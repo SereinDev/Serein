@@ -1,0 +1,11 @@
+C:\Users\Administrator\Source\Repos\Serein\bin\x86\Debug\Serein.exe.config
+C:\Users\Administrator\Source\Repos\Serein\bin\x86\Debug\Serein.exe
+C:\Users\Administrator\Source\Repos\Serein\bin\x86\Debug\Serein.pdb
+C:\Users\Administrator\Source\Repos\Serein\bin\x86\Debug\WebKitBrowser.dll
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.csproj.AssemblyReference.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.main.resources
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.Properties.Resources.resources
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.csproj.GenerateResource.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.exe
+C:\Users\Administrator\Source\Repos\Serein\obj\x86\Debug\Serein.pdb

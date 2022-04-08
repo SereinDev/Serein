@@ -1,0 +1,14 @@
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\Serein.exe.config
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\Serein.exe
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\Serein.pdb
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.csproj.AssemblyReference.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.main.resources
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.Properties.Resources.resources
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.csproj.GenerateResource.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.exe
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.pdb
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\WebKitBrowser.dll
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\WebKit.Interop.dll
+C:\Users\Administrator\Source\Repos\Serein\bin\Release\stdole.dll
+C:\Users\Administrator\Source\Repos\Serein\obj\Release\Serein.csproj.CopyComplete
