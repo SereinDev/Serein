@@ -37,14 +37,20 @@ namespace Serein
             this.PanelInfo = new System.Windows.Forms.GroupBox();
             this.PanelControls = new System.Windows.Forms.GroupBox();
             this.PanelConsole = new System.Windows.Forms.GroupBox();
+            this.PanelPanel = new System.Windows.Forms.Panel();
+            this.ConsoleWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.PanelConsolePanel1 = new System.Windows.Forms.Panel();
+            this.PanelConsoleEnter = new System.Windows.Forms.Button();
+            this.PanelConsoleInput = new System.Windows.Forms.TextBox();
             this.About = new System.Windows.Forms.TabPage();
             this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabControl.SuspendLayout();
             this.Panel.SuspendLayout();
             this.PanelTableLayout.SuspendLayout();
             this.PanelConsole.SuspendLayout();
+            this.PanelPanel.SuspendLayout();
+            this.PanelConsolePanel1.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,12 +93,45 @@ namespace Serein
             // 
             // PanelConsole
             // 
-            this.PanelConsole.Controls.Add(this.webBrowser1);
+            this.PanelConsole.Controls.Add(this.PanelPanel);
             resources.ApplyResources(this.PanelConsole, "PanelConsole");
             this.PanelConsole.Name = "PanelConsole";
             this.PanelTableLayout.SetRowSpan(this.PanelConsole, 2);
             this.PanelConsole.TabStop = false;
             this.PanelConsole.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // PanelPanel
+            // 
+            this.PanelPanel.Controls.Add(this.ConsoleWebBrowser);
+            this.PanelPanel.Controls.Add(this.PanelConsolePanel1);
+            resources.ApplyResources(this.PanelPanel, "PanelPanel");
+            this.PanelPanel.Name = "PanelPanel";
+            // 
+            // ConsoleWebBrowser
+            // 
+            resources.ApplyResources(this.ConsoleWebBrowser, "ConsoleWebBrowser");
+            this.ConsoleWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.ConsoleWebBrowser.Name = "ConsoleWebBrowser";
+            this.ConsoleWebBrowser.ScrollBarsEnabled = false;
+            this.ConsoleWebBrowser.WebBrowserShortcutsEnabled = false;
+            // 
+            // PanelConsolePanel1
+            // 
+            resources.ApplyResources(this.PanelConsolePanel1, "PanelConsolePanel1");
+            this.PanelConsolePanel1.Controls.Add(this.PanelConsoleEnter);
+            this.PanelConsolePanel1.Controls.Add(this.PanelConsoleInput);
+            this.PanelConsolePanel1.Name = "PanelConsolePanel1";
+            // 
+            // PanelConsoleEnter
+            // 
+            resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
+            this.PanelConsoleEnter.Name = "PanelConsoleEnter";
+            this.PanelConsoleEnter.UseVisualStyleBackColor = true;
+            // 
+            // PanelConsoleInput
+            // 
+            resources.ApplyResources(this.PanelConsoleInput, "PanelConsoleInput");
+            this.PanelConsoleInput.Name = "PanelConsoleInput";
             // 
             // About
             // 
@@ -111,14 +150,6 @@ namespace Serein
             this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
             this.MainTableLayout.Name = "MainTableLayout";
             // 
-            // webBrowser1
-            // 
-            resources.ApplyResources(this.webBrowser1, "webBrowser1");
-            this.webBrowser1.IsWebBrowserContextMenuEnabled = false;
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Url = new System.Uri("C:\\Users\\Administrator\\Source\\Repos\\Serein\\bin\\Debug\\console.html", System.UriKind.Absolute);
-            this.webBrowser1.WebBrowserShortcutsEnabled = false;
-            // 
             // main
             // 
             resources.ApplyResources(this, "$this");
@@ -130,6 +161,9 @@ namespace Serein
             this.Panel.PerformLayout();
             this.PanelTableLayout.ResumeLayout(false);
             this.PanelConsole.ResumeLayout(false);
+            this.PanelPanel.ResumeLayout(false);
+            this.PanelConsolePanel1.ResumeLayout(false);
+            this.PanelConsolePanel1.PerformLayout();
             this.MainTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -145,7 +179,11 @@ namespace Serein
         private System.Windows.Forms.GroupBox PanelInfo;
         private System.Windows.Forms.GroupBox PanelControls;
         private System.Windows.Forms.GroupBox PanelConsole;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.Panel PanelConsolePanel1;
+        private System.Windows.Forms.TextBox PanelConsoleInput;
+        private System.Windows.Forms.Button PanelConsoleEnter;
+        private System.Windows.Forms.Panel PanelPanel;
+        private System.Windows.Forms.WebBrowser ConsoleWebBrowser;
     }
 }
 

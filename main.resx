@@ -174,31 +174,139 @@
     <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="webBrowser1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="ConsoleWebBrowser.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="webBrowser1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 31</value>
+  <data name="ConsoleWebBrowser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="webBrowser1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+  <data name="ConsoleWebBrowser.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
   </data>
-  <data name="webBrowser1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>964, 790</value>
+  <data name="ConsoleWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>940, 704</value>
   </data>
-  <data name="webBrowser1.TabIndex" type="System.Int32, mscorlib">
+  <data name="ConsoleWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;webBrowser1.Name" xml:space="preserve">
-    <value>webBrowser1</value>
+  <data name="&gt;&gt;ConsoleWebBrowser.Name" xml:space="preserve">
+    <value>ConsoleWebBrowser</value>
   </data>
-  <data name="&gt;&gt;webBrowser1.Type" xml:space="preserve">
+  <data name="&gt;&gt;ConsoleWebBrowser.Type" xml:space="preserve">
     <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;webBrowser1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ConsoleWebBrowser.Parent" xml:space="preserve">
+    <value>PanelPanel</value>
+  </data>
+  <data name="&gt;&gt;ConsoleWebBrowser.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelConsolePanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="PanelConsoleEnter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelConsoleEnter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>895, 0</value>
+  </data>
+  <data name="PanelConsoleEnter.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="PanelConsoleEnter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 35</value>
+  </data>
+  <data name="PanelConsoleEnter.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelConsoleEnter.Text" xml:space="preserve">
+    <value>▲</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Name" xml:space="preserve">
+    <value>PanelConsoleEnter</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Parent" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelConsoleInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="PanelConsoleInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="PanelConsoleInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>880, 35</value>
+  </data>
+  <data name="PanelConsoleInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PanelConsoleInput.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Name" xml:space="preserve">
+    <value>PanelConsoleInput</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Parent" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelConsolePanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 722</value>
+  </data>
+  <data name="PanelConsolePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 15, 3, 15</value>
+  </data>
+  <data name="PanelConsolePanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>940, 44</value>
+  </data>
+  <data name="PanelConsolePanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Name" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Parent" xml:space="preserve">
+    <value>PanelPanel</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 43</value>
+  </data>
+  <data name="PanelPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>940, 766</value>
+  </data>
+  <data name="PanelPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PanelPanel.Name" xml:space="preserve">
+    <value>PanelPanel</value>
+  </data>
+  <data name="&gt;&gt;PanelPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelPanel.Parent" xml:space="preserve">
     <value>PanelConsole</value>
   </data>
-  <data name="&gt;&gt;webBrowser1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PanelPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="PanelConsole.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -206,6 +314,9 @@
   </data>
   <data name="PanelConsole.Location" type="System.Drawing.Point, System.Drawing">
     <value>253, 3</value>
+  </data>
+  <data name="PanelConsole.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>15, 15, 15, 15</value>
   </data>
   <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
     <value>970, 824</value>

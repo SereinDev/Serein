@@ -15,6 +15,12 @@ namespace Serein
         public main()
         {
             InitializeComponent();
+            if (! System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
+            {
+                MessageBox.Show("文件  "+ AppDomain.CurrentDomain.BaseDirectory + "console.html  已丢失");
+                System.Environment.Exit(0);
+             }
+            ConsoleWebBrowser.Navigate(AppDomain.CurrentDomain.BaseDirectory + "console.html");
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
