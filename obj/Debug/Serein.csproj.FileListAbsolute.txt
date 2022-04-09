@@ -7,4 +7,4 @@ C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.csproj.GenerateResou
 C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.exe
 C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.pdb
-C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.main.resources
+C:\Users\Administrator\Source\Repos\Serein\obj\Debug\Serein.Serein.resources

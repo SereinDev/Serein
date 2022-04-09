@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    public partial class main : Form
+    public partial class Serein : Form
     {
-        public main()
+        public Serein()
         {
             InitializeComponent();
             if (! System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
@@ -20,26 +20,17 @@ namespace Serein
                 MessageBox.Show("文件  "+ AppDomain.CurrentDomain.BaseDirectory + "console.html  已丢失");
                 System.Environment.Exit(0);
              }
-            ConsoleWebBrowser.Navigate(AppDomain.CurrentDomain.BaseDirectory + "console.html");
+            PanelConsoleWebBrowser.Navigate(@"file:\\\"+AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
+            BotWebBrowser.Navigate(@"file:\\\"+AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
+            System.Diagnostics.Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
     }
 }
