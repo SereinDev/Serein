@@ -93,8 +93,6 @@ namespace Serein
             this.SettingServerPath = new System.Windows.Forms.TextBox();
             this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.SettingServerOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.SettingBotOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.Panel.SuspendLayout();
             this.PanelTableLayout.SuspendLayout();
@@ -469,7 +467,6 @@ namespace Serein
             // 
             this.SettingBotSupportedLink.ActiveLinkColor = System.Drawing.Color.DarkSlateGray;
             resources.ApplyResources(this.SettingBotSupportedLink, "SettingBotSupportedLink");
-            this.SettingBotSupportedLink.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingBotSupportedLink.ForeColor = System.Drawing.SystemColors.ControlText;
             this.SettingBotSupportedLink.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
             this.SettingBotSupportedLink.LinkColor = System.Drawing.Color.Teal;
@@ -500,6 +497,7 @@ namespace Serein
             resources.ApplyResources(this.SettingBotPathSelect, "SettingBotPathSelect");
             this.SettingBotPathSelect.Name = "SettingBotPathSelect";
             this.SettingBotPathSelect.UseVisualStyleBackColor = true;
+            this.SettingBotPathSelect.Click += new System.EventHandler(this.SettingBotPathSelect_Click);
             // 
             // SettingBotPath
             // 
@@ -565,6 +563,7 @@ namespace Serein
             resources.ApplyResources(this.SettingServerPathSelect, "SettingServerPathSelect");
             this.SettingServerPathSelect.Name = "SettingServerPathSelect";
             this.SettingServerPathSelect.UseVisualStyleBackColor = true;
+            this.SettingServerPathSelect.Click += new System.EventHandler(this.SettingServerPathSelect_Click);
             // 
             // SettingServerPath
             // 
@@ -575,22 +574,12 @@ namespace Serein
             // SereinIcon
             // 
             resources.ApplyResources(this.SereinIcon, "SereinIcon");
-            this.SereinIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // MainTableLayout
             // 
             resources.ApplyResources(this.MainTableLayout, "MainTableLayout");
             this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
             this.MainTableLayout.Name = "MainTableLayout";
-            // 
-            // SettingServerOpenFileDialog
-            // 
-            this.SettingServerOpenFileDialog.FileName = "openFileDialog1";
-            resources.ApplyResources(this.SettingServerOpenFileDialog, "SettingServerOpenFileDialog");
-            // 
-            // SettingBotOpenFileDialog
-            // 
-            this.SettingBotOpenFileDialog.FileName = "openFileDialog1";
             // 
             // Serein
             // 
@@ -668,7 +657,6 @@ namespace Serein
         private System.Windows.Forms.Label SettingServerPathLabel;
         private System.Windows.Forms.CheckBox SettingServerEnableOutputCommand;
         private System.Windows.Forms.CheckBox SettingServerEnableRestart;
-        private System.Windows.Forms.OpenFileDialog SettingServerOpenFileDialog;
         private System.Windows.Forms.CheckBox SettingServerEnableLog;
         private System.Windows.Forms.ComboBox SettingServerOutputStyle;
         private System.Windows.Forms.Label SettingServerOutputStyleLabel;
@@ -680,7 +668,6 @@ namespace Serein
         private System.Windows.Forms.Label SettingBotPathLabel;
         private System.Windows.Forms.Button SettingBotPathSelect;
         private System.Windows.Forms.TextBox SettingBotPath;
-        private System.Windows.Forms.OpenFileDialog SettingBotOpenFileDialog;
         private System.Windows.Forms.TextBox SettingBotGroupList;
         private System.Windows.Forms.TextBox SettingBotPermissionList;
         private System.Windows.Forms.Label label2;

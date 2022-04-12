@@ -24,13 +24,39 @@ namespace Serein
             BotWebBrowser.Navigate(@"file:\\\"+AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
         }
 
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-        }
-
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/Mrs4s/go-cqhttp");
+        }
+
+        private void SettingServerPathSelect_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SettingServerPath.Text = dialog.FileName;
+            }
+        }
+
+        private void SettingBotPathSelect_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "go-cqhttp可执行文件|go-cqhttp.exe;go-cqhttp_windows_armv7.exe;go-cqhttp_windows_386.exe;go-cqhttp_windows_arm64.exe;go-cqhttp_windows_amd64.exe"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SettingBotPath.Text = dialog.FileName;
+            }
+        }
+
+        private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
     }
 }

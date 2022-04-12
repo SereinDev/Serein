@@ -517,44 +517,56 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACJTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0dyb3VwDQAAAAZIZWFkZXIPSGVhZGVyQWxpZ25tZW50A1Rh
+        ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0dyb3VwEQAAAAZIZWFkZXIPSGVhZGVyQWxpZ25tZW50A1Rh
         ZwROYW1lCkl0ZW1zQ291bnQFSXRlbTAFSXRlbTEFSXRlbTIFSXRlbTMFSXRlbTQFSXRlbTUFSXRlbTYF
-        SXRlbTcBBAIBAAQEBAQEBAQEKFN5c3RlbS5XaW5kb3dzLkZvcm1zLkhvcml6b250YWxBbGlnbm1lbnQC
-        AAAACCFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZv
-        cm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFT
-        eXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxp
-        c3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0u
-        V2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3
-        SXRlbQIAAAACAAAABgMAAAAPTGlzdFZpZXdHcm91cDIyBfz///8oU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        SG9yaXpvbnRhbEFsaWdubWVudAEAAAAHdmFsdWVfXwAIAgAAAAAAAAAKBgUAAAAObGlzdFZpZXdHcm91
-        cDEIAAAACQYAAAAJBwAAAAkIAAAACQkAAAAJCgAAAAkLAAAACQwAAAAJDQAAAAwOAAAAUVN5c3RlbS5E
-        cmF3aW5nLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49YjAz
-        ZjVmN2YxMWQ1MGEzYQUGAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQgAAAAEVGV4
-        dApJbWFnZUluZGV4CUJhY2tDb2xvcgdDaGVja2VkBEZvbnQJRm9yZUNvbG9yF1VzZUl0ZW1TdHlsZUZv
-        clN1Ykl0ZW1zBUdyb3VwAQAEAAQEAAQIFFN5c3RlbS5EcmF3aW5nLkNvbG9yDgAAAAETU3lzdGVtLkRy
-        YXdpbmcuRm9udA4AAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IOAAAAASJTeXN0ZW0uV2luZG93cy5Gb3Jt
-        cy5MaXN0Vmlld0dyb3VwAgAAAAIAAAAGDwAAAAMxLDL/////BfD///8UU3lzdGVtLkRyYXdpbmcuQ29s
-        b3IEAAAABG5hbWUFdmFsdWUKa25vd25Db2xvcgVzdGF0ZQEAAAAJBwcOAAAACgAAAAAAAAAAGAABAAAJ
-        EQAAAAHu////8P///woAAAAAAAAAABoAAQABCQEAAAABBwAAAAYAAAAGFAAAAAMxLDL/////Aev////w
-        ////CgAAAAAAAAAAGAABAAAJFgAAAAHp////8P///woAAAAAAAAAABoAAQABCQEAAAABCAAAAAYAAAAG
-        GQAAAAMxLDL/////Aeb////w////CgAAAAAAAAAAGAABAAAJGwAAAAHk////8P///woAAAAAAAAAABoA
-        AQABCQEAAAABCQAAAAYAAAAGHgAAAAMxLDL/////AeH////w////CgAAAAAAAAAAGAABAAAJIAAAAAHf
-        ////8P///woAAAAAAAAAABoAAQABCQEAAAABCgAAAAYAAAAGIwAAAAMxLDL/////Adz////w////CgAA
-        AAAAAAAAGAABAAAJJQAAAAHa////8P///woAAAAAAAAAABoAAQABCQEAAAABCwAAAAYAAAAGKAAAAAMx
-        LDL/////Adf////w////CgAAAAAAAAAAGAABAAAJKgAAAAHV////8P///woAAAAAAAAAABoAAQABCQEA
-        AAABDAAAAAYAAAAGLQAAAAMxLDL/////AdL////w////CgAAAAAAAAAAGAABAAAJLwAAAAHQ////8P//
-        /woAAAAAAAAAABoAAQABCQEAAAABDQAAAAYAAAAGMgAAAAMxLDL/////Ac3////w////CgAAAAAAAAAA
-        GAABAAAJNAAAAAHL////8P///woAAAAAAAAAABoAAQABCQEAAAAFEQAAABNTeXN0ZW0uRHJhd2luZy5G
-        b250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQ4A
-        AAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0DgAAAA4AAAAGNwAAAAblrovkvZMAABBBBcj///8Y
-        U3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAAAAd2YWx1ZV9fAAgOAAAAAAAAAAXH////G1N5c3RlbS5E
-        cmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFsdWVfXwAIDgAAAAMAAAABFgAAABEAAAAGOgAAAAblrovk
-        vZMAABBBAcX////I////AAAAAAHE////x////wMAAAABGwAAABEAAAAGPQAAAAblrovkvZMAABBBAcL/
-        ///I////AAAAAAHB////x////wMAAAABIAAAABEAAAAGQAAAAAblrovkvZMAABBBAb/////I////AAAA
-        AAG+////x////wMAAAABJQAAABEAAAAGQwAAAAblrovkvZMAABBBAbz////I////AAAAAAG7////x///
-        /wMAAAABKgAAABEAAAAGRgAAAAblrovkvZMAABBBAbn////I////AAAAAAG4////x////wMAAAABLwAA
-        ABEAAAAGSQAAAAblrovkvZMAABBBAbb////I////AAAAAAG1////x////wMAAAABNAAAABEAAAAGTAAA
-        AAblrovkvZMAABBBAbP////I////AAAAAAGy////x////wMAAAAL
+        SXRlbTcFSXRlbTgFSXRlbTkGSXRlbTEwBkl0ZW0xMQEEAgEABAQEBAQEBAQEBAQEKFN5c3RlbS5XaW5k
+        b3dzLkZvcm1zLkhvcml6b250YWxBbGlnbm1lbnQCAAAACCFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0
+        Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldp
+        bmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0
+        ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3Mu
+        Rm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAA
+        IVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMu
+        TGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3Rl
+        bS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZp
+        ZXdJdGVtAgAAAAIAAAAGAwAAAA9MaXN0Vmlld0dyb3VwMjIF/P///yhTeXN0ZW0uV2luZG93cy5Gb3Jt
+        cy5Ib3Jpem9udGFsQWxpZ25tZW50AQAAAAd2YWx1ZV9fAAgCAAAAAAAAAAoGBQAAAA5saXN0Vmlld0dy
+        b3VwMQwAAAAJBgAAAAkHAAAACQgAAAAJCQAAAAkKAAAACQsAAAAJDAAAAAkNAAAACQ4AAAAJDwAAAAkQ
+        AAAACREAAAAMEgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRy
+        YWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFBgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jt
+        cy5MaXN0Vmlld0l0ZW0IAAAABFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZv
+        cmVDb2xvchdVc2VJdGVtU3R5bGVGb3JTdWJJdGVtcwVHcm91cAEABAAEBAAECBRTeXN0ZW0uRHJhd2lu
+        Zy5Db2xvchIAAAABE1N5c3RlbS5EcmF3aW5nLkZvbnQSAAAAFFN5c3RlbS5EcmF3aW5nLkNvbG9yEgAA
+        AAEiU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdHcm91cAIAAAACAAAABhMAAAADMSwy/////wXs
+        ////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3RhdGUBAAAA
+        CQcHEgAAAAoAAAAAAAAAABgAAQAACRUAAAAB6v///+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAQcAAAAG
+        AAAABhgAAAADMSwy/////wHn////7P///woAAAAAAAAAABgAAQAACRoAAAAB5f///+z///8KAAAAAAAA
+        AAAaAAEAAQkBAAAAAQgAAAAGAAAABh0AAAADMSwy/////wHi////7P///woAAAAAAAAAABgAAQAACR8A
+        AAAB4P///+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAQkAAAAGAAAABiIAAAADMSwy/////wHd////7P//
+        /woAAAAAAAAAABgAAQAACSQAAAAB2////+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAQoAAAAGAAAABicA
+        AAADMSwy/////wHY////7P///woAAAAAAAAAABgAAQAACSkAAAAB1v///+z///8KAAAAAAAAAAAaAAEA
+        AQkBAAAAAQsAAAAGAAAABiwAAAADMSwy/////wHT////7P///woAAAAAAAAAABgAAQAACS4AAAAB0f//
+        /+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAQwAAAAGAAAABjEAAAADMSwy/////wHO////7P///woAAAAA
+        AAAAABgAAQAACTMAAAABzP///+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAQ0AAAAGAAAABjYAAAADMSwy
+        /////wHJ////7P///woAAAAAAAAAABgAAQAACTgAAAABx////+z///8KAAAAAAAAAAAaAAEAAQkBAAAA
+        AQ4AAAAGAAAABjsAAAADMSwy/////wHE////7P///woAAAAAAAAAABgAAQAACT0AAAABwv///+z///8K
+        AAAAAAAAAAAaAAEAAQkBAAAAAQ8AAAAGAAAABkAAAAADMSwy/////wG/////7P///woAAAAAAAAAABgA
+        AQAACUIAAAABvf///+z///8KAAAAAAAAAAAaAAEAAQkBAAAAARAAAAAGAAAABkUAAAADMSwy/////wG6
+        ////7P///woAAAAAAAAAABgAAQAACUcAAAABuP///+z///8KAAAAAAAAAAAaAAEAAQkBAAAAAREAAAAG
+        AAAABkoAAAADMSwy/////wG1////7P///woAAAAAAAAAABgAAQAACUwAAAABs////+z///8KAAAAAAAA
+        AAAaAAEAAQkBAAAABRUAAAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVu
+        aXQBAAQECxhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUSAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNz
+        VW5pdBIAAAASAAAABk8AAAAG5a6L5L2TAAAQQQWw////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEA
+        AAAHdmFsdWVfXwAIEgAAAAAAAAAFr////xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3Zh
+        bHVlX18ACBIAAAADAAAAARoAAAAVAAAABlIAAAAG5a6L5L2TAAAQQQGt////sP///wAAAAABrP///6//
+        //8DAAAAAR8AAAAVAAAABlUAAAAG5a6L5L2TAAAQQQGq////sP///wAAAAABqf///6////8DAAAAASQA
+        AAAVAAAABlgAAAAG5a6L5L2TAAAQQQGn////sP///wAAAAABpv///6////8DAAAAASkAAAAVAAAABlsA
+        AAAG5a6L5L2TAAAQQQGk////sP///wAAAAABo////6////8DAAAAAS4AAAAVAAAABl4AAAAG5a6L5L2T
+        AAAQQQGh////sP///wAAAAABoP///6////8DAAAAATMAAAAVAAAABmEAAAAG5a6L5L2TAAAQQQGe////
+        sP///wAAAAABnf///6////8DAAAAATgAAAAVAAAABmQAAAAG5a6L5L2TAAAQQQGb////sP///wAAAAAB
+        mv///6////8DAAAAAT0AAAAVAAAABmcAAAAG5a6L5L2TAAAQQQGY////sP///wAAAAABl////6////8D
+        AAAAAUIAAAAVAAAABmoAAAAG5a6L5L2TAAAQQQGV////sP///wAAAAABlP///6////8DAAAAAUcAAAAV
+        AAAABm0AAAAG5a6L5L2TAAAQQQGS////sP///wAAAAABkf///6////8DAAAAAUwAAAAVAAAABnAAAAAG
+        5a6L5L2TAAAQQQGP////sP///wAAAAABjv///6////8DAAAACw==
 </value>
   </data>
   <data name="PluginList.Groups1" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -600,32 +612,44 @@
         G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMAAAADAAAABgkAAAAG5a6L5L2TAAAQQQX2////GFN5
         c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFsdWVfXwAIAwAAAAAAAAAF9f///xtTeXN0ZW0uRHJh
         d2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18ACAMAAAADAAAABQgAAAAiU3lzdGVtLldpbmRvd3Mu
-        Rm9ybXMuTGlzdFZpZXdHcm91cA0AAAAGSGVhZGVyD0hlYWRlckFsaWdubWVudANUYWcETmFtZQpJdGVt
-        c0NvdW50BUl0ZW0wBUl0ZW0xBUl0ZW0yBUl0ZW0zBUl0ZW00BUl0ZW01BUl0ZW02BUl0ZW03AQQCAQAE
-        BAQEBAQEBChTeXN0ZW0uV2luZG93cy5Gb3Jtcy5Ib3Jpem9udGFsQWxpZ25tZW50AgAAAAghU3lzdGVt
-        LldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmll
-        d0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRv
-        d3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0C
-        AAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9y
-        bXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAAgAA
-        AAYMAAAAD0xpc3RWaWV3R3JvdXAyMgXz////KFN5c3RlbS5XaW5kb3dzLkZvcm1zLkhvcml6b250YWxB
-        bGlnbm1lbnQBAAAAB3ZhbHVlX18ACAIAAAAAAAAACgYOAAAADmxpc3RWaWV3R3JvdXAxCAAAAAkPAAAA
-        CRAAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACQEAAAABDwAAAAEAAAAGFwAAAAMxLDL/////Aej/
-        ///7////CgAAAAAAAAAAGAABAAAJGQAAAAHm////+////woAAAAAAAAAABoAAQABCQgAAAABEAAAAAEA
-        AAAGHAAAAAMxLDL/////AeP////7////CgAAAAAAAAAAGAABAAAJHgAAAAHh////+////woAAAAAAAAA
-        ABoAAQABCQgAAAABEQAAAAEAAAAGIQAAAAMxLDL/////Ad7////7////CgAAAAAAAAAAGAABAAAJIwAA
-        AAHc////+////woAAAAAAAAAABoAAQABCQgAAAABEgAAAAEAAAAGJgAAAAMxLDL/////Adn////7////
-        CgAAAAAAAAAAGAABAAAJKAAAAAHX////+////woAAAAAAAAAABoAAQABCQgAAAABEwAAAAEAAAAGKwAA
-        AAMxLDL/////AdT////7////CgAAAAAAAAAAGAABAAAJLQAAAAHS////+////woAAAAAAAAAABoAAQAB
-        CQgAAAABFAAAAAEAAAAGMAAAAAMxLDL/////Ac/////7////CgAAAAAAAAAAGAABAAAJMgAAAAHN////
-        +////woAAAAAAAAAABoAAQABCQgAAAABFQAAAAEAAAAGNQAAAAMxLDL/////Acr////7////CgAAAAAA
-        AAAAGAABAAAJNwAAAAHI////+////woAAAAAAAAAABoAAQABCQgAAAABGQAAAAYAAAAGOgAAAAblrovk
-        vZMAABBBAcX////2////AAAAAAHE////9f///wMAAAABHgAAAAYAAAAGPQAAAAblrovkvZMAABBBAcL/
-        ///2////AAAAAAHB////9f///wMAAAABIwAAAAYAAAAGQAAAAAblrovkvZMAABBBAb/////2////AAAA
-        AAG+////9f///wMAAAABKAAAAAYAAAAGQwAAAAblrovkvZMAABBBAbz////2////AAAAAAG7////9f//
-        /wMAAAABLQAAAAYAAAAGRgAAAAblrovkvZMAABBBAbn////2////AAAAAAG4////9f///wMAAAABMgAA
-        AAYAAAAGSQAAAAblrovkvZMAABBBAbb////2////AAAAAAG1////9f///wMAAAABNwAAAAYAAAAGTAAA
-        AAblrovkvZMAABBBAbP////2////AAAAAAGy////9f///wMAAAAL
+        Rm9ybXMuTGlzdFZpZXdHcm91cBEAAAAGSGVhZGVyD0hlYWRlckFsaWdubWVudANUYWcETmFtZQpJdGVt
+        c0NvdW50BUl0ZW0wBUl0ZW0xBUl0ZW0yBUl0ZW0zBUl0ZW00BUl0ZW01BUl0ZW02BUl0ZW03BUl0ZW04
+        BUl0ZW05Bkl0ZW0xMAZJdGVtMTEBBAIBAAQEBAQEBAQEBAQEBChTeXN0ZW0uV2luZG93cy5Gb3Jtcy5I
+        b3Jpem9udGFsQWxpZ25tZW50AgAAAAghU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAA
+        ACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1z
+        Lkxpc3RWaWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RW
+        aWV3SXRlbQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2lu
+        ZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRl
+        bQIAAAAhU3lzdGVtLldpbmRvd3MuRm9ybXMuTGlzdFZpZXdJdGVtAgAAACFTeXN0ZW0uV2luZG93cy5G
+        b3Jtcy5MaXN0Vmlld0l0ZW0CAAAAIVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbQIAAAAC
+        AAAABgwAAAAPTGlzdFZpZXdHcm91cDIyBfP///8oU3lzdGVtLldpbmRvd3MuRm9ybXMuSG9yaXpvbnRh
+        bEFsaWdubWVudAEAAAAHdmFsdWVfXwAIAgAAAAAAAAAKBg4AAAAObGlzdFZpZXdHcm91cDEMAAAACQ8A
+        AAAJEAAAAAkRAAAACRIAAAAJEwAAAAkUAAAACRUAAAAJFgAAAAkXAAAACRgAAAAJGQAAAAkBAAAAAQ8A
+        AAABAAAABhsAAAADMSwy/////wHk////+////woAAAAAAAAAABgAAQAACR0AAAAB4v////v///8KAAAA
+        AAAAAAAaAAEAAQkIAAAAARAAAAABAAAABiAAAAADMSwy/////wHf////+////woAAAAAAAAAABgAAQAA
+        CSIAAAAB3f////v///8KAAAAAAAAAAAaAAEAAQkIAAAAAREAAAABAAAABiUAAAADMSwy/////wHa////
+        +////woAAAAAAAAAABgAAQAACScAAAAB2P////v///8KAAAAAAAAAAAaAAEAAQkIAAAAARIAAAABAAAA
+        BioAAAADMSwy/////wHV////+////woAAAAAAAAAABgAAQAACSwAAAAB0/////v///8KAAAAAAAAAAAa
+        AAEAAQkIAAAAARMAAAABAAAABi8AAAADMSwy/////wHQ////+////woAAAAAAAAAABgAAQAACTEAAAAB
+        zv////v///8KAAAAAAAAAAAaAAEAAQkIAAAAARQAAAABAAAABjQAAAADMSwy/////wHL////+////woA
+        AAAAAAAAABgAAQAACTYAAAAByf////v///8KAAAAAAAAAAAaAAEAAQkIAAAAARUAAAABAAAABjkAAAAD
+        MSwy/////wHG////+////woAAAAAAAAAABgAAQAACTsAAAABxP////v///8KAAAAAAAAAAAaAAEAAQkI
+        AAAAARYAAAABAAAABj4AAAADMSwy/////wHB////+////woAAAAAAAAAABgAAQAACUAAAAABv/////v/
+        //8KAAAAAAAAAAAaAAEAAQkIAAAAARcAAAABAAAABkMAAAADMSwy/////wG8////+////woAAAAAAAAA
+        ABgAAQAACUUAAAABuv////v///8KAAAAAAAAAAAaAAEAAQkIAAAAARgAAAABAAAABkgAAAADMSwy////
+        /wG3////+////woAAAAAAAAAABgAAQAACUoAAAABtf////v///8KAAAAAAAAAAAaAAEAAQkIAAAAARkA
+        AAABAAAABk0AAAADMSwy/////wGy////+////woAAAAAAAAAABgAAQAACU8AAAABsP////v///8KAAAA
+        AAAAAAAaAAEAAQkIAAAAAR0AAAAGAAAABlIAAAAG5a6L5L2TAAAQQQGt////9v///wAAAAABrP////X/
+        //8DAAAAASIAAAAGAAAABlUAAAAG5a6L5L2TAAAQQQGq////9v///wAAAAABqf////X///8DAAAAAScA
+        AAAGAAAABlgAAAAG5a6L5L2TAAAQQQGn////9v///wAAAAABpv////X///8DAAAAASwAAAAGAAAABlsA
+        AAAG5a6L5L2TAAAQQQGk////9v///wAAAAABo/////X///8DAAAAATEAAAAGAAAABl4AAAAG5a6L5L2T
+        AAAQQQGh////9v///wAAAAABoP////X///8DAAAAATYAAAAGAAAABmEAAAAG5a6L5L2TAAAQQQGe////
+        9v///wAAAAABnf////X///8DAAAAATsAAAAGAAAABmQAAAAG5a6L5L2TAAAQQQGb////9v///wAAAAAB
+        mv////X///8DAAAAAUAAAAAGAAAABmcAAAAG5a6L5L2TAAAQQQGY////9v///wAAAAABl/////X///8D
+        AAAAAUUAAAAGAAAABmoAAAAG5a6L5L2TAAAQQQGV////9v///wAAAAABlP////X///8DAAAAAUoAAAAG
+        AAAABm0AAAAG5a6L5L2TAAAQQQGS////9v///wAAAAABkf////X///8DAAAAAU8AAAAGAAAABnAAAAAG
+        5a6L5L2TAAAQQQGP////9v///wAAAAABjv////X///8DAAAACw==
 </value>
   </data>
   <data name="PluginList.Location" type="System.Drawing.Point, System.Drawing">
@@ -1034,7 +1058,7 @@
     <value>11, 866</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1152, 138</value>
+    <value>1143, 138</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1157,7 +1181,7 @@
     <value>True</value>
   </data>
   <data name="SettingBotPermissionList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1106, 35</value>
+    <value>1097, 35</value>
   </data>
   <data name="SettingBotPermissionList.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1184,7 +1208,7 @@
     <value>True</value>
   </data>
   <data name="SettingBotGroupList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1106, 35</value>
+    <value>1097, 35</value>
   </data>
   <data name="SettingBotGroupList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1478,7 +1502,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPathSelect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>996, 115</value>
+    <value>987, 115</value>
   </data>
   <data name="SettingBotPathSelect.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 35</value>
@@ -1508,7 +1532,7 @@
     <value>23, 115</value>
   </data>
   <data name="SettingBotPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>964, 35</value>
+    <value>955, 35</value>
   </data>
   <data name="SettingBotPath.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1529,7 +1553,7 @@
     <value>10, 290</value>
   </data>
   <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1153, 545</value>
+    <value>1144, 545</value>
   </data>
   <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1556,7 +1580,7 @@
     <value>True</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 125</value>
+    <value>384, 121</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -1628,16 +1652,13 @@
     <value>语法高亮+</value>
   </data>
   <data name="SettingServerOutputStyle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>498, 122</value>
+    <value>498, 118</value>
   </data>
   <data name="SettingServerOutputStyle.Size" type="System.Drawing.Size, System.Drawing">
     <value>151, 32</value>
   </data>
   <data name="SettingServerOutputStyle.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="SettingServerOutputStyle.Text" xml:space="preserve">
-    <value>无</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
     <value>SettingServerOutputStyle</value>
@@ -1745,7 +1766,7 @@
     <value>Top, Right</value>
   </data>
   <data name="SettingServerPathSelect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>996, 63</value>
+    <value>987, 63</value>
   </data>
   <data name="SettingServerPathSelect.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 35</value>
@@ -1775,7 +1796,7 @@
     <value>23, 63</value>
   </data>
   <data name="SettingServerPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>965, 35</value>
+    <value>956, 35</value>
   </data>
   <data name="SettingServerPath.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1802,7 +1823,7 @@
     <value>20, 20, 20, 20</value>
   </data>
   <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1153, 248</value>
+    <value>1144, 248</value>
   </data>
   <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1965,15 +1986,6 @@
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <metadata name="SettingServerOpenFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>213, 17</value>
-  </metadata>
-  <data name="SettingServerOpenFileDialog.Filter" xml:space="preserve">
-    <value>|批处理文件、可执行文件|*.exe *.bat|</value>
-  </data>
-  <metadata name="SettingBotOpenFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>477, 17</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -2029,18 +2041,6 @@
   </data>
   <data name="&gt;&gt;SereinIcon.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOpenFileDialog.Name" xml:space="preserve">
-    <value>SettingServerOpenFileDialog</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOpenFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotOpenFileDialog.Name" xml:space="preserve">
-    <value>SettingBotOpenFileDialog</value>
-  </data>
-  <data name="&gt;&gt;SettingBotOpenFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Serein</value>
