@@ -86,10 +86,10 @@ namespace Log
                             }
                             else if (((IList)ColorList).Contains(ChildArg))
                             {
-                                SpanClass += "color" + ChildArg + " ";
+                                SpanClass += "vanillaColor" + ChildArg + " ";
                                 if (ChildArg == "37" && SpanClass.Contains("colored"))
                                 {
-                                    SpanClass += "noColor";
+                                    SpanClass += "noColored";
                                 }
                                 else
                                 {
@@ -99,7 +99,7 @@ namespace Log
                         }
                         if (SpanClass == "")
                         {
-                            SpanClass += "noColor";
+                            SpanClass += "noColored";
                         }
                         Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
                     }
