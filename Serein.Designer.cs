@@ -63,6 +63,7 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
@@ -176,12 +177,14 @@ namespace Serein
             resources.ApplyResources(this.PanelControlStop, "PanelControlStop");
             this.PanelControlStop.Name = "PanelControlStop";
             this.PanelControlStop.UseVisualStyleBackColor = true;
+            this.PanelControlStop.Click += new System.EventHandler(this.PanelControlStop_Click);
             // 
             // PanelControlStart
             // 
             resources.ApplyResources(this.PanelControlStart, "PanelControlStart");
             this.PanelControlStart.Name = "PanelControlStart";
             this.PanelControlStart.UseVisualStyleBackColor = true;
+            this.PanelControlStart.Click += new System.EventHandler(this.PanelControlStart_Click);
             // 
             // PanelConsole
             // 
@@ -343,10 +346,16 @@ namespace Serein
             // SettingSerein
             // 
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
+            this.SettingSerein.Controls.Add(this.SettingSereinVersion);
             this.SettingSerein.Controls.Add(this.SettingEnableGetAnnouncement);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
+            // 
+            // SettingSereinVersion
+            // 
+            resources.ApplyResources(this.SettingSereinVersion, "SettingSereinVersion");
+            this.SettingSereinVersion.Name = "SettingSereinVersion";
             // 
             // SettingEnableGetAnnouncement
             // 
@@ -532,6 +541,7 @@ namespace Serein
             // 
             // SettingServerOutputStyle
             // 
+            this.SettingServerOutputStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SettingServerOutputStyle.FormattingEnabled = true;
             this.SettingServerOutputStyle.Items.AddRange(new object[] {
             resources.GetString("SettingServerOutputStyle.Items"),
@@ -680,6 +690,7 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingEnableGetAnnouncement;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Button SettingBotClearCache;
+        private System.Windows.Forms.Label SettingSereinVersion;
     }
 }
 

@@ -16,7 +16,9 @@ namespace Serein
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Serein());
+            Serein serein = new Serein();
+            Global.serein = serein;
+            Application.Run(serein);
         }
     }
 }

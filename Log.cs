@@ -2,11 +2,11 @@
 using System.Text.RegularExpressions;
 using System.Collections;
 
-namespace Log
+namespace Serein
 {
     public class Log
     {
-        public  string OutputRecognition(string Input)
+        public static string OutputRecognition(string Input)
         {
             string Result;
             Result = Regex.Replace(Input, @"\[.+?m", "");
@@ -14,7 +14,7 @@ namespace Log
             Result = Regex.Replace(Result, @"\s+?$", "");
             return Result;
         }
-        public string EscapeLog(string Input)
+        public static string EscapeLog(string Input)
         {
             string Result;
             Result = Regex.Replace(Input, "/", "&#47;");
@@ -25,7 +25,7 @@ namespace Log
             Result = Regex.Replace(Result, ">", "&gt;");
             return Result;
         }
-        public string ColorLog(string Input,int Type)
+        public static string ColorLog(string Input,int Type)
         {
             Input = Regex.Replace(Input, @"^>\s+?", "");
             Input = Regex.Replace(Input, @"\s+?$", "");

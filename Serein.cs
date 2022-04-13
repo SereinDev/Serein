@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Serein
@@ -15,18 +17,24 @@ namespace Serein
         public Serein()
         {
             InitializeComponent();
-            if (! System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
+            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
             {
-                MessageBox.Show("文件  "+ AppDomain.CurrentDomain.BaseDirectory + "console.html  已丢失");
+                MessageBox.Show($"文件  {AppDomain.CurrentDomain.BaseDirectory}console.html  已丢失");
                 System.Environment.Exit(0);
-             }
-            PanelConsoleWebBrowser.Navigate(@"file:\\\"+AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
-            BotWebBrowser.Navigate(@"file:\\\"+AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
+            }
+            string VERSION = "Testing 2022";
+            PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
+            BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
+            Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
+            Global.BotWebBrowser = BotWebBrowser;
+            SettingSereinVersion.Text = $"Version:{VERSION}";
+            Server.UpdateStatusThreadStart();
+
         }
 
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Mrs4s/go-cqhttp");
+            Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
 
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
@@ -38,6 +46,7 @@ namespace Serein
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 SettingServerPath.Text = dialog.FileName;
+                Server.Path = dialog.FileName;
             }
         }
 
@@ -53,10 +62,25 @@ namespace Serein
             }
         }
 
-        private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
+        delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
+        private void PanelConsoleWebBrowser_AppendText(object[] objects)
         {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
+            PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
+            
+        }
+        public void PanelConsoleWebBrowser_Invoke(object[] objects)
+        {
+            object[] _objects = { objects };
+            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, _objects);
+        }
+        private void PanelControlStart_Click(object sender, EventArgs e)
+        {
+            Server.Start();
+        }
+
+        private void PanelControlStop_Click(object sender, EventArgs e)
+        {
+            Server.Stop();
         }
     }
 }
