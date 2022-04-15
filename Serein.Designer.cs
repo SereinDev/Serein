@@ -36,7 +36,7 @@ namespace Serein
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.PanelInfo = new System.Windows.Forms.GroupBox();
             this.PanelControls = new System.Windows.Forms.GroupBox();
-            this.PanelControlTerminate = new System.Windows.Forms.Button();
+            this.PanelControlKill = new System.Windows.Forms.Button();
             this.PanelControlRestart = new System.Windows.Forms.Button();
             this.PanelControlStop = new System.Windows.Forms.Button();
             this.PanelControlStart = new System.Windows.Forms.Button();
@@ -64,7 +64,7 @@ namespace Serein
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
-            this.SettingEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
+            this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
             this.SettingBotClearCache = new System.Windows.Forms.Button();
@@ -74,8 +74,8 @@ namespace Serein
             this.SettingBotGroupList = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.SettingBotSendPort = new System.Windows.Forms.NumericUpDown();
+            this.SettingBotListenPort = new System.Windows.Forms.NumericUpDown();
             this.SettingBotSupportedLabel = new System.Windows.Forms.Label();
             this.SettingBotSupportedLink = new System.Windows.Forms.LinkLabel();
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
@@ -111,8 +111,8 @@ namespace Serein
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
             this.SettingBot.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotSendPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotListenPort)).BeginInit();
             this.SettingServer.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.SuspendLayout();
@@ -152,7 +152,7 @@ namespace Serein
             // 
             // PanelControls
             // 
-            this.PanelControls.Controls.Add(this.PanelControlTerminate);
+            this.PanelControls.Controls.Add(this.PanelControlKill);
             this.PanelControls.Controls.Add(this.PanelControlRestart);
             this.PanelControls.Controls.Add(this.PanelControlStop);
             this.PanelControls.Controls.Add(this.PanelControlStart);
@@ -160,11 +160,12 @@ namespace Serein
             this.PanelControls.Name = "PanelControls";
             this.PanelControls.TabStop = false;
             // 
-            // PanelControlTerminate
+            // PanelControlKill
             // 
-            resources.ApplyResources(this.PanelControlTerminate, "PanelControlTerminate");
-            this.PanelControlTerminate.Name = "PanelControlTerminate";
-            this.PanelControlTerminate.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.PanelControlKill, "PanelControlKill");
+            this.PanelControlKill.Name = "PanelControlKill";
+            this.PanelControlKill.UseVisualStyleBackColor = true;
+            this.PanelControlKill.Click += new System.EventHandler(this.PanelControlKill_Click);
             // 
             // PanelControlRestart
             // 
@@ -221,11 +222,13 @@ namespace Serein
             resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
             this.PanelConsoleEnter.Name = "PanelConsoleEnter";
             this.PanelConsoleEnter.UseVisualStyleBackColor = true;
+            this.PanelConsoleEnter.Click += new System.EventHandler(this.PanelConsoleEnter_Click);
             // 
             // PanelConsoleInput
             // 
             resources.ApplyResources(this.PanelConsoleInput, "PanelConsoleInput");
             this.PanelConsoleInput.Name = "PanelConsoleInput";
+            this.PanelConsoleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PanelConsoleInput_KeyDown);
             // 
             // Plugin
             // 
@@ -345,10 +348,10 @@ namespace Serein
             // 
             // SettingSerein
             // 
-            resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Controls.Add(this.SettingSereinVersion);
-            this.SettingSerein.Controls.Add(this.SettingEnableGetAnnouncement);
+            this.SettingSerein.Controls.Add(this.SettingSereinEnableGetAnnouncement);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
+            resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
             // 
@@ -357,11 +360,11 @@ namespace Serein
             resources.ApplyResources(this.SettingSereinVersion, "SettingSereinVersion");
             this.SettingSereinVersion.Name = "SettingSereinVersion";
             // 
-            // SettingEnableGetAnnouncement
+            // SettingSereinEnableGetAnnouncement
             // 
-            resources.ApplyResources(this.SettingEnableGetAnnouncement, "SettingEnableGetAnnouncement");
-            this.SettingEnableGetAnnouncement.Name = "SettingEnableGetAnnouncement";
-            this.SettingEnableGetAnnouncement.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.SettingSereinEnableGetAnnouncement, "SettingSereinEnableGetAnnouncement");
+            this.SettingSereinEnableGetAnnouncement.Name = "SettingSereinEnableGetAnnouncement";
+            this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
             // 
             // SettingSereinEnableGetUpdate
             // 
@@ -371,7 +374,6 @@ namespace Serein
             // 
             // SettingBot
             // 
-            resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Controls.Add(this.SettingBotClearCache);
             this.SettingBot.Controls.Add(this.SettingBotPermission);
             this.SettingBot.Controls.Add(this.SettingBotGroup);
@@ -379,8 +381,8 @@ namespace Serein
             this.SettingBot.Controls.Add(this.SettingBotGroupList);
             this.SettingBot.Controls.Add(this.label2);
             this.SettingBot.Controls.Add(this.label1);
-            this.SettingBot.Controls.Add(this.numericUpDown2);
-            this.SettingBot.Controls.Add(this.numericUpDown1);
+            this.SettingBot.Controls.Add(this.SettingBotSendPort);
+            this.SettingBot.Controls.Add(this.SettingBotListenPort);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLabel);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLink);
             this.SettingBot.Controls.Add(this.SettingBotGivePermissionToAllAdmin);
@@ -388,6 +390,7 @@ namespace Serein
             this.SettingBot.Controls.Add(this.SettingBotPathLabel);
             this.SettingBot.Controls.Add(this.SettingBotPathSelect);
             this.SettingBot.Controls.Add(this.SettingBotPath);
+            resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
             // 
@@ -427,42 +430,42 @@ namespace Serein
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-            // numericUpDown2
+            // SettingBotSendPort
             // 
-            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.SettingBotSendPort, "SettingBotSendPort");
+            this.SettingBotSendPort.Maximum = new decimal(new int[] {
             65536,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.SettingBotSendPort.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.SettingBotSendPort.Name = "SettingBotSendPort";
+            this.SettingBotSendPort.Value = new decimal(new int[] {
             5700,
             0,
             0,
             0});
             // 
-            // numericUpDown1
+            // SettingBotListenPort
             // 
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.SettingBotListenPort, "SettingBotListenPort");
+            this.SettingBotListenPort.Maximum = new decimal(new int[] {
             65536,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.SettingBotListenPort.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Value = new decimal(new int[] {
-            8080,
+            this.SettingBotListenPort.Name = "SettingBotListenPort";
+            this.SettingBotListenPort.Value = new decimal(new int[] {
+            8000,
             0,
             0,
             0});
@@ -516,7 +519,6 @@ namespace Serein
             // 
             // SettingServer
             // 
-            resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Controls.Add(this.SettingServerOutputStyleLabel);
             this.SettingServer.Controls.Add(this.SettingServerEnableLog);
             this.SettingServer.Controls.Add(this.SettingServerOutputStyle);
@@ -525,6 +527,7 @@ namespace Serein
             this.SettingServer.Controls.Add(this.SettingServerPathLabel);
             this.SettingServer.Controls.Add(this.SettingServerPathSelect);
             this.SettingServer.Controls.Add(this.SettingServerPath);
+            resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
             // 
@@ -594,7 +597,7 @@ namespace Serein
             // Serein
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.MainTableLayout);
             this.Name = "Serein";
             this.tabControl.ResumeLayout(false);
@@ -618,8 +621,8 @@ namespace Serein
             this.SettingSerein.PerformLayout();
             this.SettingBot.ResumeLayout(false);
             this.SettingBot.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotSendPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotListenPort)).EndInit();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
             this.MainTableLayout.ResumeLayout(false);
@@ -642,7 +645,7 @@ namespace Serein
         private System.Windows.Forms.Panel PanelConsolePanel2;
         private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
         private System.Windows.Forms.Button PanelControlStart;
-        private System.Windows.Forms.Button PanelControlTerminate;
+        private System.Windows.Forms.Button PanelControlKill;
         private System.Windows.Forms.Button PanelControlRestart;
         private System.Windows.Forms.Button PanelControlStop;
         private System.Windows.Forms.TabPage Plugin;
@@ -662,6 +665,9 @@ namespace Serein
         private System.Windows.Forms.Button BotStart;
         private System.Windows.Forms.Panel SettingPanel;
         private System.Windows.Forms.GroupBox SettingServer;
+        private System.Windows.Forms.Label SettingServerOutputStyleLabel;
+        private System.Windows.Forms.GroupBox SettingBot;
+        private System.Windows.Forms.GroupBox SettingSerein;
         private System.Windows.Forms.Button SettingServerPathSelect;
         private System.Windows.Forms.TextBox SettingServerPath;
         private System.Windows.Forms.Label SettingServerPathLabel;
@@ -669,8 +675,6 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingServerEnableRestart;
         private System.Windows.Forms.CheckBox SettingServerEnableLog;
         private System.Windows.Forms.ComboBox SettingServerOutputStyle;
-        private System.Windows.Forms.Label SettingServerOutputStyleLabel;
-        private System.Windows.Forms.GroupBox SettingBot;
         private System.Windows.Forms.Label SettingBotSupportedLabel;
         private System.Windows.Forms.LinkLabel SettingBotSupportedLink;
         private System.Windows.Forms.CheckBox SettingBotGivePermissionToAllAdmin;
@@ -682,12 +686,11 @@ namespace Serein
         private System.Windows.Forms.TextBox SettingBotPermissionList;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown SettingBotSendPort;
+        private System.Windows.Forms.NumericUpDown SettingBotListenPort;
         private System.Windows.Forms.Label SettingBotPermission;
         private System.Windows.Forms.Label SettingBotGroup;
-        private System.Windows.Forms.GroupBox SettingSerein;
-        private System.Windows.Forms.CheckBox SettingEnableGetAnnouncement;
+        private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Button SettingBotClearCache;
         private System.Windows.Forms.Label SettingSereinVersion;

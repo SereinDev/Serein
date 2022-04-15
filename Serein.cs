@@ -28,15 +28,28 @@ namespace Serein
             Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
             Global.BotWebBrowser = BotWebBrowser;
             SettingSereinVersion.Text = $"Version:{VERSION}";
-            Server.UpdateStatusThreadStart();
-
         }
-
+        public object[] UpdateSettings()
+        {
+            Settings.Server.Path = SettingServerPath.Text;
+            Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
+            Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
+            Settings.Server.EnableLog = SettingServerEnableLog.Checked;
+            Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
+            Settings.Bot.Path = SettingBotPath.Text;
+            Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
+            Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
+            Settings.Bot.ListenPort = SettingBotListenPort.DecimalPlaces;
+            Settings.Bot.SendPort = SettingBotSendPort.DecimalPlaces;
+            Settings.Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
+            Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+            object[] Setting = new object[0];
+            return Setting;
+        }
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
-
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -49,7 +62,6 @@ namespace Serein
                 Server.Path = dialog.FileName;
             }
         }
-
         private void SettingBotPathSelect_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog
@@ -61,26 +73,42 @@ namespace Serein
                 SettingBotPath.Text = dialog.FileName;
             }
         }
-
         delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
         private void PanelConsoleWebBrowser_AppendText(object[] objects)
         {
             PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
             
         }
-        public void PanelConsoleWebBrowser_Invoke(object[] objects)
+        public void PanelConsoleWebBrowser_Invoke(string str)
         {
-            object[] _objects = { objects };
-            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, _objects);
+            object[] objects1 = { str };
+            object[] objects2 = { objects1 };
+            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
         }
         private void PanelControlStart_Click(object sender, EventArgs e)
         {
             Server.Start();
         }
-
         private void PanelControlStop_Click(object sender, EventArgs e)
         {
             Server.Stop();
+        }
+        private void PanelControlKill_Click(object sender, EventArgs e)
+        {
+            Server.Kill();
+        }
+        private void PanelConsoleEnter_Click(object sender, EventArgs e)
+        {
+            Server.InputCommand(PanelConsoleInput.Text);
+            PanelConsoleInput.Text = "";
+        }
+        private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Server.InputCommand(PanelConsoleInput.Text);
+                PanelConsoleInput.Text = "";
+            }
         }
     }
 }

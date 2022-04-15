@@ -19,19 +19,26 @@ namespace Serein
         static ProcessStartInfo ServerProcessInfo;
         static Process ServerProcess;
         static object[] objects = new object[1];
-        static Thread UpdateStatusThread = new Thread(UpdateStatus);
-
+        static Thread WaitForExitThread;
 
         public static void Start() 
         {
-            objects[0] = "Starting...";
-            Global.PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
-            if (!File.Exists(Path))
+            if (string.IsNullOrEmpty(Path) || string.IsNullOrWhiteSpace(Path))
             {
-                MessageBox.Show($"\"{Path}\"未找到");
+                MessageBox.Show(":(\n启动路径为空.");
+            }
+            else if (!File.Exists(Path))
+            {
+                MessageBox.Show($":(\n启动文件\"{Path}\"未找到.");
+            }
+            else if (Status)
+            {
+                MessageBox.Show(":(\n服务器已在运行中.");
             }
             else
             {
+                Global.serein.PanelConsoleWebBrowser_Invoke("#clear");
+                Global.serein.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
                 ServerProcessInfo = new ProcessStartInfo(Path);
                 ServerProcessInfo.FileName = Path;
                 ServerProcessInfo.UseShellExecute = false;
@@ -43,21 +50,59 @@ namespace Serein
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
                 Status = true;
+                WaitForExitThread = new Thread(WaitForExit);
+                WaitForExitThread.IsBackground = true;
+                WaitForExitThread.Start();
+                Global.serein.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>监听进程已启动");
             }
         }
         public static void Stop()
         {
             if (Status == true)
             {
-                ServerProcess.StandardInput.WriteLine("stop\n\r");
+                InputCommand("stop");
+            }
+            else
+            {
+                MessageBox.Show(":(\n服务器不在运行中.");
+            }
+        }
+        public static void Kill()
+        {
+            if (
+                Status == true 
+                &&
+                (int)MessageBox.Show(
+                    "确定结束进程吗？\n此操作可能导致存档损坏等问题",
+                    "Serein",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning
+                    )==1
+                )
+            {
+                ServerProcess.Kill();
+            }
+            else
+            {
+                MessageBox.Show(":(\n服务器不在运行中.");
+            }
+        }
+        public static void InputCommand(string Command)
+        {
+            if (Status == true)
+            {
+                if (Settings.Server.EnableOutputCommand)
+                {
+                    Global.serein.PanelConsoleWebBrowser_Invoke($">{Command}");
+                }
+                ServerProcess.StandardInput.WriteLine(Command);
             }
         }
         private static void SortOutputHandler(object sendingProcess,DataReceivedEventArgs outLine)
         { 
             if (!string.IsNullOrEmpty(outLine.Data))
             {
-                objects[0] = Log.ColorLog(outLine.Data, 2);
-                Global.serein.PanelConsoleWebBrowser_Invoke(objects);
+                Global.serein.PanelConsoleWebBrowser_Invoke(Log.ColorLog(outLine.Data, 2));
             }
         }
         
@@ -65,28 +110,19 @@ namespace Serein
         {
             return Status;
         }
-        public static void UpdateStatus()
+        public static void WaitForExit()
         {
-            while (true)
-            {
-                try
-                {
-                    if (Status == true && ServerProcess.HasExited)
-                    {
-                        Status = false;
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                Task.Delay(1000);
-            }
-            
+            ServerProcess.WaitForExit();
+            Status = false;
+            Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
+                );
+            WaitForExitThread.Abort();
         }
-        public static void UpdateStatusThreadStart()
+        public static void WaitForExitThreadStart()
         {
-            UpdateStatusThread.IsBackground = true;
-            //UpdateStatusThread.Start();
+            WaitForExitThread.IsBackground = true;
+            //WaitForExitThread.Start();
         }
     }
 }
