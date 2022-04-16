@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -28,51 +29,33 @@ namespace Serein
             Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
             Global.BotWebBrowser = BotWebBrowser;
             SettingSereinVersion.Text = $"Version:{VERSION}";
+            Settings.ReadSettings();
+            LoadSettings();
+            Settings.StartSaveSettings();
         }
-        public object[] UpdateSettings()
+
+        public void LoadSettings()
         {
-            Settings.Server.Path = SettingServerPath.Text;
-            Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
-            Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
-            Settings.Server.EnableLog = SettingServerEnableLog.Checked;
-            Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
-            Settings.Bot.Path = SettingBotPath.Text;
-            Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
-            Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-            Settings.Bot.ListenPort = SettingBotListenPort.DecimalPlaces;
-            Settings.Bot.SendPort = SettingBotSendPort.DecimalPlaces;
-            Settings.Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
-            Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-            object[] Setting = new object[0];
-            return Setting;
+            SettingServerEnableRestart.Checked = Global.Settings_server.EnableRestart;
+            SettingServerEnableOutputCommand.Checked = Global.Settings_server.EnableOutputCommand;
+            SettingServerEnableLog.Checked = Global.Settings_server.EnableLog;
+            SettingServerOutputStyle.SelectedIndex = Global.Settings_server.OutputStyle;
+            SettingBotListenPort.Value = Global.Settings_bot.ListenPort;
+            SettingBotSendPort.Value = Global.Settings_bot.SendPort;
+            SettingBotEnableLog.Checked = Global.Settings_bot.EnableLog;
+            SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_bot.GivePermissionToAllAdmin;
+            SettingSereinEnableGetUpdate.Checked = Global.Settings_serein.EnableGetUpdate;
+            SettingSereinEnableGetAnnouncement.Checked = Global.Settings_serein.EnableGetAnnouncement;
+            SettingServerPath.Text = Global.Settings_server.Path;
+            SettingBotPath.Text = Global.Settings_bot.Path;
+            SettingBotPermissionList.Text = string.Join(",", Global.Settings_bot.PermissionList);
+            SettingBotGroupList.Text = string.Join(",", Global.Settings_bot.GroupList);
         }
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
-        private void SettingServerPathSelect_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                SettingServerPath.Text = dialog.FileName;
-                Server.Path = dialog.FileName;
-            }
-        }
-        private void SettingBotPathSelect_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Filter = "go-cqhttp可执行文件|go-cqhttp.exe;go-cqhttp_windows_armv7.exe;go-cqhttp_windows_386.exe;go-cqhttp_windows_arm64.exe;go-cqhttp_windows_amd64.exe"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                SettingBotPath.Text = dialog.FileName;
-            }
-        }
+        
         delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
         private void PanelConsoleWebBrowser_AppendText(object[] objects)
         {
@@ -112,6 +95,107 @@ namespace Serein
             {
                 Server.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Text = "";
+            }
+        }
+        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_server.EnableRestart = SettingServerEnableRestart.Checked;
+        }
+        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
+        }
+        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_server.EnableLog = SettingServerEnableLog.Checked;
+        }
+        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Global.Settings_server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
+        }
+        private void SettingBotListenPort_ValueChanged(object sender, EventArgs e)
+        {
+            Global.Settings_bot.ListenPort = (int)SettingBotListenPort.Value;
+        }
+        private void SettingBotSendPort_ValueChanged(object sender, EventArgs e)
+        {
+            Global.Settings_bot.SendPort = (int)SettingBotSendPort.Value;
+        }
+        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_bot.EnableLog = SettingBotEnableLog.Checked;
+        }
+        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
+
+        }
+        private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
+        {
+            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d,]+?$"))
+            {
+                Global.Settings_bot.GroupList = Array.ConvertAll(
+                    SettingBotGroupList.Text.Split(','),
+                    s => int.TryParse(s, out int i) ? i : 0
+                    );
+            }
+            else
+            {
+                SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]","");
+                SettingBotGroupList.Focus();
+                SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
+                SettingBotGroupList.ScrollToCaret();
+            }
+        }
+        private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
+        {
+            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d,]+?$"))
+            {
+                Global.Settings_bot.PermissionList = Array.ConvertAll(
+                    SettingBotPermissionList.Text.Split(','),
+                    s => int.TryParse(s, out int i) ? i : 0
+                    );
+            }
+            else
+            {
+                SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", "");
+                SettingBotPermissionList.Focus();
+                SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
+                SettingBotPermissionList.ScrollToCaret();
+            }
+        }
+        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+        }
+
+        private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
+        }
+        private void SettingServerPathSelect_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SettingServerPath.Text = dialog.FileName;
+                Global.Settings_server.Path = dialog.FileName;
+            }
+        }
+        private void SettingBotPathSelect_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "go-cqhttp可执行文件|go-cqhttp.exe;go-cqhttp_windows_armv7.exe;go-cqhttp_windows_386.exe;go-cqhttp_windows_arm64.exe;go-cqhttp_windows_amd64.exe"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SettingBotPath.Text = dialog.FileName;
+                Global.Settings_bot.Path = dialog.FileName;
+
             }
         }
     }

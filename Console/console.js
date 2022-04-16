@@ -5,7 +5,7 @@ function AppendText(str){
         Clear();
     }
     else{
-        $("#console").append(str);
+        $("#console").append("<div>"+str+"</div>");
 
     }
     if(line>250){

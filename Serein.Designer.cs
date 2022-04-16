@@ -366,12 +366,14 @@ namespace Serein
             resources.ApplyResources(this.SettingSereinEnableGetAnnouncement, "SettingSereinEnableGetAnnouncement");
             this.SettingSereinEnableGetAnnouncement.Name = "SettingSereinEnableGetAnnouncement";
             this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
+            this.SettingSereinEnableGetAnnouncement.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_CheckedChanged);
             // 
             // SettingSereinEnableGetUpdate
             // 
             resources.ApplyResources(this.SettingSereinEnableGetUpdate, "SettingSereinEnableGetUpdate");
             this.SettingSereinEnableGetUpdate.Name = "SettingSereinEnableGetUpdate";
             this.SettingSereinEnableGetUpdate.UseVisualStyleBackColor = true;
+            this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
             // 
             // SettingBot
             // 
@@ -415,11 +417,13 @@ namespace Serein
             // 
             resources.ApplyResources(this.SettingBotPermissionList, "SettingBotPermissionList");
             this.SettingBotPermissionList.Name = "SettingBotPermissionList";
+            this.SettingBotPermissionList.TextChanged += new System.EventHandler(this.SettingBotPermissionList_TextChanged);
             // 
             // SettingBotGroupList
             // 
             resources.ApplyResources(this.SettingBotGroupList, "SettingBotGroupList");
             this.SettingBotGroupList.Name = "SettingBotGroupList";
+            this.SettingBotGroupList.TextChanged += new System.EventHandler(this.SettingBotGroupList_TextChanged);
             // 
             // label2
             // 
@@ -450,6 +454,7 @@ namespace Serein
             0,
             0,
             0});
+            this.SettingBotSendPort.ValueChanged += new System.EventHandler(this.SettingBotSendPort_ValueChanged);
             // 
             // SettingBotListenPort
             // 
@@ -470,6 +475,7 @@ namespace Serein
             0,
             0,
             0});
+            this.SettingBotListenPort.ValueChanged += new System.EventHandler(this.SettingBotListenPort_ValueChanged);
             // 
             // SettingBotSupportedLabel
             // 
@@ -493,12 +499,14 @@ namespace Serein
             resources.ApplyResources(this.SettingBotGivePermissionToAllAdmin, "SettingBotGivePermissionToAllAdmin");
             this.SettingBotGivePermissionToAllAdmin.Name = "SettingBotGivePermissionToAllAdmin";
             this.SettingBotGivePermissionToAllAdmin.UseVisualStyleBackColor = true;
+            this.SettingBotGivePermissionToAllAdmin.CheckedChanged += new System.EventHandler(this.SettingBotGivePermissionToAllAdmin_CheckedChanged);
             // 
             // SettingBotEnableLog
             // 
             resources.ApplyResources(this.SettingBotEnableLog, "SettingBotEnableLog");
             this.SettingBotEnableLog.Name = "SettingBotEnableLog";
             this.SettingBotEnableLog.UseVisualStyleBackColor = true;
+            this.SettingBotEnableLog.CheckedChanged += new System.EventHandler(this.SettingBotEnableLog_CheckedChanged);
             // 
             // SettingBotPathLabel
             // 
@@ -542,6 +550,7 @@ namespace Serein
             resources.ApplyResources(this.SettingServerEnableLog, "SettingServerEnableLog");
             this.SettingServerEnableLog.Name = "SettingServerEnableLog";
             this.SettingServerEnableLog.UseVisualStyleBackColor = true;
+            this.SettingServerEnableLog.CheckedChanged += new System.EventHandler(this.SettingServerEnableLog_CheckedChanged);
             // 
             // SettingServerOutputStyle
             // 
@@ -554,18 +563,21 @@ namespace Serein
             resources.GetString("SettingServerOutputStyle.Items3")});
             resources.ApplyResources(this.SettingServerOutputStyle, "SettingServerOutputStyle");
             this.SettingServerOutputStyle.Name = "SettingServerOutputStyle";
+            this.SettingServerOutputStyle.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputStyle_SelectedIndexChanged);
             // 
             // SettingServerEnableOutputCommand
             // 
             resources.ApplyResources(this.SettingServerEnableOutputCommand, "SettingServerEnableOutputCommand");
             this.SettingServerEnableOutputCommand.Name = "SettingServerEnableOutputCommand";
             this.SettingServerEnableOutputCommand.UseVisualStyleBackColor = true;
+            this.SettingServerEnableOutputCommand.CheckedChanged += new System.EventHandler(this.SettingServerEnableOutputCommand_CheckedChanged);
             // 
             // SettingServerEnableRestart
             // 
             resources.ApplyResources(this.SettingServerEnableRestart, "SettingServerEnableRestart");
             this.SettingServerEnableRestart.Name = "SettingServerEnableRestart";
             this.SettingServerEnableRestart.UseVisualStyleBackColor = true;
+            this.SettingServerEnableRestart.CheckedChanged += new System.EventHandler(this.SettingServerEnableRestart_CheckedChanged);
             // 
             // SettingServerPathLabel
             // 
