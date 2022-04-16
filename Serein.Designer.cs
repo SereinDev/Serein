@@ -172,6 +172,7 @@ namespace Serein
             resources.ApplyResources(this.PanelControlRestart, "PanelControlRestart");
             this.PanelControlRestart.Name = "PanelControlRestart";
             this.PanelControlRestart.UseVisualStyleBackColor = true;
+            this.PanelControlRestart.Click += new System.EventHandler(this.PanelControlRestart_Click);
             // 
             // PanelControlStop
             // 

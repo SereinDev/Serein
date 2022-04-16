@@ -19,7 +19,8 @@ namespace Serein
         static ProcessStartInfo ServerProcessInfo;
         static Process ServerProcess;
         static object[] objects = new object[1];
-        static Thread WaitForExitThread;
+        static Thread WaitForExitThread, RestartTimerThread;
+        static bool Killed;
 
         public static void Start() 
         {
@@ -49,7 +50,9 @@ namespace Serein
                 ServerProcess = Process.Start(ServerProcessInfo);
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
+                Restart = Settings.Server.EnableRestart;
                 Status = true;
+                Killed = false;
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
@@ -58,9 +61,13 @@ namespace Serein
         }
         public static void Stop()
         {
-            if (Status == true)
+            if (Status)
             {
                 InputCommand("stop");
+            }
+            else if (!Status && Restart)
+            {
+                Restart = false;
             }
             else
             {
@@ -70,7 +77,7 @@ namespace Serein
         public static void Kill()
         {
             if (
-                Status == true 
+                Status 
                 &&
                 (int)MessageBox.Show(
                     "确定结束进程吗？\n此操作可能导致存档损坏等问题",
@@ -81,6 +88,7 @@ namespace Serein
                 )
             {
                 ServerProcess.Kill();
+                Killed = true;
             }
             else
             {
@@ -89,7 +97,7 @@ namespace Serein
         }
         public static void InputCommand(string Command)
         {
-            if (Status == true)
+            if (Status)
             {
                 if (Settings.Server.EnableOutputCommand)
                 {
@@ -105,11 +113,6 @@ namespace Serein
                 Global.serein.PanelConsoleWebBrowser_Invoke(Log.ColorLog(outLine.Data, 2));
             }
         }
-        
-        public static bool GetStatus()
-        {
-            return Status;
-        }
         public static void WaitForExit()
         {
             ServerProcess.WaitForExit();
@@ -117,12 +120,68 @@ namespace Serein
             Global.serein.PanelConsoleWebBrowser_Invoke(
                 $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
+            if (Killed && ServerProcess.ExitCode != 0)
+            {
+                Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出"
+                );
+                if(Settings.Server.EnableRestart)
+                {
+                    Restart = true;
+                } 
+            }
+            if (Restart)
+            {
+                RestartTimerThread = new Thread(RestartTimer);
+                RestartTimerThread.IsBackground = true;
+                RestartTimerThread.Start();
+            }
             WaitForExitThread.Abort();
+        }
+        public static void RestartRequest()
+        {
+            if (Status)
+            {
+                InputCommand("stop");
+                Restart = true;
+            }
+            else
+            {
+                MessageBox.Show(":(\n服务器不在运行中.");
+            }
         }
         public static void WaitForExitThreadStart()
         {
             WaitForExitThread.IsBackground = true;
             //WaitForExitThread.Start();
         }
-    }
+        private static void RestartTimer()
+        {
+            Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>服务器将在5s后重新启动."
+                );
+            Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下停止按钮来取消这次重启."
+                );
+            for (int i = 0; i < 10; i++)
+            {
+                if (! Restart)
+                {
+                    break;
+                }
+                RestartTimerThread.Join(500);
+            }
+            if (Restart)
+            {
+                Start();
+            }
+            else
+            {
+                Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消."
+                );
+            }
+            RestartTimerThread.Abort();
+        }
+     }
 }

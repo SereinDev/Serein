@@ -93,6 +93,10 @@ namespace Serein
         {
             Server.Stop();
         }
+        private void PanelControlRestart_Click(object sender, EventArgs e)
+        {
+            Server.RestartRequest();
+        }
         private void PanelControlKill_Click(object sender, EventArgs e)
         {
             Server.Kill();
