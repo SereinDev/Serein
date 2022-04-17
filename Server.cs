@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel;
@@ -25,15 +26,15 @@ namespace Serein
         {
             if (string.IsNullOrEmpty(Global.Settings_server.Path) || string.IsNullOrWhiteSpace(Global.Settings_server.Path))
             {
-                MessageBox.Show(":(\n启动路径为空.");
+                MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if (!File.Exists(Global.Settings_server.Path))
             {
-                MessageBox.Show($":(\n启动文件\"{Global.Settings_server.Path}\"未找到.");
+                MessageBox.Show($":(\n启动文件\"{Global.Settings_server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if (Status)
             {
-                MessageBox.Show(":(\n服务器已在运行中.");
+                MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -49,6 +50,8 @@ namespace Serein
                 ServerProcessInfo.WorkingDirectory = Path.GetDirectoryName(Global.Settings_server.Path);
                 ServerProcess = Process.Start(ServerProcessInfo);
                 CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream, Encoding.UTF8);
+                CommandWriter.AutoFlush = true;
+                CommandWriter.NewLine = "\n";
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
                 Restart = Global.Settings_server.EnableRestart;
@@ -73,7 +76,7 @@ namespace Serein
             }
             else
             {
-                MessageBox.Show(":(\n服务器不在运行中.");
+                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void Kill()
@@ -92,21 +95,37 @@ namespace Serein
                 ServerProcess.Kill();
                 Killed = true;
             }
-            else
+            else if (!Status)
             {
-                MessageBox.Show(":(\n服务器不在运行中.");
+                MessageBox.Show(":(\n服务器不在运行中.","Serein",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
         public static void InputCommand(string Command)
         {
             if (Status)
             {
+                Command = Regex.Replace(Command, @"[\r\n]+?$", "");
+                Command = Regex.Replace(Command, @"^[\r\n\s]+?", "");
                 if (Global.Settings_server.EnableOutputCommand)
                 {
                     Global.serein.PanelConsoleWebBrowser_Invoke($">{Command}");
                 }
-                CommandWriter.WriteLine(Command);
-                CommandWriter.Flush();
+                CommandWriter.WriteLine(Command.TrimEnd('\r','\n'));
+                if (Global.Settings_server.EnableLog)
+                {
+                    if (!Directory.Exists(Global.PATH + "\\logs\\console"))
+                    {
+                        Directory.CreateDirectory(Global.PATH + "\\logs\\console");
+                    }
+                    LogWriter = new StreamWriter(
+                        Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                        true,
+                        Encoding.UTF8
+                        );
+                    LogWriter.WriteLine(">"+Log.OutputRecognition(Command));
+                    LogWriter.Flush();
+                    LogWriter.Close();
+                }
             }
         }
         private static void SortOutputHandler(object sendingProcess,DataReceivedEventArgs outLine)
@@ -137,18 +156,21 @@ namespace Serein
             ServerProcess.WaitForExit();
             Status = false;
             CommandWriter.Close();
-            Global.serein.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
-                );
             if (! Killed && ServerProcess.ExitCode != 0)
             {
                 Global.serein.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出"
+                $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 if(Global.Settings_server.EnableRestart)
                 {
                     Restart = true;
-                } 
+                }
+            }
+            else
+            {
+                Global.serein.PanelConsoleWebBrowser_Invoke(
+                $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
+                );
             }
             if (Restart)
             {
@@ -167,7 +189,7 @@ namespace Serein
             }
             else
             {
-                MessageBox.Show(":(\n服务器不在运行中.");
+                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void WaitForExitThreadStart()

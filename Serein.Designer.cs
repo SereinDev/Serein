@@ -48,9 +48,9 @@ namespace Serein
             this.PanelConsoleInput = new System.Windows.Forms.TextBox();
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Regular = new System.Windows.Forms.TabPage();
-            this.RegularList = new System.Windows.Forms.ListView();
+            this.RegexList = new System.Windows.Forms.ListView();
             this.Task = new System.Windows.Forms.TabPage();
             this.TaskList = new System.Windows.Forms.ListView();
             this.Bot = new System.Windows.Forms.TabPage();
@@ -240,8 +240,9 @@ namespace Serein
             // 
             // PluginList
             // 
+            this.PluginList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PluginList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4});
+            this.columnHeader});
             resources.ApplyResources(this.PluginList, "PluginList");
             this.PluginList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             ((System.Windows.Forms.ListViewGroup)(resources.GetObject("PluginList.Groups"))),
@@ -249,23 +250,25 @@ namespace Serein
             this.PluginList.HideSelection = false;
             this.PluginList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items"))),
-            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items1")))});
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items1"))),
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items2")))});
             this.PluginList.Name = "PluginList";
             this.PluginList.UseCompatibleStateImageBehavior = false;
+            this.PluginList.View = System.Windows.Forms.View.SmallIcon;
             // 
             // Regular
             // 
-            this.Regular.Controls.Add(this.RegularList);
+            this.Regular.Controls.Add(this.RegexList);
             resources.ApplyResources(this.Regular, "Regular");
             this.Regular.Name = "Regular";
             this.Regular.UseVisualStyleBackColor = true;
             // 
-            // RegularList
+            // RegexList
             // 
-            resources.ApplyResources(this.RegularList, "RegularList");
-            this.RegularList.HideSelection = false;
-            this.RegularList.Name = "RegularList";
-            this.RegularList.UseCompatibleStateImageBehavior = false;
+            resources.ApplyResources(this.RegexList, "RegexList");
+            this.RegexList.HideSelection = false;
+            this.RegexList.Name = "RegexList";
+            this.RegexList.UseCompatibleStateImageBehavior = false;
             // 
             // Task
             // 
@@ -653,7 +656,6 @@ namespace Serein
         private System.Windows.Forms.GroupBox PanelControls;
         private System.Windows.Forms.GroupBox PanelConsole;
         private System.Windows.Forms.Panel PanelConsolePanel1;
-        private System.Windows.Forms.TextBox PanelConsoleInput;
         private System.Windows.Forms.Button PanelConsoleEnter;
         private System.Windows.Forms.Panel PanelConsolePanel2;
         private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
@@ -665,10 +667,8 @@ namespace Serein
         private System.Windows.Forms.TabPage Regular;
         private System.Windows.Forms.TabPage Setting;
         private System.Windows.Forms.ListView PluginList;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ListView RegularList;
+        private System.Windows.Forms.ColumnHeader columnHeader;
         private System.Windows.Forms.TabPage Task;
-        private System.Windows.Forms.ListView TaskList;
         private System.Windows.Forms.TabPage Bot;
         private System.Windows.Forms.TableLayoutPanel BotTableLayoutPanel;
         private System.Windows.Forms.WebBrowser BotWebBrowser;
@@ -707,6 +707,9 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Button SettingBotClearCache;
         private System.Windows.Forms.Label SettingSereinVersion;
+        private System.Windows.Forms.ListView RegexList;
+        private System.Windows.Forms.ListView TaskList;
+        private System.Windows.Forms.TextBox PanelConsoleInput;
     }
 }
 

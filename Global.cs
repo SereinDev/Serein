@@ -11,7 +11,7 @@ namespace Serein
     {
         public static string PATH = AppDomain.CurrentDomain.BaseDirectory;
         public static string SETTINGPATH = AppDomain.CurrentDomain.BaseDirectory+"settings";
-
+        public static string VERSION = "Testing 2022";
         public static Serein serein;
         public static WebBrowser PanelConsoleWebBrowser;
         public static WebBrowser BotWebBrowser;

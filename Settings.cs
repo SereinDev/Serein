@@ -21,8 +21,8 @@ namespace Serein
         public string Path { get; set; } = "";
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;
-        public int[] GroupList { get; set; } = { };
-        public int[] PermissionList{ get; set; } = { };
+        public long[] GroupList { get; set; } = { };
+        public long[] PermissionList{ get; set; } = { };
         public int ListenPort { get; set; } = 8000;
         public int SendPort { get; set; } = 5700;
     }
@@ -74,18 +74,30 @@ namespace Serein
                 Global.Settings_server = JsonConvert.DeserializeObject<Settings_Server>(
                     File.ReadAllText(Global.SETTINGPATH + "\\server.json")
                     );
+                if (Global.Settings_server == null)
+                {
+                    Global.Settings_server = new Settings_Server();
+                }
             }
             if (File.Exists(Global.SETTINGPATH + "\\bot.json"))
             {
                 Global.Settings_bot = JsonConvert.DeserializeObject<Settings_Bot>(
                     File.ReadAllText(Global.SETTINGPATH + "\\bot.json")
                     );
+                if (Global.Settings_bot == null)
+                {
+                    Global.Settings_bot = new Settings_Bot();
+                }
             }
             if (File.Exists(Global.SETTINGPATH + "\\serein.json"))
             {
                 Global.Settings_serein=JsonConvert.DeserializeObject<Settings_Serein>(
                     File.ReadAllText(Global.SETTINGPATH + "\\serein.json")
                     );
+                if (Global.Settings_serein == null)
+                {
+                    Global.Settings_serein = new Settings_Serein();
+                }
             }
         }
         

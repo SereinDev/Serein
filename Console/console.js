@@ -12,6 +12,7 @@ function AppendText(str){
         $("#console > *:first-child").remove();
         line=line-1;
     }
+    document.querySelector("#console").scrollTop=document.querySelector("#console").scrollHeight;
 }
 function Clear(){
     $("#console").html("");

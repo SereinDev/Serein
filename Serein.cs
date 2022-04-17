@@ -23,12 +23,11 @@ namespace Serein
                 MessageBox.Show($"文件  {AppDomain.CurrentDomain.BaseDirectory}console.html  已丢失");
                 System.Environment.Exit(0);
             }
-            string VERSION = "Testing 2022";
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
             Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
             Global.BotWebBrowser = BotWebBrowser;
-            SettingSereinVersion.Text = $"Version:{VERSION}";
+            SettingSereinVersion.Text = $"Version:{Global.VERSION}";
             Settings.ReadSettings();
             LoadSettings();
             Settings.StartSaveSettings();
@@ -87,14 +86,14 @@ namespace Serein
         private void PanelConsoleEnter_Click(object sender, EventArgs e)
         {
             Server.InputCommand(PanelConsoleInput.Text);
-            PanelConsoleInput.Text = "";
+            PanelConsoleInput.Clear();
         }
         private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 Server.InputCommand(PanelConsoleInput.Text);
-                PanelConsoleInput.Text = "";
+                PanelConsoleInput.Clear();
             }
         }
         private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
@@ -134,35 +133,46 @@ namespace Serein
         {
             if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d,]+?$"))
             {
-                Global.Settings_bot.GroupList = Array.ConvertAll(
-                    SettingBotGroupList.Text.Split(','),
-                    s => int.TryParse(s, out int i) ? i : 0
-                    );
+                List<long> list = new List<long>();
+                foreach (string qq in SettingBotGroupList.Text.Split(','))
+                {
+                    if (qq.Length >= 6 && qq.Length <= 16)
+                    {
+                        long.TryParse(qq, out long qq_);
+                        list.Add(qq_);
+                    }
+                }
+                Global.Settings_bot.GroupList = list.Distinct().ToArray();
             }
-            else
-            {
-                SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]","");
-                SettingBotGroupList.Focus();
-                SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
-                SettingBotGroupList.ScrollToCaret();
-            }
+            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
+            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @",+", ",");
+            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, "^,", "");
+            SettingBotGroupList.Focus();
+            SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
+            SettingBotGroupList.ScrollToCaret();
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
             if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d,]+?$"))
             {
-                Global.Settings_bot.PermissionList = Array.ConvertAll(
-                    SettingBotPermissionList.Text.Split(','),
-                    s => int.TryParse(s, out int i) ? i : 0
-                    );
+                List<long> list= new List<long>();
+                foreach(string qq in SettingBotPermissionList.Text.Split(','))
+                {
+                    if (qq.Length >= 5 && qq.Length <= 13)
+                    {
+                        long.TryParse(qq, out long qq_);
+                        list.Add(qq_);
+                    }
+                }
+                Global.Settings_bot.PermissionList = list.Distinct().ToArray();
             }
-            else
-            {
-                SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", "");
-                SettingBotPermissionList.Focus();
-                SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
-                SettingBotPermissionList.ScrollToCaret();
-            }
+            SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ",");
+            SettingBotPermissionList.Text= Regex.Replace(SettingBotPermissionList.Text, @",+", ",");
+            SettingBotPermissionList.Text= Regex.Replace(SettingBotPermissionList.Text, @"^,", "");
+            SettingBotPermissionList.Focus();
+            SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
+            SettingBotPermissionList.ScrollToCaret();
+            
         }
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
         {

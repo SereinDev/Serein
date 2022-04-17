@@ -124,11 +124,13 @@ namespace Serein
                 Input = Regex.Replace(Input, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
                 Input = Regex.Replace(Input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
                 Input = Regex.Replace(Input, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
-                Input = Regex.Replace(Input, @"(\d{5,})", "<span class='int'>$1</span>"); 
+                Input = Regex.Replace(Input, @"(\d{5,})", "<span class='int'>$1</span>");
+                Input = $"<span class=\"noColored\">{Input}</span>";
                 return Input;
             }
             else
             {
+                Input = OutputRecognition(Input);
                 return Input;
             }
         }
