@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
@@ -13,15 +8,15 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    public partial class Serein : Form
+    public partial class Ui : Form
     {
-        public Serein()
+        public Ui()
         {
             InitializeComponent();
             if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
             {
                 MessageBox.Show($"文件  {AppDomain.CurrentDomain.BaseDirectory}console.html  已丢失");
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
@@ -31,8 +26,65 @@ namespace Serein
             Settings.ReadSettings();
             LoadSettings();
             Settings.StartSaveSettings();
+            ShowBalloonTip($"Hello!\n这是测试版（{Global.VERSION}），不建议用于生产环境哦qwq");
+            LoadPlugins();
         }
-
+        public void LoadPlugins()
+        {
+            if (Plugins.GetPluglin() != null) 
+            {
+                PluginList.BeginUpdate();
+                PluginList.Clear();
+                string[] Files = Plugins.GetPluglin();
+                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
+                PluginList.Groups.Add(PluginGroupJs);
+                PluginList.Groups.Add(PluginGroupDll);
+                PluginList.Groups.Add(PluginGroupJar);
+                PluginList.Groups.Add(PluginGroupPy);
+                PluginList.Groups.Add(PluginGroupGo);
+                PluginList.Groups.Add(PluginGroupJs);
+                foreach (string PluginFile in Files)
+                {
+                    string PluginName = Path.GetFileName(PluginFile);
+                    ListViewItem Item = new ListViewItem();
+                    Item.Text = PluginName;
+                    bool added = true;
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".DLL"))
+                    {
+                        PluginGroupDll.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".JAR"))
+                    {
+                        PluginGroupJar.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".PY"))
+                    {
+                        PluginGroupPy.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".GO"))
+                    {
+                        PluginGroupGo.Items.Add(Item);
+                    }
+                    else
+                    {
+                        added = false;
+                    }
+                    if (added)
+                    {
+                        PluginList.Items.Add(Item);
+                    }
+                }
+                PluginList.EndUpdate();
+            }
+        }
         public void LoadSettings()
         {
             SettingServerEnableRestart.Checked = Global.Settings_server.EnableRestart;
@@ -92,6 +144,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.Handled = true;
                 Server.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Clear();
             }
@@ -207,6 +260,43 @@ namespace Serein
                 Global.Settings_bot.Path = dialog.FileName;
 
             }
+        }
+        private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            Visible = true;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+            Activate();
+        }
+        private void Serein_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Server.Status)
+            {
+                e.Cancel = true;
+                Visible = false;
+                ShowInTaskbar = false;
+                ShowBalloonTip("服务器进程仍在运行中\n(已自动最小化至托盘，点击托盘图标即可复原窗口)");
+                //MessageBox.Show("服务器进程仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void ShowBalloonTip(string text)
+        {
+            SereinIcon.BalloonTipTitle = "Serein";
+            SereinIcon.BalloonTipText = text;
+            SereinIcon.ShowBalloonTip(10000);
+        }
+
+        private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            Visible = true;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+            Activate();
+        }
+
+        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadPlugins();
         }
     }
 }

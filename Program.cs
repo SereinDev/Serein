@@ -19,8 +19,8 @@ namespace Serein
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Serein serein = new Serein();
-            Global.serein = serein;
+            Ui serein = new Ui();
+            Global.ui = serein;
             Application.Run(serein);
         }
         private static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

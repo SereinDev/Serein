@@ -1,7 +1,7 @@
 ﻿
 namespace Serein
 {
-    partial class Serein
+    partial class Ui
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -30,7 +30,7 @@ namespace Serein
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Serein));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.Panel = new System.Windows.Forms.TabPage();
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -49,6 +49,14 @@ namespace Serein
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
             this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PluginContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.添加插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.禁用插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.启用插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Regular = new System.Windows.Forms.TabPage();
             this.RegexList = new System.Windows.Forms.ListView();
             this.Task = new System.Windows.Forms.TabPage();
@@ -102,6 +110,7 @@ namespace Serein
             this.PanelConsolePanel2.SuspendLayout();
             this.PanelConsolePanel1.SuspendLayout();
             this.Plugin.SuspendLayout();
+            this.PluginContextMenuStrip.SuspendLayout();
             this.Regular.SuspendLayout();
             this.Task.SuspendLayout();
             this.Bot.SuspendLayout();
@@ -243,18 +252,62 @@ namespace Serein
             this.PluginList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PluginList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader});
+            this.PluginList.ContextMenuStrip = this.PluginContextMenuStrip;
             resources.ApplyResources(this.PluginList, "PluginList");
-            this.PluginList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("PluginList.Groups"))),
-            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("PluginList.Groups1")))});
             this.PluginList.HideSelection = false;
-            this.PluginList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items"))),
-            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items1"))),
-            ((System.Windows.Forms.ListViewItem)(resources.GetObject("PluginList.Items2")))});
             this.PluginList.Name = "PluginList";
             this.PluginList.UseCompatibleStateImageBehavior = false;
             this.PluginList.View = System.Windows.Forms.View.SmallIcon;
+            // 
+            // PluginContextMenuStrip
+            // 
+            this.PluginContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.PluginContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加插件ToolStripMenuItem,
+            this.删除插件ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.禁用插件ToolStripMenuItem,
+            this.启用插件ToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.刷新ToolStripMenuItem});
+            this.PluginContextMenuStrip.Name = "PluginContextMenuStrip";
+            resources.ApplyResources(this.PluginContextMenuStrip, "PluginContextMenuStrip");
+            // 
+            // 添加插件ToolStripMenuItem
+            // 
+            resources.ApplyResources(this.添加插件ToolStripMenuItem, "添加插件ToolStripMenuItem");
+            this.添加插件ToolStripMenuItem.Name = "添加插件ToolStripMenuItem";
+            // 
+            // 删除插件ToolStripMenuItem
+            // 
+            resources.ApplyResources(this.删除插件ToolStripMenuItem, "删除插件ToolStripMenuItem");
+            this.删除插件ToolStripMenuItem.Name = "删除插件ToolStripMenuItem";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // 禁用插件ToolStripMenuItem
+            // 
+            resources.ApplyResources(this.禁用插件ToolStripMenuItem, "禁用插件ToolStripMenuItem");
+            this.禁用插件ToolStripMenuItem.Name = "禁用插件ToolStripMenuItem";
+            // 
+            // 启用插件ToolStripMenuItem
+            // 
+            resources.ApplyResources(this.启用插件ToolStripMenuItem, "启用插件ToolStripMenuItem");
+            this.启用插件ToolStripMenuItem.Name = "启用插件ToolStripMenuItem";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // 刷新ToolStripMenuItem
+            // 
+            this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
+            resources.ApplyResources(this.刷新ToolStripMenuItem, "刷新ToolStripMenuItem");
+            this.刷新ToolStripMenuItem.Click += new System.EventHandler(this.刷新ToolStripMenuItem_Click);
             // 
             // Regular
             // 
@@ -603,6 +656,8 @@ namespace Serein
             // SereinIcon
             // 
             resources.ApplyResources(this.SereinIcon, "SereinIcon");
+            this.SereinIcon.BalloonTipClicked += new System.EventHandler(this.SereinIcon_BalloonTipClicked);
+            this.SereinIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SereinIcon_MouseClick);
             // 
             // MainTableLayout
             // 
@@ -610,12 +665,13 @@ namespace Serein
             this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
             this.MainTableLayout.Name = "MainTableLayout";
             // 
-            // Serein
+            // Ui
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.MainTableLayout);
-            this.Name = "Serein";
+            this.Name = "Ui";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Serein_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.Panel.ResumeLayout(false);
             this.PanelTableLayout.ResumeLayout(false);
@@ -626,6 +682,7 @@ namespace Serein
             this.PanelConsolePanel1.ResumeLayout(false);
             this.PanelConsolePanel1.PerformLayout();
             this.Plugin.ResumeLayout(false);
+            this.PluginContextMenuStrip.ResumeLayout(false);
             this.Regular.ResumeLayout(false);
             this.Task.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
@@ -649,7 +706,6 @@ namespace Serein
         #endregion
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage Panel;
-        private System.Windows.Forms.NotifyIcon SereinIcon;
         private System.Windows.Forms.TableLayoutPanel MainTableLayout;
         private System.Windows.Forms.TableLayoutPanel PanelTableLayout;
         private System.Windows.Forms.GroupBox PanelInfo;
@@ -666,7 +722,6 @@ namespace Serein
         private System.Windows.Forms.TabPage Plugin;
         private System.Windows.Forms.TabPage Regular;
         private System.Windows.Forms.TabPage Setting;
-        private System.Windows.Forms.ListView PluginList;
         private System.Windows.Forms.ColumnHeader columnHeader;
         private System.Windows.Forms.TabPage Task;
         private System.Windows.Forms.TabPage Bot;
@@ -710,6 +765,16 @@ namespace Serein
         private System.Windows.Forms.ListView RegexList;
         private System.Windows.Forms.ListView TaskList;
         private System.Windows.Forms.TextBox PanelConsoleInput;
+        private System.Windows.Forms.ContextMenuStrip PluginContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem 添加插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem 禁用插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 启用插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
+        public System.Windows.Forms.NotifyIcon SereinIcon;
+        public System.Windows.Forms.ListView PluginList;
     }
 }
 
