@@ -35,6 +35,14 @@ namespace Serein
             this.Panel = new System.Windows.Forms.TabPage();
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.PanelInfo = new System.Windows.Forms.GroupBox();
+            this.PanelInfoRAM = new System.Windows.Forms.Label();
+            this.PanelInfoCPU = new System.Windows.Forms.Label();
+            this.PanelInfoTime = new System.Windows.Forms.Label();
+            this.PanelInfoPort = new System.Windows.Forms.Label();
+            this.PanelInfoDifficulty = new System.Windows.Forms.Label();
+            this.PanelInfoVersion = new System.Windows.Forms.Label();
+            this.PanelInfoStatus2 = new System.Windows.Forms.Label();
+            this.PanelInfoStatus = new System.Windows.Forms.Label();
             this.PanelControls = new System.Windows.Forms.GroupBox();
             this.PanelControlKill = new System.Windows.Forms.Button();
             this.PanelControlRestart = new System.Windows.Forms.Button();
@@ -50,13 +58,13 @@ namespace Serein
             this.PluginList = new System.Windows.Forms.ListView();
             this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PluginContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.添加插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.删除插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.禁用插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.启用插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripEnable = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripDisable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Regular = new System.Windows.Forms.TabPage();
             this.RegexList = new System.Windows.Forms.ListView();
             this.Task = new System.Windows.Forms.TabPage();
@@ -80,8 +88,8 @@ namespace Serein
             this.SettingBotGroup = new System.Windows.Forms.Label();
             this.SettingBotPermissionList = new System.Windows.Forms.TextBox();
             this.SettingBotGroupList = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.SettingBotSendPortLabel = new System.Windows.Forms.Label();
+            this.SettingBotListenPortLabel = new System.Windows.Forms.Label();
             this.SettingBotSendPort = new System.Windows.Forms.NumericUpDown();
             this.SettingBotListenPort = new System.Windows.Forms.NumericUpDown();
             this.SettingBotSupportedLabel = new System.Windows.Forms.Label();
@@ -102,9 +110,16 @@ namespace Serein
             this.SettingServerPath = new System.Windows.Forms.TextBox();
             this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.PanelInfoVersion2 = new System.Windows.Forms.Label();
+            this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
+            this.PanelInfoTime2 = new System.Windows.Forms.Label();
+            this.PanelInfoPort2 = new System.Windows.Forms.Label();
+            this.PanelInfoCPU2 = new System.Windows.Forms.Label();
+            this.PanelInfoRAM2 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.Panel.SuspendLayout();
             this.PanelTableLayout.SuspendLayout();
+            this.PanelInfo.SuspendLayout();
             this.PanelControls.SuspendLayout();
             this.PanelConsole.SuspendLayout();
             this.PanelConsolePanel2.SuspendLayout();
@@ -155,9 +170,63 @@ namespace Serein
             // 
             // PanelInfo
             // 
+            this.PanelInfo.Controls.Add(this.PanelInfoRAM2);
+            this.PanelInfo.Controls.Add(this.PanelInfoCPU2);
+            this.PanelInfo.Controls.Add(this.PanelInfoPort2);
+            this.PanelInfo.Controls.Add(this.PanelInfoTime2);
+            this.PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
+            this.PanelInfo.Controls.Add(this.PanelInfoVersion2);
+            this.PanelInfo.Controls.Add(this.PanelInfoRAM);
+            this.PanelInfo.Controls.Add(this.PanelInfoCPU);
+            this.PanelInfo.Controls.Add(this.PanelInfoTime);
+            this.PanelInfo.Controls.Add(this.PanelInfoPort);
+            this.PanelInfo.Controls.Add(this.PanelInfoDifficulty);
+            this.PanelInfo.Controls.Add(this.PanelInfoVersion);
+            this.PanelInfo.Controls.Add(this.PanelInfoStatus2);
+            this.PanelInfo.Controls.Add(this.PanelInfoStatus);
             resources.ApplyResources(this.PanelInfo, "PanelInfo");
             this.PanelInfo.Name = "PanelInfo";
             this.PanelInfo.TabStop = false;
+            // 
+            // PanelInfoRAM
+            // 
+            resources.ApplyResources(this.PanelInfoRAM, "PanelInfoRAM");
+            this.PanelInfoRAM.Name = "PanelInfoRAM";
+            // 
+            // PanelInfoCPU
+            // 
+            resources.ApplyResources(this.PanelInfoCPU, "PanelInfoCPU");
+            this.PanelInfoCPU.Name = "PanelInfoCPU";
+            // 
+            // PanelInfoTime
+            // 
+            resources.ApplyResources(this.PanelInfoTime, "PanelInfoTime");
+            this.PanelInfoTime.Name = "PanelInfoTime";
+            // 
+            // PanelInfoPort
+            // 
+            resources.ApplyResources(this.PanelInfoPort, "PanelInfoPort");
+            this.PanelInfoPort.Name = "PanelInfoPort";
+            // 
+            // PanelInfoDifficulty
+            // 
+            resources.ApplyResources(this.PanelInfoDifficulty, "PanelInfoDifficulty");
+            this.PanelInfoDifficulty.Name = "PanelInfoDifficulty";
+            // 
+            // PanelInfoVersion
+            // 
+            resources.ApplyResources(this.PanelInfoVersion, "PanelInfoVersion");
+            this.PanelInfoVersion.Name = "PanelInfoVersion";
+            // 
+            // PanelInfoStatus2
+            // 
+            resources.ApplyResources(this.PanelInfoStatus2, "PanelInfoStatus2");
+            this.PanelInfoStatus2.Name = "PanelInfoStatus2";
+            // 
+            // PanelInfoStatus
+            // 
+            resources.ApplyResources(this.PanelInfoStatus, "PanelInfoStatus");
+            this.PanelInfoStatus.Name = "PanelInfoStatus";
             // 
             // PanelControls
             // 
@@ -263,51 +332,56 @@ namespace Serein
             // 
             this.PluginContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.PluginContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.添加插件ToolStripMenuItem,
-            this.删除插件ToolStripMenuItem,
+            this.PluginContextMenuStripAdd,
+            this.PluginContextMenuStripRemove,
             this.toolStripSeparator1,
-            this.禁用插件ToolStripMenuItem,
-            this.启用插件ToolStripMenuItem,
+            this.PluginContextMenuStripEnable,
+            this.PluginContextMenuStripDisable,
             this.toolStripSeparator2,
-            this.刷新ToolStripMenuItem});
+            this.PluginContextMenuStripRefresh});
             this.PluginContextMenuStrip.Name = "PluginContextMenuStrip";
             resources.ApplyResources(this.PluginContextMenuStrip, "PluginContextMenuStrip");
+            this.PluginContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.PluginContextMenuStrip_Opening);
             // 
-            // 添加插件ToolStripMenuItem
+            // PluginContextMenuStripAdd
             // 
-            resources.ApplyResources(this.添加插件ToolStripMenuItem, "添加插件ToolStripMenuItem");
-            this.添加插件ToolStripMenuItem.Name = "添加插件ToolStripMenuItem";
+            this.PluginContextMenuStripAdd.Name = "PluginContextMenuStripAdd";
+            resources.ApplyResources(this.PluginContextMenuStripAdd, "PluginContextMenuStripAdd");
+            this.PluginContextMenuStripAdd.Click += new System.EventHandler(this.PluginContextMenuStripAdd_Click);
             // 
-            // 删除插件ToolStripMenuItem
+            // PluginContextMenuStripRemove
             // 
-            resources.ApplyResources(this.删除插件ToolStripMenuItem, "删除插件ToolStripMenuItem");
-            this.删除插件ToolStripMenuItem.Name = "删除插件ToolStripMenuItem";
+            this.PluginContextMenuStripRemove.Name = "PluginContextMenuStripRemove";
+            resources.ApplyResources(this.PluginContextMenuStripRemove, "PluginContextMenuStripRemove");
+            this.PluginContextMenuStripRemove.Click += new System.EventHandler(this.PluginContextMenuStripRemove_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
-            // 禁用插件ToolStripMenuItem
+            // PluginContextMenuStripEnable
             // 
-            resources.ApplyResources(this.禁用插件ToolStripMenuItem, "禁用插件ToolStripMenuItem");
-            this.禁用插件ToolStripMenuItem.Name = "禁用插件ToolStripMenuItem";
+            this.PluginContextMenuStripEnable.Name = "PluginContextMenuStripEnable";
+            resources.ApplyResources(this.PluginContextMenuStripEnable, "PluginContextMenuStripEnable");
+            this.PluginContextMenuStripEnable.Click += new System.EventHandler(this.PluginContextMenuStripEnable_Click);
             // 
-            // 启用插件ToolStripMenuItem
+            // PluginContextMenuStripDisable
             // 
-            resources.ApplyResources(this.启用插件ToolStripMenuItem, "启用插件ToolStripMenuItem");
-            this.启用插件ToolStripMenuItem.Name = "启用插件ToolStripMenuItem";
+            this.PluginContextMenuStripDisable.Name = "PluginContextMenuStripDisable";
+            resources.ApplyResources(this.PluginContextMenuStripDisable, "PluginContextMenuStripDisable");
+            this.PluginContextMenuStripDisable.Click += new System.EventHandler(this.PluginContextMenuStripDisable_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
-            // 刷新ToolStripMenuItem
+            // PluginContextMenuStripRefresh
             // 
-            this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
-            resources.ApplyResources(this.刷新ToolStripMenuItem, "刷新ToolStripMenuItem");
-            this.刷新ToolStripMenuItem.Click += new System.EventHandler(this.刷新ToolStripMenuItem_Click);
+            this.PluginContextMenuStripRefresh.Name = "PluginContextMenuStripRefresh";
+            resources.ApplyResources(this.PluginContextMenuStripRefresh, "PluginContextMenuStripRefresh");
+            this.PluginContextMenuStripRefresh.Click += new System.EventHandler(this.PluginContextMenuStripRefresh_Click);
             // 
             // Regular
             // 
@@ -438,8 +512,8 @@ namespace Serein
             this.SettingBot.Controls.Add(this.SettingBotGroup);
             this.SettingBot.Controls.Add(this.SettingBotPermissionList);
             this.SettingBot.Controls.Add(this.SettingBotGroupList);
-            this.SettingBot.Controls.Add(this.label2);
-            this.SettingBot.Controls.Add(this.label1);
+            this.SettingBot.Controls.Add(this.SettingBotSendPortLabel);
+            this.SettingBot.Controls.Add(this.SettingBotListenPortLabel);
             this.SettingBot.Controls.Add(this.SettingBotSendPort);
             this.SettingBot.Controls.Add(this.SettingBotListenPort);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLabel);
@@ -481,15 +555,15 @@ namespace Serein
             this.SettingBotGroupList.Name = "SettingBotGroupList";
             this.SettingBotGroupList.TextChanged += new System.EventHandler(this.SettingBotGroupList_TextChanged);
             // 
-            // label2
+            // SettingBotSendPortLabel
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.SettingBotSendPortLabel, "SettingBotSendPortLabel");
+            this.SettingBotSendPortLabel.Name = "SettingBotSendPortLabel";
             // 
-            // label1
+            // SettingBotListenPortLabel
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.SettingBotListenPortLabel, "SettingBotListenPortLabel");
+            this.SettingBotListenPortLabel.Name = "SettingBotListenPortLabel";
             // 
             // SettingBotSendPort
             // 
@@ -665,6 +739,36 @@ namespace Serein
             this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
             this.MainTableLayout.Name = "MainTableLayout";
             // 
+            // PanelInfoVersion2
+            // 
+            resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
+            this.PanelInfoVersion2.Name = "PanelInfoVersion2";
+            // 
+            // PanelInfoDifficulty2
+            // 
+            resources.ApplyResources(this.PanelInfoDifficulty2, "PanelInfoDifficulty2");
+            this.PanelInfoDifficulty2.Name = "PanelInfoDifficulty2";
+            // 
+            // PanelInfoTime2
+            // 
+            resources.ApplyResources(this.PanelInfoTime2, "PanelInfoTime2");
+            this.PanelInfoTime2.Name = "PanelInfoTime2";
+            // 
+            // PanelInfoPort2
+            // 
+            resources.ApplyResources(this.PanelInfoPort2, "PanelInfoPort2");
+            this.PanelInfoPort2.Name = "PanelInfoPort2";
+            // 
+            // PanelInfoCPU2
+            // 
+            resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
+            this.PanelInfoCPU2.Name = "PanelInfoCPU2";
+            // 
+            // PanelInfoRAM2
+            // 
+            resources.ApplyResources(this.PanelInfoRAM2, "PanelInfoRAM2");
+            this.PanelInfoRAM2.Name = "PanelInfoRAM2";
+            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -676,6 +780,8 @@ namespace Serein
             this.Panel.ResumeLayout(false);
             this.PanelTableLayout.ResumeLayout(false);
             this.PanelTableLayout.PerformLayout();
+            this.PanelInfo.ResumeLayout(false);
+            this.PanelInfo.PerformLayout();
             this.PanelControls.ResumeLayout(false);
             this.PanelConsole.ResumeLayout(false);
             this.PanelConsolePanel2.ResumeLayout(false);
@@ -752,8 +858,8 @@ namespace Serein
         private System.Windows.Forms.TextBox SettingBotPath;
         private System.Windows.Forms.TextBox SettingBotGroupList;
         private System.Windows.Forms.TextBox SettingBotPermissionList;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label SettingBotSendPortLabel;
+        private System.Windows.Forms.Label SettingBotListenPortLabel;
         private System.Windows.Forms.NumericUpDown SettingBotSendPort;
         private System.Windows.Forms.NumericUpDown SettingBotListenPort;
         private System.Windows.Forms.Label SettingBotPermission;
@@ -766,15 +872,29 @@ namespace Serein
         private System.Windows.Forms.ListView TaskList;
         private System.Windows.Forms.TextBox PanelConsoleInput;
         private System.Windows.Forms.ContextMenuStrip PluginContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem 添加插件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 删除插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripAdd;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripRemove;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem 禁用插件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 启用插件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripDisable;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripEnable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripRefresh;
         public System.Windows.Forms.NotifyIcon SereinIcon;
         public System.Windows.Forms.ListView PluginList;
+        private System.Windows.Forms.Label PanelInfoStatus;
+        private System.Windows.Forms.Label PanelInfoRAM;
+        private System.Windows.Forms.Label PanelInfoCPU;
+        private System.Windows.Forms.Label PanelInfoTime;
+        private System.Windows.Forms.Label PanelInfoPort;
+        private System.Windows.Forms.Label PanelInfoDifficulty;
+        private System.Windows.Forms.Label PanelInfoVersion;
+        private System.Windows.Forms.Label PanelInfoStatus2;
+        private System.Windows.Forms.Label PanelInfoRAM2;
+        private System.Windows.Forms.Label PanelInfoCPU2;
+        private System.Windows.Forms.Label PanelInfoPort2;
+        private System.Windows.Forms.Label PanelInfoTime2;
+        private System.Windows.Forms.Label PanelInfoDifficulty2;
+        private System.Windows.Forms.Label PanelInfoVersion2;
     }
 }
 

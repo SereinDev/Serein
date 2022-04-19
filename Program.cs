@@ -23,8 +23,9 @@ namespace Serein
             Global.ui = serein;
             Application.Run(serein);
         }
-        private static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
+            SafeStop();
             MessageBox.Show(
                 $"线程异常：\n" +
                 $"{e.Exception.StackTrace}\n" +
@@ -33,8 +34,9 @@ namespace Serein
                 $"若有必要，请在GitHub提交Issue反馈此问题",
                 $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            SafeStop();
             MessageBox.Show(
                 $"程序异常：\n" +
                 $"{e.ExceptionObject}\n" +
@@ -42,6 +44,16 @@ namespace Serein
                 $"时间：{DateTime.Now}\n\n\n" +
                 $"若有必要，请在GitHub提交Issue反馈此问题",
                 $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        static void SafeStop()
+        {
+            if (Server.Status)
+            {
+                Server.ServerProcess.StandardInput.WriteLine("stop\n");
+                Server.ServerProcess.StandardInput.WriteLine("exit\n");
+                Server.ServerProcess.StandardInput.WriteLine("quit\n");
+                Server.Killed = false;
+            }
         }
     }
 }

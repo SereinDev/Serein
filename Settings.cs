@@ -31,12 +31,11 @@ namespace Serein
         public static Thread thread = new Thread(SaveSettings);
         public static void StartSaveSettings()
         {
-            thread.IsBackground = true;
             thread.Start();
         }
         public static void SaveSettings()
         {
-            while (true)
+            while (Global.Alive)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
                 thread.Join(2500);

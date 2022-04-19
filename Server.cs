@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -12,10 +13,11 @@ namespace Serein
      {
         public static bool Restart = false;
         public static bool Status = false;
+        public static bool Started = false;
         static ProcessStartInfo ServerProcessInfo;
-        static Process ServerProcess;
+        public static Process ServerProcess;
         static Thread WaitForExitThread, RestartTimerThread;
-        static bool Killed;
+        public static bool Killed;
         static StreamWriter CommandWriter,LogWriter;
 
         public static void Start() 
@@ -53,6 +55,7 @@ namespace Serein
                 Restart = Global.Settings_server.EnableRestart;
                 Status = true;
                 Killed = false;
+                Started = false;
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
@@ -192,7 +195,6 @@ namespace Serein
         public static void WaitForExitThreadStart()
         {
             WaitForExitThread.IsBackground = true;
-            //WaitForExitThread.Start();
         }
         private static void RestartTimer()
         {
@@ -221,6 +223,12 @@ namespace Serein
                 );
             }
             RestartTimerThread.Abort();
+        }
+        public static Dictionary<string,string> GetInfo()
+        {
+            return new Dictionary<string, string>{
+                { "","" },
+            };
         }
      }
 }

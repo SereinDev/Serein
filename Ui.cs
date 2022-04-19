@@ -5,6 +5,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Serein
 {
@@ -28,29 +30,33 @@ namespace Serein
             Settings.StartSaveSettings();
             ShowBalloonTip($"Hello!\n这是测试版（{Global.VERSION}），不建议用于生产环境哦qwq");
             LoadPlugins();
+            Thread UpdateInfoThread = new Thread(UpdateInfo);
+            UpdateInfoThread.Start();
         }
         public void LoadPlugins()
         {
-            if (Plugins.GetPluglin() != null) 
+            if (Plugins.Get() != null) 
             {
                 PluginList.BeginUpdate();
                 PluginList.Clear();
-                string[] Files = Plugins.GetPluglin();
+                string[] Files = Plugins.Get();
                 ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
                 PluginList.Groups.Add(PluginGroupJs);
                 PluginList.Groups.Add(PluginGroupDll);
                 PluginList.Groups.Add(PluginGroupJar);
                 PluginList.Groups.Add(PluginGroupPy);
                 PluginList.Groups.Add(PluginGroupGo);
-                PluginList.Groups.Add(PluginGroupJs);
+                PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
                 {
                     string PluginName = Path.GetFileName(PluginFile);
                     ListViewItem Item = new ListViewItem();
+                    PluginName = Regex.Replace(PluginName, @"\.lock$", "");
                     Item.Text = PluginName;
                     bool added = true;
                     if (PluginFile.ToUpper().EndsWith(".JS"))
@@ -72,6 +78,11 @@ namespace Serein
                     else if (PluginFile.ToUpper().EndsWith(".GO"))
                     {
                         PluginGroupGo.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".LOCK"))
+                    {
+                        Item.ForeColor = System.Drawing.Color.Gray;
+                        PluginGroupDisable.Items.Add(Item);
                     }
                     else
                     {
@@ -276,8 +287,8 @@ namespace Serein
                 Visible = false;
                 ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n(已自动最小化至托盘，点击托盘图标即可复原窗口)");
-                //MessageBox.Show("服务器进程仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            Global.Alive = false;
         }
         private void ShowBalloonTip(string text)
         {
@@ -293,10 +304,85 @@ namespace Serein
             WindowState = FormWindowState.Normal;
             Activate();
         }
-
-        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
+        {
+            Plugins.Add();
+            LoadPlugins();
+        }
+        private void PluginContextMenuStripRemove_Click(object sender, EventArgs e)
+        {
+            Plugins.Remove(PluginList.SelectedItems);
+            LoadPlugins();
+        }
+        private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
             LoadPlugins();
+        }
+        private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            if (PluginList.SelectedItems.Count >= 1)
+            {
+                bool Mixed = false;
+                bool Locked = false;
+                foreach (ListViewItem file in PluginList.SelectedItems)
+                {
+                    if (file.ForeColor==System.Drawing.Color.Gray)
+                    {
+                        Locked = true;
+                    }
+                    else if (Locked)
+                    {
+                        Mixed = true;
+                        break;
+                    }
+                }
+                if (Mixed)
+                {
+                    PluginContextMenuStripEnable.Enabled = false;
+                    PluginContextMenuStripDisable.Enabled = false;
+                    PluginContextMenuStripRemove.Enabled = true;
+                }
+                else if (Locked)
+                {
+                    PluginContextMenuStripEnable.Enabled = true;
+                    PluginContextMenuStripDisable.Enabled = false;
+                    PluginContextMenuStripRemove.Enabled = true;
+                }
+                else
+                {
+                    PluginContextMenuStripEnable.Enabled = false;
+                    PluginContextMenuStripDisable.Enabled = true;
+                    PluginContextMenuStripRemove.Enabled = true;
+                }
+            }
+            else
+            {
+                PluginContextMenuStripEnable.Enabled = false;
+                PluginContextMenuStripDisable.Enabled = false;
+                PluginContextMenuStripRemove.Enabled = false;
+            }
+        }
+
+        private void PluginContextMenuStripEnable_Click(object sender, EventArgs e)
+        {
+            Plugins.Enable(PluginList.SelectedItems);
+            LoadPlugins();
+        }
+        private void PluginContextMenuStripDisable_Click(object sender, EventArgs e)
+        {
+            Plugins.Disable(PluginList.SelectedItems);
+            LoadPlugins();
+        }
+        private void UpdateInfo()
+        {
+            while (Global.Alive)
+            {
+                Thread.CurrentThread.Join(2000);
+                if (Server.Status)
+                {
+
+                }
+            }
         }
     }
 }
