@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Serein
 {
-    class Plugins
+    partial class Plugins
     {
         public static string PluginPath="";
         public static string[] Get()
@@ -172,4 +172,5 @@ namespace Serein
             }
         }
     }
+    
 }

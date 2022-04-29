@@ -1,6 +1,4 @@
 bin/
 obj/
 .vs/
-Sources/Newtonsoft.Json.dll
-Sources/Newtonsoft.Json.xml
-Sources/Newtonsoft.Json.pdb
+packages/

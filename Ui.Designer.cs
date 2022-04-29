@@ -31,11 +31,25 @@ namespace Serein
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
+            this.PluginContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.PluginContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.PluginContextMenuStripEnable = new System.Windows.Forms.ToolStripMenuItem();
+            this.PluginContextMenuStripDisable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.PluginContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.Panel = new System.Windows.Forms.TabPage();
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.PanelInfo = new System.Windows.Forms.GroupBox();
-            this.PanelInfoRAM = new System.Windows.Forms.Label();
+            this.PanelInfoCPU2 = new System.Windows.Forms.Label();
+            this.PanelInfoPort2 = new System.Windows.Forms.Label();
+            this.PanelInfoTime2 = new System.Windows.Forms.Label();
+            this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
+            this.PanelInfoVersion2 = new System.Windows.Forms.Label();
             this.PanelInfoCPU = new System.Windows.Forms.Label();
             this.PanelInfoTime = new System.Windows.Forms.Label();
             this.PanelInfoPort = new System.Windows.Forms.Label();
@@ -57,25 +71,28 @@ namespace Serein
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
             this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PluginContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.PluginContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.PluginContextMenuStripRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.PluginContextMenuStripEnable = new System.Windows.Forms.ToolStripMenuItem();
-            this.PluginContextMenuStripDisable = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.PluginContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Regular = new System.Windows.Forms.TabPage();
             this.RegexList = new System.Windows.Forms.ListView();
+            this.RegexListRegex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexListArea = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexListIsAdmin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexListRemark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexListCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.RegexContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStripDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStripClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.RegexContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Task = new System.Windows.Forms.TabPage();
             this.TaskList = new System.Windows.Forms.ListView();
             this.Bot = new System.Windows.Forms.TabPage();
             this.BotTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
             this.BotInfo = new System.Windows.Forms.GroupBox();
-            this.BotControl = new System.Windows.Forms.GroupBox();
-            this.BotStop = new System.Windows.Forms.Button();
-            this.BotStart = new System.Windows.Forms.Button();
+            this.BotWebsocket = new System.Windows.Forms.GroupBox();
+            this.BotClose = new System.Windows.Forms.Button();
+            this.BotConnect = new System.Windows.Forms.Button();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
@@ -88,17 +105,12 @@ namespace Serein
             this.SettingBotGroup = new System.Windows.Forms.Label();
             this.SettingBotPermissionList = new System.Windows.Forms.TextBox();
             this.SettingBotGroupList = new System.Windows.Forms.TextBox();
-            this.SettingBotSendPortLabel = new System.Windows.Forms.Label();
-            this.SettingBotListenPortLabel = new System.Windows.Forms.Label();
-            this.SettingBotSendPort = new System.Windows.Forms.NumericUpDown();
-            this.SettingBotListenPort = new System.Windows.Forms.NumericUpDown();
+            this.SettingBotPortLabel = new System.Windows.Forms.Label();
+            this.SettingBotPort = new System.Windows.Forms.NumericUpDown();
             this.SettingBotSupportedLabel = new System.Windows.Forms.Label();
             this.SettingBotSupportedLink = new System.Windows.Forms.LinkLabel();
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
-            this.SettingBotPathLabel = new System.Windows.Forms.Label();
-            this.SettingBotPathSelect = new System.Windows.Forms.Button();
-            this.SettingBotPath = new System.Windows.Forms.TextBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
             this.SettingServerOutputStyleLabel = new System.Windows.Forms.Label();
             this.SettingServerEnableLog = new System.Windows.Forms.CheckBox();
@@ -108,14 +120,8 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
-            this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.PanelInfoVersion2 = new System.Windows.Forms.Label();
-            this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
-            this.PanelInfoTime2 = new System.Windows.Forms.Label();
-            this.PanelInfoPort2 = new System.Windows.Forms.Label();
-            this.PanelInfoCPU2 = new System.Windows.Forms.Label();
-            this.PanelInfoRAM2 = new System.Windows.Forms.Label();
+            this.PluginContextMenuStrip.SuspendLayout();
+            this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.Panel.SuspendLayout();
             this.PanelTableLayout.SuspendLayout();
@@ -125,21 +131,86 @@ namespace Serein
             this.PanelConsolePanel2.SuspendLayout();
             this.PanelConsolePanel1.SuspendLayout();
             this.Plugin.SuspendLayout();
-            this.PluginContextMenuStrip.SuspendLayout();
             this.Regular.SuspendLayout();
+            this.RegexContextMenuStrip.SuspendLayout();
             this.Task.SuspendLayout();
             this.Bot.SuspendLayout();
             this.BotTableLayoutPanel.SuspendLayout();
-            this.BotControl.SuspendLayout();
+            this.BotWebsocket.SuspendLayout();
             this.Setting.SuspendLayout();
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
             this.SettingBot.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotSendPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotListenPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).BeginInit();
             this.SettingServer.SuspendLayout();
-            this.MainTableLayout.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // PluginContextMenuStrip
+            // 
+            this.PluginContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.PluginContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PluginContextMenuStripAdd,
+            this.PluginContextMenuStripRemove,
+            this.toolStripSeparator1,
+            this.PluginContextMenuStripEnable,
+            this.PluginContextMenuStripDisable,
+            this.toolStripSeparator2,
+            this.PluginContextMenuStripRefresh});
+            this.PluginContextMenuStrip.Name = "PluginContextMenuStrip";
+            resources.ApplyResources(this.PluginContextMenuStrip, "PluginContextMenuStrip");
+            this.PluginContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.PluginContextMenuStrip_Opening);
+            // 
+            // PluginContextMenuStripAdd
+            // 
+            this.PluginContextMenuStripAdd.Name = "PluginContextMenuStripAdd";
+            resources.ApplyResources(this.PluginContextMenuStripAdd, "PluginContextMenuStripAdd");
+            this.PluginContextMenuStripAdd.Click += new System.EventHandler(this.PluginContextMenuStripAdd_Click);
+            // 
+            // PluginContextMenuStripRemove
+            // 
+            this.PluginContextMenuStripRemove.Name = "PluginContextMenuStripRemove";
+            resources.ApplyResources(this.PluginContextMenuStripRemove, "PluginContextMenuStripRemove");
+            this.PluginContextMenuStripRemove.Click += new System.EventHandler(this.PluginContextMenuStripRemove_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // PluginContextMenuStripEnable
+            // 
+            this.PluginContextMenuStripEnable.Name = "PluginContextMenuStripEnable";
+            resources.ApplyResources(this.PluginContextMenuStripEnable, "PluginContextMenuStripEnable");
+            this.PluginContextMenuStripEnable.Click += new System.EventHandler(this.PluginContextMenuStripEnable_Click);
+            // 
+            // PluginContextMenuStripDisable
+            // 
+            this.PluginContextMenuStripDisable.Name = "PluginContextMenuStripDisable";
+            resources.ApplyResources(this.PluginContextMenuStripDisable, "PluginContextMenuStripDisable");
+            this.PluginContextMenuStripDisable.Click += new System.EventHandler(this.PluginContextMenuStripDisable_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // PluginContextMenuStripRefresh
+            // 
+            this.PluginContextMenuStripRefresh.Name = "PluginContextMenuStripRefresh";
+            resources.ApplyResources(this.PluginContextMenuStripRefresh, "PluginContextMenuStripRefresh");
+            this.PluginContextMenuStripRefresh.Click += new System.EventHandler(this.PluginContextMenuStripRefresh_Click);
+            // 
+            // SereinIcon
+            // 
+            resources.ApplyResources(this.SereinIcon, "SereinIcon");
+            this.SereinIcon.BalloonTipClicked += new System.EventHandler(this.SereinIcon_BalloonTipClicked);
+            this.SereinIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SereinIcon_MouseClick);
+            // 
+            // MainTableLayout
+            // 
+            resources.ApplyResources(this.MainTableLayout, "MainTableLayout");
+            this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
+            this.MainTableLayout.Name = "MainTableLayout";
             // 
             // tabControl
             // 
@@ -170,13 +241,11 @@ namespace Serein
             // 
             // PanelInfo
             // 
-            this.PanelInfo.Controls.Add(this.PanelInfoRAM2);
             this.PanelInfo.Controls.Add(this.PanelInfoCPU2);
             this.PanelInfo.Controls.Add(this.PanelInfoPort2);
             this.PanelInfo.Controls.Add(this.PanelInfoTime2);
             this.PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
             this.PanelInfo.Controls.Add(this.PanelInfoVersion2);
-            this.PanelInfo.Controls.Add(this.PanelInfoRAM);
             this.PanelInfo.Controls.Add(this.PanelInfoCPU);
             this.PanelInfo.Controls.Add(this.PanelInfoTime);
             this.PanelInfo.Controls.Add(this.PanelInfoPort);
@@ -188,10 +257,30 @@ namespace Serein
             this.PanelInfo.Name = "PanelInfo";
             this.PanelInfo.TabStop = false;
             // 
-            // PanelInfoRAM
+            // PanelInfoCPU2
             // 
-            resources.ApplyResources(this.PanelInfoRAM, "PanelInfoRAM");
-            this.PanelInfoRAM.Name = "PanelInfoRAM";
+            resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
+            this.PanelInfoCPU2.Name = "PanelInfoCPU2";
+            // 
+            // PanelInfoPort2
+            // 
+            resources.ApplyResources(this.PanelInfoPort2, "PanelInfoPort2");
+            this.PanelInfoPort2.Name = "PanelInfoPort2";
+            // 
+            // PanelInfoTime2
+            // 
+            resources.ApplyResources(this.PanelInfoTime2, "PanelInfoTime2");
+            this.PanelInfoTime2.Name = "PanelInfoTime2";
+            // 
+            // PanelInfoDifficulty2
+            // 
+            resources.ApplyResources(this.PanelInfoDifficulty2, "PanelInfoDifficulty2");
+            this.PanelInfoDifficulty2.Name = "PanelInfoDifficulty2";
+            // 
+            // PanelInfoVersion2
+            // 
+            resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
+            this.PanelInfoVersion2.Name = "PanelInfoVersion2";
             // 
             // PanelInfoCPU
             // 
@@ -328,61 +417,6 @@ namespace Serein
             this.PluginList.UseCompatibleStateImageBehavior = false;
             this.PluginList.View = System.Windows.Forms.View.SmallIcon;
             // 
-            // PluginContextMenuStrip
-            // 
-            this.PluginContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.PluginContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PluginContextMenuStripAdd,
-            this.PluginContextMenuStripRemove,
-            this.toolStripSeparator1,
-            this.PluginContextMenuStripEnable,
-            this.PluginContextMenuStripDisable,
-            this.toolStripSeparator2,
-            this.PluginContextMenuStripRefresh});
-            this.PluginContextMenuStrip.Name = "PluginContextMenuStrip";
-            resources.ApplyResources(this.PluginContextMenuStrip, "PluginContextMenuStrip");
-            this.PluginContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.PluginContextMenuStrip_Opening);
-            // 
-            // PluginContextMenuStripAdd
-            // 
-            this.PluginContextMenuStripAdd.Name = "PluginContextMenuStripAdd";
-            resources.ApplyResources(this.PluginContextMenuStripAdd, "PluginContextMenuStripAdd");
-            this.PluginContextMenuStripAdd.Click += new System.EventHandler(this.PluginContextMenuStripAdd_Click);
-            // 
-            // PluginContextMenuStripRemove
-            // 
-            this.PluginContextMenuStripRemove.Name = "PluginContextMenuStripRemove";
-            resources.ApplyResources(this.PluginContextMenuStripRemove, "PluginContextMenuStripRemove");
-            this.PluginContextMenuStripRemove.Click += new System.EventHandler(this.PluginContextMenuStripRemove_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-            // 
-            // PluginContextMenuStripEnable
-            // 
-            this.PluginContextMenuStripEnable.Name = "PluginContextMenuStripEnable";
-            resources.ApplyResources(this.PluginContextMenuStripEnable, "PluginContextMenuStripEnable");
-            this.PluginContextMenuStripEnable.Click += new System.EventHandler(this.PluginContextMenuStripEnable_Click);
-            // 
-            // PluginContextMenuStripDisable
-            // 
-            this.PluginContextMenuStripDisable.Name = "PluginContextMenuStripDisable";
-            resources.ApplyResources(this.PluginContextMenuStripDisable, "PluginContextMenuStripDisable");
-            this.PluginContextMenuStripDisable.Click += new System.EventHandler(this.PluginContextMenuStripDisable_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
-            // 
-            // PluginContextMenuStripRefresh
-            // 
-            this.PluginContextMenuStripRefresh.Name = "PluginContextMenuStripRefresh";
-            resources.ApplyResources(this.PluginContextMenuStripRefresh, "PluginContextMenuStripRefresh");
-            this.PluginContextMenuStripRefresh.Click += new System.EventHandler(this.PluginContextMenuStripRefresh_Click);
-            // 
             // Regular
             // 
             this.Regular.Controls.Add(this.RegexList);
@@ -392,10 +426,81 @@ namespace Serein
             // 
             // RegexList
             // 
+            this.RegexList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.RegexList.BackColor = System.Drawing.SystemColors.Window;
+            this.RegexList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.RegexListRegex,
+            this.RegexListArea,
+            this.RegexListIsAdmin,
+            this.RegexListRemark,
+            this.RegexListCommand});
+            this.RegexList.ContextMenuStrip = this.RegexContextMenuStrip;
+            this.RegexList.Cursor = System.Windows.Forms.Cursors.Arrow;
             resources.ApplyResources(this.RegexList, "RegexList");
-            this.RegexList.HideSelection = false;
+            this.RegexList.FullRowSelect = true;
+            this.RegexList.GridLines = true;
             this.RegexList.Name = "RegexList";
             this.RegexList.UseCompatibleStateImageBehavior = false;
+            this.RegexList.View = System.Windows.Forms.View.Details;
+            // 
+            // RegexListRegex
+            // 
+            resources.ApplyResources(this.RegexListRegex, "RegexListRegex");
+            // 
+            // RegexListArea
+            // 
+            resources.ApplyResources(this.RegexListArea, "RegexListArea");
+            // 
+            // RegexListIsAdmin
+            // 
+            resources.ApplyResources(this.RegexListIsAdmin, "RegexListIsAdmin");
+            // 
+            // RegexListRemark
+            // 
+            resources.ApplyResources(this.RegexListRemark, "RegexListRemark");
+            // 
+            // RegexListCommand
+            // 
+            resources.ApplyResources(this.RegexListCommand, "RegexListCommand");
+            // 
+            // RegexContextMenuStrip
+            // 
+            this.RegexContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.RegexContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RegexContextMenuStripAdd,
+            this.RegexContextMenuStripDelete,
+            this.RegexContextMenuStripClear,
+            this.toolStripSeparator3,
+            this.RegexContextMenuStripRefresh});
+            this.RegexContextMenuStrip.Name = "RegexMenuStrip";
+            resources.ApplyResources(this.RegexContextMenuStrip, "RegexContextMenuStrip");
+            this.RegexContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.RegexContextMenuStrip_Opening);
+            // 
+            // RegexContextMenuStripAdd
+            // 
+            this.RegexContextMenuStripAdd.Name = "RegexContextMenuStripAdd";
+            resources.ApplyResources(this.RegexContextMenuStripAdd, "RegexContextMenuStripAdd");
+            this.RegexContextMenuStripAdd.Click += new System.EventHandler(this.RegexContextMenuStripAdd_Click);
+            // 
+            // RegexContextMenuStripDelete
+            // 
+            this.RegexContextMenuStripDelete.Name = "RegexContextMenuStripDelete";
+            resources.ApplyResources(this.RegexContextMenuStripDelete, "RegexContextMenuStripDelete");
+            // 
+            // RegexContextMenuStripClear
+            // 
+            this.RegexContextMenuStripClear.Name = "RegexContextMenuStripClear";
+            resources.ApplyResources(this.RegexContextMenuStripClear, "RegexContextMenuStripClear");
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // RegexContextMenuStripRefresh
+            // 
+            this.RegexContextMenuStripRefresh.Name = "RegexContextMenuStripRefresh";
+            resources.ApplyResources(this.RegexContextMenuStripRefresh, "RegexContextMenuStripRefresh");
             // 
             // Task
             // 
@@ -423,7 +528,7 @@ namespace Serein
             resources.ApplyResources(this.BotTableLayoutPanel, "BotTableLayoutPanel");
             this.BotTableLayoutPanel.Controls.Add(this.BotWebBrowser, 1, 0);
             this.BotTableLayoutPanel.Controls.Add(this.BotInfo, 0, 0);
-            this.BotTableLayoutPanel.Controls.Add(this.BotControl, 0, 1);
+            this.BotTableLayoutPanel.Controls.Add(this.BotWebsocket, 0, 1);
             this.BotTableLayoutPanel.Name = "BotTableLayoutPanel";
             // 
             // BotWebBrowser
@@ -442,25 +547,27 @@ namespace Serein
             this.BotInfo.Name = "BotInfo";
             this.BotInfo.TabStop = false;
             // 
-            // BotControl
+            // BotWebsocket
             // 
-            this.BotControl.Controls.Add(this.BotStop);
-            this.BotControl.Controls.Add(this.BotStart);
-            resources.ApplyResources(this.BotControl, "BotControl");
-            this.BotControl.Name = "BotControl";
-            this.BotControl.TabStop = false;
+            this.BotWebsocket.Controls.Add(this.BotClose);
+            this.BotWebsocket.Controls.Add(this.BotConnect);
+            resources.ApplyResources(this.BotWebsocket, "BotWebsocket");
+            this.BotWebsocket.Name = "BotWebsocket";
+            this.BotWebsocket.TabStop = false;
             // 
-            // BotStop
+            // BotClose
             // 
-            resources.ApplyResources(this.BotStop, "BotStop");
-            this.BotStop.Name = "BotStop";
-            this.BotStop.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.BotClose, "BotClose");
+            this.BotClose.Name = "BotClose";
+            this.BotClose.UseVisualStyleBackColor = true;
+            this.BotClose.Click += new System.EventHandler(this.BotClose_Click);
             // 
-            // BotStart
+            // BotConnect
             // 
-            resources.ApplyResources(this.BotStart, "BotStart");
-            this.BotStart.Name = "BotStart";
-            this.BotStart.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.BotConnect, "BotConnect");
+            this.BotConnect.Name = "BotConnect";
+            this.BotConnect.UseVisualStyleBackColor = true;
+            this.BotConnect.Click += new System.EventHandler(this.BotConnect_Click);
             // 
             // Setting
             // 
@@ -497,6 +604,7 @@ namespace Serein
             this.SettingSereinEnableGetAnnouncement.Name = "SettingSereinEnableGetAnnouncement";
             this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
             this.SettingSereinEnableGetAnnouncement.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_CheckedChanged);
+            this.SettingSereinEnableGetAnnouncement.MouseHover += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_MouseHover);
             // 
             // SettingSereinEnableGetUpdate
             // 
@@ -504,6 +612,7 @@ namespace Serein
             this.SettingSereinEnableGetUpdate.Name = "SettingSereinEnableGetUpdate";
             this.SettingSereinEnableGetUpdate.UseVisualStyleBackColor = true;
             this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
+            this.SettingSereinEnableGetUpdate.MouseHover += new System.EventHandler(this.SettingSereinEnableGetUpdate_MouseHover);
             // 
             // SettingBot
             // 
@@ -512,17 +621,12 @@ namespace Serein
             this.SettingBot.Controls.Add(this.SettingBotGroup);
             this.SettingBot.Controls.Add(this.SettingBotPermissionList);
             this.SettingBot.Controls.Add(this.SettingBotGroupList);
-            this.SettingBot.Controls.Add(this.SettingBotSendPortLabel);
-            this.SettingBot.Controls.Add(this.SettingBotListenPortLabel);
-            this.SettingBot.Controls.Add(this.SettingBotSendPort);
-            this.SettingBot.Controls.Add(this.SettingBotListenPort);
+            this.SettingBot.Controls.Add(this.SettingBotPortLabel);
+            this.SettingBot.Controls.Add(this.SettingBotPort);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLabel);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLink);
             this.SettingBot.Controls.Add(this.SettingBotGivePermissionToAllAdmin);
             this.SettingBot.Controls.Add(this.SettingBotEnableLog);
-            this.SettingBot.Controls.Add(this.SettingBotPathLabel);
-            this.SettingBot.Controls.Add(this.SettingBotPathSelect);
-            this.SettingBot.Controls.Add(this.SettingBotPath);
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
@@ -532,80 +636,60 @@ namespace Serein
             resources.ApplyResources(this.SettingBotClearCache, "SettingBotClearCache");
             this.SettingBotClearCache.Name = "SettingBotClearCache";
             this.SettingBotClearCache.UseVisualStyleBackColor = true;
+            this.SettingBotClearCache.MouseHover += new System.EventHandler(this.SettingBotClearCache_MouseHover);
             // 
             // SettingBotPermission
             // 
             resources.ApplyResources(this.SettingBotPermission, "SettingBotPermission");
             this.SettingBotPermission.Name = "SettingBotPermission";
+            this.SettingBotPermission.MouseHover += new System.EventHandler(this.SettingBotPermission_MouseHover);
             // 
             // SettingBotGroup
             // 
             resources.ApplyResources(this.SettingBotGroup, "SettingBotGroup");
             this.SettingBotGroup.Name = "SettingBotGroup";
+            this.SettingBotGroup.MouseHover += new System.EventHandler(this.SettingBotGroup_MouseHover);
             // 
             // SettingBotPermissionList
             // 
             resources.ApplyResources(this.SettingBotPermissionList, "SettingBotPermissionList");
             this.SettingBotPermissionList.Name = "SettingBotPermissionList";
             this.SettingBotPermissionList.TextChanged += new System.EventHandler(this.SettingBotPermissionList_TextChanged);
+            this.SettingBotPermissionList.MouseHover += new System.EventHandler(this.SettingBotPermissionList_MouseHover);
             // 
             // SettingBotGroupList
             // 
             resources.ApplyResources(this.SettingBotGroupList, "SettingBotGroupList");
             this.SettingBotGroupList.Name = "SettingBotGroupList";
             this.SettingBotGroupList.TextChanged += new System.EventHandler(this.SettingBotGroupList_TextChanged);
+            this.SettingBotGroupList.MouseHover += new System.EventHandler(this.SettingBotGroupList_MouseHover);
             // 
-            // SettingBotSendPortLabel
+            // SettingBotPortLabel
             // 
-            resources.ApplyResources(this.SettingBotSendPortLabel, "SettingBotSendPortLabel");
-            this.SettingBotSendPortLabel.Name = "SettingBotSendPortLabel";
+            resources.ApplyResources(this.SettingBotPortLabel, "SettingBotPortLabel");
+            this.SettingBotPortLabel.Name = "SettingBotPortLabel";
+            this.SettingBotPortLabel.MouseHover += new System.EventHandler(this.SettingBotPortLabel_MouseHover);
             // 
-            // SettingBotListenPortLabel
+            // SettingBotPort
             // 
-            resources.ApplyResources(this.SettingBotListenPortLabel, "SettingBotListenPortLabel");
-            this.SettingBotListenPortLabel.Name = "SettingBotListenPortLabel";
-            // 
-            // SettingBotSendPort
-            // 
-            resources.ApplyResources(this.SettingBotSendPort, "SettingBotSendPort");
-            this.SettingBotSendPort.Maximum = new decimal(new int[] {
+            resources.ApplyResources(this.SettingBotPort, "SettingBotPort");
+            this.SettingBotPort.Maximum = new decimal(new int[] {
             65536,
             0,
             0,
             0});
-            this.SettingBotSendPort.Minimum = new decimal(new int[] {
+            this.SettingBotPort.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.SettingBotSendPort.Name = "SettingBotSendPort";
-            this.SettingBotSendPort.Value = new decimal(new int[] {
-            5700,
+            this.SettingBotPort.Name = "SettingBotPort";
+            this.SettingBotPort.Value = new decimal(new int[] {
+            6700,
             0,
             0,
             0});
-            this.SettingBotSendPort.ValueChanged += new System.EventHandler(this.SettingBotSendPort_ValueChanged);
-            // 
-            // SettingBotListenPort
-            // 
-            resources.ApplyResources(this.SettingBotListenPort, "SettingBotListenPort");
-            this.SettingBotListenPort.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.SettingBotListenPort.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.SettingBotListenPort.Name = "SettingBotListenPort";
-            this.SettingBotListenPort.Value = new decimal(new int[] {
-            8000,
-            0,
-            0,
-            0});
-            this.SettingBotListenPort.ValueChanged += new System.EventHandler(this.SettingBotListenPort_ValueChanged);
+            this.SettingBotPort.ValueChanged += new System.EventHandler(this.SettingBotPort_ValueChanged);
             // 
             // SettingBotSupportedLabel
             // 
@@ -630,6 +714,7 @@ namespace Serein
             this.SettingBotGivePermissionToAllAdmin.Name = "SettingBotGivePermissionToAllAdmin";
             this.SettingBotGivePermissionToAllAdmin.UseVisualStyleBackColor = true;
             this.SettingBotGivePermissionToAllAdmin.CheckedChanged += new System.EventHandler(this.SettingBotGivePermissionToAllAdmin_CheckedChanged);
+            this.SettingBotGivePermissionToAllAdmin.MouseHover += new System.EventHandler(this.SettingBotGivePermissionToAllAdmin_MouseHover);
             // 
             // SettingBotEnableLog
             // 
@@ -637,24 +722,7 @@ namespace Serein
             this.SettingBotEnableLog.Name = "SettingBotEnableLog";
             this.SettingBotEnableLog.UseVisualStyleBackColor = true;
             this.SettingBotEnableLog.CheckedChanged += new System.EventHandler(this.SettingBotEnableLog_CheckedChanged);
-            // 
-            // SettingBotPathLabel
-            // 
-            resources.ApplyResources(this.SettingBotPathLabel, "SettingBotPathLabel");
-            this.SettingBotPathLabel.Name = "SettingBotPathLabel";
-            // 
-            // SettingBotPathSelect
-            // 
-            resources.ApplyResources(this.SettingBotPathSelect, "SettingBotPathSelect");
-            this.SettingBotPathSelect.Name = "SettingBotPathSelect";
-            this.SettingBotPathSelect.UseVisualStyleBackColor = true;
-            this.SettingBotPathSelect.Click += new System.EventHandler(this.SettingBotPathSelect_Click);
-            // 
-            // SettingBotPath
-            // 
-            resources.ApplyResources(this.SettingBotPath, "SettingBotPath");
-            this.SettingBotPath.Name = "SettingBotPath";
-            this.SettingBotPath.ReadOnly = true;
+            this.SettingBotEnableLog.MouseHover += new System.EventHandler(this.SettingBotEnableLog_MouseHover);
             // 
             // SettingServer
             // 
@@ -674,6 +742,7 @@ namespace Serein
             // 
             resources.ApplyResources(this.SettingServerOutputStyleLabel, "SettingServerOutputStyleLabel");
             this.SettingServerOutputStyleLabel.Name = "SettingServerOutputStyleLabel";
+            this.SettingServerOutputStyleLabel.MouseHover += new System.EventHandler(this.SettingServerOutputStyleLabel_MouseHover);
             // 
             // SettingServerEnableLog
             // 
@@ -681,6 +750,7 @@ namespace Serein
             this.SettingServerEnableLog.Name = "SettingServerEnableLog";
             this.SettingServerEnableLog.UseVisualStyleBackColor = true;
             this.SettingServerEnableLog.CheckedChanged += new System.EventHandler(this.SettingServerEnableLog_CheckedChanged);
+            this.SettingServerEnableLog.MouseHover += new System.EventHandler(this.SettingServerEnableLog_MouseHover);
             // 
             // SettingServerOutputStyle
             // 
@@ -689,11 +759,11 @@ namespace Serein
             this.SettingServerOutputStyle.Items.AddRange(new object[] {
             resources.GetString("SettingServerOutputStyle.Items"),
             resources.GetString("SettingServerOutputStyle.Items1"),
-            resources.GetString("SettingServerOutputStyle.Items2"),
-            resources.GetString("SettingServerOutputStyle.Items3")});
+            resources.GetString("SettingServerOutputStyle.Items2")});
             resources.ApplyResources(this.SettingServerOutputStyle, "SettingServerOutputStyle");
             this.SettingServerOutputStyle.Name = "SettingServerOutputStyle";
             this.SettingServerOutputStyle.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputStyle_SelectedIndexChanged);
+            this.SettingServerOutputStyle.MouseHover += new System.EventHandler(this.SettingServerOutputStyle_MouseHover);
             // 
             // SettingServerEnableOutputCommand
             // 
@@ -701,6 +771,7 @@ namespace Serein
             this.SettingServerEnableOutputCommand.Name = "SettingServerEnableOutputCommand";
             this.SettingServerEnableOutputCommand.UseVisualStyleBackColor = true;
             this.SettingServerEnableOutputCommand.CheckedChanged += new System.EventHandler(this.SettingServerEnableOutputCommand_CheckedChanged);
+            this.SettingServerEnableOutputCommand.MouseHover += new System.EventHandler(this.SettingServerEnableOutputCommand_MouseHover);
             // 
             // SettingServerEnableRestart
             // 
@@ -708,11 +779,13 @@ namespace Serein
             this.SettingServerEnableRestart.Name = "SettingServerEnableRestart";
             this.SettingServerEnableRestart.UseVisualStyleBackColor = true;
             this.SettingServerEnableRestart.CheckedChanged += new System.EventHandler(this.SettingServerEnableRestart_CheckedChanged);
+            this.SettingServerEnableRestart.MouseHover += new System.EventHandler(this.SettingServerEnableRestart_MouseHover);
             // 
             // SettingServerPathLabel
             // 
             resources.ApplyResources(this.SettingServerPathLabel, "SettingServerPathLabel");
             this.SettingServerPathLabel.Name = "SettingServerPathLabel";
+            this.SettingServerPathLabel.MouseHover += new System.EventHandler(this.SettingServerPathLabel_MouseHover);
             // 
             // SettingServerPathSelect
             // 
@@ -726,48 +799,7 @@ namespace Serein
             resources.ApplyResources(this.SettingServerPath, "SettingServerPath");
             this.SettingServerPath.Name = "SettingServerPath";
             this.SettingServerPath.ReadOnly = true;
-            // 
-            // SereinIcon
-            // 
-            resources.ApplyResources(this.SereinIcon, "SereinIcon");
-            this.SereinIcon.BalloonTipClicked += new System.EventHandler(this.SereinIcon_BalloonTipClicked);
-            this.SereinIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SereinIcon_MouseClick);
-            // 
-            // MainTableLayout
-            // 
-            resources.ApplyResources(this.MainTableLayout, "MainTableLayout");
-            this.MainTableLayout.Controls.Add(this.tabControl, 0, 0);
-            this.MainTableLayout.Name = "MainTableLayout";
-            // 
-            // PanelInfoVersion2
-            // 
-            resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
-            this.PanelInfoVersion2.Name = "PanelInfoVersion2";
-            // 
-            // PanelInfoDifficulty2
-            // 
-            resources.ApplyResources(this.PanelInfoDifficulty2, "PanelInfoDifficulty2");
-            this.PanelInfoDifficulty2.Name = "PanelInfoDifficulty2";
-            // 
-            // PanelInfoTime2
-            // 
-            resources.ApplyResources(this.PanelInfoTime2, "PanelInfoTime2");
-            this.PanelInfoTime2.Name = "PanelInfoTime2";
-            // 
-            // PanelInfoPort2
-            // 
-            resources.ApplyResources(this.PanelInfoPort2, "PanelInfoPort2");
-            this.PanelInfoPort2.Name = "PanelInfoPort2";
-            // 
-            // PanelInfoCPU2
-            // 
-            resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
-            this.PanelInfoCPU2.Name = "PanelInfoCPU2";
-            // 
-            // PanelInfoRAM2
-            // 
-            resources.ApplyResources(this.PanelInfoRAM2, "PanelInfoRAM2");
-            this.PanelInfoRAM2.Name = "PanelInfoRAM2";
+            this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
             // Ui
             // 
@@ -776,6 +808,8 @@ namespace Serein
             this.Controls.Add(this.MainTableLayout);
             this.Name = "Ui";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Serein_FormClosing);
+            this.PluginContextMenuStrip.ResumeLayout(false);
+            this.MainTableLayout.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.Panel.ResumeLayout(false);
             this.PanelTableLayout.ResumeLayout(false);
@@ -788,89 +822,27 @@ namespace Serein
             this.PanelConsolePanel1.ResumeLayout(false);
             this.PanelConsolePanel1.PerformLayout();
             this.Plugin.ResumeLayout(false);
-            this.PluginContextMenuStrip.ResumeLayout(false);
             this.Regular.ResumeLayout(false);
+            this.RegexContextMenuStrip.ResumeLayout(false);
             this.Task.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
             this.BotTableLayoutPanel.ResumeLayout(false);
-            this.BotControl.ResumeLayout(false);
+            this.BotWebsocket.ResumeLayout(false);
             this.Setting.ResumeLayout(false);
             this.SettingPanel.ResumeLayout(false);
             this.SettingSerein.ResumeLayout(false);
             this.SettingSerein.PerformLayout();
             this.SettingBot.ResumeLayout(false);
             this.SettingBot.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotSendPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotListenPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).EndInit();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
-            this.MainTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage Panel;
         private System.Windows.Forms.TableLayoutPanel MainTableLayout;
-        private System.Windows.Forms.TableLayoutPanel PanelTableLayout;
-        private System.Windows.Forms.GroupBox PanelInfo;
-        private System.Windows.Forms.GroupBox PanelControls;
-        private System.Windows.Forms.GroupBox PanelConsole;
-        private System.Windows.Forms.Panel PanelConsolePanel1;
-        private System.Windows.Forms.Button PanelConsoleEnter;
-        private System.Windows.Forms.Panel PanelConsolePanel2;
-        private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
-        private System.Windows.Forms.Button PanelControlStart;
-        private System.Windows.Forms.Button PanelControlKill;
-        private System.Windows.Forms.Button PanelControlRestart;
-        private System.Windows.Forms.Button PanelControlStop;
-        private System.Windows.Forms.TabPage Plugin;
-        private System.Windows.Forms.TabPage Regular;
-        private System.Windows.Forms.TabPage Setting;
-        private System.Windows.Forms.ColumnHeader columnHeader;
-        private System.Windows.Forms.TabPage Task;
-        private System.Windows.Forms.TabPage Bot;
-        private System.Windows.Forms.TableLayoutPanel BotTableLayoutPanel;
-        private System.Windows.Forms.WebBrowser BotWebBrowser;
-        private System.Windows.Forms.GroupBox BotInfo;
-        private System.Windows.Forms.GroupBox BotControl;
-        private System.Windows.Forms.Button BotStop;
-        private System.Windows.Forms.Button BotStart;
-        private System.Windows.Forms.Panel SettingPanel;
-        private System.Windows.Forms.GroupBox SettingServer;
-        private System.Windows.Forms.Label SettingServerOutputStyleLabel;
-        private System.Windows.Forms.GroupBox SettingBot;
-        private System.Windows.Forms.GroupBox SettingSerein;
-        private System.Windows.Forms.Button SettingServerPathSelect;
-        private System.Windows.Forms.TextBox SettingServerPath;
-        private System.Windows.Forms.Label SettingServerPathLabel;
-        private System.Windows.Forms.CheckBox SettingServerEnableOutputCommand;
-        private System.Windows.Forms.CheckBox SettingServerEnableRestart;
-        private System.Windows.Forms.CheckBox SettingServerEnableLog;
-        private System.Windows.Forms.ComboBox SettingServerOutputStyle;
-        private System.Windows.Forms.Label SettingBotSupportedLabel;
-        private System.Windows.Forms.LinkLabel SettingBotSupportedLink;
-        private System.Windows.Forms.CheckBox SettingBotGivePermissionToAllAdmin;
-        private System.Windows.Forms.CheckBox SettingBotEnableLog;
-        private System.Windows.Forms.Label SettingBotPathLabel;
-        private System.Windows.Forms.Button SettingBotPathSelect;
-        private System.Windows.Forms.TextBox SettingBotPath;
-        private System.Windows.Forms.TextBox SettingBotGroupList;
-        private System.Windows.Forms.TextBox SettingBotPermissionList;
-        private System.Windows.Forms.Label SettingBotSendPortLabel;
-        private System.Windows.Forms.Label SettingBotListenPortLabel;
-        private System.Windows.Forms.NumericUpDown SettingBotSendPort;
-        private System.Windows.Forms.NumericUpDown SettingBotListenPort;
-        private System.Windows.Forms.Label SettingBotPermission;
-        private System.Windows.Forms.Label SettingBotGroup;
-        private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
-        private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
-        private System.Windows.Forms.Button SettingBotClearCache;
-        private System.Windows.Forms.Label SettingSereinVersion;
-        private System.Windows.Forms.ListView RegexList;
-        private System.Windows.Forms.ListView TaskList;
-        private System.Windows.Forms.TextBox PanelConsoleInput;
         private System.Windows.Forms.ContextMenuStrip PluginContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripAdd;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripRemove;
@@ -880,21 +852,85 @@ namespace Serein
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripRefresh;
         public System.Windows.Forms.NotifyIcon SereinIcon;
-        public System.Windows.Forms.ListView PluginList;
-        private System.Windows.Forms.Label PanelInfoStatus;
-        private System.Windows.Forms.Label PanelInfoRAM;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage Panel;
+        private System.Windows.Forms.TableLayoutPanel PanelTableLayout;
+        private System.Windows.Forms.GroupBox PanelInfo;
+        private System.Windows.Forms.Label PanelInfoCPU2;
+        private System.Windows.Forms.Label PanelInfoPort2;
+        private System.Windows.Forms.Label PanelInfoTime2;
+        private System.Windows.Forms.Label PanelInfoDifficulty2;
+        private System.Windows.Forms.Label PanelInfoVersion2;
         private System.Windows.Forms.Label PanelInfoCPU;
         private System.Windows.Forms.Label PanelInfoTime;
         private System.Windows.Forms.Label PanelInfoPort;
         private System.Windows.Forms.Label PanelInfoDifficulty;
         private System.Windows.Forms.Label PanelInfoVersion;
         private System.Windows.Forms.Label PanelInfoStatus2;
-        private System.Windows.Forms.Label PanelInfoRAM2;
-        private System.Windows.Forms.Label PanelInfoCPU2;
-        private System.Windows.Forms.Label PanelInfoPort2;
-        private System.Windows.Forms.Label PanelInfoTime2;
-        private System.Windows.Forms.Label PanelInfoDifficulty2;
-        private System.Windows.Forms.Label PanelInfoVersion2;
+        private System.Windows.Forms.Label PanelInfoStatus;
+        private System.Windows.Forms.GroupBox PanelControls;
+        private System.Windows.Forms.Button PanelControlKill;
+        private System.Windows.Forms.Button PanelControlRestart;
+        private System.Windows.Forms.Button PanelControlStop;
+        private System.Windows.Forms.Button PanelControlStart;
+        private System.Windows.Forms.GroupBox PanelConsole;
+        private System.Windows.Forms.Panel PanelConsolePanel2;
+        private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
+        private System.Windows.Forms.Panel PanelConsolePanel1;
+        private System.Windows.Forms.Button PanelConsoleEnter;
+        private System.Windows.Forms.TextBox PanelConsoleInput;
+        private System.Windows.Forms.TabPage Plugin;
+        public System.Windows.Forms.ListView PluginList;
+        private System.Windows.Forms.ColumnHeader columnHeader;
+        private System.Windows.Forms.TabPage Regular;
+        private System.Windows.Forms.ListView RegexList;
+        private System.Windows.Forms.TabPage Task;
+        private System.Windows.Forms.ListView TaskList;
+        private System.Windows.Forms.TabPage Bot;
+        private System.Windows.Forms.TableLayoutPanel BotTableLayoutPanel;
+        private System.Windows.Forms.WebBrowser BotWebBrowser;
+        private System.Windows.Forms.GroupBox BotInfo;
+        private System.Windows.Forms.GroupBox BotWebsocket;
+        private System.Windows.Forms.Button BotClose;
+        private System.Windows.Forms.Button BotConnect;
+        private System.Windows.Forms.TabPage Setting;
+        private System.Windows.Forms.Panel SettingPanel;
+        private System.Windows.Forms.GroupBox SettingSerein;
+        private System.Windows.Forms.Label SettingSereinVersion;
+        private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
+        private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
+        private System.Windows.Forms.GroupBox SettingBot;
+        private System.Windows.Forms.Button SettingBotClearCache;
+        private System.Windows.Forms.Label SettingBotPermission;
+        private System.Windows.Forms.Label SettingBotGroup;
+        private System.Windows.Forms.TextBox SettingBotPermissionList;
+        private System.Windows.Forms.TextBox SettingBotGroupList;
+        private System.Windows.Forms.Label SettingBotPortLabel;
+        private System.Windows.Forms.NumericUpDown SettingBotPort;
+        private System.Windows.Forms.Label SettingBotSupportedLabel;
+        private System.Windows.Forms.LinkLabel SettingBotSupportedLink;
+        private System.Windows.Forms.CheckBox SettingBotGivePermissionToAllAdmin;
+        private System.Windows.Forms.CheckBox SettingBotEnableLog;
+        private System.Windows.Forms.GroupBox SettingServer;
+        private System.Windows.Forms.Label SettingServerOutputStyleLabel;
+        private System.Windows.Forms.CheckBox SettingServerEnableLog;
+        private System.Windows.Forms.ComboBox SettingServerOutputStyle;
+        private System.Windows.Forms.CheckBox SettingServerEnableOutputCommand;
+        private System.Windows.Forms.CheckBox SettingServerEnableRestart;
+        private System.Windows.Forms.Label SettingServerPathLabel;
+        private System.Windows.Forms.Button SettingServerPathSelect;
+        private System.Windows.Forms.TextBox SettingServerPath;
+        private System.Windows.Forms.ContextMenuStrip RegexContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripAdd;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripDelete;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripClear;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripRefresh;
+        private System.Windows.Forms.ColumnHeader RegexListArea;
+        private System.Windows.Forms.ColumnHeader RegexListRegex;
+        private System.Windows.Forms.ColumnHeader RegexListRemark;
+        private System.Windows.Forms.ColumnHeader RegexListCommand;
+        private System.Windows.Forms.ColumnHeader RegexListIsAdmin;
     }
 }
 

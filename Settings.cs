@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 namespace Serein
@@ -13,20 +14,18 @@ namespace Serein
     }
     public class Settings_Bot
     {
-        public string Path { get; set; } = "";
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;
         public long[] GroupList { get; set; } = { };
         public long[] PermissionList{ get; set; } = { };
-        public int ListenPort { get; set; } = 8000;
-        public int SendPort { get; set; } = 5700;
+        public int Port { get; set; } = 6700;
     }
     public class Settings_Serein
     {
         public bool EnableGetUpdate { get; set; } = true;
         public bool EnableGetAnnouncement{ get; set; } = true;
     }
-    class Settings
+    partial class Settings
     {
         public static Thread thread = new Thread(SaveSettings);
         public static void StartSaveSettings()
@@ -43,17 +42,17 @@ namespace Serein
                 {
                     Directory.CreateDirectory(Global.SETTINGPATH);
                 }
-                ServerStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\server.json");
+                ServerStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\server.json", false, Encoding.UTF8);
                 ServerStreamWriter.WriteAsync(
                     JsonConvert.SerializeObject(Global.Settings_server, Formatting.Indented)
                     );
                 ServerStreamWriter.Close();
-                BotStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\bot.json");
+                BotStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\bot.json", false, Encoding.UTF8);
                 BotStreamWriter.WriteAsync(
                     JsonConvert.SerializeObject(Global.Settings_bot, Formatting.Indented)
                     );
                 BotStreamWriter.Close();
-                SereinStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\serein.json");
+                SereinStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\serein.json", false, Encoding.UTF8);
                 SereinStreamWriter.WriteAsync(
                     JsonConvert.SerializeObject(Global.Settings_serein, Formatting.Indented)
                     );
@@ -66,7 +65,7 @@ namespace Serein
             if (File.Exists(Global.SETTINGPATH + "\\server.json"))
             {
                 Global.Settings_server = JsonConvert.DeserializeObject<Settings_Server>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\server.json")
+                    File.ReadAllText(Global.SETTINGPATH + "\\server.json", Encoding.UTF8)
                     );
                 if (Global.Settings_server == null)
                 {
@@ -76,7 +75,7 @@ namespace Serein
             if (File.Exists(Global.SETTINGPATH + "\\bot.json"))
             {
                 Global.Settings_bot = JsonConvert.DeserializeObject<Settings_Bot>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\bot.json")
+                    File.ReadAllText(Global.SETTINGPATH + "\\bot.json", Encoding.UTF8)
                     );
                 if (Global.Settings_bot == null)
                 {
@@ -86,7 +85,7 @@ namespace Serein
             if (File.Exists(Global.SETTINGPATH + "\\serein.json"))
             {
                 Global.Settings_serein=JsonConvert.DeserializeObject<Settings_Serein>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\serein.json")
+                    File.ReadAllText(Global.SETTINGPATH + "\\serein.json", Encoding.UTF8)
                     );
                 if (Global.Settings_serein == null)
                 {

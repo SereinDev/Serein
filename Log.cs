@@ -29,7 +29,7 @@ namespace Serein
         {
             Input = Regex.Replace(Input, @"^>\s+?", "");
             Input = Regex.Replace(Input, @"\s+?$", "");
-            if (Type==1 || Type == 3)
+            if (Type==1)
             {
                 string Pattern = @"\[([^]+?)m([^]*)";
                 if (! Regex.IsMatch(Input, Pattern))
@@ -102,13 +102,6 @@ namespace Serein
                             SpanClass += "noColored";
                         }
                         Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
-                    }
-                    if (Type == 3)
-                    {
-                        Output = Regex.Replace(Output,  @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
-                        Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
-                        Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
-                        Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                     }
                     return Output;
                 }

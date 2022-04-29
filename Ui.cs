@@ -14,263 +14,22 @@ namespace Serein
     {
         public Ui()
         {
+            Init.CheckFiles();
             InitializeComponent();
-            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "console.html"))
-            {
-                MessageBox.Show($"文件  {AppDomain.CurrentDomain.BaseDirectory}console.html  已丢失");
-                Environment.Exit(0);
-            }
-            PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=panel");
-            BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console.html?from=bot");
-            Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
-            Global.BotWebBrowser = BotWebBrowser;
-            SettingSereinVersion.Text = $"Version:{Global.VERSION}";
-            Settings.ReadSettings();
-            LoadSettings();
-            Settings.StartSaveSettings();
-            ShowBalloonTip($"Hello!\n这是测试版（{Global.VERSION}），不建议用于生产环境哦qwq");
-            LoadPlugins();
-            Thread UpdateInfoThread = new Thread(UpdateInfo);
-            UpdateInfoThread.Start();
+            Initialize();
+            UpdateVersion();
         }
-        public void LoadPlugins()
-        {
-            if (Plugins.Get() != null) 
-            {
-                PluginList.BeginUpdate();
-                PluginList.Clear();
-                string[] Files = Plugins.Get();
-                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
-                PluginList.Groups.Add(PluginGroupJs);
-                PluginList.Groups.Add(PluginGroupDll);
-                PluginList.Groups.Add(PluginGroupJar);
-                PluginList.Groups.Add(PluginGroupPy);
-                PluginList.Groups.Add(PluginGroupGo);
-                PluginList.Groups.Add(PluginGroupDisable);
-                foreach (string PluginFile in Files)
-                {
-                    string PluginName = Path.GetFileName(PluginFile);
-                    ListViewItem Item = new ListViewItem();
-                    PluginName = Regex.Replace(PluginName, @"\.lock$", "");
-                    Item.Text = PluginName;
-                    bool added = true;
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".DLL"))
-                    {
-                        PluginGroupDll.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".JAR"))
-                    {
-                        PluginGroupJar.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".PY"))
-                    {
-                        PluginGroupPy.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".GO"))
-                    {
-                        PluginGroupGo.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".LOCK"))
-                    {
-                        Item.ForeColor = System.Drawing.Color.Gray;
-                        PluginGroupDisable.Items.Add(Item);
-                    }
-                    else
-                    {
-                        added = false;
-                    }
-                    if (added)
-                    {
-                        PluginList.Items.Add(Item);
-                    }
-                }
-                PluginList.EndUpdate();
-            }
-        }
-        public void LoadSettings()
-        {
-            SettingServerEnableRestart.Checked = Global.Settings_server.EnableRestart;
-            SettingServerEnableOutputCommand.Checked = Global.Settings_server.EnableOutputCommand;
-            SettingServerEnableLog.Checked = Global.Settings_server.EnableLog;
-            SettingServerOutputStyle.SelectedIndex = Global.Settings_server.OutputStyle;
-            SettingBotListenPort.Value = Global.Settings_bot.ListenPort;
-            SettingBotSendPort.Value = Global.Settings_bot.SendPort;
-            SettingBotEnableLog.Checked = Global.Settings_bot.EnableLog;
-            SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_bot.GivePermissionToAllAdmin;
-            SettingSereinEnableGetUpdate.Checked = Global.Settings_serein.EnableGetUpdate;
-            SettingSereinEnableGetAnnouncement.Checked = Global.Settings_serein.EnableGetAnnouncement;
-            SettingServerPath.Text = Global.Settings_server.Path;
-            SettingBotPath.Text = Global.Settings_bot.Path;
-            SettingBotPermissionList.Text = string.Join(",", Global.Settings_bot.PermissionList);
-            SettingBotGroupList.Text = string.Join(",", Global.Settings_bot.GroupList);
-        }
+        
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
-        
-        delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
-        private void PanelConsoleWebBrowser_AppendText(object[] objects)
+        private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
         {
-            PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
-            
-        }
-        public void PanelConsoleWebBrowser_Invoke(string str)
-        {
-            object[] objects1 = { str };
-            object[] objects2 = { objects1 };
-            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
-        }
-        private void PanelControlStart_Click(object sender, EventArgs e)
-        {
-            Server.Start();
-        }
-        private void PanelControlStop_Click(object sender, EventArgs e)
-        {
-            Server.Stop();
-        }
-        private void PanelControlRestart_Click(object sender, EventArgs e)
-        {
-            Server.RestartRequest();
-        }
-        private void PanelControlKill_Click(object sender, EventArgs e)
-        {
-            Server.Kill();
-        }
-        private void PanelConsoleEnter_Click(object sender, EventArgs e)
-        {
-            Server.InputCommand(PanelConsoleInput.Text);
-            PanelConsoleInput.Clear();
-        }
-        private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                Server.InputCommand(PanelConsoleInput.Text);
-                PanelConsoleInput.Clear();
-            }
-        }
-        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_server.EnableRestart = SettingServerEnableRestart.Checked;
-        }
-        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
-        }
-        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_server.EnableLog = SettingServerEnableLog.Checked;
-        }
-        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Global.Settings_server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
-        }
-        private void SettingBotListenPort_ValueChanged(object sender, EventArgs e)
-        {
-            Global.Settings_bot.ListenPort = (int)SettingBotListenPort.Value;
-        }
-        private void SettingBotSendPort_ValueChanged(object sender, EventArgs e)
-        {
-            Global.Settings_bot.SendPort = (int)SettingBotSendPort.Value;
-        }
-        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_bot.EnableLog = SettingBotEnableLog.Checked;
-        }
-        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-
-        }
-        private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
-        {
-            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d,]+?$"))
-            {
-                List<long> list = new List<long>();
-                foreach (string qq in SettingBotGroupList.Text.Split(','))
-                {
-                    if (qq.Length >= 6 && qq.Length <= 16)
-                    {
-                        long.TryParse(qq, out long qq_);
-                        list.Add(qq_);
-                    }
-                }
-                Global.Settings_bot.GroupList = list.Distinct().ToArray();
-            }
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @",+", ",");
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, "^,", "");
-            SettingBotGroupList.Focus();
-            SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
-            SettingBotGroupList.ScrollToCaret();
-        }
-        private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
-        {
-            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d,]+?$"))
-            {
-                List<long> list= new List<long>();
-                foreach(string qq in SettingBotPermissionList.Text.Split(','))
-                {
-                    if (qq.Length >= 5 && qq.Length <= 13)
-                    {
-                        long.TryParse(qq, out long qq_);
-                        list.Add(qq_);
-                    }
-                }
-                Global.Settings_bot.PermissionList = list.Distinct().ToArray();
-            }
-            SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ",");
-            SettingBotPermissionList.Text= Regex.Replace(SettingBotPermissionList.Text, @",+", ",");
-            SettingBotPermissionList.Text= Regex.Replace(SettingBotPermissionList.Text, @"^,", "");
-            SettingBotPermissionList.Focus();
-            SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
-            SettingBotPermissionList.ScrollToCaret();
-            
-        }
-        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-        }
-
-        private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings_serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
-        }
-        private void SettingServerPathSelect_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                SettingServerPath.Text = dialog.FileName;
-                Global.Settings_server.Path = dialog.FileName;
-            }
-        }
-        private void SettingBotPathSelect_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Filter = "go-cqhttp可执行文件|go-cqhttp.exe;go-cqhttp_windows_armv7.exe;go-cqhttp_windows_386.exe;go-cqhttp_windows_arm64.exe;go-cqhttp_windows_amd64.exe"
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                SettingBotPath.Text = dialog.FileName;
-                Global.Settings_bot.Path = dialog.FileName;
-
-            }
+            Visible = true;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+            Activate();
         }
         private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
         {
@@ -288,7 +47,10 @@ namespace Serein
                 ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n(已自动最小化至托盘，点击托盘图标即可复原窗口)");
             }
-            Global.Alive = false;
+            else
+            {
+                Global.Alive = false;
+            }
         }
         private void ShowBalloonTip(string text)
         {
@@ -297,92 +59,12 @@ namespace Serein
             SereinIcon.ShowBalloonTip(10000);
         }
 
-        private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
+        private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            Visible = true;
-            ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
-            Activate();
-        }
-        private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
-        {
-            Plugins.Add();
-            LoadPlugins();
-        }
-        private void PluginContextMenuStripRemove_Click(object sender, EventArgs e)
-        {
-            Plugins.Remove(PluginList.SelectedItems);
-            LoadPlugins();
-        }
-        private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e)
-        {
-            LoadPlugins();
-        }
-        private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
-        {
-            if (PluginList.SelectedItems.Count >= 1)
-            {
-                bool Mixed = false;
-                bool Locked = false;
-                foreach (ListViewItem file in PluginList.SelectedItems)
-                {
-                    if (file.ForeColor==System.Drawing.Color.Gray)
-                    {
-                        Locked = true;
-                    }
-                    else if (Locked)
-                    {
-                        Mixed = true;
-                        break;
-                    }
-                }
-                if (Mixed)
-                {
-                    PluginContextMenuStripEnable.Enabled = false;
-                    PluginContextMenuStripDisable.Enabled = false;
-                    PluginContextMenuStripRemove.Enabled = true;
-                }
-                else if (Locked)
-                {
-                    PluginContextMenuStripEnable.Enabled = true;
-                    PluginContextMenuStripDisable.Enabled = false;
-                    PluginContextMenuStripRemove.Enabled = true;
-                }
-                else
-                {
-                    PluginContextMenuStripEnable.Enabled = false;
-                    PluginContextMenuStripDisable.Enabled = true;
-                    PluginContextMenuStripRemove.Enabled = true;
-                }
-            }
-            else
-            {
-                PluginContextMenuStripEnable.Enabled = false;
-                PluginContextMenuStripDisable.Enabled = false;
-                PluginContextMenuStripRemove.Enabled = false;
-            }
+            RegexEditer regexEditer = new RegexEditer();
+            regexEditer.ShowDialog(this);
         }
 
-        private void PluginContextMenuStripEnable_Click(object sender, EventArgs e)
-        {
-            Plugins.Enable(PluginList.SelectedItems);
-            LoadPlugins();
-        }
-        private void PluginContextMenuStripDisable_Click(object sender, EventArgs e)
-        {
-            Plugins.Disable(PluginList.SelectedItems);
-            LoadPlugins();
-        }
-        private void UpdateInfo()
-        {
-            while (Global.Alive)
-            {
-                Thread.CurrentThread.Join(2000);
-                if (Server.Status)
-                {
-
-                }
-            }
-        }
+        
     }
 }

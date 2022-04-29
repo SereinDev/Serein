@@ -19,6 +19,8 @@ namespace Serein
         static Thread WaitForExitThread, RestartTimerThread;
         public static bool Killed;
         static StreamWriter CommandWriter,LogWriter;
+        public static TimeSpan prevCpuTime = TimeSpan.Zero;
+        public static TimeSpan curTime = TimeSpan.Zero;
 
         public static void Start() 
         {
@@ -56,11 +58,11 @@ namespace Serein
                 Status = true;
                 Killed = false;
                 Started = false;
+                prevCpuTime = TimeSpan.Zero;
+                curTime = TimeSpan.Zero;
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
-                Global.ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>监听进程已启动");
-                
             }
         }
         public static void Stop()
@@ -117,14 +119,18 @@ namespace Serein
                     {
                         Directory.CreateDirectory(Global.PATH + "\\logs\\console");
                     }
-                    LogWriter = new StreamWriter(
+                    try
+                    {
+                        LogWriter = new StreamWriter(
                         Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
                         true,
                         Encoding.UTF8
                         );
-                    LogWriter.WriteLine(">"+Log.OutputRecognition(Command));
-                    LogWriter.Flush();
-                    LogWriter.Close();
+                        LogWriter.WriteLine(">" + Log.OutputRecognition(Command));
+                        LogWriter.Flush();
+                        LogWriter.Close();
+                    }
+                    catch {}
                 }
             }
         }
@@ -140,14 +146,18 @@ namespace Serein
                     {
                         Directory.CreateDirectory(Global.PATH + "\\logs\\console");
                     }
-                    LogWriter = new StreamWriter(
-                        Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                        true,
-                        Encoding.UTF8
-                        );
-                    LogWriter.WriteLine(Log.OutputRecognition(outLine.Data));
-                    LogWriter.Flush();
-                    LogWriter.Close();
+                    try
+                    {
+                        LogWriter = new StreamWriter(
+                            Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            true,
+                            Encoding.UTF8
+                            );
+                        LogWriter.WriteLine(Log.OutputRecognition(outLine.Data));
+                        LogWriter.Flush();
+                        LogWriter.Close();
+                    }
+                    catch { }
                 }
             }
         }
@@ -224,11 +234,12 @@ namespace Serein
             }
             RestartTimerThread.Abort();
         }
-        public static Dictionary<string,string> GetInfo()
+        public static double GetCPU()
         {
-            return new Dictionary<string, string>{
-                { "","" },
-            };
+            curTime = ServerProcess.TotalProcessorTime;
+            double value= (curTime - prevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+            prevCpuTime = curTime;
+            return value;
         }
      }
 }
