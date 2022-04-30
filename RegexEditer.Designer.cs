@@ -71,16 +71,19 @@ namespace Serein
             // 
             resources.ApplyResources(this.Regex, "Regex");
             this.Regex.Name = "Regex";
+            this.Regex.TextChanged += new System.EventHandler(this.Regex_TextChanged);
             // 
             // Command
             // 
             resources.ApplyResources(this.Command, "Command");
             this.Command.Name = "Command";
+            this.Command.TextChanged += new System.EventHandler(this.Command_TextChanged);
             // 
             // Remark
             // 
             resources.ApplyResources(this.Remark, "Remark");
             this.Remark.Name = "Remark";
+            this.Remark.TextChanged += new System.EventHandler(this.Remark_TextChanged);
             // 
             // RegexLabel
             // 
@@ -137,16 +140,16 @@ namespace Serein
 
         #endregion
 
-        private System.Windows.Forms.ComboBox Area;
-        private System.Windows.Forms.Label AreaLabel;
-        private System.Windows.Forms.CheckBox IsAdmin;
-        private System.Windows.Forms.TextBox Regex;
-        private System.Windows.Forms.TextBox Command;
-        private System.Windows.Forms.TextBox Remark;
-        private System.Windows.Forms.Label RegexLabel;
-        private System.Windows.Forms.Label RemarkLabel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Confirm;
-        private System.Windows.Forms.Button Cancel;
+        public System.Windows.Forms.ComboBox Area;
+        public System.Windows.Forms.Label AreaLabel;
+        public System.Windows.Forms.CheckBox IsAdmin;
+        public System.Windows.Forms.TextBox Regex;
+        public System.Windows.Forms.TextBox Command;
+        public System.Windows.Forms.TextBox Remark;
+        public System.Windows.Forms.Label RegexLabel;
+        public System.Windows.Forms.Label RemarkLabel;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Button Confirm;
+        public System.Windows.Forms.Button Cancel;
     }
 }

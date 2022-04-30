@@ -80,6 +80,7 @@ namespace Serein
             this.RegexListCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RegexContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RegexContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStripEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.RegexContextMenuStripDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.RegexContextMenuStripClear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -372,11 +373,12 @@ namespace Serein
             // 
             // PanelConsoleWebBrowser
             // 
+            this.PanelConsoleWebBrowser.AllowWebBrowserDrop = false;
             resources.ApplyResources(this.PanelConsoleWebBrowser, "PanelConsoleWebBrowser");
             this.PanelConsoleWebBrowser.IsWebBrowserContextMenuEnabled = false;
             this.PanelConsoleWebBrowser.Name = "PanelConsoleWebBrowser";
+            this.PanelConsoleWebBrowser.ScriptErrorsSuppressed = true;
             this.PanelConsoleWebBrowser.ScrollBarsEnabled = false;
-            this.PanelConsoleWebBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // PanelConsolePanel1
             // 
@@ -439,6 +441,8 @@ namespace Serein
             resources.ApplyResources(this.RegexList, "RegexList");
             this.RegexList.FullRowSelect = true;
             this.RegexList.GridLines = true;
+            this.RegexList.HideSelection = false;
+            this.RegexList.MultiSelect = false;
             this.RegexList.Name = "RegexList";
             this.RegexList.UseCompatibleStateImageBehavior = false;
             this.RegexList.View = System.Windows.Forms.View.Details;
@@ -468,6 +472,7 @@ namespace Serein
             this.RegexContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.RegexContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RegexContextMenuStripAdd,
+            this.RegexContextMenuStripEdit,
             this.RegexContextMenuStripDelete,
             this.RegexContextMenuStripClear,
             this.toolStripSeparator3,
@@ -482,15 +487,23 @@ namespace Serein
             resources.ApplyResources(this.RegexContextMenuStripAdd, "RegexContextMenuStripAdd");
             this.RegexContextMenuStripAdd.Click += new System.EventHandler(this.RegexContextMenuStripAdd_Click);
             // 
+            // RegexContextMenuStripEdit
+            // 
+            this.RegexContextMenuStripEdit.Name = "RegexContextMenuStripEdit";
+            resources.ApplyResources(this.RegexContextMenuStripEdit, "RegexContextMenuStripEdit");
+            this.RegexContextMenuStripEdit.Click += new System.EventHandler(this.RegexContextMenuStripEdit_Click);
+            // 
             // RegexContextMenuStripDelete
             // 
             this.RegexContextMenuStripDelete.Name = "RegexContextMenuStripDelete";
             resources.ApplyResources(this.RegexContextMenuStripDelete, "RegexContextMenuStripDelete");
+            this.RegexContextMenuStripDelete.Click += new System.EventHandler(this.RegexContextMenuStripDelete_Click);
             // 
             // RegexContextMenuStripClear
             // 
             this.RegexContextMenuStripClear.Name = "RegexContextMenuStripClear";
             resources.ApplyResources(this.RegexContextMenuStripClear, "RegexContextMenuStripClear");
+            this.RegexContextMenuStripClear.Click += new System.EventHandler(this.RegexContextMenuStripClear_Click);
             // 
             // toolStripSeparator3
             // 
@@ -539,7 +552,6 @@ namespace Serein
             this.BotWebBrowser.Name = "BotWebBrowser";
             this.BotTableLayoutPanel.SetRowSpan(this.BotWebBrowser, 2);
             this.BotWebBrowser.ScrollBarsEnabled = false;
-            this.BotWebBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // BotInfo
             // 
@@ -931,6 +943,7 @@ namespace Serein
         private System.Windows.Forms.ColumnHeader RegexListRemark;
         private System.Windows.Forms.ColumnHeader RegexListCommand;
         private System.Windows.Forms.ColumnHeader RegexListIsAdmin;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripEdit;
     }
 }
 

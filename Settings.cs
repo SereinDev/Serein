@@ -38,22 +38,22 @@ namespace Serein
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
                 thread.Join(2500);
-                if (!Directory.Exists(Global.SETTINGPATH))
+                if (!Directory.Exists(Global.SettingPath))
                 {
-                    Directory.CreateDirectory(Global.SETTINGPATH);
+                    Directory.CreateDirectory(Global.SettingPath);
                 }
-                ServerStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\server.json", false, Encoding.UTF8);
-                ServerStreamWriter.WriteAsync(
+                ServerStreamWriter = new StreamWriter(Global.SettingPath + "\\server.json", false, Encoding.UTF8);
+                ServerStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_server, Formatting.Indented)
                     );
                 ServerStreamWriter.Close();
-                BotStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\bot.json", false, Encoding.UTF8);
-                BotStreamWriter.WriteAsync(
+                BotStreamWriter = new StreamWriter(Global.SettingPath + "\\bot.json", false, Encoding.UTF8);
+                BotStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_bot, Formatting.Indented)
                     );
                 BotStreamWriter.Close();
-                SereinStreamWriter = new StreamWriter(Global.SETTINGPATH + "\\serein.json", false, Encoding.UTF8);
-                SereinStreamWriter.WriteAsync(
+                SereinStreamWriter = new StreamWriter(Global.SettingPath + "\\serein.json", false, Encoding.UTF8);
+                SereinStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_serein, Formatting.Indented)
                     );
                 SereinStreamWriter.Close();
@@ -62,30 +62,30 @@ namespace Serein
         }
         public static void ReadSettings()
         {
-            if (File.Exists(Global.SETTINGPATH + "\\server.json"))
+            if (File.Exists(Global.SettingPath + "\\server.json"))
             {
                 Global.Settings_server = JsonConvert.DeserializeObject<Settings_Server>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\server.json", Encoding.UTF8)
+                    File.ReadAllText(Global.SettingPath + "\\server.json", Encoding.UTF8)
                     );
                 if (Global.Settings_server == null)
                 {
                     Global.Settings_server = new Settings_Server();
                 }
             }
-            if (File.Exists(Global.SETTINGPATH + "\\bot.json"))
+            if (File.Exists(Global.SettingPath + "\\bot.json"))
             {
                 Global.Settings_bot = JsonConvert.DeserializeObject<Settings_Bot>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\bot.json", Encoding.UTF8)
+                    File.ReadAllText(Global.SettingPath + "\\bot.json", Encoding.UTF8)
                     );
                 if (Global.Settings_bot == null)
                 {
                     Global.Settings_bot = new Settings_Bot();
                 }
             }
-            if (File.Exists(Global.SETTINGPATH + "\\serein.json"))
+            if (File.Exists(Global.SettingPath + "\\serein.json"))
             {
                 Global.Settings_serein=JsonConvert.DeserializeObject<Settings_Serein>(
-                    File.ReadAllText(Global.SETTINGPATH + "\\serein.json", Encoding.UTF8)
+                    File.ReadAllText(Global.SettingPath + "\\serein.json", Encoding.UTF8)
                     );
                 if (Global.Settings_serein == null)
                 {

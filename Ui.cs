@@ -58,13 +58,5 @@ namespace Serein
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
-
-        private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
-        {
-            RegexEditer regexEditer = new RegexEditer();
-            regexEditer.ShowDialog(this);
-        }
-
-        
     }
 }

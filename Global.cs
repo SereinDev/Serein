@@ -9,9 +9,10 @@ namespace Serein
     class Global
     {
         public static bool Alive = true;
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory;
-        public static string SETTINGPATH = AppDomain.CurrentDomain.BaseDirectory+"settings";
+        public static string Path = AppDomain.CurrentDomain.BaseDirectory;
+        public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory+"settings";
         public static string VERSION = "Testing 2022";
+        public static RegexItem[] RegexItems= { };
         public static Ui ui;
         public static WebBrowser PanelConsoleWebBrowser;
         public static WebBrowser BotWebBrowser;

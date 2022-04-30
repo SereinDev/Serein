@@ -324,7 +324,7 @@
     <value>575, 17</value>
   </metadata>
   <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 162</value>
+    <value>185, 200</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
     <value>RegexContextMenuStrip</value>
@@ -1485,7 +1485,7 @@
     <value>20, 20</value>
   </data>
   <data name="PanelConsoleWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 691</value>
+    <value>890, 699</value>
   </data>
   <data name="PanelConsoleWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1642,6 +1642,12 @@
   </data>
   <data name="RegexContextMenuStripAdd.Text" xml:space="preserve">
     <value>新建记录</value>
+  </data>
+  <data name="RegexContextMenuStripEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="RegexContextMenuStripEdit.Text" xml:space="preserve">
+    <value>修改记录</value>
   </data>
   <data name="RegexContextMenuStripDelete.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
@@ -1910,9 +1916,6 @@
   <data name="&gt;&gt;BotConnect.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="SettingPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1952,11 +1955,14 @@
   <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
   <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 816</value>
+    <value>1232, 836</value>
   </data>
   <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2457,13 +2463,13 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotPortLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 24</value>
+    <value>214, 24</value>
   </data>
   <data name="SettingBotPortLabel.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
   <data name="SettingBotPortLabel.Text" xml:space="preserve">
-    <value>WebSocket端口</value>
+    <value>本地WebSocket端口</value>
   </data>
   <data name="&gt;&gt;SettingBotPortLabel.Name" xml:space="preserve">
     <value>SettingBotPortLabel</value>
@@ -2478,7 +2484,7 @@
     <value>5</value>
   </data>
   <data name="SettingBotPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>197, 87</value>
+    <value>245, 87</value>
   </data>
   <data name="SettingBotPort.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 35</value>
@@ -3143,6 +3149,12 @@
     <value>RegexContextMenuStripAdd</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStripEdit.Name" xml:space="preserve">
+    <value>RegexContextMenuStripEdit</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStripEdit.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripDelete.Name" xml:space="preserve">

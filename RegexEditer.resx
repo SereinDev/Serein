@@ -210,7 +210,7 @@
     <value>8</value>
   </data>
   <data name="Regex.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 87</value>
+    <value>168, 86</value>
   </data>
   <data name="Regex.Size" type="System.Drawing.Size, System.Drawing">
     <value>564, 35</value>
@@ -231,7 +231,7 @@
     <value>7</value>
   </data>
   <data name="Command.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 152</value>
+    <value>168, 156</value>
   </data>
   <data name="Command.Size" type="System.Drawing.Size, System.Drawing">
     <value>564, 35</value>
@@ -276,7 +276,7 @@
     <value>True</value>
   </data>
   <data name="RegexLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 90</value>
+    <value>27, 89</value>
   </data>
   <data name="RegexLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 24</value>
@@ -337,7 +337,7 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 155</value>
+    <value>34, 159</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 24</value>
@@ -454,6 +454,9 @@
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>800, 450</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>正则编辑器</value>

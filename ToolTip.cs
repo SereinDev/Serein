@@ -60,7 +60,7 @@ namespace Serein
         }
         private void SettingBotPortLabel_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "设置Websocket的端口");
+            ShowToolTip(sender, $"设置Websocket的端口\n即go-http的ws正向服务器应在127.0.0.1:{SettingBotPort.Value}开启");
         }
         private void SettingBotEnableLog_MouseHover(object sender, EventArgs e)
         {

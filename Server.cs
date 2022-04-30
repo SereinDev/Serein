@@ -115,14 +115,14 @@ namespace Serein
                 CommandWriter.WriteLine(Command.TrimEnd('\r','\n'));
                 if (Global.Settings_server.EnableLog)
                 {
-                    if (!Directory.Exists(Global.PATH + "\\logs\\console"))
+                    if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
-                        Directory.CreateDirectory(Global.PATH + "\\logs\\console");
+                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
                     }
                     try
                     {
                         LogWriter = new StreamWriter(
-                        Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                        Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
                         true,
                         Encoding.UTF8
                         );
@@ -142,14 +142,14 @@ namespace Serein
                     Log.ColorLog(outLine.Data,Global.Settings_server.OutputStyle));
                 if (Global.Settings_server.EnableLog)
                 {
-                    if (!Directory.Exists(Global.PATH + "\\logs\\console"))
+                    if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
-                        Directory.CreateDirectory(Global.PATH + "\\logs\\console");
+                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
                     }
                     try
                     {
                         LogWriter = new StreamWriter(
-                            Global.PATH + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
                             true,
                             Encoding.UTF8
                             );
