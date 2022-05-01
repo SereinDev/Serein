@@ -117,6 +117,13 @@ namespace Serein
         }
         public void AddRegex(int areaIndex,string regex,bool isAdmin,string remark, string command)
         {
+            if (
+              string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
+              string.IsNullOrWhiteSpace(command) || string.IsNullOrEmpty(command)
+              )
+            {
+                return;
+            }
             string isAdminText = "";
             ListViewItem Item = new ListViewItem(regex);
             if (areaIndex <= 1)
@@ -145,6 +152,11 @@ namespace Serein
                 RegexList.Items.Add(Item);
             }
         }
+        private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
+        {
+            LoadRegex();
+            SaveRegex();
+        }
         public void LoadRegex()
         {
             RegexList.Items.Clear();
@@ -153,13 +165,13 @@ namespace Serein
                 FileStream TsvFile = new FileStream($"{ Global.Path }\\data\\regex.tsv", FileMode.Open);
                 StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
                 string Line;
-                RegexItem[] regexItems = { };
+                List<RegexItem> regexItems = new List<RegexItem>();
                 while ((Line = Reader.ReadLine()) != null)
                 {
                     RegexItem Item = new RegexItem();
                     Item.ConvertToItem(Line);
                     AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                    regexItems.Append(Item);
+                    regexItems.Add(Item);
                 }
                 TsvFile.Close();
                 Reader.Close();
@@ -168,7 +180,7 @@ namespace Serein
         }
         public void SaveRegex()
         {
-            RegexItem[] regexItems = { };
+            List<RegexItem> regexItems =new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
@@ -176,7 +188,7 @@ namespace Serein
             StreamWriter RegexWriter = new StreamWriter(
                 File.Open(
                     $"{Global.Path}\\data\\regex.tsv", 
-                    FileMode.OpenOrCreate,
+                    FileMode.Create,
                     FileAccess.Write
                     ),
                 Encoding.UTF8
@@ -190,7 +202,7 @@ namespace Serein
                 regexItem.Remark = item.SubItems[3].Text;
                 regexItem.Command = item.SubItems[4].Text;
                 RegexWriter.WriteLine(regexItem.ConvertToStr());
-                regexItems.Append(regexItem);
+                regexItems.Add(regexItem);
             }
             Global.RegexItems = regexItems;
             RegexWriter.Flush();

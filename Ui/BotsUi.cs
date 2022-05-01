@@ -11,10 +11,6 @@ using System.Threading;
 
 namespace Serein
 {
-    partial class Bots
-    {
-
-    }
     public partial class Ui : Form
     {
         delegate void BotWebBrowser_Delegate(object[] objects);
@@ -31,11 +27,11 @@ namespace Serein
         }
         private void BotConnect_Click(object sender, EventArgs e)
         {
-            Bots.Websocket.Connect();
+            Websocket.Connect();
         }
         private void BotClose_Click(object sender, EventArgs e)
         {
-            Bots.Websocket.Close();
+            Websocket.Close();
         }
     }
 

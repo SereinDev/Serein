@@ -99,7 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bots.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Ui\BotsUi.cs" />
     <Compile Include="Ui\InitializeUi.cs" />
     <Compile Include="Message.cs" />
@@ -126,10 +126,10 @@
     <Compile Include="Log.cs" />
     <Compile Include="Plugins.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Ui.cs">
+    <Compile Include="Ui\Ui.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui.Designer.cs">
+    <Compile Include="Ui\Ui.Designer.cs">
       <DependentUpon>Ui.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -138,7 +138,7 @@
     <EmbeddedResource Include="Ui\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ui.resx">
+    <EmbeddedResource Include="Ui\Ui.resx">
       <DependentUpon>Ui.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

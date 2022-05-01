@@ -514,6 +514,7 @@ namespace Serein
             // 
             this.RegexContextMenuStripRefresh.Name = "RegexContextMenuStripRefresh";
             resources.ApplyResources(this.RegexContextMenuStripRefresh, "RegexContextMenuStripRefresh");
+            this.RegexContextMenuStripRefresh.Click += new System.EventHandler(this.RegexContextMenuStripRefresh_Click);
             // 
             // Task
             // 

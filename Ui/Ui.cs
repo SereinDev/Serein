@@ -14,7 +14,6 @@ namespace Serein
     {
         public Ui()
         {
-            Init.CheckFiles();
             InitializeComponent();
             Initialize();
             UpdateVersion();
@@ -24,6 +23,7 @@ namespace Serein
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
+
         private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
         {
             Visible = true;
@@ -31,6 +31,7 @@ namespace Serein
             WindowState = FormWindowState.Normal;
             Activate();
         }
+
         private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
         {
             Visible = true;
@@ -38,6 +39,7 @@ namespace Serein
             WindowState = FormWindowState.Normal;
             Activate();
         }
+
         private void Serein_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Server.Status)
@@ -52,6 +54,7 @@ namespace Serein
                 Global.Alive = false;
             }
         }
+
         private void ShowBalloonTip(string text)
         {
             SereinIcon.BalloonTipTitle = "Serein";
