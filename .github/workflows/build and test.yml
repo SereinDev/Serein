@@ -27,12 +27,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Install Newtonsoft.Json
-      run: dotnet add package Newtonsoft.Json --version 13.0.1
-      
-    - name: Install WebSocketSharp
-      run: dotnet add package WebSocketSharp --version 1.0.3-rc11
-
     - name: Build
       run: dotnet build --configuration Release --no-restore
     
