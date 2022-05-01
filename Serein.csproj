@@ -94,8 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
-    <Compile Include="Ui\BotsUi.cs" />
-    <Compile Include="Ui\InitializeUi.cs" />
+    <Compile Include="Ui\BotsUi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\InitializeUi.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Message.cs" />
     <Compile Include="Ui\PanelUi.cs" />
     <Compile Include="Ui\PluginsUi.cs">

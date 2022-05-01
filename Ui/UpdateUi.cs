@@ -19,7 +19,7 @@ namespace Serein
                 {
                     Thread.CurrentThread.Join(5000);
                 }
-                if (Server.Status)
+                if (Server.Status && Global.Alive)
                 {
                     TimeSpan t = DateTime.Now - Server.ServerProcess.StartTime;
                     if (t.TotalSeconds < 3600)
@@ -38,7 +38,7 @@ namespace Serein
                     PanelInfoStatus2_Update("已启动");
 
                 }
-                else
+                else if(Global.Alive)
                 {
                     PanelInfoStatus2_Update("未启动");
                     PanelInfoVersion2_Update("-");

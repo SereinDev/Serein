@@ -64,7 +64,7 @@ namespace Serein
                         "\"params\":" +
                         "{" +
                             "\"user_id\":" + target + "," +
-                            "\"message\":" + message +
+                            "\"message\":\"" + message + "\"" +
                         "}" +
                     "}";
                 }
@@ -76,7 +76,7 @@ namespace Serein
                         "\"params\":" +
                         "{" +
                             "\"group_id\":" + target + "," +
-                            "\"message\":" + message +
+                            "\"message\":\"" + message + "\"" +
                         "}" +
                     "}";
                 }

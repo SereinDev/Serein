@@ -125,7 +125,7 @@
     <value>184, 38</value>
   </data>
   <data name="PluginContextMenuStripAdd.Text" xml:space="preserve">
-    <value>添加插件</value>
+    <value>导入插件</value>
   </data>
   <data name="PluginContextMenuStripRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
@@ -1095,40 +1095,40 @@
     <value>575, 17</value>
   </metadata>
   <data name="RegexContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>184, 38</value>
   </data>
   <data name="RegexContextMenuStripAdd.Text" xml:space="preserve">
     <value>新建记录</value>
   </data>
   <data name="RegexContextMenuStripEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>184, 38</value>
   </data>
   <data name="RegexContextMenuStripEdit.Text" xml:space="preserve">
     <value>修改记录</value>
   </data>
   <data name="RegexContextMenuStripDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>184, 38</value>
   </data>
   <data name="RegexContextMenuStripDelete.Text" xml:space="preserve">
     <value>删除记录</value>
   </data>
   <data name="RegexContextMenuStripClear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>184, 38</value>
   </data>
   <data name="RegexContextMenuStripClear.Text" xml:space="preserve">
     <value>清空记录</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 6</value>
+    <value>181, 6</value>
   </data>
   <data name="RegexContextMenuStripRefresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>184, 38</value>
   </data>
   <data name="RegexContextMenuStripRefresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
   <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 244</value>
+    <value>185, 200</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
     <value>RegexContextMenuStrip</value>
@@ -1460,9 +1460,6 @@
   <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingSereinEnableGetAnnouncement.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="SettingSereinEnableGetAnnouncement.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1495,9 +1492,6 @@
   </data>
   <data name="SettingSereinEnableGetUpdate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1533,10 +1527,10 @@
     <value>Top</value>
   </data>
   <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 713</value>
+    <value>0, 655</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 138</value>
+    <value>1232, 138</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1556,33 +1550,6 @@
   <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="SettingBotClearCache.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingBotClearCache.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 403</value>
-  </data>
-  <data name="SettingBotClearCache.Size" type="System.Drawing.Size, System.Drawing">
-    <value>288, 35</value>
-  </data>
-  <data name="SettingBotClearCache.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="SettingBotClearCache.Text" xml:space="preserve">
-    <value>退出账号并清除缓存</value>
-  </data>
-  <data name="&gt;&gt;SettingBotClearCache.Name" xml:space="preserve">
-    <value>SettingBotClearCache</value>
-  </data>
-  <data name="&gt;&gt;SettingBotClearCache.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotClearCache.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotClearCache.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="SettingBotPermission.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1590,7 +1557,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPermission.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 311</value>
+    <value>23, 309</value>
   </data>
   <data name="SettingBotPermission.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -1614,7 +1581,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="SettingBotGroup.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1623,7 +1590,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 233</value>
+    <value>23, 231</value>
   </data>
   <data name="SettingBotGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -1647,7 +1614,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="SettingBotPermissionList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1659,7 +1626,7 @@
     <value>True</value>
   </data>
   <data name="SettingBotPermissionList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 35</value>
+    <value>1185, 35</value>
   </data>
   <data name="SettingBotPermissionList.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1674,7 +1641,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="SettingBotGroupList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1686,7 +1653,7 @@
     <value>True</value>
   </data>
   <data name="SettingBotGroupList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 35</value>
+    <value>1185, 35</value>
   </data>
   <data name="SettingBotGroupList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1701,7 +1668,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="SettingBotPortLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1710,7 +1677,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPortLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 89</value>
+    <value>23, 92</value>
   </data>
   <data name="SettingBotPortLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -1734,7 +1701,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPortLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="SettingBotPort.Location" type="System.Drawing.Point, System.Drawing">
     <value>245, 87</value>
@@ -1758,7 +1725,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPort.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="SettingBotSupportedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1791,7 +1758,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="SettingBotSupportedLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1824,7 +1791,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLink.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1857,7 +1824,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="SettingBotEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1890,7 +1857,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1899,7 +1866,7 @@
     <value>0, 248</value>
   </data>
   <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 465</value>
+    <value>1232, 407</value>
   </data>
   <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1926,7 +1893,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 121</value>
+    <value>384, 125</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2121,10 +2088,10 @@
     <value>NoControl</value>
   </data>
   <data name="SettingServerPathSelect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1041, 63</value>
+    <value>1075, 63</value>
   </data>
   <data name="SettingServerPathSelect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 35</value>
+    <value>134, 38</value>
   </data>
   <data name="SettingServerPathSelect.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2151,7 +2118,7 @@
     <value>23, 63</value>
   </data>
   <data name="SettingServerPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1010, 35</value>
+    <value>1044, 35</value>
   </data>
   <data name="SettingServerPath.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2181,7 +2148,7 @@
     <value>20, 20, 20, 20</value>
   </data>
   <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 248</value>
+    <value>1232, 248</value>
   </data>
   <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

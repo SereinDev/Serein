@@ -154,8 +154,10 @@ namespace Serein
         }
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
+            RegexList.BeginUpdate();
             LoadRegex();
             SaveRegex();
+            RegexList.EndUpdate();
         }
         public void LoadRegex()
         {

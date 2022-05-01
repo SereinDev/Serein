@@ -101,7 +101,6 @@ namespace Serein
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
-            this.SettingBotClearCache = new System.Windows.Forms.Button();
             this.SettingBotPermission = new System.Windows.Forms.Label();
             this.SettingBotGroup = new System.Windows.Forms.Label();
             this.SettingBotPermissionList = new System.Windows.Forms.TextBox();
@@ -629,7 +628,6 @@ namespace Serein
             // 
             // SettingBot
             // 
-            this.SettingBot.Controls.Add(this.SettingBotClearCache);
             this.SettingBot.Controls.Add(this.SettingBotPermission);
             this.SettingBot.Controls.Add(this.SettingBotGroup);
             this.SettingBot.Controls.Add(this.SettingBotPermissionList);
@@ -643,13 +641,6 @@ namespace Serein
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
-            // 
-            // SettingBotClearCache
-            // 
-            resources.ApplyResources(this.SettingBotClearCache, "SettingBotClearCache");
-            this.SettingBotClearCache.Name = "SettingBotClearCache";
-            this.SettingBotClearCache.UseVisualStyleBackColor = true;
-            this.SettingBotClearCache.MouseHover += new System.EventHandler(this.SettingBotClearCache_MouseHover);
             // 
             // SettingBotPermission
             // 
@@ -913,7 +904,6 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.GroupBox SettingBot;
-        private System.Windows.Forms.Button SettingBotClearCache;
         private System.Windows.Forms.Label SettingBotPermission;
         private System.Windows.Forms.Label SettingBotGroup;
         private System.Windows.Forms.TextBox SettingBotPermissionList;

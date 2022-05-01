@@ -55,7 +55,7 @@ namespace Serein
                             {
                                 Command.command(
                                     item.Command,
-                                    Regex.Matches(
+                                    Regex.Match(
                                         jsonObject["raw_message"].ToString(),
                                         item.Regex
                                     ),
@@ -68,7 +68,7 @@ namespace Serein
                             {
                                 Command.command(
                                     item.Command,
-                                    Regex.Matches(
+                                    Regex.Match(
                                         jsonObject["raw_message"].ToString(),
                                         item.Regex
                                         ),
@@ -85,7 +85,7 @@ namespace Serein
                             {
                                 Command.command(
                                     item.Command,
-                                    Regex.Matches(
+                                    Regex.Match(
                                         jsonObject["raw_message"].ToString(),
                                         item.Regex
                                     ),
@@ -98,7 +98,7 @@ namespace Serein
                             {
                                 Command.command(
                                     item.Command,
-                                    Regex.Matches(
+                                    Regex.Match(
                                         jsonObject["raw_message"].ToString(),
                                         item.Regex
                                         ),

@@ -86,17 +86,13 @@ namespace Serein
         {
             ShowToolTip(sender, "设定有管理权限的用户");
         }
-        private void SettingBotClearCache_MouseHover(object sender, EventArgs e)
-        {
-            ShowToolTip(sender, "退出当前账号并清除消息缓存");
-        }
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "启动后每隔10分钟检查一次更新（建议开启）");
         }
         private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "启动后获取一次公告（建议开启）");
+            ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         }
     }
 }
