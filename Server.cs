@@ -19,8 +19,8 @@ namespace Serein
         static Thread WaitForExitThread, RestartTimerThread;
         public static bool Killed;
         static StreamWriter CommandWriter,LogWriter;
-        public static TimeSpan prevCpuTime = TimeSpan.Zero;
-        public static TimeSpan curTime = TimeSpan.Zero;
+        public static TimeSpan PrevCpuTime = TimeSpan.Zero;
+        public static TimeSpan CurTime = TimeSpan.Zero;
 
         public static void Start() 
         {
@@ -58,8 +58,8 @@ namespace Serein
                 Status = true;
                 Killed = false;
                 Started = false;
-                prevCpuTime = TimeSpan.Zero;
-                curTime = TimeSpan.Zero;
+                PrevCpuTime = TimeSpan.Zero;
+                CurTime = TimeSpan.Zero;
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
@@ -159,6 +159,7 @@ namespace Serein
                     }
                     catch { }
                 }
+                Message.ProcessMsgFromConsole(outLine.Data);
             }
         }
         public static void WaitForExit()
@@ -236,9 +237,9 @@ namespace Serein
         }
         public static double GetCPU()
         {
-            curTime = ServerProcess.TotalProcessorTime;
-            double value= (curTime - prevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
-            prevCpuTime = curTime;
+            CurTime = ServerProcess.TotalProcessorTime;
+            double value= (CurTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+            PrevCpuTime = CurTime;
             return value;
         }
      }

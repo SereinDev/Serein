@@ -5,115 +5,122 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Web.Script.Serialization;
 
 namespace Serein
 {
     public class Message
     {
-        public static void ProcessMsgFromConsole(string text)
+        public static void ProcessMsgFromConsole(string CommandLine)
         {
-
+            foreach (RegexItem Item in Global.RegexItems)
+            {
+                if (string.IsNullOrEmpty(Item.Regex) || Item.Area != 1)
+                {
+                    continue;
+                }
+                if (Regex.IsMatch(CommandLine, Item.Regex))
+                {
+                    Command.Run(Item.Command, Regex.Match(CommandLine, Item.Regex));
+                }
+            }
         }
-        public static void ProcessMsgFromBot(string json)
+        public static void ProcessMsgFromBot(string Json)
         {
-            JObject jsonObject = (JObject)JsonConvert.DeserializeObject(json);
-            if(jsonObject["post_type"].ToString()== "message")
+            JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
+            if(JsonObject["post_type"].ToString()== "message")
             {
                 Global.ui.BotWebBrowser_Invoke(
                 "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                $"{jsonObject["sender"]["nickname"]}({jsonObject["sender"]["user_id"]})"+":"+
-                jsonObject["raw_message"].ToString());
-                foreach(RegexItem item in Global.RegexItems)
+                $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})"+":"+
+                JsonObject["raw_message"].ToString());
+                foreach(RegexItem Item in Global.RegexItems)
                 {
-                    if (string.IsNullOrEmpty(item.Regex) || item.Area<=1)
+                    if (string.IsNullOrEmpty(Item.Regex) || Item.Area<=1)
                     {
                         continue;
                     }
-                    if(Regex.IsMatch(jsonObject["raw_message"].ToString(), item.Regex))
+                    if(Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
-                        string message_type = jsonObject["message_type"].ToString();
+                        string MessageType = JsonObject["message_type"].ToString();
                         int r;
-                        int group_id = int.TryParse(jsonObject["group_id"].ToString(), out r) ? r : -1;
-                        int user_id = int.TryParse(jsonObject["sender"]["user_id"].ToString(), out r) ? r : -1;
-                        if (item.IsAdmin)
+                        int GroupId = int.TryParse(JsonObject["group_id"].ToString(), out r) ? r : -1;
+                        int UserId = int.TryParse(JsonObject["sender"]["user_id"].ToString(), out r) ? r : -1;
+                        if (Item.IsAdmin)
                         {
-                            bool Admin = false;
-                            if (Global.Settings_bot.PermissionList.Contains(user_id))
+                            bool IsAdmin = false;
+                            if (Global.Settings_bot.PermissionList.Contains(UserId))
                             {
-                                Admin = true;
+                                IsAdmin = true;
                             }
-                            else if (Global.Settings_bot.GivePermissionToAllAdmin && (jsonObject["sender"]["role"].ToString() == "admin" || jsonObject["sender"]["role"].ToString() == "owner"))
+                            else if (Global.Settings_bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
                             {
-                                Admin = true;
+                                IsAdmin = true;
                             }
-                            if (!Admin)
+                            if (!IsAdmin)
                             {
                                 continue;
                             }
-                            if (message_type == "group" && Global.Settings_bot.GroupList.Contains(group_id))
+                            if (MessageType == "group" && Global.Settings_bot.GroupList.Contains(GroupId))
                             {
-                                Command.command(
-                                    item.Command,
+                                Command.Run(
+                                    JsonObject,
+                                    Item.Command,
                                     Regex.Match(
-                                        jsonObject["raw_message"].ToString(),
-                                        item.Regex
+                                        JsonObject["raw_message"].ToString(),
+                                        Item.Regex
                                     ),
-                                    user_id,
-                                    group_id
+                                    UserId,
+                                    GroupId
                                 );
-                                Command.test(item);
+                                Command.test(Item);
                             }
-                            else if(message_type == "private")
+                            else if(MessageType == "private")
                             {
-                                Command.command(
-                                    item.Command,
+                                Command.Run(
+                                    JsonObject,
+                                    Item.Command,
                                     Regex.Match(
-                                        jsonObject["raw_message"].ToString(),
-                                        item.Regex
+                                        JsonObject["raw_message"].ToString(),
+                                        Item.Regex
                                         ),
-                                    user_id
+                                    UserId
                                 );
-                                Command.test(item);
+                                Command.test(Item);
                             }
-
-
                         }
                         else
                         {
-                            if (message_type == "group" && Global.Settings_bot.GroupList.Contains(group_id))
+                            if (MessageType == "group" && Global.Settings_bot.GroupList.Contains(GroupId))
                             {
-                                Command.command(
-                                    item.Command,
+                                Command.Run(
+                                    JsonObject,
+                                    Item.Command,
                                     Regex.Match(
-                                        jsonObject["raw_message"].ToString(),
-                                        item.Regex
+                                        JsonObject["raw_message"].ToString(),
+                                        Item.Regex
                                     ),
-                                    user_id,
-                                    group_id
+                                    UserId,
+                                    GroupId
                                 );
-                                Command.test(item);
+                                Command.test(Item);
                             }
-                            else if (message_type == "private")
+                            else if (MessageType == "private")
                             {
-                                Command.command(
-                                    item.Command,
+                                Command.Run(
+                                    JsonObject,
+                                    Item.Command,
                                     Regex.Match(
-                                        jsonObject["raw_message"].ToString(),
-                                        item.Regex
+                                        JsonObject["raw_message"].ToString(),
+                                        Item.Regex
                                         ),
-                                    user_id
+                                    UserId
                                 );
-                                Command.test(item);
+                                Command.test(Item);
                             }
                         }
                     }
                 }
             }
-        }
-        public static void ProcessMsgFromTask(string text)
-        {
-
         }
     }
 }

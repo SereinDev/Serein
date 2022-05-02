@@ -1,88 +1,142 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Serein
 {
     class Command
     {
-        public static void command(string command, Match OutputMatch)
+        public static  void StartCmd(string Command)
         {
-
+            Process CMDProcess = new Process();
+            CMDProcess.StartInfo.FileName = "cmd.exe";
+            CMDProcess.StartInfo.UseShellExecute = false;
+            CMDProcess.StartInfo.RedirectStandardInput = true;
+            CMDProcess.StartInfo.CreateNoWindow = true;
+            CMDProcess.Start();
+            StreamWriter CommandWriter = new StreamWriter(CMDProcess.StandardInput.BaseStream, Encoding.Default);
+            CommandWriter.AutoFlush = true;
+            CommandWriter.NewLine = "\r\n";
+            CommandWriter.WriteLine("chcp 936");
+            CommandWriter.WriteLine($"cd \"{Global.Path}\"");
+            CommandWriter.WriteLine("cls");
+            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
+            CommandWriter.WriteLine("exit");
+            CMDProcess.WaitForExit();
+            CMDProcess.Close();
+            CommandWriter.Close();
         }
-
-        public static void command(string command,Match MsgMatch,int user_id, int group_id=-1)
+        public static void Run(string Command, Match OutputMatch)
         {
-            int type = GetType(command);
-            if (type==-1)
+            int Type = GetType(Command);
+            if (Type == -1)
             {
                 return;
             }
-            string value = GetValue(command, MsgMatch);
-            if (type == 1)
+            string Value = GetValue(Command, OutputMatch);
+            if (Type == 1)
             {
+                Task CMDTask = new Task(() =>
+                  {
+                      StartCmd(Value);
+                  });
+                CMDTask.Start();
             }
-            else if (type == 2 && Server.Status)
+            else if (Type == 2 && Server.Status)
             {
-                Server.InputCommand(value);
+                Server.InputCommand(Value);
             }
-            else if (type == 3)
+            else if (Type == 3 && Websocket.Status)
             {
-                Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value);
+                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (type == 4)
+            else if (Type == 4 && Websocket.Status)
             {
-                Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value);
+                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (type == 5)
+        }
+
+        public static void Run(JObject JsonObject,string Command,Match MsgMatch,int UserId, int GroupId=-1)
+        {
+            int Type = GetType(Command);
+            if (Type==-1)
             {
-                Websocket.Send(false, value, group_id.ToString());
+                return;
             }
-            else if (type == 6)
+            string Value = GetValue(Command, MsgMatch);
+            if (Type == 1)
             {
-                Websocket.Send(true, value, user_id.ToString());
+                Task CMDTask = new Task(() =>
+                {
+                    StartCmd(Value);
+                });
+                CMDTask.Start();
             }
-            MessageBox.Show(command + "\n" + value + "\n" + type.ToString());
+            else if (Type == 2 && Server.Status)
+            {
+                Server.InputCommand(Value);
+            }
+            else if (Type == 3 && Websocket.Status)
+            {
+                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+            }
+            else if (Type == 4 && Websocket.Status)
+            {
+                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+            }
+            else if (Type == 5 && Websocket.Status)
+            {
+                Websocket.Send(false, Value, GroupId.ToString());
+            }
+            else if (Type == 6 && Websocket.Status)
+            {
+                Websocket.Send(true, Value, UserId.ToString());
+            }
+            MessageBox.Show(Command + "\n" + Value + "\n" + Type.ToString());
         }
 
         public static void test(RegexItem item)
         {
             MessageBox.Show($"{item.Regex}\n{item.Command}");
         }
-        public static int GetType(string command)
+        public static int GetType(string Command)
         {
-            if (!command.Contains("|"))
+            if (!Command.Contains("|"))
             {
                 return -1;
             }
-            if (!Regex.IsMatch(command, @"^.+?\|.+$", RegexOptions.IgnoreCase))
+            if (!Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase))
             {
                 return -1;
             }
-            if (Regex.IsMatch(command,@"^cmd\|",RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command,@"^cmd\|",RegexOptions.IgnoreCase))
             {
                 return 1;
             }
-            else if(Regex.IsMatch(command, @"^s\|", RegexOptions.IgnoreCase)|| Regex.IsMatch(command, @"^server\|", RegexOptions.IgnoreCase))
+            else if(Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase)|| Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return 2;
             }
-            else if (Regex.IsMatch(command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 3;
             }
-            else if (Regex.IsMatch(command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 4;
             }
-            else if(Regex.IsMatch(command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(command, @"^group\|", RegexOptions.IgnoreCase))
+            else if(Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
             {
                 return 5;
             }
-            else if (Regex.IsMatch(command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(command, @"^private\|", RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
             {
                 return 6;
             }
@@ -94,12 +148,12 @@ namespace Serein
         public static string  GetValue(string command, Match MsgMatch)
         {
             int index = command.IndexOf('|');
-            string value = command.Substring(index+1);
+            string Value = command.Substring(index+1);
             for (int i=1; i < MsgMatch.Groups.Count; i++)
             {
-                value = value.Replace($"${i}", MsgMatch.Groups[i].Value);
+                Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }
-            return value;
+            return Value;
         }
     }
 }

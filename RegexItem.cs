@@ -18,18 +18,18 @@ namespace Serein
             string Text = $"{Regex}\t{Area}\t{IsAdmin}\t{Remark}\t{Command}";
             return Text;
         }
-        public void ConvertToItem(string text)
+        public void ConvertToItem(string Text)
         {
-            string[] texts = text.Split('\t');
-            if (texts.Length != 5)
+            string[] Texts = Text.Split('\t');
+            if (Texts.Length != 5)
             {
                 return;
             }
-            Regex = texts[0];
-            Area = int.TryParse(texts[1], out int s) ? s : 0;
-            IsAdmin = texts[2]=="True";
-            Remark = texts[3];
-            Command = texts[4];
+            Regex = Texts[0];
+            Area = int.TryParse(Texts[1], out int s) ? s : 0;
+            IsAdmin = Texts[2]=="True";
+            Remark = Texts[3];
+            Command = Texts[4];
         }
     }
 }
