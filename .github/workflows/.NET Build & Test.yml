@@ -7,7 +7,7 @@ jobs:
     Build-Debug:
       strategy:
         matrix:
-          configuration: Debug
+          configuration: [Debug]
       runs-on: windows-latest
 
       steps:
@@ -49,10 +49,10 @@ jobs:
           name: Serein_Debug
           path: ${{ github.workspace }}\bin\Debug
   
-  Build-Release:
+    Build-Release:
       strategy:
         matrix:
-          configuration: Release
+          configuration: [Release]
       runs-on: windows-latest
 
       steps:
