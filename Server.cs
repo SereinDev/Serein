@@ -38,8 +38,8 @@ namespace Serein
             }
             else
             {
-                Global.ui.PanelConsoleWebBrowser_Invoke("#clear");
-                Global.ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
+                Global.Ui.PanelConsoleWebBrowser_Invoke("#clear");
+                Global.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
                 ServerProcessInfo = new ProcessStartInfo(Global.Settings_server.Path);
                 ServerProcessInfo.FileName = Global.Settings_server.Path;
                 ServerProcessInfo.UseShellExecute = false;
@@ -93,9 +93,27 @@ namespace Serein
                     )==1
                 )
             {
-                ServerProcess.Kill();
-                Killed = true;
-                Restart = false;
+                if (ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT"))
+                {
+                    if((int)MessageBox.Show(
+                    "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
+                    "Serein",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning
+                    ) == 1)
+                    {
+                        ServerProcess.Kill();
+                        Killed = true;
+                        Restart = false;
+                    }
+
+                }
+                else
+                {
+                    ServerProcess.Kill();
+                    Killed = true;
+                    Restart = false;
+                }
             }
             else if (!Status)
             {
@@ -110,7 +128,7 @@ namespace Serein
                 Command = Regex.Replace(Command, @"^[\r\n\s]+?", "");
                 if (Global.Settings_server.EnableOutputCommand)
                 {
-                    Global.ui.PanelConsoleWebBrowser_Invoke($">{Command}");
+                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Command}");
                 }
                 CommandWriter.WriteLine(Command.TrimEnd('\r','\n'));
                 if (Global.Settings_server.EnableLog)
@@ -138,7 +156,7 @@ namespace Serein
         { 
             if (!string.IsNullOrEmpty(outLine.Data))
             {
-                Global.ui.PanelConsoleWebBrowser_Invoke(
+                Global.Ui.PanelConsoleWebBrowser_Invoke(
                     Log.ColorLog(outLine.Data,Global.Settings_server.OutputStyle));
                 if (Global.Settings_server.EnableLog)
                 {
@@ -169,7 +187,7 @@ namespace Serein
             CommandWriter.Close();
             if (! Killed && ServerProcess.ExitCode != 0)
             {
-                Global.ui.PanelConsoleWebBrowser_Invoke(
+                Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 if(Global.Settings_server.EnableRestart)
@@ -179,7 +197,7 @@ namespace Serein
             }
             else
             {
-                Global.ui.PanelConsoleWebBrowser_Invoke(
+                Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
             }
@@ -209,10 +227,10 @@ namespace Serein
         }
         private static void RestartTimer()
         {
-            Global.ui.PanelConsoleWebBrowser_Invoke(
+            Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>服务器将在5s后重新启动."
                 );
-            Global.ui.PanelConsoleWebBrowser_Invoke(
+            Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下停止按钮来取消这次重启."
                 );
             for (int i = 0; i < 10; i++)
@@ -229,7 +247,7 @@ namespace Serein
             }
             else
             {
-                Global.ui.PanelConsoleWebBrowser_Invoke(
+                Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消."
                 );
             }

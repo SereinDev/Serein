@@ -25,22 +25,27 @@ namespace Serein
         private void Confirm_Click(object sender, EventArgs e)
         {
             if(
-                !string.IsNullOrWhiteSpace(Regex.Text)||!string.IsNullOrEmpty(Regex.Text)||
-                !string.IsNullOrWhiteSpace(Command.Text)||!string.IsNullOrEmpty(Command.Text)
-                )
+                !(string.IsNullOrWhiteSpace(RegexTextBox.Text)||string.IsNullOrEmpty(RegexTextBox.Text)||
+                string.IsNullOrWhiteSpace(CommandTextBox.Text)||string.IsNullOrEmpty(CommandTextBox.Text)
+                ))
             {
+                if (Command.GetType(CommandTextBox.Text) == -1)
+                {
+                    MessageBox.Show("命令内容无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 try
                 {
-                    Regex m = new Regex(Regex.Text);
+                    Regex m = new Regex(RegexTextBox.Text);
                     m.Match("");
                     if (!Edit)
                     {
-                        Global.ui.AddRegex(
+                        Global.Ui.AddRegex(
                             Area.SelectedIndex,
-                            Regex.Text,
+                            RegexTextBox.Text,
                             IsAdmin.Checked,
-                            Remark.Text,
-                            Command.Text
+                            RemarkTextBox.Text,
+                            CommandTextBox.Text
                             );
                     }
                     CancelFlag = false;
@@ -48,7 +53,7 @@ namespace Serein
                 }
                 catch
                 {
-                    MessageBox.Show("正则表达式不合法", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -75,10 +80,10 @@ namespace Serein
         public void UpdateInfo(int areaIndex, string regex, bool isAdmin, string remark, string command)
         {
             Area.SelectedIndex = areaIndex;
-            Regex.Text = regex;
+            RegexTextBox.Text = regex;
             IsAdmin.Checked = isAdmin;
-            Remark.Text = remark;
-            Command.Text = command;
+            RemarkTextBox.Text = remark;
+            CommandTextBox.Text = command;
             if (Area.SelectedIndex <= 1)
             {
                 IsAdmin.Enabled = false;
@@ -92,25 +97,25 @@ namespace Serein
 
         private void Regex_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.Text.Contains("\t"))
+            if (RegexTextBox.Text.Contains("\t"))
             {
-                Regex.Text = Regex.Text.Replace("\t", "");
+                RegexTextBox.Text = RegexTextBox.Text.Replace("\t", "");
             }
         }
 
         private void Command_TextChanged(object sender, EventArgs e)
         {
-            if (Command.Text.Contains("\t"))
+            if (CommandTextBox.Text.Contains("\t"))
             {
-                Command.Text = Command.Text.Replace("\t", "");
+                CommandTextBox.Text = CommandTextBox.Text.Replace("\t", "");
             }
         }
 
         private void Remark_TextChanged(object sender, EventArgs e)
         {
-            if (Remark.Text.Contains("\t"))
+            if (RemarkTextBox.Text.Contains("\t"))
             {
-                Remark.Text = Remark.Text.Replace("\t", "");
+                RemarkTextBox.Text = RemarkTextBox.Text.Replace("\t", "");
             }
         }
     }

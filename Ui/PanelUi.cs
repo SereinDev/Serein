@@ -11,10 +11,6 @@ using System.Threading;
 
 namespace Serein
 {
-    partial class Panel
-    {
-
-    }
     public partial class Ui : Form
     {
         delegate void PanelConsoleWebBrowser_Delegate(object[] objects);

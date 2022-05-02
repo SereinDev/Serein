@@ -209,67 +209,67 @@
   <data name="&gt;&gt;IsAdmin.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="Regex.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="RegexTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 86</value>
   </data>
-  <data name="Regex.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>564, 35</value>
   </data>
-  <data name="Regex.TabIndex" type="System.Int32, mscorlib">
+  <data name="RegexTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;Regex.Name" xml:space="preserve">
-    <value>Regex</value>
+  <data name="&gt;&gt;RegexTextBox.Name" xml:space="preserve">
+    <value>RegexTextBox</value>
   </data>
-  <data name="&gt;&gt;Regex.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Regex.Parent" xml:space="preserve">
+  <data name="&gt;&gt;RegexTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Regex.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;RegexTextBox.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="Command.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="CommandTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 156</value>
   </data>
-  <data name="Command.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CommandTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>564, 35</value>
   </data>
-  <data name="Command.TabIndex" type="System.Int32, mscorlib">
+  <data name="CommandTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;Command.Name" xml:space="preserve">
-    <value>Command</value>
+  <data name="&gt;&gt;CommandTextBox.Name" xml:space="preserve">
+    <value>CommandTextBox</value>
   </data>
-  <data name="&gt;&gt;Command.Type" xml:space="preserve">
+  <data name="&gt;&gt;CommandTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Command.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CommandTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Command.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CommandTextBox.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="Remark.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="RemarkTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 226</value>
   </data>
-  <data name="Remark.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RemarkTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>564, 35</value>
   </data>
-  <data name="Remark.TabIndex" type="System.Int32, mscorlib">
+  <data name="RemarkTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;Remark.Name" xml:space="preserve">
-    <value>Remark</value>
+  <data name="&gt;&gt;RemarkTextBox.Name" xml:space="preserve">
+    <value>RemarkTextBox</value>
   </data>
-  <data name="&gt;&gt;Remark.Type" xml:space="preserve">
+  <data name="&gt;&gt;RemarkTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Remark.Parent" xml:space="preserve">
+  <data name="&gt;&gt;RemarkTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Remark.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;RemarkTextBox.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="RegexLabel.AutoSize" type="System.Boolean, mscorlib">

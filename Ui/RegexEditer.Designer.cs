@@ -33,9 +33,9 @@ namespace Serein
             this.Area = new System.Windows.Forms.ComboBox();
             this.AreaLabel = new System.Windows.Forms.Label();
             this.IsAdmin = new System.Windows.Forms.CheckBox();
-            this.Regex = new System.Windows.Forms.TextBox();
-            this.Command = new System.Windows.Forms.TextBox();
-            this.Remark = new System.Windows.Forms.TextBox();
+            this.RegexTextBox = new System.Windows.Forms.TextBox();
+            this.CommandTextBox = new System.Windows.Forms.TextBox();
+            this.RemarkTextBox = new System.Windows.Forms.TextBox();
             this.RegexLabel = new System.Windows.Forms.Label();
             this.RemarkLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -67,23 +67,23 @@ namespace Serein
             this.IsAdmin.Name = "IsAdmin";
             this.IsAdmin.UseVisualStyleBackColor = true;
             // 
-            // Regex
+            // RegexTextBox
             // 
-            resources.ApplyResources(this.Regex, "Regex");
-            this.Regex.Name = "Regex";
-            this.Regex.TextChanged += new System.EventHandler(this.Regex_TextChanged);
+            resources.ApplyResources(this.RegexTextBox, "RegexTextBox");
+            this.RegexTextBox.Name = "RegexTextBox";
+            this.RegexTextBox.TextChanged += new System.EventHandler(this.Regex_TextChanged);
             // 
-            // Command
+            // CommandTextBox
             // 
-            resources.ApplyResources(this.Command, "Command");
-            this.Command.Name = "Command";
-            this.Command.TextChanged += new System.EventHandler(this.Command_TextChanged);
+            resources.ApplyResources(this.CommandTextBox, "CommandTextBox");
+            this.CommandTextBox.Name = "CommandTextBox";
+            this.CommandTextBox.TextChanged += new System.EventHandler(this.Command_TextChanged);
             // 
-            // Remark
+            // RemarkTextBox
             // 
-            resources.ApplyResources(this.Remark, "Remark");
-            this.Remark.Name = "Remark";
-            this.Remark.TextChanged += new System.EventHandler(this.Remark_TextChanged);
+            resources.ApplyResources(this.RemarkTextBox, "RemarkTextBox");
+            this.RemarkTextBox.Name = "RemarkTextBox";
+            this.RemarkTextBox.TextChanged += new System.EventHandler(this.Remark_TextChanged);
             // 
             // RegexLabel
             // 
@@ -123,9 +123,9 @@ namespace Serein
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RemarkLabel);
             this.Controls.Add(this.RegexLabel);
-            this.Controls.Add(this.Remark);
-            this.Controls.Add(this.Command);
-            this.Controls.Add(this.Regex);
+            this.Controls.Add(this.RemarkTextBox);
+            this.Controls.Add(this.CommandTextBox);
+            this.Controls.Add(this.RegexTextBox);
             this.Controls.Add(this.IsAdmin);
             this.Controls.Add(this.AreaLabel);
             this.Controls.Add(this.Area);
@@ -143,9 +143,9 @@ namespace Serein
         public System.Windows.Forms.ComboBox Area;
         public System.Windows.Forms.Label AreaLabel;
         public System.Windows.Forms.CheckBox IsAdmin;
-        public System.Windows.Forms.TextBox Regex;
-        public System.Windows.Forms.TextBox Command;
-        public System.Windows.Forms.TextBox Remark;
+        public System.Windows.Forms.TextBox RegexTextBox;
+        public System.Windows.Forms.TextBox CommandTextBox;
+        public System.Windows.Forms.TextBox RemarkTextBox;
         public System.Windows.Forms.Label RegexLabel;
         public System.Windows.Forms.Label RemarkLabel;
         public System.Windows.Forms.Label label1;

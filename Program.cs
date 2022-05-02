@@ -20,7 +20,7 @@ namespace Serein
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Ui serein = new Ui();
-            Global.ui = serein;
+            Global.Ui = serein;
             Application.Run(serein);
         }
         static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

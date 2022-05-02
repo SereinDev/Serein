@@ -29,8 +29,6 @@ namespace Serein
             CommandWriter.WriteLine("cls");
             CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
             CommandWriter.WriteLine("exit");
-            CMDProcess.WaitForExit();
-            CMDProcess.Close();
             CommandWriter.Close();
         }
         public static void Run(string Command, Match OutputMatch)
@@ -60,6 +58,10 @@ namespace Serein
             else if (Type == 4 && Websocket.Status)
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+            }
+            else if (Type == 5 && Websocket.Status && Global.Settings_bot.GroupList.Length>=1)
+            {
+                Websocket.Send(false, Value, Global.Settings_bot.GroupList[0].ToString());
             }
         }
 

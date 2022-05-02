@@ -11,9 +11,6 @@ using System.Threading;
 
 namespace Serein
 {
-    partial class Settings
-    {
-    }
     public partial class Ui : Form
     {
         public void LoadSettings()

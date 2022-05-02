@@ -120,6 +120,8 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
+            this.PluginContextMenuStripShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -154,6 +156,8 @@ namespace Serein
             this.toolStripSeparator1,
             this.PluginContextMenuStripEnable,
             this.PluginContextMenuStripDisable,
+            this.toolStripSeparator4,
+            this.PluginContextMenuStripShow,
             this.toolStripSeparator2,
             this.PluginContextMenuStripRefresh});
             this.PluginContextMenuStrip.Name = "PluginContextMenuStrip";
@@ -805,6 +809,17 @@ namespace Serein
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
+            // PluginContextMenuStripShow
+            // 
+            this.PluginContextMenuStripShow.Name = "PluginContextMenuStripShow";
+            resources.ApplyResources(this.PluginContextMenuStripShow, "PluginContextMenuStripShow");
+            this.PluginContextMenuStripShow.Click += new System.EventHandler(this.PluginContextMenuStripShow_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -935,6 +950,8 @@ namespace Serein
         private System.Windows.Forms.ColumnHeader RegexListCommand;
         private System.Windows.Forms.ColumnHeader RegexListIsAdmin;
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripEdit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripShow;
     }
 }
 

@@ -36,23 +36,23 @@ namespace Serein
         }
         public static void Add()
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            OpenFileDialog Dialog = new OpenFileDialog
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
             };
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string file in dialog.FileNames)
+                foreach (string AddedFile in Dialog.FileNames)
                 {
                     try
                     {
-                        File.Copy(file, PluginPath + "\\" + Path.GetFileName(file));
+                        File.Copy(AddedFile, PluginPath + "\\" + Path.GetFileName(AddedFile));
                     }
                     catch (Exception Exp)
                     {
                         MessageBox.Show(
-                            $"文件\"{file}\"复制失败\n" +
+                            $"文件\"{AddedFile}\"复制失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning
@@ -65,12 +65,12 @@ namespace Serein
         {
             if (Items.Count == 1 && !Check())
             {
-                int result = (int)MessageBox.Show(
+                if ((int)MessageBox.Show(
                     $"确定删除\"{Items[0].Text}\"？\n" +
                     $"他将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
-                    );
-                if (result == 1 && !Check())
+                    ) == 1
+                    && !Check())
                 {
                     try
                     {
@@ -89,12 +89,12 @@ namespace Serein
             }
             else if (Items.Count > 1 && !Check())
             {
-                int result = (int)MessageBox.Show(
+                 if ((int)MessageBox.Show(
                     $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
                     $"他将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
-                    );
-                 if (result == 1 && !Check())
+                    ) == 1
+                    && !Check())
                  {
                     foreach (ListViewItem Item in Items)
                     {
@@ -124,8 +124,8 @@ namespace Serein
                 {
                     try
                     {
-                        FileInfo file = new FileInfo(PluginPath + "\\" + Item.Text);
-                        file.MoveTo(PluginPath + "\\" + Item.Text + ".lock");
+                        FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text);
+                        RenamedFile.MoveTo(PluginPath + "\\" + Item.Text + ".lock");
                     }
                     catch (Exception Exp)
                     {
@@ -145,8 +145,8 @@ namespace Serein
             {
                 try
                 {
-                    FileInfo file = new FileInfo(PluginPath + "\\" + Item.Text+".lock");
-                    file.MoveTo(PluginPath + "\\" +Item.Text);
+                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text+".lock");
+                    RenamedFile.MoveTo(PluginPath + "\\" +Item.Text);
                 }
                 catch (Exception Exp)
                 {

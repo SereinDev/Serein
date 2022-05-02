@@ -11,10 +11,6 @@ using System.Threading;
 
 namespace Serein
 {
-    class ToolTips
-    {
-
-    }
     public partial class Ui : Form
     {
         private void ShowToolTip(object sender, string str)

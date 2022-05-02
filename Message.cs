@@ -29,7 +29,7 @@ namespace Serein
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
             if(JsonObject["post_type"].ToString()== "message")
             {
-                Global.ui.BotWebBrowser_Invoke(
+                Global.Ui.BotWebBrowser_Invoke(
                 "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                 $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})"+":"+
                 JsonObject["raw_message"].ToString());

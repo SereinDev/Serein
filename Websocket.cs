@@ -9,13 +9,16 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
 using System.Net;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using WebSocketSharp;
+
 namespace Serein
 {
     public class Websocket
     {
         public static bool Status = false;
-        public static WebSocket ws;
+        public static WebSocket webSocket;
         static StreamWriter LogWriter;
         public static void Connect()
         {
@@ -29,65 +32,57 @@ namespace Serein
             }
             else
             {
-                Global.ui.BotWebBrowser_Invoke("#clear");
+                Global.Ui.BotWebBrowser_Invoke("#clear");
                 Status = true;
-                ws = new WebSocket($"ws://127.0.0.1:{Global.Settings_bot.Port}");
-                ws.OnMessage += Recieve;
-                ws.OnError += (sender, e) =>
+                webSocket = new WebSocket($"ws://127.0.0.1:{Global.Settings_bot.Port}");
+                webSocket.OnMessage += Recieve;
+                webSocket.OnError += (sender, e) =>
                 {
-                    Global.ui.BotWebBrowser_Invoke(
+                    Global.Ui.BotWebBrowser_Invoke(
                         "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
                         e.Message);
                 };
-                ws.OnClose += (sender, e) =>
+                webSocket.OnClose += (sender, e) =>
                 {
                     Status = false;
-                    Global.ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
+                    Global.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
                 };
-                ws.OnOpen += (sender, e) =>
+                webSocket.OnOpen += (sender, e) =>
                 {
-                    Global.ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到ws://127.0.0.1:{Global.Settings_bot.Port}");
+                    Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到ws://127.0.0.1:{Global.Settings_bot.Port}");
                 };
-                ws.ConnectAsync();
+                webSocket.ConnectAsync();
             }
         }
-        public static void Send(bool isPrivate, string message, string target)
+        public static void Send(bool IsPrivate, string Message, string Target)
         {
             if (Status)
             {
-                string text = "";
-                if (isPrivate)
+                int IntTarget = int.TryParse(Target, out int t) ? t : -1;
+                JObject TextJObject = new JObject();
+                JObject ParamsJObject = new JObject();
+                if (IsPrivate)
                 {
-                    text =
-                    "{" +
-                        "\"action\":\"send_private_msg\"," +
-                        "\"params\":" +
-                        "{" +
-                            "\"user_id\":" + target + "," +
-                            "\"message\":\"" + message + "\"" +
-                        "}" +
-                    "}";
+                    TextJObject.Add("action", "send_private_msg");
+                    ParamsJObject.Add("user_id", IntTarget);
+                    ParamsJObject.Add("message", Message);
+                    TextJObject.Add("params", ParamsJObject);
                 }
                 else
                 {
-                    text =
-                    "{" +
-                        "\"action\":\"send_group_msg\"," +
-                        "\"params\":" +
-                        "{" +
-                            "\"group_id\":" + target + "," +
-                            "\"message\":\"" + message + "\"" +
-                        "}" +
-                    "}";
+                    TextJObject.Add("action", "send_group_msg");
+                    ParamsJObject.Add("group_id", IntTarget);
+                    ParamsJObject.Add("message", Message);
+                    TextJObject.Add("params", ParamsJObject);
                 }
-                ws.SendAsync(
-                    text,
-                    (sent) => {
-                        if (sent)
+                webSocket.SendAsync(
+                    TextJObject.ToString(),
+                    (Sent) => {
+                        if (Sent)
                         {
-                            Global.ui.BotWebBrowser_Invoke(
+                            Global.Ui.BotWebBrowser_Invoke(
                            "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                           text);
+                           TextJObject.ToString());
                         }
                     }
                     );
@@ -97,7 +92,7 @@ namespace Serein
         {
             if (Status)
             {
-                ws.CloseAsync();
+                webSocket.CloseAsync();
             }
             else
             {
@@ -106,7 +101,7 @@ namespace Serein
         }
         public static void Recieve(object sender, MessageEventArgs e)
         {
-            Global.ui.BotWebBrowser_Invoke(
+            Global.Ui.BotWebBrowser_Invoke(
                 "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                 e.Data);
             if (Global.Settings_bot.EnableLog)

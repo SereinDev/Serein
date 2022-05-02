@@ -76,11 +76,11 @@ namespace Serein
             {
                 isAdminText = "否";
             }
-            RegexList.SelectedItems[0].Text = regexEditer.Regex.Text;
+            RegexList.SelectedItems[0].Text = regexEditer.RegexTextBox.Text;
             RegexList.SelectedItems[0].SubItems[1].Text = areas[regexEditer.Area.SelectedIndex];
             RegexList.SelectedItems[0].SubItems[2].Text = isAdminText;
-            RegexList.SelectedItems[0].SubItems[3].Text = regexEditer.Remark.Text;
-            RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.Command.Text;
+            RegexList.SelectedItems[0].SubItems[3].Text = regexEditer.RemarkTextBox.Text;
+            RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.CommandTextBox.Text;
             SaveRegex();
         }
         private void RegexContextMenuStripClear_Click(object sender, EventArgs e)

@@ -81,6 +81,26 @@ namespace Serein
             Plugins.Disable(PluginList.SelectedItems);
             LoadPlugins();
         }
+        private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe");
+            if (PluginList.SelectedItems.Count >= 1)
+            {
+                if(PluginList.SelectedItems[0].ForeColor== System.Drawing.Color.Gray)
+                {
+                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\"";
+                }
+                else
+                {
+                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\"";
+                }
+            }
+            else
+            {
+                psi.Arguments = "/e,\"" + Plugins.PluginPath + "\"";
+            }
+            Process.Start(psi);
+        }
         public void LoadPlugins()
         {
             if (Plugins.Get() != null)

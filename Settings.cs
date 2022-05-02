@@ -27,17 +27,17 @@ namespace Serein
     }
     partial class Settings
     {
-        public static Thread thread = new Thread(SaveSettings);
+        public static Thread SaveSettingsThread = new Thread(SaveSettings);
         public static void StartSaveSettings()
         {
-            thread.Start();
+            SaveSettingsThread.Start();
         }
         public static void SaveSettings()
         {
             while (Global.Alive)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
-                thread.Join(2500);
+                SaveSettingsThread.Join(2500);
                 if (!Directory.Exists(Global.SettingPath))
                 {
                     Directory.CreateDirectory(Global.SettingPath);

@@ -4,11 +4,6 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    class Update 
-    {
-        
-    }
-
     public partial class Ui : Form
     {
         private void UpdateInfo()

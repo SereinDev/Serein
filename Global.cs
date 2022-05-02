@@ -13,7 +13,7 @@ namespace Serein
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory+"settings";
         public static string VERSION = "Testing 2022";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
-        public static Ui ui;
+        public static Ui Ui;
         public static WebBrowser PanelConsoleWebBrowser;
         public static WebBrowser BotWebBrowser;
         public static Settings_Server Settings_server = new Settings_Server();

@@ -43,8 +43,8 @@ namespace Serein
         {
             if(!File.Exists(Global.Path + "console\\console.html"))
             {
-                PanelConsoleWebBrowser.Navigate("https://zaitonn.github.io/Serein/Console/console.html");
-                BotWebBrowser.Navigate("https://zaitonn.github.io/Serein/Console/console.html");
+                PanelConsoleWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
+                BotWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
             }
             else
             {
