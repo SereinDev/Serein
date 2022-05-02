@@ -24,8 +24,6 @@ jobs:
 
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.1
-      with:
-        msbuild-architecture: [x64,x86]
 
     - name: Setup NuGet
       uses: nuget/setup-nuget@v1
