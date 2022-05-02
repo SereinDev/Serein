@@ -47,8 +47,8 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Serein_x86.exe
-          path: ${{ github.workspace }}\Release
+          name: Serein_x86
+          path: ${{ github.workspace }}\bin\Release
 
     Build_on_x64:
       strategy:
@@ -93,5 +93,5 @@ jobs:
           
       - uses: actions/upload-artifact@v3
         with:
-          name: Serein_x64.exe
-          path: ${{ github.workspace }}
+          name: Serein_x86
+          path: ${{ github.workspace }}\bin\Release
