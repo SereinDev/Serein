@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-    Build on x86:
+    Build_on_x86:
       strategy:
         matrix:
           configuration: [Debug, Release]
@@ -50,7 +50,7 @@ jobs:
           name: Serein_x86.exe
           path: Serein.exe
 
-    Build on x64:
+    Build_on_x64:
       strategy:
         matrix:
           configuration: [Debug, Release]
