@@ -25,20 +25,20 @@ namespace Serein
             Result = Regex.Replace(Result, ">", "&gt;");
             return Result;
         }
-        public static string ColorLog(string Input,int Type)
+        public static string ColorLog(string Input, int Type)
         {
             Input = Regex.Replace(Input, @"^>\s+?", "");
             Input = Regex.Replace(Input, @"\s+?$", "");
-            if (Type==1)
+            if (Type == 1)
             {
                 string Pattern = @"\[([^]+?)m([^]*)";
-                if (! Regex.IsMatch(Input, Pattern))
-                { 
+                if (!Regex.IsMatch(Input, Pattern))
+                {
                     return Input;
                 }
                 else
                 {
-                    string Style, SpanClass, ChildArg, Arg,Color;
+                    string Style, SpanClass, ChildArg, Arg, Color;
                     string Output = "";
                     string[] ArgList;
                     string[] ColorList = {
@@ -50,7 +50,8 @@ namespace Serein
                     foreach (Match Match in Regex.Matches(Input, Pattern))
                     {
                         Arg = Match.Groups[1].Value;
-                        if (Match.Groups[2].Value==""){
+                        if (Match.Groups[2].Value == "")
+                        {
                             continue;
                         }
                         Style = "";
@@ -64,7 +65,7 @@ namespace Serein
                             {
                                 Style += "font-weight:bold;";
                             }
-                            else if(ChildArg == "3") 
+                            else if (ChildArg == "3")
                             {
                                 Style += "font-style: italic;";
                             }
@@ -72,7 +73,7 @@ namespace Serein
                             {
                                 Style += "text-decoration: underline;";
                             }
-                            else if (ChildArg == "38" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex+4 <= ArgList.Length)
+                            else if (ChildArg == "38" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
                             {
                                 Color = $"rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
                                 Style += $"color:{Color}";

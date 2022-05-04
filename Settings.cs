@@ -17,13 +17,13 @@ namespace Serein
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;
         public long[] GroupList { get; set; } = { };
-        public long[] PermissionList{ get; set; } = { };
+        public long[] PermissionList { get; set; } = { };
         public int Port { get; set; } = 6700;
     }
     public class Settings_Serein
     {
         public bool EnableGetUpdate { get; set; } = true;
-        public bool EnableGetAnnouncement{ get; set; } = true;
+        public bool EnableGetAnnouncement { get; set; } = true;
     }
     partial class Settings
     {
@@ -85,7 +85,7 @@ namespace Serein
             }
             if (File.Exists(Global.SettingPath + "\\serein.json"))
             {
-                Global.Settings_serein=JsonConvert.DeserializeObject<Settings_Serein>(
+                Global.Settings_serein = JsonConvert.DeserializeObject<Settings_Serein>(
                     File.ReadAllText(Global.SettingPath + "\\serein.json", Encoding.UTF8)
                     );
                 if (Global.Settings_serein == null)
@@ -94,6 +94,6 @@ namespace Serein
                 }
             }
         }
-        
+
     }
 }

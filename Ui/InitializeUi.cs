@@ -41,7 +41,7 @@ namespace Serein
         }
         public void InitWebBrowser()
         {
-            if(!File.Exists(Global.Path + "console\\console.html"))
+            if (!File.Exists(Global.Path + "console\\console.html"))
             {
                 PanelConsoleWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
                 BotWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
@@ -69,14 +69,14 @@ namespace Serein
             GetAnnouncementThread.IsBackground = true;
             GetAnnouncementThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
-            
+
         }
         public void GetAnnouncement()
         {
             string announcementId = "", oldAnnouncementId = "";
             while (true)
             {
-               
+
                 if (Global.Settings_serein.EnableGetAnnouncement)
                 {
                     try

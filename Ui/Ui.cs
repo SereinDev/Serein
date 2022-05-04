@@ -18,7 +18,7 @@ namespace Serein
             Initialize();
             UpdateVersion();
         }
-        
+
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");

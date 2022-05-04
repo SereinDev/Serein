@@ -3,19 +3,20 @@ using System;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Serein
 {
     partial class Plugins
     {
-        public static string PluginPath="";
+        public static string PluginPath = "";
         public static string[] Get()
         {
             if (File.Exists(Global.Settings_server.Path))
             {
                 if (Directory.Exists(Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugin"))
                 {
-                    PluginPath= Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugin";
+                    PluginPath = Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugin";
                 }
                 else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugins"))
                 {
@@ -28,7 +29,7 @@ namespace Serein
                 if (PluginPath != "")
                 {
                     string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
-                    
+
                     return Files;
                 }
             }
@@ -74,7 +75,15 @@ namespace Serein
                 {
                     try
                     {
-                        File.Delete(PluginPath + "\\" + Items[0].Text);
+                        if (Items[0].ForeColor == Color.Gray)
+                        {
+                            File.Delete(PluginPath + "\\" + Items[0].Text + ".lock");
+
+                        }
+                        else
+                        {
+                            File.Delete(PluginPath + "\\" + Items[0].Text);
+                        }
                     }
                     catch (Exception Exp)
                     {
@@ -89,18 +98,26 @@ namespace Serein
             }
             else if (Items.Count > 1 && !Check())
             {
-                 if ((int)MessageBox.Show(
-                    $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
-                    $"他将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
-                    ) == 1
-                    && !Check())
-                 {
+                if ((int)MessageBox.Show(
+                   $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
+                   $"他将会永远失去！（真的很久！）", "Serein",
+                   MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                   ) == 1
+                   && !Check())
+                {
                     foreach (ListViewItem Item in Items)
                     {
                         try
                         {
-                            File.Delete(PluginPath + "\\" + Item.Text);
+                            if (Item.ForeColor == Color.Gray)
+                            {
+                                File.Delete(PluginPath + "\\" + Item + ".lock");
+
+                            }
+                            else
+                            {
+                                File.Delete(PluginPath + "\\" + Item);
+                            }
                         }
                         catch (Exception Exp)
                         {
@@ -145,8 +162,8 @@ namespace Serein
             {
                 try
                 {
-                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text+".lock");
-                    RenamedFile.MoveTo(PluginPath + "\\" +Item.Text);
+                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text + ".lock");
+                    RenamedFile.MoveTo(PluginPath + "\\" + Item.Text);
                 }
                 catch (Exception Exp)
                 {
@@ -172,5 +189,5 @@ namespace Serein
             }
         }
     }
-    
+
 }

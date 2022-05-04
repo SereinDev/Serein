@@ -129,6 +129,7 @@ namespace Serein
             this.Controls.Add(this.IsAdmin);
             this.Controls.Add(this.AreaLabel);
             this.Controls.Add(this.Area);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RegexEditer";

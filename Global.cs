@@ -9,7 +9,7 @@ namespace Serein
     class Global
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
-        public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory+"settings";
+        public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
         public static string VERSION = "Testing 2022";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static Ui Ui;

@@ -77,7 +77,8 @@ namespace Serein
                 }
                 webSocket.SendAsync(
                     TextJObject.ToString(),
-                    (Sent) => {
+                    (Sent) =>
+                    {
                         if (Sent)
                         {
                             Global.Ui.BotWebBrowser_Invoke(

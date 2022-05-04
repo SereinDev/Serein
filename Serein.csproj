@@ -209,4 +209,7 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>dotnet-format "C:\Users\Administrator\Source\Repos\Serein\Serein.sln"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

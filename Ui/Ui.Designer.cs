@@ -122,6 +122,10 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -540,10 +544,16 @@ namespace Serein
             // 
             // TaskList
             // 
+            this.TaskList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
             resources.ApplyResources(this.TaskList, "TaskList");
             this.TaskList.HideSelection = false;
             this.TaskList.Name = "TaskList";
             this.TaskList.UseCompatibleStateImageBehavior = false;
+            this.TaskList.View = System.Windows.Forms.View.Details;
             // 
             // Bot
             // 
@@ -821,6 +831,22 @@ namespace Serein
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
+            // columnHeader1
+            // 
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
+            // 
+            // columnHeader2
+            // 
+            resources.ApplyResources(this.columnHeader2, "columnHeader2");
+            // 
+            // columnHeader3
+            // 
+            resources.ApplyResources(this.columnHeader3, "columnHeader3");
+            // 
+            // columnHeader4
+            // 
+            resources.ApplyResources(this.columnHeader4, "columnHeader4");
+            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -953,6 +979,10 @@ namespace Serein
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripShow;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
 

@@ -10,8 +10,8 @@ using System.Diagnostics;
 
 namespace Serein
 {
-     public class Server
-     {
+    public class Server
+    {
         public static bool Restart = false;
         public static bool Status = false;
         public static bool Started = false;
@@ -19,11 +19,11 @@ namespace Serein
         public static Process ServerProcess;
         static Thread WaitForExitThread, RestartTimerThread;
         public static bool Killed;
-        static StreamWriter CommandWriter,LogWriter;
+        static StreamWriter CommandWriter, LogWriter;
         public static TimeSpan PrevCpuTime = TimeSpan.Zero;
         public static TimeSpan CurTime = TimeSpan.Zero;
 
-        public static void Start() 
+        public static void Start()
         {
             if (string.IsNullOrEmpty(Global.Settings_server.Path) || string.IsNullOrWhiteSpace(Global.Settings_server.Path))
             {
@@ -47,7 +47,7 @@ namespace Serein
                 ServerProcessInfo.CreateNoWindow = true;
                 ServerProcessInfo.RedirectStandardOutput = true;
                 ServerProcessInfo.RedirectStandardInput = true;
-                ServerProcessInfo.StandardOutputEncoding =Encoding.UTF8;
+                ServerProcessInfo.StandardOutputEncoding = Encoding.UTF8;
                 ServerProcessInfo.WorkingDirectory = Path.GetDirectoryName(Global.Settings_server.Path);
                 ServerProcess = Process.Start(ServerProcessInfo);
                 CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream, Encoding.UTF8);
@@ -84,19 +84,19 @@ namespace Serein
         public static void Kill()
         {
             if (
-                Status 
+                Status
                 &&
                 (int)MessageBox.Show(
                     "确定结束进程吗？\n此操作可能导致存档损坏等问题",
                     "Serein",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
-                    )==1
+                    ) == 1
                 )
             {
                 if (ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT"))
                 {
-                    if((int)MessageBox.Show(
+                    if ((int)MessageBox.Show(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
                     "Serein",
                     MessageBoxButtons.OKCancel,
@@ -118,7 +118,7 @@ namespace Serein
             }
             else if (!Status)
             {
-                MessageBox.Show(":(\n服务器不在运行中.","Serein",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void InputCommand(string Command)
@@ -131,7 +131,7 @@ namespace Serein
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Command}");
                 }
-                CommandWriter.WriteLine(Command.TrimEnd('\r','\n'));
+                CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
                 if (Global.Settings_server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -149,16 +149,16 @@ namespace Serein
                         LogWriter.Flush();
                         LogWriter.Close();
                     }
-                    catch {}
+                    catch { }
                 }
             }
         }
-        private static void SortOutputHandler(object sendingProcess,DataReceivedEventArgs outLine)
-        { 
+        private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
             if (!string.IsNullOrEmpty(outLine.Data))
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(outLine.Data,Global.Settings_server.OutputStyle));
+                    Log.ColorLog(outLine.Data, Global.Settings_server.OutputStyle));
                 if (Global.Settings_server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -190,12 +190,12 @@ namespace Serein
             ServerProcess.WaitForExit();
             Status = false;
             CommandWriter.Close();
-            if (! Killed && ServerProcess.ExitCode != 0)
+            if (!Killed && ServerProcess.ExitCode != 0)
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
-                if(Global.Settings_server.EnableRestart)
+                if (Global.Settings_server.EnableRestart)
                 {
                     Restart = true;
                 }
@@ -240,7 +240,7 @@ namespace Serein
                 );
             for (int i = 0; i < 10; i++)
             {
-                if (! Restart)
+                if (!Restart)
                 {
                     break;
                 }
@@ -261,9 +261,9 @@ namespace Serein
         public static double GetCPU()
         {
             CurTime = ServerProcess.TotalProcessorTime;
-            double value= (CurTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+            double value = (CurTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
             PrevCpuTime = CurTime;
             return value;
         }
-     }
+    }
 }

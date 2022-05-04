@@ -45,7 +45,7 @@ namespace Serein
         }
         private void RegexContextMenuStripEdit_Click(object sender, EventArgs e)
         {
-            if(RegexList.SelectedItems.Count <= 0)
+            if (RegexList.SelectedItems.Count <= 0)
             {
                 return;
             }
@@ -54,7 +54,7 @@ namespace Serein
             regexEditer.UpdateInfo(
                 index,
                 RegexList.SelectedItems[0].Text,
-                RegexList.SelectedItems[0].SubItems[2].Text== "是",
+                RegexList.SelectedItems[0].SubItems[2].Text == "是",
                 RegexList.SelectedItems[0].SubItems[3].Text,
                 RegexList.SelectedItems[0].SubItems[4].Text
                 );
@@ -115,7 +115,7 @@ namespace Serein
                 }
             }
         }
-        public void AddRegex(int areaIndex,string regex,bool isAdmin,string remark, string command)
+        public void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
         {
             if (
               string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
@@ -130,7 +130,7 @@ namespace Serein
             {
                 isAdminText = "-";
             }
-            else if(isAdmin)
+            else if (isAdmin)
             {
                 isAdminText = "是";
             }
@@ -186,14 +186,14 @@ namespace Serein
         }
         public void SaveRegex()
         {
-            List<RegexItem> regexItems =new List<RegexItem>();
+            List<RegexItem> regexItems = new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
             StreamWriter RegexWriter = new StreamWriter(
                 File.Open(
-                    $"{Global.Path}\\data\\regex.tsv", 
+                    $"{Global.Path}\\data\\regex.tsv",
                     FileMode.Create,
                     FileAccess.Write
                     ),
@@ -215,5 +215,5 @@ namespace Serein
             RegexWriter.Close();
         }
     }
-    
+
 }

@@ -15,7 +15,7 @@ namespace Serein
     {
         public bool Edit = false;
         public bool CancelFlag = true;
-        public RegexEditer(bool edit=false)
+        public RegexEditer(bool edit = false)
         {
             InitializeComponent();
             Edit = edit;
@@ -24,9 +24,9 @@ namespace Serein
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if(
-                !(string.IsNullOrWhiteSpace(RegexTextBox.Text)||string.IsNullOrEmpty(RegexTextBox.Text)||
-                string.IsNullOrWhiteSpace(CommandTextBox.Text)||string.IsNullOrEmpty(CommandTextBox.Text)
+            if (
+                !(string.IsNullOrWhiteSpace(RegexTextBox.Text) || string.IsNullOrEmpty(RegexTextBox.Text) ||
+                string.IsNullOrWhiteSpace(CommandTextBox.Text) || string.IsNullOrEmpty(CommandTextBox.Text)
                 ))
             {
                 if (Command.GetType(CommandTextBox.Text) == -1)
@@ -67,7 +67,7 @@ namespace Serein
         }
         private void Area_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(Area.SelectedIndex <= 1)
+            if (Area.SelectedIndex <= 1)
             {
                 IsAdmin.Enabled = false;
                 IsAdmin.Checked = false;

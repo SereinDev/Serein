@@ -86,7 +86,7 @@ namespace Serein
             ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe");
             if (PluginList.SelectedItems.Count >= 1)
             {
-                if(PluginList.SelectedItems[0].ForeColor== System.Drawing.Color.Gray)
+                if (PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray)
                 {
                     psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\"";
                 }

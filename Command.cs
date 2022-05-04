@@ -13,7 +13,7 @@ namespace Serein
 {
     class Command
     {
-        public static  void StartCmd(string Command)
+        public static void StartCmd(string Command)
         {
             Process CMDProcess = new Process();
             CMDProcess.StartInfo.FileName = "cmd.exe";
@@ -27,7 +27,7 @@ namespace Serein
             CommandWriter.WriteLine("chcp 936");
             CommandWriter.WriteLine($"cd \"{Global.Path}\"");
             CommandWriter.WriteLine("cls");
-            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n')+"&exit");
+            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n') + "&exit");
             CommandWriter.Close();
             CMDProcess.WaitForExit();
             CMDProcess.Close();
@@ -60,16 +60,16 @@ namespace Serein
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 5 && Websocket.Status && Global.Settings_bot.GroupList.Length>=1)
+            else if (Type == 5 && Websocket.Status && Global.Settings_bot.GroupList.Length >= 1)
             {
                 Websocket.Send(false, Value, Global.Settings_bot.GroupList[0].ToString());
             }
         }
 
-        public static void Run(JObject JsonObject,string Command,Match MsgMatch,int UserId, int GroupId=-1)
+        public static void Run(JObject JsonObject, string Command, Match MsgMatch, int UserId, int GroupId = -1)
         {
             int Type = GetType(Command);
-            if (Type==-1)
+            if (Type == -1)
             {
                 return;
             }
@@ -119,11 +119,11 @@ namespace Serein
             {
                 return -1;
             }
-            if (Regex.IsMatch(Command,@"^cmd\|",RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
             {
                 return 1;
             }
-            else if(Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase)|| Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return 2;
             }
@@ -135,7 +135,7 @@ namespace Serein
             {
                 return 4;
             }
-            else if(Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
             {
                 return 5;
             }
@@ -148,11 +148,11 @@ namespace Serein
                 return -1;
             }
         }
-        public static string  GetValue(string command, Match MsgMatch)
+        public static string GetValue(string command, Match MsgMatch)
         {
             int index = command.IndexOf('|');
-            string Value = command.Substring(index+1);
-            for (int i=1; i < MsgMatch.Groups.Count; i++)
+            string Value = command.Substring(index + 1);
+            for (int i = 1; i < MsgMatch.Groups.Count; i++)
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }

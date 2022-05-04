@@ -27,19 +27,19 @@ namespace Serein
         public static void ProcessMsgFromBot(string Json)
         {
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
-            if(JsonObject["post_type"].ToString()== "message")
+            if (JsonObject["post_type"].ToString() == "message")
             {
                 Global.Ui.BotWebBrowser_Invoke(
                 "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})"+":"+
+                $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
                 JsonObject["raw_message"].ToString());
-                foreach(RegexItem Item in Global.RegexItems)
+                foreach (RegexItem Item in Global.RegexItems)
                 {
-                    if (string.IsNullOrEmpty(Item.Regex) || Item.Area<=1)
+                    if (string.IsNullOrEmpty(Item.Regex) || Item.Area <= 1)
                     {
                         continue;
                     }
-                    if(Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
+                    if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
                         string MessageType = JsonObject["message_type"].ToString();
                         int r;
@@ -74,7 +74,7 @@ namespace Serein
                                 );
                                 Command.test(Item);
                             }
-                            else if(MessageType == "private")
+                            else if (MessageType == "private")
                             {
                                 Command.Run(
                                     JsonObject,

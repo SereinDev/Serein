@@ -27,7 +27,7 @@ namespace Serein
             }
             Regex = Texts[0];
             Area = int.TryParse(Texts[1], out int s) ? s : 0;
-            IsAdmin = Texts[2]=="True";
+            IsAdmin = Texts[2] == "True";
             Remark = Texts[3];
             Command = Texts[4];
         }
