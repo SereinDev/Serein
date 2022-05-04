@@ -9,19 +9,26 @@ jobs:
     steps:
     
     - uses: actions/checkout@v1
+
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x'
         include-prerelease: true
-        
-    - name: build
-      run: dotnet build
-      
-    - name: format
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NuGetAPIKey }}
+        nuget-version: '5.x'
+
+    - name: NuGet restore
+      run: nuget restore  
+
+    - name: Format
       run: dotnet format
       
-    - name: check for changes
+    - name: Check for changes
       run: |
         if git diff --exit-code; then
           echo "has_changes=false" >> $GITHUB_ENV
@@ -34,7 +41,7 @@ jobs:
       shell: bash
       run: |
         git config --local user.name "github-actions[bot]"
-        git config --local user.email "weihanli@outlook.com"
+        git config --local user.email "action@github.com"
         git add -u
         git commit -m "Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
         git log -1
