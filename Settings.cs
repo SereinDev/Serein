@@ -30,11 +30,12 @@ namespace Serein
         public static Thread SaveSettingsThread = new Thread(SaveSettings);
         public static void StartSaveSettings()
         {
+            SaveSettingsThread.IsBackground = true;
             SaveSettingsThread.Start();
         }
         public static void SaveSettings()
         {
-            while (Global.Alive)
+            while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
                 SaveSettingsThread.Join(2500);

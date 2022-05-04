@@ -122,52 +122,52 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PluginContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripAdd.Text" xml:space="preserve">
     <value>导入插件</value>
   </data>
   <data name="PluginContextMenuStripRemove.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripRemove.Text" xml:space="preserve">
     <value>删除插件</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="PluginContextMenuStripEnable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripEnable.Text" xml:space="preserve">
     <value>启用插件</value>
   </data>
   <data name="PluginContextMenuStripDisable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripDisable.Text" xml:space="preserve">
     <value>禁用插件</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="PluginContextMenuStripShow.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripShow.Text" xml:space="preserve">
     <value>打开文件夹</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="PluginContextMenuStripRefresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
+    <value>208, 38</value>
   </data>
   <data name="PluginContextMenuStripRefresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
   <data name="PluginContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 294</value>
+    <value>209, 250</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStrip.Name" xml:space="preserve">
     <value>PluginContextMenuStrip</value>
@@ -2353,6 +2353,18 @@
   <data name="&gt;&gt;PluginContextMenuStripDisable.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
+    <value>toolStripSeparator4</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PluginContextMenuStripShow.Name" xml:space="preserve">
+    <value>PluginContextMenuStripShow</value>
+  </data>
+  <data name="&gt;&gt;PluginContextMenuStripShow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
     <value>toolStripSeparator2</value>
   </data>
@@ -2442,18 +2454,6 @@
   </data>
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PluginContextMenuStripShow.Name" xml:space="preserve">
-    <value>PluginContextMenuStripShow</value>
-  </data>
-  <data name="&gt;&gt;PluginContextMenuStripShow.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
-    <value>toolStripSeparator4</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

@@ -37,6 +37,8 @@ namespace Serein
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.PluginContextMenuStripEnable = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStripDisable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.PluginContextMenuStripShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.PluginContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.SereinIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -120,8 +122,6 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
-            this.PluginContextMenuStripShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -192,6 +192,17 @@ namespace Serein
             this.PluginContextMenuStripDisable.Name = "PluginContextMenuStripDisable";
             resources.ApplyResources(this.PluginContextMenuStripDisable, "PluginContextMenuStripDisable");
             this.PluginContextMenuStripDisable.Click += new System.EventHandler(this.PluginContextMenuStripDisable_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
+            // 
+            // PluginContextMenuStripShow
+            // 
+            this.PluginContextMenuStripShow.Name = "PluginContextMenuStripShow";
+            resources.ApplyResources(this.PluginContextMenuStripShow, "PluginContextMenuStripShow");
+            this.PluginContextMenuStripShow.Click += new System.EventHandler(this.PluginContextMenuStripShow_Click);
             // 
             // toolStripSeparator2
             // 
@@ -402,6 +413,7 @@ namespace Serein
             resources.ApplyResources(this.PanelConsoleInput, "PanelConsoleInput");
             this.PanelConsoleInput.Name = "PanelConsoleInput";
             this.PanelConsoleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PanelConsoleInput_KeyDown);
+            this.PanelConsoleInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PanelConsoleInput_KeyPress);
             // 
             // Plugin
             // 
@@ -808,17 +820,6 @@ namespace Serein
             this.SettingServerPath.Name = "SettingServerPath";
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
-            // 
-            // PluginContextMenuStripShow
-            // 
-            this.PluginContextMenuStripShow.Name = "PluginContextMenuStripShow";
-            resources.ApplyResources(this.PluginContextMenuStripShow, "PluginContextMenuStripShow");
-            this.PluginContextMenuStripShow.Click += new System.EventHandler(this.PluginContextMenuStripShow_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             // 
             // Ui
             // 

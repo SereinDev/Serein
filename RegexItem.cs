@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Serein
@@ -30,6 +30,30 @@ namespace Serein
             IsAdmin = Texts[2]=="True";
             Remark = Texts[3];
             Command = Texts[4];
+        }
+        public bool CheckItem()
+        {
+            if (
+                !(string.IsNullOrWhiteSpace(Regex) || string.IsNullOrEmpty(Regex) ||
+                string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
+                ))
+            {
+                if (Serein.Command.GetType(Command) == -1)
+                {
+                    return false;
+                }
+                try
+                {
+                    Regex m = new Regex(Regex);
+                    m.Match("");
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }

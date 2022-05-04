@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -177,7 +178,11 @@ namespace Serein
                     }
                     catch { }
                 }
-                Message.ProcessMsgFromConsole(outLine.Data);
+                Task MsgTask = new Task(() =>
+                  {
+                      Message.ProcessMsgFromConsole(Log.OutputRecognition(outLine.Data));
+                  });
+                MsgTask.Start();
             }
         }
         public static void WaitForExit()

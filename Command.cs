@@ -27,9 +27,10 @@ namespace Serein
             CommandWriter.WriteLine("chcp 936");
             CommandWriter.WriteLine($"cd \"{Global.Path}\"");
             CommandWriter.WriteLine("cls");
-            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
-            CommandWriter.WriteLine("exit");
+            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n')+"&exit");
             CommandWriter.Close();
+            CMDProcess.WaitForExit();
+            CMDProcess.Close();
         }
         public static void Run(string Command, Match OutputMatch)
         {

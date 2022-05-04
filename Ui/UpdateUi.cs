@@ -8,13 +8,13 @@ namespace Serein
     {
         private void UpdateInfo()
         {
-            while (Global.Alive)
+            while (true)
             {
                 if (!Visible)
                 {
-                    Thread.CurrentThread.Join(5000);
+                    Thread.Sleep(5000);
                 }
-                if (Server.Status && Global.Alive)
+                if (Server.Status)
                 {
                     TimeSpan t = DateTime.Now - Server.ServerProcess.StartTime;
                     if (t.TotalSeconds < 3600)
@@ -33,7 +33,7 @@ namespace Serein
                     PanelInfoStatus2_Update("已启动");
 
                 }
-                else if(Global.Alive)
+                else
                 {
                     PanelInfoStatus2_Update("未启动");
                     PanelInfoVersion2_Update("-");
@@ -44,13 +44,12 @@ namespace Serein
                 }
                 Thread.CurrentThread.Join(2000);
             }
-            Thread.CurrentThread.Abort();
         }
         private void PanelInfoStatus2_Update(string str)
         {
             if (PanelInfoStatus2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoStatus2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoStatus2.Text = x; };
                 PanelInfoStatus2.Invoke(actionDelegate, str);
             }
         }
@@ -58,7 +57,7 @@ namespace Serein
         {
             if (PanelInfoVersion2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoVersion2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoVersion2.Text = x; };
                 PanelInfoVersion2.Invoke(actionDelegate, str);
             }
         }
@@ -66,7 +65,7 @@ namespace Serein
         {
             if (PanelInfoDifficulty2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoDifficulty2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoDifficulty2.Text = x; };
                 PanelInfoDifficulty2.Invoke(actionDelegate, str);
             }
         }
@@ -74,7 +73,7 @@ namespace Serein
         {
             if (PanelInfoPort2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoPort2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoPort2.Text = x; };
                 PanelInfoPort2.Invoke(actionDelegate, str);
             }
         }
@@ -82,7 +81,7 @@ namespace Serein
         {
             if (PanelInfoTime2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoTime2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoTime2.Text = x; };
                 PanelInfoTime2.Invoke(actionDelegate, str);
             }
         }
@@ -90,7 +89,7 @@ namespace Serein
         {
             if (PanelInfoCPU2.InvokeRequired)
             {
-                Action<string> actionDelegate = (x) => { PanelInfoCPU2.Text = x.ToString(); };
+                Action<string> actionDelegate = (x) => { PanelInfoCPU2.Text = x; };
                 PanelInfoCPU2.Invoke(actionDelegate, str);
             }
         }

@@ -8,7 +8,6 @@ namespace Serein
 {
     class Global
     {
-        public static bool Alive = true;
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory+"settings";
         public static string VERSION = "Testing 2022";

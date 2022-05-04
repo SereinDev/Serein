@@ -63,6 +63,7 @@ namespace Serein
             LoadPlugins();
             LoadRegex();
             Thread UpdateInfoThread = new Thread(UpdateInfo);
+            UpdateInfoThread.IsBackground = true;
             UpdateInfoThread.Start();
             Thread GetAnnouncementThread = new Thread(GetAnnouncement);
             GetAnnouncementThread.IsBackground = true;

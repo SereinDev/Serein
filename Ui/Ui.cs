@@ -49,10 +49,6 @@ namespace Serein
                 ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n(已自动最小化至托盘，点击托盘图标即可复原窗口)");
             }
-            else
-            {
-                Global.Alive = false;
-            }
         }
 
         private void ShowBalloonTip(string text)
@@ -62,6 +58,5 @@ namespace Serein
             SereinIcon.ShowBalloonTip(10000);
         }
 
-        
     }
 }

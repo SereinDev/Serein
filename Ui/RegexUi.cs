@@ -172,6 +172,10 @@ namespace Serein
                 {
                     RegexItem Item = new RegexItem();
                     Item.ConvertToItem(Line);
+                    if (!Item.CheckItem())
+                    {
+                        continue;
+                    }
                     AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                     regexItems.Add(Item);
                 }

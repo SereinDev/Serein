@@ -55,5 +55,13 @@ namespace Serein
                 PanelConsoleInput.Clear();
             }
         }
+
+        private void PanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar  == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

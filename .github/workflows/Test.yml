@@ -1,28 +1,20 @@
-name: CodeQL
+name: Test
 on:
   push:
   pull_request:
 
 jobs:
-  CodeQL-Build:
-    strategy:
+    Test:
+      strategy:
         matrix:
           configuration: [Debug]
-    runs-on: windows-latest
+      runs-on: windows-latest
 
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          languages: csharp
+          fetch-depth: 0
 
       - name: Install .NET Core
         uses: actions/setup-dotnet@v1
@@ -46,5 +38,7 @@ jobs:
         env:
           Configuration: ${{ matrix.configuration }}
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      - name: Execute unit tests
+        run: dotnet test -c $env:Configuration
+        env:
+          Configuration: ${{ matrix.configuration }}
