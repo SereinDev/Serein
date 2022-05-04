@@ -1,13 +1,13 @@
 name: dotnet-format
- 
+
 on:
   push:
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+
     - uses: actions/checkout@v1
 
     - name: Setup .NET 6
@@ -23,11 +23,14 @@ jobs:
         nuget-version: '5.x'
 
     - name: NuGet restore
-      run: nuget restore  
+      run: nuget restore
 
+    - name: build
+      run: dotnet build
+      
     - name: Format
       run: dotnet format
-      
+
     - name: Check for changes
       run: |
         if git diff --exit-code; then
@@ -35,7 +38,7 @@ jobs:
         else
           echo "has_changes=true" >> $GITHUB_ENV
         fi
-        
+
     - name: Commit and Push
       if: ${{ env.has_changes == 'true' }}
       shell: bash
