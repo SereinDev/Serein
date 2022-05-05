@@ -49,7 +49,3 @@ jobs:
         with:
           name: Release
           path: ${{ github.workspace }}\bin\Release
-
-
-	
-  

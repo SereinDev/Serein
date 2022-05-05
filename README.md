@@ -7,7 +7,7 @@
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Zaitonn/Serein">
 <img alt="GitHub .Net Framework" src="https://img.shields.io/badge/.Net%20Framework-4.7.2-orange">
 <img alt="GitHub repo license" src="https://img.shields.io/github/license/zaitonn/Serein?color=yellow">
-<img alt="GitHub bulid and test" src="https://github.com/Zaitonn/Serein/actions/workflows/.NET%20Build%20&%20Test.yml/badge.svg">
+<img alt="GitHub bulid" src="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml/badge.svg">
 </div>
 
 ---  

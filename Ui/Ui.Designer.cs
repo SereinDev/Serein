@@ -90,9 +90,14 @@ namespace Serein
             this.Task = new System.Windows.Forms.TabPage();
             this.TaskList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TaskContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TaskContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskContextMenuStrip_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskContextMenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.TaskContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Bot = new System.Windows.Forms.TabPage();
             this.BotTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
@@ -126,8 +131,6 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
-            this.TaskContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TaskContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -142,6 +145,7 @@ namespace Serein
             this.Regular.SuspendLayout();
             this.RegexContextMenuStrip.SuspendLayout();
             this.Task.SuspendLayout();
+            this.TaskContextMenuStrip.SuspendLayout();
             this.Bot.SuspendLayout();
             this.BotTableLayoutPanel.SuspendLayout();
             this.BotWebsocket.SuspendLayout();
@@ -151,7 +155,6 @@ namespace Serein
             this.SettingBot.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).BeginInit();
             this.SettingServer.SuspendLayout();
-            this.TaskContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -549,10 +552,11 @@ namespace Serein
             // 
             this.TaskList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
+            this.TaskList.ContextMenuStrip = this.TaskContextMenuStrip;
             resources.ApplyResources(this.TaskList, "TaskList");
+            this.TaskList.GridLines = true;
             this.TaskList.HideSelection = false;
             this.TaskList.Name = "TaskList";
             this.TaskList.UseCompatibleStateImageBehavior = false;
@@ -562,10 +566,6 @@ namespace Serein
             // 
             resources.ApplyResources(this.columnHeader1, "columnHeader1");
             // 
-            // columnHeader2
-            // 
-            resources.ApplyResources(this.columnHeader2, "columnHeader2");
-            // 
             // columnHeader3
             // 
             resources.ApplyResources(this.columnHeader3, "columnHeader3");
@@ -573,6 +573,47 @@ namespace Serein
             // columnHeader4
             // 
             resources.ApplyResources(this.columnHeader4, "columnHeader4");
+            // 
+            // TaskContextMenuStrip
+            // 
+            this.TaskContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.TaskContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TaskContextMenuStrip_Add,
+            this.TaskContextMenuStrip_Delete,
+            this.TaskContextMenuStrip_Clear,
+            this.toolStripSeparator5,
+            this.TaskContextMenuStrip_Refresh});
+            this.TaskContextMenuStrip.Name = "TaskContextMenuStrip";
+            resources.ApplyResources(this.TaskContextMenuStrip, "TaskContextMenuStrip");
+            // 
+            // TaskContextMenuStrip_Add
+            // 
+            this.TaskContextMenuStrip_Add.Name = "TaskContextMenuStrip_Add";
+            resources.ApplyResources(this.TaskContextMenuStrip_Add, "TaskContextMenuStrip_Add");
+            this.TaskContextMenuStrip_Add.Click += new System.EventHandler(this.TaskContextMenuStrip_Add_Click);
+            // 
+            // TaskContextMenuStrip_Delete
+            // 
+            this.TaskContextMenuStrip_Delete.Name = "TaskContextMenuStrip_Delete";
+            resources.ApplyResources(this.TaskContextMenuStrip_Delete, "TaskContextMenuStrip_Delete");
+            this.TaskContextMenuStrip_Delete.Click += new System.EventHandler(this.TaskContextMenuStrip_Delete_Click);
+            // 
+            // TaskContextMenuStrip_Clear
+            // 
+            this.TaskContextMenuStrip_Clear.Name = "TaskContextMenuStrip_Clear";
+            resources.ApplyResources(this.TaskContextMenuStrip_Clear, "TaskContextMenuStrip_Clear");
+            this.TaskContextMenuStrip_Clear.Click += new System.EventHandler(this.TaskContextMenuStrip_Clear_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
+            // 
+            // TaskContextMenuStrip_Refresh
+            // 
+            this.TaskContextMenuStrip_Refresh.Name = "TaskContextMenuStrip_Refresh";
+            resources.ApplyResources(this.TaskContextMenuStrip_Refresh, "TaskContextMenuStrip_Refresh");
+            this.TaskContextMenuStrip_Refresh.Click += new System.EventHandler(this.TaskContextMenuStrip_Refresh_Click);
             // 
             // Bot
             // 
@@ -850,20 +891,6 @@ namespace Serein
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
-            // TaskContextMenuStrip
-            // 
-            this.TaskContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.TaskContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TaskContextMenuStrip_Add});
-            this.TaskContextMenuStrip.Name = "TaskContextMenuStrip";
-            resources.ApplyResources(this.TaskContextMenuStrip, "TaskContextMenuStrip");
-            // 
-            // TaskContextMenuStrip_Add
-            // 
-            this.TaskContextMenuStrip_Add.Name = "TaskContextMenuStrip_Add";
-            resources.ApplyResources(this.TaskContextMenuStrip_Add, "TaskContextMenuStrip_Add");
-            this.TaskContextMenuStrip_Add.Click += new System.EventHandler(this.TaskContextMenuStrip_Add_Click);
-            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -888,6 +915,7 @@ namespace Serein
             this.Regular.ResumeLayout(false);
             this.RegexContextMenuStrip.ResumeLayout(false);
             this.Task.ResumeLayout(false);
+            this.TaskContextMenuStrip.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
             this.BotTableLayoutPanel.ResumeLayout(false);
             this.BotWebsocket.ResumeLayout(false);
@@ -900,7 +928,6 @@ namespace Serein
             ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).EndInit();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
-            this.TaskContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -998,11 +1025,14 @@ namespace Serein
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripShow;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ContextMenuStrip TaskContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Add;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Delete;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Clear;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Refresh;
     }
 }
 

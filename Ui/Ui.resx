@@ -1205,9 +1205,6 @@
   <data name="columnHeader1.Width" type="System.Int32, mscorlib">
     <value>200</value>
   </data>
-  <data name="columnHeader2.Text" xml:space="preserve">
-    <value>状态</value>
-  </data>
   <data name="columnHeader3.Text" xml:space="preserve">
     <value>备注</value>
   </data>
@@ -1216,6 +1213,45 @@
   </data>
   <data name="columnHeader4.Width" type="System.Int32, mscorlib">
     <value>120</value>
+  </data>
+  <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>935, 17</value>
+  </metadata>
+  <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
+    <value>添加任务</value>
+  </data>
+  <data name="TaskContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Delete.Text" xml:space="preserve">
+    <value>删除任务</value>
+  </data>
+  <data name="TaskContextMenuStrip_Clear.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Clear.Text" xml:space="preserve">
+    <value>清空任务</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 6</value>
+  </data>
+  <data name="TaskContextMenuStrip_Refresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Refresh.Text" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 162</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TaskList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2297,24 +2333,6 @@
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>935, 17</value>
-  </metadata>
-  <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 38</value>
-  </data>
-  <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
-    <value>添加任务</value>
-  </data>
-  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 86</value>
-  </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -2497,12 +2515,6 @@
   <data name="&gt;&gt;columnHeader1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnHeader2.Name" xml:space="preserve">
-    <value>columnHeader2</value>
-  </data>
-  <data name="&gt;&gt;columnHeader2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;columnHeader3.Name" xml:space="preserve">
     <value>columnHeader3</value>
   </data>
@@ -2519,6 +2531,30 @@
     <value>TaskContextMenuStrip_Add</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Add.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Delete.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Delete</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Delete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Clear.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Clear</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Clear.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Refresh</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

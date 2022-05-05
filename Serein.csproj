@@ -93,6 +93,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ui\TaskEditer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\TaskEditer.Designer.cs">
+      <DependentUpon>TaskEditer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\TaskUi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimedTask.cs" />
     <Compile Include="Ui\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +163,9 @@
     <EmbeddedResource Include="Ui\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ui\TaskEditer.resx">
+      <DependentUpon>TaskEditer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ui\Ui.resx">
       <DependentUpon>Ui.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,6 +214,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ncrontab">
+      <Version>3.3.1</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>

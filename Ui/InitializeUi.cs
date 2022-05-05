@@ -69,6 +69,8 @@ namespace Serein
             GetAnnouncementThread.IsBackground = true;
             GetAnnouncementThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
+            SetWindowTheme(TaskList.Handle, "Explorer", null);
+            SetWindowTheme(PluginList.Handle, "Explorer", null);
 
         }
         public void GetAnnouncement()
