@@ -25,10 +25,10 @@ namespace Serein
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if(!(string.IsNullOrEmpty(Cron.Text)||string.IsNullOrWhiteSpace(Cron.Text)||
-                string.IsNullOrEmpty(Command .Text) || string.IsNullOrWhiteSpace(Command.Text)))
+            if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
+                string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
             {
-                if(Serein.Command.GetType(Command.Text) != -1)
+                if (Serein.Command.GetType(Command.Text) != -1)
                 {
                     MessageBox.Show("命令内容无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -36,14 +36,14 @@ namespace Serein
                 try
                 {
                     List<DateTime> Occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-                    CronNextTime.Text = "下一次执行时间:"+Occurrences[0].ToString();
+                    CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
                     Global.Ui.AddTask(Cron.Text, Command.Text, Remark.Text);
                     Close();
                     return;
                 }
                 catch
                 {
-                    CronNextTime.Text = "下一次执行时间:"+"Error";
+                    CronNextTime.Text = "下一次执行时间:" + "Error";
                     MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }

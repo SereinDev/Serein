@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Serein
 {
-    partial class Ui:Form
+    partial class Ui : Form
     {
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
@@ -28,7 +28,7 @@ namespace Serein
         {
 
         }
-        public void AddTask(string Cron,string Command,string Remark)
+        public void AddTask(string Cron, string Command, string Remark)
         {
             ListViewItem Item = new ListViewItem(Cron);
             Item.SubItems.Add(Command);
