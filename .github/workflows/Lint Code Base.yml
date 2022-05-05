@@ -17,6 +17,6 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
-          FILTER_REGEX_INCLUDE: .*.cs
+          FILTER_REGEX_INCLUDE: .*\.cs
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
