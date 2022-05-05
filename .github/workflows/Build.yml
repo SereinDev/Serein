@@ -33,6 +33,12 @@ jobs:
       - name: NuGet restore
         run: nuget restore
 
+      - name: Upload Serein codes
+        uses: actions/upload-artifact@v3
+        with:
+          name: Code
+          path: ${{ github.workspace }}
+
       - name: Build the solution
         run: msbuild /p:Configuration=$env:Configuration
         env:
@@ -43,4 +49,7 @@ jobs:
         with:
           name: Release
           path: ${{ github.workspace }}\bin\Release
+
+
+	
   

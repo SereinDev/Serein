@@ -2292,10 +2292,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>935, 17</value>
+  </metadata>
+  <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
+    <value>添加任务</value>
+  </data>
+  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>301, 86</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2496,6 +2514,12 @@
   </data>
   <data name="&gt;&gt;columnHeader4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Add.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Add</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Add.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

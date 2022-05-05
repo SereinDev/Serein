@@ -58,5 +58,9 @@ namespace Serein
             SereinIcon.ShowBalloonTip(10000);
         }
 
+        private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
+        {
+            TaskList.Items.Add("test"     );
+        }
     }
 }

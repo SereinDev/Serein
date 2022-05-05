@@ -32,14 +32,14 @@ namespace Serein
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match OutputMatch)
+        public static void Run(string Command, Match InputMatch)
         {
             int Type = GetType(Command);
             if (Type == -1)
             {
                 return;
             }
-            string Value = GetValue(Command, OutputMatch);
+            string Value = GetValue(Command, InputMatch);
             if (Type == 1)
             {
                 Task CMDTask = new Task(() =>
