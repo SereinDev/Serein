@@ -1,9 +1,8 @@
-name: Format codes
-
+name: Code format check
 
 on: 
   push:
-  
+
 jobs:
   dotnet-format:
     runs-on: windows-latest
@@ -17,15 +16,15 @@ jobs:
       - name: Install dotnet-format
         run: dotnet tool install -g dotnet-format
 
-      - name: Run dotnet format
-        run: dotnet format
+      - name: Format
+        run: dotnet-format  ${{ github.workspace }}\Serein.sln
 
       - name: Commit and Push
         if: steps.format.outputs.has-changes == 'true'
         shell: bash
         run: |
           git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "weihanli@outlook.com"
           git add -u
           git commit -m "Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
           git log -1
