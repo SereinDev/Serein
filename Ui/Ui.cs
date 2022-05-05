@@ -60,7 +60,7 @@ namespace Serein
 
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskList.Items.Add("test"     );
+            TaskList.Items.Add("test");
         }
     }
 }
