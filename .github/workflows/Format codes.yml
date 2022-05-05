@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           git config --local user.name "github-actions[bot]"
-          git config --local user.email "weihanli@outlook.com"
+          git config --local user.email "action@github.com"
           git add -u
           git commit -m "Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
           git log -1
