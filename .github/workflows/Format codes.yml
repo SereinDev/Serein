@@ -20,7 +20,6 @@ jobs:
         run: dotnet-format  ${{ github.workspace }}\Serein.sln
 
       - name: Commit and Push
-        if: steps.format.outputs.has-changes == 'true'
         shell: bash
         run: |
           git config --local user.name "github-actions[bot]"
