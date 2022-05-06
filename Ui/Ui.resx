@@ -1223,6 +1223,12 @@
   <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
     <value>添加任务</value>
   </data>
+  <data name="TaskContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Edit.Text" xml:space="preserve">
+    <value>修改任务</value>
+  </data>
   <data name="TaskContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
@@ -1235,6 +1241,21 @@
   <data name="TaskContextMenuStrip_Clear.Text" xml:space="preserve">
     <value>清空任务</value>
   </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 6</value>
+  </data>
+  <data name="TaskContextMenuStrip_Enable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Enable.Text" xml:space="preserve">
+    <value>启用任务</value>
+  </data>
+  <data name="TaskContextMenuStrip_Disable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Disable.Text" xml:space="preserve">
+    <value>禁用任务</value>
+  </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
@@ -1245,7 +1266,7 @@
     <value>刷新</value>
   </data>
   <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 162</value>
+    <value>185, 282</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
     <value>TaskContextMenuStrip</value>
@@ -2533,6 +2554,12 @@
   <data name="&gt;&gt;TaskContextMenuStrip_Add.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Edit.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Edit</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Edit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Delete.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Delete</value>
   </data>
@@ -2543,6 +2570,24 @@
     <value>TaskContextMenuStrip_Clear</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Clear.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
+    <value>toolStripSeparator6</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Enable.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Enable</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Enable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Disable.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Disable</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Disable.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">

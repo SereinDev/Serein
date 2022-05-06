@@ -56,12 +56,14 @@ namespace Serein
         }
         public void Initialize()
         {
+            TaskManager.RunnerThread.Start();
             InitWebBrowser();
             Settings.ReadSettings();
             LoadSettings();
             Settings.StartSaveSettings();
             LoadPlugins();
             LoadRegex();
+            LoadTask();
             Thread UpdateInfoThread = new Thread(UpdateInfo);
             UpdateInfoThread.IsBackground = true;
             UpdateInfoThread.Start();
@@ -70,8 +72,6 @@ namespace Serein
             GetAnnouncementThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
-            SetWindowTheme(PluginList.Handle, "Explorer", null);
-
         }
         public void GetAnnouncement()
         {

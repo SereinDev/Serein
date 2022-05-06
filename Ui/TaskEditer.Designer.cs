@@ -43,7 +43,7 @@ namespace Serein
             // 
             // Cron
             // 
-            this.Cron.Location = new System.Drawing.Point(167, 68);
+            this.Cron.Location = new System.Drawing.Point(170, 43);
             this.Cron.Name = "Cron";
             this.Cron.Size = new System.Drawing.Size(570, 35);
             this.Cron.TabIndex = 0;
@@ -52,7 +52,7 @@ namespace Serein
             // CronLabel
             // 
             this.CronLabel.AutoSize = true;
-            this.CronLabel.Location = new System.Drawing.Point(31, 71);
+            this.CronLabel.Location = new System.Drawing.Point(34, 46);
             this.CronLabel.Name = "CronLabel";
             this.CronLabel.Size = new System.Drawing.Size(130, 24);
             this.CronLabel.TabIndex = 1;
@@ -61,7 +61,7 @@ namespace Serein
             // CommandLabel
             // 
             this.CommandLabel.AutoSize = true;
-            this.CommandLabel.Location = new System.Drawing.Point(55, 147);
+            this.CommandLabel.Location = new System.Drawing.Point(58, 122);
             this.CommandLabel.Name = "CommandLabel";
             this.CommandLabel.Size = new System.Drawing.Size(106, 24);
             this.CommandLabel.TabIndex = 3;
@@ -69,7 +69,7 @@ namespace Serein
             // 
             // Command
             // 
-            this.Command.Location = new System.Drawing.Point(167, 144);
+            this.Command.Location = new System.Drawing.Point(170, 119);
             this.Command.Name = "Command";
             this.Command.Size = new System.Drawing.Size(570, 35);
             this.Command.TabIndex = 2;
@@ -77,7 +77,7 @@ namespace Serein
             // RemarkLabel
             // 
             this.RemarkLabel.AutoSize = true;
-            this.RemarkLabel.Location = new System.Drawing.Point(103, 223);
+            this.RemarkLabel.Location = new System.Drawing.Point(106, 198);
             this.RemarkLabel.Name = "RemarkLabel";
             this.RemarkLabel.Size = new System.Drawing.Size(58, 24);
             this.RemarkLabel.TabIndex = 5;
@@ -85,14 +85,14 @@ namespace Serein
             // 
             // Remark
             // 
-            this.Remark.Location = new System.Drawing.Point(167, 220);
+            this.Remark.Location = new System.Drawing.Point(170, 195);
             this.Remark.Name = "Remark";
             this.Remark.Size = new System.Drawing.Size(570, 35);
             this.Remark.TabIndex = 4;
             // 
             // Confirm
             // 
-            this.Confirm.Location = new System.Drawing.Point(170, 374);
+            this.Confirm.Location = new System.Drawing.Point(170, 349);
             this.Confirm.Name = "Confirm";
             this.Confirm.Size = new System.Drawing.Size(125, 55);
             this.Confirm.TabIndex = 6;
@@ -102,7 +102,7 @@ namespace Serein
             // 
             // Cancel
             // 
-            this.Cancel.Location = new System.Drawing.Point(459, 374);
+            this.Cancel.Location = new System.Drawing.Point(459, 349);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(125, 55);
             this.Cancel.TabIndex = 7;
@@ -113,7 +113,7 @@ namespace Serein
             // CronNextTime
             // 
             this.CronNextTime.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CronNextTime.Location = new System.Drawing.Point(35, 290);
+            this.CronNextTime.Location = new System.Drawing.Point(38, 273);
             this.CronNextTime.Name = "CronNextTime";
             this.CronNextTime.ReadOnly = true;
             this.CronNextTime.Size = new System.Drawing.Size(702, 35);
@@ -148,15 +148,14 @@ namespace Serein
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox Cron;
         private System.Windows.Forms.Label CronLabel;
         private System.Windows.Forms.Label CommandLabel;
-        private System.Windows.Forms.TextBox Command;
         private System.Windows.Forms.Label RemarkLabel;
-        private System.Windows.Forms.TextBox Remark;
         private System.Windows.Forms.Button Confirm;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.TextBox CronNextTime;
+        public System.Windows.Forms.TextBox Cron;
+        public System.Windows.Forms.TextBox Command;
+        public System.Windows.Forms.TextBox Remark;
     }
 }

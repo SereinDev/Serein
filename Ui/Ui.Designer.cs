@@ -94,8 +94,12 @@ namespace Serein
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TaskContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TaskContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskContextMenuStrip_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskContextMenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.TaskContextMenuStrip_Enable = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskContextMenuStrip_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.TaskContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Bot = new System.Windows.Forms.TabPage();
@@ -556,8 +560,10 @@ namespace Serein
             this.columnHeader4});
             this.TaskList.ContextMenuStrip = this.TaskContextMenuStrip;
             resources.ApplyResources(this.TaskList, "TaskList");
+            this.TaskList.FullRowSelect = true;
             this.TaskList.GridLines = true;
             this.TaskList.HideSelection = false;
+            this.TaskList.MultiSelect = false;
             this.TaskList.Name = "TaskList";
             this.TaskList.UseCompatibleStateImageBehavior = false;
             this.TaskList.View = System.Windows.Forms.View.Details;
@@ -579,18 +585,29 @@ namespace Serein
             this.TaskContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.TaskContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TaskContextMenuStrip_Add,
+            this.TaskContextMenuStrip_Edit,
             this.TaskContextMenuStrip_Delete,
             this.TaskContextMenuStrip_Clear,
+            this.toolStripSeparator6,
+            this.TaskContextMenuStrip_Enable,
+            this.TaskContextMenuStrip_Disable,
             this.toolStripSeparator5,
             this.TaskContextMenuStrip_Refresh});
             this.TaskContextMenuStrip.Name = "TaskContextMenuStrip";
             resources.ApplyResources(this.TaskContextMenuStrip, "TaskContextMenuStrip");
+            this.TaskContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.TaskContextMenuStrip_Opening);
             // 
             // TaskContextMenuStrip_Add
             // 
             this.TaskContextMenuStrip_Add.Name = "TaskContextMenuStrip_Add";
             resources.ApplyResources(this.TaskContextMenuStrip_Add, "TaskContextMenuStrip_Add");
             this.TaskContextMenuStrip_Add.Click += new System.EventHandler(this.TaskContextMenuStrip_Add_Click);
+            // 
+            // TaskContextMenuStrip_Edit
+            // 
+            this.TaskContextMenuStrip_Edit.Name = "TaskContextMenuStrip_Edit";
+            resources.ApplyResources(this.TaskContextMenuStrip_Edit, "TaskContextMenuStrip_Edit");
+            this.TaskContextMenuStrip_Edit.Click += new System.EventHandler(this.TaskContextMenuStrip_Edit_Click);
             // 
             // TaskContextMenuStrip_Delete
             // 
@@ -603,6 +620,23 @@ namespace Serein
             this.TaskContextMenuStrip_Clear.Name = "TaskContextMenuStrip_Clear";
             resources.ApplyResources(this.TaskContextMenuStrip_Clear, "TaskContextMenuStrip_Clear");
             this.TaskContextMenuStrip_Clear.Click += new System.EventHandler(this.TaskContextMenuStrip_Clear_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+            // 
+            // TaskContextMenuStrip_Enable
+            // 
+            this.TaskContextMenuStrip_Enable.Name = "TaskContextMenuStrip_Enable";
+            resources.ApplyResources(this.TaskContextMenuStrip_Enable, "TaskContextMenuStrip_Enable");
+            this.TaskContextMenuStrip_Enable.Click += new System.EventHandler(this.TaskContextMenuStrip_Enable_Click);
+            // 
+            // TaskContextMenuStrip_Disable
+            // 
+            this.TaskContextMenuStrip_Disable.Name = "TaskContextMenuStrip_Disable";
+            resources.ApplyResources(this.TaskContextMenuStrip_Disable, "TaskContextMenuStrip_Disable");
+            this.TaskContextMenuStrip_Disable.Click += new System.EventHandler(this.TaskContextMenuStrip_Disable_Click);
             // 
             // toolStripSeparator5
             // 
@@ -1033,6 +1067,10 @@ namespace Serein
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Clear;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Refresh;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Edit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Enable;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Disable;
     }
 }
 
