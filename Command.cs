@@ -32,7 +32,7 @@ namespace Serein
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch=null)
+        public static void Run(string Command, Match InputMatch = null)
         {
             int Type = GetType(Command);
             if (Type == -1)
@@ -152,7 +152,7 @@ namespace Serein
         {
             int index = command.IndexOf('|');
             string Value = command.Substring(index + 1);
-            if(MsgMatch==null)
+            if (MsgMatch == null)
             {
                 return Value;
             }

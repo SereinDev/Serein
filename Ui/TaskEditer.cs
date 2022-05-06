@@ -65,7 +65,7 @@ namespace Serein
                 CronNextTime.Text = "Error";
             }
         }
-        public void Update(string CronText,string RemarkText, string CommandText)
+        public void Update(string CronText, string RemarkText, string CommandText)
         {
             Cron.Text = CronText;
             Command.Text = CommandText;

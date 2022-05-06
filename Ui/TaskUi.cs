@@ -53,9 +53,9 @@ namespace Serein
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskList.Items[TaskList.SelectedIndices[0]].ForeColor =Color.Black;
-                TaskList.Items[TaskList.SelectedIndices[0]].SubItems[1].ForeColor =Color.Black;
-                TaskList.Items[TaskList.SelectedIndices[0]].SubItems[2].ForeColor =Color.Black;
+                TaskList.Items[TaskList.SelectedIndices[0]].ForeColor = Color.Black;
+                TaskList.Items[TaskList.SelectedIndices[0]].SubItems[1].ForeColor = Color.Black;
+                TaskList.Items[TaskList.SelectedIndices[0]].SubItems[2].ForeColor = Color.Black;
                 SaveTask();
             }
         }
@@ -71,7 +71,7 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditer TE= new TaskEditer();
+            TaskEditer TE = new TaskEditer();
             TE.ShowDialog();
             AddTask(TE.Cron.Text, TE.Remark.Text, TE.Command.Text);
             SaveTask();
@@ -151,7 +151,7 @@ namespace Serein
                     ),
                 Encoding.UTF8
                 );
-                       List <TaskItem> TaskItems = new List<TaskItem>();
+            List<TaskItem> TaskItems = new List<TaskItem>();
             DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
             {
@@ -165,7 +165,7 @@ namespace Serein
                 TaskItems.Add(TI);
                 TaskWriter.WriteLine(TI.ConvertToStr());
             }
-            
+
             TaskWriter.Flush();
             TaskWriter.Close();
             Global.TaskItems = TaskItems;

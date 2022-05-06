@@ -12,11 +12,11 @@ namespace Serein
         public static Thread RunnerThread = new Thread(Runner) { IsBackground = true };
         public static void Runner()
         {
-            while (true) 
-            { 
+            while (true)
+            {
                 foreach (TaskItem Item in Global.TaskItems)
                 {
-                    if (Item.Enable&&DateTime.Compare(Item.NextTime, DateTime.Now) <= 0)
+                    if (Item.Enable && DateTime.Compare(Item.NextTime, DateTime.Now) <= 0)
                     {
                         Item.Run();
                     }

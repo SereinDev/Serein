@@ -12,7 +12,7 @@ namespace Serein
         public string Cron { get; set; } = "";
         public string Command { get; set; } = "";
         public string Remark { get; set; } = "";
-        public bool Enable { get; set; } = true ;
+        public bool Enable { get; set; } = true;
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()
         {
@@ -55,8 +55,8 @@ namespace Serein
             {
                 return;
             }
-            Cron  = Texts[0];
-            Enable = Texts[2]=="True";
+            Cron = Texts[0];
+            Enable = Texts[2] == "True";
             Remark = Texts[2];
             Command = Texts[3];
             List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
