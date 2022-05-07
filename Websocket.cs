@@ -123,12 +123,13 @@ namespace Serein
                     LogWriter.Close();
                 }
                 catch { }
-                Task MsgTask = new Task(() =>
-                {
-                    Message.ProcessMsgFromBot(e.Data);
-                });
-                MsgTask.Start();
+                
             }
+            Task MsgTask = new Task(() =>
+            {
+                Message.ProcessMsgFromBot(e.Data);
+            });
+            MsgTask.Start();
         }
         private static bool CheckPort(int port)
         {

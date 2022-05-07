@@ -112,9 +112,11 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinAbout = new System.Windows.Forms.Label();
+            this.SettingSereinUpdateInfoTypeLabel = new System.Windows.Forms.Label();
+            this.SettingSereinUpdateInfoType = new System.Windows.Forms.ComboBox();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
-            this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
             this.SettingBotPermission = new System.Windows.Forms.Label();
             this.SettingBotGroup = new System.Windows.Forms.Label();
@@ -718,12 +720,40 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinAbout);
+            this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoTypeLabel);
+            this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoType);
             this.SettingSerein.Controls.Add(this.SettingSereinVersion);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetAnnouncement);
-            this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
+            // 
+            // SettingSereinAbout
+            // 
+            resources.ApplyResources(this.SettingSereinAbout, "SettingSereinAbout");
+            this.SettingSereinAbout.Name = "SettingSereinAbout";
+            this.SettingSereinAbout.Click += new System.EventHandler(this.SettingSereinAbout_Click);
+            this.SettingSereinAbout.MouseHover += new System.EventHandler(this.SettingSereinAbout_MouseHover);
+            // 
+            // SettingSereinUpdateInfoTypeLabel
+            // 
+            resources.ApplyResources(this.SettingSereinUpdateInfoTypeLabel, "SettingSereinUpdateInfoTypeLabel");
+            this.SettingSereinUpdateInfoTypeLabel.Name = "SettingSereinUpdateInfoTypeLabel";
+            this.SettingSereinUpdateInfoTypeLabel.MouseHover += new System.EventHandler(this.SettingSereinUpdateInfoTypeLabel_MouseHover);
+            // 
+            // SettingSereinUpdateInfoType
+            // 
+            this.SettingSereinUpdateInfoType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SettingSereinUpdateInfoType.FormattingEnabled = true;
+            this.SettingSereinUpdateInfoType.Items.AddRange(new object[] {
+            resources.GetString("SettingSereinUpdateInfoType.Items"),
+            resources.GetString("SettingSereinUpdateInfoType.Items1"),
+            resources.GetString("SettingSereinUpdateInfoType.Items2")});
+            resources.ApplyResources(this.SettingSereinUpdateInfoType, "SettingSereinUpdateInfoType");
+            this.SettingSereinUpdateInfoType.Name = "SettingSereinUpdateInfoType";
+            this.SettingSereinUpdateInfoType.SelectedIndexChanged += new System.EventHandler(this.SettingSereinUpdateInfoType_SelectedIndexChanged);
+            this.SettingSereinUpdateInfoType.MouseHover += new System.EventHandler(this.SettingSereinUpdateInfoType_MouseHover);
             // 
             // SettingSereinVersion
             // 
@@ -737,14 +767,6 @@ namespace Serein
             this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
             this.SettingSereinEnableGetAnnouncement.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_CheckedChanged);
             this.SettingSereinEnableGetAnnouncement.MouseHover += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_MouseHover);
-            // 
-            // SettingSereinEnableGetUpdate
-            // 
-            resources.ApplyResources(this.SettingSereinEnableGetUpdate, "SettingSereinEnableGetUpdate");
-            this.SettingSereinEnableGetUpdate.Name = "SettingSereinEnableGetUpdate";
-            this.SettingSereinEnableGetUpdate.UseVisualStyleBackColor = true;
-            this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
-            this.SettingSereinEnableGetUpdate.MouseHover += new System.EventHandler(this.SettingSereinEnableGetUpdate_MouseHover);
             // 
             // SettingBot
             // 
@@ -1023,7 +1045,6 @@ namespace Serein
         private System.Windows.Forms.GroupBox SettingSerein;
         private System.Windows.Forms.Label SettingSereinVersion;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
-        private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.GroupBox SettingBot;
         private System.Windows.Forms.Label SettingBotPermission;
         private System.Windows.Forms.Label SettingBotGroup;
@@ -1071,6 +1092,9 @@ namespace Serein
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Enable;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Disable;
+        private System.Windows.Forms.Label SettingSereinUpdateInfoTypeLabel;
+        private System.Windows.Forms.ComboBox SettingSereinUpdateInfoType;
+        private System.Windows.Forms.Label SettingSereinAbout;
     }
 }
 

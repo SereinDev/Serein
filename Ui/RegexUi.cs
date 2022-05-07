@@ -41,6 +41,13 @@ namespace Serein
         {
             RegexEditer regexEditer = new RegexEditer();
             regexEditer.ShowDialog(this);
+            AddRegex(
+                    regexEditer.Area.SelectedIndex,
+                    regexEditer.RegexTextBox.Text,
+                    regexEditer.IsAdmin.Checked,
+                    regexEditer.RemarkTextBox.Text,
+                    regexEditer.CommandTextBox.Text
+                    );
             SaveRegex();
         }
         private void RegexContextMenuStripEdit_Click(object sender, EventArgs e)
@@ -49,7 +56,7 @@ namespace Serein
             {
                 return;
             }
-            RegexEditer regexEditer = new RegexEditer(true);
+            RegexEditer regexEditer = new RegexEditer();
             int index = Array.IndexOf(areas, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,

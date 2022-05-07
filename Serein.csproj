@@ -104,12 +104,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TaskItem.cs" />
-    <Compile Include="Ui\About.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\About.Designer.cs">
-      <DependentUpon>About.cs</DependentUpon>
-    </Compile>
     <Compile Include="Command.cs" />
     <Compile Include="Ui\BotsUi.cs">
       <SubType>Form</SubType>
@@ -158,9 +152,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Ui\About.resx">
-      <DependentUpon>About.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Ui\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>

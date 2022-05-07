@@ -22,7 +22,7 @@ namespace Serein
     }
     public class Settings_Serein
     {
-        public bool EnableGetUpdate { get; set; } = true;
+        public int UpdateInfoType { get; set; } = 0;
         public bool EnableGetAnnouncement { get; set; } = true;
     }
     partial class Settings

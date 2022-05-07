@@ -73,7 +73,14 @@ namespace Serein
         {
             TaskEditer TE = new TaskEditer();
             TE.ShowDialog();
-            AddTask(TE.Cron.Text, TE.Remark.Text, TE.Command.Text);
+            if (TE.CancelFlag)
+            {
+                return;
+            }
+            ListViewItem Item = new ListViewItem(TE.Cron.Text);
+            Item.SubItems.Add(TE.Remark.Text);
+            Item.SubItems.Add(TE.Command.Text);
+            TaskList.Items.Add(Item);
             SaveTask();
         }
         private void TaskContextMenuStrip_Edit_Click(object sender, EventArgs e)
@@ -87,6 +94,10 @@ namespace Serein
                     TaskList.SelectedItems[0].SubItems[2].Text
                     );
                 TE.ShowDialog();
+                if (TE.CancelFlag)
+                {
+                    return;
+                }
                 TaskList.SelectedItems[0].Text = TE.Cron.Text;
                 TaskList.SelectedItems[0].SubItems[1].Text = TE.Remark.Text;
                 TaskList.SelectedItems[0].SubItems[2].Text = TE.Command.Text;
@@ -129,13 +140,6 @@ namespace Serein
         {
             SaveTask();
             LoadTask();
-        }
-        public void AddTask(string Cron, string Remark, string Command)
-        {
-            ListViewItem Item = new ListViewItem(Cron);
-            Item.SubItems.Add(Remark);
-            Item.SubItems.Add(Command);
-            TaskList.Items.Add(Item);
         }
         public void SaveTask()
         {

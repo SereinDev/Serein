@@ -231,13 +231,13 @@
     <value>NoControl</value>
   </data>
   <data name="PanelInfoCPU2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 263</value>
+    <value>163, 263</value>
   </data>
   <data name="PanelInfoCPU2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoCPU2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+    <value>102, 24</value>
   </data>
   <data name="PanelInfoCPU2.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -417,13 +417,13 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoCPU.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 24</value>
+    <value>166, 24</value>
   </data>
   <data name="PanelInfoCPU.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="PanelInfoCPU.Text" xml:space="preserve">
-    <value>CPU使用率：</value>
+    <value>进程CPU占用：</value>
   </data>
   <data name="&gt;&gt;PanelInfoCPU.Name" xml:space="preserve">
     <value>PanelInfoCPU</value>
@@ -1511,6 +1511,93 @@
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinAbout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Underline</value>
+  </data>
+  <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>469, 49</value>
+  </data>
+  <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 24</value>
+  </data>
+  <data name="SettingSereinAbout.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="SettingSereinAbout.Text" xml:space="preserve">
+    <value>关于...</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Name" xml:space="preserve">
+    <value>SettingSereinAbout</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 92</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 24</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Text" xml:space="preserve">
+    <value>获取更新类型</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Name" xml:space="preserve">
+    <value>SettingSereinUpdateInfoTypeLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items1" xml:space="preserve">
+    <value>仅正式版</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items2" xml:space="preserve">
+    <value>测试版和正式版</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 84</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 32</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Name" xml:space="preserve">
+    <value>SettingSereinUpdateInfoType</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1518,7 +1605,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>345, 45</value>
+    <value>469, 92</value>
   </data>
   <data name="SettingSereinVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 24</value>
@@ -1539,7 +1626,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1548,7 +1635,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 83</value>
+    <value>23, 45</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -1572,40 +1659,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 45</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 28</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="SettingSereinEnableGetUpdate.Text" xml:space="preserve">
-    <value>自动获取更新通知</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Name" xml:space="preserve">
-    <value>SettingSereinEnableGetUpdate</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetUpdate.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1614,7 +1668,7 @@
     <value>0, 655</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 138</value>
+    <value>1232, 149</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2175,7 +2229,7 @@
     <value>1075, 63</value>
   </data>
   <data name="SettingServerPathSelect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 38</value>
+    <value>134, 35</value>
   </data>
   <data name="SettingServerPathSelect.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

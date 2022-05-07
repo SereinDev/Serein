@@ -50,7 +50,7 @@ namespace Serein
                 ServerProcessInfo.StandardOutputEncoding = Encoding.UTF8;
                 ServerProcessInfo.WorkingDirectory = Path.GetDirectoryName(Global.Settings_server.Path);
                 ServerProcess = Process.Start(ServerProcessInfo);
-                CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream, Encoding.UTF8);
+                CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream, new UTF8Encoding(true ));
                 CommandWriter.AutoFlush = true;
                 CommandWriter.NewLine = "\n";
                 ServerProcess.BeginOutputReadLine();
@@ -107,7 +107,6 @@ namespace Serein
                         Killed = true;
                         Restart = false;
                     }
-
                 }
                 else
                 {

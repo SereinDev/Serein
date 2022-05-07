@@ -42,9 +42,9 @@ namespace Serein
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
                         string MessageType = JsonObject["message_type"].ToString();
-                        int r;
-                        int GroupId = int.TryParse(JsonObject["group_id"].ToString(), out r) ? r : -1;
-                        int UserId = int.TryParse(JsonObject["sender"]["user_id"].ToString(), out r) ? r : -1;
+                        int Result;
+                        int GroupId = int.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                        int UserId = int.TryParse(JsonObject["sender"]["user_id"].ToString(), out Result) ? Result : -1;
                         if (Item.IsAdmin)
                         {
                             bool IsAdmin = false;
@@ -72,7 +72,6 @@ namespace Serein
                                     UserId,
                                     GroupId
                                 );
-                                Command.test(Item);
                             }
                             else if (MessageType == "private")
                             {
@@ -85,7 +84,6 @@ namespace Serein
                                         ),
                                     UserId
                                 );
-                                Command.test(Item);
                             }
                         }
                         else
@@ -102,7 +100,6 @@ namespace Serein
                                     UserId,
                                     GroupId
                                 );
-                                Command.test(Item);
                             }
                             else if (MessageType == "private")
                             {
@@ -115,7 +112,6 @@ namespace Serein
                                         ),
                                     UserId
                                 );
-                                Command.test(Item);
                             }
                         }
                     }

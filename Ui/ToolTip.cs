@@ -82,13 +82,31 @@ namespace Serein
         {
             ShowToolTip(sender, "设定有管理权限的用户");
         }
-        private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
-        {
-            ShowToolTip(sender, "启动后每隔10分钟检查一次更新（建议开启）");
-        }
         private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "启动后自动获取公告（建议开启）");
+        }
+        private void SettingSereinUpdateInfoType_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender,
+                "启动后每隔10分钟检查一次更新\n" +
+                "-禁用 禁止获取更新信息\n" +
+                "-仅正式版 获取Release中的正式版（推荐）\n" +
+                "-测试版和正式版 获取来自Workflow中成功的构建和Release中的Tag"
+                );
+        }
+        private void SettingSereinUpdateInfoTypeLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender,
+                "启动后每隔10分钟检查一次更新\n" +
+                "-禁用 禁止获取更新信息\n" +
+                "-仅正式版 获取Release中的正式版（推荐）\n" +
+                "-测试版和正式版 获取来自Workflow中成功的构建和Release中的Tag"
+                );
+        }
+        private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "打开帮助页面（https://zaitonn.github.io/Serein/About.md）");
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Serein
                 return;
             }
             Cron = Texts[0];
-            Enable = Texts[2] == "True";
+            Enable = Texts[1] == "True";
             Remark = Texts[2];
             Command = Texts[3];
             List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();

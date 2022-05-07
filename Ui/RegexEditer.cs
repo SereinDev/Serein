@@ -13,12 +13,10 @@ namespace Serein
 {
     public partial class RegexEditer : Form
     {
-        public bool Edit = false;
         public bool CancelFlag = true;
-        public RegexEditer(bool edit = false)
+        public RegexEditer()
         {
             InitializeComponent();
-            Edit = edit;
             Area.SelectedIndex = 0;
         }
 
@@ -38,16 +36,6 @@ namespace Serein
                 {
                     Regex m = new Regex(RegexTextBox.Text);
                     m.Match("");
-                    if (!Edit)
-                    {
-                        Global.Ui.AddRegex(
-                            Area.SelectedIndex,
-                            RegexTextBox.Text,
-                            IsAdmin.Checked,
-                            RemarkTextBox.Text,
-                            CommandTextBox.Text
-                            );
-                    }
                     CancelFlag = false;
                     Close();
                 }

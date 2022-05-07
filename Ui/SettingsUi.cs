@@ -22,7 +22,7 @@ namespace Serein
             SettingBotPort.Value = Global.Settings_bot.Port;
             SettingBotEnableLog.Checked = Global.Settings_bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_bot.GivePermissionToAllAdmin;
-            SettingSereinEnableGetUpdate.Checked = Global.Settings_serein.EnableGetUpdate;
+            SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_serein.UpdateInfoType;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings_serein.EnableGetAnnouncement;
             SettingServerPath.Text = Global.Settings_server.Path;
             SettingBotPermissionList.Text = string.Join(",", Global.Settings_bot.PermissionList);
@@ -100,11 +100,11 @@ namespace Serein
             SettingBotPermissionList.Focus();
             SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
             SettingBotPermissionList.ScrollToCaret();
-
         }
-        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
+
+        private void SettingSereinUpdateInfoType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Global.Settings_serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+            Global.Settings_serein.UpdateInfoType = SettingSereinUpdateInfoType.SelectedIndex;
         }
 
         private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e)
@@ -123,6 +123,15 @@ namespace Serein
                 Global.Settings_server.Path = dialog.FileName;
                 LoadPlugins();
             }
+        }
+
+        private void SettingSereinAbout_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Mrs4s/go-cqhttp");
+        }
+        private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/About.md");
         }
     }
 
