@@ -2,6 +2,8 @@ name: Code format check
 
 on: 
   push:
+    paths:
+      - '**.cs'
 
 jobs:
   dotnet-format:

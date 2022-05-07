@@ -1,4 +1,5 @@
-﻿### 参考&鸣谢
+## 关于
+### 参考&鸣谢
 [Naive](https://www.minebbs.com/threads/bds-naive.4860/)  
 [MCSManager](https://mcsmanager.com)  
 [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters)
@@ -10,6 +11,3 @@
 ### 捐赠
 [爱发电 @Zaiton](https://afdian.net/@Zaiton)
 
----
->另见：  
-[Github仓库](https://github.com/Zaitonn/Serein)

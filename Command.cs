@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -108,7 +107,6 @@ namespace Serein
             {
                 Websocket.Send(true, Value, UserId.ToString());
             }
-            MessageBox.Show(Command + "\n" + Value + "\n" + Type.ToString());
         }
 
         public static int GetType(string Command)
@@ -201,9 +199,6 @@ namespace Serein
                     Text = Text.Replace(
                         "%QQ-Title%",
                         JsonObject["sender"]["title"].ToString());
-                    Text = Text.Replace(
-                        "%QQ-ID%",
-                        JsonObject["sender"]["user_id"].ToString());
                     Text = Text.Replace(
                         "%QQ-Role%",
                         Roles_Chinese[Array.IndexOf(

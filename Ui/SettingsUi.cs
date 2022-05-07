@@ -133,6 +133,10 @@ namespace Serein
         {
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
+        private void SettingSereinPage_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein");
+        }
     }
 
 }

@@ -137,6 +137,7 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
+            this.SettingSereinPage = new System.Windows.Forms.Label();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -720,6 +721,7 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
             this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoTypeLabel);
             this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoType);
@@ -732,6 +734,7 @@ namespace Serein
             // SettingSereinAbout
             // 
             resources.ApplyResources(this.SettingSereinAbout, "SettingSereinAbout");
+            this.SettingSereinAbout.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingSereinAbout.Name = "SettingSereinAbout";
             this.SettingSereinAbout.Click += new System.EventHandler(this.SettingSereinAbout_Click);
             this.SettingSereinAbout.MouseHover += new System.EventHandler(this.SettingSereinAbout_MouseHover);
@@ -947,6 +950,13 @@ namespace Serein
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
+            // SettingSereinPage
+            // 
+            resources.ApplyResources(this.SettingSereinPage, "SettingSereinPage");
+            this.SettingSereinPage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinPage.Name = "SettingSereinPage";
+            this.SettingSereinPage.Click += new System.EventHandler(this.SettingSereinPage_Click);
+            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -1095,6 +1105,7 @@ namespace Serein
         private System.Windows.Forms.Label SettingSereinUpdateInfoTypeLabel;
         private System.Windows.Forms.ComboBox SettingSereinUpdateInfoType;
         private System.Windows.Forms.Label SettingSereinAbout;
+        private System.Windows.Forms.Label SettingSereinPage;
     }
 }
 

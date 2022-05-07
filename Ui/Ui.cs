@@ -54,6 +54,8 @@ namespace Serein
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
+
+        
     }
 }
 

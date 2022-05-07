@@ -92,7 +92,7 @@ namespace Serein
                 "启动后每隔10分钟检查一次更新\n" +
                 "-禁用 禁止获取更新信息\n" +
                 "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-测试版和正式版 获取来自Workflow中成功的构建和Release中的Tag"
+                "-测试版和正式版 获取来自最新的Commit和Release中的正式版"
                 );
         }
         private void SettingSereinUpdateInfoTypeLabel_MouseHover(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace Serein
                 "启动后每隔10分钟检查一次更新\n" +
                 "-禁用 禁止获取更新信息\n" +
                 "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-测试版和正式版 获取来自Workflow中成功的构建和Release中的Tag"
+                "-测试版和正式版 获取来自最新的Commit和Release中的正式版"
                 );
         }
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
