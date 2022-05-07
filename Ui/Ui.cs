@@ -19,7 +19,7 @@ namespace Serein
             UpdateVersion();
         }
 
-        
+
 
         private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
         {

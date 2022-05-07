@@ -13,10 +13,10 @@ namespace Serein
 {
     class Command
     {
-        public static string[] Sexs = { "unknown","male","female" };
-        public static string[] Sexs_Chinese = { "未知","男","女" };
+        public static string[] Sexs = { "unknown", "male", "female" };
+        public static string[] Sexs_Chinese = { "未知", "男", "女" };
         public static string[] Roles = { "owner", "admin", "member" };
-        public static string[] Roles_Chinese = { "群主","管理员","成员" };
+        public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
         public static void StartCmd(string Command)
         {
             Process CMDProcess = new Process();
@@ -166,7 +166,7 @@ namespace Serein
         }
         public static string GetVariables(string Text, JObject JsonObject = null)
         {
-            DateTime CurrentTime = DateTime.Now ;
+            DateTime CurrentTime = DateTime.Now;
             Text = Text.Replace("%DateTime-Year%", CurrentTime.Year.ToString());
             Text = Text.Replace("%DateTime-Month%", CurrentTime.Month.ToString());
             Text = Text.Replace("%DateTime-Day%", CurrentTime.Day.ToString());
@@ -174,7 +174,7 @@ namespace Serein
             Text = Text.Replace("%DateTime-Minute%", CurrentTime.Minute.ToString());
             Text = Text.Replace("%DateTime-Second%", CurrentTime.Second.ToString());
             Text = Text.Replace("%DateTime%", CurrentTime.ToString());
-            if(JsonObject != null)
+            if (JsonObject != null)
             {
                 try
                 {
@@ -190,7 +190,7 @@ namespace Serein
                         "%QQ-Area%",
                         JsonObject["sender"]["area"].ToString());
                     Text = Text.Replace(
-                        "%QQ-Card%", 
+                        "%QQ-Card%",
                         JsonObject["sender"]["card"].ToString());
                     Text = Text.Replace(
                         "%QQ-Level%",
@@ -199,19 +199,19 @@ namespace Serein
                         "%QQ-Nickname%",
                         JsonObject["sender"]["nickname"].ToString());
                     Text = Text.Replace(
-                        "%QQ-Title%", 
+                        "%QQ-Title%",
                         JsonObject["sender"]["title"].ToString());
                     Text = Text.Replace(
-                        "%QQ-ID%", 
+                        "%QQ-ID%",
                         JsonObject["sender"]["user_id"].ToString());
                     Text = Text.Replace(
                         "%QQ-Role%",
                         Roles_Chinese[Array.IndexOf(
-                            Roles, 
+                            Roles,
                             JsonObject["sender"]["role"].ToString()
                             )]);
                     Text = Text.Replace(
-                        "%QQ-Sex%", 
+                        "%QQ-Sex%",
                         Sexs_Chinese[Array.IndexOf(
                             Sexs,
                             JsonObject["sender"]["sex"].ToString()
@@ -230,7 +230,7 @@ namespace Serein
 
                 }
             }
-            return Text.Replace("\\n","\n");
+            return Text.Replace("\\n", "\n");
         }
     }
 }

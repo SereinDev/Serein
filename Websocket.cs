@@ -123,7 +123,7 @@ namespace Serein
                     LogWriter.Close();
                 }
                 catch { }
-                
+
             }
             Task MsgTask = new Task(() =>
             {

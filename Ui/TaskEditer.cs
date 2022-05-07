@@ -38,8 +38,8 @@ namespace Serein
                 {
                     List<DateTime> Occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                     CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
-                    CancelFlag = false ;
-        Close();
+                    CancelFlag = false;
+                    Close();
                     return;
                 }
                 catch
