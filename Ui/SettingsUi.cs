@@ -127,11 +127,11 @@ namespace Serein
 
         private void SettingSereinAbout_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Mrs4s/go-cqhttp");
+            Process.Start("https://zaitonn.github.io/Serein/About");
         }
         private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/About.md");
+            Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
     }
 

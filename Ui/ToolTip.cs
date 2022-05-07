@@ -106,7 +106,7 @@ namespace Serein
         }
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "打开帮助页面（https://zaitonn.github.io/Serein/About.md）");
+            ShowToolTip(sender, "打开帮助页面（https://zaitonn.github.io/Serein/About）");
         }
     }
 }
