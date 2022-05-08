@@ -1,14 +1,12 @@
-﻿using System;
+﻿using NCrontab;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Linq;
-using System.Threading;
 using System.ComponentModel;
-using NCrontab;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Serein
 {
@@ -38,7 +36,6 @@ namespace Serein
                     TaskContextMenuStrip_Disable.Enabled = true;
                     TaskContextMenuStrip_Enable.Enabled = false;
                 }
-
             }
             if (TaskList.Items.Count <= 0)
             {
@@ -163,13 +160,19 @@ namespace Serein
                 TI.Cron = Item.Text;
                 TI.Remark = Item.SubItems[1].Text;
                 TI.Command = Item.SubItems[2].Text;
-                List<DateTime> Occurrences = CrontabSchedule.Parse(TI.Cron).GetNextOccurrences(Now, Now.AddYears(1)).ToList();
-                TI.NextTime = Occurrences[0];
+                try
+                {
+                    List<DateTime> Occurrences = CrontabSchedule.Parse(TI.Cron).GetNextOccurrences(Now, Now.AddYears(1)).ToList();
+                    TI.NextTime = Occurrences[0];
+                }
+                catch
+                {
+                    continue;
+                }
                 TI.Enable = Item.ForeColor != Color.Gray;
                 TaskItems.Add(TI);
                 TaskWriter.WriteLine(TI.ConvertToStr());
             }
-
             TaskWriter.Flush();
             TaskWriter.Close();
             Global.TaskItems = TaskItems;

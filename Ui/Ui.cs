@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
 using System.Windows.Forms;
-using System.Threading;
-using System.ComponentModel;
 
 namespace Serein
 {
@@ -48,14 +41,12 @@ namespace Serein
             }
         }
 
-        private void ShowBalloonTip(string text)
+        public void ShowBalloonTip(string text)
         {
             SereinIcon.BalloonTipTitle = "Serein";
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
-
-
     }
 }
 

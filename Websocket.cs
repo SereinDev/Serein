@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
-using System.Text;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Windows.Forms;
-using System.Net.NetworkInformation;
 using System.Net;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using WebSocketSharp;
 
 namespace Serein

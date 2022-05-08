@@ -1,7 +1,7 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System.IO;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
 namespace Serein
 {
     public class Settings_Server

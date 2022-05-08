@@ -112,6 +112,7 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
             this.SettingSereinUpdateInfoTypeLabel = new System.Windows.Forms.Label();
             this.SettingSereinUpdateInfoType = new System.Windows.Forms.ComboBox();
@@ -137,7 +138,6 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
-            this.SettingSereinPage = new System.Windows.Forms.Label();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -731,6 +731,13 @@ namespace Serein
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
             // 
+            // SettingSereinPage
+            // 
+            resources.ApplyResources(this.SettingSereinPage, "SettingSereinPage");
+            this.SettingSereinPage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinPage.Name = "SettingSereinPage";
+            this.SettingSereinPage.Click += new System.EventHandler(this.SettingSereinPage_Click);
+            // 
             // SettingSereinAbout
             // 
             resources.ApplyResources(this.SettingSereinAbout, "SettingSereinAbout");
@@ -949,13 +956,6 @@ namespace Serein
             this.SettingServerPath.Name = "SettingServerPath";
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
-            // 
-            // SettingSereinPage
-            // 
-            resources.ApplyResources(this.SettingSereinPage, "SettingSereinPage");
-            this.SettingSereinPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingSereinPage.Name = "SettingSereinPage";
-            this.SettingSereinPage.Click += new System.EventHandler(this.SettingSereinPage_Click);
             // 
             // Ui
             // 

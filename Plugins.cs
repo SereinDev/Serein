@@ -1,9 +1,7 @@
-﻿using System.IO;
-using System;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Serein
 {

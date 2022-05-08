@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetInfo.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Ui\TaskEditer.cs">
       <SubType>Form</SubType>

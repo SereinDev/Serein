@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Linq;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace Serein
 {

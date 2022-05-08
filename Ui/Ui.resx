@@ -243,7 +243,7 @@
     <value>12</value>
   </data>
   <data name="PanelInfoCPU2.Text" xml:space="preserve">
-    <value>-%</value>
+    <value>-</value>
   </data>
   <data name="PanelInfoCPU2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopRight</value>
