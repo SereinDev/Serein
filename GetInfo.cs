@@ -53,9 +53,9 @@ namespace Serein
                             Global.Ui.ShowBalloonTip(RequestInfo($"https://zaitonn.github.io/Serein/announcement/{AnnouncementId}.txt").Replace("\\n", "\n"));
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        Global.Ui.ShowBalloonTip("公告获取异常：\n"+e.Message );
+                        Global.Ui.ShowBalloonTip("公告获取异常：\n" + e.Message);
                     }
                 }
                 else
@@ -82,7 +82,7 @@ namespace Serein
                             OldPreVersion = PreVersion;
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
                     }
@@ -91,7 +91,7 @@ namespace Serein
                 {
                     try
                     {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(RequestInfo("https://api.github.com/repos/Zaitonn/Serein/releases/latest",true ));
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(RequestInfo("https://api.github.com/repos/Zaitonn/Serein/releases/latest", true));
                         string Version = JsonObject["tag_name"].ToString();
                         if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
                             Version != Global.VERSION && OldPreVersion != Version)
@@ -100,7 +100,7 @@ namespace Serein
                             OldPreVersion = Version;
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
                     }

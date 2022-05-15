@@ -1,4 +1,4 @@
-﻿using System.IO ;
+﻿using System.IO;
 using System.Text;
 
 namespace Serein
@@ -12,13 +12,13 @@ namespace Serein
             ExtractConsoleFile(Properties.Resources.preset_css, "preset.css");
             ExtractConsoleFile(Properties.Resources.vanilla_css, "vanilla.css");
         }
-        private  static void ExtractConsoleFile(string Resource, string Name)
+        private static void ExtractConsoleFile(string Resource, string Name)
         {
-            if (!Directory.Exists(Global.Path+"console"))
+            if (!Directory.Exists(Global.Path + "console"))
             {
                 Directory.CreateDirectory(Global.Path + "console");
             }
-            StreamWriter streamWriter = new StreamWriter(Global.Path + "console\\"+Name, false, Encoding.UTF8);
+            StreamWriter streamWriter = new StreamWriter(Global.Path + "console\\" + Name, false, Encoding.UTF8);
             streamWriter.Write(Resource);
             streamWriter.Close();
         }
