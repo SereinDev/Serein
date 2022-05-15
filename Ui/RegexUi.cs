@@ -36,6 +36,10 @@ namespace Serein
         {
             RegexEditer regexEditer = new RegexEditer();
             regexEditer.ShowDialog(this);
+            if (regexEditer.CancelFlag)
+            {
+                return;
+            }
             AddRegex(
                     regexEditer.Area.SelectedIndex,
                     regexEditer.RegexTextBox.Text,

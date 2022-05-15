@@ -16,16 +16,9 @@ namespace Serein
         }
         public void InitWebBrowser()
         {
-            if (!File.Exists(Global.Path + "console\\console.html"))
-            {
-                PanelConsoleWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
-                BotWebBrowser.Navigate("https://zaitonn.github.io/Serein/console/console.html");
-            }
-            else
-            {
-                PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
+            
+             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
                 BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
-            }
             Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
             Global.BotWebBrowser = BotWebBrowser;
         }

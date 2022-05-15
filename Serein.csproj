@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResourcesManager.cs" />
     <Compile Include="GetInfo.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Ui\TaskEditer.cs">
@@ -163,7 +164,7 @@
       <DependentUpon>Ui.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -188,6 +189,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="console\console.html" />
+    <None Include="console\console.js" />
+    <None Include="console\preset.css" />
+    <None Include="console\vanilla.css" />
     <Content Include="Serein.ico" />
     <Content Include="Serein_full.ico" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Serein
@@ -11,6 +12,10 @@ namespace Serein
         [STAThread]
         static void Main()
         {
+            if (!File.Exists(Global.Path + "console\\console.html"))
+            {
+                ResourcesManager.InitConsole();
+            }
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
@@ -46,11 +51,12 @@ namespace Serein
         {
             if (Server.Status)
             {
-                Server.ServerProcess.StandardInput.WriteLine("stop\n");
                 Server.ServerProcess.StandardInput.WriteLine("exit\n");
+                Server.ServerProcess.StandardInput.WriteLine("stop\n");
                 Server.ServerProcess.StandardInput.WriteLine("quit\n");
                 Server.Killed = false;
             }
         }
+
     }
 }

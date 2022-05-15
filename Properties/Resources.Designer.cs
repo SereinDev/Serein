@@ -22,7 +22,7 @@ namespace Serein.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Serein.Properties {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Serein.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,135 @@ namespace Serein.Properties {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;UTF-8&quot;&gt;
+        ///    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        ///    &lt;title&gt;Console&lt;/title&gt;
+        ///    &lt;meta name=&quot;description&quot; itemprop=&quot;description&quot; content=&quot;Serein https://github.com/Zaitonn/Serein&quot;&gt;
+        ///    &lt;script src=&quot;console.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;preset.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;vanilla.css&quot;&gt;
+        ///    &lt;link rel=&quot;shortcut icon&quot; href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string console_html {
+            get {
+                return ResourceManager.GetString("console_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 line=0;
+        ///function AppendText(str){
+        ///    ConsoleDiv=document.querySelector(&quot;#console&quot;);
+        ///    line=line+1;
+        ///    if (str==&quot;#clear&quot;){
+        ///        Clear();
+        ///    }
+        ///    else{
+        ///        var div=document.createElement(&quot;div&quot;);
+        ///        div.innerHTML=str;
+        ///        ConsoleDiv.appendChild(div);
+        ///    }
+        ///    if(line&gt;250){
+        ///        ConsoleDiv.removeChild(ConsoleDiv.children[0]);
+        ///        line=line-1;
+        ///    }
+        ///    ConsoleDiv.scrollTop=ConsoleDiv.scrollHeight;
+        ///}
+        ///function Clear(){
+        ///    document.querySelector(&quot;#console&quot;).innerHT [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string console_js {
+            get {
+                return ResourceManager.GetString("console_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 /*
+        ///  用于自定义特殊高亮样式
+        ///  - 需以 &quot;.noColored&gt;&quot; 开头
+        ///  - 用&quot;.[NAME]&quot;指定高亮对象
+        ///*/
+        ///.noColored&gt;.file{
+        ///  color:#688292
+        ///}
+        ///.noColored&gt;.server{
+        ///  color:#8bd645
+        ///}
+        ///.noColored&gt;.debug{
+        ///  color:#865FC5;
+        ///}
+        ///.noColored&gt;.error{
+        ///  color:#D16969;
+        ///}
+        ///.noColored&gt;.warn{
+        ///  color:#aa5612;
+        ///}
+        ///.noColored&gt;.info{
+        ///  color:#20B2AA;
+        ///}
+        ///.noColored&gt;.plugins{
+        ///  color:#e4b44c;
+        ///}
+        ///.noColored&gt;.LiteLoader,.noColored&gt;.LiteXLoader,.noColored&gt;.LLMoney{
+        ///  color:#5a93c2 ;
+        ///}
+        ///.noColored&gt;.Chakra{
+        ///  color:#a93eca;
+        ///}
+        ///.noColored&gt;.int{
+        ///  colo [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string preset_css {
+            get {
+                return ResourceManager.GetString("preset_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 /* 
+        ///  颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit -Windows 10 Console
+        ///*/
+        ///.vanillaColor30,.vanillaColor40{
+        ///  color:#0c0c0c;
+        ///}
+        ///.vanillaColor31,.vanillaColor41{
+        ///  color:#C50F1F;
+        ///}
+        ///.vanillaColor32,.vanillaColor42{
+        ///  color:#13A10E;
+        ///}
+        ///.vanillaColor33,.vanillaColor43{
+        ///  color:#C19C00;
+        ///}
+        ///.vanillaColor34,.vanillaColor44{
+        ///  color:#0037DA;
+        ///}
+        ///.vanillaColor35,.vanillaColor45{
+        ///  color:#881798;
+        ///}
+        ///.vanillaColor36,.vanillaColor46{
+        ///  color:#3A96DD;
+        ///}
+        ////*
+        ///.vanillaColor37,.vani [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string vanilla_css {
+            get {
+                return ResourceManager.GetString("vanilla_css", resourceCulture);
             }
         }
     }

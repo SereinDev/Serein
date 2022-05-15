@@ -81,19 +81,19 @@ namespace Serein
         private void SettingSereinUpdateInfoType_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender,
-                "启动后每隔10分钟检查一次更新\n" +
+                "启动后自动检查更新\n" +
                 "-禁用 禁止获取更新信息\n" +
                 "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-测试版和正式版 获取来自最新的Commit和Release中的正式版"
+                "-仅测试版 获取来自最新的提交（不一定保证稳定，使用前请自行备份）"
                 );
         }
         private void SettingSereinUpdateInfoTypeLabel_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender,
-                "启动后每隔10分钟检查一次更新\n" +
+                "启动后自动检查更新\n" +
                 "-禁用 禁止获取更新信息\n" +
                 "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-测试版和正式版 获取来自最新的Commit和Release中的正式版"
+                "-仅测试版 获取来自最新的提交（不一定保证稳定，使用前请自行备份）"
                 );
         }
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
