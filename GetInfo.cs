@@ -102,7 +102,7 @@ namespace Serein
             Stream ResponseStream;
             StreamReader Reader;
             Request = (HttpWebRequest)WebRequest.Create(Url);
-            Request. KeepAlive = false;
+            Request.KeepAlive = false;
             Request.ProtocolVersion = HttpVersion.Version10;
             Request.Method = "GET";
             Request.ContentType = "text/html;charset=UTF-8";

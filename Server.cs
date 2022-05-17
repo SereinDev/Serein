@@ -20,7 +20,7 @@ namespace Serein
         static Thread WaitForExitThread, RestartTimerThread;
         public static bool Killed;
         static StreamWriter CommandWriter, LogWriter;
-        public static TimeSpan PrevCpuTime = TimeSpan.Zero,CurTime = TimeSpan.Zero;
+        public static TimeSpan PrevCpuTime = TimeSpan.Zero, CurTime = TimeSpan.Zero;
 
         public static void Start()
         {
@@ -54,7 +54,7 @@ namespace Serein
                 CommandWriter.NewLine = "\n";
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
-                Restart = false ;
+                Restart = false;
                 Status = true;
                 Killed = false;
                 Started = false;
