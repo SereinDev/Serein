@@ -7,13 +7,11 @@ namespace Serein
     {
         public Ui()
         {
+            MultiOpenCheck();
             InitializeComponent();
             Initialize();
             UpdateVersion();
         }
-
-
-
         private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
         {
             Visible = true;
@@ -40,7 +38,6 @@ namespace Serein
                 ShowBalloonTip("服务器进程仍在运行中\n(已自动最小化至托盘，点击托盘图标即可复原窗口)");
             }
         }
-
         public void ShowBalloonTip(string text)
         {
             SereinIcon.BalloonTipTitle = "Serein";

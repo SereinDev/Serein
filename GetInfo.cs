@@ -18,27 +18,9 @@ namespace Serein
         {
             IsBackground = true
         };
-        public static string RequestInfo(string Url, bool isApi = false)
-        {
-            HttpWebRequest Request;
-            HttpWebResponse Response;
-            Stream ResponseStream;
-            StreamReader Reader;
-            Request = (HttpWebRequest)WebRequest.Create(Url);
-            Request.Method = "GET";
-            Request.ContentType = "text/html;charset=UTF-8";
-            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32";
-            Request.Accept = isApi ? Request.Accept : "application/vnd.github.v3+json";
-            Response = (HttpWebResponse)Request.GetResponse();
-            ResponseStream = Response.GetResponseStream();
-            Reader = new StreamReader(ResponseStream, Encoding.GetEncoding("utf-8"));
-            string Text = Reader.ReadToEnd();
-            Reader.Close();
-            ResponseStream.Close();
-            return Text;
-        }
         public static void GetAnnouncement()
         {
+            Thread.Sleep(100);
             string OldAnnouncementId = "";
             while (true)
             {
@@ -111,6 +93,29 @@ namespace Serein
                 }
                 Thread.Sleep(120000);
             }
+        }
+        public static string RequestInfo(string Url, bool isApi = false)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            HttpWebRequest Request;
+            HttpWebResponse Response;
+            Stream ResponseStream;
+            StreamReader Reader;
+            Request = (HttpWebRequest)WebRequest.Create(Url);
+            Request. KeepAlive = false;
+            Request.ProtocolVersion = HttpVersion.Version10;
+            Request.Method = "GET";
+            Request.ContentType = "text/html;charset=UTF-8";
+            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32";
+            Request.Accept = isApi ? Request.Accept : "application/vnd.github.v3+json";
+            Response = (HttpWebResponse)Request.GetResponse();
+            ResponseStream = Response.GetResponseStream();
+            Reader = new StreamReader(ResponseStream, Encoding.GetEncoding("utf-8"));
+            string Text = Reader.ReadToEnd();
+            Reader.Close();
+            ResponseStream.Close();
+            Request.Abort();
+            return Text;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+
 namespace Serein
 {
     public class Settings_Server
@@ -11,6 +13,66 @@ namespace Serein
         public bool EnableOutputCommand { get; set; } = true;
         public bool EnableLog { get; set; } = false;
         public int OutputStyle { get; set; } = 0;
+    }
+    public class Settings_Matches
+    {
+        public string Version { get; set; } = @"(\d+\.\d+\.\d+\.\d+)";
+        public string Difficulty { get; set; } = "Difficulty.+?(PEACEFUL|EASY|NORMAL|DIFFICULT)";
+        public string LevelName { get; set; } = "Level Name: (.+?)$";
+        public Settings_Matches()
+        {
+            if (File.Exists(Global.SettingPath + "\\Matches.ini"))
+            {
+                FileStream IniFile = new FileStream(Global.SettingPath + "\\Matches.ini", FileMode.Open);
+                StreamReader Reader = new StreamReader(IniFile, Encoding.UTF8);
+                string Line, Value, Type;
+                while ((Line = Reader.ReadLine()) != null)
+                {
+                    if (Line.Contains("="))
+                    {
+                        Line = Line.Trim();
+                        Value = Line.Substring(Line.IndexOf("=") + 1).Trim();
+                        Type = Line.Substring(0, Line.IndexOf("=") - 1).Trim();
+                        try
+                        {
+                            Regex.Match("", Value);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                        if (Type == "Verison")
+                        {
+                            Version = Value;
+                        }
+                        else if (Type == "Difficulty")
+                        {
+                            Difficulty = Value;
+                        }
+                        else if (Type == "LevelName")
+                        {
+                            LevelName = Value;
+                        }
+                    }
+                }
+                IniFile.Close();
+                IniFile.Dispose();
+                Reader.Close();
+                Reader.Dispose();
+            }
+            else
+            {
+                StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.ini", false, Encoding.UTF8);
+                IniStreamWriter.Write("# 在此处自定义捕获信息的正则表达式\n" +
+                $"Version={Version}\n" +
+                $"Difficulty={Difficulty}\n" +
+                $"LevelName={LevelName}"
+                    );
+                IniStreamWriter.Close();
+                IniStreamWriter.Dispose();
+            }
+        }
+
     }
     public class Settings_Bot
     {
@@ -48,17 +110,19 @@ namespace Serein
                     JsonConvert.SerializeObject(Global.Settings_server, Formatting.Indented)
                     );
                 ServerStreamWriter.Close();
+                ServerStreamWriter.Dispose();
                 BotStreamWriter = new StreamWriter(Global.SettingPath + "\\bot.json", false, Encoding.UTF8);
                 BotStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_bot, Formatting.Indented)
                     );
                 BotStreamWriter.Close();
+                BotStreamWriter.Dispose();
                 SereinStreamWriter = new StreamWriter(Global.SettingPath + "\\serein.json", false, Encoding.UTF8);
                 SereinStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_serein, Formatting.Indented)
                     );
                 SereinStreamWriter.Close();
-
+                SereinStreamWriter.Dispose();
             }
         }
         public static void ReadSettings()
@@ -94,6 +158,5 @@ namespace Serein
                 }
             }
         }
-
     }
 }

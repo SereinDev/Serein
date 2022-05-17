@@ -12,6 +12,7 @@ namespace Serein
     public class Server
     {
         public static bool Restart = false;
+        public static string StartFileName = "";
         public static bool Status = false;
         public static bool Started = false;
         static ProcessStartInfo ServerProcessInfo;
@@ -19,8 +20,7 @@ namespace Serein
         static Thread WaitForExitThread, RestartTimerThread;
         public static bool Killed;
         static StreamWriter CommandWriter, LogWriter;
-        public static TimeSpan PrevCpuTime = TimeSpan.Zero;
-        public static TimeSpan CurTime = TimeSpan.Zero;
+        public static TimeSpan PrevCpuTime = TimeSpan.Zero,CurTime = TimeSpan.Zero;
 
         public static void Start()
         {
@@ -54,10 +54,11 @@ namespace Serein
                 CommandWriter.NewLine = "\n";
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
-                Restart = Global.Settings_server.EnableRestart;
+                Restart = false ;
                 Status = true;
                 Killed = false;
                 Started = false;
+                StartFileName = Path.GetFileName(Global.Settings_server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 CurTime = TimeSpan.Zero;
                 WaitForExitThread = new Thread(WaitForExit);
@@ -223,10 +224,6 @@ namespace Serein
             {
                 MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-        public static void WaitForExitThreadStart()
-        {
-            WaitForExitThread.IsBackground = true;
         }
         private static void RestartTimer()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace Serein
 {
@@ -19,7 +20,12 @@ namespace Serein
 
         private void PanelControlStart_Click(object sender, EventArgs e)
         {
-            Server.Start();
+            new Task(() =>
+            {
+                {
+                    Server.Start();
+                }
+            }).Start();
         }
         private void PanelControlStop_Click(object sender, EventArgs e)
         {

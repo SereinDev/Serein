@@ -151,7 +151,7 @@ namespace Serein
             if (RegexList.InvokeRequired)
             {
                 Action<ListViewItem> actionDelegate = (x) => { RegexList.Items.Add(Item); };
-                PanelInfoPort2.Invoke(actionDelegate, Item);
+                PanelInfoLevel2.Invoke(actionDelegate, Item);
             }
             else
             {

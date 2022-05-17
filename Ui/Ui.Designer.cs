@@ -48,13 +48,13 @@ namespace Serein
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.PanelInfo = new System.Windows.Forms.GroupBox();
             this.PanelInfoCPU2 = new System.Windows.Forms.Label();
-            this.PanelInfoPort2 = new System.Windows.Forms.Label();
+            this.PanelInfoLevel2 = new System.Windows.Forms.Label();
             this.PanelInfoTime2 = new System.Windows.Forms.Label();
             this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
             this.PanelInfoVersion2 = new System.Windows.Forms.Label();
             this.PanelInfoCPU = new System.Windows.Forms.Label();
             this.PanelInfoTime = new System.Windows.Forms.Label();
-            this.PanelInfoPort = new System.Windows.Forms.Label();
+            this.PanelInfoLevel = new System.Windows.Forms.Label();
             this.PanelInfoDifficulty = new System.Windows.Forms.Label();
             this.PanelInfoVersion = new System.Windows.Forms.Label();
             this.PanelInfoStatus2 = new System.Windows.Forms.Label();
@@ -274,13 +274,13 @@ namespace Serein
             // PanelInfo
             // 
             this.PanelInfo.Controls.Add(this.PanelInfoCPU2);
-            this.PanelInfo.Controls.Add(this.PanelInfoPort2);
+            this.PanelInfo.Controls.Add(this.PanelInfoLevel2);
             this.PanelInfo.Controls.Add(this.PanelInfoTime2);
             this.PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
             this.PanelInfo.Controls.Add(this.PanelInfoVersion2);
             this.PanelInfo.Controls.Add(this.PanelInfoCPU);
             this.PanelInfo.Controls.Add(this.PanelInfoTime);
-            this.PanelInfo.Controls.Add(this.PanelInfoPort);
+            this.PanelInfo.Controls.Add(this.PanelInfoLevel);
             this.PanelInfo.Controls.Add(this.PanelInfoDifficulty);
             this.PanelInfo.Controls.Add(this.PanelInfoVersion);
             this.PanelInfo.Controls.Add(this.PanelInfoStatus2);
@@ -294,10 +294,10 @@ namespace Serein
             resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
             this.PanelInfoCPU2.Name = "PanelInfoCPU2";
             // 
-            // PanelInfoPort2
+            // PanelInfoLevel2
             // 
-            resources.ApplyResources(this.PanelInfoPort2, "PanelInfoPort2");
-            this.PanelInfoPort2.Name = "PanelInfoPort2";
+            resources.ApplyResources(this.PanelInfoLevel2, "PanelInfoLevel2");
+            this.PanelInfoLevel2.Name = "PanelInfoLevel2";
             // 
             // PanelInfoTime2
             // 
@@ -324,10 +324,10 @@ namespace Serein
             resources.ApplyResources(this.PanelInfoTime, "PanelInfoTime");
             this.PanelInfoTime.Name = "PanelInfoTime";
             // 
-            // PanelInfoPort
+            // PanelInfoLevel
             // 
-            resources.ApplyResources(this.PanelInfoPort, "PanelInfoPort");
-            this.PanelInfoPort.Name = "PanelInfoPort";
+            resources.ApplyResources(this.PanelInfoLevel, "PanelInfoLevel");
+            this.PanelInfoLevel.Name = "PanelInfoLevel";
             // 
             // PanelInfoDifficulty
             // 
@@ -1014,13 +1014,13 @@ namespace Serein
         private System.Windows.Forms.TableLayoutPanel PanelTableLayout;
         private System.Windows.Forms.GroupBox PanelInfo;
         private System.Windows.Forms.Label PanelInfoCPU2;
-        private System.Windows.Forms.Label PanelInfoPort2;
+        private System.Windows.Forms.Label PanelInfoLevel2;
         private System.Windows.Forms.Label PanelInfoTime2;
         private System.Windows.Forms.Label PanelInfoDifficulty2;
         private System.Windows.Forms.Label PanelInfoVersion2;
         private System.Windows.Forms.Label PanelInfoCPU;
         private System.Windows.Forms.Label PanelInfoTime;
-        private System.Windows.Forms.Label PanelInfoPort;
+        private System.Windows.Forms.Label PanelInfoLevel;
         private System.Windows.Forms.Label PanelInfoDifficulty;
         private System.Windows.Forms.Label PanelInfoVersion;
         private System.Windows.Forms.Label PanelInfoStatus2;

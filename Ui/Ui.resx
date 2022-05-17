@@ -221,6 +221,579 @@
   <data name="MainTableLayout.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="PanelTableLayout.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelInfoCPU2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelInfoCPU2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoCPU2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>163, 263</value>
+  </data>
+  <data name="PanelInfoCPU2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoCPU2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 24</value>
+  </data>
+  <data name="PanelInfoCPU2.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="PanelInfoCPU2.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="PanelInfoCPU2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Name" xml:space="preserve">
+    <value>PanelInfoCPU2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelInfoLevel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelInfoLevel2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoLevel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 175</value>
+  </data>
+  <data name="PanelInfoLevel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoLevel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 24</value>
+  </data>
+  <data name="PanelInfoLevel2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="PanelInfoLevel2.Text" xml:space="preserve">
+    <value>- / -</value>
+  </data>
+  <data name="PanelInfoLevel2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Name" xml:space="preserve">
+    <value>PanelInfoLevel2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelInfoTime2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelInfoTime2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoTime2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 219</value>
+  </data>
+  <data name="PanelInfoTime2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoTime2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 24</value>
+  </data>
+  <data name="PanelInfoTime2.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="PanelInfoTime2.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="PanelInfoTime2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Name" xml:space="preserve">
+    <value>PanelInfoTime2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PanelInfoDifficulty2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelInfoDifficulty2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoDifficulty2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>92, 131</value>
+  </data>
+  <data name="PanelInfoDifficulty2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoDifficulty2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 24</value>
+  </data>
+  <data name="PanelInfoDifficulty2.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="PanelInfoDifficulty2.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="PanelInfoDifficulty2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Name" xml:space="preserve">
+    <value>PanelInfoDifficulty2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="PanelInfoVersion2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="PanelInfoVersion2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoVersion2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>92, 87</value>
+  </data>
+  <data name="PanelInfoVersion2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoVersion2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 24</value>
+  </data>
+  <data name="PanelInfoVersion2.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="PanelInfoVersion2.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="PanelInfoVersion2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Name" xml:space="preserve">
+    <value>PanelInfoVersion2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="PanelInfoCPU.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoCPU.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoCPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 263</value>
+  </data>
+  <data name="PanelInfoCPU.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoCPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 24</value>
+  </data>
+  <data name="PanelInfoCPU.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="PanelInfoCPU.Text" xml:space="preserve">
+    <value>进程CPU占用：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Name" xml:space="preserve">
+    <value>PanelInfoCPU</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="PanelInfoTime.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 219</value>
+  </data>
+  <data name="PanelInfoTime.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 24</value>
+  </data>
+  <data name="PanelInfoTime.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="PanelInfoTime.Text" xml:space="preserve">
+    <value>运行时长：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Name" xml:space="preserve">
+    <value>PanelInfoTime</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="PanelInfoLevel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoLevel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoLevel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 175</value>
+  </data>
+  <data name="PanelInfoLevel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoLevel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="PanelInfoLevel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="PanelInfoLevel.Text" xml:space="preserve">
+    <value>存档：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Name" xml:space="preserve">
+    <value>PanelInfoLevel</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="PanelInfoDifficulty.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoDifficulty.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoDifficulty.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 131</value>
+  </data>
+  <data name="PanelInfoDifficulty.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoDifficulty.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="PanelInfoDifficulty.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="PanelInfoDifficulty.Text" xml:space="preserve">
+    <value>难度：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Name" xml:space="preserve">
+    <value>PanelInfoDifficulty</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="PanelInfoVersion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 87</value>
+  </data>
+  <data name="PanelInfoVersion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="PanelInfoVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelInfoVersion.Text" xml:space="preserve">
+    <value>版本：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Name" xml:space="preserve">
+    <value>PanelInfoVersion</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="PanelInfoStatus2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoStatus2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoStatus2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 43</value>
+  </data>
+  <data name="PanelInfoStatus2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoStatus2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="PanelInfoStatus2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PanelInfoStatus2.Text" xml:space="preserve">
+    <value>未启动</value>
+  </data>
+  <data name="PanelInfoStatus2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Name" xml:space="preserve">
+    <value>PanelInfoStatus2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="PanelInfoStatus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelInfoStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PanelInfoStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 43</value>
+  </data>
+  <data name="PanelInfoStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelInfoStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 24</value>
+  </data>
+  <data name="PanelInfoStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="PanelInfoStatus.Text" xml:space="preserve">
+    <value>状态：</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Name" xml:space="preserve">
+    <value>PanelInfoStatus</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="PanelInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PanelInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 312</value>
+  </data>
+  <data name="PanelInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="PanelInfo.Text" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelControlKill.Name" xml:space="preserve">
+    <value>PanelControlKill</value>
+  </data>
+  <data name="&gt;&gt;PanelControlKill.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlKill.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlKill.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelControlRestart.Name" xml:space="preserve">
+    <value>PanelControlRestart</value>
+  </data>
+  <data name="&gt;&gt;PanelControlRestart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlRestart.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlRestart.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Name" xml:space="preserve">
+    <value>PanelControlStop</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Name" xml:space="preserve">
+    <value>PanelControlStart</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="PanelControls.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 321</value>
+  </data>
+  <data name="PanelControls.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 161</value>
+  </data>
+  <data name="PanelControls.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelControls.Text" xml:space="preserve">
+    <value>控制</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelConsole.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Name" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelConsole.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelConsole.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 3</value>
+  </data>
+  <data name="PanelConsole.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>15, 15, 15, 15</value>
+  </data>
+  <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>920, 824</value>
+  </data>
+  <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="PanelConsole.Text" xml:space="preserve">
+    <value>控制台</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PanelTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelTableLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PanelTableLayout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 830</value>
+  </data>
+  <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;PanelTableLayout.Name" xml:space="preserve">
     <value>PanelTableLayout</value>
   </data>
@@ -298,63 +871,6 @@
   </data>
   <data name="&gt;&gt;Plugin.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="RegexListRegex.Text" xml:space="preserve">
-    <value>正则表达式</value>
-  </data>
-  <data name="RegexListRegex.Width" type="System.Int32, mscorlib">
-    <value>200</value>
-  </data>
-  <data name="RegexListArea.Text" xml:space="preserve">
-    <value>作用域</value>
-  </data>
-  <data name="RegexListArea.Width" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="RegexListIsAdmin.Text" xml:space="preserve">
-    <value>管理权限</value>
-  </data>
-  <data name="RegexListRemark.Text" xml:space="preserve">
-    <value>备注</value>
-  </data>
-  <data name="RegexListRemark.Width" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="RegexListCommand.Text" xml:space="preserve">
-    <value>命令</value>
-  </data>
-  <data name="RegexListCommand.Width" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <metadata name="RegexContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>575, 17</value>
-  </metadata>
-  <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 200</value>
-  </data>
-  <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
-    <value>RegexContextMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;RegexContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RegexList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="RegexList.LabelWrap" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="RegexList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="RegexList.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
-  </data>
-  <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;RegexList.Name" xml:space="preserve">
     <value>RegexList</value>
@@ -557,729 +1073,6 @@
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="PanelTableLayout.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
-    <value>PanelConsole</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="PanelTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelTableLayout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="PanelTableLayout.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 830</value>
-  </data>
-  <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Name" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Parent" xml:space="preserve">
-    <value>Panel</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PanelInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelControls" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelConsole" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Name" xml:space="preserve">
-    <value>PanelInfoCPU2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Name" xml:space="preserve">
-    <value>PanelInfoPort2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Name" xml:space="preserve">
-    <value>PanelInfoTime2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Name" xml:space="preserve">
-    <value>PanelInfoDifficulty2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Name" xml:space="preserve">
-    <value>PanelInfoVersion2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Name" xml:space="preserve">
-    <value>PanelInfoCPU</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Name" xml:space="preserve">
-    <value>PanelInfoTime</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Name" xml:space="preserve">
-    <value>PanelInfoPort</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Name" xml:space="preserve">
-    <value>PanelInfoDifficulty</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Name" xml:space="preserve">
-    <value>PanelInfoVersion</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Name" xml:space="preserve">
-    <value>PanelInfoStatus2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Name" xml:space="preserve">
-    <value>PanelInfoStatus</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="PanelInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="PanelInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 312</value>
-  </data>
-  <data name="PanelInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="PanelInfo.Text" xml:space="preserve">
-    <value>详细信息</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelInfoCPU2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="PanelInfoCPU2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoCPU2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 263</value>
-  </data>
-  <data name="PanelInfoCPU2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoCPU2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 24</value>
-  </data>
-  <data name="PanelInfoCPU2.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="PanelInfoCPU2.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="PanelInfoCPU2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Name" xml:space="preserve">
-    <value>PanelInfoCPU2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelInfoPort2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="PanelInfoPort2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoPort2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 175</value>
-  </data>
-  <data name="PanelInfoPort2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoPort2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 24</value>
-  </data>
-  <data name="PanelInfoPort2.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="PanelInfoPort2.Text" xml:space="preserve">
-    <value>- / -</value>
-  </data>
-  <data name="PanelInfoPort2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Name" xml:space="preserve">
-    <value>PanelInfoPort2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PanelInfoTime2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="PanelInfoTime2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoTime2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 219</value>
-  </data>
-  <data name="PanelInfoTime2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoTime2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 24</value>
-  </data>
-  <data name="PanelInfoTime2.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="PanelInfoTime2.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="PanelInfoTime2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Name" xml:space="preserve">
-    <value>PanelInfoTime2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="PanelInfoDifficulty2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="PanelInfoDifficulty2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoDifficulty2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 131</value>
-  </data>
-  <data name="PanelInfoDifficulty2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoDifficulty2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 24</value>
-  </data>
-  <data name="PanelInfoDifficulty2.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="PanelInfoDifficulty2.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="PanelInfoDifficulty2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Name" xml:space="preserve">
-    <value>PanelInfoDifficulty2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty2.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="PanelInfoVersion2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="PanelInfoVersion2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoVersion2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 87</value>
-  </data>
-  <data name="PanelInfoVersion2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoVersion2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 24</value>
-  </data>
-  <data name="PanelInfoVersion2.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="PanelInfoVersion2.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="PanelInfoVersion2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Name" xml:space="preserve">
-    <value>PanelInfoVersion2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="PanelInfoCPU.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoCPU.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoCPU.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 263</value>
-  </data>
-  <data name="PanelInfoCPU.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoCPU.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 24</value>
-  </data>
-  <data name="PanelInfoCPU.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="PanelInfoCPU.Text" xml:space="preserve">
-    <value>进程CPU占用：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Name" xml:space="preserve">
-    <value>PanelInfoCPU</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoCPU.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="PanelInfoTime.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 219</value>
-  </data>
-  <data name="PanelInfoTime.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
-  </data>
-  <data name="PanelInfoTime.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="PanelInfoTime.Text" xml:space="preserve">
-    <value>运行时长：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Name" xml:space="preserve">
-    <value>PanelInfoTime</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoTime.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="PanelInfoPort.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoPort.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 175</value>
-  </data>
-  <data name="PanelInfoPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoPort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
-  </data>
-  <data name="PanelInfoPort.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="PanelInfoPort.Text" xml:space="preserve">
-    <value>端口：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Name" xml:space="preserve">
-    <value>PanelInfoPort</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoPort.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="PanelInfoDifficulty.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoDifficulty.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoDifficulty.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 131</value>
-  </data>
-  <data name="PanelInfoDifficulty.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoDifficulty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
-  </data>
-  <data name="PanelInfoDifficulty.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="PanelInfoDifficulty.Text" xml:space="preserve">
-    <value>难度：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Name" xml:space="preserve">
-    <value>PanelInfoDifficulty</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoDifficulty.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="PanelInfoVersion.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 87</value>
-  </data>
-  <data name="PanelInfoVersion.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
-  </data>
-  <data name="PanelInfoVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PanelInfoVersion.Text" xml:space="preserve">
-    <value>版本：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Name" xml:space="preserve">
-    <value>PanelInfoVersion</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoVersion.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="PanelInfoStatus2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoStatus2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoStatus2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 43</value>
-  </data>
-  <data name="PanelInfoStatus2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoStatus2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
-  </data>
-  <data name="PanelInfoStatus2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="PanelInfoStatus2.Text" xml:space="preserve">
-    <value>未启动</value>
-  </data>
-  <data name="PanelInfoStatus2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Name" xml:space="preserve">
-    <value>PanelInfoStatus2</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus2.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="PanelInfoStatus.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="PanelInfoStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PanelInfoStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 43</value>
-  </data>
-  <data name="PanelInfoStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelInfoStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
-  </data>
-  <data name="PanelInfoStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="PanelInfoStatus.Text" xml:space="preserve">
-    <value>状态：</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Name" xml:space="preserve">
-    <value>PanelInfoStatus</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.Parent" xml:space="preserve">
-    <value>PanelInfo</value>
-  </data>
-  <data name="&gt;&gt;PanelInfoStatus.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;PanelControlKill.Name" xml:space="preserve">
-    <value>PanelControlKill</value>
-  </data>
-  <data name="&gt;&gt;PanelControlKill.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControlKill.Parent" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControlKill.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelControlRestart.Name" xml:space="preserve">
-    <value>PanelControlRestart</value>
-  </data>
-  <data name="&gt;&gt;PanelControlRestart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControlRestart.Parent" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControlRestart.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStop.Name" xml:space="preserve">
-    <value>PanelControlStop</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStop.Parent" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStop.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStart.Name" xml:space="preserve">
-    <value>PanelControlStart</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStart.Parent" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControlStart.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="PanelControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 321</value>
-  </data>
-  <data name="PanelControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 161</value>
-  </data>
-  <data name="PanelControls.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PanelControls.Text" xml:space="preserve">
-    <value>控制</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="PanelControlKill.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1387,51 +1180,6 @@
   </data>
   <data name="&gt;&gt;PanelControlStart.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="PanelConsole.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Name" xml:space="preserve">
-    <value>PanelConsolePanel2</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
-    <value>PanelConsole</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelConsole.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelConsole.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 3</value>
-  </data>
-  <data name="PanelConsole.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>15, 15, 15, 15</value>
-  </data>
-  <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>920, 824</value>
-  </data>
-  <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="PanelConsole.Text" xml:space="preserve">
-    <value>控制台</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
-    <value>PanelConsole</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="&gt;&gt;PanelConsoleWebBrowser.Name" xml:space="preserve">
     <value>PanelConsoleWebBrowser</value>
@@ -1641,6 +1389,75 @@
     <value>Plugin</value>
   </data>
   <data name="&gt;&gt;PluginList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RegexListRegex.Text" xml:space="preserve">
+    <value>正则表达式</value>
+  </data>
+  <data name="RegexListRegex.Width" type="System.Int32, mscorlib">
+    <value>200</value>
+  </data>
+  <data name="RegexListArea.Text" xml:space="preserve">
+    <value>作用域</value>
+  </data>
+  <data name="RegexListArea.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="RegexListIsAdmin.Text" xml:space="preserve">
+    <value>管理权限</value>
+  </data>
+  <data name="RegexListRemark.Text" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="RegexListRemark.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="RegexListCommand.Text" xml:space="preserve">
+    <value>命令</value>
+  </data>
+  <data name="RegexListCommand.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <metadata name="RegexContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>575, 17</value>
+  </metadata>
+  <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 200</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RegexList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RegexList.LabelWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="RegexList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="RegexList.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 836</value>
+  </data>
+  <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Name" xml:space="preserve">
+    <value>RegexList</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Parent" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="&gt;&gt;RegexList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="RegexContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">

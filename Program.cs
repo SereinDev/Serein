@@ -27,6 +27,7 @@ namespace Serein
         }
         static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
+            Global.Crash = true;
             SafeStop();
             MessageBox.Show(
                 $"线程异常：\n" +
@@ -35,9 +36,11 @@ namespace Serein
                 $"时间：{DateTime.Now}\n\n\n" +
                 $"若有必要，请在GitHub提交Issue反馈此问题",
                 $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Global.Crash = false;
         }
         static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Global.Crash = true;
             SafeStop();
             MessageBox.Show(
                 $"程序异常：\n" +
@@ -46,6 +49,7 @@ namespace Serein
                 $"时间：{DateTime.Now}\n\n\n" +
                 $"若有必要，请在GitHub提交Issue反馈此问题",
                 $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Global.Crash = false;
         }
         static void SafeStop()
         {
