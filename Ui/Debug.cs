@@ -11,9 +11,9 @@ namespace Serein
         }
         public void Append(string NewText)
         {
-            if (DebugTextBox .InvokeRequired)
+            if (DebugTextBox.InvokeRequired)
             {
-                Action<string> actionDelegate = (Text) => { DebugTextBox.Text += Text+"\n"; };
+                Action<string> actionDelegate = (Text) => { DebugTextBox.Text += Text + "\n"; };
                 DebugTextBox.Invoke(actionDelegate, NewText);
             }
             else

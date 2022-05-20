@@ -124,7 +124,7 @@ namespace Serein
                 MessageReceived = JsonObject["status"]["stat"]["MessageReceived"].ToString();
                 MessageSent = JsonObject["status"]["stat"]["MessageSent"].ToString();
                 ulong Number;
-                if ((ulong.TryParse(MessageReceived, out Number) ? Number:0 )> 10000000)
+                if ((ulong.TryParse(MessageReceived, out Number) ? Number : 0) > 10000000)
                 {
                     MessageReceived = (Number / 10000).ToString("N1") + "W";
                 }

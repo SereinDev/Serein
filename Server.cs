@@ -59,7 +59,7 @@ namespace Serein
                 Killed = false;
                 Finished = false;
                 Version = "-";
-                LevelName = "-"; 
+                LevelName = "-";
                 Difficulty = "-";
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
@@ -159,20 +159,20 @@ namespace Serein
         {
             if (!string.IsNullOrEmpty(outLine.Data))
             {
-                if(!Finished)
+                if (!Finished)
                 {
                     if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Finished, RegexOptions.IgnoreCase))
                     {
                         Finished = true;
                         Global.Ui.UpdateServerInfo(LevelName, Version, Difficulty);
                     }
-                    else if (Regex.IsMatch (outLine.Data, Global.Settings_Matches.Version, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Version, RegexOptions.IgnoreCase))
                     {
                         Version = Regex.Match(outLine.Data, Global.Settings_Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                     else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase))
                     {
-                        LevelName  = Regex.Match(outLine.Data, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        LevelName = Regex.Match(outLine.Data, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                     else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
@@ -207,7 +207,7 @@ namespace Serein
                 MsgTask.Start();
             }
         }
-        private  static void WaitForExit()
+        private static void WaitForExit()
         {
             ServerProcess.WaitForExit();
             Status = false;

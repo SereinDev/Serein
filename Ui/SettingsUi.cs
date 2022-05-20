@@ -71,14 +71,14 @@ namespace Serein
             string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
             Text = Regex.Replace(Text, @",+", ",");
             Text = Regex.Replace(Text, "^,", "");
-            if(Text!=SettingBotGroupList.Text)
+            if (Text != SettingBotGroupList.Text)
             {
                 SettingBotGroupList.Text = Text;
                 SettingBotGroupList.Focus();
                 SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
                 SettingBotGroupList.ScrollToCaret();
             }
-            
+
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {

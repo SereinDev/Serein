@@ -79,7 +79,7 @@ namespace Serein
                 Thread.Sleep(2000);
             }
         }
-        public void UpdateServerInfo(string LevelName,string Version ,string Difficulty)
+        public void UpdateServerInfo(string LevelName, string Version, string Difficulty)
         {
             PanelInfoVersion2_Update(Version);
             PanelInfoLevel2_Update(LevelName);

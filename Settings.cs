@@ -8,7 +8,7 @@ namespace Serein
     class Settings
     {
         public static Thread SaveSettingsThread = new Thread(SaveSettings);
-        public  static void StartSaveSettings()
+        public static void StartSaveSettings()
         {
             SaveSettingsThread.IsBackground = true;
             SaveSettingsThread.Start();

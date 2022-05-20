@@ -22,7 +22,7 @@ namespace Serein
         }
         private void Debug(string Text)
         {
-            if (Global.Settings_Serein.Debug&& DebugWindow!=null)
+            if (Global.Settings_Serein.Debug && DebugWindow != null)
             {
                 DebugWindow.Append(Text);
             }
