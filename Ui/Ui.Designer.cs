@@ -106,6 +106,16 @@ namespace Serein
             this.BotTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
             this.BotInfo = new System.Windows.Forms.GroupBox();
+            this.BotInfoStatus2 = new System.Windows.Forms.Label();
+            this.BotInfoStatus = new System.Windows.Forms.Label();
+            this.BotInfoTime2 = new System.Windows.Forms.Label();
+            this.BotInfoMessageSent2 = new System.Windows.Forms.Label();
+            this.BotInfoMessageReceived2 = new System.Windows.Forms.Label();
+            this.BotInfoQQ2 = new System.Windows.Forms.Label();
+            this.BotInfoTime = new System.Windows.Forms.Label();
+            this.BotInfoMessageSent = new System.Windows.Forms.Label();
+            this.BotInfoMessageReceived = new System.Windows.Forms.Label();
+            this.BotInfoQQ = new System.Windows.Forms.Label();
             this.BotWebsocket = new System.Windows.Forms.GroupBox();
             this.BotClose = new System.Windows.Forms.Button();
             this.BotConnect = new System.Windows.Forms.Button();
@@ -155,6 +165,7 @@ namespace Serein
             this.TaskContextMenuStrip.SuspendLayout();
             this.Bot.SuspendLayout();
             this.BotTableLayoutPanel.SuspendLayout();
+            this.BotInfo.SuspendLayout();
             this.BotWebsocket.SuspendLayout();
             this.Setting.SuspendLayout();
             this.SettingPanel.SuspendLayout();
@@ -270,6 +281,7 @@ namespace Serein
             this.PanelTableLayout.Controls.Add(this.PanelControls, 0, 1);
             this.PanelTableLayout.Controls.Add(this.PanelConsole, 1, 0);
             this.PanelTableLayout.Name = "PanelTableLayout";
+            this.PanelTableLayout.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PanelTableLayout_PreviewKeyDown);
             // 
             // PanelInfo
             // 
@@ -678,9 +690,69 @@ namespace Serein
             // 
             // BotInfo
             // 
+            this.BotInfo.Controls.Add(this.BotInfoStatus2);
+            this.BotInfo.Controls.Add(this.BotInfoStatus);
+            this.BotInfo.Controls.Add(this.BotInfoTime2);
+            this.BotInfo.Controls.Add(this.BotInfoMessageSent2);
+            this.BotInfo.Controls.Add(this.BotInfoMessageReceived2);
+            this.BotInfo.Controls.Add(this.BotInfoQQ2);
+            this.BotInfo.Controls.Add(this.BotInfoTime);
+            this.BotInfo.Controls.Add(this.BotInfoMessageSent);
+            this.BotInfo.Controls.Add(this.BotInfoMessageReceived);
+            this.BotInfo.Controls.Add(this.BotInfoQQ);
             resources.ApplyResources(this.BotInfo, "BotInfo");
             this.BotInfo.Name = "BotInfo";
             this.BotInfo.TabStop = false;
+            // 
+            // BotInfoStatus2
+            // 
+            resources.ApplyResources(this.BotInfoStatus2, "BotInfoStatus2");
+            this.BotInfoStatus2.Name = "BotInfoStatus2";
+            // 
+            // BotInfoStatus
+            // 
+            resources.ApplyResources(this.BotInfoStatus, "BotInfoStatus");
+            this.BotInfoStatus.Name = "BotInfoStatus";
+            // 
+            // BotInfoTime2
+            // 
+            resources.ApplyResources(this.BotInfoTime2, "BotInfoTime2");
+            this.BotInfoTime2.Name = "BotInfoTime2";
+            // 
+            // BotInfoMessageSent2
+            // 
+            resources.ApplyResources(this.BotInfoMessageSent2, "BotInfoMessageSent2");
+            this.BotInfoMessageSent2.Name = "BotInfoMessageSent2";
+            // 
+            // BotInfoMessageReceived2
+            // 
+            resources.ApplyResources(this.BotInfoMessageReceived2, "BotInfoMessageReceived2");
+            this.BotInfoMessageReceived2.Name = "BotInfoMessageReceived2";
+            // 
+            // BotInfoQQ2
+            // 
+            resources.ApplyResources(this.BotInfoQQ2, "BotInfoQQ2");
+            this.BotInfoQQ2.Name = "BotInfoQQ2";
+            // 
+            // BotInfoTime
+            // 
+            resources.ApplyResources(this.BotInfoTime, "BotInfoTime");
+            this.BotInfoTime.Name = "BotInfoTime";
+            // 
+            // BotInfoMessageSent
+            // 
+            resources.ApplyResources(this.BotInfoMessageSent, "BotInfoMessageSent");
+            this.BotInfoMessageSent.Name = "BotInfoMessageSent";
+            // 
+            // BotInfoMessageReceived
+            // 
+            resources.ApplyResources(this.BotInfoMessageReceived, "BotInfoMessageReceived");
+            this.BotInfoMessageReceived.Name = "BotInfoMessageReceived";
+            // 
+            // BotInfoQQ
+            // 
+            resources.ApplyResources(this.BotInfoQQ, "BotInfoQQ");
+            this.BotInfoQQ.Name = "BotInfoQQ";
             // 
             // BotWebsocket
             // 
@@ -984,6 +1056,8 @@ namespace Serein
             this.TaskContextMenuStrip.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
             this.BotTableLayoutPanel.ResumeLayout(false);
+            this.BotInfo.ResumeLayout(false);
+            this.BotInfo.PerformLayout();
             this.BotWebsocket.ResumeLayout(false);
             this.Setting.ResumeLayout(false);
             this.SettingPanel.ResumeLayout(false);
@@ -1106,6 +1180,16 @@ namespace Serein
         private System.Windows.Forms.ComboBox SettingSereinUpdateInfoType;
         private System.Windows.Forms.Label SettingSereinAbout;
         private System.Windows.Forms.Label SettingSereinPage;
+        private System.Windows.Forms.Label BotInfoTime2;
+        private System.Windows.Forms.Label BotInfoMessageSent2;
+        private System.Windows.Forms.Label BotInfoMessageReceived2;
+        private System.Windows.Forms.Label BotInfoQQ2;
+        private System.Windows.Forms.Label BotInfoTime;
+        private System.Windows.Forms.Label BotInfoMessageSent;
+        private System.Windows.Forms.Label BotInfoMessageReceived;
+        private System.Windows.Forms.Label BotInfoQQ;
+        private System.Windows.Forms.Label BotInfoStatus2;
+        private System.Windows.Forms.Label BotInfoStatus;
     }
 }
 

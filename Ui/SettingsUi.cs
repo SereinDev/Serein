@@ -11,46 +11,46 @@ namespace Serein
     {
         public void LoadSettings()
         {
-            SettingServerEnableRestart.Checked = Global.Settings_server.EnableRestart;
-            SettingServerEnableOutputCommand.Checked = Global.Settings_server.EnableOutputCommand;
-            SettingServerEnableLog.Checked = Global.Settings_server.EnableLog;
-            SettingServerOutputStyle.SelectedIndex = Global.Settings_server.OutputStyle;
-            SettingBotPort.Value = Global.Settings_bot.Port;
-            SettingBotEnableLog.Checked = Global.Settings_bot.EnableLog;
-            SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_bot.GivePermissionToAllAdmin;
-            SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_serein.UpdateInfoType;
-            SettingSereinEnableGetAnnouncement.Checked = Global.Settings_serein.EnableGetAnnouncement;
-            SettingServerPath.Text = Global.Settings_server.Path;
-            SettingBotPermissionList.Text = string.Join(",", Global.Settings_bot.PermissionList);
-            SettingBotGroupList.Text = string.Join(",", Global.Settings_bot.GroupList);
+            SettingServerEnableRestart.Checked = Global.Settings_Server.EnableRestart;
+            SettingServerEnableOutputCommand.Checked = Global.Settings_Server.EnableOutputCommand;
+            SettingServerEnableLog.Checked = Global.Settings_Server.EnableLog;
+            SettingServerOutputStyle.SelectedIndex = Global.Settings_Server.OutputStyle;
+            SettingBotPort.Value = Global.Settings_Bot.Port;
+            SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
+            SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
+            SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_Serein.UpdateInfoType;
+            SettingSereinEnableGetAnnouncement.Checked = Global.Settings_Serein.EnableGetAnnouncement;
+            SettingServerPath.Text = Global.Settings_Server.Path;
+            SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
+            SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
         }
         private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_server.EnableRestart = SettingServerEnableRestart.Checked;
+            Global.Settings_Server.EnableRestart = SettingServerEnableRestart.Checked;
         }
         private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
+            Global.Settings_Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
         }
         private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_server.EnableLog = SettingServerEnableLog.Checked;
+            Global.Settings_Server.EnableLog = SettingServerEnableLog.Checked;
         }
         private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Global.Settings_server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
+            Global.Settings_Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
         }
         private void SettingBotPort_ValueChanged(object sender, EventArgs e)
         {
-            Global.Settings_bot.Port = (int)SettingBotPort.Value;
+            Global.Settings_Bot.Port = (int)SettingBotPort.Value;
         }
         private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_bot.EnableLog = SettingBotEnableLog.Checked;
+            Global.Settings_Bot.EnableLog = SettingBotEnableLog.Checked;
         }
         private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
+            Global.Settings_Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
 
         }
         private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
@@ -66,14 +66,19 @@ namespace Serein
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_bot.GroupList = list.Distinct().ToArray();
+                Global.Settings_Bot.GroupList = list.Distinct().ToArray();
             }
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, @",+", ",");
-            SettingBotGroupList.Text = Regex.Replace(SettingBotGroupList.Text, "^,", "");
-            SettingBotGroupList.Focus();
-            SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
-            SettingBotGroupList.ScrollToCaret();
+            string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
+            Text = Regex.Replace(Text, @",+", ",");
+            Text = Regex.Replace(Text, "^,", "");
+            if(Text!=SettingBotGroupList.Text)
+            {
+                SettingBotGroupList.Text = Text;
+                SettingBotGroupList.Focus();
+                SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
+                SettingBotGroupList.ScrollToCaret();
+            }
+            
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
@@ -88,24 +93,28 @@ namespace Serein
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_bot.PermissionList = list.Distinct().ToArray();
+                Global.Settings_Bot.PermissionList = list.Distinct().ToArray();
             }
-            SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ",");
-            SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @",+", ",");
-            SettingBotPermissionList.Text = Regex.Replace(SettingBotPermissionList.Text, @"^,", "");
-            SettingBotPermissionList.Focus();
-            SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
-            SettingBotPermissionList.ScrollToCaret();
+            string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ",");
+            Text = Regex.Replace(Text, @",+", ",");
+            Text = Regex.Replace(Text, "^,", "");
+            if (Text != SettingBotPermissionList.Text)
+            {
+                SettingBotPermissionList.Text = Text;
+                SettingBotPermissionList.Focus();
+                SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
+                SettingBotPermissionList.ScrollToCaret();
+            }
         }
 
         private void SettingSereinUpdateInfoType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Global.Settings_serein.UpdateInfoType = SettingSereinUpdateInfoType.SelectedIndex;
+            Global.Settings_Serein.UpdateInfoType = SettingSereinUpdateInfoType.SelectedIndex;
         }
 
         private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
+            Global.Settings_Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
         }
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
@@ -116,7 +125,7 @@ namespace Serein
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 SettingServerPath.Text = dialog.FileName;
-                Global.Settings_server.Path = dialog.FileName;
+                Global.Settings_Server.Path = dialog.FileName;
                 LoadPlugins();
             }
         }

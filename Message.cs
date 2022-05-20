@@ -7,6 +7,7 @@ namespace Serein
 {
     public class Message
     {
+        public static string MessageReceived, MessageSent, SelfId;
         public static void ProcessMsgFromConsole(string CommandLine)
         {
             foreach (RegexItem Item in Global.RegexItems)
@@ -45,11 +46,11 @@ namespace Serein
                         if (Item.IsAdmin)
                         {
                             bool IsAdmin = false;
-                            if (Global.Settings_bot.PermissionList.Contains(UserId))
+                            if (Global.Settings_Bot.PermissionList.Contains(UserId))
                             {
                                 IsAdmin = true;
                             }
-                            else if (Global.Settings_bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
+                            else if (Global.Settings_Bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
                             {
                                 IsAdmin = true;
                             }
@@ -57,7 +58,7 @@ namespace Serein
                             {
                                 continue;
                             }
-                            if (MessageType == "group" && Global.Settings_bot.GroupList.Contains(GroupId))
+                            if (MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     JsonObject,
@@ -85,7 +86,7 @@ namespace Serein
                         }
                         else
                         {
-                            if (MessageType == "group" && Global.Settings_bot.GroupList.Contains(GroupId))
+                            if (MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     JsonObject,
@@ -112,6 +113,24 @@ namespace Serein
                             }
                         }
                     }
+                }
+            }
+            else if (
+                JsonObject["post_type"].ToString() == "meta_event"
+                &&
+                JsonObject["meta_event_type"].ToString() == "heartbeat")
+            {
+                SelfId = JsonObject["self_id"].ToString();
+                MessageReceived = JsonObject["status"]["stat"]["MessageReceived"].ToString();
+                MessageSent = JsonObject["status"]["stat"]["MessageSent"].ToString();
+                ulong Number;
+                if ((ulong.TryParse(MessageReceived, out Number) ? Number:0 )> 10000000)
+                {
+                    MessageReceived = (Number / 10000).ToString("N1") + "W";
+                }
+                if ((ulong.TryParse(MessageSent, out Number) ? Number : 0) > 10000000)
+                {
+                    MessageSent = (Number / 10000).ToString("N1") + "W";
                 }
             }
         }

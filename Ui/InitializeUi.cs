@@ -8,13 +8,30 @@ namespace Serein
 {
     public partial class Ui : Form
     {
+        private Debug DebugWindow = null;
+
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
-        public void UpdateVersion()
+        private void InitDebugwindow()
         {
-            SettingSereinVersion.Text = $"Version:{Global.VERSION}";
+            if (Global.Settings_Serein.Debug)
+            {
+                DebugWindow = new Debug();
+                DebugWindow.Show();
+            }
         }
-        public void InitWebBrowser()
+        private void Debug(string Text)
+        {
+            if (Global.Settings_Serein.Debug&& DebugWindow!=null)
+            {
+                DebugWindow.Append(Text);
+            }
+        }
+        private void UpdateVersion()
+        {
+            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
+        }
+        private void InitWebBrowser()
         {
 
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
@@ -22,7 +39,7 @@ namespace Serein
             Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
             Global.BotWebBrowser = BotWebBrowser;
         }
-        public void Initialize()
+        private void Initialize()
         {
             InitWebBrowser();
             Settings.ReadSettings();
@@ -41,6 +58,7 @@ namespace Serein
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
+            InitDebugwindow();
         }
         private void MultiOpenCheck()
         {

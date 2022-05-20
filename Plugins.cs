@@ -10,15 +10,15 @@ namespace Serein
         public static string PluginPath = "";
         public static string[] Get()
         {
-            if (File.Exists(Global.Settings_server.Path))
+            if (File.Exists(Global.Settings_Server.Path))
             {
-                if (Directory.Exists(Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugin"))
+                if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugin";
+                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin";
                 }
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugins"))
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugins"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_server.Path) + "\\plugins";
+                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugins";
                 }
                 else
                 {

@@ -62,9 +62,9 @@ namespace Serein
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 5 && Websocket.Status && Global.Settings_bot.GroupList.Length >= 1)
+            else if (Type == 5 && Websocket.Status && Global.Settings_Bot.GroupList.Length >= 1)
             {
-                Websocket.Send(false, Value, Global.Settings_bot.GroupList[0].ToString());
+                Websocket.Send(false, Value, Global.Settings_Bot.GroupList[0].ToString());
             }
         }
 

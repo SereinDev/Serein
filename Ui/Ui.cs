@@ -44,6 +44,14 @@ namespace Serein
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
+
+        private void PanelTableLayout_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!PanelConsoleInput.Focused)
+            {
+                PanelConsoleInput.Focus();
+            }
+        }
     }
 }
 

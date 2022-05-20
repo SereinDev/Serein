@@ -24,7 +24,7 @@ namespace Serein
             string OldAnnouncementId = "";
             while (true)
             {
-                if (Global.Settings_serein.EnableGetAnnouncement)
+                if (Global.Settings_Serein.EnableGetAnnouncement)
                 {
                     try
                     {
@@ -53,7 +53,7 @@ namespace Serein
             Thread.Sleep(10000);
             while (true)
             {
-                if (Global.Settings_serein.UpdateInfoType == 2)
+                if (Global.Settings_Serein.UpdateInfoType == 2)
                 {
                     try
                     {
@@ -69,7 +69,7 @@ namespace Serein
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
                     }
                 }
-                else if (Global.Settings_serein.UpdateInfoType == 1)
+                else if (Global.Settings_Serein.UpdateInfoType == 1)
                 {
                     try
                     {

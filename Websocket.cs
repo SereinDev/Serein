@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using WebSocketSharp;
 
 namespace Serein
@@ -15,21 +16,26 @@ namespace Serein
         public static bool Status = false;
         public static WebSocket webSocket;
         static StreamWriter LogWriter;
+        public static DateTime StartTime = DateTime.Now;
         public static void Connect()
         {
             if (Status)
             {
                 MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if (!CheckPort(Global.Settings_bot.Port))
+            else if (!CheckPort(Global.Settings_Bot.Port))
             {
                 MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 Global.Ui.BotWebBrowser_Invoke("#clear");
+                Message.MessageReceived = "-";
+                Message.MessageSent = "-";
+                Message.SelfId = "-";
+                StartTime = DateTime.Now;
                 Status = true;
-                webSocket = new WebSocket($"ws://127.0.0.1:{Global.Settings_bot.Port}");
+                webSocket = new WebSocket($"ws://127.0.0.1:{Global.Settings_Bot.Port}");
                 webSocket.OnMessage += Recieve;
                 webSocket.OnError += (sender, e) =>
                 {
@@ -44,7 +50,7 @@ namespace Serein
                 };
                 webSocket.OnOpen += (sender, e) =>
                 {
-                    Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到ws://127.0.0.1:{Global.Settings_bot.Port}");
+                    Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到ws://127.0.0.1:{Global.Settings_Bot.Port}");
                 };
                 webSocket.ConnectAsync();
             }
@@ -100,7 +106,7 @@ namespace Serein
             Global.Ui.BotWebBrowser_Invoke(
                 "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                 e.Data);
-            if (Global.Settings_bot.EnableLog)
+            if (Global.Settings_Bot.EnableLog)
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))
                 {
@@ -118,7 +124,6 @@ namespace Serein
                     LogWriter.Close();
                 }
                 catch { }
-
             }
             Task MsgTask = new Task(() =>
             {

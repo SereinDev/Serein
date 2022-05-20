@@ -58,9 +58,7 @@ namespace Serein
                 Server.ServerProcess.StandardInput.WriteLine("exit\n");
                 Server.ServerProcess.StandardInput.WriteLine("stop\n");
                 Server.ServerProcess.StandardInput.WriteLine("quit\n");
-                Server.Killed = false;
             }
         }
-
     }
 }

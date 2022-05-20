@@ -93,8 +93,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ui\Debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\Debug.Designer.cs">
+      <DependentUpon>Debug.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResourcesManager.cs" />
     <Compile Include="GetInfo.cs" />
+    <Compile Include="SettingsItem\Settings_Bot.cs" />
+    <Compile Include="SettingsItem\Settings_Matches.cs" />
+    <Compile Include="SettingsItem\Settings_Serein.cs" />
+    <Compile Include="SettingsItem\Settings_Server.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Ui\TaskEditer.cs">
       <SubType>Form</SubType>
@@ -154,6 +164,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Ui\Debug.resx">
+      <DependentUpon>Debug.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ui\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +235,7 @@
       <Version>1.0.3-rc11</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

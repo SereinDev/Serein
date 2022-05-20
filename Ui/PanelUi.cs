@@ -43,6 +43,7 @@ namespace Serein
         {
             Server.InputCommand(PanelConsoleInput.Text);
             PanelConsoleInput.Clear();
+            PanelConsoleInput.Focus();
         }
         private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
