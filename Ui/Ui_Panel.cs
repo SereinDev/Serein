@@ -55,6 +55,14 @@ namespace Serein
             }
         }
 
+        private void PanelTableLayout_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (!PanelConsoleInput.Focused)
+            {
+                PanelConsoleInput.Focus();
+            }
+        }
+
         private void PanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))

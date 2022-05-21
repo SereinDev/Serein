@@ -38,6 +38,7 @@ namespace Serein
                     catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("公告获取异常：\n" + e.Message);
+                        Thread.Sleep(120000);
                     }
                 }
                 else
@@ -67,6 +68,7 @@ namespace Serein
                     catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
+                        Thread.Sleep(120000);
                     }
                 }
                 else if (Global.Settings_Serein.UpdateInfoType == 1)
@@ -85,6 +87,7 @@ namespace Serein
                     catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
+                        Thread.Sleep(120000);
                     }
                 }
                 else

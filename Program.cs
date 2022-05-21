@@ -55,9 +55,10 @@ namespace Serein
         {
             if (Server.Status)
             {
-                Server.ServerProcess.StandardInput.WriteLine("exit\n");
-                Server.ServerProcess.StandardInput.WriteLine("stop\n");
-                Server.ServerProcess.StandardInput.WriteLine("quit\n");
+                foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
+                {
+                    Server.InputCommand(Command);
+                }
             }
         }
     }

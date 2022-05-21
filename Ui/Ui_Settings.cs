@@ -15,14 +15,16 @@ namespace Serein
             SettingServerEnableOutputCommand.Checked = Global.Settings_Server.EnableOutputCommand;
             SettingServerEnableLog.Checked = Global.Settings_Server.EnableLog;
             SettingServerOutputStyle.SelectedIndex = Global.Settings_Server.OutputStyle;
+            SettingServerAutoStop.Checked = Global.Settings_Server.AutoStop;
+            SettingServerPath.Text = Global.Settings_Server.Path;
+            SettingServerStopCommand.Text=Global.Settings_Server.StopCommand;
+            SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
+            SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
             SettingBotPort.Value = Global.Settings_Bot.Port;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
             SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_Serein.UpdateInfoType;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings_Serein.EnableGetAnnouncement;
-            SettingServerPath.Text = Global.Settings_Server.Path;
-            SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
-            SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
         }
         private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
         {
@@ -129,7 +131,30 @@ namespace Serein
                 LoadPlugins();
             }
         }
+        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_Server.AutoStop = SettingServerAutoStop.Checked ;
+        }
+        private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(SettingServerStopCommand.Text)|| string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
+            {
+                Global.Settings_Server.StopCommand = "stop";
+            }
+            else
+            {
+                Global.Settings_Server.StopCommand = SettingServerStopCommand.Text;
+            }
+        }
 
+        private void SettingServerStopCommand_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SettingServerStopCommand.Text) || string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
+            {
+                Global.Settings_Server.StopCommand = "stop";
+                SettingServerStopCommand.Text = "stop";
+            }
+        }
         private void SettingSereinAbout_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein/About");
@@ -139,6 +164,10 @@ namespace Serein
             Process.Start("https://github.com/Mrs4s/go-cqhttp");
         }
         private void SettingSereinPage_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein");
+        }
+        private void SettingSereinHelp_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein");
         }

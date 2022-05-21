@@ -122,6 +122,7 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinHelp = new System.Windows.Forms.Label();
             this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
             this.SettingSereinUpdateInfoTypeLabel = new System.Windows.Forms.Label();
@@ -136,10 +137,12 @@ namespace Serein
             this.SettingBotPortLabel = new System.Windows.Forms.Label();
             this.SettingBotPort = new System.Windows.Forms.NumericUpDown();
             this.SettingBotSupportedLabel = new System.Windows.Forms.Label();
-            this.SettingBotSupportedLink = new System.Windows.Forms.LinkLabel();
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerAutoStop = new System.Windows.Forms.CheckBox();
+            this.SettingServerStopCommandLabel = new System.Windows.Forms.Label();
+            this.SettingServerStopCommand = new System.Windows.Forms.TextBox();
             this.SettingServerOutputStyleLabel = new System.Windows.Forms.Label();
             this.SettingServerEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServerOutputStyle = new System.Windows.Forms.ComboBox();
@@ -793,6 +796,7 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinHelp);
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
             this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoTypeLabel);
@@ -802,6 +806,13 @@ namespace Serein
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
+            // 
+            // SettingSereinHelp
+            // 
+            resources.ApplyResources(this.SettingSereinHelp, "SettingSereinHelp");
+            this.SettingSereinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinHelp.Name = "SettingSereinHelp";
+            this.SettingSereinHelp.Click += new System.EventHandler(this.SettingSereinHelp_Click);
             // 
             // SettingSereinPage
             // 
@@ -859,7 +870,6 @@ namespace Serein
             this.SettingBot.Controls.Add(this.SettingBotPortLabel);
             this.SettingBot.Controls.Add(this.SettingBotPort);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLabel);
-            this.SettingBot.Controls.Add(this.SettingBotSupportedLink);
             this.SettingBot.Controls.Add(this.SettingBotGivePermissionToAllAdmin);
             this.SettingBot.Controls.Add(this.SettingBotEnableLog);
             resources.ApplyResources(this.SettingBot, "SettingBot");
@@ -924,18 +934,6 @@ namespace Serein
             resources.ApplyResources(this.SettingBotSupportedLabel, "SettingBotSupportedLabel");
             this.SettingBotSupportedLabel.Name = "SettingBotSupportedLabel";
             // 
-            // SettingBotSupportedLink
-            // 
-            this.SettingBotSupportedLink.ActiveLinkColor = System.Drawing.Color.DarkSlateGray;
-            resources.ApplyResources(this.SettingBotSupportedLink, "SettingBotSupportedLink");
-            this.SettingBotSupportedLink.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SettingBotSupportedLink.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-            this.SettingBotSupportedLink.LinkColor = System.Drawing.Color.Teal;
-            this.SettingBotSupportedLink.Name = "SettingBotSupportedLink";
-            this.SettingBotSupportedLink.TabStop = true;
-            this.SettingBotSupportedLink.VisitedLinkColor = System.Drawing.Color.Teal;
-            this.SettingBotSupportedLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SettingBotSupportedLink_LinkClicked);
-            // 
             // SettingBotGivePermissionToAllAdmin
             // 
             resources.ApplyResources(this.SettingBotGivePermissionToAllAdmin, "SettingBotGivePermissionToAllAdmin");
@@ -954,6 +952,9 @@ namespace Serein
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerAutoStop);
+            this.SettingServer.Controls.Add(this.SettingServerStopCommandLabel);
+            this.SettingServer.Controls.Add(this.SettingServerStopCommand);
             this.SettingServer.Controls.Add(this.SettingServerOutputStyleLabel);
             this.SettingServer.Controls.Add(this.SettingServerEnableLog);
             this.SettingServer.Controls.Add(this.SettingServerOutputStyle);
@@ -965,6 +966,28 @@ namespace Serein
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerAutoStop
+            // 
+            resources.ApplyResources(this.SettingServerAutoStop, "SettingServerAutoStop");
+            this.SettingServerAutoStop.Name = "SettingServerAutoStop";
+            this.SettingServerAutoStop.UseVisualStyleBackColor = true;
+            this.SettingServerAutoStop.CheckedChanged += new System.EventHandler(this.SettingServerAutoStop_CheckedChanged);
+            this.SettingServerAutoStop.MouseHover += new System.EventHandler(this.SettingServerAutoStop_MouseHover);
+            // 
+            // SettingServerStopCommandLabel
+            // 
+            resources.ApplyResources(this.SettingServerStopCommandLabel, "SettingServerStopCommandLabel");
+            this.SettingServerStopCommandLabel.Name = "SettingServerStopCommandLabel";
+            this.SettingServerStopCommandLabel.MouseHover += new System.EventHandler(this.SettingServerStopCommandLabel_MouseHover);
+            // 
+            // SettingServerStopCommand
+            // 
+            resources.ApplyResources(this.SettingServerStopCommand, "SettingServerStopCommand");
+            this.SettingServerStopCommand.Name = "SettingServerStopCommand";
+            this.SettingServerStopCommand.TextChanged += new System.EventHandler(this.SettingServerStopCommand_TextChanged);
+            this.SettingServerStopCommand.Leave += new System.EventHandler(this.SettingServerStopCommand_Leave);
+            this.SettingServerStopCommand.MouseHover += new System.EventHandler(this.SettingServerStopCommand_MouseHover);
             // 
             // SettingServerOutputStyleLabel
             // 
@@ -1137,7 +1160,6 @@ namespace Serein
         private System.Windows.Forms.Label SettingBotPortLabel;
         private System.Windows.Forms.NumericUpDown SettingBotPort;
         private System.Windows.Forms.Label SettingBotSupportedLabel;
-        private System.Windows.Forms.LinkLabel SettingBotSupportedLink;
         private System.Windows.Forms.CheckBox SettingBotGivePermissionToAllAdmin;
         private System.Windows.Forms.CheckBox SettingBotEnableLog;
         private System.Windows.Forms.GroupBox SettingServer;
@@ -1190,6 +1212,10 @@ namespace Serein
         private System.Windows.Forms.Label BotInfoQQ;
         private System.Windows.Forms.Label BotInfoStatus2;
         private System.Windows.Forms.Label BotInfoStatus;
+        private System.Windows.Forms.CheckBox SettingServerAutoStop;
+        private System.Windows.Forms.Label SettingServerStopCommandLabel;
+        private System.Windows.Forms.TextBox SettingServerStopCommand;
+        private System.Windows.Forms.Label SettingSereinHelp;
     }
 }
 

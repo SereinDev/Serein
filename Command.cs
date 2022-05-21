@@ -50,9 +50,9 @@ namespace Serein
                   });
                 CMDTask.Start();
             }
-            else if (Type == 2 && Server.Status)
+            else if (Type == 2)
             {
-                Server.InputCommand(Value);
+                Server.InputCommand(Value, true);
             }
             else if (Type == 3 && Websocket.Status)
             {
@@ -85,9 +85,9 @@ namespace Serein
                 });
                 CMDTask.Start();
             }
-            else if (Type == 2 && Server.Status)
+            else if (Type == 2)
             {
-                Server.InputCommand(Value);
+                Server.InputCommand(Value,true);
             }
             else if (Type == 3 && Websocket.Status)
             {

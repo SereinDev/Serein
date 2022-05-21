@@ -22,19 +22,28 @@ namespace Serein
         static StreamWriter CommandWriter, LogWriter;
         static TimeSpan PrevCpuTime = TimeSpan.Zero, CurTime = TimeSpan.Zero;
 
-        public static void Start()
+        public static void Start(bool StartedByCommand=false)
         {
             if (string.IsNullOrEmpty(Global.Settings_Server.Path) || string.IsNullOrWhiteSpace(Global.Settings_Server.Path))
             {
-                MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!StartedByCommand)
+                {
+                    MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else if (!File.Exists(Global.Settings_Server.Path))
             {
-                MessageBox.Show($":(\n启动文件\"{Global.Settings_Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!StartedByCommand)
+                {
+                    MessageBox.Show($":(\n启动文件\"{Global.Settings_Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else if (Status)
             {
-                MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!StartedByCommand)
+                {
+                    MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
@@ -49,7 +58,7 @@ namespace Serein
                 ServerProcessInfo.StandardOutputEncoding = Encoding.UTF8;
                 ServerProcessInfo.WorkingDirectory = Path.GetDirectoryName(Global.Settings_Server.Path);
                 ServerProcess = Process.Start(ServerProcessInfo);
-                CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream, Encoding.UTF8);
+                CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream);
                 CommandWriter.AutoFlush = true;
                 CommandWriter.NewLine = "\n";
                 ServerProcess.BeginOutputReadLine();
@@ -73,7 +82,10 @@ namespace Serein
         {
             if (Status)
             {
-                InputCommand("stop");
+                foreach(string Command in Global.Settings_Server.StopCommand.Split(';'))
+                {
+                    InputCommand(Command);
+                }
             }
             else if (!Status && Restart)
             {
@@ -123,7 +135,7 @@ namespace Serein
                 MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static void InputCommand(string Command)
+        public static void InputCommand(string Command, bool StartedByCommand=false)
         {
             if (Status)
             {
@@ -153,6 +165,10 @@ namespace Serein
                     }
                     catch { }
                 }
+            }
+            else if (Command.Trim().ToUpper() == "START")
+            {
+                Start(StartedByCommand);
             }
         }
         private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)

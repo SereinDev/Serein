@@ -46,9 +46,22 @@ namespace Serein
                "-原始彩色 按照原控制台的样式输出（推荐）\n" +
                "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）");
         }
+        private void SettingServerStopCommand_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "设置使用关服功能时执行的命令（使用英文分号\";\"分隔）");
+        }
+        private void SettingServerStopCommandLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "设置使用关服功能时执行的命令（使用英文分号\";\"分隔）");
+        }
+
+        private void SettingServerAutoStop_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "此程序发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）");
+        }
         private void SettingBotPortLabel_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, $"设置Websocket的端口\n即go-http的ws正向服务器应在127.0.0.1:{SettingBotPort.Value}开启");
+            ShowToolTip(sender, $"设置Websocket的端口\n即Websocket正向服务器应在127.0.0.1:{SettingBotPort.Value}开启");
         }
         private void SettingBotEnableLog_MouseHover(object sender, EventArgs e)
         {

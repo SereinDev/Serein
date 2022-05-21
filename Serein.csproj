@@ -93,10 +93,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ui\Debug.cs">
+    <Compile Include="Ui\BaseFunction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\Debug.Designer.cs">
+    <Compile Include="Ui\ChildrenWindow\Debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ui\ChildrenWindow\Debug.Designer.cs">
       <DependentUpon>Debug.cs</DependentUpon>
     </Compile>
     <Compile Include="ResourcesManager.cs" />
@@ -106,48 +109,48 @@
     <Compile Include="SettingsItem\Settings_Serein.cs" />
     <Compile Include="SettingsItem\Settings_Server.cs" />
     <Compile Include="TaskManager.cs" />
-    <Compile Include="Ui\TaskEditer.cs">
+    <Compile Include="Ui\ChildrenWindow\TaskEditer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\TaskEditer.Designer.cs">
+    <Compile Include="Ui\ChildrenWindow\TaskEditer.Designer.cs">
       <DependentUpon>TaskEditer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ui\TaskUi.cs">
+    <Compile Include="Ui\Ui_Task.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TaskItem.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="Ui\BotsUi.cs">
+    <Compile Include="Ui\Ui_Bot.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Ui\InitializeUi.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Message.cs" />
-    <Compile Include="Ui\PanelUi.cs">
+    <Compile Include="Ui\Ui_Panel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\PluginsUi.cs">
+    <Compile Include="Ui\Ui_Plugin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\RegexEditer.cs">
+    <Compile Include="Ui\ChildrenWindow\RegexEditer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\RegexEditer.Designer.cs">
+    <Compile Include="Ui\ChildrenWindow\RegexEditer.Designer.cs">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </Compile>
     <Compile Include="RegexItem.cs" />
-    <Compile Include="Ui\RegexUi.cs">
+    <Compile Include="Ui\Ui_Regex.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Serein.cs" />
-    <Compile Include="Ui\SettingsUi.cs">
+    <Compile Include="Ui\Ui_Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\ToolTip.cs">
+    <Compile Include="Ui\Ui_ShowToolTip.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ui\UpdateUi.cs">
+    <Compile Include="Ui\Ui_Update.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Websocket.cs" />
@@ -164,13 +167,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Ui\Debug.resx">
+    <EmbeddedResource Include="Ui\ChildrenWindow\Debug.resx">
       <DependentUpon>Debug.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ui\RegexEditer.resx">
+    <EmbeddedResource Include="Ui\ChildrenWindow\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ui\TaskEditer.resx">
+    <EmbeddedResource Include="Ui\ChildrenWindow\TaskEditer.resx">
       <DependentUpon>TaskEditer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ui\Ui.resx">

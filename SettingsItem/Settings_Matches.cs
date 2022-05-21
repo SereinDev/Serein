@@ -7,7 +7,7 @@ namespace Serein
     class Settings_Matches
     {
         public string Version { get; set; } = @"(\d+\.\d+\.\d+\.\d+)";
-        public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|DIFFICULT)";
+        public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|DIFFICULT[^Y])";
         public string LevelName { get; set; } = "Level Name: (.+?)$";
         public string Finished { get; set; } = "(Done|Started)";
         public Settings_Matches()
