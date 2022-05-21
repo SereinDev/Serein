@@ -1,5 +1,6 @@
 ### 目录
-- [Github仓库](https://github.com/Zaitonn/Serein)  
+- [Github仓库](https://github.com/Zaitonn/Serein)
+- [配置机器人](Bot.md)  
 - [定时任务](Schedule.md)
 - [正则说明](Regex.md)
 - [命令列表](Command.md)  
