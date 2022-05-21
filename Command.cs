@@ -87,7 +87,7 @@ namespace Serein
             }
             else if (Type == 2)
             {
-                Server.InputCommand(Value,true);
+                Server.InputCommand(Value, true);
             }
             else if (Type == 3 && Websocket.Status)
             {

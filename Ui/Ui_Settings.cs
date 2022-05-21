@@ -17,7 +17,7 @@ namespace Serein
             SettingServerOutputStyle.SelectedIndex = Global.Settings_Server.OutputStyle;
             SettingServerAutoStop.Checked = Global.Settings_Server.AutoStop;
             SettingServerPath.Text = Global.Settings_Server.Path;
-            SettingServerStopCommand.Text=Global.Settings_Server.StopCommand;
+            SettingServerStopCommand.Text = Global.Settings_Server.StopCommand;
             SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
             SettingBotPort.Value = Global.Settings_Bot.Port;
@@ -133,11 +133,11 @@ namespace Serein
         }
         private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_Server.AutoStop = SettingServerAutoStop.Checked ;
+            Global.Settings_Server.AutoStop = SettingServerAutoStop.Checked;
         }
         private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(SettingServerStopCommand.Text)|| string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
+            if (string.IsNullOrEmpty(SettingServerStopCommand.Text) || string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
             {
                 Global.Settings_Server.StopCommand = "stop";
             }

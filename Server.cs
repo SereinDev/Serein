@@ -22,7 +22,7 @@ namespace Serein
         static StreamWriter CommandWriter, LogWriter;
         static TimeSpan PrevCpuTime = TimeSpan.Zero, CurTime = TimeSpan.Zero;
 
-        public static void Start(bool StartedByCommand=false)
+        public static void Start(bool StartedByCommand = false)
         {
             if (string.IsNullOrEmpty(Global.Settings_Server.Path) || string.IsNullOrWhiteSpace(Global.Settings_Server.Path))
             {
@@ -82,7 +82,7 @@ namespace Serein
         {
             if (Status)
             {
-                foreach(string Command in Global.Settings_Server.StopCommand.Split(';'))
+                foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
                 {
                     InputCommand(Command);
                 }
@@ -135,7 +135,7 @@ namespace Serein
                 MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static void InputCommand(string Command, bool StartedByCommand=false)
+        public static void InputCommand(string Command, bool StartedByCommand = false)
         {
             if (Status)
             {
