@@ -121,7 +121,7 @@ namespace Serein
                     e.Data
                     );
             }
-                
+
             if (Global.Settings_Bot.EnableLog)
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))

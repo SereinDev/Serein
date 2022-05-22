@@ -21,12 +21,12 @@ namespace Serein
             SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
             SettingBotPort.Value = Global.Settings_Bot.Port;
-            SettingBotEnbaleOutputData.Checked= Global.Settings_Bot.EnbaleOutputData;
+            SettingBotEnbaleOutputData.Checked = Global.Settings_Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
             SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_Serein.UpdateInfoType;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings_Serein.EnableGetAnnouncement;
-            if(!Global .Settings_Serein.Debug)
+            if (!Global.Settings_Serein.Debug)
             {
                 Debug.Parent = null;
             }

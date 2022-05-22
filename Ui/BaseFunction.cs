@@ -50,7 +50,7 @@ namespace Serein
                 {
                     DebugTextBox.Text = DebugTextBox.Text + "\n" + Text;
                 }
-                
+
             }
         }
         private void UpdateVersion()

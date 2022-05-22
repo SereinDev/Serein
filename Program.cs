@@ -53,7 +53,7 @@ namespace Serein
         }
         static void SafeStop()
         {
-            if (Server.Status&&Global.Settings_Server.AutoStop )
+            if (Server.Status && Global.Settings_Server.AutoStop)
             {
                 foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
                 {
