@@ -1,4 +1,3 @@
-
 name: Code Scanning
 
 on:
@@ -42,8 +41,8 @@ jobs:
       - name: NuGet restore
         run: nuget restore
 
-      - name: Build the solution(Debug)
-        run: msbuild /p:Configuration=$env:Configuration
+      - name: Build the solution
+        run: msbuild /p:Configuration=$env:Configuration /p:UseSharedCompilation=false
         env:
           Configuration: Debug
 
