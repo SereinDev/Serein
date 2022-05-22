@@ -1,13 +1,11 @@
 name: Build
+
 on:
   push:
   pull_request:
 
 jobs:
     Build:
-      strategy:
-        matrix:
-          configuration: [Release]
       runs-on: windows-latest
 
       steps:
@@ -41,13 +39,24 @@ jobs:
       - name: NuGet restore
         run: nuget restore
 
-      - name: Build the solution
+      - name: Build the solution(Debug)
         run: msbuild /p:Configuration=$env:Configuration
         env:
-          Configuration: ${{ matrix.configuration }}
+          Configuration: Debug
 
-      - name: Upload Serein
+      - name: Upload Serein(Debug)
         uses: actions/upload-artifact@v3
         with:
-          name: Release
+          name: Serein_Debug
+          path: ${{ github.workspace }}\bin\Debug
+
+      - name: Build the solution(Release)
+        run: msbuild /p:Configuration=$env:Configuration
+        env:
+          Configuration: Release
+
+      - name: Upload Serein(Release)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_Release
           path: ${{ github.workspace }}\bin\Release

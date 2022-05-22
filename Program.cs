@@ -12,18 +12,18 @@ namespace Serein
         [STAThread]
         static void Main()
         {
+            if (!File.Exists(Global.Path + "console\\console.html"))
+            {
+                ResourcesManager.InitConsole();
+            }
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!File.Exists(Global.Path + "console\\console.html"))
-            {
-                ResourcesManager.InitConsole();
-            }
-            Ui Ui = new Ui();
-            Global.Ui = Ui;
-            Application.Run(Ui);
+            Ui ui = new Ui();
+            Global.Ui = ui;
+            Application.Run(ui);
         }
         static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
