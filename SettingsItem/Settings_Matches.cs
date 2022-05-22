@@ -12,6 +12,10 @@ namespace Serein
         public string Finished { get; set; } = "(Done|Started)";
         public Settings_Matches()
         {
+            if (!Directory.Exists(Global.SettingPath))
+            {
+                Directory.CreateDirectory(Global.SettingPath);
+            }
             if (File.Exists(Global.SettingPath + "\\Matches.ini"))
             {
                 FileStream IniFile = new FileStream(Global.SettingPath + "\\Matches.ini", FileMode.Open);
