@@ -6,7 +6,6 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using WebSocketSharp;
 
 namespace Serein
@@ -82,9 +81,21 @@ namespace Serein
                     {
                         if (Sent)
                         {
-                            Global.Ui.BotWebBrowser_Invoke(
-                           "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                           TextJObject.ToString());
+                            if (Global.Settings_Bot.EnbaleOutputData)
+                            {
+                                Global.Ui.BotWebBrowser_Invoke(
+                                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
+                                    TextJObject.ToString()
+                                    );
+                            }
+                            else
+                            {
+                                Global.Ui.BotWebBrowser_Invoke(
+                                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
+                                    $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}"
+                                    );
+                            }
+
                         }
                     }
                     );
@@ -103,9 +114,14 @@ namespace Serein
         }
         public static void Recieve(object sender, MessageEventArgs e)
         {
-            Global.Ui.BotWebBrowser_Invoke(
-                "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                e.Data);
+            if (Global.Settings_Bot.EnbaleOutputData)
+            {
+                Global.Ui.BotWebBrowser_Invoke(
+                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
+                    e.Data
+                    );
+            }
+                
             if (Global.Settings_Bot.EnableLog)
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))

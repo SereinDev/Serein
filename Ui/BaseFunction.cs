@@ -37,5 +37,26 @@ namespace Serein
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
+        private void Debug_Append(string Text)
+        {
+            if (Global.Settings_Serein.Debug)
+            {
+                if (DebugTextBox.InvokeRequired)
+                {
+                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\n" + _Text; };
+                    PanelInfoTime2.Invoke(actionDelegate, Text);
+                }
+                else
+                {
+                    DebugTextBox.Text = DebugTextBox.Text + "\n" + Text;
+                }
+                
+            }
+        }
+        private void UpdateVersion()
+        {
+            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
+            Debug_Append(Global.VERSION);
+        }
     }
 }

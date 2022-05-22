@@ -12,30 +12,30 @@ namespace Serein
         [STAThread]
         static void Main()
         {
-            if (!File.Exists(Global.Path + "console\\console.html"))
-            {
-                ResourcesManager.InitConsole();
-            }
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Ui serein = new Ui();
-            Global.Ui = serein;
-            Application.Run(serein);
+            if (!File.Exists(Global.Path + "console\\console.html"))
+            {
+                ResourcesManager.InitConsole();
+            }
+            Ui Ui = new Ui();
+            Global.Ui = Ui;
+            Application.Run(Ui);
         }
         static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
             Global.Crash = true;
             SafeStop();
             MessageBox.Show(
-                $"线程异常：\n" +
+                "线程异常：\n" +
                 $"{e.Exception.StackTrace}\n" +
                 $"版本： {Global.VERSION}\n" +
                 $"时间：{DateTime.Now}\n\n\n" +
-                $"若有必要，请在GitHub提交Issue反馈此问题",
-                $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                "若有必要，请在GitHub提交Issue反馈此问题",
+                "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Global.Crash = false;
         }
         static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -43,17 +43,17 @@ namespace Serein
             Global.Crash = true;
             SafeStop();
             MessageBox.Show(
-                $"程序异常：\n" +
+               $"程序异常：\n" +
                 $"{e.ExceptionObject}\n" +
                 $"版本： {Global.VERSION}\n" +
                 $"时间：{DateTime.Now}\n\n\n" +
-                $"若有必要，请在GitHub提交Issue反馈此问题",
-                $"Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                "若有必要，请在GitHub提交Issue反馈此问题",
+                "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Global.Crash = false;
         }
         static void SafeStop()
         {
-            if (Server.Status)
+            if (Server.Status&&Global.Settings_Server.AutoStop )
             {
                 foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
                 {

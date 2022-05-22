@@ -71,6 +71,10 @@ namespace Serein
         {
             ShowToolTip(sender, "使群聊的管理员和群主也有管理权限");
         }
+        private void SettingBotEnbaleOutputData_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "在机器人控制台中输出接收和发送的数据");
+        }
         private void SettingBotGroup_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "设定要监听消息的群聊");

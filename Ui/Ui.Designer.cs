@@ -130,6 +130,7 @@ namespace Serein
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
+            this.SettingBotEnbaleOutputData = new System.Windows.Forms.CheckBox();
             this.SettingBotPermission = new System.Windows.Forms.Label();
             this.SettingBotGroup = new System.Windows.Forms.Label();
             this.SettingBotPermissionList = new System.Windows.Forms.TextBox();
@@ -151,6 +152,8 @@ namespace Serein
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
             this.SettingServerPathSelect = new System.Windows.Forms.Button();
             this.SettingServerPath = new System.Windows.Forms.TextBox();
+            this.Debug = new System.Windows.Forms.TabPage();
+            this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -176,6 +179,7 @@ namespace Serein
             this.SettingBot.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).BeginInit();
             this.SettingServer.SuspendLayout();
+            this.Debug.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -266,6 +270,7 @@ namespace Serein
             this.tabControl.Controls.Add(this.Task);
             this.tabControl.Controls.Add(this.Bot);
             this.tabControl.Controls.Add(this.Setting);
+            this.tabControl.Controls.Add(this.Debug);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -863,6 +868,7 @@ namespace Serein
             // 
             // SettingBot
             // 
+            this.SettingBot.Controls.Add(this.SettingBotEnbaleOutputData);
             this.SettingBot.Controls.Add(this.SettingBotPermission);
             this.SettingBot.Controls.Add(this.SettingBotGroup);
             this.SettingBot.Controls.Add(this.SettingBotPermissionList);
@@ -875,6 +881,14 @@ namespace Serein
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
+            // 
+            // SettingBotEnbaleOutputData
+            // 
+            resources.ApplyResources(this.SettingBotEnbaleOutputData, "SettingBotEnbaleOutputData");
+            this.SettingBotEnbaleOutputData.Name = "SettingBotEnbaleOutputData";
+            this.SettingBotEnbaleOutputData.UseVisualStyleBackColor = true;
+            this.SettingBotEnbaleOutputData.CheckedChanged += new System.EventHandler(this.SettingBotEnbaleOutputData_CheckedChanged);
+            this.SettingBotEnbaleOutputData.MouseHover += new System.EventHandler(this.SettingBotEnbaleOutputData_MouseHover);
             // 
             // SettingBotPermission
             // 
@@ -1052,6 +1066,18 @@ namespace Serein
             this.SettingServerPath.ReadOnly = true;
             this.SettingServerPath.MouseHover += new System.EventHandler(this.SettingServerPath_MouseHover);
             // 
+            // Debug
+            // 
+            this.Debug.Controls.Add(this.DebugTextBox);
+            resources.ApplyResources(this.Debug, "Debug");
+            this.Debug.Name = "Debug";
+            this.Debug.UseVisualStyleBackColor = true;
+            // 
+            // DebugTextBox
+            // 
+            resources.ApplyResources(this.DebugTextBox, "DebugTextBox");
+            this.DebugTextBox.Name = "DebugTextBox";
+            // 
             // Ui
             // 
             resources.ApplyResources(this, "$this");
@@ -1091,6 +1117,8 @@ namespace Serein
             ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).EndInit();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
+            this.Debug.ResumeLayout(false);
+            this.Debug.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1216,6 +1244,9 @@ namespace Serein
         private System.Windows.Forms.Label SettingServerStopCommandLabel;
         private System.Windows.Forms.TextBox SettingServerStopCommand;
         private System.Windows.Forms.Label SettingSereinHelp;
+        private System.Windows.Forms.CheckBox SettingBotEnbaleOutputData;
+        private System.Windows.Forms.TabPage Debug;
+        private System.Windows.Forms.TextBox DebugTextBox;
     }
 }
 

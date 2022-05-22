@@ -12,7 +12,6 @@ namespace Serein
             Initialize();
             UpdateVersion();
         }
-
     }
 }
 

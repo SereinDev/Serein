@@ -4,7 +4,6 @@
 - 可使用WS正向连接
 
 >由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人  
-**仅适配发送消息与接收消息功能，更多功能请自行寻找其他软件**
 >>已完全支持的机器人：[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 
 ### 配置教程（以[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)为例）
