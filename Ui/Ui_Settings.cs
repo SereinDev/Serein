@@ -168,17 +168,13 @@ namespace Serein
         {
             Process.Start("https://zaitonn.github.io/Serein/About");
         }
-        private void SettingBotSupportedLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("https://github.com/Mrs4s/go-cqhttp");
-        }
         private void SettingSereinPage_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein");
         }
         private void SettingSereinHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein");
+            Process.Start("https://zaitonn.github.io/Serein/Help");
         }
     }
 

@@ -84,7 +84,10 @@ namespace Serein
             {
                 foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
                 {
-                    InputCommand(Command);
+                    if (string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))
+                    {
+                        InputCommand(Command);
+                    }
                 }
             }
             else if (!Status && Restart)
@@ -139,8 +142,7 @@ namespace Serein
         {
             if (Status)
             {
-                Command = Regex.Replace(Command, @"[\r\n]+?$", "");
-                Command = Regex.Replace(Command, @"^[\r\n\s]+?", "");
+                Command = Command.Trim();
                 if (Global.Settings_Server.EnableOutputCommand)
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Command}");
@@ -254,15 +256,8 @@ namespace Serein
         }
         public static void RestartRequest()
         {
-            if (Status)
-            {
-                InputCommand("stop");
-                Restart = true;
-            }
-            else
-            {
-                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            Restart = Status ;
+            Stop();
         }
         private static void RestartTimer()
         {

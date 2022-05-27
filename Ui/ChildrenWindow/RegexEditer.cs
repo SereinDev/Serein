@@ -22,7 +22,7 @@ namespace Serein
             {
                 if (Command.GetType(CommandTextBox.Text) == -1)
                 {
-                    MessageBox.Show("执行命令", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try

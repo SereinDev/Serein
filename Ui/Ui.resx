@@ -410,6 +410,576 @@
   <data name="&gt;&gt;Bot.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinHelp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinHelp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Underline</value>
+  </data>
+  <data name="SettingSereinHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 135</value>
+  </data>
+  <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 24</value>
+  </data>
+  <data name="SettingSereinHelp.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="SettingSereinHelp.Text" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Name" xml:space="preserve">
+    <value>SettingSereinHelp</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinPage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Underline</value>
+  </data>
+  <data name="SettingSereinPage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 135</value>
+  </data>
+  <data name="SettingSereinPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 24</value>
+  </data>
+  <data name="SettingSereinPage.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="SettingSereinPage.Text" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Name" xml:space="preserve">
+    <value>SettingSereinPage</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinAbout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Underline</value>
+  </data>
+  <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>223, 135</value>
+  </data>
+  <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 24</value>
+  </data>
+  <data name="SettingSereinAbout.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="SettingSereinAbout.Text" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Name" xml:space="preserve">
+    <value>SettingSereinAbout</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 92</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 24</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="SettingSereinUpdateInfoTypeLabel.Text" xml:space="preserve">
+    <value>获取更新类型</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Name" xml:space="preserve">
+    <value>SettingSereinUpdateInfoTypeLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items1" xml:space="preserve">
+    <value>仅正式版</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Items2" xml:space="preserve">
+    <value>测试版和正式版</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 84</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 32</value>
+  </data>
+  <data name="SettingSereinUpdateInfoType.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Name" xml:space="preserve">
+    <value>SettingSereinUpdateInfoType</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinUpdateInfoType.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>469, 92</value>
+  </data>
+  <data name="SettingSereinVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 24</value>
+  </data>
+  <data name="SettingSereinVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="SettingSereinVersion.Text" xml:space="preserve">
+    <value>当前版本：</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Name" xml:space="preserve">
+    <value>SettingSereinVersion</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 45</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 28</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="SettingSereinEnableGetAnnouncement.Text" xml:space="preserve">
+    <value>自动获取公告</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Name" xml:space="preserve">
+    <value>SettingSereinEnableGetAnnouncement</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 859</value>
+  </data>
+  <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 185</value>
+  </data>
+  <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="SettingSerein.Text" xml:space="preserve">
+    <value>Serein</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Name" xml:space="preserve">
+    <value>SettingBotEnbaleOutputData</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Name" xml:space="preserve">
+    <value>SettingBotPermission</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Name" xml:space="preserve">
+    <value>SettingBotGroup</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Name" xml:space="preserve">
+    <value>SettingBotPermissionList</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Name" xml:space="preserve">
+    <value>SettingBotGroupList</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPortLabel.Name" xml:space="preserve">
+    <value>SettingBotPortLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPortLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPortLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPortLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPort.Name" xml:space="preserve">
+    <value>SettingBotPort</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPort.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPort.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Name" xml:space="preserve">
+    <value>SettingBotSupportedLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Name" xml:space="preserve">
+    <value>SettingBotGivePermissionToAllAdmin</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Name" xml:space="preserve">
+    <value>SettingBotEnableLog</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingBot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 415</value>
+  </data>
+  <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 444</value>
+  </data>
+  <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="SettingBot.Text" xml:space="preserve">
+    <value>机器人</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Name" xml:space="preserve">
+    <value>SettingServerAutoStop</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Name" xml:space="preserve">
+    <value>SettingServerStopCommandLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Name" xml:space="preserve">
+    <value>SettingServerStopCommand</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Name" xml:space="preserve">
+    <value>SettingServerOutputStyleLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Name" xml:space="preserve">
+    <value>SettingServerEnableLog</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
+    <value>SettingServerOutputStyle</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Name" xml:space="preserve">
+    <value>SettingServerEnableOutputCommand</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Name" xml:space="preserve">
+    <value>SettingServerEnableRestart</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Name" xml:space="preserve">
+    <value>SettingServerPathLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Name" xml:space="preserve">
+    <value>SettingServerPathSelect</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Name" xml:space="preserve">
+    <value>SettingServerPath</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingServer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SettingServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="SettingServer.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>20, 20, 20, 20</value>
+  </data>
+  <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 415</value>
+  </data>
+  <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="SettingServer.Text" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 836</value>
+  </data>
+  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
@@ -445,24 +1015,6 @@
   </data>
   <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
     <value>5</value>
-  </data>
-  <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="DebugTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="DebugTextBox.MaxLength" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="DebugTextBox.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 830</value>
-  </data>
-  <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;DebugTextBox.Name" xml:space="preserve">
     <value>DebugTextBox</value>
@@ -2516,543 +3068,6 @@
   <data name="&gt;&gt;BotConnect.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
-  </data>
-  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
-    <value>Setting</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Name" xml:space="preserve">
-    <value>SettingSereinHelp</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Name" xml:space="preserve">
-    <value>SettingSereinPage</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Name" xml:space="preserve">
-    <value>SettingSereinAbout</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Name" xml:space="preserve">
-    <value>SettingSereinUpdateInfoTypeLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Name" xml:space="preserve">
-    <value>SettingSereinUpdateInfoType</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Name" xml:space="preserve">
-    <value>SettingSereinVersion</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Name" xml:space="preserve">
-    <value>SettingSereinEnableGetAnnouncement</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 859</value>
-  </data>
-  <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 185</value>
-  </data>
-  <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="SettingSerein.Text" xml:space="preserve">
-    <value>Serein</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="SettingSereinHelp.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinHelp.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
-  <data name="SettingSereinHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 135</value>
-  </data>
-  <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
-  </data>
-  <data name="SettingSereinHelp.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="SettingSereinHelp.Text" xml:space="preserve">
-    <value>帮助</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Name" xml:space="preserve">
-    <value>SettingSereinHelp</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinPage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
-  <data name="SettingSereinPage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 135</value>
-  </data>
-  <data name="SettingSereinPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
-  </data>
-  <data name="SettingSereinPage.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="SettingSereinPage.Text" xml:space="preserve">
-    <value>主页</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Name" xml:space="preserve">
-    <value>SettingSereinPage</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinAbout.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
-  <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 135</value>
-  </data>
-  <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
-  </data>
-  <data name="SettingSereinAbout.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="SettingSereinAbout.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Name" xml:space="preserve">
-    <value>SettingSereinAbout</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="SettingSereinUpdateInfoTypeLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinUpdateInfoTypeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 92</value>
-  </data>
-  <data name="SettingSereinUpdateInfoTypeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 24</value>
-  </data>
-  <data name="SettingSereinUpdateInfoTypeLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="SettingSereinUpdateInfoTypeLabel.Text" xml:space="preserve">
-    <value>获取更新类型</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Name" xml:space="preserve">
-    <value>SettingSereinUpdateInfoTypeLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.Items" xml:space="preserve">
-    <value>禁用</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.Items1" xml:space="preserve">
-    <value>仅正式版</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.Items2" xml:space="preserve">
-    <value>测试版和正式版</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 84</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 32</value>
-  </data>
-  <data name="SettingSereinUpdateInfoType.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Name" xml:space="preserve">
-    <value>SettingSereinUpdateInfoType</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinUpdateInfoType.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingSereinVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>469, 92</value>
-  </data>
-  <data name="SettingSereinVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
-  </data>
-  <data name="SettingSereinVersion.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="SettingSereinVersion.Text" xml:space="preserve">
-    <value>当前版本：</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Name" xml:space="preserve">
-    <value>SettingSereinVersion</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 45</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 28</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="SettingSereinEnableGetAnnouncement.Text" xml:space="preserve">
-    <value>自动获取公告</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Name" xml:space="preserve">
-    <value>SettingSereinEnableGetAnnouncement</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnbaleOutputData.Name" xml:space="preserve">
-    <value>SettingBotEnbaleOutputData</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnbaleOutputData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnbaleOutputData.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermission.Name" xml:space="preserve">
-    <value>SettingBotPermission</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermission.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermission.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroup.Name" xml:space="preserve">
-    <value>SettingBotGroup</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroup.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroup.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermissionList.Name" xml:space="preserve">
-    <value>SettingBotPermissionList</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermissionList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermissionList.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroupList.Name" xml:space="preserve">
-    <value>SettingBotGroupList</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroupList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroupList.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Name" xml:space="preserve">
-    <value>SettingBotPortLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPortLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Name" xml:space="preserve">
-    <value>SettingBotPort</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;SettingBotSupportedLabel.Name" xml:space="preserve">
-    <value>SettingBotSupportedLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingBotSupportedLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotSupportedLabel.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Name" xml:space="preserve">
-    <value>SettingBotGivePermissionToAllAdmin</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnableLog.Name" xml:space="preserve">
-    <value>SettingBotEnableLog</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnableLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnableLog.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="SettingBot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 415</value>
-  </data>
-  <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 444</value>
-  </data>
-  <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="SettingBot.Text" xml:space="preserve">
-    <value>机器人</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="SettingBotEnbaleOutputData.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3063,7 +3078,7 @@
     <value>282, 28</value>
   </data>
   <data name="SettingBotEnbaleOutputData.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>11</value>
   </data>
   <data name="SettingBotEnbaleOutputData.Text" xml:space="preserve">
     <value>输出接收和发送的数据</value>
@@ -3159,7 +3174,7 @@
     <value>1151, 35</value>
   </data>
   <data name="SettingBotPermissionList.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.Name" xml:space="preserve">
     <value>SettingBotPermissionList</value>
@@ -3186,7 +3201,7 @@
     <value>1151, 35</value>
   </data>
   <data name="SettingBotGroupList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>12</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.Name" xml:space="preserve">
     <value>SettingBotGroupList</value>
@@ -3240,7 +3255,7 @@
     <value>120, 35</value>
   </data>
   <data name="SettingBotPort.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>8</value>
   </data>
   <data name="SettingBotPort.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
@@ -3306,7 +3321,7 @@
     <value>378, 28</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>10</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.Text" xml:space="preserve">
     <value>赋予所有群主和管理员管理权限</value>
@@ -3339,7 +3354,7 @@
     <value>510, 28</value>
   </data>
   <data name="SettingBotEnableLog.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="SettingBotEnableLog.Text" xml:space="preserve">
     <value>保存所有消息和数据包到日志（./log/msg）</value>
@@ -3356,171 +3371,6 @@
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;SettingServerAutoStop.Name" xml:space="preserve">
-    <value>SettingServerAutoStop</value>
-  </data>
-  <data name="&gt;&gt;SettingServerAutoStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerAutoStop.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerAutoStop.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommandLabel.Name" xml:space="preserve">
-    <value>SettingServerStopCommandLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommandLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommandLabel.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommandLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommand.Name" xml:space="preserve">
-    <value>SettingServerStopCommand</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommand.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerStopCommand.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyleLabel.Name" xml:space="preserve">
-    <value>SettingServerOutputStyleLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyleLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyleLabel.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyleLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableLog.Name" xml:space="preserve">
-    <value>SettingServerEnableLog</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableLog.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableLog.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
-    <value>SettingServerOutputStyle</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyle.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerOutputStyle.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableOutputCommand.Name" xml:space="preserve">
-    <value>SettingServerEnableOutputCommand</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableOutputCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableOutputCommand.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableOutputCommand.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableRestart.Name" xml:space="preserve">
-    <value>SettingServerEnableRestart</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableRestart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableRestart.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerEnableRestart.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathLabel.Name" xml:space="preserve">
-    <value>SettingServerPathLabel</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathLabel.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathSelect.Name" xml:space="preserve">
-    <value>SettingServerPathSelect</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathSelect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathSelect.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPathSelect.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPath.Name" xml:space="preserve">
-    <value>SettingServerPath</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPath.Parent" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="SettingServer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="SettingServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="SettingServer.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>20, 20, 20, 20</value>
-  </data>
-  <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 415</value>
-  </data>
-  <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="SettingServer.Text" xml:space="preserve">
-    <value>服务器</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="SettingServerAutoStop.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3531,7 +3381,7 @@
     <value>258, 28</value>
   </data>
   <data name="SettingServerAutoStop.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>3</value>
   </data>
   <data name="SettingServerAutoStop.Text" xml:space="preserve">
     <value>程序崩溃时自动关服</value>
@@ -3648,7 +3498,7 @@
     <value>462, 28</value>
   </data>
   <data name="SettingServerEnableLog.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="SettingServerEnableLog.Text" xml:space="preserve">
     <value>保存所有输出到日志（./log/console）</value>
@@ -3681,7 +3531,7 @@
     <value>176, 32</value>
   </data>
   <data name="SettingServerOutputStyle.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
     <value>SettingServerOutputStyle</value>
@@ -3711,7 +3561,7 @@
     <value>306, 28</value>
   </data>
   <data name="SettingServerEnableOutputCommand.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="SettingServerEnableOutputCommand.Text" xml:space="preserve">
     <value>输出执行的命令到控制台</value>
@@ -3744,7 +3594,7 @@
     <value>330, 28</value>
   </data>
   <data name="SettingServerEnableRestart.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="SettingServerEnableRestart.Text" xml:space="preserve">
     <value>服务器非正常退出自动重启</value>
@@ -3847,6 +3697,36 @@
   </data>
   <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="DebugTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="DebugTextBox.MaxLength" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="DebugTextBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 830</value>
+  </data>
+  <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Name" xml:space="preserve">
+    <value>DebugTextBox</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Parent" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

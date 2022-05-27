@@ -26,7 +26,7 @@ namespace Serein
             {
                 if (Serein.Command.GetType(Command.Text) == -1)
                 {
-                    MessageBox.Show("命令内容无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try
@@ -39,7 +39,7 @@ namespace Serein
                 }
                 catch
                 {
-                    CronNextTime.Text = "下一次执行时间:" + "Error";
+                    CronNextTime.Text = "Cron表达式无效";
                     MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -55,11 +55,11 @@ namespace Serein
             try
             {
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-                CronNextTime.Text = Occurrences[0].ToString();
+                CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
             }
             catch
             {
-                CronNextTime.Text = "Error";
+                CronNextTime.Text = "Cron表达式无效";
             }
         }
         public void Update(string CronText, string RemarkText, string CommandText)

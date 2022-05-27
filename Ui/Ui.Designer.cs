@@ -430,6 +430,7 @@ namespace Serein
             this.PanelConsoleWebBrowser.Name = "PanelConsoleWebBrowser";
             this.PanelConsoleWebBrowser.ScriptErrorsSuppressed = true;
             this.PanelConsoleWebBrowser.ScrollBarsEnabled = false;
+            this.PanelConsoleWebBrowser.TabStop = false;
             // 
             // PanelConsolePanel1
             // 
@@ -695,6 +696,7 @@ namespace Serein
             this.BotWebBrowser.Name = "BotWebBrowser";
             this.BotTableLayoutPanel.SetRowSpan(this.BotWebBrowser, 2);
             this.BotWebBrowser.ScrollBarsEnabled = false;
+            this.BotWebBrowser.TabStop = false;
             // 
             // BotInfo
             // 
@@ -818,6 +820,7 @@ namespace Serein
             this.SettingSereinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingSereinHelp.Name = "SettingSereinHelp";
             this.SettingSereinHelp.Click += new System.EventHandler(this.SettingSereinHelp_Click);
+            this.SettingSereinHelp.MouseHover += new System.EventHandler(this.SettingSereinHelp_MouseHover);
             // 
             // SettingSereinPage
             // 
@@ -825,6 +828,7 @@ namespace Serein
             this.SettingSereinPage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingSereinPage.Name = "SettingSereinPage";
             this.SettingSereinPage.Click += new System.EventHandler(this.SettingSereinPage_Click);
+            this.SettingSereinPage.MouseHover += new System.EventHandler(this.SettingSereinPage_MouseHover);
             // 
             // SettingSereinAbout
             // 
