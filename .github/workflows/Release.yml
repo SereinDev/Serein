@@ -1,0 +1,16 @@
+﻿name: Release Drafter
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  draft_release:
+    name: Draft release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter
+        name: Draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
