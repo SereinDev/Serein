@@ -2,9 +2,9 @@ name: Code Scanning
 
 on:
   push:
-    branches: [main]
+    paths:
+      - '**.cs'
   pull_request:
-    branches: [main]
 
 jobs:
   CodeQL-Build:
