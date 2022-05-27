@@ -256,7 +256,7 @@ namespace Serein
         }
         public static void RestartRequest()
         {
-            Restart = Status ;
+            Restart = Status;
             Stop();
         }
         private static void RestartTimer()

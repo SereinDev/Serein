@@ -64,10 +64,10 @@ namespace Serein
                             Global.Ui.ShowBalloonTip("发现新版本（测试版）:\n" + PreVersion);
                             OldPreVersion = PreVersion;
                         }
-                        else if(OldPreVersion != PreVersion)
+                        else if (OldPreVersion != PreVersion)
                         {
                             Global.Ui.ShowBalloonTip(
-                                "获取更新成功\n"+
+                                "获取更新成功\n" +
                                 "当前已是最新版:)");
                             OldPreVersion = PreVersion;
                         }
