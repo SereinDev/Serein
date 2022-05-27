@@ -84,7 +84,7 @@ namespace Serein
             {
                 foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
                 {
-                    if (string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))
+                    if (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
                     {
                         InputCommand(Command);
                     }

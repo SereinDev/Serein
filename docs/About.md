@@ -1,8 +1,7 @@
 ## 关于
-### 参考&鸣谢
-[Naive](https://www.minebbs.com/threads/bds-naive.4860/)  
-[MCSManager](https://mcsmanager.com)  
-[ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters)
+### 许可证
+[GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)
+
 
 ### Bug反馈
 - 提交Issue，记得附上崩溃截图和复现步骤
