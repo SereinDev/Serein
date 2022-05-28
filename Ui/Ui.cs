@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Serein
@@ -13,6 +14,7 @@ namespace Serein
             UpdateVersion();
         }
 
+        
     }
 }
 

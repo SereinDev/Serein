@@ -1084,11 +1084,14 @@ namespace Serein
             // 
             // Ui
             // 
+            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.MainTableLayout);
             this.Name = "Ui";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Serein_FormClosing);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Ui_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Ui_DragEnter);
             this.PluginContextMenuStrip.ResumeLayout(false);
             this.MainTableLayout.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);

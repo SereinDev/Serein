@@ -42,21 +42,41 @@ namespace Serein
             };
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string AddedFile in Dialog.FileNames)
+                foreach (string FileName in Dialog.FileNames)
                 {
                     try
                     {
-                        File.Copy(AddedFile, PluginPath + "\\" + Path.GetFileName(AddedFile));
+                        File.Copy(FileName, PluginPath + "\\" + Path.GetFileName(FileName));
                     }
                     catch (Exception Exp)
                     {
                         MessageBox.Show(
-                            $"文件\"{AddedFile}\"复制失败\n" +
+                            $"文件\"{FileName}\"复制失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning
                             );
                     }
+                }
+            }
+        }
+        public static void Add(Array Files)
+        {
+            foreach (object FileObject in Files)
+            {
+                string FileName = FileObject.ToString();
+                try
+                {
+                    File.Copy(FileName, PluginPath + "\\" + Path.GetFileName(FileName));
+                }
+                catch (Exception Exp)
+                {
+                    MessageBox.Show(
+                        $"文件\"{FileName}\"复制失败\n" +
+                        $"详细原因：\n" +
+                        $"{Exp.Message}", "Serein",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning
+                        );
                 }
             }
         }

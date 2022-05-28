@@ -190,6 +190,31 @@ namespace Serein
                 Global.RegexItems = regexItems;
             }
         }
+        public void LoadRegex(string FileName)
+        {
+            RegexList.Items.Clear();
+            if (File.Exists(FileName))
+            {
+                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                string Line;
+                List<RegexItem> regexItems = new List<RegexItem>();
+                while ((Line = Reader.ReadLine()) != null)
+                {
+                    RegexItem Item = new RegexItem();
+                    Item.ConvertToItem(Line);
+                    if (!Item.CheckItem())
+                    {
+                        continue;
+                    }
+                    AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
+                    regexItems.Add(Item);
+                }
+                TsvFile.Close();
+                Reader.Close();
+                Global.RegexItems = regexItems;
+            }
+        }
         public void SaveRegex()
         {
             List<RegexItem> regexItems = new List<RegexItem>();

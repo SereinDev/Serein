@@ -216,5 +216,44 @@ namespace Serein
             }
             TaskList.EndUpdate();
         }
+        public void LoadTask(string FileName)
+        {
+            TaskList.BeginUpdate();
+            TaskList.Items.Clear();
+            if (File.Exists(FileName))
+            {
+                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                string Line;
+                List<TaskItem> TaskItems = new List<TaskItem>();
+                while ((Line = Reader.ReadLine()) != null)
+                {
+                    TaskItem Item = new TaskItem();
+                    Item.ConvertToItem(Line);
+                    if (!Item.CheckItem())
+                    {
+                        continue;
+                    }
+                    TaskItems.Add(Item);
+                }
+                TsvFile.Close();
+                Reader.Close();
+                Global.TaskItems = TaskItems;
+            }
+            foreach (TaskItem Item in Global.TaskItems)
+            {
+                ListViewItem listViewItem = new ListViewItem(Item.Cron);
+                listViewItem.SubItems.Add(Item.Remark);
+                listViewItem.SubItems.Add(Item.Command);
+                if (!Item.Enable)
+                {
+                    listViewItem.ForeColor = Color.Gray;
+                    listViewItem.SubItems[1].ForeColor = Color.Gray;
+                    listViewItem.SubItems[2].ForeColor = Color.Gray;
+                }
+                TaskList.Items.Add(listViewItem);
+            }
+            TaskList.EndUpdate();
+        }
     }
 }
