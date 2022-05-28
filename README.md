@@ -14,6 +14,8 @@
 - 一个基于.Net Framework的我的世界服务器面板  
 - 介绍页：https://zaitonn.github.io/Serein/
 - 最新版下载：[Release](https://github.com/Zaitonn/Serein/releases/latest)
+- [Minebbs](https://www.minebbs.com/resources/serein.4169/)
+- [帮助页面](Help.md)
   
 
 ## 运行环境 Environment
@@ -30,4 +32,4 @@ Win7或WinServer2016以上
 记得安装运行库
 
 ## 关于
-> [About](About.md)
+> [About](https://zaitonn.github.io/Serein/About.html)

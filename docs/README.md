@@ -7,6 +7,7 @@
 - 一个基于.Net Framework的我的世界服务器面板  
 - 仓库：[Github](https://github.com/Zaitonn/Serein)
 - 最新版下载：[Release](https://github.com/Zaitonn/Serein/releases/latest)
+- [Minebbs](https://www.minebbs.com/resources/serein.4169/)
 - [帮助页面](Help.md)
 
 
@@ -43,6 +44,10 @@ Win7或WinServer2016以上
 > 此功能需在设置中开启
 
 - 自动将控制台中的输出输出到日志文件，不用担心后台刷屏找不到想要的信息了
+
+#### 后台运行
+![后台运行提示](imgs/protect.png)
+- 当服务器运行时关闭Serein将最小化至托盘，再也不用怕点错跑路
 
 ### 插件管理
 ![插件管理](imgs/plugin.png)
