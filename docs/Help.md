@@ -1,9 +1,11 @@
 ## 常见问题  
 
+> 目前仅收集了部分常见问题，其他问题可加群咨询
 
 - 入门问题
-  - [如何开服](https://www.minebbs.com/threads/bds.9518/)
-  - [服务器崩溃](https://www.minebbs.com/resources/bds.3403/)
+  - [BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)
+  - [崩服 / 假死 / 卡顿情况排查与记录方法](https://www.minebbs.com/resources/bds.3403/)
+  - [BDS服务端 与 LiteLoaderBDS 新手教程 & 常见问答](https://www.minebbs.com/threads/bds-liteloaderbds.10265/)
 - Serein使用问题
   - [Serein崩溃](help/crash.md)
   - 机器人

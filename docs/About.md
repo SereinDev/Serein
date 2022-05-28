@@ -7,6 +7,11 @@
 - 提交Issue，记得附上崩溃截图和复现步骤
 - 进群反馈：[954829203](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)
 
+### Minebbs
+[Zaiton_](https://www.minebbs.com/members/zaiton_.21326/)
+
+### BiliBili
+[Zaiton_](https://space.bilibili.com/406125728)
+
 ### 捐赠
 [爱发电 @Zaiton](https://afdian.net/@Zaiton)
-
