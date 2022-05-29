@@ -53,16 +53,40 @@ namespace Serein
                 Server.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Clear();
             }
-        }
-
-        private void PanelTableLayout_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (!PanelConsoleInput.Focused)
+            else if(e.KeyCode == Keys.Up|| e.KeyCode == Keys.PageUp)
             {
-                PanelConsoleInput.Focus();
+                if (Server.CommandListIndex > 0)
+                {
+                    Server.CommandListIndex--;
+                }
+                if (Server.CommandListIndex >= 0 && Server.CommandListIndex < Server.CommandList.Count)
+                {
+                    PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
+                }
+            }
+            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
+            {
+                if (Server.CommandListIndex < Server.CommandList.Count)
+                {
+                    Server.CommandListIndex++;
+                }
+                if (Server.CommandListIndex >= 0 && Server.CommandListIndex < Server.CommandList.Count)
+                {
+                    PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
+                }
+                else if(Server.CommandListIndex == Server.CommandList.Count && Server.CommandList.Count!=0)
+                {
+                    PanelConsoleInput_Update();
+                }
             }
         }
-
+        private void PanelConsoleInput_Update(string Text="")
+        {
+            PanelConsoleInput.Text = Text;
+            PanelConsoleInput.Focus();
+            PanelConsoleInput.Select(PanelConsoleInput.TextLength, 0);
+            PanelConsoleInput.ScrollToCaret();
+        }
         private void PanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))

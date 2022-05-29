@@ -99,5 +99,54 @@ namespace Serein
                 RemarkTextBox.Text = RemarkTextBox.Text.Replace("\t", "");
             }
         }
+
+        private void RegexTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CommandTextBox.Focus();
+            }
+        }
+
+        private void CommandTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                RemarkTextBox.Focus();
+            }
+        }
+        private void RemarkTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Confirm.Focus();
+                Confirm_Click(this, EventArgs.Empty);
+            }
+        }
+
+        private void RegexTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void CommandTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
+
+       
+        private void RemarkTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

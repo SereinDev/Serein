@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,6 +15,8 @@ namespace Serein
         public static string StartFileName = "", Version, LevelName, Difficulty;
         public static bool Status = false;
         public static bool Restart = false;
+        public static List<string> CommandList=new List<string> { };
+        public static int CommandListIndex = 0;
         static bool Finished = false;
         static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
@@ -70,6 +73,7 @@ namespace Serein
                 Version = "-";
                 LevelName = "-";
                 Difficulty = "-";
+                CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 CurTime = TimeSpan.Zero;
@@ -143,11 +147,21 @@ namespace Serein
             if (Status)
             {
                 Command = Command.Trim();
+                while (CommandList.Count>=50)
+                {
+                    CommandList.RemoveAt(0);
+                }
+                if(StartedByCommand||(!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
+                {
+                    CommandListIndex = CommandList.Count + 1;
+                    CommandList.Add(Command);
+                }
                 if (Global.Settings_Server.EnableOutputCommand)
                 {
-                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Command}");
+                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
                 }
                 CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
+                
                 if (Global.Settings_Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -256,8 +270,11 @@ namespace Serein
         }
         public static void RestartRequest()
         {
-            Restart = Status;
-            Stop();
+            if (!Restart)
+            {
+                Restart = Status;
+                Stop();
+            }
         }
         private static void RestartTimer()
         {

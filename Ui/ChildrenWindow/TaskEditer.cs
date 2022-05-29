@@ -68,5 +68,51 @@ namespace Serein
             Command.Text = CommandText;
             Remark.Text = RemarkText;
         }
+
+        private void Cron_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Command.Focus();
+            }
+        }
+
+        private void Remark_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Confirm.Focus();
+                Confirm_Click(this, EventArgs.Empty);
+            }
+        }
+
+        private void Command_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Remark.Focus();
+            }
+        }
+        private void Cron_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
+        private void Command_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
+        private void Remark_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

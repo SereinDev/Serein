@@ -45,9 +45,11 @@ namespace Serein
             // 
             this.Cron.Location = new System.Drawing.Point(170, 43);
             this.Cron.Name = "Cron";
-            this.Cron.Size = new System.Drawing.Size(570, 35);
+            this.Cron.Size = new System.Drawing.Size(551, 35);
             this.Cron.TabIndex = 0;
             this.Cron.TextChanged += new System.EventHandler(this.Cron_TextChanged);
+            this.Cron.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Cron_KeyDown);
+            this.Cron.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Cron_KeyPress);
             // 
             // CronLabel
             // 
@@ -61,7 +63,7 @@ namespace Serein
             // CommandLabel
             // 
             this.CommandLabel.AutoSize = true;
-            this.CommandLabel.Location = new System.Drawing.Point(58, 122);
+            this.CommandLabel.Location = new System.Drawing.Point(58, 112);
             this.CommandLabel.Name = "CommandLabel";
             this.CommandLabel.Size = new System.Drawing.Size(106, 24);
             this.CommandLabel.TabIndex = 3;
@@ -69,15 +71,17 @@ namespace Serein
             // 
             // Command
             // 
-            this.Command.Location = new System.Drawing.Point(170, 119);
+            this.Command.Location = new System.Drawing.Point(170, 109);
             this.Command.Name = "Command";
-            this.Command.Size = new System.Drawing.Size(570, 35);
+            this.Command.Size = new System.Drawing.Size(551, 35);
             this.Command.TabIndex = 2;
+            this.Command.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Command_KeyDown);
+            this.Command.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Command_KeyPress);
             // 
             // RemarkLabel
             // 
             this.RemarkLabel.AutoSize = true;
-            this.RemarkLabel.Location = new System.Drawing.Point(106, 198);
+            this.RemarkLabel.Location = new System.Drawing.Point(106, 178);
             this.RemarkLabel.Name = "RemarkLabel";
             this.RemarkLabel.Size = new System.Drawing.Size(58, 24);
             this.RemarkLabel.TabIndex = 5;
@@ -85,16 +89,19 @@ namespace Serein
             // 
             // Remark
             // 
-            this.Remark.Location = new System.Drawing.Point(170, 195);
+            this.Remark.Location = new System.Drawing.Point(170, 175);
             this.Remark.Name = "Remark";
-            this.Remark.Size = new System.Drawing.Size(570, 35);
+            this.Remark.Size = new System.Drawing.Size(551, 35);
             this.Remark.TabIndex = 4;
+            this.Remark.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Remark_KeyDown);
+            this.Remark.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Remark_KeyPress);
             // 
             // Confirm
             // 
-            this.Confirm.Location = new System.Drawing.Point(170, 349);
+            this.Confirm.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Confirm.Location = new System.Drawing.Point(170, 301);
             this.Confirm.Name = "Confirm";
-            this.Confirm.Size = new System.Drawing.Size(125, 55);
+            this.Confirm.Size = new System.Drawing.Size(152, 55);
             this.Confirm.TabIndex = 6;
             this.Confirm.Text = "确定";
             this.Confirm.UseVisualStyleBackColor = true;
@@ -102,9 +109,10 @@ namespace Serein
             // 
             // Cancel
             // 
-            this.Cancel.Location = new System.Drawing.Point(459, 349);
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel.Location = new System.Drawing.Point(455, 301);
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(125, 55);
+            this.Cancel.Size = new System.Drawing.Size(152, 55);
             this.Cancel.TabIndex = 7;
             this.Cancel.Text = "取消";
             this.Cancel.UseVisualStyleBackColor = true;
@@ -113,10 +121,10 @@ namespace Serein
             // CronNextTime
             // 
             this.CronNextTime.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CronNextTime.Location = new System.Drawing.Point(38, 273);
+            this.CronNextTime.Location = new System.Drawing.Point(38, 241);
             this.CronNextTime.Name = "CronNextTime";
             this.CronNextTime.ReadOnly = true;
-            this.CronNextTime.Size = new System.Drawing.Size(702, 35);
+            this.CronNextTime.Size = new System.Drawing.Size(683, 35);
             this.CronNextTime.TabIndex = 8;
             // 
             // TaskEditer
@@ -124,7 +132,8 @@ namespace Serein
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.CancelButton = this.Cancel;
+            this.ClientSize = new System.Drawing.Size(774, 379);
             this.Controls.Add(this.CronNextTime);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Confirm);

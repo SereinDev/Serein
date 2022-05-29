@@ -72,18 +72,24 @@ namespace Serein
             resources.ApplyResources(this.RegexTextBox, "RegexTextBox");
             this.RegexTextBox.Name = "RegexTextBox";
             this.RegexTextBox.TextChanged += new System.EventHandler(this.Regex_TextChanged);
+            this.RegexTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RegexTextBox_KeyDown);
+            this.RegexTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RegexTextBox_KeyPress);
             // 
             // CommandTextBox
             // 
             resources.ApplyResources(this.CommandTextBox, "CommandTextBox");
             this.CommandTextBox.Name = "CommandTextBox";
             this.CommandTextBox.TextChanged += new System.EventHandler(this.Command_TextChanged);
+            this.CommandTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandTextBox_KeyDown);
+            this.CommandTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CommandTextBox_KeyPress);
             // 
             // RemarkTextBox
             // 
             resources.ApplyResources(this.RemarkTextBox, "RemarkTextBox");
             this.RemarkTextBox.Name = "RemarkTextBox";
             this.RemarkTextBox.TextChanged += new System.EventHandler(this.Remark_TextChanged);
+            this.RemarkTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RemarkTextBox_KeyDown);
+            this.RemarkTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RemarkTextBox_KeyPress);
             // 
             // RegexLabel
             // 
@@ -109,6 +115,7 @@ namespace Serein
             // 
             // Cancel
             // 
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.Cancel, "Cancel");
             this.Cancel.Name = "Cancel";
             this.Cancel.UseVisualStyleBackColor = true;
@@ -118,6 +125,7 @@ namespace Serein
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.Cancel;
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Confirm);
             this.Controls.Add(this.label1);

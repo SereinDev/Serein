@@ -289,7 +289,6 @@ namespace Serein
             this.PanelTableLayout.Controls.Add(this.PanelControls, 0, 1);
             this.PanelTableLayout.Controls.Add(this.PanelConsole, 1, 0);
             this.PanelTableLayout.Name = "PanelTableLayout";
-            this.PanelTableLayout.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PanelTableLayout_PreviewKeyDown);
             // 
             // PanelInfo
             // 
@@ -1059,6 +1058,7 @@ namespace Serein
             // SettingServerPathSelect
             // 
             resources.ApplyResources(this.SettingServerPathSelect, "SettingServerPathSelect");
+            this.SettingServerPathSelect.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.SettingServerPathSelect.Name = "SettingServerPathSelect";
             this.SettingServerPathSelect.UseVisualStyleBackColor = true;
             this.SettingServerPathSelect.Click += new System.EventHandler(this.SettingServerPathSelect_Click);
