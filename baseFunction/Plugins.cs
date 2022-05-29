@@ -20,14 +20,21 @@ namespace Serein
                 {
                     PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugins";
                 }
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mod"))
+                {
+                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mod";
+                }
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mods"))
+                {
+                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mods";
+                }
                 else
                 {
-                    PluginPath = "";
+                    PluginPath = Global.Path;
                 }
                 if (PluginPath != "")
                 {
                     string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
-
                     return Files;
                 }
             }
@@ -129,12 +136,12 @@ namespace Serein
                         {
                             if (Item.ForeColor == Color.Gray)
                             {
-                                File.Delete(PluginPath + "\\" + Item + ".lock");
+                                File.Delete(PluginPath + "\\" + Item.Text + ".lock");
 
                             }
                             else
                             {
-                                File.Delete(PluginPath + "\\" + Item);
+                                File.Delete(PluginPath + "\\" + Item.Text);
                             }
                         }
                         catch (Exception Exp)

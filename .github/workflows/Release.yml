@@ -1,16 +1,16 @@
+name: Release Drafter
+
 on:
   push:
     branches:
-      - main
-
-name: release-please
+      - master
 
 jobs:
-  release-please:
+  draft_release:
+    name: Draft release
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v3
-        with:
-          release-type: elixir
-          package-name: release-please-action
-          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+      - uses: release-drafter/release-drafter@v5
+        name: Draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
