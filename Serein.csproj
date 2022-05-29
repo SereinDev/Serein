@@ -93,16 +93,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="setting\Settings.cs" />
     <Compile Include="Ui\BaseFunction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ResourcesManager.cs" />
-    <Compile Include="GetInfo.cs" />
-    <Compile Include="SettingsItem\Settings_Bot.cs" />
-    <Compile Include="SettingsItem\Settings_Matches.cs" />
-    <Compile Include="SettingsItem\Settings_Serein.cs" />
-    <Compile Include="SettingsItem\Settings_Server.cs" />
-    <Compile Include="TaskManager.cs" />
+    <Compile Include="baseFunction\ResourcesManager.cs" />
+    <Compile Include="Ui\GetInfo.cs" />
+    <Compile Include="setting\Settings_Bot.cs" />
+    <Compile Include="setting\Settings_Matches.cs" />
+    <Compile Include="setting\Settings_Serein.cs" />
+    <Compile Include="setting\Settings_Server.cs" />
+    <Compile Include="baseFunction\TaskManager.cs" />
     <Compile Include="Ui\ChildrenWindow\TaskEditer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,15 +113,15 @@
     <Compile Include="Ui\Ui_Task.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TaskItem.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="baseFunction\TaskItem.cs" />
+    <Compile Include="baseFunction\Command.cs" />
     <Compile Include="Ui\Ui_Bot.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Ui\InitializeUi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Message.cs" />
+    <Compile Include="baseFunction\Message.cs" />
     <Compile Include="Ui\Ui_Panel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,7 +134,7 @@
     <Compile Include="Ui\ChildrenWindow\RegexEditer.Designer.cs">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegexItem.cs" />
+    <Compile Include="baseFunction\RegexItem.cs" />
     <Compile Include="Ui\Ui_Regex.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,11 +148,11 @@
     <Compile Include="Ui\Ui_Update.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Websocket.cs" />
+    <Compile Include="baseFunction\Websocket.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Plugins.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="baseFunction\Log.cs" />
+    <Compile Include="baseFunction\Plugins.cs" />
+    <Compile Include="baseFunction\Server.cs" />
     <Compile Include="Ui\Ui.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,7 +161,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Ui\ChildrenWindow\RegexEditer.resx">
       <DependentUpon>RegexEditer.cs</DependentUpon>
     </EmbeddedResource>
