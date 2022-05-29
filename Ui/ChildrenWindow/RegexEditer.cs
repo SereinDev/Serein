@@ -140,7 +140,7 @@ namespace Serein
             }
         }
 
-       
+
         private void RemarkTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))

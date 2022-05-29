@@ -53,7 +53,7 @@ namespace Serein
                 Server.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Clear();
             }
-            else if(e.KeyCode == Keys.Up|| e.KeyCode == Keys.PageUp)
+            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.PageUp)
             {
                 if (Server.CommandListIndex > 0)
                 {
@@ -74,13 +74,13 @@ namespace Serein
                 {
                     PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
                 }
-                else if(Server.CommandListIndex == Server.CommandList.Count && Server.CommandList.Count!=0)
+                else if (Server.CommandListIndex == Server.CommandList.Count && Server.CommandList.Count != 0)
                 {
                     PanelConsoleInput_Update();
                 }
             }
         }
-        private void PanelConsoleInput_Update(string Text="")
+        private void PanelConsoleInput_Update(string Text = "")
         {
             PanelConsoleInput.Text = Text;
             PanelConsoleInput.Focus();

@@ -15,7 +15,7 @@ namespace Serein
         public static string StartFileName = "", Version, LevelName, Difficulty;
         public static bool Status = false;
         public static bool Restart = false;
-        public static List<string> CommandList=new List<string> { };
+        public static List<string> CommandList = new List<string> { };
         public static int CommandListIndex = 0;
         static bool Finished = false;
         static ProcessStartInfo ServerProcessInfo;
@@ -147,11 +147,11 @@ namespace Serein
             if (Status)
             {
                 Command = Command.Trim();
-                while (CommandList.Count>=50)
+                while (CommandList.Count >= 50)
                 {
                     CommandList.RemoveAt(0);
                 }
-                if(StartedByCommand||(!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
+                if (StartedByCommand || (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
@@ -161,7 +161,7 @@ namespace Serein
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
                 }
                 CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
-                
+
                 if (Global.Settings_Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
