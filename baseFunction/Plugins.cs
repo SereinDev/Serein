@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -67,11 +68,10 @@ namespace Serein
                 }
             }
         }
-        public static void Add(Array Files)
+        public static void Add(List<string> Files)
         {
-            foreach (object FileObject in Files)
+            foreach (string FileName in Files)
             {
-                string FileName = FileObject.ToString();
                 try
                 {
                     File.Copy(FileName, PluginPath + "\\" + Path.GetFileName(FileName));

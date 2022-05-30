@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Serein
@@ -58,23 +59,20 @@ namespace Serein
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
             int Count = 0;
+            string FileName;
             foreach (object File in (Array)e.Data.GetData(DataFormats.FileDrop))
             {
                 Count++;
             }
-            if (Count <= 0)
-            {
-                return;
-            }
-            else if (Count == 1)
+            if (Count == 1)
             {
                 FocusWindow();
-                string FileName = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                FileName = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
                 if (FileName.ToUpper().EndsWith(".EXE") || FileName.ToUpper().EndsWith(".BAT"))
                 {
                     if ((int)MessageBox.Show(
                         this,
-                        "是否以此文件为启动文件？",
+                        $"是否以\"{FileName}\"为启动文件？",
                         "Serein",
                         MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Warning
@@ -86,7 +84,7 @@ namespace Serein
                     LoadPlugins();
                     return;
                 }
-                else if (FileName.ToUpper().EndsWith("REGEX.TSV"))
+                else if (Path.GetFileName(FileName) =="regex.tsv")
                 {
                     if ((int)MessageBox.Show(
                         this,
@@ -101,7 +99,7 @@ namespace Serein
                     }
                     return;
                 }
-                else if (FileName.ToUpper().EndsWith("TASK.TSV"))
+                else if (Path.GetFileName(FileName)=="task.tsv")
                 {
                     if ((int)MessageBox.Show(
                         this,
@@ -117,17 +115,41 @@ namespace Serein
                     return;
                 }
             }
-            string FirstFileName = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
-            if ((int)MessageBox.Show(this,
-                $"是否将{Path.GetFileName(FirstFileName)}等文件复制到插件文件夹内？",
-                "Serein",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Warning
-                    ) == 1)
+            if (Count >0)
             {
-                Plugins.Add((Array)e.Data.GetData(DataFormats.FileDrop));
-                LoadPlugins();
+                List<string> AcceptableList = new List<string> { ".py", ".dll", ".js", ".go", ".jar" };
+                List<string> FileList = new List<string> { };
+                string FileListText = "";
+                foreach (object File in (Array)e.Data.GetData(DataFormats.FileDrop))
+                {
+                    if (AcceptableList.Contains(Path.GetExtension(File.ToString())))
+                    {
+                        FileList.Add(File.ToString());
+                        FileListText = FileListText + Path.GetFileName(File.ToString()) + "\n";
+                    }
+                }
+                if (FileList.Count>0&&
+                    (int)MessageBox.Show(this,
+                    $"是否将以下文件复制到插件文件夹内？\n{FileListText}",
+                    "Serein",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning
+                        ) == 1)
+                {
+                    Plugins.Add(FileList);
+                    LoadPlugins();
+                }
+                else if(FileList.Count == 0&& Count > 0)
+                {
+                    MessageBox.Show(this,
+                        ":(\n无法识别所选文件",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning
+                        );
+                }
             }
+            
 
         }
         private void Ui_DragEnter(object sender, DragEventArgs e)
