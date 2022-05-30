@@ -84,7 +84,7 @@ namespace Serein
                     LoadPlugins();
                     return;
                 }
-                else if (Path.GetFileName(FileName) =="regex.tsv")
+                else if (Path.GetFileName(FileName) == "regex.tsv")
                 {
                     if ((int)MessageBox.Show(
                         this,
@@ -99,7 +99,7 @@ namespace Serein
                     }
                     return;
                 }
-                else if (Path.GetFileName(FileName)=="task.tsv")
+                else if (Path.GetFileName(FileName) == "task.tsv")
                 {
                     if ((int)MessageBox.Show(
                         this,
@@ -115,7 +115,7 @@ namespace Serein
                     return;
                 }
             }
-            if (Count >0)
+            if (Count > 0)
             {
                 List<string> AcceptableList = new List<string> { ".py", ".dll", ".js", ".go", ".jar" };
                 List<string> FileList = new List<string> { };
@@ -128,7 +128,7 @@ namespace Serein
                         FileListText = FileListText + Path.GetFileName(File.ToString()) + "\n";
                     }
                 }
-                if (FileList.Count>0&&
+                if (FileList.Count > 0 &&
                     (int)MessageBox.Show(this,
                     $"是否将以下文件复制到插件文件夹内？\n{FileListText}",
                     "Serein",
@@ -139,7 +139,7 @@ namespace Serein
                     Plugins.Add(FileList);
                     LoadPlugins();
                 }
-                else if(FileList.Count == 0&& Count > 0)
+                else if (FileList.Count == 0 && Count > 0)
                 {
                     MessageBox.Show(this,
                         ":(\n无法识别所选文件",
@@ -149,7 +149,7 @@ namespace Serein
                         );
                 }
             }
-            
+
 
         }
         private void Ui_DragEnter(object sender, DragEventArgs e)
