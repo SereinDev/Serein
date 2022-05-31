@@ -27,7 +27,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "action@github.com"
           git add -u
-          git commit -m "Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
+          git commit -m "format: Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
           git log -1
           remote_repo="https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
           git push "${remote_repo}" HEAD:${GITHUB_REF}

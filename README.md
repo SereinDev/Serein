@@ -13,9 +13,10 @@
 ---  
 - 一个基于.Net Framework的我的世界服务器面板  
 - 介绍页：https://zaitonn.github.io/Serein/
-- 最新版下载：[Release](https://github.com/Zaitonn/Serein/releases/latest)
-- [Minebbs](https://www.minebbs.com/resources/serein.4169/)
-- [帮助页面](Help.md)
+
+[下载最新版](https://github.com/Zaitonn/Serein/releases/latest) | [Github仓库](https://github.com/Zaitonn/Serein) | [Minebbs](https://www.minebbs.com/resources/serein.4169/) | **[教程](docs/Tutorial.md)** | **[帮助页面](docs/Help.md)**
+
+
   
 
 ## 运行环境 Environment
