@@ -1838,6 +1838,39 @@
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="SettingSereinTutorial.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinTutorial.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Underline</value>
+  </data>
+  <data name="SettingSereinTutorial.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinTutorial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>223, 151</value>
+  </data>
+  <data name="SettingSereinTutorial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 24</value>
+  </data>
+  <data name="SettingSereinTutorial.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="SettingSereinTutorial.Text" xml:space="preserve">
+    <value>教程</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Name" xml:space="preserve">
+    <value>SettingSereinTutorial</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="SettingSereinHelp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1848,7 +1881,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 135</value>
+    <value>119, 151</value>
   </data>
   <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -1869,7 +1902,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1881,7 +1914,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 135</value>
+    <value>23, 151</value>
   </data>
   <data name="SettingSereinPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -1902,7 +1935,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1911,7 +1944,7 @@
     <value>宋体, 9pt, style=Underline</value>
   </data>
   <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>223, 135</value>
+    <value>333, 151</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -1932,7 +1965,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="SettingSereinUpdateInfoTypeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1959,7 +1992,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinUpdateInfoTypeLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="SettingSereinUpdateInfoType.Items" xml:space="preserve">
     <value>禁用</value>
@@ -1989,7 +2022,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinUpdateInfoType.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2019,7 +2052,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2052,7 +2085,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2061,7 +2094,7 @@
     <value>0, 859</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 185</value>
+    <value>1198, 203</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>

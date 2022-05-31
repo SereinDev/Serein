@@ -176,6 +176,11 @@ namespace Serein
         {
             Process.Start("https://zaitonn.github.io/Serein/Help");
         }
+
+        private void SettingSereinTutorial_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Tutorial");
+        }
     }
 
 }

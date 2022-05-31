@@ -122,6 +122,7 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinTutorial = new System.Windows.Forms.Label();
             this.SettingSereinHelp = new System.Windows.Forms.Label();
             this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
@@ -802,6 +803,7 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinTutorial);
             this.SettingSerein.Controls.Add(this.SettingSereinHelp);
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
@@ -812,6 +814,14 @@ namespace Serein
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
+            // 
+            // SettingSereinTutorial
+            // 
+            resources.ApplyResources(this.SettingSereinTutorial, "SettingSereinTutorial");
+            this.SettingSereinTutorial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinTutorial.Name = "SettingSereinTutorial";
+            this.SettingSereinTutorial.Click += new System.EventHandler(this.SettingSereinTutorial_Click);
+            this.SettingSereinTutorial.MouseHover += new System.EventHandler(this.SettingSereinTutorial_MouseHover);
             // 
             // SettingSereinHelp
             // 
@@ -1254,6 +1264,7 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingBotEnbaleOutputData;
         private System.Windows.Forms.TabPage Debug;
         private System.Windows.Forms.TextBox DebugTextBox;
+        private System.Windows.Forms.Label SettingSereinTutorial;
     }
 }
 

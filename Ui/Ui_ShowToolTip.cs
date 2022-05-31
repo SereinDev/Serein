@@ -125,5 +125,10 @@ namespace Serein
         {
             ShowToolTip(sender, "打开帮助页面（https://zaitonn.github.io/Serein/Help）");
         }
+        private void SettingSereinTutorial_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "打开教程页面（https://zaitonn.github.io/Serein/Tutorial）");
+
+        }
     }
 }
