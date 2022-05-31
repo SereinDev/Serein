@@ -25,6 +25,19 @@ namespace Serein
         }
         private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
+            if (!Plugins.Available)
+            {
+                PluginContextMenuStripAdd.Enabled = false;
+                PluginContextMenuStripShow.Enabled = false;
+                PluginContextMenuStripEnable.Enabled = false;
+                PluginContextMenuStripDisable.Enabled = false;
+                PluginContextMenuStripRemove.Enabled = false;
+            }
+            else
+            {
+                PluginContextMenuStripAdd.Enabled = true;
+                PluginContextMenuStripShow.Enabled = true;
+            }
             if (PluginList.SelectedItems.Count >= 1)
             {
                 bool Mixed = false;

@@ -9,10 +9,12 @@ namespace Serein
     partial class Plugins
     {
         public static string PluginPath = "";
+        public static bool Available = true;
         public static string[] Get()
         {
             if (File.Exists(Global.Settings_Server.Path))
             {
+                Available = true;
                 if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin"))
                 {
                     PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin";
@@ -32,12 +34,18 @@ namespace Serein
                 else
                 {
                     PluginPath = Global.Path;
+                    Available = false;
+                    return null;
                 }
                 if (PluginPath != "")
                 {
                     string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
                     return Files;
                 }
+            }
+            else
+            {
+                Available = false;
             }
             return null;
         }
