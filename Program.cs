@@ -17,6 +17,7 @@ namespace Serein
             if (!File.Exists(Global.Path + "console\\console.html"))
             {
                 ResourcesManager.InitConsole();
+                Global.FirstOpen = true;
             }
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);

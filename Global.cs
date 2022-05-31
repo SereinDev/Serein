@@ -8,7 +8,7 @@ namespace Serein
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.2.0";
+        public static string VERSION = "v1.2.1";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
         public static Ui Ui;
@@ -20,5 +20,6 @@ namespace Serein
         public static Settings_Serein Settings_Serein = new Settings_Serein();
         public static bool Crash = false;
         public static bool MultiOpen = false;
+        public static bool FirstOpen = false;
     }
 }

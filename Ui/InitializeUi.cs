@@ -21,6 +21,7 @@ namespace Serein
         }
         private void Initialize()
         {
+            ShowTutorial();
             InitWebBrowser();
             Settings.ReadSettings();
             LoadSettings();
@@ -38,6 +39,22 @@ namespace Serein
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
+        }
+        private void ShowTutorial()
+        {
+            if (Global.FirstOpen)
+            {
+                if ((int)MessageBox.Show(
+                        "欢迎使用Serein！！qwq\n" +
+                        "是否打开教程页面（https://zaitonn.github.io/Serein/Tutorial.html）？\n" +
+                        "内含极其详细的配置教程哦",
+                        "Serein",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                    ) == 1)
+                {
+                    Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
+                }
+            }
         }
         private void MultiOpenCheck()
         {
