@@ -191,24 +191,25 @@ namespace Serein
         {
             if (!string.IsNullOrEmpty(outLine.Data))
             {
+                string Line = Log.OutputRecognition(outLine.Data);
                 if (!Finished)
                 {
-                    if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Finished, RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(Line, Global.Settings_Matches.Finished, RegexOptions.IgnoreCase))
                     {
                         Finished = true;
                         Global.Ui.UpdateServerInfo(LevelName, Version, Difficulty);
                     }
-                    else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Version, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings_Matches.Version, RegexOptions.IgnoreCase))
                     {
-                        Version = Regex.Match(outLine.Data, Global.Settings_Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Version = Regex.Match(Line, Global.Settings_Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase))
                     {
-                        LevelName = Regex.Match(outLine.Data, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        LevelName = Regex.Match(Line, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (Regex.IsMatch(outLine.Data, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
-                        Difficulty = Regex.Match(outLine.Data, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Difficulty = Regex.Match(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
@@ -226,7 +227,7 @@ namespace Serein
                             true,
                             Encoding.UTF8
                             );
-                        LogWriter.WriteLine(Log.OutputRecognition(outLine.Data));
+                        LogWriter.WriteLine(Line);
                         LogWriter.Flush();
                         LogWriter.Close();
                     }
@@ -234,7 +235,7 @@ namespace Serein
                 }
                 Task MsgTask = new Task(() =>
                   {
-                      Message.ProcessMsgFromConsole(Log.OutputRecognition(outLine.Data));
+                      Message.ProcessMsgFromConsole(Line);
                   });
                 MsgTask.Start();
             }
