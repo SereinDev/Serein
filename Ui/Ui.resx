@@ -1127,6 +1127,15 @@
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
+  <data name="RegexContextMenuStripVariables.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 38</value>
+  </data>
+  <data name="RegexContextMenuStripVariables.Text" xml:space="preserve">
+    <value>查看变量</value>
+  </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 6</value>
+  </data>
   <data name="RegexContextMenuStripRefresh.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
@@ -1134,7 +1143,7 @@
     <value>刷新</value>
   </data>
   <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 200</value>
+    <value>185, 244</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
     <value>RegexContextMenuStrip</value>
@@ -1218,55 +1227,64 @@
     <value>935, 17</value>
   </metadata>
   <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
     <value>添加任务</value>
   </data>
   <data name="TaskContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Edit.Text" xml:space="preserve">
     <value>修改任务</value>
   </data>
   <data name="TaskContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Delete.Text" xml:space="preserve">
     <value>删除任务</value>
   </data>
   <data name="TaskContextMenuStrip_Clear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Clear.Text" xml:space="preserve">
     <value>清空任务</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 6</value>
+    <value>297, 6</value>
   </data>
   <data name="TaskContextMenuStrip_Enable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Enable.Text" xml:space="preserve">
     <value>启用任务</value>
   </data>
   <data name="TaskContextMenuStrip_Disable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Disable.Text" xml:space="preserve">
     <value>禁用任务</value>
   </data>
+  <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 6</value>
+  </data>
+  <data name="TaskContextMenuStrip_Variables.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="TaskContextMenuStrip_Variables.Text" xml:space="preserve">
+    <value>查看变量</value>
+  </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 6</value>
+    <value>297, 6</value>
   </data>
   <data name="TaskContextMenuStrip_Refresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="TaskContextMenuStrip_Refresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
   <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 282</value>
+    <value>301, 370</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
     <value>TaskContextMenuStrip</value>
@@ -3133,6 +3151,18 @@
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;RegexContextMenuStripVariables.Name" xml:space="preserve">
+    <value>RegexContextMenuStripVariables</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStripVariables.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
+    <value>toolStripSeparator7</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Name" xml:space="preserve">
     <value>RegexContextMenuStripRefresh</value>
   </data>
@@ -3210,6 +3240,18 @@
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Variables.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip_Variables</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip_Variables.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
+    <value>toolStripSeparator8</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

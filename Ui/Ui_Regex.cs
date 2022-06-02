@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -10,6 +11,10 @@ namespace Serein
     public partial class Ui : Form
     {
         public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）" };
+        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+        }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             SaveRegex();

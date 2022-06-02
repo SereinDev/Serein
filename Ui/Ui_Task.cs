@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace Serein
 {
     partial class Ui : Form
     {
+
+        private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+        }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             SaveRegex();
