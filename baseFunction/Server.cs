@@ -23,7 +23,7 @@ namespace Serein
         static Thread WaitForExitThread, RestartTimerThread;
         static bool Killed;
         static StreamWriter CommandWriter, LogWriter;
-        static TimeSpan PrevCpuTime = TimeSpan.Zero, CurTime = TimeSpan.Zero;
+        static TimeSpan PrevCpuTime = TimeSpan.Zero;
 
         public static void Start(bool StartedByCommand = false)
         {
@@ -76,7 +76,6 @@ namespace Serein
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
-                CurTime = TimeSpan.Zero;
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
@@ -267,6 +266,9 @@ namespace Serein
                 RestartTimerThread.IsBackground = true;
                 RestartTimerThread.Start();
             }
+            Version = "-";
+            LevelName = "-";
+            Difficulty = "-";
             WaitForExitThread.Abort();
         }
         public static void RestartRequest()
@@ -307,10 +309,29 @@ namespace Serein
         }
         public static double GetCPUPersent()
         {
-            CurTime = ServerProcess.TotalProcessorTime;
-            double value = (CurTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
-            PrevCpuTime = CurTime;
-            return value;
+            PrevCpuTime = ServerProcess.TotalProcessorTime;
+            return (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+        }
+        public static string GetTime()
+        {
+            string Time = "-";
+            if (Status)
+            {
+                TimeSpan t = DateTime.Now - ServerProcess.StartTime;
+                if (t.TotalSeconds < 3600)
+                {
+                    Time = ($"{t.TotalSeconds / 60:N1}m");
+                }
+                else if (t.TotalHours < 120)
+                {
+                    Time = ($"{t.TotalMinutes / 60:N1}h");
+                }
+                else
+                {
+                    Time = ($"{t.TotalHours / 24:N2}d");
+                }
+            }
+            return Time;
         }
     }
 }

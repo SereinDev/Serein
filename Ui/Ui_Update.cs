@@ -21,19 +21,7 @@ namespace Serein
                 }
                 else if (Server.Status)
                 {
-                    t = DateTime.Now - Server.ServerProcess.StartTime;
-                    if (t.TotalSeconds < 3600)
-                    {
-                        PanelInfoTime2_Update($"{t.TotalSeconds / 60:N1}m");
-                    }
-                    else if (t.TotalHours < 120)
-                    {
-                        PanelInfoTime2_Update($"{t.TotalMinutes / 60:N1}h");
-                    }
-                    else
-                    {
-                        PanelInfoTime2_Update($"{t.TotalHours / 24:N2}d");
-                    }
+                    PanelInfoTime2_Update(Server.GetTime());
                     PanelInfoCPU2_Update($"{Server.GetCPUPersent():N2}%");
                     PanelInfoStatus2_Update("已启动");
                     Ui_Update($"Serein | {Server.StartFileName}");
