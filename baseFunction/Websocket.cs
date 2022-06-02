@@ -58,20 +58,20 @@ namespace Serein
         {
             if (Status)
             {
-                int IntTarget = int.TryParse(Target, out int t) ? t : -1;
+                long Target_Long = long.TryParse(Target, out long t) ? t : -1;
                 JObject TextJObject = new JObject();
                 JObject ParamsJObject = new JObject();
                 if (IsPrivate)
                 {
                     TextJObject.Add("action", "send_private_msg");
-                    ParamsJObject.Add("user_id", IntTarget);
+                    ParamsJObject.Add("user_id", Target_Long);
                     ParamsJObject.Add("message", Message);
                     TextJObject.Add("params", ParamsJObject);
                 }
                 else
                 {
                     TextJObject.Add("action", "send_group_msg");
-                    ParamsJObject.Add("group_id", IntTarget);
+                    ParamsJObject.Add("group_id", Target_Long);
                     ParamsJObject.Add("message", Message);
                     TextJObject.Add("params", ParamsJObject);
                 }

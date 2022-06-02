@@ -40,9 +40,9 @@ namespace Serein
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
                         string MessageType = JsonObject["message_type"].ToString();
-                        int Result;
-                        int GroupId = int.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
-                        int UserId = int.TryParse(JsonObject["sender"]["user_id"].ToString(), out Result) ? Result : -1;
+                        long Result;
+                        long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                        long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out Result) ? Result : -1;
                         if (Item.IsAdmin)
                         {
                             bool IsAdmin = false;
@@ -123,14 +123,14 @@ namespace Serein
                 SelfId = JsonObject["self_id"].ToString();
                 MessageReceived = JsonObject["status"]["stat"]["MessageReceived"].ToString();
                 MessageSent = JsonObject["status"]["stat"]["MessageSent"].ToString();
-                ulong Number;
-                if ((ulong.TryParse(MessageReceived, out Number) ? Number : 0) > 10000000)
+                long TempNumber;
+                if ((long.TryParse(MessageReceived, out TempNumber) ? TempNumber : 0) > 10000000)
                 {
-                    MessageReceived = (Number / 10000).ToString("N1") + "W";
+                    MessageReceived = (TempNumber / 10000).ToString("N1") + "W";
                 }
-                if ((ulong.TryParse(MessageSent, out Number) ? Number : 0) > 10000000)
+                if ((long.TryParse(MessageSent, out TempNumber) ? TempNumber : 0) > 10000000)
                 {
-                    MessageSent = (Number / 10000).ToString("N1") + "W";
+                    MessageSent = (TempNumber / 10000).ToString("N1") + "W";
                 }
             }
         }
