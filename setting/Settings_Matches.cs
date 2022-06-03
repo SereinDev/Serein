@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using System.Text.RegularExpressions;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Serein
 {

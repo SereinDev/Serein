@@ -19,15 +19,14 @@ namespace Serein
             Result = Regex.Replace(Input, "/", "&#47;");
             Result = Regex.Replace(Result, "\"", "&quot;");
             Result = Regex.Replace(Result, ",", "&#44;");
-            Result = Regex.Replace(Result, ";", "&#58;");
             Result = Regex.Replace(Result, "<", "&lt;");
             Result = Regex.Replace(Result, ">", "&gt;");
             return Result;
         }
         public static string ColorLog(string Input, int Type)
         {
+            Input = EscapeLog(Input);
             Input = Regex.Replace(Input, @"^>\s+?", "");
-            Input = Regex.Replace(Input, @"\s+?$", "");
             if (Type == 1)
             {
                 string Pattern = @"\[([^]+?)m([^]*)";

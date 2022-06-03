@@ -40,7 +40,7 @@ namespace Serein
                 {
                     Global.Ui.BotWebBrowser_Invoke(
                         "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
-                        e.Message);
+                        Log.EscapeLog(e.Message));
                 };
                 webSocket.OnClose += (sender, e) =>
                 {
@@ -85,14 +85,14 @@ namespace Serein
                             {
                                 Global.Ui.BotWebBrowser_Invoke(
                                     "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                                    TextJObject.ToString()
+                                    Log.EscapeLog(TextJObject.ToString())
                                     );
                             }
                             else
                             {
                                 Global.Ui.BotWebBrowser_Invoke(
                                     "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                                    $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}"
+                                    Log.EscapeLog($"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}")
                                     );
                             }
 
@@ -118,7 +118,7 @@ namespace Serein
             {
                 Global.Ui.BotWebBrowser_Invoke(
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    e.Data
+                    Log.EscapeLog(e.Data)
                     );
             }
 
