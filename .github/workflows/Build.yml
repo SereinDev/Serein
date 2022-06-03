@@ -4,25 +4,49 @@ on:
   push:
     paths:
       - '**.cs'
+      - '**.yml'
   pull_request:
 
 jobs:
-    Build:
+    Format:
       runs-on: windows-latest
-
       steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
-      - name: Upload Serein codes
-        uses: actions/upload-artifact@v3
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
         with:
-          name: Code
-          path: |
-            ${{ github.workspace }}
-            !.git/
+          dotnet-version: 3.1.202
+
+      - name: Install dotnet-format
+        run: dotnet tool install -g dotnet-format
+
+      - name: Format
+        run: dotnet-format  ${{ github.workspace }}\Serein.sln
+
+      - name: Commit and Push
+        shell: bash
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "action@github.com"
+          git add -u
+          git commit -m "format: Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
+          git log -1
+          remote_repo="https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          git push "${remote_repo}" HEAD:${GITHUB_REF}
+        continue-on-error: true
+
+    Build:
+      needs: Format
+      runs-on: windows-latest
+      steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Install .NET Core
         uses: actions/setup-dotnet@v1
@@ -41,17 +65,6 @@ jobs:
       - name: NuGet restore
         run: nuget restore
 
-      - name: Build the solution(Debug)
-        run: msbuild /p:Configuration=$env:Configuration
-        env:
-          Configuration: Debug
-
-      - name: Upload Serein(Debug)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_Debug
-          path: ${{ github.workspace }}\bin\Debug
-
       - name: Build the solution(Release)
         run: msbuild /p:Configuration=$env:Configuration
         env:
@@ -62,3 +75,19 @@ jobs:
         with:
           name: Serein_Release
           path: ${{ github.workspace }}\bin\Release
+
+    CodeQL:
+      needs: Build
+      runs-on: windows-latest
+      permissions:
+        security-events: write
+        actions: read
+        contents: read
+      steps:
+      - name: Build the solution
+        run: msbuild /p:Configuration=$env:Configuration /p:UseSharedCompilation=false
+        env:
+          Configuration: Debug
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
