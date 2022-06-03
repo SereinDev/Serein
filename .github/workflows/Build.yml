@@ -76,18 +76,23 @@ jobs:
           name: Serein_Release
           path: ${{ github.workspace }}\bin\Release
 
-    CodeQL:
-      needs: Build
-      runs-on: windows-latest
-      permissions:
-        security-events: write
-        actions: read
-        contents: read
-      steps:
-      - name: Build the solution
-        run: msbuild /p:Configuration=$env:Configuration /p:UseSharedCompilation=false
+      - name: Build the solution(Debug)
+        run: msbuild /p:Configuration=$env:Configuration
         env:
           Configuration: Debug
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      - name: Upload Serein(Debug)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_Debug
+          path: ${{ github.workspace }}\bin\Debug
+
+    draft_release:
+      needs: Format
+      name: Draft release
+      runs-on: ubuntu-latest
+      steps:
+        - uses: release-drafter/release-drafter@v5
+          name: Draft
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

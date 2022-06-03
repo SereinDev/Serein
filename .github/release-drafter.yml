@@ -1,18 +1,18 @@
-name-template: 'v$RESOLVED_VERSION 🌈'
+name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
-  - title: '🚀 新功能|Features'
+  - title: '🚀 新功能'
     labels:
       - 'feat'
       - 'feature'
       - 'enhancement'
-  - title: '🐛 修复|Bug Fixes'
+  - title: '🐛 修复'
     labels:
       - 'fix'
       - 'bugfix'
       - 'bug'
-  - title: '🧰 其他|Maintenance'
+  - title: '🧰 其他'
     label:
       - 'chore'
       - 'docs'
@@ -31,5 +31,10 @@ version-resolver:
   default: patch
 template: |
   ## Changes
+  ### 🚀 新功能
 
-  $CHANGES
+  ### 🐛 修复
+
+  ### 📃 文档
+
+  ### 🧰 其他
