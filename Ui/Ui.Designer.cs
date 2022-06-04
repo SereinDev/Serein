@@ -102,6 +102,9 @@ namespace Serein
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.TaskContextMenuStrip_Enable = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskContextMenuStrip_Disable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.TaskContextMenuStrip_Command = new System.Windows.Forms.ToolStripMenuItem();
+            this.TaskContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.TaskContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Bot = new System.Windows.Forms.TabPage();
@@ -157,8 +160,7 @@ namespace Serein
             this.SettingServerPath = new System.Windows.Forms.TextBox();
             this.Debug = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.TextBox();
-            this.TaskContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.RegexContextMenuStripCommand = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -533,6 +535,7 @@ namespace Serein
             this.RegexContextMenuStripDelete,
             this.RegexContextMenuStripClear,
             this.toolStripSeparator3,
+            this.RegexContextMenuStripCommand,
             this.RegexContextMenuStripVariables,
             this.toolStripSeparator7,
             this.RegexContextMenuStripRefresh});
@@ -633,6 +636,7 @@ namespace Serein
             this.TaskContextMenuStrip_Enable,
             this.TaskContextMenuStrip_Disable,
             this.toolStripSeparator8,
+            this.TaskContextMenuStrip_Command,
             this.TaskContextMenuStrip_Variables,
             this.toolStripSeparator5,
             this.TaskContextMenuStrip_Refresh});
@@ -680,6 +684,23 @@ namespace Serein
             this.TaskContextMenuStrip_Disable.Name = "TaskContextMenuStrip_Disable";
             resources.ApplyResources(this.TaskContextMenuStrip_Disable, "TaskContextMenuStrip_Disable");
             this.TaskContextMenuStrip_Disable.Click += new System.EventHandler(this.TaskContextMenuStrip_Disable_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
+            // 
+            // TaskContextMenuStrip_Command
+            // 
+            this.TaskContextMenuStrip_Command.Name = "TaskContextMenuStrip_Command";
+            resources.ApplyResources(this.TaskContextMenuStrip_Command, "TaskContextMenuStrip_Command");
+            this.TaskContextMenuStrip_Command.Click += new System.EventHandler(this.TaskContextMenuStrip_Command_Click);
+            // 
+            // TaskContextMenuStrip_Variables
+            // 
+            this.TaskContextMenuStrip_Variables.Name = "TaskContextMenuStrip_Variables";
+            resources.ApplyResources(this.TaskContextMenuStrip_Variables, "TaskContextMenuStrip_Variables");
+            this.TaskContextMenuStrip_Variables.Click += new System.EventHandler(this.TaskContextMenuStrip_Variables_Click);
             // 
             // toolStripSeparator5
             // 
@@ -1111,16 +1132,11 @@ namespace Serein
             resources.ApplyResources(this.DebugTextBox, "DebugTextBox");
             this.DebugTextBox.Name = "DebugTextBox";
             // 
-            // TaskContextMenuStrip_Variables
+            // RegexContextMenuStripCommand
             // 
-            this.TaskContextMenuStrip_Variables.Name = "TaskContextMenuStrip_Variables";
-            resources.ApplyResources(this.TaskContextMenuStrip_Variables, "TaskContextMenuStrip_Variables");
-            this.TaskContextMenuStrip_Variables.Click += new System.EventHandler(this.TaskContextMenuStrip_Variables_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
+            this.RegexContextMenuStripCommand.Name = "RegexContextMenuStripCommand";
+            resources.ApplyResources(this.RegexContextMenuStripCommand, "RegexContextMenuStripCommand");
+            this.RegexContextMenuStripCommand.Click += new System.EventHandler(this.RegexContextMenuStripCommand_Click);
             // 
             // Ui
             // 
@@ -1299,6 +1315,8 @@ namespace Serein
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Variables;
+        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Command;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripCommand;
     }
 }
 

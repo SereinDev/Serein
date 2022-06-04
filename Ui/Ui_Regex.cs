@@ -15,6 +15,11 @@ namespace Serein
         {
             Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
+
+        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+        }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             SaveRegex();

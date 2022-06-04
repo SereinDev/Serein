@@ -13,7 +13,10 @@ namespace Serein
 {
     partial class Ui : Form
     {
-
+        private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+        }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein/Variables.html");
