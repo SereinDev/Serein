@@ -1,6 +1,7 @@
 ## 定时任务
+一个帮助执行周期性事件的功能
+![截图](imgs/task.png)
 ### 入门  
-  
 #### 文档  
 - [POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
 - [Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression)  

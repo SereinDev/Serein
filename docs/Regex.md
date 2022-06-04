@@ -1,4 +1,6 @@
-## 正则说明
+## 正则
+一个处理群消息和控制台消息的功能
+![截图](imgs/regex.png)
 ### 入门
 正则表达式的基本语法  
 - [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  

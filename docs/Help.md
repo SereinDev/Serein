@@ -1,15 +1,19 @@
 ## 常见问题  
+- 目前仅收集了部分常见问题，其他问题可[加群](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)咨询
 
-> 目前仅收集了部分常见问题，其他问题可加群咨询
+### 专题介绍
+__[教程（强烈推荐阅读）](Tutorial.md)__  [变量](Variables.md)  [命令](Command.md)  [正则](Regex.md)  [定时任务](Schedule.md) [机器人](Bot.md)
 
-- 入门问题
+
+### 入门问题
   - [BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)
   - [崩服 / 假死 / 卡顿情况排查与记录方法](https://www.minebbs.com/resources/bds.3403/)
   - [BDS服务端 与 LiteLoaderBDS 新手教程 & 常见问答](https://www.minebbs.com/threads/bds-liteloaderbds.10265/)
-- Serein使用问题
+
+
+### Serein使用问题
   - [Serein崩溃](help/crash.md)
   - 机器人
-    - [配置机器人](Bot.md#配置教程)
     - [机器人不可用](help/bot-not-available.md)
   - 服务器
     - [使用批处理启动的服务器无法强制结束](help/fail-to-kill-task.md)

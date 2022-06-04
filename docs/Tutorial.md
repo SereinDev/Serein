@@ -1,5 +1,6 @@
 ## 教程
 
+> [帮助](Help.md)
 ### 服务器
 1. 从[Release](https://github.com/Zaitonn/Serein/releases/latest)下载Serein
 2. 解压后双击运行`Serein.exe`
@@ -29,43 +30,51 @@
 ```
 
 ### 插件管理
-1. 在插件列表中右键打开菜单
-   - 选择`导入插件`添加插件
-   - 选择`删除插件`删除插件
-   - 选择`启用插件`启用插件
-   - 选择`禁用插件`禁用插件
-     - 以上两个功能实质是在插件的文件名后面增加`.lock`使加载器不能识别，不更改插件源文件
+-  在插件列表中右键打开菜单
+   - `导入插件`→添加插件
+   - `删除插件`→删除插件
+   - `启用插件`→启用插件
+   - `禁用插件`→禁用插件
+     - 以上两个功能实质是在插件的文件名后面增加`.lock`使加载器不能识别，并不更改插件文件内容
      - 禁用功能在服务器运行时不可用
-   - 选择`打开文件夹`在资源管理器中显示这个所选插件
-2. 将所选插件直接拖入窗口，可快捷导入插件
+   - `打开文件夹`→在资源管理器中显示这个所选插件
+- 将所选插件直接拖入窗口，可快捷导入插件
+
+
 ### [正则](Regex.md)
 
-1. 正则表达式的基本语法  
+#### 正则表达式的基本语法  
    - [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
    - [C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
-2. 在正则表格中右键打开菜单
-    - 选择`新建记录`添加正则
-    - 选择`修改记录`编辑正则
-    - 选择`删除记录`删除正则
-3. 打开`data/regex.tsv`直接编辑正则
+
+#### 操作方法
+- 在正则表格中右键打开菜单
+    - `新建记录`→添加正则
+    - `修改记录`→编辑正则
+    - `删除记录`→删除正则
+- 打开`data/regex.tsv`直接编辑正则
     - 格式：`正则表达式` `作用域序号` `管理权限` `备注` `执行命令`（以制表符`\t`分隔）
     - 你可以将他人的记录整行复制在该文件中以合并添加他人的正则
-    - 你可以直接将此文件分享给其他人
-4. 将`regex.tsv`拖入窗口覆盖导入正则，**此操作不可逆**
+    - 你可以直接将此文件分享给其他人供他人使用
+- 也可将`regex.tsv`拖入窗口覆盖导入正则，**此操作不可逆**
 
 ### [定时任务](Schedule.md)
-1. 语法
-   - [POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
-   - [Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression)  
-2. 生成器（推荐）
-   - [Crontab guru](https://crontab.guru/)   
-3. 在定时任务表格中右键打开菜单
-    - 选择`添加任务`添加任务
-    - 选择`修改任务`编辑任务
+#### 语法
+- [POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
+- [Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression) 
+
+
+#### 生成器（推荐）
+[Crontab guru](https://crontab.guru/)
+
+#### 操作方法
+- 在定时任务表格中右键打开菜单
+    - `添加任务`→添加任务
+    - `修改任务`→编辑任务
       - 在修改窗口中你可以直接看到下一次的执行时间
-    - 选择`删除任务`删除任务
-4. 打开`data/task.tsv`直接编辑任务
+    - `删除任务`→删除任务
+- 打开`data/task.tsv`直接编辑任务
     - 格式：`Cron表达式` `启用` `备注` `执行命令`（以制表符`\t`分隔）
     - 你可以将他人的记录整行复制在该文件中以合并添加他人的任务
-    - 你可以直接将此文件分享给其他人
-5. 将`task.tsv`拖入窗口覆盖导入任务，**此操作不可逆**
+    - 你可以直接将此文件分享给其他人供他人使用
+- 也可将`task.tsv`拖入窗口覆盖导入任务，**此操作不可逆**
