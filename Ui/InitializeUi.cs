@@ -40,7 +40,7 @@ namespace Serein
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
-            new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start() ;
+            new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start();
         }
         private void ShowTutorial()
         {

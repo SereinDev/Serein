@@ -164,7 +164,7 @@ namespace Serein
             {
                 return Value;
             }
-            for (int i = MsgMatch.Groups.Count; i >=0; i--)
+            for (int i = MsgMatch.Groups.Count; i >= 0; i--)
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }

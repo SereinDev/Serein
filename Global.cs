@@ -11,7 +11,7 @@ namespace Serein
         public static string VERSION = "v1.2.3";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
-        public static Ui Ui=null;
+        public static Ui Ui = null;
         public static WebBrowser PanelConsoleWebBrowser;
         public static WebBrowser BotWebBrowser;
         public static Settings_Server Settings_Server = new Settings_Server();

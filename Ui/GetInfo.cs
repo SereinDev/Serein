@@ -24,7 +24,7 @@ namespace Serein
             string OldAnnouncementId = "";
             while (true)
             {
-                if (Global.Ui!=null&&Global.Ui.Visible&&Global.Settings_Serein.EnableGetAnnouncement)
+                if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetAnnouncement)
                 {
                     try
                     {
@@ -54,7 +54,7 @@ namespace Serein
             Thread.Sleep(10000);
             while (true)
             {
-                if (Global.Ui != null &&  Global.Ui.Visible && Global.Settings_Serein.EnableGetUpdate)
+                if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetUpdate)
                 {
                     try
                     {
