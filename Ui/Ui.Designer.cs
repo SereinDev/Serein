@@ -86,6 +86,7 @@ namespace Serein
             this.RegexContextMenuStripDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.RegexContextMenuStripClear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.RegexContextMenuStripCommand = new System.Windows.Forms.ToolStripMenuItem();
             this.RegexContextMenuStripVariables = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.RegexContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,12 +128,15 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
-            this.SettingSereinTutorial = new System.Windows.Forms.Label();
-            this.SettingSereinHelp = new System.Windows.Forms.Label();
+            this.SettingSereinDownload = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SettingSereinStatement2 = new System.Windows.Forms.Label();
+            this.SettingSereinStatement = new System.Windows.Forms.Label();
             this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
-            this.SettingSereinUpdateInfoTypeLabel = new System.Windows.Forms.Label();
-            this.SettingSereinUpdateInfoType = new System.Windows.Forms.ComboBox();
+            this.SettingSereinHelp = new System.Windows.Forms.Label();
+            this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
+            this.SettingSereinTutorial = new System.Windows.Forms.Label();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
@@ -160,7 +164,6 @@ namespace Serein
             this.SettingServerPath = new System.Windows.Forms.TextBox();
             this.Debug = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.TextBox();
-            this.RegexContextMenuStripCommand = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -572,6 +575,12 @@ namespace Serein
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
+            // RegexContextMenuStripCommand
+            // 
+            this.RegexContextMenuStripCommand.Name = "RegexContextMenuStripCommand";
+            resources.ApplyResources(this.RegexContextMenuStripCommand, "RegexContextMenuStripCommand");
+            this.RegexContextMenuStripCommand.Click += new System.EventHandler(this.RegexContextMenuStripCommand_Click);
+            // 
             // RegexContextMenuStripVariables
             // 
             this.RegexContextMenuStripVariables.Name = "RegexContextMenuStripVariables";
@@ -843,38 +852,50 @@ namespace Serein
             // 
             // SettingSerein
             // 
-            this.SettingSerein.Controls.Add(this.SettingSereinTutorial);
-            this.SettingSerein.Controls.Add(this.SettingSereinHelp);
+            this.SettingSerein.Controls.Add(this.SettingSereinDownload);
+            this.SettingSerein.Controls.Add(this.label1);
+            this.SettingSerein.Controls.Add(this.SettingSereinStatement2);
+            this.SettingSerein.Controls.Add(this.SettingSereinStatement);
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
-            this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoTypeLabel);
-            this.SettingSerein.Controls.Add(this.SettingSereinUpdateInfoType);
+            this.SettingSerein.Controls.Add(this.SettingSereinHelp);
+            this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
+            this.SettingSerein.Controls.Add(this.SettingSereinTutorial);
             this.SettingSerein.Controls.Add(this.SettingSereinVersion);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetAnnouncement);
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
             // 
-            // SettingSereinTutorial
+            // SettingSereinDownload
             // 
-            resources.ApplyResources(this.SettingSereinTutorial, "SettingSereinTutorial");
-            this.SettingSereinTutorial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingSereinTutorial.Name = "SettingSereinTutorial";
-            this.SettingSereinTutorial.Click += new System.EventHandler(this.SettingSereinTutorial_Click);
-            this.SettingSereinTutorial.MouseHover += new System.EventHandler(this.SettingSereinTutorial_MouseHover);
+            resources.ApplyResources(this.SettingSereinDownload, "SettingSereinDownload");
+            this.SettingSereinDownload.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinDownload.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.SettingSereinDownload.Name = "SettingSereinDownload";
+            this.SettingSereinDownload.Click += new System.EventHandler(this.SettingSereinDownload_Click);
+            this.SettingSereinDownload.MouseHover += new System.EventHandler(this.SettingSereinDownload_MouseHover);
             // 
-            // SettingSereinHelp
+            // label1
             // 
-            resources.ApplyResources(this.SettingSereinHelp, "SettingSereinHelp");
-            this.SettingSereinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingSereinHelp.Name = "SettingSereinHelp";
-            this.SettingSereinHelp.Click += new System.EventHandler(this.SettingSereinHelp_Click);
-            this.SettingSereinHelp.MouseHover += new System.EventHandler(this.SettingSereinHelp_MouseHover);
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // SettingSereinStatement2
+            // 
+            resources.ApplyResources(this.SettingSereinStatement2, "SettingSereinStatement2");
+            this.SettingSereinStatement2.Name = "SettingSereinStatement2";
+            // 
+            // SettingSereinStatement
+            // 
+            resources.ApplyResources(this.SettingSereinStatement, "SettingSereinStatement");
+            this.SettingSereinStatement.Name = "SettingSereinStatement";
             // 
             // SettingSereinPage
             // 
             resources.ApplyResources(this.SettingSereinPage, "SettingSereinPage");
             this.SettingSereinPage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinPage.ForeColor = System.Drawing.Color.RoyalBlue;
             this.SettingSereinPage.Name = "SettingSereinPage";
             this.SettingSereinPage.Click += new System.EventHandler(this.SettingSereinPage_Click);
             this.SettingSereinPage.MouseHover += new System.EventHandler(this.SettingSereinPage_MouseHover);
@@ -883,28 +904,36 @@ namespace Serein
             // 
             resources.ApplyResources(this.SettingSereinAbout, "SettingSereinAbout");
             this.SettingSereinAbout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinAbout.ForeColor = System.Drawing.Color.RoyalBlue;
             this.SettingSereinAbout.Name = "SettingSereinAbout";
             this.SettingSereinAbout.Click += new System.EventHandler(this.SettingSereinAbout_Click);
             this.SettingSereinAbout.MouseHover += new System.EventHandler(this.SettingSereinAbout_MouseHover);
             // 
-            // SettingSereinUpdateInfoTypeLabel
+            // SettingSereinHelp
             // 
-            resources.ApplyResources(this.SettingSereinUpdateInfoTypeLabel, "SettingSereinUpdateInfoTypeLabel");
-            this.SettingSereinUpdateInfoTypeLabel.Name = "SettingSereinUpdateInfoTypeLabel";
-            this.SettingSereinUpdateInfoTypeLabel.MouseHover += new System.EventHandler(this.SettingSereinUpdateInfoTypeLabel_MouseHover);
+            resources.ApplyResources(this.SettingSereinHelp, "SettingSereinHelp");
+            this.SettingSereinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinHelp.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.SettingSereinHelp.Name = "SettingSereinHelp";
+            this.SettingSereinHelp.Click += new System.EventHandler(this.SettingSereinHelp_Click);
+            this.SettingSereinHelp.MouseHover += new System.EventHandler(this.SettingSereinHelp_MouseHover);
             // 
-            // SettingSereinUpdateInfoType
+            // SettingSereinEnableGetUpdate
             // 
-            this.SettingSereinUpdateInfoType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SettingSereinUpdateInfoType.FormattingEnabled = true;
-            this.SettingSereinUpdateInfoType.Items.AddRange(new object[] {
-            resources.GetString("SettingSereinUpdateInfoType.Items"),
-            resources.GetString("SettingSereinUpdateInfoType.Items1"),
-            resources.GetString("SettingSereinUpdateInfoType.Items2")});
-            resources.ApplyResources(this.SettingSereinUpdateInfoType, "SettingSereinUpdateInfoType");
-            this.SettingSereinUpdateInfoType.Name = "SettingSereinUpdateInfoType";
-            this.SettingSereinUpdateInfoType.SelectedIndexChanged += new System.EventHandler(this.SettingSereinUpdateInfoType_SelectedIndexChanged);
-            this.SettingSereinUpdateInfoType.MouseHover += new System.EventHandler(this.SettingSereinUpdateInfoType_MouseHover);
+            resources.ApplyResources(this.SettingSereinEnableGetUpdate, "SettingSereinEnableGetUpdate");
+            this.SettingSereinEnableGetUpdate.Name = "SettingSereinEnableGetUpdate";
+            this.SettingSereinEnableGetUpdate.UseVisualStyleBackColor = true;
+            this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
+            this.SettingSereinEnableGetUpdate.MouseHover += new System.EventHandler(this.SettingSereinEnableGetUpdate_MouseHover);
+            // 
+            // SettingSereinTutorial
+            // 
+            resources.ApplyResources(this.SettingSereinTutorial, "SettingSereinTutorial");
+            this.SettingSereinTutorial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinTutorial.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.SettingSereinTutorial.Name = "SettingSereinTutorial";
+            this.SettingSereinTutorial.Click += new System.EventHandler(this.SettingSereinTutorial_Click);
+            this.SettingSereinTutorial.MouseHover += new System.EventHandler(this.SettingSereinTutorial_MouseHover);
             // 
             // SettingSereinVersion
             // 
@@ -1132,12 +1161,6 @@ namespace Serein
             resources.ApplyResources(this.DebugTextBox, "DebugTextBox");
             this.DebugTextBox.Name = "DebugTextBox";
             // 
-            // RegexContextMenuStripCommand
-            // 
-            this.RegexContextMenuStripCommand.Name = "RegexContextMenuStripCommand";
-            resources.ApplyResources(this.RegexContextMenuStripCommand, "RegexContextMenuStripCommand");
-            this.RegexContextMenuStripCommand.Click += new System.EventHandler(this.RegexContextMenuStripCommand_Click);
-            // 
             // Ui
             // 
             this.AllowDrop = true;
@@ -1289,8 +1312,6 @@ namespace Serein
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Enable;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Disable;
-        private System.Windows.Forms.Label SettingSereinUpdateInfoTypeLabel;
-        private System.Windows.Forms.ComboBox SettingSereinUpdateInfoType;
         private System.Windows.Forms.Label SettingSereinAbout;
         private System.Windows.Forms.Label SettingSereinPage;
         private System.Windows.Forms.Label BotInfoTime2;
@@ -1317,6 +1338,11 @@ namespace Serein
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Variables;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Command;
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripCommand;
+        private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
+        private System.Windows.Forms.Label SettingSereinStatement2;
+        private System.Windows.Forms.Label SettingSereinStatement;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label SettingSereinDownload;
     }
 }
 

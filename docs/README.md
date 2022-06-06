@@ -1,13 +1,13 @@
 # Serein
 <div style="text-align: center;">
-<img src="Serein.png" style="image-rendering: pixelated;width:200px">
+<img src="https://zaitonn.github.io/Serein/Serein.png" style="image-rendering: pixelated;width:200px">
 
 </div>
 
 - 一个基于.Net Framework的我的世界服务器面板  
   
 
-[下载最新版](https://github.com/Zaitonn/Serein/releases/latest) | [Github仓库](https://github.com/Zaitonn/Serein) | [Minebbs](https://www.minebbs.com/resources/serein.4169/) | **[教程](Tutorial.md)** | **[帮助页面](Help.md)**
+[下载最新版](https://github.com/Zaitonn/Serein/releases/latest) | [Github仓库](https://github.com/Zaitonn/Serein) | [Minebbs](https://www.minebbs.com/resources/serein.4169/) | **[教程](Tutorial.md)（推荐阅读）** | **[帮助页面](Help.md)（推荐阅读）**
 
 
 ---
@@ -15,6 +15,7 @@
 Win7或WinServer2016以上
 
 > 更低的系统版本不保证能稳定运行，必要时务必备份数据  
+
 > x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
 #### 缺少运行库？
@@ -46,7 +47,8 @@ Win7或WinServer2016以上
 
 #### 后台运行
 ![后台运行提示](imgs/protect.png)
-- 当服务器运行时关闭Serein将最小化至托盘，再也不用怕点错跑路
+
+- 当服务器运行时关闭Serein将最小化至托盘，再也不用怕点错当场跑路
 
 ### 插件管理
 ![插件管理](imgs/plugin.png)
@@ -89,6 +91,8 @@ Win7或WinServer2016以上
 
 ### 设置
 ![设置](imgs/setting.png)
+> 设置内容因版本不同而有所差别
+
 - 提供尽可能的的设置，满足不同人的使用需求
 - 将鼠标指针放在不同设置上方，可查看关于这一项的详细提示
 

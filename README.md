@@ -1,6 +1,6 @@
 ﻿# Serein-新时代基岩版服务器面板
 <div style="text-align: center;">
-<img src="./Sources/Serein.png" style="image-rendering: pixelated;width:150px">
+<img src="[docs/Serein.png](https://zaitonn.github.io/Serein/Serein.png)" style="image-rendering: pixelated;width:150px">
 <br>
 
 <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">

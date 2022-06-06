@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein
@@ -39,6 +40,7 @@ namespace Serein
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
+            new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start() ;
         }
         private void ShowTutorial()
         {

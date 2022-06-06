@@ -22,7 +22,7 @@ namespace Serein
                 else if (Server.Status)
                 {
                     PanelInfoTime2_Update(Server.GetTime());
-                    PanelInfoCPU2_Update($"{Server.GetCPUPersent():N2}%");
+                    PanelInfoCPU2_Update($"{Server.CPUPersent:N2}%");
                     PanelInfoStatus2_Update("已启动");
                     Ui_Update($"Serein | {Server.StartFileName}");
                 }
@@ -81,7 +81,14 @@ namespace Serein
                 Invoke(actionDelegate, NewText);
             }
         }
-
+        public void SettingSereinVersion_Update(string NewText)
+        {
+            if (SettingSereinVersion.InvokeRequired)
+            {
+                Action<string> actionDelegate = (Text) => { SettingSereinVersion.Text = Text; };
+                SettingSereinVersion.Invoke(actionDelegate, NewText);
+            }
+        }
         private void PanelInfoStatus2_Update(string NewText)
         {
             if (PanelInfoStatus2.InvokeRequired)

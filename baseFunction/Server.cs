@@ -16,11 +16,12 @@ namespace Serein
         public static bool Status = false;
         public static bool Restart = false;
         public static List<string> CommandList = new List<string> { };
+        public static double CPUPersent = 0.0;
         public static int CommandListIndex = 0;
         static bool Finished = false;
         static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
-        static Thread WaitForExitThread, RestartTimerThread;
+        static Thread WaitForExitThread, RestartTimerThread, GetCPUPercentThread;
         static bool Killed;
         static StreamWriter CommandWriter, LogWriter;
         static TimeSpan PrevCpuTime = TimeSpan.Zero;
@@ -79,6 +80,9 @@ namespace Serein
                 WaitForExitThread = new Thread(WaitForExit);
                 WaitForExitThread.IsBackground = true;
                 WaitForExitThread.Start();
+                GetCPUPercentThread = new Thread(GetCPUPercent);
+                GetCPUPercentThread.IsBackground = true;
+                GetCPUPercentThread.Start();
             }
         }
         public static void Stop()
@@ -307,10 +311,15 @@ namespace Serein
             }
             RestartTimerThread.Abort();
         }
-        public static double GetCPUPersent()
+        public static void GetCPUPercent()
         {
-            PrevCpuTime = ServerProcess.TotalProcessorTime;
-            return (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+            while (Status)
+            {
+                Thread.CurrentThread.Join(2000);
+                CPUPersent = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+                PrevCpuTime = ServerProcess.TotalProcessorTime;
+            }
+            Thread.CurrentThread.Abort();
         }
         public static string GetTime()
         {

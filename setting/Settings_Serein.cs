@@ -2,7 +2,7 @@
 {
     class Settings_Serein
     {
-        public int UpdateInfoType { get; set; } = 1;
+        public bool EnableGetUpdate { get; set; } = true;
         public bool EnableGetAnnouncement { get; set; } = true;
         public bool Debug { get; set; } = false;
     }

@@ -24,7 +24,7 @@ namespace Serein
             string OldAnnouncementId = "";
             while (true)
             {
-                if (Global.Settings_Serein.EnableGetAnnouncement)
+                if (Global.Ui!=null&&Global.Ui.Visible&&Global.Settings_Serein.EnableGetAnnouncement)
                 {
                     try
                     {
@@ -38,7 +38,7 @@ namespace Serein
                     catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("公告获取异常：\n" + e.Message);
-                        Thread.Sleep(120000);
+                        Thread.Sleep(240000);
                     }
                 }
                 else
@@ -54,31 +54,7 @@ namespace Serein
             Thread.Sleep(10000);
             while (true)
             {
-                if (Global.Settings_Serein.UpdateInfoType == 2)
-                {
-                    try
-                    {
-                        string PreVersion = RequestInfo("https://zaitonn.github.io/Serein/version/latest.txt");
-                        if (PreVersion != Global.VERSION && OldPreVersion != PreVersion)
-                        {
-                            Global.Ui.ShowBalloonTip("发现新版本（测试版）:\n" + PreVersion);
-                            OldPreVersion = PreVersion;
-                        }
-                        else if (OldPreVersion != PreVersion)
-                        {
-                            Global.Ui.ShowBalloonTip(
-                                "获取更新成功\n" +
-                                "当前已是最新版:)");
-                            OldPreVersion = PreVersion;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
-                        Thread.Sleep(120000);
-                    }
-                }
-                else if (Global.Settings_Serein.UpdateInfoType == 1)
+                if (Global.Ui != null &&  Global.Ui.Visible && Global.Settings_Serein.EnableGetUpdate)
                 {
                     try
                     {
@@ -88,6 +64,7 @@ namespace Serein
                             Version != Global.VERSION && OldPreVersion != Version)
                         {
                             Global.Ui.ShowBalloonTip("发现新版本:\n" + Version);
+                            Global.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{Version}，你可以点击下方链接获取最新版）");
                             OldPreVersion = Version;
                         }
                         else if (OldPreVersion != Version)
@@ -96,12 +73,13 @@ namespace Serein
                                 "获取更新成功\n" +
                                 "当前已是最新版:)");
                             OldPreVersion = Version;
+                            Global.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版qwq）");
                         }
                     }
                     catch (Exception e)
                     {
                         Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
-                        Thread.Sleep(120000);
+                        Thread.Sleep(240000);
                     }
                 }
                 else

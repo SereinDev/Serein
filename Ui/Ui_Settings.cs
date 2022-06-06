@@ -18,13 +18,13 @@ namespace Serein
             SettingServerAutoStop.Checked = Global.Settings_Server.AutoStop;
             SettingServerPath.Text = Global.Settings_Server.Path;
             SettingServerStopCommand.Text = Global.Settings_Server.StopCommand;
-            SettingBotPermissionList.Text = string.Join(",", Global.Settings_Bot.PermissionList);
-            SettingBotGroupList.Text = string.Join(",", Global.Settings_Bot.GroupList);
+            SettingBotPermissionList.Text = string.Join(";", Global.Settings_Bot.PermissionList);
+            SettingBotGroupList.Text = string.Join(";", Global.Settings_Bot.GroupList);
             SettingBotPort.Value = Global.Settings_Bot.Port;
             SettingBotEnbaleOutputData.Checked = Global.Settings_Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
-            SettingSereinUpdateInfoType.SelectedIndex = Global.Settings_Serein.UpdateInfoType;
+            SettingSereinEnableGetUpdate.Checked = Global.Settings_Serein.EnableGetUpdate;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings_Serein.EnableGetAnnouncement;
             if (!Global.Settings_Serein.Debug)
             {
@@ -66,10 +66,10 @@ namespace Serein
         }
         private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d,]+?$"))
+            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
-                foreach (string qq in SettingBotGroupList.Text.Split(','))
+                foreach (string qq in SettingBotGroupList.Text.Split(';'))
                 {
                     if (qq.Length >= 6 && qq.Length <= 16)
                     {
@@ -79,9 +79,9 @@ namespace Serein
                 }
                 Global.Settings_Bot.GroupList = list.Distinct().ToArray();
             }
-            string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d,]", ",");
-            Text = Regex.Replace(Text, @",+", ",");
-            Text = Regex.Replace(Text, "^,", "");
+            string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
+            Text = Regex.Replace(Text, @";+", ";");
+            Text = Regex.Replace(Text, "^;", "");
             if (Text != SettingBotGroupList.Text)
             {
                 SettingBotGroupList.Text = Text;
@@ -93,10 +93,10 @@ namespace Serein
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d,]+?$"))
+            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
-                foreach (string qq in SettingBotPermissionList.Text.Split(','))
+                foreach (string qq in SettingBotPermissionList.Text.Split(';'))
                 {
                     if (qq.Length >= 5 && qq.Length <= 13)
                     {
@@ -106,9 +106,9 @@ namespace Serein
                 }
                 Global.Settings_Bot.PermissionList = list.Distinct().ToArray();
             }
-            string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ",");
-            Text = Regex.Replace(Text, @",+", ",");
-            Text = Regex.Replace(Text, "^,", "");
+            string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
+            Text = Regex.Replace(Text, @";+", ";");
+            Text = Regex.Replace(Text, "^;", "");
             if (Text != SettingBotPermissionList.Text)
             {
                 SettingBotPermissionList.Text = Text;
@@ -117,12 +117,10 @@ namespace Serein
                 SettingBotPermissionList.ScrollToCaret();
             }
         }
-
-        private void SettingSereinUpdateInfoType_SelectedIndexChanged(object sender, EventArgs e)
+        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
         {
-            Global.Settings_Serein.UpdateInfoType = SettingSereinUpdateInfoType.SelectedIndex;
+            Global.Settings_Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
         }
-
         private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings_Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
@@ -180,6 +178,10 @@ namespace Serein
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein/Tutorial");
+        }
+        private void SettingSereinDownload_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Zaitonn/Serein/releases/latest");
         }
     }
 

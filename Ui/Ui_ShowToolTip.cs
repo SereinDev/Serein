@@ -95,24 +95,12 @@ namespace Serein
         {
             ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         }
-        private void SettingSereinUpdateInfoType_MouseHover(object sender, EventArgs e)
+
+        private void SettingSereinEnableGetUpdate_MouseHover(object sender, System.EventArgs e)
         {
-            ShowToolTip(sender,
-                "启动后自动检查更新\n" +
-                "-禁用 禁止获取更新信息\n" +
-                "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-仅测试版 获取来自最新的提交构建（不一定保证稳定，使用前请自行备份）"
-                );
+            ShowToolTip(sender, "启动后自动获取更新（建议开启）");
         }
-        private void SettingSereinUpdateInfoTypeLabel_MouseHover(object sender, EventArgs e)
-        {
-            ShowToolTip(sender,
-                "启动后自动检查更新\n" +
-                "-禁用 禁止获取更新信息\n" +
-                "-仅正式版 获取Release中的正式版（推荐）\n" +
-                "-仅测试版 获取来自最新的提交构建（不一定保证稳定，使用前请自行备份）"
-                );
-        }
+
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "打开关于页面（https://zaitonn.github.io/Serein/About）");
@@ -129,6 +117,10 @@ namespace Serein
         {
             ShowToolTip(sender, "打开教程页面（https://zaitonn.github.io/Serein/Tutorial）");
 
+        }
+        private void SettingSereinDownload_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "打开最新版下载页面（https://github.com/Zaitonn/Serein/releases/latest）");
         }
     }
 }

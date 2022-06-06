@@ -164,7 +164,7 @@ namespace Serein
             {
                 return Value;
             }
-            for (int i = 1; i < MsgMatch.Groups.Count; i++)
+            for (int i = MsgMatch.Groups.Count; i >=0; i--)
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }
@@ -172,6 +172,10 @@ namespace Serein
         }
         public static string GetVariables(string Text, JObject JsonObject = null)
         {
+            if (!Text.Contains("%"))
+            {
+                return Text.Replace("\\n", "\n");
+            }
             DateTime CurrentTime = DateTime.Now;
             Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
@@ -200,12 +204,19 @@ namespace Serein
 
                 }
             }
+            Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%UsedRAM%", SystemInfo.UsedRAM, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%TotalRAM%", SystemInfo.TotalRAM, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%RAMPercentage%", SystemInfo.RAMPercentage, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%CPUPercentage%", SystemInfo.OS, RegexOptions.IgnoreCase);
             if (Server.Status)
             {
                 Text = Regex.Replace(Text, "%LevelName%", Server.LevelName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Version%", Server.Version, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Difficulty%", Server.Difficulty, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", Server.GetTime(), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Percentage%", Server.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
             else
@@ -213,7 +224,8 @@ namespace Serein
                 Text = Regex.Replace(Text, "%LevelName%", "", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Version%", "", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Difficulty%", "", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%RunTime%", "0", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Percentage%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);
             }
             return Text.Replace("\\n", "\n");
