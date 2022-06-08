@@ -109,7 +109,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除该任务？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)
@@ -125,7 +125,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除所有任务？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)

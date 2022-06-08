@@ -12,10 +12,10 @@ namespace Serein
 {
     public class Server
     {
-        public static string StartFileName = "", Version, LevelName, Difficulty;
+        public static string StartFileName = string.Empty, Version, LevelName, Difficulty;
         public static bool Status = false;
         public static bool Restart = false;
-        public static List<string> CommandList = new() { };
+        public static List<string> CommandList = new();
         public static double CPUPersent = 0.0;
         public static int CommandListIndex = 0;
         private static bool Finished = false;

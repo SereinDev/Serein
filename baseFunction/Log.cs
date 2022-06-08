@@ -8,9 +8,9 @@ namespace Serein
         public static string OutputRecognition(string Input)
         {
             string Result;
-            Result = Regex.Replace(Input, @"\[.+?m", "");
-            Result = Regex.Replace(Result, @"", "");
-            Result = Regex.Replace(Result, @"\s+?$", "");
+            Result = Regex.Replace(Input, @"\[.+?m", string.Empty);
+            Result = Regex.Replace(Result, @"", string.Empty);
+            Result = Regex.Replace(Result, @"\s+?$", string.Empty);
             return Result;
         }
         public static string EscapeLog(string Input)
@@ -26,7 +26,7 @@ namespace Serein
         public static string ColorLog(string Input, int Type)
         {
             Input = EscapeLog(Input);
-            Input = Regex.Replace(Input, @"^>\s+?", "");
+            Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
             if (Type == 1)
             {
                 string Pattern = @"\[([^]+?)m([^]*)";
@@ -37,7 +37,7 @@ namespace Serein
                 else
                 {
                     string Style, SpanClass, ChildArg, Arg, Color;
-                    string Output = "";
+                    string Output = string.Empty;
                     string[] ArgList;
                     string[] ColorList = {
                         "30", "31", "32", "33", "34", "35", "36", "37",
@@ -48,13 +48,13 @@ namespace Serein
                     foreach (Match Match in Regex.Matches(Input, Pattern))
                     {
                         Arg = Match.Groups[1].Value;
-                        if (Match.Groups[2].Value == "")
+                        if (string.IsNullOrWhiteSpace(Match.Groups[2].Value))
                         {
                             continue;
                         }
-                        Style = "";
-                        SpanClass = "";
-                        Color = "";
+                        Style = string.Empty;
+                        SpanClass = string.Empty;
+                        Color = string.Empty;
                         ArgList = Arg.Split(';');
                         for (int ChildArgIndex = 0; ChildArgIndex < ArgList.Length; ChildArgIndex++)
                         {
@@ -96,7 +96,7 @@ namespace Serein
                                 }
                             }
                         }
-                        if (SpanClass == "")
+                        if (string.IsNullOrWhiteSpace(SpanClass))
                         {
                             SpanClass += "noColored";
                         }
@@ -107,8 +107,8 @@ namespace Serein
             }
             else if (Type == 2)
             {
-                Input = Regex.Replace(Input, @"\[.+?m", "");
-                Input = Regex.Replace(Input, @"", "");
+                Input = Regex.Replace(Input, @"\[.+?m", string.Empty);
+                Input = Regex.Replace(Input, @"", string.Empty);
                 Input = Regex.Replace(Input, @"([\[\s])(INFO|info|Info)", "$1<span class='info'>$2</span>");
                 Input = Regex.Replace(Input, @"([\[\s])(WARNING|warning|Warning)", "$1<span class='warn'><b>$2</b></span>");
                 Input = Regex.Replace(Input, @"([\[\s])(WARN|warn|Warn)", "$1<span class='warn'><b>$2</b></span>");

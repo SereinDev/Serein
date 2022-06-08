@@ -58,16 +58,12 @@ namespace Serein
         }
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
-            int Count = 0;
+            Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
             string FileName;
-            foreach (object File in (Array)e.Data.GetData(DataFormats.FileDrop))
-            {
-                Count++;
-            }
-            if (Count == 1)
+            if (data.Length == 1)
             {
                 FocusWindow();
-                FileName = ((Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                FileName = data.GetValue(0).ToString();
                 if (FileName.ToUpper().EndsWith(".EXE") || FileName.ToUpper().EndsWith(".BAT"))
                 {
                     if ((int)MessageBox.Show(
@@ -115,12 +111,12 @@ namespace Serein
                     return;
                 }
             }
-            if (Count > 0)
+            if (data.Length > 0)
             {
                 List<string> AcceptableList = new() { ".py", ".dll", ".js", ".go", ".jar" };
-                List<string> FileList = new() { };
-                string FileListText = "";
-                foreach (object File in (Array)e.Data.GetData(DataFormats.FileDrop))
+                List<string> FileList = new();
+                string FileListText = string.Empty;
+                foreach (object File in data)
                 {
                     if (AcceptableList.Contains(Path.GetExtension(File.ToString())))
                     {
@@ -139,7 +135,7 @@ namespace Serein
                     Plugins.Add(FileList);
                     LoadPlugins();
                 }
-                else if (FileList.Count == 0 && Count > 0)
+                else if (FileList.Count == 0 && data.Length > 0)
                 {
                     _ = MessageBox.Show(this,
                         ":(\n无法识别所选文件",

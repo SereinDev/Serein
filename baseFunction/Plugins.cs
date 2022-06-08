@@ -8,7 +8,7 @@ namespace Serein
 {
     internal partial class Plugins
     {
-        public static string PluginPath = "";
+        public static string PluginPath = string.Empty;
         public static bool Available = true;
         public static string[] Get()
         {
@@ -37,7 +37,7 @@ namespace Serein
                     Available = false;
                     return null;
                 }
-                if (PluginPath != "")
+                if (!string.IsNullOrWhiteSpace(PluginPath))
                 {
                     string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
                     return Files;
@@ -101,7 +101,7 @@ namespace Serein
             {
                 if ((int)MessageBox.Show(
                     $"确定删除\"{Items[0].Text}\"？\n" +
-                    $"他将会永远失去！（真的很久！）", "Serein",
+                    $"它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     ) == 1
                     && !Check())
@@ -133,7 +133,7 @@ namespace Serein
             {
                 if ((int)MessageBox.Show(
                    $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
-                   $"他将会永远失去！（真的很久！）", "Serein",
+                   $"它将会永远失去！（真的很久！）", "Serein",
                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                    ) == 1
                    && !Check())

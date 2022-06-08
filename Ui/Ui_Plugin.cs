@@ -125,7 +125,7 @@ namespace Serein
                 {
                     string PluginName = Path.GetFileName(PluginFile);
                     ListViewItem Item = new();
-                    PluginName = Regex.Replace(PluginName, @"\.lock$", "");
+                    PluginName = Regex.Replace(PluginName, @"\.lock$", string.Empty);
                     Item.Text = PluginName;
                     bool added = true;
                     if (PluginFile.ToUpper().EndsWith(".JS"))

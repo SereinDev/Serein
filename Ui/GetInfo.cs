@@ -21,7 +21,7 @@ namespace Serein
         public static void GetAnnouncement()
         {
             Thread.Sleep(100);
-            string OldAnnouncementId = "";
+            string OldAnnouncementId = string.Empty;
             while (true)
             {
                 if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetAnnouncement)
@@ -43,14 +43,14 @@ namespace Serein
                 }
                 else
                 {
-                    OldAnnouncementId = "";
+                    OldAnnouncementId = string.Empty;
                 }
                 Thread.Sleep(120000);
             }
         }
         public static void GetVersion()
         {
-            string OldPreVersion = "";
+            string OldPreVersion = string.Empty;
             Thread.Sleep(10000);
             while (true)
             {
@@ -84,7 +84,7 @@ namespace Serein
                 }
                 else
                 {
-                    OldPreVersion = "";
+                    OldPreVersion = string.Empty;
                 }
                 Thread.Sleep(120000);
             }

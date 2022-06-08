@@ -16,20 +16,26 @@ namespace Serein
         public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
         public static void StartCmd(string Command)
         {
-            Process CMDProcess = new();
-            CMDProcess.StartInfo.FileName = "cmd.exe";
-            CMDProcess.StartInfo.UseShellExecute = false;
-            CMDProcess.StartInfo.RedirectStandardInput = true;
-            CMDProcess.StartInfo.CreateNoWindow = true;
+            Process CMDProcess = new()
+            {
+                StartInfo = new()
+                {
+                    FileName = "cmd.exe",
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    CreateNoWindow = true,
+                    WorkingDirectory = Global.Path,
+                    StandardErrorEncoding = Encoding.UTF8,
+                    StandardInputEncoding = Encoding.UTF8,
+                    StandardOutputEncoding = Encoding.UTF8
+                }
+            };
             _ = CMDProcess.Start();
             StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default)
             {
                 AutoFlush = true,
                 NewLine = "\r\n"
             };
-            CommandWriter.WriteLine("chcp 936");
-            CommandWriter.WriteLine($"cd \"{Global.Path}\"");
-            CommandWriter.WriteLine("cls");
             CommandWriter.WriteLine(Command.TrimEnd('\r', '\n') + "&exit");
             CommandWriter.Close();
             CMDProcess.WaitForExit();
@@ -204,9 +210,9 @@ namespace Serein
             }
             else
             {
-                Text = Regex.Replace(Text, "%LevelName%", "", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", "", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", "", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%LevelName%", string.Empty, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Version%", string.Empty, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Difficulty%", string.Empty, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Percentage%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);

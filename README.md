@@ -26,7 +26,7 @@ Win7或WinServer2012以上
 > x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
 #### 缺少运行库？
-[下载 .NET](https://dotnet.microsoft.com/zh-cn/download)
+[下载 .NET](https://dotnet.microsoft.com/download)
 
 ## 编译 Build
 ~~反正我用VS~~  

@@ -81,7 +81,7 @@ namespace Serein
             }
             string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
             Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", "");
+            Text = Regex.Replace(Text, "^;", string.Empty);
             if (Text != SettingBotGroupList.Text)
             {
                 SettingBotGroupList.Text = Text;
@@ -108,7 +108,7 @@ namespace Serein
             }
             string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
             Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", "");
+            Text = Regex.Replace(Text, "^;", string.Empty);
             if (Text != SettingBotPermissionList.Text)
             {
                 SettingBotPermissionList.Text = Text;

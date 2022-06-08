@@ -30,7 +30,7 @@ namespace Serein
                         Type = Line[..Line.IndexOf("=")].Trim();
                         try
                         {
-                            _ = Regex.Match("", Value);
+                            _ = Regex.Match(string.Empty, Value);
                         }
                         catch
                         {

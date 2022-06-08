@@ -86,7 +86,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除所有记录？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)
@@ -102,7 +102,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除此行记录？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)
@@ -121,7 +121,7 @@ namespace Serein
             {
                 return;
             }
-            string isAdminText = "";
+            string isAdminText = string.Empty;
             ListViewItem Item = new(regex);
             isAdminText = areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
             _ = Item.SubItems.Add(areas[areaIndex]);
