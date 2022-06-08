@@ -24,9 +24,9 @@ namespace Serein
             if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
                 string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
             {
-                if (Serein.Command.GetType(Command.Text) == -1)
+                if (baseFunction.Command.GetType(Command.Text) == -1)
                 {
-                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try
@@ -40,12 +40,12 @@ namespace Serein
                 catch
                 {
                     CronNextTime.Text = "Cron表达式无效";
-                    MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
@@ -73,7 +73,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Command.Focus();
+                _ = Command.Focus();
             }
         }
 
@@ -81,7 +81,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Confirm.Focus();
+                _ = Confirm.Focus();
                 Confirm_Click(this, EventArgs.Empty);
             }
         }
@@ -90,7 +90,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Remark.Focus();
+                _ = Remark.Focus();
             }
         }
         private void Cron_KeyPress(object sender, KeyPressEventArgs e)

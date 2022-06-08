@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -78,7 +79,7 @@ namespace Serein
             if (InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { this.Text = Text; };
-                Invoke(actionDelegate, NewText);
+                _ = Invoke(actionDelegate, NewText);
             }
         }
         public void SettingSereinVersion_Update(string NewText)
@@ -86,7 +87,7 @@ namespace Serein
             if (SettingSereinVersion.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { SettingSereinVersion.Text = Text; };
-                SettingSereinVersion.Invoke(actionDelegate, NewText);
+                _ = SettingSereinVersion.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoStatus2_Update(string NewText)
@@ -94,7 +95,7 @@ namespace Serein
             if (PanelInfoStatus2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoStatus2.Text = Text; };
-                PanelInfoStatus2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoStatus2.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoVersion2_Update(string NewText)
@@ -102,7 +103,7 @@ namespace Serein
             if (PanelInfoVersion2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoVersion2.Text = Text; };
-                PanelInfoVersion2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoVersion2.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoDifficulty2_Update(string NewText)
@@ -110,7 +111,7 @@ namespace Serein
             if (PanelInfoDifficulty2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoDifficulty2.Text = Text; };
-                PanelInfoDifficulty2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoDifficulty2.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoLevel2_Update(string NewText)
@@ -118,7 +119,7 @@ namespace Serein
             if (PanelInfoLevel2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoLevel2.Text = Text; };
-                PanelInfoLevel2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoLevel2.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoTime2_Update(string NewText)
@@ -126,7 +127,7 @@ namespace Serein
             if (PanelInfoTime2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoTime2.Text = Text; };
-                PanelInfoTime2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoTime2.Invoke(actionDelegate, NewText);
             }
         }
         private void PanelInfoCPU2_Update(string NewText)
@@ -134,7 +135,7 @@ namespace Serein
             if (PanelInfoCPU2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { PanelInfoCPU2.Text = Text; };
-                PanelInfoCPU2.Invoke(actionDelegate, NewText);
+                _ = PanelInfoCPU2.Invoke(actionDelegate, NewText);
             }
         }
         private void BotInfoStatus2_Update(string NewText)
@@ -142,7 +143,7 @@ namespace Serein
             if (BotInfoStatus2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { BotInfoStatus2.Text = Text; };
-                BotInfoStatus2.Invoke(actionDelegate, NewText);
+                _ = BotInfoStatus2.Invoke(actionDelegate, NewText);
             }
         }
         private void BotInfoQQ2_Update(string NewText)
@@ -150,7 +151,7 @@ namespace Serein
             if (BotInfoQQ2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { BotInfoQQ2.Text = Text; };
-                BotInfoQQ2.Invoke(actionDelegate, NewText);
+                _ = BotInfoQQ2.Invoke(actionDelegate, NewText);
             }
         }
         private void BotInfoMessageReceived2_Update(string NewText)
@@ -158,7 +159,7 @@ namespace Serein
             if (BotInfoMessageReceived2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { BotInfoMessageReceived2.Text = Text; };
-                BotInfoMessageReceived2.Invoke(actionDelegate, NewText);
+                _ = BotInfoMessageReceived2.Invoke(actionDelegate, NewText);
             }
         }
         private void BotInfoMessageSent2_Update(string NewText)
@@ -166,7 +167,7 @@ namespace Serein
             if (BotInfoMessageSent2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { BotInfoMessageSent2.Text = Text; };
-                BotInfoMessageSent2.Invoke(actionDelegate, NewText);
+                _ = BotInfoMessageSent2.Invoke(actionDelegate, NewText);
             }
         }
         private void BotInfoTime2_Update(string NewText)
@@ -174,7 +175,7 @@ namespace Serein
             if (BotInfoTime2.InvokeRequired)
             {
                 Action<string> actionDelegate = (Text) => { BotInfoTime2.Text = Text; };
-                BotInfoTime2.Invoke(actionDelegate, NewText);
+                _ = BotInfoTime2.Invoke(actionDelegate, NewText);
             }
         }
 

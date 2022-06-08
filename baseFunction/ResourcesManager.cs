@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class ResourcesManager
+    internal class ResourcesManager
     {
         public static void InitConsole()
         {
@@ -16,9 +16,9 @@ namespace Serein
         {
             if (!Directory.Exists(Global.Path + "console"))
             {
-                Directory.CreateDirectory(Global.Path + "console");
+                _ = Directory.CreateDirectory(Global.Path + "console");
             }
-            StreamWriter streamWriter = new StreamWriter(Global.Path + "console\\" + Name, false, Encoding.UTF8);
+            StreamWriter streamWriter = new(Global.Path + "console\\" + Name, false, Encoding.UTF8);
             streamWriter.Write(Resource);
             streamWriter.Close();
         }

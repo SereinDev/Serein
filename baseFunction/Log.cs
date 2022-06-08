@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.baseFunction
 {
     public class Log
     {

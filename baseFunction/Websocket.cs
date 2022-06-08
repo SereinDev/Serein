@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 
-namespace Serein
+namespace Serein.baseFunction
 {
     public class Websocket
     {
         public static bool Status = false;
         public static WebSocket webSocket;
-        static StreamWriter LogWriter;
+        private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         public static void Connect()
         {
             if (Status)
             {
-                MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if (!CheckPort(Global.Settings_Bot.Port))
             {
-                MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -59,8 +59,8 @@ namespace Serein
             if (Status)
             {
                 long Target_Long = long.TryParse(Target, out long t) ? t : -1;
-                JObject TextJObject = new JObject();
-                JObject ParamsJObject = new JObject();
+                JObject TextJObject = new();
+                JObject ParamsJObject = new();
                 if (IsPrivate)
                 {
                     TextJObject.Add("action", "send_private_msg");
@@ -109,7 +109,7 @@ namespace Serein
             }
             else
             {
-                MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void Recieve(object sender, MessageEventArgs e)
@@ -126,7 +126,7 @@ namespace Serein
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))
                 {
-                    Directory.CreateDirectory(Global.Path + "\\logs\\msg");
+                    _ = Directory.CreateDirectory(Global.Path + "\\logs\\msg");
                 }
                 try
                 {
@@ -141,7 +141,7 @@ namespace Serein
                 }
                 catch { }
             }
-            Task MsgTask = new Task(() =>
+            Task MsgTask = new(() =>
             {
                 Message.ProcessMsgFromBot(e.Data);
             });

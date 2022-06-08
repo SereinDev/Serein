@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.baseFunction
 {
     public class Message
     {
@@ -40,8 +40,7 @@ namespace Serein
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
                         string MessageType = JsonObject["message_type"].ToString();
-                        long Result;
-                        long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                        long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out long Result) ? Result : -1;
                         long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out Result) ? Result : -1;
                         if (Item.IsAdmin)
                         {
@@ -123,8 +122,7 @@ namespace Serein
                 SelfId = JsonObject["self_id"].ToString();
                 MessageReceived = JsonObject["status"]["stat"]["MessageReceived"].ToString();
                 MessageSent = JsonObject["status"]["stat"]["MessageSent"].ToString();
-                long TempNumber;
-                if ((long.TryParse(MessageReceived, out TempNumber) ? TempNumber : 0) > 10000000)
+                if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
                 {
                     MessageReceived = (TempNumber / 10000).ToString("N1") + "W";
                 }

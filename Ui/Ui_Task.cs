@@ -1,4 +1,5 @@
 ﻿using NCrontab;
+using Serein.baseFunction;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,15 +12,15 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    partial class Ui : Form
+    public partial class Ui : Form
     {
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            _ = Process.Start("https://zaitonn.github.io/Serein/Command.html");
         }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            _ = Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -46,14 +47,7 @@ namespace Serein
                     TaskContextMenuStrip_Enable.Enabled = false;
                 }
             }
-            if (TaskList.Items.Count <= 0)
-            {
-                TaskContextMenuStrip_Clear.Enabled = false;
-            }
-            else
-            {
-                TaskContextMenuStrip_Clear.Enabled = true;
-            }
+            TaskContextMenuStrip_Clear.Enabled = TaskList.Items.Count > 0;
         }
         private void TaskContextMenuStrip_Enable_Click(object sender, EventArgs e)
         {
@@ -77,29 +71,29 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditer TE = new TaskEditer();
-            TE.ShowDialog();
+            TaskEditer TE = new();
+            _ = TE.ShowDialog();
             if (TE.CancelFlag)
             {
                 return;
             }
-            ListViewItem Item = new ListViewItem(TE.Cron.Text);
-            Item.SubItems.Add(TE.Remark.Text);
-            Item.SubItems.Add(TE.Command.Text);
-            TaskList.Items.Add(Item);
+            ListViewItem Item = new(TE.Cron.Text);
+            _ = Item.SubItems.Add(TE.Remark.Text);
+            _ = Item.SubItems.Add(TE.Command.Text);
+            _ = TaskList.Items.Add(Item);
             SaveTask();
         }
         private void TaskContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskEditer TE = new TaskEditer();
+                TaskEditer TE = new();
                 TE.Update(
                     TaskList.SelectedItems[0].Text,
                     TaskList.SelectedItems[0].SubItems[1].Text,
                     TaskList.SelectedItems[0].SubItems[2].Text
                     );
-                TE.ShowDialog();
+                _ = TE.ShowDialog();
                 if (TE.CancelFlag)
                 {
                     return;
@@ -151,9 +145,9 @@ namespace Serein
         {
             if (!Directory.Exists(Global.Path + "\\data"))
             {
-                Directory.CreateDirectory(Global.Path + "\\data");
+                _ = Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter TaskWriter = new StreamWriter(
+            StreamWriter TaskWriter = new(
                 File.Open(
                     $"{Global.Path}\\data\\task.tsv",
                     FileMode.Create,
@@ -161,14 +155,16 @@ namespace Serein
                     ),
                 Encoding.UTF8
                 );
-            List<TaskItem> TaskItems = new List<TaskItem>();
+            List<TaskItem> TaskItems = new();
             DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
             {
-                TaskItem TI = new TaskItem();
-                TI.Cron = Item.Text;
-                TI.Remark = Item.SubItems[1].Text;
-                TI.Command = Item.SubItems[2].Text;
+                TaskItem TI = new()
+                {
+                    Cron = Item.Text,
+                    Remark = Item.SubItems[1].Text,
+                    Command = Item.SubItems[2].Text
+                };
                 try
                 {
                     List<DateTime> Occurrences = CrontabSchedule.Parse(TI.Cron).GetNextOccurrences(Now, Now.AddYears(1)).ToList();
@@ -192,13 +188,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists($"{Global.Path}\\data\\task.tsv"))
             {
-                FileStream TsvFile = new FileStream($"{ Global.Path }\\data\\task.tsv", FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new($"{Global.Path}\\data\\task.tsv", FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
+                List<TaskItem> TaskItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new TaskItem();
+                    TaskItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -212,16 +208,16 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
-                listViewItem.SubItems.Add(Item.Remark);
-                listViewItem.SubItems.Add(Item.Command);
+                ListViewItem listViewItem = new(Item.Cron);
+                _ = listViewItem.SubItems.Add(Item.Remark);
+                _ = listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;
                     listViewItem.SubItems[2].ForeColor = Color.Gray;
                 }
-                TaskList.Items.Add(listViewItem);
+                _ = TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
         }
@@ -231,13 +227,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new(FileName, FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
+                List<TaskItem> TaskItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new TaskItem();
+                    TaskItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -251,16 +247,16 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
-                listViewItem.SubItems.Add(Item.Remark);
-                listViewItem.SubItems.Add(Item.Command);
+                ListViewItem listViewItem = new(Item.Cron);
+                _ = listViewItem.SubItems.Add(Item.Remark);
+                _ = listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;
                     listViewItem.SubItems[2].ForeColor = Color.Gray;
                 }
-                TaskList.Items.Add(listViewItem);
+                _ = TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
         }

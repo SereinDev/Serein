@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -92,23 +93,15 @@ namespace Serein
         }
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe");
-            if (PluginList.SelectedItems.Count >= 1)
+            ProcessStartInfo psi = new("Explorer.exe")
             {
-                if (PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray)
-                {
-                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\"";
-                }
-                else
-                {
-                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\"";
-                }
-            }
-            else
-            {
-                psi.Arguments = "/e,\"" + Plugins.PluginPath + "\"";
-            }
-            Process.Start(psi);
+                Arguments = PluginList.SelectedItems.Count >= 1
+                ? PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray
+                    ? "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\""
+                    : "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\""
+                : "/e,\"" + Plugins.PluginPath + "\""
+            };
+            _ = Process.Start(psi);
         }
         public void LoadPlugins()
         {
@@ -117,49 +110,49 @@ namespace Serein
                 PluginList.BeginUpdate();
                 PluginList.Clear();
                 string[] Files = Plugins.Get();
-                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
-                PluginList.Groups.Add(PluginGroupJs);
-                PluginList.Groups.Add(PluginGroupDll);
-                PluginList.Groups.Add(PluginGroupJar);
-                PluginList.Groups.Add(PluginGroupPy);
-                PluginList.Groups.Add(PluginGroupGo);
-                PluginList.Groups.Add(PluginGroupDisable);
+                ListViewGroup PluginGroupJs = new("Js", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDll = new("Dll", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJar = new("Jar", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupPy = new("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupGo = new("Go", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
+                _ = PluginList.Groups.Add(PluginGroupJs);
+                _ = PluginList.Groups.Add(PluginGroupDll);
+                _ = PluginList.Groups.Add(PluginGroupJar);
+                _ = PluginList.Groups.Add(PluginGroupPy);
+                _ = PluginList.Groups.Add(PluginGroupGo);
+                _ = PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
                 {
                     string PluginName = Path.GetFileName(PluginFile);
-                    ListViewItem Item = new ListViewItem();
+                    ListViewItem Item = new();
                     PluginName = Regex.Replace(PluginName, @"\.lock$", "");
                     Item.Text = PluginName;
                     bool added = true;
                     if (PluginFile.ToUpper().EndsWith(".JS"))
                     {
-                        PluginGroupJs.Items.Add(Item);
+                        _ = PluginGroupJs.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".DLL"))
                     {
-                        PluginGroupDll.Items.Add(Item);
+                        _ = PluginGroupDll.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".JAR"))
                     {
-                        PluginGroupJar.Items.Add(Item);
+                        _ = PluginGroupJar.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".PY"))
                     {
-                        PluginGroupPy.Items.Add(Item);
+                        _ = PluginGroupPy.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".GO"))
                     {
-                        PluginGroupGo.Items.Add(Item);
+                        _ = PluginGroupGo.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".LOCK"))
                     {
                         Item.ForeColor = System.Drawing.Color.Gray;
-                        PluginGroupDisable.Items.Add(Item);
+                        _ = PluginGroupDisable.Items.Add(Item);
                     }
                     else
                     {
@@ -167,7 +160,7 @@ namespace Serein
                     }
                     if (added)
                     {
-                        PluginList.Items.Add(Item);
+                        _ = PluginList.Items.Add(Item);
                     }
                 }
                 PluginList.EndUpdate();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -6,13 +7,13 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             if (!File.Exists(Global.Path + "console\\console.html"))
             {
@@ -23,21 +24,24 @@ namespace Serein
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            _ = Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
             Ui ui = new Ui();
             Global.Ui = ui;
             Application.Run(ui);
         }
-        static void ThreadException(object sender, ThreadExceptionEventArgs e)
+
+        private static void ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Abort(e.Exception.StackTrace);
         }
-        static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Abort(e.ExceptionObject.ToString());
         }
-        static void Abort(string Text)
+
+        private static void Abort(string Text)
         {
             Global.Crash = true;
             if (Server.Status && Global.Settings_Server.AutoStop)
@@ -49,11 +53,11 @@ namespace Serein
             }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
             {
-                Directory.CreateDirectory(Global.Path + "\\logs\\crash");
+                _ = Directory.CreateDirectory(Global.Path + "\\logs\\crash");
             }
             try
             {
-                StreamWriter LogWriter = new StreamWriter(
+                StreamWriter LogWriter = new(
                     Global.Path + $"\\logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log",
                     true,
                     Encoding.UTF8
@@ -67,7 +71,7 @@ namespace Serein
                 LogWriter.Close();
             }
             catch { }
-            MessageBox.Show(
+            _ = MessageBox.Show(
                 "崩溃啦:(\n\n" +
                 $"{Text}\n" +
                 $"版本： {Global.VERSION}\n" +

@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Management;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class SystemInfo
+    internal class SystemInfo
     {
         public static string OS = new ComputerInfo().OSFullName;
         public static string CPUName
@@ -25,35 +25,17 @@ namespace Serein
                 }
             }
         }
-        public static string UsedRAM
-        {
-            get
-            {
-                return ((ulong.TryParse(TotalRAM, out ulong i) ? i : 0) - (new ComputerInfo().AvailablePhysicalMemory / 1024 / 1024)).ToString();
-            }
-
-        }
+        public static string UsedRAM => ((ulong.TryParse(TotalRAM, out ulong i) ? i : 0) - (new ComputerInfo().AvailablePhysicalMemory / 1024 / 1024)).ToString();
         public static string TotalRAM = (new ComputerInfo().TotalPhysicalMemory / 1024 / 1024).ToString();
-        public static string RAMPercentage
-        {
-            get
-            {
-                return (
+        public static string RAMPercentage => (
                     (double)(ulong.TryParse(UsedRAM, out ulong i) ? i : 1) /
                     (ulong.TryParse(TotalRAM, out ulong j) ? j : 1) * 100
                 ).ToString("N1");
-            }
-        }
-        static PerformanceCounter pcCpuLoad = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+
+        private static readonly PerformanceCounter pcCpuLoad = new("Processor", "% Processor Time", "_Total")
         {
             MachineName = "."
         };
-        public static string CPUPercentage
-        {
-            get
-            {
-                return pcCpuLoad.NextValue().ToString("N1");
-            }
-        }
+        public static string CPUPercentage => pcCpuLoad.NextValue().ToString("N1");
     }
 }

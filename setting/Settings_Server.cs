@@ -1,6 +1,6 @@
-﻿namespace Serein
+﻿namespace Serein.setting
 {
-    class Settings_Server
+    internal class Settings_Server
     {
         public string Path { get; set; } = "";
         public bool EnableRestart { get; set; } = false;

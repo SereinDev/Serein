@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,12 +14,12 @@ namespace Serein
         public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）" };
         private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            _ = Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
 
         private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            _ = Process.Start("https://zaitonn.github.io/Serein/Command.html");
         }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -33,19 +34,12 @@ namespace Serein
                 RegexContextMenuStripEdit.Enabled = true;
                 RegexContextMenuStripDelete.Enabled = true;
             }
-            if (RegexList.Items.Count <= 0)
-            {
-                RegexContextMenuStripClear.Enabled = false;
-            }
-            else
-            {
-                RegexContextMenuStripClear.Enabled = true;
-            }
+            RegexContextMenuStripClear.Enabled = RegexList.Items.Count > 0;
         }
         private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            RegexEditer regexEditer = new RegexEditer();
-            regexEditer.ShowDialog(this);
+            RegexEditer regexEditer = new();
+            _ = regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
                 return;
@@ -65,7 +59,7 @@ namespace Serein
             {
                 return;
             }
-            RegexEditer regexEditer = new RegexEditer();
+            RegexEditer regexEditer = new();
             int index = Array.IndexOf(areas, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,
@@ -74,24 +68,12 @@ namespace Serein
                 RegexList.SelectedItems[0].SubItems[3].Text,
                 RegexList.SelectedItems[0].SubItems[4].Text
                 );
-            regexEditer.ShowDialog(this);
+            _ = regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
                 return;
             }
-            string isAdminText;
-            if (regexEditer.Area.SelectedIndex <= 1)
-            {
-                isAdminText = "-";
-            }
-            else if (regexEditer.IsAdmin.Checked)
-            {
-                isAdminText = "是";
-            }
-            else
-            {
-                isAdminText = "否";
-            }
+            string isAdminText = regexEditer.Area.SelectedIndex <= 1 ? "-" : regexEditer.IsAdmin.Checked ? "是" : "否";
             RegexList.SelectedItems[0].Text = regexEditer.RegexTextBox.Text;
             RegexList.SelectedItems[0].SubItems[1].Text = areas[regexEditer.Area.SelectedIndex];
             RegexList.SelectedItems[0].SubItems[2].Text = isAdminText;
@@ -141,31 +123,20 @@ namespace Serein
                 return;
             }
             string isAdminText = "";
-            ListViewItem Item = new ListViewItem(regex);
-            if (areaIndex <= 1)
-            {
-                isAdminText = "-";
-            }
-            else if (isAdmin)
-            {
-                isAdminText = "是";
-            }
-            else
-            {
-                isAdminText = "否";
-            }
-            Item.SubItems.Add(areas[areaIndex]);
-            Item.SubItems.Add(isAdminText);
-            Item.SubItems.Add(remark);
-            Item.SubItems.Add(command);
+            ListViewItem Item = new(regex);
+            isAdminText = areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
+            _ = Item.SubItems.Add(areas[areaIndex]);
+            _ = Item.SubItems.Add(isAdminText);
+            _ = Item.SubItems.Add(remark);
+            _ = Item.SubItems.Add(command);
             if (RegexList.InvokeRequired)
             {
-                Action<ListViewItem> actionDelegate = (x) => { RegexList.Items.Add(Item); };
-                PanelInfoLevel2.Invoke(actionDelegate, Item);
+                Action<ListViewItem> actionDelegate = (x) => { _ = RegexList.Items.Add(Item); };
+                _ = PanelInfoLevel2.Invoke(actionDelegate, Item);
             }
             else
             {
-                RegexList.Items.Add(Item);
+                _ = RegexList.Items.Add(Item);
             }
         }
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
@@ -180,13 +151,13 @@ namespace Serein
             RegexList.Items.Clear();
             if (File.Exists($"{Global.Path}\\data\\regex.tsv"))
             {
-                FileStream TsvFile = new FileStream($"{ Global.Path }\\data\\regex.tsv", FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new($"{Global.Path}\\data\\regex.tsv", FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<RegexItem> regexItems = new List<RegexItem>();
+                List<RegexItem> regexItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    RegexItem Item = new RegexItem();
+                    RegexItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -205,13 +176,13 @@ namespace Serein
             RegexList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new(FileName, FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<RegexItem> regexItems = new List<RegexItem>();
+                List<RegexItem> regexItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    RegexItem Item = new RegexItem();
+                    RegexItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -227,12 +198,12 @@ namespace Serein
         }
         public void SaveRegex()
         {
-            List<RegexItem> regexItems = new List<RegexItem>();
+            List<RegexItem> regexItems = new();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
-                Directory.CreateDirectory(Global.Path + "\\data");
+                _ = Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter RegexWriter = new StreamWriter(
+            StreamWriter RegexWriter = new(
                 File.Open(
                     $"{Global.Path}\\data\\regex.tsv",
                     FileMode.Create,
@@ -242,12 +213,14 @@ namespace Serein
                 );
             foreach (ListViewItem item in RegexList.Items)
             {
-                RegexItem regexItem = new RegexItem();
-                regexItem.Regex = item.Text;
-                regexItem.Area = Array.IndexOf(areas, item.SubItems[1].Text);
-                regexItem.IsAdmin = item.SubItems[2].Text == "是";
-                regexItem.Remark = item.SubItems[3].Text;
-                regexItem.Command = item.SubItems[4].Text;
+                RegexItem regexItem = new()
+                {
+                    Regex = item.Text,
+                    Area = Array.IndexOf(areas, item.SubItems[1].Text),
+                    IsAdmin = item.SubItems[2].Text == "是",
+                    Remark = item.SubItems[3].Text,
+                    Command = item.SubItems[4].Text
+                };
                 RegexWriter.WriteLine(regexItem.ConvertToStr());
                 regexItems.Add(regexItem);
             }

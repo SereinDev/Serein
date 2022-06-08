@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class RegexItem
+    internal class RegexItem
     {
         public string Regex { get; set; } = "";
         public string Remark { get; set; } = "";
@@ -34,14 +34,14 @@ namespace Serein
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Serein.Command.GetType(Command) == -1)
+                if (baseFunction.Command.GetType(Command) == -1)
                 {
                     return false;
                 }
                 try
                 {
-                    Regex m = new Regex(Regex);
-                    m.Match("");
+                    Regex m = new(Regex);
+                    _ = m.Match("");
                     return true;
                 }
                 catch

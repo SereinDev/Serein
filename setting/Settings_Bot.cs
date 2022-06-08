@@ -1,6 +1,6 @@
-﻿namespace Serein
+﻿namespace Serein.setting
 {
-    class Settings_Bot
+    internal class Settings_Bot
     {
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;

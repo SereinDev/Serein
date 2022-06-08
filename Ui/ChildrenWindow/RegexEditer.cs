@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -22,24 +23,24 @@ namespace Serein
             {
                 if (Command.GetType(CommandTextBox.Text) == -1)
                 {
-                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try
                 {
-                    Regex m = new Regex(RegexTextBox.Text);
-                    m.Match("");
+                    Regex m = new(RegexTextBox.Text);
+                    _ = m.Match("");
                     CancelFlag = false;
                     Close();
                 }
                 catch
                 {
-                    MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void Cancel_Click(object sender, EventArgs e)
@@ -104,7 +105,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                CommandTextBox.Focus();
+                _ = CommandTextBox.Focus();
             }
         }
 
@@ -112,14 +113,14 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                RemarkTextBox.Focus();
+                _ = RemarkTextBox.Focus();
             }
         }
         private void RemarkTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Confirm.Focus();
+                _ = Confirm.Focus();
                 Confirm_Click(this, EventArgs.Empty);
             }
         }

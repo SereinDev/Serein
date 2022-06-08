@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -47,7 +48,7 @@ namespace Serein
                 if (DebugTextBox.InvokeRequired)
                 {
                     Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\n" + _Text; };
-                    PanelInfoTime2.Invoke(actionDelegate, Text);
+                    _ = PanelInfoTime2.Invoke(actionDelegate, Text);
                 }
                 else
                 {
@@ -117,8 +118,8 @@ namespace Serein
             }
             if (Count > 0)
             {
-                List<string> AcceptableList = new List<string> { ".py", ".dll", ".js", ".go", ".jar" };
-                List<string> FileList = new List<string> { };
+                List<string> AcceptableList = new() { ".py", ".dll", ".js", ".go", ".jar" };
+                List<string> FileList = new() { };
                 string FileListText = "";
                 foreach (object File in (Array)e.Data.GetData(DataFormats.FileDrop))
                 {
@@ -141,7 +142,7 @@ namespace Serein
                 }
                 else if (FileList.Count == 0 && Count > 0)
                 {
-                    MessageBox.Show(this,
+                    _ = MessageBox.Show(this,
                         ":(\n无法识别所选文件",
                         "Serein",
                         MessageBoxButtons.OKCancel,

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class TaskItem
+    internal class TaskItem
     {
         public string Cron { get; set; } = "";
         public string Command { get; set; } = "";
@@ -15,9 +15,9 @@ namespace Serein
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()
         {
-            Task RunTask = new Task(() =>
+            Task RunTask = new(() =>
             {
-                Serein.Command.Run(Command);
+                baseFunction.Command.Run(Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                 NextTime = Occurrences[0];
             }
@@ -31,7 +31,7 @@ namespace Serein
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Serein.Command.GetType(Command) == -1)
+                if (baseFunction.Command.GetType(Command) == -1)
                 {
                     return false;
                 }

@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class Command
+    internal class Command
     {
         public static string[] Sexs = { "unknown", "male", "female" };
         public static string[] Sexs_Chinese = { "未知", "男", "女" };
@@ -16,15 +16,17 @@ namespace Serein
         public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
         public static void StartCmd(string Command)
         {
-            Process CMDProcess = new Process();
+            Process CMDProcess = new();
             CMDProcess.StartInfo.FileName = "cmd.exe";
             CMDProcess.StartInfo.UseShellExecute = false;
             CMDProcess.StartInfo.RedirectStandardInput = true;
             CMDProcess.StartInfo.CreateNoWindow = true;
-            CMDProcess.Start();
-            StreamWriter CommandWriter = new StreamWriter(CMDProcess.StandardInput.BaseStream, Encoding.Default);
-            CommandWriter.AutoFlush = true;
-            CommandWriter.NewLine = "\r\n";
+            _ = CMDProcess.Start();
+            StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default)
+            {
+                AutoFlush = true,
+                NewLine = "\r\n"
+            };
             CommandWriter.WriteLine("chcp 936");
             CommandWriter.WriteLine($"cd \"{Global.Path}\"");
             CommandWriter.WriteLine("cls");
@@ -44,7 +46,7 @@ namespace Serein
             Value = GetVariables(Value);
             if (Type == 1)
             {
-                Task CMDTask = new Task(() =>
+                Task CMDTask = new(() =>
                   {
                       StartCmd(Value);
                   });
@@ -79,7 +81,7 @@ namespace Serein
             Value = GetVariables(Value, JsonObject);
             if (Type == 1)
             {
-                Task CMDTask = new Task(() =>
+                Task CMDTask = new(() =>
                 {
                     StartCmd(Value);
                 });
@@ -135,31 +137,23 @@ namespace Serein
             {
                 return 2;
             }
-            else if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
-            {
-                return 3;
-            }
-            else if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
-            {
-                return 4;
-            }
-            else if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
-            {
-                return 5;
-            }
-            else if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
-            {
-                return 6;
-            }
             else
             {
-                return -1;
+                return Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase)
+                    ? 3
+                    : Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase)
+                                    ? 4
+                                    : Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase)
+                                                    ? 5
+                                                    : Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase)
+                                                                    ? 6
+                                                                    : -1;
             }
         }
         public static string GetValue(string command, Match MsgMatch)
         {
             int index = command.IndexOf('|');
-            string Value = command.Substring(index + 1);
+            string Value = command[(index + 1)..];
             if (MsgMatch == null)
             {
                 return Value;

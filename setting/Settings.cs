@@ -3,11 +3,11 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace Serein
+namespace Serein.setting
 {
-    class Settings
+    internal class Settings
     {
-        public static Thread SaveSettingsThread = new Thread(SaveSettings);
+        public static Thread SaveSettingsThread = new(SaveSettings);
         public static void StartSaveSettings()
         {
             SaveSettingsThread.IsBackground = true;
@@ -18,10 +18,10 @@ namespace Serein
             while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
-                SaveSettingsThread.Join(2500);
+                _ = SaveSettingsThread.Join(2500);
                 if (!Directory.Exists(Global.SettingPath))
                 {
-                    Directory.CreateDirectory(Global.SettingPath);
+                    _ = Directory.CreateDirectory(Global.SettingPath);
                 }
                 ServerStreamWriter = new StreamWriter(Global.SettingPath + "\\Server.json", false, Encoding.UTF8);
                 ServerStreamWriter.Write(

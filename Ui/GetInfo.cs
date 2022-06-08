@@ -6,15 +6,15 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace Serein
+namespace Serein.Ui
 {
-    class GetInfo
+    internal class GetInfo
     {
-        public static Thread GetAnnouncementThread = new Thread(GetAnnouncement)
+        public static Thread GetAnnouncementThread = new(GetAnnouncement)
         {
             IsBackground = true
         };
-        public static Thread GetVersionThread = new Thread(GetVersion)
+        public static Thread GetVersionThread = new(GetVersion)
         {
             IsBackground = true
         };

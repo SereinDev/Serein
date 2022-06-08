@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Serein.baseFunction;
+using Serein.setting;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -30,7 +32,7 @@ namespace Serein
             LoadPlugins();
             LoadRegex();
             LoadTask();
-            Thread UpdateInfoThread = new Thread(UpdateInfo)
+            Thread UpdateInfoThread = new(UpdateInfo)
             {
                 IsBackground = true
             };
@@ -38,8 +40,8 @@ namespace Serein
             TaskManager.RunnerThread.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();
-            SetWindowTheme(RegexList.Handle, "Explorer", null);
-            SetWindowTheme(TaskList.Handle, "Explorer", null);
+            _ = SetWindowTheme(RegexList.Handle, "Explorer", null);
+            _ = SetWindowTheme(TaskList.Handle, "Explorer", null);
             new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start();
         }
         private void ShowTutorial()
@@ -54,7 +56,7 @@ namespace Serein
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     ) == 1)
                 {
-                    Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
+                    _ = Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
                 }
             }
         }

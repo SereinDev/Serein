@@ -4,9 +4,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    partial class Plugins
+    internal partial class Plugins
     {
         public static string PluginPath = "";
         public static bool Available = true;
@@ -51,7 +51,7 @@ namespace Serein
         }
         public static void Add()
         {
-            OpenFileDialog Dialog = new OpenFileDialog
+            OpenFileDialog Dialog = new()
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
@@ -66,7 +66,7 @@ namespace Serein
                     }
                     catch (Exception Exp)
                     {
-                        MessageBox.Show(
+                        _ = MessageBox.Show(
                             $"文件\"{FileName}\"复制失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
@@ -86,7 +86,7 @@ namespace Serein
                 }
                 catch (Exception Exp)
                 {
-                    MessageBox.Show(
+                    _ = MessageBox.Show(
                         $"文件\"{FileName}\"复制失败\n" +
                         $"详细原因：\n" +
                         $"{Exp.Message}", "Serein",
@@ -120,7 +120,7 @@ namespace Serein
                     }
                     catch (Exception Exp)
                     {
-                        MessageBox.Show(
+                        _ = MessageBox.Show(
                                 $"文件\"{Items[0].Text}\"删除失败\n" +
                                 $"详细原因：\n" +
                                 $"{Exp.Message}", "Serein",
@@ -154,7 +154,7 @@ namespace Serein
                         }
                         catch (Exception Exp)
                         {
-                            MessageBox.Show(
+                            _ = MessageBox.Show(
                                     $"文件\"{Item.Text}\"删除失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
@@ -174,12 +174,12 @@ namespace Serein
                 {
                     try
                     {
-                        FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text);
+                        FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text);
                         RenamedFile.MoveTo(PluginPath + "\\" + Item.Text + ".lock");
                     }
                     catch (Exception Exp)
                     {
-                        MessageBox.Show(
+                        _ = MessageBox.Show(
                             $"文件\"{Item.Text}\"禁用失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
@@ -195,12 +195,12 @@ namespace Serein
             {
                 try
                 {
-                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text + ".lock");
+                    FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text + ".lock");
                     RenamedFile.MoveTo(PluginPath + "\\" + Item.Text);
                 }
                 catch (Exception Exp)
                 {
-                    MessageBox.Show(
+                    _ = MessageBox.Show(
                                     $"文件\"{Item.Text}\"禁用失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
@@ -213,7 +213,7 @@ namespace Serein
         {
             if (Server.Status)
             {
-                MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
             }
             else

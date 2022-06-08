@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 
-namespace Serein
+namespace Serein.baseFunction
 {
-    class TaskManager
+    internal class TaskManager
     {
-        public static Thread RunnerThread = new Thread(Runner) { IsBackground = true };
+        public static Thread RunnerThread = new(Runner) { IsBackground = true };
         public static void Runner()
         {
             while (true)
