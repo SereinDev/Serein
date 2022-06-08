@@ -183,7 +183,11 @@ namespace Serein
             Text = Regex.Replace(Text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%DayTime%", CurrentTime.TimeOfDay.ToString().Split('.')[0], RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%Date%", CurrentTime.Date.ToString().Split(' ')[0], RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
             if (JsonObject != null)
             {
                 try
@@ -217,6 +221,7 @@ namespace Serein
                 Text = Regex.Replace(Text, "%Difficulty%", Server.Difficulty, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", Server.GetTime(), RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Percentage%", Server.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%FileName%", Server.StartFileName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
             else
@@ -226,6 +231,7 @@ namespace Serein
                 Text = Regex.Replace(Text, "%Difficulty%", "", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Percentage%", "-", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%FileName%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);
             }
             return Text.Replace("\\n", "\n");
