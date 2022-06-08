@@ -1,5 +1,4 @@
-﻿using Serein.baseFunction;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -26,7 +25,7 @@ namespace Serein
             Application.EnableVisualStyles();
             _ = Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
-            Ui ui = new Ui();
+            Ui ui = new();
             Global.Ui = ui;
             Application.Run(ui);
         }

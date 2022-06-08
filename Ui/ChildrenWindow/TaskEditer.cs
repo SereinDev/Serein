@@ -24,7 +24,7 @@ namespace Serein
             if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
                 string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
             {
-                if (baseFunction.Command.GetType(Command.Text) == -1)
+                if (Serein.Command.GetType(Command.Text) == -1)
                 {
                     _ = MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

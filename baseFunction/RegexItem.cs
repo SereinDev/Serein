@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     internal class RegexItem
     {
@@ -34,7 +34,7 @@ namespace Serein.baseFunction
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (baseFunction.Command.GetType(Command) == -1)
+                if (Serein.Command.GetType(Command) == -1)
                 {
                     return false;
                 }

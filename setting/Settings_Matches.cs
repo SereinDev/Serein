@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Serein.setting
+namespace Serein
 {
     internal class Settings_Matches
     {

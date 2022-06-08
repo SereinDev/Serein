@@ -1,4 +1,4 @@
-﻿namespace Serein.setting
+﻿namespace Serein
 {
     internal class Settings_Serein
     {

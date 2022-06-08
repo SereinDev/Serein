@@ -1,6 +1,4 @@
-﻿using Serein.baseFunction;
-using Serein.setting;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;

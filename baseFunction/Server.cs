@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     public class Server
     {
@@ -162,7 +162,7 @@ namespace Serein.baseFunction
                 {
                     CommandList.RemoveAt(0);
                 }
-                if (StartedByCommand || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
+                if (StartedByCommand || (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);

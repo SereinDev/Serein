@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     internal partial class Plugins
     {

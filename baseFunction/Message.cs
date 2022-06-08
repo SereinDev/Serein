@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     public class Message
     {

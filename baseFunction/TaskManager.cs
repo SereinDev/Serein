@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     internal class TaskManager
     {

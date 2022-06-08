@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Management;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     internal class SystemInfo
     {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     public class Websocket
     {

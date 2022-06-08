@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace Serein.setting
+namespace Serein
 {
     internal class Settings
     {

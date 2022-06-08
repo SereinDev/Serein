@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Serein.baseFunction
+namespace Serein
 {
     internal class TaskItem
     {
@@ -17,7 +17,7 @@ namespace Serein.baseFunction
         {
             Task RunTask = new(() =>
             {
-                baseFunction.Command.Run(Command);
+                Serein.Command.Run(Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                 NextTime = Occurrences[0];
             }
@@ -31,7 +31,7 @@ namespace Serein.baseFunction
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (baseFunction.Command.GetType(Command) == -1)
+                if (Serein.Command.GetType(Command) == -1)
                 {
                     return false;
                 }
