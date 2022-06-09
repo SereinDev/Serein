@@ -159,10 +159,7 @@ namespace Serein
             {
                 return 6;
             }
-            else
-            {
-                return -1;
-            }
+            return -1;
         }
         public static string GetValue(string command, Match MsgMatch)
         {
