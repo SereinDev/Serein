@@ -7,6 +7,8 @@ namespace Serein
 {
     public partial class Ui : Form
     {
+        bool isdrag = false;
+        ListViewItem itemDraged;
         private void FocusWindow()
         {
             Visible = true;
@@ -32,6 +34,10 @@ namespace Serein
                 Visible = false;
                 ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+            }
+            else
+            {
+                SereinIcon.Dispose();
             }
         }
         public void ShowBalloonTip(string text)

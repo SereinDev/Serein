@@ -13,17 +13,33 @@ namespace Serein
 {
     public partial class Ui : Form
     {
-        private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
+        private void TaskList_MouseUp(object sender, MouseEventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            SaveTask();
+            isdrag = false;
+            if ((TaskList.SelectedItems.Count != 0) && (itemDraged != null))
+            {
+                if (itemDraged.Index != TaskList.SelectedItems[0].Index)
+                {
+                    TaskList.Items.RemoveAt(itemDraged.Index);
+                    TaskList.Items.Insert(TaskList.SelectedItems[0].Index, itemDraged);
+                    itemDraged = null;
+                }
+            }
         }
-        private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
+        private void TaskList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            itemDraged = (ListViewItem)e.Item;
+            isdrag = true;
+        }
+
+        private void TaskList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+        {
+            e.Item.Selected = isdrag;
         }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            SaveRegex();
+            SaveTask();
             if (TaskList.SelectedItems.Count <= 0)
             {
                 TaskContextMenuStrip_Edit.Enabled = false;
@@ -79,7 +95,14 @@ namespace Serein
             ListViewItem Item = new(TE.Cron.Text);
             Item.SubItems.Add(TE.Remark.Text);
             Item.SubItems.Add(TE.Command.Text);
-            TaskList.Items.Add(Item);
+            if (TaskList.SelectedItems.Count > 0)
+            {
+                TaskList.Items.Insert(TaskList.SelectedItems[0].Index + 1, Item);
+            }
+            else
+            {
+                TaskList.Items.Add(Item);
+            }
             SaveTask();
         }
         private void TaskContextMenuStrip_Edit_Click(object sender, EventArgs e)
@@ -258,6 +281,14 @@ namespace Serein
                 TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
+        }
+        private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+        }
+        private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
     }
 }

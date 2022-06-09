@@ -128,8 +128,8 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SettingSereinDownload = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.SettingSereinStatement2 = new System.Windows.Forms.Label();
             this.SettingSereinStatement = new System.Windows.Forms.Label();
             this.SettingSereinPage = new System.Windows.Forms.Label();
@@ -491,6 +491,7 @@ namespace Serein
             // RegexList
             // 
             this.RegexList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.RegexList.AllowDrop = true;
             this.RegexList.BackColor = System.Drawing.SystemColors.Window;
             this.RegexList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.RegexListRegex,
@@ -508,6 +509,9 @@ namespace Serein
             this.RegexList.Name = "RegexList";
             this.RegexList.UseCompatibleStateImageBehavior = false;
             this.RegexList.View = System.Windows.Forms.View.Details;
+            this.RegexList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.RegexList_ItemDrag);
+            this.RegexList.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.RegexList_ItemMouseHover);
+            this.RegexList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RegexList_MouseUp);
             // 
             // RegexListRegex
             // 
@@ -607,6 +611,7 @@ namespace Serein
             // 
             // TaskList
             // 
+            this.TaskList.AllowDrop = true;
             this.TaskList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader3,
@@ -620,6 +625,9 @@ namespace Serein
             this.TaskList.Name = "TaskList";
             this.TaskList.UseCompatibleStateImageBehavior = false;
             this.TaskList.View = System.Windows.Forms.View.Details;
+            this.TaskList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TaskList_ItemDrag);
+            this.TaskList.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.TaskList_ItemMouseHover);
+            this.TaskList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TaskList_MouseUp);
             // 
             // columnHeader1
             // 
@@ -852,8 +860,8 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.label2);
             this.SettingSerein.Controls.Add(this.SettingSereinDownload);
-            this.SettingSerein.Controls.Add(this.label1);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement2);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement);
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
@@ -867,6 +875,11 @@ namespace Serein
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
             // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
             // SettingSereinDownload
             // 
             resources.ApplyResources(this.SettingSereinDownload, "SettingSereinDownload");
@@ -875,11 +888,6 @@ namespace Serein
             this.SettingSereinDownload.Name = "SettingSereinDownload";
             this.SettingSereinDownload.Click += new System.EventHandler(this.SettingSereinDownload_Click);
             this.SettingSereinDownload.MouseHover += new System.EventHandler(this.SettingSereinDownload_MouseHover);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
             // 
             // SettingSereinStatement2
             // 
@@ -1341,8 +1349,8 @@ namespace Serein
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Label SettingSereinStatement2;
         private System.Windows.Forms.Label SettingSereinStatement;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label SettingSereinDownload;
+        private System.Windows.Forms.Label label2;
     }
 }
 

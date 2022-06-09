@@ -12,6 +12,9 @@ namespace Serein
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
         private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
         private void InitWebBrowser()
         {
 
@@ -26,7 +29,6 @@ namespace Serein
             InitWebBrowser();
             Settings.ReadSettings();
             LoadSettings();
-            Settings.StartSaveSettings();
             LoadPlugins();
             LoadRegex();
             LoadTask();
@@ -35,12 +37,15 @@ namespace Serein
                 IsBackground = true
             };
             UpdateInfoThread.Start();
+            Settings.StartSaveSettings();
             TaskManager.RunnerThread.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
-            new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start();
+            SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            new Task(() => Debug_Append(SystemInfo.CPUPercentage)).Start();
         }
         private void ShowTutorial()
         {

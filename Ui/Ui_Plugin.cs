@@ -146,6 +146,10 @@ namespace Serein
                     {
                         PluginGroupPy.Items.Add(Item);
                     }
+                    else if (PluginFile.ToUpper().EndsWith(".LUA"))
+                    {
+                        PluginGroupLua.Items.Add(Item);
+                    }
                     else if (PluginFile.ToUpper().EndsWith(".GO"))
                     {
                         PluginGroupGo.Items.Add(Item);
