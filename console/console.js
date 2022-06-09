@@ -1,8 +1,8 @@
 "use strict";
 
-line = 0;
+var line = 0;
 function AppendText(str) {
-    ConsoleDiv = document.querySelector("#console");
+    var ConsoleDiv = document.querySelector("#console");
     line = line + 1;
     if (str == "#clear") {
         Clear();
