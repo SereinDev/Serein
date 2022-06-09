@@ -11,14 +11,31 @@ namespace Serein
     public partial class Ui : Form
     {
         public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）" };
-        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
+
+        private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            itemDraged = (ListViewItem)e.Item;
+            isdrag = true;
         }
 
-        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
+        private void RegexList_MouseUp(object sender, MouseEventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            SaveRegex();
+            isdrag = false;
+            if ((RegexList.SelectedItems.Count != 0) && (itemDraged != null))
+            {
+                if (itemDraged.Index != RegexList.SelectedItems[0].Index)
+                {
+                    RegexList.Items.RemoveAt(itemDraged.Index);
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index, itemDraged);
+                    itemDraged = null;
+                }
+            }
+        }
+
+        private void RegexList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+        {
+            e.Item.Selected = isdrag;
         }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -160,12 +177,21 @@ namespace Serein
             Item.SubItems.Add(command);
             if (RegexList.InvokeRequired)
             {
-                Action<ListViewItem> actionDelegate = (x) => { RegexList.Items.Add(Item); };
+                Action<ListViewItem> actionDelegate = (x) => {
+                    RegexList.Items.Add(Item);
+                };
                 PanelInfoLevel2.Invoke(actionDelegate, Item);
             }
             else
             {
-                RegexList.Items.Add(Item);
+                if (RegexList.SelectedItems.Count > 0)
+                {
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index+1,Item);
+                }
+                else
+                {
+                    RegexList.Items.Add(Item);
+                }
             }
         }
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
@@ -202,6 +228,7 @@ namespace Serein
         }
         public void LoadRegex(string FileName)
         {
+            RegexList.BeginUpdate();
             RegexList.Items.Clear();
             if (File.Exists(FileName))
             {
@@ -223,6 +250,7 @@ namespace Serein
                 TsvFile.Close();
                 Reader.Close();
                 Global.RegexItems = regexItems;
+                RegexList.EndUpdate();
             }
         }
         public void SaveRegex()
@@ -255,6 +283,14 @@ namespace Serein
             RegexWriter.Flush();
             RegexWriter.Close();
         }
-    }
+        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+        }
 
+        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+        }
+    }
 }

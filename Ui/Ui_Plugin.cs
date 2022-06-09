@@ -121,6 +121,7 @@ namespace Serein
                 ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupLua = new ListViewGroup("Lua", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
                 PluginList.Groups.Add(PluginGroupJs);
@@ -151,6 +152,10 @@ namespace Serein
                     else if (PluginFile.ToUpper().EndsWith(".PY"))
                     {
                         PluginGroupPy.Items.Add(Item);
+                    }
+                    else if (PluginFile.ToUpper().EndsWith(".LUA"))
+                    {
+                        PluginGroupLua.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".GO"))
                     {

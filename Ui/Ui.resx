@@ -1868,6 +1868,39 @@
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 126</value>
+  </data>
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>406, 24</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>_________________________________</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="SettingSereinDownload.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1878,7 +1911,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 133</value>
+    <value>393, 163</value>
   </data>
   <data name="SettingSereinDownload.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 24</value>
@@ -1899,39 +1932,6 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinDownload.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 178</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>406, 24</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>_________________________________</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>SettingSerein</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="SettingSereinStatement2.AutoSize" type="System.Boolean, mscorlib">
@@ -1941,7 +1941,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinStatement2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 238</value>
+    <value>17, 230</value>
   </data>
   <data name="SettingSereinStatement2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -1971,7 +1971,7 @@
     <value>True</value>
   </data>
   <data name="SettingSereinStatement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 208</value>
+    <value>17, 200</value>
   </data>
   <data name="SettingSereinStatement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -2007,7 +2007,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 133</value>
+    <value>21, 163</value>
   </data>
   <data name="SettingSereinPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
@@ -2040,7 +2040,7 @@
     <value>宋体, 9pt, style=Underline</value>
   </data>
   <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 133</value>
+    <value>297, 163</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2073,7 +2073,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 133</value>
+    <value>123, 163</value>
   </data>
   <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2133,7 +2133,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinTutorial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 133</value>
+    <value>209, 163</value>
   </data>
   <data name="SettingSereinTutorial.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2226,7 +2226,7 @@
     <value>0, 859</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 283</value>
+    <value>1198, 275</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -3134,7 +3134,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>800, 650</value>
+    <value>800, 620</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Serein</value>
