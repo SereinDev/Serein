@@ -113,12 +113,14 @@ namespace Serein
                 ListViewGroup PluginGroupDll = new("Dll", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupJar = new("Jar", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupPy = new("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupLua = new("Lua", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupGo = new("Go", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
                 PluginList.Groups.Add(PluginGroupJs);
                 PluginList.Groups.Add(PluginGroupDll);
                 PluginList.Groups.Add(PluginGroupJar);
                 PluginList.Groups.Add(PluginGroupPy);
+                PluginList.Groups.Add(PluginGroupLua);
                 PluginList.Groups.Add(PluginGroupGo);
                 PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
