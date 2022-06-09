@@ -177,7 +177,8 @@ namespace Serein
             Item.SubItems.Add(command);
             if (RegexList.InvokeRequired)
             {
-                Action<ListViewItem> actionDelegate = (x) => {
+                Action<ListViewItem> actionDelegate = (x) =>
+                {
                     RegexList.Items.Add(Item);
                 };
                 PanelInfoLevel2.Invoke(actionDelegate, Item);
@@ -186,7 +187,7 @@ namespace Serein
             {
                 if (RegexList.SelectedItems.Count > 0)
                 {
-                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index+1,Item);
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index + 1, Item);
                 }
                 else
                 {

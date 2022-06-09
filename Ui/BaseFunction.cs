@@ -8,7 +8,7 @@ namespace Serein
     public partial class Ui : Form
     {
         bool isdrag = false;
-        ListViewItem itemDraged; 
+        ListViewItem itemDraged;
         private void FocusWindow()
         {
             Visible = true;
