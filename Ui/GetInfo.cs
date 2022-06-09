@@ -5,19 +5,14 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Serein
 {
     internal class GetInfo
     {
-        public static Thread GetAnnouncementThread = new(GetAnnouncement)
-        {
-            IsBackground = true
-        };
-        public static Thread GetVersionThread = new(GetVersion)
-        {
-            IsBackground = true
-        };
+        public static Task GetAnnouncementThread = new(GetAnnouncement);
+        public static Task GetVersionThread = new(GetVersion);
         public static void GetAnnouncement()
         {
             Thread.Sleep(100);

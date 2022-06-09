@@ -2,15 +2,15 @@
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Serein
 {
     internal class Settings
     {
-        public static Thread SaveSettingsThread = new(SaveSettings);
+        public static Task SaveSettingsThread = new(SaveSettings);
         public static void StartSaveSettings()
         {
-            SaveSettingsThread.IsBackground = true;
             SaveSettingsThread.Start();
         }
         public static void SaveSettings()
@@ -18,7 +18,7 @@ namespace Serein
             while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
-                SaveSettingsThread.Join(2500);
+                SaveSettingsThread.Wait(2500);
                 if (!Directory.Exists(Global.SettingPath))
                 {
                     Directory.CreateDirectory(Global.SettingPath);
