@@ -96,9 +96,9 @@ namespace Serein
             {
                 Arguments = PluginList.SelectedItems.Count >= 1
                 ? PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray
-                    ? "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\""
-                    : "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\""
-                : "/e,\"" + Plugins.PluginPath + "\""
+                    ? $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}.lock\""
+                    : $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}\""
+                : $"/e,\"{Plugins.PluginPath}\""
             };
             Process.Start(psi);
         }

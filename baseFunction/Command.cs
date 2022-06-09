@@ -127,23 +127,42 @@ namespace Serein
             5           群聊
             6           私聊
             */
-            return !Command.Contains("|")
-                ? -1
-                : !Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase)
-                ? -1
-                : Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase)
-                ? 1
-                : Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase)
-                    ? 2
-                    : Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase)
-                                    ? 3
-                                    : Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase)
-                                                    ? 4
-                                                    : Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase)
-                                                                    ? 5
-                                                                    : Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase)
-                                                                                    ? 6
-                                                                                    : -1;
+            if (!Command.Contains("|"))
+            {
+                return -1;
+            }
+            if (!Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase))
+            {
+                return -1;
+            }
+            if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
+            {
+                return 1;
+            }
+            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
+            {
+                return 2;
+            }
+            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            {
+                return 3;
+            }
+            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            {
+                return 4;
+            }
+            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            {
+                return 5;
+            }
+            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            {
+                return 6;
+            }
+            else
+            {
+                return -1;
+            }
         }
         public static string GetValue(string command, Match MsgMatch)
         {
