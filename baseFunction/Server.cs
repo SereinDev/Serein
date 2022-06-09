@@ -21,7 +21,7 @@ namespace Serein
         private static bool Finished = false;
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
-        private static Thread WaitForExitThread, RestartTimerThread, GetCPUPercentThread;
+        private static CancellationToken WaitForExitTaskCancellationToken, RestartTimerTaskCancellationToken, GetCPUPercentTaskCancellationToken;
         private static bool Killed;
         private static StreamWriter CommandWriter, LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
@@ -81,16 +81,8 @@ namespace Serein
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
-                WaitForExitThread = new Thread(WaitForExit)
-                {
-                    IsBackground = true
-                };
-                WaitForExitThread.Start();
-                GetCPUPercentThread = new Thread(GetCPUPercent)
-                {
-                    IsBackground = true
-                };
-                GetCPUPercentThread.Start();
+                Task.Run(WaitForExit, WaitForExitTaskCancellationToken = new());
+                Task.Run(GetCPUPercent, GetCPUPercentTaskCancellationToken = new());
             }
         }
         public static void Stop()
@@ -274,16 +266,12 @@ namespace Serein
             }
             if (Restart)
             {
-                RestartTimerThread = new Thread(RestartTimer)
-                {
-                    IsBackground = true
-                };
-                RestartTimerThread.Start();
+                Task.Run(RestartTimer, RestartTimerTaskCancellationToken = new());
             }
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
-            WaitForExitThread.Abort();
+            CancellationTokenSource.CreateLinkedTokenSource(WaitForExitTaskCancellationToken).Cancel();
         }
         public static void RestartRequest()
         {
@@ -307,7 +295,7 @@ namespace Serein
                 {
                     break;
                 }
-                RestartTimerThread.Join(500);
+                CancellationTokenSource.CreateLinkedTokenSource(RestartTimerTaskCancellationToken).CancelAfter(500);
             }
             if (Restart)
             {
@@ -319,7 +307,7 @@ namespace Serein
                 $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消."
                 );
             }
-            RestartTimerThread.Abort();
+            CancellationTokenSource.CreateLinkedTokenSource(RestartTimerTaskCancellationToken).Cancel();
         }
         public static void GetCPUPercent()
         {
@@ -329,7 +317,7 @@ namespace Serein
                 CPUPersent = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
             }
-            Thread.CurrentThread.Abort();
+            CancellationTokenSource.CreateLinkedTokenSource(GetCPUPercentTaskCancellationToken).Cancel();
         }
         public static string GetTime()
         {

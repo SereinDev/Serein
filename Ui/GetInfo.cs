@@ -101,7 +101,7 @@ namespace Serein
             Request.ProtocolVersion = HttpVersion.Version10;
             Request.Method = "GET";
             Request.ContentType = "text/html;charset=UTF-8";
-            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32";
+            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33";
             Request.Accept = isApi ? Request.Accept : "application/vnd.github.v3+json";
             Response = (HttpWebResponse)Request.GetResponse();
             ResponseStream = Response.GetResponseStream();
