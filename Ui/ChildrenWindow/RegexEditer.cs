@@ -22,24 +22,24 @@ namespace Serein
             {
                 if (Command.GetType(CommandTextBox.Text) == -1)
                 {
-                    _ = MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try
                 {
                     Regex m = new(RegexTextBox.Text);
-                    _ = m.Match(string.Empty);
+                    m.Match(string.Empty);
                     CancelFlag = false;
                     Close();
                 }
                 catch
                 {
-                    _ = MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                _ = MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void Cancel_Click(object sender, EventArgs e)
@@ -104,7 +104,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = CommandTextBox.Focus();
+                CommandTextBox.Focus();
             }
         }
 
@@ -112,14 +112,14 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = RemarkTextBox.Focus();
+                RemarkTextBox.Focus();
             }
         }
         private void RemarkTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = Confirm.Focus();
+                Confirm.Focus();
                 Confirm_Click(this, EventArgs.Empty);
             }
         }

@@ -15,11 +15,11 @@ namespace Serein
     {
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
         }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -71,15 +71,15 @@ namespace Serein
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
             TaskEditer TE = new();
-            _ = TE.ShowDialog();
+            TE.ShowDialog();
             if (TE.CancelFlag)
             {
                 return;
             }
             ListViewItem Item = new(TE.Cron.Text);
-            _ = Item.SubItems.Add(TE.Remark.Text);
-            _ = Item.SubItems.Add(TE.Command.Text);
-            _ = TaskList.Items.Add(Item);
+            Item.SubItems.Add(TE.Remark.Text);
+            Item.SubItems.Add(TE.Command.Text);
+            TaskList.Items.Add(Item);
             SaveTask();
         }
         private void TaskContextMenuStrip_Edit_Click(object sender, EventArgs e)
@@ -92,7 +92,7 @@ namespace Serein
                     TaskList.SelectedItems[0].SubItems[1].Text,
                     TaskList.SelectedItems[0].SubItems[2].Text
                     );
-                _ = TE.ShowDialog();
+                TE.ShowDialog();
                 if (TE.CancelFlag)
                 {
                     return;
@@ -144,7 +144,7 @@ namespace Serein
         {
             if (!Directory.Exists(Global.Path + "\\data"))
             {
-                _ = Directory.CreateDirectory(Global.Path + "\\data");
+                Directory.CreateDirectory(Global.Path + "\\data");
             }
             StreamWriter TaskWriter = new(
                 File.Open(
@@ -208,15 +208,15 @@ namespace Serein
             foreach (TaskItem Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new(Item.Cron);
-                _ = listViewItem.SubItems.Add(Item.Remark);
-                _ = listViewItem.SubItems.Add(Item.Command);
+                listViewItem.SubItems.Add(Item.Remark);
+                listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;
                     listViewItem.SubItems[2].ForeColor = Color.Gray;
                 }
-                _ = TaskList.Items.Add(listViewItem);
+                TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
         }
@@ -247,15 +247,15 @@ namespace Serein
             foreach (TaskItem Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new(Item.Cron);
-                _ = listViewItem.SubItems.Add(Item.Remark);
-                _ = listViewItem.SubItems.Add(Item.Command);
+                listViewItem.SubItems.Add(Item.Remark);
+                listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;
                     listViewItem.SubItems[2].ForeColor = Color.Gray;
                 }
-                _ = TaskList.Items.Add(listViewItem);
+                TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
         }

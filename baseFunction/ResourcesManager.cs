@@ -16,7 +16,7 @@ namespace Serein
         {
             if (!Directory.Exists(Global.Path + "console"))
             {
-                _ = Directory.CreateDirectory(Global.Path + "console");
+                Directory.CreateDirectory(Global.Path + "console");
             }
             StreamWriter streamWriter = new(Global.Path + "console\\" + Name, false, Encoding.UTF8);
             streamWriter.Write(Resource);

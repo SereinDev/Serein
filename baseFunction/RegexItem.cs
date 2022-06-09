@@ -41,7 +41,7 @@ namespace Serein
                 try
                 {
                     Regex m = new(Regex);
-                    _ = m.Match(string.Empty);
+                    m.Match(string.Empty);
                     return true;
                 }
                 catch

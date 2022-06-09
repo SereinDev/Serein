@@ -9,13 +9,13 @@ namespace Serein
         private delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
         private void PanelConsoleWebBrowser_AppendText(object[] objects)
         {
-            _ = PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
+            PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
         }
         public void PanelConsoleWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
-            _ = Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
+            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
         }
 
         private void PanelControlStart_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace Serein
         {
             Server.InputCommand(PanelConsoleInput.Text);
             PanelConsoleInput.Clear();
-            _ = PanelConsoleInput.Focus();
+            PanelConsoleInput.Focus();
         }
         private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
@@ -83,7 +83,7 @@ namespace Serein
         private void PanelConsoleInput_Update(string Text = "")
         {
             PanelConsoleInput.Text = Text;
-            _ = PanelConsoleInput.Focus();
+            PanelConsoleInput.Focus();
             PanelConsoleInput.Select(PanelConsoleInput.TextLength, 0);
             PanelConsoleInput.ScrollToCaret();
         }

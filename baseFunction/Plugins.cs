@@ -66,7 +66,7 @@ namespace Serein
                     }
                     catch (Exception Exp)
                     {
-                        _ = MessageBox.Show(
+                        MessageBox.Show(
                             $"文件\"{FileName}\"复制失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
@@ -86,7 +86,7 @@ namespace Serein
                 }
                 catch (Exception Exp)
                 {
-                    _ = MessageBox.Show(
+                    MessageBox.Show(
                         $"文件\"{FileName}\"复制失败\n" +
                         $"详细原因：\n" +
                         $"{Exp.Message}", "Serein",
@@ -120,7 +120,7 @@ namespace Serein
                     }
                     catch (Exception Exp)
                     {
-                        _ = MessageBox.Show(
+                        MessageBox.Show(
                                 $"文件\"{Items[0].Text}\"删除失败\n" +
                                 $"详细原因：\n" +
                                 $"{Exp.Message}", "Serein",
@@ -154,7 +154,7 @@ namespace Serein
                         }
                         catch (Exception Exp)
                         {
-                            _ = MessageBox.Show(
+                            MessageBox.Show(
                                     $"文件\"{Item.Text}\"删除失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
@@ -179,7 +179,7 @@ namespace Serein
                     }
                     catch (Exception Exp)
                     {
-                        _ = MessageBox.Show(
+                        MessageBox.Show(
                             $"文件\"{Item.Text}\"禁用失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
@@ -200,7 +200,7 @@ namespace Serein
                 }
                 catch (Exception Exp)
                 {
-                    _ = MessageBox.Show(
+                    MessageBox.Show(
                                     $"文件\"{Item.Text}\"禁用失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
@@ -213,7 +213,7 @@ namespace Serein
         {
             if (Server.Status)
             {
-                _ = MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
             }
             else

@@ -47,7 +47,7 @@ namespace Serein
                 if (DebugTextBox.InvokeRequired)
                 {
                     Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\n" + _Text; };
-                    _ = PanelInfoTime2.Invoke(actionDelegate, Text);
+                    PanelInfoTime2.Invoke(actionDelegate, Text);
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace Serein
                 }
                 else if (FileList.Count == 0 && data.Length > 0)
                 {
-                    _ = MessageBox.Show(this,
+                    MessageBox.Show(this,
                         ":(\n无法识别所选文件",
                         "Serein",
                         MessageBoxButtons.OKCancel,

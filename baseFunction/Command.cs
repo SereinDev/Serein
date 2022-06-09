@@ -30,7 +30,7 @@ namespace Serein
                     StandardOutputEncoding = Encoding.UTF8
                 }
             };
-            _ = CMDProcess.Start();
+            CMDProcess.Start();
             StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default)
             {
                 AutoFlush = true,

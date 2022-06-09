@@ -14,7 +14,7 @@ namespace Serein
         {
             if (!Directory.Exists(Global.SettingPath))
             {
-                _ = Directory.CreateDirectory(Global.SettingPath);
+                Directory.CreateDirectory(Global.SettingPath);
             }
             if (File.Exists(Global.SettingPath + "\\Matches.ini"))
             {
@@ -30,7 +30,7 @@ namespace Serein
                         Type = Line[..Line.IndexOf("=")].Trim();
                         try
                         {
-                            _ = Regex.Match(string.Empty, Value);
+                            Regex.Match(string.Empty, Value);
                         }
                         catch
                         {

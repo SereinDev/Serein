@@ -18,10 +18,10 @@ namespace Serein
             while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
-                _ = SaveSettingsThread.Join(2500);
+                SaveSettingsThread.Join(2500);
                 if (!Directory.Exists(Global.SettingPath))
                 {
-                    _ = Directory.CreateDirectory(Global.SettingPath);
+                    Directory.CreateDirectory(Global.SettingPath);
                 }
                 ServerStreamWriter = new StreamWriter(Global.SettingPath + "\\Server.json", false, Encoding.UTF8);
                 ServerStreamWriter.Write(

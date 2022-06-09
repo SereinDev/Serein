@@ -100,7 +100,7 @@ namespace Serein
                     : "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\""
                 : "/e,\"" + Plugins.PluginPath + "\""
             };
-            _ = Process.Start(psi);
+            Process.Start(psi);
         }
         public void LoadPlugins()
         {
@@ -115,12 +115,12 @@ namespace Serein
                 ListViewGroup PluginGroupPy = new("Py", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupGo = new("Go", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
-                _ = PluginList.Groups.Add(PluginGroupJs);
-                _ = PluginList.Groups.Add(PluginGroupDll);
-                _ = PluginList.Groups.Add(PluginGroupJar);
-                _ = PluginList.Groups.Add(PluginGroupPy);
-                _ = PluginList.Groups.Add(PluginGroupGo);
-                _ = PluginList.Groups.Add(PluginGroupDisable);
+                PluginList.Groups.Add(PluginGroupJs);
+                PluginList.Groups.Add(PluginGroupDll);
+                PluginList.Groups.Add(PluginGroupJar);
+                PluginList.Groups.Add(PluginGroupPy);
+                PluginList.Groups.Add(PluginGroupGo);
+                PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
                 {
                     string PluginName = Path.GetFileName(PluginFile);
@@ -130,28 +130,28 @@ namespace Serein
                     bool added = true;
                     if (PluginFile.ToUpper().EndsWith(".JS"))
                     {
-                        _ = PluginGroupJs.Items.Add(Item);
+                        PluginGroupJs.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".DLL"))
                     {
-                        _ = PluginGroupDll.Items.Add(Item);
+                        PluginGroupDll.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".JAR"))
                     {
-                        _ = PluginGroupJar.Items.Add(Item);
+                        PluginGroupJar.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".PY"))
                     {
-                        _ = PluginGroupPy.Items.Add(Item);
+                        PluginGroupPy.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".GO"))
                     {
-                        _ = PluginGroupGo.Items.Add(Item);
+                        PluginGroupGo.Items.Add(Item);
                     }
                     else if (PluginFile.ToUpper().EndsWith(".LOCK"))
                     {
                         Item.ForeColor = System.Drawing.Color.Gray;
-                        _ = PluginGroupDisable.Items.Add(Item);
+                        PluginGroupDisable.Items.Add(Item);
                     }
                     else
                     {
@@ -159,7 +159,7 @@ namespace Serein
                     }
                     if (added)
                     {
-                        _ = PluginList.Items.Add(Item);
+                        PluginList.Items.Add(Item);
                     }
                 }
                 PluginList.EndUpdate();

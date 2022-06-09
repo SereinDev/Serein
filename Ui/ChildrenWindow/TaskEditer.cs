@@ -26,7 +26,7 @@ namespace Serein
             {
                 if (Serein.Command.GetType(Command.Text) == -1)
                 {
-                    _ = MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 try
@@ -40,12 +40,12 @@ namespace Serein
                 catch
                 {
                     CronNextTime.Text = "Cron表达式无效";
-                    _ = MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                _ = MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
@@ -73,7 +73,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = Command.Focus();
+                Command.Focus();
             }
         }
 
@@ -81,7 +81,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = Confirm.Focus();
+                Confirm.Focus();
                 Confirm_Click(this, EventArgs.Empty);
             }
         }
@@ -90,7 +90,7 @@ namespace Serein
         {
             if (e.KeyCode == Keys.Enter)
             {
-                _ = Remark.Focus();
+                Remark.Focus();
             }
         }
         private void Cron_KeyPress(object sender, KeyPressEventArgs e)

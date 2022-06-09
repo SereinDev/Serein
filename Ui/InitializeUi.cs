@@ -38,8 +38,8 @@ namespace Serein
             TaskManager.RunnerThread.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();
-            _ = SetWindowTheme(RegexList.Handle, "Explorer", null);
-            _ = SetWindowTheme(TaskList.Handle, "Explorer", null);
+            SetWindowTheme(RegexList.Handle, "Explorer", null);
+            SetWindowTheme(TaskList.Handle, "Explorer", null);
             new Task(() => { Debug_Append(SystemInfo.CPUPercentage); }).Start();
         }
         private void ShowTutorial()
@@ -54,7 +54,7 @@ namespace Serein
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     ) == 1)
                 {
-                    _ = Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
+                    Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
                 }
             }
         }

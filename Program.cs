@@ -23,7 +23,7 @@ namespace Serein
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
-            _ = Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
             Ui ui = new();
             Global.Ui = ui;
@@ -52,7 +52,7 @@ namespace Serein
             }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
             {
-                _ = Directory.CreateDirectory(Global.Path + "\\logs\\crash");
+                Directory.CreateDirectory(Global.Path + "\\logs\\crash");
             }
             try
             {
@@ -70,7 +70,7 @@ namespace Serein
                 LogWriter.Close();
             }
             catch { }
-            _ = MessageBox.Show(
+            MessageBox.Show(
                 "崩溃啦:(\n\n" +
                 $"{Text}\n" +
                 $"版本： {Global.VERSION}\n" +

@@ -20,11 +20,11 @@ namespace Serein
         {
             if (Status)
             {
-                _ = MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else if (!CheckPort(Global.Settings_Bot.Port))
             {
-                _ = MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace Serein
             }
             else
             {
-                _ = MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void Recieve(object sender, MessageEventArgs e)
@@ -126,7 +126,7 @@ namespace Serein
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))
                 {
-                    _ = Directory.CreateDirectory(Global.Path + "\\logs\\msg");
+                    Directory.CreateDirectory(Global.Path + "\\logs\\msg");
                 }
                 try
                 {

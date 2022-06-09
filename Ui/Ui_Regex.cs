@@ -13,12 +13,12 @@ namespace Serein
         public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）" };
         private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
         }
 
         private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            Process.Start("https://zaitonn.github.io/Serein/Command.html");
         }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -38,7 +38,7 @@ namespace Serein
         private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
             RegexEditer regexEditer = new();
-            _ = regexEditer.ShowDialog(this);
+            regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
                 return;
@@ -67,7 +67,7 @@ namespace Serein
                 RegexList.SelectedItems[0].SubItems[3].Text,
                 RegexList.SelectedItems[0].SubItems[4].Text
                 );
-            _ = regexEditer.ShowDialog(this);
+            regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
                 return;
@@ -124,18 +124,18 @@ namespace Serein
             string isAdminText = string.Empty;
             ListViewItem Item = new(regex);
             isAdminText = areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
-            _ = Item.SubItems.Add(areas[areaIndex]);
-            _ = Item.SubItems.Add(isAdminText);
-            _ = Item.SubItems.Add(remark);
-            _ = Item.SubItems.Add(command);
+            Item.SubItems.Add(areas[areaIndex]);
+            Item.SubItems.Add(isAdminText);
+            Item.SubItems.Add(remark);
+            Item.SubItems.Add(command);
             if (RegexList.InvokeRequired)
             {
-                Action<ListViewItem> actionDelegate = (x) => { _ = RegexList.Items.Add(Item); };
-                _ = PanelInfoLevel2.Invoke(actionDelegate, Item);
+                Action<ListViewItem> actionDelegate = (x) => { RegexList.Items.Add(Item); };
+                PanelInfoLevel2.Invoke(actionDelegate, Item);
             }
             else
             {
-                _ = RegexList.Items.Add(Item);
+                RegexList.Items.Add(Item);
             }
         }
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
@@ -200,7 +200,7 @@ namespace Serein
             List<RegexItem> regexItems = new();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
-                _ = Directory.CreateDirectory(Global.Path + "\\data");
+                Directory.CreateDirectory(Global.Path + "\\data");
             }
             StreamWriter RegexWriter = new(
                 File.Open(

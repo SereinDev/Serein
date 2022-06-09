@@ -32,21 +32,21 @@ namespace Serein
             {
                 if (!StartedByCommand)
                 {
-                    _ = MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (!File.Exists(Global.Settings_Server.Path))
             {
                 if (!StartedByCommand)
                 {
-                    _ = MessageBox.Show($":(\n启动文件\"{Global.Settings_Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($":(\n启动文件\"{Global.Settings_Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (Status)
             {
                 if (!StartedByCommand)
                 {
-                    _ = MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -111,7 +111,7 @@ namespace Serein
             }
             else
             {
-                _ = MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void Kill()
@@ -150,7 +150,7 @@ namespace Serein
             }
             else if (!Status)
             {
-                _ = MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public static void InputCommand(string Command, bool StartedByCommand = false)
@@ -177,7 +177,7 @@ namespace Serein
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
-                        _ = Directory.CreateDirectory(Global.Path + "\\logs\\console");
+                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
                     }
                     try
                     {
@@ -229,7 +229,7 @@ namespace Serein
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
-                        _ = Directory.CreateDirectory(Global.Path + "\\logs\\console");
+                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
                     }
                     try
                     {
@@ -307,7 +307,7 @@ namespace Serein
                 {
                     break;
                 }
-                _ = RestartTimerThread.Join(500);
+                RestartTimerThread.Join(500);
             }
             if (Restart)
             {
@@ -325,7 +325,7 @@ namespace Serein
         {
             while (Status)
             {
-                _ = Thread.CurrentThread.Join(2000);
+                Thread.CurrentThread.Join(2000);
                 CPUPersent = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
             }

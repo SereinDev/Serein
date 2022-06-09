@@ -73,7 +73,7 @@ namespace Serein
                 {
                     if (qq.Length is >= 6 and <= 16)
                     {
-                        _ = long.TryParse(qq, out long qq_);
+                        long.TryParse(qq, out long qq_);
                         list.Add(qq_);
                     }
                 }
@@ -85,7 +85,7 @@ namespace Serein
             if (Text != SettingBotGroupList.Text)
             {
                 SettingBotGroupList.Text = Text;
-                _ = SettingBotGroupList.Focus();
+                SettingBotGroupList.Focus();
                 SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
                 SettingBotGroupList.ScrollToCaret();
             }
@@ -100,7 +100,7 @@ namespace Serein
                 {
                     if (qq.Length is >= 5 and <= 13)
                     {
-                        _ = long.TryParse(qq, out long qq_);
+                        long.TryParse(qq, out long qq_);
                         list.Add(qq_);
                     }
                 }
@@ -112,7 +112,7 @@ namespace Serein
             if (Text != SettingBotPermissionList.Text)
             {
                 SettingBotPermissionList.Text = Text;
-                _ = SettingBotPermissionList.Focus();
+                SettingBotPermissionList.Focus();
                 SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
                 SettingBotPermissionList.ScrollToCaret();
             }
@@ -159,24 +159,24 @@ namespace Serein
         }
         private void SettingSereinAbout_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/About");
+            Process.Start("https://zaitonn.github.io/Serein/About");
         }
         private void SettingSereinPage_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein");
+            Process.Start("https://zaitonn.github.io/Serein");
         }
         private void SettingSereinHelp_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Help");
+            Process.Start("https://zaitonn.github.io/Serein/Help");
         }
 
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://zaitonn.github.io/Serein/Tutorial");
+            Process.Start("https://zaitonn.github.io/Serein/Tutorial");
         }
         private void SettingSereinDownload_Click(object sender, EventArgs e)
         {
-            _ = Process.Start("https://github.com/Zaitonn/Serein/releases/latest");
+            Process.Start("https://github.com/Zaitonn/Serein/releases/latest");
         }
     }
 
