@@ -77,7 +77,7 @@ namespace Serein
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_Bot.GroupList = list.Distinct().ToArray();
+                Global.Settings_Bot.GroupList = list.Distinct().ToList();
             }
             string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
             Text = Regex.Replace(Text, @";+", ";");
@@ -104,7 +104,7 @@ namespace Serein
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_Bot.PermissionList = list.Distinct().ToArray();
+                Global.Settings_Bot.PermissionList = list.Distinct().ToList();
             }
             string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
             Text = Regex.Replace(Text, @";+", ";");

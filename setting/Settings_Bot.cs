@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Serein
 {
@@ -7,8 +7,8 @@ namespace Serein
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;
         public bool EnbaleOutputData { get; set; } = false;
-        public long[] GroupList { get; set; } = Array.Empty<long>();
-        public long[] PermissionList { get; set; } = Array.Empty<long>();
+        public List<long> GroupList { get; set; } = new();
+        public List<long> PermissionList { get; set; } = new();
         public int Port { get; set; } = 6700;
     }
 }
