@@ -19,7 +19,7 @@ Win7或WinServer2012以上
 > x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
 #### 缺少运行库？
-[下载 .NET](https://dotnet.microsoft.com/download)
+[下载 .NET 6.0 桌面运行时](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
 
 ## 💖特点|Feature
 ### 控制面板
