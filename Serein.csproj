@@ -1,20 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ED28FD59-AAA9-437A-95EB-329B925D9C9C}</ProjectGuid>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Serein</RootNamespace>
-    <AssemblyName>Serein</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,26 +17,15 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -57,152 +34,13 @@
     <ApplicationIcon>Serein.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="setting\Settings.cs" />
-    <Compile Include="baseFunction\SystemInfo.cs" />
-    <Compile Include="Ui\BaseFunction.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="baseFunction\ResourcesManager.cs" />
-    <Compile Include="Ui\GetInfo.cs" />
-    <Compile Include="setting\Settings_Bot.cs" />
-    <Compile Include="setting\Settings_Matches.cs" />
-    <Compile Include="setting\Settings_Serein.cs" />
-    <Compile Include="setting\Settings_Server.cs" />
-    <Compile Include="baseFunction\TaskManager.cs" />
-    <Compile Include="Ui\ChildrenWindow\TaskEditer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\ChildrenWindow\TaskEditer.Designer.cs">
-      <DependentUpon>TaskEditer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Ui\Ui_Task.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="baseFunction\TaskItem.cs" />
-    <Compile Include="baseFunction\Command.cs" />
-    <Compile Include="Ui\Ui_Bot.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\InitializeUi.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="baseFunction\Message.cs" />
-    <Compile Include="Ui\Ui_Panel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\Ui_Plugin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\ChildrenWindow\RegexEditer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\ChildrenWindow\RegexEditer.Designer.cs">
-      <DependentUpon>RegexEditer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="baseFunction\RegexItem.cs" />
-    <Compile Include="Ui\Ui_Regex.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Serein.cs" />
-    <Compile Include="Ui\Ui_Settings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\Ui_Update.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="baseFunction\Websocket.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="baseFunction\Log.cs" />
-    <Compile Include="baseFunction\Plugins.cs" />
-    <Compile Include="baseFunction\Server.cs" />
-    <Compile Include="Ui\Ui.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ui\Ui.Designer.cs">
-      <DependentUpon>Ui.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ui\Ui_ShowToolTip.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="Ui\ChildrenWindow\RegexEditer.resx">
-      <DependentUpon>RegexEditer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Ui\ChildrenWindow\TaskEditer.resx">
-      <DependentUpon>TaskEditer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Ui\Ui.resx">
-      <DependentUpon>Ui.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include=".editorconfig" />
-    <None Include="app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="console\console.html" />
-    <None Include="console\console.js" />
-    <None Include="console\preset.css" />
-    <None Include="console\vanilla.css" />
+    <Content Include="appsettings.json" />
     <Content Include="Serein.ico" />
     <Content Include="Serein_full.ico" />
   </ItemGroup>
@@ -221,21 +59,18 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <PropertyGroup />
   <ItemGroup>
-    <PackageReference Include="ncrontab">
-      <Version>3.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="WebSocketSharp">
-      <Version>1.0.3-rc11</Version>
-    </PackageReference>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NCrontab.Signed" Version="3.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
+    <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
+  </ItemGroup>
 </Project>

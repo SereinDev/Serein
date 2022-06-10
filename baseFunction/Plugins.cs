@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    partial class Plugins
+    internal partial class Plugins
     {
-        public static string PluginPath = "";
+        public static string PluginPath = string.Empty;
         public static bool Available = true;
         public static string[] Get()
         {
@@ -37,7 +37,7 @@ namespace Serein
                     Available = false;
                     return null;
                 }
-                if (PluginPath != "")
+                if (!string.IsNullOrWhiteSpace(PluginPath))
                 {
                     string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
                     return Files;
@@ -51,7 +51,7 @@ namespace Serein
         }
         public static void Add()
         {
-            OpenFileDialog Dialog = new OpenFileDialog
+            OpenFileDialog Dialog = new()
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
@@ -101,7 +101,7 @@ namespace Serein
             {
                 if ((int)MessageBox.Show(
                     $"确定删除\"{Items[0].Text}\"？\n" +
-                    $"他将会永远失去！（真的很久！）", "Serein",
+                    $"它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     ) == 1
                     && !Check())
@@ -133,7 +133,7 @@ namespace Serein
             {
                 if ((int)MessageBox.Show(
                    $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
-                   $"他将会永远失去！（真的很久！）", "Serein",
+                   $"它将会永远失去！（真的很久！）", "Serein",
                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                    ) == 1
                    && !Check())
@@ -174,7 +174,7 @@ namespace Serein
                 {
                     try
                     {
-                        FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text);
+                        FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text);
                         RenamedFile.MoveTo(PluginPath + "\\" + Item.Text + ".lock");
                     }
                     catch (Exception Exp)
@@ -195,7 +195,7 @@ namespace Serein
             {
                 try
                 {
-                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text + ".lock");
+                    FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text + ".lock");
                     RenamedFile.MoveTo(PluginPath + "\\" + Item.Text);
                 }
                 catch (Exception Exp)

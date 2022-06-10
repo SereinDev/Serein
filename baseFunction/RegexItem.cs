@@ -2,11 +2,11 @@
 
 namespace Serein
 {
-    class RegexItem
+    internal class RegexItem
     {
-        public string Regex { get; set; } = "";
-        public string Remark { get; set; } = "";
-        public string Command { get; set; } = "";
+        public string Regex { get; set; } = string.Empty;
+        public string Remark { get; set; } = string.Empty;
+        public string Command { get; set; } = string.Empty;
         public int Area { get; set; } = 0;
         public bool IsAdmin { get; set; } = false;
         public string ConvertToStr()
@@ -40,8 +40,8 @@ namespace Serein
                 }
                 try
                 {
-                    Regex m = new Regex(Regex);
-                    m.Match("");
+                    Regex m = new(Regex);
+                    m.Match(string.Empty);
                     return true;
                 }
                 catch

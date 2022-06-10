@@ -14,7 +14,7 @@ namespace Serein
     {
         public static bool Status = false;
         public static WebSocket webSocket;
-        static StreamWriter LogWriter;
+        private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         public static void Connect()
         {
@@ -59,8 +59,8 @@ namespace Serein
             if (Status)
             {
                 long Target_Long = long.TryParse(Target, out long t) ? t : -1;
-                JObject TextJObject = new JObject();
-                JObject ParamsJObject = new JObject();
+                JObject TextJObject = new();
+                JObject ParamsJObject = new();
                 if (IsPrivate)
                 {
                     TextJObject.Add("action", "send_private_msg");
@@ -141,7 +141,7 @@ namespace Serein
                 }
                 catch { }
             }
-            Task MsgTask = new Task(() =>
+            Task MsgTask = new(() =>
             {
                 Message.ProcessMsgFromBot(e.Data);
             });

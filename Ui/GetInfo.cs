@@ -5,23 +5,18 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Serein
 {
-    class GetInfo
+    internal class GetInfo
     {
-        public static Thread GetAnnouncementThread = new Thread(GetAnnouncement)
-        {
-            IsBackground = true
-        };
-        public static Thread GetVersionThread = new Thread(GetVersion)
-        {
-            IsBackground = true
-        };
+        public static Task GetAnnouncementThread = new(GetAnnouncement);
+        public static Task GetVersionThread = new(GetVersion);
         public static void GetAnnouncement()
         {
             Thread.Sleep(100);
-            string OldAnnouncementId = "";
+            string OldAnnouncementId = string.Empty;
             while (true)
             {
                 if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetAnnouncement)
@@ -43,14 +38,14 @@ namespace Serein
                 }
                 else
                 {
-                    OldAnnouncementId = "";
+                    OldAnnouncementId = string.Empty;
                 }
                 Thread.Sleep(120000);
             }
         }
         public static void GetVersion()
         {
-            string OldPreVersion = "";
+            string OldPreVersion = string.Empty;
             Thread.Sleep(10000);
             while (true)
             {
@@ -84,7 +79,7 @@ namespace Serein
                 }
                 else
                 {
-                    OldPreVersion = "";
+                    OldPreVersion = string.Empty;
                 }
                 Thread.Sleep(120000);
             }
@@ -101,7 +96,7 @@ namespace Serein
             Request.ProtocolVersion = HttpVersion.Version10;
             Request.Method = "GET";
             Request.ContentType = "text/html;charset=UTF-8";
-            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32";
+            Request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33";
             Request.Accept = isApi ? Request.Accept : "application/vnd.github.v3+json";
             Response = (HttpWebResponse)Request.GetResponse();
             ResponseStream = Response.GetResponseStream();

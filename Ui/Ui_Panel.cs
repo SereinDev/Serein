@@ -6,7 +6,7 @@ namespace Serein
 {
     public partial class Ui : Form
     {
-        delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
+        private delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
         private void PanelConsoleWebBrowser_AppendText(object[] objects)
         {
             PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
@@ -53,7 +53,7 @@ namespace Serein
                 Server.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Clear();
             }
-            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.PageUp)
+            else if (e.KeyCode is Keys.Up or Keys.PageUp)
             {
                 if (Server.CommandListIndex > 0)
                 {
@@ -64,7 +64,7 @@ namespace Serein
                     PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
                 }
             }
-            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
+            else if (e.KeyCode is Keys.Down or Keys.PageDown)
             {
                 if (Server.CommandListIndex < Server.CommandList.Count)
                 {

@@ -1,8 +1,8 @@
 ﻿namespace Serein
 {
-    class Settings_Server
+    internal class Settings_Server
     {
-        public string Path { get; set; } = "";
+        public string Path { get; set; } = string.Empty;
         public bool EnableRestart { get; set; } = false;
         public bool EnableOutputCommand { get; set; } = true;
         public bool EnableLog { get; set; } = false;

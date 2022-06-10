@@ -7,7 +7,7 @@ namespace Serein
     {
         private void ShowToolTip(object sender, string str)
         {
-            ToolTip toolTip = new ToolTip();
+            ToolTip toolTip = new();
             toolTip.SetToolTip((Control)sender, str);
         }
         private void SettingServerPath_MouseHover(object sender, EventArgs e)

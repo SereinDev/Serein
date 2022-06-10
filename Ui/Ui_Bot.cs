@@ -5,7 +5,7 @@ namespace Serein
 {
     public partial class Ui : Form
     {
-        delegate void BotWebBrowser_Delegate(object[] objects);
+        private delegate void BotWebBrowser_Delegate(object[] objects);
 
         private void BotWebBrowser_AppendText(object[] objects)
         {

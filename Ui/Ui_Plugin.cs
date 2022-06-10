@@ -92,22 +92,14 @@ namespace Serein
         }
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe");
-            if (PluginList.SelectedItems.Count >= 1)
+            ProcessStartInfo psi = new("Explorer.exe")
             {
-                if (PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray)
-                {
-                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + ".lock\"";
-                }
-                else
-                {
-                    psi.Arguments = "/e,/select,\"" + Plugins.PluginPath + "\\" + PluginList.SelectedItems[0].Text + "\"";
-                }
-            }
-            else
-            {
-                psi.Arguments = "/e,\"" + Plugins.PluginPath + "\"";
-            }
+                Arguments = PluginList.SelectedItems.Count >= 1
+                ? PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray
+                    ? $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}.lock\""
+                    : $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}\""
+                : $"/e,\"{Plugins.PluginPath}\""
+            };
             Process.Start(psi);
         }
         public void LoadPlugins()
@@ -117,24 +109,25 @@ namespace Serein
                 PluginList.BeginUpdate();
                 PluginList.Clear();
                 string[] Files = Plugins.Get();
-                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupLua = new ListViewGroup("Lua", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJs = new("Js", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDll = new("Dll", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJar = new("Jar", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupPy = new("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupLua = new("Lua", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupGo = new("Go", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
                 PluginList.Groups.Add(PluginGroupJs);
                 PluginList.Groups.Add(PluginGroupDll);
                 PluginList.Groups.Add(PluginGroupJar);
                 PluginList.Groups.Add(PluginGroupPy);
+                PluginList.Groups.Add(PluginGroupLua);
                 PluginList.Groups.Add(PluginGroupGo);
                 PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
                 {
                     string PluginName = Path.GetFileName(PluginFile);
-                    ListViewItem Item = new ListViewItem();
-                    PluginName = Regex.Replace(PluginName, @"\.lock$", "");
+                    ListViewItem Item = new();
+                    PluginName = Regex.Replace(PluginName, @"\.lock$", string.Empty);
                     Item.Text = PluginName;
                     bool added = true;
                     if (PluginFile.ToUpper().EndsWith(".JS"))

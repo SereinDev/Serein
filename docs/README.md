@@ -4,7 +4,7 @@
 
 </div>
 
-- 一个基于.Net Framework的我的世界服务器面板  
+- 一个基于.NET的我的世界服务器面板  
   
 
 [下载最新版](https://github.com/Zaitonn/Serein/releases/latest) | [Github仓库](https://github.com/Zaitonn/Serein) | [Minebbs](https://www.minebbs.com/resources/serein.4169/) | **[教程](Tutorial.md)（推荐阅读）** | **[帮助页面](Help.md)（推荐阅读）**
@@ -12,14 +12,14 @@
 
 ---
 ## 🖥运行环境|Environment
-Win7或WinServer2016以上
+Win7或WinServer2012以上
 
 > 更低的系统版本不保证能稳定运行，必要时务必备份数据  
 
 > x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
 #### 缺少运行库？
-[下载 .NET](https://dotnet.microsoft.com/zh-cn/download)  (最低版本4.7)
+[下载 .NET 6.0 桌面运行时](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
 
 ## 💖特点|Feature
 ### 控制面板

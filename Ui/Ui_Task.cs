@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-    partial class Ui : Form
+    public partial class Ui : Form
     {
         private void TaskList_MouseUp(object sender, MouseEventArgs e)
         {
@@ -62,14 +62,7 @@ namespace Serein
                     TaskContextMenuStrip_Enable.Enabled = false;
                 }
             }
-            if (TaskList.Items.Count <= 0)
-            {
-                TaskContextMenuStrip_Clear.Enabled = false;
-            }
-            else
-            {
-                TaskContextMenuStrip_Clear.Enabled = true;
-            }
+            TaskContextMenuStrip_Clear.Enabled = TaskList.Items.Count > 0;
         }
         private void TaskContextMenuStrip_Enable_Click(object sender, EventArgs e)
         {
@@ -93,13 +86,13 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditer TE = new TaskEditer();
+            TaskEditer TE = new();
             TE.ShowDialog();
             if (TE.CancelFlag)
             {
                 return;
             }
-            ListViewItem Item = new ListViewItem(TE.Cron.Text);
+            ListViewItem Item = new(TE.Cron.Text);
             Item.SubItems.Add(TE.Remark.Text);
             Item.SubItems.Add(TE.Command.Text);
             if (TaskList.SelectedItems.Count > 0)
@@ -116,7 +109,7 @@ namespace Serein
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskEditer TE = new TaskEditer();
+                TaskEditer TE = new();
                 TE.Update(
                     TaskList.SelectedItems[0].Text,
                     TaskList.SelectedItems[0].SubItems[1].Text,
@@ -139,7 +132,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除该任务？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)
@@ -155,7 +148,7 @@ namespace Serein
             {
                 int result = (int)MessageBox.Show(
                     "确定删除所有任务？\n" +
-                    "他将会永远失去！（真的很久！）", "Serein",
+                    "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     );
                 if (result == 1)
@@ -176,7 +169,7 @@ namespace Serein
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter TaskWriter = new StreamWriter(
+            StreamWriter TaskWriter = new(
                 File.Open(
                     $"{Global.Path}\\data\\task.tsv",
                     FileMode.Create,
@@ -184,14 +177,16 @@ namespace Serein
                     ),
                 Encoding.UTF8
                 );
-            List<TaskItem> TaskItems = new List<TaskItem>();
+            List<TaskItem> TaskItems = new();
             DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
             {
-                TaskItem TI = new TaskItem();
-                TI.Cron = Item.Text;
-                TI.Remark = Item.SubItems[1].Text;
-                TI.Command = Item.SubItems[2].Text;
+                TaskItem TI = new()
+                {
+                    Cron = Item.Text,
+                    Remark = Item.SubItems[1].Text,
+                    Command = Item.SubItems[2].Text
+                };
                 try
                 {
                     List<DateTime> Occurrences = CrontabSchedule.Parse(TI.Cron).GetNextOccurrences(Now, Now.AddYears(1)).ToList();
@@ -215,13 +210,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists($"{Global.Path}\\data\\task.tsv"))
             {
-                FileStream TsvFile = new FileStream($"{ Global.Path }\\data\\task.tsv", FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new($"{Global.Path}\\data\\task.tsv", FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
+                List<TaskItem> TaskItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new TaskItem();
+                    TaskItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -235,7 +230,7 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
+                ListViewItem listViewItem = new(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);
                 listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
@@ -254,13 +249,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new(FileName, FileMode.Open);
+                StreamReader Reader = new(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
+                List<TaskItem> TaskItems = new();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new TaskItem();
+                    TaskItem Item = new();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -274,7 +269,7 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
+                ListViewItem listViewItem = new(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);
                 listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)

@@ -17,4 +17,59 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <RemoteDebugEnabled>false</RemoteDebugEnabled>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Ui\BaseFunction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\ChildrenWindow\RegexEditer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\ChildrenWindow\TaskEditer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\InitializeUi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Bot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Panel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Plugin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Regex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_ShowToolTip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Task.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ui\Ui_Update.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\RegexEditer.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\TaskEditer.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\Ui.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

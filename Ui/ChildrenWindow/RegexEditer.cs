@@ -27,8 +27,8 @@ namespace Serein
                 }
                 try
                 {
-                    Regex m = new Regex(RegexTextBox.Text);
-                    m.Match("");
+                    Regex m = new(RegexTextBox.Text);
+                    m.Match(string.Empty);
                     CancelFlag = false;
                     Close();
                 }
@@ -80,7 +80,7 @@ namespace Serein
         {
             if (RegexTextBox.Text.Contains("\t"))
             {
-                RegexTextBox.Text = RegexTextBox.Text.Replace("\t", "");
+                RegexTextBox.Text = RegexTextBox.Text.Replace("\t", string.Empty);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Serein
         {
             if (CommandTextBox.Text.Contains("\t"))
             {
-                CommandTextBox.Text = CommandTextBox.Text.Replace("\t", "");
+                CommandTextBox.Text = CommandTextBox.Text.Replace("\t", string.Empty);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Serein
         {
             if (RemarkTextBox.Text.Contains("\t"))
             {
-                RemarkTextBox.Text = RemarkTextBox.Text.Replace("\t", "");
+                RemarkTextBox.Text = RemarkTextBox.Text.Replace("\t", string.Empty);
             }
         }
 

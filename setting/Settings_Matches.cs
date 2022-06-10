@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein
 {
-    class Settings_Matches
+    internal class Settings_Matches
     {
         public string Version { get; set; } = @"(\d+\.\d+\.\d+\.\d+)";
         public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|DIFFICULT[^Y])";
@@ -18,19 +18,19 @@ namespace Serein
             }
             if (File.Exists(Global.SettingPath + "\\Matches.ini"))
             {
-                FileStream IniFile = new FileStream(Global.SettingPath + "\\Matches.ini", FileMode.Open);
-                StreamReader Reader = new StreamReader(IniFile, Encoding.UTF8);
+                FileStream IniFile = new(Global.SettingPath + "\\Matches.ini", FileMode.Open);
+                StreamReader Reader = new(IniFile, Encoding.UTF8);
                 string Line, Value, Type;
                 while ((Line = Reader.ReadLine()) != null)
                 {
                     if (Line.Contains("="))
                     {
                         Line = Line.Trim();
-                        Value = Line.Substring(Line.IndexOf("=") + 1).Trim();
-                        Type = Line.Substring(0, Line.IndexOf("=")).Trim();
+                        Value = Line[(Line.IndexOf("=") + 1)..].Trim();
+                        Type = Line[..Line.IndexOf("=")].Trim();
                         try
                         {
-                            Regex.Match("", Value);
+                            Regex.Match(string.Empty, Value);
                         }
                         catch
                         {
@@ -61,7 +61,7 @@ namespace Serein
             }
             else
             {
-                StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.ini", false, Encoding.UTF8);
+                StreamWriter IniStreamWriter = new(Global.SettingPath + "\\Matches.ini", false, Encoding.UTF8);
                 IniStreamWriter.Write("# 在此处自定义捕获信息的正则表达式\n" +
                 $"Version={Version}\n" +
                 $"Difficulty={Difficulty}\n" +
