@@ -15,7 +15,7 @@ namespace Serein
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()
         {
-            Task RunTask = new(() =>
+            Task RunTask = new Task(() =>
             {
                 Serein.Command.Run(Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();

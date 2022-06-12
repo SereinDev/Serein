@@ -18,7 +18,7 @@ namespace Serein
             {
                 Directory.CreateDirectory(Global.Path + "console");
             }
-            StreamWriter streamWriter = new(Global.Path + "console\\" + Name, false, Encoding.UTF8);
+            StreamWriter streamWriter = new StreamWriter(Global.Path + "console\\" + Name, false, Encoding.UTF8);
             streamWriter.Write(Resource);
             streamWriter.Close();
         }

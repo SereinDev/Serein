@@ -11,8 +11,8 @@ namespace Serein
 {
     internal class GetInfo
     {
-        public static Task GetAnnouncementThread = new(GetAnnouncement);
-        public static Task GetVersionThread = new(GetVersion);
+        public static Task GetAnnouncementThread = new Task(GetAnnouncement);
+        public static Task GetVersionThread = new Task(GetVersion);
         public static void GetAnnouncement()
         {
             Thread.Sleep(100);

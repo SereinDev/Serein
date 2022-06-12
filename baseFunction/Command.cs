@@ -16,9 +16,9 @@ namespace Serein
         public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
         public static void StartCmd(string Command)
         {
-            Process CMDProcess = new()
+            Process CMDProcess = new Process()
             {
-                StartInfo = new()
+                StartInfo = new ProcessStartInfo()
                 {
                     FileName = "cmd.exe",
                     UseShellExecute = false,
@@ -26,12 +26,11 @@ namespace Serein
                     CreateNoWindow = true,
                     WorkingDirectory = Global.Path,
                     StandardErrorEncoding = Encoding.UTF8,
-                    StandardInputEncoding = Encoding.UTF8,
                     StandardOutputEncoding = Encoding.UTF8
                 }
             };
             CMDProcess.Start();
-            StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default)
+            StreamWriter CommandWriter = new StreamWriter(CMDProcess.StandardInput.BaseStream, Encoding.Default)
             {
                 AutoFlush = true,
                 NewLine = "\r\n"
@@ -52,7 +51,7 @@ namespace Serein
             Value = GetVariables(Value);
             if (Type == 1)
             {
-                Task CMDTask = new(() =>
+                Task CMDTask = new Task(() =>
                   {
                       StartCmd(Value);
                   });
@@ -87,7 +86,7 @@ namespace Serein
             Value = GetVariables(Value, JsonObject);
             if (Type == 1)
             {
-                Task CMDTask = new(() =>
+                Task CMDTask = new Task(() =>
                 {
                     StartCmd(Value);
                 });
@@ -164,7 +163,7 @@ namespace Serein
         public static string GetValue(string command, Match MsgMatch)
         {
             int index = command.IndexOf('|');
-            string Value = command[(index + 1)..];
+            string Value = command.Substring(index + 1);
             if (MsgMatch == null)
             {
                 return Value;

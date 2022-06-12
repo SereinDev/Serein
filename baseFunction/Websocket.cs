@@ -59,8 +59,8 @@ namespace Serein
             if (Status)
             {
                 long Target_Long = long.TryParse(Target, out long t) ? t : -1;
-                JObject TextJObject = new();
-                JObject ParamsJObject = new();
+                JObject TextJObject = new JObject();
+                JObject ParamsJObject = new JObject();
                 if (IsPrivate)
                 {
                     TextJObject.Add("action", "send_private_msg");
@@ -141,7 +141,7 @@ namespace Serein
                 }
                 catch { }
             }
-            Task MsgTask = new(() =>
+            Task MsgTask = new Task(() =>
             {
                 Message.ProcessMsgFromBot(e.Data);
             });

@@ -51,7 +51,7 @@ namespace Serein
         }
         public static void Add()
         {
-            OpenFileDialog Dialog = new()
+            OpenFileDialog Dialog = new OpenFileDialog()
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
@@ -174,7 +174,7 @@ namespace Serein
                 {
                     try
                     {
-                        FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text);
+                        FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text);
                         RenamedFile.MoveTo(PluginPath + "\\" + Item.Text + ".lock");
                     }
                     catch (Exception Exp)
@@ -195,7 +195,7 @@ namespace Serein
             {
                 try
                 {
-                    FileInfo RenamedFile = new(PluginPath + "\\" + Item.Text + ".lock");
+                    FileInfo RenamedFile = new FileInfo(PluginPath + "\\" + Item.Text + ".lock");
                     RenamedFile.MoveTo(PluginPath + "\\" + Item.Text);
                 }
                 catch (Exception Exp)

@@ -23,9 +23,8 @@ namespace Serein
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
-            Ui ui = new();
+            Ui ui = new Ui();
             Global.Ui = ui;
             Application.Run(ui);
         }
@@ -56,7 +55,7 @@ namespace Serein
             }
             try
             {
-                StreamWriter LogWriter = new(
+                StreamWriter LogWriter = new StreamWriter(
                     Global.Path + $"\\logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log",
                     true,
                     Encoding.UTF8

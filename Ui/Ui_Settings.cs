@@ -68,16 +68,16 @@ namespace Serein
         {
             if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
             {
-                List<long> list = new();
+                List<long> list = new List<long>();
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
                 {
-                    if (qq.Length is >= 6 and <= 16)
+                    if (qq.Length >= 6 && qq.Length <= 16)
                     {
                         long.TryParse(qq, out long qq_);
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_Bot.GroupList = list.Distinct().ToList();
+                Global.Settings_Bot.GroupList = list;
             }
             string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
             Text = Regex.Replace(Text, @";+", ";");
@@ -95,16 +95,16 @@ namespace Serein
         {
             if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
             {
-                List<long> list = new();
+                List<long> list = new List<long>();
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))
                 {
-                    if (qq.Length is >= 5 and <= 13)
+                    if (qq.Length >= 5 && qq.Length <= 13)
                     {
                         long.TryParse(qq, out long qq_);
                         list.Add(qq_);
                     }
                 }
-                Global.Settings_Bot.PermissionList = list.Distinct().ToList();
+                Global.Settings_Bot.PermissionList = list;
             }
             string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
             Text = Regex.Replace(Text, @";+", ";");
@@ -127,7 +127,7 @@ namespace Serein
         }
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new()
+            OpenFileDialog dialog = new OpenFileDialog()
             {
                 Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
             };

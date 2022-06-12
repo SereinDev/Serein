@@ -32,7 +32,7 @@ namespace Serein
                     (ulong.TryParse(TotalRAM, out ulong j) ? j : 1) * 100
                 ).ToString("N1");
 
-        private static readonly PerformanceCounter pcCpuLoad = new("Processor", "% Processor Time", "_Total")
+        private static readonly PerformanceCounter pcCpuLoad = new PerformanceCounter("Processor", "% Processor Time", "_Total")
         {
             MachineName = "."
         };

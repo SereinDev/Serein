@@ -54,7 +54,7 @@ namespace Serein
         }
         private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            RegexEditer regexEditer = new();
+            RegexEditer regexEditer = new RegexEditer();
             regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
@@ -75,7 +75,7 @@ namespace Serein
             {
                 return;
             }
-            RegexEditer regexEditer = new();
+            RegexEditer regexEditer = new RegexEditer();
             int index = Array.IndexOf(areas, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,
@@ -139,7 +139,7 @@ namespace Serein
                 return;
             }
             string isAdminText = string.Empty;
-            ListViewItem Item = new(regex);
+            ListViewItem Item = new ListViewItem(regex);
             isAdminText = areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
             Item.SubItems.Add(areas[areaIndex]);
             Item.SubItems.Add(isAdminText);
@@ -177,13 +177,13 @@ namespace Serein
             RegexList.Items.Clear();
             if (File.Exists($"{Global.Path}\\data\\regex.tsv"))
             {
-                FileStream TsvFile = new($"{Global.Path}\\data\\regex.tsv", FileMode.Open);
-                StreamReader Reader = new(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new FileStream($"{Global.Path}\\data\\regex.tsv", FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
                 string Line;
-                List<RegexItem> regexItems = new();
+                List<RegexItem> regexItems = new List<RegexItem>();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    RegexItem Item = new();
+                    RegexItem Item = new RegexItem();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -203,13 +203,13 @@ namespace Serein
             RegexList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new(FileName, FileMode.Open);
-                StreamReader Reader = new(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
                 string Line;
-                List<RegexItem> regexItems = new();
+                List<RegexItem> regexItems = new List<RegexItem>();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    RegexItem Item = new();
+                    RegexItem Item = new RegexItem();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -226,12 +226,12 @@ namespace Serein
         }
         public void SaveRegex()
         {
-            List<RegexItem> regexItems = new();
+            List<RegexItem> regexItems = new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter RegexWriter = new(
+            StreamWriter RegexWriter = new StreamWriter(
                 File.Open(
                     $"{Global.Path}\\data\\regex.tsv",
                     FileMode.Create,
@@ -241,7 +241,7 @@ namespace Serein
                 );
             foreach (ListViewItem item in RegexList.Items)
             {
-                RegexItem regexItem = new()
+                RegexItem regexItem = new RegexItem()
                 {
                     Regex = item.Text,
                     Area = Array.IndexOf(areas, item.SubItems[1].Text),

@@ -8,7 +8,7 @@ namespace Serein
 {
     internal class Settings
     {
-        public static Task SaveSettingsThread = new(SaveSettings);
+        public static Task SaveSettingsThread = new Task(SaveSettings);
         public static void StartSaveSettings()
         {
             SaveSettingsThread.Start();

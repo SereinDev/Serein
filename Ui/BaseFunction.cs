@@ -119,8 +119,8 @@ namespace Serein
             }
             if (data.Length > 0)
             {
-                List<string> AcceptableList = new() { ".py", ".dll", ".js", ".go", ".jar" };
-                List<string> FileList = new();
+                List<string> AcceptableList = new List<string>() { ".py", ".dll", ".js", ".go", ".jar" };
+                List<string> FileList = new List<string>();
                 string FileListText = string.Empty;
                 foreach (object File in data)
                 {

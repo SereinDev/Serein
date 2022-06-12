@@ -27,8 +27,7 @@ namespace Serein
                 }
                 try
                 {
-                    Regex m = new(RegexTextBox.Text);
-                    m.Match(string.Empty);
+                    new Regex(RegexTextBox.Text).Match(string.Empty);
                     CancelFlag = false;
                     Close();
                 }

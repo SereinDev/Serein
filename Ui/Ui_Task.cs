@@ -86,13 +86,13 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditer TE = new();
+            TaskEditer TE = new TaskEditer();
             TE.ShowDialog();
             if (TE.CancelFlag)
             {
                 return;
             }
-            ListViewItem Item = new(TE.Cron.Text);
+            ListViewItem Item = new ListViewItem(TE.Cron.Text);
             Item.SubItems.Add(TE.Remark.Text);
             Item.SubItems.Add(TE.Command.Text);
             if (TaskList.SelectedItems.Count > 0)
@@ -109,7 +109,7 @@ namespace Serein
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskEditer TE = new();
+                TaskEditer TE = new TaskEditer();
                 TE.Update(
                     TaskList.SelectedItems[0].Text,
                     TaskList.SelectedItems[0].SubItems[1].Text,
@@ -169,7 +169,7 @@ namespace Serein
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter TaskWriter = new(
+            StreamWriter TaskWriter = new StreamWriter(
                 File.Open(
                     $"{Global.Path}\\data\\task.tsv",
                     FileMode.Create,
@@ -177,11 +177,11 @@ namespace Serein
                     ),
                 Encoding.UTF8
                 );
-            List<TaskItem> TaskItems = new();
+            List<TaskItem> TaskItems = new List<TaskItem>();
             DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
             {
-                TaskItem TI = new()
+                TaskItem TI = new TaskItem()
                 {
                     Cron = Item.Text,
                     Remark = Item.SubItems[1].Text,
@@ -210,13 +210,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists($"{Global.Path}\\data\\task.tsv"))
             {
-                FileStream TsvFile = new($"{Global.Path}\\data\\task.tsv", FileMode.Open);
-                StreamReader Reader = new(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new FileStream($"{Global.Path}\\data\\task.tsv", FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new();
+                List<TaskItem> TaskItems = new List<TaskItem>();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new();
+                    TaskItem Item = new TaskItem();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -230,7 +230,7 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new(Item.Cron);
+                ListViewItem listViewItem = new ListViewItem(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);
                 listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)
@@ -249,13 +249,13 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new(FileName, FileMode.Open);
-                StreamReader Reader = new(TsvFile, Encoding.UTF8);
+                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
+                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
                 string Line;
-                List<TaskItem> TaskItems = new();
+                List<TaskItem> TaskItems = new List<TaskItem>();
                 while ((Line = Reader.ReadLine()) != null)
                 {
-                    TaskItem Item = new();
+                    TaskItem Item = new TaskItem();
                     Item.ConvertToItem(Line);
                     if (!Item.CheckItem())
                     {
@@ -269,7 +269,7 @@ namespace Serein
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new(Item.Cron);
+                ListViewItem listViewItem = new ListViewItem(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);
                 listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)

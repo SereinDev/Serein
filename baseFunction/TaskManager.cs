@@ -6,7 +6,7 @@ namespace Serein
 {
     internal class TaskManager
     {
-        public static Task RunnerThread = new(Runner);
+        public static Task RunnerThread = new Task(Runner);
         public static void Runner()
         {
             while (true)

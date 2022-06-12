@@ -92,7 +92,7 @@ namespace Serein
         }
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo psi = new("Explorer.exe")
+            ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe")
             {
                 Arguments = PluginList.SelectedItems.Count >= 1
                 ? PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray
@@ -109,13 +109,13 @@ namespace Serein
                 PluginList.BeginUpdate();
                 PluginList.Clear();
                 string[] Files = Plugins.Get();
-                ListViewGroup PluginGroupJs = new("Js", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDll = new("Dll", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupJar = new("Jar", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupPy = new("Py", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupLua = new("Lua", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupGo = new("Go", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupLua = new ListViewGroup("Lua", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupGo = new ListViewGroup("Go", HorizontalAlignment.Left);
+                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
                 PluginList.Groups.Add(PluginGroupJs);
                 PluginList.Groups.Add(PluginGroupDll);
                 PluginList.Groups.Add(PluginGroupJar);
@@ -126,7 +126,7 @@ namespace Serein
                 foreach (string PluginFile in Files)
                 {
                     string PluginName = Path.GetFileName(PluginFile);
-                    ListViewItem Item = new();
+                    ListViewItem Item = new ListViewItem();
                     PluginName = Regex.Replace(PluginName, @"\.lock$", string.Empty);
                     Item.Text = PluginName;
                     bool added = true;

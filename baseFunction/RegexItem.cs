@@ -40,8 +40,7 @@ namespace Serein
                 }
                 try
                 {
-                    Regex m = new(Regex);
-                    m.Match(string.Empty);
+                    new Regex (Regex).Match(string.Empty);
                     return true;
                 }
                 catch

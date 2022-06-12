@@ -31,7 +31,7 @@ namespace Serein
             LoadPlugins();
             LoadRegex();
             LoadTask();
-            Task UpdateInfoThread = new(UpdateInfo);
+            Task UpdateInfoThread = new Task(UpdateInfo);
             UpdateInfoThread.Start();
             Settings.StartSaveSettings();
             TaskManager.RunnerThread.Start();
