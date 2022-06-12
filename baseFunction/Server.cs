@@ -15,7 +15,7 @@ namespace Serein
         public static string StartFileName = string.Empty, Version, LevelName, Difficulty;
         public static bool Status = false;
         public static bool Restart = false;
-        public static List <string> CommandList = new List <string>();
+        public static List<string> CommandList = new List<string>();
         public static double CPUPersent = 0.0;
         public static int CommandListIndex = 0;
         private static bool Finished = false;
