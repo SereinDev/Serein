@@ -70,11 +70,17 @@ jobs:
         env:
           Configuration: Release
 
-      - name: Upload Serein(Release)
+      - name: Upload Serein(Release .Net Framework 4.7.2)
         uses: actions/upload-artifact@v3
         with:
           name: Serein_Release
-          path: ${{ github.workspace }}\bin\Release
+          path: ${{ github.workspace }}\bin\Release\net472
+
+      - name: Upload Serein(Release Net6.0)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_Release
+          path: ${{ github.workspace }}\bin\Release\net6.0-windows
 
       - name: Build the solution(Debug)
         run: msbuild /p:Configuration=$env:Configuration

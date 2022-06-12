@@ -19,7 +19,7 @@ namespace Serein.Properties {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -63,15 +63,20 @@ namespace Serein.Properties {
         /// <summary>
         ///   查找类似 &lt;!DOCTYPE html&gt;
         ///&lt;html&gt;
-        ///&lt;head&gt;
-        ///    &lt;meta charset=&quot;UTF-8&quot;&gt;
-        ///    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-        ///    &lt;title&gt;Console&lt;/title&gt;
-        ///    &lt;meta name=&quot;description&quot; itemprop=&quot;description&quot; content=&quot;Serein https://github.com/Zaitonn/Serein&quot;&gt;
-        ///    &lt;script src=&quot;console.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
-        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;preset.css&quot;&gt;
-        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;vanilla.css&quot;&gt;
-        ///    &lt;link rel=&quot;shortcut icon&quot; href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;head&gt;
+        ///        &lt;meta charset=&quot;UTF-8&quot; /&gt;
+        ///        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;
+        ///        &lt;title&gt;Console&lt;/title&gt;
+        ///        &lt;meta
+        ///            name=&quot;description&quot;
+        ///            itemprop=&quot;description&quot;
+        ///            content=&quot;Serein https://github.com/Zaitonn/Serein&quot;
+        ///        /&gt;
+        ///        &lt;script src=&quot;console.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        ///        &lt;link rel=&quot;stylesheet&quot; href=&quot;preset.css&quot; /&gt;
+        ///        &lt;link rel=&quot;stylesheet&quot; href=&quot;vanilla.css&quot; /&gt;
+        ///        &lt;link
+        ///            [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string console_html {
             get {
@@ -80,26 +85,27 @@ namespace Serein.Properties {
         }
         
         /// <summary>
-        ///   查找类似 line=0;
-        ///function AppendText(str){
-        ///    ConsoleDiv=document.querySelector(&quot;#console&quot;);
-        ///    line=line+1;
-        ///    if (str==&quot;#clear&quot;){
+        ///   查找类似 &quot;use strict&quot;;
+        ///
+        ///var line = 0;
+        ///function AppendText(str) {
+        ///    var ConsoleDiv = document.querySelector(&quot;#console&quot;);
+        ///    line = line + 1;
+        ///    if (str == &quot;#clear&quot;) {
         ///        Clear();
-        ///    }
-        ///    else{
-        ///        var div=document.createElement(&quot;div&quot;);
-        ///        div.innerHTML=str;
+        ///    } else {
+        ///        var div = document.createElement(&quot;div&quot;);
+        ///        div.innerHTML = str;
         ///        ConsoleDiv.appendChild(div);
         ///    }
-        ///    if(line&gt;250){
+        ///    if (line &gt; 250) {
         ///        ConsoleDiv.removeChild(ConsoleDiv.children[0]);
-        ///        line=line-1;
+        ///        line = line - 1;
         ///    }
-        ///    ConsoleDiv.scrollTop=ConsoleDiv.scrollHeight;
+        ///    ConsoleDiv.scrollTop = ConsoleDiv.scrollHeight;
         ///}
-        ///function Clear(){
-        ///    document.querySelector(&quot;#console&quot;).innerHT [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///function Clear() {
+        ///    document.query [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string console_js {
             get {
@@ -113,35 +119,34 @@ namespace Serein.Properties {
         ///  - 需以 &quot;.noColored&gt;&quot; 开头
         ///  - 用&quot;.[NAME]&quot;指定高亮对象
         ///*/
-        ///.noColored&gt;.file{
-        ///  color:#688292
+        ///.noColored &gt; .file {
+        ///    color: #688292;
         ///}
-        ///.noColored&gt;.server{
-        ///  color:#8bd645
+        ///.noColored &gt; .server {
+        ///    color: #8bd645;
         ///}
-        ///.noColored&gt;.debug{
-        ///  color:#865FC5;
+        ///.noColored &gt; .debug {
+        ///    color: #865fc5;
         ///}
-        ///.noColored&gt;.error{
-        ///  color:#D16969;
+        ///.noColored &gt; .error {
+        ///    color: #d16969;
         ///}
-        ///.noColored&gt;.warn{
-        ///  color:#aa5612;
+        ///.noColored &gt; .warn {
+        ///    color: #aa5612;
         ///}
-        ///.noColored&gt;.info{
-        ///  color:#20B2AA;
+        ///.noColored &gt; .info {
+        ///    color: #20b2aa;
         ///}
-        ///.noColored&gt;.plugins{
-        ///  color:#e4b44c;
+        ///.noColored &gt; .plugins {
+        ///    color: #e4b44c;
         ///}
-        ///.noColored&gt;.LiteLoader,.noColored&gt;.LiteXLoader,.noColored&gt;.LLMoney{
-        ///  color:#5a93c2 ;
+        ///.noColored &gt; .LiteLoader,
+        ///.noColored &gt; .LiteXLoader,
+        ///.noColored &gt; .LLMoney {
+        ///    color: #5a93c2;
         ///}
-        ///.noColored&gt;.Chakra{
-        ///  color:#a93eca;
-        ///}
-        ///.noColored&gt;.int{
-        ///  colo [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///.noColored &gt; .Chakra {
+        ///    color: #a93ec [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string preset_css {
             get {
@@ -153,29 +158,36 @@ namespace Serein.Properties {
         ///   查找类似 /* 
         ///  颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit -Windows 10 Console
         ///*/
-        ///.vanillaColor30,.vanillaColor40{
-        ///  color:#0c0c0c;
+        ///.vanillaColor30,
+        ///.vanillaColor40 {
+        ///    color: #0c0c0c;
         ///}
-        ///.vanillaColor31,.vanillaColor41{
-        ///  color:#C50F1F;
+        ///.vanillaColor31,
+        ///.vanillaColor41 {
+        ///    color: #c50f1f;
         ///}
-        ///.vanillaColor32,.vanillaColor42{
-        ///  color:#13A10E;
+        ///.vanillaColor32,
+        ///.vanillaColor42 {
+        ///    color: #13a10e;
         ///}
-        ///.vanillaColor33,.vanillaColor43{
-        ///  color:#C19C00;
+        ///.vanillaColor33,
+        ///.vanillaColor43 {
+        ///    color: #c19c00;
         ///}
-        ///.vanillaColor34,.vanillaColor44{
-        ///  color:#0037DA;
+        ///.vanillaColor34,
+        ///.vanillaColor44 {
+        ///    color: #0037da;
         ///}
-        ///.vanillaColor35,.vanillaColor45{
-        ///  color:#881798;
+        ///.vanillaColor35,
+        ///.vanillaColor45 {
+        ///    color: #881798;
         ///}
-        ///.vanillaColor36,.vanillaColor46{
-        ///  color:#3A96DD;
+        ///.vanillaColor36,
+        ///.vanillaColor46 {
+        ///    color: #3a96dd;
         ///}
         ////*
-        ///.vanillaColor37,.vani [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///.vanillaCol [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string vanilla_css {
             get {
