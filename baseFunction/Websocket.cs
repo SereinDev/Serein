@@ -32,7 +32,7 @@ namespace Serein
                 try
                 {
                     webSocket = new WebSocket(
-                                        "ws://"+Global.Settings_Bot.Uri,
+                                        "ws://" + Global.Settings_Bot.Uri,
                                         "",
                                         null,
                                         new List<KeyValuePair<string, string>> {
@@ -59,10 +59,10 @@ namespace Serein
                     StartTime = DateTime.Now;
                     Status = true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Global.Ui.BotWebBrowser_Invoke(
-                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +e.Message);
+                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + e.Message);
                 }
             }
         }

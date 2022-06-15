@@ -114,7 +114,7 @@ namespace Serein
         {
             ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         }
-        private void SettingSereinEnableGetUpdate_MouseHover(object sender,EventArgs e)
+        private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "启动后自动获取更新（建议开启）");
         }
