@@ -54,14 +54,33 @@ namespace Serein
         {
             ShowToolTip(sender, "设置使用关服功能时执行的命令（使用英文分号\";\"分隔）");
         }
-
         private void SettingServerAutoStop_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "此程序发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）");
+            ShowToolTip(sender, "Serein发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）");
         }
-        private void SettingBotPortLabel_MouseHover(object sender, EventArgs e)
+        private void SettingServerEncodingLabel_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, $"设置Websocket的端口\n即Websocket正向服务器应在127.0.0.1:{SettingBotPort.Value}开启");
+            ShowToolTip(sender, "指定输出到服务器的编码格式（重启服务器生效）");
+        }
+        private void SettingServerEncoding_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "指定输出到服务器的编码格式（重启服务器生效）");
+        }
+        private void SettingBotUriLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings_Bot.Uri} 上开启");
+        }
+        private void SettingBotUri_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings_Bot.Uri} 上开启");
+        }
+        private void SettingBotAuthorizationLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "用于鉴权的Access-Token（可为空）\n在Websocket的Header添加Authorization字段用于鉴权，连接非本地的ws服务器时建议设置此项");
+        }
+        private void SettingBotAuthorization_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "用于鉴权的Access-Token（可为空）\n在Websocket的Header添加Authorization字段用于鉴权，连接非本地的ws服务器时建议设置此项");
         }
         private void SettingBotEnableLog_MouseHover(object sender, EventArgs e)
         {
@@ -95,12 +114,10 @@ namespace Serein
         {
             ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         }
-
-        private void SettingSereinEnableGetUpdate_MouseHover(object sender, System.EventArgs e)
+        private void SettingSereinEnableGetUpdate_MouseHover(object sender,EventArgs e)
         {
             ShowToolTip(sender, "启动后自动获取更新（建议开启）");
         }
-
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "打开关于页面（https://zaitonn.github.io/Serein/About）");
@@ -116,7 +133,6 @@ namespace Serein
         private void SettingSereinTutorial_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "打开教程页面（https://zaitonn.github.io/Serein/Tutorial）");
-
         }
         private void SettingSereinDownload_MouseHover(object sender, EventArgs e)
         {

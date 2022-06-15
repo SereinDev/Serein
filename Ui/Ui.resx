@@ -1,64 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
+﻿<root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -173,7 +113,7 @@
     <value>PluginContextMenuStrip</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="SereinIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -214,7 +154,7 @@
   <data name="SereinIcon.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="MainTableLayout.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
@@ -233,6 +173,7 @@
   <data name="PanelInfoCPU2.Location" type="System.Drawing.Point, System.Drawing">
     <value>163, 263</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PanelInfoCPU2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
   </data>
@@ -252,7 +193,7 @@
     <value>PanelInfoCPU2</value>
   </data>
   <data name="&gt;&gt;PanelInfoCPU2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoCPU2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -288,7 +229,7 @@
     <value>PanelInfoLevel2</value>
   </data>
   <data name="&gt;&gt;PanelInfoLevel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoLevel2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -324,7 +265,7 @@
     <value>PanelInfoTime2</value>
   </data>
   <data name="&gt;&gt;PanelInfoTime2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoTime2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -360,7 +301,7 @@
     <value>PanelInfoDifficulty2</value>
   </data>
   <data name="&gt;&gt;PanelInfoDifficulty2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoDifficulty2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -396,7 +337,7 @@
     <value>PanelInfoVersion2</value>
   </data>
   <data name="&gt;&gt;PanelInfoVersion2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoVersion2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -417,7 +358,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoCPU.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 24</value>
+    <value>183, 31</value>
   </data>
   <data name="PanelInfoCPU.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -429,7 +370,7 @@
     <value>PanelInfoCPU</value>
   </data>
   <data name="&gt;&gt;PanelInfoCPU.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoCPU.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -450,7 +391,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="PanelInfoTime.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -462,7 +403,7 @@
     <value>PanelInfoTime</value>
   </data>
   <data name="&gt;&gt;PanelInfoTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoTime.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -483,7 +424,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoLevel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="PanelInfoLevel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -495,7 +436,7 @@
     <value>PanelInfoLevel</value>
   </data>
   <data name="&gt;&gt;PanelInfoLevel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoLevel.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -516,7 +457,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoDifficulty.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="PanelInfoDifficulty.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -528,7 +469,7 @@
     <value>PanelInfoDifficulty</value>
   </data>
   <data name="&gt;&gt;PanelInfoDifficulty.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoDifficulty.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -549,7 +490,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="PanelInfoVersion.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -561,7 +502,7 @@
     <value>PanelInfoVersion</value>
   </data>
   <data name="&gt;&gt;PanelInfoVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoVersion.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -582,7 +523,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoStatus2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="PanelInfoStatus2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -597,7 +538,7 @@
     <value>PanelInfoStatus2</value>
   </data>
   <data name="&gt;&gt;PanelInfoStatus2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoStatus2.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -618,7 +559,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="PanelInfoStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="PanelInfoStatus.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -630,7 +571,7 @@
     <value>PanelInfoStatus</value>
   </data>
   <data name="&gt;&gt;PanelInfoStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfoStatus.Parent" xml:space="preserve">
     <value>PanelInfo</value>
@@ -654,7 +595,7 @@
     <value>PanelInfo</value>
   </data>
   <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
     <value>PanelTableLayout</value>
@@ -681,7 +622,7 @@
     <value>PanelControlKill</value>
   </data>
   <data name="&gt;&gt;PanelControlKill.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelControlKill.Parent" xml:space="preserve">
     <value>PanelControls</value>
@@ -708,7 +649,7 @@
     <value>PanelControlRestart</value>
   </data>
   <data name="&gt;&gt;PanelControlRestart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelControlRestart.Parent" xml:space="preserve">
     <value>PanelControls</value>
@@ -735,7 +676,7 @@
     <value>PanelControlStop</value>
   </data>
   <data name="&gt;&gt;PanelControlStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelControlStop.Parent" xml:space="preserve">
     <value>PanelControls</value>
@@ -762,7 +703,7 @@
     <value>PanelControlStart</value>
   </data>
   <data name="&gt;&gt;PanelControlStart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelControlStart.Parent" xml:space="preserve">
     <value>PanelControls</value>
@@ -786,7 +727,7 @@
     <value>PanelControls</value>
   </data>
   <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
     <value>PanelTableLayout</value>
@@ -807,7 +748,7 @@
     <value>20, 20</value>
   </data>
   <data name="PanelConsoleWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 699</value>
+    <value>890, 690</value>
   </data>
   <data name="PanelConsoleWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -816,7 +757,7 @@
     <value>PanelConsoleWebBrowser</value>
   </data>
   <data name="&gt;&gt;PanelConsoleWebBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsoleWebBrowser.Parent" xml:space="preserve">
     <value>PanelConsolePanel2</value>
@@ -852,7 +793,7 @@
     <value>PanelConsoleEnter</value>
   </data>
   <data name="&gt;&gt;PanelConsoleEnter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsoleEnter.Parent" xml:space="preserve">
     <value>PanelConsolePanel1</value>
@@ -867,7 +808,7 @@
     <value>1, 0</value>
   </data>
   <data name="PanelConsoleInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>824, 35</value>
+    <value>824, 38</value>
   </data>
   <data name="PanelConsoleInput.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -879,7 +820,7 @@
     <value>PanelConsoleInput</value>
   </data>
   <data name="&gt;&gt;PanelConsoleInput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsoleInput.Parent" xml:space="preserve">
     <value>PanelConsolePanel1</value>
@@ -888,7 +829,7 @@
     <value>1</value>
   </data>
   <data name="PanelConsolePanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 720</value>
+    <value>0, 711</value>
   </data>
   <data name="PanelConsolePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 15, 3, 15</value>
@@ -903,7 +844,7 @@
     <value>PanelConsolePanel1</value>
   </data>
   <data name="&gt;&gt;PanelConsolePanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsolePanel1.Parent" xml:space="preserve">
     <value>PanelConsolePanel2</value>
@@ -915,10 +856,10 @@
     <value>Fill</value>
   </data>
   <data name="PanelConsolePanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 43</value>
+    <value>15, 46</value>
   </data>
   <data name="PanelConsolePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 766</value>
+    <value>890, 757</value>
   </data>
   <data name="PanelConsolePanel2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -927,7 +868,7 @@
     <value>PanelConsolePanel2</value>
   </data>
   <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
     <value>PanelConsole</value>
@@ -945,7 +886,7 @@
     <value>15, 15, 15, 15</value>
   </data>
   <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>920, 824</value>
+    <value>920, 818</value>
   </data>
   <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -957,7 +898,7 @@
     <value>PanelConsole</value>
   </data>
   <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
     <value>PanelTableLayout</value>
@@ -975,7 +916,7 @@
     <value>2</value>
   </data>
   <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 830</value>
+    <value>1226, 824</value>
   </data>
   <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -984,7 +925,7 @@
     <value>PanelTableLayout</value>
   </data>
   <data name="&gt;&gt;PanelTableLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelTableLayout.Parent" xml:space="preserve">
     <value>Panel</value>
@@ -996,13 +937,13 @@
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PanelInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelControls" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelConsole" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="Panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Panel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Panel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1014,7 +955,7 @@
     <value>Panel</value>
   </data>
   <data name="&gt;&gt;Panel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Panel.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -1029,7 +970,7 @@
     <value>0, 0</value>
   </data>
   <data name="PluginList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="PluginList.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1038,7 +979,7 @@
     <value>PluginList</value>
   </data>
   <data name="&gt;&gt;PluginList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginList.Parent" xml:space="preserve">
     <value>Plugin</value>
@@ -1047,10 +988,10 @@
     <value>0</value>
   </data>
   <data name="Plugin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Plugin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Plugin.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1062,7 +1003,7 @@
     <value>Plugin</value>
   </data>
   <data name="&gt;&gt;Plugin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Plugin.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -1155,7 +1096,7 @@
     <value>RegexContextMenuStrip</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RegexList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1170,7 +1111,7 @@
     <value>No</value>
   </data>
   <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1179,7 +1120,7 @@
     <value>RegexList</value>
   </data>
   <data name="&gt;&gt;RegexList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexList.Parent" xml:space="preserve">
     <value>Regular</value>
@@ -1188,10 +1129,10 @@
     <value>0</value>
   </data>
   <data name="Regular.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Regular.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Regular.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1203,7 +1144,7 @@
     <value>Regular</value>
   </data>
   <data name="&gt;&gt;Regular.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Regular.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -1302,7 +1243,7 @@
     <value>TaskContextMenuStrip</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TaskList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1311,7 +1252,7 @@
     <value>0, 0</value>
   </data>
   <data name="TaskList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="TaskList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1320,7 +1261,7 @@
     <value>TaskList</value>
   </data>
   <data name="&gt;&gt;TaskList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskList.Parent" xml:space="preserve">
     <value>Task</value>
@@ -1329,10 +1270,10 @@
     <value>0</value>
   </data>
   <data name="Task.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Task.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Task.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1344,7 +1285,7 @@
     <value>Task</value>
   </data>
   <data name="&gt;&gt;Task.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Task.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -1365,7 +1306,7 @@
     <value>20, 20</value>
   </data>
   <data name="BotWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>926, 830</value>
+    <value>926, 824</value>
   </data>
   <data name="BotWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1374,7 +1315,7 @@
     <value>BotWebBrowser</value>
   </data>
   <data name="&gt;&gt;BotWebBrowser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotWebBrowser.Parent" xml:space="preserve">
     <value>BotTableLayoutPanel</value>
@@ -1407,7 +1348,7 @@
     <value>BotInfoStatus2</value>
   </data>
   <data name="&gt;&gt;BotInfoStatus2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoStatus2.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1428,7 +1369,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 24</value>
+    <value>86, 31</value>
   </data>
   <data name="BotInfoStatus.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1440,7 +1381,7 @@
     <value>BotInfoStatus</value>
   </data>
   <data name="&gt;&gt;BotInfoStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoStatus.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1473,7 +1414,7 @@
     <value>BotInfoTime2</value>
   </data>
   <data name="&gt;&gt;BotInfoTime2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoTime2.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1506,7 +1447,7 @@
     <value>BotInfoMessageSent2</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageSent2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageSent2.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1539,7 +1480,7 @@
     <value>BotInfoMessageReceived2</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageReceived2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageReceived2.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1572,7 +1513,7 @@
     <value>BotInfoQQ2</value>
   </data>
   <data name="&gt;&gt;BotInfoQQ2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoQQ2.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1593,7 +1534,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="BotInfoTime.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1605,7 +1546,7 @@
     <value>BotInfoTime</value>
   </data>
   <data name="&gt;&gt;BotInfoTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoTime.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1626,7 +1567,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoMessageSent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="BotInfoMessageSent.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1638,7 +1579,7 @@
     <value>BotInfoMessageSent</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageSent.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageSent.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1659,7 +1600,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoMessageReceived.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="BotInfoMessageReceived.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1671,7 +1612,7 @@
     <value>BotInfoMessageReceived</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageReceived.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoMessageReceived.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1689,7 +1630,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoQQ.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
+    <value>78, 31</value>
   </data>
   <data name="BotInfoQQ.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1701,7 +1642,7 @@
     <value>BotInfoQQ</value>
   </data>
   <data name="&gt;&gt;BotInfoQQ.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfoQQ.Parent" xml:space="preserve">
     <value>BotInfo</value>
@@ -1725,7 +1666,7 @@
     <value>BotInfo</value>
   </data>
   <data name="&gt;&gt;BotInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotInfo.Parent" xml:space="preserve">
     <value>BotTableLayoutPanel</value>
@@ -1752,7 +1693,7 @@
     <value>BotClose</value>
   </data>
   <data name="&gt;&gt;BotClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotClose.Parent" xml:space="preserve">
     <value>BotWebsocket</value>
@@ -1779,7 +1720,7 @@
     <value>BotConnect</value>
   </data>
   <data name="&gt;&gt;BotConnect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotConnect.Parent" xml:space="preserve">
     <value>BotWebsocket</value>
@@ -1803,7 +1744,7 @@
     <value>BotWebsocket</value>
   </data>
   <data name="&gt;&gt;BotWebsocket.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotWebsocket.Parent" xml:space="preserve">
     <value>BotTableLayoutPanel</value>
@@ -1821,7 +1762,7 @@
     <value>2</value>
   </data>
   <data name="BotTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="BotTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1830,7 +1771,7 @@
     <value>BotTableLayoutPanel</value>
   </data>
   <data name="&gt;&gt;BotTableLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BotTableLayoutPanel.Parent" xml:space="preserve">
     <value>Bot</value>
@@ -1842,10 +1783,10 @@
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BotWebBrowser" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BotInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BotWebsocket" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="Bot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Bot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Bot.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1857,7 +1798,7 @@
     <value>Bot</value>
   </data>
   <data name="&gt;&gt;Bot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Bot.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -1875,13 +1816,13 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 126</value>
+    <value>25, 129</value>
   </data>
   <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>406, 24</value>
+    <value>377, 31</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -1893,7 +1834,7 @@
     <value>label2</value>
   </data>
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -1911,7 +1852,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 163</value>
+    <value>397, 163</value>
   </data>
   <data name="SettingSereinDownload.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 24</value>
@@ -1926,7 +1867,7 @@
     <value>SettingSereinDownload</value>
   </data>
   <data name="&gt;&gt;SettingSereinDownload.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinDownload.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -1941,13 +1882,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinStatement2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 230</value>
+    <value>19, 229</value>
   </data>
   <data name="SettingSereinStatement2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="SettingSereinStatement2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 24</value>
+    <value>555, 31</value>
   </data>
   <data name="SettingSereinStatement2.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -1959,7 +1900,7 @@
     <value>SettingSereinStatement2</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement2.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -1971,13 +1912,13 @@
     <value>True</value>
   </data>
   <data name="SettingSereinStatement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 200</value>
+    <value>19, 199</value>
   </data>
   <data name="SettingSereinStatement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="SettingSereinStatement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>646, 24</value>
+    <value>650, 31</value>
   </data>
   <data name="SettingSereinStatement.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -1989,7 +1930,7 @@
     <value>SettingSereinStatement</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2007,7 +1948,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 163</value>
+    <value>25, 163</value>
   </data>
   <data name="SettingSereinPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
@@ -2025,7 +1966,7 @@
     <value>SettingSereinPage</value>
   </data>
   <data name="&gt;&gt;SettingSereinPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinPage.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2040,7 +1981,7 @@
     <value>宋体, 9pt, style=Underline</value>
   </data>
   <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 163</value>
+    <value>301, 163</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2055,7 +1996,7 @@
     <value>SettingSereinAbout</value>
   </data>
   <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2073,7 +2014,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 163</value>
+    <value>127, 163</value>
   </data>
   <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2088,7 +2029,7 @@
     <value>SettingSereinHelp</value>
   </data>
   <data name="&gt;&gt;SettingSereinHelp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinHelp.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2100,10 +2041,10 @@
     <value>True</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 51</value>
+    <value>25, 50</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 28</value>
+    <value>142, 35</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -2115,7 +2056,7 @@
     <value>SettingSereinEnableGetUpdate</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2133,7 +2074,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinTutorial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 163</value>
+    <value>213, 163</value>
   </data>
   <data name="SettingSereinTutorial.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2148,7 +2089,7 @@
     <value>SettingSereinTutorial</value>
   </data>
   <data name="&gt;&gt;SettingSereinTutorial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinTutorial.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2166,7 +2107,7 @@
     <value>257, 51</value>
   </data>
   <data name="SettingSereinVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="SettingSereinVersion.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2178,7 +2119,7 @@
     <value>SettingSereinVersion</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2193,13 +2134,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 90</value>
+    <value>25, 93</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 28</value>
+    <value>190, 35</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -2211,7 +2152,7 @@
     <value>SettingSereinEnableGetAnnouncement</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Parent" xml:space="preserve">
     <value>SettingSerein</value>
@@ -2223,7 +2164,7 @@
     <value>Top</value>
   </data>
   <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 859</value>
+    <value>0, 991</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
     <value>1198, 275</value>
@@ -2238,7 +2179,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
     <value>SettingPanel</value>
@@ -2246,14 +2187,89 @@
   <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="SettingBotAuthorization.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="SettingBotAuthorization.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 141</value>
+  </data>
+  <data name="SettingBotAuthorization.Size" type="System.Drawing.Size, System.Drawing">
+    <value>956, 38</value>
+  </data>
+  <data name="SettingBotAuthorization.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorization.Name" xml:space="preserve">
+    <value>SettingBotAuthorization</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorization.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorization.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorization.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingBotAuthorizationLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingBotAuthorizationLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 144</value>
+  </data>
+  <data name="SettingBotAuthorizationLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 31</value>
+  </data>
+  <data name="SettingBotAuthorizationLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="SettingBotAuthorizationLabel.Text" xml:space="preserve">
+    <value>鉴权凭证(Token)</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Name" xml:space="preserve">
+    <value>SettingBotAuthorizationLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SettingBotUri.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="SettingBotUri.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 89</value>
+  </data>
+  <data name="SettingBotUri.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 38</value>
+  </data>
+  <data name="SettingBotUri.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Name" xml:space="preserve">
+    <value>SettingBotUri</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="SettingBotEnbaleOutputData.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingBotEnbaleOutputData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 212</value>
+    <value>23, 272</value>
   </data>
   <data name="SettingBotEnbaleOutputData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 28</value>
+    <value>286, 35</value>
   </data>
   <data name="SettingBotEnbaleOutputData.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -2265,13 +2281,13 @@
     <value>SettingBotEnbaleOutputData</value>
   </data>
   <data name="&gt;&gt;SettingBotEnbaleOutputData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotEnbaleOutputData.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="SettingBotPermission.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2280,13 +2296,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPermission.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 354</value>
+    <value>25, 414</value>
   </data>
   <data name="SettingBotPermission.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotPermission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 24</value>
+    <value>158, 31</value>
   </data>
   <data name="SettingBotPermission.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2298,13 +2314,13 @@
     <value>SettingBotPermission</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="SettingBotGroup.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2313,13 +2329,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 276</value>
+    <value>19, 315</value>
   </data>
   <data name="SettingBotGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="SettingBotGroup.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2331,25 +2347,25 @@
     <value>SettingBotGroup</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="SettingBotPermissionList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotPermissionList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 383</value>
+    <value>25, 453</value>
   </data>
   <data name="SettingBotPermissionList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingBotPermissionList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 35</value>
+    <value>1153, 35</value>
   </data>
   <data name="SettingBotPermissionList.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -2358,25 +2374,25 @@
     <value>SettingBotPermissionList</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="SettingBotGroupList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotGroupList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 305</value>
+    <value>25, 354</value>
   </data>
   <data name="SettingBotGroupList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingBotGroupList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 35</value>
+    <value>1151, 41</value>
   </data>
   <data name="SettingBotGroupList.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -2385,70 +2401,46 @@
     <value>SettingBotGroupList</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
-  <data name="SettingBotPortLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="SettingBotUriLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingBotPortLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="SettingBotUriLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="SettingBotPortLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SettingBotUriLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>23, 92</value>
   </data>
-  <data name="SettingBotPortLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SettingBotUriLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
-  <data name="SettingBotPortLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 24</value>
+  <data name="SettingBotUriLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 31</value>
   </data>
-  <data name="SettingBotPortLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="SettingBotUriLabel.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <data name="SettingBotPortLabel.Text" xml:space="preserve">
-    <value>本地WebSocket端口</value>
+  <data name="SettingBotUriLabel.Text" xml:space="preserve">
+    <value>Websocket地址   ws://</value>
   </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Name" xml:space="preserve">
-    <value>SettingBotPortLabel</value>
+  <data name="&gt;&gt;SettingBotUriLabel.Name" xml:space="preserve">
+    <value>SettingBotUriLabel</value>
   </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;SettingBotUriLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingBotPortLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SettingBotUriLabel.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
-  <data name="&gt;&gt;SettingBotPortLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="SettingBotPort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>245, 87</value>
-  </data>
-  <data name="SettingBotPort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 35</value>
-  </data>
-  <data name="SettingBotPort.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;SettingBotUriLabel.ZOrder" xml:space="preserve">
     <value>8</value>
-  </data>
-  <data name="SettingBotPort.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Name" xml:space="preserve">
-    <value>SettingBotPort</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.Parent" xml:space="preserve">
-    <value>SettingBot</value>
-  </data>
-  <data name="&gt;&gt;SettingBotPort.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="SettingBotSupportedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2463,7 +2455,7 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotSupportedLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>646, 24</value>
+    <value>658, 31</value>
   </data>
   <data name="SettingBotSupportedLabel.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -2475,13 +2467,13 @@
     <value>SettingBotSupportedLabel</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2490,13 +2482,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 175</value>
+    <value>23, 235</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>378, 28</value>
+    <value>382, 35</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -2508,13 +2500,13 @@
     <value>SettingBotGivePermissionToAllAdmin</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="SettingBotEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2523,13 +2515,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotEnableLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 137</value>
+    <value>23, 197</value>
   </data>
   <data name="SettingBotEnableLog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotEnableLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>510, 28</value>
+    <value>516, 35</value>
   </data>
   <data name="SettingBotEnableLog.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2541,22 +2533,22 @@
     <value>SettingBotEnableLog</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.Parent" xml:space="preserve">
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
   <data name="SettingBot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 415</value>
+    <value>0, 468</value>
   </data>
   <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 444</value>
+    <value>1198, 523</value>
   </data>
   <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2568,12 +2560,81 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SettingServerEncoding.Items" xml:space="preserve">
+    <value>UTF-8</value>
+  </data>
+  <data name="SettingServerEncoding.Items1" xml:space="preserve">
+    <value>UTF-8 with BOM</value>
+  </data>
+  <data name="SettingServerEncoding.Items2" xml:space="preserve">
+    <value>UTF16 (LittleEndian)</value>
+  </data>
+  <data name="SettingServerEncoding.Items3" xml:space="preserve">
+    <value>UTF16 (BigEndian)</value>
+  </data>
+  <data name="SettingServerEncoding.Items4" xml:space="preserve">
+    <value>UTF32</value>
+  </data>
+  <data name="SettingServerEncoding.Items5" xml:space="preserve">
+    <value>ASCII</value>
+  </data>
+  <data name="SettingServerEncoding.Items6" xml:space="preserve">
+    <value>ISO-8859-1</value>
+  </data>
+  <data name="SettingServerEncoding.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 394</value>
+  </data>
+  <data name="SettingServerEncoding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 39</value>
+  </data>
+  <data name="SettingServerEncoding.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Name" xml:space="preserve">
+    <value>SettingServerEncoding</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingServerEncodingLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingServerEncodingLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 397</value>
+  </data>
+  <data name="SettingServerEncodingLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 31</value>
+  </data>
+  <data name="SettingServerEncodingLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="SettingServerEncodingLabel.Text" xml:space="preserve">
+    <value>输入编码</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Name" xml:space="preserve">
+    <value>SettingServerEncodingLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="SettingServerAutoStop.AutoSize" type="System.Boolean, mscorlib">
@@ -2583,7 +2644,7 @@
     <value>23, 201</value>
   </data>
   <data name="SettingServerAutoStop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 28</value>
+    <value>262, 35</value>
   </data>
   <data name="SettingServerAutoStop.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2595,22 +2656,22 @@
     <value>SettingServerAutoStop</value>
   </data>
   <data name="&gt;&gt;SettingServerAutoStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerAutoStop.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerAutoStop.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="SettingServerStopCommandLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingServerStopCommandLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 116</value>
+    <value>23, 123</value>
   </data>
   <data name="SettingServerStopCommandLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+    <value>110, 31</value>
   </data>
   <data name="SettingServerStopCommandLabel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2622,22 +2683,22 @@
     <value>SettingServerStopCommandLabel</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommandLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommandLabel.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommandLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="SettingServerStopCommand.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingServerStopCommand.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 143</value>
+    <value>23, 157</value>
   </data>
   <data name="SettingServerStopCommand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 35</value>
+    <value>1151, 38</value>
   </data>
   <data name="SettingServerStopCommand.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2646,13 +2707,13 @@
     <value>SettingServerStopCommand</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommand.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommand.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="SettingServerOutputStyleLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2661,13 +2722,13 @@
     <value>NoControl</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 357</value>
+    <value>23, 352</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingServerOutputStyleLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+    <value>110, 31</value>
   </data>
   <data name="SettingServerOutputStyleLabel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2679,13 +2740,13 @@
     <value>SettingServerOutputStyleLabel</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyleLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyleLabel.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyleLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="SettingServerEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2700,7 +2761,7 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingServerEnableLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>462, 28</value>
+    <value>460, 35</value>
   </data>
   <data name="SettingServerEnableLog.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2712,13 +2773,13 @@
     <value>SettingServerEnableLog</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableLog.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableLog.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="SettingServerOutputStyle.Items" xml:space="preserve">
     <value>默认</value>
@@ -2730,10 +2791,10 @@
     <value>语法高亮</value>
   </data>
   <data name="SettingServerOutputStyle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>133, 349</value>
+    <value>141, 349</value>
   </data>
   <data name="SettingServerOutputStyle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 32</value>
+    <value>242, 39</value>
   </data>
   <data name="SettingServerOutputStyle.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2742,13 +2803,13 @@
     <value>SettingServerOutputStyle</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="SettingServerEnableOutputCommand.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2763,7 +2824,7 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingServerEnableOutputCommand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 28</value>
+    <value>310, 35</value>
   </data>
   <data name="SettingServerEnableOutputCommand.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2775,13 +2836,13 @@
     <value>SettingServerEnableOutputCommand</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableOutputCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableOutputCommand.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableOutputCommand.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="SettingServerEnableRestart.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2796,7 +2857,7 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingServerEnableRestart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 28</value>
+    <value>334, 35</value>
   </data>
   <data name="SettingServerEnableRestart.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2808,13 +2869,13 @@
     <value>SettingServerEnableRestart</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableRestart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableRestart.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableRestart.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="SettingServerPathLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2826,10 +2887,10 @@
     <value>23, 36</value>
   </data>
   <data name="SettingServerPathLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="SettingServerPathLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>134, 31</value>
   </data>
   <data name="SettingServerPathLabel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2841,13 +2902,13 @@
     <value>SettingServerPathLabel</value>
   </data>
   <data name="&gt;&gt;SettingServerPathLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerPathLabel.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPathLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="SettingServerPathSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -2856,7 +2917,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingServerPathSelect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1041, 60</value>
+    <value>1041, 68</value>
   </data>
   <data name="SettingServerPathSelect.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 40</value>
@@ -2871,22 +2932,22 @@
     <value>SettingServerPathSelect</value>
   </data>
   <data name="&gt;&gt;SettingServerPathSelect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerPathSelect.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPathSelect.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="SettingServerPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingServerPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 63</value>
+    <value>23, 70</value>
   </data>
   <data name="SettingServerPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1010, 35</value>
+    <value>1010, 38</value>
   </data>
   <data name="SettingServerPath.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2895,13 +2956,13 @@
     <value>SettingServerPath</value>
   </data>
   <data name="&gt;&gt;SettingServerPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServerPath.Parent" xml:space="preserve">
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2916,7 +2977,7 @@
     <value>20, 20, 20, 20</value>
   </data>
   <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 415</value>
+    <value>1198, 468</value>
   </data>
   <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2928,7 +2989,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
     <value>SettingPanel</value>
@@ -2943,7 +3004,7 @@
     <value>0, 0</value>
   </data>
   <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2952,7 +3013,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
     <value>Setting</value>
@@ -2961,10 +3022,10 @@
     <value>0</value>
   </data>
   <data name="Setting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Setting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Setting.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2976,7 +3037,7 @@
     <value>Setting</value>
   </data>
   <data name="&gt;&gt;Setting.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Setting.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -2997,7 +3058,7 @@
     <value>True</value>
   </data>
   <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 830</value>
+    <value>1226, 824</value>
   </data>
   <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3006,7 +3067,7 @@
     <value>DebugTextBox</value>
   </data>
   <data name="&gt;&gt;DebugTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DebugTextBox.Parent" xml:space="preserve">
     <value>Debug</value>
@@ -3015,13 +3076,13 @@
     <value>0</value>
   </data>
   <data name="Debug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 39</value>
+    <value>8, 45</value>
   </data>
   <data name="Debug.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="Debug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 836</value>
+    <value>1232, 830</value>
   </data>
   <data name="Debug.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -3033,7 +3094,7 @@
     <value>Debug</value>
   </data>
   <data name="&gt;&gt;Debug.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Debug.Parent" xml:space="preserve">
     <value>tabControl</value>
@@ -3057,7 +3118,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
     <value>MainTableLayout</value>
@@ -3084,7 +3145,7 @@
     <value>MainTableLayout</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.Parent" xml:space="preserve">
     <value>$this</value>
@@ -3143,246 +3204,246 @@
     <value>PluginContextMenuStripAdd</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripRemove.Name" xml:space="preserve">
     <value>PluginContextMenuStripRemove</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripRemove.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
     <value>toolStripSeparator1</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripEnable.Name" xml:space="preserve">
     <value>PluginContextMenuStripEnable</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripEnable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripDisable.Name" xml:space="preserve">
     <value>PluginContextMenuStripDisable</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripDisable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
     <value>toolStripSeparator4</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripShow.Name" xml:space="preserve">
     <value>PluginContextMenuStripShow</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripShow.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
     <value>toolStripSeparator2</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripRefresh.Name" xml:space="preserve">
     <value>PluginContextMenuStripRefresh</value>
   </data>
   <data name="&gt;&gt;PluginContextMenuStripRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SereinIcon.Name" xml:space="preserve">
     <value>SereinIcon</value>
   </data>
   <data name="&gt;&gt;SereinIcon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;columnHeader.Name" xml:space="preserve">
     <value>columnHeader</value>
   </data>
   <data name="&gt;&gt;columnHeader.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexListRegex.Name" xml:space="preserve">
     <value>RegexListRegex</value>
   </data>
   <data name="&gt;&gt;RegexListRegex.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexListArea.Name" xml:space="preserve">
     <value>RegexListArea</value>
   </data>
   <data name="&gt;&gt;RegexListArea.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexListIsAdmin.Name" xml:space="preserve">
     <value>RegexListIsAdmin</value>
   </data>
   <data name="&gt;&gt;RegexListIsAdmin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexListRemark.Name" xml:space="preserve">
     <value>RegexListRemark</value>
   </data>
   <data name="&gt;&gt;RegexListRemark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexListCommand.Name" xml:space="preserve">
     <value>RegexListCommand</value>
   </data>
   <data name="&gt;&gt;RegexListCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripAdd.Name" xml:space="preserve">
     <value>RegexContextMenuStripAdd</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripEdit.Name" xml:space="preserve">
     <value>RegexContextMenuStripEdit</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripDelete.Name" xml:space="preserve">
     <value>RegexContextMenuStripDelete</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripDelete.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripClear.Name" xml:space="preserve">
     <value>RegexContextMenuStripClear</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripClear.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
     <value>toolStripSeparator3</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripCommand.Name" xml:space="preserve">
     <value>RegexContextMenuStripCommand</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripVariables.Name" xml:space="preserve">
     <value>RegexContextMenuStripVariables</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripVariables.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
     <value>toolStripSeparator7</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Name" xml:space="preserve">
     <value>RegexContextMenuStripRefresh</value>
   </data>
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
     <value>columnHeader1</value>
   </data>
   <data name="&gt;&gt;columnHeader1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;columnHeader3.Name" xml:space="preserve">
     <value>columnHeader3</value>
   </data>
   <data name="&gt;&gt;columnHeader3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;columnHeader4.Name" xml:space="preserve">
     <value>columnHeader4</value>
   </data>
   <data name="&gt;&gt;columnHeader4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Add.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Add</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Add.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Edit.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Edit</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Edit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Delete.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Delete</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Delete.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Clear.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Clear</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Clear.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
     <value>toolStripSeparator6</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Enable.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Enable</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Enable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Disable.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Disable</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Disable.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
     <value>toolStripSeparator8</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Command.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Command</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Command.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Variables.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Variables</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Variables.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
     <value>toolStripSeparator5</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Name" xml:space="preserve">
     <value>TaskContextMenuStrip_Refresh</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

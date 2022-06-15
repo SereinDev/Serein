@@ -73,13 +73,13 @@ jobs:
       - name: Upload Serein(Release .Net Framework 4.7.2)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_Release
+          name: .Net Framework 4.7.2
           path: ${{ github.workspace }}\bin\Release\net472
 
       - name: Upload Serein(Release Net6.0)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_Release
+          name: Net6.0
           path: ${{ github.workspace }}\bin\Release\net6.0-windows
 
       - name: Build the solution(Debug)
@@ -90,7 +90,7 @@ jobs:
       - name: Upload Serein(Debug)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_Debug
+          name: Debug
           path: ${{ github.workspace }}\bin\Debug
 
     draft_release:

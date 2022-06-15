@@ -15,12 +15,14 @@ namespace Serein
             SettingServerEnableOutputCommand.Checked = Global.Settings_Server.EnableOutputCommand;
             SettingServerEnableLog.Checked = Global.Settings_Server.EnableLog;
             SettingServerOutputStyle.SelectedIndex = Global.Settings_Server.OutputStyle;
+            SettingServerEncoding.SelectedIndex = Global.Settings_Server.EncodingIndex;
             SettingServerAutoStop.Checked = Global.Settings_Server.AutoStop;
             SettingServerPath.Text = Global.Settings_Server.Path;
             SettingServerStopCommand.Text = Global.Settings_Server.StopCommand;
             SettingBotPermissionList.Text = string.Join(";", Global.Settings_Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings_Bot.GroupList);
-            SettingBotPort.Value = Global.Settings_Bot.Port;
+            SettingBotUri.Text = Global.Settings_Bot.Uri;
+            SettingBotAuthorization.Text = Global.Settings_Bot.Authorization;
             SettingBotEnbaleOutputData.Checked = Global.Settings_Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
@@ -47,9 +49,17 @@ namespace Serein
         {
             Global.Settings_Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
         }
-        private void SettingBotPort_ValueChanged(object sender, EventArgs e)
+        private void SettingServerEncoding_SelectedValueChanged(object sender,EventArgs e)
         {
-            Global.Settings_Bot.Port = (int)SettingBotPort.Value;
+            Global.Settings_Server.EncodingIndex = SettingServerEncoding.SelectedIndex;
+        }
+            private void SettingBotUri_TextChanged(object sender, EventArgs e)
+        {
+            Global.Settings_Bot.Uri = SettingBotUri.Text;
+        }
+        private void SettingBotAuthorization_TextChanged(object sender,EventArgs e)
+        {
+            Global.Settings_Bot.Authorization = SettingBotAuthorization.Text;
         }
         private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
         {

@@ -72,14 +72,14 @@ namespace Serein
             this.PanelConsoleInput = new System.Windows.Forms.TextBox();
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
-            this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader = new System.Windows.Forms.ColumnHeader();
             this.Regular = new System.Windows.Forms.TabPage();
             this.RegexList = new System.Windows.Forms.ListView();
-            this.RegexListRegex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RegexListArea = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RegexListIsAdmin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RegexListRemark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RegexListCommand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RegexListRegex = new System.Windows.Forms.ColumnHeader();
+            this.RegexListArea = new System.Windows.Forms.ColumnHeader();
+            this.RegexListIsAdmin = new System.Windows.Forms.ColumnHeader();
+            this.RegexListRemark = new System.Windows.Forms.ColumnHeader();
+            this.RegexListCommand = new System.Windows.Forms.ColumnHeader();
             this.RegexContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RegexContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.RegexContextMenuStripEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,9 +92,9 @@ namespace Serein
             this.RegexContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Task = new System.Windows.Forms.TabPage();
             this.TaskList = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.TaskContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TaskContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,17 +140,21 @@ namespace Serein
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
+            this.SettingBotAuthorization = new System.Windows.Forms.TextBox();
+            this.SettingBotAuthorizationLabel = new System.Windows.Forms.Label();
+            this.SettingBotUri = new System.Windows.Forms.TextBox();
             this.SettingBotEnbaleOutputData = new System.Windows.Forms.CheckBox();
             this.SettingBotPermission = new System.Windows.Forms.Label();
             this.SettingBotGroup = new System.Windows.Forms.Label();
             this.SettingBotPermissionList = new System.Windows.Forms.TextBox();
             this.SettingBotGroupList = new System.Windows.Forms.TextBox();
-            this.SettingBotPortLabel = new System.Windows.Forms.Label();
-            this.SettingBotPort = new System.Windows.Forms.NumericUpDown();
+            this.SettingBotUriLabel = new System.Windows.Forms.Label();
             this.SettingBotSupportedLabel = new System.Windows.Forms.Label();
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerEncoding = new System.Windows.Forms.ComboBox();
+            this.SettingServerEncodingLabel = new System.Windows.Forms.Label();
             this.SettingServerAutoStop = new System.Windows.Forms.CheckBox();
             this.SettingServerStopCommandLabel = new System.Windows.Forms.Label();
             this.SettingServerStopCommand = new System.Windows.Forms.TextBox();
@@ -187,7 +191,6 @@ namespace Serein
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
             this.SettingBot.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).BeginInit();
             this.SettingServer.SuspendLayout();
             this.Debug.SuspendLayout();
             this.SuspendLayout();
@@ -476,7 +479,6 @@ namespace Serein
             this.columnHeader});
             this.PluginList.ContextMenuStrip = this.PluginContextMenuStrip;
             resources.ApplyResources(this.PluginList, "PluginList");
-            this.PluginList.HideSelection = false;
             this.PluginList.Name = "PluginList";
             this.PluginList.UseCompatibleStateImageBehavior = false;
             this.PluginList.View = System.Windows.Forms.View.SmallIcon;
@@ -500,11 +502,9 @@ namespace Serein
             this.RegexListRemark,
             this.RegexListCommand});
             this.RegexList.ContextMenuStrip = this.RegexContextMenuStrip;
-            this.RegexList.Cursor = System.Windows.Forms.Cursors.Arrow;
             resources.ApplyResources(this.RegexList, "RegexList");
             this.RegexList.FullRowSelect = true;
             this.RegexList.GridLines = true;
-            this.RegexList.HideSelection = false;
             this.RegexList.MultiSelect = false;
             this.RegexList.Name = "RegexList";
             this.RegexList.UseCompatibleStateImageBehavior = false;
@@ -620,7 +620,6 @@ namespace Serein
             resources.ApplyResources(this.TaskList, "TaskList");
             this.TaskList.FullRowSelect = true;
             this.TaskList.GridLines = true;
-            this.TaskList.HideSelection = false;
             this.TaskList.MultiSelect = false;
             this.TaskList.Name = "TaskList";
             this.TaskList.UseCompatibleStateImageBehavior = false;
@@ -958,19 +957,41 @@ namespace Serein
             // 
             // SettingBot
             // 
+            this.SettingBot.Controls.Add(this.SettingBotAuthorization);
+            this.SettingBot.Controls.Add(this.SettingBotAuthorizationLabel);
+            this.SettingBot.Controls.Add(this.SettingBotUri);
             this.SettingBot.Controls.Add(this.SettingBotEnbaleOutputData);
             this.SettingBot.Controls.Add(this.SettingBotPermission);
             this.SettingBot.Controls.Add(this.SettingBotGroup);
             this.SettingBot.Controls.Add(this.SettingBotPermissionList);
             this.SettingBot.Controls.Add(this.SettingBotGroupList);
-            this.SettingBot.Controls.Add(this.SettingBotPortLabel);
-            this.SettingBot.Controls.Add(this.SettingBotPort);
+            this.SettingBot.Controls.Add(this.SettingBotUriLabel);
             this.SettingBot.Controls.Add(this.SettingBotSupportedLabel);
             this.SettingBot.Controls.Add(this.SettingBotGivePermissionToAllAdmin);
             this.SettingBot.Controls.Add(this.SettingBotEnableLog);
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
+            // 
+            // SettingBotAuthorization
+            // 
+            resources.ApplyResources(this.SettingBotAuthorization, "SettingBotAuthorization");
+            this.SettingBotAuthorization.Name = "SettingBotAuthorization";
+            this.SettingBotAuthorization.TextChanged += new System.EventHandler(this.SettingBotAuthorization_TextChanged);
+            this.SettingBotAuthorization.MouseHover += new System.EventHandler(this.SettingBotAuthorization_MouseHover);
+            // 
+            // SettingBotAuthorizationLabel
+            // 
+            resources.ApplyResources(this.SettingBotAuthorizationLabel, "SettingBotAuthorizationLabel");
+            this.SettingBotAuthorizationLabel.Name = "SettingBotAuthorizationLabel";
+            this.SettingBotAuthorizationLabel.MouseHover += new System.EventHandler(this.SettingBotAuthorizationLabel_MouseHover);
+            // 
+            // SettingBotUri
+            // 
+            resources.ApplyResources(this.SettingBotUri, "SettingBotUri");
+            this.SettingBotUri.Name = "SettingBotUri";
+            this.SettingBotUri.TextChanged += new System.EventHandler(this.SettingBotUri_TextChanged);
+            this.SettingBotUri.MouseHover += new System.EventHandler(this.SettingBotUri_MouseHover);
             // 
             // SettingBotEnbaleOutputData
             // 
@@ -1006,32 +1027,11 @@ namespace Serein
             this.SettingBotGroupList.TextChanged += new System.EventHandler(this.SettingBotGroupList_TextChanged);
             this.SettingBotGroupList.MouseHover += new System.EventHandler(this.SettingBotGroupList_MouseHover);
             // 
-            // SettingBotPortLabel
+            // SettingBotUriLabel
             // 
-            resources.ApplyResources(this.SettingBotPortLabel, "SettingBotPortLabel");
-            this.SettingBotPortLabel.Name = "SettingBotPortLabel";
-            this.SettingBotPortLabel.MouseHover += new System.EventHandler(this.SettingBotPortLabel_MouseHover);
-            // 
-            // SettingBotPort
-            // 
-            resources.ApplyResources(this.SettingBotPort, "SettingBotPort");
-            this.SettingBotPort.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.SettingBotPort.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.SettingBotPort.Name = "SettingBotPort";
-            this.SettingBotPort.Value = new decimal(new int[] {
-            6700,
-            0,
-            0,
-            0});
-            this.SettingBotPort.ValueChanged += new System.EventHandler(this.SettingBotPort_ValueChanged);
+            resources.ApplyResources(this.SettingBotUriLabel, "SettingBotUriLabel");
+            this.SettingBotUriLabel.Name = "SettingBotUriLabel";
+            this.SettingBotUriLabel.MouseHover += new System.EventHandler(this.SettingBotUriLabel_MouseHover);
             // 
             // SettingBotSupportedLabel
             // 
@@ -1056,6 +1056,8 @@ namespace Serein
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerEncoding);
+            this.SettingServer.Controls.Add(this.SettingServerEncodingLabel);
             this.SettingServer.Controls.Add(this.SettingServerAutoStop);
             this.SettingServer.Controls.Add(this.SettingServerStopCommandLabel);
             this.SettingServer.Controls.Add(this.SettingServerStopCommand);
@@ -1070,6 +1072,29 @@ namespace Serein
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerEncoding
+            // 
+            this.SettingServerEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SettingServerEncoding.FormattingEnabled = true;
+            this.SettingServerEncoding.Items.AddRange(new object[] {
+            resources.GetString("SettingServerEncoding.Items"),
+            resources.GetString("SettingServerEncoding.Items1"),
+            resources.GetString("SettingServerEncoding.Items2"),
+            resources.GetString("SettingServerEncoding.Items3"),
+            resources.GetString("SettingServerEncoding.Items4"),
+            resources.GetString("SettingServerEncoding.Items5"),
+            resources.GetString("SettingServerEncoding.Items6")});
+            resources.ApplyResources(this.SettingServerEncoding, "SettingServerEncoding");
+            this.SettingServerEncoding.Name = "SettingServerEncoding";
+            this.SettingServerEncoding.SelectedValueChanged += new System.EventHandler(this.SettingServerEncoding_SelectedValueChanged);
+            this.SettingServerEncoding.MouseHover += new System.EventHandler(this.SettingServerEncoding_MouseHover);
+            // 
+            // SettingServerEncodingLabel
+            // 
+            resources.ApplyResources(this.SettingServerEncodingLabel, "SettingServerEncodingLabel");
+            this.SettingServerEncodingLabel.Name = "SettingServerEncodingLabel";
+            this.SettingServerEncodingLabel.MouseHover += new System.EventHandler(this.SettingServerEncodingLabel_MouseHover);
             // 
             // SettingServerAutoStop
             // 
@@ -1208,7 +1233,6 @@ namespace Serein
             this.SettingSerein.PerformLayout();
             this.SettingBot.ResumeLayout(false);
             this.SettingBot.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBotPort)).EndInit();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
             this.Debug.ResumeLayout(false);
@@ -1279,8 +1303,7 @@ namespace Serein
         private System.Windows.Forms.Label SettingBotGroup;
         private System.Windows.Forms.TextBox SettingBotPermissionList;
         private System.Windows.Forms.TextBox SettingBotGroupList;
-        private System.Windows.Forms.Label SettingBotPortLabel;
-        private System.Windows.Forms.NumericUpDown SettingBotPort;
+        private System.Windows.Forms.Label SettingBotUriLabel;
         private System.Windows.Forms.Label SettingBotSupportedLabel;
         private System.Windows.Forms.CheckBox SettingBotGivePermissionToAllAdmin;
         private System.Windows.Forms.CheckBox SettingBotEnableLog;
@@ -1351,6 +1374,11 @@ namespace Serein
         private System.Windows.Forms.Label SettingSereinStatement;
         private System.Windows.Forms.Label SettingSereinDownload;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox SettingBotAuthorization;
+        private System.Windows.Forms.Label SettingBotAuthorizationLabel;
+        private System.Windows.Forms.TextBox SettingBotUri;
+        private System.Windows.Forms.ComboBox SettingServerEncoding;
+        private System.Windows.Forms.Label SettingServerEncodingLabel;
     }
 }
 

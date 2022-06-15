@@ -22,10 +22,21 @@ namespace Serein
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
         private static bool Killed;
-        private static StreamWriter CommandWriter, LogWriter;
+        public static StreamWriter CommandWriter;
+        private static StreamWriter LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
+        public static Encoding[] EncodingList =
+        {
+            new UTF8Encoding(false),
+            new UTF8Encoding(true),
+            Encoding.Unicode,
+            Encoding.BigEndianUnicode,
+            Encoding.UTF32,
+            Encoding.ASCII,
+            Encoding.GetEncoding("ISO-8859-1")
+        };
 
-        public static void Start(bool StartedByCommand = false)
+         public static void Start(bool StartedByCommand = false)
         {
             if (string.IsNullOrEmpty(Global.Settings_Server.Path) || string.IsNullOrWhiteSpace(Global.Settings_Server.Path))
             {
@@ -63,7 +74,10 @@ namespace Serein
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings_Server.Path)
                 };
                 ServerProcess = Process.Start(ServerProcessInfo);
-                CommandWriter = new StreamWriter(ServerProcess.StandardInput.BaseStream)
+                CommandWriter = new StreamWriter(
+                    ServerProcess.StandardInput.BaseStream,
+                   EncodingList[Global.Settings_Server.EncodingIndex]
+                   )
                 {
                     AutoFlush = true,
                     NewLine = "\n"

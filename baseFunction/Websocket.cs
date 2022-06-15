@@ -6,7 +6,8 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocketSharp;
+using WebSocket4Net;
+using System.Collections.Generic;
 
 namespace Serein
 {
@@ -22,36 +23,47 @@ namespace Serein
             {
                 MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if (!CheckPort(Global.Settings_Bot.Port))
-            {
-                MessageBox.Show(":(\nWebsocket目标端口未开启.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
             else
             {
                 Global.Ui.BotWebBrowser_Invoke("#clear");
                 Message.MessageReceived = "-";
                 Message.MessageSent = "-";
                 Message.SelfId = "-";
-                StartTime = DateTime.Now;
-                Status = true;
-                webSocket = new WebSocket($"ws://127.0.0.1:{Global.Settings_Bot.Port}");
-                webSocket.OnMessage += Recieve;
-                webSocket.OnError += (sender, e) =>
+                try
+                {
+                    webSocket = new WebSocket(
+                                        "ws://"+Global.Settings_Bot.Uri,
+                                        "",
+                                        null,
+                                        new List<KeyValuePair<string, string>> {
+                        new KeyValuePair<string, string>("Authorization", Global.Settings_Bot.Authorization)
+                                        }
+                                        );
+                    webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
+                    webSocket.Error += (sender, e) =>
+                    {
+                        Global.Ui.BotWebBrowser_Invoke(
+                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
+                            Log.EscapeLog(e.ToString()));
+                    };
+                    webSocket.Closed += (sender, e) =>
+                    {
+                        Status = false;
+                        Global.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
+                    };
+                    webSocket.Opened += (sender, e) =>
+                    {
+                        Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到{Global.Settings_Bot.Uri}");
+                    };
+                    webSocket.Open();
+                    StartTime = DateTime.Now;
+                    Status = true;
+                }
+                catch(Exception e)
                 {
                     Global.Ui.BotWebBrowser_Invoke(
-                        "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
-                        Log.EscapeLog(e.Message));
-                };
-                webSocket.OnClose += (sender, e) =>
-                {
-                    Status = false;
-                    Global.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
-                };
-                webSocket.OnOpen += (sender, e) =>
-                {
-                    Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到ws://127.0.0.1:{Global.Settings_Bot.Port}");
-                };
-                webSocket.ConnectAsync();
+                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +e.Message);
+                }
             }
         }
         public static void Send(bool IsPrivate, string Message, string Target)
@@ -75,50 +87,41 @@ namespace Serein
                     ParamsJObject.Add("message", Message);
                     TextJObject.Add("params", ParamsJObject);
                 }
-                webSocket.SendAsync(
-                    TextJObject.ToString(),
-                    (Sent) =>
-                    {
-                        if (Sent)
-                        {
-                            if (Global.Settings_Bot.EnbaleOutputData)
-                            {
-                                Global.Ui.BotWebBrowser_Invoke(
-                                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                                    Log.EscapeLog(TextJObject.ToString())
-                                    );
-                            }
-                            else
-                            {
-                                Global.Ui.BotWebBrowser_Invoke(
-                                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                                    Log.EscapeLog($"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}")
-                                    );
-                            }
-
-                        }
-                    }
-                    );
+                webSocket.Send(TextJObject.ToString());
+                if (Global.Settings_Bot.EnbaleOutputData)
+                {
+                    Global.Ui.BotWebBrowser_Invoke(
+                        "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
+                        Log.EscapeLog(TextJObject.ToString())
+                        );
+                }
+                else
+                {
+                    Global.Ui.BotWebBrowser_Invoke(
+                        "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
+                        Log.EscapeLog($"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}")
+                        );
+                }
             }
         }
         public static void Close()
         {
             if (Status)
             {
-                webSocket.CloseAsync();
+                webSocket.Close();
             }
             else
             {
                 MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static void Recieve(object sender, MessageEventArgs e)
+        public static void Recieve(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings_Bot.EnbaleOutputData)
             {
                 Global.Ui.BotWebBrowser_Invoke(
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    Log.EscapeLog(e.Data)
+                    Log.EscapeLog(e.Message)
                     );
             }
 
@@ -135,30 +138,16 @@ namespace Serein
                     true,
                     Encoding.UTF8
                     );
-                    LogWriter.WriteLine($"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Data)}");
+                    LogWriter.WriteLine($"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Message)}");
                     LogWriter.Flush();
                     LogWriter.Close();
                 }
                 catch { }
             }
-            Task MsgTask = new Task(() =>
+            new Task(() =>
             {
-                Message.ProcessMsgFromBot(e.Data);
-            });
-            MsgTask.Start();
-        }
-        private static bool CheckPort(int port)
-        {
-            IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-            IPEndPoint[] iPEndPoints = iPGlobalProperties.GetActiveTcpListeners();
-            foreach (IPEndPoint iPEndPoint in iPEndPoints)
-            {
-                if (iPEndPoint.Port == port)
-                {
-                    return true;
-                }
-            }
-            return false;
+                Message.ProcessMsgFromBot(e.Message);
+            }).Start();
         }
     }
 }

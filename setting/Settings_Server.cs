@@ -9,5 +9,6 @@
         public int OutputStyle { get; set; } = 1;
         public string StopCommand { get; set; } = "stop";
         public bool AutoStop { get; set; } = true;
+        public int EncodingIndex { get; set; } = 0;
     }
 }
