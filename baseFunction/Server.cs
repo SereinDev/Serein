@@ -36,7 +36,7 @@ namespace Serein
             Encoding.GetEncoding("ISO-8859-1")
         };
 
-         public static void Start(bool StartedByCommand = false)
+        public static void Start(bool StartedByCommand = false)
         {
             if (string.IsNullOrEmpty(Global.Settings_Server.Path) || string.IsNullOrWhiteSpace(Global.Settings_Server.Path))
             {

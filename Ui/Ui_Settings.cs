@@ -49,15 +49,15 @@ namespace Serein
         {
             Global.Settings_Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
         }
-        private void SettingServerEncoding_SelectedValueChanged(object sender,EventArgs e)
+        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e)
         {
             Global.Settings_Server.EncodingIndex = SettingServerEncoding.SelectedIndex;
         }
-            private void SettingBotUri_TextChanged(object sender, EventArgs e)
+        private void SettingBotUri_TextChanged(object sender, EventArgs e)
         {
             Global.Settings_Bot.Uri = SettingBotUri.Text;
         }
-        private void SettingBotAuthorization_TextChanged(object sender,EventArgs e)
+        private void SettingBotAuthorization_TextChanged(object sender, EventArgs e)
         {
             Global.Settings_Bot.Authorization = SettingBotAuthorization.Text;
         }
