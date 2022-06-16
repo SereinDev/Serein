@@ -134,7 +134,7 @@ namespace Serein
             7           私聊
             */
             if (
-                !Command.Contains("|") || 
+                !Command.Contains("|") ||
                 !Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase)
                 )
             {
