@@ -153,6 +153,7 @@ namespace Serein
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerEnableUnicode = new System.Windows.Forms.CheckBox();
             this.SettingServerEncoding = new System.Windows.Forms.ComboBox();
             this.SettingServerEncodingLabel = new System.Windows.Forms.Label();
             this.SettingServerAutoStop = new System.Windows.Forms.CheckBox();
@@ -1056,6 +1057,7 @@ namespace Serein
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerEnableUnicode);
             this.SettingServer.Controls.Add(this.SettingServerEncoding);
             this.SettingServer.Controls.Add(this.SettingServerEncodingLabel);
             this.SettingServer.Controls.Add(this.SettingServerAutoStop);
@@ -1072,6 +1074,14 @@ namespace Serein
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerEnableUnicode
+            // 
+            resources.ApplyResources(this.SettingServerEnableUnicode, "SettingServerEnableUnicode");
+            this.SettingServerEnableUnicode.Name = "SettingServerEnableUnicode";
+            this.SettingServerEnableUnicode.UseVisualStyleBackColor = true;
+            this.SettingServerEnableUnicode.CheckedChanged += new System.EventHandler(this.SettingServerEnableUnicode_CheckedChanged);
+            this.SettingServerEnableUnicode.MouseHover += new System.EventHandler(this.SettingServerEnableUnicode_MouseHover);
             // 
             // SettingServerEncoding
             // 
@@ -1379,6 +1389,7 @@ namespace Serein
         private System.Windows.Forms.TextBox SettingBotUri;
         private System.Windows.Forms.ComboBox SettingServerEncoding;
         private System.Windows.Forms.Label SettingServerEncodingLabel;
+        private System.Windows.Forms.CheckBox SettingServerEnableUnicode;
     }
 }
 

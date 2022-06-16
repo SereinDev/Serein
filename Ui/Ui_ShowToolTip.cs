@@ -58,6 +58,10 @@ namespace Serein
         {
             ShowToolTip(sender, "Serein发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）");
         }
+        private void SettingServerEnableUnicode_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "将非ASCII字符转为Unicode后输出\n例：\"你好\"→\"\\u4f60\\u597d");
+        }
         private void SettingServerEncodingLabel_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "指定输出到服务器的编码格式（重启服务器生效）");

@@ -172,6 +172,10 @@ namespace Serein
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
                 }
+                if (Global.Settings_Server.EnableUnicode)
+                {
+                    Command = ConvertToUnicode(Command);
+                }
                 if (Global.Settings_Server.EnableOutputCommand)
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
@@ -339,6 +343,20 @@ namespace Serein
                     : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N2}d";
             }
             return Time;
+        }
+        private static string ConvertToUnicode(string Text)
+        {
+            string result = "";
+            for (int i = 0; i < Text.Length; i++)
+            {
+                if ((int)Text[i] > 32 && (int)Text[i] < 127)
+                {
+                    result += Text[i].ToString();
+                }
+                else
+                    result += string.Format("\\u{0:x4}", (int)Text[i]);
+            }
+            return result;
         }
     }
 }

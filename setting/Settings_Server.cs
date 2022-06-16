@@ -10,5 +10,6 @@
         public string StopCommand { get; set; } = "stop";
         public bool AutoStop { get; set; } = true;
         public int EncodingIndex { get; set; } = 0;
+        public bool EnableUnicode { get; set; } = false;
     }
 }

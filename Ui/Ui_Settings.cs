@@ -14,6 +14,7 @@ namespace Serein
             SettingServerEnableRestart.Checked = Global.Settings_Server.EnableRestart;
             SettingServerEnableOutputCommand.Checked = Global.Settings_Server.EnableOutputCommand;
             SettingServerEnableLog.Checked = Global.Settings_Server.EnableLog;
+            SettingServerEnableUnicode.Checked = Global.Settings_Server.EnableUnicode;
             SettingServerOutputStyle.SelectedIndex = Global.Settings_Server.OutputStyle;
             SettingServerEncoding.SelectedIndex = Global.Settings_Server.EncodingIndex;
             SettingServerAutoStop.Checked = Global.Settings_Server.AutoStop;
@@ -44,6 +45,10 @@ namespace Serein
         private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings_Server.EnableLog = SettingServerEnableLog.Checked;
+        }
+        private void SettingServerEnableUnicode_CheckedChanged(object sender, System.EventArgs e)
+        {
+            Global.Settings_Server.EnableUnicode = SettingServerEnableUnicode.Checked;
         }
         private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
