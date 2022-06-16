@@ -51,25 +51,28 @@ namespace Serein
             Value = GetVariables(Value);
             if (Type == 1)
             {
-                Task CMDTask = new Task(() =>
-                  {
-                      StartCmd(Value);
-                  });
-                CMDTask.Start();
+                new Task(() =>
+                {
+                    StartCmd(Value);
+                }).Start();
             }
             else if (Type == 2)
             {
                 Server.InputCommand(Value, true);
             }
-            else if (Type == 3 && Websocket.Status)
+            else if (Type == 3)
             {
-                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                Server.InputCommand(Value, true);
             }
             else if (Type == 4 && Websocket.Status)
             {
+                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+            }
+            else if (Type == 5 && Websocket.Status)
+            {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 5 && Websocket.Status && Global.Settings_Bot.GroupList.Count >= 1)
+            else if (Type == 6 && Websocket.Status && Global.Settings_Bot.GroupList.Count >= 1)
             {
                 Websocket.Send(false, Value, Global.Settings_Bot.GroupList[0].ToString());
             }
@@ -86,29 +89,32 @@ namespace Serein
             Value = GetVariables(Value, JsonObject);
             if (Type == 1)
             {
-                Task CMDTask = new Task(() =>
+                new Task(() =>
                 {
                     StartCmd(Value);
-                });
-                CMDTask.Start();
+                }).Start();
             }
             else if (Type == 2)
             {
                 Server.InputCommand(Value, true);
             }
-            else if (Type == 3 && Websocket.Status)
+            else if (Type == 3)
             {
-                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                Server.InputCommand(Value, true);
             }
             else if (Type == 4 && Websocket.Status)
             {
-                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
             else if (Type == 5 && Websocket.Status)
             {
-                Websocket.Send(false, Value, GroupId.ToString());
+                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
             else if (Type == 6 && Websocket.Status)
+            {
+                Websocket.Send(false, Value, GroupId.ToString());
+            }
+            else if (Type == 7 && Websocket.Status)
             {
                 Websocket.Send(true, Value, UserId.ToString());
             }
@@ -121,16 +127,16 @@ namespace Serein
             -1          错误的、不合法的、未知的
             1           cmd
             2           服务器命令
-            3           群聊（带参）
-            4           私聊（带参）
-            5           群聊
-            6           私聊
+            3           服务器命令（Unicode）
+            4           群聊（带参）
+            5           私聊（带参）
+            6           群聊
+            7           私聊
             */
-            if (!Command.Contains("|"))
-            {
-                return -1;
-            }
-            if (!Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase))
+            if (
+                !Command.Contains("|") || 
+                !Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase)
+                )
             {
                 return -1;
             }
@@ -142,21 +148,25 @@ namespace Serein
             {
                 return 2;
             }
-            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return 3;
             }
-            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 4;
             }
-            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 5;
             }
-            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
             {
                 return 6;
+            }
+            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            {
+                return 7;
             }
             return -1;
         }

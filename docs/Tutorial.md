@@ -3,6 +3,7 @@
 ### 目录
 - [教程](#教程)
   - [目录](#目录)
+- [正文](#正文)
   - [安装Serein](#安装serein)
     - [Release](#release)
     - [Beta](#beta)
@@ -25,8 +26,7 @@
     - [操作方法](#操作方法-1)
     - [特点](#特点-1)
 
----
-
+## 正文
 ### 安装Serein
 #### Release
 1. 从[Release](https://github.com/Zaitonn/Serein/releaseslatest)下载Serein
@@ -70,7 +70,7 @@
    - 应该注意：
       1. `console.js`中定义的函数**不建议更改**，错误的修改可能导致无法输出信息
       2. 由于显示网页组件以IE为内核，故内嵌网页需**适配IE浏览器**
-      > 听说IE于2022年6月15日停止支持？不慌 ~~管他的，大不了再修复~~
+      > 听说IE于2022年6月15日停止支持？不慌 ~~管他的，大不了再修复 反正已经过了~~
 3. 重启`Serein`后生效
 
 
@@ -105,7 +105,7 @@
 - 可使用WS正向连接
 
 >由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人  
->目前已完全支持的机器人：[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
+>目前已完全支持的机器人：[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)、[OneBot Mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)
 
 #### 配置方法（以go-cqhttp为例）
 1. 下载并运行，首次运行时会释放启动文件和配置文件
@@ -123,9 +123,10 @@
  3: 反向 Websocket 通信  
  4: pprof 性能分析服务器  
 请输入你需要的编号(0-9)，可输入多个，同一编号也可输入多个(如: 233)
-```
-如上所示，你应该选择 `2: 正向 Websocket 通信`
-
+``` 
+如上所示，你应该选择 `2: 正向 Websocket 通信` 
+   
+其他机器人可能需要直接修改配置文件，但操作方法类似
 ### 插件管理
 ![插件管理](imgs/plugin.png)
 

@@ -48,7 +48,7 @@ namespace Serein
                     foreach (Match Match in Regex.Matches(Input, Pattern))
                     {
                         Arg = Match.Groups[1].Value;
-                        if (string.IsNullOrWhiteSpace(Match.Groups[2].Value))
+                        if (string.IsNullOrEmpty(Match.Groups[2].Value))
                         {
                             continue;
                         }
@@ -96,7 +96,7 @@ namespace Serein
                                 }
                             }
                         }
-                        if (string.IsNullOrWhiteSpace(SpanClass))
+                        if (string.IsNullOrEmpty(SpanClass))
                         {
                             SpanClass += "noColored";
                         }
