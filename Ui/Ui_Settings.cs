@@ -69,7 +69,7 @@ namespace Serein
         private void SettingBotAuthorization_Leave(object sender, EventArgs e)
         {
             Global.Settings_Bot.Authorization = SettingBotAuthorization.Text;
-            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text,".","*");
+            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text, ".", "*");
         }
         private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
         {

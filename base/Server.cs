@@ -158,7 +158,7 @@ namespace Serein
                 MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static void InputCommand(string Command, bool StartedByCommand = false, bool Unicode=false)
+        public static void InputCommand(string Command, bool StartedByCommand = false, bool Unicode = false)
         {
             if (Status)
             {
@@ -172,7 +172,7 @@ namespace Serein
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
                 }
-                if (Unicode||Global.Settings_Server.EnableUnicode)
+                if (Unicode || Global.Settings_Server.EnableUnicode)
                 {
                     Command = ConvertToUnicode(Command);
                 }

@@ -144,19 +144,19 @@ namespace Serein
             {
                 return 1;
             }
-            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || 
+            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return 2;
             }
             if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase)||
-                Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) || 
+                Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
             {
                 return 3;
             }
-            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || 
+            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 11;

@@ -173,7 +173,7 @@ namespace Serein
         }
         private void UpdateStatusLabel(string Text)
         {
-            StripStatusLabel.Text= Text;
+            StripStatusLabel.Text = Text;
         }
     }
 }
