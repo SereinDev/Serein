@@ -6,6 +6,21 @@ using System.Windows.Forms;
 
 namespace Serein
 {
+
+    /*
+     *  ____ 
+     * /\  _`\                        __            
+     * \ \,\L\_\     __   _ __    __ /\_\    ___    
+     *  \/_\__ \   /'__`\/\`'__\/'__`\/\ \ /' _ `\  
+     *    /\ \L\ \/\  __/\ \ \//\  __/\ \ \/\ \/\ \ 
+     *    \ `\____\ \____\\ \_\\ \____\\ \_\ \_\ \_\
+     *     \/_____/\/____/ \/_/ \/____/ \/_/\/_/\/_/
+     *     
+     *     https://github.com/Zaitonn/Serein
+     *  Copyright © 2022 Zaitonn. All Rights Reserved.
+     *     
+     */
+
     static class Program
     {
         /// <summary>
@@ -61,7 +76,10 @@ namespace Serein
                     Encoding.UTF8
                     );
                 LogWriter.WriteLine(
-                    DateTime.Now + "  |  " + Global.VERSION + "\n" +
+                    DateTime.Now + "  |  "
+                    + Global.VERSION + "  |  " +
+                    "NET" + Environment.Version.ToString() +
+                    "\n" +
                     Text +
                     "\n==============================================="
                     );
@@ -73,7 +91,8 @@ namespace Serein
                 "崩溃啦:(\n\n" +
                 $"{Text}\n" +
                 $"版本： {Global.VERSION}\n" +
-                $"时间：{DateTime.Now}\n\n\n" +
+                $"时间：{DateTime.Now}\n" +
+                $"NET版本：{Environment.Version}\n\n\n" +
                 $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
                 "若有必要，请在GitHub提交Issue反馈此问题",
                 "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);

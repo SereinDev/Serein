@@ -748,7 +748,7 @@
     <value>20, 20</value>
   </data>
   <data name="PanelConsoleWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 690</value>
+    <value>890, 649</value>
   </data>
   <data name="PanelConsoleWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -829,7 +829,7 @@
     <value>1</value>
   </data>
   <data name="PanelConsolePanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 711</value>
+    <value>0, 670</value>
   </data>
   <data name="PanelConsolePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 15, 3, 15</value>
@@ -859,7 +859,7 @@
     <value>15, 46</value>
   </data>
   <data name="PanelConsolePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 757</value>
+    <value>890, 716</value>
   </data>
   <data name="PanelConsolePanel2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -886,7 +886,7 @@
     <value>15, 15, 15, 15</value>
   </data>
   <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>920, 818</value>
+    <value>920, 777</value>
   </data>
   <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -916,7 +916,7 @@
     <value>2</value>
   </data>
   <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 824</value>
+    <value>1226, 783</value>
   </data>
   <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -943,7 +943,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Panel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -970,7 +970,7 @@
     <value>0, 0</value>
   </data>
   <data name="PluginList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="PluginList.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -991,7 +991,7 @@
     <value>8, 45</value>
   </data>
   <data name="Plugin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Plugin.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1111,7 +1111,7 @@
     <value>No</value>
   </data>
   <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1132,7 +1132,7 @@
     <value>8, 45</value>
   </data>
   <data name="Regular.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Regular.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1252,7 +1252,7 @@
     <value>0, 0</value>
   </data>
   <data name="TaskList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="TaskList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1273,7 +1273,7 @@
     <value>8, 45</value>
   </data>
   <data name="Task.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Task.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1306,7 +1306,7 @@
     <value>20, 20</value>
   </data>
   <data name="BotWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>926, 824</value>
+    <value>926, 783</value>
   </data>
   <data name="BotWebBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1762,7 +1762,7 @@
     <value>2</value>
   </data>
   <data name="BotTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="BotTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1786,7 +1786,7 @@
     <value>8, 45</value>
   </data>
   <data name="Bot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Bot.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2047,7 +2047,7 @@
     <value>142, 35</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>17</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.Text" xml:space="preserve">
     <value>获取更新</value>
@@ -2143,7 +2143,7 @@
     <value>190, 35</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.Text" xml:space="preserve">
     <value>自动获取公告</value>
@@ -2197,7 +2197,7 @@
     <value>956, 38</value>
   </data>
   <data name="SettingBotAuthorization.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;SettingBotAuthorization.Name" xml:space="preserve">
     <value>SettingBotAuthorization</value>
@@ -2248,7 +2248,7 @@
     <value>890, 38</value>
   </data>
   <data name="SettingBotUri.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;SettingBotUri.Name" xml:space="preserve">
     <value>SettingBotUri</value>
@@ -2272,7 +2272,7 @@
     <value>286, 35</value>
   </data>
   <data name="SettingBotEnbaleOutputData.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>14</value>
   </data>
   <data name="SettingBotEnbaleOutputData.Text" xml:space="preserve">
     <value>输出接收和发送的数据</value>
@@ -2368,7 +2368,7 @@
     <value>1153, 35</value>
   </data>
   <data name="SettingBotPermissionList.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>16</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.Name" xml:space="preserve">
     <value>SettingBotPermissionList</value>
@@ -2395,7 +2395,7 @@
     <value>1151, 41</value>
   </data>
   <data name="SettingBotGroupList.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>15</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.Name" xml:space="preserve">
     <value>SettingBotGroupList</value>
@@ -2491,7 +2491,7 @@
     <value>382, 35</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.Text" xml:space="preserve">
     <value>赋予所有群主和管理员管理权限</value>
@@ -2524,7 +2524,7 @@
     <value>516, 35</value>
   </data>
   <data name="SettingBotEnableLog.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="SettingBotEnableLog.Text" xml:space="preserve">
     <value>保存所有消息和数据包到日志（./log/msg）</value>
@@ -2571,8 +2571,11 @@
   <data name="SettingServerEnableUnicode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="SettingServerEnableUnicode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="SettingServerEnableUnicode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 350</value>
+    <value>23, 351</value>
   </data>
   <data name="SettingServerEnableUnicode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2581,7 +2584,7 @@
     <value>237, 35</value>
   </data>
   <data name="SettingServerEnableUnicode.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>7</value>
   </data>
   <data name="SettingServerEnableUnicode.Text" xml:space="preserve">
     <value>使用Unicode字符</value>
@@ -2626,7 +2629,7 @@
     <value>242, 39</value>
   </data>
   <data name="SettingServerEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;SettingServerEncoding.Name" xml:space="preserve">
     <value>SettingServerEncoding</value>
@@ -2827,7 +2830,7 @@
     <value>242, 39</value>
   </data>
   <data name="SettingServerOutputStyle.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
     <value>SettingServerOutputStyle</value>
@@ -3034,7 +3037,7 @@
     <value>0, 0</value>
   </data>
   <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -3055,7 +3058,7 @@
     <value>8, 45</value>
   </data>
   <data name="Setting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Setting.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -3088,7 +3091,7 @@
     <value>True</value>
   </data>
   <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 824</value>
+    <value>1226, 783</value>
   </data>
   <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -3112,7 +3115,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="Debug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 830</value>
+    <value>1232, 789</value>
   </data>
   <data name="Debug.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -3139,7 +3142,7 @@
     <value>3, 3</value>
   </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1248, 883</value>
+    <value>1248, 842</value>
   </data>
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -3166,7 +3169,7 @@
     <value>1</value>
   </data>
   <data name="MainTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1254, 889</value>
+    <value>1254, 848</value>
   </data>
   <data name="MainTableLayout.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -3185,6 +3188,39 @@
   </data>
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="StatusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1276, 17</value>
+  </metadata>
+  <data name="StripStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 31</value>
+  </data>
+  <data name="StripStatusLabel.Text" xml:space="preserve">
+    <value>就绪</value>
+  </data>
+  <data name="StatusStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 848</value>
+  </data>
+  <data name="StatusStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1254, 41</value>
+  </data>
+  <data name="StatusStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="StatusStrip.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip.Name" xml:space="preserve">
+    <value>StatusStrip</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3225,7 +3261,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>800, 620</value>
+    <value>800, 630</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Serein</value>
@@ -3469,6 +3505,12 @@
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
+    <value>StripStatusLabel</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

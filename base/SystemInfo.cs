@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.Devices;
+using System;
 using System.Diagnostics;
 using System.Management;
 
@@ -7,6 +8,7 @@ namespace Serein
     internal class SystemInfo
     {
         public static string OS = new ComputerInfo().OSFullName;
+        public static string NET = Environment.Version.ToString();
         public static string CPUName
         {
             get

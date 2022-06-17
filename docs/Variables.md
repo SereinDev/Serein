@@ -29,6 +29,7 @@
 
 | 变量名 | 描述 | 例子 |  
 | --- | --- | --- |
+| NET |  当前NET版本 | `4.0.30319.42000` |  
 | OS | 操作系统名称 | `Microsoft Windows 10 家庭版` |  
 | CPUName | CPU名称 | `Intel(R) Core(TM) i5-1035G4 CPU @ 1.10GHz` |  
 | TotalRAM | 总内存（MB） | `7778` |  
@@ -48,6 +49,7 @@
 | Difficulty | 难度 | `Normal` |
 | RunTime | 运行时间 | `1.4m` `2.0h` `3.23d` |
 | Percentage | **服务器进程**CPU占用率 | `23.4` |  
+| %FileName% | 服务器启动文件名称 | `bedrock_server.exe` |  
 
 
 ### 消息变量（私聊）

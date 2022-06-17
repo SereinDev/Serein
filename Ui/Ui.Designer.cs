@@ -169,6 +169,8 @@ namespace Serein
             this.SettingServerPath = new System.Windows.Forms.TextBox();
             this.Debug = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.TextBox();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -194,6 +196,7 @@ namespace Serein
             this.SettingBot.SuspendLayout();
             this.SettingServer.SuspendLayout();
             this.Debug.SuspendLayout();
+            this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -978,7 +981,8 @@ namespace Serein
             // 
             resources.ApplyResources(this.SettingBotAuthorization, "SettingBotAuthorization");
             this.SettingBotAuthorization.Name = "SettingBotAuthorization";
-            this.SettingBotAuthorization.TextChanged += new System.EventHandler(this.SettingBotAuthorization_TextChanged);
+            this.SettingBotAuthorization.Enter += new System.EventHandler(this.SettingBotAuthorization_Enter);
+            this.SettingBotAuthorization.Leave += new System.EventHandler(this.SettingBotAuthorization_Leave);
             this.SettingBotAuthorization.MouseHover += new System.EventHandler(this.SettingBotAuthorization_MouseHover);
             // 
             // SettingBotAuthorizationLabel
@@ -1204,12 +1208,26 @@ namespace Serein
             resources.ApplyResources(this.DebugTextBox, "DebugTextBox");
             this.DebugTextBox.Name = "DebugTextBox";
             // 
+            // StatusStrip
+            // 
+            this.StatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StripStatusLabel});
+            resources.ApplyResources(this.StatusStrip, "StatusStrip");
+            this.StatusStrip.Name = "StatusStrip";
+            // 
+            // StripStatusLabel
+            // 
+            this.StripStatusLabel.Name = "StripStatusLabel";
+            resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
+            // 
             // Ui
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.MainTableLayout);
+            this.Controls.Add(this.StatusStrip);
             this.Name = "Ui";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Serein_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Ui_DragDrop);
@@ -1247,7 +1265,10 @@ namespace Serein
             this.SettingServer.PerformLayout();
             this.Debug.ResumeLayout(false);
             this.Debug.PerformLayout();
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1389,6 +1410,8 @@ namespace Serein
         private System.Windows.Forms.TextBox SettingBotUri;
         private System.Windows.Forms.ComboBox SettingServerEncoding;
         private System.Windows.Forms.Label SettingServerEncodingLabel;
+        private System.Windows.Forms.StatusStrip StatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel StripStatusLabel;
         private System.Windows.Forms.CheckBox SettingServerEnableUnicode;
     }
 }

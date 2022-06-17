@@ -23,7 +23,7 @@ namespace Serein
             SettingBotPermissionList.Text = string.Join(";", Global.Settings_Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings_Bot.GroupList);
             SettingBotUri.Text = Global.Settings_Bot.Uri;
-            SettingBotAuthorization.Text = Global.Settings_Bot.Authorization;
+            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text, ".", "*");
             SettingBotEnbaleOutputData.Checked = Global.Settings_Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
@@ -62,9 +62,14 @@ namespace Serein
         {
             Global.Settings_Bot.Uri = SettingBotUri.Text;
         }
-        private void SettingBotAuthorization_TextChanged(object sender, EventArgs e)
+        private void SettingBotAuthorization_Enter(object sender, EventArgs e)
+        {
+            SettingBotAuthorization.Text = Global.Settings_Bot.Authorization;
+        }
+        private void SettingBotAuthorization_Leave(object sender, EventArgs e)
         {
             Global.Settings_Bot.Authorization = SettingBotAuthorization.Text;
+            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text,".","*");
         }
         private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
         {

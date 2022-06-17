@@ -60,7 +60,7 @@ namespace Serein
         }
         private void SettingServerEnableUnicode_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "将非ASCII字符转为Unicode后输出\n例：\"你好\"→\"\\u4f60\\u597d");
+            ShowToolTip(sender, "将所有指令中的非ASCII字符转为Unicode后输出\n例：\"你好\"→\"\\u4f60\\u597d\"");
         }
         private void SettingServerEncodingLabel_MouseHover(object sender, EventArgs e)
         {

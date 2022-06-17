@@ -60,6 +60,10 @@ namespace Serein
             {
                 Server.InputCommand(Value, true);
             }
+            else if (Type == 3)
+            {
+                Server.InputCommand(Value, true, true);
+            }
             else if (Type == 11 && Websocket.Status)
             {
                 Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
@@ -94,6 +98,10 @@ namespace Serein
             {
                 Server.InputCommand(Value, true);
             }
+            else if (Type == 3)
+            {
+                Server.InputCommand(Value, true, true);
+            }
             else if (Type == 11 && Websocket.Status)
             {
                 Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
@@ -119,6 +127,7 @@ namespace Serein
             -1          错误的、不合法的、未知的
             1           cmd
             2           服务器命令
+            3           服务器命令 with Unicode
             11          群聊（带参）
             12          私聊（带参）
             13          群聊
@@ -135,23 +144,35 @@ namespace Serein
             {
                 return 1;
             }
-            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) || 
+                Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return 2;
             }
-            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase)||
+                Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) || 
+                Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
+            {
+                return 3;
+            }
+            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) || 
+                Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 11;
             }
-            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
             {
                 return 12;
             }
-            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
             {
                 return 13;
             }
-            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) || Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
             {
                 return 14;
             }
@@ -209,6 +230,7 @@ namespace Serein
 
                 }
             }
+            Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%UsedRAM%", SystemInfo.UsedRAM, RegexOptions.IgnoreCase);
