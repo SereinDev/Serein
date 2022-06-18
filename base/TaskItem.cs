@@ -3,15 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Serein
 {
+    [JsonObject(MemberSerialization.OptOut)]
     internal class TaskItem
     {
         public string Cron { get; set; } = string.Empty;
         public string Command { get; set; } = string.Empty;
         public string Remark { get; set; } = string.Empty;
         public bool Enable { get; set; } = true;
+        [JsonIgnore]
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()
         {

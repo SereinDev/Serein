@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -20,7 +22,6 @@ namespace Serein
 
         private void RegexList_MouseUp(object sender, MouseEventArgs e)
         {
-            SaveRegex();
             isdrag = false;
             if ((RegexList.SelectedItems.Count != 0) && (itemDraged != null))
             {
@@ -28,6 +29,7 @@ namespace Serein
                 {
                     RegexList.Items.RemoveAt(itemDraged.Index);
                     RegexList.Items.Insert(RegexList.SelectedItems[0].Index, itemDraged);
+                    SaveRegex();
                     itemDraged = null;
                 }
             }
@@ -39,7 +41,6 @@ namespace Serein
         }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            SaveRegex();
             if (RegexList.SelectedItems.Count <= 0)
             {
                 RegexContextMenuStripEdit.Enabled = false;
@@ -174,53 +175,80 @@ namespace Serein
         }
         public void LoadRegex()
         {
+            RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            if (File.Exists($"{Global.Path}\\data\\regex.tsv"))
+            if (!Directory.Exists(Global.Path + "\\data"))
             {
-                FileStream TsvFile = new FileStream($"{Global.Path}\\data\\regex.tsv", FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
-                string Line;
-                List<RegexItem> regexItems = new List<RegexItem>();
-                while ((Line = Reader.ReadLine()) != null)
-                {
-                    RegexItem Item = new RegexItem();
-                    Item.ConvertToItem(Line);
-                    if (!Item.CheckItem())
-                    {
-                        continue;
-                    }
-                    AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                    regexItems.Add(Item);
-                }
-                TsvFile.Close();
-                Reader.Close();
-                Global.RegexItems = regexItems;
+                Directory.CreateDirectory(Global.Path + "\\data");
             }
+            if (File.Exists($"{Global.Path}\\data\\regex.json"))
+            {
+                StreamReader Reader = new StreamReader(
+                    File.Open(
+                        $"{Global.Path}\\data\\regex.json",
+                        FileMode.Open
+                    ),
+                    Encoding.UTF8);
+                string Text = Reader.ReadToEnd();
+                if (!string.IsNullOrEmpty(Text))
+                {
+                    try
+                    {
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (JsonObject["type"].ToString().ToUpper() != "REGEX")
+                        {
+                            return;
+                        }
+                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        foreach (RegexItem Item in Global.RegexItems)
+                        {
+                            if (Item.CheckItem())
+                            {
+                                AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                Reader.Close();
+                RegexList.EndUpdate();
+            } 
         }
+
         public void LoadRegex(string FileName)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
-                string Line;
-                List<RegexItem> regexItems = new List<RegexItem>();
-                while ((Line = Reader.ReadLine()) != null)
+                StreamReader Reader = new StreamReader(
+                    File.Open(
+                    FileName,
+                    FileMode.Open
+                    ),
+                    Encoding.UTF8);
+                string Text = Reader.ReadToEnd();
+                if (!string.IsNullOrEmpty(Text))
                 {
-                    RegexItem Item = new RegexItem();
-                    Item.ConvertToItem(Line);
-                    if (!Item.CheckItem())
+                    try
                     {
-                        continue;
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (JsonObject["type"].ToString().ToUpper() != "REGEX")
+                        {
+                            return;
+                        }
+                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        foreach (RegexItem Item in Global.RegexItems)
+                        {
+                            if (Item.CheckItem())
+                            {
+                                AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
+                            }
+                        }
                     }
-                    AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                    regexItems.Add(Item);
+                    catch { }
                 }
-                TsvFile.Close();
                 Reader.Close();
-                Global.RegexItems = regexItems;
                 RegexList.EndUpdate();
             }
         }
@@ -233,12 +261,14 @@ namespace Serein
             }
             StreamWriter RegexWriter = new StreamWriter(
                 File.Open(
-                    $"{Global.Path}\\data\\regex.tsv",
+                    $"{Global.Path}\\data\\regex.json",
                     FileMode.Create,
                     FileAccess.Write
                     ),
                 Encoding.UTF8
                 );
+            JObject ListJObject = new JObject();
+            JArray ListJArray = new JArray();
             foreach (ListViewItem item in RegexList.Items)
             {
                 RegexItem regexItem = new RegexItem()
@@ -249,9 +279,14 @@ namespace Serein
                     Remark = item.SubItems[3].Text,
                     Command = item.SubItems[4].Text
                 };
-                RegexWriter.WriteLine(regexItem.ConvertToStr());
                 regexItems.Add(regexItem);
+                JObject ListItemJObject = JObject.FromObject(regexItem);
+                ListJArray.Add(ListItemJObject);
             }
+            ListJObject.Add("type", "REGEX");
+            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
+            ListJObject.Add("data", ListJArray);
+            RegexWriter.Write(ListJObject.ToString());
             Global.RegexItems = regexItems;
             RegexWriter.Flush();
             RegexWriter.Close();

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -86,29 +89,39 @@ namespace Serein
                     LoadPlugins();
                     return;
                 }
-                else if (Path.GetFileName(FileName) == "regex.tsv")
+                else if (Path.GetExtension(FileName).ToUpper() == ".JSON")
                 {
-                    if ((int)MessageBox.Show(
-                        this,
-                        "是否导入正则记录？\n将覆盖原有文件且不可逆",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
+                    StreamReader Reader = new StreamReader(
+                        File.Open(
+                            FileName,
+                            FileMode.Open
+                        ),
+                        Encoding.UTF8
+                        );
+                    JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Reader.ReadToEnd());
+                    Reader.Close();
+                    if (
+                        JsonObject["type"].ToString().ToUpper() == "REGEX"
+                        &&
+                        (int)MessageBox.Show(
+                            this,
+                            "是否导入正则记录？\n将覆盖原有文件且不可逆",
+                            "Serein",
+                            MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Warning
                         ) == 1)
                     {
                         LoadRegex(FileName);
                         SaveRegex();
                     }
-                    return;
-                }
-                else if (Path.GetFileName(FileName) == "task.tsv")
-                {
-                    if ((int)MessageBox.Show(
-                        this,
-                        "是否导入定时任务？\n将覆盖原有文件且不可逆",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
+                    else if (JsonObject["type"].ToString().ToUpper() == "TASK"
+                        &&
+                        (int)MessageBox.Show(
+                            this,
+                            "是否导入定时任务？\n将覆盖原有文件且不可逆",
+                            "Serein",
+                            MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Warning
                         ) == 1)
                     {
                         LoadTask(FileName);

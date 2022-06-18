@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Serein
 {
@@ -15,7 +17,6 @@ namespace Serein
     {
         private void TaskList_MouseUp(object sender, MouseEventArgs e)
         {
-            SaveTask();
             isdrag = false;
             if ((TaskList.SelectedItems.Count != 0) && (itemDraged != null))
             {
@@ -24,6 +25,7 @@ namespace Serein
                     TaskList.Items.RemoveAt(itemDraged.Index);
                     TaskList.Items.Insert(TaskList.SelectedItems[0].Index, itemDraged);
                     itemDraged = null;
+                    SaveTask();
                 }
             }
         }
@@ -39,7 +41,6 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            SaveTask();
             if (TaskList.SelectedItems.Count <= 0)
             {
                 TaskContextMenuStrip_Edit.Enabled = false;
@@ -160,8 +161,8 @@ namespace Serein
         }
         private void TaskContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
-            SaveTask();
             LoadTask();
+            SaveTask();
         }
         public void SaveTask()
         {
@@ -171,12 +172,14 @@ namespace Serein
             }
             StreamWriter TaskWriter = new StreamWriter(
                 File.Open(
-                    $"{Global.Path}\\data\\task.tsv",
+                    $"{Global.Path}\\data\\task.json",
                     FileMode.Create,
                     FileAccess.Write
                     ),
                 Encoding.UTF8
                 );
+            JObject ListJObject = new JObject();
+            JArray ListJArray = new JArray();
             List<TaskItem> TaskItems = new List<TaskItem>();
             DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
@@ -185,7 +188,8 @@ namespace Serein
                 {
                     Cron = Item.Text,
                     Remark = Item.SubItems[1].Text,
-                    Command = Item.SubItems[2].Text
+                    Command = Item.SubItems[2].Text,
+                    Enable = Item.ForeColor != Color.Gray   
                 };
                 try
                 {
@@ -198,8 +202,13 @@ namespace Serein
                 }
                 TI.Enable = Item.ForeColor != Color.Gray;
                 TaskItems.Add(TI);
-                TaskWriter.WriteLine(TI.ConvertToStr());
+                JObject ListItemJObject = JObject.FromObject(TI);
+                ListJArray.Add(ListItemJObject);
             }
+            ListJObject.Add("type", "TASK");
+            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
+            ListJObject.Add("data", ListJArray);
+            TaskWriter.Write(ListJObject.ToString());
             TaskWriter.Flush();
             TaskWriter.Close();
             Global.TaskItems = TaskItems;
@@ -208,25 +217,29 @@ namespace Serein
         {
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            if (File.Exists($"{Global.Path}\\data\\task.tsv"))
+            if (File.Exists($"{Global.Path}\\data\\task.json"))
             {
-                FileStream TsvFile = new FileStream($"{Global.Path}\\data\\task.tsv", FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
-                string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
-                while ((Line = Reader.ReadLine()) != null)
+                StreamReader Reader = new StreamReader(
+                    File.Open(
+                    $"{Global.Path}\\data\\task.json",
+                    FileMode.Open
+                    ),
+                    Encoding.UTF8);
+                string Text = Reader.ReadToEnd();
+                if (!string.IsNullOrEmpty(Text))
                 {
-                    TaskItem Item = new TaskItem();
-                    Item.ConvertToItem(Line);
-                    if (!Item.CheckItem())
+                    try
                     {
-                        continue;
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
+                        {
+                            return;
+                        }
+                        Global.TaskItems = ((JArray)JsonObject["data"]).ToObject<List<TaskItem>>();
                     }
-                    TaskItems.Add(Item);
+                    catch { }
                 }
-                TsvFile.Close();
                 Reader.Close();
-                Global.TaskItems = TaskItems;
             }
             foreach (TaskItem Item in Global.TaskItems)
             {
@@ -249,39 +262,44 @@ namespace Serein
             TaskList.Items.Clear();
             if (File.Exists(FileName))
             {
-                FileStream TsvFile = new FileStream(FileName, FileMode.Open);
-                StreamReader Reader = new StreamReader(TsvFile, Encoding.UTF8);
-                string Line;
-                List<TaskItem> TaskItems = new List<TaskItem>();
-                while ((Line = Reader.ReadLine()) != null)
+                StreamReader Reader = new StreamReader(
+                    File.Open(
+                    FileName,
+                    FileMode.Open
+                    ),
+                    Encoding.UTF8);
+                string Text = Reader.ReadToEnd();
+                if (!string.IsNullOrEmpty(Text))
                 {
-                    TaskItem Item = new TaskItem();
-                    Item.ConvertToItem(Line);
-                    if (!Item.CheckItem())
+                    try
                     {
-                        continue;
-                    }
-                    TaskItems.Add(Item);
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
+                        {
+                            return;
+                        }
+                        Global.TaskItems = JArray.Parse(Text).ToObject<List<TaskItem>>();
+                   }
+                    catch { }
                 }
-                TsvFile.Close();
                 Reader.Close();
-                Global.TaskItems = TaskItems;
-            }
-            foreach (TaskItem Item in Global.TaskItems)
-            {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
-                listViewItem.SubItems.Add(Item.Remark);
-                listViewItem.SubItems.Add(Item.Command);
-                if (!Item.Enable)
+                foreach (TaskItem Item in Global.TaskItems)
                 {
-                    listViewItem.ForeColor = Color.Gray;
-                    listViewItem.SubItems[1].ForeColor = Color.Gray;
-                    listViewItem.SubItems[2].ForeColor = Color.Gray;
+                    ListViewItem listViewItem = new ListViewItem(Item.Cron);
+                    listViewItem.SubItems.Add(Item.Remark);
+                    listViewItem.SubItems.Add(Item.Command);
+                    if (!Item.Enable)
+                    {
+                        listViewItem.ForeColor = Color.Gray;
+                        listViewItem.SubItems[1].ForeColor = Color.Gray;
+                        listViewItem.SubItems[2].ForeColor = Color.Gray;
+                    }
+                    TaskList.Items.Add(listViewItem);
                 }
-                TaskList.Items.Add(listViewItem);
             }
             TaskList.EndUpdate();
         }
+
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
             Process.Start("https://zaitonn.github.io/Serein/Command.html");
