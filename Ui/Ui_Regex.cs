@@ -212,7 +212,7 @@ namespace Serein
                 }
                 Reader.Close();
                 RegexList.EndUpdate();
-            } 
+            }
         }
 
         public void LoadRegex(string FileName)

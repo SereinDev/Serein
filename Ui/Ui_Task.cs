@@ -189,7 +189,7 @@ namespace Serein
                     Cron = Item.Text,
                     Remark = Item.SubItems[1].Text,
                     Command = Item.SubItems[2].Text,
-                    Enable = Item.ForeColor != Color.Gray   
+                    Enable = Item.ForeColor != Color.Gray
                 };
                 try
                 {
@@ -279,7 +279,7 @@ namespace Serein
                             return;
                         }
                         Global.TaskItems = JArray.Parse(Text).ToObject<List<TaskItem>>();
-                   }
+                    }
                     catch { }
                 }
                 Reader.Close();
