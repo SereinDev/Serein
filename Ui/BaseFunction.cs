@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Serein
@@ -49,7 +49,7 @@ namespace Serein
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
-        private void Debug_Append(string Text)
+        public void Debug_Append(string Text)
         {
             if (Global.Settings_Serein.Debug)
             {

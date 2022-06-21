@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -293,12 +293,12 @@ namespace Serein
         }
         private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Variables.html") { UseShellExecute = true });
         }
 
         private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Command.html") { UseShellExecute = true });
         }
     }
 }

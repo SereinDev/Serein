@@ -55,7 +55,7 @@ namespace Serein
                         MessageBoxButtons.OKCancel, MessageBoxIcon.Information
                     ) == 1)
                 {
-                    Process.Start("https://zaitonn.github.io/Serein/Tutorial.html");
+                    Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial.html") { UseShellExecute = true });
                 }
             }
         }

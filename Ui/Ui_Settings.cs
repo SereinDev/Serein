@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Serein
 {
@@ -23,7 +22,7 @@ namespace Serein
             SettingBotPermissionList.Text = string.Join(";", Global.Settings_Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings_Bot.GroupList);
             SettingBotUri.Text = Global.Settings_Bot.Uri;
-            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text, ".", "*");
+            SettingBotAuthorization.Text = Regex.Replace(Global.Settings_Bot.Authorization, ".", "*");
             SettingBotEnbaleOutputData.Checked = Global.Settings_Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings_Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
@@ -179,24 +178,25 @@ namespace Serein
         }
         private void SettingSereinAbout_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/About");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/About") { UseShellExecute = true });
         }
         private void SettingSereinPage_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein") { UseShellExecute = true });
         }
         private void SettingSereinHelp_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Help");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Help") { UseShellExecute = true });
         }
 
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Tutorial");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial") { UseShellExecute = true });
+
         }
         private void SettingSereinDownload_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Zaitonn/Serein/releases/latest");
+            Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
         }
     }
 

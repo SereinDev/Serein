@@ -41,6 +41,11 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="motd\**" />
+    <EmbeddedResource Remove="motd\**" />
+    <None Remove="motd\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="appsettings.json" />
     <Content Include="Serein.ico" />
     <Content Include="Serein_full.ico" />

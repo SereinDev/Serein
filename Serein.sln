@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motd", "Motd\Motd.csproj", "{3C88228C-C0D9-4223-8F55-16385D5788FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{ED28FD59-AAA9-437A-95EB-329B925D9C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED28FD59-AAA9-437A-95EB-329B925D9C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED28FD59-AAA9-437A-95EB-329B925D9C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C88228C-C0D9-4223-8F55-16385D5788FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C88228C-C0D9-4223-8F55-16385D5788FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C88228C-C0D9-4223-8F55-16385D5788FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C88228C-C0D9-4223-8F55-16385D5788FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

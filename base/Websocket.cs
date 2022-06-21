@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocket4Net;
-using System.Collections.Generic;
 
 namespace Serein
 {

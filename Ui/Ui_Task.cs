@@ -1,4 +1,6 @@
 ﻿using NCrontab;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,8 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Serein
 {
@@ -302,11 +302,11 @@ namespace Serein
 
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Command.html");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Command.html") { UseShellExecute = true });
         }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
-            Process.Start("https://zaitonn.github.io/Serein/Variables.html");
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Variables.html") { UseShellExecute = true });
         }
     }
 }

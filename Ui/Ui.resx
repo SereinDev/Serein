@@ -3090,6 +3090,9 @@
   <data name="DebugTextBox.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="DebugTextBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
   <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>1226, 783</value>
   </data>
