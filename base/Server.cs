@@ -99,7 +99,7 @@ namespace Serein
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
-                
+
             }
         }
         public static void Stop()
