@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace Serein
 {
@@ -100,6 +99,7 @@ namespace Serein
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
+                
             }
         }
         public static void Stop()

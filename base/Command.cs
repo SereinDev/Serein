@@ -198,6 +198,16 @@ namespace Serein
             {
                 return Text.Replace("\\n", "\n");
             }
+            if (Regex.IsMatch(Text, @"%(OnlinePlayer|MaxPlayer|Description|Protocol|LevelName|Original)%", RegexOptions.IgnoreCase))
+            {
+                MotdpeItem Item = Motd.GetPe(new MotdpeItem());
+                Text = Regex.Replace(Text, "%Description%", Item.Description, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Protocol%", Item.Protocol, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%OnlinePlayer%", Item.OnlinePlayer, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%MaxPlayer%", Item.MaxPlayer, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%LevelName%", Item.LevelName, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Original%", Item.Original, RegexOptions.IgnoreCase);
+            }
             DateTime CurrentTime = DateTime.Now;
             Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
@@ -225,10 +235,7 @@ namespace Serein
                     Text = Regex.Replace(Text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, JsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
-                catch
-                {
-
-                }
+                catch{}
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
