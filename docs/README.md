@@ -15,7 +15,7 @@
 ---  
 - 一个基于.NET的我的世界服务器面板  
 
-[下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](docs/Tutorial.md)** 丨 __[帮助页面](docs/Help.md)__
+[下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](Tutorial.md)** 丨 __[帮助页面](Help.md)__
 
 ## 目录
 - [Serein](#serein)
