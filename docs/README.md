@@ -1,13 +1,21 @@
 # Serein
 <div style="text-align: center;">
-<img src="https://zaitonn.github.io/Serein/Serein.png" style="image-rendering: pixelated;width:200px">
-
+<img src="https://zaitonn.github.io/Serein/Serein.png" style="image-rendering: pixelated;width:150px">
+<br>
+<img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Zaitonn/Serein">
+<img alt="GitHub .NET" src="https://img.shields.io/badge/.NET-6.0-orange">
+<img alt="GitHub .NET" src="https://img.shields.io/badge/.Net%20Framework-4.7.2-blue">
+<img alt="GitHub repo license" src="https://img.shields.io/github/license/zaitonn/Serein?color=yellow">
+<img alt="GitHub bulid" src="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml/badge.svg">
+<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total">
 </div>
 
-- 一个基于.NET的我的世界服务器面板  
-  
 
-[下载最新版](https://github.com/Zaitonn/Serein/releases/latest) | [Github仓库](https://github.com/Zaitonn/Serein) | [Minebbs](https://www.minebbs.com/resources/serein.4169/) | **[教程](Tutorial.md)（推荐阅读）** | **[帮助页面](Help.md)（推荐阅读）**
+---  
+- 一个基于.NET的我的世界服务器面板  
+
+[下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](docs/Tutorial.md)** 丨 __[帮助页面](docs/Help.md)__
 
 ## 目录
 - [Serein](#serein)

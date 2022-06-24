@@ -2,6 +2,7 @@ name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
+  ## Changes
   ### 🚀 新功能|Features
   
   ### 🐛 修复|Bug Fixes
