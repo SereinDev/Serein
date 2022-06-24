@@ -200,7 +200,7 @@ namespace Serein
             }
             if (Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original)%", RegexOptions.IgnoreCase))
             {
-                Motdpe motdpe =new Motdpe(newPort: Server.Port);
+                Motdpe motdpe = new Motdpe(newPort: Server.Port);
                 Text = Regex.Replace(Text, "%GameMode%", motdpe.GameMode, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Description%", motdpe.Description, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Protocol%", motdpe.Protocol, RegexOptions.IgnoreCase);

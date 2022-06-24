@@ -245,7 +245,7 @@ namespace Serein
                     }
                     Global.RegexItems = regexItems;
                 }
-                else if(FileName.ToUpper().EndsWith(".JSON"))
+                else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
                     string Text = Reader.ReadToEnd();
                     if (string.IsNullOrEmpty(Text)) { return; }

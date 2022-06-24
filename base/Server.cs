@@ -19,7 +19,7 @@ namespace Serein
         public static bool Restart = false;
         public static List<string> CommandList = new List<string>();
         public static double CPUPersent = 0.0;
-        public static int CommandListIndex = 0,Port=0;
+        public static int CommandListIndex = 0, Port = 0;
         private static bool Finished = false;
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
@@ -240,7 +240,7 @@ namespace Serein
                     {
                         Port = int.TryParse(
                             Regex.Match(
-                                Line, 
+                                Line,
                                 Global.Settings_Matches.ipv4Port,
                                 RegexOptions.IgnoreCase
                                 ).Groups[1].Value.Trim(),
