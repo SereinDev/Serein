@@ -221,8 +221,8 @@ namespace Serein
             {
                 StreamReader Reader = new StreamReader(
                     File.Open(
-                    $"{Global.Path}\\data\\task.json",
-                    FileMode.Open
+                        $"{Global.Path}\\data\\task.json",
+                        FileMode.Open
                     ),
                     Encoding.UTF8);
                 string Text = Reader.ReadToEnd();
@@ -264,13 +264,30 @@ namespace Serein
             {
                 StreamReader Reader = new StreamReader(
                     File.Open(
-                    FileName,
-                    FileMode.Open
+                        FileName,
+                        FileMode.Open
                     ),
                     Encoding.UTF8);
-                string Text = Reader.ReadToEnd();
-                if (!string.IsNullOrEmpty(Text))
+                if (FileName.ToUpper().EndsWith(".TSV"))
                 {
+                    string Line;
+                    List<TaskItem> TaskItems = new List<TaskItem>();
+                    while ((Line = Reader.ReadLine()) != null)
+                    {
+                        TaskItem Item = new TaskItem();
+                        Item.ConvertToItem(Line);
+                        if (!Item.CheckItem())
+                        {
+                            continue;
+                        }
+                        TaskItems.Add(Item);
+                    }
+                    Global.TaskItems = TaskItems;
+                }
+                else if (FileName.ToUpper().EndsWith(".JSON"))
+                {
+                    string Text = Reader.ReadToEnd();
+                    if (string.IsNullOrEmpty(Text)) { return; }
                     try
                     {
                         JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);

@@ -19,7 +19,7 @@ namespace Serein
         public static bool Restart = false;
         public static List<string> CommandList = new List<string>();
         public static double CPUPersent = 0.0;
-        public static int CommandListIndex = 0;
+        public static int CommandListIndex = 0,Port=0;
         private static bool Finished = false;
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
@@ -94,6 +94,7 @@ namespace Serein
                 Version = "-";
                 LevelName = "-";
                 Difficulty = "-";
+                Port = 0;
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
@@ -234,6 +235,18 @@ namespace Serein
                     else if (Regex.IsMatch(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
                         Difficulty = Regex.Match(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    }
+                    else if (Port == 0 && Regex.IsMatch(Line, Global.Settings_Matches.ipv4Port, RegexOptions.IgnoreCase))
+                    {
+                        Port = int.TryParse(
+                            Regex.Match(
+                                Line, 
+                                Global.Settings_Matches.ipv4Port,
+                                RegexOptions.IgnoreCase
+                                ).Groups[1].Value.Trim(),
+                            out int r)
+                            ? r : 0;
+                        Global.Ui.Debug_Append(Port.ToString());
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(

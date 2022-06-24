@@ -69,11 +69,22 @@ namespace Serein
         {
             Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
             string FileName;
-            if (data.Length == 1)
+            List<string> SingleList = new List<string> { ".EXE", ".BAT", ".JSON", ".TSV" };
+            if (
+                data.Length == 1 &&
+                SingleList.Contains(
+                    Path.GetExtension(
+                        data.GetValue(0).ToString()
+                        ).ToUpper()
+                    )
+                )
             {
                 FocusWindow();
                 FileName = data.GetValue(0).ToString();
-                if (FileName.ToUpper().EndsWith(".EXE") || FileName.ToUpper().EndsWith(".BAT"))
+                if (
+                    Path.GetExtension(FileName).ToUpper() == ".EXE" ||
+                    Path.GetExtension(FileName).ToUpper() == ".BAT"
+                    )
                 {
                     if ((int)MessageBox.Show(
                         this,
@@ -87,7 +98,6 @@ namespace Serein
                         Global.Settings_Server.Path = FileName;
                     }
                     LoadPlugins();
-                    return;
                 }
                 else if (Path.GetExtension(FileName).ToUpper() == ".JSON")
                 {
@@ -127,8 +137,34 @@ namespace Serein
                         LoadTask(FileName);
                         SaveTask();
                     }
-                    return;
                 }
+                else if (
+                    Path.GetFileName(FileName).ToUpper() == "REGEX.TSV" &&
+                    (int)MessageBox.Show(
+                        this,
+                        "是否导入正则记录？\n将覆盖原有文件且不可逆",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning
+                        ) == 1)
+                {
+                    LoadRegex(FileName);
+                    SaveRegex();
+                }
+                else if (
+                    Path.GetFileName(FileName).ToUpper() == "TASK.TSV" &&
+                    (int)MessageBox.Show(
+                        this,
+                        "是否导入定时任务？\n将覆盖原有文件且不可逆",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning
+                        ) == 1)
+                {
+                    LoadTask(FileName);
+                    SaveTask();
+                }
+                return;
             }
             if (data.Length > 0)
             {
@@ -137,7 +173,7 @@ namespace Serein
                 string FileListText = string.Empty;
                 foreach (object File in data)
                 {
-                    if (AcceptableList.Contains(Path.GetExtension(File.ToString())))
+                    if (AcceptableList.Contains(Path.GetExtension(File.ToString().ToLower())))
                     {
                         FileList.Add(File.ToString());
                         FileListText = FileListText + Path.GetFileName(File.ToString()) + "\n";
@@ -171,7 +207,7 @@ namespace Serein
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                e.Effect = DragDropEffects.All;                                                              //重要代码：表明是所有类型的数据，比如文件路径
+                e.Effect = DragDropEffects.All;
             }
             else
             {

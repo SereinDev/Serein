@@ -95,4 +95,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="base\Motd\" />
+  </ItemGroup>
 </Project>

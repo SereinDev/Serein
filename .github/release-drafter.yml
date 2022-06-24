@@ -1,40 +1,15 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
-categories:
-  - title: '🚀 新功能'
-    labels:
-      - 'feat'
-      - 'feature'
-      - 'enhancement'
-  - title: '🐛 修复'
-    labels:
-      - 'fix'
-      - 'bugfix'
-      - 'bug'
-  - title: '🧰 其他'
-    label:
-      - 'chore'
-      - 'docs'
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
-change-title-escapes: '\<*_&' 
-version-resolver:
-  major:
-    labels:
-      - 'major'
-  minor:
-    labels:
-      - 'minor'
-  patch:
-    labels:
-      - 'patch'
-  default: patch
 template: |
-  ## Changes
-  ### 🚀 新功能
+  ### 🚀 新功能|Features
+  
+  ### 🐛 修复|Bug Fixes
 
-  ### 🐛 修复
+  ### 📃 文档|Docs
 
-  ### 📃 文档
+  ### 🧰 其他|Maintenance
 
-  ### 🧰 其他
+  ---
+  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/$PREVIOUS_TAG/total)   
+  > [如何选择不同Net的版本](https://zaitonn.github.io/Serein/Tutorial.html#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8Cnet%E7%9A%84%E7%89%88%E6%9C%AC)

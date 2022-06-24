@@ -39,7 +39,7 @@
 
 
 ### 服务器变量
-> 服务器不在运行时使用除`Status`变量将**返回空值**   
+> 服务器不在运行时使用除`Status`变量将**返回**`-`    
 
 | 变量名 | 描述 | 例子 |  
 | --- | --- | --- |
@@ -49,7 +49,12 @@
 | Difficulty | 难度 | `Normal` |
 | RunTime | 运行时间 | `1.4m` `2.0h` `3.23d` |
 | Percentage | **服务器进程**CPU占用率 | `23.4` |  
-| %FileName% | 服务器启动文件名称 | `bedrock_server.exe` |  
+| MaxPlayer | 最大玩家数 | `10` |  
+| OnlinePlayer | 当前玩家数 | `1` |  
+| Description | 服务器介绍 | `Dedicated Server` |  
+| Protocol | 协议版本 | `527` |  
+| GameMode | 游戏模式 | `Survival` |  
+| Original | Motd原文 | `MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;` |  
 
 
 ### 消息变量（私聊）

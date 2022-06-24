@@ -223,13 +223,32 @@ namespace Serein
             {
                 StreamReader Reader = new StreamReader(
                     File.Open(
-                    FileName,
-                    FileMode.Open
+                        FileName,
+                        FileMode.Open
                     ),
-                    Encoding.UTF8);
-                string Text = Reader.ReadToEnd();
-                if (!string.IsNullOrEmpty(Text))
+                    Encoding.UTF8
+                    );
+                if (FileName.ToUpper().EndsWith(".TSV"))
                 {
+                    string Line;
+                    List<RegexItem> regexItems = new List<RegexItem>();
+                    while ((Line = Reader.ReadLine()) != null)
+                    {
+                        RegexItem Item = new RegexItem();
+                        Item.ConvertToItem(Line);
+                        if (!Item.CheckItem())
+                        {
+                            continue;
+                        }
+                        AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
+                        regexItems.Add(Item);
+                    }
+                    Global.RegexItems = regexItems;
+                }
+                else if(FileName.ToUpper().EndsWith(".JSON"))
+                {
+                    string Text = Reader.ReadToEnd();
+                    if (string.IsNullOrEmpty(Text)) { return; }
                     try
                     {
                         JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);

@@ -44,6 +44,10 @@ namespace Serein
         }
         public static void ReadSettings()
         {
+            if (!Directory.Exists(Global.SettingPath))
+            {
+                Directory.CreateDirectory(Global.SettingPath);
+            }
             if (File.Exists(Global.SettingPath + "\\Server.json"))
             {
                 Global.Settings_Server = JsonConvert.DeserializeObject<Settings_Server>(
@@ -73,6 +77,27 @@ namespace Serein
                 {
                     Global.Settings_Serein = new Settings_Serein();
                 }
+            }
+            if (File.Exists(Global.SettingPath + "\\Matches.json"))
+            {
+                Global.Settings_Matches = JsonConvert.DeserializeObject<Settings_Matches>(
+                    File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)
+                    );
+                if (Global.Settings_Matches == null)
+                {
+                    Global.Settings_Matches = new Settings_Matches();
+                    StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
+                    IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
+                    IniStreamWriter.Close();
+                    IniStreamWriter.Dispose();
+                }
+            }
+            else
+            {
+                StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
+                IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
+                IniStreamWriter.Close();
+                IniStreamWriter.Dispose();
             }
         }
     }
