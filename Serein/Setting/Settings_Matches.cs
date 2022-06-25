@@ -39,14 +39,6 @@ namespace Serein
                 Regex.Match(string.Empty, ipv4Port);
             }
             catch { ipv4Port = @"ipv4.+?(\d+?)$"; }
-            if (!Directory.Exists(Global.SettingPath))
-            {
-                Directory.CreateDirectory(Global.SettingPath);
-            }
-            StreamWriter IniStreamWriter = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
-            IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
-            IniStreamWriter.Close();
-            IniStreamWriter.Dispose();
         }
     }
 }

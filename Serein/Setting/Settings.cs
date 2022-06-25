@@ -14,14 +14,19 @@ namespace Serein
         }
         public static void SaveSettings()
         {
+            SaveSettingsThread.Wait(2500);
+            if (!Directory.Exists(Global.SettingPath))
+            {
+                Directory.CreateDirectory(Global.SettingPath);
+            }
+            StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
+            IniStreamWriter.Write(JsonConvert.SerializeObject(new Settings_Matches(), Formatting.Indented));
+            IniStreamWriter.Close();
+            IniStreamWriter.Dispose();
             while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
                 SaveSettingsThread.Wait(2500);
-                if (!Directory.Exists(Global.SettingPath))
-                {
-                    Directory.CreateDirectory(Global.SettingPath);
-                }
                 ServerStreamWriter = new StreamWriter(Global.SettingPath + "\\Server.json", false, Encoding.UTF8);
                 ServerStreamWriter.Write(
                     JsonConvert.SerializeObject(Global.Settings_Server, Formatting.Indented)
@@ -95,7 +100,7 @@ namespace Serein
             else
             {
                 StreamWriter IniStreamWriter = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
-                IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
+                IniStreamWriter.Write(JsonConvert.SerializeObject(new Settings_Matches(), Formatting.Indented));
                 IniStreamWriter.Close();
                 IniStreamWriter.Dispose();
             }
