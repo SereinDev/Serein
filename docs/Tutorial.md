@@ -30,7 +30,7 @@
 ## 正文
 ### 安装Serein
 #### Release
-1. 从[Release](https://github.com/Zaitonn/Serein/releaseslatest)下载Serein
+1. 从[Release](https://github.com/Zaitonn/Serein/releases/latest)下载Serein
 2. 解压后双击运行`Serein.exe`
 
 #### Beta
@@ -55,7 +55,8 @@
 
 ### 服务器
 ![服务器](imgs/console.png)
->[BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)__（推荐）__  
+>**首先你应该先看看：**  
+[BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)**（推荐）**  
 [崩服 / 假死 / 卡顿情况排查与记录方法](https://www.minebbs.com/resources/bds.3403/)  
 [BDS服务端 与 LiteLoaderBDS 新手教程 & 常见问答](https://www.minebbs.com/threads/bds-liteloaderbds.10265/)
 
@@ -125,7 +126,7 @@
  4: pprof 性能分析服务器  
 请输入你需要的编号(0-9)，可输入多个，同一编号也可输入多个(如: 233)
 ``` 
-如上所示，你应该选择 `2: 正向 Websocket 通信` 
+如上所示，你应该选择 `2: 正向 Websocket 通信`  
    
 其他机器人可能需要直接修改配置文件，但操作方法类似
 ### 插件管理
@@ -153,7 +154,7 @@
 - 在正则表格中右键打开菜单
     - `新建记录`→添加正则
     - `修改记录`→编辑正则
-      - __正则表达式或命令为空或不合法时无法保存__
+      - **正则表达式或命令为空或不合法时无法保存**
       - 查看[变量](Variables.md)、[命令](Command.md)
     - `删除记录`→删除正则
 - 文件保存在`data/regex.json`
@@ -198,7 +199,7 @@
 - 在定时任务表格中右键打开菜单
     - `添加任务`→添加任务
     - `修改任务`→编辑任务
-      - __Cron表达式或命令为空或不合法时无法保存__
+      - **Cron表达式或命令为空或不合法时无法保存**
       - 查看[变量](Variables.md)、[命令](Command.md)
       - 在修改窗口中你可以直接看到下一次的执行时间
     - `删除任务`→删除任务

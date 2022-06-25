@@ -30,13 +30,13 @@ namespace Serein
                 try
                 {
                     webSocket = new WebSocket(
-                                        "ws://" + Global.Settings_Bot.Uri,
-                                        "",
-                                        null,
-                                        new List<KeyValuePair<string, string>> {
-                        new KeyValuePair<string, string>("Authorization", Global.Settings_Bot.Authorization)
-                                        }
-                                        );
+                        "ws://" + Global.Settings_Bot.Uri,
+                        "",
+                        null,
+                        new List<KeyValuePair<string, string>> {
+                            new KeyValuePair<string, string>("Authorization", Global.Settings_Bot.Authorization)
+                            }
+                        );
                     webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
                     webSocket.Error += (sender, e) =>
                     {
@@ -60,7 +60,8 @@ namespace Serein
                 catch (Exception e)
                 {
                     Global.Ui.BotWebBrowser_Invoke(
-                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + e.Message);
+                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + e.Message
+                            );
                 }
             }
         }
@@ -122,7 +123,6 @@ namespace Serein
                     Log.EscapeLog(e.Message)
                     );
             }
-
             if (Global.Settings_Bot.EnableLog)
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))
@@ -132,20 +132,17 @@ namespace Serein
                 try
                 {
                     LogWriter = new StreamWriter(
-                    Global.Path + $"\\logs\\msg\\{DateTime.Now:yyyy-MM-dd}.log",
-                    true,
-                    Encoding.UTF8
-                    );
+                        Global.Path + $"\\logs\\msg\\{DateTime.Now:yyyy-MM-dd}.log",
+                        true,
+                        Encoding.UTF8
+                        );
                     LogWriter.WriteLine($"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Message)}");
                     LogWriter.Flush();
                     LogWriter.Close();
                 }
                 catch { }
             }
-            new Task(() =>
-            {
-                Message.ProcessMsgFromBot(e.Message);
-            }).Start();
+            new Task(() => Message.ProcessMsgFromBot(e.Message)).Start();
         }
     }
 }

@@ -28,10 +28,10 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationManifest>Serein\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Serein.ico</ApplicationIcon>
+    <ApplicationIcon>Sources\Serein.ico</ApplicationIcon>
     <RootNamespace>Serein</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -41,9 +41,10 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="appsettings.json" />
-    <Content Include="Serein.ico" />
-    <Content Include="Serein_full.ico" />
+    <None Remove="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sources\Serein.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -56,6 +57,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Serein\App.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -96,6 +102,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="base\Motd\" />
+    <Folder Include="Serein\Motd\" />
   </ItemGroup>
 </Project>

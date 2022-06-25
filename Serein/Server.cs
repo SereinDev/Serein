@@ -246,7 +246,6 @@ namespace Serein
                                 ).Groups[1].Value.Trim(),
                             out int r)
                             ? r : 0;
-                        Global.Ui.Debug_Append(Port.ToString());
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(

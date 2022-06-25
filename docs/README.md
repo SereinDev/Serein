@@ -1,21 +1,22 @@
 # Serein
 <div style="text-align: center;">
 <img src="https://zaitonn.github.io/Serein/Serein.png" style="image-rendering: pixelated;width:150px">
-<br>
-<img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">
-<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Zaitonn/Serein">
-<img alt="GitHub .NET" src="https://img.shields.io/badge/.NET-6.0-orange">
-<img alt="GitHub .NET" src="https://img.shields.io/badge/.Net%20Framework-4.7.2-blue">
-<img alt="GitHub repo license" src="https://img.shields.io/github/license/zaitonn/Serein?color=yellow">
-<img alt="GitHub bulid" src="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml/badge.svg">
-<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total">
 </div>
 
+
+![C#](https://img.shields.io/badge/C%23-%23239120.svg?logo=c-sharp&logoColor=fff)
+[![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein)](https://github.com/Zaitonn/Serein)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Zaitonn/Serein)](https://github.com/Zaitonn/Serein/commits/main) 
+[![.NET 6.0](https://img.shields.io/badge/.NET-6.0-orange)](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
+[![.NET Framework 4.7.2](https://img.shields.io/badge/.NET%20Framework-4.7.2-blue)](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
+[![GitHub bulid](https://img.shields.io/github/license/zaitonn/Serein?color=yellow)](https://github.com/Zaitonn/Serein/blob/main/LICENSE)
+[![GitHub bulid](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml/badge.svg)](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)
+[![GitHub all releases](https://img.shields.io/github/downloads/Zaitonn/Serein/total)](https://github.com/Zaitonn/Serein/releases/latest)
 
 ---  
 - 一个基于.NET的我的世界服务器面板  
 
-[下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](docs/Tutorial.md)** 丨 __[帮助页面](docs/Help.md)__
+[下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](Tutorial.md)** 丨 __[帮助页面](Help.md)__
 
 ## 目录
 - [Serein](#serein)
@@ -34,6 +35,7 @@
     - [定时任务](#定时任务)
     - [机器人](#机器人)
     - [设置](#设置)
+  - [✨第三方插件/整合包 Plugin](#第三方插件整合包-plugin)
   - [📒关于 About](#关于-about)
 
 ---
@@ -88,8 +90,6 @@ Win7或WinServer2012以上
 ### 正则
 ![正则](imgs/regex.png)
 
-
-
 - 简单易上手的正则表达式和[命令系统](Command.md)，可以执行命令、发送消息（需要配置机器人）甚至备份存档（基于cmd，需要自行下载7z）等高级功能
 - 通过此功能还能实现自动回复，与群信息互通和状态输出等功能
 - 备注功能，再也不用担心写的是啥
@@ -97,7 +97,6 @@ Win7或WinServer2012以上
 
 ### 定时任务
 ![定时任务](imgs/task.png)
-
 
 - 简单易上手的Cron表达式和[命令系统](Command.md)，可以执行命令、发送消息（需要配置机器人）甚至备份存档（基于cmd命令行，需要自行下载7z）等高级功能
 - 通过此功能还能实现定时命令、准点报时和定时备份等功能
@@ -107,7 +106,6 @@ Win7或WinServer2012以上
 
 ### 机器人
 ![机器人](imgs/bot.png)
-
 
 - 通过Websocket连接本地的机器人（需要自行配置）实现消息收发功能
 - 允许多开`Serein`实现群组服的消息互通功能
@@ -120,6 +118,13 @@ Win7或WinServer2012以上
 
 - 提供尽可能的的设置，满足不同人的使用需求
 - 将鼠标指针放在不同设置上方，可查看关于这一项的详细提示
+
+## ✨第三方插件/整合包 Plugin
+> **选配选配选配选配选配选配选配选配选配选配选配**  
+> 你需要自行判断其安全性和可用性，使用时出现问题与`Serein`无关
+- [Serein机器人整合包](https://www.minebbs.com/threads/serein.12192/)
+- [Serein - 新的机器人内置常用正则](https://www.minebbs.com/resources/serein.4204/)
+- [PSerein - 机器人辅助插件](https://www.minebbs.com/resources/pserein.4211/)
 
 ## 📒关于 About
 > [About](About.md)
