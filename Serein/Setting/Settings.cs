@@ -94,7 +94,7 @@ namespace Serein
             }
             else
             {
-                StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
+                StreamWriter IniStreamWriter = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
                 IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
                 IniStreamWriter.Close();
                 IniStreamWriter.Dispose();

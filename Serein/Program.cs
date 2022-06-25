@@ -29,16 +29,16 @@ namespace Serein
         [STAThread]
         private static void Main()
         {
-            if (!File.Exists(Global.Path + "console\\console.html"))
-            {
-                ResourcesManager.InitConsole();
-                Global.FirstOpen = true;
-            }
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            if (!File.Exists(Global.Path + "console\\console.html"))
+            {
+                ResourcesManager.InitConsole();
+                Global.FirstOpen = true;
+            }
             Ui ui = new Ui();
             Global.Ui = ui;
             Application.Run(ui);
