@@ -122,6 +122,7 @@ Win7或WinServer2012以上
 ## ✨第三方插件/整合包 Plugin
 > **选配选配选配选配选配选配选配选配选配选配选配**  
 > 你需要自行判断其安全性和可用性，使用时出现问题与`Serein`无关
+
 - [Serein机器人整合包](https://www.minebbs.com/threads/serein.12192/)
 - [Serein - 新的机器人内置常用正则](https://www.minebbs.com/resources/serein.4204/)
 - [PSerein - 机器人辅助插件](https://www.minebbs.com/resources/pserein.4211/)
