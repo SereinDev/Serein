@@ -75,30 +75,6 @@ namespace Serein
             }
         }
 
-        private void Regex_TextChanged(object sender, EventArgs e)
-        {
-            if (RegexTextBox.Text.Contains("\t"))
-            {
-                RegexTextBox.Text = RegexTextBox.Text.Replace("\t", string.Empty);
-            }
-        }
-
-        private void Command_TextChanged(object sender, EventArgs e)
-        {
-            if (CommandTextBox.Text.Contains("\t"))
-            {
-                CommandTextBox.Text = CommandTextBox.Text.Replace("\t", string.Empty);
-            }
-        }
-
-        private void Remark_TextChanged(object sender, EventArgs e)
-        {
-            if (RemarkTextBox.Text.Contains("\t"))
-            {
-                RemarkTextBox.Text = RemarkTextBox.Text.Replace("\t", string.Empty);
-            }
-        }
-
         private void RegexTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

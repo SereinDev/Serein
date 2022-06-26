@@ -9,11 +9,6 @@ namespace Serein
         public string Command { get; set; } = string.Empty;
         public int Area { get; set; } = 0;
         public bool IsAdmin { get; set; } = false;
-        public string ConvertToStr()
-        {
-            string Text = $"{Regex}\t{Area}\t{IsAdmin}\t{Remark}\t{Command}";
-            return Text;
-        }
         public void ConvertToItem(string Text)
         {
             string[] Texts = Text.Split('\t');

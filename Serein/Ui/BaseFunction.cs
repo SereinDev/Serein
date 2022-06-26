@@ -55,14 +55,13 @@ namespace Serein
             {
                 if (DebugTextBox.InvokeRequired)
                 {
-                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\n" + _Text; };
+                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\r\n" + _Text; };
                     PanelInfoTime2.Invoke(actionDelegate, Text);
                 }
                 else
                 {
-                    DebugTextBox.Text = DebugTextBox.Text + "\n" + Text;
+                    DebugTextBox.Text = DebugTextBox.Text + "\r\n" + Text;
                 }
-
             }
         }
         private void Ui_DragDrop(object sender, DragEventArgs e)
@@ -200,8 +199,6 @@ namespace Serein
                         );
                 }
             }
-
-
         }
         private void Ui_DragEnter(object sender, DragEventArgs e)
         {

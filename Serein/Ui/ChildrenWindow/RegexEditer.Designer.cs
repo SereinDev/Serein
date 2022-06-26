@@ -71,7 +71,6 @@ namespace Serein
             // 
             resources.ApplyResources(this.RegexTextBox, "RegexTextBox");
             this.RegexTextBox.Name = "RegexTextBox";
-            this.RegexTextBox.TextChanged += new System.EventHandler(this.Regex_TextChanged);
             this.RegexTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RegexTextBox_KeyDown);
             this.RegexTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RegexTextBox_KeyPress);
             // 
@@ -79,7 +78,6 @@ namespace Serein
             // 
             resources.ApplyResources(this.CommandTextBox, "CommandTextBox");
             this.CommandTextBox.Name = "CommandTextBox";
-            this.CommandTextBox.TextChanged += new System.EventHandler(this.Command_TextChanged);
             this.CommandTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CommandTextBox_KeyDown);
             this.CommandTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CommandTextBox_KeyPress);
             // 
@@ -87,7 +85,6 @@ namespace Serein
             // 
             resources.ApplyResources(this.RemarkTextBox, "RemarkTextBox");
             this.RemarkTextBox.Name = "RemarkTextBox";
-            this.RemarkTextBox.TextChanged += new System.EventHandler(this.Remark_TextChanged);
             this.RemarkTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RemarkTextBox_KeyDown);
             this.RemarkTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RemarkTextBox_KeyPress);
             // 

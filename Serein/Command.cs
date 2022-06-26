@@ -190,6 +190,7 @@ namespace Serein
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }
+            Global.Ui.Debug_Append($"{DateTime.Now} {command} {Value}");
             return Value;
         }
         public static string GetVariables(string Text, JObject JsonObject = null)

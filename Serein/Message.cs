@@ -23,6 +23,10 @@ namespace Serein
         }
         public static void ProcessMsgFromBot(string Json)
         {
+            Json = Json.Replace("&#44;", ",");
+            Json = Json.Replace("&amp;", "#");
+            Json = Json.Replace("&#91;", "[");
+            Json = Json.Replace("&#93;", "]");
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
             if (JsonObject["post_type"].ToString() == "message")
             {

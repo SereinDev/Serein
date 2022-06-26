@@ -61,6 +61,15 @@
     <value>213, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="PluginContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 250</value>
+  </data>
+  <data name="&gt;&gt;PluginContextMenuStrip.Name" xml:space="preserve">
+    <value>PluginContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;PluginContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="PluginContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 38</value>
   </data>
@@ -105,15 +114,6 @@
   </data>
   <data name="PluginContextMenuStripRefresh.Text" xml:space="preserve">
     <value>刷新</value>
-  </data>
-  <data name="PluginContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 250</value>
-  </data>
-  <data name="&gt;&gt;PluginContextMenuStrip.Name" xml:space="preserve">
-    <value>PluginContextMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;PluginContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="SereinIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -161,8 +161,585 @@
   <data name="MainTableLayout.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;PanelTableLayout.Name" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.Parent" xml:space="preserve">
+    <value>Panel</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PanelInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelControls" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelConsole" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="Panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Panel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="Panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Panel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="Panel.Text" xml:space="preserve">
+    <value>控制面板</value>
+  </data>
+  <data name="&gt;&gt;Panel.Name" xml:space="preserve">
+    <value>Panel</value>
+  </data>
+  <data name="&gt;&gt;Panel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Panel.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Panel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PluginList.Name" xml:space="preserve">
+    <value>PluginList</value>
+  </data>
+  <data name="&gt;&gt;PluginList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PluginList.Parent" xml:space="preserve">
+    <value>Plugin</value>
+  </data>
+  <data name="&gt;&gt;PluginList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Plugin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Plugin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Plugin.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="Plugin.Text" xml:space="preserve">
+    <value>插件管理</value>
+  </data>
+  <data name="&gt;&gt;Plugin.Name" xml:space="preserve">
+    <value>Plugin</value>
+  </data>
+  <data name="&gt;&gt;Plugin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Plugin.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Plugin.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Name" xml:space="preserve">
+    <value>RegexList</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Parent" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="&gt;&gt;RegexList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Regular.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Regular.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Regular.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="Regular.Text" xml:space="preserve">
+    <value>正则</value>
+  </data>
+  <data name="&gt;&gt;Regular.Name" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="&gt;&gt;Regular.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Regular.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Regular.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Name" xml:space="preserve">
+    <value>TaskList</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Parent" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="&gt;&gt;TaskList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Task.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Task.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Task.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="Task.Text" xml:space="preserve">
+    <value>定时任务</value>
+  </data>
+  <data name="&gt;&gt;Task.Name" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="&gt;&gt;Task.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Task.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Task.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Name" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Parent" xml:space="preserve">
+    <value>Bot</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BotTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BotWebBrowser" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BotInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BotWebsocket" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="Bot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Bot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Bot.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="Bot.Text" xml:space="preserve">
+    <value>机器人</value>
+  </data>
+  <data name="&gt;&gt;Bot.Name" xml:space="preserve">
+    <value>Bot</value>
+  </data>
+  <data name="&gt;&gt;Bot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Bot.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Bot.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Setting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Setting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Setting.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="Setting.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="&gt;&gt;Setting.Name" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="&gt;&gt;Setting.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Setting.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="DebugTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="DebugTextBox.MaxLength" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="DebugTextBox.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DebugTextBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Both</value>
+  </data>
+  <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 783</value>
+  </data>
+  <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="DebugTextBox.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Name" xml:space="preserve">
+    <value>DebugTextBox</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.Parent" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="&gt;&gt;DebugTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Debug.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Debug.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="Debug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Debug.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="Debug.Text" xml:space="preserve">
+    <value>Debug窗口</value>
+  </data>
+  <data name="&gt;&gt;Debug.Name" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="&gt;&gt;Debug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Debug.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Debug.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1248, 842</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>MainTableLayout</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MainTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="MainTableLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="MainTableLayout.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="MainTableLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1254, 848</value>
+  </data>
+  <data name="MainTableLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;MainTableLayout.Name" xml:space="preserve">
+    <value>MainTableLayout</value>
+  </data>
+  <data name="&gt;&gt;MainTableLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MainTableLayout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="PanelTableLayout.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PanelTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelTableLayout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PanelTableLayout.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 783</value>
+  </data>
+  <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.Name" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.Parent" xml:space="preserve">
+    <value>Panel</value>
+  </data>
+  <data name="&gt;&gt;PanelTableLayout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PanelInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelControls" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelConsole" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Name" xml:space="preserve">
+    <value>PanelInfoCPU</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Name" xml:space="preserve">
+    <value>PanelInfoTime</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Name" xml:space="preserve">
+    <value>PanelInfoCPU2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoCPU2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Name" xml:space="preserve">
+    <value>PanelInfoLevel2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Name" xml:space="preserve">
+    <value>PanelInfoTime2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoTime2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Name" xml:space="preserve">
+    <value>PanelInfoDifficulty2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Name" xml:space="preserve">
+    <value>PanelInfoVersion2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion2.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Name" xml:space="preserve">
+    <value>PanelInfoLevel</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoLevel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Name" xml:space="preserve">
+    <value>PanelInfoDifficulty</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoDifficulty.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Name" xml:space="preserve">
+    <value>PanelInfoVersion</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoVersion.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Name" xml:space="preserve">
+    <value>PanelInfoStatus2</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus2.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Name" xml:space="preserve">
+    <value>PanelInfoStatus</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.Parent" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfoStatus.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="PanelInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PanelInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 312</value>
+  </data>
+  <data name="PanelInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="PanelInfo.Text" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
+    <value>PanelInfo</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="PanelInfoCPU.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -173,7 +750,6 @@
   <data name="PanelInfoCPU.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 263</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PanelInfoCPU.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
   </data>
@@ -579,29 +1155,77 @@
   <data name="&gt;&gt;PanelInfoStatus.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
-  <data name="PanelInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="&gt;&gt;PanelControlKill.Name" xml:space="preserve">
+    <value>PanelControlKill</value>
   </data>
-  <data name="PanelInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 312</value>
+  <data name="&gt;&gt;PanelControlKill.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PanelInfo.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;PanelControlKill.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlKill.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="PanelInfo.Text" xml:space="preserve">
-    <value>详细信息</value>
+  <data name="&gt;&gt;PanelControlRestart.Name" xml:space="preserve">
+    <value>PanelControlRestart</value>
   </data>
-  <data name="&gt;&gt;PanelInfo.Name" xml:space="preserve">
-    <value>PanelInfo</value>
+  <data name="&gt;&gt;PanelControlRestart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PanelInfo.Type" xml:space="preserve">
+  <data name="&gt;&gt;PanelControlRestart.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlRestart.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Name" xml:space="preserve">
+    <value>PanelControlStop</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStop.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Name" xml:space="preserve">
+    <value>PanelControlStart</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.Parent" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControlStart.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="PanelControls.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 321</value>
+  </data>
+  <data name="PanelControls.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 161</value>
+  </data>
+  <data name="PanelControls.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PanelControls.Text" xml:space="preserve">
+    <value>控制</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
+    <value>PanelControls</value>
+  </data>
+  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PanelInfo.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
     <value>PanelTableLayout</value>
   </data>
-  <data name="&gt;&gt;PanelInfo.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="PanelControlKill.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -711,32 +1335,98 @@
   <data name="&gt;&gt;PanelControlStart.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="PanelControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 321</value>
-  </data>
-  <data name="PanelControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 161</value>
-  </data>
-  <data name="PanelControls.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PanelControls.Text" xml:space="preserve">
-    <value>控制</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Name" xml:space="preserve">
-    <value>PanelControls</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelControls.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="PanelConsole.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Name" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PanelConsole.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelConsole.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 3</value>
+  </data>
+  <data name="PanelConsole.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>15, 15, 15, 15</value>
+  </data>
+  <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>920, 777</value>
+  </data>
+  <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="PanelConsole.Text" xml:space="preserve">
+    <value>控制台</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
+    <value>PanelTableLayout</value>
+  </data>
+  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleWebBrowser.Name" xml:space="preserve">
+    <value>PanelConsoleWebBrowser</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleWebBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleWebBrowser.Parent" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleWebBrowser.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Name" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Parent" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelConsolePanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PanelConsolePanel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 46</value>
+  </data>
+  <data name="PanelConsolePanel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 716</value>
+  </data>
+  <data name="PanelConsolePanel2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Name" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
+    <value>PanelConsole</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel2.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="PanelConsoleWebBrowser.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -767,6 +1457,54 @@
   </data>
   <data name="PanelConsolePanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Name" xml:space="preserve">
+    <value>PanelConsoleEnter</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.Parent" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleEnter.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Name" xml:space="preserve">
+    <value>PanelConsoleInput</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.Parent" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsoleInput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PanelConsolePanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 670</value>
+  </data>
+  <data name="PanelConsolePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 15, 3, 15</value>
+  </data>
+  <data name="PanelConsolePanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 54</value>
+  </data>
+  <data name="PanelConsolePanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Name" xml:space="preserve">
+    <value>PanelConsolePanel1</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.Parent" xml:space="preserve">
+    <value>PanelConsolePanel2</value>
+  </data>
+  <data name="&gt;&gt;PanelConsolePanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="PanelConsoleEnter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -828,141 +1566,6 @@
   <data name="&gt;&gt;PanelConsoleInput.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="PanelConsolePanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 670</value>
-  </data>
-  <data name="PanelConsolePanel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 15, 3, 15</value>
-  </data>
-  <data name="PanelConsolePanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 54</value>
-  </data>
-  <data name="PanelConsolePanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel1.Name" xml:space="preserve">
-    <value>PanelConsolePanel1</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel1.Parent" xml:space="preserve">
-    <value>PanelConsolePanel2</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PanelConsolePanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelConsolePanel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 46</value>
-  </data>
-  <data name="PanelConsolePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 716</value>
-  </data>
-  <data name="PanelConsolePanel2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Name" xml:space="preserve">
-    <value>PanelConsolePanel2</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.Parent" xml:space="preserve">
-    <value>PanelConsole</value>
-  </data>
-  <data name="&gt;&gt;PanelConsolePanel2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelConsole.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelConsole.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 3</value>
-  </data>
-  <data name="PanelConsole.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>15, 15, 15, 15</value>
-  </data>
-  <data name="PanelConsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>920, 777</value>
-  </data>
-  <data name="PanelConsole.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="PanelConsole.Text" xml:space="preserve">
-    <value>控制台</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Name" xml:space="preserve">
-    <value>PanelConsole</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.Parent" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelConsole.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="PanelTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelTableLayout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="PanelTableLayout.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PanelTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 783</value>
-  </data>
-  <data name="PanelTableLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Name" xml:space="preserve">
-    <value>PanelTableLayout</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.Parent" xml:space="preserve">
-    <value>Panel</value>
-  </data>
-  <data name="&gt;&gt;PanelTableLayout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PanelTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PanelInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelControls" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PanelConsole" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0,AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="Panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Panel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Panel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="Panel.Text" xml:space="preserve">
-    <value>控制面板</value>
-  </data>
-  <data name="&gt;&gt;Panel.Name" xml:space="preserve">
-    <value>Panel</value>
-  </data>
-  <data name="&gt;&gt;Panel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Panel.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Panel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="PluginList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -986,30 +1589,6 @@
   </data>
   <data name="&gt;&gt;PluginList.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="Plugin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Plugin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Plugin.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="Plugin.Text" xml:space="preserve">
-    <value>插件管理</value>
-  </data>
-  <data name="&gt;&gt;Plugin.Name" xml:space="preserve">
-    <value>Plugin</value>
-  </data>
-  <data name="&gt;&gt;Plugin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Plugin.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Plugin.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="RegexListRegex.Text" xml:space="preserve">
     <value>正则表达式</value>
@@ -1041,6 +1620,45 @@
   <metadata name="RegexContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>575, 17</value>
   </metadata>
+  <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 282</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;RegexContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RegexList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RegexList.LabelWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="RegexList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="RegexList.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Name" xml:space="preserve">
+    <value>RegexList</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RegexList.Parent" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="&gt;&gt;RegexList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="RegexContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
@@ -1089,69 +1707,6 @@
   <data name="RegexContextMenuStripRefresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="RegexContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 282</value>
-  </data>
-  <data name="&gt;&gt;RegexContextMenuStrip.Name" xml:space="preserve">
-    <value>RegexContextMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;RegexContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RegexList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="RegexList.LabelWrap" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="RegexList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="RegexList.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="RegexList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="RegexList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;RegexList.Name" xml:space="preserve">
-    <value>RegexList</value>
-  </data>
-  <data name="&gt;&gt;RegexList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RegexList.Parent" xml:space="preserve">
-    <value>Regular</value>
-  </data>
-  <data name="&gt;&gt;RegexList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Regular.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Regular.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Regular.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="Regular.Text" xml:space="preserve">
-    <value>正则</value>
-  </data>
-  <data name="&gt;&gt;Regular.Name" xml:space="preserve">
-    <value>Regular</value>
-  </data>
-  <data name="&gt;&gt;Regular.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Regular.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Regular.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="columnHeader1.Text" xml:space="preserve">
     <value>Cron表达式</value>
   </data>
@@ -1173,6 +1728,39 @@
   <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>935, 17</value>
   </metadata>
+  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 364</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
+    <value>TaskContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TaskList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TaskList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="TaskList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="TaskList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Name" xml:space="preserve">
+    <value>TaskList</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TaskList.Parent" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="&gt;&gt;TaskList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
@@ -1236,65 +1824,74 @@
   <data name="TaskContextMenuStrip_Refresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 364</value>
-  </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip</value>
-  </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TaskList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TaskList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="TaskList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="TaskList.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TaskList.Name" xml:space="preserve">
-    <value>TaskList</value>
-  </data>
-  <data name="&gt;&gt;TaskList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TaskList.Parent" xml:space="preserve">
-    <value>Task</value>
-  </data>
-  <data name="&gt;&gt;TaskList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Task.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Task.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Task.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="Task.Text" xml:space="preserve">
-    <value>定时任务</value>
-  </data>
-  <data name="&gt;&gt;Task.Name" xml:space="preserve">
-    <value>Task</value>
-  </data>
-  <data name="&gt;&gt;Task.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Task.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Task.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="BotTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;BotWebBrowser.Name" xml:space="preserve">
+    <value>BotWebBrowser</value>
+  </data>
+  <data name="&gt;&gt;BotWebBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotWebBrowser.Parent" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotWebBrowser.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Name" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Parent" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.Name" xml:space="preserve">
+    <value>BotWebsocket</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.Parent" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BotTableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="BotTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="BotTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="BotTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="BotTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Name" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.Parent" xml:space="preserve">
+    <value>Bot</value>
+  </data>
+  <data name="&gt;&gt;BotTableLayoutPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BotTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BotWebBrowser" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BotInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BotWebsocket" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="BotWebBrowser.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1322,6 +1919,150 @@
   </data>
   <data name="&gt;&gt;BotWebBrowser.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus2.Name" xml:space="preserve">
+    <value>BotInfoStatus2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus2.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived2.Name" xml:space="preserve">
+    <value>BotInfoMessageReceived2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived2.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent2.Name" xml:space="preserve">
+    <value>BotInfoMessageSent2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent2.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime2.Name" xml:space="preserve">
+    <value>BotInfoTime2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime2.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus.Name" xml:space="preserve">
+    <value>BotInfoStatus</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoStatus.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ2.Name" xml:space="preserve">
+    <value>BotInfoQQ2</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ2.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime.Name" xml:space="preserve">
+    <value>BotInfoTime</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoTime.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent.Name" xml:space="preserve">
+    <value>BotInfoMessageSent</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageSent.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived.Name" xml:space="preserve">
+    <value>BotInfoMessageReceived</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoMessageReceived.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ.Name" xml:space="preserve">
+    <value>BotInfoQQ</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ.Parent" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfoQQ.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="BotInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="BotInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 281</value>
+  </data>
+  <data name="BotInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="BotInfo.Text" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Name" xml:space="preserve">
+    <value>BotInfo</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.Parent" xml:space="preserve">
+    <value>BotTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BotInfo.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="BotInfoStatus2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1650,29 +2391,53 @@
   <data name="&gt;&gt;BotInfoQQ.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="BotInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="&gt;&gt;BotClose.Name" xml:space="preserve">
+    <value>BotClose</value>
   </data>
-  <data name="BotInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 281</value>
+  <data name="&gt;&gt;BotClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="BotInfo.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;BotClose.Parent" xml:space="preserve">
+    <value>BotWebsocket</value>
+  </data>
+  <data name="&gt;&gt;BotClose.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BotConnect.Name" xml:space="preserve">
+    <value>BotConnect</value>
+  </data>
+  <data name="&gt;&gt;BotConnect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BotConnect.Parent" xml:space="preserve">
+    <value>BotWebsocket</value>
+  </data>
+  <data name="&gt;&gt;BotConnect.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="BotInfo.Text" xml:space="preserve">
-    <value>详细信息</value>
+  <data name="BotWebsocket.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 290</value>
   </data>
-  <data name="&gt;&gt;BotInfo.Name" xml:space="preserve">
-    <value>BotInfo</value>
+  <data name="BotWebsocket.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 103</value>
   </data>
-  <data name="&gt;&gt;BotInfo.Type" xml:space="preserve">
+  <data name="BotWebsocket.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="BotWebsocket.Text" xml:space="preserve">
+    <value>WebSocket</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.Name" xml:space="preserve">
+    <value>BotWebsocket</value>
+  </data>
+  <data name="&gt;&gt;BotWebsocket.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BotInfo.Parent" xml:space="preserve">
+  <data name="&gt;&gt;BotWebsocket.Parent" xml:space="preserve">
     <value>BotTableLayoutPanel</value>
   </data>
-  <data name="&gt;&gt;BotInfo.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;BotWebsocket.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="BotClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1728,86 +2493,227 @@
   <data name="&gt;&gt;BotConnect.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="BotWebsocket.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 290</value>
-  </data>
-  <data name="BotWebsocket.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 103</value>
-  </data>
-  <data name="BotWebsocket.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="BotWebsocket.Text" xml:space="preserve">
-    <value>WebSocket</value>
-  </data>
-  <data name="&gt;&gt;BotWebsocket.Name" xml:space="preserve">
-    <value>BotWebsocket</value>
-  </data>
-  <data name="&gt;&gt;BotWebsocket.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BotWebsocket.Parent" xml:space="preserve">
-    <value>BotTableLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BotWebsocket.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BotTableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="BotTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="BotTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="BotTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="BotTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;BotTableLayoutPanel.Name" xml:space="preserve">
-    <value>BotTableLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BotTableLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BotTableLayoutPanel.Parent" xml:space="preserve">
-    <value>Bot</value>
-  </data>
-  <data name="&gt;&gt;BotTableLayoutPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="BotTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BotWebBrowser" Row="0" RowSpan="2" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BotInfo" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BotWebsocket" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,300,Percent,100" /&gt;&lt;Rows Styles="AutoSize,0,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="Bot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Bot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Bot.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="Bot.Text" xml:space="preserve">
-    <value>机器人</value>
-  </data>
-  <data name="&gt;&gt;Bot.Name" xml:space="preserve">
-    <value>Bot</value>
-  </data>
-  <data name="&gt;&gt;Bot.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Bot.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Bot.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinDownload.Name" xml:space="preserve">
+    <value>SettingSereinDownload</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinDownload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinDownload.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinDownload.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement2.Name" xml:space="preserve">
+    <value>SettingSereinStatement2</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement2.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement.Name" xml:space="preserve">
+    <value>SettingSereinStatement</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Name" xml:space="preserve">
+    <value>SettingSereinPage</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Name" xml:space="preserve">
+    <value>SettingSereinAbout</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Name" xml:space="preserve">
+    <value>SettingSereinHelp</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Name" xml:space="preserve">
+    <value>SettingSereinEnableGetUpdate</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetUpdate.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetUpdate.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Name" xml:space="preserve">
+    <value>SettingSereinTutorial</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinTutorial.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Name" xml:space="preserve">
+    <value>SettingSereinVersion</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Name" xml:space="preserve">
+    <value>SettingSereinEnableGetAnnouncement</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 1027</value>
+  </data>
+  <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 275</value>
+  </data>
+  <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="SettingSerein.Text" xml:space="preserve">
+    <value>Serein</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2160,32 +3066,176 @@
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="&gt;&gt;SettingBotAuthorization.Name" xml:space="preserve">
+    <value>SettingBotAuthorization</value>
   </data>
-  <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 1027</value>
+  <data name="&gt;&gt;SettingBotAuthorization.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 275</value>
+  <data name="&gt;&gt;SettingBotAuthorization.Parent" xml:space="preserve">
+    <value>SettingBot</value>
   </data>
-  <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;SettingBotAuthorization.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Name" xml:space="preserve">
+    <value>SettingBotAuthorizationLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAuthorizationLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Name" xml:space="preserve">
+    <value>SettingBotUri</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUri.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="SettingSerein.Text" xml:space="preserve">
-    <value>Serein</value>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Name" xml:space="preserve">
+    <value>SettingBotEnbaleOutputData</value>
   </data>
-  <data name="&gt;&gt;SettingSerein.Name" xml:space="preserve">
-    <value>SettingSerein</value>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingSerein.Type" xml:space="preserve">
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Name" xml:space="preserve">
+    <value>SettingBotPermission</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Name" xml:space="preserve">
+    <value>SettingBotGroup</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Name" xml:space="preserve">
+    <value>SettingBotPermissionList</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Name" xml:space="preserve">
+    <value>SettingBotGroupList</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUriLabel.Name" xml:space="preserve">
+    <value>SettingBotUriLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUriLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUriLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotUriLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Name" xml:space="preserve">
+    <value>SettingBotSupportedLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Name" xml:space="preserve">
+    <value>SettingBotGivePermissionToAllAdmin</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Name" xml:space="preserve">
+    <value>SettingBotEnableLog</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingBot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 504</value>
+  </data>
+  <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 523</value>
+  </data>
+  <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="SettingBot.Text" xml:space="preserve">
+    <value>机器人</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingSerein.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
-  <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="SettingBotAuthorization.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2541,32 +3591,206 @@
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
-  <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="&gt;&gt;SettingServerOutputStyle.Name" xml:space="preserve">
+    <value>SettingServerOutputStyle</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Name" xml:space="preserve">
+    <value>SettingServerStopCommand</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommand.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableUnicode.Name" xml:space="preserve">
+    <value>SettingServerEnableUnicode</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableUnicode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableUnicode.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableUnicode.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Name" xml:space="preserve">
+    <value>SettingServerEncoding</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncoding.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Name" xml:space="preserve">
+    <value>SettingServerEncodingLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEncodingLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Name" xml:space="preserve">
+    <value>SettingServerAutoStop</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerAutoStop.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Name" xml:space="preserve">
+    <value>SettingServerStopCommandLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerStopCommandLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Name" xml:space="preserve">
+    <value>SettingServerOutputStyleLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerOutputStyleLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Name" xml:space="preserve">
+    <value>SettingServerEnableLog</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableLog.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Name" xml:space="preserve">
+    <value>SettingServerEnableOutputCommand</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableOutputCommand.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Name" xml:space="preserve">
+    <value>SettingServerEnableRestart</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerEnableRestart.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Name" xml:space="preserve">
+    <value>SettingServerPathLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathLabel.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Name" xml:space="preserve">
+    <value>SettingServerPathSelect</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPathSelect.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Name" xml:space="preserve">
+    <value>SettingServerPath</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="SettingBot.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 504</value>
+  <data name="SettingServer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 523</value>
+  <data name="SettingServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
   </data>
-  <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="SettingServer.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>20, 20, 20, 20</value>
   </data>
-  <data name="SettingBot.Text" xml:space="preserve">
-    <value>机器人</value>
+  <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1198, 504</value>
   </data>
-  <data name="&gt;&gt;SettingBot.Name" xml:space="preserve">
-    <value>SettingBot</value>
+  <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;SettingBot.Type" xml:space="preserve">
+  <data name="SettingServer.Text" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingBot.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
-  <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="SettingServerOutputStyle.Items" xml:space="preserve">
     <value>默认</value>
@@ -2997,210 +4221,9 @@
   <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="SettingServer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="SettingServer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="SettingServer.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>20, 20, 20, 20</value>
-  </data>
-  <data name="SettingServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 504</value>
-  </data>
-  <data name="SettingServer.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="SettingServer.Text" xml:space="preserve">
-    <value>服务器</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Name" xml:space="preserve">
-    <value>SettingServer</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingServer.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
-    <value>Setting</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Setting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Setting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Setting.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="Setting.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="&gt;&gt;Setting.Name" xml:space="preserve">
-    <value>Setting</value>
-  </data>
-  <data name="&gt;&gt;Setting.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Setting.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="DebugTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="DebugTextBox.MaxLength" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="DebugTextBox.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DebugTextBox.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="DebugTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1226, 783</value>
-  </data>
-  <data name="DebugTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;DebugTextBox.Name" xml:space="preserve">
-    <value>DebugTextBox</value>
-  </data>
-  <data name="&gt;&gt;DebugTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DebugTextBox.Parent" xml:space="preserve">
-    <value>Debug</value>
-  </data>
-  <data name="&gt;&gt;DebugTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Debug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="Debug.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="Debug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 789</value>
-  </data>
-  <data name="Debug.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="Debug.Text" xml:space="preserve">
-    <value>Debug窗口</value>
-  </data>
-  <data name="&gt;&gt;Debug.Name" xml:space="preserve">
-    <value>Debug</value>
-  </data>
-  <data name="&gt;&gt;Debug.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Debug.Parent" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;Debug.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1248, 842</value>
-  </data>
-  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
-    <value>tabControl</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>MainTableLayout</value>
-  </data>
-  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="MainTableLayout.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="MainTableLayout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="MainTableLayout.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="MainTableLayout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1254, 848</value>
-  </data>
-  <data name="MainTableLayout.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;MainTableLayout.Name" xml:space="preserve">
-    <value>MainTableLayout</value>
-  </data>
-  <data name="&gt;&gt;MainTableLayout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MainTableLayout.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
   <metadata name="StatusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1276, 17</value>
   </metadata>
-  <data name="StripStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 31</value>
-  </data>
-  <data name="StripStatusLabel.Text" xml:space="preserve">
-    <value>就绪</value>
-  </data>
   <data name="StatusStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 848</value>
   </data>
@@ -3224,6 +4247,12 @@
   </data>
   <data name="&gt;&gt;StatusStrip.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="StripStatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 31</value>
+  </data>
+  <data name="StripStatusLabel.Text" xml:space="preserve">
+    <value>就绪</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

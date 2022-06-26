@@ -64,11 +64,5 @@ namespace Serein
             List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
             NextTime = Occurrences[0];
         }
-        public string ConvertToStr()
-        {
-            string Text = $"{Cron}\t{Enable}\t{Remark}\t{Command}";
-            return Text;
-        }
-
     }
 }
