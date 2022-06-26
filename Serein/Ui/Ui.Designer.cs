@@ -47,13 +47,13 @@ namespace Serein
             this.Panel = new System.Windows.Forms.TabPage();
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.PanelInfo = new System.Windows.Forms.GroupBox();
+            this.PanelInfoCPU = new System.Windows.Forms.Label();
+            this.PanelInfoTime = new System.Windows.Forms.Label();
             this.PanelInfoCPU2 = new System.Windows.Forms.Label();
             this.PanelInfoLevel2 = new System.Windows.Forms.Label();
             this.PanelInfoTime2 = new System.Windows.Forms.Label();
             this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
             this.PanelInfoVersion2 = new System.Windows.Forms.Label();
-            this.PanelInfoCPU = new System.Windows.Forms.Label();
-            this.PanelInfoTime = new System.Windows.Forms.Label();
             this.PanelInfoLevel = new System.Windows.Forms.Label();
             this.PanelInfoDifficulty = new System.Windows.Forms.Label();
             this.PanelInfoVersion = new System.Windows.Forms.Label();
@@ -113,10 +113,10 @@ namespace Serein
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
             this.BotInfo = new System.Windows.Forms.GroupBox();
             this.BotInfoStatus2 = new System.Windows.Forms.Label();
-            this.BotInfoStatus = new System.Windows.Forms.Label();
-            this.BotInfoTime2 = new System.Windows.Forms.Label();
-            this.BotInfoMessageSent2 = new System.Windows.Forms.Label();
             this.BotInfoMessageReceived2 = new System.Windows.Forms.Label();
+            this.BotInfoMessageSent2 = new System.Windows.Forms.Label();
+            this.BotInfoTime2 = new System.Windows.Forms.Label();
+            this.BotInfoStatus = new System.Windows.Forms.Label();
             this.BotInfoQQ2 = new System.Windows.Forms.Label();
             this.BotInfoTime = new System.Windows.Forms.Label();
             this.BotInfoMessageSent = new System.Windows.Forms.Label();
@@ -153,15 +153,15 @@ namespace Serein
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerOutputStyle = new System.Windows.Forms.ComboBox();
+            this.SettingServerStopCommand = new System.Windows.Forms.TextBox();
             this.SettingServerEnableUnicode = new System.Windows.Forms.CheckBox();
             this.SettingServerEncoding = new System.Windows.Forms.ComboBox();
             this.SettingServerEncodingLabel = new System.Windows.Forms.Label();
             this.SettingServerAutoStop = new System.Windows.Forms.CheckBox();
             this.SettingServerStopCommandLabel = new System.Windows.Forms.Label();
-            this.SettingServerStopCommand = new System.Windows.Forms.TextBox();
             this.SettingServerOutputStyleLabel = new System.Windows.Forms.Label();
             this.SettingServerEnableLog = new System.Windows.Forms.CheckBox();
-            this.SettingServerOutputStyle = new System.Windows.Forms.ComboBox();
             this.SettingServerEnableOutputCommand = new System.Windows.Forms.CheckBox();
             this.SettingServerEnableRestart = new System.Windows.Forms.CheckBox();
             this.SettingServerPathLabel = new System.Windows.Forms.Label();
@@ -309,13 +309,13 @@ namespace Serein
             // 
             // PanelInfo
             // 
+            this.PanelInfo.Controls.Add(this.PanelInfoCPU);
+            this.PanelInfo.Controls.Add(this.PanelInfoTime);
             this.PanelInfo.Controls.Add(this.PanelInfoCPU2);
             this.PanelInfo.Controls.Add(this.PanelInfoLevel2);
             this.PanelInfo.Controls.Add(this.PanelInfoTime2);
             this.PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
             this.PanelInfo.Controls.Add(this.PanelInfoVersion2);
-            this.PanelInfo.Controls.Add(this.PanelInfoCPU);
-            this.PanelInfo.Controls.Add(this.PanelInfoTime);
             this.PanelInfo.Controls.Add(this.PanelInfoLevel);
             this.PanelInfo.Controls.Add(this.PanelInfoDifficulty);
             this.PanelInfo.Controls.Add(this.PanelInfoVersion);
@@ -324,6 +324,16 @@ namespace Serein
             resources.ApplyResources(this.PanelInfo, "PanelInfo");
             this.PanelInfo.Name = "PanelInfo";
             this.PanelInfo.TabStop = false;
+            // 
+            // PanelInfoCPU
+            // 
+            resources.ApplyResources(this.PanelInfoCPU, "PanelInfoCPU");
+            this.PanelInfoCPU.Name = "PanelInfoCPU";
+            // 
+            // PanelInfoTime
+            // 
+            resources.ApplyResources(this.PanelInfoTime, "PanelInfoTime");
+            this.PanelInfoTime.Name = "PanelInfoTime";
             // 
             // PanelInfoCPU2
             // 
@@ -349,16 +359,6 @@ namespace Serein
             // 
             resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
             this.PanelInfoVersion2.Name = "PanelInfoVersion2";
-            // 
-            // PanelInfoCPU
-            // 
-            resources.ApplyResources(this.PanelInfoCPU, "PanelInfoCPU");
-            this.PanelInfoCPU.Name = "PanelInfoCPU";
-            // 
-            // PanelInfoTime
-            // 
-            resources.ApplyResources(this.PanelInfoTime, "PanelInfoTime");
-            this.PanelInfoTime.Name = "PanelInfoTime";
             // 
             // PanelInfoLevel
             // 
@@ -761,10 +761,10 @@ namespace Serein
             // BotInfo
             // 
             this.BotInfo.Controls.Add(this.BotInfoStatus2);
-            this.BotInfo.Controls.Add(this.BotInfoStatus);
-            this.BotInfo.Controls.Add(this.BotInfoTime2);
-            this.BotInfo.Controls.Add(this.BotInfoMessageSent2);
             this.BotInfo.Controls.Add(this.BotInfoMessageReceived2);
+            this.BotInfo.Controls.Add(this.BotInfoMessageSent2);
+            this.BotInfo.Controls.Add(this.BotInfoTime2);
+            this.BotInfo.Controls.Add(this.BotInfoStatus);
             this.BotInfo.Controls.Add(this.BotInfoQQ2);
             this.BotInfo.Controls.Add(this.BotInfoTime);
             this.BotInfo.Controls.Add(this.BotInfoMessageSent);
@@ -779,25 +779,25 @@ namespace Serein
             resources.ApplyResources(this.BotInfoStatus2, "BotInfoStatus2");
             this.BotInfoStatus2.Name = "BotInfoStatus2";
             // 
-            // BotInfoStatus
+            // BotInfoMessageReceived2
             // 
-            resources.ApplyResources(this.BotInfoStatus, "BotInfoStatus");
-            this.BotInfoStatus.Name = "BotInfoStatus";
-            // 
-            // BotInfoTime2
-            // 
-            resources.ApplyResources(this.BotInfoTime2, "BotInfoTime2");
-            this.BotInfoTime2.Name = "BotInfoTime2";
+            resources.ApplyResources(this.BotInfoMessageReceived2, "BotInfoMessageReceived2");
+            this.BotInfoMessageReceived2.Name = "BotInfoMessageReceived2";
             // 
             // BotInfoMessageSent2
             // 
             resources.ApplyResources(this.BotInfoMessageSent2, "BotInfoMessageSent2");
             this.BotInfoMessageSent2.Name = "BotInfoMessageSent2";
             // 
-            // BotInfoMessageReceived2
+            // BotInfoTime2
             // 
-            resources.ApplyResources(this.BotInfoMessageReceived2, "BotInfoMessageReceived2");
-            this.BotInfoMessageReceived2.Name = "BotInfoMessageReceived2";
+            resources.ApplyResources(this.BotInfoTime2, "BotInfoTime2");
+            this.BotInfoTime2.Name = "BotInfoTime2";
+            // 
+            // BotInfoStatus
+            // 
+            resources.ApplyResources(this.BotInfoStatus, "BotInfoStatus");
+            this.BotInfoStatus.Name = "BotInfoStatus";
             // 
             // BotInfoQQ2
             // 
@@ -1061,15 +1061,15 @@ namespace Serein
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerOutputStyle);
+            this.SettingServer.Controls.Add(this.SettingServerStopCommand);
             this.SettingServer.Controls.Add(this.SettingServerEnableUnicode);
             this.SettingServer.Controls.Add(this.SettingServerEncoding);
             this.SettingServer.Controls.Add(this.SettingServerEncodingLabel);
             this.SettingServer.Controls.Add(this.SettingServerAutoStop);
             this.SettingServer.Controls.Add(this.SettingServerStopCommandLabel);
-            this.SettingServer.Controls.Add(this.SettingServerStopCommand);
             this.SettingServer.Controls.Add(this.SettingServerOutputStyleLabel);
             this.SettingServer.Controls.Add(this.SettingServerEnableLog);
-            this.SettingServer.Controls.Add(this.SettingServerOutputStyle);
             this.SettingServer.Controls.Add(this.SettingServerEnableOutputCommand);
             this.SettingServer.Controls.Add(this.SettingServerEnableRestart);
             this.SettingServer.Controls.Add(this.SettingServerPathLabel);
@@ -1078,6 +1078,27 @@ namespace Serein
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerOutputStyle
+            // 
+            this.SettingServerOutputStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SettingServerOutputStyle.FormattingEnabled = true;
+            this.SettingServerOutputStyle.Items.AddRange(new object[] {
+            resources.GetString("SettingServerOutputStyle.Items"),
+            resources.GetString("SettingServerOutputStyle.Items1"),
+            resources.GetString("SettingServerOutputStyle.Items2")});
+            resources.ApplyResources(this.SettingServerOutputStyle, "SettingServerOutputStyle");
+            this.SettingServerOutputStyle.Name = "SettingServerOutputStyle";
+            this.SettingServerOutputStyle.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputStyle_SelectedIndexChanged);
+            this.SettingServerOutputStyle.MouseHover += new System.EventHandler(this.SettingServerOutputStyle_MouseHover);
+            // 
+            // SettingServerStopCommand
+            // 
+            resources.ApplyResources(this.SettingServerStopCommand, "SettingServerStopCommand");
+            this.SettingServerStopCommand.Name = "SettingServerStopCommand";
+            this.SettingServerStopCommand.TextChanged += new System.EventHandler(this.SettingServerStopCommand_TextChanged);
+            this.SettingServerStopCommand.Leave += new System.EventHandler(this.SettingServerStopCommand_Leave);
+            this.SettingServerStopCommand.MouseHover += new System.EventHandler(this.SettingServerStopCommand_MouseHover);
             // 
             // SettingServerEnableUnicode
             // 
@@ -1124,14 +1145,6 @@ namespace Serein
             this.SettingServerStopCommandLabel.Name = "SettingServerStopCommandLabel";
             this.SettingServerStopCommandLabel.MouseHover += new System.EventHandler(this.SettingServerStopCommandLabel_MouseHover);
             // 
-            // SettingServerStopCommand
-            // 
-            resources.ApplyResources(this.SettingServerStopCommand, "SettingServerStopCommand");
-            this.SettingServerStopCommand.Name = "SettingServerStopCommand";
-            this.SettingServerStopCommand.TextChanged += new System.EventHandler(this.SettingServerStopCommand_TextChanged);
-            this.SettingServerStopCommand.Leave += new System.EventHandler(this.SettingServerStopCommand_Leave);
-            this.SettingServerStopCommand.MouseHover += new System.EventHandler(this.SettingServerStopCommand_MouseHover);
-            // 
             // SettingServerOutputStyleLabel
             // 
             resources.ApplyResources(this.SettingServerOutputStyleLabel, "SettingServerOutputStyleLabel");
@@ -1145,19 +1158,6 @@ namespace Serein
             this.SettingServerEnableLog.UseVisualStyleBackColor = true;
             this.SettingServerEnableLog.CheckedChanged += new System.EventHandler(this.SettingServerEnableLog_CheckedChanged);
             this.SettingServerEnableLog.MouseHover += new System.EventHandler(this.SettingServerEnableLog_MouseHover);
-            // 
-            // SettingServerOutputStyle
-            // 
-            this.SettingServerOutputStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SettingServerOutputStyle.FormattingEnabled = true;
-            this.SettingServerOutputStyle.Items.AddRange(new object[] {
-            resources.GetString("SettingServerOutputStyle.Items"),
-            resources.GetString("SettingServerOutputStyle.Items1"),
-            resources.GetString("SettingServerOutputStyle.Items2")});
-            resources.ApplyResources(this.SettingServerOutputStyle, "SettingServerOutputStyle");
-            this.SettingServerOutputStyle.Name = "SettingServerOutputStyle";
-            this.SettingServerOutputStyle.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputStyle_SelectedIndexChanged);
-            this.SettingServerOutputStyle.MouseHover += new System.EventHandler(this.SettingServerOutputStyle_MouseHover);
             // 
             // SettingServerEnableOutputCommand
             // 
