@@ -18,9 +18,9 @@
 
 [下载最新版](https://github.com/Zaitonn/Serein/releases/latest)丨[Github仓库](https://github.com/Zaitonn/Serein)丨[Minebbs](https://www.minebbs.com/resources/serein.4169/)丨 **[教程](Tutorial.md)** 丨 __[帮助页面](Help.md)__
 
-## 目录
+---
+
 - [Serein](#serein)
-  - [目录](#目录)
   - [🖥运行环境 Environment](#运行环境-environment)
       - [缺少运行库？](#缺少运行库)
   - [💖特点 Feature](#特点-feature)
@@ -93,7 +93,7 @@ Win7或WinServer2012以上
 - 简单易上手的正则表达式和[命令系统](Command.md)，可以执行命令、发送消息（需要配置机器人）甚至备份存档（基于cmd，需要自行下载7z）等高级功能
 - 通过此功能还能实现自动回复，与群信息互通和状态输出等功能
 - 备注功能，再也不用担心写的是啥
-- 简单明了的配置文件（类似.csv，但是分隔符是`\t`），可快捷分享或导入
+- 简单明了的配置文件，可快捷分享或导入
 
 ### 定时任务
 ![定时任务](imgs/task.png)
@@ -102,7 +102,7 @@ Win7或WinServer2012以上
 - 通过此功能还能实现定时命令、准点报时和定时备份等功能
 - 自动提示下一次执行时间，再也不用怕搞出逆天的表达式了
 - 备注功能，再也不用担心写的是啥
-- 简单明了的配置文件（类似.csv，但是分隔符是`\t`），可快捷分享或导入
+- 简单明了的配置文件，可快捷分享或导入
 
 ### 机器人
 ![机器人](imgs/bot.png)
