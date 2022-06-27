@@ -12,7 +12,7 @@ namespace Serein
 {
     public partial class Ui : Form
     {
-        public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）" , "消息（自身发送）" };
+        public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）", "消息（自身发送）" };
 
         private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
@@ -141,7 +141,7 @@ namespace Serein
             }
             string isAdminText = string.Empty;
             ListViewItem Item = new ListViewItem(regex);
-            isAdminText = areaIndex==4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
+            isAdminText = areaIndex == 4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
             Item.SubItems.Add(areas[areaIndex]);
             Item.SubItems.Add(isAdminText);
             Item.SubItems.Add(remark);
