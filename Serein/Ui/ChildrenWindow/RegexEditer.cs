@@ -47,7 +47,7 @@ namespace Serein
         }
         private void Area_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Area.SelectedIndex <= 1)
+            if (Area.SelectedIndex <= 1 || Area.SelectedIndex == 4)
             {
                 IsAdmin.Enabled = false;
                 IsAdmin.Checked = false;
@@ -55,6 +55,16 @@ namespace Serein
             else
             {
                 IsAdmin.Enabled = true;
+            }
+            if (Area.SelectedIndex == 4)
+            {
+                MessageBox.Show(
+                    "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，" +
+                    "配置错误可能导致机器人刷屏甚至被封号",
+                    "Serein",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
             }
         }
         public void UpdateInfo(int areaIndex, string regex, bool isAdmin, string remark, string command)
@@ -64,7 +74,7 @@ namespace Serein
             IsAdmin.Checked = isAdmin;
             RemarkTextBox.Text = remark;
             CommandTextBox.Text = command;
-            if (Area.SelectedIndex <= 1)
+            if (Area.SelectedIndex <= 1 || Area.SelectedIndex == 4)
             {
                 IsAdmin.Enabled = false;
                 IsAdmin.Checked = false;

@@ -1,4 +1,3 @@
-# Serein - 新时代服务器面板
 ![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&forks=1&issues=1&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
 
 ![C#](https://img.shields.io/badge/C%23-%23239120.svg?logo=c-sharp&logoColor=fff&style=for-the-badge)
@@ -9,30 +8,29 @@
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的我的世界服务器面板  
 
-- **下载最新版：https://github.com/Zaitonn/Serein/releases/latest**
-- Github仓库：https://github.com/Zaitonn/Serein
-- Minebbs：https://www.minebbs.com/resources/serein.4169/
+- **下载最新版：[https://github.com/Zaitonn/Serein/releases/latest](https://github.com/Zaitonn/Serein/releases/latest)**
+- Github仓库：[https://github.com/Zaitonn/Serein](https://github.com/Zaitonn/Serein)
+- Minebbs：[https://www.minebbs.com/resources/serein.4169/](https://www.minebbs.com/resources/serein.4169/)
 - 查看 **[教程](docs/Tutorial.md)** 丨 __[帮助](docs/Help.md)__
 
 ---
 
-- [Serein - 新时代服务器面板](#serein---新时代服务器面板)
-  - [🖥运行环境 Environment](#运行环境-environment)
-      - [缺少运行库？](#缺少运行库)
-  - [💖特点 Feature](#特点-feature)
-    - [控制面板](#控制面板)
-      - [简洁的状态信息显示](#简洁的状态信息显示)
-      - [方便的一键控制按钮](#方便的一键控制按钮)
-      - [简单且可自定义的控制台](#简单且可自定义的控制台)
-      - [日志系统](#日志系统)
-      - [后台运行](#后台运行)
-    - [插件管理](#插件管理)
-    - [正则](#正则)
-    - [定时任务](#定时任务)
-    - [机器人](#机器人)
-    - [设置](#设置)
-  - [✨第三方插件/整合包 Plugin](#第三方插件整合包-plugin)
-  - [📒关于 About](#关于-about)
+- [🖥运行环境 Environment](#运行环境-environment)
+    - [缺少运行库？](#缺少运行库)
+- [💖特点 Feature](#特点-feature)
+  - [控制面板](#控制面板)
+    - [简洁的状态信息显示](#简洁的状态信息显示)
+    - [方便的一键控制按钮](#方便的一键控制按钮)
+    - [简单且可自定义的控制台](#简单且可自定义的控制台)
+    - [日志系统](#日志系统)
+    - [后台运行](#后台运行)
+  - [插件管理](#插件管理)
+  - [正则](#正则)
+  - [定时任务](#定时任务)
+  - [机器人](#机器人)
+  - [设置](#设置)
+- [✨第三方插件/整合包 Plugin](#第三方插件整合包-plugin)
+- [📒关于 About](#关于-about)
 
 ---
 

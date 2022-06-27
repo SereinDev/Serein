@@ -47,7 +47,7 @@ namespace Serein
                     webSocket.Closed += (sender, e) =>
                     {
                         Status = false;
-                        Global.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
+                        Global.Ui.BotWebBrowser_Invoke("<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
                     };
                     webSocket.Opened += (sender, e) =>
                     {

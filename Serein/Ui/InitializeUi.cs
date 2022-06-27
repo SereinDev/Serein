@@ -16,11 +16,8 @@ namespace Serein
 
         private void InitWebBrowser()
         {
-
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
-            Global.PanelConsoleWebBrowser = PanelConsoleWebBrowser;
-            Global.BotWebBrowser = BotWebBrowser;
         }
         private void Initialize()
         {

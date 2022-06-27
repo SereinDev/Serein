@@ -51,7 +51,8 @@ namespace Serein
             resources.GetString("Area.Items"),
             resources.GetString("Area.Items1"),
             resources.GetString("Area.Items2"),
-            resources.GetString("Area.Items3")});
+            resources.GetString("Area.Items3"),
+            resources.GetString("Area.Items4")});
             resources.ApplyResources(this.Area, "Area");
             this.Area.Name = "Area";
             this.Area.SelectedIndexChanged += new System.EventHandler(this.Area_SelectedIndexChanged);
