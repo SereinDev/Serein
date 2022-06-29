@@ -21,7 +21,7 @@ namespace Serein
         public static bool FirstOpen = false;
         public static void Debug(object o)
         {
-            if (Ui != null &&o!=null)
+            if (Ui != null && o != null)
             {
                 try
                 {
