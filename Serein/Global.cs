@@ -19,5 +19,16 @@ namespace Serein
         public static bool Crash = false;
         public static bool MultiOpen = false;
         public static bool FirstOpen = false;
+        public static void Debug(object o)
+        {
+            if (Ui != null &&o!=null)
+            {
+                try
+                {
+                    Ui.Debug_Append($"{DateTime.Now} {o}");
+                }
+                catch { }
+            }
+        }
     }
 }

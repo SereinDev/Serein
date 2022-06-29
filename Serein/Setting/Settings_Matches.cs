@@ -12,6 +12,7 @@ namespace Serein
         public string LevelName { get; set; } = "Level Name: (.+?)$";
         public string Finished { get; set; } = "(Done|Started)";
         public string ipv4Port { get; set; } = @"ipv4.+?(\d+?)$";
+        public string PlayerList { get; set; } = @"players\sonline:";
         public Settings_Matches()
         {
             try

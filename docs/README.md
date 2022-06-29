@@ -1,17 +1,20 @@
-![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&forks=1&issues=1&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
+![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board&theme=Light)
 
-![C#](https://img.shields.io/badge/C%23-%23239120.svg?logo=c-sharp&logoColor=fff&style=for-the-badge)
+
+![GitHub Stars](https://img.shields.io/github/stars/Zaitonn/Serein?style=for-the-badge&color=red)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Zaitonn/Serein?style=for-the-badge&color=orange)](https://github.com/Zaitonn/Serein/releases/latest)
 [![GitHub license](https://img.shields.io/github/license/zaitonn/Serein?color=yellow&style=for-the-badge)](https://github.com/Zaitonn/Serein/blob/main/LICENSE)
 [![GitHub all releases](https://img.shields.io/github/downloads/Zaitonn/Serein/total?style=for-the-badge)](https://github.com/Zaitonn/Serein/releases/latest)
-[![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein?style=for-the-badge)](https://github.com/Zaitonn/Serein)
 [![GitHub bulid](https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?style=for-the-badge)](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)
+[![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein?style=for-the-badge)](https://github.com/Zaitonn/Serein)
+
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的我的世界服务器面板  
 
 - **下载最新版：[https://github.com/Zaitonn/Serein/releases/latest](https://github.com/Zaitonn/Serein/releases/latest)**
 - Github仓库：[https://github.com/Zaitonn/Serein](https://github.com/Zaitonn/Serein)
 - Minebbs：[https://www.minebbs.com/resources/serein.4169/](https://www.minebbs.com/resources/serein.4169/)
-- 查看 **[教程](docs/Tutorial.md)** 丨 __[帮助](docs/Help.md)__
+- 查看 **[教程](Tutorial.md)** 丨 __[帮助](Help.md)__
 
 ---
 

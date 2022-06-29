@@ -1,11 +1,13 @@
 ## 教程
 - [教程](#教程)
+  - [帮助改进文档](#帮助改进文档)
+    - [具体方法](#具体方法)
   - [安装Serein](#安装serein)
     - [Release](#release)
     - [Beta](#beta)
     - [自行编译](#自行编译)
     - [如何选择不同Net的版本](#如何选择不同net的版本)
-  - [服务器](#服务器)
+  - [启动服务器](#启动服务器)
   - [自定义控制台样式](#自定义控制台样式)
   - [多开Serein](#多开serein)
   - [机器人](#机器人)
@@ -13,16 +15,23 @@
     - [配置方法（以go-cqhttp为例）](#配置方法以go-cqhttp为例)
   - [插件管理](#插件管理)
   - [正则](#正则)
-    - [正则表达式的基本语法](#正则表达式的基本语法)
-    - [说明](#说明)
-    - [操作方法](#操作方法)
-    - [特点](#特点)
+    - [介绍](#介绍)
+    - [食用方法](#食用方法)
   - [定时任务](#定时任务)
-    - [语法](#语法)
-    - [生成器（推荐）](#生成器推荐)
-    - [说明](#说明-1)
-    - [操作方法](#操作方法-1)
-    - [特点](#特点-1)
+    - [介绍](#介绍-1)
+    - [食用方法](#食用方法-1)
+    - [特点](#特点)
+
+---
+### 帮助改进文档
+
+💖 **欢迎所有人提出建议或帮忙改进文档~** 💖  
+不需要任何代码基础，只要有一颗奉献的心ヾ(•ω•`)o
+#### 具体方法
+- fork该项目后提交pr
+- 进群直接向作者提出更改建议
+
+---
 
 ### 安装Serein
 #### Release
@@ -47,9 +56,9 @@
   - Win10及以上等大部分系统自带，可不需要手动安装，方便使用
     - 你也可以自行安装 [`.NET Framework`](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
 
+---
 
-
-### 服务器
+### 启动服务器
 ![服务器](imgs/console.png)
 >**首先你应该先看看：**  
 [BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)**（推荐）**  
@@ -62,6 +71,7 @@
    - 将启动文件拖入窗口可直接识别设置
 3. 点击`启动`按钮即可启动服务器
 
+---
 ### 自定义控制台样式
 1. 打开`./console`文件夹
 2. 在Visual Studio Code或者其他编辑器中编辑其中的文件
@@ -71,8 +81,7 @@
       > 听说IE于2022年6月15日停止支持？不慌 ~~管他的，大不了再修复 反正已经过了~~
 3. 重启`Serein`后生效
 
-
-
+---
 ### 多开Serein
 
 > Mulit-Open，指在本地开启多个服务端并接入同一个机器人统一控制，适用于群组服等   
@@ -96,17 +105,20 @@
    - 你可能需要对不同的`Serein`的正则或定时任务乃至设置进行相应配置，否则可能出现一呼百应的情况
 3. 对于机器人你可以选择开启`上报自身消息`，通过对该消息进行匹配从而实现群组服消息互通
 
+---
 ### 机器人
 
 ![机器人](imgs/bot.png)
 #### 支持的条件
 - 使用[OneBot-11](https://github.com/botuniverse/onebot-11)标准
+  - 使用新的[OneBot-12](https://12.onebot.dev/)标准的机器人不确定是否可用
 - 可使用WS正向连接
 
 >由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人 
 
 >目前已完全支持的机器人：[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)  
->❗ **此处列举的机器人只代表已经经过测试且可用，并不是只有以上两种机器人可用**
+
+>❗ **此处列举的机器人只代表已经经过测试且可用，并不是只有以上两种机器人可用，且不代表作者的个人观点**
 
 #### 配置方法（以go-cqhttp为例）
 1. 下载并运行，首次运行时会释放启动文件和配置文件
@@ -128,28 +140,28 @@
 如上所示，你应该选择 `2: 正向 Websocket 通信`  
    
 其他机器人可能需要直接修改配置文件，但操作方法类似
+
+---
 ### 插件管理
 ![插件管理](imgs/plugin.png)
 
 -  在插件列表中右键打开菜单
-   - `导入插件`→添加插件
-   - `删除插件`→删除插件
-   - `启用插件`→启用插件
-   - `禁用插件`→禁用插件
+   - `导入插件`
+     - 打开选择文件窗口一键导入
+   - `删除插件`
+     - 永久删除所选文件
+   - `启用插件` `禁用插件`
      - 以上两个功能实质是在插件的文件名后面增加`.lock`使加载器不能识别，并不更改插件文件内容
      - 禁用功能在服务器运行时不可用
-   - `打开文件夹`→在资源管理器中显示这个所选插件
-- 将所选插件直接拖入窗口，可快捷导入插件
+   - `打开文件夹`
+     - 在资源管理器中显示插件文件夹或所选插件
+- 你也可以将所选插件直接拖入窗口，快捷导入插件
 
-
+---
 ### 正则
 ![正则](imgs/regex.png)
 
-#### 正则表达式的基本语法  
-- [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
-- [C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
-
-#### 说明
+#### 介绍
 - 作用域 —— 指定匹配的区域，可为以下五个值
   1. `禁用` 不做任何匹配
   2. `控制台` 匹配控制台
@@ -157,13 +169,22 @@
   4. `消息（私聊）` 匹配私聊消息
   5. `消息（自身发送）` 匹配自身上报消息
      - ❗ **保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，配置错误可能导致机器人刷屏甚至被封号**
-- 正则表达式 —— 顾名思义
+- 正则表达式 —— 一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。
+    - 基本语法 
+      - [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
+      - [C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
+  - 特点
+    - 若无特别标记，正则表达式仅**匹配第一个符合条件的文本** 
+      - 例：`(.+?)`匹配``我是一段文本``仅返回第一个字``我``（即使使用贪婪模式也是如此）  
+      - 解决方法：强制匹配整段文本`(.+?)`→`^(.+?)$`
+    - [条件匹配的表达式](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-with-an-expression)、[基于有效的捕获组的条件匹配](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-based-on-a-valid-captured-group)等原生功能**理论可用，但未测试**
+    - [替换命名组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-a-named-group)、[替换整个匹配项](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-match)、[替换匹配项前的文本](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-match)、[替换匹配项后的文本](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-text-after-the-match)、[替换最后捕获的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-last-captured-group)、[替换整个输入字符串](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-input-string)等用法**暂不支持**
 - 需要管理权限 —— 针对群聊消息和私聊消息
 - 命令 —— 执行内容 
   - 参考文档：[变量](Variables.md)、[命令](Command.md)
-- 备注 —— 不影响匹配
+- 备注 —— 对这项内容的备注/注释，不影响匹配
 
-#### 操作方法
+#### 食用方法
 - 在正则表格中右键打开菜单
     - `新建记录`→添加新的正则
     - `修改记录`→编辑所选正则
@@ -190,29 +211,20 @@
 }
 ```
 
-#### 特点
-- 若无特别标记，正则表达式仅**匹配第一个符合条件的文本** 
->举个例子  
-`(.+?)`匹配``我是一段文本``仅返回第一个字``我``（即使使用贪婪模式也是如此）  
->>解决方法：  
-强制匹配整段文本`(.+?)`→`^(.+?)$`
-- [条件匹配的表达式](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-with-an-expression)、[基于有效的捕获组的条件匹配](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-based-on-a-valid-captured-group)等原生功能**理论可用，但未测试**
-- [替换命名组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-a-named-group)、[替换整个匹配项](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-match)、[替换匹配项前的文本](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-match)、[替换匹配项后的文本](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-text-after-the-match)、[替换最后捕获的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-last-captured-group)、[替换整个输入字符串](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-input-string)等用法**暂不支持**
-
+---
 ### 定时任务
 ![定时任务](imgs/task.png)
-#### 语法
-- [POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
-- [Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression) 
 
-#### 生成器（推荐）
-[Crontab guru](https://crontab.guru/)
-
-#### 说明
+#### 介绍
 - Cron表达式 —— 指定任务执行的时间和周期
+  - 生成器（推荐）：
+    - **[Crontab guru](https://crontab.guru/)**
+  - 语法：
+    - [POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
+    - [Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression) 
 - 命令 —— 执行内容 
 - 备注 —— 不影响匹配
-#### 操作方法
+#### 食用方法
 - 在定时任务表格中右键打开菜单
     - `添加任务`→添加新的任务
     - `修改任务`→编辑所选任务

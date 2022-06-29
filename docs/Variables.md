@@ -85,5 +85,6 @@
 
 
   
->参考：[事件-群消息](https://docs.go-cqhttp.org/event/#%E7%BE%A4%E6%B6%88%E6%81%AF)    
-需要注意的是， 各字段是尽最大努力提供的， 也就是说， **不保证每个字段都一定存在**， **也不保证存在的字段都是完全正确的** ( 缓存可能过期 ) 。尤其对于匿名消息， 此字段**不具有参考价值**。
+>参考：[Post_Message_MessageSender](https://docs.go-cqhttp.org/reference/data_struct.html#post-message-messagesender)    
+
+>需要注意的是， 各字段是尽最大努力提供的， 也就是说， **不保证每个字段都一定存在**， **也不保证存在的字段都是完全正确的** ( 缓存可能过期 ) 。尤其对于匿名消息， 此字段**不具有参考价值**。

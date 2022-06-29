@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -27,6 +25,7 @@ namespace Serein
         public static StreamWriter CommandWriter;
         private static StreamWriter LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
+        private static string TempMessage = String.Empty;
         public static Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
@@ -94,6 +93,7 @@ namespace Serein
                 Version = "-";
                 LevelName = "-";
                 Difficulty = "-";
+                TempMessage = String.Empty;
                 Port = 0;
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings_Server.Path);
@@ -167,7 +167,7 @@ namespace Serein
         {
             if (Status)
             {
-                Command = Command.Trim();
+                Command = Command.Trim().TrimEnd('\r', '\n');
                 while (CommandList.Count >= 50)
                 {
                     CommandList.RemoveAt(0);
@@ -185,8 +185,7 @@ namespace Serein
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
                 }
-                CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
-
+                CommandWriter.WriteLine(Command);
                 if (Global.Settings_Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -249,7 +248,8 @@ namespace Serein
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle));
+                    Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle)
+                    );
                 if (Global.Settings_Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -269,7 +269,19 @@ namespace Serein
                     }
                     catch { }
                 }
-                new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
+                if (!string.IsNullOrEmpty(TempMessage))
+                {
+                    new Task(() => Message.ProcessMsgFromConsole(TempMessage + "\n" + Line)).Start();
+                    TempMessage = string.Empty;
+                }
+                else
+                {
+                    new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
+                }
+                if (Regex.IsMatch(Line, Global.Settings_Matches.PlayerList, RegexOptions.IgnoreCase))
+                {
+                    TempMessage = Line.Trim('\r', '\n');
+                }
             }
         }
         private static void WaitForExit()

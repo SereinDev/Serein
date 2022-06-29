@@ -103,7 +103,7 @@ namespace Serein
                         }
                         else
                         {
-                            if (Item.Area == 2 && MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
+                            if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     JsonObject,
@@ -116,7 +116,7 @@ namespace Serein
                                     GroupId
                                 );
                             }
-                            else if (Item.Area == 3 && MessageType == "private")
+                            else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
                             {
                                 Command.Run(
                                     JsonObject,

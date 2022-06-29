@@ -76,6 +76,10 @@ namespace Serein
             {
                 Websocket.Send(false, Value, Global.Settings_Bot.GroupList[0].ToString());
             }
+            else if (Type == 50)
+            {
+                Global.Debug("CommandOutput:" + Value);
+            }
         }
 
         public static void Run(JObject JsonObject, string Command, Match MsgMatch, long UserId, long GroupId = -1)
@@ -118,6 +122,10 @@ namespace Serein
             {
                 Websocket.Send(true, Value, UserId.ToString());
             }
+            else if (Type == 50)
+            {
+                Global.Debug("CommandOutput:" + Value);
+            }
         }
 
         public static int GetType(string Command)
@@ -132,6 +140,7 @@ namespace Serein
             12          私聊（带参）
             13          群聊
             14          私聊
+            50          debug
             */
             if (
                 !Command.Contains("|") ||
@@ -190,7 +199,7 @@ namespace Serein
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }
-            Global.Ui.Debug_Append($"{DateTime.Now} {command} {Value}");
+            Global.Debug($"Command:{command} Value:{Value}");
             return Value;
         }
         public static string GetVariables(string Text, JObject JsonObject = null)
