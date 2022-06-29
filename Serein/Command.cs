@@ -185,6 +185,11 @@ namespace Serein
             {
                 return 14;
             }
+            if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
+            {
+                return 50;
+            }
+
             return -1;
         }
         public static string GetValue(string command, Match MsgMatch)
