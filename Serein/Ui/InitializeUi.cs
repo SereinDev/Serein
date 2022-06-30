@@ -38,7 +38,7 @@ namespace Serein
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.','w'))).Start();
+            new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
         }
         private void ShowTutorial()
         {
