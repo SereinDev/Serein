@@ -25,7 +25,7 @@ namespace Serein
             {
                 try
                 {
-                    Ui.Debug_Append($"{DateTime.Now} {o}");
+                    Ui.Debug_Append($"{DateTime.Now:T} {o}");
                 }
                 catch { }
             }

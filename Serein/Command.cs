@@ -78,7 +78,7 @@ namespace Serein
             }
             else if (Type == 50)
             {
-                Global.Debug("CommandOutput:" + Value);
+                Global.Debug("[DebugOutput]" + Value);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Serein
             }
             else if (Type == 50)
             {
-                Global.Debug("CommandOutput:" + Value);
+                Global.Debug("[DebugOutput]" + Value);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Serein
             {
                 Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
             }
-            Global.Debug($"Command:{command} Value:{Value}");
+            Global.Debug($"[Command] Command:{command} Value:{Value}");
             return Value;
         }
         public static string GetVariables(string Text, JObject JsonObject = null)
@@ -230,8 +230,8 @@ namespace Serein
             Text = Regex.Replace(Text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%DayTime%", CurrentTime.TimeOfDay.ToString().Split('.')[0], RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Date%", CurrentTime.Date.ToString().Split(' ')[0], RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%DayTime%", CurrentTime.Date.ToString("T"), RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%Date%", CurrentTime.Date.ToString("d"), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);

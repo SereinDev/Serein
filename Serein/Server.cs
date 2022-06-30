@@ -269,19 +269,24 @@ namespace Serein
                     }
                     catch { }
                 }
-                if (!string.IsNullOrEmpty(TempMessage))
-                {
-                    new Task(() => Message.ProcessMsgFromConsole(TempMessage + "\n" + Line)).Start();
-                    TempMessage = string.Empty;
-                }
-                else
-                {
-                    new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
-                }
                 if (Regex.IsMatch(Line, Global.Settings_Matches.PlayerList, RegexOptions.IgnoreCase))
                 {
                     TempMessage = Line.Trim('\r', '\n');
                 }
+                else
+                {
+                    if (!string.IsNullOrEmpty(TempMessage))
+                    {
+                        string Ltempstr = TempMessage + "\n" + Line;
+                        new Task(() => Message.ProcessMsgFromConsole(Ltempstr)).Start();
+                        TempMessage = string.Empty;
+                    }
+                    else
+                    {
+                        new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
+                    }
+                }
+
             }
         }
         private static void WaitForExit()

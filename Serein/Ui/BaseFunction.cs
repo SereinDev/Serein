@@ -62,6 +62,22 @@ namespace Serein
                 {
                     DebugTextBox.Text = DebugTextBox.Text + "\r\n" + Text;
                 }
+                if (!Directory.Exists(Global.Path + "\\logs\\debug"))
+                {
+                    Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                }
+                try
+                {
+                    StreamWriter LogWriter = new StreamWriter(
+                        Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                        true,
+                        Encoding.UTF8
+                        );
+                    LogWriter.WriteLine(Text);
+                    LogWriter.Flush();
+                    LogWriter.Close();
+                }
+                catch { }
             }
         }
         private void Ui_DragDrop(object sender, DragEventArgs e)
