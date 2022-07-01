@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Serein
 {
@@ -11,7 +12,16 @@ namespace Serein
             Result = Regex.Replace(Input, @"\[.+?m", string.Empty);
             Result = Regex.Replace(Result, @"", string.Empty);
             Result = Regex.Replace(Result, @"\s+?$", string.Empty);
-            return Result;
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < Result.Length; i++)
+            {
+                int Unicode = Result[i];
+                if (Unicode > 31 && Unicode != 127)
+                {
+                    sBuilder.Append(Result[i].ToString());
+                }
+            }
+            return sBuilder.ToString();
         }
         public static string EscapeLog(string Input)
         {
@@ -27,7 +37,7 @@ namespace Serein
         {
             Input = EscapeLog(Input);
             Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
-            if (Type == 1)
+            if (Type == 1 || Type == 3)
             {
                 string Pattern = @"\[([^]+?)m([^]*)";
                 if (!Regex.IsMatch(Input, Pattern))
@@ -52,6 +62,7 @@ namespace Serein
                         {
                             continue;
                         }
+                        bool Colored = true;
                         Style = string.Empty;
                         SpanClass = string.Empty;
                         Color = string.Empty;
@@ -75,32 +86,32 @@ namespace Serein
                             {
                                 Color = $"rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
                                 Style += $"color:{Color}";
-                                SpanClass += "colored";
+                                Colored = true;
                             }
                             else if (ChildArg == "48" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
                             {
                                 Color = $"rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
                                 Style += $"background-color:{Color}";
-                                SpanClass += "colored";
+                                Colored = true;
                             }
                             else if (((IList)ColorList).Contains(ChildArg))
                             {
                                 SpanClass += "vanillaColor" + ChildArg + " ";
-                                if (ChildArg == "37" && SpanClass.Contains("colored"))
-                                {
-                                    SpanClass += "noColored";
-                                }
-                                else
-                                {
-                                    SpanClass += "colored";
-                                }
+                                Colored = !(ChildArg == "37" || ChildArg == "47" || ChildArg == "97" || ChildArg == "107");
                             }
                         }
-                        if (string.IsNullOrEmpty(SpanClass))
+                        if (!Colored)
                         {
                             SpanClass += "noColored";
                         }
                         Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
+                    }
+                    if (Type == 3)
+                    {
+                        Output = Regex.Replace(Output, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
+                        Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
+                        Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
+                        Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                     }
                     return Output;
                 }

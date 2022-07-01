@@ -34,17 +34,19 @@ namespace Serein
         {
             ShowToolTip(sender,
                 "指定控制台的输出样式\n" +
-                "-默认 禁用彩色输出\n" +
+                "-无 禁用彩色输出\n" +
                 "-原始彩色 按照原控制台的样式输出（推荐）\n" +
-                "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）");
+                "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）\n" +
+                "-混合 综合以上两条的优点");
         }
         private void SettingServerOutputStyleLabel_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender,
-               "指定控制台的输出样式\n" +
-               "-默认 禁用彩色输出\n" +
-               "-原始彩色 按照原控制台的样式输出（推荐）\n" +
-               "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）");
+                "指定控制台的输出样式\n" +
+                "-无 禁用彩色输出\n" +
+                "-原始彩色 按照原控制台的样式输出（推荐）\n" +
+                "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）\n" +
+                "-混合 综合以上两条的优点");
         }
         private void SettingServerStopCommand_MouseHover(object sender, EventArgs e)
         {

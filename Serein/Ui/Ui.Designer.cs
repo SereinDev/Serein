@@ -1086,7 +1086,8 @@ namespace Serein
             this.SettingServerOutputStyle.Items.AddRange(new object[] {
             resources.GetString("SettingServerOutputStyle.Items"),
             resources.GetString("SettingServerOutputStyle.Items1"),
-            resources.GetString("SettingServerOutputStyle.Items2")});
+            resources.GetString("SettingServerOutputStyle.Items2"),
+            resources.GetString("SettingServerOutputStyle.Items3")});
             resources.ApplyResources(this.SettingServerOutputStyle, "SettingServerOutputStyle");
             this.SettingServerOutputStyle.Name = "SettingServerOutputStyle";
             this.SettingServerOutputStyle.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputStyle_SelectedIndexChanged);

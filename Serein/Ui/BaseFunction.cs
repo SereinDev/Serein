@@ -55,12 +55,12 @@ namespace Serein
             {
                 if (DebugTextBox.InvokeRequired)
                 {
-                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + "\r\n" + _Text; };
+                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n"; };
                     PanelInfoTime2.Invoke(actionDelegate, Text);
                 }
                 else
                 {
-                    DebugTextBox.Text = DebugTextBox.Text + "\r\n" + Text;
+                    DebugTextBox.Text = DebugTextBox.Text + Text + "\r\n";
                 }
                 if (!Directory.Exists(Global.Path + "\\logs\\debug"))
                 {
