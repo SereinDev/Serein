@@ -64,7 +64,7 @@ namespace Serein
                         bool Colored = true;
                         string Style = string.Empty;
                         string SpanClass = string.Empty;
-                        string[]  ArgList = Arg.Split(';');
+                        string[] ArgList = Arg.Split(';');
                         for (int ChildArgIndex = 0; ChildArgIndex < ArgList.Length; ChildArgIndex++)
                         {
                             string ChildArg = ArgList[ChildArgIndex];
