@@ -36,5 +36,11 @@ Win7或WinServer2012以上
 ~~反正我用VS~~  
 记得安装SDK
 
+## 💖发电 Donate
+>如果觉得这个软件对你很有帮助的话可以稍微鼓励一下  
+我会很感谢你的(*￣3￣)╭❤
+
+[![爱发电](https://zaitonn.github.io/Serein/imgs/afdian.png)](https://afdian.net/@Zaiton)
+
 ## 关于
 > [About](https://zaitonn.github.io/Serein/About.html)

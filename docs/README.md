@@ -32,6 +32,7 @@
   - [机器人](#机器人)
   - [设置](#设置)
 - [✨第三方插件/整合包 Plugin](#第三方插件整合包-plugin)
+- [💖发电 Donate](#发电-donate)
 - [📒关于 About](#关于-about)
 
 ---
@@ -122,6 +123,13 @@ Win7或WinServer2012以上
 - [Serein机器人整合包](https://www.minebbs.com/threads/serein.12192/)
 - [Serein - 新的机器人内置常用正则](https://www.minebbs.com/resources/serein.4204/)
 - [PSerein - 机器人辅助插件](https://www.minebbs.com/resources/pserein.4211/)
+
+
+## 💖发电 Donate
+>如果觉得这个软件对你很有帮助的话可以稍微鼓励一下  
+我会很感谢你的(*￣3￣)╭❤
+
+[![爱发电](imgs/afdian.png)](https://afdian.net/@Zaiton)
 
 ## 📒关于 About
 > [About](About.md)

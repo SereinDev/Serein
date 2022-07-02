@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Text;
 
@@ -6,6 +6,13 @@ namespace Serein
 {
     public class Log
     {
+        private static List<string> ColorList = new List<string>
+        {
+            "30", "31", "32", "33", "34", "35", "36", "37",
+            "40", "41", "42", "43", "44", "45", "46", "47",
+            "90", "91", "92", "93", "94", "95", "96", "97",
+            "100","101","102","103","104","105","106","107"
+        };
         public static string OutputRecognition(string Input)
         {
             string Result;
@@ -46,30 +53,21 @@ namespace Serein
                 }
                 else
                 {
-                    string Style, SpanClass, ChildArg, Arg, Color;
                     string Output = string.Empty;
-                    string[] ArgList;
-                    string[] ColorList = {
-                        "30", "31", "32", "33", "34", "35", "36", "37",
-                        "40", "41", "42", "43", "44", "45", "46", "47",
-                        "90", "91", "92", "93", "94", "95", "96", "97",
-                        "100","101","102","103","104","105","106","107"
-                    };
                     foreach (Match Match in Regex.Matches(Input, Pattern))
                     {
-                        Arg = Match.Groups[1].Value;
+                        string Arg = Match.Groups[1].Value;
                         if (string.IsNullOrEmpty(Match.Groups[2].Value))
                         {
                             continue;
                         }
                         bool Colored = true;
-                        Style = string.Empty;
-                        SpanClass = string.Empty;
-                        Color = string.Empty;
-                        ArgList = Arg.Split(';');
+                        string Style = string.Empty;
+                        string SpanClass = string.Empty;
+                        string[]  ArgList = Arg.Split(';');
                         for (int ChildArgIndex = 0; ChildArgIndex < ArgList.Length; ChildArgIndex++)
                         {
-                            ChildArg = ArgList[ChildArgIndex];
+                            string ChildArg = ArgList[ChildArgIndex];
                             if (ChildArg == "1")
                             {
                                 Style += "font-weight:bold;";
@@ -84,17 +82,15 @@ namespace Serein
                             }
                             else if (ChildArg == "38" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
                             {
-                                Color = $"rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                Style += $"color:{Color}";
+                                Style += $"color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
                                 Colored = true;
                             }
                             else if (ChildArg == "48" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
                             {
-                                Color = $"rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                Style += $"background-color:{Color}";
+                                Style += $"background-color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
                                 Colored = true;
                             }
-                            else if (((IList)ColorList).Contains(ChildArg))
+                            else if (ColorList.Contains(ChildArg))
                             {
                                 SpanClass += "vanillaColor" + ChildArg + " ";
                                 Colored = !(ChildArg == "37" || ChildArg == "47" || ChildArg == "97" || ChildArg == "107");

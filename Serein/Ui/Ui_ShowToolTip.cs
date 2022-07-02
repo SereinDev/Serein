@@ -37,7 +37,7 @@ namespace Serein
                 "-无 禁用彩色输出\n" +
                 "-原始彩色 按照原控制台的样式输出（推荐）\n" +
                 "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）\n" +
-                "-混合 综合以上两条的优点");
+                "-混合 综合\"原始彩色\"和\"语法高亮\"的优点");
         }
         private void SettingServerOutputStyleLabel_MouseHover(object sender, EventArgs e)
         {
@@ -46,7 +46,7 @@ namespace Serein
                 "-无 禁用彩色输出\n" +
                 "-原始彩色 按照原控制台的样式输出（推荐）\n" +
                 "-语法高亮 匹配部分文本并高亮（可在preset.css中设置）\n" +
-                "-混合 综合以上两条的优点");
+                "-混合 综合\"原始彩色\"和\"语法高亮\"的优点");
         }
         private void SettingServerStopCommand_MouseHover(object sender, EventArgs e)
         {

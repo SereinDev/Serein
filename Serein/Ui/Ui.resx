@@ -2302,13 +2302,13 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotPermission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 31</value>
+    <value>328, 31</value>
   </data>
   <data name="SettingBotPermission.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="SettingBotPermission.Text" xml:space="preserve">
-    <value>管理权限列表</value>
+    <value>管理权限列表（使用";"分隔）</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.Name" xml:space="preserve">
     <value>SettingBotPermission</value>
@@ -2335,13 +2335,13 @@
     <value>5, 5, 5, 5</value>
   </data>
   <data name="SettingBotGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 31</value>
+    <value>304, 31</value>
   </data>
   <data name="SettingBotGroup.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="SettingBotGroup.Text" xml:space="preserve">
-    <value>监听群列表</value>
+    <value>监听群列表（使用";"分隔）</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.Name" xml:space="preserve">
     <value>SettingBotGroup</value>
@@ -2761,13 +2761,13 @@
     <value>23, 123</value>
   </data>
   <data name="SettingServerStopCommandLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 31</value>
+    <value>280, 31</value>
   </data>
   <data name="SettingServerStopCommandLabel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
   <data name="SettingServerStopCommandLabel.Text" xml:space="preserve">
-    <value>关服命令</value>
+    <value>关服命令（使用";"分隔）</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommandLabel.Name" xml:space="preserve">
     <value>SettingServerStopCommandLabel</value>
