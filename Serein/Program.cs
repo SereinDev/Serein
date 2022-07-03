@@ -31,7 +31,7 @@ namespace Serein
         [STAThread]
         private static void Main(string[] args)
         {
-            
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
@@ -53,7 +53,7 @@ namespace Serein
             }
             Ui ui = new Ui();
             Global.Ui = ui;
-            
+
             Application.Run(ui);
         }
 
