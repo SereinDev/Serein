@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Collections;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -27,11 +29,21 @@ namespace Serein
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
+            
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Settings.ReadSettings();
+            if (((IList)args).Contains("debug"))
+            {
+                Global.Settings_Serein.Debug = true;
+            }
+            if (Global.Settings_Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (!File.Exists(Global.Path + "console\\console.html"))
@@ -41,6 +53,7 @@ namespace Serein
             }
             Ui ui = new Ui();
             Global.Ui = ui;
+            
             Application.Run(ui);
         }
 
@@ -98,5 +111,7 @@ namespace Serein
                 "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Global.Crash = false;
         }
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
     }
 }

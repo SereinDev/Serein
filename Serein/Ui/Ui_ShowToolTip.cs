@@ -144,5 +144,10 @@ namespace Serein
         {
             ShowToolTip(sender, "打开最新版下载页面（https://github.com/Zaitonn/Serein/releases/latest）");
         }
+
+        private void SettingSereinEnableDPIAware_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "启用DPI感知\n若界面异常或模糊可选择开启此项");
+        }
     }
 }

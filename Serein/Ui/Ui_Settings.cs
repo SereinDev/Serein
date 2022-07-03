@@ -28,6 +28,7 @@ namespace Serein
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings_Bot.GivePermissionToAllAdmin;
             SettingSereinEnableGetUpdate.Checked = Global.Settings_Serein.EnableGetUpdate;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings_Serein.EnableGetAnnouncement;
+            SettingSereinEnableDPIAware.Checked = Global.Settings_Serein.DPIAware;
             if (!Global.Settings_Serein.Debug)
             {
                 Debug.Parent = null;
@@ -45,7 +46,7 @@ namespace Serein
         {
             Global.Settings_Server.EnableLog = SettingServerEnableLog.Checked;
         }
-        private void SettingServerEnableUnicode_CheckedChanged(object sender, System.EventArgs e)
+        private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings_Server.EnableUnicode = SettingServerEnableUnicode.Checked;
         }
@@ -198,6 +199,9 @@ namespace Serein
         {
             Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
         }
+        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings_Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
+        }
     }
-
 }

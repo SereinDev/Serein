@@ -12,6 +12,5 @@ namespace Serein
             UpdateVersion();
         }
 
-
     }
 }

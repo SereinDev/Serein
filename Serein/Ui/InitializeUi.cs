@@ -23,7 +23,6 @@ namespace Serein
         {
             ShowTutorial();
             InitWebBrowser();
-            Settings.ReadSettings();
             LoadSettings();
             LoadPlugins();
             LoadRegex();

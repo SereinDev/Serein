@@ -46,14 +46,11 @@ namespace Serein
             Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
             if (Type == 1 || Type == 3)
             {
+                string Output = Input;
                 string Pattern = @"\[([^]+?)m([^]*)";
-                if (!Regex.IsMatch(Input, Pattern))
+                if (Regex.IsMatch(Input, Pattern))
                 {
-                    return Input;
-                }
-                else
-                {
-                    string Output = string.Empty;
+                    Output = string.Empty;
                     foreach (Match Match in Regex.Matches(Input, Pattern))
                     {
                         string Arg = Match.Groups[1].Value;
@@ -109,8 +106,15 @@ namespace Serein
                         Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
                         Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                     }
-                    return Output;
                 }
+                if (Type == 3)
+                {
+                    Output = Regex.Replace(Output, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
+                    Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
+                    Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
+                    Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
+                }
+                return Output;
             }
             else if (Type == 2)
             {

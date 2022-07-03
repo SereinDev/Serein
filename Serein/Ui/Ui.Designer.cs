@@ -128,6 +128,7 @@ namespace Serein
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
+            this.SettingSereinEnableDPIAware = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SettingSereinDownload = new System.Windows.Forms.Label();
             this.SettingSereinStatement2 = new System.Windows.Forms.Label();
@@ -863,6 +864,7 @@ namespace Serein
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinEnableDPIAware);
             this.SettingSerein.Controls.Add(this.label2);
             this.SettingSerein.Controls.Add(this.SettingSereinDownload);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement2);
@@ -877,6 +879,14 @@ namespace Serein
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
+            // 
+            // SettingSereinEnableDPIAware
+            // 
+            resources.ApplyResources(this.SettingSereinEnableDPIAware, "SettingSereinEnableDPIAware");
+            this.SettingSereinEnableDPIAware.Name = "SettingSereinEnableDPIAware";
+            this.SettingSereinEnableDPIAware.UseVisualStyleBackColor = true;
+            this.SettingSereinEnableDPIAware.CheckedChanged += new System.EventHandler(this.SettingSereinEnableDPIAware_CheckedChanged);
+            this.SettingSereinEnableDPIAware.MouseHover += new System.EventHandler(this.SettingSereinEnableDPIAware_MouseHover);
             // 
             // label2
             // 
@@ -1414,6 +1424,7 @@ namespace Serein
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel StripStatusLabel;
         private System.Windows.Forms.CheckBox SettingServerEnableUnicode;
+        private System.Windows.Forms.CheckBox SettingSereinEnableDPIAware;
     }
 }
 

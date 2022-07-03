@@ -1809,6 +1809,33 @@
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="SettingSereinEnableDPIAware.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinEnableDPIAware.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 93</value>
+  </data>
+  <data name="SettingSereinEnableDPIAware.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 35</value>
+  </data>
+  <data name="SettingSereinEnableDPIAware.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="SettingSereinEnableDPIAware.Text" xml:space="preserve">
+    <value>启用DPI感知（重启生效）</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableDPIAware.Name" xml:space="preserve">
+    <value>SettingSereinEnableDPIAware</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableDPIAware.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableDPIAware.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinEnableDPIAware.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1840,7 +1867,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="SettingSereinDownload.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1873,7 +1900,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinDownload.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="SettingSereinStatement2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1906,7 +1933,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="SettingSereinStatement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1936,7 +1963,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1972,7 +1999,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2002,7 +2029,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="SettingSereinHelp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2035,7 +2062,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2062,7 +2089,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="SettingSereinTutorial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2095,7 +2122,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinTutorial.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2125,7 +2152,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2158,7 +2185,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
