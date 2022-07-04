@@ -250,6 +250,7 @@ namespace Serein
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
                     Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle)
                     );
+                //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle));
                 if (Global.Settings_Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))

@@ -107,6 +107,10 @@ namespace Serein
                         Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                     }
                 }
+                else
+                {
+                    Output = $"<span class=\"noColored\">{Output}</span>";
+                }
                 if (Type == 3)
                 {
                     Output = Regex.Replace(Output, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
