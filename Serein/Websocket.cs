@@ -42,7 +42,7 @@ namespace Serein
                     {
                         Global.Ui.BotWebBrowser_Invoke(
                             "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
-                            Log.EscapeLog(e.ToString()));
+                            Log.EscapeLog(e.Exception.Message));
                     };
                     webSocket.Closed += (sender, e) =>
                     {

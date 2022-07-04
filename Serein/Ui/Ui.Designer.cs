@@ -65,10 +65,9 @@ namespace Serein
             this.PanelControlStop = new System.Windows.Forms.Button();
             this.PanelControlStart = new System.Windows.Forms.Button();
             this.PanelConsole = new System.Windows.Forms.GroupBox();
-            this.PanelConsolePanel2 = new System.Windows.Forms.Panel();
-            this.PanelConsoleWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.PanelConsolePanel1 = new System.Windows.Forms.Panel();
+            this.PanelConsolePanel = new System.Windows.Forms.Panel();
             this.PanelConsoleEnter = new System.Windows.Forms.Button();
+            this.PanelConsoleWebBrowser = new System.Windows.Forms.WebBrowser();
             this.PanelConsoleInput = new System.Windows.Forms.TextBox();
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
@@ -180,8 +179,7 @@ namespace Serein
             this.PanelInfo.SuspendLayout();
             this.PanelControls.SuspendLayout();
             this.PanelConsole.SuspendLayout();
-            this.PanelConsolePanel2.SuspendLayout();
-            this.PanelConsolePanel1.SuspendLayout();
+            this.PanelConsolePanel.SuspendLayout();
             this.Plugin.SuspendLayout();
             this.Regular.SuspendLayout();
             this.RegexContextMenuStrip.SuspendLayout();
@@ -427,17 +425,25 @@ namespace Serein
             // PanelConsole
             // 
             resources.ApplyResources(this.PanelConsole, "PanelConsole");
-            this.PanelConsole.Controls.Add(this.PanelConsolePanel2);
+            this.PanelConsole.Controls.Add(this.PanelConsolePanel);
             this.PanelConsole.Name = "PanelConsole";
             this.PanelTableLayout.SetRowSpan(this.PanelConsole, 2);
             this.PanelConsole.TabStop = false;
             // 
-            // PanelConsolePanel2
+            // PanelConsolePanel
             // 
-            this.PanelConsolePanel2.Controls.Add(this.PanelConsoleWebBrowser);
-            this.PanelConsolePanel2.Controls.Add(this.PanelConsolePanel1);
-            resources.ApplyResources(this.PanelConsolePanel2, "PanelConsolePanel2");
-            this.PanelConsolePanel2.Name = "PanelConsolePanel2";
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleEnter);
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleWebBrowser);
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleInput);
+            resources.ApplyResources(this.PanelConsolePanel, "PanelConsolePanel");
+            this.PanelConsolePanel.Name = "PanelConsolePanel";
+            // 
+            // PanelConsoleEnter
+            // 
+            resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
+            this.PanelConsoleEnter.Name = "PanelConsoleEnter";
+            this.PanelConsoleEnter.UseVisualStyleBackColor = true;
+            this.PanelConsoleEnter.Click += new System.EventHandler(this.PanelConsoleEnter_Click);
             // 
             // PanelConsoleWebBrowser
             // 
@@ -448,20 +454,6 @@ namespace Serein
             this.PanelConsoleWebBrowser.ScriptErrorsSuppressed = true;
             this.PanelConsoleWebBrowser.ScrollBarsEnabled = false;
             this.PanelConsoleWebBrowser.TabStop = false;
-            // 
-            // PanelConsolePanel1
-            // 
-            resources.ApplyResources(this.PanelConsolePanel1, "PanelConsolePanel1");
-            this.PanelConsolePanel1.Controls.Add(this.PanelConsoleEnter);
-            this.PanelConsolePanel1.Controls.Add(this.PanelConsoleInput);
-            this.PanelConsolePanel1.Name = "PanelConsolePanel1";
-            // 
-            // PanelConsoleEnter
-            // 
-            resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
-            this.PanelConsoleEnter.Name = "PanelConsoleEnter";
-            this.PanelConsoleEnter.UseVisualStyleBackColor = true;
-            this.PanelConsoleEnter.Click += new System.EventHandler(this.PanelConsoleEnter_Click);
             // 
             // PanelConsoleInput
             // 
@@ -1253,9 +1245,8 @@ namespace Serein
             this.PanelInfo.PerformLayout();
             this.PanelControls.ResumeLayout(false);
             this.PanelConsole.ResumeLayout(false);
-            this.PanelConsolePanel2.ResumeLayout(false);
-            this.PanelConsolePanel1.ResumeLayout(false);
-            this.PanelConsolePanel1.PerformLayout();
+            this.PanelConsolePanel.ResumeLayout(false);
+            this.PanelConsolePanel.PerformLayout();
             this.Plugin.ResumeLayout(false);
             this.Regular.ResumeLayout(false);
             this.RegexContextMenuStrip.ResumeLayout(false);
@@ -1316,11 +1307,8 @@ namespace Serein
         private System.Windows.Forms.Button PanelControlStop;
         private System.Windows.Forms.Button PanelControlStart;
         private System.Windows.Forms.GroupBox PanelConsole;
-        private System.Windows.Forms.Panel PanelConsolePanel2;
+        private System.Windows.Forms.Panel PanelConsolePanel;
         private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
-        private System.Windows.Forms.Panel PanelConsolePanel1;
-        private System.Windows.Forms.Button PanelConsoleEnter;
-        private System.Windows.Forms.TextBox PanelConsoleInput;
         private System.Windows.Forms.TabPage Plugin;
         public System.Windows.Forms.ListView PluginList;
         private System.Windows.Forms.ColumnHeader columnHeader;
@@ -1425,6 +1413,8 @@ namespace Serein
         private System.Windows.Forms.ToolStripStatusLabel StripStatusLabel;
         private System.Windows.Forms.CheckBox SettingServerEnableUnicode;
         private System.Windows.Forms.CheckBox SettingSereinEnableDPIAware;
+        private System.Windows.Forms.Button PanelConsoleEnter;
+        private System.Windows.Forms.TextBox PanelConsoleInput;
     }
 }
 
