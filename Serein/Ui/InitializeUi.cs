@@ -21,7 +21,6 @@ namespace Serein
         }
         private void Initialize()
         {
-            ShowTutorial();
             InitWebBrowser();
             LoadSettings();
             LoadPlugins();
@@ -39,22 +38,7 @@ namespace Serein
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
         }
-        private void ShowTutorial()
-        {
-            if (Global.FirstOpen)
-            {
-                if ((int)MessageBox.Show(
-                        "欢迎使用Serein！！qwq\n" +
-                        "是否打开教程页面（https://zaitonn.github.io/Serein/Tutorial.html）？\n" +
-                        "内含极其详细的配置教程哦",
-                        "Serein",
-                        MessageBoxButtons.OKCancel, MessageBoxIcon.Information
-                    ) == 1)
-                {
-                    Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial.html") { UseShellExecute = true });
-                }
-            }
-        }
+        
         private void MultiOpenCheck()
         {
             Process[] Processes = Process.GetProcessesByName("Serein");

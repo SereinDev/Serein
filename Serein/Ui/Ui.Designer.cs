@@ -1233,6 +1233,7 @@ namespace Serein
             this.Controls.Add(this.StatusStrip);
             this.Name = "Ui";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Serein_FormClosing);
+            this.Shown += new System.EventHandler(this.Ui_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Ui_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Ui_DragEnter);
             this.PluginContextMenuStrip.ResumeLayout(false);

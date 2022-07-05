@@ -1,7 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -59,15 +61,15 @@ namespace Serein
 
         private static void ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            Abort(e.Exception.StackTrace);
+            Abort(e.Exception);
         }
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Abort(e.ExceptionObject.ToString());
+            Abort(e.ExceptionObject);
         }
 
-        private static void Abort(string Text)
+        private static void Abort(object obj)
         {
             Global.Crash = true;
             if (Server.Status && Global.Settings_Server.AutoStop)
@@ -93,25 +95,42 @@ namespace Serein
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
                     "\n" +
-                    Text +
+                    obj.ToString() +
                     "\n==============================================="
                     );
                 LogWriter.Flush();
                 LogWriter.Close();
             }
             catch { }
-            MessageBox.Show(
-                "崩溃啦:(\n\n" +
-                $"{Text}\n" +
+            Ookii.Dialogs.Wpf.TaskDialog TaskDialog = new Ookii.Dialogs.Wpf.TaskDialog
+            {
+                Buttons = {
+                        new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
+                    },
+                MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
+                WindowTitle = "Serein",
+                Content = "" +
                 $"版本： {Global.VERSION}\n" +
                 $"时间：{DateTime.Now}\n" +
-                $"NET版本：{Environment.Version}\n\n\n" +
-                $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
-                "若有必要，请在GitHub提交Issue反馈此问题",
-                "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                $"NET版本：{Environment.Version}\n\n" +
+                $"◦ 崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n"+
+                $"◦ 反馈此问题可以帮助作者更好的改进Serein",
+                MainIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Error,
+                Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
+                FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
+                EnableHyperlinks = true,
+                ExpandedInformation = obj.ToString(),
+            };
+            TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
+            TaskDialog.ShowDialog();
             Global.Crash = false;
         }
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
+
+        private static void TaskDialog_HyperLinkClicked(object sender, HyperlinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+        }
     }
 }
