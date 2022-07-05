@@ -38,7 +38,7 @@ namespace Serein
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
         }
-        
+
         private void MultiOpenCheck()
         {
             Process[] Processes = Process.GetProcessesByName("Serein");
