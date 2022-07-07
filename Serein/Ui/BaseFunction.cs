@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Ookii.Dialogs.Wpf;
-using System.Diagnostics;
 
 namespace Serein
 {
@@ -14,6 +15,12 @@ namespace Serein
     {
         private bool isdrag = false;
         private ListViewItem itemDraged;
+
+        private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
+        {
+            Global.FirstOpen = true;
+            Ui_Shown(sender, e);
+        }
         private void TaskDialog_HyperLinkClicked(object sender, HyperlinkClickedEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });

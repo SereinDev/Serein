@@ -34,9 +34,14 @@ namespace Serein
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
+            SetWindowTheme(MemberList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
+            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void MultiOpenCheck()

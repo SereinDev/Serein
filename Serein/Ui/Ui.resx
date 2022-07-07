@@ -1125,22 +1125,22 @@
   <data name="&gt;&gt;Regular.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="columnHeader1.Text" xml:space="preserve">
+  <data name="TaskListCron.Text" xml:space="preserve">
     <value>Cron表达式</value>
   </data>
-  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
+  <data name="TaskListCron.Width" type="System.Int32, mscorlib">
     <value>200</value>
   </data>
-  <data name="columnHeader3.Text" xml:space="preserve">
+  <data name="TaskListRemark.Text" xml:space="preserve">
     <value>备注</value>
   </data>
-  <data name="columnHeader3.Width" type="System.Int32, mscorlib">
+  <data name="TaskListRemark.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
-  <data name="columnHeader4.Text" xml:space="preserve">
+  <data name="TaskListCommand.Text" xml:space="preserve">
     <value>执行命令</value>
   </data>
-  <data name="columnHeader4.Width" type="System.Int32, mscorlib">
+  <data name="TaskListCommand.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
   <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -1779,8 +1779,179 @@
   <data name="&gt;&gt;Bot.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="MemberListID.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="MemberListID.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="MemberListRole.Text" xml:space="preserve">
+    <value>群角色</value>
+  </data>
+  <data name="MemberListRole.Width" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="MemberListNickname.Text" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="MemberListNickname.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="MemberListCard.Text" xml:space="preserve">
+    <value>群名片</value>
+  </data>
+  <data name="MemberListCard.Width" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="MemberListPlayerName.Text" xml:space="preserve">
+    <value>游戏名称</value>
+  </data>
+  <data name="MemberListPlayerName.Width" type="System.Int32, mscorlib">
+    <value>150</value>
+  </data>
+  <metadata name="MemberContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>29, 86</value>
+  </metadata>
+  <data name="MemberContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="MemberContextMenuStrip_Edit.Text" xml:space="preserve">
+    <value>修改游戏名称</value>
+  </data>
+  <data name="MemberContextMenuStrip_Remove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="MemberContextMenuStrip_Remove.Text" xml:space="preserve">
+    <value>删除所选项</value>
+  </data>
+  <data name="MemberContextMenuStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 6</value>
+  </data>
+  <data name="MemberContextMenuStrip_Refresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="MemberContextMenuStrip_Refresh.Text" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="MemberContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>301, 168</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip.Name" xml:space="preserve">
+    <value>MemberContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MemberList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="MemberList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="MemberList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 783</value>
+  </data>
+  <data name="MemberList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;MemberList.Name" xml:space="preserve">
+    <value>MemberList</value>
+  </data>
+  <data name="&gt;&gt;MemberList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberList.Parent" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="&gt;&gt;MemberList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Member.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="Member.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="Member.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="Member.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="Member.Text" xml:space="preserve">
+    <value>成员管理</value>
+  </data>
+  <data name="&gt;&gt;Member.Name" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="&gt;&gt;Member.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Member.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;Member.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="SettingSereinStatement1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinStatement1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SettingSereinStatement1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 282</value>
+  </data>
+  <data name="SettingSereinStatement1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="SettingSereinStatement1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>410, 31</value>
+  </data>
+  <data name="SettingSereinStatement1.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="SettingSereinStatement1.Text" xml:space="preserve">
+    <value>◦ Serein is licensed under GPL-v3.0</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement1.Name" xml:space="preserve">
+    <value>SettingSereinStatement1</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement1.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinStatement1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingSereinShowWelcomePage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 145</value>
+  </data>
+  <data name="SettingSereinShowWelcomePage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 46</value>
+  </data>
+  <data name="SettingSereinShowWelcomePage.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="SettingSereinShowWelcomePage.Text" xml:space="preserve">
+    <value>显示欢迎页</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinShowWelcomePage.Name" xml:space="preserve">
+    <value>SettingSereinShowWelcomePage</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinShowWelcomePage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinShowWelcomePage.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinShowWelcomePage.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="SettingSereinEnableDPIAware.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1807,7 +1978,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableDPIAware.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1816,7 +1987,7 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 129</value>
+    <value>23, 180</value>
   </data>
   <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -1840,7 +2011,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="SettingSereinDownload.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1852,7 +2023,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinDownload.Location" type="System.Drawing.Point, System.Drawing">
-    <value>397, 163</value>
+    <value>395, 214</value>
   </data>
   <data name="SettingSereinDownload.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 24</value>
@@ -1873,7 +2044,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinDownload.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="SettingSereinStatement2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1882,19 +2053,19 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinStatement2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 229</value>
+    <value>25, 313</value>
   </data>
   <data name="SettingSereinStatement2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="SettingSereinStatement2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>555, 31</value>
+    <value>571, 31</value>
   </data>
   <data name="SettingSereinStatement2.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
   <data name="SettingSereinStatement2.Text" xml:space="preserve">
-    <value>Copyright © 2022 Zaitonn. All Rights Reserved.</value>
+    <value>◦ Copyright © 2022 Zaitonn. All Rights Reserved.</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement2.Name" xml:space="preserve">
     <value>SettingSereinStatement2</value>
@@ -1906,25 +2077,25 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="SettingSereinStatement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingSereinStatement.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 199</value>
+    <value>23, 251</value>
   </data>
   <data name="SettingSereinStatement.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="SettingSereinStatement.Size" type="System.Drawing.Size, System.Drawing">
-    <value>650, 31</value>
+    <value>648, 31</value>
   </data>
   <data name="SettingSereinStatement.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
   <data name="SettingSereinStatement.Text" xml:space="preserve">
-    <value>* 此软件与Mojang Studio、网易、Microsoft没有从属关系.</value>
+    <value>◦ 此软件与Mojang Studio、网易、Microsoft没有从属关系.</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement.Name" xml:space="preserve">
     <value>SettingSereinStatement</value>
@@ -1936,7 +2107,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinStatement.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1948,7 +2119,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 163</value>
+    <value>23, 214</value>
   </data>
   <data name="SettingSereinPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
@@ -1972,7 +2143,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinPage.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1981,7 +2152,7 @@
     <value>宋体, 9pt, style=Underline</value>
   </data>
   <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>301, 163</value>
+    <value>299, 214</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2002,7 +2173,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinAbout.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="SettingSereinHelp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2014,7 +2185,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>127, 163</value>
+    <value>125, 214</value>
   </data>
   <data name="SettingSereinHelp.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2035,7 +2206,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinHelp.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2062,7 +2233,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="SettingSereinTutorial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2074,7 +2245,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingSereinTutorial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 163</value>
+    <value>211, 214</value>
   </data>
   <data name="SettingSereinTutorial.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2095,7 +2266,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinTutorial.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2125,7 +2296,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinVersion.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="SettingSereinEnableGetAnnouncement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2158,7 +2329,7 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetAnnouncement.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="SettingSerein.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2167,7 +2338,7 @@
     <value>0, 1027</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 275</value>
+    <value>1198, 370</value>
   </data>
   <data name="SettingSerein.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -3079,7 +3250,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3142,7 +3313,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Debug.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3193,7 +3364,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -3229,13 +3400,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StatusStrip.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>90</value>
+    <value>158</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>192, 192</value>
@@ -3428,22 +3599,22 @@
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
-    <value>columnHeader1</value>
+  <data name="&gt;&gt;TaskListCron.Name" xml:space="preserve">
+    <value>TaskListCron</value>
   </data>
-  <data name="&gt;&gt;columnHeader1.Type" xml:space="preserve">
+  <data name="&gt;&gt;TaskListCron.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnHeader3.Name" xml:space="preserve">
-    <value>columnHeader3</value>
+  <data name="&gt;&gt;TaskListRemark.Name" xml:space="preserve">
+    <value>TaskListRemark</value>
   </data>
-  <data name="&gt;&gt;columnHeader3.Type" xml:space="preserve">
+  <data name="&gt;&gt;TaskListRemark.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnHeader4.Name" xml:space="preserve">
-    <value>columnHeader4</value>
+  <data name="&gt;&gt;TaskListCommand.Name" xml:space="preserve">
+    <value>TaskListCommand</value>
   </data>
-  <data name="&gt;&gt;columnHeader4.Type" xml:space="preserve">
+  <data name="&gt;&gt;TaskListCommand.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TaskContextMenuStrip_Add.Name" xml:space="preserve">
@@ -3518,11 +3689,65 @@
   <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;MemberListID.Name" xml:space="preserve">
+    <value>MemberListID</value>
+  </data>
+  <data name="&gt;&gt;MemberListID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberListRole.Name" xml:space="preserve">
+    <value>MemberListRole</value>
+  </data>
+  <data name="&gt;&gt;MemberListRole.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberListNickname.Name" xml:space="preserve">
+    <value>MemberListNickname</value>
+  </data>
+  <data name="&gt;&gt;MemberListNickname.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberListCard.Name" xml:space="preserve">
+    <value>MemberListCard</value>
+  </data>
+  <data name="&gt;&gt;MemberListCard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberListPlayerName.Name" xml:space="preserve">
+    <value>MemberListPlayerName</value>
+  </data>
+  <data name="&gt;&gt;MemberListPlayerName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Edit.Name" xml:space="preserve">
+    <value>MemberContextMenuStrip_Edit</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Edit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Refresh.Name" xml:space="preserve">
+    <value>MemberContextMenuStrip_Refresh</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Refresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
     <value>StripStatusLabel</value>
   </data>
   <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStripSeparator1.Name" xml:space="preserve">
+    <value>MemberContextMenuStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Remove.Name" xml:space="preserve">
+    <value>MemberContextMenuStrip_Remove</value>
+  </data>
+  <data name="&gt;&gt;MemberContextMenuStrip_Remove.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

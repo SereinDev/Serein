@@ -122,9 +122,37 @@ namespace Serein
             {
                 Websocket.Send(true, Value, UserId.ToString());
             }
+            else if (Type == 20 && GroupId != -1)
+            {
+                Websocket.Send(
+                    false,
+                    $"[CQ:at,qq={UserId}] " +
+                    Members.Bind(
+                        JsonObject,
+                        Value,
+                        UserId
+                        ),
+                    GroupId.ToString()
+                    );
+            }
+            else if (Type == 21 && GroupId != -1)
+            {
+                Websocket.Send(
+                    false,
+                    $"[CQ:at,qq={UserId}] " +
+                    Members.UnBind(
+                        long.TryParse(Value, out long i) ? i : -1
+                        ),
+                    GroupId.ToString()
+                    );
+            }
             else if (Type == 50)
             {
                 Global.Debug("[DebugOutput]" + Value);
+            }
+            if (Type != 20 && Type != 21 && GroupId != -1)
+            {
+                Members.Update(JsonObject, UserId);
             }
         }
 
@@ -140,6 +168,8 @@ namespace Serein
             12          私聊（带参）
             13          群聊
             14          私聊
+            20          绑定id
+            21          解绑id
             50          debug
             */
             if (
@@ -184,6 +214,16 @@ namespace Serein
                 Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
             {
                 return 14;
+            }
+            if (Regex.IsMatch(Command, @"^b\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^bind\|", RegexOptions.IgnoreCase))
+            {
+                return 20;
+            }
+            if (Regex.IsMatch(Command, @"^ub\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
+            {
+                return 21;
             }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
             {

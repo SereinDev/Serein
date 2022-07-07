@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace Serein
 {
@@ -8,9 +7,10 @@ namespace Serein
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.2.7";
+        public static string VERSION = "v1.2.8";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
+        public static List<MemberItem> MemberItems = new List<MemberItem>();
         public static Ui Ui = null;
         public static Settings_Server Settings_Server = new Settings_Server();
         public static Settings_Matches Settings_Matches = new Settings_Matches();
