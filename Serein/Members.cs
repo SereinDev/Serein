@@ -65,7 +65,8 @@ namespace Serein
                 Reader.Close();
             }
             Global.MemberItems.Sort(
-                (Item1, Item2) => {
+                (Item1, Item2) =>
+                {
                     return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
@@ -73,8 +74,9 @@ namespace Serein
         public static void Save()
         {
             Global.MemberItems.Sort(
-                (Item1, Item2) => { 
-                    return Item1.ID > Item2.ID ? 1 : -1; 
+                (Item1, Item2) =>
+                {
+                    return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -141,7 +143,7 @@ namespace Serein
             {
                 foreach (MemberItem Item in Global.MemberItems)
                 {
-                    if (Item.ID==UserId&&Global.MemberItems.Remove(Item))
+                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
                     {
                         Save();
                         return "解绑成功";
