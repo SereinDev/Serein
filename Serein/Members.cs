@@ -22,14 +22,14 @@ namespace Serein
                 return list;
             }
         }
-        public static List<string> GameNames
+        public static List<string> GameIDs
         {
             get
             {
                 List<string> list = new List<string>();
                 foreach (MemberItem Item in Global.MemberItems)
                 {
-                    list.Add(Item.GameName);
+                    list.Add(Item.GameID);
                 }
                 return list;
             }
@@ -114,7 +114,7 @@ namespace Serein
             {
                 return "该游戏名称无效";
             }
-            else if (GameNames.Contains(Value))
+            else if (GameIDs.Contains(Value))
             {
                 return "该游戏名称被占用";
             }
@@ -126,7 +126,7 @@ namespace Serein
                     Card = JsonObject["sender"]["card"].ToString(),
                     Nickname = JsonObject["sender"]["nickname"].ToString(),
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
-                    GameName = Value
+                    GameID = Value
                 };
                 Global.MemberItems.Add(Item);
                 Save();

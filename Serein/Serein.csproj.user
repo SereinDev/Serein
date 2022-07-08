@@ -22,6 +22,9 @@
     <Compile Update="Ui\BaseFunction.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Ui\ChildrenWindow\MemberInfoEditer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Ui\ChildrenWindow\RegexEditer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +75,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Ui\ChildrenWindow\TaskEditer.resx">
       <DependentUpon>TaskEditer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\MemberInfoEditer.resx">
+      <DependentUpon>MemberInfoEditer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Ui\Ui.resx">

@@ -130,9 +130,11 @@ namespace Serein
             this.MemberListRole = new System.Windows.Forms.ColumnHeader();
             this.MemberListNickname = new System.Windows.Forms.ColumnHeader();
             this.MemberListCard = new System.Windows.Forms.ColumnHeader();
-            this.MemberListPlayerName = new System.Windows.Forms.ColumnHeader();
+            this.MemberListGameID = new System.Windows.Forms.ColumnHeader();
             this.MemberContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MemberContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.MemberContextMenuStrip_Remove = new System.Windows.Forms.ToolStripMenuItem();
+            this.MemberContextMenuStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MemberContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
@@ -152,6 +154,8 @@ namespace Serein
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
+            this.SettingBotRemoveWhitelistAfterQuit = new System.Windows.Forms.CheckBox();
+            this.SettingBotUnbindAfterQuit = new System.Windows.Forms.CheckBox();
             this.SettingBotAuthorization = new System.Windows.Forms.TextBox();
             this.SettingBotAuthorizationLabel = new System.Windows.Forms.Label();
             this.SettingBotUri = new System.Windows.Forms.TextBox();
@@ -183,8 +187,6 @@ namespace Serein
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.MemberContextMenuStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MemberContextMenuStrip_Remove = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -871,7 +873,7 @@ namespace Serein
             this.MemberListRole,
             this.MemberListNickname,
             this.MemberListCard,
-            this.MemberListPlayerName});
+            this.MemberListGameID});
             this.MemberList.ContextMenuStrip = this.MemberContextMenuStrip;
             resources.ApplyResources(this.MemberList, "MemberList");
             this.MemberList.FullRowSelect = true;
@@ -896,9 +898,9 @@ namespace Serein
             // 
             resources.ApplyResources(this.MemberListCard, "MemberListCard");
             // 
-            // MemberListPlayerName
+            // MemberListGameID
             // 
-            resources.ApplyResources(this.MemberListPlayerName, "MemberListPlayerName");
+            resources.ApplyResources(this.MemberListGameID, "MemberListGameID");
             // 
             // MemberContextMenuStrip
             // 
@@ -910,12 +912,24 @@ namespace Serein
             this.MemberContextMenuStrip_Refresh});
             this.MemberContextMenuStrip.Name = "PluginContextMenuStrip";
             resources.ApplyResources(this.MemberContextMenuStrip, "MemberContextMenuStrip");
+            this.MemberContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MemberContextMenuStrip_Opening);
             // 
             // MemberContextMenuStrip_Edit
             // 
             this.MemberContextMenuStrip_Edit.Name = "MemberContextMenuStrip_Edit";
             resources.ApplyResources(this.MemberContextMenuStrip_Edit, "MemberContextMenuStrip_Edit");
             this.MemberContextMenuStrip_Edit.Click += new System.EventHandler(this.MemberContextMenuStrip_Edit_Click);
+            // 
+            // MemberContextMenuStrip_Remove
+            // 
+            this.MemberContextMenuStrip_Remove.Name = "MemberContextMenuStrip_Remove";
+            resources.ApplyResources(this.MemberContextMenuStrip_Remove, "MemberContextMenuStrip_Remove");
+            this.MemberContextMenuStrip_Remove.Click += new System.EventHandler(this.MemberContextMenuStrip_Remove_Click);
+            // 
+            // MemberContextMenuStripSeparator1
+            // 
+            this.MemberContextMenuStripSeparator1.Name = "MemberContextMenuStripSeparator1";
+            resources.ApplyResources(this.MemberContextMenuStripSeparator1, "MemberContextMenuStripSeparator1");
             // 
             // MemberContextMenuStrip_Refresh
             // 
@@ -1061,6 +1075,8 @@ namespace Serein
             // 
             // SettingBot
             // 
+            this.SettingBot.Controls.Add(this.SettingBotRemoveWhitelistAfterQuit);
+            this.SettingBot.Controls.Add(this.SettingBotUnbindAfterQuit);
             this.SettingBot.Controls.Add(this.SettingBotAuthorization);
             this.SettingBot.Controls.Add(this.SettingBotAuthorizationLabel);
             this.SettingBot.Controls.Add(this.SettingBotUri);
@@ -1076,6 +1092,22 @@ namespace Serein
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
+            // 
+            // SettingBotRemoveWhitelistAfterQuit
+            // 
+            resources.ApplyResources(this.SettingBotRemoveWhitelistAfterQuit, "SettingBotRemoveWhitelistAfterQuit");
+            this.SettingBotRemoveWhitelistAfterQuit.Name = "SettingBotRemoveWhitelistAfterQuit";
+            this.SettingBotRemoveWhitelistAfterQuit.UseVisualStyleBackColor = true;
+            this.SettingBotRemoveWhitelistAfterQuit.CheckedChanged += new System.EventHandler(this.SettingBotRemoveWhitelistAfterQuit_CheckedChanged);
+            this.SettingBotRemoveWhitelistAfterQuit.MouseHover += new System.EventHandler(this.SettingBotRemoveWhitelistAfterQuit_MouseHover);
+            // 
+            // SettingBotUnbindAfterQuit
+            // 
+            resources.ApplyResources(this.SettingBotUnbindAfterQuit, "SettingBotUnbindAfterQuit");
+            this.SettingBotUnbindAfterQuit.Name = "SettingBotUnbindAfterQuit";
+            this.SettingBotUnbindAfterQuit.UseVisualStyleBackColor = true;
+            this.SettingBotUnbindAfterQuit.CheckedChanged += new System.EventHandler(this.SettingBotUnbindAfterQuit_CheckedChanged);
+            this.SettingBotUnbindAfterQuit.MouseHover += new System.EventHandler(this.SettingBotUnbindAfterQuit_MouseHover);
             // 
             // SettingBotAuthorization
             // 
@@ -1322,17 +1354,6 @@ namespace Serein
             this.StripStatusLabel.Name = "StripStatusLabel";
             resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
             // 
-            // MemberContextMenuStripSeparator1
-            // 
-            this.MemberContextMenuStripSeparator1.Name = "MemberContextMenuStripSeparator1";
-            resources.ApplyResources(this.MemberContextMenuStripSeparator1, "MemberContextMenuStripSeparator1");
-            // 
-            // MemberContextMenuStrip_Remove
-            // 
-            this.MemberContextMenuStrip_Remove.Name = "MemberContextMenuStrip_Remove";
-            resources.ApplyResources(this.MemberContextMenuStrip_Remove, "MemberContextMenuStrip_Remove");
-            this.MemberContextMenuStrip_Remove.Click += new System.EventHandler(this.MemberContextMenuStrip_Remove_Click);
-            // 
             // Ui
             // 
             this.AllowDrop = true;
@@ -1533,7 +1554,7 @@ namespace Serein
         private System.Windows.Forms.ListView MemberList;
         private System.Windows.Forms.ColumnHeader MemberListID;
         private System.Windows.Forms.ColumnHeader MemberListNickname;
-        private System.Windows.Forms.ColumnHeader MemberListPlayerName;
+        private System.Windows.Forms.ColumnHeader MemberListGameID;
         private System.Windows.Forms.ColumnHeader MemberListRole;
         private System.Windows.Forms.ColumnHeader MemberListCard;
         private System.Windows.Forms.ContextMenuStrip MemberContextMenuStrip;
@@ -1541,6 +1562,8 @@ namespace Serein
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Remove;
         private System.Windows.Forms.ToolStripSeparator MemberContextMenuStripSeparator1;
+        private System.Windows.Forms.CheckBox SettingBotRemoveWhitelistAfterQuit;
+        private System.Windows.Forms.CheckBox SettingBotUnbindAfterQuit;
     }
 }
 

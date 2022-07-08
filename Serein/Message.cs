@@ -39,6 +39,9 @@ namespace Serein
                     JsonObject["raw_message"].ToString()
                     );
                 bool IsSelfMessage = JsonObject["post_type"].ToString() == "message_sent";
+                string MessageType = JsonObject["message_type"].ToString();
+                long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
+                long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
                 foreach (RegexItem Item in Global.RegexItems)
                 {
                     if (
@@ -57,9 +60,6 @@ namespace Serein
                     }
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
-                        string MessageType = JsonObject["message_type"].ToString();
-                        long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
-                        long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
                         if (Item.IsAdmin && !IsSelfMessage)
                         {
                             bool IsAdmin = false;
@@ -154,6 +154,36 @@ namespace Serein
                 if ((long.TryParse(MessageSent, out TempNumber) ? TempNumber : 0) > 10000000)
                 {
                     MessageSent = (TempNumber / 10000).ToString("N1") + "w";
+                }
+            }
+            else if(
+                JsonObject["post_type"].ToString() == "notice"
+                &&
+                JsonObject["notice_type"].ToString() == "group_decrease"
+                )
+            {
+                long UserId = long.TryParse(JsonObject["user_id"].ToString(), out long Result) ? Result : -1;
+                long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                if (Global.Settings_Bot.GroupList.Contains(GroupId))
+                {
+                    if (Global.Settings_Bot.RemoveWhitelistAfterQuit)
+                    {
+                        foreach (MemberItem Item in Global.MemberItems)
+                        {
+                            if (Item.ID == UserId)
+                            {
+                                Server.InputCommand(
+                                    Global.Settings_Bot.RemoveWhitelistCommand.TrimEnd() +
+                                    $" \"{Item.GameID}\""
+                                    );
+                                break;
+                            }
+                        }
+                    }
+                    if (Global.Settings_Bot.UnbindAfterQuit)
+                    {
+                        Members.UnBind(UserId);
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace Serein
 {
@@ -19,7 +20,7 @@ namespace Serein
                 Item.SubItems.Add(Roles_Chinese[memberItem.Role]);
                 Item.SubItems.Add(memberItem.Nickname);
                 Item.SubItems.Add(memberItem.Card);
-                Item.SubItems.Add(memberItem.GameName);
+                Item.SubItems.Add(memberItem.GameID);
                 MemberList.Items.Add(Item);
             }
             MemberList.EndUpdate();
@@ -35,7 +36,7 @@ namespace Serein
                     Role = Array.IndexOf(Roles_Chinese, Item.SubItems[1].Text),
                     Nickname = Item.SubItems[2].Text,
                     Card = Item.SubItems[3].Text,
-                    GameName = Item.SubItems[4].Text
+                    GameID = Item.SubItems[4].Text
                 };
                 if (memberItem.ID != -1)
                 {
@@ -60,11 +61,45 @@ namespace Serein
         }
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
-
+            if (MemberList.SelectedItems.Count > 0)
+            {
+                MemberInfoEditer Editer = new MemberInfoEditer(MemberList.SelectedItems[0]);
+                Editer.ShowDialog(this);
+                if (!Editer.CancelFlag)
+                {
+                    MemberList.SelectedItems[0].SubItems[4].Text = Editer.GameIDBox.Text;
+                    SaveMembers();
+                }
+            }
         }
         private void MemberContextMenuStrip_Remove_Click(object sender, EventArgs e)
         {
-
+            if (MemberList.SelectedItems.Count > 0)
+            {
+                int result = (int)MessageBox.Show(
+                    "确定删除此行数据？\n" +
+                    "它将会永远失去！（真的很久！）", "Serein",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                    );
+                if (result == 1)
+                {
+                    MemberList.Items.RemoveAt(MemberList.SelectedItems[0].Index);
+                    SaveRegex();
+                }
+            }
+        }
+        private void MemberContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            if (MemberList.SelectedItems.Count == 1)
+            {
+                MemberContextMenuStrip_Edit.Enabled = true;
+                MemberContextMenuStrip_Remove.Enabled = true;
+            }
+            else
+            {
+                MemberContextMenuStrip_Edit.Enabled = false;
+                MemberContextMenuStrip_Remove.Enabled = false;
+            }
         }
     }
 }
