@@ -86,7 +86,7 @@ namespace Serein
         {
             Global.Settings_Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
         }
-        private void SettingBotUnbindAfterQuit_CheckedChanged(object sender,EventArgs e)
+        private void SettingBotUnbindAfterQuit_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings_Bot.UnbindAfterQuit = SettingBotUnbindAfterQuit.Checked;
         }

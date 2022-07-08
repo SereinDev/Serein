@@ -156,7 +156,7 @@ namespace Serein
                     MessageSent = (TempNumber / 10000).ToString("N1") + "w";
                 }
             }
-            else if(
+            else if (
                 JsonObject["post_type"].ToString() == "notice"
                 &&
                 JsonObject["notice_type"].ToString() == "group_decrease"
