@@ -40,7 +40,7 @@ namespace Serein
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            if (File.Exists($"{Global.Path}\\data\\regex.json"))
+            if (File.Exists($"{Global.Path}\\data\\members.json"))
             {
                 StreamReader Reader = new StreamReader(
                     File.Open(
