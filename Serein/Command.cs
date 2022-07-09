@@ -335,7 +335,7 @@ namespace Serein
                 Text = Regex.Replace(
                     Text,
                     @"%GameID:(\d+?)%",
-                    Members.GetGameID(UserId), 
+                    Members.GetGameID(UserId),
                     RegexOptions.IgnoreCase
                     );
             }
