@@ -84,7 +84,7 @@ namespace Serein
                 if (result == 1)
                 {
                     MemberList.Items.RemoveAt(MemberList.SelectedItems[0].Index);
-                    SaveRegex();
+                    SaveMembers();
                 }
             }
         }

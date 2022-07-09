@@ -153,6 +153,42 @@ namespace Serein
                 return "解绑失败";
             }
         }
+        public static string GetGameID(long UserId)
+        {
+            if (!IDs.Contains(UserId))
+            {
+                return "null";
+            }
+            else
+            {
+                foreach (MemberItem Item in Global.MemberItems)
+                {
+                    if (Item.ID == UserId)
+                    {
+                        return Item.GameID;
+                    }
+                }
+                return "unknown";
+            }
+        }
+        public static string GetID(string GameID)
+        {
+            if (!GameIDs.Contains(GameID))
+            {
+                return "null";
+            }
+            else
+            {
+                foreach (MemberItem Item in Global.MemberItems)
+                {
+                    if (Item.GameID == GameID)
+                    {
+                        return Item.ID.ToString();
+                    }
+                }
+                return "unknown";
+            }
+        }
         public static void Update(JObject JsonObject, long UserId)
         {
             if (IDs.Contains(UserId))

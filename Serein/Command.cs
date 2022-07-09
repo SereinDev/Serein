@@ -100,10 +100,14 @@ namespace Serein
             }
             else if (Type == 2)
             {
+                Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
+                Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
                 Server.InputCommand(Value, true);
             }
             else if (Type == 3)
             {
+                Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
+                Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
                 Server.InputCommand(Value, true, true);
             }
             else if (Type == 11 && Websocket.Status)
@@ -270,7 +274,7 @@ namespace Serein
             Text = Regex.Replace(Text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%DayTime%", CurrentTime.Date.ToString("T"), RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%Time%", CurrentTime.ToString("T"), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Date%", CurrentTime.Date.ToString("d"), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
@@ -279,15 +283,15 @@ namespace Serein
             {
                 try
                 {
+                    Text = Regex.Replace(Text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, JsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
+                    Text = Regex.Replace(Text, "%Nickname%", JsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Age%", JsonObject["sender"]["age"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ID%", JsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Area%", JsonObject["sender"]["area"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Card%", JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Level%", JsonObject["sender"]["level"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Nickname%", JsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Title%", JsonObject["sender"]["title"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, JsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, JsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
                 catch { }
@@ -311,13 +315,44 @@ namespace Serein
             }
             else
             {
-                Text = Regex.Replace(Text, "%LevelName%", string.Empty, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", string.Empty, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", string.Empty, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%LevelName%", "-", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Version%", "-", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Difficulty%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Percentage%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%FileName%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);
+            }
+            if (Regex.IsMatch(Text, @"%GameID:\d+%", RegexOptions.IgnoreCase))
+            {
+                long UserId = long.TryParse(
+                    Regex.Match(
+                        Text,
+                        @"%GameID:(\d+?)%",
+                        RegexOptions.IgnoreCase
+                        ).Groups[1].Value,
+                    out long i) ? i : -1;
+                Text = Regex.Replace(
+                    Text,
+                    @"%GameID:(\d+?)%",
+                    Members.GetGameID(UserId), 
+                    RegexOptions.IgnoreCase
+                    );
+            }
+            if (Regex.IsMatch(Text, @"%ID:.+?%", RegexOptions.IgnoreCase))
+            {
+                Text = Regex.Replace(
+                    Text,
+                    @"%ID:(.+?)%",
+                    Members.GetID(
+                        Regex.Match(
+                            Text,
+                            @"%ID:(.+?)%",
+                            RegexOptions.IgnoreCase
+                            ).Groups[1].Value
+                        ),
+                    RegexOptions.IgnoreCase
+                    );
             }
             return Text.Replace("\\n", "\n");
         }
