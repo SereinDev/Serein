@@ -1,6 +1,8 @@
 ﻿using NCrontab;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Items;
+using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {

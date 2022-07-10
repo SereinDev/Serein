@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Serein.Items;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.Base
 {
     internal class Command
     {
@@ -72,9 +73,9 @@ namespace Serein
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 13 && Websocket.Status && Global.Settings_Bot.GroupList.Count >= 1)
+            else if (Type == 13 && Websocket.Status && Global.Settings.Bot.GroupList.Count >= 1)
             {
-                Websocket.Send(false, Value, Global.Settings_Bot.GroupList[0].ToString());
+                Websocket.Send(false, Value, Global.Settings.Bot.GroupList[0].ToString());
             }
             else if (Type == 50)
             {

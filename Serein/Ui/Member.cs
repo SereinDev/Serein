@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Serein.Base;
+using Serein.Items;
+using Serein.Ui.ChildrenWindow;
+using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {

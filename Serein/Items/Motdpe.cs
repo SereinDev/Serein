@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.Items
 {
     internal class Motdpe
     {

@@ -1,6 +1,6 @@
-﻿namespace Serein
+﻿namespace Serein.Settings
 {
-    internal class Settings_Serein
+    internal class Serein
     {
         public bool EnableGetUpdate { get; set; } = true;
         public bool EnableGetAnnouncement { get; set; } = true;

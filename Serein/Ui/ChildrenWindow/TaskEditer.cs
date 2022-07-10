@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Serein.Base;
 
-namespace Serein
+namespace Serein.Ui.ChildrenWindow
 {
     public partial class TaskEditer : Form
     {
@@ -24,7 +25,7 @@ namespace Serein
             if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
                 string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
             {
-                if (Serein.Command.GetType(Command.Text) == -1)
+                if (Base.Command.GetType(Command.Text) == -1)
                 {
                     MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

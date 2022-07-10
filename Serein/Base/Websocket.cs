@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocket4Net;
 
-namespace Serein
+namespace Serein.Base
 {
     public class Websocket
     {
@@ -30,11 +30,11 @@ namespace Serein
                 try
                 {
                     webSocket = new WebSocket(
-                        "ws://" + Global.Settings_Bot.Uri,
+                        "ws://" + Global.Settings.Bot.Uri,
                         "",
                         null,
                         new List<KeyValuePair<string, string>> {
-                            new KeyValuePair<string, string>("Authorization", Global.Settings_Bot.Authorization)
+                            new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                             }
                         );
                     webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
@@ -51,7 +51,7 @@ namespace Serein
                     };
                     webSocket.Opened += (sender, e) =>
                     {
-                        Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到{Global.Settings_Bot.Uri}");
+                        Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到{Global.Settings.Bot.Uri}");
                     };
                     webSocket.Open();
                     StartTime = DateTime.Now;
@@ -87,7 +87,7 @@ namespace Serein
                     TextJObject.Add("params", ParamsJObject);
                 }
                 webSocket.Send(TextJObject.ToString());
-                if (Global.Settings_Bot.EnbaleOutputData)
+                if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Global.Ui.BotWebBrowser_Invoke(
                         "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
@@ -116,14 +116,14 @@ namespace Serein
         }
         public static void Recieve(object sender, MessageReceivedEventArgs e)
         {
-            if (Global.Settings_Bot.EnbaleOutputData)
+            if (Global.Settings.Bot.EnbaleOutputData)
             {
                 Global.Ui.BotWebBrowser_Invoke(
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                     Log.EscapeLog(e.Message)
                     );
             }
-            if (Global.Settings_Bot.EnableLog)
+            if (Global.Settings.Bot.EnableLog)
             {
                 if (!Directory.Exists(Global.Path + "\\logs\\msg"))
                 {

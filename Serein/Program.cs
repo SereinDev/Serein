@@ -1,4 +1,6 @@
 ﻿using Ookii.Dialogs.Wpf;
+using Serein.Base;
+using Serein.Settings;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -37,12 +39,12 @@ namespace Serein
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-            Settings.ReadSettings();
+            Settings.Base.ReadSettings();
             if (((IList)args).Contains("debug"))
             {
-                Global.Settings_Serein.Debug = true;
+                Global.Settings.Serein.Debug = true;
             }
-            if (Global.Settings_Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
+            if (Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
             {
                 SetProcessDPIAware();
             }
@@ -53,9 +55,8 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            Ui ui = new Ui();
+            Ui.Ui ui = new Ui.Ui();
             Global.Ui = ui;
-
             Application.Run(ui);
         }
 
@@ -72,11 +73,11 @@ namespace Serein
         private static void Abort(object obj)
         {
             Global.Crash = true;
-            if (Server.Status && Global.Settings_Server.AutoStop)
+            if (Base.Server.Status && Global.Settings.Server.AutoStop)
             {
-                foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
+                foreach (string Command in Global.Settings.Server.StopCommand.Split(';'))
                 {
-                    Server.InputCommand(Command);
+                    Base.Server.InputCommand(Command);
                 }
             }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))

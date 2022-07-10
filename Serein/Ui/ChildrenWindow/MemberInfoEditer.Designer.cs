@@ -1,4 +1,5 @@
-﻿namespace Serein
+﻿namespace Serein.Ui.ChildrenWindow
+
 {
     partial class MemberInfoEditer
     {

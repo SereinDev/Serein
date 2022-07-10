@@ -1,5 +1,4 @@
-﻿
-namespace Serein
+﻿namespace Serein.Ui.ChildrenWindow
 {
     partial class RegexEditer
     {

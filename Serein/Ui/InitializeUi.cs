@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Serein.Base;
+using Serein.Settings;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {
@@ -28,7 +30,7 @@ namespace Serein
             LoadTask();
             Task UpdateInfoThread = new Task(UpdateInfo);
             UpdateInfoThread.Start();
-            Settings.StartSaveSettings();
+            Settings. Base.StartSaveSettings();
             TaskManager.RunnerThread.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();

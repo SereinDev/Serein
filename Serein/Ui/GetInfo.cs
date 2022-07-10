@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.Ui
 {
     internal class GetInfo
     {
@@ -19,7 +19,7 @@ namespace Serein
             string OldAnnouncementId = string.Empty;
             while (true)
             {
-                if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetAnnouncement)
+                if (Global.Ui != null && Global.Ui.Visible && Global.Settings.Serein.EnableGetAnnouncement)
                 {
                     try
                     {
@@ -49,7 +49,7 @@ namespace Serein
             Thread.Sleep(10000);
             while (true)
             {
-                if (Global.Ui != null && Global.Ui.Visible && Global.Settings_Serein.EnableGetUpdate)
+                if (Global.Ui != null && Global.Ui.Visible && Global.Settings.Serein.EnableGetUpdate)
                 {
                     try
                     {

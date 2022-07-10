@@ -3,9 +3,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.Settings
 {
-    internal class Settings
+    internal class Base
     {
         public static Task SaveSettingsThread = new Task(SaveSettings);
         public static void StartSaveSettings()
@@ -20,7 +20,7 @@ namespace Serein
                 Directory.CreateDirectory(Global.SettingPath);
             }
             StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
-            IniStreamWriter.Write(JsonConvert.SerializeObject(new Settings_Matches(), Formatting.Indented));
+            IniStreamWriter.Write(JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
             IniStreamWriter.Close();
             IniStreamWriter.Dispose();
             while (true)
@@ -29,19 +29,19 @@ namespace Serein
                 SaveSettingsThread.Wait(2500);
                 ServerStreamWriter = new StreamWriter(Global.SettingPath + "\\Server.json", false, Encoding.UTF8);
                 ServerStreamWriter.Write(
-                    JsonConvert.SerializeObject(Global.Settings_Server, Formatting.Indented)
+                    JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented)
                     );
                 ServerStreamWriter.Close();
                 ServerStreamWriter.Dispose();
                 BotStreamWriter = new StreamWriter(Global.SettingPath + "\\Bot.json", false, Encoding.UTF8);
                 BotStreamWriter.Write(
-                    JsonConvert.SerializeObject(Global.Settings_Bot, Formatting.Indented)
+                    JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented)
                     );
                 BotStreamWriter.Close();
                 BotStreamWriter.Dispose();
                 SereinStreamWriter = new StreamWriter(Global.SettingPath + "\\Serein.json", false, Encoding.UTF8);
                 SereinStreamWriter.Write(
-                    JsonConvert.SerializeObject(Global.Settings_Serein, Formatting.Indented)
+                    JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented)
                     );
                 SereinStreamWriter.Close();
                 SereinStreamWriter.Dispose();
@@ -55,44 +55,44 @@ namespace Serein
             }
             if (File.Exists(Global.SettingPath + "\\Server.json"))
             {
-                Global.Settings_Server = JsonConvert.DeserializeObject<Settings_Server>(
+                Global.Settings.Server = JsonConvert.DeserializeObject<Server>(
                     File.ReadAllText(Global.SettingPath + "\\Server.json", Encoding.UTF8)
                     );
-                if (Global.Settings_Server == null)
+                if (Global.Settings.Server == null)
                 {
-                    Global.Settings_Server = new Settings_Server();
+                    Global.Settings.Server = new Server();
                 }
             }
             if (File.Exists(Global.SettingPath + "\\Bot.json"))
             {
-                Global.Settings_Bot = JsonConvert.DeserializeObject<Settings_Bot>(
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(
                     File.ReadAllText(Global.SettingPath + "\\Bot.json", Encoding.UTF8)
                     );
-                if (Global.Settings_Bot == null)
+                if (Global.Settings.Bot == null)
                 {
-                    Global.Settings_Bot = new Settings_Bot();
+                    Global.Settings.Bot = new Bot();
                 }
             }
             if (File.Exists(Global.SettingPath + "\\Serein.json"))
             {
-                Global.Settings_Serein = JsonConvert.DeserializeObject<Settings_Serein>(
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Serein>(
                     File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8)
                     );
-                if (Global.Settings_Serein == null)
+                if (Global.Settings.Serein == null)
                 {
-                    Global.Settings_Serein = new Settings_Serein();
+                    Global.Settings.Serein = new Serein();
                 }
             }
             if (File.Exists(Global.SettingPath + "\\Matches.json"))
             {
-                Global.Settings_Matches = JsonConvert.DeserializeObject<Settings_Matches>(
+                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(
                     File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)
                     );
-                if (Global.Settings_Matches == null)
+                if (Global.Settings.Matches == null)
                 {
-                    Global.Settings_Matches = new Settings_Matches();
+                    Global.Settings.Matches = new Matches();
                     StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
-                    IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings_Matches, Formatting.Indented));
+                    IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
                     IniStreamWriter.Close();
                     IniStreamWriter.Dispose();
                 }
@@ -100,7 +100,7 @@ namespace Serein
             else
             {
                 StreamWriter IniStreamWriter = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
-                IniStreamWriter.Write(JsonConvert.SerializeObject(new Settings_Matches(), Formatting.Indented));
+                IniStreamWriter.Write(JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
                 IniStreamWriter.Close();
                 IniStreamWriter.Dispose();
             }

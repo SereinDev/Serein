@@ -8,8 +8,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Serein.Base;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {
@@ -91,7 +92,7 @@ namespace Serein
         }
         public void Debug_Append(string Text)
         {
-            if (Global.Settings_Serein.Debug)
+            if (Global.Settings.Serein.Debug)
             {
                 if (DebugTextBox.InvokeRequired)
                 {
@@ -150,7 +151,7 @@ namespace Serein
                         ) == 1)
                     {
                         SettingServerPath.Text = FileName;
-                        Global.Settings_Server.Path = FileName;
+                        Global.Settings.Server.Path = FileName;
                     }
                     LoadPlugins();
                 }

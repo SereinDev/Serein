@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {

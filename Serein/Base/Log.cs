@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.Base
 {
     public class Log
     {

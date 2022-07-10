@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.Settings
 {
-    internal class Settings_Matches
+    internal class Matches
     {
         public string Version { get; set; } = @"(\d+\.\d+\.\d+\.\d+)";
         public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
@@ -10,7 +10,7 @@ namespace Serein
         public string Finished { get; set; } = "(Done|Started)";
         public string ipv4Port { get; set; } = @"ipv4.+?(\d+?)$";
         public string PlayerList { get; set; } = @"players\sonline:";
-        public Settings_Matches()
+        public Matches()
         {
             try
             {

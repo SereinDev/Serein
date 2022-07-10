@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Serein.Items;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.Base
 {
     internal class TaskManager
     {

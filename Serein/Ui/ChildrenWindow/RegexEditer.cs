@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui.ChildrenWindow
 {
     public partial class RegexEditer : Form
     {

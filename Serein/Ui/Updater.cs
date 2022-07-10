@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {
@@ -39,9 +40,9 @@ namespace Serein
                 if (Websocket.Status)
                 {
                     BotInfoStatus2_Update("已连接");
-                    BotInfoQQ2_Update(Message.SelfId);
-                    BotInfoMessageReceived2_Update(Message.MessageReceived);
-                    BotInfoMessageSent2_Update(Message.MessageSent);
+                    BotInfoQQ2_Update(Base.Message.SelfId);
+                    BotInfoMessageReceived2_Update(Base.Message.MessageReceived);
+                    BotInfoMessageSent2_Update(Base.Message.MessageSent);
                     t = DateTime.Now - Websocket.StartTime;
                     if (t.TotalSeconds < 3600)
                     {

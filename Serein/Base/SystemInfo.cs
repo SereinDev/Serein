@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Management;
 
-namespace Serein
+namespace Serein.Base
 {
     internal class SystemInfo
     {
@@ -27,7 +27,7 @@ namespace Serein
                 }
             }
         }
-        public static string UsedRAM => ((ulong.TryParse(TotalRAM, out ulong i) ? i : 0) - (new ComputerInfo().AvailablePhysicalMemory / 1024 / 1024)).ToString();
+        public static string UsedRAM => ((ulong.TryParse(TotalRAM, out ulong i) ? i : 0) - new ComputerInfo().AvailablePhysicalMemory / 1024 / 1024).ToString();
         public static string TotalRAM = (new ComputerInfo().TotalPhysicalMemory / 1024 / 1024).ToString();
         public static string RAMPercentage => (
                     (double)(ulong.TryParse(UsedRAM, out ulong i) ? i : 1) /

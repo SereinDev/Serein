@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace Serein
+namespace Serein.Base
 {
     internal class ResourcesManager
     {

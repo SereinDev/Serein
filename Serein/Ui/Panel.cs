@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {

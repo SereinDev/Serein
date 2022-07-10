@@ -1,5 +1,5 @@
 ﻿
-namespace Serein
+namespace Serein.Ui
 {
     partial class Ui
     {

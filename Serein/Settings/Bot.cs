@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Serein
+namespace Serein.Settings
 {
-    internal class Settings_Bot
+    internal class Bot
     {
         public bool EnableLog { get; set; } = false;
         public bool GivePermissionToAllAdmin { get; set; } = false;

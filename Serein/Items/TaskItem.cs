@@ -2,10 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Serein.Base;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Serein
+namespace Serein.Items
 {
     [JsonObject(MemberSerialization.OptOut)]
     internal class TaskItem
@@ -20,7 +21,7 @@ namespace Serein
         {
             Task RunTask = new Task(() =>
             {
-                Serein.Command.Run(Command);
+                Base.Command.Run(Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                 NextTime = Occurrences[0];
             }
@@ -34,7 +35,7 @@ namespace Serein
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Serein.Command.GetType(Command) == -1)
+                if (Base.Command.GetType(Command) == -1)
                 {
                     return false;
                 }

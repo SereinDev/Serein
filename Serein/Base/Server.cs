@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Base
 {
     public class Server
     {
@@ -25,7 +25,7 @@ namespace Serein
         public static StreamWriter CommandWriter;
         private static StreamWriter LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
-        private static string TempMessage = String.Empty;
+        private static string TempMessage = string.Empty;
         public static Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
@@ -40,18 +40,18 @@ namespace Serein
 
         public static void Start(bool StartedByCommand = false)
         {
-            if (string.IsNullOrEmpty(Global.Settings_Server.Path) || string.IsNullOrWhiteSpace(Global.Settings_Server.Path))
+            if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!StartedByCommand)
                 {
                     MessageBox.Show(Global.Ui, ":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else if (!File.Exists(Global.Settings_Server.Path))
+            else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!StartedByCommand)
                 {
-                    MessageBox.Show(Global.Ui, $":(\n启动文件\"{Global.Settings_Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Global.Ui, $":(\n启动文件\"{Global.Settings.Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (Status)
@@ -65,20 +65,20 @@ namespace Serein
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke("#clear");
                 Global.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
-                ServerProcessInfo = new ProcessStartInfo(Global.Settings_Server.Path)
+                ServerProcessInfo = new ProcessStartInfo(Global.Settings.Server.Path)
                 {
-                    FileName = Global.Settings_Server.Path,
+                    FileName = Global.Settings.Server.Path,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardInput = true,
                     StandardOutputEncoding = Encoding.UTF8,
-                    WorkingDirectory = Path.GetDirectoryName(Global.Settings_Server.Path)
+                    WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 };
                 ServerProcess = Process.Start(ServerProcessInfo);
                 CommandWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
-                    EncodingList[Global.Settings_Server.EncodingIndex]
+                    EncodingList[Global.Settings.Server.EncodingIndex]
                    )
                 {
                     AutoFlush = true,
@@ -93,10 +93,10 @@ namespace Serein
                 Version = "-";
                 LevelName = "-";
                 Difficulty = "-";
-                TempMessage = String.Empty;
+                TempMessage = string.Empty;
                 Port = 0;
                 CommandList.Clear();
-                StartFileName = Path.GetFileName(Global.Settings_Server.Path);
+                StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
@@ -107,7 +107,7 @@ namespace Serein
         {
             if (Status)
             {
-                foreach (string Command in Global.Settings_Server.StopCommand.Split(';'))
+                foreach (string Command in Global.Settings.Server.StopCommand.Split(';'))
                 {
                     if (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
                     {
@@ -172,21 +172,21 @@ namespace Serein
                 {
                     CommandList.RemoveAt(0);
                 }
-                if (StartedByCommand || (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
+                if (StartedByCommand || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
                 }
-                if (Unicode || Global.Settings_Server.EnableUnicode)
+                if (Unicode || Global.Settings.Server.EnableUnicode)
                 {
                     Command = ConvertToUnicode(Command);
                 }
-                if (Global.Settings_Server.EnableOutputCommand)
+                if (Global.Settings.Server.EnableOutputCommand)
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
                 }
                 CommandWriter.WriteLine(Command);
-                if (Global.Settings_Server.EnableLog)
+                if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
@@ -218,29 +218,29 @@ namespace Serein
                 string Line = Log.OutputRecognition(outLine.Data);
                 if (!Finished)
                 {
-                    if (Regex.IsMatch(Line, Global.Settings_Matches.Finished, RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
                     {
                         Finished = true;
                         Global.Ui.UpdateServerInfo(LevelName, Version, Difficulty);
                     }
-                    else if (Regex.IsMatch(Line, Global.Settings_Matches.Version, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
                     {
-                        Version = Regex.Match(Line, Global.Settings_Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Version = Regex.Match(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (Regex.IsMatch(Line, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
                     {
-                        LevelName = Regex.Match(Line, Global.Settings_Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        LevelName = Regex.Match(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (Regex.IsMatch(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
-                        Difficulty = Regex.Match(Line, Global.Settings_Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Difficulty = Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (Port == 0 && Regex.IsMatch(Line, Global.Settings_Matches.ipv4Port, RegexOptions.IgnoreCase))
+                    else if (Port == 0 && Regex.IsMatch(Line, Global.Settings.Matches.ipv4Port, RegexOptions.IgnoreCase))
                     {
                         Port = int.TryParse(
                             Regex.Match(
                                 Line,
-                                Global.Settings_Matches.ipv4Port,
+                                Global.Settings.Matches.ipv4Port,
                                 RegexOptions.IgnoreCase
                                 ).Groups[1].Value.Trim(),
                             out int r)
@@ -248,10 +248,10 @@ namespace Serein
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle)
+                    Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
-                //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings_Server.OutputStyle));
-                if (Global.Settings_Server.EnableLog)
+                //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
+                if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
                     {
@@ -270,7 +270,7 @@ namespace Serein
                     }
                     catch { }
                 }
-                if (Regex.IsMatch(Line, Global.Settings_Matches.PlayerList, RegexOptions.IgnoreCase))
+                if (Regex.IsMatch(Line, Global.Settings.Matches.PlayerList, RegexOptions.IgnoreCase))
                 {
                     TempMessage = Line.Trim('\r', '\n');
                 }
@@ -300,7 +300,7 @@ namespace Serein
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
                 $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
-                Restart = Global.Settings_Server.EnableRestart;
+                Restart = Global.Settings.Server.EnableRestart;
             }
             else
             {

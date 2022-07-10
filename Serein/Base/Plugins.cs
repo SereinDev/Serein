@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Base
 {
     internal partial class Plugins
     {
@@ -12,24 +12,24 @@ namespace Serein
         public static bool Available = true;
         public static string[] Get()
         {
-            if (File.Exists(Global.Settings_Server.Path))
+            if (File.Exists(Global.Settings.Server.Path))
             {
                 Available = true;
-                if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin"))
+                if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugin";
+                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin";
                 }
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugins"))
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\plugins";
+                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins";
                 }
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mod"))
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mod";
+                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod";
                 }
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mods"))
+                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods"))
                 {
-                    PluginPath = Path.GetDirectoryName(Global.Settings_Server.Path) + "\\mods";
+                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods";
                 }
                 else
                 {

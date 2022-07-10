@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Items;
 using System.Text.RegularExpressions;
 
-namespace Serein
+namespace Serein.Base
 {
     public class Message
     {
@@ -52,8 +53,8 @@ namespace Serein
                     }
                     if (
                         !(
-                            (IsSelfMessage && Item.Area == 4) ||
-                            (!IsSelfMessage && Item.Area != 4)
+                            IsSelfMessage && Item.Area == 4 ||
+                            !IsSelfMessage && Item.Area != 4
                         ))
                     {
                         continue;
@@ -63,11 +64,11 @@ namespace Serein
                         if (Item.IsAdmin && !IsSelfMessage)
                         {
                             bool IsAdmin = false;
-                            if (Global.Settings_Bot.PermissionList.Contains(UserId))
+                            if (Global.Settings.Bot.PermissionList.Contains(UserId))
                             {
                                 IsAdmin = true;
                             }
-                            else if (Global.Settings_Bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
+                            else if (Global.Settings.Bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
                             {
                                 IsAdmin = true;
                             }
@@ -75,7 +76,7 @@ namespace Serein
                             {
                                 continue;
                             }
-                            if (Item.Area == 2 && MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
+                            if (Item.Area == 2 && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     JsonObject,
@@ -103,7 +104,7 @@ namespace Serein
                         }
                         else
                         {
-                            if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings_Bot.GroupList.Contains(GroupId))
+                            if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     JsonObject,
@@ -164,23 +165,23 @@ namespace Serein
             {
                 long UserId = long.TryParse(JsonObject["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
-                if (Global.Settings_Bot.GroupList.Contains(GroupId))
+                if (Global.Settings.Bot.GroupList.Contains(GroupId))
                 {
-                    if (Global.Settings_Bot.RemoveWhitelistAfterQuit)
+                    if (Global.Settings.Bot.RemoveWhitelistAfterQuit)
                     {
                         foreach (MemberItem Item in Global.MemberItems)
                         {
                             if (Item.ID == UserId)
                             {
                                 Server.InputCommand(
-                                    Global.Settings_Bot.RemoveWhitelistCommand.TrimEnd() +
+                                    Global.Settings.Bot.RemoveWhitelistCommand.TrimEnd() +
                                     $" \"{Item.GameID}\""
                                     );
                                 break;
                             }
                         }
                     }
-                    if (Global.Settings_Bot.UnbindAfterQuit)
+                    if (Global.Settings.Bot.UnbindAfterQuit)
                     {
                         Members.UnBind(UserId);
                     }

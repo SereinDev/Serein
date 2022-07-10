@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Serein
+namespace Serein.Ui
 {
     public partial class Ui : Form
     {
@@ -74,11 +74,11 @@ namespace Serein
         }
         private void SettingBotUriLabel_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings_Bot.Uri} 上开启");
+            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings.Bot.Uri} 上开启");
         }
         private void SettingBotUri_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings_Bot.Uri} 上开启");
+            ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings.Bot.Uri} 上开启");
         }
         private void SettingBotAuthorizationLabel_MouseHover(object sender, EventArgs e)
         {

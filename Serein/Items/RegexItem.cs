@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using Serein.Base;
 
-namespace Serein
+namespace Serein.Items
 {
     internal class RegexItem
     {
@@ -29,7 +30,7 @@ namespace Serein
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Serein.Command.GetType(Command) == -1)
+                if (Base.Command.GetType(Command) == -1)
                 {
                     return false;
                 }
