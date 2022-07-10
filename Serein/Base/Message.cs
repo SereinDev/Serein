@@ -157,35 +157,35 @@ namespace Serein.Base
                     MessageSent = (TempNumber / 10000).ToString("N1") + "w";
                 }
             }
-            else if (
-                JsonObject["post_type"].ToString() == "notice"
-                &&
-                JsonObject["notice_type"].ToString() == "group_decrease"
-                )
+            else if (JsonObject["post_type"].ToString() == "notice")
             {
                 long UserId = long.TryParse(JsonObject["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
                 if (Global.Settings.Bot.GroupList.Contains(GroupId))
                 {
-                    if (Global.Settings.Bot.RemoveWhitelistAfterQuit)
+                    if (
+                        JsonObject["notice_type"].ToString() == "group_decrease" ||
+                        JsonObject["notice_type"].ToString() == "group_increase")
                     {
-                        foreach (MemberItem Item in Global.MemberItems)
+                        switch (JsonObject["notice_type"].ToString())
                         {
-                            if (Item.ID == UserId)
-                            {
-                                Server.InputCommand(
-                                    Global.Settings.Bot.RemoveWhitelistCommand.TrimEnd() +
-                                    $" \"{Item.GameID}\""
-                                    );
+                            case "group_decrease":
+                                EventTrigger.Trigger("Group_Decrease", GroupId, UserId);
                                 break;
-                            }
+                            case "group_increase":
+                                EventTrigger.Trigger("Group_Increase", GroupId, UserId);
+                                break;
                         }
                     }
-                    if (Global.Settings.Bot.UnbindAfterQuit)
+                    else if (
+                        JsonObject["notice_type"].ToString() == "notify" &&
+                        JsonObject["sub_type"].ToString() == "poke" &&
+                        JsonObject["target_id"].ToString() == SelfId)
                     {
-                        Members.UnBind(UserId);
+                        EventTrigger.Trigger("Group_Poke", GroupId, UserId);
                     }
                 }
+                
             }
         }
     }

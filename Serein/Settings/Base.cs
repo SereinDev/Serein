@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,14 +16,6 @@ namespace Serein.Settings
         public static void SaveSettings()
         {
             SaveSettingsThread.Wait(2500);
-            if (!Directory.Exists(Global.SettingPath))
-            {
-                Directory.CreateDirectory(Global.SettingPath);
-            }
-            StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
-            IniStreamWriter.Write(JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-            IniStreamWriter.Close();
-            IniStreamWriter.Dispose();
             while (true)
             {
                 StreamWriter ServerStreamWriter, BotStreamWriter, SereinStreamWriter;
@@ -45,6 +38,25 @@ namespace Serein.Settings
                     );
                 SereinStreamWriter.Close();
                 SereinStreamWriter.Dispose();
+                try
+                {
+                    if (File.Exists(Global.SettingPath + "\\Matches.json"))
+                    {
+                        Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(
+                            File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)
+                            );
+                    }
+                    if (File.Exists(Global.SettingPath + "\\Event.json"))
+                    {
+                        Global.Settings.Event = JsonConvert.DeserializeObject<Event>(
+                            File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)
+                            );
+                    }
+                }
+                catch(Exception e)
+                {
+                    Global.Debug($"[Setting]Fail to update: {e.Message}");
+                }
             }
         }
         public static void ReadSettings()
@@ -91,18 +103,39 @@ namespace Serein.Settings
                 if (Global.Settings.Matches == null)
                 {
                     Global.Settings.Matches = new Matches();
-                    StreamWriter IniStreamWriter = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
-                    IniStreamWriter.Write(JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
-                    IniStreamWriter.Close();
-                    IniStreamWriter.Dispose();
+                    StreamWriter Writer = new StreamWriter(Global.SettingPath + "\\Matches.json", false, Encoding.UTF8);
+                    Writer.Write(JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
+                    Writer.Close();
+                    Writer.Dispose();
                 }
             }
             else
             {
-                StreamWriter IniStreamWriter = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
-                IniStreamWriter.Write(JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-                IniStreamWriter.Close();
-                IniStreamWriter.Dispose();
+                StreamWriter Writer = new StreamWriter(File.Open(Global.SettingPath + "\\Matches.json", FileMode.OpenOrCreate), Encoding.UTF8);
+                Writer.Write(JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
+                Writer.Close();
+                Writer.Dispose();
+            }
+            if (File.Exists(Global.SettingPath + "\\Event.json"))
+            {
+                Global.Settings.Event = JsonConvert.DeserializeObject<Event>(
+                    File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)
+                    );
+                if (Global.Settings.Event == null)
+                {
+                    Global.Settings.Event = new Event();
+                    StreamWriter Writer = new StreamWriter(Global.SettingPath + "\\Event.json", false, Encoding.UTF8);
+                    Writer.Write(JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+                    Writer.Close();
+                    Writer.Dispose();
+                }
+            }
+            else
+            {
+                StreamWriter Writer = new StreamWriter(File.Open(Global.SettingPath + "\\Event.json", FileMode.OpenOrCreate), Encoding.UTF8);
+                Writer.Write(JsonConvert.SerializeObject(new Event(), Formatting.Indented));
+                Writer.Close();
+                Writer.Dispose();
             }
         }
     }

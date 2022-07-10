@@ -41,8 +41,12 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch = null)
+        public static void Run(string Command, Match InputMatch = null,long Default=-1)
         {
+            if (Default == -1&& Global.Settings.Bot.GroupList.Count >= 1)
+            {
+                Default = Global.Settings.Bot.GroupList[0];
+            }
             int Type = GetType(Command);
             if (Type == -1)
             {
@@ -73,9 +77,9 @@ namespace Serein.Base
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 13 && Websocket.Status && Global.Settings.Bot.GroupList.Count >= 1)
+            else if (Type == 13 && Websocket.Status && Default!=-1)
             {
-                Websocket.Send(false, Value, Global.Settings.Bot.GroupList[0].ToString());
+                Websocket.Send(false, Value, Default);
             }
             else if (Type == 50)
             {
@@ -121,34 +125,25 @@ namespace Serein.Base
             }
             else if (Type == 13 && Websocket.Status)
             {
-                Websocket.Send(false, Value, GroupId.ToString());
+                Websocket.Send(false, Value, GroupId);
             }
             else if (Type == 14 && Websocket.Status)
             {
-                Websocket.Send(true, Value, UserId.ToString());
+                Websocket.Send(true, Value, UserId);
             }
             else if (Type == 20 && GroupId != -1)
             {
-                Websocket.Send(
-                    false,
-                    $"[CQ:at,qq={UserId}] " +
-                    Members.Bind(
-                        JsonObject,
-                        Value,
-                        UserId
-                        ),
-                    GroupId.ToString()
+                Members.Bind(
+                    JsonObject,
+                    Value,
+                    UserId,
+                    GroupId
                     );
             }
             else if (Type == 21 && GroupId != -1)
             {
-                Websocket.Send(
-                    false,
-                    $"[CQ:at,qq={UserId}] " +
-                    Members.UnBind(
-                        long.TryParse(Value, out long i) ? i : -1
-                        ),
-                    GroupId.ToString()
+                Members.UnBind(
+                    long.TryParse(Value, out long i) ? i : -1, GroupId
                     );
             }
             else if (Type == 50)

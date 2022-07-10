@@ -105,19 +105,19 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
-        public static string Bind(JObject JsonObject, string Value, long UserId)
+        public static void Bind(JObject JsonObject, string Value, long UserId,long GroupId=-1)
         {
             if (IDs.Contains(UserId))
             {
-                return "你已经绑定过了";
+                EventTrigger.Trigger("Bind_Already", GroupId, UserId);
             }
             else if (!Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
-                return "该游戏名称无效";
+                EventTrigger.Trigger("Bind_Invalid", GroupId, UserId);
             }
             else if (GameIDs.Contains(Value))
             {
-                return "该游戏名称被占用";
+                EventTrigger.Trigger("Bind_Occupied", GroupId, UserId);
             }
             else
             {
@@ -131,14 +131,14 @@ namespace Serein.Base
                 };
                 Global.MemberItems.Add(Item);
                 Save();
-                return "绑定成功";
+                EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
         }
-        public static string UnBind(long UserId)
+        public static void UnBind(long UserId,long GroupId=-1)
         {
             if (!IDs.Contains(UserId))
             {
-                return "该账号未绑定";
+                EventTrigger.Trigger("Unbind_Failure", GroupId, UserId);
             }
             else
             {
@@ -147,11 +147,10 @@ namespace Serein.Base
                     if (Item.ID == UserId && Global.MemberItems.Remove(Item))
                     {
                         Save();
-                        return "解绑成功";
+                        EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
                     }
                 }
                 Save();
-                return "解绑失败";
             }
         }
         public static string GetGameID(long UserId)

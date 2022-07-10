@@ -24,8 +24,6 @@ namespace Serein.Ui
             SettingBotUri.Text = Global.Settings.Bot.Uri;
             SettingBotAuthorization.Text = Regex.Replace(Global.Settings.Bot.Authorization, ".", "*");
             SettingBotEnbaleOutputData.Checked = Global.Settings.Bot.EnbaleOutputData;
-            SettingBotRemoveWhitelistAfterQuit.Checked = Global.Settings.Bot.RemoveWhitelistAfterQuit;
-            SettingBotUnbindAfterQuit.Checked = Global.Settings.Bot.UnbindAfterQuit;
             SettingBotEnableLog.Checked = Global.Settings.Bot.EnableLog;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
@@ -85,14 +83,6 @@ namespace Serein.Ui
         private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
-        }
-        private void SettingBotUnbindAfterQuit_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings.Bot.UnbindAfterQuit = SettingBotUnbindAfterQuit.Checked;
-        }
-        private void SettingBotRemoveWhitelistAfterQuit_CheckedChanged(object sender, EventArgs e)
-        {
-            Global.Settings.Bot.RemoveWhitelistAfterQuit = SettingBotRemoveWhitelistAfterQuit.Checked;
         }
         private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
         {

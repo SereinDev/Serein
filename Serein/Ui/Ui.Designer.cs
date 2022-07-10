@@ -154,8 +154,6 @@ namespace Serein.Ui
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
-            this.SettingBotRemoveWhitelistAfterQuit = new System.Windows.Forms.CheckBox();
-            this.SettingBotUnbindAfterQuit = new System.Windows.Forms.CheckBox();
             this.SettingBotAuthorization = new System.Windows.Forms.TextBox();
             this.SettingBotAuthorizationLabel = new System.Windows.Forms.Label();
             this.SettingBotUri = new System.Windows.Forms.TextBox();
@@ -1075,8 +1073,6 @@ namespace Serein.Ui
             // 
             // SettingBot
             // 
-            this.SettingBot.Controls.Add(this.SettingBotRemoveWhitelistAfterQuit);
-            this.SettingBot.Controls.Add(this.SettingBotUnbindAfterQuit);
             this.SettingBot.Controls.Add(this.SettingBotAuthorization);
             this.SettingBot.Controls.Add(this.SettingBotAuthorizationLabel);
             this.SettingBot.Controls.Add(this.SettingBotUri);
@@ -1092,22 +1088,6 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
-            // 
-            // SettingBotRemoveWhitelistAfterQuit
-            // 
-            resources.ApplyResources(this.SettingBotRemoveWhitelistAfterQuit, "SettingBotRemoveWhitelistAfterQuit");
-            this.SettingBotRemoveWhitelistAfterQuit.Name = "SettingBotRemoveWhitelistAfterQuit";
-            this.SettingBotRemoveWhitelistAfterQuit.UseVisualStyleBackColor = true;
-            this.SettingBotRemoveWhitelistAfterQuit.CheckedChanged += new System.EventHandler(this.SettingBotRemoveWhitelistAfterQuit_CheckedChanged);
-            this.SettingBotRemoveWhitelistAfterQuit.MouseHover += new System.EventHandler(this.SettingBotRemoveWhitelistAfterQuit_MouseHover);
-            // 
-            // SettingBotUnbindAfterQuit
-            // 
-            resources.ApplyResources(this.SettingBotUnbindAfterQuit, "SettingBotUnbindAfterQuit");
-            this.SettingBotUnbindAfterQuit.Name = "SettingBotUnbindAfterQuit";
-            this.SettingBotUnbindAfterQuit.UseVisualStyleBackColor = true;
-            this.SettingBotUnbindAfterQuit.CheckedChanged += new System.EventHandler(this.SettingBotUnbindAfterQuit_CheckedChanged);
-            this.SettingBotUnbindAfterQuit.MouseHover += new System.EventHandler(this.SettingBotUnbindAfterQuit_MouseHover);
             // 
             // SettingBotAuthorization
             // 
@@ -1562,8 +1542,6 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Remove;
         private System.Windows.Forms.ToolStripSeparator MemberContextMenuStripSeparator1;
-        private System.Windows.Forms.CheckBox SettingBotRemoveWhitelistAfterQuit;
-        private System.Windows.Forms.CheckBox SettingBotUnbindAfterQuit;
     }
 }
 

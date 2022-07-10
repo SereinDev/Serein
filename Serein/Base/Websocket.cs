@@ -65,11 +65,11 @@ namespace Serein.Base
                 }
             }
         }
-        public static void Send(bool IsPrivate, string Message, string Target)
+        public static void Send(bool IsPrivate, string Message, object Target)
         {
             if (Status)
             {
-                long Target_Long = long.TryParse(Target, out long t) ? t : -1;
+                long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
                 JObject TextJObject = new JObject();
                 JObject ParamsJObject = new JObject();
                 if (IsPrivate)

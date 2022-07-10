@@ -103,6 +103,7 @@ namespace Serein
                 LogWriter.Close();
             }
             catch { }
+            EventTrigger.Trigger("Serein_Crash");
             Ookii.Dialogs.Wpf.TaskDialog TaskDialog = new Ookii.Dialogs.Wpf.TaskDialog
             {
                 Buttons = {

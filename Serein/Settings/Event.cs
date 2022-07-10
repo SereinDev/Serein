@@ -21,6 +21,14 @@ namespace Serein.Settings
         {
              "g|[CQ:at,qq=%ID%] 你已经绑定过了"
         };
+        public List<string> Unbind_Success { get; set; } = new List<string>()
+        {
+             "g|[CQ:at,qq=%ID%] 解绑成功"
+        };
+        public List<string> Unbind_Failure { get; set; } = new List<string>()
+        {
+             "g|[CQ:at,qq=%ID%] 该账号未绑定"
+        };
         public List<string> Server_Start { get; set; } = new List<string>()
         {
             "g|服务器正在启动"
@@ -35,14 +43,16 @@ namespace Serein.Settings
         };
         public List<string> Group_Increase { get; set; } = new List<string>()
         {
-            "g|欢迎[CQ:at,qq=%ID%]入群"
+            "g|欢迎[CQ:at,qq=%ID%]入群~"
         };
         public List<string> Group_Decrease { get; set; } = new List<string>()
         {
-            "g|用户%ID%退出了群聊"
+            "g|用户%ID%退出了群聊，已自动解绑游戏ID",
+            "unbind|%ID%"
         };
         public List<string> Group_Poke { get; set; } = new List<string>()
         {
+            "g|别戳我……(*/ω＼*)"
         };
         public List<string> Serein_Crash { get; set; } = new List<string>()
         {

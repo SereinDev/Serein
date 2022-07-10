@@ -100,7 +100,7 @@ namespace Serein.Base
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
-
+                EventTrigger.Trigger("Server_Start");
             }
         }
         public static void Stop()
@@ -298,15 +298,17 @@ namespace Serein.Base
             if (!Killed && ServerProcess.ExitCode != 0)
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
+                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
+                EventTrigger.Trigger("Server_Error");
             }
             else
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
+                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
+                EventTrigger.Trigger("Server_Stop");
             }
             if (Restart)
             {
