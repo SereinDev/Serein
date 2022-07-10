@@ -9,9 +9,9 @@ namespace Serein.Base
 {
     internal class EventTrigger
     {
-        public static void Run(string Type,string Value,JObject JsonObject = null)
+        public static void Run(string Type, string Value, JObject JsonObject = null)
         {
-            if(Type== "Bind_Success")
+            if (Type == "Bind_Success")
             {
             }
         }
