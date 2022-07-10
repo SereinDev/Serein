@@ -53,7 +53,7 @@ namespace Serein.Settings
                             );
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Global.Debug($"[Setting]Fail to update: {e.Message}");
                 }

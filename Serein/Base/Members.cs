@@ -105,7 +105,7 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
-        public static void Bind(JObject JsonObject, string Value, long UserId,long GroupId=-1)
+        public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
         {
             if (IDs.Contains(UserId))
             {
@@ -134,7 +134,7 @@ namespace Serein.Base
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
         }
-        public static void UnBind(long UserId,long GroupId=-1)
+        public static void UnBind(long UserId, long GroupId = -1)
         {
             if (!IDs.Contains(UserId))
             {

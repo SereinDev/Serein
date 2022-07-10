@@ -41,9 +41,9 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch = null,long Default=-1)
+        public static void Run(string Command, Match InputMatch = null, long Default = -1)
         {
-            if (Default == -1&& Global.Settings.Bot.GroupList.Count >= 1)
+            if (Default == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
                 Default = Global.Settings.Bot.GroupList[0];
             }
@@ -77,7 +77,7 @@ namespace Serein.Base
             {
                 Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
             }
-            else if (Type == 13 && Websocket.Status && Default!=-1)
+            else if (Type == 13 && Websocket.Status && Default != -1)
             {
                 Websocket.Send(false, Value, Default);
             }

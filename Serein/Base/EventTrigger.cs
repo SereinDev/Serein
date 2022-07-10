@@ -9,11 +9,11 @@ namespace Serein.Base
 {
     internal class EventTrigger
     {
-        public static void Trigger(string Type, long GroupId = -1, long UserId=-1)
+        public static void Trigger(string Type, long GroupId = -1, long UserId = -1)
         {
             List<string> CommandGroup = new List<string>();
             if (
-                Type.StartsWith("Bind_")|| 
+                Type.StartsWith("Bind_") ||
                 Type.StartsWith("Unbind_")
                 )
             {
@@ -42,7 +42,7 @@ namespace Serein.Base
                 {
                     Base.Command.Run(
                         Regex.Replace(Command, "%ID%", UserId.ToString()),
-                        Default:GroupId
+                        Default: GroupId
                         );
                 }
             }
@@ -87,7 +87,7 @@ namespace Serein.Base
                         );
                 }
             }
-            else if (Type== "Serein_Crash")
+            else if (Type == "Serein_Crash")
             {
                 CommandGroup = Global.Settings.Event.Serein_Crash;
                 foreach (string Command in CommandGroup)
