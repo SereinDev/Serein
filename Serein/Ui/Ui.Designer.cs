@@ -142,7 +142,7 @@ namespace Serein.Ui
             this.SettingSereinStatement1 = new System.Windows.Forms.Label();
             this.SettingSereinShowWelcomePage = new System.Windows.Forms.Button();
             this.SettingSereinEnableDPIAware = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.Splitter = new System.Windows.Forms.Label();
             this.SettingSereinDownload = new System.Windows.Forms.Label();
             this.SettingSereinStatement2 = new System.Windows.Forms.Label();
             this.SettingSereinStatement = new System.Windows.Forms.Label();
@@ -167,6 +167,10 @@ namespace Serein.Ui
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerTypeLabel = new System.Windows.Forms.Label();
+            this.SettingServerPortLabel = new System.Windows.Forms.Label();
+            this.SettingServerType = new System.Windows.Forms.ComboBox();
+            this.SettingServerPort = new System.Windows.Forms.NumericUpDown();
             this.SettingServerOutputStyle = new System.Windows.Forms.ComboBox();
             this.SettingServerStopCommand = new System.Windows.Forms.TextBox();
             this.SettingServerEnableUnicode = new System.Windows.Forms.CheckBox();
@@ -210,6 +214,7 @@ namespace Serein.Ui
             this.SettingSerein.SuspendLayout();
             this.SettingBot.SuspendLayout();
             this.SettingServer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).BeginInit();
             this.Debug.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -955,7 +960,7 @@ namespace Serein.Ui
             this.SettingSerein.Controls.Add(this.SettingSereinStatement1);
             this.SettingSerein.Controls.Add(this.SettingSereinShowWelcomePage);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableDPIAware);
-            this.SettingSerein.Controls.Add(this.label2);
+            this.SettingSerein.Controls.Add(this.Splitter);
             this.SettingSerein.Controls.Add(this.SettingSereinDownload);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement2);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement);
@@ -990,10 +995,10 @@ namespace Serein.Ui
             this.SettingSereinEnableDPIAware.CheckedChanged += new System.EventHandler(this.SettingSereinEnableDPIAware_CheckedChanged);
             this.SettingSereinEnableDPIAware.MouseHover += new System.EventHandler(this.SettingSereinEnableDPIAware_MouseHover);
             // 
-            // label2
+            // Splitter
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.Splitter, "Splitter");
+            this.Splitter.Name = "Splitter";
             // 
             // SettingSereinDownload
             // 
@@ -1173,6 +1178,10 @@ namespace Serein.Ui
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerTypeLabel);
+            this.SettingServer.Controls.Add(this.SettingServerPortLabel);
+            this.SettingServer.Controls.Add(this.SettingServerType);
+            this.SettingServer.Controls.Add(this.SettingServerPort);
             this.SettingServer.Controls.Add(this.SettingServerOutputStyle);
             this.SettingServer.Controls.Add(this.SettingServerStopCommand);
             this.SettingServer.Controls.Add(this.SettingServerEnableUnicode);
@@ -1190,6 +1199,52 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerTypeLabel
+            // 
+            resources.ApplyResources(this.SettingServerTypeLabel, "SettingServerTypeLabel");
+            this.SettingServerTypeLabel.Name = "SettingServerTypeLabel";
+            this.SettingServerTypeLabel.MouseHover += new System.EventHandler(this.SettingServerTypeLabel_MouseHover);
+            // 
+            // SettingServerPortLabel
+            // 
+            resources.ApplyResources(this.SettingServerPortLabel, "SettingServerPortLabel");
+            this.SettingServerPortLabel.Name = "SettingServerPortLabel";
+            this.SettingServerPortLabel.MouseHover += new System.EventHandler(this.SettingServerPortLabel_MouseHover);
+            // 
+            // SettingServerType
+            // 
+            this.SettingServerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SettingServerType.FormattingEnabled = true;
+            this.SettingServerType.Items.AddRange(new object[] {
+            resources.GetString("SettingServerType.Items"),
+            resources.GetString("SettingServerType.Items1"),
+            resources.GetString("SettingServerType.Items2")});
+            resources.ApplyResources(this.SettingServerType, "SettingServerType");
+            this.SettingServerType.Name = "SettingServerType";
+            this.SettingServerType.SelectedIndexChanged += new System.EventHandler(this.SettingServerType_SelectedIndexChanged);
+            this.SettingServerType.MouseHover += new System.EventHandler(this.SettingServerType_MouseHover);
+            // 
+            // SettingServerPort
+            // 
+            resources.ApplyResources(this.SettingServerPort, "SettingServerPort");
+            this.SettingServerPort.Maximum = new decimal(new int[] {
+            65565,
+            0,
+            0,
+            0});
+            this.SettingServerPort.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.SettingServerPort.Name = "SettingServerPort";
+            this.SettingServerPort.Value = new decimal(new int[] {
+            19132,
+            0,
+            0,
+            0});
+            this.SettingServerPort.ValueChanged += new System.EventHandler(this.SettingServerPort_ValueChanged);
             // 
             // SettingServerOutputStyle
             // 
@@ -1378,6 +1433,7 @@ namespace Serein.Ui
             this.SettingBot.PerformLayout();
             this.SettingServer.ResumeLayout(false);
             this.SettingServer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).EndInit();
             this.Debug.ResumeLayout(false);
             this.Debug.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
@@ -1516,7 +1572,7 @@ namespace Serein.Ui
         private System.Windows.Forms.Label SettingSereinStatement2;
         private System.Windows.Forms.Label SettingSereinStatement;
         private System.Windows.Forms.Label SettingSereinDownload;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Splitter;
         private System.Windows.Forms.TextBox SettingBotAuthorization;
         private System.Windows.Forms.Label SettingBotAuthorizationLabel;
         private System.Windows.Forms.TextBox SettingBotUri;
@@ -1542,6 +1598,10 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripMenuItem MemberContextMenuStrip_Remove;
         private System.Windows.Forms.ToolStripSeparator MemberContextMenuStripSeparator1;
+        private System.Windows.Forms.Label SettingServerTypeLabel;
+        private System.Windows.Forms.Label SettingServerPortLabel;
+        private System.Windows.Forms.ComboBox SettingServerType;
+        private System.Windows.Forms.NumericUpDown SettingServerPort;
     }
 }
 

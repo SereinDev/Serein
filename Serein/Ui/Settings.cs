@@ -19,6 +19,8 @@ namespace Serein.Ui
             SettingServerAutoStop.Checked = Global.Settings.Server.AutoStop;
             SettingServerPath.Text = Global.Settings.Server.Path;
             SettingServerStopCommand.Text = Global.Settings.Server.StopCommand;
+            SettingServerPort.Value=Global.Settings.Server.Port;
+            SettingServerType.SelectedIndex=Global.Settings.Server.Type;
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             SettingBotUri.Text = Global.Settings.Bot.Uri;
@@ -57,6 +59,14 @@ namespace Serein.Ui
         private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e)
         {
             Global.Settings.Server.EncodingIndex = SettingServerEncoding.SelectedIndex;
+        }
+        private void SettingServerPort_ValueChanged(object sender, EventArgs e)
+        {
+            Global.Settings.Server.Port = (int)SettingServerPort.Value;
+        }
+        private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Global.Settings.Server.Type = SettingServerType.SelectedIndex;
         }
         private void SettingBotUri_TextChanged(object sender, EventArgs e)
         {

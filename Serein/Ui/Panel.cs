@@ -21,12 +21,7 @@ namespace Serein.Ui
 
         private void PanelControlStart_Click(object sender, EventArgs e)
         {
-            new Task(() =>
-            {
-                {
-                    Server.Start();
-                }
-            }).Start();
+            new Task(() =>Server.Start()).Start();
         }
         private void PanelControlStop_Click(object sender, EventArgs e)
         {

@@ -8,7 +8,6 @@ namespace Serein.Settings
         public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
         public string LevelName { get; set; } = "Level Name: (.+?)$";
         public string Finished { get; set; } = "(Done|Started)";
-        public string ipv4Port { get; set; } = @"ipv4.+?(\d+?)$";
         public string PlayerList { get; set; } = @"players\sonline:";
         public Matches()
         {
@@ -32,11 +31,6 @@ namespace Serein.Settings
                 Regex.Match(string.Empty, Finished);
             }
             catch { Finished = "(Done|Started)"; }
-            try
-            {
-                Regex.Match(string.Empty, ipv4Port);
-            }
-            catch { ipv4Port = @"ipv4.+?(\d+?)$"; }
         }
     }
 }

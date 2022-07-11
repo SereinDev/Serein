@@ -1,6 +1,5 @@
 ﻿using Ookii.Dialogs.Wpf;
 using Serein.Base;
-using Serein.Settings;
 using System;
 using System.Collections;
 using System.Diagnostics;

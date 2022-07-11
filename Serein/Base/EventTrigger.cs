@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+
 
 namespace Serein.Base
 {
@@ -11,6 +8,7 @@ namespace Serein.Base
     {
         public static void Trigger(string Type, long GroupId = -1, long UserId = -1)
         {
+            Global.Debug("[EventTrigger] Trigger: " + Type);
             List<string> CommandGroup = new List<string>();
             if (
                 Type.StartsWith("Bind_") ||

@@ -1,14 +1,23 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
+
+/* 项目“Serein (net472)”的未合并的更改
+在此之前:
 using System;
 using System.Collections.Generic;
+在此之后:
+using Serein.Base;
+using System;
 using System.Collections;
+*/
+using Serein.Base;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Serein.Base;
 
 namespace Serein.Ui
 {

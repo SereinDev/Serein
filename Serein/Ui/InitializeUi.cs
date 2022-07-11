@@ -1,5 +1,4 @@
 ﻿using Serein.Base;
-using Serein.Settings;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;

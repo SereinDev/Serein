@@ -11,5 +11,7 @@
         public bool AutoStop { get; set; } = true;
         public int EncodingIndex { get; set; } = 0;
         public bool EnableUnicode { get; set; } = false;
+        public int Type { get; set; } = 1;
+        public int Port { get; set; } = 19132;
     }
 }

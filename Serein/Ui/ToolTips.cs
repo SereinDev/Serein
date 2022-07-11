@@ -72,6 +72,18 @@ namespace Serein.Ui
         {
             ShowToolTip(sender, "指定输出到服务器的编码格式（重启服务器生效）");
         }
+        private void SettingServerType_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "指定服务器的类型\n用于获取服务器的Motd");
+        }
+        private void SettingServerTypeLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "指定服务器的类型\n用于获取服务器的Motd");
+        }
+        private void SettingServerPortLabel_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "指定服务器的本地端口\n用于获取服务器的Motd");
+        }
         private void SettingBotUriLabel_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings.Bot.Uri} 上开启");

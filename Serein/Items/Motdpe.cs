@@ -8,7 +8,7 @@ namespace Serein.Items
 {
     internal class Motdpe
     {
-        public string ip { get; set; } = "127.0.0.1";
+        public IPAddress ip { get; set; } = IPAddress.Parse("127.0.0.1");
         public int Port { get; set; } = 19132;
         public string MaxPlayer { get; set; } = "-";
         public string OnlinePlayer { get; set; } = "-";
@@ -17,11 +17,31 @@ namespace Serein.Items
         public string Version { get; set; } = "-";
         public string LevelName { get; set; } = "-";
         public string GameMode { get; set; } = "-";
-        public TimeSpan Span { get; set; } = TimeSpan.Zero;
+        public TimeSpan Delay { get; set; } = TimeSpan.Zero;
         public string Original { get; set; } = "-";
+        public string Exception { get; set; } = string.Empty;
         public Motdpe(string newip = "127.0.0.1", int newPort = 19132)
         {
-            ip = newip;
+            try
+            {
+                if (!new Regex(
+                    @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
+                    .IsMatch(newip))
+                {
+                    IPAddress[] IPs = Dns.GetHostAddresses(newip);
+                    ip = IPs[0];
+                }
+                else
+                {
+                    ip = IPAddress.Parse(newip);
+                }
+            }
+            catch (Exception e)
+            {
+                Global.Debug($"[Motdpe] {e.Message}");
+                Exception = e.Message;
+                return;
+            }
             Port = newPort;
             int length = 0;
             string Data = string.Empty;
@@ -41,19 +61,24 @@ namespace Serein.Items
                     sendBytes[i] = Convert.ToByte(Text.Substring(i * 2, 2), 16);
                 }
                 StartTime = DateTime.Now;
-                client.SendTo(sendBytes, new IPEndPoint(IPAddress.Parse(ip), Port));
+                client.SendTo(sendBytes, new IPEndPoint(ip, Port));
                 EndPoint point = new IPEndPoint(IPAddress.Any, 0);
                 byte[] buffer = new byte[1024];
                 length = client.ReceiveFrom(buffer, ref point);
+                Delay = DateTime.Now - StartTime;
                 Data = length > 35 ?
                     Encoding.UTF8.GetString(buffer, 35, length - 35) :
                     Encoding.UTF8.GetString(buffer, 0, length);
                 client.Close();
             }
-            catch { return; }
+            catch (Exception e)
+            {
+                Global.Debug($"[Motdpe] {e.Message}");
+                Exception = e.Message;
+                return;
+            }
             if (length > 35)
             {
-                Span = DateTime.Now - StartTime;
                 Original = Data;
                 string[] Datas = Data.Split(';');
                 if (Datas.Length >= 12)

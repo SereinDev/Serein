@@ -172,7 +172,9 @@ namespace Serein.Base
                 {
                     CommandList.RemoveAt(0);
                 }
-                if (StartedByCommand || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
+                if (
+                    (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command || CommandList.Count == 0) &&
+                    (!StartedByCommand || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
@@ -234,17 +236,6 @@ namespace Serein.Base
                     else if (Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
                         Difficulty = Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    }
-                    else if (Port == 0 && Regex.IsMatch(Line, Global.Settings.Matches.ipv4Port, RegexOptions.IgnoreCase))
-                    {
-                        Port = int.TryParse(
-                            Regex.Match(
-                                Line,
-                                Global.Settings.Matches.ipv4Port,
-                                RegexOptions.IgnoreCase
-                                ).Groups[1].Value.Trim(),
-                            out int r)
-                            ? r : 0;
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(

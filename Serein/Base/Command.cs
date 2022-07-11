@@ -253,15 +253,30 @@ namespace Serein.Base
             {
                 return Text.Replace("\\n", "\n");
             }
-            if (Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original)%", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
             {
-                Motdpe motdpe = new Motdpe(newPort: Server.Port);
-                Text = Regex.Replace(Text, "%GameMode%", motdpe.GameMode, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Description%", motdpe.Description, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Protocol%", motdpe.Protocol, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%OnlinePlayer%", motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%MaxPlayer%", motdpe.MaxPlayer, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Original%", motdpe.Original, RegexOptions.IgnoreCase);
+                switch (Global.Settings.Server.Type)
+                {
+                    case 1:
+                        Motdpe motdpe = new Motdpe(newPort: Global.Settings.Server.Port);
+                        Text = Regex.Replace(Text, "%GameMode%", motdpe.GameMode, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Description%", motdpe.Description, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Protocol%", motdpe.Protocol, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%OnlinePlayer%", motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%MaxPlayer%", motdpe.MaxPlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Original%", motdpe.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Delay%", motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        break;
+                    case 2:
+                        Motdje motdje = new Motdje(newPort: Global.Settings.Server.Port);
+                        Text = Regex.Replace(Text, "%Description%", motdje.Description, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Protocol%", motdje.Protocol, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%OnlinePlayer%", motdje.OnlinePlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%MaxPlayer%", motdje.MaxPlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Original%", motdje.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Delay%", motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        break;
+                }
             }
             DateTime CurrentTime = DateTime.Now;
             Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
@@ -290,7 +305,10 @@ namespace Serein.Base
                     Text = Regex.Replace(Text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, JsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    Global.Debug($"[Command:GetVariables()]{e.Message}");
+                }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);

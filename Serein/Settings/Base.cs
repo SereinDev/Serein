@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.IO;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,25 +38,6 @@ namespace Serein.Settings
                     );
                 SereinStreamWriter.Close();
                 SereinStreamWriter.Dispose();
-                try
-                {
-                    if (File.Exists(Global.SettingPath + "\\Matches.json"))
-                    {
-                        Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(
-                            File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)
-                            );
-                    }
-                    if (File.Exists(Global.SettingPath + "\\Event.json"))
-                    {
-                        Global.Settings.Event = JsonConvert.DeserializeObject<Event>(
-                            File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)
-                            );
-                    }
-                }
-                catch (Exception e)
-                {
-                    Global.Debug($"[Setting]Fail to update: {e.Message}");
-                }
             }
         }
         public static void ReadSettings()
@@ -137,6 +118,7 @@ namespace Serein.Settings
                 Writer.Close();
                 Writer.Dispose();
             }
+            return;
         }
     }
 }
