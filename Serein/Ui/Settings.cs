@@ -19,8 +19,8 @@ namespace Serein.Ui
             SettingServerAutoStop.Checked = Global.Settings.Server.AutoStop;
             SettingServerPath.Text = Global.Settings.Server.Path;
             SettingServerStopCommand.Text = Global.Settings.Server.StopCommand;
-            SettingServerPort.Value=Global.Settings.Server.Port;
-            SettingServerType.SelectedIndex=Global.Settings.Server.Type;
+            SettingServerPort.Value = Global.Settings.Server.Port;
+            SettingServerType.SelectedIndex = Global.Settings.Server.Type;
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             SettingBotUri.Text = Global.Settings.Bot.Uri;

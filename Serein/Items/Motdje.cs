@@ -36,7 +36,7 @@ namespace Serein.Items
                     ip = IPAddress.Parse(newip);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Global.Debug($"[Motdje] {e.Message}");
                 Exception = e.Message;
@@ -99,7 +99,7 @@ namespace Serein.Items
                     }
                     Description = Regex.Replace(Regex.Unescape(Description), "§.", string.Empty);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Global.Debug($"[Motdje] {e.Message}");
                     Exception = e.Message;
