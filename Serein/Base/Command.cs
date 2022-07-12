@@ -301,6 +301,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%MaxPlayer%", motdje.MaxPlayer, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Original%", motdje.Original, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Delay%", motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Favicon%", motdje.Favicon, RegexOptions.IgnoreCase);
                         break;
                 }
             }

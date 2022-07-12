@@ -16,10 +16,11 @@ namespace Serein.Items.Motd
         public string LevelName { get; set; } = "-";
         public string GameMode { get; set; } = "-";
         public TimeSpan Delay { get; set; } = TimeSpan.Zero;
+        public string Favicon { get; set; } = "-";
         public string Original { get; set; } = "-";
         public string Exception { get; set; } = string.Empty;
         public bool Success { get; set; } = false;
-        public void Init(string newip = "127.0.0.1", string newPort = "19132")
+        public bool Init(string newip = "127.0.0.1", string newPort = "19132")
         {
             try
             {
@@ -40,12 +41,13 @@ namespace Serein.Items.Motd
                     IP = IPAddress.Parse(newip);
                 }
                 Port = int.Parse(newPort);
+                return true;
             }
             catch (Exception e)
             {
                 Global.Debug($"[Motd:Init()] {e.Message}");
                 Exception = e.Message;
-                return;
+                return false;
             }
         }
     }

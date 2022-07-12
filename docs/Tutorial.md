@@ -65,8 +65,6 @@
   - Win10及以上等大部分系统自带，可不需要手动安装，方便使用
     - 你也可以自行安装 [`.NET Framework`](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
 
-
-
 ### 启动服务器
 ![服务器](imgs/console.png)
 >#### ⭐ Tips 

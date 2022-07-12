@@ -10,7 +10,10 @@ namespace Serein.Items.Motd
     {
         public Motdpe(string newip = "127.0.0.1", string newPort = "19132")
         {
-            Init(newip, newPort);
+            if (!Init(newip, newPort))
+            {
+                return;
+            }
             int length = 0;
             string Data = string.Empty;
             DateTime StartTime = DateTime.Now;

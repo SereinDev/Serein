@@ -118,7 +118,7 @@ namespace Serein.Base
                 foreach (string Command in CommandGroup)
                 {
                     string Command_Copy = Command;
-                    if (Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
                     {
                         Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
                         Command_Copy = Regex.Replace(Command_Copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);
@@ -128,8 +128,8 @@ namespace Serein.Base
                         Command_Copy = Regex.Replace(Command_Copy, "%Original%", motd.Original, RegexOptions.IgnoreCase);
                         Command_Copy = Regex.Replace(Command_Copy, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
                         Command_Copy = Regex.Replace(Command_Copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
                     }
-                    Global.Debug(Command_Copy);
                     Base.Command.Run(
                         Command_Copy,
                         Default: GroupId,

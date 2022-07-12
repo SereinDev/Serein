@@ -65,7 +65,7 @@ namespace Serein.Settings
         };
         public string[] Motdje_Success { get; set; } = new string[]
         {
-            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Delay%ms"
+            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Delay%ms\n%Favicon%"
         };
         public string[] Motd_Failure { get; set; } = new string[]
         {

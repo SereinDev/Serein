@@ -12,7 +12,10 @@ namespace Serein.Items.Motd
     {
         public Motdje(string newip = "127.0.0.1", string newPort = "25565")
         {
-            Init(newip, newPort);
+            if(!Init(newip, newPort))
+            {
+                return;
+            }
             string Data = string.Empty;
             DateTime StartTime = DateTime.Now;
             try
@@ -59,12 +62,24 @@ namespace Serein.Items.Motd
                     {
                         Description = JsonObject["description"]["text"].ToString();
                     }
-                    else if (JsonObject["description"]["extra"] != null)
+                    if (JsonObject["description"]["extra"] != null)
                     {
                         Description = string.Empty;
-                        foreach (JObject ChildrenJObject in (JArray)JsonObject["description"]["extra"])
+                        foreach (JObject ChildrenJObject in JsonObject["description"]["extra"])
                         {
                             Description += ChildrenJObject["text"].ToString();
+                        }
+                    }
+                    if (JsonObject["favicon"] != null)
+                    {
+                        Favicon = (string)JsonObject["favicon"];
+                        if (Favicon.Contains(","))
+                        {
+                            Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
+                        }
+                        else
+                        {
+                            Favicon = string.Empty;
                         }
                     }
                     Description = Regex.Replace(Regex.Unescape(Description), "§.", string.Empty);

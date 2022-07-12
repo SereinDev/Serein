@@ -157,6 +157,7 @@ g|
 版本：%Version%(%Protocol%)
 在线玩家：%OnlinePlayer%/%MaxPlayer%
 延迟：%Delay%ms
+%Favicon%
 ```
 #### Motd_Failure 
 命令`motdpe`或`motdje`执行失败  

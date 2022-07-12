@@ -1,16 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
-
-/* 项目“Serein (net472)”的未合并的更改
-在此之前:
-using System;
-using System.Collections.Generic;
-在此之后:
-using Serein.Base;
-using System;
-using System.Collections;
-*/
 using Serein.Base;
 using System;
 using System.Collections.Generic;
@@ -105,11 +95,21 @@ namespace Serein.Ui
             {
                 if (DebugTextBox.InvokeRequired)
                 {
-                    Action<string> actionDelegate = (_Text) => { DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n"; };
+                    Action<string> actionDelegate = (_Text) => {
+                        if (DebugTextBox.Text.Length > 50000)
+                        {
+                            DebugTextBox.Text = "";
+                        }
+                        DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n";
+                    };
                     PanelInfoTime2.Invoke(actionDelegate, Text);
                 }
                 else
                 {
+                    if (DebugTextBox.Text.Length > 50000)
+                    {
+                        DebugTextBox.Text = "";
+                    }
                     DebugTextBox.Text = DebugTextBox.Text + Text + "\r\n";
                 }
                 if (!Directory.Exists(Global.Path + "\\logs\\debug"))
