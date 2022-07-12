@@ -95,7 +95,8 @@ namespace Serein.Ui
             {
                 if (DebugTextBox.InvokeRequired)
                 {
-                    Action<string> actionDelegate = (_Text) => {
+                    Action<string> actionDelegate = (_Text) =>
+                    {
                         if (DebugTextBox.Text.Length > 50000)
                         {
                             DebugTextBox.Text = "";

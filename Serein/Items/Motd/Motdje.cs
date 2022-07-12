@@ -12,7 +12,7 @@ namespace Serein.Items.Motd
     {
         public Motdje(string newip = "127.0.0.1", string newPort = "25565")
         {
-            if(!Init(newip, newPort))
+            if (!Init(newip, newPort))
             {
                 return;
             }
