@@ -15,6 +15,7 @@ namespace Serein.Settings
         }
         public static void SaveSettings()
         {
+            Global.Debug($"[Settings] {JsonConvert.SerializeObject(Global.Settings)}");
             SaveSettingsThread.Wait(2500);
             while (true)
             {

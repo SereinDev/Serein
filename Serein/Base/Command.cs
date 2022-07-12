@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Serein.Items;
+using Serein.Items.Motd;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -41,7 +41,7 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch = null, long Default = -1)
+        public static void Run(string Command, Match InputMatch = null, long Default = -1,bool DisableMotd=false)
         {
             if (Default == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
@@ -53,7 +53,7 @@ namespace Serein.Base
                 return;
             }
             string Value = GetValue(Command, InputMatch);
-            Value = GetVariables(Value);
+            Value = GetVariables(Value,DisableMotd:DisableMotd);
             if (Type == 1)
             {
                 new Task(() =>
@@ -146,8 +146,24 @@ namespace Serein.Base
                     long.TryParse(Value, out long i) ? i : -1, GroupId
                     );
             }
-            else if (Type == 50)
+            else if (Type == 30 && GroupId != -1)
             {
+                Motd motd = new Motdpe(Value);
+                EventTrigger.Trigger(
+                    motd.Success ? "Motdpe_Success" : "Motd_Failure", 
+                    GroupId,
+                    motd: motd);
+            }
+            else if (Type == 31 && GroupId != -1)
+            {
+                Motd motd = new Motdje(Value);
+                EventTrigger.Trigger(
+                    motd.Success ? "Motdje_Success" : "Motd_Failure",
+                    GroupId,
+                    motd: motd);
+            }
+            else if (Type == 50)
+                    {
                 Global.Debug("[DebugOutput]" + Value);
             }
             if (Type != 20 && Type != 21 && GroupId != -1)
@@ -170,11 +186,13 @@ namespace Serein.Base
             14          私聊
             20          绑定id
             21          解绑id
+            30          Motdpe
+            31          Motdje
             50          debug
             */
             if (
                 !Command.Contains("|") ||
-                !Regex.IsMatch(Command, @"^.+?\|.+$", RegexOptions.IgnoreCase)
+                !Regex.IsMatch(Command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
                 )
             {
                 return -1;
@@ -225,6 +243,14 @@ namespace Serein.Base
             {
                 return 21;
             }
+            if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
+            {
+                return 30;
+            }
+            if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
+            {
+                return 31;
+            }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
             {
                 return 50;
@@ -247,18 +273,18 @@ namespace Serein.Base
             Global.Debug($"[Command] Command:{command} Value:{Value}");
             return Value;
         }
-        public static string GetVariables(string Text, JObject JsonObject = null)
+        public static string GetVariables(string Text, JObject JsonObject = null,bool DisableMotd= false)
         {
             if (!Text.Contains("%"))
             {
                 return Text.Replace("\\n", "\n");
             }
-            if (Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
+            if (!DisableMotd&&Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
             {
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
-                        Motdpe motdpe = new Motdpe(newPort: Global.Settings.Server.Port);
+                        Motdpe motdpe = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
                         Text = Regex.Replace(Text, "%GameMode%", motdpe.GameMode, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Description%", motdpe.Description, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Protocol%", motdpe.Protocol, RegexOptions.IgnoreCase);
@@ -268,7 +294,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Delay%", motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         break;
                     case 2:
-                        Motdje motdje = new Motdje(newPort: Global.Settings.Server.Port);
+                        Motdje motdje = new Motdje(newPort: Global.Settings.Server.Port.ToString());
                         Text = Regex.Replace(Text, "%Description%", motdje.Description, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Protocol%", motdje.Protocol, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%OnlinePlayer%", motdje.OnlinePlayer, RegexOptions.IgnoreCase);

@@ -4,45 +4,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Serein.Items
+namespace Serein.Items.Motd
 {
-    internal class Motdpe
+    internal class Motdpe : Motd
     {
-        public IPAddress ip { get; set; } = IPAddress.Parse("127.0.0.1");
-        public int Port { get; set; } = 19132;
-        public string MaxPlayer { get; set; } = "-";
-        public string OnlinePlayer { get; set; } = "-";
-        public string Description { get; set; } = "-";
-        public string Protocol { get; set; } = "-";
-        public string Version { get; set; } = "-";
-        public string LevelName { get; set; } = "-";
-        public string GameMode { get; set; } = "-";
-        public TimeSpan Delay { get; set; } = TimeSpan.Zero;
-        public string Original { get; set; } = "-";
-        public string Exception { get; set; } = string.Empty;
-        public Motdpe(string newip = "127.0.0.1", int newPort = 19132)
+        public Motdpe(string newip = "127.0.0.1", string  newPort = "19132")
         {
-            try
-            {
-                if (!new Regex(
-                    @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
-                    .IsMatch(newip))
-                {
-                    IPAddress[] IPs = Dns.GetHostAddresses(newip);
-                    ip = IPs[0];
-                }
-                else
-                {
-                    ip = IPAddress.Parse(newip);
-                }
-            }
-            catch (Exception e)
-            {
-                Global.Debug($"[Motdpe] {e.Message}");
-                Exception = e.Message;
-                return;
-            }
-            Port = newPort;
+            Init(newip, newPort);
             int length = 0;
             string Data = string.Empty;
             DateTime StartTime = DateTime.Now;
@@ -51,7 +19,7 @@ namespace Serein.Items
                 Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
                 client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
-                client.Bind(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0));
+                client.Bind(new IPEndPoint(IPAddress.Any, 0));
                 string[] Guids = Guid.NewGuid().ToString().ToUpper().Split('-');
                 int TickCount = Environment.TickCount;
                 string Text = $"01{TickCount.ToString("X").PadLeft(16, '0')}00FFFF00FEFEFEFEFDFDFDFD12345678{Guids[2]}{Guids[4]}";
@@ -61,7 +29,7 @@ namespace Serein.Items
                     sendBytes[i] = Convert.ToByte(Text.Substring(i * 2, 2), 16);
                 }
                 StartTime = DateTime.Now;
-                client.SendTo(sendBytes, new IPEndPoint(ip, Port));
+                client.SendTo(sendBytes, new IPEndPoint(IP, Port));
                 EndPoint point = new IPEndPoint(IPAddress.Any, 0);
                 byte[] buffer = new byte[1024];
                 length = client.ReceiveFrom(buffer, ref point);
@@ -90,6 +58,7 @@ namespace Serein.Items
                     MaxPlayer = Datas[5];
                     LevelName = Datas[7];
                     GameMode = Datas[8];
+                    Success = true;
                 }
             }
         }

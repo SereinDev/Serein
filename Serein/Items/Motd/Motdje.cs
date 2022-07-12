@@ -6,44 +6,14 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Serein.Items
+namespace Serein.Items.Motd
 {
-    internal class Motdje
+    internal class Motdje : Motd
     {
-        public IPAddress ip { get; set; } = IPAddress.Parse("127.0.0.1");
-        public int Port { get; set; } = 25565;
-        public string MaxPlayer { get; set; } = "-";
-        public string OnlinePlayer { get; set; } = "-";
-        public string Description { get; set; } = "-";
-        public string Protocol { get; set; } = "-";
-        public string Version { get; set; } = "-";
-        public TimeSpan Delay { get; set; } = TimeSpan.Zero;
-        public string Original { get; set; } = "-";
-        public string Exception { get; set; } = string.Empty;
-        public Motdje(string newip = "127.0.0.1", int newPort = 25565)
+        public Motdje(string newip = "127.0.0.1", string newPort = "25565")
         {
-            try
-            {
-                if (!new Regex(
-                    @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
-                    .IsMatch(newip))
-                {
-                    IPAddress[] IPs = Dns.GetHostAddresses(newip);
-                    ip = IPs[0];
-                }
-                else
-                {
-                    ip = IPAddress.Parse(newip);
-                }
-            }
-            catch (Exception e)
-            {
-                Global.Debug($"[Motdje] {e.Message}");
-                Exception = e.Message;
-                return;
-            }
+            Init(newip, newPort);
             string Data = string.Empty;
-            Port = newPort;
             DateTime StartTime = DateTime.Now;
             try
             {
@@ -52,7 +22,7 @@ namespace Serein.Items
                 client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
                 client.Connect(
                     new IPEndPoint(
-                        ip,
+                        IP,
                         Port
                         )
                     );
@@ -98,6 +68,7 @@ namespace Serein.Items
                         }
                     }
                     Description = Regex.Replace(Regex.Unescape(Description), "§.", string.Empty);
+                    Success = true;
                 }
                 catch (Exception e)
                 {
