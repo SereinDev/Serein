@@ -7,10 +7,10 @@ namespace Serein.Base
 {
     internal class EventTrigger
     {
-        public static void Trigger(string Type, long GroupId = -1, long UserId = -1,Motd motd=null)
+        public static void Trigger(string Type, long GroupId = -1, long UserId = -1, Motd motd = null)
         {
             Global.Debug("[EventTrigger] Trigger:" + Type);
-            string[] CommandGroup = new string[] {};
+            string[] CommandGroup = new string[] { };
             if (
                 Type.StartsWith("Bind_") ||
                 Type.StartsWith("Unbind_")
@@ -94,9 +94,9 @@ namespace Serein.Base
                     Base.Command.Run(Command);
                 }
             }
-            else if(Type.StartsWith("Motd"))
+            else if (Type.StartsWith("Motd"))
             {
-                switch(Type)
+                switch (Type)
                 {
                     case "Motdpe_Success":
                         CommandGroup = Global.Settings.Event.Motdpe_Success;
@@ -109,8 +109,8 @@ namespace Serein.Base
                         {
                             Base.Command.Run(
                                 Regex.Replace(Command, "%Exception%", motd.Exception, RegexOptions.IgnoreCase),
-                                Default:GroupId,
-                                DisableMotd:true
+                                Default: GroupId,
+                                DisableMotd: true
                                 );
                         }
                         break;
@@ -118,7 +118,7 @@ namespace Serein.Base
                 foreach (string Command in CommandGroup)
                 {
                     string Command_Copy = Command;
-                    if(Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
                     {
                         Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
                         Command_Copy = Regex.Replace(Command_Copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);

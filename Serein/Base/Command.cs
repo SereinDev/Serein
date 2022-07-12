@@ -41,7 +41,7 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch = null, long Default = -1,bool DisableMotd=false)
+        public static void Run(string Command, Match InputMatch = null, long Default = -1, bool DisableMotd = false)
         {
             if (Default == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
@@ -53,7 +53,7 @@ namespace Serein.Base
                 return;
             }
             string Value = GetValue(Command, InputMatch);
-            Value = GetVariables(Value,DisableMotd:DisableMotd);
+            Value = GetVariables(Value, DisableMotd: DisableMotd);
             if (Type == 1)
             {
                 new Task(() =>
@@ -150,7 +150,7 @@ namespace Serein.Base
             {
                 Motd motd = new Motdpe(Value);
                 EventTrigger.Trigger(
-                    motd.Success ? "Motdpe_Success" : "Motd_Failure", 
+                    motd.Success ? "Motdpe_Success" : "Motd_Failure",
                     GroupId,
                     motd: motd);
             }
@@ -163,7 +163,7 @@ namespace Serein.Base
                     motd: motd);
             }
             else if (Type == 50)
-                    {
+            {
                 Global.Debug("[DebugOutput]" + Value);
             }
             if (Type != 20 && Type != 21 && GroupId != -1)
@@ -273,13 +273,13 @@ namespace Serein.Base
             Global.Debug($"[Command] Command:{command} Value:{Value}");
             return Value;
         }
-        public static string GetVariables(string Text, JObject JsonObject = null,bool DisableMotd= false)
+        public static string GetVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
         {
             if (!Text.Contains("%"))
             {
                 return Text.Replace("\\n", "\n");
             }
-            if (!DisableMotd&&Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
+            if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
             {
                 switch (Global.Settings.Server.Type)
                 {

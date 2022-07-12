@@ -59,11 +59,11 @@ namespace Serein.Settings
         {
             "g|唔……发生了一点小问题(っ °Д °;)っ\n请查看Serein错误弹窗获取更多信息"
         };
-        public string[] Motdpe_Success {get;set;}= new string[]
+        public string[] Motdpe_Success { get; set; } = new string[]
         {
             "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n游戏模式：%GameMode%\n延迟：%Delay%ms"
         };
-        public string[] Motdje_Success {get;set;}= new string[]
+        public string[] Motdje_Success { get; set; } = new string[]
         {
             "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Delay%ms"
         };

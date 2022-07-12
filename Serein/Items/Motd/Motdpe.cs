@@ -8,7 +8,7 @@ namespace Serein.Items.Motd
 {
     internal class Motdpe : Motd
     {
-        public Motdpe(string newip = "127.0.0.1", string  newPort = "19132")
+        public Motdpe(string newip = "127.0.0.1", string newPort = "19132")
         {
             Init(newip, newPort);
             int length = 0;
