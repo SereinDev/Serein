@@ -69,7 +69,7 @@
 
 ### 启动服务器
 ![服务器](imgs/console.png)
->#### ❕ Tips 
+>#### ⭐ Tips 
 >- [BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)**（推荐）**  
 >- [崩服 / 假死 / 卡顿情况排查与记录方法](https://www.minebbs.com/resources/bds.3403/)  
 >- [BDS服务端 与 LiteLoaderBDS 新手教程 & 常见问答](https://www.minebbs.com/threads/bds-liteloaderbds.10265/)
@@ -170,7 +170,7 @@
 ![正则](imgs/regex.png)
 
 正则数据保存在`data/regex.json`
->#### ❕ Tips 
+>#### ⭐ Tips 
 >- 将他人的记录复制在该文件中以合并添加他人的正则
 >- 直接将此文件分享给其他人供他人使用
 >- 将数据文件拖入窗口覆盖导入正则，但是要注意**此操作不可逆**
@@ -201,7 +201,7 @@
 一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。
 
 
->#### ❕ Tips 
+>#### ⭐ Tips 
 >- [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
 >- [C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
 
@@ -256,7 +256,7 @@
 ![定时任务](imgs/task.png)
 
 任务数据保存在`data/regex.json`
->#### ❕ Tips 
+>#### ⭐ Tips 
 >- 将他人的记录复制在该文件中以合并添加他人的任务
 >- 直接将此文件分享给其他人供他人使用
 >- 将数据文件拖入窗口覆盖导入任务，但是要注意**此操作不可逆**
@@ -265,7 +265,7 @@
 在任务表格中右键打开菜单
 - `添加任务`
 - `修改任务`
-  >#### ❕ Tips 
+  >#### ⭐ Tips 
   >在编辑窗口中你可以直接看到下一次的执行时间
 
   >#### ⚠ 提示
@@ -277,7 +277,7 @@
 ##### Cron表达式
 指定任务执行的时间和周期
 
->#### ❕ Tips 
+>#### ⭐ Tips 
 >生成器（推荐）：[Crontab guru](https://crontab.guru/)  
 >语法：[POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) ，[Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression) 
 

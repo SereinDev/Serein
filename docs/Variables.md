@@ -43,7 +43,7 @@
 >#### ⚠ 提示
 > 以下几种情况除`Status`可能会返回`-`  
 > - 服务器不在运行
-> - `Settings/Matches.json`设置有误，无法捕捉消息
+> - `settings/Matches.json`设置有误，无法捕捉消息
 
 | 变量名 | 描述 | 例子 |  
 | --- | --- | --- |
@@ -57,13 +57,14 @@
 
 ### 服务器Motd变量
 
->#### ❕ Tips 
+>#### ⭐ Tips 
 >使用以下变量前请确保设置中的服务器类型和本地端口与实际一致
 
 >#### ⚠ 提示
 > - 以下几种情况可能会返回`-`
->   - 服务器类型设置不正确
->   - 本地端口设置错误
+>   - 若非[事件](Event.md)中的变量
+>       - 服务器类型设置不正确
+>       - 本地端口设置错误
 >   - 服务器不在运行
 > - 其中
 >   - 由于Java服务器无法获取游戏模式，`GameMode`仅适用于基岩版服务器
@@ -73,12 +74,12 @@
 | 变量名 | 描述 | 例子 |  
 | --- | --- | --- |
 | MaxPlayer | 最大玩家数 | `10` |  
-| OnlinePlayer | 当前玩家数 | `1` |  
+| OnlinePlayer | 当前玩家数 | `0` |  
 | Description | 服务器介绍 | `Dedicated Server` |  
 | Version | 版本 | `1.19.1` |
 | Protocol | 协议版本 | `527` |  
 | GameMode | 游戏模式 | `Survival` |  
-| Delay | 延迟(ms)| `20` |
+| Delay | 延迟(ms)| `20.22` |
 | Original | Motd原文 | `MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;` |  
 
 ### 成员管理变量
