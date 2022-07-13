@@ -39,6 +39,31 @@ namespace Serein.Settings
                     );
                 SereinStreamWriter.Close();
                 SereinStreamWriter.Dispose();
+                try
+                {
+                    if (File.Exists(Global.SettingPath + "\\Matches.json"))
+                    {
+                        Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(
+                            File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)
+                            );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Global.Debug($"[Setting]Fail to update Matches.json: {e.Message}");
+                }
+                try{
+                    if (File.Exists(Global.SettingPath + "\\Event.json"))
+                    {
+                        Global.Settings.Event = JsonConvert.DeserializeObject<Event>(
+                            File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)
+                            );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Global.Debug($"[Setting]Fail to update Event.json: {e.Message}");
+                }
             }
         }
         public static void ReadSettings()
