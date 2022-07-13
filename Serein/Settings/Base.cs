@@ -52,7 +52,8 @@ namespace Serein.Settings
                 {
                     Global.Debug($"[Setting]Fail to update Matches.json: {e.Message}");
                 }
-                try{
+                try
+                {
                     if (File.Exists(Global.SettingPath + "\\Event.json"))
                     {
                         Global.Settings.Event = JsonConvert.DeserializeObject<Event>(
