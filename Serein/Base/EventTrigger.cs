@@ -1,6 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Serein.Items.Motd;
-
+﻿using Serein.Items.Motd;
+using System.Text.RegularExpressions;
 
 namespace Serein.Base
 {
@@ -45,7 +44,7 @@ namespace Serein.Base
                 {
                     Base.Command.Run(
                         4,
-                        Regex.Replace(Command, "%ID%", UserId.ToString()),
+                        Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
                         GroupId: GroupId
                         );
                 }
@@ -87,7 +86,7 @@ namespace Serein.Base
                 {
                     Base.Command.Run(
                         4,
-                        Regex.Replace(Command, "%ID%", UserId.ToString()),
+                        Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
                         GroupId: GroupId
                         );
                 }
@@ -145,6 +144,27 @@ namespace Serein.Base
                         Command_Copy,
                         GroupId: GroupId,
                         DisableMotd: true
+                        );
+                }
+            }
+            else if (Type.StartsWith("PermissionDenied_"))
+            {
+                switch (Type)
+                {
+                    case "PermissionDenied_Private":
+                        CommandGroup = Global.Settings.Event.PermissionDenied_Private;
+                        break;
+                    case "PermissionDenied_Group":
+                        CommandGroup = Global.Settings.Event.PermissionDenied_Group;
+                        break;
+                }
+                foreach (string Command in CommandGroup)
+                {
+                    Base.Command.Run(
+                        4,
+                        Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
+                        UserId: UserId,
+                        GroupId: GroupId
                         );
                 }
             }

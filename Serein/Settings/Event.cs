@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Serein.Settings
+﻿namespace Serein.Settings
 {
     internal class Event
     {
@@ -69,7 +67,15 @@ namespace Serein.Settings
         };
         public string[] Motd_Failure { get; set; } = new string[]
         {
-            "g|Motd获取失败\n%Exception%"
+            "g|Motd获取失败\n详细原因：%Exception%"
+        };
+        public string[] PermissionDenied_Private { get; set; } = new string[]
+        {
+            "p|你没有执行这个命令的权限"
+        };
+        public string[] PermissionDenied_Group { get; set; } = new string[]
+        {
+            "g|[CQ:at,qq=%ID%] 你没有执行这个命令的权限"
         };
     }
 }

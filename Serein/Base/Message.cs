@@ -78,9 +78,17 @@ namespace Serein.Base
                             }
                             if (!IsAdmin)
                             {
-                                continue;
+                                switch (Item.Area)
+                                {
+                                    case 2:
+                                        EventTrigger.Trigger("PermissionDenied_Group", GroupId, UserId);
+                                        break;
+                                    case 3:
+                                        EventTrigger.Trigger("PermissionDenied_Private", UserId: UserId);
+                                        break;
+                                }
                             }
-                            if (Item.Area == 2 && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
+                            else if (Item.Area == 2 && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
                                     1,
