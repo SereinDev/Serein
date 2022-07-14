@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Serein.Items.Motd;
 
 
@@ -7,7 +6,12 @@ namespace Serein.Base
 {
     internal class EventTrigger
     {
-        public static void Trigger(string Type, long GroupId = -1, long UserId = -1, Motd motd = null)
+        public static void Trigger(
+            string Type,
+            long GroupId = -1,
+            long UserId = -1,
+            Motd motd = null
+            )
         {
             Global.Debug("[EventTrigger] Trigger:" + Type);
             string[] CommandGroup = new string[] { };

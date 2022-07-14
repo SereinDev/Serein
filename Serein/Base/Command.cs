@@ -100,7 +100,7 @@ namespace Serein.Base
             {
                 Websocket.Send(true, Value, UserId);
             }
-            else if ((InputType == 1 || InputType == 4) && Type == 20 && GroupId != -1)
+            else if (InputType == 1 && Type == 20 && GroupId != -1)
             {
                 Members.Bind(
                     JsonObject,
