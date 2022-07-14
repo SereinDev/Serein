@@ -96,7 +96,7 @@ namespace Serein.Base
             {
                 Websocket.Send(false, Value, GroupId);
             }
-            else if ((InputType == 1|| InputType == 4) && Type == 14 && Websocket.Status)
+            else if ((InputType == 1 || InputType == 4) && Type == 14 && Websocket.Status)
             {
                 Websocket.Send(true, Value, UserId);
             }
