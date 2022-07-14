@@ -41,54 +41,26 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
-        public static void Run(string Command, Match InputMatch = null, long Default = -1, bool DisableMotd = false)
+        public static void Run(
+            int InputType, 
+            string Command, 
+            JObject JsonObject = null, 
+            Match MsgMatch = null, 
+            long UserId = -1,
+            long GroupId = -1,
+            bool DisableMotd=false
+            )
         {
-            if (Default == -1 && Global.Settings.Bot.GroupList.Count >= 1)
+            /*
+                1   QQ消息
+                2   控制台输出
+                3   定时任务
+                4   EventTrigger
+            */
+            if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
-                Default = Global.Settings.Bot.GroupList[0];
+                GroupId = Global.Settings.Bot.GroupList[0];
             }
-            int Type = GetType(Command);
-            if (Type == -1)
-            {
-                return;
-            }
-            string Value = GetValue(Command, InputMatch);
-            Value = GetVariables(Value, DisableMotd: DisableMotd);
-            if (Type == 1)
-            {
-                new Task(() =>
-                {
-                    StartCmd(Value);
-                }).Start();
-            }
-            else if (Type == 2)
-            {
-                Server.InputCommand(Value, true);
-            }
-            else if (Type == 3)
-            {
-                Server.InputCommand(Value, true, true);
-            }
-            else if (Type == 11 && Websocket.Status)
-            {
-                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
-            }
-            else if (Type == 12 && Websocket.Status)
-            {
-                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
-            }
-            else if (Type == 13 && Websocket.Status && Default != -1)
-            {
-                Websocket.Send(false, Value, Default);
-            }
-            else if (Type == 50)
-            {
-                Global.Debug("[DebugOutput]" + Value);
-            }
-        }
-
-        public static void Run(JObject JsonObject, string Command, Match MsgMatch, long UserId, long GroupId = -1)
-        {
             int Type = GetType(Command);
             if (Type == -1)
             {
@@ -98,10 +70,7 @@ namespace Serein.Base
             Value = GetVariables(Value, JsonObject);
             if (Type == 1)
             {
-                new Task(() =>
-                {
-                    StartCmd(Value);
-                }).Start();
+                new Task(() => StartCmd(Value)).Start();
             }
             else if (Type == 2)
             {
@@ -127,11 +96,11 @@ namespace Serein.Base
             {
                 Websocket.Send(false, Value, GroupId);
             }
-            else if (Type == 14 && Websocket.Status)
+            else if (InputType == 1 && Type == 14 && Websocket.Status)
             {
                 Websocket.Send(true, Value, UserId);
             }
-            else if (Type == 20 && GroupId != -1)
+            else if ((InputType == 1 || InputType == 4) && Type == 20 && GroupId != -1)
             {
                 Members.Bind(
                     JsonObject,
@@ -140,13 +109,13 @@ namespace Serein.Base
                     GroupId
                     );
             }
-            else if (Type == 21 && GroupId != -1)
+            else if ((InputType == 1 || InputType == 4) && Type == 21 && GroupId != -1)
             {
                 Members.UnBind(
                     long.TryParse(Value, out long i) ? i : -1, GroupId
                     );
             }
-            else if (Type == 30 && GroupId != -1)
+            else if (InputType == 1 && Type == 30 && GroupId != -1)
             {
                 Motd motd = new Motdpe(Value);
                 EventTrigger.Trigger(
@@ -154,7 +123,7 @@ namespace Serein.Base
                     GroupId,
                     motd: motd);
             }
-            else if (Type == 31 && GroupId != -1)
+            else if (InputType == 1 && Type == 31 && GroupId != -1)
             {
                 Motd motd = new Motdje(Value);
                 EventTrigger.Trigger(
@@ -166,7 +135,7 @@ namespace Serein.Base
             {
                 Global.Debug("[DebugOutput]" + Value);
             }
-            if (Type != 20 && Type != 21 && GroupId != -1)
+            if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
             {
                 Members.Update(JsonObject, UserId);
             }
@@ -258,17 +227,16 @@ namespace Serein.Base
 
             return -1;
         }
-        public static string GetValue(string command, Match MsgMatch)
+        public static string GetValue(string command, Match MsgMatch=null)
         {
             int index = command.IndexOf('|');
             string Value = command.Substring(index + 1);
-            if (MsgMatch == null)
+            if (MsgMatch != null)
             {
-                return Value;
-            }
-            for (int i = MsgMatch.Groups.Count; i >= 0; i--)
-            {
-                Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
+                for (int i = MsgMatch.Groups.Count; i >= 0; i--)
+                {
+                    Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
+                }
             }
             Global.Debug($"[Command] Command:{command} Value:{Value}");
             return Value;

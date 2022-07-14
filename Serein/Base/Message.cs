@@ -18,7 +18,11 @@ namespace Serein.Base
                 }
                 if (Regex.IsMatch(CommandLine, Item.Regex))
                 {
-                    Command.Run(Item.Command, Regex.Match(CommandLine, Item.Regex));
+                    Command.Run(
+                        2,
+                        Item.Command, 
+                        MsgMatch:Regex.Match(CommandLine, Item.Regex)
+                        );
                 }
             }
         }
@@ -79,8 +83,9 @@ namespace Serein.Base
                             if (Item.Area == 2 && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
-                                    JsonObject,
+                                    1,
                                     Item.Command,
+                                    JsonObject,
                                     Regex.Match(
                                         JsonObject["raw_message"].ToString(),
                                         Item.Regex
@@ -92,8 +97,9 @@ namespace Serein.Base
                             else if (Item.Area == 3 && MessageType == "private")
                             {
                                 Command.Run(
-                                    JsonObject,
+                                    1,
                                     Item.Command,
+                                    JsonObject,
                                     Regex.Match(
                                         JsonObject["raw_message"].ToString(),
                                         Item.Regex
@@ -107,8 +113,9 @@ namespace Serein.Base
                             if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                             {
                                 Command.Run(
-                                    JsonObject,
+                                    1,
                                     Item.Command,
+                                    JsonObject,
                                     Regex.Match(
                                         JsonObject["raw_message"].ToString(),
                                         Item.Regex
@@ -120,8 +127,9 @@ namespace Serein.Base
                             else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
                             {
                                 Command.Run(
-                                    JsonObject,
+                                    1,
                                     Item.Command,
+                                    JsonObject,
                                     Regex.Match(
                                         JsonObject["raw_message"].ToString(),
                                         Item.Regex

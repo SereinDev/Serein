@@ -40,8 +40,9 @@ namespace Serein.Base
                 foreach (string Command in CommandGroup)
                 {
                     Base.Command.Run(
+                        4,
                         Regex.Replace(Command, "%ID%", UserId.ToString()),
-                        Default: GroupId
+                        GroupId: GroupId
                         );
                 }
             }
@@ -61,7 +62,7 @@ namespace Serein.Base
                 }
                 foreach (string Command in CommandGroup)
                 {
-                    Base.Command.Run(Command);
+                    Base.Command.Run(4,Command);
                 }
             }
             else if (Type.StartsWith("Group_"))
@@ -81,8 +82,9 @@ namespace Serein.Base
                 foreach (string Command in CommandGroup)
                 {
                     Base.Command.Run(
+                        4,
                         Regex.Replace(Command, "%ID%", UserId.ToString()),
-                        Default: GroupId
+                        GroupId: GroupId
                         );
                 }
             }
@@ -91,7 +93,10 @@ namespace Serein.Base
                 CommandGroup = Global.Settings.Event.Serein_Crash;
                 foreach (string Command in CommandGroup)
                 {
-                    Base.Command.Run(Command);
+                    Base.Command.Run(
+                        4,
+                        Command
+                        );
                 }
             }
             else if (Type.StartsWith("Motd"))
@@ -108,8 +113,9 @@ namespace Serein.Base
                         foreach (string Command in Global.Settings.Event.Motd_Failure)
                         {
                             Base.Command.Run(
+                                4,
                                 Regex.Replace(Command, "%Exception%", motd.Exception, RegexOptions.IgnoreCase),
-                                Default: GroupId,
+                                GroupId: GroupId,
                                 DisableMotd: true
                                 );
                         }
@@ -131,8 +137,9 @@ namespace Serein.Base
                         Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
                     }
                     Base.Command.Run(
+                        4,
                         Command_Copy,
-                        Default: GroupId,
+                        GroupId: GroupId,
                         DisableMotd: true
                         );
                 }
