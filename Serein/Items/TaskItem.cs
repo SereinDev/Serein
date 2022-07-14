@@ -20,7 +20,7 @@ namespace Serein.Items
         {
             Task RunTask = new Task(() =>
             {
-                Base.Command.Run(3,Command);
+                Base.Command.Run(3, Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                 NextTime = Occurrences[0];
             }

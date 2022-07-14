@@ -62,7 +62,7 @@ namespace Serein.Base
                 }
                 foreach (string Command in CommandGroup)
                 {
-                    Base.Command.Run(4,Command);
+                    Base.Command.Run(4, Command);
                 }
             }
             else if (Type.StartsWith("Group_"))

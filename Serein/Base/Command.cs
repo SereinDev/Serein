@@ -42,13 +42,13 @@ namespace Serein.Base
             CMDProcess.Close();
         }
         public static void Run(
-            int InputType, 
-            string Command, 
-            JObject JsonObject = null, 
-            Match MsgMatch = null, 
+            int InputType,
+            string Command,
+            JObject JsonObject = null,
+            Match MsgMatch = null,
             long UserId = -1,
             long GroupId = -1,
-            bool DisableMotd=false
+            bool DisableMotd = false
             )
         {
             /*
@@ -227,7 +227,7 @@ namespace Serein.Base
 
             return -1;
         }
-        public static string GetValue(string command, Match MsgMatch=null)
+        public static string GetValue(string command, Match MsgMatch = null)
         {
             int index = command.IndexOf('|');
             string Value = command.Substring(index + 1);

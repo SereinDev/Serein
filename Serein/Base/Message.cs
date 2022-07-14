@@ -20,8 +20,8 @@ namespace Serein.Base
                 {
                     Command.Run(
                         2,
-                        Item.Command, 
-                        MsgMatch:Regex.Match(CommandLine, Item.Regex)
+                        Item.Command,
+                        MsgMatch: Regex.Match(CommandLine, Item.Regex)
                         );
                 }
             }
