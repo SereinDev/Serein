@@ -1,6 +1,6 @@
 name: Build
 
-on: 
+on:
   push:
     paths:
       - '**.cs'
@@ -73,13 +73,13 @@ jobs:
       - name: Upload Serein(Release .Net Framework 4.7.2)
         uses: actions/upload-artifact@v3
         with:
-          name: .Net Framework 4.7.2
+          name: .NET_Framework_4.7.2
           path: ${{ github.workspace }}\Serein\bin\Release\net472
 
       - name: Upload Serein(Release Net6.0)
         uses: actions/upload-artifact@v3
         with:
-          name: Net6.0
+          name: NET_6.0
           path: ${{ github.workspace }}\Serein\bin\Release\net6.0-windows
 
       - name: Build the solution(Debug)

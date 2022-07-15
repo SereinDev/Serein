@@ -1,15 +1,26 @@
-![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light)
-
-![GitHub Stars](https://img.shields.io/github/stars/Zaitonn/Serein?style=for-the-badge&color=red)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Zaitonn/Serein?style=for-the-badge&color=orange)](https://github.com/Zaitonn/Serein/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/zaitonn/Serein?color=yellow&style=for-the-badge)](https://github.com/Zaitonn/Serein/blob/main/LICENSE)
-[![GitHub all releases](https://img.shields.io/github/downloads/Zaitonn/Serein/total?style=for-the-badge)](https://github.com/Zaitonn/Serein/releases/latest)
-[![GitHub bulid](https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?style=for-the-badge)](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)
-[![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein?style=for-the-badge)](https://github.com/Zaitonn/Serein)
+<p align="center">
+    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light">
+    <br>
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
+    <a href="https://github.com/Zaitonn/Serein/releases/latest">
+        <img src="https://img.shields.io/github/v/release/Zaitonn/Serein?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/releases/latest">
+        <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml">
+    <img alt="GitHub bulid" src="https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein">
+        <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">
+    </a>
+    <a href="https://www.codefactor.io/repository/github/zaitonn/serein">
+        <img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/Zaitonn/Serein/main?color=blue">
+    </a>
+</p>
 
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板 
-
 - **下载最新版：[https://github.com/Zaitonn/Serein/releases/latest](https://github.com/Zaitonn/Serein/releases/latest)**
 - Github仓库：[https://github.com/Zaitonn/Serein](https://github.com/Zaitonn/Serein)
 - Minebbs：[https://www.minebbs.com/resources/serein.4169/](https://www.minebbs.com/resources/serein.4169/)

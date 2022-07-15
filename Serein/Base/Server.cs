@@ -278,7 +278,6 @@ namespace Serein.Base
                         new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
                     }
                 }
-
             }
         }
         private static void WaitForExit()

@@ -111,7 +111,6 @@ namespace Serein.Base
                         if (Items[0].ForeColor == Color.Gray)
                         {
                             File.Delete(PluginPath + "\\" + Items[0].Text + ".lock");
-
                         }
                         else
                         {

@@ -178,6 +178,5 @@ namespace Serein.Ui
                 BotInfoTime2.Invoke(actionDelegate, NewText);
             }
         }
-
     }
 }

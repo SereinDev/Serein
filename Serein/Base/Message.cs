@@ -51,15 +51,12 @@ namespace Serein.Base
                 {
                     if (
                         string.IsNullOrEmpty(Item.Regex) ||
-                        Item.Area <= 1)
-                    {
-                        continue;
-                    }
-                    if (
+                        Item.Area <= 1||
                         !(
                             IsSelfMessage && Item.Area == 4 ||
                             !IsSelfMessage && Item.Area != 4
-                        ))
+                        )
+                        )
                     {
                         continue;
                     }
@@ -67,15 +64,10 @@ namespace Serein.Base
                     {
                         if (Item.IsAdmin && !IsSelfMessage)
                         {
-                            bool IsAdmin = false;
-                            if (Global.Settings.Bot.PermissionList.Contains(UserId))
-                            {
-                                IsAdmin = true;
-                            }
-                            else if (Global.Settings.Bot.GivePermissionToAllAdmin && (JsonObject["sender"]["role"].ToString() == "admin" || JsonObject["sender"]["role"].ToString() == "owner"))
-                            {
-                                IsAdmin = true;
-                            }
+                            bool IsAdmin = Global.Settings.Bot.PermissionList.Contains(UserId) ||
+                                Global.Settings.Bot.GivePermissionToAllAdmin && (
+                                JsonObject["sender"]["role"].ToString() == "admin" ||
+                                JsonObject["sender"]["role"].ToString() == "owner");
                             if (!IsAdmin)
                             {
                                 switch (Item.Area)
@@ -201,9 +193,7 @@ namespace Serein.Base
                         EventTrigger.Trigger("Group_Poke", GroupId, UserId);
                     }
                 }
-
             }
         }
     }
 }
-

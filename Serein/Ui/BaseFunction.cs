@@ -280,7 +280,7 @@ namespace Serein.Ui
         }
         private void UpdateVersion()
         {
-            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
+            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}\r\n";
             UpdateStatusLabel(Global.VERSION);
             DebugTextBox.Text = Global.VERSION;
         }

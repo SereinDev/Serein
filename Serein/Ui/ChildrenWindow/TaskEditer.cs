@@ -47,7 +47,6 @@ namespace Serein.Ui.ChildrenWindow
             {
                 MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
         private void Cron_TextChanged(object sender, EventArgs e)

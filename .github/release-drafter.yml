@@ -2,9 +2,9 @@ name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  ## Changes
+  ## Changes in v$RESOLVED_VERSION
   ### 🚀 新功能|Features
-  
+
   ### 🐛 修复|Bug Fixes
 
   ### 📃 文档|Docs
@@ -12,5 +12,5 @@ template: |
   ### 🧰 其他|Maintenance
 
   ---
-  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/$PREVIOUS_TAG/total)   
+  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/v$RESOLVED_VERSION/total)
   > [如何选择不同Net的版本](https://zaitonn.github.io/Serein/Tutorial.html#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8Cnet%E7%9A%84%E7%89%88%E6%9C%AC)

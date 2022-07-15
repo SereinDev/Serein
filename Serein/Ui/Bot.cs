@@ -27,5 +27,4 @@ namespace Serein.Ui
             Websocket.Close();
         }
     }
-
 }

@@ -68,79 +68,81 @@ namespace Serein.Base
             }
             string Value = GetValue(Command, MsgMatch);
             Value = GetVariables(Value, JsonObject);
-            if (Type == 1)
+            switch (Type)
             {
-                new Task(() => StartCmd(Value)).Start();
-            }
-            else if (Type == 2)
-            {
-                Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
-                Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                Server.InputCommand(Value, true);
-            }
-            else if (Type == 3)
-            {
-                Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
-                Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                Server.InputCommand(Value, true, true);
-            }
-            else if (Type == 11 && Websocket.Status)
-            {
-                Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
-            }
-            else if (Type == 12 && Websocket.Status)
-            {
-                Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
-            }
-            else if (Type == 13 && Websocket.Status)
-            {
-                Websocket.Send(false, Value, GroupId);
-            }
-            else if ((InputType == 1 || InputType == 4) && Type == 14 && Websocket.Status)
-            {
-                Websocket.Send(true, Value, UserId);
-            }
-            else if (InputType == 1 && Type == 20 && GroupId != -1)
-            {
-                Members.Bind(
-                    JsonObject,
-                    Value,
-                    UserId,
-                    GroupId
-                    );
-            }
-            else if ((InputType == 1 || InputType == 4) && Type == 21 && GroupId != -1)
-            {
-                Members.UnBind(
-                    long.TryParse(Value, out long i) ? i : -1, GroupId
-                    );
-            }
-            else if (InputType == 1 && Type == 30 && GroupId != -1)
-            {
-                Motd motd = new Motdpe(Value);
-                EventTrigger.Trigger(
-                    motd.Success ? "Motdpe_Success" : "Motd_Failure",
-                    GroupId,
-                    motd: motd);
-            }
-            else if (InputType == 1 && Type == 31 && GroupId != -1)
-            {
-                Motd motd = new Motdje(Value);
-                EventTrigger.Trigger(
-                    motd.Success ? "Motdje_Success" : "Motd_Failure",
-                    GroupId,
-                    motd: motd);
-            }
-            else if (Type == 50)
-            {
-                Global.Debug("[DebugOutput]" + Value);
+                case 1:
+                    new Task(() => StartCmd(Value)).Start();
+                    break;
+                case 2:
+                    Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
+                    Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
+                    Server.InputCommand(Value, true);
+                    break;
+                case 3:
+                    Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
+                    Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
+                    Server.InputCommand(Value, true, true);
+                    break;
+                case 11:
+                    if (Websocket.Status)
+                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                    break;
+                case 12:
+                    if (Websocket.Status)
+                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                    break;
+                case 13:
+                    if (Websocket.Status)
+                        Websocket.Send(false, Value, GroupId);
+                    break;
+                case 14:
+                    if ((InputType == 1 || InputType == 4) && Websocket.Status)
+                        Websocket.Send(true, Value, UserId);
+                    break;
+                case 20:
+                    if ((InputType == 1 || InputType == 4) && GroupId != -1)
+                        Members.Bind(
+                            JsonObject,
+                            Value,
+                            UserId,
+                            GroupId
+                            );
+                    break;
+                case 21:
+                    if ((InputType == 1 || InputType == 4) && GroupId != -1)
+                        Members.UnBind(
+                            long.TryParse(Value, out long i) ? i : -1, GroupId
+                            );
+                    break;
+                case 30:
+                    if (InputType == 1 && GroupId != -1)
+                    {
+                        Motd motd = new Motdpe(Value);
+                        EventTrigger.Trigger(
+                            motd.Success ? "Motdpe_Success" : "Motd_Failure",
+                            GroupId,
+                            motd: motd);
+                    }
+                    break;
+                case 31:
+                    if (InputType == 1 && GroupId != -1)
+                    {
+                        Motd motd = new Motdje(Value);
+                        EventTrigger.Trigger(
+                            motd.Success ? "Motdje_Success" : "Motd_Failure",
+                            GroupId,
+                            motd: motd);
+                    }
+                    break;
+                case 50:
+                    Global.Debug("[DebugOutput]" + Value);
+                    break;
             }
             if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
             {
                 Members.Update(JsonObject, UserId);
             }
         }
-
         public static int GetType(string Command)
         {
             /*

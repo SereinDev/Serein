@@ -88,7 +88,6 @@ namespace Serein.Ui
         private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
         {
             Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-
         }
         private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
         {
@@ -119,7 +118,6 @@ namespace Serein.Ui
                 SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
                 SettingBotGroupList.ScrollToCaret();
             }
-
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
@@ -199,11 +197,9 @@ namespace Serein.Ui
         {
             Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Help") { UseShellExecute = true });
         }
-
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial") { UseShellExecute = true });
-
         }
         private void SettingSereinDownload_Click(object sender, EventArgs e)
         {

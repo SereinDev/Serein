@@ -11,7 +11,6 @@ using System.Windows.Forms;
 
 namespace Serein
 {
-
     /*
      *  ____ 
      * /\  _`\                        __            
@@ -34,7 +33,6 @@ namespace Serein
         [STAThread]
         private static void Main(string[] args)
         {
-
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
