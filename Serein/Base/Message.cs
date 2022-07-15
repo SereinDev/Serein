@@ -51,7 +51,7 @@ namespace Serein.Base
                 {
                     if (
                         string.IsNullOrEmpty(Item.Regex) ||
-                        Item.Area <= 1||
+                        Item.Area <= 1 ||
                         !(
                             IsSelfMessage && Item.Area == 4 ||
                             !IsSelfMessage && Item.Area != 4
