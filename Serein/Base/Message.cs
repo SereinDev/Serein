@@ -60,8 +60,8 @@ namespace Serein.Base
                         !(
                             IsSelfMessage && Item.Area == 4 ||
                             !IsSelfMessage && Item.Area != 4
-                        )||
-                        MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId)||
+                        ) ||
+                        MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
                         !Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex)
                         )
                     {
@@ -91,7 +91,7 @@ namespace Serein.Base
                     }
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
-                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" )
+                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                         {
                             Command.Run(
                                 1,

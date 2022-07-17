@@ -35,14 +35,14 @@ namespace Serein.Base
                 return list;
             }
         }
-        private static List<MemberItem> MemberItems 
-        { 
+        private static List<MemberItem> MemberItems
+        {
             get
             {
                 List<MemberItem> TempList = new List<MemberItem>();
                 Global.MemberItems.ForEach(i => TempList.Add(i));
                 return TempList;
-            } 
+            }
         }
         public static void Load()
         {
