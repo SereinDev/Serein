@@ -253,7 +253,7 @@ namespace Serein.Ui
                     MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    Plugins.Add(FileList);
+                    PluginManager.Add(FileList);
                     LoadPlugins();
                 }
                 else if (FileList.Count == 0 && data.Length > 0)
@@ -280,9 +280,9 @@ namespace Serein.Ui
         }
         private void UpdateVersion()
         {
-            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}\r\n";
+            SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
             UpdateStatusLabel(Global.VERSION);
-            DebugTextBox.Text = Global.VERSION;
+            DebugTextBox.Text = Global.VERSION+ "\r\n";
         }
         private void UpdateStatusLabel(string Text)
         {

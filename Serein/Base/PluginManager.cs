@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Serein.Base
 {
-    internal partial class Plugins
+    internal partial class PluginManager
     {
         public static string PluginPath = string.Empty;
         public static bool Available = true;

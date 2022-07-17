@@ -12,12 +12,12 @@ namespace Serein.Ui
     {
         private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            Plugins.Add();
+            PluginManager.Add();
             LoadPlugins();
         }
         private void PluginContextMenuStripRemove_Click(object sender, EventArgs e)
         {
-            Plugins.Remove(PluginList.SelectedItems);
+            PluginManager.Remove(PluginList.SelectedItems);
             LoadPlugins();
         }
         private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace Serein.Ui
         }
         private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            if (!Plugins.Available)
+            if (!PluginManager.Available)
             {
                 PluginContextMenuStripAdd.Enabled = false;
                 PluginContextMenuStripShow.Enabled = false;
@@ -83,12 +83,12 @@ namespace Serein.Ui
         }
         private void PluginContextMenuStripEnable_Click(object sender, EventArgs e)
         {
-            Plugins.Enable(PluginList.SelectedItems);
+            PluginManager.Enable(PluginList.SelectedItems);
             LoadPlugins();
         }
         private void PluginContextMenuStripDisable_Click(object sender, EventArgs e)
         {
-            Plugins.Disable(PluginList.SelectedItems);
+            PluginManager.Disable(PluginList.SelectedItems);
             LoadPlugins();
         }
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
@@ -97,19 +97,19 @@ namespace Serein.Ui
             {
                 Arguments = PluginList.SelectedItems.Count >= 1
                 ? PluginList.SelectedItems[0].ForeColor == System.Drawing.Color.Gray
-                    ? $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}.lock\""
-                    : $"/e,/select,\"{Plugins.PluginPath}\\{PluginList.SelectedItems[0].Text}\""
-                : $"/e,\"{Plugins.PluginPath}\""
+                    ? $"/e,/select,\"{PluginManager.PluginPath}\\{PluginList.SelectedItems[0].Text}.lock\""
+                    : $"/e,/select,\"{PluginManager.PluginPath}\\{PluginList.SelectedItems[0].Text}\""
+                : $"/e,\"{PluginManager.PluginPath}\""
             };
             Process.Start(psi);
         }
         public void LoadPlugins()
         {
-            if (Plugins.Get() != null)
+            if (PluginManager.Get() != null)
             {
                 PluginList.BeginUpdate();
                 PluginList.Clear();
-                string[] Files = Plugins.Get();
+                string[] Files = PluginManager.Get();
                 ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
                 ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);

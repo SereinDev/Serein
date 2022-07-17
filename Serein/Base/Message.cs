@@ -60,83 +60,57 @@ namespace Serein.Base
                     {
                         continue;
                     }
+                    //Global.Debug($"[ProcessMsgFromBot] {JsonConvert.SerializeObject(Item)}");
+                    if (
+                        !(Global.Settings.Bot.PermissionList.Contains(UserId) ||
+                        Global.Settings.Bot.GivePermissionToAllAdmin &&
+                        MessageType == "group" && (
+                            JsonObject["sender"]["role"].ToString() == "admin" ||
+                            JsonObject["sender"]["role"].ToString() == "owner")
+                        ) && 
+                        Item.IsAdmin && 
+                        !IsSelfMessage
+                        )
+                    {
+                        switch (Item.Area)
+                        {
+                            case 2:
+                                EventTrigger.Trigger("PermissionDenied_Group", GroupId, UserId);
+                                break;
+                            case 3:
+                                EventTrigger.Trigger("PermissionDenied_Private", UserId: UserId);
+                                break;
+                        }
+                        continue;
+                    }
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
-                        if (Item.IsAdmin && !IsSelfMessage)
+                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
                         {
-                            bool IsAdmin = Global.Settings.Bot.PermissionList.Contains(UserId) ||
-                                Global.Settings.Bot.GivePermissionToAllAdmin && (
-                                JsonObject["sender"]["role"].ToString() == "admin" ||
-                                JsonObject["sender"]["role"].ToString() == "owner");
-                            if (!IsAdmin)
-                            {
-                                switch (Item.Area)
-                                {
-                                    case 2:
-                                        EventTrigger.Trigger("PermissionDenied_Group", GroupId, UserId);
-                                        break;
-                                    case 3:
-                                        EventTrigger.Trigger("PermissionDenied_Private", UserId: UserId);
-                                        break;
-                                }
-                            }
-                            else if (Item.Area == 2 && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
-                            {
-                                Command.Run(
-                                    1,
-                                    Item.Command,
-                                    JsonObject,
-                                    Regex.Match(
-                                        JsonObject["raw_message"].ToString(),
-                                        Item.Regex
-                                    ),
-                                    UserId,
-                                    GroupId
-                                );
-                            }
-                            else if (Item.Area == 3 && MessageType == "private")
-                            {
-                                Command.Run(
-                                    1,
-                                    Item.Command,
-                                    JsonObject,
-                                    Regex.Match(
-                                        JsonObject["raw_message"].ToString(),
-                                        Item.Regex
-                                        ),
-                                    UserId
-                                );
-                            }
+                            Command.Run(
+                                1,
+                                Item.Command,
+                                JsonObject,
+                                Regex.Match(
+                                    JsonObject["raw_message"].ToString(),
+                                    Item.Regex
+                                ),
+                                UserId,
+                                GroupId
+                            );
                         }
-                        else
+                        else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
                         {
-                            if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
-                            {
-                                Command.Run(
-                                    1,
-                                    Item.Command,
-                                    JsonObject,
-                                    Regex.Match(
-                                        JsonObject["raw_message"].ToString(),
-                                        Item.Regex
+                            Command.Run(
+                                1,
+                                Item.Command,
+                                JsonObject,
+                                Regex.Match(
+                                    JsonObject["raw_message"].ToString(),
+                                    Item.Regex
                                     ),
-                                    UserId,
-                                    GroupId
-                                );
-                            }
-                            else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
-                            {
-                                Command.Run(
-                                    1,
-                                    Item.Command,
-                                    JsonObject,
-                                    Regex.Match(
-                                        JsonObject["raw_message"].ToString(),
-                                        Item.Regex
-                                        ),
-                                    UserId
-                                );
-                            }
+                                UserId
+                            );
                         }
                     }
                 }

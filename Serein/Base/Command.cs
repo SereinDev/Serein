@@ -57,6 +57,7 @@ namespace Serein.Base
                 3   定时任务
                 4   EventTrigger
             */
+            Global.Debug($"[Command:Run()] InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
                 GroupId = Global.Settings.Bot.GroupList[0];
@@ -135,7 +136,7 @@ namespace Serein.Base
                     }
                     break;
                 case 50:
-                    Global.Debug("[DebugOutput]" + Value);
+                    Global.Debug("[DebugOutput] " + Value);
                     break;
             }
             if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
@@ -226,7 +227,6 @@ namespace Serein.Base
             {
                 return 50;
             }
-
             return -1;
         }
         public static string GetValue(string command, Match MsgMatch = null)
@@ -240,7 +240,7 @@ namespace Serein.Base
                     Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
                 }
             }
-            Global.Debug($"[Command] Command:{command} Value:{Value}");
+            Global.Debug($"[Command:GetValue()] Value:{Value}");
             return Value;
         }
         public static string GetVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
@@ -304,7 +304,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Command:GetVariables()]{e.Message}");
+                    Global.Debug($"[Command:GetVariables()] {e.Message}");
                 }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
