@@ -92,8 +92,9 @@
 
 | 变量名 | 描述 | 例子 |  
 | --- | --- | --- |
-| ID:`<GameID>` | 获取绑定的游戏ID为指定值的用户ID | `114514` |
-| GameID:`<ID>` | 获取绑定的用户ID为指定值的游戏ID | `Zaitonn` |
+| ID:`<GameID>` | 获取绑定的游戏ID对应的ID | `114514` |
+| GameID | 获取当前账号对应的游戏ID | `Default` |
+| GameID:`<ID>` | 获取绑定的用户ID对应的游戏ID | `Zaitonn` |
 
 ### 消息变量（私聊）
 

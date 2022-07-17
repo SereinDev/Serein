@@ -16,7 +16,7 @@ namespace Serein.Base
             get
             {
                 List<long> list = new List<long>();
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     list.Add(Item.ID);
                 }
@@ -28,12 +28,21 @@ namespace Serein.Base
             get
             {
                 List<string> list = new List<string>();
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     list.Add(Item.GameID);
                 }
                 return list;
             }
+        }
+        private static List<MemberItem> MemberItems 
+        { 
+            get
+            {
+                List<MemberItem> TempList = new List<MemberItem>();
+                Global.MemberItems.ForEach(i => TempList.Add(i));
+                return TempList;
+            } 
         }
         public static void Load()
         {
@@ -94,7 +103,7 @@ namespace Serein.Base
                 );
             JObject ListJObject = new JObject();
             JArray ListJArray = new JArray();
-            foreach (MemberItem Item in Global.MemberItems)
+            foreach (MemberItem Item in MemberItems)
             {
                 ListJArray.Add(JObject.FromObject(Item));
             }
@@ -142,7 +151,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     if (Item.ID == UserId && Global.MemberItems.Remove(Item))
                     {
@@ -161,7 +170,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     if (Item.ID == UserId)
                     {
@@ -179,7 +188,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     if (Item.GameID == GameID)
                     {
@@ -193,7 +202,7 @@ namespace Serein.Base
         {
             if (IDs.Contains(UserId))
             {
-                foreach (MemberItem Item in Global.MemberItems)
+                foreach (MemberItem Item in MemberItems)
                 {
                     if (Item.ID == UserId && Global.MemberItems.Remove(Item))
                     {

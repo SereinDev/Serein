@@ -54,6 +54,7 @@ Win7或WinServer2012以上
 
 | Supporters | 发电金额 |日期|
 |---- |----: |----|
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.17|
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.10|
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
 

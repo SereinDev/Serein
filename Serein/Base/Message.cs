@@ -26,13 +26,18 @@ namespace Serein.Base
                 }
             }
         }
-        public static void ProcessMsgFromBot(string Json)
+        public static void ProcessMsgFromBot(string Msg)
         {
+            string Json = Msg ?? "";
             Json = Json.Replace("&#44;", ",");
             Json = Json.Replace("&amp;", "#");
             Json = Json.Replace("&#91;", "[");
             Json = Json.Replace("&#93;", "]");
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
+            if (JsonObject["post_type"] == null)
+            {
+                return;
+            }
             if (
                 JsonObject["post_type"].ToString() == "message" ||
                 JsonObject["post_type"].ToString() == "message_sent"
@@ -55,12 +60,13 @@ namespace Serein.Base
                         !(
                             IsSelfMessage && Item.Area == 4 ||
                             !IsSelfMessage && Item.Area != 4
-                        )
+                        )||
+                        MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId)||
+                        !Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex)
                         )
                     {
                         continue;
                     }
-                    //Global.Debug($"[ProcessMsgFromBot] {JsonConvert.SerializeObject(Item)}");
                     if (
                         !(Global.Settings.Bot.PermissionList.Contains(UserId) ||
                         Global.Settings.Bot.GivePermissionToAllAdmin &&
@@ -85,7 +91,7 @@ namespace Serein.Base
                     }
                     if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
                     {
-                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
+                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group" )
                         {
                             Command.Run(
                                 1,
