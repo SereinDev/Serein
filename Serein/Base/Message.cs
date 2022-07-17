@@ -67,8 +67,8 @@ namespace Serein.Base
                         MessageType == "group" && (
                             JsonObject["sender"]["role"].ToString() == "admin" ||
                             JsonObject["sender"]["role"].ToString() == "owner")
-                        ) && 
-                        Item.IsAdmin && 
+                        ) &&
+                        Item.IsAdmin &&
                         !IsSelfMessage
                         )
                     {
