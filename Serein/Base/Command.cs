@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MSScriptControl;
+using Jint;
 using Microsoft.CSharp;
 
 namespace Serein.Base
@@ -141,13 +141,9 @@ namespace Serein.Base
                     string str = string.Empty;
                     try
                     {
-                        ScriptControl scriptControl = new ScriptControl()
-                        {
-                            UseSafeSubset = true,
-                            Language = "JScript"
-                        };
-                        scriptControl.AddCode("function a(){return 10;}");
-                        str = scriptControl.Eval("a()").ToString();
+                        var engine = new Engine();
+                        engine.SetValue("log", new Action<object>(Global.Debug));
+                        engine.Execute($"log({Value});");
                     }
                     catch (Exception ex)
                     {
