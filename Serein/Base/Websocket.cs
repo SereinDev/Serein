@@ -17,9 +17,9 @@ namespace Serein.Base
         private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         private static bool Restart = false;
-        public static void Connect(bool ExecutedByUser=true)
+        public static void Connect(bool ExecutedByUser = true)
         {
-            if (ExecutedByUser&&Status)
+            if (ExecutedByUser && Status)
             {
                 MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -27,7 +27,7 @@ namespace Serein.Base
             {
                 MessageBox.Show(":(\n请先结束重启倒计时.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if(!Status)
+            else if (!Status)
             {
                 Global.Ui.BotWebBrowser_Invoke("#clear");
                 Message.MessageReceived = "-";
@@ -54,21 +54,21 @@ namespace Serein.Base
                     {
                         Status = false;
                         Global.Ui.BotWebBrowser_Invoke("<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
-                        if (Global.Settings.Bot.Restart&&Restart)
+                        if (Global.Settings.Bot.Restart && Restart)
                         {
-                            Task.Run(() => 
+                            Task.Run(() =>
                             {
                                 Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
                                 Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下断开按钮来取消重启");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
-                                    if (!Restart|| Status)
+                                    if (!Restart || Status)
                                     {
                                         break;
                                     }
                                 }
-                                if (Restart&&!Status)
+                                if (Restart && !Status)
                                 {
                                     Connect(false);
                                 }
