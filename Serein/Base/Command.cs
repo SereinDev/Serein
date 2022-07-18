@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Jint;
-using Microsoft.CSharp;
 
 namespace Serein.Base
 {
@@ -70,7 +69,7 @@ namespace Serein.Base
                 return;
             }
             string Value = GetValue(Command, MsgMatch);
-            Value = GetVariables(Value, JsonObject);
+            Value = GetVariables(Value, JsonObject, DisableMotd);
             switch (Type)
             {
                 case 1:
@@ -138,18 +137,32 @@ namespace Serein.Base
                     }
                     break;
                 case 40:
-                    string str = string.Empty;
-                    try
+                    if (Type != 5)
                     {
-                        var engine = new Engine();
-                        engine.SetValue("log", new Action<object>(Global.Debug));
-                        engine.Execute($"log({Value});");
+                        try
+                        {
+                            Engine engine = new Engine(cfg => cfg.AllowClr(
+                                typeof(File).Assembly,
+                                typeof(Path).Assembly,
+                                typeof(Directory).Assembly,
+                                typeof(DirectoryInfo).Assembly,
+                                typeof(StreamReader).Assembly,
+                                typeof(StreamWriter).Assembly,
+                                typeof(Encoding).Assembly,
+                                typeof(Process).Assembly,
+                                typeof(ProcessStartInfo).Assembly
+                                ));
+                            engine.SetValue("Serein_DebugLog", new Action<object>(Global.Debug));
+                            engine.SetValue("Serein_RunCommand", new Action<string>((command) => Run(5, command)));
+                            engine.Execute("var console={log:Serein_DebugLog,debug:Serein_DebugLog,warn:Serein_DebugLog,error:Serein_DebugLog};");
+                            engine.Execute("var serein={log:Serein_DebugLog,run:Serein_RunCommand};");
+                            engine.Execute(Value);
+                        }
+                        catch (Exception e)
+                        {
+                            Global.Debug("[JSEngine] " + e.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        str = ex.Message;
-                    }
-                    Global.Debug("[DebugOutput] " + str);
                     break;
                 case 50:
                     Global.Debug("[DebugOutput] " + Value);
