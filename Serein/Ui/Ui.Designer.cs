@@ -154,6 +154,7 @@ namespace Serein.Ui
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingBot = new System.Windows.Forms.GroupBox();
+            this.SettingBotRestart = new System.Windows.Forms.CheckBox();
             this.SettingBotAuthorization = new System.Windows.Forms.TextBox();
             this.SettingBotAuthorizationLabel = new System.Windows.Forms.Label();
             this.SettingBotUri = new System.Windows.Forms.TextBox();
@@ -1078,6 +1079,7 @@ namespace Serein.Ui
             // 
             // SettingBot
             // 
+            this.SettingBot.Controls.Add(this.SettingBotRestart);
             this.SettingBot.Controls.Add(this.SettingBotAuthorization);
             this.SettingBot.Controls.Add(this.SettingBotAuthorizationLabel);
             this.SettingBot.Controls.Add(this.SettingBotUri);
@@ -1093,6 +1095,14 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
+            // 
+            // SettingBotRestart
+            // 
+            resources.ApplyResources(this.SettingBotRestart, "SettingBotRestart");
+            this.SettingBotRestart.Name = "SettingBotRestart";
+            this.SettingBotRestart.UseVisualStyleBackColor = true;
+            this.SettingBotRestart.CheckedChanged += new System.EventHandler(this.SettingBotRestart_CheckedChanged);
+            this.SettingBotRestart.MouseHover += new System.EventHandler(this.SettingBotRestart_MouseHover);
             // 
             // SettingBotAuthorization
             // 
@@ -1602,6 +1612,7 @@ namespace Serein.Ui
         private System.Windows.Forms.Label SettingServerPortLabel;
         private System.Windows.Forms.ComboBox SettingServerType;
         private System.Windows.Forms.NumericUpDown SettingServerPort;
+        private System.Windows.Forms.CheckBox SettingBotRestart;
     }
 }
 
