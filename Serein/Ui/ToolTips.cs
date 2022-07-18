@@ -112,17 +112,13 @@ namespace Serein.Ui
         {
             ShowToolTip(sender, "在机器人控制台中输出接收和发送的数据");
         }
-        private void SettingBotUnbindAfterQuit_MouseHover(object sender, EventArgs e)
+        private void SettingBotRestart_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "在机器人控制台中输出接收和发送的数据");
+            ShowToolTip(sender, "ws连接异常断开时自动重连");
         }
         private void SettingBotGroup_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "当有群员退出监听的群聊时自动解绑");
-        }
-        private void SettingBotRemoveWhitelistAfterQuit_MouseHover(object sender, EventArgs e)
-        {
-            ShowToolTip(sender, "当有群员退出监听的群聊时自动删除白名单（需要服务器处于运行状态）\n删除白名单的指令可在settings/Bot.json中设置");
+            ShowToolTip(sender, "设定要监听消息的群聊");
         }
         private void SettingBotGroupList_MouseHover(object sender, EventArgs e)
         {

@@ -11,5 +11,6 @@ namespace Serein.Settings
         public List<long> PermissionList { get; set; } = new List<long>();
         public string Uri { get; set; } = "127.0.0.1:6700";
         public string Authorization { get; set; } = string.Empty;
+        public bool Restart { get; set; } = false;
     }
 }

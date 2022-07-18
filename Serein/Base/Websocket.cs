@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocket4Net;
@@ -15,13 +16,18 @@ namespace Serein.Base
         public static WebSocket webSocket;
         private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
-        public static void Connect()
+        private static bool Restart = false;
+        public static void Connect(bool ExecutedByUser=true)
         {
-            if (Status)
+            if (ExecutedByUser&&Status)
             {
                 MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else
+            else if (ExecutedByUser && Restart)
+            {
+                MessageBox.Show(":(\n请先结束重启倒计时.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if(!Status)
             {
                 Global.Ui.BotWebBrowser_Invoke("#clear");
                 Message.MessageReceived = "-";
@@ -48,9 +54,30 @@ namespace Serein.Base
                     {
                         Status = false;
                         Global.Ui.BotWebBrowser_Invoke("<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
+                        if (Global.Settings.Bot.Restart&&Restart)
+                        {
+                            Task.Run(() => 
+                            {
+                                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下断开按钮来取消重启");
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    Thread.CurrentThread.Join(500);
+                                    if (!Restart|| Status)
+                                    {
+                                        break;
+                                    }
+                                }
+                                if (Restart&&!Status)
+                                {
+                                    Connect(false);
+                                }
+                            });
+                        }
                     };
                     webSocket.Opened += (sender, e) =>
                     {
+                        Restart = true;
                         Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到{Global.Settings.Bot.Uri}");
                     };
                     webSocket.Open();
@@ -107,7 +134,13 @@ namespace Serein.Base
         {
             if (Status)
             {
+                Restart = false;
                 webSocket.Close();
+            }
+            else if (Restart)
+            {
+                Restart = false;
+                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消.");
             }
             else
             {
