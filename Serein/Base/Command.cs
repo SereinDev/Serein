@@ -6,6 +6,8 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MSScriptControl;
+using Microsoft.CSharp;
 
 namespace Serein.Base
 {
@@ -135,6 +137,24 @@ namespace Serein.Base
                             motd: motd);
                     }
                     break;
+                case 40:
+                    string str = string.Empty;
+                    try
+                    {
+                        ScriptControl scriptControl = new ScriptControl()
+                        {
+                            UseSafeSubset = true,
+                            Language = "JScript"
+                        };
+                        scriptControl.AddCode("function a(){return 10;}");
+                        str = scriptControl.Eval("a()").ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        str = ex.Message;
+                    }
+                    Global.Debug("[DebugOutput] " + str);
+                    break;
                 case 50:
                     Global.Debug("[DebugOutput] " + Value);
                     break;
@@ -222,6 +242,11 @@ namespace Serein.Base
             if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
             {
                 return 31;
+            }
+            if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
+            {
+                return 40;
             }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
             {
