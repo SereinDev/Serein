@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein.Base
+namespace Serein.Server
 {
-    public class Server
+    public class ServerManager
     {
         public static string StartFileName = string.Empty, Version, LevelName, Difficulty;
         public static bool Status = false;
@@ -270,12 +271,12 @@ namespace Serein.Base
                     if (!string.IsNullOrEmpty(TempMessage))
                     {
                         string Ltempstr = TempMessage + "\n" + Line;
-                        new Task(() => Message.ProcessMsgFromConsole(Ltempstr)).Start();
+                        new Task(() => Base.Message.ProcessMsgFromConsole(Ltempstr)).Start();
                         TempMessage = string.Empty;
                     }
                     else
                     {
-                        new Task(() => Message.ProcessMsgFromConsole(Line)).Start();
+                        new Task(() => Base.Message.ProcessMsgFromConsole(Line)).Start();
                     }
                 }
             }

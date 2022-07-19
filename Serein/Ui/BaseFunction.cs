@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
-using Serein.Base;
+using Serein.Server;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -71,7 +71,7 @@ namespace Serein.Ui
 
         private void Serein_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Server.Status)
+            if (ServerManager.Status)
             {
                 e.Cancel = true;
                 Visible = false;

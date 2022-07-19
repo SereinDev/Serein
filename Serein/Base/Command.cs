@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Items.Motd;
+using Serein.Plugin;
+using Serein.Server;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Jint;
 
 namespace Serein.Base
 {
@@ -78,12 +79,12 @@ namespace Serein.Base
                 case 2:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
                     Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    Server.InputCommand(Value, true);
+                    ServerManager.InputCommand(Value, true);
                     break;
                 case 3:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
                     Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    Server.InputCommand(Value, true, true);
+                    ServerManager.InputCommand(Value, true, true);
                     break;
                 case 11:
                     if (Websocket.Status)
@@ -139,29 +140,7 @@ namespace Serein.Base
                 case 40:
                     if (Type != 5)
                     {
-                        try
-                        {
-                            Engine engine = new Engine(cfg => cfg.AllowClr(
-                                typeof(File).Assembly,
-                                typeof(Path).Assembly,
-                                typeof(Directory).Assembly,
-                                typeof(DirectoryInfo).Assembly,
-                                typeof(StreamReader).Assembly,
-                                typeof(StreamWriter).Assembly,
-                                typeof(Encoding).Assembly,
-                                typeof(Process).Assembly,
-                                typeof(ProcessStartInfo).Assembly
-                                ));
-                            engine.SetValue("Serein_DebugLog", new Action<object>(Global.Debug));
-                            engine.SetValue("Serein_RunCommand", new Action<string>((command) => Run(5, command)));
-                            engine.Execute("var console={log:Serein_DebugLog,debug:Serein_DebugLog,warn:Serein_DebugLog,error:Serein_DebugLog};");
-                            engine.Execute("var serein={log:Serein_DebugLog,run:Serein_RunCommand};");
-                            engine.Execute(Value);
-                        }
-                        catch (Exception e)
-                        {
-                            Global.Debug("[JSEngine] " + e.Message);
-                        }
+                        JSEngine.Run(Value);
                     }
                     break;
                 case 50:
@@ -349,14 +328,14 @@ namespace Serein.Base
             Text = Regex.Replace(Text, "%TotalRAM%", SystemInfo.TotalRAM, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%RAMPercentage%", SystemInfo.RAMPercentage, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUPercentage%", SystemInfo.CPUPercentage, RegexOptions.IgnoreCase);
-            if (Server.Status)
+            if (ServerManager.Status)
             {
-                Text = Regex.Replace(Text, "%LevelName%", Server.LevelName, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", Server.Version, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", Server.Difficulty, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%RunTime%", Server.GetTime(), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Percentage%", Server.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%FileName%", Server.StartFileName, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Version%", ServerManager.Version, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Percentage%", ServerManager.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
             else

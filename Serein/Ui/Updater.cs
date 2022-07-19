@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Server;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -20,12 +21,12 @@ namespace Serein.Ui
                 {
                     Ui_Update("Serein | 崩溃啦:(");
                 }
-                else if (Server.Status)
+                else if (ServerManager.Status)
                 {
-                    PanelInfoTime2_Update(Server.GetTime());
-                    PanelInfoCPU2_Update($"{Server.CPUPersent:N2}%");
+                    PanelInfoTime2_Update(ServerManager.GetTime());
+                    PanelInfoCPU2_Update($"{ServerManager.CPUPersent:N2}%");
                     PanelInfoStatus2_Update("已启动");
-                    Ui_Update($"Serein | {Server.StartFileName}");
+                    Ui_Update($"Serein | {ServerManager.StartFileName}");
                 }
                 else
                 {

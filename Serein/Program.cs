@@ -1,5 +1,7 @@
 ﻿using Ookii.Dialogs.Wpf;
 using Serein.Base;
+using Serein.Plugin;
+using Serein.Server;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -52,6 +54,7 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
+            JSEngine.Init();
             Ui.Ui ui = new Ui.Ui();
             Global.Ui = ui;
             Application.Run(ui);
@@ -70,11 +73,11 @@ namespace Serein
         private static void Abort(object obj)
         {
             Global.Crash = true;
-            if (Base.Server.Status && Global.Settings.Server.AutoStop)
+            if (ServerManager.Status && Global.Settings.Server.AutoStop)
             {
                 foreach (string Command in Global.Settings.Server.StopCommand.Split(';'))
                 {
-                    Base.Server.InputCommand(Command);
+                    ServerManager.InputCommand(Command);
                 }
             }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
