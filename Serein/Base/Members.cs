@@ -114,6 +114,36 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
+        public static bool Add(long UserId)
+        {
+            if (IDs.Contains(UserId))
+                return false;
+            else
+            {
+                MemberItem Item = new MemberItem()
+                {
+                    ID = UserId
+                };
+                Global.MemberItems.Add(Item);
+                Save();
+                return true;
+            }
+        }
+        public static bool Remove(long UserId)
+        {
+            if (IDs.Contains(UserId))
+            {
+                foreach (MemberItem Item in MemberItems)
+                {
+                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
+                    {
+                        Save();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
         {
             if (IDs.Contains(UserId))
@@ -166,7 +196,7 @@ namespace Serein.Base
         {
             if (!IDs.Contains(UserId))
             {
-                return "null";
+                return string.Empty;
             }
             else
             {
@@ -177,14 +207,14 @@ namespace Serein.Base
                         return Item.GameID;
                     }
                 }
-                return "unknown";
+                return string.Empty;
             }
         }
-        public static string GetID(string GameID)
+        public static long GetID(string GameID)
         {
             if (!GameIDs.Contains(GameID))
             {
-                return "null";
+                return 0;
             }
             else
             {
@@ -192,10 +222,10 @@ namespace Serein.Base
                 {
                     if (Item.GameID == GameID)
                     {
-                        return Item.ID.ToString();
+                        return Item.ID;
                     }
                 }
-                return "unknown";
+                return 0;
             }
         }
         public static void Update(JObject JsonObject, long UserId)

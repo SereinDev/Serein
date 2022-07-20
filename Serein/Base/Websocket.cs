@@ -92,7 +92,7 @@ namespace Serein.Base
                 }
             }
         }
-        public static void Send(bool IsPrivate, string Message, object Target)
+        public static bool Send(bool IsPrivate, string Message, object Target)
         {
             if (Status)
             {
@@ -129,6 +129,7 @@ namespace Serein.Base
                         );
                 }
             }
+            return Status;
         }
         public static void Close()
         {

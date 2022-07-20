@@ -375,7 +375,7 @@ namespace Serein.Base
                             @"%ID:(.+?)%",
                             RegexOptions.IgnoreCase
                             ).Groups[1].Value
-                        ),
+                        ).ToString(),
                     RegexOptions.IgnoreCase
                     );
             }

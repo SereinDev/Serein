@@ -39,27 +39,27 @@ namespace Serein.Server
         };
         public static string Online;
 
-        public static void Start(bool StartedByCommand = false)
+        public static bool Start(bool NoMsgBox = false)
         {
-            if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
+            if (Status)
             {
-                if (!StartedByCommand)
+                if (!NoMsgBox)
+                {
+                    MessageBox.Show(Global.Ui, ":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
+            {
+                if (!NoMsgBox)
                 {
                     MessageBox.Show(Global.Ui, ":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
-                if (!StartedByCommand)
+                if (!NoMsgBox)
                 {
                     MessageBox.Show(Global.Ui, $":(\n启动文件\"{Global.Settings.Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else if (Status)
-            {
-                if (!StartedByCommand)
-                {
-                    MessageBox.Show(Global.Ui, ":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -102,7 +102,9 @@ namespace Serein.Server
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
                 EventTrigger.Trigger("Server_Start");
+                return true;
             }
+            return false;
         }
         public static void Stop()
         {
@@ -125,9 +127,10 @@ namespace Serein.Server
                 MessageBox.Show(Global.Ui, ":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static void Kill()
+        public static bool Kill(bool NoMsgBox = false)
         {
             if (
+                !NoMsgBox &&
                 Status
                 &&
                 (int)MessageBox.Show(
@@ -136,35 +139,53 @@ namespace Serein.Server
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
                     ) == 1
-                )
-            {
-                if (ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT"))
-                {
-                    if ((int)MessageBox.Show(
+                && (ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
+                    (int)MessageBox.Show(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
                     "Serein",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
-                    ) == 1)
-                    {
-                        ServerProcess.Kill();
-                        Killed = true;
-                        Restart = false;
-                    }
-                }
-                else
+                    ) != 1
+                ||
+                !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT")
+                )
+                )
+            {
+                try
                 {
                     ServerProcess.Kill();
                     Killed = true;
                     Restart = false;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        "强制结束失败\n" + e.Message,
+                        "Serein",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                        );
                 }
             }
-            else if (!Status)
+            else if (NoMsgBox)
+            {
+                try
+                {
+                    ServerProcess.Kill();
+                    Killed = true;
+                    Restart = false;
+                    return true;
+                }
+                catch { }
+            }
+            else if (!Status && !NoMsgBox)
             {
                 MessageBox.Show(Global.Ui, ":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            return false;
         }
-        public static void InputCommand(string Command, bool StartedByCommand = false, bool Unicode = false)
+        public static void InputCommand(string Command, bool NoMsgBox = false, bool Unicode = false)
         {
             if (Status)
             {
@@ -175,7 +196,7 @@ namespace Serein.Server
                 }
                 if (
                     (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command || CommandList.Count == 0) &&
-                    (!StartedByCommand || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
+                    (!NoMsgBox || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command);
@@ -211,7 +232,7 @@ namespace Serein.Server
             }
             else if (Command.Trim().ToUpper() == "START")
             {
-                Start(StartedByCommand);
+                Start(NoMsgBox);
             }
         }
         private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
