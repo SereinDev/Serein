@@ -16,7 +16,7 @@ namespace Serein.Ui
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
-            Invoke((PanelConsoleWebBrowser_Delegate)BotWebBrowser_AppendText, objects2);
+            Invoke((BotWebBrowser_Delegate)BotWebBrowser_AppendText, objects2);
         }
         private void BotConnect_Click(object sender, EventArgs e)
         {

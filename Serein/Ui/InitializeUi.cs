@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Plugin;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -19,6 +20,7 @@ namespace Serein.Ui
         {
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
+            SereinPluginsWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
         }
         private void Initialize()
         {

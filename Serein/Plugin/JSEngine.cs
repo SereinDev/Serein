@@ -50,6 +50,7 @@ namespace Serein.Plugin
                         return string.Empty;
                 }
             }));
+            engine.SetValue("Serein_Log", new Action<object>((Content) => { Global.Ui.SereinPluginsWebBrowser_Invoke((Content ?? "").ToString()); }));
             engine.SetValue("Serein_Command_Run", new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Path", Global.Path);
             engine.SetValue("Serein_Global_Version", Global.VERSION);
@@ -68,11 +69,12 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
             engine.SetValue("Serein_Websocket_Status", new Func<bool>(() => { return Websocket.Status; }));
-            engine.SetValue("Serein_Member_Add", new Func<long, bool>(Members.Add));
-            engine.SetValue("Serein_Member_Remove", new Func<long, bool>(Members.Remove));
+            engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Members.Bind));
+            engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
             engine.Execute("var serein={" +
+                "log:Serein_Log" +
                 "path:Serein_Global_Path," +
                 "versions:Serein_Global_Version," +
                 "debugLog:Serein_Global_Debug," +
@@ -91,8 +93,8 @@ namespace Serein.Plugin
                 "sendGroup:Serein_Websocket_SendGroup," +
                 "sendPrivate:Serein_Websocket_SendPrivate," +
                 "getWsStatus:Serein_Websocket_Status," +
-                "addMember:Serein_Member_Add," +
-                "removeMember:Serein_Member_Remove," +
+                "bindMember:Serein_Member_Bind," +
+                "unbindMember:Serein_Member_UnBind," +
                 "getID:Serein_Member_GetID," +
                 "getGameID:Serein_Member_GetGameID" +
                 "};");

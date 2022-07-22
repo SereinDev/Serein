@@ -10,9 +10,6 @@
   - [解绑游戏ID](#解绑游戏id)
   - [获取服务器信息](#获取服务器信息)
   - [执行Javascript代码](#执行javascript代码)
-    - [内置函数](#内置函数)
-    - [NET对象/类（可直接使用）](#net对象类可直接使用)
-    - [示例](#示例)
   - [调试输出](#调试输出)
 
 ### 写在前面
@@ -145,38 +142,7 @@
 - 运行超时：1min
 - js标准：[ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
 
-#### 内置函数
-- `run(string)` `serein.run(string)` 运行一条新的Serein命令
-  - 限制：不能执行`motdpe` `motdje` `js` `javascript`命令
-- `debug(object)` `serein.log(object)` 输出调试消息到Debug窗口
 
-#### NET对象/类（可直接使用）
-- [`System.IO.File`](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.file) 提供用于创建、复制、删除、移动和打开单一文件的静态方法，并协助创建 FileStream 对象。
-- [`System.IO.Directory`](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.directory) 公开用于通过目录和子目录进行创建、移动和枚举的静态方法。
-- [`System.IO.DirectoryInfo`]() 公开用于创建、移动和枚举目录和子目录的实例方法。 
-- [`System.IO.Path`](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.path) 对包含文件或目录路径信息的 String 实例执行操作。 这些操作是以跨平台的方式执行的。
-- [`System.IO.StreamReader`](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.streamreader) 实现一个 TextReader，使其以一种特定的编码从字节流中读取字符。
-- [`System.IO.StreamWriter`](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.streamwriter) 实现一个 TextWriter，使其以一种特定的编码向流中写入字符。
-- [`System.Text.Encoding`](https://docs.microsoft.com/zh-cn/dotnet/api/system.text.encoding) 表示字符编码。
-- [`System.Diagnostics.Process`](https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process) 提供对本地和远程进程的访问权限并使你能够启动和停止本地系统进程。
-- [`System.Diagnostics.ProcessStartInfo`](https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.processstartinfo) 指定启动进程时使用的一组值。
-
-#### 示例
-
-输出到文件
-```js
-var file = new System.IO.StreamWriter('log.txt');
-file.WriteLine('Hello World !');
-file.Dispose();
-```
-
-启动`cmd.exe`
-```js
-System.Diagnostics.Process.Start("cmd.exe");
-```
-
->#### ⚠ 提示
->`Exception`将输出在Debug窗口
 
 ### 调试输出
 `debug|<消息>`  

@@ -2,11 +2,13 @@
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
 using Serein.Server;
+using Serein.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -51,6 +53,7 @@ namespace Serein.Ui
                 TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
                 TaskDialog.ShowDialog();
             }
+            new Task(Plugins.Load).Start();
         }
         private void FocusWindow()
         {

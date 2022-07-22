@@ -1893,6 +1893,135 @@
   <data name="&gt;&gt;Member.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="SereinPluginsSplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 783</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Name" xml:space="preserve">
+    <value>SereinPluginsWebBrowser</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SereinPluginsList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SereinPluginsList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>814, 783</value>
+  </data>
+  <data name="SereinPluginsList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Name" xml:space="preserve">
+    <value>SereinPluginsList</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 783</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.SplitterDistance" type="System.Int32, mscorlib">
+    <value>408</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Parent" xml:space="preserve">
+    <value>SereinPlugins</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SereinPlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="SereinPlugins.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="SereinPlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="SereinPlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="SereinPlugins.Text" xml:space="preserve">
+    <value>Serein插件</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Name" xml:space="preserve">
+    <value>SereinPlugins</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3382,7 +3511,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3445,7 +3574,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Debug.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

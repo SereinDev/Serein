@@ -130,7 +130,8 @@ namespace Serein.Server
         public static bool Kill(bool NoMsgBox = false)
         {
             if (
-                !NoMsgBox &&
+                !NoMsgBox 
+                &&
                 Status
                 &&
                 (int)MessageBox.Show(
@@ -139,16 +140,16 @@ namespace Serein.Server
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
                     ) == 1
-                && (ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
+                && (
+                    !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT")||(
+                    ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
                     (int)MessageBox.Show(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
                     "Serein",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
-                    ) != 1
-                ||
-                !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT")
-                )
+                    ) == 1
+                ))
                 )
             {
                 try

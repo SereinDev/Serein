@@ -114,35 +114,21 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
-        public static bool Add(long UserId)
+        public static bool Bind(long UserId,string Value)
         {
-            if (IDs.Contains(UserId))
+            if (IDs.Contains(UserId)|| !Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$")|| GameIDs.Contains(Value))
                 return false;
             else
             {
                 MemberItem Item = new MemberItem()
                 {
-                    ID = UserId
+                    ID = UserId,
+                    GameID = Value
                 };
                 Global.MemberItems.Add(Item);
                 Save();
                 return true;
             }
-        }
-        public static bool Remove(long UserId)
-        {
-            if (IDs.Contains(UserId))
-            {
-                foreach (MemberItem Item in MemberItems)
-                {
-                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
-                    {
-                        Save();
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
         public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
         {
@@ -191,6 +177,21 @@ namespace Serein.Base
                 }
                 Save();
             }
+        }
+        public static bool UnBind(long UserId)
+        {
+            if (IDs.Contains(UserId))
+            {
+                foreach (MemberItem Item in MemberItems)
+                {
+                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
+                    {
+                        Save();
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         public static string GetGameID(long UserId)
         {

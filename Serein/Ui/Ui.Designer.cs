@@ -136,6 +136,7 @@ namespace Serein.Ui
             this.MemberContextMenuStrip_Remove = new System.Windows.Forms.ToolStripMenuItem();
             this.MemberContextMenuStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MemberContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.SereinPlugins = new System.Windows.Forms.TabPage();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
@@ -190,6 +191,9 @@ namespace Serein.Ui
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.SereinPluginsList = new System.Windows.Forms.ListView();
+            this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -210,6 +214,7 @@ namespace Serein.Ui
             this.BotWebsocket.SuspendLayout();
             this.Member.SuspendLayout();
             this.MemberContextMenuStrip.SuspendLayout();
+            this.SereinPlugins.SuspendLayout();
             this.Setting.SuspendLayout();
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
@@ -218,6 +223,10 @@ namespace Serein.Ui
             ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).BeginInit();
             this.Debug.SuspendLayout();
             this.StatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).BeginInit();
+            this.SereinPluginsSplitContainer.Panel1.SuspendLayout();
+            this.SereinPluginsSplitContainer.Panel2.SuspendLayout();
+            this.SereinPluginsSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -308,6 +317,7 @@ namespace Serein.Ui
             this.tabControl.Controls.Add(this.Task);
             this.tabControl.Controls.Add(this.Bot);
             this.tabControl.Controls.Add(this.Member);
+            this.tabControl.Controls.Add(this.SereinPlugins);
             this.tabControl.Controls.Add(this.Setting);
             this.tabControl.Controls.Add(this.Debug);
             resources.ApplyResources(this.tabControl, "tabControl");
@@ -941,6 +951,13 @@ namespace Serein.Ui
             resources.ApplyResources(this.MemberContextMenuStrip_Refresh, "MemberContextMenuStrip_Refresh");
             this.MemberContextMenuStrip_Refresh.Click += new System.EventHandler(this.MemberContextMenuStrip_Refresh_Click);
             // 
+            // SereinPlugins
+            // 
+            this.SereinPlugins.Controls.Add(this.SereinPluginsSplitContainer);
+            resources.ApplyResources(this.SereinPlugins, "SereinPlugins");
+            this.SereinPlugins.Name = "SereinPlugins";
+            this.SereinPlugins.UseVisualStyleBackColor = true;
+            // 
             // Setting
             // 
             this.Setting.Controls.Add(this.SettingPanel);
@@ -1399,6 +1416,35 @@ namespace Serein.Ui
             this.StripStatusLabel.Name = "StripStatusLabel";
             resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
             // 
+            // SereinPluginsSplitContainer
+            // 
+            resources.ApplyResources(this.SereinPluginsSplitContainer, "SereinPluginsSplitContainer");
+            this.SereinPluginsSplitContainer.Name = "SereinPluginsSplitContainer";
+            // 
+            // SereinPluginsSplitContainer.Panel1
+            // 
+            this.SereinPluginsSplitContainer.Panel1.Controls.Add(this.SereinPluginsWebBrowser);
+            // 
+            // SereinPluginsSplitContainer.Panel2
+            // 
+            this.SereinPluginsSplitContainer.Panel2.Controls.Add(this.SereinPluginsList);
+            // 
+            // SereinPluginsList
+            // 
+            resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
+            this.SereinPluginsList.Name = "SereinPluginsList";
+            this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
+            // 
+            // SereinPluginsWebBrowser
+            // 
+            this.SereinPluginsWebBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.SereinPluginsWebBrowser, "SereinPluginsWebBrowser");
+            this.SereinPluginsWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.SereinPluginsWebBrowser.Name = "SereinPluginsWebBrowser";
+            this.SereinPluginsWebBrowser.ScriptErrorsSuppressed = true;
+            this.SereinPluginsWebBrowser.ScrollBarsEnabled = false;
+            this.SereinPluginsWebBrowser.TabStop = false;
+            // 
             // Ui
             // 
             this.AllowDrop = true;
@@ -1435,6 +1481,7 @@ namespace Serein.Ui
             this.BotWebsocket.ResumeLayout(false);
             this.Member.ResumeLayout(false);
             this.MemberContextMenuStrip.ResumeLayout(false);
+            this.SereinPlugins.ResumeLayout(false);
             this.Setting.ResumeLayout(false);
             this.SettingPanel.ResumeLayout(false);
             this.SettingSerein.ResumeLayout(false);
@@ -1448,6 +1495,10 @@ namespace Serein.Ui
             this.Debug.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
+            this.SereinPluginsSplitContainer.Panel1.ResumeLayout(false);
+            this.SereinPluginsSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).EndInit();
+            this.SereinPluginsSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1613,6 +1664,10 @@ namespace Serein.Ui
         private System.Windows.Forms.ComboBox SettingServerType;
         private System.Windows.Forms.NumericUpDown SettingServerPort;
         private System.Windows.Forms.CheckBox SettingBotRestart;
+        private System.Windows.Forms.TabPage SereinPlugins;
+        private System.Windows.Forms.SplitContainer SereinPluginsSplitContainer;
+        private System.Windows.Forms.WebBrowser SereinPluginsWebBrowser;
+        private System.Windows.Forms.ListView SereinPluginsList;
     }
 }
 
