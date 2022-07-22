@@ -130,7 +130,7 @@ namespace Serein.Server
         public static bool Kill(bool NoMsgBox = false)
         {
             if (
-                !NoMsgBox 
+                !NoMsgBox
                 &&
                 Status
                 &&
@@ -141,7 +141,7 @@ namespace Serein.Server
                     MessageBoxIcon.Warning
                     ) == 1
                 && (
-                    !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT")||(
+                    !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") || (
                     ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
                     (int)MessageBox.Show(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",

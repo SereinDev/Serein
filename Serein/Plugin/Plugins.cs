@@ -41,12 +41,12 @@ namespace Serein.Plugin
                         if (!JSEngine.Run(reader.ReadToEnd()))
                             ErrorFiles.Add(Path.GetFileName(Filename));
                         reader.Close();
-                        
+
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Global.Debug("[Plugins:Load()] "+e.Message);
+                        Global.Debug("[Plugins:Load()] " + e.Message);
                     }
                 }
                 Global.Ui.SereinPluginsWebBrowser_Invoke(

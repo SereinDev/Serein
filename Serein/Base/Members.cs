@@ -114,9 +114,9 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
-        public static bool Bind(long UserId,string Value)
+        public static bool Bind(long UserId, string Value)
         {
-            if (IDs.Contains(UserId)|| !Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$")|| GameIDs.Contains(Value))
+            if (IDs.Contains(UserId) || !Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
                 return false;
             else
             {
