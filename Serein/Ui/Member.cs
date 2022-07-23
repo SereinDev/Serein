@@ -54,14 +54,6 @@ namespace Serein.Ui
             Members.Load();
             LoadMembers();
         }
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControl.SelectedIndex == 5)
-            {
-                Members.Load();
-                LoadMembers();
-            }
-        }
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
             if (MemberList.SelectedItems.Count > 0)

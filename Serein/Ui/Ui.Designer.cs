@@ -137,6 +137,9 @@ namespace Serein.Ui
             this.MemberContextMenuStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MemberContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.SereinPlugins = new System.Windows.Forms.TabPage();
+            this.SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.SereinPluginsList = new System.Windows.Forms.ListView();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
@@ -191,9 +194,10 @@ namespace Serein.Ui
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.SereinPluginsList = new System.Windows.Forms.ListView();
-            this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.SereinPluginsListName = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListVersion = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -215,6 +219,10 @@ namespace Serein.Ui
             this.Member.SuspendLayout();
             this.MemberContextMenuStrip.SuspendLayout();
             this.SereinPlugins.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).BeginInit();
+            this.SereinPluginsSplitContainer.Panel1.SuspendLayout();
+            this.SereinPluginsSplitContainer.Panel2.SuspendLayout();
+            this.SereinPluginsSplitContainer.SuspendLayout();
             this.Setting.SuspendLayout();
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
@@ -223,10 +231,6 @@ namespace Serein.Ui
             ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).BeginInit();
             this.Debug.SuspendLayout();
             this.StatusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).BeginInit();
-            this.SereinPluginsSplitContainer.Panel1.SuspendLayout();
-            this.SereinPluginsSplitContainer.Panel2.SuspendLayout();
-            this.SereinPluginsSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -958,6 +962,42 @@ namespace Serein.Ui
             this.SereinPlugins.Name = "SereinPlugins";
             this.SereinPlugins.UseVisualStyleBackColor = true;
             // 
+            // SereinPluginsSplitContainer
+            // 
+            resources.ApplyResources(this.SereinPluginsSplitContainer, "SereinPluginsSplitContainer");
+            this.SereinPluginsSplitContainer.Name = "SereinPluginsSplitContainer";
+            // 
+            // SereinPluginsSplitContainer.Panel1
+            // 
+            this.SereinPluginsSplitContainer.Panel1.Controls.Add(this.SereinPluginsWebBrowser);
+            // 
+            // SereinPluginsSplitContainer.Panel2
+            // 
+            this.SereinPluginsSplitContainer.Panel2.Controls.Add(this.SereinPluginsList);
+            // 
+            // SereinPluginsWebBrowser
+            // 
+            this.SereinPluginsWebBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.SereinPluginsWebBrowser, "SereinPluginsWebBrowser");
+            this.SereinPluginsWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.SereinPluginsWebBrowser.Name = "SereinPluginsWebBrowser";
+            this.SereinPluginsWebBrowser.ScriptErrorsSuppressed = true;
+            this.SereinPluginsWebBrowser.ScrollBarsEnabled = false;
+            this.SereinPluginsWebBrowser.TabStop = false;
+            // 
+            // SereinPluginsList
+            // 
+            this.SereinPluginsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.SereinPluginsListName,
+            this.SereinPluginsListVersion,
+            this.SereinPluginsListAuthor,
+            this.SereinPluginsListDescription});
+            resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
+            this.SereinPluginsList.GridLines = true;
+            this.SereinPluginsList.Name = "SereinPluginsList";
+            this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
+            this.SereinPluginsList.View = System.Windows.Forms.View.Details;
+            // 
             // Setting
             // 
             this.Setting.Controls.Add(this.SettingPanel);
@@ -1416,34 +1456,21 @@ namespace Serein.Ui
             this.StripStatusLabel.Name = "StripStatusLabel";
             resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
             // 
-            // SereinPluginsSplitContainer
+            // SereinPluginsListName
             // 
-            resources.ApplyResources(this.SereinPluginsSplitContainer, "SereinPluginsSplitContainer");
-            this.SereinPluginsSplitContainer.Name = "SereinPluginsSplitContainer";
+            resources.ApplyResources(this.SereinPluginsListName, "SereinPluginsListName");
             // 
-            // SereinPluginsSplitContainer.Panel1
+            // SereinPluginsListVersion
             // 
-            this.SereinPluginsSplitContainer.Panel1.Controls.Add(this.SereinPluginsWebBrowser);
+            resources.ApplyResources(this.SereinPluginsListVersion, "SereinPluginsListVersion");
             // 
-            // SereinPluginsSplitContainer.Panel2
+            // SereinPluginsListAuthor
             // 
-            this.SereinPluginsSplitContainer.Panel2.Controls.Add(this.SereinPluginsList);
+            resources.ApplyResources(this.SereinPluginsListAuthor, "SereinPluginsListAuthor");
             // 
-            // SereinPluginsList
+            // SereinPluginsListDescription
             // 
-            resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
-            this.SereinPluginsList.Name = "SereinPluginsList";
-            this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
-            // 
-            // SereinPluginsWebBrowser
-            // 
-            this.SereinPluginsWebBrowser.AllowWebBrowserDrop = false;
-            resources.ApplyResources(this.SereinPluginsWebBrowser, "SereinPluginsWebBrowser");
-            this.SereinPluginsWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.SereinPluginsWebBrowser.Name = "SereinPluginsWebBrowser";
-            this.SereinPluginsWebBrowser.ScriptErrorsSuppressed = true;
-            this.SereinPluginsWebBrowser.ScrollBarsEnabled = false;
-            this.SereinPluginsWebBrowser.TabStop = false;
+            resources.ApplyResources(this.SereinPluginsListDescription, "SereinPluginsListDescription");
             // 
             // Ui
             // 
@@ -1482,6 +1509,10 @@ namespace Serein.Ui
             this.Member.ResumeLayout(false);
             this.MemberContextMenuStrip.ResumeLayout(false);
             this.SereinPlugins.ResumeLayout(false);
+            this.SereinPluginsSplitContainer.Panel1.ResumeLayout(false);
+            this.SereinPluginsSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).EndInit();
+            this.SereinPluginsSplitContainer.ResumeLayout(false);
             this.Setting.ResumeLayout(false);
             this.SettingPanel.ResumeLayout(false);
             this.SettingSerein.ResumeLayout(false);
@@ -1495,10 +1526,6 @@ namespace Serein.Ui
             this.Debug.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
-            this.SereinPluginsSplitContainer.Panel1.ResumeLayout(false);
-            this.SereinPluginsSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).EndInit();
-            this.SereinPluginsSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1668,6 +1695,10 @@ namespace Serein.Ui
         private System.Windows.Forms.SplitContainer SereinPluginsSplitContainer;
         private System.Windows.Forms.WebBrowser SereinPluginsWebBrowser;
         private System.Windows.Forms.ListView SereinPluginsList;
+        private System.Windows.Forms.ColumnHeader SereinPluginsListName;
+        private System.Windows.Forms.ColumnHeader SereinPluginsListVersion;
+        private System.Windows.Forms.ColumnHeader SereinPluginsListAuthor;
+        private System.Windows.Forms.ColumnHeader SereinPluginsListDescription;
     }
 }
 

@@ -1938,6 +1938,18 @@
   <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="SereinPluginsListName.Text" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="SereinPluginsListVersion.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="SereinPluginsListAuthor.Text" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="SereinPluginsListDescription.Text" xml:space="preserve">
+    <value>介绍</value>
+  </data>
   <data name="SereinPluginsList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -4009,6 +4021,30 @@
   </data>
   <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListName.Name" xml:space="preserve">
+    <value>SereinPluginsListName</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListVersion.Name" xml:space="preserve">
+    <value>SereinPluginsListVersion</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListAuthor.Name" xml:space="preserve">
+    <value>SereinPluginsListAuthor</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListAuthor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListDescription.Name" xml:space="preserve">
+    <value>SereinPluginsListDescription</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

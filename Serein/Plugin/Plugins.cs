@@ -30,18 +30,39 @@ namespace Serein.Plugin
             {
                 List<string> ErrorFiles = new List<string>();
                 string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
+                long Temp;
                 foreach (string Filename in Files)
                 {
                     Global.Ui.SereinPluginsWebBrowser_Invoke(
                         $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>正在加载{Path.GetFileName(Filename)}"
                         );
+                    Temp = PluginItems.Count;
                     try
                     {
                         StreamReader reader = new StreamReader(Filename, Encoding.UTF8);
-                        if (!JSEngine.Run(reader.ReadToEnd()))
+                        bool Success = JSEngine.Run(reader.ReadToEnd());
+                        if (!Success)
                             ErrorFiles.Add(Path.GetFileName(Filename));
                         reader.Close();
-
+                        if (Success) 
+                        {
+                            if(Temp == PluginItems.Count+1) 
+                            {
+                                PluginItems[PluginItems.Count - 1].Path = Filename;
+                            }
+                            else if (Temp == PluginItems.Count&& PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
+                            {
+                                PluginItems.Add(
+                                new PluginItem()
+                                {
+                                    Name = Path.GetFileNameWithoutExtension(Filename),
+                                    Version = "-",
+                                    Author = "-",
+                                    Description = "-",
+                                    Path = Filename
+                                });
+                            }
+                        }
                     }
                     catch (Exception e)
                     {
@@ -54,14 +75,11 @@ namespace Serein.Plugin
                     );
                 if (ErrorFiles.Count > 0)
                 {
-                    MessageBox.Show(
-                        Global.Ui,
-                        "以下插件加载出现问题，请咨询原作者获取更多信息\n" +
-                        string.Join("\n", ErrorFiles),
-                        "Serein",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
+                    Global.Ui.SereinPluginsWebBrowser_Invoke(
+                        "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" +
+                        $"以下插件加载出现问题，请咨询原作者获取更多信息<br>"+
+                        string.Join("\n", ErrorFiles)
+                        );
                 }
             }
         }

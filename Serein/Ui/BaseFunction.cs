@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
+using Serein.Base;
 using Serein.Server;
 using Serein.Plugin;
 using System;
@@ -17,7 +18,19 @@ namespace Serein.Ui
     {
         private bool isdrag = false;
         private ListViewItem itemDraged;
-
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabControl.SelectedIndex)
+            {
+                case 5:
+                    Members.Load();
+                    LoadMembers();
+                    break;
+                case 6:
+                    LoadSereinPlugin();
+                    break;
+            }
+        }
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
         {
             Global.FirstOpen = true;

@@ -74,7 +74,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
             engine.Execute("var serein={" +
-                "log:Serein_Log" +
+                "log:Serein_Log," +
                 "path:Serein_Global_Path," +
                 "versions:Serein_Global_Version," +
                 "debugLog:Serein_Global_Debug," +
