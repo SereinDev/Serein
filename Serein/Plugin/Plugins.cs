@@ -44,13 +44,13 @@ namespace Serein.Plugin
                         if (!Success)
                             ErrorFiles.Add(Path.GetFileName(Filename));
                         reader.Close();
-                        if (Success) 
+                        if (Success)
                         {
-                            if(Temp == PluginItems.Count+1) 
+                            if (Temp == PluginItems.Count + 1)
                             {
                                 PluginItems[PluginItems.Count - 1].Path = Filename;
                             }
-                            else if (Temp == PluginItems.Count&& PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
+                            else if (Temp == PluginItems.Count && PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
                             {
                                 PluginItems.Add(
                                 new PluginItem()
@@ -77,7 +77,7 @@ namespace Serein.Plugin
                 {
                     Global.Ui.SereinPluginsWebBrowser_Invoke(
                         "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" +
-                        $"以下插件加载出现问题，请咨询原作者获取更多信息<br>"+
+                        $"以下插件加载出现问题，请咨询原作者获取更多信息<br>" +
                         string.Join("\n", ErrorFiles)
                         );
                 }
