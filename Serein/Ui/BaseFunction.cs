@@ -67,7 +67,8 @@ namespace Serein.Ui
                 TaskDialog.ShowDialog();
             }
             new Task(
-                ()=> {
+                () =>
+                {
                     Plugins.Load();
                     JSFunc.Trigger("onSereinStart");
                 }).Start();

@@ -112,7 +112,7 @@ namespace Serein.Plugin
                 return false;
             }
         }
-        public static void Invoke(string FuncitonName,params object[] Args)
+        public static void Invoke(string FuncitonName, params object[] Args)
         {
             try
             {

@@ -68,9 +68,9 @@ namespace Serein.Plugin
             }
             return true;
         }
-        public static void Trigger(string EventName,params object[] Args)
+        public static void Trigger(string EventName, params object[] Args)
         {
-            Global.Debug("[JSFunc:Tigger()] "+EventName);
+            Global.Debug("[JSFunc:Tigger()] " + EventName);
             List<string> TartgetEventGroup = new List<string>();
             switch (EventName)
             {
@@ -107,7 +107,7 @@ namespace Serein.Plugin
                 default:
                     return;
             }
-            foreach(string FunctionName in TartgetEventGroup)
+            foreach (string FunctionName in TartgetEventGroup)
             {
                 JSEngine.Invoke(FunctionName, Args);
             }
