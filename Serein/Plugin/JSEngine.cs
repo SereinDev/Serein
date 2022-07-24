@@ -108,8 +108,19 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Debug("[JSEngine] " + e.Message);
+                Global.Debug("[JSEngine:Run()] " + e.Message);
                 return false;
+            }
+        }
+        public static void Invoke(string FuncitonName,params object[] Args)
+        {
+            try
+            {
+                engine.Invoke(FuncitonName, Args);
+            }
+            catch (Exception e)
+            {
+                Global.Debug("[JSEngine:Invoke()] " + e.Message);
             }
         }
     }

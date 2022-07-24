@@ -8,7 +8,7 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        public void LoadSettings()
+        private void LoadSettings()
         {
             SettingServerEnableRestart.Checked = Global.Settings.Server.EnableRestart;
             SettingServerEnableOutputCommand.Checked = Global.Settings.Server.EnableOutputCommand;

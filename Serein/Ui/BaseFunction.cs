@@ -66,7 +66,11 @@ namespace Serein.Ui
                 TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
                 TaskDialog.ShowDialog();
             }
-            new Task(Plugins.Load).Start();
+            new Task(
+                ()=> {
+                    Plugins.Load();
+                    JSFunc.Trigger("onSereinStart");
+                }).Start();
         }
         private void FocusWindow()
         {
@@ -85,7 +89,7 @@ namespace Serein.Ui
             FocusWindow();
         }
 
-        private void Serein_FormClosing(object sender, FormClosingEventArgs e)
+        private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ServerManager.Status)
             {
@@ -97,6 +101,7 @@ namespace Serein.Ui
             else
             {
                 SereinIcon.Dispose();
+                JSFunc.Trigger("onSereinClose");
             }
         }
         public void ShowBalloonTip(string text)

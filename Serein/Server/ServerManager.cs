@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,7 +27,7 @@ namespace Serein.Server
         public static StreamWriter CommandWriter;
         private static StreamWriter LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
-        private static string TempMessage = string.Empty;
+        private static string TempLine = string.Empty;
         public static Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
@@ -94,14 +95,15 @@ namespace Serein.Server
                 Version = "-";
                 LevelName = "-";
                 Difficulty = "-";
-                TempMessage = string.Empty;
+                TempLine = string.Empty;
                 Port = 0;
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
-                EventTrigger.Trigger("Server_Start");
+                Task.Run(() => EventTrigger.Trigger("Server_Start"));
+                Task.Run(() => JSFunc.Trigger("onServerStart"));
                 return true;
             }
             return false;
@@ -190,27 +192,28 @@ namespace Serein.Server
         {
             if (Status)
             {
-                Command = Command.Trim().TrimEnd('\r', '\n');
+                Task.Run(() => JSFunc.Trigger("onServerSendCommand", Command));
+                string Command_Copy = Command.TrimEnd('\r', '\n');
                 while (CommandList.Count >= 50)
                 {
                     CommandList.RemoveAt(0);
                 }
                 if (
-                    (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command || CommandList.Count == 0) &&
-                    (!NoMsgBox || !(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command))))
+                    (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command_Copy || CommandList.Count == 0) &&
+                    (!NoMsgBox || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
                 {
                     CommandListIndex = CommandList.Count + 1;
-                    CommandList.Add(Command);
+                    CommandList.Add(Command_Copy);
                 }
                 if (Unicode || Global.Settings.Server.EnableUnicode)
                 {
-                    Command = ConvertToUnicode(Command);
+                    Command_Copy = ConvertToUnicode(Command_Copy);
                 }
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command)}");
+                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
                 }
-                CommandWriter.WriteLine(Command);
+                CommandWriter.WriteLine(Command_Copy);
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -224,7 +227,7 @@ namespace Serein.Server
                         true,
                         Encoding.UTF8
                         );
-                        LogWriter.WriteLine(">" + Log.OutputRecognition(Command));
+                        LogWriter.WriteLine(">" + Log.OutputRecognition(Command_Copy));
                         LogWriter.Flush();
                         LogWriter.Close();
                     }
@@ -286,19 +289,19 @@ namespace Serein.Server
                 }
                 if (Regex.IsMatch(Line, Global.Settings.Matches.PlayerList, RegexOptions.IgnoreCase))
                 {
-                    TempMessage = Line.Trim('\r', '\n');
+                    TempLine = Line.Trim('\r', '\n');
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(TempMessage))
+                    if (!string.IsNullOrEmpty(TempLine))
                     {
-                        string Ltempstr = TempMessage + "\n" + Line;
-                        new Task(() => Base.Message.ProcessMsgFromConsole(Ltempstr)).Start();
-                        TempMessage = string.Empty;
+                        string Ltempstr = TempLine + "\n" + Line;
+                        Task.Run(() => Base.Message.ProcessMsgFromConsole(Ltempstr));
+                        TempLine = string.Empty;
                     }
                     else
                     {
-                        new Task(() => Base.Message.ProcessMsgFromConsole(Line)).Start();
+                        Task.Run(() => Base.Message.ProcessMsgFromConsole(Line));
                     }
                 }
             }
@@ -314,15 +317,16 @@ namespace Serein.Server
                     $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
-                EventTrigger.Trigger("Server_Error");
+                Task.Run(() => EventTrigger.Trigger("Server_Error"));
             }
             else
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
                     $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
-                EventTrigger.Trigger("Server_Stop");
+                Task.Run(() => EventTrigger.Trigger("Server_Stop"));
             }
+            Task.Run(() => JSFunc.Trigger("onServerStop"));
             if (Restart)
             {
                 Task.Run(RestartTimer);

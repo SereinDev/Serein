@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Serein.Items;
 using System.Text.RegularExpressions;
+using Serein.Plugin;
 
 namespace Serein.Base
 {
@@ -26,9 +27,9 @@ namespace Serein.Base
                 }
             }
         }
-        public static void ProcessMsgFromBot(string Msg)
+        public static void ProcessMsgFromBot(string Package)
         {
-            string Json = Msg ?? "";
+            string Json = Package ?? "";
             Json = Json.Replace("&#44;", ",");
             Json = Json.Replace("&amp;", "#");
             Json = Json.Replace("&#91;", "[");
@@ -64,9 +65,7 @@ namespace Serein.Base
                         MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
                         !Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex)
                         )
-                    {
                         continue;
-                    }
                     if (
                         !(Global.Settings.Bot.PermissionList.Contains(UserId) ||
                         Global.Settings.Bot.GivePermissionToAllAdmin &&
@@ -120,6 +119,13 @@ namespace Serein.Base
                         }
                     }
                 }
+                if (!IsSelfMessage)
+                {
+                    if (MessageType == "private")
+                        JSFunc.Trigger("onReceivePrivateMessage", UserId, JsonObject["raw_message"].ToString(), JsonObject["sender"]["nickname"].ToString());
+                    else if (MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
+                        JSFunc.Trigger("onReceiveGroupMessage", GroupId, UserId, JsonObject["raw_message"].ToString(), string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString());
+                }
             }
             else if (
                 JsonObject["post_type"].ToString() == "meta_event"
@@ -159,9 +165,11 @@ namespace Serein.Base
                         {
                             case "group_decrease":
                                 EventTrigger.Trigger("Group_Decrease", GroupId, UserId);
+                                JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
                                 break;
                             case "group_increase":
                                 EventTrigger.Trigger("Group_Increase", GroupId, UserId);
+                                JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
                                 break;
                         }
                     }
@@ -171,9 +179,11 @@ namespace Serein.Base
                         JsonObject["target_id"].ToString() == SelfId)
                     {
                         EventTrigger.Trigger("Group_Poke", GroupId, UserId);
+                        JSFunc.Trigger("onGroupPoke", GroupId, UserId);
                     }
                 }
             }
+            JSFunc.Trigger("onReceivePackage", Package);
         }
     }
 }

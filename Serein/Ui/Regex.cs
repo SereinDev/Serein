@@ -132,7 +132,7 @@ namespace Serein.Ui
                 }
             }
         }
-        public void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
+        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
         {
             if (
               string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
@@ -175,7 +175,7 @@ namespace Serein.Ui
             SaveRegex();
             RegexList.EndUpdate();
         }
-        public void LoadRegex()
+        private void LoadRegex()
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
@@ -217,7 +217,7 @@ namespace Serein.Ui
             }
         }
 
-        public void LoadRegex(string FileName)
+        private void LoadRegex(string FileName)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
@@ -273,7 +273,7 @@ namespace Serein.Ui
                 RegexList.EndUpdate();
             }
         }
-        public void SaveRegex()
+        private void SaveRegex()
         {
             List<RegexItem> regexItems = new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))

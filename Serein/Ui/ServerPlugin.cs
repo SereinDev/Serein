@@ -103,7 +103,7 @@ namespace Serein.Ui
             };
             Process.Start(psi);
         }
-        public void LoadPlugins()
+        private void LoadPlugins()
         {
             if (PluginManager.Get() != null)
             {

@@ -166,7 +166,7 @@ namespace Serein.Ui
             LoadTask();
             SaveTask();
         }
-        public void SaveTask()
+        private void SaveTask()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
             {
@@ -215,7 +215,7 @@ namespace Serein.Ui
             TaskWriter.Close();
             Global.TaskItems = TaskItems;
         }
-        public void LoadTask()
+        private void LoadTask()
         {
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
@@ -258,7 +258,7 @@ namespace Serein.Ui
             }
             TaskList.EndUpdate();
         }
-        public void LoadTask(string FileName)
+        private void LoadTask(string FileName)
         {
             TaskList.BeginUpdate();
             TaskList.Items.Clear();

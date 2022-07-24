@@ -2,7 +2,7 @@
 - [Javascript](#javascript)
   - [标准](#标准)
   - [可直接使用的NET对象/类](#可直接使用的net对象类)
-  - [示例](#示例)
+    - [示例](#示例)
   - [内置属性](#内置属性)
     - [Serein.exe所在文件夹](#sereinexe所在文件夹)
     - [Serein版本](#serein版本)
@@ -42,7 +42,7 @@
 - [`System.Diagnostics.Process`](https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process) 提供对本地和远程进程的访问权限并使你能够启动和停止本地系统进程。
 - [`System.Diagnostics.ProcessStartInfo`](https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.processstartinfo) 指定启动进程时使用的一组值。
 
-### 示例
+#### 示例
 
 输出到文件
 ```js
@@ -61,32 +61,32 @@ System.Diagnostics.Process.Start("cmd.exe");
 #### Serein.exe所在文件夹
 `serein.path`
 - 返回
-  - `string` 
+  - `String` 
 
 #### Serein版本
 `serein.version`
 - 返回
-  - `string`
+  - `String`
 ### 内置函数
 
 #### 输出日志
-`serein.log(content:object)`
+`serein.log(content:Object)`
 - 参数
   - `content` 输出内容
-    - 支持`int` `double` `string`等类型
+    - 支持`Number` `String`等类型
 - 返回
   - 空
 
 #### Debug输出
-`serein.debugLog(content:object)`
+`serein.debugLog(content:Object)`
 - 参数
   - `content` 输出内容
-    - 支持`int` `double` `string`等类型
+    - 支持`Number` `String`等类型
 - 返回
   - 空
 
 #### 注册插件
-`serein.registerPlugin(name:string,version:string,author:string,description:string)`
+`serein.registerPlugin(name:String,version:String,author:String,description:String)`
 
 - 参数
   - `name` 插件名称
@@ -95,23 +95,37 @@ System.Diagnostics.Process.Start("cmd.exe");
   - `author` 作者或版权信息
   - `description` 介绍
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
 #### 设置监听器
-`serein.setListener(event:string,funcname:string)`
+`serein.setListener(event:String,funcname:String)`
 - 参数
-  - `event` [Serein事件](Event.md)
+  - `event` 事件名称，具体值见下表（区分大小写）
   - `funcname` 函数名
     - 不要包含`()`和参数
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
+| 事件名 | 描述 | 函数原型 |
+| --- | --- | --- |
+| onServerStart | 服务器启动 | `()` |
+| onServerStop | 服务器关闭 | `()` |
+| onServerSendCommand | 服务器输入指令 | `(cmd:String)` |
+| onGroupIncrease | 监听群群成员增加 | `(group_id:Number,user_id:Number)` |
+| onGroupDecrease | 监听群群成员减少 | `(group_id:Number,user_id:Number)` |
+| onGroupPoke | 监听群戳一戳自身账号 | `(group_id:Number,user_id:Number)` |
+| onReceiveGroupMessage | 收到群消息 | `(group_id:Number,user_id:Number,msg:String,shownName:String)` |
+| onReceivePrivateMessage | 收到私聊消息 | `(user_id:Number,msg:String,nickName:String)` |
+| onReceivePackage | 收到数据包 | `(parkage:String)` |
+| onSereinStart | Serein启动 | `( )` |
+| onSereinClose | Serein关闭 | `( )` |
+
 #### 获取系统信息
-`serein.getSysInfo(type:string)`
+`serein.getSysInfo(type:String)`
 - 参数
-  - `type` 信息类型
+  - `type` 信息类型，可为以下值之一
     - `NET` 当前NET版本
     - `OS` 操作系统名称
     - `CPUName` CPU名称
@@ -123,21 +137,21 @@ System.Diagnostics.Process.Start("cmd.exe");
     >- 不区分大小写  
     >- 若不在以上列表中则为返回空值
 - 返回
-  - `string` 对应的值
+  - `String` 对应的值
 
 #### 执行命令
-`serein.runCommand(cmd:string)`
+`serein.runCommand(cmd:String)`
 
 - 参数
-  - `cmd` 一条[命令](Command.md)
+  - `cmd` 一条[Serein命令](Command.md)
   >#### ⚠ 提示
   >此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
 - 返回
   - 空
 
 #### 获取Motd原文
-基岩版：`serein.getMotdpe(ip:string)`  
-Java版：`serein.getMotdje(ip:string)` 
+基岩版：`serein.getMotdpe(ip:String)`  
+Java版：`serein.getMotdje(ip:String)` 
 
 - 参数
   - `ip` 服务器IP
@@ -145,7 +159,7 @@ Java版：`serein.getMotdje(ip:string)`
   >可含端口，如`example.com:11451`  
   >不填端口基岩版默认`19132`，Java版默认`25565`
 - 返回
-  - `string` Motd原文
+  - `String` Motd原文
     - 获取失败时返回`-`
     - 基岩版为纯字符串
     ```
@@ -162,7 +176,7 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 空
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
 #### 关闭服务器
@@ -182,7 +196,7 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 空
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
 #### 获取服务器状态
@@ -191,7 +205,7 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 空
 - 返回
-  - `bool`
+  - `Boolean`
     - 已启动为`true`，未启动则为`false`
 
 #### 获取服务器运行时长
@@ -200,7 +214,7 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 空
 - 返回
-  - `string`
+  - `String`
     - 示例：`0.2m` `1.5h` `3.02d`
 
 #### 获取服务器进程占用
@@ -209,29 +223,29 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 空
 - 返回
-  - `string`
+  - `String`
     - 示例：`1.14` `5.14`
 
 #### 发送群聊消息
-`serein.sendGroup(target:long,msg:string)`
+`serein.sendGroup(target:Number,msg:String)`
 
 - 参数
   - `target` 群号
   - `msg` 消息内容
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
     >#### ⚠ 提示
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送私聊消息
-`serein.sendPrivate(target:long,msg:string)`
+`serein.sendPrivate(target:Number,msg:String)`
 
 - 参数
   - `target` 对方QQ号
   - `msg` 消息内容
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
     >#### ⚠ 提示
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
@@ -242,39 +256,39 @@ Java版：`serein.getMotdje(ip:string)`
 - 参数
   - 无
 - 返回
-  - `bool`
+  - `Boolean`
     - 已连接为`true`，否则为`false`
 
 #### 绑定游戏ID
-`serein.bindMember(userId:long,gameId:string)`
+`serein.bindMember(userId:Number,gameId:String)`
 
 - 参数
   - `userId` QQ号
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
 #### 删除绑定记录
-`serein.unbindMember(userId:long)`
+`serein.unbindMember(userId:Number)`
 
 - 参数
   - `userId` QQ号
 - 返回
-  - `bool`
+  - `Boolean`
     - 成功为`true`，否则为`false`
 
 #### 获取指定用户QQ
-`serein.getID(gameId:string)`
+`serein.getID(gameId:String)`
 
 - 参数
   - `gameId` 游戏ID
 - 返回
-  - `long` QQ号
+  - `Number` QQ号
 
 #### 获取指定游戏ID
-`serein.getGameID(userId:long)`
+`serein.getGameID(userId:Number)`
 
 - 参数
   - `userId` QQ号
 - 返回
-  - `string` 游戏ID
+  - `String` 游戏ID

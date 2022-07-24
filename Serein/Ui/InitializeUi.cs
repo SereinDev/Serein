@@ -14,7 +14,7 @@ namespace Serein.Ui
         private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         private void InitWebBrowser()
         {

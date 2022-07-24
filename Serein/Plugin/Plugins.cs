@@ -8,6 +8,7 @@ namespace Serein.Plugin
 {
     internal class Plugins
     {
+        public static Event Event = new Event();
         public static List<PluginItem> PluginItems = new List<PluginItem>();
         public static List<string> PluginNames
         {
@@ -46,11 +47,11 @@ namespace Serein.Plugin
                         reader.Close();
                         if (Success)
                         {
-                            if (Temp == PluginItems.Count + 1)
+                            if (Temp == PluginItems.Count - 1)
                             {
                                 PluginItems[PluginItems.Count - 1].Path = Filename;
                             }
-                            else if (Temp == PluginItems.Count && PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
+                            else if (Temp == PluginItems.Count && !PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
                             {
                                 PluginItems.Add(
                                 new PluginItem()
