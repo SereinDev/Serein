@@ -68,27 +68,31 @@ namespace Serein.Base
                         {
                             return;
                         }
-                        Global.MemberItems = ((JArray)JsonObject["data"]).ToObject<List<MemberItem>>();
+                        Global.UpdateMemberItems(((JArray)JsonObject["data"]).ToObject<List<MemberItem>>());
                     }
                     catch { }
                 }
                 Reader.Close();
             }
-            Global.MemberItems.Sort(
+            List<MemberItem> memberItems = MemberItems;
+            memberItems.Sort(
                 (Item1, Item2) =>
                 {
                     return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
+            Global.UpdateMemberItems(memberItems);
         }
         public static void Save()
         {
-            Global.MemberItems.Sort(
+            List<MemberItem> memberItems = MemberItems;
+            memberItems.Sort(
                 (Item1, Item2) =>
                 {
                     return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
+            Global.UpdateMemberItems(memberItems);
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
@@ -125,7 +129,9 @@ namespace Serein.Base
                     ID = UserId,
                     GameID = Value
                 };
-                Global.MemberItems.Add(Item);
+                List<MemberItem> memberItems = MemberItems;
+                memberItems.Add(Item);
+                Global.UpdateMemberItems(memberItems);
                 Save();
                 return true;
             }
@@ -154,7 +160,9 @@ namespace Serein.Base
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
                     GameID = Value
                 };
-                Global.MemberItems.Add(Item);
+                List<MemberItem> memberItems = MemberItems;
+                memberItems.Add(Item);
+                Global.UpdateMemberItems(memberItems);
                 Save();
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
@@ -167,25 +175,29 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in MemberItems)
+                List<MemberItem> memberItems = MemberItems;
+                foreach (MemberItem Item in memberItems)
                 {
-                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
+                    if (Item.ID == UserId && memberItems.Remove(Item))
                     {
+                        Global.UpdateMemberItems(memberItems);
                         Save();
                         EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
+                        break;
                     }
                 }
-                Save();
             }
         }
         public static bool UnBind(long UserId)
         {
             if (IDs.Contains(UserId))
             {
-                foreach (MemberItem Item in MemberItems)
+                List<MemberItem> memberItems = MemberItems;
+                foreach (MemberItem Item in memberItems)
                 {
-                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
+                    if (Item.ID == UserId && memberItems.Remove(Item))
                     {
+                        Global.UpdateMemberItems(memberItems);
                         Save();
                         return true;
                     }
@@ -233,14 +245,17 @@ namespace Serein.Base
         {
             if (IDs.Contains(UserId))
             {
+
+                List<MemberItem> memberItems = MemberItems;
                 foreach (MemberItem Item in MemberItems)
                 {
-                    if (Item.ID == UserId && Global.MemberItems.Remove(Item))
+                    if (Item.ID == UserId && memberItems.Remove(Item))
                     {
                         Item.Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString());
                         Item.Nickname = JsonObject["sender"]["nickname"].ToString();
                         Item.Card = JsonObject["sender"]["card"].ToString();
-                        Global.MemberItems.Add(Item);
+                        memberItems.Add(Item);
+                        Global.UpdateMemberItems(memberItems);
                         Save();
                         break;
                     }

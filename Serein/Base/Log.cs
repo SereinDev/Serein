@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace Serein.Base
 {
@@ -32,14 +33,7 @@ namespace Serein.Base
         }
         public static string EscapeLog(string Input)
         {
-            string Result;
-            Result = Input.Replace("/", "&#47;");
-            Result = Result.Replace("\"", "&quot;");
-            Result = Result.Replace(",", "&#44;");
-            Result = Result.Replace("<", "&lt;");
-            Result = Result.Replace(">", "&gt;");
-            Result = Result.Replace(" ", "&nbsp;");
-            return Result;
+            return WebUtility.HtmlEncode(Input);
         }
         public static string ColorLog(string Input, int Type)
         {

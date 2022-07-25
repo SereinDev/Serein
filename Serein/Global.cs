@@ -18,6 +18,27 @@ namespace Serein
         public static bool Crash = false;
         public static bool MultiOpen = false;
         public static bool FirstOpen = false;
+        public static void UpdateRegexItems(List<RegexItem> New)
+        {
+            lock (RegexItems)
+            {
+                RegexItems = New;
+            }
+        }
+        public static void UpdateTaskItems(List<TaskItem> New)
+        {
+            lock (TaskItems)
+            {
+                TaskItems = New;
+            }
+        }
+        public static void UpdateMemberItems(List<MemberItem> New)
+        {
+            lock (MemberItems)
+            {
+                MemberItems = New;
+            }
+        }
         public static void Debug(object o)
         {
             if (Ui != null && o != null)

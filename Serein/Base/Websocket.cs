@@ -176,7 +176,11 @@ namespace Serein.Base
                 }
                 catch { }
             }
-            Message.ProcessMsgFromBot(e.Message);
+            try
+            {
+                Message.ProcessMsgFromBot(e.Message);
+            }
+            catch { }
         }
     }
 }

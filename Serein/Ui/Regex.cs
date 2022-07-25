@@ -202,7 +202,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        Global.UpdateRegexItems( ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
                             if (Item.CheckItem())
@@ -247,7 +247,7 @@ namespace Serein.Ui
                         AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                         regexItems.Add(Item);
                     }
-                    Global.RegexItems = regexItems;
+                    Global.UpdateRegexItems(regexItems);
                 }
                 else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
@@ -260,7 +260,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
                             if (Item.CheckItem())
@@ -311,7 +311,7 @@ namespace Serein.Ui
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", ListJArray);
             RegexWriter.Write(ListJObject.ToString());
-            Global.RegexItems = regexItems;
+            Global.UpdateRegexItems(regexItems);
             RegexWriter.Flush();
             RegexWriter.Close();
         }

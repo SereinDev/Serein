@@ -213,7 +213,7 @@ namespace Serein.Ui
             TaskWriter.Write(ListJObject.ToString());
             TaskWriter.Flush();
             TaskWriter.Close();
-            Global.TaskItems = TaskItems;
+            Global.UpdateTaskItems(TaskItems);
         }
         private void LoadTask()
         {
@@ -237,7 +237,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.TaskItems = ((JArray)JsonObject["data"]).ToObject<List<TaskItem>>();
+                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
                     }
                     catch { }
                 }
@@ -297,7 +297,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.TaskItems = JArray.Parse(Text).ToObject<List<TaskItem>>();
+                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
                     }
                     catch { }
                 }
