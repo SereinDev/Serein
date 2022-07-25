@@ -173,6 +173,7 @@ namespace Serein.Ui
             RegexList.BeginUpdate();
             LoadRegex();
             SaveRegex();
+            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             RegexList.EndUpdate();
         }
         private void LoadRegex()
@@ -213,6 +214,7 @@ namespace Serein.Ui
                     catch { }
                 }
                 Reader.Close();
+                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 RegexList.EndUpdate();
             }
         }
@@ -270,6 +272,7 @@ namespace Serein.Ui
                     catch { }
                 }
                 Reader.Close();
+                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 RegexList.EndUpdate();
             }
         }

@@ -102,8 +102,8 @@ namespace Serein.Server
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Run(GetCPUPercent);
                 Task.Run(WaitForExit);
-                Task.Run(() => EventTrigger.Trigger("Server_Start"));
-                Task.Run(() => JSFunc.Trigger("onServerStart"));
+                EventTrigger.Trigger("Server_Start");
+                JSFunc.Trigger("onServerStart");
                 return true;
             }
             return false;
@@ -192,7 +192,6 @@ namespace Serein.Server
         {
             if (Status)
             {
-                Task.Run(() => JSFunc.Trigger("onServerSendCommand", Command));
                 string Command_Copy = Command.TrimEnd('\r', '\n');
                 while (CommandList.Count >= 50)
                 {
@@ -205,7 +204,7 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (Unicode || Global.Settings.Server.EnableUnicode)
+                if (!Plugins.Commands.Contains(Command.Split(' ')[0])&&(Unicode || Global.Settings.Server.EnableUnicode))
                 {
                     Command_Copy = ConvertToUnicode(Command_Copy);
                 }
@@ -233,6 +232,7 @@ namespace Serein.Server
                     }
                     catch { }
                 }
+                JSFunc.Trigger("onServerSendCommand", Command);
             }
             else if (Command.Trim().ToUpper() == "START")
             {
@@ -295,13 +295,13 @@ namespace Serein.Server
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
-                        string Ltempstr = TempLine + "\n" + Line;
-                        Task.Run(() => Base.Message.ProcessMsgFromConsole(Ltempstr));
+                        string TempLine_ = TempLine + "\n" + Line;
                         TempLine = string.Empty;
+                        Base.Message.ProcessMsgFromConsole(TempLine_);
                     }
                     else
                     {
-                        Task.Run(() => Base.Message.ProcessMsgFromConsole(Line));
+                        Base.Message.ProcessMsgFromConsole(Line);
                     }
                 }
             }
@@ -317,23 +317,21 @@ namespace Serein.Server
                     $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
-                Task.Run(() => EventTrigger.Trigger("Server_Error"));
+                EventTrigger.Trigger("Server_Error");
             }
             else
             {
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
                     $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
-                Task.Run(() => EventTrigger.Trigger("Server_Stop"));
+                EventTrigger.Trigger("Server_Stop");
             }
-            Task.Run(() => JSFunc.Trigger("onServerStop"));
             if (Restart)
-            {
                 Task.Run(RestartTimer);
-            }
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
+            JSFunc.Trigger("onServerStop");
         }
         public static void RestartRequest()
         {

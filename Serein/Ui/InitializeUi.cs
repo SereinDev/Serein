@@ -41,8 +41,8 @@ namespace Serein.Ui
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             new Task(() => Global.Debug("[Serein] Welcome.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
-            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }

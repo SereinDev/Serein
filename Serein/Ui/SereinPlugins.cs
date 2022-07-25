@@ -1,7 +1,6 @@
 ﻿using Serein.Plugin;
 using System;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace Serein.Ui
 {
@@ -31,8 +30,12 @@ namespace Serein.Ui
                 item.SubItems.Add(Item.Description);
                 SereinPluginsList.Items.Add(item);
             }
-            Global.Debug(JsonConvert.SerializeObject(Plugins.PluginItems));
             SereinPluginsList.EndUpdate();
+            SereinPluginsList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+        private void SereinPluginsListContextMenuStrip_Reload_Click(object sender, EventArgs e)
+        {
+            Plugins.Reload();
         }
     }
 }

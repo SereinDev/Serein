@@ -140,6 +140,10 @@ namespace Serein.Ui
             this.SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
             this.SereinPluginsList = new System.Windows.Forms.ListView();
+            this.SereinPluginsListName = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListVersion = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
@@ -194,10 +198,8 @@ namespace Serein.Ui
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.SereinPluginsListName = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListVersion = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SereinPluginsListContextMenuStrip_Reload = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -231,6 +233,7 @@ namespace Serein.Ui
             ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).BeginInit();
             this.Debug.SuspendLayout();
             this.StatusStrip.SuspendLayout();
+            this.SereinPluginsListContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // PluginContextMenuStrip
@@ -992,11 +995,28 @@ namespace Serein.Ui
             this.SereinPluginsListVersion,
             this.SereinPluginsListAuthor,
             this.SereinPluginsListDescription});
+            this.SereinPluginsList.ContextMenuStrip = this.SereinPluginsListContextMenuStrip;
             resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
             this.SereinPluginsList.GridLines = true;
             this.SereinPluginsList.Name = "SereinPluginsList";
             this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
             this.SereinPluginsList.View = System.Windows.Forms.View.Details;
+            // 
+            // SereinPluginsListName
+            // 
+            resources.ApplyResources(this.SereinPluginsListName, "SereinPluginsListName");
+            // 
+            // SereinPluginsListVersion
+            // 
+            resources.ApplyResources(this.SereinPluginsListVersion, "SereinPluginsListVersion");
+            // 
+            // SereinPluginsListAuthor
+            // 
+            resources.ApplyResources(this.SereinPluginsListAuthor, "SereinPluginsListAuthor");
+            // 
+            // SereinPluginsListDescription
+            // 
+            resources.ApplyResources(this.SereinPluginsListDescription, "SereinPluginsListDescription");
             // 
             // Setting
             // 
@@ -1456,21 +1476,19 @@ namespace Serein.Ui
             this.StripStatusLabel.Name = "StripStatusLabel";
             resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
             // 
-            // SereinPluginsListName
+            // SereinPluginsListContextMenuStrip
             // 
-            resources.ApplyResources(this.SereinPluginsListName, "SereinPluginsListName");
+            this.SereinPluginsListContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.SereinPluginsListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SereinPluginsListContextMenuStrip_Reload});
+            this.SereinPluginsListContextMenuStrip.Name = "SereinPluginsListContextMenuStrip";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip, "SereinPluginsListContextMenuStrip");
             // 
-            // SereinPluginsListVersion
+            // SereinPluginsListContextMenuStrip_Reload
             // 
-            resources.ApplyResources(this.SereinPluginsListVersion, "SereinPluginsListVersion");
-            // 
-            // SereinPluginsListAuthor
-            // 
-            resources.ApplyResources(this.SereinPluginsListAuthor, "SereinPluginsListAuthor");
-            // 
-            // SereinPluginsListDescription
-            // 
-            resources.ApplyResources(this.SereinPluginsListDescription, "SereinPluginsListDescription");
+            this.SereinPluginsListContextMenuStrip_Reload.Name = "SereinPluginsListContextMenuStrip_Reload";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Reload, "SereinPluginsListContextMenuStrip_Reload");
+            this.SereinPluginsListContextMenuStrip_Reload.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Reload_Click);
             // 
             // Ui
             // 
@@ -1526,6 +1544,7 @@ namespace Serein.Ui
             this.Debug.PerformLayout();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
+            this.SereinPluginsListContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1699,6 +1718,8 @@ namespace Serein.Ui
         private System.Windows.Forms.ColumnHeader SereinPluginsListVersion;
         private System.Windows.Forms.ColumnHeader SereinPluginsListAuthor;
         private System.Windows.Forms.ColumnHeader SereinPluginsListDescription;
+        private System.Windows.Forms.ContextMenuStrip SereinPluginsListContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem SereinPluginsListContextMenuStrip_Reload;
     }
 }
 

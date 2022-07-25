@@ -33,11 +33,12 @@ namespace Serein.Base
         public static string EscapeLog(string Input)
         {
             string Result;
-            Result = Regex.Replace(Input, "/", "&#47;");
-            Result = Regex.Replace(Result, "\"", "&quot;");
-            Result = Regex.Replace(Result, ",", "&#44;");
-            Result = Regex.Replace(Result, "<", "&lt;");
-            Result = Regex.Replace(Result, ">", "&gt;");
+            Result = Input.Replace("/", "&#47;");
+            Result = Result.Replace("\"", "&quot;");
+            Result = Result.Replace(",", "&#44;");
+            Result = Result.Replace("<", "&lt;");
+            Result = Result.Replace(">", "&gt;");
+            Result = Result.Replace(" ", "&nbsp;");
             return Result;
         }
         public static string ColorLog(string Input, int Type)

@@ -1950,6 +1950,24 @@
   <data name="SereinPluginsListDescription.Text" xml:space="preserve">
     <value>介绍</value>
   </data>
+  <metadata name="SereinPluginsListContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 75</value>
+  </metadata>
+  <data name="SereinPluginsListContextMenuStrip_Reload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 38</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_Reload.Text" xml:space="preserve">
+    <value>重新加载所有插件</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 42</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="SereinPluginsList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -3637,7 +3655,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -3673,13 +3691,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StatusStrip.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>85</value>
+    <value>157</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>192, 192</value>
@@ -4016,12 +4034,6 @@
   <data name="&gt;&gt;MemberContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
-    <value>StripStatusLabel</value>
-  </data>
-  <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;SereinPluginsListName.Name" xml:space="preserve">
     <value>SereinPluginsListName</value>
   </data>
@@ -4045,6 +4057,18 @@
   </data>
   <data name="&gt;&gt;SereinPluginsListDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
+    <value>StripStatusLabel</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip_Reload</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

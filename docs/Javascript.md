@@ -11,6 +11,8 @@
     - [Debug输出](#debug输出)
     - [注册插件](#注册插件)
     - [设置监听器](#设置监听器)
+    - [注册服务器命令](#注册服务器命令)
+    - [获取Serein设置](#获取serein设置)
     - [获取系统信息](#获取系统信息)
     - [执行命令](#执行命令)
     - [获取Motd原文](#获取motd原文)
@@ -121,6 +123,24 @@ System.Diagnostics.Process.Start("cmd.exe");
 | onReceivePackage | 收到数据包 | `(parkage:String)` |
 | onSereinStart | Serein启动 | `( )` |
 | onSereinClose | Serein关闭 | `( )` |
+
+#### 注册服务器命令
+`serein.registerCommand(command:String)`
+
+>本质上是拦截命令输入，处理该命令需要监听`onServerSendCommand`事件
+
+- 参数
+  - `command` 命令名称
+- 返回
+  - 空
+
+
+#### 获取Serein设置
+`serein.getSettings()`
+- 参数
+  - 空
+- 返回
+  - `String` 设置的json文本
 
 #### 获取系统信息
 `serein.getSysInfo(type:String)`

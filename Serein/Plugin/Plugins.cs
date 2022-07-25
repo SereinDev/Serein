@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Serein.Base;
 using System.Text;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Serein.Plugin
@@ -9,6 +11,7 @@ namespace Serein.Plugin
     internal class Plugins
     {
         public static Event Event = new Event();
+        public static List<string> Commands = new List<string>();
         public static List<PluginItem> PluginItems = new List<PluginItem>();
         public static List<string> PluginNames
         {
@@ -41,11 +44,15 @@ namespace Serein.Plugin
                     try
                     {
                         StreamReader reader = new StreamReader(Filename, Encoding.UTF8);
-                        bool Success = JSEngine.Run(reader.ReadToEnd());
-                        if (!Success)
-                            ErrorFiles.Add(Path.GetFileName(Filename));
+                        string Exception = JSEngine.Run(reader.ReadToEnd());
                         reader.Close();
-                        if (Success)
+                        bool Success = string.IsNullOrEmpty(Exception);
+                        if (!Success)
+                        {
+                            ErrorFiles.Add(Path.GetFileName(Filename));
+                            Global.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(Exception));
+                        }
+                        else
                         {
                             if (Temp == PluginItems.Count - 1)
                             {
@@ -68,7 +75,7 @@ namespace Serein.Plugin
                     catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Global.Debug("[Plugins:Load()] " + e.Message);
+                        Global.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(e.Message));
                     }
                 }
                 Global.Ui.SereinPluginsWebBrowser_Invoke(
@@ -79,13 +86,17 @@ namespace Serein.Plugin
                     Global.Ui.SereinPluginsWebBrowser_Invoke(
                         "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" +
                         $"以下插件加载出现问题，请咨询原作者获取更多信息<br>" +
-                        string.Join("\n", ErrorFiles)
+                        Log.EscapeLog(string.Join(" ,", ErrorFiles))
                         );
                 }
             }
         }
         public static void Reload()
         {
+            Global.Ui.SereinPluginsWebBrowser_Invoke("#clear");
+            Thread.CurrentThread.Join(100);
+            Commands = new List<string>();
+            Event = new Event();
             JSEngine.Init();
             Load();
         }

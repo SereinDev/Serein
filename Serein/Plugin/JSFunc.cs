@@ -112,5 +112,15 @@ namespace Serein.Plugin
                 JSEngine.Invoke(FunctionName, Args);
             }
         }
+        public static bool RegisterCommand(string Command)
+        {
+            if (Command.Contains(" ") || Plugins.Commands.Contains(Command))
+                return false;
+            else
+            {
+                Plugins.Commands.Add(Command);
+                return true;
+            }
+        }
     }
 }

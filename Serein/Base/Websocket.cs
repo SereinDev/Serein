@@ -176,7 +176,7 @@ namespace Serein.Base
                 }
                 catch { }
             }
-            new Task(() => Message.ProcessMsgFromBot(e.Message)).Start();
+            Message.ProcessMsgFromBot(e.Message);
         }
     }
 }
