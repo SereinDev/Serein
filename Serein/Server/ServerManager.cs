@@ -204,7 +204,7 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (!Plugins.Commands.Contains(Command.Split(' ')[0])&&(Unicode || Global.Settings.Server.EnableUnicode))
+                if (!Plugins.Commands.Contains(Command.Split(' ')[0]) && (Unicode || Global.Settings.Server.EnableUnicode))
                 {
                     Command_Copy = ConvertToUnicode(Command_Copy);
                 }

@@ -55,9 +55,9 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Global_Path", Global.Path);
             engine.SetValue("Serein_Global_Version", Global.VERSION);
             engine.SetValue("Serein_Global_Debug", new Action<object>(Global.Debug));
-            engine.SetValue("Serein_Global_Settings", new Func<string>(()=>JsonConvert.SerializeObject(Global.Settings)));
+            engine.SetValue("Serein_Global_Settings", new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register", new Func<string, string, string, string, bool>(JSFunc.Register));
-            engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string,bool>(JSFunc.RegisterCommand));
+            engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, bool>(JSFunc.RegisterCommand));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener", new Func<string, string, bool>(JSFunc.SetListener));
             engine.SetValue("Serein_Motdpe", new Func<string, string>((IP) => { return new Motdpe(IP).Original; }));
             engine.SetValue("Serein_Motdje", new Func<string, string>((IP) => { return new Motdje(IP).Original; }));
@@ -79,7 +79,7 @@ namespace Serein.Plugin
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +
                 "versions:Serein_Global_Version," +
-                "getSettings:Serein_Global_Settings,"+
+                "getSettings:Serein_Global_Settings," +
                 "debugLog:Serein_Global_Debug," +
                 "runCommand:Serein_Command_Run," +
                 "registerPlugin:Serein_Plugin_JSFunc_Register," +
