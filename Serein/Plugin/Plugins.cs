@@ -75,7 +75,7 @@ namespace Serein.Plugin
                     catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>"+Log.EscapeLog(e.Message));
+                        Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(e.Message));
                     }
                 }
                 Global.Ui.SereinPluginsWebBrowser_Invoke(
@@ -86,7 +86,7 @@ namespace Serein.Plugin
                     Global.Ui.SereinPluginsWebBrowser_Invoke(
                         "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" +
                         $"以下插件加载出现问题，请咨询原作者获取更多信息<br>" +
-                        Log.EscapeLog(string.Join(" ,", ErrorFiles))+
+                        Log.EscapeLog(string.Join(" ,", ErrorFiles)) +
                         "<br>"
                         );
                 }

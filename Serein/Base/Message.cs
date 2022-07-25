@@ -32,7 +32,7 @@ namespace Serein.Base
         public static void ProcessMsgFromBot(string Package)
         {
             string Json = Package ?? "";
-            Json= DeUnicode(Json);
+            Json = DeUnicode(Json);
             Json = WebUtility.HtmlDecode(Json);
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
             if (JsonObject["post_type"] == null)
@@ -44,7 +44,7 @@ namespace Serein.Base
                 JsonObject["post_type"].ToString() == "message_sent"
                 )
             {
-                
+
                 bool IsSelfMessage = JsonObject["post_type"].ToString() == "message_sent";
                 string MessageType = JsonObject["message_type"].ToString();
                 string RawMessage = JsonObject["raw_message"].ToString();

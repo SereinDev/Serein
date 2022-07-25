@@ -202,7 +202,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.UpdateRegexItems( ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
+                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
                             if (Item.CheckItem())

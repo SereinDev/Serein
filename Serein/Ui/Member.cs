@@ -46,7 +46,7 @@ namespace Serein.Ui
                     MemberItems.Add(memberItem);
                 }
             }
-            Global.UpdateMemberItems( MemberItems);
+            Global.UpdateMemberItems(MemberItems);
             Members.Save();
         }
         private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
