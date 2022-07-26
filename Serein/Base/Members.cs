@@ -11,6 +11,9 @@ namespace Serein.Base
 {
     internal class Members
     {
+        /// <summary>
+        /// 用户ID集合
+        /// </summary>
         public static List<long> IDs
         {
             get
@@ -23,6 +26,10 @@ namespace Serein.Base
                 return list;
             }
         }
+
+        /// <summary>
+        /// 游戏ID集合
+        /// </summary>
         public static List<string> GameIDs
         {
             get
@@ -35,6 +42,10 @@ namespace Serein.Base
                 return list;
             }
         }
+
+        /// <summary>
+        /// 只读的 Global.MemberItems 副本
+        /// </summary>
         private static List<MemberItem> MemberItems
         {
             get
@@ -44,6 +55,10 @@ namespace Serein.Base
                 return TempList;
             }
         }
+
+        /// <summary>
+        /// 加载数据
+        /// </summary>
         public static void Load()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -83,6 +98,10 @@ namespace Serein.Base
                 );
             Global.UpdateMemberItems(memberItems);
         }
+
+        /// <summary>
+        /// 保存数据
+        /// </summary>
         public static void Save()
         {
             List<MemberItem> memberItems = MemberItems;
@@ -118,6 +137,13 @@ namespace Serein.Base
             MembersWriter.Flush();
             MembersWriter.Close();
         }
+
+        /// <summary>
+        /// 绑定（无群反馈）
+        /// </summary>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="Value">值</param>
+        /// <returns>绑定结果</returns>
         public static bool Bind(long UserId, string Value)
         {
             if (IDs.Contains(UserId) || !Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
@@ -136,6 +162,14 @@ namespace Serein.Base
                 return true;
             }
         }
+
+        /// <summary>
+        /// 绑定
+        /// </summary>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="Value">值</param>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="GroupId">群聊ID</param>
         public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
         {
             if (IDs.Contains(UserId))
@@ -167,6 +201,12 @@ namespace Serein.Base
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
         }
+
+        /// <summary>
+        /// 解绑
+        /// </summary>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="GroupId">群聊ID</param>
         public static void UnBind(long UserId, long GroupId = -1)
         {
             if (!IDs.Contains(UserId))
@@ -188,6 +228,12 @@ namespace Serein.Base
                 }
             }
         }
+
+        /// <summary>
+        /// 解绑ID（无群反馈）
+        /// </summary>
+        /// <param name="UserId">用户ID</param>
+        /// <returns>解绑结果</returns>
         public static bool UnBind(long UserId)
         {
             if (IDs.Contains(UserId))
@@ -205,6 +251,12 @@ namespace Serein.Base
             }
             return false;
         }
+
+        /// <summary>
+        /// 获取指定用户ID对应的游戏ID
+        /// </summary>
+        /// <param name="UserId">用户ID</param>
+        /// <returns>对应的游戏ID</returns>
         public static string GetGameID(long UserId)
         {
             if (!IDs.Contains(UserId))
@@ -223,6 +275,12 @@ namespace Serein.Base
                 return string.Empty;
             }
         }
+
+        /// <summary>
+        /// 获取指定游戏ID对应的用户ID
+        /// </summary>
+        /// <param name="GameID">游戏ID</param>
+        /// <returns>对应的用户ID</returns>
         public static long GetID(string GameID)
         {
             if (!GameIDs.Contains(GameID))
@@ -241,11 +299,16 @@ namespace Serein.Base
                 return 0;
             }
         }
+
+        /// <summary>
+        /// 更新群成员信息
+        /// </summary>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="UserId">用户ID</param>
         public static void Update(JObject JsonObject, long UserId)
         {
             if (IDs.Contains(UserId))
             {
-
                 List<MemberItem> memberItems = MemberItems;
                 foreach (MemberItem Item in MemberItems)
                 {

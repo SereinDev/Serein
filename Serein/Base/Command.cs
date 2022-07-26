@@ -17,6 +17,11 @@ namespace Serein.Base
         public static string[] Sexs_Chinese = { "未知", "男", "女" };
         public static string[] Roles = { "owner", "admin", "member" };
         public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
+
+        /// <summary>
+        /// 启动cmd.exe
+        /// </summary>
+        /// <param name="Command">执行的命令</param>
         public static void StartCmd(string Command)
         {
             Process CMDProcess = new Process()
@@ -43,6 +48,17 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
+
+        /// <summary>
+        /// 处理Serein命令
+        /// </summary>
+        /// <param name="InputType">输入类型</param>
+        /// <param name="Command">命令</param>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="MsgMatch">消息匹配对象</param>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="GroupId">群聊ID</param>
+        /// <param name="DisableMotd">禁用Motd获取</param>
         public static void Run(
             int InputType,
             string Command,
@@ -70,7 +86,7 @@ namespace Serein.Base
                 return;
             }
             string Value = GetValue(Command, MsgMatch);
-            Value = GetVariables(Value, JsonObject, DisableMotd);
+            Value = ApplyVariables(Value, JsonObject, DisableMotd);
             switch (Type)
             {
                 case 1:
@@ -152,11 +168,17 @@ namespace Serein.Base
                 Members.Update(JsonObject, UserId);
             }
         }
+
+        /// <summary>
+        /// 获取命令类型
+        /// </summary>
+        /// <param name="Command">命令</param>
+        /// <returns>类型</returns>
         public static int GetType(string Command)
         {
             /*
             Type类型     描述
-            -1          错误的、不合法的、未知的
+            -1          错误的，会谢的，栓q的，yyds的，暴风吸入的，绝绝子的，属于是的，剁jiojio的，homo特有的，现充的，一整个的，乌鱼子的，集美的，咱就是说的，退退退的，别急的，抛开事实不谈的，9敏的
             1           cmd
             2           服务器命令
             3           服务器命令 with Unicode
@@ -242,6 +264,13 @@ namespace Serein.Base
             }
             return -1;
         }
+
+        /// <summary>
+        /// 获取命令的值
+        /// </summary>
+        /// <param name="command">命令</param>
+        /// <param name="MsgMatch">消息匹配对象</param>
+        /// <returns>值</returns>
         public static string GetValue(string command, Match MsgMatch = null)
         {
             int index = command.IndexOf('|');
@@ -256,7 +285,15 @@ namespace Serein.Base
             Global.Debug($"[Command:GetValue()] Value:{Value}");
             return Value;
         }
-        public static string GetVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
+
+        /// <summary>
+        /// 应用变量
+        /// </summary>
+        /// <param name="Text">文本</param>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="DisableMotd">禁用Motd获取</param>
+        /// <returns>应用变量后的文本</returns>
+        public static string ApplyVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
         {
             if (!Text.Contains("%"))
             {

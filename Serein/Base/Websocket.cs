@@ -17,6 +17,11 @@ namespace Serein.Base
         private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         private static bool Restart = false;
+
+        /// <summary>
+        /// 连接WS
+        /// </summary>
+        /// <param name="ExecutedByUser">被用户执行</param>
         public static void Connect(bool ExecutedByUser = true)
         {
             if (ExecutedByUser && Status)
@@ -92,6 +97,14 @@ namespace Serein.Base
                 }
             }
         }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="IsPrivate">是否私聊消息</param>
+        /// <param name="Message">消息内容</param>
+        /// <param name="Target">目标对象</param>
+        /// <returns>发送结果</returns>
         public static bool Send(bool IsPrivate, string Message, object Target)
         {
             if (Status)
@@ -131,6 +144,10 @@ namespace Serein.Base
             }
             return Status;
         }
+
+        /// <summary>
+        /// 断开WS
+        /// </summary>
         public static void Close()
         {
             if (Status)
@@ -148,6 +165,12 @@ namespace Serein.Base
                 MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        /// <summary>
+        /// 消息接收处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">消息接收事件参数</param>
         public static void Recieve(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)

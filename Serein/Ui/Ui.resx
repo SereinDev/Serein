@@ -2494,7 +2494,7 @@
     <value>Top</value>
   </data>
   <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 1060</value>
+    <value>0, 1104</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
     <value>1198, 370</value>
@@ -2515,6 +2515,33 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingBotAutoEscape.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingBotAutoEscape.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 354</value>
+  </data>
+  <data name="SettingBotAutoEscape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 35</value>
+  </data>
+  <data name="SettingBotAutoEscape.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="SettingBotAutoEscape.Text" xml:space="preserve">
+    <value>纯文本发送</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Name" xml:space="preserve">
+    <value>SettingBotAutoEscape</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="SettingBotRestart.AutoSize" type="System.Boolean, mscorlib">
@@ -2542,7 +2569,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotRestart.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="SettingBotAuthorization.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2566,7 +2593,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotAuthorization.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="SettingBotAuthorizationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2593,7 +2620,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotAuthorizationLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="SettingBotUri.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2617,7 +2644,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotUri.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="SettingBotEnbaleOutputData.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2644,7 +2671,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="SettingBotPermission.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2653,7 +2680,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPermission.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 455</value>
+    <value>23, 499</value>
   </data>
   <data name="SettingBotPermission.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2677,7 +2704,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="SettingBotGroup.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2686,7 +2713,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 356</value>
+    <value>23, 400</value>
   </data>
   <data name="SettingBotGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2710,13 +2737,13 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="SettingBotPermissionList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotPermissionList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 494</value>
+    <value>23, 538</value>
   </data>
   <data name="SettingBotPermissionList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2737,13 +2764,13 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="SettingBotGroupList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotGroupList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 395</value>
+    <value>23, 439</value>
   </data>
   <data name="SettingBotGroupList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2764,7 +2791,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="SettingBotUriLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2797,7 +2824,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotUriLabel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="SettingBotSupportedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2830,7 +2857,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2863,7 +2890,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="SettingBotEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2896,7 +2923,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2905,7 +2932,7 @@
     <value>0, 504</value>
   </data>
   <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 556</value>
+    <value>1198, 600</value>
   </data>
   <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -4058,17 +4085,17 @@
   <data name="&gt;&gt;SereinPluginsListDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
-    <value>StripStatusLabel</value>
-  </data>
-  <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Name" xml:space="preserve">
     <value>SereinPluginsListContextMenuStrip_Reload</value>
   </data>
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
+    <value>StripStatusLabel</value>
+  </data>
+  <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

@@ -44,7 +44,6 @@ namespace Serein.Base
                 JsonObject["post_type"].ToString() == "message_sent"
                 )
             {
-
                 bool IsSelfMessage = JsonObject["post_type"].ToString() == "message_sent";
                 string MessageType = JsonObject["message_type"].ToString();
                 string RawMessage = JsonObject["raw_message"].ToString();
