@@ -998,7 +998,9 @@ namespace Serein.Ui
             this.SereinPluginsListDescription});
             this.SereinPluginsList.ContextMenuStrip = this.SereinPluginsListContextMenuStrip;
             resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
+            this.SereinPluginsList.FullRowSelect = true;
             this.SereinPluginsList.GridLines = true;
+            this.SereinPluginsList.MultiSelect = false;
             this.SereinPluginsList.Name = "SereinPluginsList";
             this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
             this.SereinPluginsList.View = System.Windows.Forms.View.Details;

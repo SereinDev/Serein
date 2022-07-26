@@ -53,7 +53,8 @@ namespace Serein.Base
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                     $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
                     RawMessage
-                    ); foreach (RegexItem Item in Global.RegexItems)
+                    ); 
+                foreach (RegexItem Item in Global.RegexItems)
                 {
                     if (
                         string.IsNullOrEmpty(Item.Regex) ||
@@ -67,7 +68,8 @@ namespace Serein.Base
                         )
                         continue;
                     if (
-                        !(Global.Settings.Bot.PermissionList.Contains(UserId) ||
+                        !(
+                        Global.Settings.Bot.PermissionList.Contains(UserId) ||
                         Global.Settings.Bot.GivePermissionToAllAdmin &&
                         MessageType == "group" && (
                             JsonObject["sender"]["role"].ToString() == "admin" ||

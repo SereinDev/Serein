@@ -104,19 +104,19 @@ namespace Serein.Base
                     break;
                 case 11:
                     if (Websocket.Status)
-                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType!=4);
                     break;
                 case 12:
                     if (Websocket.Status)
-                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
                 case 13:
                     if (Websocket.Status)
-                        Websocket.Send(false, Value, GroupId);
+                        Websocket.Send(false, Value, GroupId, InputType != 4);
                     break;
                 case 14:
                     if ((InputType == 1 || InputType == 4) && Websocket.Status)
-                        Websocket.Send(true, Value, UserId);
+                        Websocket.Send(true, Value, UserId, InputType != 4);
                     break;
                 case 20:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)

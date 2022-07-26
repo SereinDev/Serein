@@ -38,6 +38,7 @@ namespace Serein.Ui
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
+            SetWindowTheme(SereinPluginsList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);

@@ -105,7 +105,11 @@ namespace Serein.Ui
         }
         private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
+            if (string.IsNullOrEmpty(SettingBotGroupList.Text))
+            {
+                Global.Settings.Bot.GroupList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
@@ -131,7 +135,11 @@ namespace Serein.Ui
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
+            if (string.IsNullOrEmpty(SettingBotPermissionList.Text))
+            {
+                Global.Settings.Bot.PermissionList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))

@@ -104,28 +104,20 @@ namespace Serein.Base
         /// <param name="IsPrivate">是否私聊消息</param>
         /// <param name="Message">消息内容</param>
         /// <param name="Target">目标对象</param>
+        /// <param name="AutoEscape">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool IsPrivate, string Message, object Target)
+        public static bool Send(bool IsPrivate, string Message, object Target,bool AutoEscape=true)
         {
             if (Status)
             {
                 long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
                 JObject TextJObject = new JObject();
                 JObject ParamsJObject = new JObject();
-                if (IsPrivate)
-                {
-                    TextJObject.Add("action", "send_private_msg");
-                    ParamsJObject.Add("user_id", Target_Long);
-                    ParamsJObject.Add("message", Message);
-                    TextJObject.Add("params", ParamsJObject);
-                }
-                else
-                {
-                    TextJObject.Add("action", "send_group_msg");
-                    ParamsJObject.Add("group_id", Target_Long);
-                    ParamsJObject.Add("message", Message);
-                    TextJObject.Add("params", ParamsJObject);
-                }
+                TextJObject.Add("action", IsPrivate ? "send_private_msg" : "send_group_msg");
+                ParamsJObject.Add(IsPrivate ? "user_id" : "group_id", Target_Long);
+                ParamsJObject.Add("message", Message);
+                ParamsJObject.Add("auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape);
+                TextJObject.Add("params", ParamsJObject);
                 webSocket.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
