@@ -53,7 +53,7 @@ namespace Serein.Base
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
                     $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
                     RawMessage
-                    ); 
+                    );
                 foreach (RegexItem Item in Global.RegexItems)
                 {
                     if (

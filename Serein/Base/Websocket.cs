@@ -106,7 +106,7 @@ namespace Serein.Base
         /// <param name="Target">目标对象</param>
         /// <param name="AutoEscape">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool IsPrivate, string Message, object Target,bool AutoEscape=true)
+        public static bool Send(bool IsPrivate, string Message, object Target, bool AutoEscape = true)
         {
             if (Status)
             {

@@ -104,7 +104,7 @@ namespace Serein.Base
                     break;
                 case 11:
                     if (Websocket.Status)
-                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType!=4);
+                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
                 case 12:
                     if (Websocket.Status)
