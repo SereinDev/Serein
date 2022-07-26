@@ -113,7 +113,8 @@ namespace Serein.Plugin
                     default:
                         return;
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Global.Debug(e.ToString());
             }
