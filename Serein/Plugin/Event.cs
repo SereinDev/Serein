@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Serein.Plugin
 {
     internal class Event
     {
-        public List<string> onServerStart { get; set; } = new List<string>();
-        public List<string> onServerStop { get; set; } = new List<string>();
-        public List<string> onServerSendCommand { get; set; } = new List<string>();
-        public List<string> onGroupIncrease { get; set; } = new List<string>();
-        public List<string> onGroupDecrease { get; set; } = new List<string>();
-        public List<string> onGroupPoke { get; set; } = new List<string>();
-        public List<string> onReceiveGroupMessage { get; set; } = new List<string>();
-        public List<string> onReceivePrivateMessage { get; set; } = new List<string>();
-        public List<string> onSereinStart { get; set; } = new List<string>();
-        public List<string> onSereinClose { get; set; } = new List<string>();
+        public List<Delegate> onServerStart { get; set; } = new List<Delegate>();
+        public List<Delegate> onServerStop { get; set; } = new List<Delegate>();
+        public List<Delegate> onServerSendCommand { get; set; } = new List<Delegate>();
+        public List<Delegate> onGroupIncrease { get; set; } = new List<Delegate>();
+        public List<Delegate> onGroupDecrease { get; set; } = new List<Delegate>();
+        public List<Delegate> onGroupPoke { get; set; } = new List<Delegate>();
+        public List<Delegate> onReceiveGroupMessage { get; set; } = new List<Delegate>();
+        public List<Delegate> onReceivePrivateMessage { get; set; } = new List<Delegate>();
+        public List<Delegate> onSereinStart { get; set; } = new List<Delegate>();
+        public List<Delegate> onSereinClose { get; set; } = new List<Delegate>();
     }
 }

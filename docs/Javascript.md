@@ -101,10 +101,10 @@ System.Diagnostics.Process.Start("cmd.exe");
     - 成功为`true`，否则为`false`
 
 #### 设置监听器
-`serein.setListener(event:String,funcname:String)`
+`serein.setListener(event:String,func:Function)`
 - 参数
   - `event` 事件名称，具体值见下表（区分大小写）
-  - `funcname` 函数名
+  - `funcname` 函数
     - 不要包含`()`和参数
 - 返回
   - `Boolean`

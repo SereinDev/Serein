@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Serein.Plugin
@@ -25,91 +26,96 @@ namespace Serein.Plugin
             });
             return true;
         }
-        public static bool SetListener(string EventName, string FunctionName)
+        public static bool SetListener(string EventName, Delegate Function)
         {
-            if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName) ||
-                string.IsNullOrEmpty(FunctionName) || string.IsNullOrWhiteSpace(FunctionName) ||
-                !Regex.IsMatch(FunctionName, @"^[A-Za-z_]+?$"))
+            if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName))
                 return false;
             switch (EventName)
             {
                 case "onServerStart":
-                    Plugins.Event.onServerStart.Add(FunctionName);
+                    Plugins.Event.onServerStart.Add(Function);
                     break;
                 case "onServerStop":
-                    Plugins.Event.onServerStop.Add(FunctionName);
+                    Plugins.Event.onServerStop.Add(Function);
                     break;
                 case "onServerSendCommand":
-                    Plugins.Event.onServerSendCommand.Add(FunctionName);
+                    Plugins.Event.onServerSendCommand.Add(Function);
                     break;
                 case "onGroupIncrease":
-                    Plugins.Event.onGroupIncrease.Add(FunctionName);
+                    Plugins.Event.onGroupIncrease.Add(Function);
                     break;
                 case "onGroupDecrease":
-                    Plugins.Event.onGroupDecrease.Add(FunctionName);
+                    Plugins.Event.onGroupDecrease.Add(Function);
                     break;
                 case "onGroupPoke":
-                    Plugins.Event.onGroupPoke.Add(FunctionName);
+                    Plugins.Event.onGroupPoke.Add(Function);
                     break;
                 case "onReceiveGroupMessage":
-                    Plugins.Event.onReceiveGroupMessage.Add(FunctionName);
+                    Plugins.Event.onReceiveGroupMessage.Add(Function);
                     break;
                 case "onReceivePrivateMessage":
-                    Plugins.Event.onReceivePrivateMessage.Add(FunctionName);
+                    Plugins.Event.onReceivePrivateMessage.Add(Function);
                     break;
                 case "onSereinStart":
-                    Plugins.Event.onSereinStart.Add(FunctionName);
+                    Plugins.Event.onSereinStart.Add(Function);
                     break;
                 case "onSereinClose":
-                    Plugins.Event.onSereinClose.Add(FunctionName);
+                    Plugins.Event.onSereinClose.Add(Function);
                     break;
                 default:
                     return false;
             }
             return true;
         }
+
+        /// <summary>
+        /// 触发插件事件
+        /// </summary>
+        /// <param name="EventName">事件名称</param>
+        /// <param name="Args">参数</param>
         public static void Trigger(string EventName, params object[] Args)
         {
             Global.Debug("[JSFunc:Tigger()] " + EventName);
-            List<string> TartgetEventGroup = new List<string>();
-            switch (EventName)
+            try
             {
-                case "onServerStart":
-                    TartgetEventGroup = Plugins.Event.onServerStart;
-                    break;
-                case "onServerStop":
-                    TartgetEventGroup = Plugins.Event.onServerStop;
-                    break;
-                case "onServerSendCommand":
-                    TartgetEventGroup = Plugins.Event.onServerSendCommand;
-                    break;
-                case "onGroupIncrease":
-                    TartgetEventGroup = Plugins.Event.onGroupIncrease;
-                    break;
-                case "onGroupDecrease":
-                    TartgetEventGroup = Plugins.Event.onGroupDecrease;
-                    break;
-                case "onGroupPoke":
-                    TartgetEventGroup = Plugins.Event.onGroupPoke;
-                    break;
-                case "onReceiveGroupMessage":
-                    TartgetEventGroup = Plugins.Event.onReceiveGroupMessage;
-                    break;
-                case "onReceivePrivateMessage":
-                    TartgetEventGroup = Plugins.Event.onReceivePrivateMessage;
-                    break;
-                case "onSereinStart":
-                    TartgetEventGroup = Plugins.Event.onSereinStart;
-                    break;
-                case "onSereinClose":
-                    TartgetEventGroup = Plugins.Event.onSereinClose;
-                    break;
-                default:
-                    return;
-            }
-            foreach (string FunctionName in TartgetEventGroup)
+                switch (EventName)
+                {
+                    case "onServerStart":
+                        Plugins.Event.onServerStart.ForEach((x) => x.DynamicInvoke());
+                        break;
+                    case "onServerStop":
+                        Plugins.Event.onServerStop.ForEach((x) => x.DynamicInvoke());
+                        break;
+                    case "onServerSendCommand":
+                        Plugins.Event.onServerSendCommand.ForEach((x) => x.DynamicInvoke(Args[0]));
+                        break;
+                    case "onGroupIncrease":
+                        Plugins.Event.onGroupIncrease.ForEach((x) => x.DynamicInvoke(Args));
+                        break;
+                    case "onGroupDecrease":
+                        Plugins.Event.onGroupDecrease.ForEach((x) => x.DynamicInvoke(Args));
+                        break;
+                    case "onGroupPoke":
+                        Plugins.Event.onGroupPoke.ForEach((x) => x.DynamicInvoke(Args));
+                        break;
+                    case "onReceiveGroupMessage":
+                        Plugins.Event.onReceiveGroupMessage.ForEach((x) => x.DynamicInvoke(Args));
+                        break;
+                    case "onReceivePrivateMessage":
+                        Plugins.Event.onReceivePrivateMessage.ForEach((x) => x.DynamicInvoke(Args));
+                        break;
+                    case "onSereinStart":
+                        Plugins.Event.onSereinStart.ForEach((x) => x.DynamicInvoke());
+                        break;
+                    case "onSereinClose":
+                        Plugins.Event.onSereinClose.ForEach((x) => x.DynamicInvoke());
+                        break;
+                    default:
+                        return;
+                }
+            }catch(Exception e)
             {
-                JSEngine.Invoke(FunctionName, Args);
+                Global.Debug(e.ToString());
             }
         }
         public static bool RegisterCommand(string Command)

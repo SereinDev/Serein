@@ -58,7 +58,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Global_Settings", new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register", new Func<string, string, string, string, bool>(JSFunc.Register));
             engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, bool>(JSFunc.RegisterCommand));
-            engine.SetValue("Serein_Plugin_JSFunc_SetListener", new Func<string, string, bool>(JSFunc.SetListener));
+            engine.SetValue("Serein_Plugin_JSFunc_SetListener", new Func<string, Delegate, bool>(JSFunc.SetListener));
             engine.SetValue("Serein_Motdpe", new Func<string, string>((IP) => { return new Motdpe(IP).Original; }));
             engine.SetValue("Serein_Motdje", new Func<string, string>((IP) => { return new Motdje(IP).Original; }));
             engine.SetValue("Serein_ServerManager_Start", new Func<bool>(() => ServerManager.Start(true)));
