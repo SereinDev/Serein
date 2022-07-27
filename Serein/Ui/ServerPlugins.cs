@@ -1,4 +1,4 @@
-﻿using Serein.Base;
+﻿using Serein.Server;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -103,7 +103,7 @@ namespace Serein.Ui
             };
             Process.Start(psi);
         }
-        public void LoadPlugins()
+        private void LoadPlugins()
         {
             if (PluginManager.Get() != null)
             {

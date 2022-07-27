@@ -17,6 +17,11 @@ namespace Serein.Base
         private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         private static bool Restart = false;
+
+        /// <summary>
+        /// 连接WS
+        /// </summary>
+        /// <param name="ExecutedByUser">被用户执行</param>
         public static void Connect(bool ExecutedByUser = true)
         {
             if (ExecutedByUser && Status)
@@ -92,27 +97,27 @@ namespace Serein.Base
                 }
             }
         }
-        public static void Send(bool IsPrivate, string Message, object Target)
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="IsPrivate">是否私聊消息</param>
+        /// <param name="Message">消息内容</param>
+        /// <param name="Target">目标对象</param>
+        /// <param name="AutoEscape">纯文本发送</param>
+        /// <returns>发送结果</returns>
+        public static bool Send(bool IsPrivate, string Message, object Target, bool AutoEscape = true)
         {
             if (Status)
             {
                 long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
                 JObject TextJObject = new JObject();
                 JObject ParamsJObject = new JObject();
-                if (IsPrivate)
-                {
-                    TextJObject.Add("action", "send_private_msg");
-                    ParamsJObject.Add("user_id", Target_Long);
-                    ParamsJObject.Add("message", Message);
-                    TextJObject.Add("params", ParamsJObject);
-                }
-                else
-                {
-                    TextJObject.Add("action", "send_group_msg");
-                    ParamsJObject.Add("group_id", Target_Long);
-                    ParamsJObject.Add("message", Message);
-                    TextJObject.Add("params", ParamsJObject);
-                }
+                TextJObject.Add("action", IsPrivate ? "send_private_msg" : "send_group_msg");
+                ParamsJObject.Add(IsPrivate ? "user_id" : "group_id", Target_Long);
+                ParamsJObject.Add("message", Message);
+                ParamsJObject.Add("auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape);
+                TextJObject.Add("params", ParamsJObject);
                 webSocket.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
@@ -129,7 +134,12 @@ namespace Serein.Base
                         );
                 }
             }
+            return Status;
         }
+
+        /// <summary>
+        /// 断开WS
+        /// </summary>
         public static void Close()
         {
             if (Status)
@@ -147,6 +157,12 @@ namespace Serein.Base
                 MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        /// <summary>
+        /// 消息接收处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">消息接收事件参数</param>
         public static void Recieve(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)
@@ -175,7 +191,11 @@ namespace Serein.Base
                 }
                 catch { }
             }
-            new Task(() => Message.ProcessMsgFromBot(e.Message)).Start();
+            try
+            {
+                Message.ProcessMsgFromBot(e.Message);
+            }
+            catch { }
         }
     }
 }

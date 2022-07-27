@@ -8,7 +8,7 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        public void LoadSettings()
+        private void LoadSettings()
         {
             SettingServerEnableRestart.Checked = Global.Settings.Server.EnableRestart;
             SettingServerEnableOutputCommand.Checked = Global.Settings.Server.EnableOutputCommand;
@@ -27,6 +27,7 @@ namespace Serein.Ui
             SettingBotAuthorization.Text = Regex.Replace(Global.Settings.Bot.Authorization, ".", "*");
             SettingBotEnbaleOutputData.Checked = Global.Settings.Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings.Bot.EnableLog;
+            SettingBotAutoEscape.Checked = Global.Settings.Bot.AutoEscape;
             SettingBotRestart.Checked = Global.Settings.Bot.Restart;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
@@ -98,9 +99,17 @@ namespace Serein.Ui
         {
             Global.Settings.Bot.Restart = SettingBotRestart.Checked;
         }
+        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
+        {
+            Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
+        }
         private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
+            if (string.IsNullOrEmpty(SettingBotGroupList.Text))
+            {
+                Global.Settings.Bot.GroupList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
@@ -126,7 +135,11 @@ namespace Serein.Ui
         }
         private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
+            if (string.IsNullOrEmpty(SettingBotPermissionList.Text))
+            {
+                Global.Settings.Bot.PermissionList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
             {
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))

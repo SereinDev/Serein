@@ -5,6 +5,13 @@ namespace Serein.Base
 {
     internal class EventTrigger
     {
+        /// <summary>
+        /// 触发指定事件
+        /// </summary>
+        /// <param name="Type">类型</param>
+        /// <param name="GroupId">群聊ID</param>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="motd">Motd对象</param>
         public static void Trigger(
             string Type,
             long GroupId = -1,

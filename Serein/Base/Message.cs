@@ -2,6 +2,9 @@
 using Newtonsoft.Json.Linq;
 using Serein.Items;
 using System.Text.RegularExpressions;
+using System;
+using System.Net;
+using Serein.Plugin;
 
 namespace Serein.Base
 {
@@ -26,13 +29,11 @@ namespace Serein.Base
                 }
             }
         }
-        public static void ProcessMsgFromBot(string Msg)
+        public static void ProcessMsgFromBot(string Package)
         {
-            string Json = Msg ?? "";
-            Json = Json.Replace("&#44;", ",");
-            Json = Json.Replace("&amp;", "#");
-            Json = Json.Replace("&#91;", "[");
-            Json = Json.Replace("&#93;", "]");
+            string Json = Package ?? "";
+            Json = DeUnicode(Json);
+            Json = WebUtility.HtmlDecode(Json);
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
             if (JsonObject["post_type"] == null)
             {
@@ -43,15 +44,18 @@ namespace Serein.Base
                 JsonObject["post_type"].ToString() == "message_sent"
                 )
             {
-                Global.Ui.BotWebBrowser_Invoke(
-                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
-                    JsonObject["raw_message"].ToString()
-                    );
                 bool IsSelfMessage = JsonObject["post_type"].ToString() == "message_sent";
                 string MessageType = JsonObject["message_type"].ToString();
+                string RawMessage = JsonObject["raw_message"].ToString();
                 long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                Global.Ui.BotWebBrowser_Invoke(
+                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
+                    Log.EscapeLog(
+                        $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
+                        RawMessage
+                        )
+                    );
                 foreach (RegexItem Item in Global.RegexItems)
                 {
                     if (
@@ -62,13 +66,12 @@ namespace Serein.Base
                             !IsSelfMessage && Item.Area != 4
                         ) ||
                         MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
-                        !Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex)
+                        !Regex.IsMatch(RawMessage, Item.Regex)
                         )
-                    {
                         continue;
-                    }
                     if (
-                        !(Global.Settings.Bot.PermissionList.Contains(UserId) ||
+                        !(
+                        Global.Settings.Bot.PermissionList.Contains(UserId) ||
                         Global.Settings.Bot.GivePermissionToAllAdmin &&
                         MessageType == "group" && (
                             JsonObject["sender"]["role"].ToString() == "admin" ||
@@ -89,7 +92,7 @@ namespace Serein.Base
                         }
                         continue;
                     }
-                    if (Regex.IsMatch(JsonObject["raw_message"].ToString(), Item.Regex))
+                    if (Regex.IsMatch(RawMessage, Item.Regex))
                     {
                         if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                         {
@@ -98,7 +101,7 @@ namespace Serein.Base
                                 Item.Command,
                                 JsonObject,
                                 Regex.Match(
-                                    JsonObject["raw_message"].ToString(),
+                                    RawMessage,
                                     Item.Regex
                                 ),
                                 UserId,
@@ -112,13 +115,20 @@ namespace Serein.Base
                                 Item.Command,
                                 JsonObject,
                                 Regex.Match(
-                                    JsonObject["raw_message"].ToString(),
+                                    RawMessage,
                                     Item.Regex
                                     ),
                                 UserId
                             );
                         }
                     }
+                }
+                if (!IsSelfMessage)
+                {
+                    if (MessageType == "private")
+                        JSFunc.Trigger("onReceivePrivateMessage", UserId, RawMessage, JsonObject["sender"]["nickname"].ToString());
+                    else if (MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
+                        JSFunc.Trigger("onReceiveGroupMessage", GroupId, UserId, RawMessage, string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString());
                 }
             }
             else if (
@@ -159,9 +169,11 @@ namespace Serein.Base
                         {
                             case "group_decrease":
                                 EventTrigger.Trigger("Group_Decrease", GroupId, UserId);
+                                JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
                                 break;
                             case "group_increase":
                                 EventTrigger.Trigger("Group_Increase", GroupId, UserId);
+                                JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
                                 break;
                         }
                     }
@@ -171,9 +183,16 @@ namespace Serein.Base
                         JsonObject["target_id"].ToString() == SelfId)
                     {
                         EventTrigger.Trigger("Group_Poke", GroupId, UserId);
+                        JSFunc.Trigger("onGroupPoke", GroupId, UserId);
                     }
                 }
             }
+            JSFunc.Trigger("onReceivePackage", Package);
+        }
+        public static string DeUnicode(string str)
+        {
+            Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+            return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
         }
     }
 }

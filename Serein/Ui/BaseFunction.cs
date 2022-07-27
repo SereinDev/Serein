@@ -2,11 +2,14 @@
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
 using Serein.Base;
+using Serein.Server;
+using Serein.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -15,7 +18,19 @@ namespace Serein.Ui
     {
         private bool isdrag = false;
         private ListViewItem itemDraged;
-
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabControl.SelectedIndex)
+            {
+                case 5:
+                    Members.Load();
+                    LoadMembers();
+                    break;
+                case 6:
+                    LoadSereinPlugin();
+                    break;
+            }
+        }
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
         {
             Global.FirstOpen = true;
@@ -51,6 +66,12 @@ namespace Serein.Ui
                 TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
                 TaskDialog.ShowDialog();
             }
+            new Task(
+                () =>
+                {
+                    Plugins.Load();
+                    JSFunc.Trigger("onSereinStart");
+                }).Start();
         }
         private void FocusWindow()
         {
@@ -69,9 +90,9 @@ namespace Serein.Ui
             FocusWindow();
         }
 
-        private void Serein_FormClosing(object sender, FormClosingEventArgs e)
+        private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Server.Status)
+            if (ServerManager.Status)
             {
                 e.Cancel = true;
                 Visible = false;
@@ -81,6 +102,7 @@ namespace Serein.Ui
             else
             {
                 SereinIcon.Dispose();
+                JSFunc.Trigger("onSereinClose");
             }
         }
         public void ShowBalloonTip(string text)

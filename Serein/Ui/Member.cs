@@ -46,21 +46,13 @@ namespace Serein.Ui
                     MemberItems.Add(memberItem);
                 }
             }
-            Global.MemberItems = MemberItems;
+            Global.UpdateMemberItems(MemberItems);
             Members.Save();
         }
         private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
             Members.Load();
             LoadMembers();
-        }
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControl.SelectedIndex == 5)
-            {
-                Members.Load();
-                LoadMembers();
-            }
         }
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {

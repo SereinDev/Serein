@@ -1,4 +1,4 @@
-﻿using Serein.Base;
+﻿using Serein.Server;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,23 +21,23 @@ namespace Serein.Ui
 
         private void PanelControlStart_Click(object sender, EventArgs e)
         {
-            new Task(() => Server.Start()).Start();
+            new Task(() => ServerManager.Start()).Start();
         }
         private void PanelControlStop_Click(object sender, EventArgs e)
         {
-            Server.Stop();
+            ServerManager.Stop();
         }
         private void PanelControlRestart_Click(object sender, EventArgs e)
         {
-            Server.RestartRequest();
+            ServerManager.RestartRequest();
         }
         private void PanelControlKill_Click(object sender, EventArgs e)
         {
-            Server.Kill();
+            ServerManager.Kill();
         }
         private void PanelConsoleEnter_Click(object sender, EventArgs e)
         {
-            Server.InputCommand(PanelConsoleInput.Text);
+            ServerManager.InputCommand(PanelConsoleInput.Text);
             PanelConsoleInput.Clear();
             PanelConsoleInput.Focus();
         }
@@ -46,31 +46,31 @@ namespace Serein.Ui
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                Server.InputCommand(PanelConsoleInput.Text);
+                ServerManager.InputCommand(PanelConsoleInput.Text);
                 PanelConsoleInput.Clear();
             }
             else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.PageUp)
             {
-                if (Server.CommandListIndex > 0)
+                if (ServerManager.CommandListIndex > 0)
                 {
-                    Server.CommandListIndex--;
+                    ServerManager.CommandListIndex--;
                 }
-                if (Server.CommandListIndex >= 0 && Server.CommandListIndex < Server.CommandList.Count)
+                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
                 {
-                    PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandList[ServerManager.CommandListIndex]);
                 }
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
             {
-                if (Server.CommandListIndex < Server.CommandList.Count)
+                if (ServerManager.CommandListIndex < ServerManager.CommandList.Count)
                 {
-                    Server.CommandListIndex++;
+                    ServerManager.CommandListIndex++;
                 }
-                if (Server.CommandListIndex >= 0 && Server.CommandListIndex < Server.CommandList.Count)
+                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
                 {
-                    PanelConsoleInput_Update(Server.CommandList[Server.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandList[ServerManager.CommandListIndex]);
                 }
-                else if (Server.CommandListIndex == Server.CommandList.Count && Server.CommandList.Count != 0)
+                else if (ServerManager.CommandListIndex == ServerManager.CommandList.Count && ServerManager.CommandList.Count != 0)
                 {
                     PanelConsoleInput_Update();
                 }

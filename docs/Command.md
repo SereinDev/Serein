@@ -9,6 +9,7 @@
   - [绑定游戏ID](#绑定游戏id)
   - [解绑游戏ID](#解绑游戏id)
   - [获取服务器信息](#获取服务器信息)
+  - [执行Javascript代码](#执行javascript代码)
   - [调试输出](#调试输出)
 
 ### 写在前面
@@ -110,12 +111,14 @@
 `ub|<QQID>`  
 `unbind|<QQID>`  
 解除QQ号为`QQID`的游戏ID绑定
+
 >#### ⚠ 提示
 >- 此命令只能被群聊消息触发
 >- 若该QQID未绑定会返回消息提示
 >- 提示内容可在`settings/Event.json`中自定义，详见[事件](Event.md)
 
 ### 获取服务器信息
+
 | 服务器类型 | 对应命令 | 默认端口 |  
 | --- | --- | --- |
 |Java | `motdje\|<IP>[:端口]`| 25565|
@@ -134,8 +137,16 @@
 >   - 数据包无法识别
 >- 错误消息可在`settings/Event.json`中自定义，详见[事件](Event.md)
 
+### 执行Javascript代码
+`js|<代码>`  
+`javascript|<代码>`
+- 运行超时：1min
+- js标准：[ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
+
+
+
 ### 调试输出
 `debug|<消息>`  
-输出调试消息到debug窗口
+输出调试消息到Debug窗口
 >#### ⚠ 提示
->- 你需要在`settings/Serein.json`中手动开启`Debug模式`
+>你需要在`settings/Serein.json`中手动开启`Debug模式`

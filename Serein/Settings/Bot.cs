@@ -12,5 +12,6 @@ namespace Serein.Settings
         public string Uri { get; set; } = "127.0.0.1:6700";
         public string Authorization { get; set; } = string.Empty;
         public bool Restart { get; set; } = false;
+        public bool AutoEscape { get; set; } = false;
     }
 }

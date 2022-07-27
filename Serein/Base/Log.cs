@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace Serein.Base
 {
     public class Log
     {
+        /// <summary>
+        /// 颜色代码列表
+        /// </summary>
         private static List<string> ColorList = new List<string>
         {
             "30", "31", "32", "33", "34", "35", "36", "37",
@@ -13,6 +17,12 @@ namespace Serein.Base
             "90", "91", "92", "93", "94", "95", "96", "97",
             "100","101","102","103","104","105","106","107"
         };
+
+        /// <summary>
+        /// 去除彩色字符和控制字符
+        /// </summary>
+        /// <param name="Input">输入文本</param>
+        /// <returns>处理后的文本</returns>
         public static string OutputRecognition(string Input)
         {
             string Result;
@@ -30,16 +40,24 @@ namespace Serein.Base
             }
             return sBuilder.ToString();
         }
+
+        /// <summary>
+        /// 将字符串转为HTML编码的字符串
+        /// </summary>
+        /// <param name="Input">输入文本</param>
+        /// 将字符串转为HTML编码的字符串
+        /// <returns>转义后的HTML</returns>
         public static string EscapeLog(string Input)
         {
-            string Result;
-            Result = Regex.Replace(Input, "/", "&#47;");
-            Result = Regex.Replace(Result, "\"", "&quot;");
-            Result = Regex.Replace(Result, ",", "&#44;");
-            Result = Regex.Replace(Result, "<", "&lt;");
-            Result = Regex.Replace(Result, ">", "&gt;");
-            return Result;
+            return WebUtility.HtmlEncode(Input);
         }
+
+        /// <summary>
+        /// 彩色文本转义
+        /// </summary>
+        /// <param name="Input">输入文本</param>
+        /// <param name="Type">输出样式</param>
+        /// <returns>转义后的HTML文本</returns>
         public static string ColorLog(string Input, int Type)
         {
             Input = EscapeLog(Input);

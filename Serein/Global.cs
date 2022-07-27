@@ -9,7 +9,7 @@ namespace Serein
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.2.9";
+        public static string VERSION = "v1.3.0";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
         public static List<MemberItem> MemberItems = new List<MemberItem>();
@@ -18,6 +18,27 @@ namespace Serein
         public static bool Crash = false;
         public static bool MultiOpen = false;
         public static bool FirstOpen = false;
+        public static void UpdateRegexItems(List<RegexItem> New)
+        {
+            lock (RegexItems)
+            {
+                RegexItems = New;
+            }
+        }
+        public static void UpdateTaskItems(List<TaskItem> New)
+        {
+            lock (TaskItems)
+            {
+                TaskItems = New;
+            }
+        }
+        public static void UpdateMemberItems(List<MemberItem> New)
+        {
+            lock (MemberItems)
+            {
+                MemberItems = New;
+            }
+        }
         public static void Debug(object o)
         {
             if (Ui != null && o != null)

@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Items.Motd;
+using Serein.Plugin;
+using Serein.Server;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jint;
 
 namespace Serein.Base
 {
@@ -15,6 +18,11 @@ namespace Serein.Base
         public static string[] Sexs_Chinese = { "未知", "男", "女" };
         public static string[] Roles = { "owner", "admin", "member" };
         public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
+
+        /// <summary>
+        /// 启动cmd.exe
+        /// </summary>
+        /// <param name="Command">执行的命令</param>
         public static void StartCmd(string Command)
         {
             Process CMDProcess = new Process()
@@ -41,6 +49,17 @@ namespace Serein.Base
             CMDProcess.WaitForExit();
             CMDProcess.Close();
         }
+
+        /// <summary>
+        /// 处理Serein命令
+        /// </summary>
+        /// <param name="InputType">输入类型</param>
+        /// <param name="Command">命令</param>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="MsgMatch">消息匹配对象</param>
+        /// <param name="UserId">用户ID</param>
+        /// <param name="GroupId">群聊ID</param>
+        /// <param name="DisableMotd">禁用Motd获取</param>
         public static void Run(
             int InputType,
             string Command,
@@ -68,7 +87,7 @@ namespace Serein.Base
                 return;
             }
             string Value = GetValue(Command, MsgMatch);
-            Value = GetVariables(Value, JsonObject);
+            Value = ApplyVariables(Value, JsonObject, DisableMotd);
             switch (Type)
             {
                 case 1:
@@ -77,28 +96,28 @@ namespace Serein.Base
                 case 2:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
                     Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    Server.InputCommand(Value, true);
+                    ServerManager.InputCommand(Value, true);
                     break;
                 case 3:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
                     Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    Server.InputCommand(Value, true, true);
+                    ServerManager.InputCommand(Value, true, true);
                     break;
                 case 11:
                     if (Websocket.Status)
-                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
                 case 12:
                     if (Websocket.Status)
-                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value);
+                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
                 case 13:
                     if (Websocket.Status)
-                        Websocket.Send(false, Value, GroupId);
+                        Websocket.Send(false, Value, GroupId, InputType != 4);
                     break;
                 case 14:
                     if ((InputType == 1 || InputType == 4) && Websocket.Status)
-                        Websocket.Send(true, Value, UserId);
+                        Websocket.Send(true, Value, UserId, InputType != 4);
                     break;
                 case 20:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
@@ -135,6 +154,28 @@ namespace Serein.Base
                             motd: motd);
                     }
                     break;
+                case 40:
+                    if (Type != 5)
+                    {
+                        Task.Run(() =>
+                        {
+                            JSEngine.Init(new Engine(cfg => cfg.AllowClr(
+                                typeof(File).Assembly,
+                                typeof(Path).Assembly,
+                                typeof(Directory).Assembly,
+                                typeof(DirectoryInfo).Assembly,
+                                typeof(StreamReader).Assembly,
+                                typeof(StreamWriter).Assembly,
+                                typeof(Encoding).Assembly,
+                                typeof(Process).Assembly,
+                                typeof(ProcessStartInfo).Assembly
+                                )
+                                .CatchClrExceptions()
+                                .TimeoutInterval(TimeSpan.FromMinutes(1))
+                                )).Execute(Value);
+                        });
+                    }
+                    break;
                 case 50:
                     Global.Debug("[DebugOutput] " + Value);
                     break;
@@ -144,11 +185,17 @@ namespace Serein.Base
                 Members.Update(JsonObject, UserId);
             }
         }
+
+        /// <summary>
+        /// 获取命令类型
+        /// </summary>
+        /// <param name="Command">命令</param>
+        /// <returns>类型</returns>
         public static int GetType(string Command)
         {
             /*
             Type类型     描述
-            -1          错误的、不合法的、未知的
+            -1          错误的，会谢的，栓q的，yyds的，暴风吸入的，绝绝子的，属于是的，剁jiojio的，homo特有的，现充的，一整个的，乌鱼子的，集美的，咱就是说的，退退退的，别急的，抛开事实不谈的，9敏的
             1           cmd
             2           服务器命令
             3           服务器命令 with Unicode
@@ -223,12 +270,24 @@ namespace Serein.Base
             {
                 return 31;
             }
+            if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
+            {
+                return 40;
+            }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
             {
                 return 50;
             }
             return -1;
         }
+
+        /// <summary>
+        /// 获取命令的值
+        /// </summary>
+        /// <param name="command">命令</param>
+        /// <param name="MsgMatch">消息匹配对象</param>
+        /// <returns>值</returns>
         public static string GetValue(string command, Match MsgMatch = null)
         {
             int index = command.IndexOf('|');
@@ -243,7 +302,15 @@ namespace Serein.Base
             Global.Debug($"[Command:GetValue()] Value:{Value}");
             return Value;
         }
-        public static string GetVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
+
+        /// <summary>
+        /// 应用变量
+        /// </summary>
+        /// <param name="Text">文本</param>
+        /// <param name="JsonObject">消息JSON对象</param>
+        /// <param name="DisableMotd">禁用Motd获取</param>
+        /// <returns>应用变量后的文本</returns>
+        public static string ApplyVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
         {
             if (!Text.Contains("%"))
             {
@@ -315,14 +382,14 @@ namespace Serein.Base
             Text = Regex.Replace(Text, "%TotalRAM%", SystemInfo.TotalRAM, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%RAMPercentage%", SystemInfo.RAMPercentage, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUPercentage%", SystemInfo.CPUPercentage, RegexOptions.IgnoreCase);
-            if (Server.Status)
+            if (ServerManager.Status)
             {
-                Text = Regex.Replace(Text, "%LevelName%", Server.LevelName, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", Server.Version, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", Server.Difficulty, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%RunTime%", Server.GetTime(), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Percentage%", Server.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%FileName%", Server.StartFileName, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Version%", ServerManager.Version, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%Percentage%", ServerManager.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
             else
@@ -362,7 +429,7 @@ namespace Serein.Base
                             @"%ID:(.+?)%",
                             RegexOptions.IgnoreCase
                             ).Groups[1].Value
-                        ),
+                        ).ToString(),
                     RegexOptions.IgnoreCase
                     );
             }

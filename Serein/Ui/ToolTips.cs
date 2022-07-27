@@ -116,6 +116,10 @@ namespace Serein.Ui
         {
             ShowToolTip(sender, "ws连接异常断开时自动重连");
         }
+        private void SettingBotAutoEscape_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip(sender, "消息内容是否作为纯文本发送（即不解析CQ码）");
+        }
         private void SettingBotGroup_MouseHover(object sender, EventArgs e)
         {
             ShowToolTip(sender, "设定要监听消息的群聊");

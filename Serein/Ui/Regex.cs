@@ -132,7 +132,7 @@ namespace Serein.Ui
                 }
             }
         }
-        public void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
+        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
         {
             if (
               string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
@@ -173,9 +173,10 @@ namespace Serein.Ui
             RegexList.BeginUpdate();
             LoadRegex();
             SaveRegex();
+            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             RegexList.EndUpdate();
         }
-        public void LoadRegex()
+        private void LoadRegex()
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
@@ -201,7 +202,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
                             if (Item.CheckItem())
@@ -213,11 +214,12 @@ namespace Serein.Ui
                     catch { }
                 }
                 Reader.Close();
+                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 RegexList.EndUpdate();
             }
         }
 
-        public void LoadRegex(string FileName)
+        private void LoadRegex(string FileName)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
@@ -245,7 +247,7 @@ namespace Serein.Ui
                         AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                         regexItems.Add(Item);
                     }
-                    Global.RegexItems = regexItems;
+                    Global.UpdateRegexItems(regexItems);
                 }
                 else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
@@ -258,7 +260,7 @@ namespace Serein.Ui
                         {
                             return;
                         }
-                        Global.RegexItems = ((JArray)JsonObject["data"]).ToObject<List<RegexItem>>();
+                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
                             if (Item.CheckItem())
@@ -270,10 +272,11 @@ namespace Serein.Ui
                     catch { }
                 }
                 Reader.Close();
+                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 RegexList.EndUpdate();
             }
         }
-        public void SaveRegex()
+        private void SaveRegex()
         {
             List<RegexItem> regexItems = new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -308,7 +311,7 @@ namespace Serein.Ui
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", ListJArray);
             RegexWriter.Write(ListJObject.ToString());
-            Global.RegexItems = regexItems;
+            Global.UpdateRegexItems(regexItems);
             RegexWriter.Flush();
             RegexWriter.Close();
         }

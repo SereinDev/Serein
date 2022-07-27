@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Serein.Base
+namespace Serein.Server
 {
     internal partial class PluginManager
     {
@@ -210,7 +210,7 @@ namespace Serein.Base
         }
         public static bool Check()
         {
-            if (Server.Status)
+            if (ServerManager.Status)
             {
                 MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return true;
@@ -221,5 +221,4 @@ namespace Serein.Base
             }
         }
     }
-
 }

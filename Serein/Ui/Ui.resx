@@ -1893,6 +1893,165 @@
   <data name="&gt;&gt;Member.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="SereinPluginsSplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 783</value>
+  </data>
+  <data name="SereinPluginsWebBrowser.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Name" xml:space="preserve">
+    <value>SereinPluginsWebBrowser</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsWebBrowser.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SereinPluginsListName.Text" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="SereinPluginsListVersion.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="SereinPluginsListAuthor.Text" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="SereinPluginsListDescription.Text" xml:space="preserve">
+    <value>介绍</value>
+  </data>
+  <metadata name="SereinPluginsListContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 75</value>
+  </metadata>
+  <data name="SereinPluginsListContextMenuStrip_Reload.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 38</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_Reload.Text" xml:space="preserve">
+    <value>重新加载所有插件</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 42</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SereinPluginsList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SereinPluginsList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SereinPluginsList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>814, 783</value>
+  </data>
+  <data name="SereinPluginsList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Name" xml:space="preserve">
+    <value>SereinPluginsList</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.Parent" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1226, 783</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.SplitterDistance" type="System.Int32, mscorlib">
+    <value>408</value>
+  </data>
+  <data name="SereinPluginsSplitContainer.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Name" xml:space="preserve">
+    <value>SereinPluginsSplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.Parent" xml:space="preserve">
+    <value>SereinPlugins</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsSplitContainer.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SereinPlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="SereinPlugins.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="SereinPlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1232, 789</value>
+  </data>
+  <data name="SereinPlugins.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="SereinPlugins.Text" xml:space="preserve">
+    <value>Serein插件</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Name" xml:space="preserve">
+    <value>SereinPlugins</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;SereinPlugins.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="SettingPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2335,7 +2494,7 @@
     <value>Top</value>
   </data>
   <data name="SettingSerein.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 1060</value>
+    <value>0, 1104</value>
   </data>
   <data name="SettingSerein.Size" type="System.Drawing.Size, System.Drawing">
     <value>1198, 370</value>
@@ -2356,6 +2515,33 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingSerein.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingBotAutoEscape.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingBotAutoEscape.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 354</value>
+  </data>
+  <data name="SettingBotAutoEscape.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 35</value>
+  </data>
+  <data name="SettingBotAutoEscape.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="SettingBotAutoEscape.Text" xml:space="preserve">
+    <value>纯文本发送</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Name" xml:space="preserve">
+    <value>SettingBotAutoEscape</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.Parent" xml:space="preserve">
+    <value>SettingBot</value>
+  </data>
+  <data name="&gt;&gt;SettingBotAutoEscape.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="SettingBotRestart.AutoSize" type="System.Boolean, mscorlib">
@@ -2383,7 +2569,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotRestart.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="SettingBotAuthorization.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2407,7 +2593,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotAuthorization.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="SettingBotAuthorizationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2434,7 +2620,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotAuthorizationLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="SettingBotUri.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2458,7 +2644,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotUri.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="SettingBotEnbaleOutputData.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2485,7 +2671,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnbaleOutputData.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="SettingBotPermission.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2494,7 +2680,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotPermission.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 455</value>
+    <value>23, 499</value>
   </data>
   <data name="SettingBotPermission.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2518,7 +2704,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermission.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="SettingBotGroup.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2527,7 +2713,7 @@
     <value>NoControl</value>
   </data>
   <data name="SettingBotGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 356</value>
+    <value>23, 400</value>
   </data>
   <data name="SettingBotGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
@@ -2551,13 +2737,13 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroup.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="SettingBotPermissionList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotPermissionList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 494</value>
+    <value>23, 538</value>
   </data>
   <data name="SettingBotPermissionList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2578,13 +2764,13 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotPermissionList.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="SettingBotGroupList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="SettingBotGroupList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 395</value>
+    <value>23, 439</value>
   </data>
   <data name="SettingBotGroupList.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2605,7 +2791,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGroupList.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="SettingBotUriLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2638,7 +2824,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotUriLabel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="SettingBotSupportedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2671,7 +2857,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotSupportedLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="SettingBotGivePermissionToAllAdmin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2704,7 +2890,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotGivePermissionToAllAdmin.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="SettingBotEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2737,7 +2923,7 @@
     <value>SettingBot</value>
   </data>
   <data name="&gt;&gt;SettingBotEnableLog.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="SettingBot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2746,7 +2932,7 @@
     <value>0, 504</value>
   </data>
   <data name="SettingBot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1198, 556</value>
+    <value>1198, 600</value>
   </data>
   <data name="SettingBot.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -3382,7 +3568,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Setting.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="DebugTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3445,7 +3631,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;Debug.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3496,7 +3682,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;MainTableLayout.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="MainTableLayout.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50,Absolute,889" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -3532,13 +3718,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;StatusStrip.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>85</value>
+    <value>157</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>192, 192</value>
@@ -3873,6 +4059,36 @@
     <value>MemberContextMenuStrip_Refresh</value>
   </data>
   <data name="&gt;&gt;MemberContextMenuStrip_Refresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListName.Name" xml:space="preserve">
+    <value>SereinPluginsListName</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListVersion.Name" xml:space="preserve">
+    <value>SereinPluginsListVersion</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListAuthor.Name" xml:space="preserve">
+    <value>SereinPluginsListAuthor</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListAuthor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListDescription.Name" xml:space="preserve">
+    <value>SereinPluginsListDescription</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip_Reload</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">

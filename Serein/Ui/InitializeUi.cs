@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Plugin;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -13,12 +14,13 @@ namespace Serein.Ui
         private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         private void InitWebBrowser()
         {
             PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
+            SereinPluginsWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
         }
         private void Initialize()
         {
@@ -36,11 +38,12 @@ namespace Serein.Ui
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
+            SetWindowTheme(SereinPluginsList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            new Task(() => Debug_Append("[Serein]Loaded.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
-            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            new Task(() => Global.Debug("[Serein] Welcome.  " + SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
             TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
