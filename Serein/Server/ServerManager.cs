@@ -192,7 +192,17 @@ namespace Serein.Server
         {
             if (Status)
             {
+                bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\r', '\n');
+                string Command_Copy_Prefix = Command_Copy.Split(' ')[0];
+                foreach(CommandItem Item in Plugins.CommandItems)
+                {
+                    if (Command_Copy_Prefix == Item.Command)
+                    {
+                        IsSpecifiedCommand = true;
+                        JSFunc.Trigger("onServerSendSpecifiedCommand", Command_Copy, Item.Function);
+                    }
+                }
                 while (CommandList.Count >= 50)
                 {
                     CommandList.RemoveAt(0);
@@ -204,18 +214,20 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (!Plugins.Commands.Contains(Command.Split(' ')[0]) && (Unicode || Global.Settings.Server.EnableUnicode))
-                {
-                    Command_Copy = ConvertToUnicode(Command_Copy);
-                }
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
                 }
-                if (!Plugins.Commands.Contains(Command_Copy.Split(' ')[0]))
+                if (!IsSpecifiedCommand)
                 {
+                    if ((Unicode || Global.Settings.Server.EnableUnicode))
+                    {
+                        Command_Copy = ConvertToUnicode(Command_Copy);
+                    }
                     CommandWriter.WriteLine(Command_Copy);
+                    JSFunc.Trigger("onServerSendCommand", Command);
                 }
+                
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -235,7 +247,6 @@ namespace Serein.Server
                     }
                     catch { }
                 }
-                JSFunc.Trigger("onServerSendCommand", Command);
             }
             else if (Command.Trim().ToUpper() == "START")
             {
@@ -268,7 +279,7 @@ namespace Serein.Server
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(Log.EscapeLog(outLine.Data), Global.Settings.Server.OutputStyle)
+                    Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
                 //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
                 if (Global.Settings.Server.EnableLog)
@@ -307,6 +318,7 @@ namespace Serein.Server
                         Base.Message.ProcessMsgFromConsole(Line);
                     }
                 }
+                JSFunc.Trigger("onServerOutput", Line);
             }
         }
         private static void WaitForExit()

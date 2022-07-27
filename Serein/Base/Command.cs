@@ -33,9 +33,7 @@ namespace Serein.Base
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     CreateNoWindow = true,
-                    WorkingDirectory = Global.Path,
-                    StandardErrorEncoding = Encoding.UTF8,
-                    StandardOutputEncoding = Encoding.UTF8
+                    WorkingDirectory = Global.Path
                 }
             };
             CMDProcess.Start();
@@ -44,10 +42,17 @@ namespace Serein.Base
                 AutoFlush = true,
                 NewLine = "\r\n"
             };
-            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n') + "&exit");
+            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
             CommandWriter.Close();
-            CMDProcess.WaitForExit();
-            CMDProcess.Close();
+            Task.Run(() =>
+            {
+                CMDProcess.WaitForExit(600000);
+                if (!CMDProcess.HasExited)
+                {
+                    CMDProcess.Kill();
+                }
+                CMDProcess.Dispose();
+            });
         }
 
         /// <summary>
@@ -91,7 +96,7 @@ namespace Serein.Base
             switch (Type)
             {
                 case 1:
-                    new Task(() => StartCmd(Value)).Start();
+                    StartCmd(Value);
                     break;
                 case 2:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");

@@ -8,6 +8,14 @@ namespace Serein.Plugin
 {
     partial class JSFunc
     {
+        /// <summary>
+        /// 注册插件
+        /// </summary>
+        /// <param name="Name">名称</param>
+        /// <param name="Version">版本</param>
+        /// <param name="Author">作者</param>
+        /// <param name="Description">介绍</param>
+        /// <returns>注册结果</returns>
         public static bool Register(
             string Name,
             string Version,
@@ -46,6 +54,9 @@ namespace Serein.Plugin
                     break;
                 case "onServerStop":
                     Plugins.Event.onServerStop.Add(Function);
+                    break;
+                case "onServerOutput":
+                    Plugins.Event.onServerOutput.Add(Function);
                     break;
                 case "onServerSendCommand":
                     Plugins.Event.onServerSendCommand.Add(Function);
@@ -107,54 +118,64 @@ namespace Serein.Plugin
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
                             );
                         break;
+                    case "onServerOutput":
+                        Plugins.Event.onServerOutput.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine, Args[0])})
+                            );
+                        break;
                     case "onServerSendCommand":
                         Plugins.Event.onServerSendCommand.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]) })
+                                JsValue.FromObject(engine, Args[0])})
                             );
+                        break;
+                    case "onServerSendSpecifiedCommand":
+                        ((Delegate)Args[1]).DynamicInvoke(
+                            JsValue.Undefined, new[] {JsValue.FromObject(engine, Args[0])});
                         break;
                     case "onGroupIncrease":
                         Plugins.Event.onGroupIncrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine, Args[0]),
                                 JsValue.FromObject(engine, Args[1]) })
                             );
                         break;
                     case "onGroupDecrease":
                         Plugins.Event.onGroupDecrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine,  Args[0]),
-                                JsValue.FromObject(engine, Args[1]) })
+                                JsValue.FromObject(engine, Args[0]),
+                                JsValue.FromObject(engine, Args[1])})
                             );
                         break;
                     case "onGroupPoke":
                         Plugins.Event.onGroupPoke.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine,  Args[0]),
-                                JsValue.FromObject(engine, Args[1]) })
+                                JsValue.FromObject(engine, Args[0]),
+                                JsValue.FromObject(engine, Args[1])})
                             );
                         break;
                     case "onReceiveGroupMessage":
                         Plugins.Event.onReceiveGroupMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine,  Args[0]),
-                                JsValue.FromObject(engine,  Args[1]),
-                                JsValue.FromObject(engine,  Args[2]),
-                                JsValue.FromObject(engine, Args[3]) })
+                                JsValue.FromObject(engine, Args[0]),
+                                JsValue.FromObject(engine, Args[1]),
+                                JsValue.FromObject(engine, Args[2]),
+                                JsValue.FromObject(engine, Args[3])})
                             );
                         break;
                     case "onReceivePrivateMessage":
                         Plugins.Event.onReceivePrivateMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine,  Args[0]),
-                                JsValue.FromObject(engine,  Args[1]),
-                                JsValue.FromObject(engine,  Args[2])})
+                                JsValue.FromObject(engine, Args[0]),
+                                JsValue.FromObject(engine, Args[1]),
+                                JsValue.FromObject(engine, Args[2])})
                             );
                         break;
                     case "onReceivePackage":
                         Plugins.Event.onReceivePackage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]) })
+                                JsValue.FromObject(engine, Args[0])})
                             );
                         break;
                     case "onSereinStart":
@@ -186,11 +207,10 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Command">命令</param>
         /// <returns>注册结果</returns>
-        public static bool RegisterCommand(string Command)
+        public static bool RegisterCommand(string Command,Delegate Function)
         {
             if (
                 Command.Contains(" ") ||
-                Plugins.Commands.Contains(Command) ||
                 ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
                 )
             {
@@ -202,7 +222,11 @@ namespace Serein.Plugin
             }
             else
             {
-                Plugins.Commands.Add(Command);
+                Plugins.CommandItems.Add(
+                    new CommandItem {
+                        Command = Command,
+                        Function=Function
+                    });
                 return true;
             }
         }

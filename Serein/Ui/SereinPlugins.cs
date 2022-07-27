@@ -1,5 +1,6 @@
 ﻿using Serein.Plugin;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -36,6 +37,7 @@ namespace Serein.Ui
         private void SereinPluginsListContextMenuStrip_Reload_Click(object sender, EventArgs e)
         {
             Plugins.Reload();
+            LoadSereinPlugin();
         }
     }
 }

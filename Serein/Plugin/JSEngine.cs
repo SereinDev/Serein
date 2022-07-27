@@ -66,7 +66,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Global_Debug", new Action<object>(Global.Debug));
             engine.SetValue("Serein_Global_Settings", new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register", new Func<string, string, string, string, bool>(JSFunc.Register));
-            engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, bool>(JSFunc.RegisterCommand));
+            engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, Delegate, bool>(JSFunc.RegisterCommand));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener", new Func<string, Delegate, bool>(JSFunc.SetListener));
             engine.SetValue("Serein_Motdpe", new Func<string, string>((IP) => { return new Motdpe(IP).Original; }));
             engine.SetValue("Serein_Motdje", new Func<string, string>((IP) => { return new Motdje(IP).Original; }));
@@ -79,6 +79,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_ServerManager_GetCPUPersent", new Func<string>(() => { return ServerManager.CPUPersent.ToString("N2"); }));
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
+            engine.SetValue("Serein_Websocket_SendPackage", new Func<string,bool>((Json) => { if (Websocket.Status) { Websocket.webSocket.Send(Json); } return Websocket.Status; }));
             engine.SetValue("Serein_Websocket_Status", new Func<bool>(() => { return Websocket.Status; }));
             engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Members.Bind));
             engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
@@ -105,6 +106,7 @@ namespace Serein.Plugin
                 "getServerCPUPersent:Serein_ServerManager_GetCPUPersent," +
                 "sendGroup:Serein_Websocket_SendGroup," +
                 "sendPrivate:Serein_Websocket_SendPrivate," +
+                "sendPackage:Serein_Websocket_SendPackage," +
                 "getWsStatus:Serein_Websocket_Status," +
                 "bindMember:Serein_Member_Bind," +
                 "unbindMember:Serein_Member_UnBind," +

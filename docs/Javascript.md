@@ -1,5 +1,6 @@
 ## Javascript
 - [Javascript](#javascript)
+  - [推荐列表](#推荐列表)
   - [标准](#标准)
   - [可直接使用的NET对象/类](#可直接使用的net对象类)
     - [示例](#示例)
@@ -24,11 +25,20 @@
     - [获取服务器进程占用](#获取服务器进程占用)
     - [发送群聊消息](#发送群聊消息)
     - [发送私聊消息](#发送私聊消息)
+    - [发送数据包](#发送数据包)
     - [获取ws连接状态](#获取ws连接状态)
     - [绑定游戏ID](#绑定游戏id)
     - [删除绑定记录](#删除绑定记录)
     - [获取指定用户QQ](#获取指定用户qq)
     - [获取指定游戏ID](#获取指定游戏id)
+
+### 推荐列表
+- [**示例插件（官方）**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
+
+>#### ⭐ Tips 
+>如果你有优秀的插件，欢迎提交Issue、提交pr或与作者私聊  
+> 
+>经过审核后你的插件也有机会出现在上面ヾ(≧▽≦*)o
 
 ### 标准
 [ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
@@ -59,7 +69,6 @@ System.Diagnostics.Process.Start("cmd.exe");
 ```
 
 ### 内置属性
-
 #### Serein.exe所在文件夹
 `serein.path`
 - 返回
@@ -89,7 +98,6 @@ System.Diagnostics.Process.Start("cmd.exe");
 
 #### 注册插件
 `serein.registerPlugin(name:String,version:String,author:String,description:String)`
-
 - 参数
   - `name` 插件名称
     - 不允许与其他插件出现重复
@@ -114,13 +122,14 @@ System.Diagnostics.Process.Start("cmd.exe");
 | --- | --- | --- |
 | onServerStart | 服务器启动 | `()` |
 | onServerStop | 服务器关闭 | `()` |
+| onServerOutput | 服务器输出 | `(line:String)` |
 | onServerSendCommand | 服务器输入指令 | `(cmd:String)` |
 | onGroupIncrease | 监听群群成员增加 | `(group_id:Number,user_id:Number)` |
 | onGroupDecrease | 监听群群成员减少 | `(group_id:Number,user_id:Number)` |
 | onGroupPoke | 监听群戳一戳自身账号 | `(group_id:Number,user_id:Number)` |
 | onReceiveGroupMessage | 收到群消息 | `(group_id:Number,user_id:Number,msg:String,shownName:String)` |
 | onReceivePrivateMessage | 收到私聊消息 | `(user_id:Number,msg:String,nickName:String)` |
-| onReceivePackage | 收到数据包 | `(parkage:String)` |
+| onReceivePackage | 收到数据包 | `(package:String)` |
 | onSereinStart | Serein启动 | `( )` |
 | onSereinClose | Serein关闭 | `( )` |
 
@@ -264,6 +273,17 @@ Java版：`serein.getMotdje(ip:String)`
 - 参数
   - `target` 对方QQ号
   - `msg` 消息内容
+- 返回
+  - `Boolean`
+    - 成功为`true`，否则为`false`
+    >#### ⚠ 提示
+    >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+
+#### 发送数据包
+`serein.sendPackage(json:String)`
+
+- 参数
+  - `json` 发送的json数据
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`

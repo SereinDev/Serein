@@ -11,7 +11,7 @@ namespace Serein.Plugin
     internal class Plugins
     {
         public static Event Event = new Event();
-        public static List<string> Commands = new List<string>();
+        public static List<CommandItem> CommandItems = new List<CommandItem>();
         public static List<PluginItem> PluginItems = new List<PluginItem>();
         public static List<string> PluginNames
         {
@@ -104,7 +104,8 @@ namespace Serein.Plugin
         public static void Reload()
         {
             Global.Ui.SereinPluginsWebBrowser_Invoke("#clear");
-            Commands = new List<string>();
+            CommandItems.Clear();
+            PluginItems.Clear();
             Event = new Event();
             JSEngine.Setup();
             Load();
