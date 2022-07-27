@@ -195,7 +195,7 @@ namespace Serein.Server
                 bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\r', '\n');
                 string Command_Copy_Prefix = Command_Copy.Split(' ')[0];
-                foreach(CommandItem Item in Plugins.CommandItems)
+                foreach (CommandItem Item in Plugins.CommandItems)
                 {
                     if (Command_Copy_Prefix == Item.Command)
                     {
@@ -227,7 +227,7 @@ namespace Serein.Server
                     CommandWriter.WriteLine(Command_Copy);
                     JSFunc.Trigger("onServerSendCommand", Command);
                 }
-                
+
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))

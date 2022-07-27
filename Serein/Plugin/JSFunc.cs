@@ -132,7 +132,7 @@ namespace Serein.Plugin
                         break;
                     case "onServerSendSpecifiedCommand":
                         ((Delegate)Args[1]).DynamicInvoke(
-                            JsValue.Undefined, new[] {JsValue.FromObject(engine, Args[0])});
+                            JsValue.Undefined, new[] { JsValue.FromObject(engine, Args[0]) });
                         break;
                     case "onGroupIncrease":
                         Plugins.Event.onGroupIncrease.ForEach(
@@ -207,7 +207,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Command">命令</param>
         /// <returns>注册结果</returns>
-        public static bool RegisterCommand(string Command,Delegate Function)
+        public static bool RegisterCommand(string Command, Delegate Function)
         {
             if (
                 Command.Contains(" ") ||
@@ -223,9 +223,10 @@ namespace Serein.Plugin
             else
             {
                 Plugins.CommandItems.Add(
-                    new CommandItem {
+                    new CommandItem
+                    {
                         Command = Command,
-                        Function=Function
+                        Function = Function
                     });
                 return true;
             }
