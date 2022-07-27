@@ -189,7 +189,7 @@ namespace Serein.Plugin
         public static bool RegisterCommand(string Command)
         {
             if (
-                Command.Contains(" ") || 
+                Command.Contains(" ") ||
                 Plugins.Commands.Contains(Command) ||
                 ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
                 )

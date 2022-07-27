@@ -212,7 +212,7 @@ namespace Serein.Server
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
                 }
-                if(!Plugins.Commands.Contains(Command_Copy.Split(' ')[0]))
+                if (!Plugins.Commands.Contains(Command_Copy.Split(' ')[0]))
                 {
                     CommandWriter.WriteLine(Command_Copy);
                 }

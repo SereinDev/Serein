@@ -157,7 +157,8 @@ namespace Serein.Base
                 case 40:
                     if (Type != 5)
                     {
-                        Task.Run(() => {
+                        Task.Run(() =>
+                        {
                             JSEngine.Init(new Engine(cfg => cfg.AllowClr(
                                 typeof(File).Assembly,
                                 typeof(Path).Assembly,
