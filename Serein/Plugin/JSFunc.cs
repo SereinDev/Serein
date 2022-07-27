@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Jint.Native;
+using Serein.Base;
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using Jint;
 
 namespace Serein.Plugin
 {
@@ -26,6 +28,13 @@ namespace Serein.Plugin
             });
             return true;
         }
+
+        /// <summary>
+        /// 注册事件监听器
+        /// </summary>
+        /// <param name="EventName">事件名称</param>
+        /// <param name="Function">函数</param>
+        /// <returns>注册结果</returns>
         public static bool SetListener(string EventName, Delegate Function)
         {
             if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName))
@@ -56,6 +65,9 @@ namespace Serein.Plugin
                 case "onReceivePrivateMessage":
                     Plugins.Event.onReceivePrivateMessage.Add(Function);
                     break;
+                case "onReceivePackage":
+                    Plugins.Event.onReceivePackage.Add(Function);
+                    break;
                 case "onSereinStart":
                     Plugins.Event.onSereinStart.Add(Function);
                     break;
@@ -63,6 +75,10 @@ namespace Serein.Plugin
                     Plugins.Event.onSereinClose.Add(Function);
                     break;
                 default:
+                    Global.Ui.SereinPluginsWebBrowser_Invoke(
+                        "<span style=\"color:#C09553;font-weight: bold;\">[!]</span>" +
+                        $"插件注册了一个未知事件：{Log.EscapeLog(EventName)}"
+                        );
                     return false;
             }
             return true;
@@ -75,54 +91,115 @@ namespace Serein.Plugin
         /// <param name="Args">参数</param>
         public static void Trigger(string EventName, params object[] Args)
         {
+            Engine engine = new Engine();
             Global.Debug("[JSFunc:Tigger()] " + EventName);
             try
             {
                 switch (EventName)
                 {
                     case "onServerStart":
-                        Plugins.Event.onServerStart.ForEach((x) => x.DynamicInvoke());
+                        Plugins.Event.onServerStart.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            );
                         break;
                     case "onServerStop":
-                        Plugins.Event.onServerStop.ForEach((x) => x.DynamicInvoke());
+                        Plugins.Event.onServerStop.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            );
                         break;
                     case "onServerSendCommand":
-                        Plugins.Event.onServerSendCommand.ForEach((x) => x.DynamicInvoke(Args[0]));
+                        Plugins.Event.onServerSendCommand.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine, Args[0]) })
+                            );
                         break;
                     case "onGroupIncrease":
-                        Plugins.Event.onGroupIncrease.ForEach((x) => x.DynamicInvoke(Args));
+                        Plugins.Event.onGroupIncrease.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine, Args[1]) })
+                            );
                         break;
                     case "onGroupDecrease":
-                        Plugins.Event.onGroupDecrease.ForEach((x) => x.DynamicInvoke(Args));
+                        Plugins.Event.onGroupDecrease.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine, Args[1]) })
+                            );
                         break;
                     case "onGroupPoke":
-                        Plugins.Event.onGroupPoke.ForEach((x) => x.DynamicInvoke(Args));
+                        Plugins.Event.onGroupPoke.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine, Args[1]) })
+                            );
                         break;
                     case "onReceiveGroupMessage":
-                        Plugins.Event.onReceiveGroupMessage.ForEach((x) => x.DynamicInvoke(Args));
+                        Plugins.Event.onReceiveGroupMessage.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine,  Args[1]),
+                                JsValue.FromObject(engine,  Args[2]),
+                                JsValue.FromObject(engine, Args[3]) })
+                            );
                         break;
                     case "onReceivePrivateMessage":
-                        Plugins.Event.onReceivePrivateMessage.ForEach((x) => x.DynamicInvoke(Args));
+                        Plugins.Event.onReceivePrivateMessage.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine,  Args[0]),
+                                JsValue.FromObject(engine,  Args[1]),
+                                JsValue.FromObject(engine,  Args[2])})
+                            );
+                        break;
+                    case "onReceivePackage":
+                        Plugins.Event.onReceivePackage.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine, Args[0]) })
+                            );
                         break;
                     case "onSereinStart":
-                        Plugins.Event.onSereinStart.ForEach((x) => x.DynamicInvoke());
+                        Plugins.Event.onSereinStart.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            );
                         break;
                     case "onSereinClose":
-                        Plugins.Event.onSereinClose.ForEach((x) => x.DynamicInvoke());
+                        Plugins.Event.onSereinClose.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            );
                         break;
-                    default:
-                        return;
                 }
+                engine = null;
             }
             catch (Exception e)
             {
+                Global.Ui.SereinPluginsWebBrowser_Invoke(
+                        "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
+                        $"触发事件{EventName}时出现异常：" +
+                        Log.EscapeLog(e.Message)
+                        );
                 Global.Debug(e.ToString());
             }
         }
+
+        /// <summary>
+        /// 注册命令
+        /// </summary>
+        /// <param name="Command">命令</param>
+        /// <returns>注册结果</returns>
         public static bool RegisterCommand(string Command)
         {
-            if (Command.Contains(" ") || Plugins.Commands.Contains(Command))
+            if (
+                Command.Contains(" ") || 
+                Plugins.Commands.Contains(Command) ||
+                ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
+                )
+            {
+                Global.Ui.SereinPluginsWebBrowser_Invoke(
+                    "<span style=\"color:#C09553;font-weight: bold;\">[!]</span>" +
+                    $"插件注册命令\"{Log.EscapeLog(Command)}\"失败"
+                    );
                 return false;
+            }
             else
             {
                 Plugins.Commands.Add(Command);

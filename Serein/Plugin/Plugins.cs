@@ -25,6 +25,10 @@ namespace Serein.Plugin
                 return list;
             }
         }
+
+        /// <summary>
+        /// 加载插件
+        /// </summary>
         public static void Load()
         {
             string PluginPath = Global.Path + "\\plugins";
@@ -38,11 +42,12 @@ namespace Serein.Plugin
                 foreach (string Filename in Files)
                 {
                     Global.Ui.SereinPluginsWebBrowser_Invoke(
-                        $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>正在加载{Path.GetFileName(Filename)}"
+                        $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>正在加载{Log.EscapeLog(Path.GetFileName(Filename))}"
                         );
                     Temp = PluginItems.Count;
                     try
                     {
+                        JSEngine.Setup();
                         StreamReader reader = new StreamReader(Filename, Encoding.UTF8);
                         string Exception = JSEngine.Run(reader.ReadToEnd());
                         reader.Close();
@@ -92,13 +97,16 @@ namespace Serein.Plugin
                 }
             }
         }
+
+        /// <summary>
+        /// 重新加载插件
+        /// </summary>
         public static void Reload()
         {
             Global.Ui.SereinPluginsWebBrowser_Invoke("#clear");
-            Thread.CurrentThread.Join(1000);
             Commands = new List<string>();
             Event = new Event();
-            JSEngine.Init();
+            JSEngine.Setup();
             Load();
         }
     }

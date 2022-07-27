@@ -12,10 +12,12 @@ namespace Serein.Plugin
 {
     internal class JSEngine
     {
-        private static Engine engine = new Engine();
-        public static void Init()
+        public static Engine engine = new Engine();
+
+        public static void Setup()
         {
-            engine = new Engine(cfg => cfg.AllowClr(
+            engine = Init(
+            new Engine(cfg => cfg.AllowClr(
                 typeof(File).Assembly,
                 typeof(Path).Assembly,
                 typeof(Directory).Assembly,
@@ -27,7 +29,14 @@ namespace Serein.Plugin
                 typeof(ProcessStartInfo).Assembly
                 )
             .CatchClrExceptions()
-            );
+            ));
+        }
+        /// <summary>
+        /// 初始化JS引擎
+        /// </summary>
+        /// <returns>JS引擎</returns>
+        public static Engine Init(Engine engine)
+        {
             engine.SetValue("Serein_SystemInfo", new Func<string, string>((Type) =>
             {
                 switch (Type.ToLower())
@@ -102,13 +111,14 @@ namespace Serein.Plugin
                 "getID:Serein_Member_GetID," +
                 "getGameID:Serein_Member_GetGameID" +
                 "};");
+            return engine;
         }
         public static string Run(string Code)
         {
             try
             {
                 engine.Execute(Code);
-                return String.Empty;
+                return string.Empty;
             }
             catch (Exception e)
             {

@@ -54,7 +54,6 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            JSEngine.Init();
             Ui.Ui ui = new Ui.Ui();
             Global.Ui = ui;
             Application.Run(ui);

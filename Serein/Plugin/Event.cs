@@ -13,6 +13,7 @@ namespace Serein.Plugin
         public List<Delegate> onGroupPoke { get; set; } = new List<Delegate>();
         public List<Delegate> onReceiveGroupMessage { get; set; } = new List<Delegate>();
         public List<Delegate> onReceivePrivateMessage { get; set; } = new List<Delegate>();
+        public List<Delegate> onReceivePackage { get; set; } = new List<Delegate>();
         public List<Delegate> onSereinStart { get; set; } = new List<Delegate>();
         public List<Delegate> onSereinClose { get; set; } = new List<Delegate>();
     }

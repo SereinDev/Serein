@@ -212,7 +212,10 @@ namespace Serein.Server
                 {
                     Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
                 }
-                CommandWriter.WriteLine(Command_Copy);
+                if(!Plugins.Commands.Contains(Command_Copy.Split(' ')[0]))
+                {
+                    CommandWriter.WriteLine(Command_Copy);
+                }
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -265,7 +268,7 @@ namespace Serein.Server
                     }
                 }
                 Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
+                    Log.ColorLog(Log.EscapeLog(outLine.Data), Global.Settings.Server.OutputStyle)
                     );
                 //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
                 if (Global.Settings.Server.EnableLog)

@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jint;
 
 namespace Serein.Base
 {
@@ -156,7 +157,22 @@ namespace Serein.Base
                 case 40:
                     if (Type != 5)
                     {
-                        JSEngine.Run(Value);
+                        Task.Run(() => {
+                            JSEngine.Init(new Engine(cfg => cfg.AllowClr(
+                                typeof(File).Assembly,
+                                typeof(Path).Assembly,
+                                typeof(Directory).Assembly,
+                                typeof(DirectoryInfo).Assembly,
+                                typeof(StreamReader).Assembly,
+                                typeof(StreamWriter).Assembly,
+                                typeof(Encoding).Assembly,
+                                typeof(Process).Assembly,
+                                typeof(ProcessStartInfo).Assembly
+                                )
+                                .CatchClrExceptions()
+                                .TimeoutInterval(TimeSpan.FromMinutes(1))
+                                )).Execute(Value);
+                        });
                     }
                     break;
                 case 50:

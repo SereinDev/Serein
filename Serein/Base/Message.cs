@@ -51,8 +51,10 @@ namespace Serein.Base
                 long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
                 Global.Ui.BotWebBrowser_Invoke(
                     "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
-                    RawMessage
+                    Log.EscapeLog(
+                        $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" +
+                        RawMessage
+                        )
                     );
                 foreach (RegexItem Item in Global.RegexItems)
                 {
