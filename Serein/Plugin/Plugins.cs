@@ -63,7 +63,7 @@ namespace Serein.Plugin
                             {
                                 PluginItems[PluginItems.Count - 1].Path = Filename;
                             }
-                            else if (Temp == PluginItems.Count && !PluginNames.Contains(Path.GetFileNameWithoutExtension(Filename)))
+                            else
                             {
                                 PluginItems.Add(
                                 new PluginItem()

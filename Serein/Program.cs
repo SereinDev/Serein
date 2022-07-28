@@ -69,6 +69,11 @@ namespace Serein
             Abort(e.ExceptionObject);
         }
 
+
+        /// <summary>
+        /// Serein错误处理
+        /// </summary>
+        /// <param name="obj">Exception</param>
         private static void Abort(object obj)
         {
             Global.Crash = true;

@@ -60,11 +60,11 @@ function onReceivePrivateMessage(user,msg,nickname){
     serein.log("监听私聊消息 "+nickname+"（"+user+"）："+msg);
 }
 
-serein.setListener("onReceivePackage",onReceivePackage);
-function onReceivePackage(json){
+serein.setListener("onReceivePacket",onReceivePacket);
+function onReceivePacket(json){
     serein.log("收到数据包："+json)
 }
 
 
 
-serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": \"10001\",\"message\": \"111\"}}") // 发送数据包
+serein.sendPacket("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": \"10001\",\"message\": \"111\"}}") // 发送数据包

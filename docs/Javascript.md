@@ -112,7 +112,7 @@ System.Diagnostics.Process.Start("cmd.exe");
 `serein.setListener(event:String,func:Function)`
 - 参数
   - `event` 事件名称，具体值见下表（区分大小写）
-  - `funcname` 函数
+  - `func` 函数
     - 不要包含`()`和参数
 - 返回
   - `Boolean`
@@ -120,8 +120,8 @@ System.Diagnostics.Process.Start("cmd.exe");
 
 | 事件名 | 描述 | 函数原型 |
 | --- | --- | --- |
-| onServerStart | 服务器启动 | `()` |
-| onServerStop | 服务器关闭 | `()` |
+| onServerStart | 服务器启动 | `( )` |
+| onServerStop | 服务器关闭 | `( )` |
 | onServerOutput | 服务器输出 | `(line:String)` |
 | onServerSendCommand | 服务器输入指令 | `(cmd:String)` |
 | onGroupIncrease | 监听群群成员增加 | `(group_id:Number,user_id:Number)` |
@@ -129,17 +129,21 @@ System.Diagnostics.Process.Start("cmd.exe");
 | onGroupPoke | 监听群戳一戳自身账号 | `(group_id:Number,user_id:Number)` |
 | onReceiveGroupMessage | 收到群消息 | `(group_id:Number,user_id:Number,msg:String,shownName:String)` |
 | onReceivePrivateMessage | 收到私聊消息 | `(user_id:Number,msg:String,nickName:String)` |
-| onReceivePackage | 收到数据包 | `(package:String)` |
+| onReceivePacket | 收到数据包 | `(packet:String)` |
 | onSereinStart | Serein启动 | `( )` |
 | onSereinClose | Serein关闭 | `( )` |
 
 #### 注册服务器命令
-`serein.registerCommand(command:String)`
+`serein.registerCommand(command:String,func:Function)`
 
 >本质上是拦截命令输入，处理该命令需要监听`onServerSendCommand`事件
 
 - 参数
   - `command` 命令名称
+  - `func` 函数
+    - 不要包含`()`和参数
+    - 函数原型：`(cmd:String)`
+      - `cmd` 输入的命令全文
 - 返回
   - 空
 
@@ -280,7 +284,7 @@ Java版：`serein.getMotdje(ip:String)`
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送数据包
-`serein.sendPackage(json:String)`
+`serein.sendPacket(json:String)`
 
 - 参数
   - `json` 发送的json数据

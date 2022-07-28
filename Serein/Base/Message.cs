@@ -11,7 +11,12 @@ namespace Serein.Base
     public class Message
     {
         public static string MessageReceived, MessageSent, SelfId;
-        public static void ProcessMsgFromConsole(string CommandLine)
+
+        /// <summary>
+        /// 处理来自控制台的消息
+        /// </summary>
+        /// <param name="Line">控制台的消息</param>
+        public static void ProcessMsgFromConsole(string Line)
         {
             foreach (RegexItem Item in Global.RegexItems)
             {
@@ -19,19 +24,24 @@ namespace Serein.Base
                 {
                     continue;
                 }
-                if (Regex.IsMatch(CommandLine, Item.Regex))
+                if (Regex.IsMatch(Line, Item.Regex))
                 {
                     Command.Run(
                         2,
                         Item.Command,
-                        MsgMatch: Regex.Match(CommandLine, Item.Regex)
+                        MsgMatch: Regex.Match(Line, Item.Regex)
                         );
                 }
             }
         }
-        public static void ProcessMsgFromBot(string Package)
+
+        /// <summary>
+        /// 处理来自机器人的消息
+        /// </summary>
+        /// <param name="Packet">数据包</param>
+        public static void ProcessMsgFromBot(string Packet)
         {
-            string Json = Package ?? "";
+            string Json = Packet ?? "";
             Json = DeUnicode(Json);
             Json = WebUtility.HtmlDecode(Json);
             JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
@@ -187,8 +197,14 @@ namespace Serein.Base
                     }
                 }
             }
-            JSFunc.Trigger("onReceivePackage", Package);
+            JSFunc.Trigger("onReceivePacket", Packet);
         }
+
+        /// <summary>
+        /// 处理Unicode转义
+        /// </summary>
+        /// <param name="str">文本</param>
+        /// <returns>处理后文本</returns>
         public static string DeUnicode(string str)
         {
             Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");

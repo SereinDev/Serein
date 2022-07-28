@@ -23,7 +23,7 @@ namespace Serein.Plugin
             string Description
             )
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrWhiteSpace(Name) || Plugins.PluginNames.Contains(Name))
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrWhiteSpace(Name))
             {
                 return false;
             }
@@ -76,8 +76,8 @@ namespace Serein.Plugin
                 case "onReceivePrivateMessage":
                     Plugins.Event.onReceivePrivateMessage.Add(Function);
                     break;
-                case "onReceivePackage":
-                    Plugins.Event.onReceivePackage.Add(Function);
+                case "onReceivePacket":
+                    Plugins.Event.onReceivePacket.Add(Function);
                     break;
                 case "onSereinStart":
                     Plugins.Event.onSereinStart.Add(Function);
@@ -172,8 +172,8 @@ namespace Serein.Plugin
                                 JsValue.FromObject(engine, Args[2])})
                             );
                         break;
-                    case "onReceivePackage":
-                        Plugins.Event.onReceivePackage.ForEach(
+                    case "onReceivePacket":
+                        Plugins.Event.onReceivePacket.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
                                 JsValue.FromObject(engine, Args[0])})
                             );

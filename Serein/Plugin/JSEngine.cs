@@ -79,7 +79,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_ServerManager_GetCPUPersent", new Func<string>(() => { return ServerManager.CPUPersent.ToString("N2"); }));
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
-            engine.SetValue("Serein_Websocket_SendPackage", new Func<string, bool>((Json) => { if (Websocket.Status) { Websocket.webSocket.Send(Json); } return Websocket.Status; }));
+            engine.SetValue("Serein_Websocket_SendPacket", new Func<string, bool>((Json) => { if (Websocket.Status) { Websocket.webSocket.Send(Json); } return Websocket.Status; }));
             engine.SetValue("Serein_Websocket_Status", new Func<bool>(() => { return Websocket.Status; }));
             engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Members.Bind));
             engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
@@ -106,7 +106,7 @@ namespace Serein.Plugin
                 "getServerCPUPersent:Serein_ServerManager_GetCPUPersent," +
                 "sendGroup:Serein_Websocket_SendGroup," +
                 "sendPrivate:Serein_Websocket_SendPrivate," +
-                "sendPackage:Serein_Websocket_SendPackage," +
+                "sendPacket:Serein_Websocket_SendPacket," +
                 "getWsStatus:Serein_Websocket_Status," +
                 "bindMember:Serein_Member_Bind," +
                 "unbindMember:Serein_Member_UnBind," +
