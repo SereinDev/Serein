@@ -9,7 +9,8 @@ on:
 
 jobs:
     draft_release:
-      outputs:  ${{ steps.Draft.outputs.tag_name }}
+      outputs:
+        tag_name:  ${{ steps.Draft.outputs.tag_name }}
       name: Draft release
       runs-on: ubuntu-latest
       steps:
