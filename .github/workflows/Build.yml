@@ -8,6 +8,17 @@ on:
   pull_request:
 
 jobs:
+    draft_release:
+      outputs:  ${{ steps.Draft.outputs.tag_name }}
+      name: Draft release
+      runs-on: ubuntu-latest
+      steps:
+        - uses: release-drafter/release-drafter@v5
+          id: Draft
+          name: Draft
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     Format:
       runs-on: windows-latest
       steps:
@@ -40,7 +51,7 @@ jobs:
         continue-on-error: true
 
     Build:
-      needs: Format
+      needs: [Format,draft_release]
       runs-on: windows-latest
       steps:
       - name: Checkout repo
@@ -73,13 +84,13 @@ jobs:
       - name: Upload Serein(Release .Net Framework 4.7.2)
         uses: actions/upload-artifact@v3
         with:
-          name: .NET_Framework_4.7.2
+          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
           path: ${{ github.workspace }}\Serein\bin\Release\net472
 
       - name: Upload Serein(Release Net6.0)
         uses: actions/upload-artifact@v3
         with:
-          name: NET_6.0
+          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnet6
           path: ${{ github.workspace }}\Serein\bin\Release\net6.0-windows
 
       - name: Build the solution(Debug)
@@ -93,12 +104,4 @@ jobs:
           name: Debug
           path: ${{ github.workspace }}\Serein\bin\Debug
 
-    draft_release:
-      needs: Format
-      name: Draft release
-      runs-on: ubuntu-latest
-      steps:
-        - uses: release-drafter/release-drafter@v5
-          name: Draft
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
