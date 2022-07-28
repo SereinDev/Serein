@@ -56,32 +56,43 @@
 
 #### 示例
 
-输出到文件
 ```js
 var file = new System.IO.StreamWriter('log.txt');
 file.WriteLine('Hello World !');
 file.Dispose();
+// 输出到文件
 ```
 
-启动`cmd.exe`
 ```js
 System.Diagnostics.Process.Start("cmd.exe");
+// 启动cmd.exe
 ```
 
 ### 内置属性
 #### Serein.exe所在文件夹
 `serein.path`
+```js
+var path = serein.path; // Serein.exe所在文件夹，如C:\Serein
+```
 - 返回
   - `String` 
 
 #### Serein版本
 `serein.version`
+```js
+var version = serein.version; // Serein版本，如v1.3.0
+```
 - 返回
   - `String`
 ### 内置函数
 
 #### 输出日志
 `serein.log(content:Object)`
+```js
+serein.log("这是一条日志");
+serein.log(12345); // 你也可以输出数字
+serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
+```
 - 参数
   - `content` 输出内容
     - 支持`Number` `String`等类型
@@ -90,6 +101,9 @@ System.Diagnostics.Process.Start("cmd.exe");
 
 #### Debug输出
 `serein.debugLog(content:Object)`
+```js
+serein.debugLog("这是一条Debug输出");
+```
 - 参数
   - `content` 输出内容
     - 支持`Number` `String`等类型
@@ -98,9 +112,11 @@ System.Diagnostics.Process.Start("cmd.exe");
 
 #### 注册插件
 `serein.registerPlugin(name:String,version:String,author:String,description:String)`
+```js
+serein.registerPlugin("示例插件","v1.0","Zaitonn","这是一个示例插件"); 
+```
 - 参数
   - `name` 插件名称
-    - 不允许与其他插件出现重复
   - `version` 版本
   - `author` 作者或版权信息
   - `description` 介绍
@@ -110,6 +126,21 @@ System.Diagnostics.Process.Start("cmd.exe");
 
 #### 设置监听器
 `serein.setListener(event:String,func:Function)`
+
+```js
+serein.setListener("onSereinStart",onSereinStart);
+function onSereinStart(){
+    serein.log("Serein启动");
+}
+```
+
+```js
+serein.setListener("onGroupPoke",onGroupPoke);
+function onGroupPoke(group,user){
+    serein.log("监听群群成员戳一戳当前账号 触发群："+group+"  QQ："+user);
+}
+```
+
 - 参数
   - `event` 事件名称，具体值见下表（区分大小写）
   - `func` 函数
@@ -133,30 +164,148 @@ System.Diagnostics.Process.Start("cmd.exe");
 | onSereinStart | Serein启动 | `( )` |
 | onSereinClose | Serein关闭 | `( )` |
 
+
+
 #### 注册服务器命令
 `serein.registerCommand(command:String,func:Function)`
 
->本质上是拦截命令输入，处理该命令需要监听`onServerSendCommand`事件
+```js
+serein.registerCommand("example",example);
+function example(cmd){
+    serein.log("你输入了注册的命令："+cmd);
+}
+```
+>本质上是拦截命令输入
 
 - 参数
   - `command` 命令名称
-  - `func` 函数
+  - `func` 命令处理函数
     - 不要包含`()`和参数
     - 函数原型：`(cmd:String)`
       - `cmd` 输入的命令全文
+    - 例：
 - 返回
   - 空
 
-
 #### 获取Serein设置
 `serein.getSettings()`
+```js
+var settings = serein.getSettings();
+```
 - 参数
   - 空
 - 返回
   - `String` 设置的json文本
 
+<details>
+<summary>返回示例（已格式化）</summary>
+<pre><code>
+{
+  "Server": {
+    "Path": "",
+    "EnableRestart": false,
+    "EnableOutputCommand": true,
+    "EnableLog": false,
+    "OutputStyle": 1,
+    "StopCommand": "stop",
+    "AutoStop": true,
+    "EncodingIndex": 0,
+    "EnableUnicode": false,
+    "Type": 1,
+    "Port": 19132
+  },
+  "Matches": {
+    "Version": "(\\d+\\.\\d+\\.\\d+\\.\\d+)",
+    "Difficulty": "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])",
+    "LevelName": "Level Name: (.+?)$",
+    "Finished": "(Done|Started)",
+    "PlayerList": "players\\sonline:"
+  },
+  "Bot": {
+    "EnableLog": false,
+    "GivePermissionToAllAdmin": false,
+    "EnbaleOutputData": false,
+    "GroupList": [],
+    "PermissionList": [],
+    "Uri": "127.0.0.1:6700",
+    "Authorization": "",
+    "Restart": false,
+    "AutoEscape": false
+  },
+  "Serein": {
+    "EnableGetUpdate": true,
+    "EnableGetAnnouncement": true,
+    "Debug": true,
+    "DPIAware": true
+  },
+  "Event": {
+    "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://zaitonn.github.io/Serein/Command.html、https://zaitonn.github.io/Serein/Event.html",
+    "Bind_Success": [
+      "g|[CQ:at,qq=%ID%] 绑定成功"
+    ],
+    "Bind_Occupied": [
+      "g|[CQ:at,qq=%ID%] 该游戏名称被占用"
+    ],
+    "Bind_Invalid": [
+      "g|[CQ:at,qq=%ID%] 该游戏名称无效"
+    ],
+    "Bind_Already": [
+      "g|[CQ:at,qq=%ID%] 你已经绑定过了"
+    ],
+    "Unbind_Success": [
+      "g|[CQ:at,qq=%ID%] 解绑成功"
+    ],
+    "Unbind_Failure": [
+      "g|[CQ:at,qq=%ID%] 该账号未绑定"
+    ],
+    "Server_Start": [
+      "g|服务器正在启动"
+    ],
+    "Server_Stop": [
+      "g|服务器已关闭"
+    ],
+    "Server_Error": [
+      "g|服务器异常关闭"
+    ],
+    "Group_Increase": [
+      "g|欢迎[CQ:at,qq=%ID%]入群~"
+    ],
+    "Group_Decrease": [
+      "g|用户%ID%退出了群聊，已自动解绑游戏ID",
+      "unbind|%ID%"
+    ],
+    "Group_Poke": [
+      "g|别戳我……(*/ω＼*)"
+    ],
+    "Serein_Crash": [
+      "g|唔……发生了一点小问题(っ °Д °;)っ\n请查看Serein错误弹窗获取更多信息"
+    ],
+    "Motdpe_Success": [
+      "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n游戏模式：%GameMode%\n延迟：%Delay%ms"
+    ],
+    "Motdje_Success": [
+      "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Delay%ms\n%Favicon%"
+    ],
+    "Motd_Failure": [
+      "g|Motd获取失败\n详细原因：%Exception%"
+    ],
+    "PermissionDenied_Private": [
+      "p|你没有执行这个命令的权限"
+    ],
+    "PermissionDenied_Group": [
+      "g|[CQ:at,qq=%ID%] 你没有执行这个命令的权限"
+    ]
+  }
+}
+</code></pre>
+</details>
+
 #### 获取系统信息
 `serein.getSysInfo(type:String)`
+```js
+var cpuname = serein.getSysInfo("CPUName");
+```
+
 - 参数
   - `type` 信息类型，可为以下值之一
     - `NET` 当前NET版本
@@ -175,6 +324,10 @@ System.Diagnostics.Process.Start("cmd.exe");
 #### 执行命令
 `serein.runCommand(cmd:String)`
 
+```js
+serein.runCommand("g|hello")
+```
+
 - 参数
   - `cmd` 一条[Serein命令](Command.md)
   >#### ⚠ 提示
@@ -185,6 +338,10 @@ System.Diagnostics.Process.Start("cmd.exe");
 #### 获取Motd原文
 基岩版：`serein.getMotdpe(ip:String)`  
 Java版：`serein.getMotdje(ip:String)` 
+```js
+var pe = serein.getMotdpe("127.0.0.1:19132");
+var je = serein.getMotdje("127.0.0.1:25565");
+```
 
 - 参数
   - `ip` 服务器IP
@@ -206,6 +363,9 @@ Java版：`serein.getMotdje(ip:String)`
 #### 启动服务器
 `serein.startServer()`
 
+```js
+var success = serein.startServer();
+```
 - 参数
   - 空
 - 返回
@@ -214,6 +374,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 关闭服务器
 `serein.stopServer()`
+```js
+serein.stopServer();
+```
 
 - 参数
   - 空
@@ -225,6 +388,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 强制结束服务器
 `serein.killServer()`
+```js
+var success = serein.killServer();
+```
 
 - 参数
   - 空
@@ -234,6 +400,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 获取服务器状态
 `serein.getServerStatus()`
+```js
+var serverStatus = serein.getServerStatus();
+```
 
 - 参数
   - 空
@@ -243,6 +412,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 获取服务器运行时长
 `serein.getServerTime()`
+```js
+var time = serein.getServerTime();
+```
 
 - 参数
   - 空
@@ -253,6 +425,10 @@ Java版：`serein.getMotdje(ip:String)`
 #### 获取服务器进程占用
 `serein.getServerCPUPersent()`
 
+```js
+var cpupersent = serein.getServerCPUPersent();
+```
+
 - 参数
   - 空
 - 返回
@@ -261,6 +437,10 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 发送群聊消息
 `serein.sendGroup(target:Number,msg:String)`
+
+```js
+var success = serein.sendGroup(114514,"大家好");
+```
 
 - 参数
   - `target` 群号
@@ -273,6 +453,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 发送私聊消息
 `serein.sendPrivate(target:Number,msg:String)`
+```js
+var success = serein.sendPrivate(114514,"你好");
+```
 
 - 参数
   - `target` 对方QQ号
@@ -285,6 +468,10 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 发送数据包
 `serein.sendPacket(json:String)`
+```js
+serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": \"10001\",\"message\": \"你好\"}}")
+// 你可以通过这个功能实现自动同意好友请求等操作
+```
 
 - 参数
   - `json` 发送的json数据
@@ -296,6 +483,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 获取ws连接状态
 `serein.getWsStatus()`
+```js
+var connected = serein.getWsStatus();
+```
 
 - 参数
   - 无
@@ -305,6 +495,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 绑定游戏ID
 `serein.bindMember(userId:Number,gameId:String)`
+```js
+var success = serein.bindMember(114514,"Li_Tiansuo");
+```
 
 - 参数
   - `userId` QQ号
@@ -314,6 +507,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 删除绑定记录
 `serein.unbindMember(userId:Number)`
+```js
+var success = serein.unbindMember(114514);
+```
 
 - 参数
   - `userId` QQ号
@@ -323,6 +519,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 获取指定用户QQ
 `serein.getID(gameId:String)`
+```js
+var qq = serein.getID("Li_Tiansuo");
+```
 
 - 参数
   - `gameId` 游戏ID
@@ -331,7 +530,9 @@ Java版：`serein.getMotdje(ip:String)`
 
 #### 获取指定游戏ID
 `serein.getGameID(userId:Number)`
-
+```js
+var id = serein.getGameID(114514);
+```
 - 参数
   - `userId` QQ号
 - 返回
