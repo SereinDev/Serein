@@ -227,7 +227,6 @@ namespace Serein.Server
                     CommandWriter.WriteLine(Command_Copy);
                     JSFunc.Trigger("onServerSendCommand", Command);
                 }
-
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
