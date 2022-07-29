@@ -47,7 +47,7 @@ namespace Serein.Plugin
                     Temp = PluginItems.Count;
                     try
                     {
-                        JSEngine.engine=JSEngine.Init();
+                        JSEngine.engine = JSEngine.Init();
                         StreamReader reader = new StreamReader(Filename, Encoding.UTF8);
                         string Exception = JSEngine.Run(reader.ReadToEnd());
                         reader.Close();
