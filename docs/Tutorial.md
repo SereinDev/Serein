@@ -34,6 +34,7 @@
     - [食用方法](#食用方法-3)
   - [事件](#事件)
     - [这是个啥](#这是个啥)
+  - [命令行启动参数](#命令行启动参数)
 
 
 ### 帮助改进文档
@@ -54,7 +55,7 @@
 #### Beta
 在[Action](https://github.com/Zaitonn/Serein/actions)下载最新的构建  
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >Beta版不能保证稳定性，可能存在Bug，使用前务必自行备份
 
 #### 自行编译
@@ -73,7 +74,7 @@
 
 ### 启动服务器
 ![服务器](imgs/console.png)
->#### ⭐ Tips 
+> __⭐ Tips__  
 >- [BDS开服教程 - 手把手教你开服务器](https://www.minebbs.com/threads/bds.9518/)**（推荐）**  
 >- [崩服 / 假死 / 卡顿情况排查与记录方法](https://www.minebbs.com/resources/bds.3403/)  
 >- [BDS服务端 与 LiteLoaderBDS 新手教程 & 常见问答](https://www.minebbs.com/threads/bds-liteloaderbds.10265/)
@@ -89,7 +90,7 @@
 1. 打开`./console`文件夹
 2. 在Visual Studio Code或者其他编辑器中编辑其中的文件
 3. 重启`Serein`后生效
->#### ⚠ 提示
+> __⚠ 提示__   
 >- `console.js`中定义的函数**不建议更改**，修改错误可能导致无法输出信息
 >- 由于显示网页组件以IE为内核，内嵌网页需**适配IE浏览器**
 
@@ -97,7 +98,7 @@
 
 > Mulit-Open，指在本地开启多个服务端并接入同一个机器人统一控制，适用于群组服等   
 
->#### ❗ 警告
+> __❗ 警告__   
 >不建议直接多次双击`Serein.exe`来开启多个窗口，这可能**导致数据无法保存甚至崩溃**
 
 ```
@@ -115,7 +116,7 @@
 1. 将`Serein.exe`上层文件夹复制多份，并重命名区分。目录结构如上所示
 2. 分别启动其中的`Serein.exe`，选择不同的文件启动，可以独立保存数据和设置
 3. 对于机器人你可以选择开启`上报自身消息`，通过对该消息进行匹配从而实现群组服消息互通
->#### ⚠ 提示
+> __⚠ 提示__   
 > 你需要对不同的`Serein`的正则或定时任务乃至设置进行相应配置，否则可能出现一呼百应的情况
 
 ### 机器人
@@ -127,7 +128,7 @@
 - 可使用WS正向连接
 
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >- 由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人 
 >- 目前已完全支持的机器人：[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)  
 >- **此处列举的机器人只代表已经经过测试且可用，并不是只有以上两种机器人可用，且不代表作者的个人观点**
@@ -140,7 +141,7 @@
 5. 在`设置`>`机器人`>`Websocket地址`中设置与机器人配置文件中一致的地址 
 6. 单击`机器人`>`连接`按钮连接机器人
    
->#### ⚠ 提示
+> __⚠ 提示__   
 >其他机器人可能需要直接修改配置文件，但操作方法类似
 
 
@@ -151,7 +152,7 @@
 
 此外，你还需要将`Access-Token`内容复制到`设置`>`机器人`>`鉴权凭证`，连接时在Websocket的Header添加Authorization字段用于鉴权  
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >**`Access-Token`区分大小写、首尾空格等**
 
 
@@ -179,7 +180,7 @@
 - 例子下载：[Regex_Demo](Regex_Demo.html)
 
 
->#### ⭐ Tips 
+> __⭐ Tips__  
 >- 将他人的记录复制在该文件中以合并添加他人的正则
 >- 直接将此文件分享给其他人供他人使用
 >- 将数据文件拖入窗口覆盖导入正则，但是要注意**此操作不可逆**
@@ -190,7 +191,7 @@
 - `修改记录`
 - `删除记录`
   
->#### ⚠ 提示
+> __⚠ 提示__   
 >正则表达式或命令为空或不合法时无法保存
 
 #### 功能介绍
@@ -202,7 +203,7 @@
 4. `消息（私聊）` 匹配私聊消息
 5. `消息（自身发送）` 匹配自身上报消息
 
->#### ❗ 警告
+> __❗ 警告__   
 > 若选择`消息（自身发送）`，保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，配置错误可能导致机器人刷屏甚至被封号
 
 
@@ -210,9 +211,9 @@
 一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。
 
 
->#### ⭐ Tips 
->- [.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
->- [C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
+> __⭐ Tips__  
+>[.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
+>[C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
 
 
 
@@ -228,7 +229,7 @@
 | [替换最后捕获的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-last-captured-group)  | *暂不可用* |
 | [替换整个输入字符串](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-input-string)  | *暂不可用* |
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >由于功能限制，若无特别标记，正则表达式仅**匹配第一个符合条件的文本**   
 >例：`(.+?)`匹配`我是一段文本`仅返回第一个字`我`（即使使用贪婪模式也是如此）    
 >*解决方法：强制匹配整段文本`(.+?)`→`^(.+?)$`*
@@ -266,7 +267,7 @@
 
 任务数据保存在`data/task.json`
 
->#### ⭐ Tips 
+> __⭐ Tips__  
 >- 将他人的记录复制在该文件中以合并添加他人的任务
 >- 直接将此文件分享给其他人供他人使用
 >- 将数据文件拖入窗口覆盖导入任务，但是要注意**此操作不可逆**
@@ -275,10 +276,10 @@
 在任务表格中右键打开菜单
 - `添加任务`
 - `修改任务`
-  >#### ⭐ Tips 
+  > __⭐ Tips__  
   >在编辑窗口中你可以直接看到下一次的执行时间
 
-  >#### ⚠ 提示
+  > __⚠ 提示__   
   >Cron表达式或命令为空或不合法时无法保存
 - `删除任务`
 
@@ -287,11 +288,11 @@
 ##### Cron表达式
 指定任务执行的时间和周期
 
->#### ⭐ Tips 
+> __⭐ Tips__  
 >生成器（推荐）：[Crontab guru](https://crontab.guru/)  
 >语法：[POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) ，[Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression) 
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
 >例：假设一定时任务为`* * * * *`，代表在每一分钟执行该任务，但是可能在这分钟的第0秒到第4秒的任意时刻执行
 
@@ -356,7 +357,7 @@
 #### 食用方法
 将他人的插件复制到`./plugins`文件夹下后右键列表选择重新加载插件即可
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >**这里不是放服务器插件的地方！！！！**  
 >**这里不是放服务器插件的地方！！！！**  
 >**这里不是放服务器插件的地方！！！！**  
@@ -373,5 +374,17 @@
 
 ![事件](imgs/Event.png)
 
->#### ⭐ Tips 
+> __⭐ Tips__  
 >将来可能会有专用的编辑窗口
+
+### 命令行启动参数
+```
+Serein.exe [debug] [auto_connect] [auto_start]
+```
+
+- `debug` 开启Debug模式  
+- `auto_connect` 启动后自动连接ws
+- `auto_start` 启动后自动开启服务器
+
+> __⚠ 提示__  
+>各参数区分大小写，但不区分顺序

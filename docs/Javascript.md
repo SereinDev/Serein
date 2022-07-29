@@ -35,7 +35,7 @@
 ### 推荐列表
 - [**示例插件（官方）**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
 
->#### ⭐ Tips 
+> __⭐ Tips__  
 >如果你有优秀的插件，欢迎提交Issue、提交pr或与作者私聊  
 > 
 >经过审核后你的插件也有机会出现在上面ヾ(≧▽≦*)o
@@ -315,7 +315,7 @@ var cpuname = serein.getSysInfo("CPUName");
     - `UsedRAM` 已用内存（MB)
     - `RAMPercentage` 内存占用率
     - `CPUPercentage` CPU占用率
-    >#### ⚠ 提示
+    > __⚠ 提示__   
     >- 不区分大小写  
     >- 若不在以上列表中则为返回空值
 - 返回
@@ -330,7 +330,7 @@ serein.runCommand("g|hello")
 
 - 参数
   - `cmd` 一条[Serein命令](Command.md)
-  >#### ⚠ 提示
+  > __⚠ 提示__   
   >此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
 - 返回
   - 空
@@ -345,7 +345,7 @@ var je = serein.getMotdje("127.0.0.1:25565");
 
 - 参数
   - `ip` 服务器IP
-  >#### ⚠ 提示
+  > __⚠ 提示__   
   >可含端口，如`example.com:11451`  
   >不填端口基岩版默认`19132`，Java版默认`25565`
 - 返回
@@ -383,7 +383,7 @@ serein.stopServer();
 - 返回
   - 空
 
->#### ⚠ 提示
+> __⚠ 提示__   
 >此函数不能保证服务器被关闭
 
 #### 强制结束服务器
@@ -448,7 +448,7 @@ var success = serein.sendGroup(114514,"大家好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >#### ⚠ 提示
+    > __⚠ 提示__   
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送私聊消息
@@ -463,7 +463,7 @@ var success = serein.sendPrivate(114514,"你好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >#### ⚠ 提示
+    > __⚠ 提示__   
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送数据包
@@ -478,7 +478,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >#### ⚠ 提示
+    > __⚠ 提示__   
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 获取ws连接状态

@@ -18,6 +18,7 @@ namespace Serein
         public static bool Crash = false;
         public static bool MultiOpen = false;
         public static bool FirstOpen = false;
+        public static IList<string> Args = null;
         public static void UpdateRegexItems(List<RegexItem> New)
         {
             lock (RegexItems)

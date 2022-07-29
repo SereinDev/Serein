@@ -152,7 +152,7 @@ Win7或WinServer2012以上
 
 - 支持多种主流机器人，包括但不限于[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)
 - `Serein`与机器人窗口分离，方便拓展
-  >#### ⭐ Tips  
+  > __⭐ Tips__   
   >你可以使用`Nonebot`、`Nonebot2`等机器人框架继续拓展实现更多功能
 - 通过Websocket一键连接机器人实现消息收发功能
 - 允许多开`Serein`实现群组服的消息互通功能
@@ -195,7 +195,7 @@ Win7或WinServer2012以上
 
 | Supporters | 发电金额 |日期|
 |---- |----: |----|
-| [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640)| $ 10.00 | 2022.7.25|
+| [c设阿森_Asen](https://q.qlogo.cn/g?b=qq&k=tSKwDJ8UqzSUZRRYxElIFQ&s=100)| $ 10.00 | 2022.7.25|
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.17|
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.10|
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|

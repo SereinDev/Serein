@@ -1,12 +1,14 @@
 ﻿using Jint;
+using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Text;
-using Newtonsoft.Json;
+using Serein.Ui;
 
 namespace Serein.Plugin
 {
@@ -14,29 +16,31 @@ namespace Serein.Plugin
     {
         public static Engine engine = new Engine();
 
-        public static void Setup()
-        {
-            engine = Init(
-            new Engine(cfg => cfg.AllowClr(
-                typeof(File).Assembly,
-                typeof(Path).Assembly,
-                typeof(Directory).Assembly,
-                typeof(DirectoryInfo).Assembly,
-                typeof(StreamReader).Assembly,
-                typeof(StreamWriter).Assembly,
-                typeof(Encoding).Assembly,
-                typeof(Process).Assembly,
-                typeof(ProcessStartInfo).Assembly
-                )
-            .CatchClrExceptions()
-            ));
-        }
         /// <summary>
         /// 初始化JS引擎
         /// </summary>
+        /// <param name="ExecuteByCommand">被命令执行</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(Engine engine)
+        public static Engine Init(bool ExecuteByCommand = false)
         {
+            Engine engine = new Engine(
+                new Action<Options>((cfg) =>
+                {
+                    cfg.AllowClr(
+                        typeof(File).Assembly,
+                        typeof(Path).Assembly,
+                        typeof(Directory).Assembly,
+                        typeof(DirectoryInfo).Assembly,
+                        typeof(StreamReader).Assembly,
+                        typeof(StreamWriter).Assembly,
+                        typeof(Encoding).Assembly,
+                        typeof(Process).Assembly,
+                        typeof(ProcessStartInfo).Assembly
+                        );
+                    cfg.CatchClrExceptions();
+                    if (ExecuteByCommand) { cfg.TimeoutInterval(TimeSpan.FromMinutes(1)); }
+                }
+                ));
             engine.SetValue("Serein_SystemInfo", new Func<string, string>((Type) =>
             {
                 switch (Type.ToLower())
@@ -85,6 +89,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
+            engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +
@@ -111,7 +116,8 @@ namespace Serein.Plugin
                 "bindMember:Serein_Member_Bind," +
                 "unbindMember:Serein_Member_UnBind," +
                 "getID:Serein_Member_GetID," +
-                "getGameID:Serein_Member_GetGameID" +
+                "getGameID:Serein_Member_GetGameID," +
+                "createRequest:Serein_CreateRequest" +
                 "};");
             return engine;
         }

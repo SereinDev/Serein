@@ -2,8 +2,8 @@
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
 using Serein.Base;
-using Serein.Server;
 using Serein.Plugin;
+using Serein.Server;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,6 +66,8 @@ namespace Serein.Ui
                 TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
                 TaskDialog.ShowDialog();
             }
+            new Task(() => { if (Global.Args.Contains("auto_connect")) { Websocket.Connect(false); } }).Start();
+            new Task(() => { if (Global.Args.Contains("auto_start")) { ServerManager.Start(true); } }).Start();
             new Task(
                 () =>
                 {

@@ -32,6 +32,7 @@ namespace Serein
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
+        /// <param name="args">启动参数</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -39,6 +40,7 @@ namespace Serein
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Settings.Base.ReadSettings();
+            Global.Args = args;
             if (((IList)args).Contains("debug"))
             {
                 Global.Settings.Serein.Debug = true;

@@ -164,20 +164,7 @@ namespace Serein.Base
                     {
                         Task.Run(() =>
                         {
-                            JSEngine.Init(new Engine(cfg => cfg.AllowClr(
-                                typeof(File).Assembly,
-                                typeof(Path).Assembly,
-                                typeof(Directory).Assembly,
-                                typeof(DirectoryInfo).Assembly,
-                                typeof(StreamReader).Assembly,
-                                typeof(StreamWriter).Assembly,
-                                typeof(Encoding).Assembly,
-                                typeof(Process).Assembly,
-                                typeof(ProcessStartInfo).Assembly
-                                )
-                                .CatchClrExceptions()
-                                .TimeoutInterval(TimeSpan.FromMinutes(1))
-                                )).Execute(Value);
+                            JSEngine.Init(true).Execute(Value);
                         });
                     }
                     break;
