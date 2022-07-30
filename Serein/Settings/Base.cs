@@ -50,7 +50,7 @@ namespace Serein.Settings
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Setting]Fail to update Matches.json: {e.Message}");
+                    Global.Debug($"[Setting]Fail to update Matches.json: {e.ToString()}");
                 }
                 try
                 {
@@ -63,7 +63,7 @@ namespace Serein.Settings
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Setting]Fail to update Event.json: {e.Message}");
+                    Global.Debug($"[Setting]Fail to update Event.json: {e.ToString()}");
                 }
             }
         }

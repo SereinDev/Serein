@@ -130,7 +130,7 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Debug("[JSEngine:Run()] " + e.Message);
+                Global.Debug("[JSEngine:Run()] " + e.ToString());
                 return e.Message;
             }
         }
@@ -142,7 +142,7 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Debug("[JSEngine:Invoke()] " + e.Message);
+                Global.Debug("[JSEngine:Invoke()] " + e.ToString());
             }
         }
     }

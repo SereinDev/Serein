@@ -80,7 +80,7 @@ namespace Serein.Plugin
                     catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(e.Message));
+                        Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(e.ToString()));
                     }
                 }
                 Global.Ui.SereinPluginsWebBrowser_Invoke(

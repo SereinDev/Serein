@@ -364,7 +364,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Command:GetVariables()] {e.Message}");
+                    Global.Debug($"[Command:GetVariables()] {e.ToString()}");
                 }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
