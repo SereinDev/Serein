@@ -232,7 +232,7 @@ namespace Serein.Plugin
                 return true;
             }
         }
-        public static void SetTimeout(double Delay ,Delegate Function)
+        public static void SetTimeout(double Delay, Delegate Function)
         {
             Task.Run(() =>
             {
