@@ -3,6 +3,7 @@ using System.IO;
 using Serein.Base;
 using System.Text;
 using System;
+using System.Timers;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ namespace Serein.Plugin
         public static Event Event = new Event();
         public static List<CommandItem> CommandItems = new List<CommandItem>();
         public static List<PluginItem> PluginItems = new List<PluginItem>();
+        public static List<JSTimer> Timers = new List<JSTimer>();
         public static List<string> PluginNames
         {
             get
@@ -62,6 +64,7 @@ namespace Serein.Plugin
                             if (Temp == PluginItems.Count - 1)
                             {
                                 PluginItems[PluginItems.Count - 1].Path = Filename;
+                                PluginItems[PluginItems.Count - 1].Engine = JSEngine.engine;
                             }
                             else
                             {
@@ -72,7 +75,8 @@ namespace Serein.Plugin
                                     Version = "-",
                                     Author = "-",
                                     Description = "-",
-                                    Path = Filename
+                                    Path = Filename,
+                                    Engine=JSEngine.engine
                                 });
                             }
                         }

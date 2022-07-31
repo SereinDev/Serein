@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using Jint.Native;
 using System.Text;
 using Serein.Ui;
 using WebSocket4Net;
@@ -92,7 +93,10 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
             engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
-            engine.SetValue("setTimeout", new Action<double, Delegate>(JSFunc.SetTimeout));
+            engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Delay) => { return JSFunc.SetTimer(Function, Delay, true); }));
+            engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Delay) => { return JSFunc.SetTimer(Function, Delay, true); }));
+            engine.SetValue("ClearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
+            engine.SetValue("ClearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +

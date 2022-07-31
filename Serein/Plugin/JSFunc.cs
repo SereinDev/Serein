@@ -1,6 +1,7 @@
 ﻿using Jint.Native;
 using Serein.Base;
 using System;
+using System.Timers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jint;
@@ -232,13 +233,47 @@ namespace Serein.Plugin
                 return true;
             }
         }
-        public static void SetTimeout(double Delay, Delegate Function)
+        public static JsValue SetTimer(Delegate Function, JsValue Delay, bool Interval)
         {
-            Task.Run(() =>
+            JSTimer jst = new JSTimer()
             {
-                Task.Delay(TimeSpan.FromMilliseconds(Delay));
+                timer = new Timer(Delay.AsNumber())
+                {
+                    AutoReset = Interval,
+                }
+            };
+            jst.timer.Elapsed += (e, args) =>
+            {
                 Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-            });
+                if (!Interval)
+                {
+                    jst.timer.Dispose();
+                }
+            };
+            jst.timer.Start();
+            int ID = jst.timer.GetHashCode();
+            jst.ID = ID;
+            Plugins.Timers.Add(jst);
+            return JsValue.FromObject(new Engine(), ID);
+        }
+        private static bool ClearTimer(int ID)
+        {
+            foreach (JSTimer Timer in Plugins.Timers)
+            {
+                if (Timer.ID == ID)
+                {
+                    Plugins.Timers.Remove(Timer);
+                    Timer.timer.Stop();
+                    Timer.timer.Dispose();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ClearTimer(JsValue ID)
+        {
+            return ClearTimer((int)ID.AsNumber());
         }
     }
 }
