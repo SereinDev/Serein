@@ -9,6 +9,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using Serein.Ui;
+using WebSocket4Net;
 
 namespace Serein.Plugin
 {
@@ -35,7 +36,8 @@ namespace Serein.Plugin
                         typeof(StreamWriter).Assembly,
                         typeof(Encoding).Assembly,
                         typeof(Process).Assembly,
-                        typeof(ProcessStartInfo).Assembly
+                        typeof(ProcessStartInfo).Assembly,
+                        typeof(WebSocket).Assembly
                         );
                     cfg.CatchClrExceptions();
                     if (ExecuteByCommand) { cfg.TimeoutInterval(TimeSpan.FromMinutes(1)); }
@@ -90,6 +92,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
             engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
+            engine.SetValue("setTimeout", new Action<double, Delegate>(JSFunc.SetTimeout));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +

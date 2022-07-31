@@ -31,6 +31,7 @@
     - [删除绑定记录](#删除绑定记录)
     - [获取指定用户QQ](#获取指定用户qq)
     - [获取指定游戏ID](#获取指定游戏id)
+    - [创建Get请求](#创建get请求)
 
 ### 推荐列表
 - [**示例插件（官方）**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
@@ -537,3 +538,13 @@ var id = serein.getGameID(114514);
   - `userId` QQ号
 - 返回
   - `String` 游戏ID
+
+#### 创建Get请求
+`serein.createRequest(url:String)`
+```js
+var str = serein.createRequest("https://github.com/Zaitonn/Serein");
+```
+- 参数
+  - `url` 目标地址
+- 返回
+  - `String` 返回内容

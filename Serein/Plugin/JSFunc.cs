@@ -2,6 +2,7 @@
 using Serein.Base;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Jint;
 
 namespace Serein.Plugin
@@ -230,6 +231,14 @@ namespace Serein.Plugin
                     });
                 return true;
             }
+        }
+        public static void SetTimeout(double Delay ,Delegate Function)
+        {
+            Task.Run(() =>
+            {
+                Task.Delay(TimeSpan.FromMilliseconds(Delay));
+                Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+            });
         }
     }
 }
