@@ -76,7 +76,7 @@ namespace Serein.Plugin
                                     Author = "-",
                                     Description = "-",
                                     Path = Filename,
-                                    Engine=JSEngine.engine
+                                    Engine = JSEngine.engine
                                 });
                             }
                         }
