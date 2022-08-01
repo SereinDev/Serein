@@ -7,9 +7,6 @@ using Serein.Server;
 using Serein.Ui;
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
-using WebSocket4Net;
 
 namespace Serein.Plugin
 {
@@ -27,6 +24,7 @@ namespace Serein.Plugin
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
                 {
+                    cfg.AllowClr(typeof(Process).Assembly);
                     cfg.CatchClrExceptions();
                     if (ExecuteByCommand) { cfg.TimeoutInterval(TimeSpan.FromMinutes(1)); }
                 }
