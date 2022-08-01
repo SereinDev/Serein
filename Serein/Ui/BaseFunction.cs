@@ -143,14 +143,11 @@ namespace Serein.Ui
                 }
                 try
                 {
-                    StreamWriter LogWriter = new StreamWriter(
+                    File.AppendAllText(
                         Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                        true,
+                        Text,
                         Encoding.UTF8
                         );
-                    LogWriter.WriteLine(Text);
-                    LogWriter.Flush();
-                    LogWriter.Close();
                 }
                 catch { }
             }

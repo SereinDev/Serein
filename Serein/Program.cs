@@ -91,21 +91,16 @@ namespace Serein
             }
             try
             {
-                StreamWriter LogWriter = new StreamWriter(
+                File.AppendAllText(
                     Global.Path + $"\\logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log",
-                    true,
-                    Encoding.UTF8
-                    );
-                LogWriter.WriteLine(
                     DateTime.Now + "  |  "
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
                     "\n" +
                     obj.ToString() +
-                    "\n==============================================="
+                    "\n===============================================",
+                    Encoding.UTF8
                     );
-                LogWriter.Flush();
-                LogWriter.Close();
             }
             catch { }
             EventTrigger.Trigger("Serein_Crash");

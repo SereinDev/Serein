@@ -14,7 +14,6 @@ namespace Serein.Base
     {
         public static bool Status = false;
         public static WebSocket webSocket;
-        private static StreamWriter LogWriter;
         public static DateTime StartTime = DateTime.Now;
         private static bool Restart = false;
 
@@ -180,14 +179,11 @@ namespace Serein.Base
                 }
                 try
                 {
-                    LogWriter = new StreamWriter(
+                    File.AppendAllText(
                         Global.Path + $"\\logs\\msg\\{DateTime.Now:yyyy-MM-dd}.log",
-                        true,
+                        $"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Message)}",
                         Encoding.UTF8
                         );
-                    LogWriter.WriteLine($"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Message)}");
-                    LogWriter.Flush();
-                    LogWriter.Close();
                 }
                 catch { }
             }

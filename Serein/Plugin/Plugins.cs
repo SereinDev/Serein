@@ -48,14 +48,15 @@ namespace Serein.Plugin
                     try
                     {
                         JSEngine.engine = JSEngine.Init();
-                        StreamReader reader = new StreamReader(Filename, Encoding.UTF8);
-                        string Exception = JSEngine.Run(reader.ReadToEnd());
-                        reader.Close();
-                        bool Success = string.IsNullOrEmpty(Exception);
+                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8));
+                        bool Success = string.IsNullOrEmpty(ExceptionMessage);
                         if (!Success)
                         {
                             ErrorFiles.Add(Path.GetFileName(Filename));
-                            Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Exception));
+                            Global.Ui.SereinPluginsWebBrowser_Invoke(
+                                "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>"
+                                + Log.EscapeLog(ExceptionMessage)
+                                );
                         }
                         else
                         {

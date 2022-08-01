@@ -25,7 +25,6 @@ namespace Serein.Server
         public static Process ServerProcess;
         private static bool Killed;
         public static StreamWriter CommandWriter;
-        private static StreamWriter LogWriter;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static string TempLine = string.Empty;
         public static Encoding[] EncodingList =
@@ -220,7 +219,7 @@ namespace Serein.Server
                 }
                 if (!IsSpecifiedCommand)
                 {
-                    if ((Unicode || Global.Settings.Server.EnableUnicode))
+                    if (Unicode || Global.Settings.Server.EnableUnicode)
                     {
                         Command_Copy = ConvertToUnicode(Command_Copy);
                     }
@@ -235,14 +234,11 @@ namespace Serein.Server
                     }
                     try
                     {
-                        LogWriter = new StreamWriter(
-                        Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                        true,
-                        Encoding.UTF8
+                        File.AppendAllText(
+                            Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            ">" + Log.OutputRecognition(Command_Copy),
+                            Encoding.UTF8
                         );
-                        LogWriter.WriteLine(">" + Log.OutputRecognition(Command_Copy));
-                        LogWriter.Flush();
-                        LogWriter.Close();
                     }
                     catch { }
                 }
@@ -289,14 +285,11 @@ namespace Serein.Server
                     }
                     try
                     {
-                        LogWriter = new StreamWriter(
+                        File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            true,
+                            Log.OutputRecognition(Line),
                             Encoding.UTF8
-                            );
-                        LogWriter.WriteLine(Line);
-                        LogWriter.Flush();
-                        LogWriter.Close();
+                        );
                     }
                     catch { }
                 }

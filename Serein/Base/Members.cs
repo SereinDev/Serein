@@ -67,13 +67,10 @@ namespace Serein.Base
             }
             if (File.Exists($"{Global.Path}\\data\\members.json"))
             {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        $"{Global.Path}\\data\\members.json",
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8);
-                string Text = Reader.ReadToEnd();
+                string Text = File.ReadAllText(
+                    $"{Global.Path}\\data\\members.json",
+                    Encoding.UTF8
+                    );
                 if (!string.IsNullOrEmpty(Text))
                 {
                     try
@@ -87,7 +84,6 @@ namespace Serein.Base
                     }
                     catch { }
                 }
-                Reader.Close();
             }
             List<MemberItem> memberItems = MemberItems;
             memberItems.Sort(
@@ -116,14 +112,6 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter MembersWriter = new StreamWriter(
-                File.Open(
-                    $"{Global.Path}\\data\\members.json",
-                    FileMode.Create,
-                    FileAccess.Write
-                    ),
-                Encoding.UTF8
-                );
             JObject ListJObject = new JObject();
             JArray ListJArray = new JArray();
             foreach (MemberItem Item in MemberItems)
@@ -133,9 +121,11 @@ namespace Serein.Base
             ListJObject.Add("type", "MEMBERS");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", ListJArray);
-            MembersWriter.Write(ListJObject.ToString());
-            MembersWriter.Flush();
-            MembersWriter.Close();
+            File.WriteAllText(
+                $"{Global.Path}\\data\\members.json",
+                ListJObject.ToString(),
+                Encoding.UTF8
+                );
         }
 
         /// <summary>
