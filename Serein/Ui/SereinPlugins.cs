@@ -1,6 +1,5 @@
 ﻿using Serein.Plugin;
 using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Serein.Ui

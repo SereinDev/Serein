@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Serein.Base;
-using System.Text;
+﻿using Serein.Base;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Timers;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace Serein.Plugin
 {
@@ -14,7 +12,7 @@ namespace Serein.Plugin
         public static Event Event = new Event();
         public static List<CommandItem> CommandItems = new List<CommandItem>();
         public static List<PluginItem> PluginItems = new List<PluginItem>();
-        public static List<JSTimer> Timers = new List<JSTimer>();
+        public static Dictionary<int, Timer> Timers = new Dictionary<int, Timer>();
         public static List<string> PluginNames
         {
             get
@@ -111,6 +109,7 @@ namespace Serein.Plugin
             CommandItems.Clear();
             PluginItems.Clear();
             Event = new Event();
+            JSFunc.ClearAllTimers();
             Load();
         }
     }

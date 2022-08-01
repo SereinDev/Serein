@@ -1,15 +1,14 @@
 ﻿using Jint;
+using Jint.Native;
 using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Items.Motd;
 using Serein.Server;
+using Serein.Ui;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
-using Jint.Native;
 using System.Text;
-using Serein.Ui;
 using WebSocket4Net;
 
 namespace Serein.Plugin
@@ -28,18 +27,6 @@ namespace Serein.Plugin
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
                 {
-                    cfg.AllowClr(
-                        typeof(File).Assembly,
-                        typeof(Path).Assembly,
-                        typeof(Directory).Assembly,
-                        typeof(DirectoryInfo).Assembly,
-                        typeof(StreamReader).Assembly,
-                        typeof(StreamWriter).Assembly,
-                        typeof(Encoding).Assembly,
-                        typeof(Process).Assembly,
-                        typeof(ProcessStartInfo).Assembly,
-                        typeof(WebSocket).Assembly
-                        );
                     cfg.CatchClrExceptions();
                     if (ExecuteByCommand) { cfg.TimeoutInterval(TimeSpan.FromMinutes(1)); }
                 }
@@ -93,8 +80,8 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
             engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
-            engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Delay) => { return JSFunc.SetTimer(Function, Delay, true); }));
-            engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Delay) => { return JSFunc.SetTimer(Function, Delay, true); }));
+            engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, false); }));
+            engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, true); }));
             engine.SetValue("ClearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("ClearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.Execute("var serein={" +

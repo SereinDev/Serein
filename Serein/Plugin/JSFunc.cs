@@ -1,10 +1,10 @@
-﻿using Jint.Native;
+﻿using Jint;
+using Jint.Native;
 using Serein.Base;
 using System;
-using System.Timers;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Jint;
+using System.Linq;
+using System.Timers;
 
 namespace Serein.Plugin
 {
@@ -233,47 +233,70 @@ namespace Serein.Plugin
                 return true;
             }
         }
-        public static JsValue SetTimer(Delegate Function, JsValue Delay, bool Interval)
+
+        /// <summary>
+        /// 设置定时器
+        /// </summary>
+        /// <param name="Function">函数</param>
+        /// <param name="Interval">间隔</param>
+        /// <param name="AutoReset"自动重置></param>
+        /// <returns>定时器哈希值</returns>
+        public static JsValue SetTimer(Delegate Function, JsValue Interval, bool AutoReset)
         {
-            JSTimer jst = new JSTimer()
+            Timer timer = new Timer(Interval.AsNumber())
             {
-                timer = new Timer(Delay.AsNumber())
-                {
-                    AutoReset = Interval,
-                }
+                AutoReset = AutoReset,
             };
-            jst.timer.Elapsed += (e, args) =>
+            timer.Elapsed += (e, args) =>
             {
                 Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                if (!Interval)
+                if (!AutoReset)
                 {
-                    jst.timer.Dispose();
+                    timer.Dispose();
                 }
             };
-            jst.timer.Start();
-            int ID = jst.timer.GetHashCode();
-            jst.ID = ID;
-            Plugins.Timers.Add(jst);
+            timer.Start();
+            int ID = timer.GetHashCode();
+            Plugins.Timers.Add(ID, timer);
             return JsValue.FromObject(new Engine(), ID);
         }
+
+        /// <summary>
+        /// 清除定时器
+        /// </summary>
+        /// <param name="ID">哈希值</param>
+        /// <returns>清除结果</returns>
         private static bool ClearTimer(int ID)
         {
-            foreach (JSTimer Timer in Plugins.Timers)
+            if (Plugins.Timers.ContainsKey(ID))
             {
-                if (Timer.ID == ID)
-                {
-                    Plugins.Timers.Remove(Timer);
-                    Timer.timer.Stop();
-                    Timer.timer.Dispose();
-                    return true;
-                }
+                Plugins.Timers[ID].Stop();
+                Plugins.Timers[ID].Dispose();
+                return Plugins.Timers.Remove(ID);
             }
             return false;
         }
 
+        /// <summary>
+        /// 清除定时器
+        /// </summary>
+        /// <param name="ID">哈希值</param>
+        /// <returns>清除结果</returns>
         public static bool ClearTimer(JsValue ID)
         {
             return ClearTimer((int)ID.AsNumber());
+        }
+
+        /// <summary>
+        /// 清除所有定时器
+        /// </summary>
+        public static void ClearAllTimers()
+        {
+            IList<int> IDs = Plugins.Timers.Keys.ToArray();
+            foreach (int ID in IDs)
+            {
+                ClearTimer(ID);
+            }
         }
     }
 }
