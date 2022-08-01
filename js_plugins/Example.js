@@ -174,6 +174,7 @@ File.Delete("2.txt");
 // 将指定文件移到新位置，提供要指定新文件名的选项
 File.Move("1.txt","2.txt");
 
+
 // 导入Directory类
 // https://docs.microsoft.com/zh-cn/dotnet/api/system.io.directory?view=net-6.0
 var Directory = importNamespace("System.IO").Directory;
@@ -205,6 +206,7 @@ var directories = Directory.GetDirectories("./"); // 重载同上
 // 返回：String
 var parentDirectory = Directory.GetParent("./");
 
+
 // 导入Process类
 // https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process?view=net-6.0
 var Process = importNamespace("System.Diagnostics").Process;
@@ -214,7 +216,7 @@ var Process = importNamespace("System.Diagnostics").Process;
 Process.Start("cmd.exe");
 
 // Process.Start("https://github.com/Zaitonn/Serein");
-// 不推荐这种方式打开网页，因为在NET 6下使用这种方法会导致Serein崩溃，替代方法见下文(Line 246)
+// 不推荐这种方式打开网页，因为在NET 6下使用这种方法会导致Serein崩溃，替代方法见下文(Line 248)
 
 // 创建新的 Process 组件，并将其与您指定的现有进程资源关联
 // var process = Process.GetProcessById(1);
@@ -235,7 +237,7 @@ Process.Start("cmd.exe");
 var ProcessStartInfo = importNamespace("System.Diagnostics").ProcessStartInfo;
 
 var psi = new ProcessStartInfo(
-    "https://github.com/Zaitonn/Serein",
+    "notepad.exe",
     "" // 启动参数（可为空）
     );
 
@@ -251,3 +253,23 @@ psi.WorkingDirectory = serein.path // 获取或设置要启动的进程的工作
 // 提供指定启动进程时使用的一组值启动进程
 Process.Start(psi);
 
+
+// 导入WebRequest类
+// https://docs.microsoft.com/zh-cn/dotnet/api/system.net.webrequest?view=net-6.0
+var WebRequest = importNamespace("System.Net").WebRequest;
+
+// 导入StreamReader类
+// https://docs.microsoft.com/zh-cn/dotnet/api/system.io.streamreader?view=net-6.0
+var StreamReader = importNamespace("System.IO").StreamReader;
+
+var request = WebRequest.Create("https://v1.hitokoto.cn"); // 创建网络请求
+request.Method = "GET"; // 设置要在此请求中使用的协议方法
+
+var response = new StreamReader(
+    request
+    .GetResponse() // 获取响应
+    .GetResponseStream() // 获取响应的流
+    ).ReadToEnd(); // 读取响应流
+
+// 输出响应数据到控制台
+serein.log(response)
