@@ -106,6 +106,7 @@
             this.Controls.Add(this.NickName);
             this.Controls.Add(this.ID);
             this.Controls.Add(this.GameIDBox);
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -113,6 +114,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "成员信息编辑器";
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.MemberInfoEditer_HelpButtonClicked);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -34,7 +34,8 @@
     - [创建Get请求](#创建get请求)
 
 ### 推荐列表
-- [**示例插件（官方）**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
+- [**示例插件**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
+- [机器人功能扩展](https://github.com/Zaitonn/Serein/blob/main/js_plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js)
 
 > __⭐ Tips__  
 >如果你有优秀的插件，欢迎提交Issue、提交pr或与作者私聊  
@@ -45,9 +46,12 @@
 [ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
 
 ### 直接使用的NET对象/类
-由于JS引擎的特性，你可以导入NET内的命名空间以及其对象、类和属性   
+由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类和属性   
 
 `importNamespace(name:String)` 导入命名空间
+
+> __⭐ Tips__  
+>配合一定`C#`基础食用更佳
 
 #### 示例
 

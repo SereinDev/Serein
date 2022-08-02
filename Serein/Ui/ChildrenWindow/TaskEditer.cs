@@ -1,6 +1,8 @@
 ﻿using NCrontab;
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -112,6 +114,11 @@ namespace Serein.Ui.ChildrenWindow
             {
                 e.Handled = true;
             }
+        }
+
+        private void TaskEditer_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial.html#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1") { UseShellExecute = true });
         }
     }
 }

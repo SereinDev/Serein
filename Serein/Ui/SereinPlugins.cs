@@ -1,5 +1,6 @@
 ﻿using Serein.Plugin;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -37,6 +38,14 @@ namespace Serein.Ui
         {
             Plugins.Reload();
             LoadSereinPlugin();
+        }
+        private void SereinPluginsListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e)
+        {
+            SereinPluginsWebBrowser_Invoke("#clear");
+        }
+        private void SereinPluginsListContextMenuStrip_Docs_Click(object sender, System.EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Javascript.html") { UseShellExecute = true });
         }
     }
 }

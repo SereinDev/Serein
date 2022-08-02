@@ -1954,13 +1954,28 @@
     <value>17, 75</value>
   </metadata>
   <data name="SereinPluginsListContextMenuStrip_Reload.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 38</value>
+    <value>300, 38</value>
   </data>
   <data name="SereinPluginsListContextMenuStrip_Reload.Text" xml:space="preserve">
     <value>重新加载所有插件</value>
   </data>
+  <data name="SereinPluginsListContextMenuStrip_ClearConsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_ClearConsole.Text" xml:space="preserve">
+    <value>清空插件控制台</value>
+  </data>
+  <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>297, 6</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_Docs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 38</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_Docs.Text" xml:space="preserve">
+    <value>查看文档</value>
+  </data>
   <data name="SereinPluginsListContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>281, 42</value>
+    <value>301, 168</value>
   </data>
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Name" xml:space="preserve">
     <value>SereinPluginsListContextMenuStrip</value>
@@ -4091,11 +4106,29 @@
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_ClearConsole.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip_ClearConsole</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_ClearConsole.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;StripStatusLabel.Name" xml:space="preserve">
     <value>StripStatusLabel</value>
   </data>
   <data name="&gt;&gt;StripStatusLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Docs.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip_Docs</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Docs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Name" xml:space="preserve">
+    <value>toolStripSeparator9</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Ui</value>

@@ -29,6 +29,11 @@ function onGroupPoke(group,user){ // 戳一戳反馈
 serein.setListener("onReceiveGroupMessage",onReceiveGroupMessage)
 function onReceiveGroupMessage(group_id,user_id,msg,shownname){
     if(msg == "一言"){
-        serein.sendGroup(group_id,JSON.parse(serein.createRequest("https://v1.hitokoto.cn")).hitokoto); 
+        var StreamReader = importNamespace("System.IO").StreamReader;
+        var streamreader = new StreamReader(importNamespace("System.Net").WebRequest.Create("https://v1.hitokoto.cn").GetResponse().GetResponseStream());
+        serein.sendGroup(group_id,JSON.parse(streamreader.ReadToEnd()).hitokoto); 
+        streamreader.Dispose();
     }
 }
+
+
