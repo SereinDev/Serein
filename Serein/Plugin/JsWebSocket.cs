@@ -18,7 +18,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Uri">ws地址</param>
         /// <param name="Token">鉴权Token</param>
-        public JSWebSocket(string Uri,string Token)
+        public JSWebSocket(string Uri, string Token)
         {
             webSocket = new WebSocket(
                 Uri,
