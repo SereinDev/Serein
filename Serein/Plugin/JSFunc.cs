@@ -88,10 +88,7 @@ namespace Serein.Plugin
                     Plugins.Event.onSereinClose.Add(Function);
                     break;
                 default:
-                    Global.Ui.SereinPluginsWebBrowser_Invoke(
-                        "<span style=\"color:#C09553;font-weight: bold;\">[!]</span>" +
-                        $"插件注册了一个未知事件：{Log.EscapeLog(EventName)}"
-                        );
+                    Global.Logger(32, $"插件注册了一个未知事件：{EventName}");
                     return false;
             }
             return true;
@@ -195,11 +192,7 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Ui.SereinPluginsWebBrowser_Invoke(
-                        "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
-                        $"触发事件{EventName}时出现异常：" +
-                        Log.EscapeLog(e.Message)
-                        );
+                Global.Logger(32,$"触发事件{EventName}时出现异常：{e.Message}");
                 Global.Debug(e.ToString());
             }
         }
@@ -216,10 +209,7 @@ namespace Serein.Plugin
                 ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
                 )
             {
-                Global.Ui.SereinPluginsWebBrowser_Invoke(
-                    "<span style=\"color:#C09553;font-weight: bold;\">[!]</span>" +
-                    $"插件注册命令\"{Log.EscapeLog(Command)}\"失败"
-                    );
+                Global.Logger(32,$"插件注册命令\"{Command}\"失败");
                 return false;
             }
             else

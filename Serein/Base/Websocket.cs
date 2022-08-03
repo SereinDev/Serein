@@ -33,7 +33,7 @@ namespace Serein.Base
             }
             else if (!Status)
             {
-                Global.Ui.BotWebBrowser_Invoke("#clear");
+                Global.Logger(20,"#clear");
                 Message.MessageReceived = "-";
                 Message.MessageSent = "-";
                 Message.SelfId = "-";
@@ -50,20 +50,19 @@ namespace Serein.Base
                     webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
                     webSocket.Error += (sender, e) =>
                     {
-                        Global.Ui.BotWebBrowser_Invoke(
-                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" +
-                            Log.EscapeLog(e.Exception.Message));
+                        Global.Logger(24,e.Exception.Message);
                     };
                     webSocket.Closed += (sender, e) =>
                     {
                         Status = false;
-                        Global.Ui.BotWebBrowser_Invoke("<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>WebSocket连接已断开");
+                        Global.Logger(20,"");
+                        Global.Logger(21,"WebSocket连接已断开");
                         if (Global.Settings.Bot.Restart && Restart)
                         {
                             Task.Run(() =>
                             {
-                                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下断开按钮来取消重启");
+                                Global.Logger(21,"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Global.Logger(21,"你可以按下断开按钮来取消重启");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
@@ -82,7 +81,7 @@ namespace Serein.Base
                     webSocket.Opened += (sender, e) =>
                     {
                         Restart = true;
-                        Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>连接到{Global.Settings.Bot.Uri}");
+                        Global.Logger(21, $"连接到{Global.Settings.Bot.Uri}");
                     };
                     webSocket.Open();
                     StartTime = DateTime.Now;
@@ -90,9 +89,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Ui.BotWebBrowser_Invoke(
-                            "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + e.Message
-                            );
+                    Global.Logger(24,e.Message);
                 }
             }
         }
@@ -120,17 +117,11 @@ namespace Serein.Base
                 webSocket.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Global.Ui.BotWebBrowser_Invoke(
-                        "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                        Log.EscapeLog(TextJObject.ToString())
-                        );
+                    Global.Logger(23, TextJObject.ToString());
                 }
                 else
                 {
-                    Global.Ui.BotWebBrowser_Invoke(
-                        "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                        Log.EscapeLog($"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}")
-                        );
+                    Global.Logger(23, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
                 }
             }
             return Status;
@@ -149,7 +140,7 @@ namespace Serein.Base
             else if (Restart)
             {
                 Restart = false;
-                Global.Ui.BotWebBrowser_Invoke($"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消.");
+                Global.Logger(21,"重启已取消.");
             }
             else
             {
@@ -166,10 +157,7 @@ namespace Serein.Base
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
-                Global.Ui.BotWebBrowser_Invoke(
-                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    Log.EscapeLog(e.Message)
-                    );
+                Global.Logger(22, e.Message);
             }
             if (Global.Settings.Bot.EnableLog)
             {

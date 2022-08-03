@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Items.Motd;
 using Serein.Server;
-using Serein.Ui;
 using System;
 using System.Diagnostics;
 
@@ -52,7 +51,7 @@ namespace Serein.Plugin
                         return string.Empty;
                 }
             }));
-            engine.SetValue("Serein_Log", new Action<object>((Content) => { Global.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog((Content ?? "").ToString())); }));
+            engine.SetValue("Serein_Log", new Action<object>((Content) => { Global.Logger(33, Content); }));
             engine.SetValue("Serein_Command_Run", new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Path", Global.Path);
             engine.SetValue("Serein_Global_Version", Global.VERSION);
@@ -78,7 +77,6 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
             engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
             engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
-            engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
             engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, false); }));
             engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, true); }));
             engine.SetValue("clearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
@@ -110,8 +108,7 @@ namespace Serein.Plugin
                 "bindMember:Serein_Member_Bind," +
                 "unbindMember:Serein_Member_UnBind," +
                 "getID:Serein_Member_GetID," +
-                "getGameID:Serein_Member_GetGameID," +
-                "createRequest:Serein_CreateRequest" +
+                "getGameID:Serein_Member_GetGameID" +
                 "};");
             return engine;
         }

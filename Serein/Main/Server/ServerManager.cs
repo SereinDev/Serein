@@ -64,8 +64,8 @@ namespace Serein.Server
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke("#clear");
-                Global.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
+                Global.Logger(10, "#clear");
+                Global.Logger(11, "启动中");
                 ServerProcessInfo = new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
@@ -215,7 +215,7 @@ namespace Serein.Server
                 }
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
+                    Global.Logger(10, $">{Command_Copy}");
                 }
                 if (!IsSpecifiedCommand)
                 {
@@ -273,7 +273,8 @@ namespace Serein.Server
                         Difficulty = Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
+                Global.Logger(
+                    10,
                     Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
                 //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
@@ -318,18 +319,19 @@ namespace Serein.Server
             ServerProcess.WaitForExit();
             Status = false;
             CommandWriter.Close();
+            Global.Logger(10, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
+                Global.Logger(11,
+                    $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger("Server_Error");
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
+                Global.Logger(11,
+                    $"进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
                 EventTrigger.Trigger("Server_Stop");
             }
@@ -350,11 +352,11 @@ namespace Serein.Server
         }
         private static void RestartTimer()
         {
-            Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>服务器将在5s后重新启动."
+            Global.Logger(11,
+                "服务器将在5s后重新启动."
                 );
-            Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下停止按钮来取消这次重启."
+            Global.Logger(11,
+                "你可以按下停止按钮来取消这次重启."
                 );
             for (int i = 0; i < 10; i++)
             {
@@ -370,8 +372,8 @@ namespace Serein.Server
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消."
+                Global.Logger(11,
+                "重启已取消."
                 );
             }
         }

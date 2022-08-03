@@ -41,12 +41,25 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Main-Console\**" />
+    <Compile Remove="Console\**" />
+    <Compile Remove="Main\**" />
     <Compile Remove="Serein\**" />
-    <EmbeddedResource Remove="Main-Console\**" />
+    <Compile Remove="Ui\**" />
+    <EmbeddedResource Remove="Console\**" />
+    <EmbeddedResource Remove="Main\**" />
     <EmbeddedResource Remove="Serein\**" />
-    <None Remove="Main-Console\**" />
+    <EmbeddedResource Remove="Ui\**" />
+    <None Remove="Console\**" />
+    <None Remove="Main\**" />
     <None Remove="Serein\**" />
+    <None Remove="Ui\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Base\ResourcesManager.cs" />
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sources\Serein.ico" />
@@ -95,11 +108,6 @@
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -107,18 +115,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Main\Base\" />
   </ItemGroup>
 </Project>

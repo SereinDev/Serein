@@ -41,9 +41,7 @@ namespace Serein.Plugin
                 long Temp;
                 foreach (string Filename in Files)
                 {
-                    Global.Ui.SereinPluginsWebBrowser_Invoke(
-                        $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>正在加载{Log.EscapeLog(Path.GetFileName(Filename))}"
-                        );
+                    Global.Logger(31,$"正在加载{Path.GetFileName(Filename)}");
                     Temp = PluginItems.Count;
                     try
                     {
@@ -53,10 +51,7 @@ namespace Serein.Plugin
                         if (!Success)
                         {
                             ErrorFiles.Add(Path.GetFileName(Filename));
-                            Global.Ui.SereinPluginsWebBrowser_Invoke(
-                                "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>"
-                                + Log.EscapeLog(ExceptionMessage)
-                                );
+                            Global.Logger(32, ExceptionMessage);
                         }
                         else
                         {
@@ -83,20 +78,14 @@ namespace Serein.Plugin
                     catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Global.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(e.ToString()));
+                        Global.Logger(32, e.ToString());
                     }
                 }
-                Global.Ui.SereinPluginsWebBrowser_Invoke(
-                    $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败"
-                    );
+                Global.Logger(33,$"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
                 {
-                    Global.Ui.SereinPluginsWebBrowser_Invoke(
-                        "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" +
-                        $"以下插件加载出现问题，请咨询原作者获取更多信息<br>" +
-                        Log.EscapeLog(string.Join(" ,", ErrorFiles)) +
-                        "<br>"
-                        );
+                    Global.Logger(31, $"以下插件加载出现问题，请咨询原作者获取更多信息");
+                    Global.Logger(30, Log.EscapeLog(string.Join(" ,", ErrorFiles)));
                 }
             }
         }
@@ -106,7 +95,7 @@ namespace Serein.Plugin
         /// </summary>
         public static void Reload()
         {
-            Global.Ui.SereinPluginsWebBrowser_Invoke("#clear");
+            Global.Logger(30,"#clear");
             CommandItems.Clear();
             PluginItems.Clear();
             Event = new Event();

@@ -13,7 +13,7 @@ namespace Serein
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
         public static List<MemberItem> MemberItems = new List<MemberItem>();
-        public static Ui.Ui Ui = null;
+        //public static Ui.Ui Ui = null;
         public static Item Settings = new Item();
         public static bool Crash = false;
         public static bool MultiOpen = false;
@@ -42,14 +42,11 @@ namespace Serein
         }
         public static void Debug(object o)
         {
-            if (Ui != null && o != null)
-            {
-                try
-                {
-                    Ui.Debug_Append($"{DateTime.Now:T} {o}");
-                }
-                catch { }
-            }
+            Base.Console.WriteLine(3, o);
+        }
+        public static void Logger(int Type,params object[] objects)
+        {
+
         }
     }
 }
