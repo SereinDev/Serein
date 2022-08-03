@@ -1,5 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
+using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Items.Motd;
@@ -80,8 +81,9 @@ namespace Serein.Plugin
             engine.SetValue("Serein_CreateRequest", new Func<string, string>((url) => { return GetInfo.RequestInfo(url); }));
             engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, false); }));
             engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, true); }));
-            engine.SetValue("ClearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
-            engine.SetValue("ClearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
+            engine.SetValue("clearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
+            engine.SetValue("clearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
+            engine.SetValue("WebSocket", TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +
