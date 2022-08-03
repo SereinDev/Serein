@@ -192,7 +192,7 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Logger(32,$"触发事件{EventName}时出现异常：{e.Message}");
+                Global.Logger(32, $"触发事件{EventName}时出现异常：{e.Message}");
                 Global.Debug(e.ToString());
             }
         }
@@ -209,7 +209,7 @@ namespace Serein.Plugin
                 ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
                 )
             {
-                Global.Logger(32,$"插件注册命令\"{Command}\"失败");
+                Global.Logger(32, $"插件注册命令\"{Command}\"失败");
                 return false;
             }
             else

@@ -44,7 +44,7 @@ namespace Serein
         {
             Base.Console.WriteLine(3, o);
         }
-        public static void Logger(int Type,params object[] objects)
+        public static void Logger(int Type, params object[] objects)
         {
 
         }

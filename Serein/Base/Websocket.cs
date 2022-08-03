@@ -33,7 +33,7 @@ namespace Serein.Base
             }
             else if (!Status)
             {
-                Global.Logger(20,"#clear");
+                Global.Logger(20, "#clear");
                 Message.MessageReceived = "-";
                 Message.MessageSent = "-";
                 Message.SelfId = "-";
@@ -50,19 +50,19 @@ namespace Serein.Base
                     webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
                     webSocket.Error += (sender, e) =>
                     {
-                        Global.Logger(24,e.Exception.Message);
+                        Global.Logger(24, e.Exception.Message);
                     };
                     webSocket.Closed += (sender, e) =>
                     {
                         Status = false;
-                        Global.Logger(20,"");
-                        Global.Logger(21,"WebSocket连接已断开");
+                        Global.Logger(20, "");
+                        Global.Logger(21, "WebSocket连接已断开");
                         if (Global.Settings.Bot.Restart && Restart)
                         {
                             Task.Run(() =>
                             {
-                                Global.Logger(21,"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Global.Logger(21,"你可以按下断开按钮来取消重启");
+                                Global.Logger(21, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Global.Logger(21, "你可以按下断开按钮来取消重启");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
@@ -89,7 +89,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Logger(24,e.Message);
+                    Global.Logger(24, e.Message);
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace Serein.Base
             else if (Restart)
             {
                 Restart = false;
-                Global.Logger(21,"重启已取消.");
+                Global.Logger(21, "重启已取消.");
             }
             else
             {
