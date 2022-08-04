@@ -26,10 +26,10 @@ namespace Serein
                     Output.Logger(4, Line);
                     break;
                 case 10:
-                    Output.Logger(0,Line);
+                    Output.Logger(0, Line);
                     break;
                 case 11:
-                    Output.Logger(1,Line);
+                    Output.Logger(1, Line);
                     break;
                 case 20:
                     Output.Logger(0, Line);

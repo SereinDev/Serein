@@ -67,7 +67,7 @@ namespace Serein.Console
             }
         }
 
-        public static void Load(string[] args =null)
+        public static void Load(string[] args = null)
         {
             Settings.Base.ReadSettings();
             Members.Load();
@@ -79,7 +79,7 @@ namespace Serein.Console
             }
             if (File.Exists($"{Global.Path}\\data\\regex.json"))
             {
-                string Text = File.ReadAllText($"{Global.Path}\\data\\regex.json",Encoding.UTF8);
+                string Text = File.ReadAllText($"{Global.Path}\\data\\regex.json", Encoding.UTF8);
                 if (!string.IsNullOrEmpty(Text))
                 {
                     JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
