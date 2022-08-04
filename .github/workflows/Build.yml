@@ -80,54 +80,23 @@ jobs:
       - name: Build the project(Release)
         run: msbuild -p:Configuration=Release Serein/Serein.csproj
 
-      - name: Upload Serein(Release .Net Framework 4.7.2)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
-          path: ${{ github.workspace }}\Serein\bin\Release\net472
-
-      - name: Upload Serein(Release Net6.0)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnet6
-          path: ${{ github.workspace }}\Serein\bin\Release\net6.0-windows
-
       - name: Build the project(Debug)
         run: msbuild -p:Configuration=Debug Serein/Serein.csproj
+
+      - name: Build the project(Release)
+        run: msbuild -p:Configuration=Release Serein/Serein-Console.csproj
+
+      - name: Build the project(Debug)
+        run: msbuild -p:Configuration=Debug Serein/Serein-Console.csproj
+
+      - name: Upload Serein(Release)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ needs.draft_release.outputs.tag_name }}
+          path: ${{ github.workspace }}\Serein\bin\Release
 
       - name: Upload Serein(Debug)
         uses: actions/upload-artifact@v3
         with:
           name: Debug
           path: ${{ github.workspace }}\Serein\bin\Debug
-      
-      - name: Clean Folders
-        run: rmdir /s /q ${{ github.workspace }}\Serein\bin\
-        shell: cmd
-      
-      - name: Build the project(Serein-Console,Release)
-        run: msbuild -p:Configuration=Release Serein/Serein-Console.csproj
-
-      - name: Upload Serein(Release .Net Framework 4.7.2)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein-Console_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
-          path: ${{ github.workspace }}\Serein\bin\Release\net472
-
-      - name: Upload Serein(Serein-Console,Release Net6.0)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein-Console_${{ needs.draft_release.outputs.tag_name }}_dotnet6
-          path: ${{ github.workspace }}\Serein\bin\Release\net6.0-windows
-
-      - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug Serein/Serein-Console.csproj
-
-      - name: Upload Serein-Console(Debug)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein-Console_Debug
-          path: ${{ github.workspace }}\Serein\bin\Debug
-
-
-    
