@@ -75,7 +75,7 @@ jobs:
           nuget-version: '5.x'
 
       - name: NuGet restore
-        run: nuget restore
+        run: nuget restore Serein.sln
 
       - name: Build the project(Release)
         run: msbuild -p:Configuration=Release Serein/Serein.csproj
