@@ -15,7 +15,6 @@ namespace Serein.Console
             if (!ServerManager.Status || Line.StartsWith("serein"))
             {
                 Line = Regex.Replace(Line, @"^serein\s?", string.Empty).ToLower();
-                if (string.IsNullOrEmpty(Line) || string.IsNullOrWhiteSpace(Line)) { return; }
                 switch (Line)
                 {
                     case "exit":
@@ -47,6 +46,7 @@ namespace Serein.Console
                         try
                         {
                             Base.Load();
+                            Output.Logger(1, "重新加载成功");
                         }
                         catch (Exception e)
                         {

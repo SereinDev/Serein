@@ -13,9 +13,9 @@ namespace Serein.Base
     public class Websocket
     {
         public static bool Status = false;
+        private static bool Restart = false;
         public static WebSocket webSocket;
         public static DateTime StartTime = DateTime.Now;
-        private static bool Restart = false;
 
         /// <summary>
         /// 连接WS
@@ -25,11 +25,25 @@ namespace Serein.Base
         {
             if (ExecutedByUser && Status)
             {
-                MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (Global.Console)
+                {
+                    Global.Logger(2, "Websocket已连接.");
+                }
+                else
+                {
+                    MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else if (ExecutedByUser && Restart)
             {
-                MessageBox.Show(":(\n请先结束重启倒计时.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (Global.Console)
+                {
+                    Global.Logger(2, "请先结束重启倒计时.");
+                }
+                else
+                {
+                    MessageBox.Show(":(\n请先结束重启倒计时.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else if (!Status)
             {
@@ -144,7 +158,14 @@ namespace Serein.Base
             }
             else
             {
-                MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (Global.Console)
+                {
+                    Global.Logger(2, "Websocket未连接.");
+                }
+                else
+                {
+                    MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

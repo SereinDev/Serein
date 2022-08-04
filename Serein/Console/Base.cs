@@ -27,13 +27,14 @@ namespace Serein.Console
         extern static IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern IntPtr GetStdHandle(int nStdHandle);
-
         [DllImport("kernel32.dll")]
         static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
         [DllImport("kernel32.dll")]
         static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
+        /// <summary>
+        /// 初始化控制台
+        /// </summary>
         public static void Init()
         {
             var Handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -50,6 +51,10 @@ namespace Serein.Console
             uint SC_CLOSE = 0xF060;
             RemoveMenu(closeMenu, SC_CLOSE, 0x0);
         }
+
+        /// <summary>
+        /// 启动输入循环
+        /// </summary>
         public static void Start()
         {
             System.Console.OutputEncoding = Encoding.UTF8;
@@ -57,7 +62,7 @@ namespace Serein.Console
             System.Console.CancelKeyPress += (sender, e) =>
             {
                 e.Cancel = true;
-                Output.Logger(2, "若要退出Serein请使用\"exit\"命令");
+                Output.Logger(2, "若要关闭Serein请使用\"exit\"命令");
             };
             Output.Logger(1, "Welcome.");
             while (true)
@@ -67,6 +72,10 @@ namespace Serein.Console
             }
         }
 
+        /// <summary>
+        /// 加载配置文件
+        /// </summary>
+        /// <param name="args">启动参数</param>
         public static void Load(string[] args = null)
         {
             Settings.Base.ReadSettings();

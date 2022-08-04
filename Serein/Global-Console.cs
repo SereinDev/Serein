@@ -9,6 +9,7 @@ namespace Serein
 {
     partial class Global
     {
+        public static bool Console = true;
         public static void Debug(object o)
         {
         }
@@ -23,7 +24,16 @@ namespace Serein
             switch (Type)
             {
                 case 999:
-                    Output.Logger(4, Line);
+                    if (Settings.Serein.Debug) { Output.Logger(4, Line); }
+                    break;
+                case 1:
+                    Output.Logger(1, Line);
+                    break;
+                case 2:
+                    Output.Logger(2, Line);
+                    break;
+                case 3:
+                    Output.Logger(3, Line);
                     break;
                 case 10:
                     Output.Logger(0, Line);
@@ -41,7 +51,7 @@ namespace Serein
                     Output.Logger(0, $"\x1b[92m[↓]\x1b[0m{Line}");
                     break;
                 case 23:
-                    Output.Logger(0, $"\x1b[94m[↑]\x1b[0m{Line}");
+                    Output.Logger(0, $"\x1b[36m[↑]\x1b[0m{Line}");
                     break;
                 case 24:
                     Output.Logger(3, Line);

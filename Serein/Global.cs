@@ -1,7 +1,6 @@
 ﻿using Serein.Items;
 using Serein.Settings;
 using System;
-using System.IO;
 using System.Collections.Generic;
 
 namespace Serein

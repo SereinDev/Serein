@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Jint;
+using Jint.Native;
+using System;
 using System.Collections.Generic;
 using WebSocket4Net;
-using Jint;
-using Jint.Native;
 
 namespace Serein.Plugin
 {

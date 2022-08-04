@@ -27,6 +27,12 @@ namespace Serein.Ui
                     PanelInfoCPU2_Update($"{ServerManager.CPUPersent:N2}%");
                     PanelInfoStatus2_Update("已启动");
                     Ui_Update($"Serein | {ServerManager.StartFileName}");
+                    if (ServerManager.Finished)
+                    {
+                        PanelInfoVersion2_Update(ServerManager.Version);
+                        PanelInfoLevel2_Update(ServerManager.LevelName);
+                        PanelInfoDifficulty2_Update(ServerManager.Difficulty);
+                    }
                 }
                 else
                 {
@@ -68,12 +74,6 @@ namespace Serein.Ui
                 }
                 Thread.Sleep(2000);
             }
-        }
-        public void UpdateServerInfo(string LevelName, string Version, string Difficulty)
-        {
-            PanelInfoVersion2_Update(Version);
-            PanelInfoLevel2_Update(LevelName);
-            PanelInfoDifficulty2_Update(Difficulty);
         }
         private void Ui_Update(string NewText)
         {

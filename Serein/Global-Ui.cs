@@ -1,13 +1,11 @@
-﻿using Serein.Items;
-using Serein.Settings;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net;
 
 namespace Serein
 {
     partial class Global
     {
+        public static bool Console = false;
         public static Ui.Ui Ui = null;
         public static void Debug(object o)
         {

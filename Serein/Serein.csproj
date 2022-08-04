@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Global-Console.cs" />
+    <Compile Remove="Program-Console.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sources\Serein.ico" />
