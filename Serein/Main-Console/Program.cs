@@ -1,6 +1,6 @@
 ﻿using Ookii.Dialogs.Wpf;
 using Serein.Base;
-using Serein.Plugin;
+using Serein.Console;
 using Serein.Server;
 using System;
 using System.Collections;
@@ -39,16 +39,10 @@ namespace Serein
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-            Settings.Base.ReadSettings();
-            Global.Args = args;
-            Global.Settings.Serein.Debug = Global.Args.Contains("debug");
-            if (!File.Exists(Global.Path + "console\\console.html"))
-            {
-                Global.FirstOpen = true;
-            }
-            Base.Console.Control();
+            Console.Base.Load(args);
+            Console.Base.Init();
+            Console.Base.Start();
         }
-
         private static void ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Abort(e.Exception);
@@ -121,8 +115,6 @@ namespace Serein
             TaskDialog.ShowDialog();
             Global.Crash = false;
         }
-        [DllImport("user32.dll")]
-        private static extern bool SetProcessDPIAware();
 
         private static void TaskDialog_HyperLinkClicked(object sender, HyperlinkClickedEventArgs e)
         {

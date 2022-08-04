@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -41,21 +41,22 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Console\**" />
+    <Compile Remove="ConsoleHtml\**" />
     <Compile Remove="Main\**" />
     <Compile Remove="Serein\**" />
     <Compile Remove="Ui\**" />
-    <EmbeddedResource Remove="Console\**" />
+    <EmbeddedResource Remove="ConsoleHtml\**" />
     <EmbeddedResource Remove="Main\**" />
     <EmbeddedResource Remove="Serein\**" />
     <EmbeddedResource Remove="Ui\**" />
-    <None Remove="Console\**" />
+    <None Remove="ConsoleHtml\**" />
     <None Remove="Main\**" />
     <None Remove="Serein\**" />
     <None Remove="Ui\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Base\ResourcesManager.cs" />
+    <Compile Remove="Global-Ui.cs" />
     <Compile Remove="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>

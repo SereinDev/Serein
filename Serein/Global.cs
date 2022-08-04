@@ -1,19 +1,19 @@
 ﻿using Serein.Items;
 using Serein.Settings;
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace Serein
 {
-    internal class Global
+    partial class Global
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.3.0";
+        public static string VERSION = "v1.3.1";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
         public static List<MemberItem> MemberItems = new List<MemberItem>();
-        //public static Ui.Ui Ui = null;
         public static Item Settings = new Item();
         public static bool Crash = false;
         public static bool MultiOpen = false;
@@ -39,14 +39,6 @@ namespace Serein
             {
                 MemberItems = New;
             }
-        }
-        public static void Debug(object o)
-        {
-            Base.Console.WriteLine(3, o);
-        }
-        public static void Logger(int Type, params object[] objects)
-        {
-
         }
     }
 }

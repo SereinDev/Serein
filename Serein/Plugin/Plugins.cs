@@ -84,8 +84,8 @@ namespace Serein.Plugin
                 Global.Logger(33, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
                 {
-                    Global.Logger(31, $"以下插件加载出现问题，请咨询原作者获取更多信息");
-                    Global.Logger(30, Log.EscapeLog(string.Join(" ,", ErrorFiles)));
+                    Global.Logger(31, "以下插件加载出现问题，请咨询原作者获取更多信息");
+                    Global.Logger(33, string.Join(" ,", ErrorFiles));
                 }
             }
         }

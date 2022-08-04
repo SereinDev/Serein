@@ -41,12 +41,18 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Console\**" />
     <Compile Remove="Main-Console\**" />
     <Compile Remove="Serein\**" />
+    <EmbeddedResource Remove="Console\**" />
     <EmbeddedResource Remove="Main-Console\**" />
     <EmbeddedResource Remove="Serein\**" />
+    <None Remove="Console\**" />
     <None Remove="Main-Console\**" />
     <None Remove="Serein\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Global-Console.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sources\Serein.ico" />
@@ -117,8 +123,5 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Main\Base\" />
   </ItemGroup>
 </Project>
