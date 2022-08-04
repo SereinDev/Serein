@@ -52,6 +52,9 @@ jobs:
         continue-on-error: true
 
     Build:
+      strategy:
+        matrix:
+          target: [Serein,Serein-Console]
       needs: [Format,draft_release]
       runs-on: windows-latest
       steps:
@@ -77,27 +80,23 @@ jobs:
       - name: NuGet restore
         run: nuget restore
 
-      - name: Build the solution(Release)
-        run: msbuild /p:Configuration=$env:Configuration
-        env:
-          Configuration: Release
+      - name: Build the project(Release)
+        run: msbuild -p:Configuration=Release Serein/${{ matrix.target }}.csproj
 
       - name: Upload Serein(Release .Net Framework 4.7.2)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
+          name: ${{ matrix.target }}_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
           path: ${{ github.workspace }}\Serein\bin\Release\net472
 
       - name: Upload Serein(Release Net6.0)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ needs.draft_release.outputs.tag_name }}_dotnet6
+          name: ${{ matrix.target }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6
           path: ${{ github.workspace }}\Serein\bin\Release\net6.0-windows
 
-      - name: Build the solution(Debug)
-        run: msbuild /p:Configuration=$env:Configuration
-        env:
-          Configuration: Debug
+      - name: Build the project(Debug)
+        run: msbuild -p:Configuration=Debug Serein/${{ matrix.target }}.csproj
 
       - name: Upload Serein(Debug)
         uses: actions/upload-artifact@v3
