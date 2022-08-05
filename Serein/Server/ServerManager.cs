@@ -36,6 +36,11 @@ namespace Serein.Server
             Encoding.GetEncoding("ISO-8859-1")
         };
 
+        /// <summary>
+        /// 启动服务器
+        /// </summary>
+        /// <param name="Quiet">静处理</param>
+        /// <returns>启动结果</returns>
         public static bool Start(bool Quiet = false)
         {
             if (Status)
@@ -48,7 +53,7 @@ namespace Serein.Server
                     }
                     else
                     {
-                        MessageBox.Show(":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(":(\n服务器已在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -62,7 +67,7 @@ namespace Serein.Server
                     }
                     else
                     {
-                        MessageBox.Show(":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(":(\n启动路径为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -72,11 +77,11 @@ namespace Serein.Server
                 {
                     if (Global.Console)
                     {
-                        Global.Logger(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到.");
+                        Global.Logger(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到");
                     }
                     else
                     {
-                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -132,6 +137,10 @@ namespace Serein.Server
             }
             return false;
         }
+
+        /// <summary>
+        /// 关闭服务器
+        /// </summary>
         public static void Stop()
         {
             if (Status)
@@ -150,13 +159,19 @@ namespace Serein.Server
             }
             else if (!Global.Console)
             {
-                MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                Global.Logger(2, "服务器不在运行中.");
+                Global.Logger(2, "服务器不在运行中");
             }
         }
+
+        /// <summary>
+        /// 强制结束服务器
+        /// </summary>
+        /// <param name="Quiet">静处理</param>
+        /// <returns>强制结束结果</returns>
         public static bool Kill(bool Quiet = false)
         {
             if (Status
@@ -226,11 +241,18 @@ namespace Serein.Server
                 }
                 else
                 {
-                    MessageBox.Show(":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             return false;
         }
+
+        /// <summary>
+        /// 输入命令
+        /// </summary>
+        /// <param name="Command">命令</param>
+        /// <param name="Quiet">静处理</param>
+        /// <param name="Unicode">使用Unicode</param>
         public static void InputCommand(string Command, bool Quiet = false, bool Unicode = false)
         {
             if (Status)
@@ -292,6 +314,10 @@ namespace Serein.Server
                 Start(Quiet);
             }
         }
+
+        /// <summary>
+        /// 输出处理
+        /// </summary>
         private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
             if (!string.IsNullOrEmpty(outLine.Data))
@@ -321,7 +347,6 @@ namespace Serein.Server
                     Global.Console ?
                     outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
-                //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -358,6 +383,10 @@ namespace Serein.Server
                 JSFunc.Trigger("onServerOutput", Line);
             }
         }
+
+        /// <summary>
+        /// 等待服务器退出
+        /// </summary>
         private static void WaitForExit()
         {
             ServerProcess.WaitForExit();
@@ -386,6 +415,10 @@ namespace Serein.Server
             Difficulty = "-";
             JSFunc.Trigger("onServerStop");
         }
+
+        /// <summary>
+        /// 重启请求
+        /// </summary>
         public static void RestartRequest()
         {
             if (!Restart)
@@ -394,13 +427,17 @@ namespace Serein.Server
                 Stop();
             }
         }
+
+        /// <summary>
+        /// 重启计时器
+        /// </summary>
         private static void RestartTimer()
         {
             Global.Logger(11,
-                "服务器将在5s后重新启动."
+                "服务器将在5s后重新启动"
                 );
             Global.Logger(11,
-                "你可以按下停止按钮来取消这次重启."
+                "你可以按下停止按钮来取消这次重启"
                 );
             for (int i = 0; i < 10; i++)
             {
@@ -417,10 +454,14 @@ namespace Serein.Server
             else
             {
                 Global.Logger(11,
-                "重启已取消."
+                "重启已取消"
                 );
             }
         }
+
+        /// <summary>
+        /// 获取CPU占用
+        /// </summary>
         public static void GetCPUPercent()
         {
             while (Status)
@@ -430,6 +471,11 @@ namespace Serein.Server
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
             }
         }
+
+        /// <summary>
+        /// 获取运行时间
+        /// </summary>
+        /// <returns>运行时间</returns>
         public static string GetTime()
         {
             string Time = "-";
@@ -444,6 +490,12 @@ namespace Serein.Server
             }
             return Time;
         }
+
+        /// <summary>
+        /// Unicode转换
+        /// </summary>
+        /// <param name="Text">输入</param>
+        /// <returns>输出字符串</returns>
         private static string ConvertToUnicode(string Text)
         {
             string result = "";

@@ -15,7 +15,7 @@ namespace Serein.Settings
         }
         public static void SaveSettings()
         {
-            Global.Debug($"[Settings] {JsonConvert.SerializeObject(Global.Settings)}");
+            Global.Logger(999,"[Settings]",JsonConvert.SerializeObject(Global.Settings));
             SaveSettingsThread.Wait(2500);
             while (true)
             {
@@ -50,7 +50,7 @@ namespace Serein.Settings
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Setting]Fail to update Matches.json: {e.ToString()}");
+                    Global.Logger(999,"[Setting] Fail to update Matches.json:",e.ToString());
                 }
                 try
                 {
@@ -63,7 +63,7 @@ namespace Serein.Settings
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Setting]Fail to update Event.json: {e.ToString()}");
+                    Global.Logger(999,"[Setting] Fail to update Event.json:",e.ToString());
                 }
             }
         }

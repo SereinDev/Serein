@@ -10,6 +10,10 @@ namespace Serein.Console
 {
     internal class Input
     {
+        /// <summary>
+        /// 处理输入消息
+        /// </summary>
+        /// <param name="Line">输入行</param>
         public static void Process(string Line)
         {
             if (!ServerManager.Status || Line.StartsWith("serein"))
@@ -77,7 +81,7 @@ namespace Serein.Console
                             "=================================================");
                         break;
                     default:
-                        Output.Logger(2, "未知的命令，请检查后重试");
+                        Output.Logger(2, "未知的命令，请检查后重试或输入\"help\"获取更多信息");
                         break;
                 }
             }

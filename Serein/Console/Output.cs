@@ -10,6 +10,12 @@ namespace Serein.Console
     internal class Output
     {
         private static object Lock = new object();
+
+        /// <summary>
+        /// 处理输出消息
+        /// </summary>
+        /// <param name="Level">输出等级</param>
+        /// <param name="Line">输出行</param>
         public static void Logger(int Level, string Line)
         {
             if (Line == "#clear") { return; }

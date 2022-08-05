@@ -5,7 +5,10 @@
     - [Release](#release)
     - [Beta](#beta)
     - [自行编译](#自行编译)
-    - [如何选择不同Net的版本](#如何选择不同net的版本)
+  - [如何选择不同的版本](#如何选择不同的版本)
+    - [文件名格式](#文件名格式)
+    - [Serein类型的选择](#serein类型的选择)
+    - [NET版本的选择](#net版本的选择)
   - [启动服务器](#启动服务器)
   - [自定义控制台样式](#自定义控制台样式)
   - [多开Serein](#多开serein)
@@ -55,22 +58,41 @@
 #### Beta
 在[Action](https://github.com/Zaitonn/Serein/actions)下载最新的构建  
 
-> __⚠ 提示__   
+>__⚠ 提示__   
 >Beta版不能保证稳定性，可能存在Bug，使用前务必自行备份
 
 #### 自行编译
-从[Release](https://github.com/Zaitonn/Serein/releaseslatest)下载`Source.zip`，使用vs或其他编译器编译运行（需要SDK）
+从[Release](https://github.com/Zaitonn/Serein/releaseslatest)下载`Source.zip`或点击仓库`Code`菜单的[`Download ZIP`](https://github.com/Zaitonn/Serein/archive/refs/heads/main.zip)，使用vs或其他编译器编译运行
 
-#### 如何选择不同Net的版本
+> __⭐ Tips__  
+>推荐环境： Visual Studio 2022
+
+### 如何选择不同的版本
+
+#### 文件名格式
+
+Ui版 `Serein_[版本号]_[运行库NET版本号].zip`  
+命令行版 `Serein-Console_[版本号]_[运行库NET版本号].zip`
+
+#### Serein类型的选择
+
+- Ui版
+  - 顾名思义，这种版本提供了图形化的操作界面
+  - 适合小白服主使用
+- 命令行版
+  - 没有图形化窗口，而是纯命令行式，大部分操作都需要输入命令来完成
+  - 适合有一定开服基础或者面板服商家使用（门槛可能会有一点点高）
+
+> __⭐ Tips__  
+>实际上实现大部分功能的代码都是完全相同的，所以你也可以通过`Ui版`调整好设置或其他数据后直接导入`命令行版`
+
+#### NET版本的选择
 - .NET 6.0 
   - 运行速度较快，若追求处理速度可选择此版本 
   > 详见[Performance Improvements in .NET 6 （.NET 6 中的性能改进）](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-6/)
-
   - 系统一般不自带运行库，需自行安装 [`.NET 运行时`](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
-
 - .NET Framework 4.7.2
   - Win10及以上等大部分系统自带，可不需要手动安装，方便使用
-    - 你也可以自行安装 [`.NET Framework`](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
 
 ### 启动服务器
 ![服务器](imgs/console.png)
@@ -84,7 +106,6 @@
    - 在`设置`>`服务器`>`启动文件`设置 
    - 将启动文件拖入窗口可直接识别设置
 3. 点击`启动`按钮即可启动服务器
-
 
 ### 自定义控制台样式
 1. 打开`./console`文件夹
@@ -153,7 +174,7 @@
 此外，你还需要将`Access-Token`内容复制到`设置`>`机器人`>`鉴权凭证`，连接时在Websocket的Header添加Authorization字段用于鉴权  
 
 > __⚠ 提示__   
->**`Access-Token`区分大小写、首尾空格等**
+>`Access-Token`区分大小写、首尾空格等
 
 
 ### 插件管理
@@ -243,8 +264,6 @@
 
 ##### 备注
 对这项内容的备注或注释，不影响匹配
-
-
   
 ```jsonc
 { // 示例文件
@@ -371,6 +390,7 @@
 >while(true){
 >   serein.log("?");  
 >}
+>// 你敢这么写就等着Serein卡死吧QwQ
 >```
 
 ### 事件

@@ -7,17 +7,6 @@ namespace Serein
     {
         public static bool Console = false;
         public static Ui.Ui Ui = null;
-        public static void Debug(object o)
-        {
-            if (Ui != null && o != null)
-            {
-                try
-                {
-                    Ui.Debug_Append($"{DateTime.Now:T} {o}");
-                }
-                catch { }
-            }
-        }
         public static void Logger(int Type, params object[] objects)
         {
             if (Ui != null)

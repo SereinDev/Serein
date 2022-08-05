@@ -27,22 +27,22 @@ namespace Serein.Base
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "Websocket已连接.");
+                    Global.Logger(2, "Websocket已连接");
                 }
                 else
                 {
-                    MessageBox.Show(":(\nWebsocket已连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\nWebsocket已连接", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (ExecutedByUser && Restart)
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "请先结束重启倒计时.");
+                    Global.Logger(2, "请先结束重启倒计时");
                 }
                 else
                 {
-                    MessageBox.Show(":(\n请先结束重启倒计时.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n请先结束重启倒计时", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if (!Status)
@@ -154,17 +154,17 @@ namespace Serein.Base
             else if (Restart)
             {
                 Restart = false;
-                Global.Logger(21, "重启已取消.");
+                Global.Logger(21, "重启已取消");
             }
             else
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "Websocket未连接.");
+                    Global.Logger(2, "Websocket未连接");
                 }
                 else
                 {
-                    MessageBox.Show(":(\nWebsocket未连接.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\nWebsocket未连接", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }

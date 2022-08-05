@@ -101,7 +101,7 @@ namespace Serein.Plugin
         public static void Trigger(string EventName, params object[] Args)
         {
             Engine engine = new Engine();
-            Global.Debug("[JSFunc:Tigger()] " + EventName);
+            Global.Logger(999,"[JSFunc:Tigger()]" , EventName);
             try
             {
                 switch (EventName)
@@ -192,7 +192,7 @@ namespace Serein.Plugin
             catch (Exception e)
             {
                 Global.Logger(32, $"触发事件{EventName}时出现异常：{e.Message}");
-                Global.Debug(e.ToString());
+                Global.Logger(999,e.ToString());
             }
         }
 
