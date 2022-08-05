@@ -50,7 +50,7 @@ namespace WebConsole
                     Console.Title = $"WebConsole - Serein ({Sockets.Count})";
                     string ClientUrl = socket.ConnectionInfo.ClientIpAddress + ":" + socket.ConnectionInfo.ClientPort;
                     string GUID = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                    Console.WriteLine($"\x1b[36m[+]\x1b[0m<{ClientUrl}> guid:{GUID}, md5:{GetMD5(GUID +(Program.Args.Count > 0 ? Program.Args[0] : "pwd"))}");
+                    Console.WriteLine($"\x1b[36m[+]\x1b[0m<{ClientUrl}> guid:{GUID}, md5:{GetMD5(GUID + (Program.Args.Count > 0 ? Program.Args[0] : "pwd"))}");
                     socket.Send(JsonConvert.SerializeObject(new Packet("request", "verify", GUID, "host")));
                     Sockets.Add(
                         ClientUrl,
