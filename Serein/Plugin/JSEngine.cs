@@ -81,6 +81,7 @@ namespace Serein.Plugin
             engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, true); }));
             engine.SetValue("clearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("clearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
+            engine.SetValue("getMD5", new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("WebSocket", TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +

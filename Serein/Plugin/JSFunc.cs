@@ -1,7 +1,9 @@
 ﻿using Jint;
 using Jint.Native;
 using System;
+using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Text;
 using System.Linq;
 using System.Timers;
 
@@ -286,6 +288,19 @@ namespace Serein.Plugin
             {
                 ClearTimer(ID);
             }
+        }
+
+        public static string GetMD5(string myString)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(myString);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string Result = string.Empty;
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                Result += targetData[i].ToString("x2");
+            }
+            return Result;
         }
     }
 }
