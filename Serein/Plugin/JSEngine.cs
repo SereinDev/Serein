@@ -55,7 +55,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Command_Run", new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Path", Global.Path);
             engine.SetValue("Serein_Global_Version", Global.VERSION);
-            engine.SetValue("Serein_Global_Debug", new Action<object>(Global.Debug));
+            engine.SetValue("Serein_Global_Debug", new Action<object>((Content) => { Global.Logger(999, Content); }));
             engine.SetValue("Serein_Global_Settings", new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register", new Func<string, string, string, string, bool>(JSFunc.Register));
             engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, Delegate, bool>(JSFunc.RegisterCommand));
