@@ -55,7 +55,7 @@ namespace Serein.Console
                         break;
                     case "help":
                         Output.Logger(
-                            0, 
+                            0,
                             "\x1b[96m ____ \r\n" +
                             "\x1b[96m/\\  _`\\                        __            \r\n" +
                             "\x1b[96m\\ \\,\\L\\_\\     __   _ __    __ /\\_\\    ___    \r\n" +
