@@ -52,7 +52,7 @@ jobs:
         continue-on-error: true
 
     Build:
-      needs: [Format,draft_release]
+      needs: [draft_release]
       runs-on: windows-latest
       steps:
       - name: Checkout repo
@@ -75,13 +75,16 @@ jobs:
           nuget-version: '5.x'
 
       - name: NuGet restore
-        run: nuget restore Serein.sln
+        run: nuget restore Serein/Serein.csproj
 
       - name: Build the project(Release)
         run: msbuild -p:Configuration=Release Serein/Serein.csproj
 
       - name: Build the project(Debug)
         run: msbuild -p:Configuration=Debug Serein/Serein.csproj
+
+      - name: NuGet restore
+        run: nuget restore Serein/Serein-Console.csproj
 
       - name: Build the project(Release)
         run: msbuild -p:Configuration=Release Serein/Serein-Console.csproj

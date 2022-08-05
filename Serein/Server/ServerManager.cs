@@ -257,7 +257,7 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (Global.Settings.Server.EnableOutputCommand)
+                if (Global.Settings.Server.EnableOutputCommand&&!Global.Console)
                 {
                     Global.Logger(10, $">{Command_Copy}");
                 }

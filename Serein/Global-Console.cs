@@ -66,7 +66,7 @@ namespace Serein
                     Output.Logger(3, Line);
                     break;
                 case 33:
-                    Output.Logger(2, Line);
+                    Output.Logger(0, $"\x1b[94m[插件]\x1b[0m{Line}");
                     break;
             }
         }

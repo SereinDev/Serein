@@ -34,8 +34,8 @@ namespace Serein
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-            Console.Base.Load(args);
             Console.Base.Init();
+            Console.Base.Load(args);
             Console.Base.Start();
         }
         private static void ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -47,7 +47,6 @@ namespace Serein
         {
             Abort(e.ExceptionObject);
         }
-
 
         /// <summary>
         /// Serein错误处理

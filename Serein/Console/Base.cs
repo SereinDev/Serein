@@ -8,6 +8,8 @@ using Serein.Items;
 using Serein.Base;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Server;
+using Serein.Plugin;
 
 namespace Serein.Console
 {
@@ -50,6 +52,7 @@ namespace Serein.Console
             IntPtr closeMenu = GetSystemMenu(windowHandle, IntPtr.Zero);
             uint SC_CLOSE = 0xF060;
             RemoveMenu(closeMenu, SC_CLOSE, 0x0);
+            System.Console.OutputEncoding = Encoding.UTF8;
         }
 
         /// <summary>
@@ -57,18 +60,29 @@ namespace Serein.Console
         /// </summary>
         public static void Start()
         {
-            System.Console.OutputEncoding = Encoding.UTF8;
+            Output.Logger(1, "Welcome.");
+            Output.Logger(1, "你可以输入\"help\"获取更多信息");
+            if (Global.Args.Contains("auto_connect"))
+            {
+                Task.Run(() => Websocket.Connect(false));
+            }
+            if (Global.Args.Contains("auto_start"))
+            {
+                Task.Run(() => ServerManager.Start(true));
+            }
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (sender, e) =>
             {
                 e.Cancel = true;
                 Output.Logger(2, "若要关闭Serein请使用\"exit\"命令");
             };
-            Output.Logger(1, "Welcome.");
             while (true)
             {
-                string Line = System.Console.ReadLine() ?? "";
-                Input.Process(Line.Trim());
+                string Line = System.Console.ReadLine();
+                if (!string.IsNullOrEmpty(Line))
+                {
+                    Input.Process(Line.Trim());
+                }
             }
         }
 
@@ -110,6 +124,7 @@ namespace Serein.Console
                     }
                 }
             }
+            Plugins.Reload();
         }
     }
 }
