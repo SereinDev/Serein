@@ -42,7 +42,7 @@ namespace Serein.Ui
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            new Task(() => Global.Logger(999,"[Serein] Welcome. " , SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
+            new Task(() => Global.Logger(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
             TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }

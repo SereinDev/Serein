@@ -44,7 +44,7 @@ namespace Serein.Items.Motd
             }
             catch (Exception e)
             {
-                Global.Logger(999,"[Motdpe]",e.ToString());
+                Global.Logger(999, "[Motdpe]", e.ToString());
                 Exception = e.Message;
                 return;
             }
