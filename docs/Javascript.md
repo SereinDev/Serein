@@ -31,7 +31,8 @@
     - [删除绑定记录](#删除绑定记录)
     - [获取指定用户QQ](#获取指定用户qq)
     - [获取指定游戏ID](#获取指定游戏id)
-    - [创建Get请求](#创建get请求)
+  - [内置类](#内置类)
+    - [WebSocket客户端](#websocket客户端)
 
 ### 推荐列表
 - [**示例插件**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
@@ -167,6 +168,7 @@ function onGroupPoke(group,user){
 | onReceivePacket | 收到数据包 | `(packet:String)` |
 | onSereinStart | Serein启动 | `( )` |
 | onSereinClose | Serein关闭 | `( )` |
+| onPluginsReload | 插件重载 | `( )` |
 
 
 
@@ -542,12 +544,29 @@ var id = serein.getGameID(114514);
 - 返回
   - `String` 游戏ID
 
-#### 创建Get请求
-`serein.createRequest(url:String)`
+### 内置类
+#### WebSocket客户端
+
 ```js
-var str = serein.createRequest("https://github.com/Zaitonn/Serein");
+// 由于该js解释器不支持ws，所以这里用C#封装了一个，部分函数和js原生的有所不同
+var ws = new WebSocket("ws://127.0.0.1:11451"); // 实例化ws
+ws.onopen = function(){
+  // ws开启
+  // ...
+};
+ws.onclose = function(){
+  // ws关闭
+  // ...
+};
+ws.onerror = function(message){ // 错误信息
+  // ws发生错误
+  // ...
+};
+ws.onmessage = function(message){ // 收到数据
+  // ws收到数据
+  // ...
+};
+ws.send("hello"); // 发送数据
+ws.close(); //关闭ws
+// [!] 插件重载和Serein关闭时不会自动关闭ws连接，请配合"onPluginsReload"和"onSereinClose"事件执行关闭操作
 ```
-- 参数
-  - `url` 目标地址
-- 返回
-  - `String` 返回内容
