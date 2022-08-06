@@ -17,5 +17,6 @@ namespace Serein.Plugin
         public List<Delegate> onReceivePacket { get; set; } = new List<Delegate>();
         public List<Delegate> onSereinStart { get; set; } = new List<Delegate>();
         public List<Delegate> onSereinClose { get; set; } = new List<Delegate>();
+        public List<Delegate> onPluginsReload { get; set; } = new List<Delegate>();
     }
 }

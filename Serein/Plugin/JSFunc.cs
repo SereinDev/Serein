@@ -88,6 +88,9 @@ namespace Serein.Plugin
                 case "onSereinClose":
                     Plugins.Event.onSereinClose.Add(Function);
                     break;
+                case "onPluginsReload":
+                    Plugins.Event.onPluginsReload.Add(Function);
+                    break;
                 default:
                     Global.Logger(32, $"插件注册了一个未知事件：{EventName}");
                     return false;
@@ -185,6 +188,11 @@ namespace Serein.Plugin
                         break;
                     case "onSereinClose":
                         Plugins.Event.onSereinClose.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            );
+                        break;
+                    case "onPluginsReload":
+                        Plugins.Event.onPluginsReload.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
                             );
                         break;

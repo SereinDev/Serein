@@ -94,6 +94,7 @@ namespace Serein.Plugin
         public static void Reload()
         {
             Global.Logger(30, "#clear");
+            JSFunc.Trigger("onPluginsReload");
             CommandItems.Clear();
             PluginItems.Clear();
             Event = new Event();
