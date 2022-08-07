@@ -18,15 +18,13 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Uri">ws地址</param>
         /// <param name="Token">鉴权Token</param>
-        public JSWebSocket(string Uri, string Token)
+        public JSWebSocket(string Uri)
         {
             webSocket = new WebSocket(
                 Uri,
                 "",
                 null,
-                new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Authorization", Token)
-                }
+                null
                 );
             webSocket.Opened += (sender, e) =>
             {

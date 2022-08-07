@@ -66,7 +66,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_ServerManager_Stop", new Action(ServerManager.Stop));
             engine.SetValue("Serein_ServerManager_Kill", new Func<bool>(() => ServerManager.Kill(true)));
             engine.SetValue("Serein_ServerManager_Status", new Func<bool>(() => { return ServerManager.Status; }));
-            engine.SetValue("Serein_ServerManager_Stop", new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));
+            engine.SetValue("Serein_ServerManager_Send", new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));
             engine.SetValue("Serein_ServerManager_GetTime", new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("Serein_ServerManager_GetCPUPersent", new Func<string>(() => { return ServerManager.CPUPersent.ToString("N2"); }));
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
@@ -98,6 +98,7 @@ namespace Serein.Plugin
                 "getMotdje:Serein_Motdje," +
                 "startServer:Serein_ServerManager_Start," +
                 "stopServer:Serein_ServerManager_Stop," +
+                "sendCmd:Serein_ServerManager_Send," +
                 "killServer:Serein_ServerManager_Kill," +
                 "getServerStatus:Serein_ServerManager_Status," +
                 "getServerTime:Serein_ServerManager_GetTime," +

@@ -381,6 +381,7 @@ namespace Serein.Server
                     }
                 }
                 JSFunc.Trigger("onServerOutput", Line);
+                JSFunc.Trigger("onServerOriginalOutput", outLine.Data);
             }
         }
 

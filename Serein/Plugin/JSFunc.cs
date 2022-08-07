@@ -61,6 +61,9 @@ namespace Serein.Plugin
                 case "onServerOutput":
                     Plugins.Event.onServerOutput.Add(Function);
                     break;
+                case "onServerOriginalOutput":
+                    Plugins.Event.onServerOriginalOutput.Add(Function);
+                    break;
                 case "onServerSendCommand":
                     Plugins.Event.onServerSendCommand.Add(Function);
                     break;
@@ -123,6 +126,12 @@ namespace Serein.Plugin
                         break;
                     case "onServerOutput":
                         Plugins.Event.onServerOutput.ForEach(
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine, Args[0])})
+                            );
+                        break;
+                    case "onServerOriginalOutput":
+                        Plugins.Event.onServerOriginalOutput.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
                                 JsValue.FromObject(engine, Args[0])})
                             );
