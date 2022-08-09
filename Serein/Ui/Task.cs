@@ -321,11 +321,11 @@ namespace Serein.Ui
 
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Command.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Command.html") { UseShellExecute = true });
         }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Variables.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Variables.html") { UseShellExecute = true });
         }
     }
 }

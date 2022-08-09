@@ -146,19 +146,19 @@ namespace Serein.Ui
         }
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "打开关于页面（https://zaitonn.github.io/Serein/About）");
+            ShowToolTip(sender, "打开关于页面（https://serein.cc/Serein/About）");
         }
         private void SettingSereinPage_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "打开介绍页面（https://zaitonn.github.io/Serein）");
+            ShowToolTip(sender, "打开介绍页面（https://serein.cc/Serein）");
         }
         private void SettingSereinHelp_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "打开帮助页面（https://zaitonn.github.io/Serein/Help）");
+            ShowToolTip(sender, "打开帮助页面（https://serein.cc/Serein/Help）");
         }
         private void SettingSereinTutorial_MouseHover(object sender, EventArgs e)
         {
-            ShowToolTip(sender, "打开教程页面（https://zaitonn.github.io/Serein/Tutorial）");
+            ShowToolTip(sender, "打开教程页面（https://serein.cc/Serein/Tutorial）");
         }
         private void SettingSereinDownload_MouseHover(object sender, EventArgs e)
         {

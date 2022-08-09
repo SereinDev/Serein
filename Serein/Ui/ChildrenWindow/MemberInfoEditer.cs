@@ -42,7 +42,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void MemberInfoEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial.html#%E6%88%90%E5%91%98%E7%AE%A1%E7%90%86") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Tutorial.html#%E6%88%90%E5%91%98%E7%AE%A1%E7%90%86") { UseShellExecute = true });
         }
     }
 }

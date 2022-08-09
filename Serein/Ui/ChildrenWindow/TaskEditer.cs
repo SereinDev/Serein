@@ -118,7 +118,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void TaskEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Tutorial.html#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Tutorial.html#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1") { UseShellExecute = true });
         }
     }
 }

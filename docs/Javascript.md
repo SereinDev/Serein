@@ -1,4 +1,5 @@
 ## Javascript
+
 - [Javascript](#javascript)
   - [推荐列表](#推荐列表)
   - [标准](#标准)
@@ -36,23 +37,26 @@
     - [WebSocket客户端](#websocket客户端)
 
 ### 推荐列表
-- [**示例插件**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js) 
+
+- [**示例插件**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js)
 - [机器人功能扩展](https://github.com/Zaitonn/Serein/blob/main/js_plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js)
 
-> __⭐ Tips__  
+> **⭐ Tips**  
 >如果你有优秀的插件，欢迎提交Issue、提交pr或与作者私聊  
-> 
+>
 >经过审核后你的插件也有机会出现在上面ヾ(≧▽≦*)o
 
 ### 标准
+
 [ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
 
 ### 直接使用的NET对象/类
-由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类和属性   
+
+由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类和属性
 
 `importNamespace(name:String)` 导入命名空间
 
-> __⭐ Tips__  
+> **⭐ Tips**  
 >配合一定`C#`基础食用更佳
 
 #### 示例
@@ -75,30 +79,41 @@ Process.Start("cmd.exe");
 ```
 
 ### 内置属性
+
 #### Serein.exe所在文件夹
+
 `serein.path`
+
 ```js
 var path = serein.path; // Serein.exe所在文件夹，如C:\Serein
 ```
+
 - 返回
-  - `String` 
+  - `String`
 
 #### Serein版本
+
 `serein.version`
+
 ```js
 var version = serein.version; // Serein版本，如v1.3.0
 ```
+
 - 返回
   - `String`
+
 ### 内置函数
 
 #### 输出日志
+
 `serein.log(content:Object)`
+
 ```js
 serein.log("这是一条日志");
 serein.log(12345); // 你也可以输出数字
 serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
 ```
+
 - 参数
   - `content` 输出内容
     - 支持`Number` `String`等类型
@@ -106,10 +121,13 @@ serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
   - 空
 
 #### Debug输出
+
 `serein.debugLog(content:Object)`
+
 ```js
 serein.debugLog("这是一条Debug输出");
 ```
+
 - 参数
   - `content` 输出内容
     - 支持`Number` `String`等类型
@@ -117,10 +135,13 @@ serein.debugLog("这是一条Debug输出");
   - 空
 
 #### 注册插件
+
 `serein.registerPlugin(name:String,version:String,author:String,description:String)`
+
 ```js
 serein.registerPlugin("示例插件","v1.0","Zaitonn","这是一个示例插件"); 
 ```
+
 - 参数
   - `name` 插件名称
   - `version` 版本
@@ -131,6 +152,7 @@ serein.registerPlugin("示例插件","v1.0","Zaitonn","这是一个示例插件"
     - 成功为`true`，否则为`false`
 
 #### 设置监听器
+
 `serein.setListener(event:String,func:Function)`
 
 ```js
@@ -172,9 +194,8 @@ function onGroupPoke(group,user){
 | onSereinClose           | Serein关闭           | `( )`                                                          |
 | onPluginsReload         | 插件重载             | `( )`                                                          |
 
-
-
 #### 注册服务器命令
+
 `serein.registerCommand(command:String,func:Function)`
 
 ```js
@@ -183,6 +204,7 @@ function example(cmd){
     serein.log("你输入了注册的命令："+cmd);
 }
 ```
+
 >本质上是拦截命令输入
 
 - 参数
@@ -196,10 +218,13 @@ function example(cmd){
   - 空
 
 #### 获取Serein设置
+
 `serein.getSettings()`
+
 ```js
 var settings = serein.getSettings();
 ```
+
 - 参数
   - 空
 - 返回
@@ -247,7 +272,7 @@ var settings = serein.getSettings();
     "DPIAware": true
   },
   "Event": {
-    "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://zaitonn.github.io/Serein/Command.html、https://zaitonn.github.io/Serein/Event.html",
+    "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/Serein/Command.html、https://serein.cc/Serein/Event.html",
     "Bind_Success": [
       "g|[CQ:at,qq=%ID%] 绑定成功"
     ],
@@ -309,7 +334,9 @@ var settings = serein.getSettings();
 </details>
 
 #### 获取系统信息
+
 `serein.getSysInfo(type:String)`
+
 ```js
 var cpuname = serein.getSysInfo("CPUName");
 ```
@@ -323,13 +350,16 @@ var cpuname = serein.getSysInfo("CPUName");
     - `UsedRAM` 已用内存（MB)
     - `RAMPercentage` 内存占用率
     - `CPUPercentage` CPU占用率
-    > __⚠ 提示__   
+    > **⚠ 提示**
+    >
     >- 不区分大小写  
     >- 若不在以上列表中则为返回空值
+    >
 - 返回
   - `String` 对应的值
 
 #### 执行命令
+
 `serein.runCommand(cmd:String)`
 
 ```js
@@ -338,14 +368,16 @@ serein.runCommand("g|hello")
 
 - 参数
   - `cmd` 一条[Serein命令](Command.md)
-  > __⚠ 提示__   
+  > **⚠ 提示**
   >此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
 - 返回
   - 空
 
 #### 获取Motd原文
+
 基岩版：`serein.getMotdpe(ip:String)`  
-Java版：`serein.getMotdje(ip:String)` 
+Java版：`serein.getMotdje(ip:String)`
+
 ```js
 var pe = serein.getMotdpe("127.0.0.1:19132");
 var je = serein.getMotdje("127.0.0.1:25565");
@@ -353,27 +385,32 @@ var je = serein.getMotdje("127.0.0.1:25565");
 
 - 参数
   - `ip` 服务器IP
-  > __⚠ 提示__   
+  > **⚠ 提示**
   >可含端口，如`example.com:11451`  
   >不填端口基岩版默认`19132`，Java版默认`25565`
 - 返回
   - `String` Motd原文
     - 获取失败时返回`-`
     - 基岩版为纯字符串
+
     ```
     MCPE;Dedicated Server;503;1.18.33;0;10;12578007761032183218;Bedrock level;Survival;1;19132;19133;
-    ``` 
+    ```
+
     - Java版为Json文本
+
     ```
     {"description":{"text":"§bMinecraftOnline§f - §6Home of Freedonia§r\n§3Survival, Without the Grief!"},"players":{"max":120,"online":1,"sample":[{"id":"a4740a2c-1eec-4b7d-9d22-1c861e7045d7","name":"Biolord101"}]},"version":{"name":"1.12.2","protocol":340},"favicon":"……"}
-    ``` 
+    ```
 
 #### 启动服务器
+
 `serein.startServer()`
 
 ```js
 var success = serein.startServer();
 ```
+
 - 参数
   - 空
 - 返回
@@ -381,7 +418,9 @@ var success = serein.startServer();
     - 成功为`true`，否则为`false`
 
 #### 关闭服务器
+
 `serein.stopServer()`
+
 ```js
 serein.stopServer();
 ```
@@ -391,11 +430,13 @@ serein.stopServer();
 - 返回
   - 空
 
-> __⚠ 提示__   
+> **⚠ 提示**
 >此函数不能保证服务器被关闭
 
 #### 强制结束服务器
+
 `serein.killServer()`
+
 ```js
 var success = serein.killServer();
 ```
@@ -407,7 +448,9 @@ var success = serein.killServer();
     - 成功为`true`，否则为`false`
 
 #### 发送服务器命令
+
 `serein.sendCmd(String:command)`
+
 ```js
 serein.sendCmd("help");
 ```
@@ -418,7 +461,9 @@ serein.sendCmd("help");
   - 空
 
 #### 获取服务器状态
+
 `serein.getServerStatus()`
+
 ```js
 var serverStatus = serein.getServerStatus();
 ```
@@ -430,7 +475,9 @@ var serverStatus = serein.getServerStatus();
     - 已启动为`true`，未启动则为`false`
 
 #### 获取服务器运行时长
+
 `serein.getServerTime()`
+
 ```js
 var time = serein.getServerTime();
 ```
@@ -442,6 +489,7 @@ var time = serein.getServerTime();
     - 示例：`0.2m` `1.5h` `3.02d`
 
 #### 获取服务器进程占用
+
 `serein.getServerCPUPersent()`
 
 ```js
@@ -454,7 +502,22 @@ var cpupersent = serein.getServerCPUPersent();
   - `String`
     - 示例：`1.14` `5.14`
 
+#### 获取服务器文件
+
+`serein.getServerFile()`
+
+```js
+var file = serein.getServerFile();
+```
+
+- 参数
+  - 空
+- 返回
+  - `String`
+    - 示例：`bedrock_server.exe`
+
 #### 发送群聊消息
+
 `serein.sendGroup(target:Number,msg:String)`
 
 ```js
@@ -467,11 +530,13 @@ var success = serein.sendGroup(114514,"大家好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > __⚠ 提示__   
+    > **⚠ 提示**
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送私聊消息
+
 `serein.sendPrivate(target:Number,msg:String)`
+
 ```js
 var success = serein.sendPrivate(114514,"你好");
 ```
@@ -482,11 +547,13 @@ var success = serein.sendPrivate(114514,"你好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > __⚠ 提示__   
+    > **⚠ 提示**
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送数据包
+
 `serein.sendPacket(json:String)`
+
 ```js
 serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": \"10001\",\"message\": \"你好\"}}")
 // 你可以通过这个功能实现自动同意好友请求等操作
@@ -497,11 +564,13 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > __⚠ 提示__   
+    > **⚠ 提示**
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 获取ws连接状态
+
 `serein.getWsStatus()`
+
 ```js
 var connected = serein.getWsStatus();
 ```
@@ -513,7 +582,9 @@ var connected = serein.getWsStatus();
     - 已连接为`true`，否则为`false`
 
 #### 绑定游戏ID
+
 `serein.bindMember(userId:Number,gameId:String)`
+
 ```js
 var success = serein.bindMember(114514,"Li_Tiansuo");
 ```
@@ -525,7 +596,9 @@ var success = serein.bindMember(114514,"Li_Tiansuo");
     - 成功为`true`，否则为`false`
 
 #### 删除绑定记录
+
 `serein.unbindMember(userId:Number)`
+
 ```js
 var success = serein.unbindMember(114514);
 ```
@@ -537,7 +610,9 @@ var success = serein.unbindMember(114514);
     - 成功为`true`，否则为`false`
 
 #### 获取指定用户QQ
+
 `serein.getID(gameId:String)`
+
 ```js
 var qq = serein.getID("Li_Tiansuo");
 ```
@@ -548,16 +623,20 @@ var qq = serein.getID("Li_Tiansuo");
   - `Number` QQ号
 
 #### 获取指定游戏ID
+
 `serein.getGameID(userId:Number)`
+
 ```js
 var id = serein.getGameID(114514);
 ```
+
 - 参数
   - `userId` QQ号
 - 返回
   - `String` 游戏ID
 
 ### 内置类
+
 #### WebSocket客户端
 
 ```js

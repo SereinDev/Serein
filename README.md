@@ -23,7 +23,7 @@
 
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板 
-- **介绍页：https://zaitonn.github.io/Serein/**
+- **介绍页：https://serein.cc/Serein/**
 - **下载最新版：https://github.com/Zaitonn/Serein/releases/latest**
 - Minebbs：https://www.minebbs.com/resources/serein.4169/
 - 查看 **[教程](docs/Tutorial.md)** 丨 __[帮助](docs/Help.md)__
@@ -49,7 +49,7 @@ Win7或WinServer2012以上
 
 <details>
   <summary>发电链接</summary>
-  <img src="https://zaitonn.github.io/Serein/imgs/afdian.png">
+  <img src="https://serein.cc/Serein/imgs/afdian.png">
 </details>
 
 | Supporters | 发电金额 |日期|
@@ -60,4 +60,4 @@ Win7或WinServer2012以上
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
 
 ## 关于
-> [About](https://zaitonn.github.io/Serein/About.html)
+> [About](https://serein.cc/Serein/About.html)
