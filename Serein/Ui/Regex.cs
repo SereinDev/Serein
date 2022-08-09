@@ -27,7 +27,7 @@ namespace Serein.Ui
             isdrag = false;
             if ((RegexList.SelectedItems.Count != 0) && (itemDraged != null))
             {
-                if (itemDraged.Index != RegexList.SelectedItems[0].Index&& itemDraged.Index>=0)
+                if (itemDraged.Index != RegexList.SelectedItems[0].Index && itemDraged.Index >= 0)
                 {
                     RegexList.Items.RemoveAt(itemDraged.Index);
                     RegexList.Items.Insert(RegexList.SelectedItems[0].Index, itemDraged);
