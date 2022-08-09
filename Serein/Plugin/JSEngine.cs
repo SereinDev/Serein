@@ -69,6 +69,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_ServerManager_Send", new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));
             engine.SetValue("Serein_ServerManager_GetTime", new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("Serein_ServerManager_GetCPUPersent", new Func<string>(() => { return ServerManager.CPUPersent.ToString("N2"); }));
+            engine.SetValue("Serein_ServerManager_GetFilename", new Func<string>(() => { return ServerManager.StartFileName; }));
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPacket", new Func<string, bool>((Json) => { if (Websocket.Status) { Websocket.webSocket.Send(Json); } return Websocket.Status; }));
@@ -86,7 +87,7 @@ namespace Serein.Plugin
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +
-                "versions:Serein_Global_Version," +
+                "version:Serein_Global_Version," +
                 "getSettings:Serein_Global_Settings," +
                 "debugLog:Serein_Global_Debug," +
                 "runCommand:Serein_Command_Run," +
@@ -103,6 +104,7 @@ namespace Serein.Plugin
                 "getServerStatus:Serein_ServerManager_Status," +
                 "getServerTime:Serein_ServerManager_GetTime," +
                 "getServerCPUPersent:Serein_ServerManager_GetCPUPersent," +
+                "getServerFile:Serein_ServerManager_GetFilename," +
                 "sendGroup:Serein_Websocket_SendGroup," +
                 "sendPrivate:Serein_Websocket_SendPrivate," +
                 "sendPacket:Serein_Websocket_SendPacket," +

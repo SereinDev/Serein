@@ -22,7 +22,7 @@ namespace Serein.Ui
             isdrag = false;
             if ((TaskList.SelectedItems.Count != 0) && (itemDraged != null))
             {
-                if (itemDraged.Index != TaskList.SelectedItems[0].Index)
+                if (itemDraged.Index != TaskList.SelectedItems[0].Index && itemDraged.Index >= 0)
                 {
                     TaskList.Items.RemoveAt(itemDraged.Index);
                     TaskList.Items.Insert(TaskList.SelectedItems[0].Index, itemDraged);

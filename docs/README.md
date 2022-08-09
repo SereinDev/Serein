@@ -193,12 +193,12 @@ Win7或WinServer2012以上
 
 [![爱发电](imgs/afdian.png)](https://afdian.net/@Zaiton)
 
-| Supporters | 发电金额 |日期|
-|---- |----: |----|
-| [c设阿森_Asen](https://q.qlogo.cn/g?b=qq&k=tSKwDJ8UqzSUZRRYxElIFQ&s=100)| $ 10.00 | 2022.7.25|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.17|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.10|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
+| Supporters                                                               | 发电金额 | 日期      |
+| ------------------------------------------------------------------------ | -------: | --------- |
+| [c设阿森_Asen](https://q.qlogo.cn/g?b=qq&k=tSKwDJ8UqzSUZRRYxElIFQ&s=100) |  $ 10.00 | 2022.7.25 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)              |   ￥20.00 | 2022.7.17 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)              |   ￥20.00 | 2022.7.10 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)              |   ￥20.00 | 2022.7.9  |
 
 ## 📒关于 About
 > [About](About.md)

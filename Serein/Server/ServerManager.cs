@@ -129,8 +129,8 @@ namespace Serein.Server
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
-                Task.Run(GetCPUPercent);
-                Task.Run(WaitForExit);
+                Task.Factory.StartNew(GetCPUPercent);
+                Task.Factory.StartNew(WaitForExit);
                 EventTrigger.Trigger("Server_Start");
                 JSFunc.Trigger("onServerStart");
                 return true;
@@ -214,7 +214,7 @@ namespace Serein.Server
                     else
                     {
                         MessageBox.Show(
-                            "强制结束失败\n" + e.Message,
+                            ":(\n强制结束失败\n" + e.Message,
                             "Serein",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
@@ -243,6 +243,12 @@ namespace Serein.Server
                 {
                     MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+            }
+
+            if (ServerProcess.HasExited)
+            {
+                Status = false;
+                return true;
             }
             return false;
         }

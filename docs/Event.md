@@ -47,24 +47,24 @@
 > __⚠ 提示__   
 >以下所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
 
-| 事件名 | 描述 |
-| --- | --- |
-| Bind_Success | 绑定成功 |
-| Bind_Occupied | 绑定失败-游戏ID占用 |
-| Bind_Invalid | 绑定失败-该游戏ID不符合规范|
-| Bind_Already | 绑定失败-该QQ已经绑定 |
-| Unbind_Success | 解绑成功 |
-| Unbind_Failure | 解绑成功 |
-| Server_Start | 服务器启动 |
-| Server_Stop | 服务器正常关闭 |
-| Server_Error | 服务器异常退出 |
-| Group_Increase | 监听群有人进群 |
-| Group_Decrease | 监听群有人退群 | 
-| Group_Poke | 监听群内当前账号被他人戳一戳 |
-| Motdpe_Success | 命令`motdpe`执行成功 |
-| Motdje_Success | 命令`motdje`执行成功 |
-| Motd_Failure | 命令`motdpe`或`motdje`执行失败|
-| Serein_Crash | `Serein`崩溃 |
+| 事件名         | 描述                           |
+| -------------- | ------------------------------ |
+| Bind_Success   | 绑定成功                       |
+| Bind_Occupied  | 绑定失败-游戏ID占用            |
+| Bind_Invalid   | 绑定失败-该游戏ID不符合规范    |
+| Bind_Already   | 绑定失败-该QQ已经绑定          |
+| Unbind_Success | 解绑成功                       |
+| Unbind_Failure | 解绑成功                       |
+| Server_Start   | 服务器启动                     |
+| Server_Stop    | 服务器正常关闭                 |
+| Server_Error   | 服务器异常退出                 |
+| Group_Increase | 监听群有人进群                 |
+| Group_Decrease | 监听群有人退群                 |
+| Group_Poke     | 监听群内当前账号被他人戳一戳   |
+| Motdpe_Success | 命令`motdpe`执行成功           |
+| Motdje_Success | 命令`motdje`执行成功           |
+| Motd_Failure   | 命令`motdpe`或`motdje`执行失败 |
+| Serein_Crash   | `Serein`崩溃                   |
 
 ### 绑定/解绑
 

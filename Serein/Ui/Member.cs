@@ -51,7 +51,6 @@ namespace Serein.Ui
         }
         private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
-            Members.Load();
             LoadMembers();
         }
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)

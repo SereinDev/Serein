@@ -45,9 +45,9 @@ Copyright © 2022 Zaitonn. All Rights Reserved.
 
 ### 联系方式
 
-|平台| 用户名|
-| --- | --- |
-| Minebbs |[Zaiton_](https://www.minebbs.com/members/zaiton_.21326/)|
-| BiliBili |[Zaiton_](https://space.bilibili.com/406125728)|
-|爱发电|[@Zaiton](https://afdian.net/@Zaiton)|
+| 平台     | 用户名                                                    |
+| -------- | --------------------------------------------------------- |
+| Minebbs  | [Zaiton_](https://www.minebbs.com/members/zaiton_.21326/) |
+| BiliBili | [Zaiton_](https://space.bilibili.com/406125728)           |
+| 爱发电   | [@Zaiton](https://afdian.net/@Zaiton)                     |
 

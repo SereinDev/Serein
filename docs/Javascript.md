@@ -20,6 +20,7 @@
     - [启动服务器](#启动服务器)
     - [关闭服务器](#关闭服务器)
     - [强制结束服务器](#强制结束服务器)
+    - [发送服务器命令](#发送服务器命令)
     - [获取服务器状态](#获取服务器状态)
     - [获取服务器运行时长](#获取服务器运行时长)
     - [获取服务器进程占用](#获取服务器进程占用)
@@ -154,21 +155,22 @@ function onGroupPoke(group,user){
   - `Boolean`
     - 成功为`true`，否则为`false`
 
-| 事件名 | 描述 | 函数原型 |
-| --- | --- | --- |
-| onServerStart | 服务器启动 | `( )` |
-| onServerStop | 服务器关闭 | `( )` |
-| onServerOutput | 服务器输出 | `(line:String)` |
-| onServerSendCommand | 服务器输入指令 | `(cmd:String)` |
-| onGroupIncrease | 监听群群成员增加 | `(group_id:Number,user_id:Number)` |
-| onGroupDecrease | 监听群群成员减少 | `(group_id:Number,user_id:Number)` |
-| onGroupPoke | 监听群戳一戳自身账号 | `(group_id:Number,user_id:Number)` |
-| onReceiveGroupMessage | 收到群消息 | `(group_id:Number,user_id:Number,msg:String,shownName:String)` |
-| onReceivePrivateMessage | 收到私聊消息 | `(user_id:Number,msg:String,nickName:String)` |
-| onReceivePacket | 收到数据包 | `(packet:String)` |
-| onSereinStart | Serein启动 | `( )` |
-| onSereinClose | Serein关闭 | `( )` |
-| onPluginsReload | 插件重载 | `( )` |
+| 事件名                  | 描述                 | 函数原型                                                       |
+| ----------------------- | -------------------- | -------------------------------------------------------------- |
+| onServerStart           | 服务器启动           | `( )`                                                          |
+| onServerStop            | 服务器关闭           | `( )`                                                          |
+| onServerOutput          | 服务器输出           | `(line:String)`                                                |
+| onServerOriginalOutput  | 服务器原始输出       | `(line:String)`                                                |
+| onServerSendCommand     | 服务器输入指令       | `(cmd:String)`                                                 |
+| onGroupIncrease         | 监听群群成员增加     | `(group_id:Number,user_id:Number)`                             |
+| onGroupDecrease         | 监听群群成员减少     | `(group_id:Number,user_id:Number)`                             |
+| onGroupPoke             | 监听群戳一戳自身账号 | `(group_id:Number,user_id:Number)`                             |
+| onReceiveGroupMessage   | 收到群消息           | `(group_id:Number,user_id:Number,msg:String,shownName:String)` |
+| onReceivePrivateMessage | 收到私聊消息         | `(user_id:Number,msg:String,nickName:String)`                  |
+| onReceivePacket         | 收到数据包           | `(packet:String)`                                              |
+| onSereinStart           | Serein启动           | `( )`                                                          |
+| onSereinClose           | Serein关闭           | `( )`                                                          |
+| onPluginsReload         | 插件重载             | `( )`                                                          |
 
 
 
@@ -403,6 +405,17 @@ var success = serein.killServer();
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
+
+#### 发送服务器命令
+`serein.sendCmd(String:command)`
+```js
+serein.sendCmd("help");
+```
+
+- 参数
+  - `command` 输入的命令
+- 返回
+  - 空
 
 #### 获取服务器状态
 `serein.getServerStatus()`
