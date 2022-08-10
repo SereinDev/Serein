@@ -9,27 +9,187 @@
     <Grid>
         <TabControl>
             <TabItem Header="控制面板">
-                <Grid Background="#FFFFFFFF">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="150px"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <GroupBox Header="详细信息"/>
-                    <GroupBox x:Name="Panel_Control" Header="?" Grid.Row="1" VerticalAlignment="Top" Height="200"/>
-                    <GroupBox Header="?" Grid.Column="1" Grid.RowSpan="2">
+                    <StackPanel>
+                        <GroupBox Margin="3" Header="详细信息" DockPanel.Dock="Top">
+                            <Grid Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <DockPanel>
+                                    <Label DockPanel.Dock="Left" Content="状态"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="1">
+                                    <Label DockPanel.Dock="Left" Content="版本"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft" >-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="2">
+                                    <Label DockPanel.Dock="Left" Content="难度"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft" >-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="3">
+                                    <Label DockPanel.Dock="Left" Content="存档"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft" >-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="4">
+                                    <Label DockPanel.Dock="Left" Content="运行时长"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft" >-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="5">
+                                    <Label DockPanel.Dock="Left" Content="进程占用"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft" >-</Label>
+                                </DockPanel>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Margin="3" Header="控制" Height="85">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button Margin="3" Content="启动"/>
+                                <Button Margin="3" Content="停止" Grid.Column="1"/>
+                                <Button Margin="3" Content="重启" Grid.Row="1"/>
+                                <Button Margin="3" Content="结束进程" Grid.Row="1" Grid.Column="1"/>
+                            </Grid>
+                        </GroupBox>
+                </StackPanel>
+                    <GroupBox Margin="3" Header="控制台" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
                         <DockPanel>
-                            <WebBrowser HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="250" DockPanel.Dock="Top"/>
-                            <TextBox></TextBox>
+                            <DockPanel DockPanel.Dock="Bottom">
+                                <Button Margin="3" Height="20" Width="20" Content="▲" DockPanel.Dock="Right"/>
+                                <TextBox Margin="3" Height="20" DockPanel.Dock="Left"/>
+                            </DockPanel>
+                            <WebBrowser Margin="3" DockPanel.Dock="Top"/>
                         </DockPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="插件管理">
-                <Grid Background="#FFE5E5E5"/>
+                <ListView>
+                    
+                </ListView>
+            </TabItem>
+            <TabItem Header="正则">
+                <ListView>
+
+                </ListView>
+            </TabItem> 
+            <TabItem Header="定时任务">
+                <ListView>
+
+                </ListView>
+            </TabItem>
+            <TabItem Header="机器人">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150px"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <GroupBox Margin="3" Header="详细信息" DockPanel.Dock="Top">
+                            <Grid Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <DockPanel>
+                                    <Label DockPanel.Dock="Left" Content="状态"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="1">
+                                    <Label DockPanel.Dock="Left" Content="QQ"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="2">
+                                    <Label DockPanel.Dock="Left" Content="接收数"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="3">
+                                    <Label DockPanel.Dock="Left" Content="发送数"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                                <DockPanel Grid.Row="4">
+                                    <Label DockPanel.Dock="Left" Content="运行时长"/>
+                                    <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                                </DockPanel>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Margin="3" Header="控制" Height="55">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button Margin="3" Content="启动"/>
+                                <Button Margin="3" Content="停止" Grid.Column="1"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                    <GroupBox Margin="3" Header="控制台" Grid.Column="1" >
+                        <WebBrowser Grid.Row="1"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="成员管理">
+                <ListView>
+
+                </ListView>
+            </TabItem>
+            <TabItem Header="Serein插件">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="7" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center" Header="控制台">
+                        <WebBrowser/>
+                    </GroupBox>
+                    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+                    <GroupBox Margin="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Header="插件列表">
+                        <ListView>
+
+                        </ListView>
+                    </GroupBox>
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="设置">
+
             </TabItem>
         </TabControl>
     </Grid>
