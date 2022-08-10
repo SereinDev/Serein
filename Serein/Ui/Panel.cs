@@ -1,6 +1,5 @@
 ﻿using Serein.Server;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -21,7 +20,7 @@ namespace Serein.Ui
 
         private void PanelControlStart_Click(object sender, EventArgs e)
         {
-            new Task(() => ServerManager.Start()).Start();
+            ServerManager.Start();
         }
         private void PanelControlStop_Click(object sender, EventArgs e)
         {

@@ -41,11 +41,11 @@ namespace Serein.Items.Motd
                     Encoding.UTF8.GetString(buffer, 0, length);
                 client.Close();
                 Original = Data;
-                Global.Debug($"[Motdje] Original: {Data}");
+                Global.Logger(999, "[Motdje]", $"Original: {Data}");
             }
             catch (Exception e)
             {
-                Global.Debug($"[Motdje] {e.Message}");
+                Global.Logger(999, "[Motdje]", e.ToString());
                 Exception = e.Message;
                 return;
             }
@@ -87,7 +87,7 @@ namespace Serein.Items.Motd
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Motdje] {e.Message}");
+                    Global.Logger(999, "[Motdje]", e.ToString());
                     Exception = e.Message;
                 }
             }

@@ -23,11 +23,11 @@ namespace Serein.Ui
                 {
                     try
                     {
-                        string AnnouncementId = RequestInfo("https://zaitonn.github.io/Serein/announcement/latest.txt");
+                        string AnnouncementId = RequestInfo("https://serein.cc/announcement/latest.txt");
                         if (OldAnnouncementId != AnnouncementId)
                         {
                             OldAnnouncementId = AnnouncementId;
-                            Global.Ui.ShowBalloonTip(RequestInfo($"https://zaitonn.github.io/Serein/announcement/{AnnouncementId}.txt").Replace("\\n", "\n"));
+                            Global.Ui.ShowBalloonTip(RequestInfo($"https://serein.cc/announcement/{AnnouncementId}.txt").Replace("\\n", "\n"));
                         }
                     }
                     catch (Exception e)

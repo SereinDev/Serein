@@ -2,7 +2,7 @@
 {
     internal class Event
     {
-        public string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://zaitonn.github.io/Serein/Command.html、https://zaitonn.github.io/Serein/Event.html";
+        public string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/Command.html、https://serein.cc/Event.html";
         public string[] Bind_Success { get; set; } = new string[]
         {
              "g|[CQ:at,qq=%ID%] 绑定成功"

@@ -8,7 +8,6 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Jint;
 
 namespace Serein.Base
 {
@@ -33,9 +32,7 @@ namespace Serein.Base
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     CreateNoWindow = true,
-                    WorkingDirectory = Global.Path,
-                    StandardErrorEncoding = Encoding.UTF8,
-                    StandardOutputEncoding = Encoding.UTF8
+                    WorkingDirectory = Global.Path
                 }
             };
             CMDProcess.Start();
@@ -44,10 +41,17 @@ namespace Serein.Base
                 AutoFlush = true,
                 NewLine = "\r\n"
             };
-            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n') + "&exit");
+            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
             CommandWriter.Close();
-            CMDProcess.WaitForExit();
-            CMDProcess.Close();
+            Task.Run(() =>
+            {
+                CMDProcess.WaitForExit(600000);
+                if (!CMDProcess.HasExited)
+                {
+                    CMDProcess.Kill();
+                }
+                CMDProcess.Dispose();
+            });
         }
 
         /// <summary>
@@ -76,7 +80,7 @@ namespace Serein.Base
                 3   定时任务
                 4   EventTrigger
             */
-            Global.Debug($"[Command:Run()] InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
+            Global.Logger(999, "[Command:Run()]", $"InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
                 GroupId = Global.Settings.Bot.GroupList[0];
@@ -91,7 +95,7 @@ namespace Serein.Base
             switch (Type)
             {
                 case 1:
-                    new Task(() => StartCmd(Value)).Start();
+                    StartCmd(Value);
                     break;
                 case 2:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
@@ -159,25 +163,12 @@ namespace Serein.Base
                     {
                         Task.Run(() =>
                         {
-                            JSEngine.Init(new Engine(cfg => cfg.AllowClr(
-                                typeof(File).Assembly,
-                                typeof(Path).Assembly,
-                                typeof(Directory).Assembly,
-                                typeof(DirectoryInfo).Assembly,
-                                typeof(StreamReader).Assembly,
-                                typeof(StreamWriter).Assembly,
-                                typeof(Encoding).Assembly,
-                                typeof(Process).Assembly,
-                                typeof(ProcessStartInfo).Assembly
-                                )
-                                .CatchClrExceptions()
-                                .TimeoutInterval(TimeSpan.FromMinutes(1))
-                                )).Execute(Value);
+                            JSEngine.Init(true).Execute(Value);
                         });
                     }
                     break;
                 case 50:
-                    Global.Debug("[DebugOutput] " + Value);
+                    Global.Logger(999, "[DebugOutput]", Value);
                     break;
             }
             if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
@@ -299,7 +290,7 @@ namespace Serein.Base
                     Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
                 }
             }
-            Global.Debug($"[Command:GetValue()] Value:{Value}");
+            Global.Logger(999, "[Command:GetValue()]", $"Value:{Value}");
             return Value;
         }
 
@@ -372,7 +363,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Debug($"[Command:GetVariables()] {e.Message}");
+                    Global.Logger(999, "[Command:GetVariables()]", e.ToString());
                 }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);

@@ -27,7 +27,7 @@ namespace Serein.Ui
             isdrag = false;
             if ((RegexList.SelectedItems.Count != 0) && (itemDraged != null))
             {
-                if (itemDraged.Index != RegexList.SelectedItems[0].Index)
+                if (itemDraged.Index != RegexList.SelectedItems[0].Index && itemDraged.Index >= 0)
                 {
                     RegexList.Items.RemoveAt(itemDraged.Index);
                     RegexList.Items.Insert(RegexList.SelectedItems[0].Index, itemDraged);
@@ -317,12 +317,12 @@ namespace Serein.Ui
         }
         private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Variables.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
         }
 
         private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Command.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
         }
     }
 }

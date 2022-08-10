@@ -1,5 +1,7 @@
 ﻿using Serein.Base;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -133,6 +135,11 @@ namespace Serein.Ui.ChildrenWindow
             {
                 e.Handled = true;
             }
+        }
+
+        private void RegexEditer_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://serein.cc/Tutorial.html#%E6%AD%A3%E5%88%99") { UseShellExecute = true });
         }
     }
 }

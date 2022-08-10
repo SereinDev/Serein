@@ -22,7 +22,7 @@ namespace Serein.Ui
             isdrag = false;
             if ((TaskList.SelectedItems.Count != 0) && (itemDraged != null))
             {
-                if (itemDraged.Index != TaskList.SelectedItems[0].Index)
+                if (itemDraged.Index != TaskList.SelectedItems[0].Index && itemDraged.Index >= 0)
                 {
                     TaskList.Items.RemoveAt(itemDraged.Index);
                     TaskList.Items.Insert(TaskList.SelectedItems[0].Index, itemDraged);
@@ -321,11 +321,11 @@ namespace Serein.Ui
 
         private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Command.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
         }
         private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://zaitonn.github.io/Serein/Variables.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
         }
     }
 }

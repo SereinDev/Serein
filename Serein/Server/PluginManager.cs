@@ -10,6 +10,11 @@ namespace Serein.Server
     {
         public static string PluginPath = string.Empty;
         public static bool Available = true;
+
+        /// <summary>
+        /// 获取插件列表
+        /// </summary>
+        /// <returns>插件列表</returns>
         public static string[] Get()
         {
             if (File.Exists(Global.Settings.Server.Path))
@@ -49,6 +54,10 @@ namespace Serein.Server
             }
             return null;
         }
+
+        /// <summary>
+        /// 导入插件
+        /// </summary>
         public static void Add()
         {
             OpenFileDialog Dialog = new OpenFileDialog()
@@ -76,6 +85,10 @@ namespace Serein.Server
                 }
             }
         }
+        /// <summary>
+        /// 导入插件
+        /// </summary>
+        /// <param name="Files">文件列表</param>
         public static void Add(List<string> Files)
         {
             foreach (string FileName in Files)
@@ -95,6 +108,11 @@ namespace Serein.Server
                 }
             }
         }
+
+        /// <summary>
+        /// 删除插件
+        /// </summary>
+        /// <param name="Items">插件列表</param>
         public static void Remove(ListView.SelectedListViewItemCollection Items)
         {
             if (Items.Count == 1 && !Check())
@@ -144,7 +162,6 @@ namespace Serein.Server
                             if (Item.ForeColor == Color.Gray)
                             {
                                 File.Delete(PluginPath + "\\" + Item.Text + ".lock");
-
                             }
                             else
                             {
@@ -162,9 +179,13 @@ namespace Serein.Server
                         }
                     }
                 }
-
             }
         }
+
+        /// <summary>
+        /// 禁用插件
+        /// </summary>
+        /// <param name="Items">插件列表</param>
         public static void Disable(ListView.SelectedListViewItemCollection Items)
         {
             if (!Check())
@@ -188,6 +209,11 @@ namespace Serein.Server
                 }
             }
         }
+
+        /// <summary>
+        /// 启用插件
+        /// </summary>
+        /// <param name="Items">插件列表</param>
         public static void Enable(ListView.SelectedListViewItemCollection Items)
         {
             foreach (ListViewItem Item in Items)
@@ -208,6 +234,11 @@ namespace Serein.Server
                 }
             }
         }
+
+        /// <summary>
+        /// 服务器状态检测
+        /// </summary>
+        /// <returns>服务器状态</returns>
         public static bool Check()
         {
             if (ServerManager.Status)

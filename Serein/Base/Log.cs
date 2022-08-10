@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Net;
 
 namespace Serein.Base
 {
@@ -26,7 +26,7 @@ namespace Serein.Base
         public static string OutputRecognition(string Input)
         {
             string Result;
-            Result = Regex.Replace(Input, @"\[.+?m", string.Empty);
+            Result = Regex.Replace(Input, @"\[.*?m", string.Empty);
             Result = Regex.Replace(Result, @"", string.Empty);
             Result = Regex.Replace(Result, @"\s+?$", string.Empty);
             StringBuilder sBuilder = new StringBuilder();
@@ -49,7 +49,7 @@ namespace Serein.Base
         /// <returns>转义后的HTML</returns>
         public static string EscapeLog(string Input)
         {
-            return WebUtility.HtmlEncode(Input);
+            return Regex.Replace(WebUtility.HtmlEncode(Input), @"\s", "&ensp;");
         }
 
         /// <summary>
@@ -62,6 +62,7 @@ namespace Serein.Base
         {
             Input = EscapeLog(Input);
             Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
+            Input = Input.Replace("[m", "[0m");
             if (Type == 1 || Type == 3)
             {
                 string Output = Input;
@@ -140,7 +141,7 @@ namespace Serein.Base
             }
             else if (Type == 2)
             {
-                Input = Regex.Replace(Input, @"\[.+?m", string.Empty);
+                Input = Regex.Replace(Input, @"\[.*?m", string.Empty);
                 Input = Regex.Replace(Input, @"", string.Empty);
                 Input = Regex.Replace(Input, @"([\[\s])(INFO|info|Info)", "$1<span class='info'>$2</span>");
                 Input = Regex.Replace(Input, @"([\[\s])(WARNING|warning|Warning)", "$1<span class='warn'><b>$2</b></span>");

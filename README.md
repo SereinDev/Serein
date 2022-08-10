@@ -21,35 +21,38 @@
     </a>
 </p>
 
-
-- 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板 
-- **介绍页：https://zaitonn.github.io/Serein/**
-- **下载最新版：https://github.com/Zaitonn/Serein/releases/latest**
-- Minebbs：https://www.minebbs.com/resources/serein.4169/
+- 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板
+- **介绍页：<https://serein.cc/>**
+- **下载最新版：<https://github.com/Zaitonn/Serein/releases/latest>**
+- Minebbs：<https://www.minebbs.com/resources/serein.4169/>
 - 查看 **[教程](docs/Tutorial.md)** 丨 __[帮助](docs/Help.md)__
 
 ## 运行环境 Environment
+
 Win7或WinServer2012以上
 
 > 更低的系统版本不保证能稳定运行，必要时务必备份数据
   
 > x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
-#### 缺少运行库？
+### 缺少运行库？
+
 [![.NET 6.0](https://img.shields.io/badge/.NET-6.0-%23512BD4?style=for-the-badge)](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
 [![.NET Framework 4.7.2](https://img.shields.io/badge/.NET%20Framework-4.7.2-%23512BD4?style=for-the-badge)](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
 
 ## 编译 Build
+
 ~~反正我用VS~~  
 记得安装SDK
 
 ## 发电 Donate
+
 >如果觉得这个软件对你很有帮助的话可以稍微鼓励一下  
 我会很感谢你的(*￣3￣)╭❤
 
 <details>
   <summary>发电链接</summary>
-  <img src="https://zaitonn.github.io/Serein/imgs/afdian.png">
+  <img src="https://serein.cc/imgs/afdian.png">
 </details>
 
 | Supporters | 发电金额 |日期|
@@ -60,4 +63,5 @@ Win7或WinServer2012以上
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
 
 ## 关于
-> [About](https://zaitonn.github.io/Serein/About.html)
+
+> [About](https://serein.cc/About.html)

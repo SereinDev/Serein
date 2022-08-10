@@ -14,20 +14,24 @@ namespace Serein.Server
 {
     public class ServerManager
     {
-        public static string StartFileName = string.Empty, Version, LevelName, Difficulty;
-        public static bool Status = false;
-        public static bool Restart = false;
-        public static List<string> CommandList = new List<string>();
+        public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
+        private static string TempLine = string.Empty;
+        public static bool Status
+        {
+            get
+            {
+                return ServerProcess != null && !ServerProcess.HasExited;
+            }
+        }
+        public static bool Restart = false, Finished = false;
+        private static bool Killed;
         public static double CPUPersent = 0.0;
         public static int CommandListIndex = 0, Port = 0;
-        private static bool Finished = false;
+        private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
-        private static bool Killed;
         public static StreamWriter CommandWriter;
-        private static StreamWriter LogWriter;
-        private static TimeSpan PrevCpuTime = TimeSpan.Zero;
-        private static string TempLine = string.Empty;
+        public static List<string> CommandList = new List<string>();
         public static Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
@@ -38,35 +42,67 @@ namespace Serein.Server
             Encoding.ASCII,
             Encoding.GetEncoding("ISO-8859-1")
         };
-        public static string Online;
 
-        public static bool Start(bool NoMsgBox = false)
+        /// <summary>
+        /// 启动服务器
+        /// </summary>
+        /// <param name="Quiet">静处理</param>
+        /// <returns>启动结果</returns>
+        public static bool Start(bool Quiet = false)
         {
             if (Status)
             {
-                if (!NoMsgBox)
+                if (!Quiet)
                 {
-                    MessageBox.Show(Global.Ui, ":(\n服务器已在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (Global.Console)
+                    {
+                        Global.Logger(2, "服务器已在运行中");
+                    }
+                    else
+                    {
+                        MessageBox.Show(":(\n服务器已在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
-                if (!NoMsgBox)
+                if (!Quiet)
                 {
-                    MessageBox.Show(Global.Ui, ":(\n启动路径为空.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (Global.Console)
+                    {
+                        Global.Logger(2, "启动路径为空");
+                    }
+                    else
+                    {
+                        MessageBox.Show(":(\n启动路径为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
-                if (!NoMsgBox)
+                if (!Quiet)
                 {
-                    MessageBox.Show(Global.Ui, $":(\n启动文件\"{Global.Settings.Server.Path}\"未找到.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (Global.Console)
+                    {
+                        Global.Logger(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到");
+                    }
+                    else
+                    {
+                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke("#clear");
-                Global.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>启动中");
+                if (Global.Console)
+                {
+                    Global.Logger(11, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
+                }
+                else
+                {
+                    Global.Logger(10, "#clear");
+                }
+                Global.Logger(11, "启动中");
                 ServerProcessInfo = new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
@@ -89,7 +125,6 @@ namespace Serein.Server
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
                 Restart = false;
-                Status = true;
                 Killed = false;
                 Finished = false;
                 Version = "-";
@@ -100,14 +135,18 @@ namespace Serein.Server
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
-                Task.Run(GetCPUPercent);
-                Task.Run(WaitForExit);
+                Task.Factory.StartNew(GetCPUPercent);
+                Task.Factory.StartNew(WaitForExit);
                 EventTrigger.Trigger("Server_Start");
                 JSFunc.Trigger("onServerStart");
                 return true;
             }
             return false;
         }
+
+        /// <summary>
+        /// 关闭服务器
+        /// </summary>
         public static void Stop()
         {
             if (Status)
@@ -124,18 +163,29 @@ namespace Serein.Server
             {
                 Restart = false;
             }
+            else if (!Global.Console)
+            {
+                MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
-                MessageBox.Show(Global.Ui, ":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Global.Logger(2, "服务器不在运行中");
             }
         }
-        public static bool Kill(bool NoMsgBox = false)
+
+        /// <summary>
+        /// 强制结束服务器
+        /// </summary>
+        /// <param name="Quiet">静处理</param>
+        /// <returns>强制结束结果</returns>
+        public static bool Kill(bool Quiet = false)
         {
-            if (
-                !NoMsgBox
+            if (Status
                 &&
-                Status
+                (Global.Console ||
+                !Quiet
                 &&
+
                 (int)MessageBox.Show(
                     "确定结束进程吗？\n此操作可能导致存档损坏等问题",
                     "Serein",
@@ -151,7 +201,7 @@ namespace Serein.Server
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning
                     ) == 1
-                ))
+                )))
                 )
             {
                 try
@@ -163,15 +213,22 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(
-                        "强制结束失败\n" + e.Message,
-                        "Serein",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                        );
+                    if (Global.Console)
+                    {
+                        Global.Logger(3, "强制结束失败\r\n" + e.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            ":(\n强制结束失败\n" + e.Message,
+                            "Serein",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                            );
+                    }
                 }
             }
-            else if (NoMsgBox)
+            else if (Quiet)
             {
                 try
                 {
@@ -182,39 +239,68 @@ namespace Serein.Server
                 }
                 catch { }
             }
-            else if (!Status && !NoMsgBox)
+            else if (!Status && !Quiet)
             {
-                MessageBox.Show(Global.Ui, ":(\n服务器不在运行中.", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (Global.Console)
+                {
+                    Global.Logger(2, "服务器不在运行中");
+                }
+                else
+                {
+                    MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            if (ServerProcess.HasExited)
+            {
+                return true;
             }
             return false;
         }
-        public static void InputCommand(string Command, bool NoMsgBox = false, bool Unicode = false)
+
+        /// <summary>
+        /// 输入命令
+        /// </summary>
+        /// <param name="Command">命令</param>
+        /// <param name="Quiet">静处理</param>
+        /// <param name="Unicode">使用Unicode</param>
+        public static void InputCommand(string Command, bool Quiet = false, bool Unicode = false)
         {
             if (Status)
             {
+                bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\r', '\n');
+                string Command_Copy_Prefix = Command_Copy.Split(' ')[0];
+                foreach (CommandItem Item in Plugins.CommandItems)
+                {
+                    if (Command_Copy_Prefix == Item.Command)
+                    {
+                        IsSpecifiedCommand = true;
+                        JSFunc.Trigger("onServerSendSpecifiedCommand", Command_Copy, Item.Function);
+                    }
+                }
                 while (CommandList.Count >= 50)
                 {
                     CommandList.RemoveAt(0);
                 }
                 if (
                     (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command_Copy || CommandList.Count == 0) &&
-                    (!NoMsgBox || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
+                    (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
                 {
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (!Plugins.Commands.Contains(Command.Split(' ')[0]) && (Unicode || Global.Settings.Server.EnableUnicode))
+                if (Global.Settings.Server.EnableOutputCommand && !Global.Console)
                 {
-                    Command_Copy = ConvertToUnicode(Command_Copy);
+                    Global.Logger(10, $">{Log.EscapeLog(Command_Copy)}");
                 }
-                if (Global.Settings.Server.EnableOutputCommand)
+                if (!IsSpecifiedCommand)
                 {
-                    Global.Ui.PanelConsoleWebBrowser_Invoke($">{Log.EscapeLog(Command_Copy)}");
-                }
-                if (!Plugins.Commands.Contains(Command_Copy.Split(' ')[0]))
-                {
+                    if (Unicode || Global.Settings.Server.EnableUnicode)
+                    {
+                        Command_Copy = ConvertToUnicode(Command_Copy);
+                    }
                     CommandWriter.WriteLine(Command_Copy);
+                    JSFunc.Trigger("onServerSendCommand", Command);
                 }
                 if (Global.Settings.Server.EnableLog)
                 {
@@ -224,24 +310,24 @@ namespace Serein.Server
                     }
                     try
                     {
-                        LogWriter = new StreamWriter(
-                        Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                        true,
-                        Encoding.UTF8
+                        File.AppendAllText(
+                            Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            ">" + Log.OutputRecognition(Command_Copy),
+                            Encoding.UTF8
                         );
-                        LogWriter.WriteLine(">" + Log.OutputRecognition(Command_Copy));
-                        LogWriter.Flush();
-                        LogWriter.Close();
                     }
                     catch { }
                 }
-                JSFunc.Trigger("onServerSendCommand", Command);
             }
             else if (Command.Trim().ToUpper() == "START")
             {
-                Start(NoMsgBox);
+                Start(Quiet);
             }
         }
+
+        /// <summary>
+        /// 输出处理
+        /// </summary>
         private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
             if (!string.IsNullOrEmpty(outLine.Data))
@@ -252,7 +338,6 @@ namespace Serein.Server
                     if (Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
                     {
                         Finished = true;
-                        Global.Ui.UpdateServerInfo(LevelName, Version, Difficulty);
                     }
                     else if (Regex.IsMatch(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
                     {
@@ -267,10 +352,11 @@ namespace Serein.Server
                         Difficulty = Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    Log.ColorLog(Log.EscapeLog(outLine.Data), Global.Settings.Server.OutputStyle)
+                Global.Logger(
+                    10,
+                    Global.Console ?
+                    outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
-                //Global.Debug(Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(Global.Path + "\\logs\\console"))
@@ -279,22 +365,25 @@ namespace Serein.Server
                     }
                     try
                     {
-                        LogWriter = new StreamWriter(
+                        File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            true,
+                            Log.OutputRecognition(Line),
                             Encoding.UTF8
-                            );
-                        LogWriter.WriteLine(Line);
-                        LogWriter.Flush();
-                        LogWriter.Close();
+                        );
                     }
                     catch { }
                 }
-                if (Regex.IsMatch(Line, Global.Settings.Matches.PlayerList, RegexOptions.IgnoreCase))
+                bool MuiltLines = false;
+                foreach (string RegExp in Global.Settings.Matches.MuiltLines)
                 {
-                    TempLine = Line.Trim('\r', '\n');
+                    if (Regex.IsMatch(Line, RegExp, RegexOptions.IgnoreCase))
+                    {
+                        TempLine = Line.Trim('\r', '\n');
+                        MuiltLines = true;
+                        break;
+                    }
                 }
-                else
+                if (!MuiltLines)
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
@@ -307,35 +396,50 @@ namespace Serein.Server
                         Base.Message.ProcessMsgFromConsole(Line);
                     }
                 }
+                JSFunc.Trigger("onServerOutput", Line);
+                JSFunc.Trigger("onServerOriginalOutput", outLine.Data);
             }
         }
+
+        /// <summary>
+        /// 等待服务器退出
+        /// </summary>
         private static void WaitForExit()
         {
-            ServerProcess.WaitForExit();
-            Status = false;
+            while (Status)
+            {
+                Thread.Sleep(1000);
+            }
             CommandWriter.Close();
+            Global.Logger(10, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
+                Global.Logger(11,
+                    $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger("Server_Error");
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                    $"<br><span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>进程已退出（返回：{ServerProcess.ExitCode}）"
+                Global.Logger(11,
+                    $"进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
                 EventTrigger.Trigger("Server_Stop");
             }
             if (Restart)
+            {
                 Task.Run(RestartTimer);
+            }
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
             JSFunc.Trigger("onServerStop");
         }
+
+        /// <summary>
+        /// 重启请求
+        /// </summary>
         public static void RestartRequest()
         {
             if (!Restart)
@@ -344,13 +448,17 @@ namespace Serein.Server
                 Stop();
             }
         }
+
+        /// <summary>
+        /// 重启计时器
+        /// </summary>
         private static void RestartTimer()
         {
-            Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>服务器将在5s后重新启动."
+            Global.Logger(11,
+                "服务器将在5s后重新启动"
                 );
-            Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>你可以按下停止按钮来取消这次重启."
+            Global.Logger(11,
+                "你可以按下停止按钮来取消这次重启"
                 );
             for (int i = 0; i < 10; i++)
             {
@@ -366,11 +474,15 @@ namespace Serein.Server
             }
             else
             {
-                Global.Ui.PanelConsoleWebBrowser_Invoke(
-                $"<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>重启已取消."
+                Global.Logger(11,
+                "重启已取消"
                 );
             }
         }
+
+        /// <summary>
+        /// 获取CPU占用
+        /// </summary>
         public static void GetCPUPercent()
         {
             while (Status)
@@ -380,6 +492,11 @@ namespace Serein.Server
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
             }
         }
+
+        /// <summary>
+        /// 获取运行时间
+        /// </summary>
+        /// <returns>运行时间</returns>
         public static string GetTime()
         {
             string Time = "-";
@@ -394,6 +511,12 @@ namespace Serein.Server
             }
             return Time;
         }
+
+        /// <summary>
+        /// Unicode转换
+        /// </summary>
+        /// <param name="Text">输入</param>
+        /// <returns>输出字符串</returns>
         private static string ConvertToUnicode(string Text)
         {
             string result = "";

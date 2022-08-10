@@ -1,6 +1,5 @@
 ﻿using Ookii.Dialogs.Wpf;
 using Serein.Base;
-using Serein.Plugin;
 using Serein.Server;
 using System;
 using System.Collections;
@@ -32,6 +31,7 @@ namespace Serein
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
+        /// <param name="args">启动参数</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -39,6 +39,7 @@ namespace Serein
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
             Settings.Base.ReadSettings();
+            Global.Args = args;
             if (((IList)args).Contains("debug"))
             {
                 Global.Settings.Serein.Debug = true;
@@ -69,6 +70,11 @@ namespace Serein
             Abort(e.ExceptionObject);
         }
 
+
+        /// <summary>
+        /// Serein错误处理
+        /// </summary>
+        /// <param name="obj">Exception</param>
         private static void Abort(object obj)
         {
             Global.Crash = true;
@@ -85,21 +91,16 @@ namespace Serein
             }
             try
             {
-                StreamWriter LogWriter = new StreamWriter(
+                File.AppendAllText(
                     Global.Path + $"\\logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log",
-                    true,
-                    Encoding.UTF8
-                    );
-                LogWriter.WriteLine(
                     DateTime.Now + "  |  "
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
                     "\n" +
                     obj.ToString() +
-                    "\n==============================================="
+                    "\n===============================================\n",
+                    Encoding.UTF8
                     );
-                LogWriter.Flush();
-                LogWriter.Close();
             }
             catch { }
             EventTrigger.Trigger("Serein_Crash");

@@ -8,7 +8,11 @@ namespace Serein.Settings
         public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
         public string LevelName { get; set; } = "Level Name: (.+?)$";
         public string Finished { get; set; } = "(Done|Started)";
-        public string PlayerList { get; set; } = @"players\sonline:";
+        public string[] MuiltLines { get; set; } = 
+        {
+            @"players\sonline:" 
+        };
+
         public Matches()
         {
             try

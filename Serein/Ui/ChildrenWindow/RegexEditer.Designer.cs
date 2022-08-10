@@ -135,10 +135,12 @@
             this.Controls.Add(this.AreaLabel);
             this.Controls.Add(this.Area);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RegexEditer";
             this.ShowInTaskbar = false;
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.RegexEditer_HelpButtonClicked);
             this.ResumeLayout(false);
             this.PerformLayout();
 
