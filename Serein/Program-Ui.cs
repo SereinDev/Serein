@@ -98,7 +98,7 @@ namespace Serein
                     "NET" + Environment.Version.ToString() +
                     "\n" +
                     obj.ToString() +
-                    "\n===============================================",
+                    "\n===============================================\n",
                     Encoding.UTF8
                     );
             }

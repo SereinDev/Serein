@@ -79,7 +79,7 @@ namespace Serein
                     "NET" + Environment.Version.ToString() +
                     "\n" +
                     obj.ToString() +
-                    "\n==============================================="
+                    "\n===============================================\n"
                     );
                 LogWriter.Flush();
                 LogWriter.Close();

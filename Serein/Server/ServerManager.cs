@@ -16,7 +16,11 @@ namespace Serein.Server
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
         private static string TempLine = string.Empty;
-        public static bool Status = false, Restart = false, Finished = false;
+        public static bool Status { get
+            {
+                return ServerProcess != null && !ServerProcess.HasExited;
+            } }
+        public static bool Restart = false, Finished = false;
         private static bool Killed;
         public static double CPUPersent = 0.0;
         public static int CommandListIndex = 0, Port = 0;
@@ -118,7 +122,6 @@ namespace Serein.Server
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
                 Restart = false;
-                Status = true;
                 Killed = false;
                 Finished = false;
                 Version = "-";
@@ -203,7 +206,6 @@ namespace Serein.Server
                     ServerProcess.Kill();
                     Killed = true;
                     Restart = false;
-                    Status = ServerProcess.HasExited;
                     return true;
                 }
                 catch (Exception e)
@@ -230,7 +232,6 @@ namespace Serein.Server
                     ServerProcess.Kill();
                     Killed = true;
                     Restart = false;
-                    Status = ServerProcess.HasExited;
                     return true;
                 }
                 catch { }
@@ -248,7 +249,6 @@ namespace Serein.Server
             }
             if (ServerProcess.HasExited)
             {
-                Status = false;
                 return true;
             }
             return false;
@@ -399,9 +399,8 @@ namespace Serein.Server
         {
             while (Status)
             {
-                Status = !ServerProcess.WaitForExit(1000);
+                Thread.Sleep(1000);
             }
-            Status = false;
             CommandWriter.Close();
             Global.Logger(10, "");
             if (!Killed && ServerProcess.ExitCode != 0)
@@ -420,7 +419,9 @@ namespace Serein.Server
                 EventTrigger.Trigger("Server_Stop");
             }
             if (Restart)
+            {
                 Task.Run(RestartTimer);
+            }
             Version = "-";
             LevelName = "-";
             Difficulty = "-";

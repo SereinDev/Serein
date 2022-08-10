@@ -49,7 +49,7 @@ namespace Serein.Base
         /// <returns>转义后的HTML</returns>
         public static string EscapeLog(string Input)
         {
-            return WebUtility.HtmlEncode(Input).Replace(" ", "&nbsp;");
+            return Regex.Replace(WebUtility.HtmlEncode(Input), @"\s", "&ensp;");
         }
 
         /// <summary>

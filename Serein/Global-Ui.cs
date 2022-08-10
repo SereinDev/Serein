@@ -9,7 +9,7 @@ namespace Serein
         public static Ui.Ui Ui = null;
         public static void Logger(int Type, params object[] objects)
         {
-            if (Ui != null)
+            if (Ui != null && !Ui.Disposing)
             {
                 string Line = string.Empty;
                 foreach (var o in objects)
