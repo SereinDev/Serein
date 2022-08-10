@@ -16,10 +16,13 @@ namespace Serein.Server
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
         private static string TempLine = string.Empty;
-        public static bool Status { get
+        public static bool Status
+        {
+            get
             {
                 return ServerProcess != null && !ServerProcess.HasExited;
-            } }
+            }
+        }
         public static bool Restart = false, Finished = false;
         private static bool Killed;
         public static double CPUPersent = 0.0;
