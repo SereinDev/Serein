@@ -203,6 +203,7 @@ namespace Serein.Server
                     ServerProcess.Kill();
                     Killed = true;
                     Restart = false;
+                    Status = ServerProcess.HasExited;
                     return true;
                 }
                 catch (Exception e)
@@ -229,6 +230,7 @@ namespace Serein.Server
                     ServerProcess.Kill();
                     Killed = true;
                     Restart = false;
+                    Status = ServerProcess.HasExited;
                     return true;
                 }
                 catch { }
@@ -244,7 +246,6 @@ namespace Serein.Server
                     MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-
             if (ServerProcess.HasExited)
             {
                 Status = false;
@@ -396,7 +397,10 @@ namespace Serein.Server
         /// </summary>
         private static void WaitForExit()
         {
-            ServerProcess.WaitForExit();
+            while (Status)
+            {
+                Status = !ServerProcess.WaitForExit(1000);
+            }
             Status = false;
             CommandWriter.Close();
             Global.Logger(10, "");
