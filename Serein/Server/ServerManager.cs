@@ -373,11 +373,17 @@ namespace Serein.Server
                     }
                     catch { }
                 }
-                if (Regex.IsMatch(Line, Global.Settings.Matches.PlayerList, RegexOptions.IgnoreCase))
+                bool MuiltLines = false;
+                foreach (string RegExp in Global.Settings.Matches.MuiltLines)
                 {
-                    TempLine = Line.Trim('\r', '\n');
+                    if (Regex.IsMatch(Line, RegExp, RegexOptions.IgnoreCase))
+                    {
+                        TempLine = Line.Trim('\r', '\n');
+                        MuiltLines = true;
+                        break;
+                    }
                 }
-                else
+                if (!MuiltLines)
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
