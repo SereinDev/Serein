@@ -117,16 +117,16 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 2. 在Visual Studio Code或者其他编辑器中编辑其中的文件
 3. 重启`Serein`后生效
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >
 >- `console.js`中定义的函数**不建议更改**，修改错误可能导致无法输出信息
 >- 由于显示网页组件以IE为内核，修改时内嵌网页时需注意**适配IE浏览器**
 
 ### 多开Serein
 
-> Mulit-Open，指在本地开启多个服务端并接入同一个机器人统一控制，适用于群组服等
+Mulit-Open，指在本地开启多个服务端并接入同一个机器人统一控制，适用于群组服等
 
-> **❗ 警告**
+> **❗ 警告**  
 >不建议直接多次双击`Serein.exe`来开启多个窗口，这可能**导致数据无法保存甚至崩溃**
 
 ```txt
@@ -146,7 +146,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 2. 分别启动其中的`Serein.exe`，选择不同的文件启动，可以独立保存数据和设置
 3. 对于机器人你可以选择开启`上报自身消息`，通过对该消息进行匹配从而实现群组服消息互通
 
-> **⚠ 提示**
+> **⚠ 提示**  
 > 你需要对不同的`Serein`的正则或定时任务乃至设置进行相应配置，否则可能出现一呼百应的情况
 
 ### 机器人
@@ -159,7 +159,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
   - 使用新[OneBot-12](https://12.onebot.dev/)标准的机器人不确定是否可用，可自行尝试
 - 可使用WS正向连接
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >
 >- 由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人
 >- 目前已完全支持的机器人：[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)  
@@ -174,7 +174,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 5. 在`设置`>`机器人`>`Websocket地址`中设置与机器人配置文件中一致的地址
 6. 单击`机器人`>`连接`按钮连接机器人
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >其他机器人可能需要直接修改配置文件，但操作方法类似
 
 #### 鉴权
@@ -185,7 +185,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 
 此外，你还需要将`Access-Token`内容复制到`设置`>`机器人`>`鉴权凭证`，连接时在Websocket的Header添加Authorization字段用于鉴权  
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >`Access-Token`区分大小写、首尾空格等
 
 ### 插件管理
@@ -226,7 +226,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 - `修改记录`
 - `删除记录`
   
-> **⚠ 提示**
+> **⚠ 提示**  
 >正则表达式或命令为空或不合法时无法保存
 
 #### 功能介绍
@@ -241,7 +241,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 4. `消息（私聊）` 匹配私聊消息
 5. `消息（自身发送）` 匹配自身上报消息
 
-> **❗ 警告**
+> **❗ 警告**  
 > 若选择`消息（自身发送）`，保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，配置错误可能导致机器人刷屏甚至被封号
 
 ##### 正则表达式
@@ -264,7 +264,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 | [替换最后捕获的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-last-captured-group)                                    | *暂不可用*   |
 | [替换整个输入字符串](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-the-entire-input-string)                                  | *暂不可用*   |
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >由于功能限制，若无特别标记，正则表达式仅**匹配第一个符合条件的文本**
 >例：`(.+?)`匹配`我是一段文本`仅返回第一个字`我`（即使使用贪婪模式也是如此）
 >*解决方法：强制匹配整段文本`(.+?)`→`^(.+?)$`*
@@ -318,7 +318,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
   > **⭐ Tips**  
   >在编辑窗口中你可以直接看到下一次的执行时间
 
-  > **⚠ 提示**
+  > **⚠ 提示**  
   >Cron表达式或命令为空或不合法时无法保存
 - `删除任务`
 
@@ -332,7 +332,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 >生成器（推荐）：[Crontab guru](https://crontab.guru/)  
 >语法：[POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) ，[Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression)
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
 >例：假设一定时任务为`* * * * *`，代表在每一分钟执行该任务，但是可能在这分钟的第0秒到第4秒的任意时刻执行
 
@@ -401,7 +401,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 
 将他人的插件复制到`./plugins`文件夹下后右键列表选择重新加载插件即可
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >这里不是放服务器插件的地方！！！！  
 >这里不是放服务器插件的地方！！！！  
 >这里不是放服务器插件的地方！！！！  
@@ -409,7 +409,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 >这里只能加载Serein的插件！！！！  
 >这里只能加载Serein的插件！！！！
 
-> **❗ 警告**
+> **❗ 警告**  
 >不要在插件中写死循环，否则将导致Serein无响应
 >
 >```js
@@ -434,7 +434,7 @@ Ui版 `Serein_[版本号]_[运行库NET版本号].zip`
 
 ### 命令行启动参数
 
-```
+```powershell
 Serein.exe [debug] [auto_connect] [auto_start]
 ```
 
@@ -442,5 +442,5 @@ Serein.exe [debug] [auto_connect] [auto_start]
 - `auto_connect` 启动后自动连接ws
 - `auto_start` 启动后自动开启服务器
 
-> **⚠ 提示**  
+> **⚠ 提示**    
 >各参数区分大小写，但不区分顺序

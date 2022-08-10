@@ -25,6 +25,7 @@
     - [获取服务器状态](#获取服务器状态)
     - [获取服务器运行时长](#获取服务器运行时长)
     - [获取服务器进程占用](#获取服务器进程占用)
+    - [获取服务器文件](#获取服务器文件)
     - [发送群聊消息](#发送群聊消息)
     - [发送私聊消息](#发送私聊消息)
     - [发送数据包](#发送数据包)
@@ -272,7 +273,7 @@ var settings = serein.getSettings();
     "DPIAware": true
   },
   "Event": {
-    "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/Serein/Command.html、https://serein.cc/Serein/Event.html",
+    "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/Command.html、https://serein.cc/Event.html",
     "Bind_Success": [
       "g|[CQ:at,qq=%ID%] 绑定成功"
     ],
@@ -350,7 +351,7 @@ var cpuname = serein.getSysInfo("CPUName");
     - `UsedRAM` 已用内存（MB)
     - `RAMPercentage` 内存占用率
     - `CPUPercentage` CPU占用率
-    > **⚠ 提示**
+    > **⚠ 提示**  
     >
     >- 不区分大小写  
     >- 若不在以上列表中则为返回空值
@@ -368,7 +369,7 @@ serein.runCommand("g|hello")
 
 - 参数
   - `cmd` 一条[Serein命令](Command.md)
-  > **⚠ 提示**
+  > **⚠ 提示**  
   >此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
 - 返回
   - 空
@@ -385,7 +386,7 @@ var je = serein.getMotdje("127.0.0.1:25565");
 
 - 参数
   - `ip` 服务器IP
-  > **⚠ 提示**
+  > **⚠ 提示**  
   >可含端口，如`example.com:11451`  
   >不填端口基岩版默认`19132`，Java版默认`25565`
 - 返回
@@ -393,13 +394,13 @@ var je = serein.getMotdje("127.0.0.1:25565");
     - 获取失败时返回`-`
     - 基岩版为纯字符串
 
-    ```
+    ```txt
     MCPE;Dedicated Server;503;1.18.33;0;10;12578007761032183218;Bedrock level;Survival;1;19132;19133;
     ```
 
     - Java版为Json文本
 
-    ```
+    ```txt
     {"description":{"text":"§bMinecraftOnline§f - §6Home of Freedonia§r\n§3Survival, Without the Grief!"},"players":{"max":120,"online":1,"sample":[{"id":"a4740a2c-1eec-4b7d-9d22-1c861e7045d7","name":"Biolord101"}]},"version":{"name":"1.12.2","protocol":340},"favicon":"……"}
     ```
 
@@ -430,7 +431,7 @@ serein.stopServer();
 - 返回
   - 空
 
-> **⚠ 提示**
+> **⚠ 提示**  
 >此函数不能保证服务器被关闭
 
 #### 强制结束服务器
@@ -530,7 +531,7 @@ var success = serein.sendGroup(114514,"大家好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**
+    > **⚠ 提示**  
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送私聊消息
@@ -547,7 +548,7 @@ var success = serein.sendPrivate(114514,"你好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**
+    > **⚠ 提示**  
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送数据包
@@ -564,7 +565,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**
+    > **⚠ 提示**  
     >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 获取ws连接状态

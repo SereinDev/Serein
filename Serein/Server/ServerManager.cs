@@ -288,7 +288,7 @@ namespace Serein.Server
                 }
                 if (Global.Settings.Server.EnableOutputCommand && !Global.Console)
                 {
-                    Global.Logger(10, $">{Command_Copy}");
+                    Global.Logger(10, $">{Log.EscapeLog(Command_Copy)}");
                 }
                 if (!IsSpecifiedCommand)
                 {

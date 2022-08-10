@@ -205,19 +205,19 @@ namespace Serein.Ui
         }
         private void SettingSereinAbout_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/About") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/About") { UseShellExecute = true });
         }
         private void SettingSereinPage_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
         }
         private void SettingSereinHelp_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Help") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Help") { UseShellExecute = true });
         }
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Tutorial") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Tutorial") { UseShellExecute = true });
         }
         private void SettingSereinDownload_Click(object sender, EventArgs e)
         {

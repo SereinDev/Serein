@@ -23,7 +23,7 @@
 - **下载最新版：[https://github.com/Zaitonn/Serein/releases/latest](https://github.com/Zaitonn/Serein/releases/latest)**
 - Github仓库：[https://github.com/Zaitonn/Serein](https://github.com/Zaitonn/Serein)
 - Minebbs：[https://www.minebbs.com/resources/serein.4169/](https://www.minebbs.com/resources/serein.4169/)
-- 查看 **[教程](Tutorial.md)** 丨 __[帮助](Help.md)__
+- 查看 **[教程](Tutorial.md)** 丨 __[帮助](Help.md)__ 
 
 ---
 

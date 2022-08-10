@@ -317,12 +317,12 @@ namespace Serein.Ui
         }
         private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Variables.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
         }
 
         private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Command.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
         }
     }
 }

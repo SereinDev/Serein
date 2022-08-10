@@ -53,8 +53,8 @@ namespace Serein.Ui
                     WindowTitle = "Serein",
                     Content = "" +
                     "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助(๑•̀ㅂ•́)و✧\n" +
-                    "◦ 实用教程：<a href=\"https://serein.cc/Serein/Tutorial.html\">https://serein.cc/Serein/Tutorial.html</a>\n" +
-                    "◦ 帮助页面：<a href=\"https://serein.cc/Serein/Help.html\">https://serein.cc/Serein/Help.html</a>\n" +
+                    "◦ 实用教程：<a href=\"https://serein.cc/Tutorial.html\">https://serein.cc/Tutorial.html</a>\n" +
+                    "◦ 帮助页面：<a href=\"https://serein.cc/Help.html\">https://serein.cc/Help.html</a>\n" +
                     "◦ 交流群：<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">954829203</a>",
                     Footer = "此面板已发布在<a href=\"https://www.minebbs.com/resources/serein.4169/\">Minebbs</a>上，欢迎支持~",
                     FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,

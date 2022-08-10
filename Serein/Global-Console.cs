@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Serein.Console;
-using System.Threading.Tasks;
+﻿using Serein.Console;
 
 namespace Serein
 {
@@ -24,43 +19,29 @@ namespace Serein
                     if (Settings.Serein.Debug) { Output.Logger(4, Line); }
                     break;
                 case 1:
+                case 11:
+                case 21:
+                case 31:
                     Output.Logger(1, Line);
                     break;
                 case 2:
                     Output.Logger(2, Line);
                     break;
                 case 3:
+                case 24:
+                case 32:
                     Output.Logger(3, Line);
                     break;
                 case 10:
-                    Output.Logger(0, Line);
-                    break;
-                case 11:
-                    Output.Logger(1, Line);
-                    break;
                 case 20:
+                case 30:
                     Output.Logger(0, Line);
-                    break;
-                case 21:
-                    Output.Logger(1, Line);
                     break;
                 case 22:
                     Output.Logger(0, $"\x1b[92m[↓]\x1b[0m{Line}");
                     break;
                 case 23:
                     Output.Logger(0, $"\x1b[36m[↑]\x1b[0m{Line}");
-                    break;
-                case 24:
-                    Output.Logger(3, Line);
-                    break;
-                case 30:
-                    Output.Logger(0, Line);
-                    break;
-                case 31:
-                    Output.Logger(1, Line);
-                    break;
-                case 32:
-                    Output.Logger(3, Line);
                     break;
                 case 33:
                     Output.Logger(0, $"\x1b[94m[插件]\x1b[0m{Line}");

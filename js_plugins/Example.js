@@ -23,7 +23,7 @@ function example(cmd){
 
 /**
  * 注册监听器
- * https://serein.cc/Serein/Javascript.html#%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%E5%99%A8
+ * https://serein.cc/Javascript.html#%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%E5%99%A8
  *
  * 返回：Boolean
  * 

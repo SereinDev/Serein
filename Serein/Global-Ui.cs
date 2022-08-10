@@ -1,5 +1,5 @@
-﻿using System;
-using System.Net;
+﻿using Serein.Base;
+using System;
 
 namespace Serein
 {
@@ -26,34 +26,34 @@ namespace Serein
                         Ui.PanelConsoleWebBrowser_Invoke(Line);
                         break;
                     case 11:
-                        Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
                     case 20:
                         Ui.BotWebBrowser_Invoke(Line);
                         break;
                     case 21:
-                        Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
                     case 22:
-                        Ui.BotWebBrowser_Invoke("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.BotWebBrowser_Invoke("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
                         break;
                     case 23:
-                        Ui.BotWebBrowser_Invoke("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.BotWebBrowser_Invoke("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
                         break;
                     case 24:
-                        Ui.BotWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.BotWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                         break;
                     case 30:
                         Ui.SereinPluginsWebBrowser_Invoke(Line);
                         break;
                     case 31:
-                        Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
                     case 32:
-                        Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + WebUtility.HtmlEncode(Line));
+                        Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                         break;
                     case 33:
-                        Ui.SereinPluginsWebBrowser_Invoke(WebUtility.HtmlEncode(Line));
+                        Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(Line));
                         break;
                 }
             }

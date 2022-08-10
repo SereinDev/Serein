@@ -45,7 +45,7 @@ namespace Serein.Ui
         }
         private void SereinPluginsListContextMenuStrip_Docs_Click(object sender, System.EventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Serein/Javascript.html") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/Javascript.html") { UseShellExecute = true });
         }
     }
 }
