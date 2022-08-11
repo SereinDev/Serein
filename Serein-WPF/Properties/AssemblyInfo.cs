@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Serein-WPF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Aliyun")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Serein-WPF")]
-[assembly: AssemblyCopyright("Copyright © Aliyun 2022")]
+[assembly: AssemblyCopyright("Copyright © Zaitonn 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
