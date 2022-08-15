@@ -145,7 +145,7 @@ namespace Serein.Ui
                 {
                     File.AppendAllText(
                         Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                        Text,
+                        Text + "\n",
                         Encoding.UTF8
                         );
                 }

@@ -297,6 +297,7 @@ namespace Serein.Base
         /// <param name="UserId">用户ID</param>
         public static void Update(JObject JsonObject, long UserId)
         {
+            return;
             if (IDs.Contains(UserId))
             {
                 List<MemberItem> memberItems = MemberItems;

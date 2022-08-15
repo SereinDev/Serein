@@ -121,7 +121,8 @@ namespace Serein.Plugin
                         break;
                     case "onServerStop":
                         Plugins.Event.onServerStop.ForEach(
-                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
+                            (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
+                                JsValue.FromObject(engine, Args[0])})
                             );
                         break;
                     case "onServerOutput":

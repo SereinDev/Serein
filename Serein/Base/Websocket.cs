@@ -190,7 +190,7 @@ namespace Serein.Base
                 {
                     File.AppendAllText(
                         Global.Path + $"\\logs\\msg\\{DateTime.Now:yyyy-MM-dd}.log",
-                        $"{DateTime.Now.TimeOfDay}  {Log.OutputRecognition(e.Message)}",
+                        $"{DateTime.Now:T}  {Log.OutputRecognition(e.Message)}\n",
                         Encoding.UTF8
                         );
                 }
