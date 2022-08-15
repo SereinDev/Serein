@@ -148,7 +148,7 @@ namespace Serein.Server
         /// 关闭服务器
         /// </summary>
         /// <param name="Quiet">静处理</param>
-        public static void Stop(bool Quiet =false)
+        public static void Stop(bool Quiet = false)
         {
             if (Status)
             {
@@ -164,11 +164,11 @@ namespace Serein.Server
             {
                 Restart = false;
             }
-            else if (!Global.Console&& !Quiet)
+            else if (!Global.Console && !Quiet)
             {
                 MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if(!Quiet)
+            else if (!Quiet)
             {
                 Global.Logger(2, "服务器不在运行中");
             }
@@ -313,7 +313,7 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            ">" + Log.OutputRecognition(Command_Copy)+"\n",
+                            ">" + Log.OutputRecognition(Command_Copy) + "\n",
                             Encoding.UTF8
                         );
                     }
@@ -368,7 +368,7 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            Log.OutputRecognition(Line)+"\n",
+                            Log.OutputRecognition(Line) + "\n",
                             Encoding.UTF8
                         );
                     }
