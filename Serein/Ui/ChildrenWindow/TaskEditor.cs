@@ -8,10 +8,10 @@ using System.Windows.Forms;
 
 namespace Serein.Ui.ChildrenWindow
 {
-    public partial class TaskEditer : Form
+    public partial class TaskEditor : Form
     {
         public bool CancelFlag = true;
-        public TaskEditer()
+        public TaskEditor()
         {
             InitializeComponent();
         }

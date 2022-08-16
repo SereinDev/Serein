@@ -43,21 +43,13 @@ namespace Serein.Ui
         }
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            if (RegexList.SelectedItems.Count <= 0)
-            {
-                RegexContextMenuStripEdit.Enabled = false;
-                RegexContextMenuStripDelete.Enabled = false;
-            }
-            else
-            {
-                RegexContextMenuStripEdit.Enabled = true;
-                RegexContextMenuStripDelete.Enabled = true;
-            }
+            RegexContextMenuStripEdit.Enabled = RegexList.SelectedItems.Count > 0;
+            RegexContextMenuStripDelete.Enabled = RegexList.SelectedItems.Count > 0;
             RegexContextMenuStripClear.Enabled = RegexList.Items.Count > 0;
         }
         private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            RegexEditer regexEditer = new RegexEditer();
+            RegexEditor regexEditer = new RegexEditor();
             regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
@@ -78,7 +70,7 @@ namespace Serein.Ui
             {
                 return;
             }
-            RegexEditer regexEditer = new RegexEditer();
+            RegexEditor regexEditer = new RegexEditor();
             int index = Array.IndexOf(areas, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,

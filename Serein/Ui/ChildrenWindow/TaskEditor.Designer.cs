@@ -1,6 +1,6 @@
 ﻿namespace Serein.Ui.ChildrenWindow
 {
-    partial class TaskEditer
+    partial class TaskEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskEditer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskEditor));
             this.Cron = new System.Windows.Forms.TextBox();
             this.CronLabel = new System.Windows.Forms.Label();
             this.CommandLabel = new System.Windows.Forms.Label();

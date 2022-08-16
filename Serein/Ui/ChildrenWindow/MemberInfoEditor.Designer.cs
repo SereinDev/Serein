@@ -1,7 +1,7 @@
 ﻿namespace Serein.Ui.ChildrenWindow
 
 {
-    partial class MemberInfoEditer
+    partial class MemberInfoEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemberInfoEditer));
+            System.Windows.Forms.Label GameIDLabel;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemberInfoEditor));
             this.GameIDBox = new System.Windows.Forms.TextBox();
             this.ID = new System.Windows.Forms.Label();
             this.NickName = new System.Windows.Forms.Label();
-            this.GameIDLabel = new System.Windows.Forms.Label();
             this.Confirm = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
+            GameIDLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // GameIDBox
@@ -67,13 +68,13 @@
             // 
             // GameIDLabel
             // 
-            this.GameIDLabel.AutoSize = true;
-            this.GameIDLabel.Location = new System.Drawing.Point(74, 132);
-            this.GameIDLabel.Margin = new System.Windows.Forms.Padding(10, 10, 10, 3);
-            this.GameIDLabel.Name = "GameIDLabel";
-            this.GameIDLabel.Size = new System.Drawing.Size(111, 31);
-            this.GameIDLabel.TabIndex = 3;
-            this.GameIDLabel.Text = "游戏ID：";
+            GameIDLabel.AutoSize = true;
+            GameIDLabel.Location = new System.Drawing.Point(74, 132);
+            GameIDLabel.Margin = new System.Windows.Forms.Padding(10, 10, 10, 3);
+            GameIDLabel.Name = "GameIDLabel";
+            GameIDLabel.Size = new System.Drawing.Size(87, 31);
+            GameIDLabel.TabIndex = 3;
+            GameIDLabel.Text = "游戏ID";
             // 
             // Confirm
             // 
@@ -95,22 +96,23 @@
             this.Cancel.UseVisualStyleBackColor = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
-            // MemberInfoEditer
+            // MemberInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(531, 353);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Confirm);
-            this.Controls.Add(this.GameIDLabel);
+            this.Controls.Add(GameIDLabel);
             this.Controls.Add(this.NickName);
             this.Controls.Add(this.ID);
             this.Controls.Add(this.GameIDBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "MemberInfoEditer";
+            this.Name = "MemberInfoEditor";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "成员信息编辑器";

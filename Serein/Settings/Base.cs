@@ -8,25 +8,30 @@ namespace Serein.Settings
 {
     internal class Base
     {
-        public static Task SaveSettingsThread = new Task(SaveSettings);
+        public static Task SaveSettingsTask = new Task(SaveSettings);
         public static void StartSaveSettings()
         {
-            SaveSettingsThread.Start();
+            SaveSettingsTask.Start();
         }
+
+        /// <summary>
+        /// 保存设置
+        /// </summary>
         public static void SaveSettings()
         {
             Global.Logger(999, "[Settings]", JsonConvert.SerializeObject(Global.Settings));
-            SaveSettingsThread.Wait(2500);
+            SaveSettingsTask.Wait(2500);
             string OldSettings = JsonConvert.SerializeObject(Global.Settings);
             while (true)
             {
-                SaveSettingsThread.Wait(2500);
+                SaveSettingsTask.Wait(2500);
                 string NewSettings = JsonConvert.SerializeObject(Global.Settings);
                 if (NewSettings != OldSettings)
                 {
                     OldSettings = NewSettings;
                     File.WriteAllText(Global.SettingPath + "\\Server.json", JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
                     File.WriteAllText(Global.SettingPath + "\\Bot.json", JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
+                    File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
                     File.WriteAllText(Global.SettingPath + "\\Serein.json", JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
                 }
                 try
@@ -40,19 +45,12 @@ namespace Serein.Settings
                 {
                     Global.Logger(999, "[Setting] Fail to update Matches.json:", e.ToString());
                 }
-                try
-                {
-                    if (File.Exists(Global.SettingPath + "\\Event.json"))
-                    {
-                        Global.Settings.Event = JsonConvert.DeserializeObject<Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8));
-                    }
-                }
-                catch (Exception e)
-                {
-                    Global.Logger(999, "[Setting] Fail to update Event.json:", e.ToString());
-                }
             }
         }
+
+        /// <summary>
+        /// 读取设置
+        /// </summary>
         public static void ReadSettings()
         {
             if (!Directory.Exists(Global.SettingPath))

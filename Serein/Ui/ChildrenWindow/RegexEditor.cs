@@ -7,10 +7,10 @@ using System.Windows.Forms;
 
 namespace Serein.Ui.ChildrenWindow
 {
-    public partial class RegexEditer : Form
+    public partial class RegexEditor : Form
     {
         public bool CancelFlag = true;
-        public RegexEditer()
+        public RegexEditor()
         {
             InitializeComponent();
             Area.SelectedIndex = 0;

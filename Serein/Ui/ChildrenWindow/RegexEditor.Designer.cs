@@ -1,6 +1,6 @@
 ﻿namespace Serein.Ui.ChildrenWindow
 {
-    partial class RegexEditer
+    partial class RegexEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegexEditer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegexEditor));
             this.Area = new System.Windows.Forms.ComboBox();
             this.AreaLabel = new System.Windows.Forms.Label();
             this.IsAdmin = new System.Windows.Forms.CheckBox();

@@ -6,10 +6,10 @@ using System.Windows.Forms;
 
 namespace Serein.Ui.ChildrenWindow
 {
-    public partial class MemberInfoEditer : Form
+    public partial class MemberInfoEditor : Form
     {
         public bool CancelFlag = true;
-        public MemberInfoEditer(ListViewItem Item)
+        public MemberInfoEditor(ListViewItem Item)
         {
             InitializeComponent();
             ID.Text += Item.Text;

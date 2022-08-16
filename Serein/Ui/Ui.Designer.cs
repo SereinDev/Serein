@@ -30,7 +30,56 @@ namespace Serein.Ui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.GroupBox PanelInfo;
+            System.Windows.Forms.Label PanelInfoCPU;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
+            System.Windows.Forms.Label PanelInfoTime;
+            System.Windows.Forms.Label PanelInfoLevel;
+            System.Windows.Forms.Label PanelInfoDifficulty;
+            System.Windows.Forms.Label PanelInfoVersion;
+            System.Windows.Forms.Label PanelInfoStatus;
+            System.Windows.Forms.GroupBox PanelControls;
+            System.Windows.Forms.GroupBox PanelConsole;
+            System.Windows.Forms.GroupBox BotInfo;
+            System.Windows.Forms.Label BotInfoStatus;
+            System.Windows.Forms.Label BotInfoTime;
+            System.Windows.Forms.Label BotInfoMessageSent;
+            System.Windows.Forms.Label BotInfoMessageReceived;
+            System.Windows.Forms.Label BotInfoQQ;
+            System.Windows.Forms.GroupBox BotWebsocket;
+            System.Windows.Forms.SplitContainer SereinPluginsSplitContainer;
+            this.PanelInfoCPU2 = new System.Windows.Forms.Label();
+            this.PanelInfoLevel2 = new System.Windows.Forms.Label();
+            this.PanelInfoTime2 = new System.Windows.Forms.Label();
+            this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
+            this.PanelInfoVersion2 = new System.Windows.Forms.Label();
+            this.PanelInfoStatus2 = new System.Windows.Forms.Label();
+            this.PanelControlKill = new System.Windows.Forms.Button();
+            this.PanelControlRestart = new System.Windows.Forms.Button();
+            this.PanelControlStop = new System.Windows.Forms.Button();
+            this.PanelControlStart = new System.Windows.Forms.Button();
+            this.PanelConsolePanel = new System.Windows.Forms.Panel();
+            this.PanelConsoleEnter = new System.Windows.Forms.Button();
+            this.PanelConsoleWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.PanelConsoleInput = new System.Windows.Forms.TextBox();
+            this.BotInfoStatus2 = new System.Windows.Forms.Label();
+            this.BotInfoMessageReceived2 = new System.Windows.Forms.Label();
+            this.BotInfoMessageSent2 = new System.Windows.Forms.Label();
+            this.BotInfoTime2 = new System.Windows.Forms.Label();
+            this.BotInfoQQ2 = new System.Windows.Forms.Label();
+            this.BotClose = new System.Windows.Forms.Button();
+            this.BotConnect = new System.Windows.Forms.Button();
+            this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.SereinPluginsList = new System.Windows.Forms.ListView();
+            this.SereinPluginsListName = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListVersion = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
+            this.SereinPluginsListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SereinPluginsListContextMenuStrip_Reload = new System.Windows.Forms.ToolStripMenuItem();
+            this.SereinPluginsListContextMenuStrip_ClearConsole = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.SereinPluginsListContextMenuStrip_Docs = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PluginContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginContextMenuStripRemove = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,29 +95,6 @@ namespace Serein.Ui
             this.tabControl = new System.Windows.Forms.TabControl();
             this.Panel = new System.Windows.Forms.TabPage();
             this.PanelTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.PanelInfo = new System.Windows.Forms.GroupBox();
-            this.PanelInfoCPU = new System.Windows.Forms.Label();
-            this.PanelInfoTime = new System.Windows.Forms.Label();
-            this.PanelInfoCPU2 = new System.Windows.Forms.Label();
-            this.PanelInfoLevel2 = new System.Windows.Forms.Label();
-            this.PanelInfoTime2 = new System.Windows.Forms.Label();
-            this.PanelInfoDifficulty2 = new System.Windows.Forms.Label();
-            this.PanelInfoVersion2 = new System.Windows.Forms.Label();
-            this.PanelInfoLevel = new System.Windows.Forms.Label();
-            this.PanelInfoDifficulty = new System.Windows.Forms.Label();
-            this.PanelInfoVersion = new System.Windows.Forms.Label();
-            this.PanelInfoStatus2 = new System.Windows.Forms.Label();
-            this.PanelInfoStatus = new System.Windows.Forms.Label();
-            this.PanelControls = new System.Windows.Forms.GroupBox();
-            this.PanelControlKill = new System.Windows.Forms.Button();
-            this.PanelControlRestart = new System.Windows.Forms.Button();
-            this.PanelControlStop = new System.Windows.Forms.Button();
-            this.PanelControlStart = new System.Windows.Forms.Button();
-            this.PanelConsole = new System.Windows.Forms.GroupBox();
-            this.PanelConsolePanel = new System.Windows.Forms.Panel();
-            this.PanelConsoleEnter = new System.Windows.Forms.Button();
-            this.PanelConsoleWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.PanelConsoleInput = new System.Windows.Forms.TextBox();
             this.Plugin = new System.Windows.Forms.TabPage();
             this.PluginList = new System.Windows.Forms.ListView();
             this.columnHeader = new System.Windows.Forms.ColumnHeader();
@@ -110,20 +136,6 @@ namespace Serein.Ui
             this.Bot = new System.Windows.Forms.TabPage();
             this.BotTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.BotInfo = new System.Windows.Forms.GroupBox();
-            this.BotInfoStatus2 = new System.Windows.Forms.Label();
-            this.BotInfoMessageReceived2 = new System.Windows.Forms.Label();
-            this.BotInfoMessageSent2 = new System.Windows.Forms.Label();
-            this.BotInfoTime2 = new System.Windows.Forms.Label();
-            this.BotInfoStatus = new System.Windows.Forms.Label();
-            this.BotInfoQQ2 = new System.Windows.Forms.Label();
-            this.BotInfoTime = new System.Windows.Forms.Label();
-            this.BotInfoMessageSent = new System.Windows.Forms.Label();
-            this.BotInfoMessageReceived = new System.Windows.Forms.Label();
-            this.BotInfoQQ = new System.Windows.Forms.Label();
-            this.BotWebsocket = new System.Windows.Forms.GroupBox();
-            this.BotClose = new System.Windows.Forms.Button();
-            this.BotConnect = new System.Windows.Forms.Button();
             this.Member = new System.Windows.Forms.TabPage();
             this.MemberList = new System.Windows.Forms.ListView();
             this.MemberListID = new System.Windows.Forms.ColumnHeader();
@@ -137,18 +149,6 @@ namespace Serein.Ui
             this.MemberContextMenuStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MemberContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.SereinPlugins = new System.Windows.Forms.TabPage();
-            this.SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.SereinPluginsWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.SereinPluginsList = new System.Windows.Forms.ListView();
-            this.SereinPluginsListName = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListVersion = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
-            this.SereinPluginsListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.SereinPluginsListContextMenuStrip_Reload = new System.Windows.Forms.ToolStripMenuItem();
-            this.SereinPluginsListContextMenuStrip_ClearConsole = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.SereinPluginsListContextMenuStrip_Docs = new System.Windows.Forms.ToolStripMenuItem();
             this.Setting = new System.Windows.Forms.TabPage();
             this.SettingPanel = new System.Windows.Forms.Panel();
             this.SettingSerein = new System.Windows.Forms.GroupBox();
@@ -166,6 +166,17 @@ namespace Serein.Ui
             this.SettingSereinTutorial = new System.Windows.Forms.Label();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
+            this.SettingEvent = new System.Windows.Forms.GroupBox();
+            this.SettingEventSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.SettingEventTreeView = new System.Windows.Forms.TreeView();
+            this.SettingEventList = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.SettingEventListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SettingEventListContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingEventListContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingEventListContextMenuStrip_Remove = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.SettingEventListContextMenuStrip_Docs = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingBot = new System.Windows.Forms.GroupBox();
             this.SettingBotAutoEscape = new System.Windows.Forms.CheckBox();
             this.SettingBotRestart = new System.Windows.Forms.CheckBox();
@@ -204,15 +215,39 @@ namespace Serein.Ui
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            PanelInfo = new System.Windows.Forms.GroupBox();
+            PanelInfoCPU = new System.Windows.Forms.Label();
+            PanelInfoTime = new System.Windows.Forms.Label();
+            PanelInfoLevel = new System.Windows.Forms.Label();
+            PanelInfoDifficulty = new System.Windows.Forms.Label();
+            PanelInfoVersion = new System.Windows.Forms.Label();
+            PanelInfoStatus = new System.Windows.Forms.Label();
+            PanelControls = new System.Windows.Forms.GroupBox();
+            PanelConsole = new System.Windows.Forms.GroupBox();
+            BotInfo = new System.Windows.Forms.GroupBox();
+            BotInfoStatus = new System.Windows.Forms.Label();
+            BotInfoTime = new System.Windows.Forms.Label();
+            BotInfoMessageSent = new System.Windows.Forms.Label();
+            BotInfoMessageReceived = new System.Windows.Forms.Label();
+            BotInfoQQ = new System.Windows.Forms.Label();
+            BotWebsocket = new System.Windows.Forms.GroupBox();
+            SereinPluginsSplitContainer = new System.Windows.Forms.SplitContainer();
+            PanelInfo.SuspendLayout();
+            PanelControls.SuspendLayout();
+            PanelConsole.SuspendLayout();
+            this.PanelConsolePanel.SuspendLayout();
+            BotInfo.SuspendLayout();
+            BotWebsocket.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(SereinPluginsSplitContainer)).BeginInit();
+            SereinPluginsSplitContainer.Panel1.SuspendLayout();
+            SereinPluginsSplitContainer.Panel2.SuspendLayout();
+            SereinPluginsSplitContainer.SuspendLayout();
+            this.SereinPluginsListContextMenuStrip.SuspendLayout();
             this.PluginContextMenuStrip.SuspendLayout();
             this.MainTableLayout.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.Panel.SuspendLayout();
             this.PanelTableLayout.SuspendLayout();
-            this.PanelInfo.SuspendLayout();
-            this.PanelControls.SuspendLayout();
-            this.PanelConsole.SuspendLayout();
-            this.PanelConsolePanel.SuspendLayout();
             this.Plugin.SuspendLayout();
             this.Regular.SuspendLayout();
             this.RegexContextMenuStrip.SuspendLayout();
@@ -220,25 +255,357 @@ namespace Serein.Ui
             this.TaskContextMenuStrip.SuspendLayout();
             this.Bot.SuspendLayout();
             this.BotTableLayoutPanel.SuspendLayout();
-            this.BotInfo.SuspendLayout();
-            this.BotWebsocket.SuspendLayout();
             this.Member.SuspendLayout();
             this.MemberContextMenuStrip.SuspendLayout();
             this.SereinPlugins.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).BeginInit();
-            this.SereinPluginsSplitContainer.Panel1.SuspendLayout();
-            this.SereinPluginsSplitContainer.Panel2.SuspendLayout();
-            this.SereinPluginsSplitContainer.SuspendLayout();
-            this.SereinPluginsListContextMenuStrip.SuspendLayout();
             this.Setting.SuspendLayout();
             this.SettingPanel.SuspendLayout();
             this.SettingSerein.SuspendLayout();
+            this.SettingEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingEventSplitContainer)).BeginInit();
+            this.SettingEventSplitContainer.Panel1.SuspendLayout();
+            this.SettingEventSplitContainer.Panel2.SuspendLayout();
+            this.SettingEventSplitContainer.SuspendLayout();
+            this.SettingEventListContextMenuStrip.SuspendLayout();
             this.SettingBot.SuspendLayout();
             this.SettingServer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SettingServerPort)).BeginInit();
             this.Debug.SuspendLayout();
             this.StatusStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // PanelInfo
+            // 
+            PanelInfo.Controls.Add(PanelInfoCPU);
+            PanelInfo.Controls.Add(PanelInfoTime);
+            PanelInfo.Controls.Add(this.PanelInfoCPU2);
+            PanelInfo.Controls.Add(this.PanelInfoLevel2);
+            PanelInfo.Controls.Add(this.PanelInfoTime2);
+            PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
+            PanelInfo.Controls.Add(this.PanelInfoVersion2);
+            PanelInfo.Controls.Add(PanelInfoLevel);
+            PanelInfo.Controls.Add(PanelInfoDifficulty);
+            PanelInfo.Controls.Add(PanelInfoVersion);
+            PanelInfo.Controls.Add(this.PanelInfoStatus2);
+            PanelInfo.Controls.Add(PanelInfoStatus);
+            resources.ApplyResources(PanelInfo, "PanelInfo");
+            PanelInfo.Name = "PanelInfo";
+            PanelInfo.TabStop = false;
+            // 
+            // PanelInfoCPU
+            // 
+            resources.ApplyResources(PanelInfoCPU, "PanelInfoCPU");
+            PanelInfoCPU.Name = "PanelInfoCPU";
+            // 
+            // PanelInfoTime
+            // 
+            resources.ApplyResources(PanelInfoTime, "PanelInfoTime");
+            PanelInfoTime.Name = "PanelInfoTime";
+            // 
+            // PanelInfoCPU2
+            // 
+            resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
+            this.PanelInfoCPU2.Name = "PanelInfoCPU2";
+            // 
+            // PanelInfoLevel2
+            // 
+            resources.ApplyResources(this.PanelInfoLevel2, "PanelInfoLevel2");
+            this.PanelInfoLevel2.Name = "PanelInfoLevel2";
+            // 
+            // PanelInfoTime2
+            // 
+            resources.ApplyResources(this.PanelInfoTime2, "PanelInfoTime2");
+            this.PanelInfoTime2.Name = "PanelInfoTime2";
+            // 
+            // PanelInfoDifficulty2
+            // 
+            resources.ApplyResources(this.PanelInfoDifficulty2, "PanelInfoDifficulty2");
+            this.PanelInfoDifficulty2.Name = "PanelInfoDifficulty2";
+            // 
+            // PanelInfoVersion2
+            // 
+            resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
+            this.PanelInfoVersion2.Name = "PanelInfoVersion2";
+            // 
+            // PanelInfoLevel
+            // 
+            resources.ApplyResources(PanelInfoLevel, "PanelInfoLevel");
+            PanelInfoLevel.Name = "PanelInfoLevel";
+            // 
+            // PanelInfoDifficulty
+            // 
+            resources.ApplyResources(PanelInfoDifficulty, "PanelInfoDifficulty");
+            PanelInfoDifficulty.Name = "PanelInfoDifficulty";
+            // 
+            // PanelInfoVersion
+            // 
+            resources.ApplyResources(PanelInfoVersion, "PanelInfoVersion");
+            PanelInfoVersion.Name = "PanelInfoVersion";
+            // 
+            // PanelInfoStatus2
+            // 
+            resources.ApplyResources(this.PanelInfoStatus2, "PanelInfoStatus2");
+            this.PanelInfoStatus2.Name = "PanelInfoStatus2";
+            // 
+            // PanelInfoStatus
+            // 
+            resources.ApplyResources(PanelInfoStatus, "PanelInfoStatus");
+            PanelInfoStatus.Name = "PanelInfoStatus";
+            // 
+            // PanelControls
+            // 
+            PanelControls.Controls.Add(this.PanelControlKill);
+            PanelControls.Controls.Add(this.PanelControlRestart);
+            PanelControls.Controls.Add(this.PanelControlStop);
+            PanelControls.Controls.Add(this.PanelControlStart);
+            resources.ApplyResources(PanelControls, "PanelControls");
+            PanelControls.Name = "PanelControls";
+            PanelControls.TabStop = false;
+            // 
+            // PanelControlKill
+            // 
+            resources.ApplyResources(this.PanelControlKill, "PanelControlKill");
+            this.PanelControlKill.Name = "PanelControlKill";
+            this.PanelControlKill.UseVisualStyleBackColor = true;
+            this.PanelControlKill.Click += new System.EventHandler(this.PanelControlKill_Click);
+            // 
+            // PanelControlRestart
+            // 
+            resources.ApplyResources(this.PanelControlRestart, "PanelControlRestart");
+            this.PanelControlRestart.Name = "PanelControlRestart";
+            this.PanelControlRestart.UseVisualStyleBackColor = true;
+            this.PanelControlRestart.Click += new System.EventHandler(this.PanelControlRestart_Click);
+            // 
+            // PanelControlStop
+            // 
+            resources.ApplyResources(this.PanelControlStop, "PanelControlStop");
+            this.PanelControlStop.Name = "PanelControlStop";
+            this.PanelControlStop.UseVisualStyleBackColor = true;
+            this.PanelControlStop.Click += new System.EventHandler(this.PanelControlStop_Click);
+            // 
+            // PanelControlStart
+            // 
+            resources.ApplyResources(this.PanelControlStart, "PanelControlStart");
+            this.PanelControlStart.Name = "PanelControlStart";
+            this.PanelControlStart.UseVisualStyleBackColor = true;
+            this.PanelControlStart.Click += new System.EventHandler(this.PanelControlStart_Click);
+            // 
+            // PanelConsole
+            // 
+            resources.ApplyResources(PanelConsole, "PanelConsole");
+            PanelConsole.Controls.Add(this.PanelConsolePanel);
+            PanelConsole.Name = "PanelConsole";
+            this.PanelTableLayout.SetRowSpan(PanelConsole, 2);
+            PanelConsole.TabStop = false;
+            // 
+            // PanelConsolePanel
+            // 
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleEnter);
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleWebBrowser);
+            this.PanelConsolePanel.Controls.Add(this.PanelConsoleInput);
+            resources.ApplyResources(this.PanelConsolePanel, "PanelConsolePanel");
+            this.PanelConsolePanel.Name = "PanelConsolePanel";
+            // 
+            // PanelConsoleEnter
+            // 
+            resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
+            this.PanelConsoleEnter.Name = "PanelConsoleEnter";
+            this.PanelConsoleEnter.UseVisualStyleBackColor = true;
+            this.PanelConsoleEnter.Click += new System.EventHandler(this.PanelConsoleEnter_Click);
+            // 
+            // PanelConsoleWebBrowser
+            // 
+            this.PanelConsoleWebBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.PanelConsoleWebBrowser, "PanelConsoleWebBrowser");
+            this.PanelConsoleWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.PanelConsoleWebBrowser.Name = "PanelConsoleWebBrowser";
+            this.PanelConsoleWebBrowser.ScriptErrorsSuppressed = true;
+            this.PanelConsoleWebBrowser.ScrollBarsEnabled = false;
+            this.PanelConsoleWebBrowser.TabStop = false;
+            // 
+            // PanelConsoleInput
+            // 
+            resources.ApplyResources(this.PanelConsoleInput, "PanelConsoleInput");
+            this.PanelConsoleInput.Name = "PanelConsoleInput";
+            this.PanelConsoleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PanelConsoleInput_KeyDown);
+            this.PanelConsoleInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PanelConsoleInput_KeyPress);
+            // 
+            // BotInfo
+            // 
+            BotInfo.Controls.Add(this.BotInfoStatus2);
+            BotInfo.Controls.Add(this.BotInfoMessageReceived2);
+            BotInfo.Controls.Add(this.BotInfoMessageSent2);
+            BotInfo.Controls.Add(this.BotInfoTime2);
+            BotInfo.Controls.Add(BotInfoStatus);
+            BotInfo.Controls.Add(this.BotInfoQQ2);
+            BotInfo.Controls.Add(BotInfoTime);
+            BotInfo.Controls.Add(BotInfoMessageSent);
+            BotInfo.Controls.Add(BotInfoMessageReceived);
+            BotInfo.Controls.Add(BotInfoQQ);
+            resources.ApplyResources(BotInfo, "BotInfo");
+            BotInfo.Name = "BotInfo";
+            BotInfo.TabStop = false;
+            // 
+            // BotInfoStatus2
+            // 
+            resources.ApplyResources(this.BotInfoStatus2, "BotInfoStatus2");
+            this.BotInfoStatus2.Name = "BotInfoStatus2";
+            // 
+            // BotInfoMessageReceived2
+            // 
+            resources.ApplyResources(this.BotInfoMessageReceived2, "BotInfoMessageReceived2");
+            this.BotInfoMessageReceived2.Name = "BotInfoMessageReceived2";
+            // 
+            // BotInfoMessageSent2
+            // 
+            resources.ApplyResources(this.BotInfoMessageSent2, "BotInfoMessageSent2");
+            this.BotInfoMessageSent2.Name = "BotInfoMessageSent2";
+            // 
+            // BotInfoTime2
+            // 
+            resources.ApplyResources(this.BotInfoTime2, "BotInfoTime2");
+            this.BotInfoTime2.Name = "BotInfoTime2";
+            // 
+            // BotInfoStatus
+            // 
+            resources.ApplyResources(BotInfoStatus, "BotInfoStatus");
+            BotInfoStatus.Name = "BotInfoStatus";
+            // 
+            // BotInfoQQ2
+            // 
+            resources.ApplyResources(this.BotInfoQQ2, "BotInfoQQ2");
+            this.BotInfoQQ2.Name = "BotInfoQQ2";
+            // 
+            // BotInfoTime
+            // 
+            resources.ApplyResources(BotInfoTime, "BotInfoTime");
+            BotInfoTime.Name = "BotInfoTime";
+            // 
+            // BotInfoMessageSent
+            // 
+            resources.ApplyResources(BotInfoMessageSent, "BotInfoMessageSent");
+            BotInfoMessageSent.Name = "BotInfoMessageSent";
+            // 
+            // BotInfoMessageReceived
+            // 
+            resources.ApplyResources(BotInfoMessageReceived, "BotInfoMessageReceived");
+            BotInfoMessageReceived.Name = "BotInfoMessageReceived";
+            // 
+            // BotInfoQQ
+            // 
+            resources.ApplyResources(BotInfoQQ, "BotInfoQQ");
+            BotInfoQQ.Name = "BotInfoQQ";
+            // 
+            // BotWebsocket
+            // 
+            BotWebsocket.Controls.Add(this.BotClose);
+            BotWebsocket.Controls.Add(this.BotConnect);
+            resources.ApplyResources(BotWebsocket, "BotWebsocket");
+            BotWebsocket.Name = "BotWebsocket";
+            BotWebsocket.TabStop = false;
+            // 
+            // BotClose
+            // 
+            resources.ApplyResources(this.BotClose, "BotClose");
+            this.BotClose.Name = "BotClose";
+            this.BotClose.UseVisualStyleBackColor = true;
+            this.BotClose.Click += new System.EventHandler(this.BotClose_Click);
+            // 
+            // BotConnect
+            // 
+            resources.ApplyResources(this.BotConnect, "BotConnect");
+            this.BotConnect.Name = "BotConnect";
+            this.BotConnect.UseVisualStyleBackColor = true;
+            this.BotConnect.Click += new System.EventHandler(this.BotConnect_Click);
+            // 
+            // SereinPluginsSplitContainer
+            // 
+            resources.ApplyResources(SereinPluginsSplitContainer, "SereinPluginsSplitContainer");
+            SereinPluginsSplitContainer.Name = "SereinPluginsSplitContainer";
+            // 
+            // SereinPluginsSplitContainer.Panel1
+            // 
+            SereinPluginsSplitContainer.Panel1.Controls.Add(this.SereinPluginsWebBrowser);
+            // 
+            // SereinPluginsSplitContainer.Panel2
+            // 
+            SereinPluginsSplitContainer.Panel2.Controls.Add(this.SereinPluginsList);
+            // 
+            // SereinPluginsWebBrowser
+            // 
+            this.SereinPluginsWebBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.SereinPluginsWebBrowser, "SereinPluginsWebBrowser");
+            this.SereinPluginsWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.SereinPluginsWebBrowser.Name = "SereinPluginsWebBrowser";
+            this.SereinPluginsWebBrowser.ScriptErrorsSuppressed = true;
+            this.SereinPluginsWebBrowser.ScrollBarsEnabled = false;
+            this.SereinPluginsWebBrowser.TabStop = false;
+            // 
+            // SereinPluginsList
+            // 
+            this.SereinPluginsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.SereinPluginsListName,
+            this.SereinPluginsListVersion,
+            this.SereinPluginsListAuthor,
+            this.SereinPluginsListDescription});
+            this.SereinPluginsList.ContextMenuStrip = this.SereinPluginsListContextMenuStrip;
+            resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
+            this.SereinPluginsList.FullRowSelect = true;
+            this.SereinPluginsList.GridLines = true;
+            this.SereinPluginsList.MultiSelect = false;
+            this.SereinPluginsList.Name = "SereinPluginsList";
+            this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
+            this.SereinPluginsList.View = System.Windows.Forms.View.Details;
+            // 
+            // SereinPluginsListName
+            // 
+            resources.ApplyResources(this.SereinPluginsListName, "SereinPluginsListName");
+            // 
+            // SereinPluginsListVersion
+            // 
+            resources.ApplyResources(this.SereinPluginsListVersion, "SereinPluginsListVersion");
+            // 
+            // SereinPluginsListAuthor
+            // 
+            resources.ApplyResources(this.SereinPluginsListAuthor, "SereinPluginsListAuthor");
+            // 
+            // SereinPluginsListDescription
+            // 
+            resources.ApplyResources(this.SereinPluginsListDescription, "SereinPluginsListDescription");
+            // 
+            // SereinPluginsListContextMenuStrip
+            // 
+            this.SereinPluginsListContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.SereinPluginsListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SereinPluginsListContextMenuStrip_Reload,
+            this.SereinPluginsListContextMenuStrip_ClearConsole,
+            this.toolStripSeparator9,
+            this.SereinPluginsListContextMenuStrip_Docs});
+            this.SereinPluginsListContextMenuStrip.Name = "SereinPluginsListContextMenuStrip";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip, "SereinPluginsListContextMenuStrip");
+            // 
+            // SereinPluginsListContextMenuStrip_Reload
+            // 
+            this.SereinPluginsListContextMenuStrip_Reload.Name = "SereinPluginsListContextMenuStrip_Reload";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Reload, "SereinPluginsListContextMenuStrip_Reload");
+            this.SereinPluginsListContextMenuStrip_Reload.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Reload_Click);
+            // 
+            // SereinPluginsListContextMenuStrip_ClearConsole
+            // 
+            this.SereinPluginsListContextMenuStrip_ClearConsole.Name = "SereinPluginsListContextMenuStrip_ClearConsole";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_ClearConsole, "SereinPluginsListContextMenuStrip_ClearConsole");
+            this.SereinPluginsListContextMenuStrip_ClearConsole.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_ClearConsole_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
+            // 
+            // SereinPluginsListContextMenuStrip_Docs
+            // 
+            this.SereinPluginsListContextMenuStrip_Docs.Name = "SereinPluginsListContextMenuStrip_Docs";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Docs, "SereinPluginsListContextMenuStrip_Docs");
+            this.SereinPluginsListContextMenuStrip_Docs.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Docs_Click);
             // 
             // PluginContextMenuStrip
             // 
@@ -346,166 +713,10 @@ namespace Serein.Ui
             // PanelTableLayout
             // 
             resources.ApplyResources(this.PanelTableLayout, "PanelTableLayout");
-            this.PanelTableLayout.Controls.Add(this.PanelInfo, 0, 0);
-            this.PanelTableLayout.Controls.Add(this.PanelControls, 0, 1);
-            this.PanelTableLayout.Controls.Add(this.PanelConsole, 1, 0);
+            this.PanelTableLayout.Controls.Add(PanelInfo, 0, 0);
+            this.PanelTableLayout.Controls.Add(PanelControls, 0, 1);
+            this.PanelTableLayout.Controls.Add(PanelConsole, 1, 0);
             this.PanelTableLayout.Name = "PanelTableLayout";
-            // 
-            // PanelInfo
-            // 
-            this.PanelInfo.Controls.Add(this.PanelInfoCPU);
-            this.PanelInfo.Controls.Add(this.PanelInfoTime);
-            this.PanelInfo.Controls.Add(this.PanelInfoCPU2);
-            this.PanelInfo.Controls.Add(this.PanelInfoLevel2);
-            this.PanelInfo.Controls.Add(this.PanelInfoTime2);
-            this.PanelInfo.Controls.Add(this.PanelInfoDifficulty2);
-            this.PanelInfo.Controls.Add(this.PanelInfoVersion2);
-            this.PanelInfo.Controls.Add(this.PanelInfoLevel);
-            this.PanelInfo.Controls.Add(this.PanelInfoDifficulty);
-            this.PanelInfo.Controls.Add(this.PanelInfoVersion);
-            this.PanelInfo.Controls.Add(this.PanelInfoStatus2);
-            this.PanelInfo.Controls.Add(this.PanelInfoStatus);
-            resources.ApplyResources(this.PanelInfo, "PanelInfo");
-            this.PanelInfo.Name = "PanelInfo";
-            this.PanelInfo.TabStop = false;
-            // 
-            // PanelInfoCPU
-            // 
-            resources.ApplyResources(this.PanelInfoCPU, "PanelInfoCPU");
-            this.PanelInfoCPU.Name = "PanelInfoCPU";
-            // 
-            // PanelInfoTime
-            // 
-            resources.ApplyResources(this.PanelInfoTime, "PanelInfoTime");
-            this.PanelInfoTime.Name = "PanelInfoTime";
-            // 
-            // PanelInfoCPU2
-            // 
-            resources.ApplyResources(this.PanelInfoCPU2, "PanelInfoCPU2");
-            this.PanelInfoCPU2.Name = "PanelInfoCPU2";
-            // 
-            // PanelInfoLevel2
-            // 
-            resources.ApplyResources(this.PanelInfoLevel2, "PanelInfoLevel2");
-            this.PanelInfoLevel2.Name = "PanelInfoLevel2";
-            // 
-            // PanelInfoTime2
-            // 
-            resources.ApplyResources(this.PanelInfoTime2, "PanelInfoTime2");
-            this.PanelInfoTime2.Name = "PanelInfoTime2";
-            // 
-            // PanelInfoDifficulty2
-            // 
-            resources.ApplyResources(this.PanelInfoDifficulty2, "PanelInfoDifficulty2");
-            this.PanelInfoDifficulty2.Name = "PanelInfoDifficulty2";
-            // 
-            // PanelInfoVersion2
-            // 
-            resources.ApplyResources(this.PanelInfoVersion2, "PanelInfoVersion2");
-            this.PanelInfoVersion2.Name = "PanelInfoVersion2";
-            // 
-            // PanelInfoLevel
-            // 
-            resources.ApplyResources(this.PanelInfoLevel, "PanelInfoLevel");
-            this.PanelInfoLevel.Name = "PanelInfoLevel";
-            // 
-            // PanelInfoDifficulty
-            // 
-            resources.ApplyResources(this.PanelInfoDifficulty, "PanelInfoDifficulty");
-            this.PanelInfoDifficulty.Name = "PanelInfoDifficulty";
-            // 
-            // PanelInfoVersion
-            // 
-            resources.ApplyResources(this.PanelInfoVersion, "PanelInfoVersion");
-            this.PanelInfoVersion.Name = "PanelInfoVersion";
-            // 
-            // PanelInfoStatus2
-            // 
-            resources.ApplyResources(this.PanelInfoStatus2, "PanelInfoStatus2");
-            this.PanelInfoStatus2.Name = "PanelInfoStatus2";
-            // 
-            // PanelInfoStatus
-            // 
-            resources.ApplyResources(this.PanelInfoStatus, "PanelInfoStatus");
-            this.PanelInfoStatus.Name = "PanelInfoStatus";
-            // 
-            // PanelControls
-            // 
-            this.PanelControls.Controls.Add(this.PanelControlKill);
-            this.PanelControls.Controls.Add(this.PanelControlRestart);
-            this.PanelControls.Controls.Add(this.PanelControlStop);
-            this.PanelControls.Controls.Add(this.PanelControlStart);
-            resources.ApplyResources(this.PanelControls, "PanelControls");
-            this.PanelControls.Name = "PanelControls";
-            this.PanelControls.TabStop = false;
-            // 
-            // PanelControlKill
-            // 
-            resources.ApplyResources(this.PanelControlKill, "PanelControlKill");
-            this.PanelControlKill.Name = "PanelControlKill";
-            this.PanelControlKill.UseVisualStyleBackColor = true;
-            this.PanelControlKill.Click += new System.EventHandler(this.PanelControlKill_Click);
-            // 
-            // PanelControlRestart
-            // 
-            resources.ApplyResources(this.PanelControlRestart, "PanelControlRestart");
-            this.PanelControlRestart.Name = "PanelControlRestart";
-            this.PanelControlRestart.UseVisualStyleBackColor = true;
-            this.PanelControlRestart.Click += new System.EventHandler(this.PanelControlRestart_Click);
-            // 
-            // PanelControlStop
-            // 
-            resources.ApplyResources(this.PanelControlStop, "PanelControlStop");
-            this.PanelControlStop.Name = "PanelControlStop";
-            this.PanelControlStop.UseVisualStyleBackColor = true;
-            this.PanelControlStop.Click += new System.EventHandler(this.PanelControlStop_Click);
-            // 
-            // PanelControlStart
-            // 
-            resources.ApplyResources(this.PanelControlStart, "PanelControlStart");
-            this.PanelControlStart.Name = "PanelControlStart";
-            this.PanelControlStart.UseVisualStyleBackColor = true;
-            this.PanelControlStart.Click += new System.EventHandler(this.PanelControlStart_Click);
-            // 
-            // PanelConsole
-            // 
-            resources.ApplyResources(this.PanelConsole, "PanelConsole");
-            this.PanelConsole.Controls.Add(this.PanelConsolePanel);
-            this.PanelConsole.Name = "PanelConsole";
-            this.PanelTableLayout.SetRowSpan(this.PanelConsole, 2);
-            this.PanelConsole.TabStop = false;
-            // 
-            // PanelConsolePanel
-            // 
-            this.PanelConsolePanel.Controls.Add(this.PanelConsoleEnter);
-            this.PanelConsolePanel.Controls.Add(this.PanelConsoleWebBrowser);
-            this.PanelConsolePanel.Controls.Add(this.PanelConsoleInput);
-            resources.ApplyResources(this.PanelConsolePanel, "PanelConsolePanel");
-            this.PanelConsolePanel.Name = "PanelConsolePanel";
-            // 
-            // PanelConsoleEnter
-            // 
-            resources.ApplyResources(this.PanelConsoleEnter, "PanelConsoleEnter");
-            this.PanelConsoleEnter.Name = "PanelConsoleEnter";
-            this.PanelConsoleEnter.UseVisualStyleBackColor = true;
-            this.PanelConsoleEnter.Click += new System.EventHandler(this.PanelConsoleEnter_Click);
-            // 
-            // PanelConsoleWebBrowser
-            // 
-            this.PanelConsoleWebBrowser.AllowWebBrowserDrop = false;
-            resources.ApplyResources(this.PanelConsoleWebBrowser, "PanelConsoleWebBrowser");
-            this.PanelConsoleWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.PanelConsoleWebBrowser.Name = "PanelConsoleWebBrowser";
-            this.PanelConsoleWebBrowser.ScriptErrorsSuppressed = true;
-            this.PanelConsoleWebBrowser.ScrollBarsEnabled = false;
-            this.PanelConsoleWebBrowser.TabStop = false;
-            // 
-            // PanelConsoleInput
-            // 
-            resources.ApplyResources(this.PanelConsoleInput, "PanelConsoleInput");
-            this.PanelConsoleInput.Name = "PanelConsoleInput";
-            this.PanelConsoleInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PanelConsoleInput_KeyDown);
-            this.PanelConsoleInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PanelConsoleInput_KeyPress);
             // 
             // Plugin
             // 
@@ -782,8 +993,8 @@ namespace Serein.Ui
             // 
             resources.ApplyResources(this.BotTableLayoutPanel, "BotTableLayoutPanel");
             this.BotTableLayoutPanel.Controls.Add(this.BotWebBrowser, 1, 0);
-            this.BotTableLayoutPanel.Controls.Add(this.BotInfo, 0, 0);
-            this.BotTableLayoutPanel.Controls.Add(this.BotWebsocket, 0, 1);
+            this.BotTableLayoutPanel.Controls.Add(BotInfo, 0, 0);
+            this.BotTableLayoutPanel.Controls.Add(BotWebsocket, 0, 1);
             this.BotTableLayoutPanel.Name = "BotTableLayoutPanel";
             // 
             // BotWebBrowser
@@ -795,94 +1006,6 @@ namespace Serein.Ui
             this.BotTableLayoutPanel.SetRowSpan(this.BotWebBrowser, 2);
             this.BotWebBrowser.ScrollBarsEnabled = false;
             this.BotWebBrowser.TabStop = false;
-            // 
-            // BotInfo
-            // 
-            this.BotInfo.Controls.Add(this.BotInfoStatus2);
-            this.BotInfo.Controls.Add(this.BotInfoMessageReceived2);
-            this.BotInfo.Controls.Add(this.BotInfoMessageSent2);
-            this.BotInfo.Controls.Add(this.BotInfoTime2);
-            this.BotInfo.Controls.Add(this.BotInfoStatus);
-            this.BotInfo.Controls.Add(this.BotInfoQQ2);
-            this.BotInfo.Controls.Add(this.BotInfoTime);
-            this.BotInfo.Controls.Add(this.BotInfoMessageSent);
-            this.BotInfo.Controls.Add(this.BotInfoMessageReceived);
-            this.BotInfo.Controls.Add(this.BotInfoQQ);
-            resources.ApplyResources(this.BotInfo, "BotInfo");
-            this.BotInfo.Name = "BotInfo";
-            this.BotInfo.TabStop = false;
-            // 
-            // BotInfoStatus2
-            // 
-            resources.ApplyResources(this.BotInfoStatus2, "BotInfoStatus2");
-            this.BotInfoStatus2.Name = "BotInfoStatus2";
-            // 
-            // BotInfoMessageReceived2
-            // 
-            resources.ApplyResources(this.BotInfoMessageReceived2, "BotInfoMessageReceived2");
-            this.BotInfoMessageReceived2.Name = "BotInfoMessageReceived2";
-            // 
-            // BotInfoMessageSent2
-            // 
-            resources.ApplyResources(this.BotInfoMessageSent2, "BotInfoMessageSent2");
-            this.BotInfoMessageSent2.Name = "BotInfoMessageSent2";
-            // 
-            // BotInfoTime2
-            // 
-            resources.ApplyResources(this.BotInfoTime2, "BotInfoTime2");
-            this.BotInfoTime2.Name = "BotInfoTime2";
-            // 
-            // BotInfoStatus
-            // 
-            resources.ApplyResources(this.BotInfoStatus, "BotInfoStatus");
-            this.BotInfoStatus.Name = "BotInfoStatus";
-            // 
-            // BotInfoQQ2
-            // 
-            resources.ApplyResources(this.BotInfoQQ2, "BotInfoQQ2");
-            this.BotInfoQQ2.Name = "BotInfoQQ2";
-            // 
-            // BotInfoTime
-            // 
-            resources.ApplyResources(this.BotInfoTime, "BotInfoTime");
-            this.BotInfoTime.Name = "BotInfoTime";
-            // 
-            // BotInfoMessageSent
-            // 
-            resources.ApplyResources(this.BotInfoMessageSent, "BotInfoMessageSent");
-            this.BotInfoMessageSent.Name = "BotInfoMessageSent";
-            // 
-            // BotInfoMessageReceived
-            // 
-            resources.ApplyResources(this.BotInfoMessageReceived, "BotInfoMessageReceived");
-            this.BotInfoMessageReceived.Name = "BotInfoMessageReceived";
-            // 
-            // BotInfoQQ
-            // 
-            resources.ApplyResources(this.BotInfoQQ, "BotInfoQQ");
-            this.BotInfoQQ.Name = "BotInfoQQ";
-            // 
-            // BotWebsocket
-            // 
-            this.BotWebsocket.Controls.Add(this.BotClose);
-            this.BotWebsocket.Controls.Add(this.BotConnect);
-            resources.ApplyResources(this.BotWebsocket, "BotWebsocket");
-            this.BotWebsocket.Name = "BotWebsocket";
-            this.BotWebsocket.TabStop = false;
-            // 
-            // BotClose
-            // 
-            resources.ApplyResources(this.BotClose, "BotClose");
-            this.BotClose.Name = "BotClose";
-            this.BotClose.UseVisualStyleBackColor = true;
-            this.BotClose.Click += new System.EventHandler(this.BotClose_Click);
-            // 
-            // BotConnect
-            // 
-            resources.ApplyResources(this.BotConnect, "BotConnect");
-            this.BotConnect.Name = "BotConnect";
-            this.BotConnect.UseVisualStyleBackColor = true;
-            this.BotConnect.Click += new System.EventHandler(this.BotConnect_Click);
             // 
             // Member
             // 
@@ -964,99 +1087,10 @@ namespace Serein.Ui
             // 
             // SereinPlugins
             // 
-            this.SereinPlugins.Controls.Add(this.SereinPluginsSplitContainer);
+            this.SereinPlugins.Controls.Add(SereinPluginsSplitContainer);
             resources.ApplyResources(this.SereinPlugins, "SereinPlugins");
             this.SereinPlugins.Name = "SereinPlugins";
             this.SereinPlugins.UseVisualStyleBackColor = true;
-            // 
-            // SereinPluginsSplitContainer
-            // 
-            resources.ApplyResources(this.SereinPluginsSplitContainer, "SereinPluginsSplitContainer");
-            this.SereinPluginsSplitContainer.Name = "SereinPluginsSplitContainer";
-            // 
-            // SereinPluginsSplitContainer.Panel1
-            // 
-            this.SereinPluginsSplitContainer.Panel1.Controls.Add(this.SereinPluginsWebBrowser);
-            // 
-            // SereinPluginsSplitContainer.Panel2
-            // 
-            this.SereinPluginsSplitContainer.Panel2.Controls.Add(this.SereinPluginsList);
-            // 
-            // SereinPluginsWebBrowser
-            // 
-            this.SereinPluginsWebBrowser.AllowWebBrowserDrop = false;
-            resources.ApplyResources(this.SereinPluginsWebBrowser, "SereinPluginsWebBrowser");
-            this.SereinPluginsWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            this.SereinPluginsWebBrowser.Name = "SereinPluginsWebBrowser";
-            this.SereinPluginsWebBrowser.ScriptErrorsSuppressed = true;
-            this.SereinPluginsWebBrowser.ScrollBarsEnabled = false;
-            this.SereinPluginsWebBrowser.TabStop = false;
-            // 
-            // SereinPluginsList
-            // 
-            this.SereinPluginsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.SereinPluginsListName,
-            this.SereinPluginsListVersion,
-            this.SereinPluginsListAuthor,
-            this.SereinPluginsListDescription});
-            this.SereinPluginsList.ContextMenuStrip = this.SereinPluginsListContextMenuStrip;
-            resources.ApplyResources(this.SereinPluginsList, "SereinPluginsList");
-            this.SereinPluginsList.FullRowSelect = true;
-            this.SereinPluginsList.GridLines = true;
-            this.SereinPluginsList.MultiSelect = false;
-            this.SereinPluginsList.Name = "SereinPluginsList";
-            this.SereinPluginsList.UseCompatibleStateImageBehavior = false;
-            this.SereinPluginsList.View = System.Windows.Forms.View.Details;
-            // 
-            // SereinPluginsListName
-            // 
-            resources.ApplyResources(this.SereinPluginsListName, "SereinPluginsListName");
-            // 
-            // SereinPluginsListVersion
-            // 
-            resources.ApplyResources(this.SereinPluginsListVersion, "SereinPluginsListVersion");
-            // 
-            // SereinPluginsListAuthor
-            // 
-            resources.ApplyResources(this.SereinPluginsListAuthor, "SereinPluginsListAuthor");
-            // 
-            // SereinPluginsListDescription
-            // 
-            resources.ApplyResources(this.SereinPluginsListDescription, "SereinPluginsListDescription");
-            // 
-            // SereinPluginsListContextMenuStrip
-            // 
-            this.SereinPluginsListContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.SereinPluginsListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SereinPluginsListContextMenuStrip_Reload,
-            this.SereinPluginsListContextMenuStrip_ClearConsole,
-            this.toolStripSeparator9,
-            this.SereinPluginsListContextMenuStrip_Docs});
-            this.SereinPluginsListContextMenuStrip.Name = "SereinPluginsListContextMenuStrip";
-            resources.ApplyResources(this.SereinPluginsListContextMenuStrip, "SereinPluginsListContextMenuStrip");
-            // 
-            // SereinPluginsListContextMenuStrip_Reload
-            // 
-            this.SereinPluginsListContextMenuStrip_Reload.Name = "SereinPluginsListContextMenuStrip_Reload";
-            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Reload, "SereinPluginsListContextMenuStrip_Reload");
-            this.SereinPluginsListContextMenuStrip_Reload.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Reload_Click);
-            // 
-            // SereinPluginsListContextMenuStrip_ClearConsole
-            // 
-            this.SereinPluginsListContextMenuStrip_ClearConsole.Name = "SereinPluginsListContextMenuStrip_ClearConsole";
-            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_ClearConsole, "SereinPluginsListContextMenuStrip_ClearConsole");
-            this.SereinPluginsListContextMenuStrip_ClearConsole.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_ClearConsole_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
-            // 
-            // SereinPluginsListContextMenuStrip_Docs
-            // 
-            this.SereinPluginsListContextMenuStrip_Docs.Name = "SereinPluginsListContextMenuStrip_Docs";
-            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Docs, "SereinPluginsListContextMenuStrip_Docs");
-            this.SereinPluginsListContextMenuStrip_Docs.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Docs_Click);
             // 
             // Setting
             // 
@@ -1069,6 +1103,7 @@ namespace Serein.Ui
             // 
             resources.ApplyResources(this.SettingPanel, "SettingPanel");
             this.SettingPanel.Controls.Add(this.SettingSerein);
+            this.SettingPanel.Controls.Add(this.SettingEvent);
             this.SettingPanel.Controls.Add(this.SettingBot);
             this.SettingPanel.Controls.Add(this.SettingServer);
             this.SettingPanel.Name = "SettingPanel";
@@ -1193,6 +1228,98 @@ namespace Serein.Ui
             this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
             this.SettingSereinEnableGetAnnouncement.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_CheckedChanged);
             this.SettingSereinEnableGetAnnouncement.MouseHover += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_MouseHover);
+            // 
+            // SettingEvent
+            // 
+            this.SettingEvent.Controls.Add(this.SettingEventSplitContainer);
+            resources.ApplyResources(this.SettingEvent, "SettingEvent");
+            this.SettingEvent.Name = "SettingEvent";
+            this.SettingEvent.TabStop = false;
+            // 
+            // SettingEventSplitContainer
+            // 
+            resources.ApplyResources(this.SettingEventSplitContainer, "SettingEventSplitContainer");
+            this.SettingEventSplitContainer.Name = "SettingEventSplitContainer";
+            // 
+            // SettingEventSplitContainer.Panel1
+            // 
+            this.SettingEventSplitContainer.Panel1.Controls.Add(this.SettingEventTreeView);
+            // 
+            // SettingEventSplitContainer.Panel2
+            // 
+            this.SettingEventSplitContainer.Panel2.Controls.Add(this.SettingEventList);
+            // 
+            // SettingEventTreeView
+            // 
+            resources.ApplyResources(this.SettingEventTreeView, "SettingEventTreeView");
+            this.SettingEventTreeView.Name = "SettingEventTreeView";
+            this.SettingEventTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes1"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes2"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes3"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes4"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("SettingEventTreeView.Nodes5")))});
+            this.SettingEventTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.SettingEventTreeView_AfterSelect);
+            // 
+            // SettingEventList
+            // 
+            this.SettingEventList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.SettingEventList.ContextMenuStrip = this.SettingEventListContextMenuStrip;
+            resources.ApplyResources(this.SettingEventList, "SettingEventList");
+            this.SettingEventList.FullRowSelect = true;
+            this.SettingEventList.GridLines = true;
+            this.SettingEventList.MultiSelect = false;
+            this.SettingEventList.Name = "SettingEventList";
+            this.SettingEventList.UseCompatibleStateImageBehavior = false;
+            this.SettingEventList.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
+            // 
+            // SettingEventListContextMenuStrip
+            // 
+            this.SettingEventListContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.SettingEventListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SettingEventListContextMenuStrip_Add,
+            this.SettingEventListContextMenuStrip_Edit,
+            this.SettingEventListContextMenuStrip_Remove,
+            this.toolStripSeparator10,
+            this.SettingEventListContextMenuStrip_Docs});
+            this.SettingEventListContextMenuStrip.Name = "SettingEventListContextMenuStrip";
+            resources.ApplyResources(this.SettingEventListContextMenuStrip, "SettingEventListContextMenuStrip");
+            this.SettingEventListContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.SettingEventListContextMenuStrip_Opening);
+            // 
+            // SettingEventListContextMenuStrip_Add
+            // 
+            this.SettingEventListContextMenuStrip_Add.Name = "SettingEventListContextMenuStrip_Add";
+            resources.ApplyResources(this.SettingEventListContextMenuStrip_Add, "SettingEventListContextMenuStrip_Add");
+            this.SettingEventListContextMenuStrip_Add.Click += new System.EventHandler(this.SettingEventListContextMenuStrip_Add_Click);
+            // 
+            // SettingEventListContextMenuStrip_Edit
+            // 
+            this.SettingEventListContextMenuStrip_Edit.Name = "SettingEventListContextMenuStrip_Edit";
+            resources.ApplyResources(this.SettingEventListContextMenuStrip_Edit, "SettingEventListContextMenuStrip_Edit");
+            this.SettingEventListContextMenuStrip_Edit.Click += new System.EventHandler(this.SettingEventListContextMenuStrip_Edit_Click);
+            // 
+            // SettingEventListContextMenuStrip_Remove
+            // 
+            this.SettingEventListContextMenuStrip_Remove.Name = "SettingEventListContextMenuStrip_Remove";
+            resources.ApplyResources(this.SettingEventListContextMenuStrip_Remove, "SettingEventListContextMenuStrip_Remove");
+            this.SettingEventListContextMenuStrip_Remove.Click += new System.EventHandler(this.SettingEventListContextMenuStrip_Remove_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
+            // 
+            // SettingEventListContextMenuStrip_Docs
+            // 
+            this.SettingEventListContextMenuStrip_Docs.Name = "SettingEventListContextMenuStrip_Docs";
+            resources.ApplyResources(this.SettingEventListContextMenuStrip_Docs, "SettingEventListContextMenuStrip_Docs");
+            this.SettingEventListContextMenuStrip_Docs.Click += new System.EventHandler(this.SettingEventListContextMenuStrip_Docs_Click);
             // 
             // SettingBot
             // 
@@ -1537,18 +1664,26 @@ namespace Serein.Ui
             this.Shown += new System.EventHandler(this.Ui_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Ui_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Ui_DragEnter);
+            PanelInfo.ResumeLayout(false);
+            PanelInfo.PerformLayout();
+            PanelControls.ResumeLayout(false);
+            PanelConsole.ResumeLayout(false);
+            this.PanelConsolePanel.ResumeLayout(false);
+            this.PanelConsolePanel.PerformLayout();
+            BotInfo.ResumeLayout(false);
+            BotInfo.PerformLayout();
+            BotWebsocket.ResumeLayout(false);
+            SereinPluginsSplitContainer.Panel1.ResumeLayout(false);
+            SereinPluginsSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(SereinPluginsSplitContainer)).EndInit();
+            SereinPluginsSplitContainer.ResumeLayout(false);
+            this.SereinPluginsListContextMenuStrip.ResumeLayout(false);
             this.PluginContextMenuStrip.ResumeLayout(false);
             this.MainTableLayout.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.Panel.ResumeLayout(false);
             this.PanelTableLayout.ResumeLayout(false);
             this.PanelTableLayout.PerformLayout();
-            this.PanelInfo.ResumeLayout(false);
-            this.PanelInfo.PerformLayout();
-            this.PanelControls.ResumeLayout(false);
-            this.PanelConsole.ResumeLayout(false);
-            this.PanelConsolePanel.ResumeLayout(false);
-            this.PanelConsolePanel.PerformLayout();
             this.Plugin.ResumeLayout(false);
             this.Regular.ResumeLayout(false);
             this.RegexContextMenuStrip.ResumeLayout(false);
@@ -1556,21 +1691,19 @@ namespace Serein.Ui
             this.TaskContextMenuStrip.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
             this.BotTableLayoutPanel.ResumeLayout(false);
-            this.BotInfo.ResumeLayout(false);
-            this.BotInfo.PerformLayout();
-            this.BotWebsocket.ResumeLayout(false);
             this.Member.ResumeLayout(false);
             this.MemberContextMenuStrip.ResumeLayout(false);
             this.SereinPlugins.ResumeLayout(false);
-            this.SereinPluginsSplitContainer.Panel1.ResumeLayout(false);
-            this.SereinPluginsSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SereinPluginsSplitContainer)).EndInit();
-            this.SereinPluginsSplitContainer.ResumeLayout(false);
-            this.SereinPluginsListContextMenuStrip.ResumeLayout(false);
             this.Setting.ResumeLayout(false);
             this.SettingPanel.ResumeLayout(false);
             this.SettingSerein.ResumeLayout(false);
             this.SettingSerein.PerformLayout();
+            this.SettingEvent.ResumeLayout(false);
+            this.SettingEventSplitContainer.Panel1.ResumeLayout(false);
+            this.SettingEventSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SettingEventSplitContainer)).EndInit();
+            this.SettingEventSplitContainer.ResumeLayout(false);
+            this.SettingEventListContextMenuStrip.ResumeLayout(false);
             this.SettingBot.ResumeLayout(false);
             this.SettingBot.PerformLayout();
             this.SettingServer.ResumeLayout(false);
@@ -1599,25 +1732,16 @@ namespace Serein.Ui
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage Panel;
         private System.Windows.Forms.TableLayoutPanel PanelTableLayout;
-        private System.Windows.Forms.GroupBox PanelInfo;
         private System.Windows.Forms.Label PanelInfoCPU2;
         private System.Windows.Forms.Label PanelInfoLevel2;
         private System.Windows.Forms.Label PanelInfoTime2;
         private System.Windows.Forms.Label PanelInfoDifficulty2;
         private System.Windows.Forms.Label PanelInfoVersion2;
-        private System.Windows.Forms.Label PanelInfoCPU;
-        private System.Windows.Forms.Label PanelInfoTime;
-        private System.Windows.Forms.Label PanelInfoLevel;
-        private System.Windows.Forms.Label PanelInfoDifficulty;
-        private System.Windows.Forms.Label PanelInfoVersion;
         private System.Windows.Forms.Label PanelInfoStatus2;
-        private System.Windows.Forms.Label PanelInfoStatus;
-        private System.Windows.Forms.GroupBox PanelControls;
         private System.Windows.Forms.Button PanelControlKill;
         private System.Windows.Forms.Button PanelControlRestart;
         private System.Windows.Forms.Button PanelControlStop;
         private System.Windows.Forms.Button PanelControlStart;
-        private System.Windows.Forms.GroupBox PanelConsole;
         private System.Windows.Forms.Panel PanelConsolePanel;
         private System.Windows.Forms.WebBrowser PanelConsoleWebBrowser;
         private System.Windows.Forms.TabPage Plugin;
@@ -1630,8 +1754,6 @@ namespace Serein.Ui
         private System.Windows.Forms.TabPage Bot;
         private System.Windows.Forms.TableLayoutPanel BotTableLayoutPanel;
         private System.Windows.Forms.WebBrowser BotWebBrowser;
-        private System.Windows.Forms.GroupBox BotInfo;
-        private System.Windows.Forms.GroupBox BotWebsocket;
         private System.Windows.Forms.Button BotClose;
         private System.Windows.Forms.Button BotConnect;
         private System.Windows.Forms.TabPage Setting;
@@ -1690,12 +1812,7 @@ namespace Serein.Ui
         private System.Windows.Forms.Label BotInfoMessageSent2;
         private System.Windows.Forms.Label BotInfoMessageReceived2;
         private System.Windows.Forms.Label BotInfoQQ2;
-        private System.Windows.Forms.Label BotInfoTime;
-        private System.Windows.Forms.Label BotInfoMessageSent;
-        private System.Windows.Forms.Label BotInfoMessageReceived;
-        private System.Windows.Forms.Label BotInfoQQ;
         private System.Windows.Forms.Label BotInfoStatus2;
-        private System.Windows.Forms.Label BotInfoStatus;
         private System.Windows.Forms.CheckBox SettingServerAutoStop;
         private System.Windows.Forms.Label SettingServerStopCommandLabel;
         private System.Windows.Forms.TextBox SettingServerStopCommand;
@@ -1746,7 +1863,6 @@ namespace Serein.Ui
         private System.Windows.Forms.NumericUpDown SettingServerPort;
         private System.Windows.Forms.CheckBox SettingBotRestart;
         private System.Windows.Forms.TabPage SereinPlugins;
-        private System.Windows.Forms.SplitContainer SereinPluginsSplitContainer;
         private System.Windows.Forms.WebBrowser SereinPluginsWebBrowser;
         private System.Windows.Forms.ListView SereinPluginsList;
         private System.Windows.Forms.ColumnHeader SereinPluginsListName;
@@ -1759,6 +1875,17 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem SereinPluginsListContextMenuStrip_ClearConsole;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem SereinPluginsListContextMenuStrip_Docs;
+        private System.Windows.Forms.GroupBox SettingEvent;
+        private System.Windows.Forms.TreeView SettingEventTreeView;
+        private System.Windows.Forms.ListView SettingEventList;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.SplitContainer SettingEventSplitContainer;
+        private System.Windows.Forms.ContextMenuStrip SettingEventListContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Add;
+        private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Edit;
+        private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Remove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Docs;
     }
 }
 

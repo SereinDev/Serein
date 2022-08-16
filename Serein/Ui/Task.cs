@@ -43,28 +43,10 @@ namespace Serein.Ui
         }
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            if (TaskList.SelectedItems.Count <= 0)
-            {
-                TaskContextMenuStrip_Edit.Enabled = false;
-                TaskContextMenuStrip_Delete.Enabled = false;
-                TaskContextMenuStrip_Enable.Enabled = false;
-                TaskContextMenuStrip_Disable.Enabled = false;
-            }
-            else
-            {
-                TaskContextMenuStrip_Edit.Enabled = true;
-                TaskContextMenuStrip_Delete.Enabled = true;
-                if (TaskList.SelectedItems[0].ForeColor == Color.Gray)
-                {
-                    TaskContextMenuStrip_Disable.Enabled = false;
-                    TaskContextMenuStrip_Enable.Enabled = true;
-                }
-                else
-                {
-                    TaskContextMenuStrip_Disable.Enabled = true;
-                    TaskContextMenuStrip_Enable.Enabled = false;
-                }
-            }
+            TaskContextMenuStrip_Edit.Enabled = TaskList.SelectedItems.Count > 0;
+            TaskContextMenuStrip_Delete.Enabled = TaskList.SelectedItems.Count > 0;
+            TaskContextMenuStrip_Enable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor != Color.Gray;
+            TaskContextMenuStrip_Disable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor == Color.Gray;
             TaskContextMenuStrip_Clear.Enabled = TaskList.Items.Count > 0;
         }
         private void TaskContextMenuStrip_Enable_Click(object sender, EventArgs e)
@@ -89,15 +71,15 @@ namespace Serein.Ui
         }
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditer TE = new TaskEditer();
-            TE.ShowDialog();
-            if (TE.CancelFlag)
+            TaskEditor Editor = new TaskEditor();
+            Editor.ShowDialog();
+            if (Editor.CancelFlag)
             {
                 return;
             }
-            ListViewItem Item = new ListViewItem(TE.Cron.Text);
-            Item.SubItems.Add(TE.Remark.Text);
-            Item.SubItems.Add(TE.Command.Text);
+            ListViewItem Item = new ListViewItem(Editor.Cron.Text);
+            Item.SubItems.Add(Editor.Remark.Text);
+            Item.SubItems.Add(Editor.Command.Text);
             if (TaskList.SelectedItems.Count > 0)
             {
                 TaskList.Items.Insert(TaskList.SelectedItems[0].Index + 1, Item);
@@ -112,20 +94,20 @@ namespace Serein.Ui
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskEditer TE = new TaskEditer();
-                TE.Update(
+                TaskEditor Editor = new TaskEditor();
+                Editor.Update(
                     TaskList.SelectedItems[0].Text,
                     TaskList.SelectedItems[0].SubItems[1].Text,
                     TaskList.SelectedItems[0].SubItems[2].Text
                     );
-                TE.ShowDialog();
-                if (TE.CancelFlag)
+                Editor.ShowDialog();
+                if (Editor.CancelFlag)
                 {
                     return;
                 }
-                TaskList.SelectedItems[0].Text = TE.Cron.Text;
-                TaskList.SelectedItems[0].SubItems[1].Text = TE.Remark.Text;
-                TaskList.SelectedItems[0].SubItems[2].Text = TE.Command.Text;
+                TaskList.SelectedItems[0].Text = Editor.Cron.Text;
+                TaskList.SelectedItems[0].SubItems[1].Text = Editor.Remark.Text;
+                TaskList.SelectedItems[0].SubItems[2].Text = Editor.Command.Text;
             }
             SaveTask();
         }

@@ -57,7 +57,7 @@ namespace Serein.Ui
         {
             if (MemberList.SelectedItems.Count > 0)
             {
-                MemberInfoEditer Editer = new MemberInfoEditer(MemberList.SelectedItems[0]);
+                MemberInfoEditor Editer = new MemberInfoEditor(MemberList.SelectedItems[0]);
                 Editer.ShowDialog(this);
                 if (!Editer.CancelFlag)
                 {

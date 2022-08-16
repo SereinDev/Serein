@@ -118,6 +118,15 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\MemberInfoEditor.resx">
+      <DependentUpon>MemberInfoEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\RegexEditor.resx">
+      <DependentUpon>RegexEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ui\ChildrenWindow\TaskEditor.resx">
+      <DependentUpon>TaskEditor.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">
