@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console", "Serein\Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein-WPF", "Serein-WPF\Serein-WPF.csproj", "{8BDAAFC1-A9A2-4EC8-8F46-B688817E79D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein2", "Serein2\Serein2.csproj", "{F3599D8D-7D45-4E12-A74A-672171F1D958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8BDAAFC1-A9A2-4EC8-8F46-B688817E79D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BDAAFC1-A9A2-4EC8-8F46-B688817E79D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BDAAFC1-A9A2-4EC8-8F46-B688817E79D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3599D8D-7D45-4E12-A74A-672171F1D958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3599D8D-7D45-4E12-A74A-672171F1D958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3599D8D-7D45-4E12-A74A-672171F1D958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3599D8D-7D45-4E12-A74A-672171F1D958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
