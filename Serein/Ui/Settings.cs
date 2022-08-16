@@ -354,7 +354,7 @@ namespace Serein.Ui
 
         private void SettingEventListContextMenuStrip_Remove_Click(object sender, EventArgs e)
         {
-            if((int)MessageBox.Show(
+            if ((int)MessageBox.Show(
                     "确定删除此行命令？\n" +
                     "它将会永远失去！（真的很久！）", "Serein",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information
@@ -427,7 +427,7 @@ namespace Serein.Ui
                             Global.Settings.Event.Motdje_Success = GetEventCommands();
                             break;
                         case "MotdFailure":
-                            Global.Settings.Event.Motd_Failure= GetEventCommands();
+                            Global.Settings.Event.Motd_Failure = GetEventCommands();
                             break;
                         case "PermissionDeniedPrivate":
                             Global.Settings.Event.PermissionDenied_Private = GetEventCommands();
