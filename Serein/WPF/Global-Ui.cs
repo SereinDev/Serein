@@ -6,9 +6,10 @@ namespace Serein
     partial class Global
     {
         public static bool Console = false;
-        public static Ui.Ui Ui = null;
+        public static object Ui = null;
         public static void Logger(int Type, params object[] objects)
         {
+            /*
             if (Ui != null && !Ui.Disposing)
             {
                 string Line = string.Empty;
@@ -57,6 +58,7 @@ namespace Serein
                         break;
                 }
             }
+        }*/
         }
     }
 }

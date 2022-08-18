@@ -22,12 +22,12 @@ namespace Serein.Windows
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }
 
-        private readonly IThemeService _themeService;
+        //private readonly IThemeService _themeService;
 
-        public void ChangeTheme()
-        {
-            _themeService.SetTheme(_themeService.GetTheme() == ThemeType.Dark ? ThemeType.Light : ThemeType.Dark);
+        //public void ChangeTheme()
+        //{
+        //    _themeService.SetTheme(_themeService.GetTheme() == ThemeType.Dark ? ThemeType.Light : ThemeType.Dark);
 
-        }
+        //}
     }
 }

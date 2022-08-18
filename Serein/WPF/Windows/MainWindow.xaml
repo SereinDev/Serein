@@ -18,13 +18,13 @@
     Title="Serein" StateChanged="UiWindow_StateChanged" 
     Style="{StaticResource UiWindow}"
     Background="{DynamicResource ApplicationBackgroundBrush}"
-    MaxWidth="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}">
+    MaxWidth="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}" MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}" Icon="/Windows/Serein.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ui:TitleBar Grid.Row="0" Padding="0" Title="Serein" Icon="/Serein.ico" Margin="5,0,0,0"/>
+        <ui:TitleBar Grid.Row="0" Padding="0" Title="Serein" Icon="./Serein.ico" Margin="5,0,0,0"/>
         <Grid 
                     Grid.Row="1"
                     Margin="3">

@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 
 namespace Serein.Server
 {
@@ -60,7 +60,7 @@ namespace Serein.Server
                     }
                     else
                     {
-                        MessageBox.Show(":(\n服务器已在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(":(\n服务器已在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -74,7 +74,7 @@ namespace Serein.Server
                     }
                     else
                     {
-                        MessageBox.Show(":(\n启动路径为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(":(\n启动路径为空", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace Serein.Server
                     }
                     else
                     {
-                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace Serein.Server
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Factory.StartNew(GetCPUPercent);
                 Task.Factory.StartNew(WaitForExit);
-                EventTrigger.Trigger("Server_Start");
+                Base.EventTrigger.Trigger("Server_Start");
                 JSFunc.Trigger("onServerStart");
                 return true;
             }
@@ -165,7 +165,7 @@ namespace Serein.Server
             }
             else if (!Global.Console)
             {
-                MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -189,8 +189,8 @@ namespace Serein.Server
                 (int)MessageBox.Show(
                     "确定结束进程吗？\n此操作可能导致存档损坏等问题",
                     "Serein",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning
                     ) == 1
                 && (
                     !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") || (
@@ -198,8 +198,8 @@ namespace Serein.Server
                     (int)MessageBox.Show(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
                     "Serein",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning
                     ) == 1
                 )))
                 )
@@ -222,8 +222,8 @@ namespace Serein.Server
                         MessageBox.Show(
                             ":(\n强制结束失败\n" + e.Message,
                             "Serein",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
                             );
                     }
                 }
@@ -247,7 +247,7 @@ namespace Serein.Server
                 }
                 else
                 {
-                    MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             if (ServerProcess.HasExited)
@@ -418,14 +418,14 @@ namespace Serein.Server
                     $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
-                EventTrigger.Trigger("Server_Error");
+                Base.EventTrigger.Trigger("Server_Error");
             }
             else
             {
                 Global.Logger(11,
                     $"进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
-                EventTrigger.Trigger("Server_Stop");
+                Base.EventTrigger.Trigger("Server_Stop");
             }
             if (Restart)
             {

@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+	 <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	 <ApplicationIcon>Serein.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../Universal/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\Universal\Sources\Serein.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ConsoleHtml\console.html" />
+    <None Remove="ConsoleHtml\console.js" />
+    <None Remove="ConsoleHtml\preset.css" />
+    <None Remove="ConsoleHtml\vanilla.css" />
+    <None Remove="Windows\Serein.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Serein.ico" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<none Include="../Universal/Sources/Serein.ico" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Jint" Version="2.11.58" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
+    <PackageReference Include="NCrontab.Signed" Version="3.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
+    <PackageReference Include="WPF-UI" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\Universal\Sources\Serein.ico" />
+    <Resource Include="ConsoleHtml\console.html" />
+    <Resource Include="ConsoleHtml\console.js" />
+    <Resource Include="ConsoleHtml\preset.css" />
+    <Resource Include="ConsoleHtml\vanilla.css" />
+    <Resource Include="Windows\Serein.ico" />
+  </ItemGroup>
+
+</Project>

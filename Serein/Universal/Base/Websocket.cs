@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using WebSocket4Net;
 
 namespace Serein.Base
@@ -31,7 +31,7 @@ namespace Serein.Base
                 }
                 else
                 {
-                    MessageBox.Show(":(\nWebsocket已连接", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\nWebsocket已连接", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else if (ExecutedByUser && Restart)
@@ -42,7 +42,7 @@ namespace Serein.Base
                 }
                 else
                 {
-                    MessageBox.Show(":(\n请先结束重启倒计时", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\n请先结束重启倒计时", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else if (!Status)
@@ -164,7 +164,7 @@ namespace Serein.Base
                 }
                 else
                 {
-                    MessageBox.Show(":(\nWebsocket未连接", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(":(\nWebsocket未连接", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
+using System.Windows;
+using Microsoft.Win32;
 
 namespace Serein.Server
 {
@@ -65,7 +66,7 @@ namespace Serein.Server
                 Filter = "所有文件|*.*",
                 Multiselect = true
             };
-            if (Dialog.ShowDialog() == DialogResult.OK)
+            if (Dialog.ShowDialog() == true)
             {
                 foreach (string FileName in Dialog.FileNames)
                 {
@@ -79,7 +80,7 @@ namespace Serein.Server
                             $"文件\"{FileName}\"复制失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            MessageBoxButton.OK, MessageBoxImage.Warning
                             );
                     }
                 }
@@ -103,12 +104,12 @@ namespace Serein.Server
                         $"文件\"{FileName}\"复制失败\n" +
                         $"详细原因：\n" +
                         $"{Exp.Message}", "Serein",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning
+                        MessageBoxButton.OK, MessageBoxImage.Warning
                         );
                 }
             }
         }
-
+        /*
         /// <summary>
         /// 删除插件
         /// </summary>
@@ -120,7 +121,7 @@ namespace Serein.Server
                 if ((int)MessageBox.Show(
                     $"确定删除\"{Items[0].Text}\"？\n" +
                     $"它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                    MessageBoxButton.OKCancel, MessageBoxImage.Information
                     ) == 1
                     && !Check())
                 {
@@ -141,7 +142,7 @@ namespace Serein.Server
                                 $"文件\"{Items[0].Text}\"删除失败\n" +
                                 $"详细原因：\n" +
                                 $"{Exp.Message}", "Serein",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning
+                                MessageBoxButton.OK, MessageBoxImage.Warning
                                 );
                     }
                 }
@@ -151,7 +152,7 @@ namespace Serein.Server
                 if ((int)MessageBox.Show(
                    $"确定删除\"{Items[0].Text}\"等{Items.Count}个文件？\n" +
                    $"它将会永远失去！（真的很久！）", "Serein",
-                   MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                   MessageBoxButton.OKCancel, MessageBoxImage.Information
                    ) == 1
                    && !Check())
                 {
@@ -174,7 +175,7 @@ namespace Serein.Server
                                     $"文件\"{Item.Text}\"删除失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                                    MessageBoxButton.OK, MessageBoxImage.Warning
                                     );
                         }
                     }
@@ -203,7 +204,7 @@ namespace Serein.Server
                             $"文件\"{Item.Text}\"禁用失败\n" +
                             $"详细原因：\n" +
                             $"{Exp.Message}", "Serein",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            MessageBoxButton.OK, MessageBoxImage.Warning
                             );
                     }
                 }
@@ -229,12 +230,12 @@ namespace Serein.Server
                                     $"文件\"{Item.Text}\"禁用失败\n" +
                                     $"详细原因：\n" +
                                     $"{Exp.Message}", "Serein",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                                    MessageBoxButton.OK, MessageBoxImage.Warning
                                     );
                 }
             }
         }
-
+        */
         /// <summary>
         /// 服务器状态检测
         /// </summary>
@@ -243,7 +244,7 @@ namespace Serein.Server
         {
             if (ServerManager.Status)
             {
-                MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return true;
             }
             else
