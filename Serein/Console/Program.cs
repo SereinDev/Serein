@@ -86,7 +86,7 @@ namespace Serein
             }
             catch { }
             EventTrigger.Trigger("Serein_Crash");
-            Global.Logger(3, $"{obj}\r\n\r\n" +
+            Logger.Out(3, $"{obj}\r\n\r\n" +
                 $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\r\n" +
                 "反馈此问题可以帮助作者更好的改进Serein");
             Global.Crash = false;

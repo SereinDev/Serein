@@ -56,7 +56,7 @@ namespace Serein.Server
                 {
                     if (Global.Console)
                     {
-                        Global.Logger(2, "服务器已在运行中");
+                        Logger.Out(2, "服务器已在运行中");
                     }
                     else
                     {
@@ -70,7 +70,7 @@ namespace Serein.Server
                 {
                     if (Global.Console)
                     {
-                        Global.Logger(2, "启动路径为空");
+                        Logger.Out(2, "启动路径为空");
                     }
                     else
                     {
@@ -84,7 +84,7 @@ namespace Serein.Server
                 {
                     if (Global.Console)
                     {
-                        Global.Logger(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到");
+                        Logger.Out(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到");
                     }
                     else
                     {
@@ -96,13 +96,13 @@ namespace Serein.Server
             {
                 if (Global.Console)
                 {
-                    Global.Logger(11, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
+                    Logger.Out(11, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
                 }
                 else
                 {
-                    Global.Logger(10, "#clear");
+                    Logger.Out(10, "#clear");
                 }
-                Global.Logger(11, "启动中");
+                Logger.Out(11, "启动中");
                 ServerProcessInfo = new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
@@ -169,7 +169,7 @@ namespace Serein.Server
             }
             else
             {
-                Global.Logger(2, "服务器不在运行中");
+                Logger.Out(2, "服务器不在运行中");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Serein.Server
                 {
                     if (Global.Console)
                     {
-                        Global.Logger(3, "强制结束失败\r\n" + e.Message);
+                        Logger.Out(3, "强制结束失败\r\n" + e.Message);
                     }
                     else
                     {
@@ -243,7 +243,7 @@ namespace Serein.Server
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "服务器不在运行中");
+                    Logger.Out(2, "服务器不在运行中");
                 }
                 else
                 {
@@ -291,7 +291,7 @@ namespace Serein.Server
                 }
                 if (Global.Settings.Server.EnableOutputCommand && !Global.Console)
                 {
-                    Global.Logger(10, $">{Log.EscapeLog(Command_Copy)}");
+                    Logger.Out(10, $">{Log.EscapeLog(Command_Copy)}");
                 }
                 if (!IsSpecifiedCommand)
                 {
@@ -352,7 +352,7 @@ namespace Serein.Server
                         Difficulty = Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
-                Global.Logger(
+                Logger.Out(
                     10,
                     Global.Console ?
                     outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
@@ -411,10 +411,10 @@ namespace Serein.Server
                 Thread.Sleep(1000);
             }
             CommandWriter.Close();
-            Global.Logger(10, "");
+            Logger.Out(10, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
-                Global.Logger(11,
+                Logger.Out(11,
                     $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
@@ -422,7 +422,7 @@ namespace Serein.Server
             }
             else
             {
-                Global.Logger(11,
+                Logger.Out(11,
                     $"进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Base.EventTrigger.Trigger("Server_Stop");
@@ -454,10 +454,10 @@ namespace Serein.Server
         /// </summary>
         private static void RestartTimer()
         {
-            Global.Logger(11,
+            Logger.Out(11,
                 "服务器将在5s后重新启动"
                 );
-            Global.Logger(11,
+            Logger.Out(11,
                 "你可以按下停止按钮来取消这次重启"
                 );
             for (int i = 0; i < 10; i++)
@@ -474,7 +474,7 @@ namespace Serein.Server
             }
             else
             {
-                Global.Logger(11,
+                Logger.Out(11,
                 "重启已取消"
                 );
             }

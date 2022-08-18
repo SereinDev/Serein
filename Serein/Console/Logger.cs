@@ -3,20 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Serein.Console;
 using Serein.Server;
 
-namespace Serein.Console
+namespace Serein
 {
-    internal class Output
+    internal static class Logger
     {
-        private static object Lock = new object();
+        private static readonly object Lock = new object();
+
+        public static void Out(int Type, params object[] objects)
+        {
+            string Line = string.Empty;
+            foreach (var o in objects)
+            {
+                if (o != null) { Line += o.ToString() + " "; }
+            }
+            Line = Line.TrimEnd();
+            switch (Type)
+            {
+                case 999:
+                    if (Global.Settings.Serein.Debug) { WriteLine(4, Line); }
+                    break;
+                case 1:
+                case 11:
+                case 21:
+                case 31:
+                    WriteLine(1, Line);
+                    break;
+                case 2:
+                    WriteLine(2, Line);
+                    break;
+                case 3:
+                case 24:
+                case 32:
+                    WriteLine(3, Line);
+                    break;
+                case 10:
+                case 20:
+                case 30:
+                    WriteLine(0, Line);
+                    break;
+                case 22:
+                    WriteLine(0, $"\x1b[92m[↓]\x1b[0m{Line}");
+                    break;
+                case 23:
+                    WriteLine(0, $"\x1b[36m[↑]\x1b[0m{Line}");
+                    break;
+                case 33:
+                    WriteLine(0, $"\x1b[94m[插件]\x1b[0m{Line}");
+                    break;
+            }
+        }
 
         /// <summary>
         /// 处理输出消息
         /// </summary>
         /// <param name="Level">输出等级</param>
         /// <param name="Line">输出行</param>
-        public static void Logger(int Level, string Line)
+        private static void WriteLine(int Level, string Line)
         {
             if (Line == "#clear") { return; }
             lock (Lock)

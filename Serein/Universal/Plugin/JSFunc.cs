@@ -95,7 +95,7 @@ namespace Serein.Plugin
                     Plugins.Event.onPluginsReload.Add(Function);
                     break;
                 default:
-                    Global.Logger(32, $"插件注册了一个未知事件：{EventName}");
+                    Logger.Out(32, $"插件注册了一个未知事件：{EventName}");
                     return false;
             }
             return true;
@@ -109,7 +109,7 @@ namespace Serein.Plugin
         public static void Trigger(string EventName, params object[] Args)
         {
             Engine engine = new Engine();
-            Global.Logger(999, "[JSFunc:Tigger()]", EventName);
+            Logger.Out(999, "[JSFunc:Tigger()]", EventName);
             try
             {
                 switch (EventName)
@@ -210,8 +210,8 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Global.Logger(32, $"触发事件{EventName}时出现异常：{e.Message}");
-                Global.Logger(999, e.ToString());
+                Logger.Out(32, $"触发事件{EventName}时出现异常：{e.Message}");
+                Logger.Out(999, e.ToString());
             }
         }
 
@@ -227,7 +227,7 @@ namespace Serein.Plugin
                 ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
                 )
             {
-                Global.Logger(32, $"插件注册命令\"{Command}\"失败");
+                Logger.Out(32, $"插件注册命令\"{Command}\"失败");
                 return false;
             }
             else

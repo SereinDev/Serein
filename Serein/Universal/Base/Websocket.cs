@@ -27,7 +27,7 @@ namespace Serein.Base
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "Websocket已连接");
+                    Logger.Out(2, "Websocket已连接");
                 }
                 else
                 {
@@ -38,7 +38,7 @@ namespace Serein.Base
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "请先结束重启倒计时");
+                    Logger.Out(2, "请先结束重启倒计时");
                 }
                 else
                 {
@@ -47,7 +47,7 @@ namespace Serein.Base
             }
             else if (!Status)
             {
-                Global.Logger(20, "#clear");
+                Logger.Out(20, "#clear");
                 Message.MessageReceived = "-";
                 Message.MessageSent = "-";
                 Message.SelfId = "-";
@@ -64,19 +64,19 @@ namespace Serein.Base
                     webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
                     webSocket.Error += (sender, e) =>
                     {
-                        Global.Logger(24, e.Exception.Message);
+                        Logger.Out(24, e.Exception.Message);
                     };
                     webSocket.Closed += (sender, e) =>
                     {
                         Status = false;
-                        Global.Logger(20, "");
-                        Global.Logger(21, "WebSocket连接已断开");
+                        Logger.Out(20, "");
+                        Logger.Out(21, "WebSocket连接已断开");
                         if (Global.Settings.Bot.Restart && Restart)
                         {
                             Task.Run(() =>
                             {
-                                Global.Logger(21, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Global.Logger(21, "你可以按下断开按钮来取消重启");
+                                Logger.Out(21, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Logger.Out(21, "你可以按下断开按钮来取消重启");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
@@ -95,7 +95,7 @@ namespace Serein.Base
                     webSocket.Opened += (sender, e) =>
                     {
                         Restart = true;
-                        Global.Logger(21, $"连接到{Global.Settings.Bot.Uri}");
+                        Logger.Out(21, $"连接到{Global.Settings.Bot.Uri}");
                     };
                     webSocket.Open();
                     StartTime = DateTime.Now;
@@ -103,7 +103,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Global.Logger(24, e.Message);
+                    Logger.Out(24, e.Message);
                 }
             }
         }
@@ -131,11 +131,11 @@ namespace Serein.Base
                 webSocket.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Global.Logger(23, TextJObject.ToString());
+                    Logger.Out(23, TextJObject.ToString());
                 }
                 else
                 {
-                    Global.Logger(23, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
+                    Logger.Out(23, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
                 }
             }
             return Status;
@@ -154,13 +154,13 @@ namespace Serein.Base
             else if (Restart)
             {
                 Restart = false;
-                Global.Logger(21, "重启已取消");
+                Logger.Out(21, "重启已取消");
             }
             else
             {
                 if (Global.Console)
                 {
-                    Global.Logger(2, "Websocket未连接");
+                    Logger.Out(2, "Websocket未连接");
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Serein.Base
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
-                Global.Logger(22, e.Message);
+                Logger.Out(22, e.Message);
             }
             if (Global.Settings.Bot.EnableLog)
             {

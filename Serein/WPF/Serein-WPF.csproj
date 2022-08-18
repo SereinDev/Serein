@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
 	 <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	 <ApplicationIcon>Serein.ico</ApplicationIcon>
+	 <RootNamespace>Serein</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -29,14 +30,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ConsoleHtml\**" />
+    <EmbeddedResource Remove="ConsoleHtml\**" />
+    <None Remove="ConsoleHtml\**" />
+    <Page Remove="ConsoleHtml\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\Universal\ConsoleHtml\console.html" />
+    <Compile Remove="..\Universal\ConsoleHtml\console.js" />
+    <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
+    <Compile Remove="..\Universal\ConsoleHtml\vanilla.css" />
     <Compile Remove="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ConsoleHtml\console.html" />
-    <None Remove="ConsoleHtml\console.js" />
-    <None Remove="ConsoleHtml\preset.css" />
-    <None Remove="ConsoleHtml\vanilla.css" />
     <None Remove="Windows\Serein.ico" />
   </ItemGroup>
 
@@ -65,10 +73,6 @@
 
   <ItemGroup>
     <Resource Include="..\Universal\Sources\Serein.ico" />
-    <Resource Include="ConsoleHtml\console.html" />
-    <Resource Include="ConsoleHtml\console.js" />
-    <Resource Include="ConsoleHtml\preset.css" />
-    <Resource Include="ConsoleHtml\vanilla.css" />
     <Resource Include="Windows\Serein.ico" />
   </ItemGroup>
 

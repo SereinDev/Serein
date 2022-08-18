@@ -59,7 +59,7 @@ namespace Serein.Base
                 string RawMessage = JsonObject["raw_message"].ToString();
                 long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
-                Global.Logger(22, $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" + RawMessage);
+                Logger.Out(22, $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" + RawMessage);
                 foreach (RegexItem Item in Global.RegexItems)
                 {
                     if (
