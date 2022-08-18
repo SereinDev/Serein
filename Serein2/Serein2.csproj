@@ -200,17 +200,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Global.cs" />
     <Compile Include="Windows\Pages\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Pages\Server\Main.xaml.cs">
-      <DependentUpon>Main.xaml</DependentUpon>
+    <Compile Include="Windows\Pages\Server\Container.xaml.cs">
+      <DependentUpon>Container.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Pages\Server\Panel.xaml.cs">
       <DependentUpon>Panel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Pages\Settings\Main.xaml.cs">
-      <DependentUpon>Main.xaml</DependentUpon>
+    <Compile Include="Windows\Pages\Settings\Serein.xaml.cs">
+      <DependentUpon>Serein.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Pages\Settings\Event.xaml.cs">
+      <DependentUpon>Event.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Pages\Settings\Container.xaml.cs">
+      <DependentUpon>Container.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Pages\Server\Plugins.xaml.cs">
+      <DependentUpon>Plugins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Pages\Settings\Bot.xaml.cs">
+      <DependentUpon>Bot.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Pages\Settings\Server.xaml.cs">
       <DependentUpon>Server.xaml</DependentUpon>
@@ -231,7 +244,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Pages\Server\Main.xaml">
+    <Page Include="Windows\Pages\Server\Container.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,9 +252,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Pages\Settings\Main.xaml">
+    <Page Include="Windows\Pages\Settings\Serein.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Pages\Settings\Event.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Pages\Settings\Container.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Pages\Server\Plugins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Pages\Settings\Bot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Pages\Settings\Server.xaml">
       <SubType>Designer</SubType>

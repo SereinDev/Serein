@@ -14,14 +14,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 
-namespace Serein2.Windows.Pages.Server
+namespace Serein2.Windows.Pages.Settings
 {
     /// <summary>
-    /// Panel.xaml 的交互逻辑
+    /// Setting.xaml 的交互逻辑
     /// </summary>
-    public partial class Main : UiPage
+    public partial class Container : UiPage
     {
-        public Main()
+        public Container()
         {
             InitializeComponent();
         }

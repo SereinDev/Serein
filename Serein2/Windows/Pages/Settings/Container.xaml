@@ -1,5 +1,5 @@
 ﻿<ui:UiPage
-    x:Class="Serein2.Windows.Pages.Settings.Main"
+    x:Class="Serein2.Windows.Pages.Settings.Container"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -28,13 +28,16 @@
                             PageType="{x:Type pages:Server}"/>
                 <ui:NavigationItem  
                             Content="机器人"
-                            Icon="Bot24"/>
+                            Icon="Bot24"
+                            PageType="{x:Type pages:Bot}"/>
                 <ui:NavigationItem  
                             Content="事件"
-                            Icon="BookInformation24"/>
+                            Icon="BookInformation24"
+                            PageType="{x:Type pages:Event}"/>
                 <ui:NavigationItem  
                             Content="Serein"
-                            Icon="WindowApps24"/>
+                            Icon="WindowApps24"
+                            PageType="{x:Type pages:Serein}"/>
             </ui:NavigationCompact.Items>
         </ui:NavigationCompact>
         <Border

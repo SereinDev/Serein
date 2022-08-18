@@ -13,17 +13,21 @@
 
     <StackPanel>
         <TextBlock Text="启动路径" ToolTip="111" HorizontalAlignment="Left"/>
-        <DockPanel Margin="0,0,0,5">
-            <ui:Button Icon="OpenFolder24" Margin="0" Content="选择文件" DockPanel.Dock="Right"/>
-            <TextBox DockPanel.Dock="Right" IsReadOnly="True"/>
-        </DockPanel>
+        <Grid Margin="0,7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox IsReadOnly="True"/>
+            <ui:Button Icon="OpenFolder24" Margin="5,0,0,0" Content="选择文件" Grid.Column="1"/>
+        </Grid>
         <TextBlock Text="关服指令（一行一条）" HorizontalAlignment="Left"/>
-        <TextBox Margin="0,0,0,5" AcceptsReturn="True" Text="stop" />
-        <ui:ToggleSwitch Margin="0,0,0,5" Content="Serein崩溃时自动关服"/>
-        <ui:ToggleSwitch Margin="0,0,0,5" Content="非正常退出时自动重启"/>
-        <ui:ToggleSwitch Margin="0,0,0,5" Content="在控制台显示输入的命令"/>
-        <ui:ToggleSwitch Margin="0,0,0,5" Content="使用Unicode字符"/>
-        <ui:ToggleSwitch Margin="0,0,0,5" Content="保存日志"/>
+        <TextBox Margin="0,7" AcceptsReturn="True" Text="stop" />
+        <ui:ToggleSwitch Margin="0,7" Content="Serein崩溃时自动关服"/>
+        <ui:ToggleSwitch Margin="0,7" Content="非正常退出时自动重启"/>
+        <ui:ToggleSwitch Margin="0,7" Content="在控制台显示输入的命令"/>
+        <ui:ToggleSwitch Margin="0,7" Content="使用Unicode字符"/>
+        <ui:ToggleSwitch Margin="0,7" Content="保存日志"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -35,7 +39,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="0,0,0,5">
+            <StackPanel Margin="0,7">
                 <TextBlock Text="输出样式"/>
                 <ComboBox SelectedIndex="1" HorizontalAlignment="Left">
                     <ComboBoxItem Content="单色"/>
@@ -44,7 +48,7 @@
                     <ComboBoxItem Content="混合"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,0,0,5" Grid.Column="1">
+            <StackPanel Margin="0,7" Grid.Column="1">
                 <TextBlock Text="服务端类型"/>
                 <ComboBox SelectedIndex="1" HorizontalAlignment="Left">
                     <ComboBoxItem Content="未知/其他"/>
@@ -52,7 +56,7 @@
                     <ComboBoxItem Content="Java版"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,0,0,5" Grid.Row="1">
+            <StackPanel Margin="0,7" Grid.Row="1">
                 <TextBlock Text="输入编码"/>
                 <ComboBox SelectedIndex="0" HorizontalAlignment="Left">
                     <ComboBoxItem Content="UTF-8"/>
@@ -63,7 +67,7 @@
                     <ComboBoxItem Content="ASCII"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,0,0,5" Grid.Row="2">
+            <StackPanel Margin="0,7" Grid.Row="2">
                 <TextBlock Text="输出编码"/>
                 <ComboBox SelectedIndex="0" HorizontalAlignment="Left">
                     <ComboBoxItem Content="UTF-8"/>
@@ -74,9 +78,9 @@
                     <ComboBoxItem Content="ASCII"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,0,0,5" Grid.Column="1" Grid.Row="1">
+            <StackPanel Margin="0,7" Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="服务器端口"/>
-                <ui:NumberBox IntegersOnly="True" Icon="Server24" Max="65535" Min="0" Step="5" Value="19132" HorizontalAlignment="Left"/>
+                <ui:NumberBox IntegersOnly="True" Icon="Server24" Max="65535" Min="0" Step="1" Value="19132" HorizontalAlignment="Left"/>
             </StackPanel>
         </Grid>
     </StackPanel>

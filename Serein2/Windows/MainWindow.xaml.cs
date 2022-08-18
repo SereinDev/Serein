@@ -1,13 +1,15 @@
 ﻿using System.Windows;
-using Wpf.Ui;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Appearance;
 using System;
+using Wpf.Ui.Mvvm.Contracts;
 
-namespace Serein2
+namespace Serein2.Windows
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : UiWindow
     {
         public MainWindow()
         {
@@ -18,6 +20,14 @@ namespace Serein2
         {
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+        }
+
+        private readonly IThemeService _themeService;
+
+        public void ChangeTheme()
+        {
+            _themeService.SetTheme(_themeService.GetTheme() == ThemeType.Dark ? ThemeType.Light : ThemeType.Dark);
+
         }
     }
 }

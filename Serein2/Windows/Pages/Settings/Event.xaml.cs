@@ -17,11 +17,11 @@ using Wpf.Ui.Controls;
 namespace Serein2.Windows.Pages.Settings
 {
     /// <summary>
-    /// Setting.xaml 的交互逻辑
+    /// Server.xaml 的交互逻辑
     /// </summary>
-    public partial class Main : UiPage
+    public partial class Event : UiPage
     {
-        public Main()
+        public Event()
         {
             InitializeComponent();
         }
