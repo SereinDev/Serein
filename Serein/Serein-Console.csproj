@@ -45,16 +45,20 @@
     <Compile Remove="Main\**" />
     <Compile Remove="Serein\**" />
     <Compile Remove="Ui\**" />
+    <Compile Remove="Windows\**" />
     <EmbeddedResource Remove="ConsoleHtml\**" />
     <EmbeddedResource Remove="Main\**" />
     <EmbeddedResource Remove="Serein\**" />
     <EmbeddedResource Remove="Ui\**" />
+    <EmbeddedResource Remove="Windows\**" />
     <None Remove="ConsoleHtml\**" />
     <None Remove="Main\**" />
     <None Remove="Serein\**" />
     <None Remove="Ui\**" />
+    <None Remove="Windows\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="App.xaml.cs" />
     <Compile Remove="Base\ResourcesManager.cs" />
     <Compile Remove="Global-Ui.cs" />
     <Compile Remove="Program-Ui.cs" />
@@ -62,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="App.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sources\Serein.ico" />
