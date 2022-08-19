@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:server_pages="clr-namespace:Serein.Windows.Pages.Server"
+    xmlns:function_pages="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:settgins_pages="clr-namespace:Serein.Windows.Pages.Settings"
     xmlns:home_page="clr-namespace:Serein.Windows.Pages"
     Width="800"
@@ -52,6 +53,7 @@
                     <ui:NavigationItem  
                             Content="功能"
                             Icon="Box24"
+                            PageType="{x:Type function_pages:Container}"
                             PageTag="functions" />
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>

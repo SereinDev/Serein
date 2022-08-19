@@ -76,4 +76,13 @@
     <Resource Include="Windows\Serein.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Windows\Pages\Function\Container.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Windows\Pages\Function\Bot.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

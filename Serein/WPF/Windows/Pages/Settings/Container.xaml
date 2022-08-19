@@ -24,7 +24,7 @@
             <ui:NavigationCompact.Items>
                 <ui:NavigationItem  
                             Content="服务器"
-                            Icon="PanelRight24"
+                            Icon="Server24"
                             PageType="{x:Type pages:Server}"/>
                 <ui:NavigationItem  
                             Content="机器人"
