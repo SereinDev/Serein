@@ -150,7 +150,7 @@ namespace Serein.Ui
 
         private void PluginContextMenuStripEnable_Click(object sender, EventArgs e)
         {
-            
+
             //PluginManager.Enable(PluginList.SelectedItems);
             LoadPlugins();
         }

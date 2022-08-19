@@ -27,7 +27,7 @@ namespace Serein
      */
 
     static class Program
-    { 
+    {
         public static Ui.Ui Ui = null;
         /// <summary>
         /// 应用程序的主入口点。
@@ -56,7 +56,7 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            Ui =  new Ui.Ui();
+            Ui = new Ui.Ui();
             Application.Run(Ui);
         }
 

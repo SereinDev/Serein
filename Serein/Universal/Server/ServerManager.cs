@@ -73,7 +73,7 @@ namespace Serein.Server
             }
             else
             {
-                if (Logger.Type==0)
+                if (Logger.Type == 0)
                 {
                     Logger.Out(11, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
                 }
@@ -158,7 +158,7 @@ namespace Serein.Server
         {
             if (Status
                 &&
-                (Logger.Type==0 ||
+                (Logger.Type == 0 ||
                 !Quiet
                 &&
                 Logger.MsgBox(
@@ -250,7 +250,7 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (Global.Settings.Server.EnableOutputCommand && Logger.Type!=0)
+                if (Global.Settings.Server.EnableOutputCommand && Logger.Type != 0)
                 {
                     Logger.Out(10, $">{Log.EscapeLog(Command_Copy)}");
                 }
@@ -315,7 +315,7 @@ namespace Serein.Server
                 }
                 Logger.Out(
                     10,
-                    Logger.Type==0 ?
+                    Logger.Type == 0 ?
                     outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
                 if (Global.Settings.Server.EnableLog)
