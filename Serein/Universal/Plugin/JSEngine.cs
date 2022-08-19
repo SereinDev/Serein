@@ -63,7 +63,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Motdpe", new Func<string, string>((IP) => { return new Motdpe(IP).Original; }));
             engine.SetValue("Serein_Motdje", new Func<string, string>((IP) => { return new Motdje(IP).Original; }));
             engine.SetValue("Serein_ServerManager_Start", new Func<bool>(() => ServerManager.Start(true)));
-            engine.SetValue("Serein_ServerManager_Stop", new Action(ServerManager.Stop));
+            engine.SetValue("Serein_ServerManager_Stop", new Action(() => ServerManager.Stop(true)));
             engine.SetValue("Serein_ServerManager_Kill", new Func<bool>(() => ServerManager.Kill(true)));
             engine.SetValue("Serein_ServerManager_Status", new Func<bool>(() => { return ServerManager.Status; }));
             engine.SetValue("Serein_ServerManager_Send", new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));

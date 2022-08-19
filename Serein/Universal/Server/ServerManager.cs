@@ -126,7 +126,8 @@ namespace Serein.Server
         /// <summary>
         /// 关闭服务器
         /// </summary>
-        public static void Stop()
+        /// <param name="Quiet">静处理</param>
+        public static void Stop(bool Quiet = false)
         {
             if (Status)
             {
@@ -272,7 +273,7 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            ">" + Log.OutputRecognition(Command_Copy),
+                            ">" + Log.OutputRecognition(Command_Copy) + "\n",
                             Encoding.UTF8
                         );
                     }
@@ -327,7 +328,7 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
-                            Log.OutputRecognition(Line),
+                            Log.OutputRecognition(Line) + "\n",
                             Encoding.UTF8
                         );
                     }
@@ -394,7 +395,7 @@ namespace Serein.Server
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
-            JSFunc.Trigger("onServerStop");
+            JSFunc.Trigger("onServerStop", ServerProcess.ExitCode);
         }
 
         /// <summary>

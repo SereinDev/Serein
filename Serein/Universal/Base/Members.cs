@@ -170,7 +170,7 @@ namespace Serein.Base
             {
                 EventTrigger.Trigger("Bind_Invalid", GroupId, UserId);
             }
-            else if (GameIDs.Contains(Value))
+            else if (GameIDs.Contains(Value.Trim()))
             {
                 EventTrigger.Trigger("Bind_Occupied", GroupId, UserId);
             }
@@ -182,7 +182,7 @@ namespace Serein.Base
                     Card = JsonObject["sender"]["card"].ToString(),
                     Nickname = JsonObject["sender"]["nickname"].ToString(),
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
-                    GameID = Value
+                    GameID = Value.Trim()
                 };
                 List<MemberItem> memberItems = MemberItems;
                 memberItems.Add(Item);
@@ -297,6 +297,7 @@ namespace Serein.Base
         /// <param name="UserId">用户ID</param>
         public static void Update(JObject JsonObject, long UserId)
         {
+            return;
             if (IDs.Contains(UserId))
             {
                 List<MemberItem> memberItems = MemberItems;
