@@ -45,7 +45,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "action@github.com"
           git add -u
-          git commit -m "format: Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
+          git commit -m "style: Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
           git log -1
           remote_repo="https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
           git push "${remote_repo}" HEAD:${GITHUB_REF}
@@ -54,6 +54,9 @@ jobs:
     Build:
       needs: [draft_release]
       runs-on: windows-latest
+      strategy:
+        matrix:
+          project: [Console,WPF,WinForm]
       steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -75,31 +78,35 @@ jobs:
           nuget-version: '5.x'
 
       - name: NuGet restore
-        run: nuget restore Serein/Serein.csproj
+        run: nuget restore Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release Serein/Serein.csproj
+        run: msbuild -p:Configuration=Release Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug Serein/Serein.csproj
+        run: msbuild -p:Configuration=Debug Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
 
-      - name: NuGet restore
-        run: nuget restore Serein/Serein-Console.csproj
-
-      - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release Serein/Serein-Console.csproj
-
-      - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug Serein/Serein-Console.csproj
-
-      - name: Upload Serein(Release)
+      - name: Upload Serein(Release,dotnet6)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ needs.draft_release.outputs.tag_name }}
-          path: ${{ github.workspace }}\Serein\bin\Release
+          name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0-windows
 
-      - name: Upload Serein(Debug)
+      - name: Upload Serein(Release,dotnetframework472)
         uses: actions/upload-artifact@v3
         with:
-          name: Debug
-          path: ${{ github.workspace }}\Serein\bin\Debug
+          name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net472
+
+      - name: Upload Serein(Debug,dotnet6)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6_debug
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows
+
+      - name: Upload Serein(Debug,dotnetframework472)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472_debug
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net472
+

@@ -1,0 +1,48 @@
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Server.Container"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:pages="clr-namespace:Serein.Windows.Pages.Server"
+    d:DesignHeight="850"
+    d:DesignWidth="800"
+    Scrollable="True"
+    mc:Ignorable="d">
+    <Grid 
+        Grid.Row="1"
+        Margin="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ui:NavigationCompact 
+                    Grid.Column="0"
+                    Margin="6,0,6,0"
+                    Frame="{Binding ElementName=RootFrame}"
+                    SelectedPageIndex="0">
+                <ui:NavigationCompact.Items>
+                    <ui:NavigationItem  
+                            Content="控制面板"
+                            Icon="PanelRight24"
+                            PageType="{x:Type pages:Panel}"
+                            PageTag="panel" />
+                    <ui:NavigationItem  
+                            Content="插件管理"
+                            Icon="PuzzlePiece24"
+                            PageType="{x:Type pages:Plugins}"
+                            PageTag="plugins" />
+                </ui:NavigationCompact.Items>
+            </ui:NavigationCompact>
+            <Border
+                Margin="0"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                CornerRadius="8,0,0,0"
+                Grid.Column="1" >
+                <Frame  
+                    x:Name="RootFrame"
+                    />
+            </Border>
+        </Grid>
+</ui:UiPage>

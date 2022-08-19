@@ -1,0 +1,29 @@
+﻿<ui:UiPage 
+    x:Class="Serein.Windows.Pages.Settings.Bot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:Serein.Windows.Pages.Settings"
+    mc:Ignorable="d" 
+    Scrollable="True"
+    d:DesignHeight="450" d:DesignWidth="800"
+    Title="Bot">
+    <StackPanel>
+        <ui:Hyperlink Margin="0,7" Content="支持的机器人标准: OneBot-11" NavigateUri="https://github.com/botuniverse/onebot-11" Icon="Link48" />
+        <TextBlock Text="WebSocket地址" HorizontalAlignment="Left"/>
+        <ui:TextBox Icon="CompassNorthwest24" Margin="0,7"/>
+        <TextBlock Text="鉴权凭证（Token）" HorizontalAlignment="Left"/>
+        <ui:PasswordBox Icon="Fluent24" Margin="0,7"/>
+        <ui:ToggleSwitch Margin="0,7" Content="保存所有消息和数据包到日志（./log/msg）"/>
+        <ui:ToggleSwitch Margin="0,7" Content="赋予所有群主和管理员管理权限"/>
+        <ui:ToggleSwitch Margin="0,7" Content="输出接收和发送的数据"/>
+        <ui:ToggleSwitch Margin="0,7" Content="断线自动重连"/>
+        <ui:ToggleSwitch Margin="0,7" Content="纯文本发送"/>
+        <TextBlock Text="监听群列表（使用&quot;;&quot;分隔）" HorizontalAlignment="Left"/>
+        <ui:TextBox Icon="PeopleTeam24" Margin="0,7"/>
+        <TextBlock Text="管理权限列表（使用&quot;;&quot;分隔）" HorizontalAlignment="Left"/>
+        <ui:TextBox Icon="ShieldPerson20" Margin="0,7"/>
+    </StackPanel>
+</ui:UiPage>
