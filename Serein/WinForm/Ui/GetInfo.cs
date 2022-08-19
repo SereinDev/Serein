@@ -19,7 +19,7 @@ namespace Serein.Ui
             string OldAnnouncementId = string.Empty;
             while (true)
             {
-                if (Global.Ui != null && Global.Ui.Visible && Global.Settings.Serein.EnableGetAnnouncement)
+                if (Program.Ui != null && Program.Ui.Visible && Global.Settings.Serein.EnableGetAnnouncement)
                 {
                     try
                     {
@@ -27,12 +27,12 @@ namespace Serein.Ui
                         if (OldAnnouncementId != AnnouncementId)
                         {
                             OldAnnouncementId = AnnouncementId;
-                            Global.Ui.ShowBalloonTip(RequestInfo($"https://serein.cc/announcement/{AnnouncementId}.txt").Replace("\\n", "\n"));
+                            Program.Ui.ShowBalloonTip(RequestInfo($"https://serein.cc/announcement/{AnnouncementId}.txt").Replace("\\n", "\n"));
                         }
                     }
                     catch (Exception e)
                     {
-                        Global.Ui.ShowBalloonTip("公告获取异常：\n" + e.Message);
+                        Program.Ui.ShowBalloonTip("公告获取异常：\n" + e.Message);
                         Thread.Sleep(240000);
                     }
                 }
@@ -49,7 +49,7 @@ namespace Serein.Ui
             Thread.Sleep(10000);
             while (true)
             {
-                if (Global.Ui != null && Global.Ui.Visible && Global.Settings.Serein.EnableGetUpdate)
+                if (Program.Ui != null && Program.Ui.Visible && Global.Settings.Serein.EnableGetUpdate)
                 {
                     try
                     {
@@ -58,22 +58,22 @@ namespace Serein.Ui
                         if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
                             Version != Global.VERSION && OldPreVersion != Version)
                         {
-                            Global.Ui.ShowBalloonTip("发现新版本:\n" + Version);
-                            Global.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{Version}，你可以点击下方链接获取最新版）");
+                            Program.Ui.ShowBalloonTip("发现新版本:\n" + Version);
+                            Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{Version}，你可以点击下方链接获取最新版）");
                             OldPreVersion = Version;
                         }
                         else if (OldPreVersion != Version)
                         {
-                            Global.Ui.ShowBalloonTip(
+                            Program.Ui.ShowBalloonTip(
                                 "获取更新成功\n" +
                                 "当前已是最新版:)");
                             OldPreVersion = Version;
-                            Global.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版qwq）");
+                            Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版qwq）");
                         }
                     }
                     catch (Exception e)
                     {
-                        Global.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
+                        Program.Ui.ShowBalloonTip("更新获取异常：\n" + e.Message);
                         Thread.Sleep(240000);
                     }
                 }

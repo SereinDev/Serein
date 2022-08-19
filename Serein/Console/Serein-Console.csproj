@@ -31,7 +31,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Sources\Serein.ico</ApplicationIcon>
+    <ApplicationIcon>Serein.ico</ApplicationIcon>
     <RootNamespace>Serein</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -41,7 +41,16 @@
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
 	<ItemGroup>
-		<Compile Include="../Universal/**"/>
+		<Compile Include="../Universal/**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="..\Universal\ConsoleHtml\console.html" />
+	  <Compile Remove="..\Universal\ConsoleHtml\console.js" />
+	  <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
+	  <Compile Remove="..\Universal\ConsoleHtml\vanilla.css" />
+		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
+		<Compile Remove="..\Universal\Server\PluginManager.cs" />
+		<Compile Remove="..\Universal\Sources\Serein.ico" />
 	</ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -54,6 +63,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Serein.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Universal\ConsoleHtml\console.html" />
+    <None Include="..\Universal\ConsoleHtml\console.js" />
+    <None Include="..\Universal\ConsoleHtml\preset.css" />
+	  <None Include="..\Universal\ConsoleHtml\vanilla.css" />
+    <None Include="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

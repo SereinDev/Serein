@@ -10,6 +10,7 @@ namespace Serein
 {
     internal static class Logger
     {
+        public static int Type = 0;
         private static readonly object Lock = new object();
 
         public static void Out(int Type, params object[] objects)
@@ -107,6 +108,11 @@ namespace Serein
                 System.Console.WriteLine(Line + "\x1b[97m");
                 System.Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+
+        public static bool MsgBox(string Text, string Caption, int Buttons, int Icon)
+        {
+            return true;
         }
     }
 }

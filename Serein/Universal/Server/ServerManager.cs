@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Serein.Server
 {
@@ -54,47 +53,27 @@ namespace Serein.Server
             {
                 if (!Quiet)
                 {
-                    if (Global.Console)
-                    {
-                        Logger.Out(2, "服务器已在运行中");
-                    }
-                    else
-                    {
-                        MessageBox.Show(":(\n服务器已在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
+                    Logger.MsgBox(":(\n服务器已在运行中", "Serein", 0, 48);
+
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!Quiet)
                 {
-                    if (Global.Console)
-                    {
-                        Logger.Out(2, "启动路径为空");
-                    }
-                    else
-                    {
-                        MessageBox.Show(":(\n启动路径为空", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
+                    Logger.MsgBox(":(\n启动路径为空", "Serein", 0, 48);
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!Quiet)
                 {
-                    if (Global.Console)
-                    {
-                        Logger.Out(2, $"启动文件\"{Global.Settings.Server.Path}\"未找到");
-                    }
-                    else
-                    {
-                        MessageBox.Show($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
+                    Logger.MsgBox($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
                 }
             }
             else
             {
-                if (Global.Console)
+                if (Logger.Type==0)
                 {
                     Logger.Out(11, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
                 }
@@ -163,10 +142,6 @@ namespace Serein.Server
             {
                 Restart = false;
             }
-            else if (!Global.Console)
-            {
-                MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
             else
             {
                 Logger.Out(2, "服务器不在运行中");
@@ -182,25 +157,24 @@ namespace Serein.Server
         {
             if (Status
                 &&
-                (Global.Console ||
+                (Logger.Type==0 ||
                 !Quiet
                 &&
-
-                (int)MessageBox.Show(
+                Logger.MsgBox(
                     "确定结束进程吗？\n此操作可能导致存档损坏等问题",
                     "Serein",
-                    MessageBoxButton.OKCancel,
-                    MessageBoxImage.Warning
-                    ) == 1
+                    1,
+                    48
+                    )
                 && (
                     !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") || (
                     ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
-                    (int)MessageBox.Show(
+                    Logger.MsgBox(
                     "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
                     "Serein",
-                    MessageBoxButton.OKCancel,
-                    MessageBoxImage.Warning
-                    ) == 1
+                    1,
+                    48
+                    )
                 )))
                 )
             {
@@ -213,19 +187,12 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    if (Global.Console)
-                    {
-                        Logger.Out(3, "强制结束失败\r\n" + e.Message);
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            ":(\n强制结束失败\n" + e.Message,
-                            "Serein",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                            );
-                    }
+                    Logger.MsgBox(
+                        ":(\n强制结束失败\n" + e.Message,
+                        "Serein",
+                        0,
+                        16
+                        );
                 }
             }
             else if (Quiet)
@@ -241,14 +208,7 @@ namespace Serein.Server
             }
             else if (!Status && !Quiet)
             {
-                if (Global.Console)
-                {
-                    Logger.Out(2, "服务器不在运行中");
-                }
-                else
-                {
-                    MessageBox.Show(":(\n服务器不在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
             }
             if (ServerProcess.HasExited)
             {
@@ -289,7 +249,7 @@ namespace Serein.Server
                     CommandListIndex = CommandList.Count + 1;
                     CommandList.Add(Command_Copy);
                 }
-                if (Global.Settings.Server.EnableOutputCommand && !Global.Console)
+                if (Global.Settings.Server.EnableOutputCommand && Logger.Type!=0)
                 {
                     Logger.Out(10, $">{Log.EscapeLog(Command_Copy)}");
                 }
@@ -354,7 +314,7 @@ namespace Serein.Server
                 }
                 Logger.Out(
                     10,
-                    Global.Console ?
+                    Logger.Type==0 ?
                     outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
                     );
                 if (Global.Settings.Server.EnableLog)

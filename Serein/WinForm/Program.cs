@@ -27,7 +27,8 @@ namespace Serein
      */
 
     static class Program
-    {
+    { 
+        public static Ui.Ui Ui = null;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -55,9 +56,8 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            Ui.Ui ui = new Ui.Ui();
-            Global.Ui = ui;
-            Application.Run(ui);
+            Ui =  new Ui.Ui();
+            Application.Run(Ui);
         }
 
         private static void ThreadException(object sender, ThreadExceptionEventArgs e)
