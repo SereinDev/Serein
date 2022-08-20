@@ -27,7 +27,7 @@ namespace Serein.Windows.Pages.Function
             BotWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
         }
 
-        private void Connect_Click(object sender ,RoutedEventArgs e)
+        private void Connect_Click(object sender, RoutedEventArgs e)
         {
             Websocket.Connect();
         }

@@ -16,7 +16,7 @@ namespace Serein.Windows.Pages.Server
             InitializeComponent();
             PanelWebBrowser.ScriptErrorsSuppressed = true;
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            PanelWebBrowser.WebBrowserShortcutsEnabled= false;
+            PanelWebBrowser.WebBrowserShortcutsEnabled = false;
             PanelWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=panel");
         }
 

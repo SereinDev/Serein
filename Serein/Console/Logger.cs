@@ -122,7 +122,7 @@ namespace Serein
                     Out(2, Text);
                     break;
                 case 16:
-                    Out(3,Text);
+                    Out(3, Text);
                     break;
             }
             return true;
