@@ -4,9 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
-	 <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	 <ApplicationIcon>Serein.ico</ApplicationIcon>
-	 <RootNamespace>Serein</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon>Serein.ico</ApplicationIcon>
+    <RootNamespace>Serein</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -52,9 +54,9 @@
     <Content Include="Serein.ico" />
   </ItemGroup>
 
-	<ItemGroup>
-		<none Include="../Universal/Sources/Serein.ico" />
-	</ItemGroup>
+  <ItemGroup>
+    <none Include="../Universal/Sources/Serein.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="5.7.0">

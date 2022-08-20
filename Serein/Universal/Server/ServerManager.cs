@@ -188,12 +188,7 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox(
-                        ":(\n强制结束失败\n" + e.Message,
-                        "Serein",
-                        0,
-                        16
-                        );
+                    Logger.MsgBox(":(\n强制结束失败\n" + e.Message, "Serein", 0, 16);
                 }
             }
             else if (Quiet)
@@ -211,7 +206,7 @@ namespace Serein.Server
             {
                 Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
             }
-            if (ServerProcess.HasExited)
+            if (ServerProcess != null && ServerProcess.HasExited)
             {
                 return true;
             }

@@ -5,6 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+    xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     mc:Ignorable="d" 
     Scrollable="True"
@@ -17,7 +19,9 @@
             <ColumnDefinition Width="*" MinWidth="100" />
         </Grid.ColumnDefinitions>
         <GroupBox Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Header="控制台">
-            <WebBrowser/>
+            <wfi:WindowsFormsHost Margin="3">
+                <wf:WebBrowser x:Name="PluginWebBrowser"/>
+            </wfi:WindowsFormsHost>
         </GroupBox>
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
         <GroupBox Margin="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Header="插件列表">

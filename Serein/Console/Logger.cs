@@ -112,6 +112,19 @@ namespace Serein
 
         public static bool MsgBox(string Text, string Caption, int Buttons, int Icon)
         {
+            if (Buttons != 0)
+            {
+                return true;
+            }
+            switch (Icon)
+            {
+                case 48:
+                    Out(2, Text);
+                    break;
+                case 16:
+                    Out(3,Text);
+                    break;
+            }
             return true;
         }
     }

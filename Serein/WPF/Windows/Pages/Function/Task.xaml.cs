@@ -16,9 +16,6 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
 {
-    /// <summary>
-    /// Server.xaml 的交互逻辑
-    /// </summary>
     public partial class Task : UiPage
     {
         public Task()

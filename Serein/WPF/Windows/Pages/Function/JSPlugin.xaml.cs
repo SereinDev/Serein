@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,14 +16,23 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
 {
-    /// <summary>
-    /// Server.xaml 的交互逻辑
-    /// </summary>
     public partial class JSPlugin : UiPage
     {
         public JSPlugin()
         {
             InitializeComponent();
+            PluginWebBrowser.ScriptErrorsSuppressed = true;
+            PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            PluginWebBrowser.WebBrowserShortcutsEnabled = false;
+            PluginWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
+        }
+
+        public void AppendText(string Line)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                PluginWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
+            }));
         }
     }
 }

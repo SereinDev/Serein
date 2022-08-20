@@ -16,9 +16,6 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Server
 {
-    /// <summary>
-    /// Plugins.xaml 的交互逻辑
-    /// </summary>
     public partial class Plugins : UiPage
     {
         public Plugins()

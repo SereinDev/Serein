@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     mc:Ignorable="d" 
     Scrollable="True"
     d:DesignHeight="450" d:DesignWidth="800"
@@ -62,13 +64,15 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ui:Button Icon="PlugConnected24" Margin="3" Content="连接"/>
-                    <ui:Button Icon="PlugDisconnected24" Margin="3" Content="断开" Grid.Column="1"/>
+                    <ui:Button Icon="PlugConnected24" Margin="3" Content="连接" Click="Connect_Click"/>
+                    <ui:Button Icon="PlugDisconnected24" Margin="3" Content="断开" Grid.Column="1" Click="Disconnect_Click"/>
                 </Grid>
             </GroupBox>
         </StackPanel>
         <GroupBox Margin="3" Header="控制台" Grid.Column="1" >
-            <WebBrowser Grid.Row="1"/>
+            <wfi:WindowsFormsHost Margin="3">
+                <wf:WebBrowser x:Name="BotWebBrowser"/>
+            </wfi:WindowsFormsHost>
         </GroupBox>
     </Grid>
 </ui:UiPage>

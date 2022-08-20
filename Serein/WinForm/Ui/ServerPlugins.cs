@@ -86,10 +86,12 @@ namespace Serein.Ui
             }
             LoadPlugins();
         }
+
         private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
             LoadPlugins();
         }
+
         private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             if (!PluginManager.Available)
@@ -111,7 +113,7 @@ namespace Serein.Ui
                 bool Locked = false;
                 foreach (ListViewItem file in PluginList.SelectedItems)
                 {
-                    if (file.ForeColor == System.Drawing.Color.Gray)
+                    if (file.ForeColor == Color.Gray)
                     {
                         Locked = true;
                     }
@@ -151,14 +153,50 @@ namespace Serein.Ui
         private void PluginContextMenuStripEnable_Click(object sender, EventArgs e)
         {
 
-            //PluginManager.Enable(PluginList.SelectedItems);
+            if (!PluginManager.Check())
+            {
+                foreach (ListViewItem Item in PluginList.SelectedItems)
+                {
+                    try
+                    {
+                        FileInfo RenamedFile = new FileInfo(PluginManager.PluginPath + "\\" + Item.Text);
+                        RenamedFile.MoveTo(PluginManager.PluginPath + "\\" + Item.Text + ".lock");
+                    }
+                    catch (Exception Exp)
+                    {
+                        MessageBox.Show(
+                            $"文件\"{Item.Text}\"禁用失败\n" +
+                            $"详细原因：\n" +
+                            $"{Exp.Message}", "Serein",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            );
+                    }
+                }
+            }
             LoadPlugins();
         }
         private void PluginContextMenuStripDisable_Click(object sender, EventArgs e)
         {
-            //PluginManager.Disable(PluginList.SelectedItems);
+            foreach (ListViewItem Item in PluginList.SelectedItems)
+            {
+                try
+                {
+                    FileInfo RenamedFile = new FileInfo(PluginManager.PluginPath + "\\" + Item.Text + ".lock");
+                    RenamedFile.MoveTo(PluginManager.PluginPath + "\\" + Item.Text);
+                }
+                catch (Exception Exp)
+                {
+                    MessageBox.Show(
+                                    $"文件\"{Item.Text}\"禁用失败\n" +
+                                    $"详细原因：\n" +
+                                    $"{Exp.Message}", "Serein",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                                    );
+                }
+            }
             LoadPlugins();
         }
+
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
         {
             ProcessStartInfo psi = new ProcessStartInfo("Explorer.exe")
@@ -171,6 +209,7 @@ namespace Serein.Ui
             };
             Process.Start(psi);
         }
+
         private void LoadPlugins()
         {
             if (PluginManager.Get() != null)

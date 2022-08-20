@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Serein.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,14 +16,33 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
 {
-    /// <summary>
-    /// Server.xaml 的交互逻辑
-    /// </summary>
     public partial class Bot : UiPage
     {
         public Bot()
         {
             InitializeComponent();
+            BotWebBrowser.ScriptErrorsSuppressed = true;
+            BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            BotWebBrowser.WebBrowserShortcutsEnabled = false;
+            BotWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
+        }
+
+        private void Connect_Click(object sender ,RoutedEventArgs e)
+        {
+            Websocket.Connect();
+        }
+
+        private void Disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            Websocket.Close();
+        }
+
+        public void AppendText(string Line)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
+            }));
         }
     }
 }

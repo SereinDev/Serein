@@ -16,9 +16,6 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
 {
-    /// <summary>
-    /// Panel.xaml 的交互逻辑
-    /// </summary>
     public partial class Container : UiPage
     {
         public Container()

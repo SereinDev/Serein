@@ -16,9 +16,6 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Settings
 {
-    /// <summary>
-    /// Server.xaml 的交互逻辑
-    /// </summary>
     public partial class Server : UiPage
     {
         public Server()
