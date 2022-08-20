@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Settings
         public Bot()
         {
             InitializeComponent();
+            Window.Settings.Bot = this;
         }
     }
 }

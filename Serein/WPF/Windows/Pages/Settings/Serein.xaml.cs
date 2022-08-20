@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Settings
         public Serein()
         {
             InitializeComponent();
+            Window.Settings.Serein = this;
         }
     }
 }

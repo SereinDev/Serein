@@ -1,16 +1,15 @@
-﻿<ui:UiPage 
-    x:Class="Serein.Windows.Pages.Function.Bot"
+﻿<ui:UiPage x:Class="Serein.Windows.Pages.Function.Bot"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
-    mc:Ignorable="d" 
-    Scrollable="True"
-    d:DesignHeight="450" d:DesignWidth="800"
+    xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
     Title="Bot">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,7 +20,9 @@ xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsForms
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel>
-            <GroupBox Margin="3" Header="详细信息" DockPanel.Dock="Top">
+            <GroupBox Margin="3"
+                Header="详细信息"
+                DockPanel.Dock="Top">
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -34,28 +35,39 @@ xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsForms
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DockPanel>
-                        <Label DockPanel.Dock="Left" Content="状态"/>
-                        <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                        <Label DockPanel.Dock="Left"
+                            Content="状态"/>
+                        <Label DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="1">
-                        <Label DockPanel.Dock="Left" Content="QQ"/>
-                        <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                        <Label DockPanel.Dock="Left"
+                            Content="QQ"/>
+                        <Label DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="2">
-                        <Label DockPanel.Dock="Left" Content="接收数"/>
-                        <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                        <Label DockPanel.Dock="Left"
+                            Content="接收数"/>
+                        <Label DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="3">
-                        <Label DockPanel.Dock="Left" Content="发送数"/>
-                        <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                        <Label DockPanel.Dock="Left"
+                            Content="发送数"/>
+                        <Label DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="4">
-                        <Label DockPanel.Dock="Left" Content="运行时长"/>
-                        <Label DockPanel.Dock="Left" FlowDirection="RightToLeft">-</Label>
+                        <Label DockPanel.Dock="Left"
+                            Content="运行时长"/>
+                        <Label DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">-</Label>
                     </DockPanel>
                 </Grid>
             </GroupBox>
-            <GroupBox Margin="3" Header="控制" >
+            <GroupBox Margin="3"
+                Header="控制">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -64,12 +76,21 @@ xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsForms
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ui:Button Icon="PlugConnected24" Margin="3" Content="连接" Click="Connect_Click"/>
-                    <ui:Button Icon="PlugDisconnected24" Margin="3" Content="断开" Grid.Column="1" Click="Disconnect_Click"/>
+                    <ui:Button Icon="PlugConnected24"
+                        Margin="3"
+                        Content="连接"
+                        Click="Connect_Click"/>
+                    <ui:Button Icon="PlugDisconnected24"
+                        Margin="3"
+                        Content="断开"
+                        Grid.Column="1"
+                        Click="Disconnect_Click"/>
                 </Grid>
             </GroupBox>
         </StackPanel>
-        <GroupBox Margin="3" Header="控制台" Grid.Column="1" >
+        <GroupBox Margin="3"
+            Header="控制台"
+            Grid.Column="1">
             <wfi:WindowsFormsHost Margin="3">
                 <wf:WebBrowser x:Name="BotWebBrowser"/>
             </wfi:WindowsFormsHost>

@@ -25,6 +25,7 @@ namespace Serein.Windows.Pages.Function
             BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
             BotWebBrowser.WebBrowserShortcutsEnabled = false;
             BotWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
+            Window.Function.Bot = this;
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)

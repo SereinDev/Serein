@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Server
         public Plugins()
         {
             InitializeComponent();
+            Window.Server.Plugins = this;
         }
     }
 }

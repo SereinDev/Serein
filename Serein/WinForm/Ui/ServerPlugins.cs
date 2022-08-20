@@ -175,6 +175,7 @@ namespace Serein.Ui
             }
             LoadPlugins();
         }
+
         private void PluginContextMenuStripDisable_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem Item in PluginList.SelectedItems)

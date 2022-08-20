@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Function
         public Regex()
         {
             InitializeComponent();
+            Window.Function.Regex = this;
         }
     }
 }

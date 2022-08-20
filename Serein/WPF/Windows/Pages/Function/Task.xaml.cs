@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Function
         public Task()
         {
             InitializeComponent();
+            Window.Function.Task = this;
         }
     }
 }

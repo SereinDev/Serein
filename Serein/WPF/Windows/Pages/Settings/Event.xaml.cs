@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Settings
         public Event()
         {
             InitializeComponent();
+            Window.Settings.Event = this;
         }
     }
 }

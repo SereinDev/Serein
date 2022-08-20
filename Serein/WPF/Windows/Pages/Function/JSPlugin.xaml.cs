@@ -24,7 +24,8 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.ScriptErrorsSuppressed = true;
             PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
-            PluginWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
+            PluginWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=plugin");
+            Window.Function.JSPlugin = this;
         }
 
         public void AppendText(string Line)

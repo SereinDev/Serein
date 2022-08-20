@@ -7,7 +7,6 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     mc:Ignorable="d" 
-    Scrollable="True"
     d:DesignHeight="450" d:DesignWidth="800"
     Title="Member">
     <Grid>

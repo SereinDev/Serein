@@ -7,7 +7,6 @@
     xmlns:pages="clr-namespace:Serein.Windows.Pages.Server"
     d:DesignHeight="850"
     d:DesignWidth="800"
-    Scrollable="True"
     mc:Ignorable="d">
     <Grid Grid.Row="1"
         Margin="3">

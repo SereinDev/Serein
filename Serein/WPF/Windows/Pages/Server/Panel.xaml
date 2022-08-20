@@ -4,11 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-           xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+    xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     d:DesignHeight="850"
     d:DesignWidth="800"
-    Scrollable="True"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -91,26 +90,30 @@ xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsForms
                         Margin="3"
                         Content="启动"
                         HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" Click="Start_Click"/>
+                        VerticalContentAlignment="Stretch"
+                        Click="Start_Click"/>
                     <ui:Button Icon="Pause24"
                         Margin="3"
                         Content="停止"
                         Grid.Column="1"
                         HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" Click="Stop_Click"/>
+                        VerticalContentAlignment="Stretch"
+                        Click="Stop_Click"/>
                     <ui:Button Icon="ArrowClockwise24"
                         Margin="3"
                         Content="重启"
                         Grid.Row="1"
                         HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" Click="Restart_Click"/>
+                        VerticalContentAlignment="Stretch"
+                        Click="Restart_Click"/>
                     <ui:Button Icon="TabProhibited24"
                         Margin="3"
                         Content="结束进程"
                         Grid.Row="1"
                         Grid.Column="1"
                         HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" Click="Kill_Click"/>
+                        VerticalContentAlignment="Stretch"
+                        Click="Kill_Click"/>
                 </Grid>
             </GroupBox>
         </StackPanel>
@@ -125,9 +128,12 @@ xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsForms
                         Padding="0,3"
                         Appearance="Transparent"
                         DockPanel.Dock="Right"
-                        Icon="ChevronCircleUp24" Click="Enter_Click"/>
-                    <TextBox Name="InputBox" Margin="3"
-                        DockPanel.Dock="Left" KeyDown="InputBox_KeyDown"/>
+                        Icon="ChevronCircleUp24"
+                        Click="Enter_Click"/>
+                    <TextBox Name="InputBox"
+                        Margin="3"
+                        DockPanel.Dock="Left"
+                        KeyDown="InputBox_KeyDown"/>
                 </DockPanel>
                 <wfi:WindowsFormsHost Margin="3"
                     DockPanel.Dock="Top">

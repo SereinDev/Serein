@@ -18,6 +18,7 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
             PanelWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=panel");
+            Window.Server.Panel = this;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
@@ -53,7 +54,6 @@ namespace Serein.Windows.Pages.Server
                 ServerManager.InputCommand(InputBox.Text);
                 InputBox.Text = "";
                 e.Handled = true;
-                AppendText("11111");
             }
         }
 

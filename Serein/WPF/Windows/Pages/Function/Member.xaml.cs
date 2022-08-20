@@ -21,6 +21,7 @@ namespace Serein.Windows.Pages.Function
         public Member()
         {
             InitializeComponent();
+            Window.Function.Member = this;
         }
     }
 }
