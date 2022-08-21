@@ -35,20 +35,20 @@ namespace Serein.Windows.Pages.Server
             PluginsListview.Items.Clear();
             if (PluginManager.Get() != null)
             {
-                foreach(string Plugin in PluginManager.Get())
+                foreach (string Plugin in PluginManager.Get())
                 {
                     if (Extensions.Contains(Path.GetExtension(Plugin).ToLower()))
                     {
                         ListViewItem Item = new ListViewItem();
-                        Item.Content = GetRelativeUri(PluginManager.PluginPath,Plugin);
+                        Item.Content = GetRelativeUri(PluginManager.PluginPath, Plugin);
                         if (Path.GetExtension(Plugin).ToLower() == ".lock") { Item.Foreground = Brushes.LightGray; }
-                        PluginsListview.Items.Add(Item) ;
+                        PluginsListview.Items.Add(Item);
                     }
                 }
             }
         }
 
-        private string GetRelativeUri(string Base,string Path)
+        private string GetRelativeUri(string Base, string Path)
         {
             return new Uri(Base).MakeRelativeUri(new Uri(Path)).OriginalString;
         }
