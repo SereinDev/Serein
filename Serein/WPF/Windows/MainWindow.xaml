@@ -21,7 +21,7 @@
     Background="{DynamicResource ApplicationBackgroundBrush}"
     MaxWidth="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}"
     MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
-    Icon="/Windows/Serein.ico">
+    Icon="/Windows/Serein.ico" Closing="UiWindow_Closing" IsVisibleChanged="UiWindow_IsVisibleChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,7 +31,34 @@
             Padding="0"
             Title="Serein"
             Icon="./Serein.ico"
-            Margin="5,0,0,0"/>
+            Margin="5,0,0,0">
+            <ui:TitleBar.Tray>
+                <ui:NotifyIcon
+            Icon="./Serein.ico"
+      FocusOnLeftClick="True"
+      MenuOnRightClick="True"
+      TooltipText="Serein">
+                    <ui:NotifyIcon.Menu>
+                        <ContextMenu>
+                            <ui:MenuItem
+            Header="隐藏窗口"
+            SymbolIcon="SlideHide24"
+                                Name="Hide"
+                                Click="Hide_Click"/>
+                            <ui:MenuItem
+            Header="帮助"
+            SymbolIcon="SearchInfo24"
+                                Name="Help"
+                                Click="Help_Click"/>
+                            <ui:MenuItem
+            Header="退出"
+            SymbolIcon="ArrowExit20"
+                                Name="Exit" Click="Exit_Click"/>
+                        </ContextMenu>
+                    </ui:NotifyIcon.Menu>
+                </ui:NotifyIcon>
+            </ui:TitleBar.Tray>
+        </ui:TitleBar>
         <Grid Grid.Row="1"
             Margin="3">
             <Grid.ColumnDefinitions>

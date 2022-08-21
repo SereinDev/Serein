@@ -25,9 +25,9 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            Timer CleanRAM = new Timer(10000) { AutoReset = true };
-            CleanRAM.Elapsed += (sender, e) => SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
-            CleanRAM.Start();
+            //Timer CleanRAM = new Timer(10000) { AutoReset = true };
+            //CleanRAM.Elapsed += (sender, e) => SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
+            //CleanRAM.Start();
         }
 
         private void ShowException(string ExceptionMsg)
