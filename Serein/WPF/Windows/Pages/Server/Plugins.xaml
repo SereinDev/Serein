@@ -10,44 +10,41 @@
     d:DesignWidth="800"
     Title="Home">
     <DockPanel>
-        <ListView Name="PluginsListview" ContextMenuOpening="PluginsListview_ContextMenuOpening">
-            <ListView.ContextMenu>
-                <ContextMenu Name="PluginsContextMenu">
-                    <ui:MenuItem
-                    Header="导入"
-                    SymbolIcon="DocumentAdd24"
-                    Name="Import"
-                    Click="Import_Click"/>
-                    <ui:MenuItem
-                    Header="删除"
-                    SymbolIcon="Delete24"
-                    Name="Delete"
-                    Click="Delete_Click"/>
-                    <Separator />
-                    <ui:MenuItem
-                    Header="启用"
-                    SymbolIcon="CheckmarkCircle24"
-                    Name="Enable"
-                    Click="Enable_Click"/>
-                    <ui:MenuItem
-                    Header="禁用"
-                    SymbolIcon="DismissCircle24"
-                    Name="Disable"
-                    Click="Disable_Click"/>
-                    <Separator />
-                    <ui:MenuItem
-                    Header="打开文件夹"
-                    SymbolIcon="FolderOpen24"
-                    Name="OpenFolder"
-                    Click="OpenFolder_Click"/>
-                    <Separator />
-                    <ui:MenuItem
-                    Header="刷新"
-                    SymbolIcon="ArrowClockwise24"
-                    Name="Refresh"
-                    Click="Refresh_Click"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
-        </ListView>
+        <GroupBox Header="插件列表">
+            <ListView Name="PluginsListview"
+                ContextMenuOpening="PluginsListview_ContextMenuOpening">
+                <ListView.ContextMenu>
+                    <ContextMenu Name="PluginsContextMenu">
+                        <ui:MenuItem Header="导入"
+                            SymbolIcon="DocumentAdd24"
+                            Name="Import"
+                            Click="Import_Click"/>
+                        <ui:MenuItem Header="删除"
+                            SymbolIcon="Delete24"
+                            Name="Delete"
+                            Click="Delete_Click"/>
+                        <Separator />
+                        <ui:MenuItem Header="启用"
+                            SymbolIcon="CheckmarkCircle24"
+                            Name="Enable"
+                            Click="Enable_Click"/>
+                        <ui:MenuItem Header="禁用"
+                            SymbolIcon="DismissCircle24"
+                            Name="Disable"
+                            Click="Disable_Click"/>
+                        <Separator />
+                        <ui:MenuItem Header="打开文件夹"
+                            SymbolIcon="FolderOpen24"
+                            Name="OpenFolder"
+                            Click="OpenFolder_Click"/>
+                        <Separator />
+                        <ui:MenuItem Header="刷新"
+                            SymbolIcon="ArrowClockwise24"
+                            Name="Refresh"
+                            Click="Refresh_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </GroupBox>
     </DockPanel>
 </ui:UiPage>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//using System.Windows;
-using System.Threading.Tasks;
-using Serein.Base;
+﻿using Serein.Base;
 using Serein.Windows;
+using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
 namespace Serein
@@ -14,7 +10,9 @@ namespace Serein
         public static int Type = 2;
         public static void Out(int Type, params object[] objects)
         {
-            if (Window.Server.Panel != null && Window.Function.Bot != null && Window.Function.Bot != null)
+            if (Type / 10 == 1 && Window.Server.Panel != null ||
+                Type / 10 == 2 && Window.Function.Bot != null ||
+                Type / 10 == 3 && Window.Function.Bot != null)
             {
                 string Line = string.Empty;
                 foreach (var o in objects)
@@ -74,7 +72,35 @@ namespace Serein
         /// <returns>按下的按钮为OK或Yes</returns>
         public static bool MsgBox(string Text, string Caption, int Buttons, int Icon)
         {
-            return true;
+            if (Buttons == 0)
+            {
+                Window.MainWindow.OpenSnackbar(
+                    "执行失败",
+                    Text.Replace(":(\n", string.Empty),
+                    Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
+                    );
+                return true;
+            }
+            else
+            {
+                bool Confirmed = false;
+                MessageBox Msg = new MessageBox()
+                {
+                    Title = Caption,
+                    Content = Text,
+                    ShowInTaskbar = false
+                };
+                Msg.ButtonLeftName = Buttons <= 1 ? "确定" : "是";
+                Msg.ButtonRightName = Buttons <= 1 ? "取消" : "否";
+                Msg.ButtonRightClick += (sender, e) => Msg.Close();
+                Msg.ButtonLeftClick += (sender, e) =>
+                {
+                    Confirmed = true;
+                    Msg.Close();
+                };
+                Msg.ShowDialog();
+                return Confirmed;
+            }
         }
     }
 }

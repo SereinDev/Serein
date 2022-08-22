@@ -18,11 +18,13 @@ namespace Serein.Items
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()
         {
+            Enable = false;
             Task RunTask = new Task(() =>
             {
                 Base.Command.Run(3, Command);
                 List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
                 NextTime = Occurrences[0];
+                Enable = true;
             }
             );
             RunTask.Start();

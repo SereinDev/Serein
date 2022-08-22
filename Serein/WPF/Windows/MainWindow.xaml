@@ -8,6 +8,7 @@
     xmlns:function_pages="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:settgins_pages="clr-namespace:Serein.Windows.Pages.Settings"
     xmlns:home_page="clr-namespace:Serein.Windows.Pages"
+    xmlns:controls="clr-namespace:Serein.Windows.Controls"
     Width="800"
     Height="500"
     WindowStyle="None"
@@ -21,82 +22,96 @@
     Background="{DynamicResource ApplicationBackgroundBrush}"
     MaxWidth="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}"
     MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
-    Icon="/Windows/Serein.ico" Closing="UiWindow_Closing" IsVisibleChanged="UiWindow_IsVisibleChanged">
+    Icon="/Windows/Serein.ico" Closing="UiWindow_Closing" IsVisibleChanged="UiWindow_IsVisibleChanged" SizeChanged="UiWindow_SizeChanged">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <ui:TitleBar Grid.Row="0"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ui:TitleBar Grid.Row="0"
             Padding="0"
             Title="Serein"
             Icon="./Serein.ico"
             Margin="5,0,0,0">
-            <ui:TitleBar.Tray>
-                <ui:NotifyIcon
+                <ui:TitleBar.Tray>
+                    <ui:NotifyIcon
             Icon="./Serein.ico"
       FocusOnLeftClick="True"
       MenuOnRightClick="True"
       TooltipText="Serein">
-                    <ui:NotifyIcon.Menu>
-                        <ContextMenu>
-                            <ui:MenuItem
+                        <ui:NotifyIcon.Menu>
+                            <ContextMenu>
+                                <ui:MenuItem
             Header="隐藏窗口"
             SymbolIcon="SlideHide24"
                                 Name="Hide"
                                 Click="Hide_Click"/>
-                            <ui:MenuItem
+                                <ui:MenuItem
             Header="帮助"
             SymbolIcon="SearchInfo24"
                                 Name="Help"
                                 Click="Help_Click"/>
-                            <ui:MenuItem
+                                <ui:MenuItem
             Header="退出"
             SymbolIcon="ArrowExit20"
                                 Name="Exit" Click="Exit_Click"/>
-                        </ContextMenu>
-                    </ui:NotifyIcon.Menu>
-                </ui:NotifyIcon>
-            </ui:TitleBar.Tray>
-        </ui:TitleBar>
-        <Grid Grid.Row="1"
+                            </ContextMenu>
+                        </ui:NotifyIcon.Menu>
+                    </ui:NotifyIcon>
+                </ui:TitleBar.Tray>
+            </ui:TitleBar>
+            <Grid Grid.Row="1"
             Margin="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <ui:NavigationStore Grid.Column="0"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ui:NavigationStore Grid.Column="0"
                 Margin="6,0,6,0"
                 Frame="{Binding ElementName=RootFrame}"
                 SelectedPageIndex="0">
-                <ui:NavigationStore.Items>
-                    <ui:NavigationItem Content="开始"
+                    <ui:NavigationStore.Items>
+                        <ui:NavigationItem Content="开始"
                         Icon="Home24"
                         PageType="{x:Type home_page:Home}"
                         PageTag="home" />
-                    <ui:NavigationSeparator />
-                    <ui:NavigationItem Content="服务器"
+                        <ui:NavigationSeparator />
+                        <ui:NavigationItem Content="服务器"
                         Icon="Server24"
                         PageType="{x:Type server_pages:Container}"
                         PageTag="server" />
-                    <ui:NavigationItem Content="功能"
+                        <ui:NavigationItem Content="功能"
                         Icon="Box24"
                         PageType="{x:Type function_pages:Container}"
                         PageTag="functions" />
-                </ui:NavigationStore.Items>
-                <ui:NavigationStore.Footer>
-                    <ui:NavigationItem Content="设置"
+                    </ui:NavigationStore.Items>
+                    <ui:NavigationStore.Footer>
+                        <ui:NavigationItem Content="设置"
                         Icon="Settings24"
                         PageType="{x:Type settgins_pages:Container}" />
-                </ui:NavigationStore.Footer>
-            </ui:NavigationStore>
-            <Border Margin="0"
+                    </ui:NavigationStore.Footer>
+                </ui:NavigationStore>
+                <Border Margin="0"
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 CornerRadius="8,0,0,0"
                 Grid.Column="1">
-                <Frame x:Name="RootFrame"
+                    <Frame x:Name="RootFrame"
                     Margin="4,8" />
-            </Border>
+                </Border>
+            </Grid>
         </Grid>
+        <controls:PopupEx
+            x:Name="PopupEx"
+            AllowsTransparency="True" 
+            IsOpen="True" 
+            Grid.Row="0" 
+            Placement="Center"
+            >
+            <ui:Snackbar
+            x:Name="Snackbar"
+            Timeout="5000"
+            Panel.ZIndex="999"/>
+        </controls:PopupEx>
     </Grid>
 </ui:UiWindow>

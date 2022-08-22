@@ -1,9 +1,8 @@
 ﻿using Serein.Server;
 using System;
-using System.Reflection;
 using System.IO;
+using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Wpf.Ui.Controls;
 
@@ -18,6 +17,9 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
             PanelWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=panel");
+            Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+            UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
+            UpdateInfoTimer.Start();
             Window.Server.Panel = this;
         }
 
@@ -62,6 +64,19 @@ namespace Serein.Windows.Pages.Server
             Dispatcher.Invoke(new Action(() =>
             {
                 PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Line });
+            }));
+        }
+
+        private void UpdateInfos()
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                Status.Content = ServerManager.Status ? "已启动" : "未启动";
+                Version.Content = ServerManager.Status ? ServerManager.Version : "-";
+                Difficulity.Content = ServerManager.Status ? ServerManager.Difficulty : "-";
+                Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
+                Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
+                CPUPerc.Content = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2") : "-";
             }));
         }
     }

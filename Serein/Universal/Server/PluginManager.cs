@@ -91,7 +91,7 @@ namespace Serein.Server
         /// 导入插件
         /// </summary>
         /// <param name="Files">文件列表</param>
-        public static void Add(List<string> Files)
+        public static string Add(List<string> Files)
         {
             foreach (string FileName in Files)
             {
@@ -101,14 +101,10 @@ namespace Serein.Server
                 }
                 catch (Exception Exp)
                 {
-                    MessageBox.Show(
-                        $"文件\"{FileName}\"复制失败\n" +
-                        $"详细原因：\n" +
-                        $"{Exp.Message}", "Serein",
-                        MessageBoxButton.OK, MessageBoxImage.Warning
-                        );
+                    return Exp.Message;
                 }
             }
+            return string.Empty;
         }
 
         /// <summary>

@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Serein.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using Serein.Server;
+using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using System.Net;
+using Wpf.Ui.Mvvm.Contracts;
 
 namespace Serein.Windows.Pages.Server
 {
@@ -26,8 +24,8 @@ namespace Serein.Windows.Pages.Server
         public Plugins()
         {
             InitializeComponent();
-            Window.Server.Plugins = this;
             Load();
+            Window.Server.Plugins = this;
         }
 
         private void Load()
@@ -50,7 +48,7 @@ namespace Serein.Windows.Pages.Server
 
         private string GetRelativeUri(string Base, string Path)
         {
-            return new Uri(Base).MakeRelativeUri(new Uri(Path)).OriginalString;
+            return WebUtility.UrlDecode(new Uri(Base).MakeRelativeUri(new Uri(Path)).OriginalString);
         }
 
         private void PluginsListview_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -63,7 +61,20 @@ namespace Serein.Windows.Pages.Server
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog Dialog = new OpenFileDialog()
+            {
+                Filter = "所有文件|*.*",
+                Multiselect = true
+            };
+            if (Dialog.ShowDialog() == true)
+            {
+                string Msg = PluginManager.Add(Dialog.FileNames.ToList());
+                if (!string.IsNullOrEmpty(Msg))
+                {
+                    Window.MainWindow.OpenSnackbar("导入失败", Msg, SymbolRegular.ErrorCircle24);
+                }
+                Load();
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)

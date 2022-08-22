@@ -11,10 +11,33 @@
     d:DesignWidth="800"
     Title="Bot">
     <StackPanel>
-        <ui:Hyperlink Margin="0,7"
-            Content="支持的机器人标准: OneBot-11"
-            NavigateUri="https://github.com/botuniverse/onebot-11"
-            Icon="Link48" />
+        <Expander ExpandDirection="Down" Margin="0,7">
+            <Expander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ui:SymbolIcon
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Symbol="Info24" />
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="支持的机器人标准: OneBot-11" />
+                </Grid>
+            </Expander.Header>
+            <TextBlock TextWrapping="Wrap">
+                OneBot 是一个聊天机器人应用接口标准，旨在统一不同聊天平台上的机器人应用开发接口，使开发者只需编写一次业务逻辑代码即可应用到多种机器人平台。<LineBreak/>
+                为了推动各CQHTTP兼容项目实现长远的兼容，为用户带来便利，2020年开发者们通过改写原CQHTTP插件文档+引入CQHTTP兼容项目的新特性的方式，尝试维护一个统一的、不断发展的接口标准（即OneBot 11标准）。<LineBreak/>
+                <ui:Hyperlink 
+                    Content="查看详细介绍"
+                    NavigateUri="https://github.com/botuniverse/onebot-11"
+                    Icon="Link48" />
+            </TextBlock>
+        </Expander>
         <TextBlock Text="WebSocket地址"
             HorizontalAlignment="Left"/>
         <ui:TextBox Icon="CompassNorthwest24"

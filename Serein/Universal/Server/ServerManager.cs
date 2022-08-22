@@ -116,7 +116,7 @@ namespace Serein.Server
                 PrevCpuTime = TimeSpan.Zero;
                 Task.Factory.StartNew(GetCPUPercent);
                 Task.Factory.StartNew(WaitForExit);
-                Base.EventTrigger.Trigger("Server_Start");
+                EventTrigger.Trigger("Server_Start");
                 JSFunc.Trigger("onServerStart");
                 return true;
             }
@@ -145,7 +145,7 @@ namespace Serein.Server
             }
             else
             {
-                Logger.Out(2, "服务器不在运行中");
+                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
             }
         }
 
