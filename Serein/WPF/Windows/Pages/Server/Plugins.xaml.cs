@@ -53,7 +53,6 @@ namespace Serein.Windows.Pages.Server
 
         private void PluginsListview_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            Import.IsEnabled = PluginsListview.SelectedIndex != -1;
             Delete.IsEnabled = PluginsListview.SelectedIndex != -1;
             Enable.IsEnabled = PluginsListview.SelectedIndex != -1;
             Disable.IsEnabled = PluginsListview.SelectedIndex != -1;
