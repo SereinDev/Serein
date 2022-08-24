@@ -56,7 +56,7 @@ namespace Serein.Base
             }
         }
 
-        
+
 
         /// <summary>
         /// 绑定（无群反馈）

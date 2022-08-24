@@ -47,7 +47,7 @@ namespace Serein.Windows.Pages.Function
         {
             if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
             {
-                if(ActionType != 0)
+                if (ActionType != 0)
                 {
                     Window.MainWindow.MemberEditor.Hide();
                     ActionType = 0;
@@ -59,7 +59,7 @@ namespace Serein.Windows.Pages.Function
                         lock (Lock)
                         {
                             ActionType = 1;
-                                Window.MainWindow.ID.IsEnabled = true;
+                            Window.MainWindow.ID.IsEnabled = true;
                             Window.MainWindow.ID.Text = "";
                             Window.MainWindow.GameID.Text = "";
                             Window.MainWindow.MemberEditor.ShowAndWaitAsync();
@@ -119,14 +119,15 @@ namespace Serein.Windows.Pages.Function
                     {
                         Window.MainWindow.OpenSnackbar("绑定成功", $"{IDNumber} -> {Window.MainWindow.GameID.Text}", SymbolRegular.Checkmark24);
                         Window.MainWindow.MemberEditor.Hide();
-                            ActionType = 0;
+                        ActionType = 0;
                     }
                     break;
                 case 2:
                     if (!System.Text.RegularExpressions.Regex.IsMatch(Window.MainWindow.GameID.Text, @"^[a-zA-Z0-9_\s-]{4,16}$"))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
-                    }else if (Members.GameIDs.Contains(Window.MainWindow.GameID.Text))
+                    }
+                    else if (Members.GameIDs.Contains(Window.MainWindow.GameID.Text))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
                     }
