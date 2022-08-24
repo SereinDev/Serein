@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.onload = function () {
+            var aTag = document.createElement('a');
+            var blob = new Blob(["{\n    \"type\": \"REGEX\",\n    \"comment\": \"非必要请不要直接修改文件，语法错误可能导致数据丢失\",\n    \"data\": [\n      {\n        \"Regex\": \"这是Serein的示例文件\",\n        \"Remark\": \"你可以自行修改以下内容\",\n        \"Command\": \"debug|Copyright © 2022 Zaitonn. All Rights Reserved.\",\n        \"Area\": 0,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^list$\",\n        \"Remark\": \"群命令-list\",\n        \"Command\": \"s|list\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^开服$\",\n        \"Remark\": \"群命令-开服\",\n        \"Command\": \"s|start\",\n        \"Area\": 2,\n        \"IsAdmin\": true\n      },\n      {\n        \"Regex\": \"^关服$\",\n        \"Remark\": \"群命令-关服\",\n        \"Command\": \"s|stop\",\n        \"Area\": 2,\n        \"IsAdmin\": true\n      },\n      {\n        \"Regex\": \"^/(.+?)$\",\n        \"Remark\": \"群命令-执行自定义命令\",\n        \"Command\": \"s|$1\",\n        \"Area\": 2,\n        \"IsAdmin\": true\n      },\n      {\n        \"Regex\": \"^服务器状态$\",\n        \"Remark\": \"群命令-服务器状态\",\n        \"Command\": \"g|服务器名称:%LevelName%\\\\n游戏版本:%Version%\\\\n难度:%Difficulty%\\\\n运行状态:%Status%\\\\n在线人数:%OnlinePlayer%/%MaxPlayer%\\\\n本次运行时长:%RunTime%\\\\n内存占用率:%RAMPercentage%%\\\\nCPU:%CPUName%(%CPUPercentage%%)\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^绑定(.+?)$\",\n        \"Remark\": \"群成员管理-绑定\",\n        \"Command\": \"bind|$1\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^解绑$\",\n        \"Remark\": \"群成员管理-解绑\",\n        \"Command\": \"unbind|%ID%\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^解绑\\\\[CQ:at,qq=(.+?)$\\\\]$\",\n        \"Remark\": \"群成员管理-解绑他人\",\n        \"Command\": \"unbind|$1\",\n        \"Area\": 2,\n        \"IsAdmin\": true\n      },\n      {\n        \"Regex\": \"^(.+?)$\",\n        \"Remark\": \"聊天转发-群聊\",\n        \"Command\": \"s|tellraw @a {\\\"rawtext\\\":[{\\\"text\\\":\\\"§b[%Time%]§r%ShownName%:$1\\\"}]}\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^motdje (.+?)$\",\n        \"Remark\": \"motd-Java服\",\n        \"Command\": \"motdje|$1\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"^motdpe (.+?)$\",\n        \"Remark\": \"motd-基岩版服\",\n        \"Command\": \"motdpe|$1\",\n        \"Area\": 2,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"\\\\[Chat\\\\]\\\\s<(.+?)>\\\\s(.+?)$\",\n        \"Remark\": \"聊天转发-服务器\",\n        \"Command\": \"g|[玩家]$1>$2\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"Quit correctly\",\n        \"Remark\": \"服务器关闭提示\",\n        \"Command\": \"g|服务器已关闭\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"Done \\\\((.+?)\\\\)! $\",\n        \"Remark\": \"服务器启动成功提示\",\n        \"Command\": \"g|服务器已启动，用时$1\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"are (.+?) players.+?[\\\\n\\\\r].+?\\\\](.*)$\",\n        \"Remark\": \"返回当前在线人数\",\n        \"Command\": \"g|当前在线:$1\\\\n$2\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"Unknown command: (.+?). Please check that the command exists and that you have permission to use it.$\",\n        \"Remark\": \"命令反馈-未知的命令\",\n        \"Command\": \"g|未知的命令：$1。请检查命令是否存在，以及您对它是否拥有权限\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"No targets matched selector$\",\n        \"Remark\": \"命令反馈-找不到目标\",\n        \"Command\": \"g|没有与选择器匹配的目标\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      },\n      {\n        \"Regex\": \"Syntax error: Unexpected \\\"(.+?)\\\": at \\\"(.+?)\\\"$\",\n        \"Remark\": \"命令反馈-语法错误\",\n        \"Command\": \"g|语法错误：意外的“$1”出现在“$2”\",\n        \"Area\": 1,\n        \"IsAdmin\": false\n      }\n    ]\n  }"]);
+            aTag.download = "regex（将此文件拖入Serein窗口即可导入）.json";
+            aTag.href = URL.createObjectURL(blob);
+            aTag.click();
+            URL.revokeObjectURL(blob);
+        }
+    </script>
+    <title>Download | Serein</title>
+</head>
+
+<body>
+</body>
+
+</html>
