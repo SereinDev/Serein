@@ -19,7 +19,7 @@ namespace Serein.Base
             get
             {
                 List<long> list = new List<long>();
-                foreach (MemberItem Item in MemberItems)
+                foreach (MemberItem Item in Items)
                 {
                     list.Add(Item.ID);
                 }
@@ -35,7 +35,7 @@ namespace Serein.Base
             get
             {
                 List<string> list = new List<string>();
-                foreach (MemberItem Item in MemberItems)
+                foreach (MemberItem Item in Items)
                 {
                     list.Add(Item.GameID);
                 }
@@ -46,7 +46,7 @@ namespace Serein.Base
         /// <summary>
         /// 只读的 Global.MemberItems 副本
         /// </summary>
-        private static List<MemberItem> MemberItems
+        private static List<MemberItem> Items
         {
             get
             {
@@ -56,77 +56,7 @@ namespace Serein.Base
             }
         }
 
-        /// <summary>
-        /// 加载数据
-        /// </summary>
-        public static void Load()
-        {
-            if (!Directory.Exists(Global.Path + "\\data"))
-            {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            if (File.Exists($"{Global.Path}\\data\\members.json"))
-            {
-                string Text = File.ReadAllText(
-                    $"{Global.Path}\\data\\members.json",
-                    Encoding.UTF8
-                    );
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    try
-                    {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "MEMBERS")
-                        {
-                            return;
-                        }
-                        Global.UpdateMemberItems(((JArray)JsonObject["data"]).ToObject<List<MemberItem>>());
-                    }
-                    catch { }
-                }
-            }
-            List<MemberItem> memberItems = MemberItems;
-            memberItems.Sort(
-                (Item1, Item2) =>
-                {
-                    return Item1.ID > Item2.ID ? 1 : -1;
-                }
-                );
-            Global.UpdateMemberItems(memberItems);
-        }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        public static void Save()
-        {
-            List<MemberItem> memberItems = MemberItems;
-            memberItems.Sort(
-                (Item1, Item2) =>
-                {
-                    return Item1.ID > Item2.ID ? 1 : -1;
-                }
-                );
-            Global.UpdateMemberItems(memberItems);
-            if (!Directory.Exists(Global.Path + "\\data"))
-            {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            JObject ListJObject = new JObject();
-            JArray ListJArray = new JArray();
-            foreach (MemberItem Item in MemberItems)
-            {
-                ListJArray.Add(JObject.FromObject(Item));
-            }
-            ListJObject.Add("type", "MEMBERS");
-            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", ListJArray);
-            File.WriteAllText(
-                $"{Global.Path}\\data\\members.json",
-                ListJObject.ToString(),
-                Encoding.UTF8
-                );
-        }
+        
 
         /// <summary>
         /// 绑定（无群反馈）
@@ -145,10 +75,10 @@ namespace Serein.Base
                     ID = UserId,
                     GameID = Value
                 };
-                List<MemberItem> memberItems = MemberItems;
+                List<MemberItem> memberItems = Items;
                 memberItems.Add(Item);
                 Global.UpdateMemberItems(memberItems);
-                Save();
+                Loader.SaveMember();
                 return true;
             }
         }
@@ -184,10 +114,10 @@ namespace Serein.Base
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
                     GameID = Value.Trim()
                 };
-                List<MemberItem> memberItems = MemberItems;
+                List<MemberItem> memberItems = Items;
                 memberItems.Add(Item);
                 Global.UpdateMemberItems(memberItems);
-                Save();
+                Loader.SaveMember();
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
         }
@@ -205,13 +135,13 @@ namespace Serein.Base
             }
             else
             {
-                List<MemberItem> memberItems = MemberItems;
+                List<MemberItem> memberItems = Items;
                 foreach (MemberItem Item in memberItems)
                 {
                     if (Item.ID == UserId && memberItems.Remove(Item))
                     {
                         Global.UpdateMemberItems(memberItems);
-                        Save();
+                        Loader.SaveMember();
                         EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
                         break;
                     }
@@ -228,13 +158,13 @@ namespace Serein.Base
         {
             if (IDs.Contains(UserId))
             {
-                List<MemberItem> memberItems = MemberItems;
+                List<MemberItem> memberItems = Items;
                 foreach (MemberItem Item in memberItems)
                 {
                     if (Item.ID == UserId && memberItems.Remove(Item))
                     {
                         Global.UpdateMemberItems(memberItems);
-                        Save();
+                        Loader.SaveMember();
                         return true;
                     }
                 }
@@ -255,7 +185,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in MemberItems)
+                foreach (MemberItem Item in Items)
                 {
                     if (Item.ID == UserId)
                     {
@@ -279,7 +209,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in MemberItems)
+                foreach (MemberItem Item in Items)
                 {
                     if (Item.GameID == GameID)
                     {
@@ -297,11 +227,11 @@ namespace Serein.Base
         /// <param name="UserId">用户ID</param>
         public static void Update(JObject JsonObject, long UserId)
         {
-            return;
+            /*
             if (IDs.Contains(UserId))
             {
-                List<MemberItem> memberItems = MemberItems;
-                foreach (MemberItem Item in MemberItems)
+                List<MemberItem> memberItems = Items;
+                foreach (MemberItem Item in Items)
                 {
                     if (Item.ID == UserId && memberItems.Remove(Item))
                     {
@@ -310,11 +240,11 @@ namespace Serein.Base
                         Item.Card = JsonObject["sender"]["card"].ToString();
                         memberItems.Add(Item);
                         Global.UpdateMemberItems(memberItems);
-                        Save();
+                        Loader.SaveMember();
                         break;
                     }
                 }
-            }
+            }*/
         }
     }
 }

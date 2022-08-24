@@ -1,7 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Serein.Items
 {
+    [JsonObject(MemberSerialization.OptOut)]
     internal class RegexItem
     {
         public string Regex { get; set; } = string.Empty;
@@ -9,6 +11,7 @@ namespace Serein.Items
         public string Command { get; set; } = string.Empty;
         public int Area { get; set; } = 0;
         public bool IsAdmin { get; set; } = false;
+
         public void ConvertToItem(string Text)
         {
             string[] Texts = Text.Split('\t');
@@ -22,6 +25,7 @@ namespace Serein.Items
             Remark = Texts[3];
             Command = Texts[4];
         }
+
         public bool CheckItem()
         {
             if (

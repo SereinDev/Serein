@@ -88,7 +88,8 @@ namespace Serein
                 {
                     Title = Caption,
                     Content = Text,
-                    ShowInTaskbar = false
+                    ShowInTaskbar = false,
+                    ResizeMode = System.Windows.ResizeMode.NoResize
                 };
                 Msg.ButtonLeftName = Buttons <= 1 ? "确定" : "是";
                 Msg.ButtonRightName = Buttons <= 1 ? "取消" : "否";

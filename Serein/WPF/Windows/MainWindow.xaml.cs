@@ -75,13 +75,7 @@ namespace Serein.Windows
             }
         }
 
-        public void OpenDialog(string Title, string Message, SymbolRegular Icon)
-        {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                PopupEx.VerticalOffset = Height * 0.5 - 60; // 自动调整底部距离，使之刚好与底部重合
-                Snackbar.Show(Title, Message, Icon);
-            }));
-        }
+        private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) => MemberEditor.Hide();
+        private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e) => Window.Function.Member.Confirm();
     }
 }

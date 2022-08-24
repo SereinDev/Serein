@@ -26,7 +26,7 @@
                     <GridViewColumn Header="ID"
                         DisplayMemberBinding="{Binding ID}"/>
                     <GridViewColumn Header="群角色"
-                        DisplayMemberBinding="{Binding Role}"/>
+                        DisplayMemberBinding="{Binding Role_Chinese}"/>
                     <GridViewColumn Header="昵称"
                         DisplayMemberBinding="{Binding Nickname}"/>
                     <GridViewColumn Header="群名片"
@@ -36,7 +36,9 @@
                 </GridView>
             </ListView.View>
             <ListView.Style>
-                <Style TargetType="{x:Type ListView}"/>
+                <Style TargetType="{x:Type ListView}">
+                    <Setter Property="BorderThickness" Value="0"/> 
+                </Style>
             </ListView.Style>
             <ListView.ContextMenu>
                 <ContextMenu Name="MemberContextMenu">
