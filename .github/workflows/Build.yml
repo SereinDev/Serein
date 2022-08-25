@@ -78,7 +78,7 @@ jobs:
           nuget-version: '5.x'
       
       - name: Write uild info
-        run: echo.${GITHUB_SHA}>${{ github.workspace }}\Serein\Universal\BuildID.txt
+        run: cmd /c echo.${GITHUB_SHA}>${{ github.workspace }}\Serein\Universal\BuildID.txt
 
       - name: NuGet restore
         run: nuget restore Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
