@@ -78,7 +78,8 @@ jobs:
           nuget-version: '5.x'
       
       - name: Get Commit ID
-        uses: fufuhu/get-commit-id
+        id: get_commit_id
+        uses: fufuhu/get-commit-id@main
         with:
           path: ./
 
