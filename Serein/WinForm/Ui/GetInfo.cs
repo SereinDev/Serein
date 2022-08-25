@@ -56,7 +56,8 @@ namespace Serein.Ui
                         JObject JsonObject = (JObject)JsonConvert.DeserializeObject(RequestInfo("https://api.github.com/repos/Zaitonn/Serein/releases/latest", true));
                         string Version = JsonObject["tag_name"].ToString();
                         if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
-                            Version != Global.VERSION && OldPreVersion != Version)
+                            Version != Global.VERSION && OldPreVersion != Version &&
+                            Global.VERSION.Contains(Version))
                         {
                             Program.Ui.ShowBalloonTip("发现新版本:\n" + Version);
                             Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{Version}，你可以点击下方链接获取最新版）");

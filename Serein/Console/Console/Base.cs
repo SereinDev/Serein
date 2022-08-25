@@ -93,37 +93,9 @@ namespace Serein.Console
         public static void Load(string[] args = null)
         {
             Settings.Base.ReadSettings();
-            Members.Load();
             Global.Args = args ?? Global.Args;
             Global.Settings.Serein.Debug = Global.Args.Contains("debug");
-            if (!Directory.Exists(Global.Path + "\\data"))
-            {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            if (File.Exists($"{Global.Path}\\data\\regex.json"))
-            {
-                string Text = File.ReadAllText($"{Global.Path}\\data\\regex.json", Encoding.UTF8);
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                    if (JsonObject["type"].ToString().ToUpper() == "REGEX")
-                    {
-                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
-                    }
-                }
-            }
-            if (File.Exists($"{Global.Path}\\data\\task.json"))
-            {
-                string Text = File.ReadAllText($"{Global.Path}\\data\\task.json", Encoding.UTF8);
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                    if (JsonObject["type"].ToString().ToUpper() == "TASK")
-                    {
-                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
-                    }
-                }
-            }
+            Loader.LoadAll();
             Plugins.Reload();
         }
     }

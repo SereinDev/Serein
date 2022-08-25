@@ -61,6 +61,15 @@ namespace Serein.Properties {
         }
         
         /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        public static string BuildID {
+            get {
+                return ResourceManager.GetString("BuildID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &lt;!DOCTYPE html&gt;
         ///&lt;html&gt;
         ///    &lt;head&gt;
@@ -75,8 +84,7 @@ namespace Serein.Properties {
         ///        &lt;script src=&quot;console.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
         ///        &lt;link rel=&quot;stylesheet&quot; href=&quot;preset.css&quot; /&gt;
         ///        &lt;link rel=&quot;stylesheet&quot; href=&quot;vanilla.css&quot; /&gt;
-        ///        &lt;link
-        ///            [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///        &lt;li [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string console_html {
             get {
@@ -104,8 +112,7 @@ namespace Serein.Properties {
         ///    }
         ///    ConsoleDiv.scrollTop = ConsoleDiv.scrollHeight;
         ///}
-        ///function Clear() {
-        ///    document.query [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///function Clear() { [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string console_js {
             get {
@@ -145,8 +152,7 @@ namespace Serein.Properties {
         ///.noColored &gt; .LLMoney {
         ///    color: #5a93c2;
         ///}
-        ///.noColored &gt; .Chakra {
-        ///    color: #a93ec [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///.noColore [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string preset_css {
             get {
@@ -184,10 +190,7 @@ namespace Serein.Properties {
         ///}
         ///.vanillaColor36,
         ///.vanillaColor46 {
-        ///    color: #3a96dd;
-        ///}
-        ////*
-        ///.vanillaCol [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    col [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string vanilla_css {
             get {

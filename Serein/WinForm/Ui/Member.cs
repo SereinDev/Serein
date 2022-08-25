@@ -13,7 +13,7 @@ namespace Serein.Ui
         private string[] Roles_Chinese = { "群主", "管理员", "成员" };
         private void LoadMembers()
         {
-            Members.Load();
+            Loader.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
             foreach (MemberItem memberItem in Global.MemberItems)
@@ -47,7 +47,7 @@ namespace Serein.Ui
                 }
             }
             Global.UpdateMemberItems(MemberItems);
-            Members.Save();
+            Loader.SaveMember();
         }
         private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Serein.Items;
 using Serein.Base;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +30,7 @@ namespace Serein.Windows.Pages.Function
 
         private void Load()
         {
-            Loader.LoadRegex();
+            Loader.ReadRegex();
             RegexListView.Items.Clear();
             foreach (RegexItem Item in Global.RegexItems)
             {
@@ -71,7 +71,50 @@ namespace Serein.Windows.Pages.Function
                 string Tag = Item.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
+                    case "Add":
+                    case "Edit":
+                    case "Delete":
+                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && RegexListView.SelectedIndex >= 0)
+                        {
+                            RegexListView.Items.RemoveAt(RegexListView.SelectedIndex);
+                            Save();
+                        }
+                        break;
+                    case "Clear":
+                        if (Logger.MsgBox("确定删除所有数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && RegexListView.SelectedIndex >= 0)
+                        {
+                            RegexListView.Items.Clear();
+                            Save();
+                        }
+                        break;
+                    case "Refresh":
+                        Load();
+                        break;
+                    case "LookupCommand":
+                        Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
+                        break;
+                    case "LookupVariables":
+                        Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
+                        break;
                 }
+            }
+        }
+
+        private void UiPage_Drop(object sender, DragEventArgs e)
+        {
+            Array Data = (Array)e.Data.GetData(DataFormats.FileDrop);
+            if (Data.Length > 0)
+            {
+                Window.MainWindow.OpenSnackbar("", Data.GetValue(0).ToString(), Wpf.Ui.Common.SymbolRegular.Sanitize20);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Wpf.Ui.Controls.Button Item && Item != null)
+            {
+                string Tag = Item.Tag as string ?? string.Empty;
+                switch (Tag) { }
             }
         }
     }

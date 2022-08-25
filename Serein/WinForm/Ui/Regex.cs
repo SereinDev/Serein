@@ -197,7 +197,7 @@ namespace Serein.Ui
                         Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
-                            if (Item.CheckItem())
+                            if (Item.Check())
                             {
                                 AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                             }
@@ -232,7 +232,7 @@ namespace Serein.Ui
                     {
                         RegexItem Item = new RegexItem();
                         Item.ConvertToItem(Line);
-                        if (!Item.CheckItem())
+                        if (!Item.Check())
                         {
                             continue;
                         }
@@ -255,7 +255,7 @@ namespace Serein.Ui
                         Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
                         foreach (RegexItem Item in Global.RegexItems)
                         {
-                            if (Item.CheckItem())
+                            if (Item.Check())
                             {
                                 AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                             }

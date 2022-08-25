@@ -11,11 +11,11 @@ namespace Serein.Base
     {
         public static void LoadAll()
         {
-            LoadRegex();
-            LoadMember();
+            ReadRegex();
+            ReadMember();
         }
 
-        public static void LoadRegex(string FileName = null)
+        public static void ReadRegex(string FileName = null)
         {
             if (string.IsNullOrEmpty(FileName))
             {
@@ -38,7 +38,7 @@ namespace Serein.Base
                     {
                         RegexItem Item = new RegexItem();
                         Item.ConvertToItem(Line);
-                        if (!Item.CheckItem())
+                        if (!Item.Check())
                         {
                             continue;
                         }
@@ -84,14 +84,14 @@ namespace Serein.Base
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "REGEX");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", JObject.FromObject(Global.RegexItems));
+            ListJObject.Add("data", JArray.FromObject(Global.RegexItems));
             RegexWriter.Write(ListJObject.ToString());
             Global.UpdateRegexItems(regexItems);
             RegexWriter.Flush();
             RegexWriter.Close();
         }
 
-        public static void LoadMember()
+        public static void ReadMember()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
             {

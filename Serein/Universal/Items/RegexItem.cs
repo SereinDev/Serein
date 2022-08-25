@@ -12,6 +12,22 @@ namespace Serein.Items
         public int Area { get; set; } = 0;
         public bool IsAdmin { get; set; } = false;
 
+        public string Area_Text
+        {
+            get
+            {
+                return new[] { "禁用", "控制台", "消息（群聊）", "消息（私聊）", "消息（自身发送）" }[Area];
+            }
+        }
+
+        public string IsAdmin_Text
+        {
+            get
+            {
+                return Area == 2 || Area == 3 ? IsAdmin ? "是" : "否" : "-";
+            }
+        }
+
         public void ConvertToItem(string Text)
         {
             string[] Texts = Text.Split('\t');
@@ -26,7 +42,7 @@ namespace Serein.Items
             Command = Texts[4];
         }
 
-        public bool CheckItem()
+        public bool Check()
         {
             if (
                 !(string.IsNullOrWhiteSpace(Regex) || string.IsNullOrEmpty(Regex) ||

@@ -39,7 +39,8 @@
             Icon="./Serein.ico"
       FocusOnLeftClick="True"
       MenuOnRightClick="True"
-      TooltipText="Serein">
+      TooltipText="Serein"
+                       x:Name="NotifyIcon">
                         <ui:NotifyIcon.Menu>
                             <ContextMenu>
                                 <ui:MenuItem

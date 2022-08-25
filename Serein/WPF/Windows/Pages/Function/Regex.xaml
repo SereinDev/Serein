@@ -8,7 +8,7 @@
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800"
-    Title="Regex">
+    Title="Regex" AllowDrop="True" Drop="UiPage_Drop">
     <ui:UiPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,6 +17,10 @@
         </ResourceDictionary>
     </ui:UiPage.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <ListView Name="RegexListView"
             ContextMenuOpening="RegexListView_ContextMenuOpening"
             SelectionMode="Single">
@@ -81,5 +85,9 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
+        <StackPanel Grid.Row="1" FlowDirection="RightToLeft" Orientation="Horizontal" >
+            <ui:Button Margin="5" Icon="ArrowDown24" Tag="Down" Click="Button_Click"/>
+            <ui:Button Margin="5" Icon="ArrowUp24" Tag="Up" Click="Button_Click"/>
+        </StackPanel>
     </Grid>
 </ui:UiPage>

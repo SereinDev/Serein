@@ -121,16 +121,4 @@
   <data name="BuildID" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Universal\BuildID.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
-  <data name="console_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\console.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="console_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\console.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
-  </data>
-  <data name="preset_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\preset.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="vanilla_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\vanilla.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
 </root>

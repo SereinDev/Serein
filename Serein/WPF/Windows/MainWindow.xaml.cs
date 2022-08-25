@@ -28,20 +28,11 @@ namespace Serein.Windows
             e.Cancel = ServerManager.Status;
         }
 
-        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ShowInTaskbar = IsVisible;
-        }
 
         private void Hide_Click(object sender, RoutedEventArgs e)
         {
             ShowInTaskbar = false;
             Hide();
-        }
-
-        private void Help_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -75,6 +66,8 @@ namespace Serein.Windows
             }
         }
 
+        private void Help_Click(object sender, RoutedEventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
+        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) => ShowInTaskbar = IsVisible;
         private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) => MemberEditor.Hide();
         private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e) => Window.Function.Member.Confirm();
     }

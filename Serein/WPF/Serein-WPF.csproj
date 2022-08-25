@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="..\Universal\BuildID.txt" />
     <Compile Remove="..\Universal\ConsoleHtml\console.html" />
     <Compile Remove="..\Universal\ConsoleHtml\console.js" />
     <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
@@ -52,6 +53,10 @@
 
   <ItemGroup>
     <Content Include="Serein.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\Universal\BuildID.txt" />
   </ItemGroup>
 
   <ItemGroup>
