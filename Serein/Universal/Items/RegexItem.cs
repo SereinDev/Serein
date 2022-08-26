@@ -12,6 +12,7 @@ namespace Serein.Items
         public int Area { get; set; } = 0;
         public bool IsAdmin { get; set; } = false;
 
+        [JsonIgnore]
         public string Area_Text
         {
             get
@@ -20,6 +21,7 @@ namespace Serein.Items
             }
         }
 
+        [JsonIgnore]
         public string IsAdmin_Text
         {
             get

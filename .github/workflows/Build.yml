@@ -78,7 +78,11 @@ jobs:
           nuget-version: '5.x'
           
       - name: Write Build info
-        run: cmd /c echo ${{github.sha}} >${{ github.workspace }}\Serein\Universal\BuildID.txt
+        shell: cmd
+        run: |
+            cmd /c echo ${{github.event_name}} >${{ github.workspace }}\Serein\Universal\Build_Info.txt
+            cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+            cmd /c echo ${{github.sha}} >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
 
       - name: NuGet restore
         run: nuget restore Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj

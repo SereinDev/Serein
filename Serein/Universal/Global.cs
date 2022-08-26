@@ -1,5 +1,4 @@
 ﻿using Serein.Items;
-using Serein.Properties;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace Serein
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.3.1 " + (Resources.BuildID ?? "Unknown").TrimEnd(' ', '\n', '\r').Substring(0, 6);
+        public static string VERSION = "v1.3.1";
         public static List<RegexItem> RegexItems = new List<RegexItem>();
         public static List<TaskItem> TaskItems = new List<TaskItem>();
         public static List<MemberItem> MemberItems = new List<MemberItem>();
@@ -19,6 +18,8 @@ namespace Serein
         public static bool MultiOpen = false;
         public static bool FirstOpen = false;
         public static IList<string> Args = null;
+        public static BuildInfo BuildInfo = new BuildInfo();
+
         public static void UpdateRegexItems(List<RegexItem> New)
         {
             lock (RegexItems)
@@ -26,6 +27,7 @@ namespace Serein
                 RegexItems = New;
             }
         }
+
         public static void UpdateTaskItems(List<TaskItem> New)
         {
             lock (TaskItems)
@@ -33,6 +35,7 @@ namespace Serein
                 TaskItems = New;
             }
         }
+
         public static void UpdateMemberItems(List<MemberItem> New)
         {
             lock (MemberItems)

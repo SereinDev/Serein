@@ -56,30 +56,18 @@ namespace Serein.Windows.Pages.Function
                 switch (Tag)
                 {
                     case "Add":
-                        lock (Lock)
-                        {
-                            ActionType = 1;
-                            Window.MainWindow.ID.IsEnabled = true;
-                            Window.MainWindow.ID.Text = "";
-                            Window.MainWindow.GameID.Text = "";
-                            Window.MainWindow.MemberEditor.ShowAndWaitAsync();
-                        }
+                        ActionType = 1;
+                        Window.MainWindow.OpenMemberEditor();
                         break;
                     case "Edit":
-                        lock (Lock)
+                        if (MemberListView.SelectedItem is MemberItem SelectedItem && SelectedItem != null)
                         {
-                            if (MemberListView.SelectedItem is MemberItem SelectedItem && SelectedItem != null)
-                            {
-                                ActionType = 2;
-                                Window.MainWindow.ID.IsEnabled = false;
-                                Window.MainWindow.ID.Text = SelectedItem.ID.ToString();
-                                Window.MainWindow.GameID.Text = SelectedItem.GameID;
-                                Window.MainWindow.MemberEditor.ShowAndWaitAsync();
-                            }
-                            else
-                            {
-                                ActionType = 0;
-                            }
+                            ActionType = 2;
+                            Window.MainWindow.OpenMemberEditor(false, SelectedItem.ID.ToString(), SelectedItem.GameID);
+                        }
+                        else
+                        {
+                            ActionType = 0;
                         }
                         break;
                     case "Delete":
@@ -102,50 +90,51 @@ namespace Serein.Windows.Pages.Function
             Delete.IsEnabled = MemberListView.SelectedIndex != -1;
         }
 
-        public void Confirm()
+        public bool Confirm(string ID, string GameID)
         {
             switch (ActionType)
             {
                 case 1:
-                    if (!long.TryParse(Window.MainWindow.ID.Text, out long IDNumber))
+                    if (!long.TryParse(ID, out long IDNumber))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "ID不合法", SymbolRegular.Warning24);
                     }
-                    else if (!Members.Bind(IDNumber, Window.MainWindow.GameID.Text))
+                    else if (!Members.Bind(IDNumber, GameID))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定", SymbolRegular.Warning24);
                     }
                     else
                     {
-                        Window.MainWindow.OpenSnackbar("绑定成功", $"{IDNumber} -> {Window.MainWindow.GameID.Text}", SymbolRegular.Checkmark24);
-                        Window.MainWindow.MemberEditor.Hide();
+                        Window.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
                         ActionType = 0;
+                        return true;
                     }
                     break;
                 case 2:
-                    if (!System.Text.RegularExpressions.Regex.IsMatch(Window.MainWindow.GameID.Text, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(GameID, @"^[a-zA-Z0-9_\s-]{4,16}$"))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
                     }
-                    else if (Members.GameIDs.Contains(Window.MainWindow.GameID.Text))
+                    else if (Members.GameIDs.Contains(GameID))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
                     }
                     else
                     {
-                        Window.MainWindow.OpenSnackbar("绑定成功", $"{Window.MainWindow.ID.Text} -> {Window.MainWindow.GameID.Text}", SymbolRegular.Checkmark24);
-                        Window.MainWindow.MemberEditor.Hide();
+                        Window.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
                         if (MemberListView.SelectedItem is MemberItem SelectedItem && SelectedItem != null)
                         {
-                            SelectedItem.GameID = Window.MainWindow.GameID.Text;
+                            SelectedItem.GameID = GameID;
                             MemberListView.SelectedItem = SelectedItem;
                             Save();
                             Load();
                         }
                         ActionType = 0;
+                        return true;
                     }
                     break;
             }
+            return false;
         }
     }
 }

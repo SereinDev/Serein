@@ -116,7 +116,7 @@
             ButtonRightName="取消"
             ButtonLeftClick="MemberEditor_ButtonLeftClick"
             ButtonRightClick="MemberEditor_ButtonRightClick"
-            DialogHeight="270"
+            DialogHeight="275"
             Title="成员编辑器"
             DialogWidth="300">
             <Grid>
@@ -125,12 +125,62 @@
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="ID"/>
                     <ui:TextBox Icon="VideoPerson24"
-                        x:Name="ID"
-                        Margin="0,0,0,5"/>
+                        x:Name="MemberEditor_ID"
+                        Margin="0,0,0,10"/>
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="游戏ID"/>
                     <ui:TextBox Icon="SlideText24"
-                        x:Name="GameID"
+                        x:Name="MemberEditor_GameID"
+                        Margin="0,0,0,5"/>
+                </StackPanel>
+            </Grid>
+        </ui:Dialog>
+        <ui:Dialog x:Name="RegexEditor"
+            ButtonLeftName="确定"
+            ButtonRightName="取消"
+            ButtonLeftClick="RegexEditor_ButtonLeftClick"
+            ButtonRightClick="RegexEditor_ButtonRightClick"
+            Title="正则编辑器"
+            DialogHeight="390"
+            DialogWidth="325">
+            <Grid>
+                <StackPanel>
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="0,5,0,0"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="作用域"/>
+                        <ComboBox Grid.Row="1" Name="RegexEditor_Area"  SelectionChanged="RegexEditor_Area_SelectionChanged">
+                            <ComboBoxItem Content="禁用"/>
+                            <ComboBoxItem Content="控制台"/>
+                            <ComboBoxItem Content="消息（群聊）"/>
+                            <ComboBoxItem Content="消息（私聊）"/>
+                            <ComboBoxItem Content="消息（自身发送）"/>
+                        </ComboBox>
+                        <CheckBox Name="RegexEditor_IsAdmain" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" Content="需要管理权限" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <TextBlock 
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="正则"/>
+                    <ui:TextBox Icon="CodeText20"
+                        x:Name="RegexEditor_Regex"
+                        Margin="0,0,0,5"/>
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="命令"/>
+                    <ui:TextBox Icon="KeyCommand24"
+                        x:Name="RegexEditor_Command"
+                        Margin="0,0,0,5"/>
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="备注"/>
+                    <ui:TextBox Icon="Pen24"
+                        x:Name="RegexEditor_Remark"
                         Margin="0,0,0,5"/>
                 </StackPanel>
             </Grid>

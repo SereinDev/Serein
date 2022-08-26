@@ -25,15 +25,15 @@
         </Grid.RowDefinitions>
         <ListView Name="RegexListView"
             ContextMenuOpening="RegexListView_ContextMenuOpening"
-            SelectionMode="Single">
+            SelectionMode="Single" SelectionChanged="RegexListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="正则表达式"
                         DisplayMemberBinding="{Binding Regex}"/>
                     <GridViewColumn Header="作用域"
-                        DisplayMemberBinding="{Binding Area}"/>
+                        DisplayMemberBinding="{Binding Area_Text}"/>
                     <GridViewColumn Header="管理权限"
-                        DisplayMemberBinding="{Binding IsAdmin}"/>
+                        DisplayMemberBinding="{Binding IsAdmin_Text}"/>
                     <GridViewColumn Header="备注"
                         DisplayMemberBinding="{Binding Remark}"/>
                     <GridViewColumn Header="命令"
@@ -94,10 +94,12 @@
             <ui:Button Margin="5"
                 Icon="ArrowDown24"
                 Tag="Down"
+                       x:Name="Down"
                 Click="Button_Click"/>
             <ui:Button Margin="5"
                 Icon="ArrowUp24"
                 Tag="Up"
+                       x:Name="Up"
                 Click="Button_Click"/>
         </StackPanel>
     </Grid>
