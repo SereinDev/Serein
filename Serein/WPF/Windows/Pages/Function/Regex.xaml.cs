@@ -193,7 +193,7 @@ namespace Serein.Windows.Pages.Function
                     case "Down":
                         RegexListView.Items.Insert(Index + 2, RegexListView.SelectedItem);
                         RegexListView.Items.RemoveAt(Index);
-                        RegexListView.SelectedIndex = Index+1;
+                        RegexListView.SelectedIndex = Index + 1;
                         break;
                 }
                 Save();
