@@ -148,7 +148,7 @@ namespace Serein.Base
                 );
         }
 
-        public static void  ReadTask(string FileName = null)
+        public static void ReadTask(string FileName = null)
         {
             if (string.IsNullOrEmpty(FileName))
             {
