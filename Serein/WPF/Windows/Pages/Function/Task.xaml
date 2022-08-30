@@ -9,7 +9,94 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     Title="Task">
+    <ui:UiPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Controls/ListviewEx.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ui:UiPage.Resources>
     <Grid>
-        <ListView/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView Name="TaskListView"
+            ContextMenuOpening="TaskListView_ContextMenuOpening"
+            SelectionMode="Single" SelectionChanged="TaskListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Cron表达式"
+                        DisplayMemberBinding="{Binding Cron}"/>
+                    <GridViewColumn Header="可用性"
+                        DisplayMemberBinding="{Binding Enable_Text}"/>
+                    <GridViewColumn Header="备注"
+                        DisplayMemberBinding="{Binding Remark}"/>
+                    <GridViewColumn Header="命令"
+                        DisplayMemberBinding="{Binding Command}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}">
+                    <Setter Property="BorderThickness"
+                        Value="0"/>
+                </Style>
+            </ListView.Style>
+            <ListView.ContextMenu>
+                <ContextMenu Name="TaskContextMenu">
+                    <ui:MenuItem Header="新增"
+                        SymbolIcon="Add24"
+                        Name="Add"
+                        Tag="Add"
+                        Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="修改"
+                        SymbolIcon="Edit24"
+                        Name="Edit"
+                        Tag="Edit"
+                        Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="删除"
+                        SymbolIcon="Delete24"
+                        Name="Delete"
+                        Tag="Delete"
+                        Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="清空"
+                        SymbolIcon="DeleteDismiss24"
+                        Name="Clear"
+                        Tag="Clear"
+                        Click="MenuItem_Click"/>
+                    <Separator />
+                    <ui:MenuItem Header="查看命令"
+                        SymbolIcon="DocumentFlowchart24"
+                        Name="LookupCommand"
+                        Tag="LookupCommand"
+                        Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="查看变量"
+                        SymbolIcon="DocumentEndnote24"
+                        Name="LookupVariables"
+                        Tag="LookupVariables"
+                        Click="MenuItem_Click"/>
+                    <Separator />
+                    <ui:MenuItem Header="刷新"
+                        SymbolIcon="ArrowClockwise24"
+                        Name="Refresh"
+                        Tag="Refresh"
+                        Click="MenuItem_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <StackPanel Grid.Row="1"
+            FlowDirection="RightToLeft"
+            Orientation="Horizontal">
+            <ui:Button Margin="5"
+                Icon="ArrowDown24"
+                Tag="Down"
+                       x:Name="Down"
+                Click="Button_Click"/>
+            <ui:Button Margin="5"
+                Icon="ArrowUp24"
+                Tag="Up"
+                       x:Name="Up"
+                Click="Button_Click"/>
+        </StackPanel>
     </Grid>
 </ui:UiPage>

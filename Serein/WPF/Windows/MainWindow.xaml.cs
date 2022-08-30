@@ -1,7 +1,9 @@
-﻿using Serein.Server;
+﻿using NCrontab;
+using Serein.Server;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
@@ -28,7 +30,6 @@ namespace Serein.Windows
         {
             e.Cancel = ServerManager.Status;
         }
-
 
         private void Hide_Click(object sender, RoutedEventArgs e)
         {
@@ -98,7 +99,7 @@ namespace Serein.Windows
         /// <summary>
         /// 打开正则编辑器窗口
         /// </summary>
-        public void OpenrRegexEditor(int AreaIndex = 0, bool IsAdmin = false, string Regex = "", string Command = "", string Remark = "")
+        public void OpenRegexEditor(int AreaIndex = 0, bool IsAdmin = false, string Regex = "", string Command = "", string Remark = "")
         {
             RegexEditor_Area.SelectedIndex = AreaIndex;
             RegexEditor_IsAdmain.IsChecked = IsAdmin;
@@ -132,6 +133,38 @@ namespace Serein.Windows
         }
 
         private void RegexEditor_ButtonRightClick(object sender, RoutedEventArgs e) => RegexEditor.Hide();
+        #endregion
+
+        #region 任务编辑器代码
+        public void OpenTaskEditor(string CronExp = "", string Command = "", string Remark = "")
+        {
+            TaskEditor_Cron.Text = CronExp;
+            TaskEditor_Command.Text = Command;
+            TaskEditor_Remark.Text = Remark;
+            TaskEditor.Show();
+        }
+
+        private void TaskEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
+        {
+            if (Window.Function.Task.Confirm(TaskEditor_Cron.Text, TaskEditor_Command.Text, TaskEditor_Remark.Text))
+            {
+                TaskEditor.Hide();
+            }
+        }
+
+        private void TaskEditor_Cron_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                TaskEditor_NextTime.Text = $"预计执行时间: {CrontabSchedule.Parse(TaskEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString("g")}";
+            }
+            catch
+            {
+                TaskEditor_NextTime.Text = "Cron表达式不合法";
+            }
+        }
+
+        private void TaskEditor_ButtonRightClick(object sender, RoutedEventArgs e) => TaskEditor.Hide();
         #endregion
     }
 }

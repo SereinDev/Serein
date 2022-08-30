@@ -33,7 +33,7 @@ namespace Serein.Base
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
-                    List<RegexItem> regexItems = new List<RegexItem>();
+                    List<RegexItem> Items = new List<RegexItem>();
                     while ((Line = Reader.ReadLine()) != null)
                     {
                         RegexItem Item = new RegexItem();
@@ -42,9 +42,9 @@ namespace Serein.Base
                         {
                             continue;
                         }
-                        regexItems.Add(Item);
+                        Items.Add(Item);
                     }
-                    Global.UpdateRegexItems(regexItems);
+                    Global.UpdateRegexItems(Items);
                 }
                 else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
@@ -68,27 +68,15 @@ namespace Serein.Base
 
         public static void SaveRegex()
         {
-            List<RegexItem> regexItems = new List<RegexItem>();
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
-            StreamWriter RegexWriter = new StreamWriter(
-                File.Open(
-                    $"{Global.Path}\\data\\regex.json",
-                    FileMode.Create,
-                    FileAccess.Write
-                    ),
-                Encoding.UTF8
-                );
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "REGEX");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", JArray.FromObject(Global.RegexItems));
-            RegexWriter.Write(ListJObject.ToString());
-            Global.UpdateRegexItems(regexItems);
-            RegexWriter.Flush();
-            RegexWriter.Close();
+            File.WriteAllText($"{Global.Path}\\data\\regex.json", ListJObject.ToString());
         }
 
         public static void ReadMember()
@@ -158,6 +146,70 @@ namespace Serein.Base
                 ListJObject.ToString(),
                 Encoding.UTF8
                 );
+        }
+
+        public static void  ReadTask(string FileName = null)
+        {
+            if (string.IsNullOrEmpty(FileName))
+            {
+                FileName = $"{Global.Path}\\data\\task.json";
+            }
+            if (File.Exists(FileName))
+            {
+                StreamReader Reader = new StreamReader(
+                    File.Open(
+                        FileName,
+                        FileMode.Open
+                    ),
+                    Encoding.UTF8
+                    );
+                if (FileName.ToUpper().EndsWith(".TSV"))
+                {
+                    string Line;
+                    List<TaskItem> Items = new List<TaskItem>();
+                    while ((Line = Reader.ReadLine()) != null)
+                    {
+                        TaskItem Item = new TaskItem();
+                        Item.ConvertToItem(Line);
+                        if (!Item.CheckItem())
+                        {
+                            continue;
+                        }
+                        Items.Add(Item);
+                    }
+                    Global.UpdateTaskItems(Items);
+                }
+                else if (FileName.ToUpper().EndsWith(".JSON"))
+                {
+                    string Text = Reader.ReadToEnd();
+                    if (string.IsNullOrEmpty(Text)) { return; }
+                    try
+                    {
+                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
+                        {
+                            return;
+                        }
+                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
+                    }
+                    catch { }
+                }
+                Reader.Close();
+                Reader.Dispose();
+            }
+        }
+
+        public static void SaveTask()
+        {
+            if (!Directory.Exists(Global.Path + "\\data"))
+            {
+                Directory.CreateDirectory(Global.Path + "\\data");
+            }
+            JObject ListJObject = new JObject();
+            ListJObject.Add("type", "TASK");
+            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
+            ListJObject.Add("data", JArray.FromObject(Global.TaskItems));
+            File.WriteAllText($"{Global.Path}\\data\\task.json", ListJObject.ToString());
         }
     }
 }

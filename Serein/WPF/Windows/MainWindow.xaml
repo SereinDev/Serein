@@ -185,5 +185,37 @@
                 </StackPanel>
             </Grid>
         </ui:Dialog>
+        <ui:Dialog x:Name="TaskEditor"
+            ButtonLeftName="确定"
+            ButtonRightName="取消"
+            ButtonLeftClick="TaskEditor_ButtonLeftClick"
+            ButtonRightClick="TaskEditor_ButtonRightClick"
+            Title="任务编辑器"
+            DialogHeight="390"
+            DialogWidth="325">
+            <Grid>
+                <StackPanel Margin="0,5">
+                    <TextBlock 
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="Cron表达式"
+                        />
+                    <ui:TextBox Icon="CodeText20"
+                        x:Name="TaskEditor_Cron"
+                        Margin="0,0,0,5" TextChanged="TaskEditor_Cron_TextChanged"/>
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="命令"/>
+                    <ui:TextBox Icon="KeyCommand24"
+                        x:Name="TaskEditor_Command"
+                        Margin="0,0,0,5"/>
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="备注"/>
+                    <ui:TextBox Icon="Pen24"
+                        x:Name="TaskEditor_Remark"
+                        Margin="0,0,0,15"/>
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="-" Name="TaskEditor_NextTime" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </ui:Dialog>
     </Grid>
 </ui:UiWindow>

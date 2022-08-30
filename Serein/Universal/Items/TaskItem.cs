@@ -14,6 +14,16 @@ namespace Serein.Items
         public string Command { get; set; } = string.Empty;
         public string Remark { get; set; } = string.Empty;
         public bool Enable { get; set; } = true;
+
+        [JsonIgnore]
+        public string Enable_Text
+        {
+            get
+            {
+                return Enable ? "启用" : "禁用";
+            }
+        }
+
         [JsonIgnore]
         public DateTime NextTime { get; set; } = DateTime.Now;
         public void Run()

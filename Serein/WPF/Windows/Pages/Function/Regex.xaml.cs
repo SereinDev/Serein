@@ -64,13 +64,13 @@ namespace Serein.Windows.Pages.Function
                 switch (Tag)
                 {
                     case "Add":
-                        Window.MainWindow.OpenrRegexEditor();
+                        Window.MainWindow.OpenRegexEditor();
                         ActionType = 1;
                         break;
                     case "Edit":
                         if (RegexListView.SelectedItem is RegexItem SelectedItem && SelectedItem != null)
                         {
-                            Window.MainWindow.OpenrRegexEditor(
+                            Window.MainWindow.OpenRegexEditor(
                                 SelectedItem.Area,
                                 SelectedItem.IsAdmin,
                                 SelectedItem.Regex,
