@@ -97,6 +97,6 @@ namespace Serein.Ui
             }
         }
 
-        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)=>LoadMember();
+        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e) => LoadMember();
     }
 }
