@@ -191,7 +191,7 @@
             ButtonLeftClick="TaskEditor_ButtonLeftClick"
             ButtonRightClick="TaskEditor_ButtonRightClick"
             Title="任务编辑器"
-            DialogHeight="390"
+            DialogHeight="355"
             DialogWidth="325">
             <Grid>
                 <StackPanel Margin="0,5">

@@ -30,7 +30,7 @@ namespace Serein.Ui
             LoadTask();
             Task UpdateInfoThread = new Task(UpdateInfo);
             UpdateInfoThread.Start();
-            Settings.Base.StartSaveSettings();
+            Loader.StartSavingAndUpdating();
             TaskManager.RunnerThread.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();
@@ -49,7 +49,7 @@ namespace Serein.Ui
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void MultiOpenCheck()
+        private static void MultiOpenCheck()
         {
             Process[] Processes = Process.GetProcessesByName("Serein");
             string CurrentName = Process.GetCurrentProcess().MainModule.FileName;

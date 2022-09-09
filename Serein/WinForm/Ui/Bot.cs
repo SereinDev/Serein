@@ -8,23 +8,15 @@ namespace Serein.Ui
     {
         private delegate void BotWebBrowser_Delegate(object[] objects);
 
-        private void BotWebBrowser_AppendText(object[] objects)
-        {
-            BotWebBrowser.Document.InvokeScript("AppendText", objects);
-        }
         public void BotWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
             Invoke((BotWebBrowser_Delegate)BotWebBrowser_AppendText, objects2);
         }
-        private void BotConnect_Click(object sender, EventArgs e)
-        {
-            Websocket.Connect();
-        }
-        private void BotClose_Click(object sender, EventArgs e)
-        {
-            Websocket.Close();
-        }
+
+        private void BotWebBrowser_AppendText(object[] objects) => BotWebBrowser.Document.InvokeScript("AppendText", objects);
+        private void BotConnect_Click(object sender, EventArgs e) => Websocket.Connect();
+        private void BotClose_Click(object sender, EventArgs e) => Websocket.Close();
     }
 }

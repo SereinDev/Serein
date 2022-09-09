@@ -19,12 +19,12 @@ namespace Serein
             DispatcherUnhandledException += (sender, e) => ShowException(e.Exception.StackTrace);
             AppDomain.CurrentDomain.UnhandledException += (sneder, e) => ShowException(e.ExceptionObject.ToString());
             TaskScheduler.UnobservedTaskException += (sender, e) => ShowException(e.Exception.ToString());
-            Settings.Base.ReadSettings();
             if (!File.Exists(Global.Path + "console\\console.html"))
             {
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
+            Loader.ReadAll();
             //Timer CleanRAM = new Timer(10000) { AutoReset = true };
             //CleanRAM.Elapsed += (sender, e) => SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
             //CleanRAM.Start();

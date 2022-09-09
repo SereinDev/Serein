@@ -11,11 +11,12 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         private string[] Roles_Chinese = { "群主", "管理员", "成员" };
-        private void LoadMembers()
+
+        private void LoadMember()
         {
-            Loader.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
+            Loader.ReadMember();
             foreach (MemberItem memberItem in Global.MemberItems)
             {
                 ListViewItem Item = new ListViewItem();
@@ -28,7 +29,8 @@ namespace Serein.Ui
             }
             MemberList.EndUpdate();
         }
-        private void SaveMembers()
+
+        private void SaveMember()
         {
             List<MemberItem> MemberItems = new List<MemberItem>();
             foreach (ListViewItem Item in MemberList.Items)
@@ -49,23 +51,21 @@ namespace Serein.Ui
             Global.UpdateMemberItems(MemberItems);
             Loader.SaveMember();
         }
-        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
-        {
-            LoadMembers();
-        }
+
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
             if (MemberList.SelectedItems.Count > 0)
             {
-                MemberInfoEditor Editer = new MemberInfoEditor(MemberList.SelectedItems[0]);
-                Editer.ShowDialog(this);
-                if (!Editer.CancelFlag)
+                MemberInfoEditor Editor = new MemberInfoEditor(MemberList.SelectedItems[0]);
+                Editor.ShowDialog(this);
+                if (!Editor.CancelFlag)
                 {
-                    MemberList.SelectedItems[0].SubItems[4].Text = Editer.GameIDBox.Text;
-                    SaveMembers();
+                    MemberList.SelectedItems[0].SubItems[4].Text = Editor.GameIDBox.Text;
+                    SaveMember();
                 }
             }
         }
+
         private void MemberContextMenuStrip_Remove_Click(object sender, EventArgs e)
         {
             if (MemberList.SelectedItems.Count > 0)
@@ -78,10 +78,11 @@ namespace Serein.Ui
                 if (result == 1)
                 {
                     MemberList.Items.RemoveAt(MemberList.SelectedItems[0].Index);
-                    SaveMembers();
+                    SaveMember();
                 }
             }
         }
+
         private void MemberContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             if (MemberList.SelectedItems.Count == 1)
@@ -95,5 +96,7 @@ namespace Serein.Ui
                 MemberContextMenuStrip_Remove.Enabled = false;
             }
         }
+
+        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)=>LoadMember();
     }
 }

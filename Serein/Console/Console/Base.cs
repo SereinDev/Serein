@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using Serein.Base;
+using Serein.Server;
+using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using Serein.Items;
-using Serein.Base;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serein.Server;
-using Serein.Plugin;
 
 namespace Serein.Console
 {
@@ -92,11 +86,9 @@ namespace Serein.Console
         /// <param name="args">启动参数</param>
         public static void Load(string[] args = null)
         {
-            Settings.Base.ReadSettings();
+            Loader.ReadAll();
             Global.Args = args ?? Global.Args;
             Global.Settings.Serein.Debug = Global.Args.Contains("debug");
-            Loader.LoadAll();
-            Plugins.Reload();
         }
     }
 }

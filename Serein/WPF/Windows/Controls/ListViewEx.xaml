@@ -71,12 +71,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
                     <Grid Background="{DynamicResource ControlFillColorDefaultBrush}" >
-                        <Border Padding="{TemplateBinding Padding}" MaxHeight="{TemplateBinding Height}">
+                        <Border Padding="{TemplateBinding Padding}" MaxHeight="{TemplateBinding Height}" BorderThickness="0,0,0,1" BorderBrush="#5aaa">
                             <ContentPresenter RecognizesAccessKey="True" 
                                           Content="{TemplateBinding ContentControl.Content}" 
                                           ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
                                           ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" 
-                                          Name="HeaderContent" Margin="5,4,5,3" 
+                                          Name="HeaderContent" Margin="5" 
                                           SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
                         </Border>
                     </Grid>

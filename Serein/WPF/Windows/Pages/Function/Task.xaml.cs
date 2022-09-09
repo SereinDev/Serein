@@ -108,6 +108,7 @@ namespace Serein.Windows.Pages.Function
                     Window.MainWindow.TaskEditor.Hide();
                     ActionType = 0;
                 }
+                TaskItem SelectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as TaskItem : null;
                 string Tag = Item.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
@@ -116,7 +117,7 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (TaskListView.SelectedItem is TaskItem SelectedItem && SelectedItem != null)
+                        if (SelectedItem != null)
                         {
                             Window.MainWindow.OpenTaskEditor(SelectedItem.Cron, SelectedItem.Command, SelectedItem.Remark);
                             ActionType = 2;
@@ -145,6 +146,16 @@ namespace Serein.Windows.Pages.Function
                     case "LookupVariables":
                         Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
                         break;
+                    case "Enable":
+                    case "Disable":
+                        if (SelectedItem != null)
+                        {
+                            SelectedItem.Enable = !SelectedItem.Enable;
+                            TaskListView.SelectedItem = SelectedItem;
+                            Save();
+                            Load();
+                        }
+                        break;
                 }
             }
         }
@@ -172,11 +183,22 @@ namespace Serein.Windows.Pages.Function
                 UpdateButton();
             }
         }
+
         private void TaskListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             Edit.IsEnabled = TaskListView.SelectedIndex != -1;
             Delete.IsEnabled = TaskListView.SelectedIndex != -1;
             Clear.IsEnabled = TaskListView.Items.Count > 0;
+            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is TaskItem SelectedItem && SelectedItem != null)
+            {
+                Enable.IsEnabled = !SelectedItem.Enable;
+                Disable.IsEnabled = SelectedItem.Enable;
+            }
+            else
+            {
+                Enable.IsEnabled = false;
+                Disable.IsEnabled = false;
+            }
         }
 
 

@@ -1,18 +1,34 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Items;
+using Serein.Plugin;
+using Serein.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Timers;
 
 namespace Serein.Base
 {
     internal static class Loader
     {
-        public static void LoadAll()
+        private static string OldSettings = string.Empty;
+
+        public static void StartSavingAndUpdating()
+        {
+            Timer timer = new Timer(2000) { AutoReset = true };
+            timer.Elapsed += (sender, e) => UpdateSettings();
+            timer.Elapsed += (sender, e) => SaveSettings();
+            timer.Start();
+        }
+
+        public static void ReadAll()
         {
             ReadRegex();
             ReadMember();
+            ReadSettings();
+            Plugins.Load();
         }
 
         public static void ReadRegex(string FileName = null)
@@ -210,6 +226,85 @@ namespace Serein.Base
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", JArray.FromObject(Global.TaskItems));
             File.WriteAllText($"{Global.Path}\\data\\task.json", ListJObject.ToString());
+        }
+
+        public static void ReadSettings()
+        {
+            if (!Directory.Exists(Global.SettingPath))
+            {
+                Directory.CreateDirectory(Global.SettingPath);
+                return;
+            }
+            if (File.Exists(Global.SettingPath + "\\Server.json"))
+            {
+                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Global.SettingPath + "\\Server.json", Encoding.UTF8))
+                    ?? new Settings.Server();
+            }
+            if (File.Exists(Global.SettingPath + "\\Bot.json"))
+            {
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Global.SettingPath + "\\Bot.json", Encoding.UTF8))
+                    ?? new Bot();
+            }
+            if (File.Exists(Global.SettingPath + "\\Serein.json"))
+            {
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8))
+                    ?? new Settings.Serein();
+            }
+            if (File.Exists(Global.SettingPath + "\\Matches.json"))
+            {
+                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8))
+                    ?? new Matches();
+            }
+            else
+            {
+                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
+            }
+            if (File.Exists(Global.SettingPath + "\\Event.json"))
+            {
+                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)) ?? new Settings.Event();
+            }
+            else
+            {
+                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
+            }
+        }
+
+        public static void UpdateSettings()
+        {
+            try
+            {
+                if (File.Exists(Global.SettingPath + "\\Matches.json"))
+                {
+                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8));
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Out(999, "[Setting] Fail to update Matches.json:", e.ToString());
+            }
+            try
+            {
+                if (File.Exists(Global.SettingPath + "\\Event.json"))
+                {
+                    Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8));
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Out(999, "[Setting] Fail to update Event.json:", e.ToString());
+            }
+        }
+
+        public static void SaveSettings()
+        {
+            string NewSettings = JsonConvert.SerializeObject(Global.Settings);
+            if (NewSettings != OldSettings)
+            {
+                OldSettings = NewSettings;
+                File.WriteAllText(Global.SettingPath + "\\Server.json", JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
+                File.WriteAllText(Global.SettingPath + "\\Bot.json", JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
+                File.WriteAllText(Global.SettingPath + "\\Serein.json", JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
+            }
         }
     }
 }

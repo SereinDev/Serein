@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Serein.Base;
 using Serein.Items;
 using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -41,12 +38,14 @@ namespace Serein.Ui
         {
             e.Item.Selected = isdrag;
         }
+
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             RegexContextMenuStripEdit.Enabled = RegexList.SelectedItems.Count > 0;
             RegexContextMenuStripDelete.Enabled = RegexList.SelectedItems.Count > 0;
             RegexContextMenuStripClear.Enabled = RegexList.Items.Count > 0;
         }
+
         private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
         {
             RegexEditor regexEditer = new RegexEditor();
@@ -56,14 +55,15 @@ namespace Serein.Ui
                 return;
             }
             AddRegex(
-                    regexEditer.Area.SelectedIndex,
-                    regexEditer.RegexTextBox.Text,
-                    regexEditer.IsAdmin.Checked,
-                    regexEditer.RemarkTextBox.Text,
-                    regexEditer.CommandTextBox.Text
-                    );
+                regexEditer.Area.SelectedIndex,
+                regexEditer.RegexTextBox.Text,
+                regexEditer.IsAdmin.Checked,
+                regexEditer.RemarkTextBox.Text,
+                regexEditer.CommandTextBox.Text
+                );
             SaveRegex();
         }
+
         private void RegexContextMenuStripEdit_Click(object sender, EventArgs e)
         {
             if (RegexList.SelectedItems.Count <= 0)
@@ -92,6 +92,7 @@ namespace Serein.Ui
             RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.CommandTextBox.Text;
             SaveRegex();
         }
+
         private void RegexContextMenuStripClear_Click(object sender, EventArgs e)
         {
             if (RegexList.Items.Count > 0)
@@ -108,6 +109,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void RegexContextMenuStripDelete_Click(object sender, EventArgs e)
         {
             if (RegexList.SelectedItems.Count > 0)
@@ -124,6 +126,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
         {
             if (
@@ -160,6 +163,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
             RegexList.BeginUpdate();
@@ -168,153 +172,42 @@ namespace Serein.Ui
             RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             RegexList.EndUpdate();
         }
-        private void LoadRegex()
+
+        private void LoadRegex(string FileName = null)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            if (!Directory.Exists(Global.Path + "\\data"))
+            Loader.ReadRegex(FileName);
+            foreach (RegexItem Item in Global.RegexItems)
             {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            if (File.Exists($"{Global.Path}\\data\\regex.json"))
-            {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        $"{Global.Path}\\data\\regex.json",
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8);
-                string Text = Reader.ReadToEnd();
-                if (!string.IsNullOrEmpty(Text))
+                if (Item.Check())
                 {
-                    try
-                    {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "REGEX")
-                        {
-                            return;
-                        }
-                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
-                        foreach (RegexItem Item in Global.RegexItems)
-                        {
-                            if (Item.Check())
-                            {
-                                AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                            }
-                        }
-                    }
-                    catch { }
+                    AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
                 }
-                Reader.Close();
-                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                RegexList.EndUpdate();
             }
+            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            RegexList.EndUpdate();
         }
 
-        private void LoadRegex(string FileName)
-        {
-            RegexList.BeginUpdate();
-            RegexList.Items.Clear();
-            if (File.Exists(FileName))
-            {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        FileName,
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8
-                    );
-                if (FileName.ToUpper().EndsWith(".TSV"))
-                {
-                    string Line;
-                    List<RegexItem> regexItems = new List<RegexItem>();
-                    while ((Line = Reader.ReadLine()) != null)
-                    {
-                        RegexItem Item = new RegexItem();
-                        Item.ConvertToItem(Line);
-                        if (!Item.Check())
-                        {
-                            continue;
-                        }
-                        AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                        regexItems.Add(Item);
-                    }
-                    Global.UpdateRegexItems(regexItems);
-                }
-                else if (FileName.ToUpper().EndsWith(".JSON"))
-                {
-                    string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text)) { return; }
-                    try
-                    {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "REGEX")
-                        {
-                            return;
-                        }
-                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
-                        foreach (RegexItem Item in Global.RegexItems)
-                        {
-                            if (Item.Check())
-                            {
-                                AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
-                            }
-                        }
-                    }
-                    catch { }
-                }
-                Reader.Close();
-                RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                RegexList.EndUpdate();
-            }
-        }
         private void SaveRegex()
         {
             List<RegexItem> regexItems = new List<RegexItem>();
-            if (!Directory.Exists(Global.Path + "\\data"))
-            {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            StreamWriter RegexWriter = new StreamWriter(
-                File.Open(
-                    $"{Global.Path}\\data\\regex.json",
-                    FileMode.Create,
-                    FileAccess.Write
-                    ),
-                Encoding.UTF8
-                );
-            JObject ListJObject = new JObject();
-            JArray ListJArray = new JArray();
             foreach (ListViewItem item in RegexList.Items)
             {
-                RegexItem regexItem = new RegexItem()
+                regexItems.Add(new RegexItem()
                 {
                     Regex = item.Text,
                     Area = Array.IndexOf(areas, item.SubItems[1].Text),
                     IsAdmin = item.SubItems[2].Text == "是",
                     Remark = item.SubItems[3].Text,
                     Command = item.SubItems[4].Text
-                };
-                regexItems.Add(regexItem);
-                JObject ListItemJObject = JObject.FromObject(regexItem);
-                ListJArray.Add(ListItemJObject);
+                });
             }
-            ListJObject.Add("type", "REGEX");
-            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", ListJArray);
-            RegexWriter.Write(ListJObject.ToString());
             Global.UpdateRegexItems(regexItems);
-            RegexWriter.Flush();
-            RegexWriter.Close();
-        }
-        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
+            Loader.SaveRegex();
         }
 
-        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
-        }
+        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
+        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
     }
 }

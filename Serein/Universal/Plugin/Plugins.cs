@@ -95,8 +95,9 @@ namespace Serein.Plugin
         {
             Logger.Out(30, "#clear");
             JSFunc.Trigger("onPluginsReload");
-            CommandItems.Clear();
+            PluginItems.ForEach((x) => { x.Engine = null; });
             PluginItems.Clear();
+            CommandItems.Clear();
             Event = new Event();
             JSFunc.ClearAllTimers();
             Load();

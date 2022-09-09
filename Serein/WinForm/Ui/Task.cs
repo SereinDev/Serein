@@ -1,6 +1,4 @@
-﻿using NCrontab;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Serein.Base;
 using Serein.Items;
 using Serein.Ui.ChildrenWindow;
 using System;
@@ -8,9 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -31,6 +26,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void TaskList_ItemDrag(object sender, ItemDragEventArgs e)
         {
             itemDraged = (ListViewItem)e.Item;
@@ -41,6 +37,7 @@ namespace Serein.Ui
         {
             e.Item.Selected = isdrag;
         }
+
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             TaskContextMenuStrip_Edit.Enabled = TaskList.SelectedItems.Count > 0;
@@ -49,6 +46,7 @@ namespace Serein.Ui
             TaskContextMenuStrip_Disable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor == Color.Gray;
             TaskContextMenuStrip_Clear.Enabled = TaskList.Items.Count > 0;
         }
+
         private void TaskContextMenuStrip_Enable_Click(object sender, EventArgs e)
         {
             if (TaskList.SelectedItems.Count >= 1)
@@ -59,6 +57,7 @@ namespace Serein.Ui
                 SaveTask();
             }
         }
+
         private void TaskContextMenuStrip_Disable_Click(object sender, EventArgs e)
         {
             if (TaskList.SelectedItems.Count >= 1)
@@ -69,6 +68,7 @@ namespace Serein.Ui
                 SaveTask();
             }
         }
+
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
             TaskEditor Editor = new TaskEditor();
@@ -90,6 +90,7 @@ namespace Serein.Ui
             }
             SaveTask();
         }
+
         private void TaskContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
             if (TaskList.SelectedItems.Count >= 1)
@@ -111,6 +112,7 @@ namespace Serein.Ui
             }
             SaveTask();
         }
+
         private void TaskContextMenuStrip_Delete_Click(object sender, EventArgs e)
         {
             if (TaskList.SelectedItems.Count > 0)
@@ -127,6 +129,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void TaskContextMenuStrip_Clear_Click(object sender, EventArgs e)
         {
             if (TaskList.Items.Count > 0)
@@ -143,29 +146,16 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void TaskContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
             LoadTask();
             SaveTask();
         }
+
         private void SaveTask()
         {
-            if (!Directory.Exists(Global.Path + "\\data"))
-            {
-                Directory.CreateDirectory(Global.Path + "\\data");
-            }
-            StreamWriter TaskWriter = new StreamWriter(
-                File.Open(
-                    $"{Global.Path}\\data\\task.json",
-                    FileMode.Create,
-                    FileAccess.Write
-                    ),
-                Encoding.UTF8
-                );
-            JObject ListJObject = new JObject();
-            JArray ListJArray = new JArray();
             List<TaskItem> TaskItems = new List<TaskItem>();
-            DateTime Now = DateTime.Now;
             foreach (ListViewItem Item in TaskList.Items)
             {
                 TaskItem TI = new TaskItem()
@@ -175,56 +165,17 @@ namespace Serein.Ui
                     Command = Item.SubItems[2].Text,
                     Enable = Item.ForeColor != Color.Gray
                 };
-                try
-                {
-                    List<DateTime> Occurrences = CrontabSchedule.Parse(TI.Cron).GetNextOccurrences(Now, Now.AddYears(1)).ToList();
-                    TI.NextTime = Occurrences[0];
-                }
-                catch
-                {
-                    continue;
-                }
-                TI.Enable = Item.ForeColor != Color.Gray;
                 TaskItems.Add(TI);
-                JObject ListItemJObject = JObject.FromObject(TI);
-                ListJArray.Add(ListItemJObject);
             }
-            ListJObject.Add("type", "TASK");
-            ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", ListJArray);
-            TaskWriter.Write(ListJObject.ToString());
-            TaskWriter.Flush();
-            TaskWriter.Close();
             Global.UpdateTaskItems(TaskItems);
+            Loader.SaveTask();
         }
-        private void LoadTask()
+
+        private void LoadTask(string FileName = null)
         {
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            if (File.Exists($"{Global.Path}\\data\\task.json"))
-            {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        $"{Global.Path}\\data\\task.json",
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8);
-                string Text = Reader.ReadToEnd();
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    try
-                    {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
-                        {
-                            return;
-                        }
-                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
-                    }
-                    catch { }
-                }
-                Reader.Close();
-            }
+            Loader.ReadTask();
             foreach (TaskItem Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new ListViewItem(Item.Cron);
@@ -240,74 +191,8 @@ namespace Serein.Ui
             }
             TaskList.EndUpdate();
         }
-        private void LoadTask(string FileName)
-        {
-            TaskList.BeginUpdate();
-            TaskList.Items.Clear();
-            if (File.Exists(FileName))
-            {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        FileName,
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8);
-                if (FileName.ToUpper().EndsWith(".TSV"))
-                {
-                    string Line;
-                    List<TaskItem> TaskItems = new List<TaskItem>();
-                    while ((Line = Reader.ReadLine()) != null)
-                    {
-                        TaskItem Item = new TaskItem();
-                        Item.ConvertToItem(Line);
-                        if (!Item.CheckItem())
-                        {
-                            continue;
-                        }
-                        TaskItems.Add(Item);
-                    }
-                    Global.TaskItems = TaskItems;
-                }
-                else if (FileName.ToUpper().EndsWith(".JSON"))
-                {
-                    string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text)) { return; }
-                    try
-                    {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
-                        {
-                            return;
-                        }
-                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
-                    }
-                    catch { }
-                }
-                Reader.Close();
-                foreach (TaskItem Item in Global.TaskItems)
-                {
-                    ListViewItem listViewItem = new ListViewItem(Item.Cron);
-                    listViewItem.SubItems.Add(Item.Remark);
-                    listViewItem.SubItems.Add(Item.Command);
-                    if (!Item.Enable)
-                    {
-                        listViewItem.ForeColor = Color.Gray;
-                        listViewItem.SubItems[1].ForeColor = Color.Gray;
-                        listViewItem.SubItems[2].ForeColor = Color.Gray;
-                    }
-                    TaskList.Items.Add(listViewItem);
-                }
-            }
-            TaskList.EndUpdate();
-        }
 
-        private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
-        }
-        private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e)
-        {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
-        }
+        private void TaskContextMenuStrip_Command_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
+        private void TaskContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
     }
 }

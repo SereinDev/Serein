@@ -39,7 +39,7 @@ namespace Serein
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-            Settings.Base.ReadSettings();
+            Loader.ReadAll();
             Global.Args = args;
             if (((IList)args).Contains("debug"))
             {

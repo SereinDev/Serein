@@ -6,7 +6,6 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    
     xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     mc:Ignorable="d"
     d:DesignHeight="450"
@@ -39,31 +38,36 @@
                         <Label DockPanel.Dock="Left"
                             Content="状态"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft">-</Label>
+                            FlowDirection="RightToLeft"
+                               Name="Status">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="1">
                         <Label DockPanel.Dock="Left"
-                            Content="QQ"/>
+                            Content="ID"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft">-</Label>
+                            FlowDirection="RightToLeft"
+                                Name="ID">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="2">
                         <Label DockPanel.Dock="Left"
                             Content="接收数"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft">-</Label>
+                            FlowDirection="RightToLeft"
+                                Name="MessageReceived">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="3">
                         <Label DockPanel.Dock="Left"
                             Content="发送数"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft">-</Label>
+                            FlowDirection="RightToLeft"
+                               Name="MessageSent">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="4">
                         <Label DockPanel.Dock="Left"
                             Content="运行时长"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft">-</Label>
+                            FlowDirection="RightToLeft"
+                               Name="Time">-</Label>
                     </DockPanel>
                 </Grid>
             </GroupBox>

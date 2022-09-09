@@ -7,10 +7,9 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         private delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
-        private void PanelConsoleWebBrowser_AppendText(object[] objects)
-        {
-            PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
-        }
+
+        private void PanelConsoleWebBrowser_AppendText(object[] objects) => PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
+
         public void PanelConsoleWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
@@ -18,28 +17,18 @@ namespace Serein.Ui
             Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
         }
 
-        private void PanelControlStart_Click(object sender, EventArgs e)
-        {
-            ServerManager.Start();
-        }
-        private void PanelControlStop_Click(object sender, EventArgs e)
-        {
-            ServerManager.Stop();
-        }
-        private void PanelControlRestart_Click(object sender, EventArgs e)
-        {
-            ServerManager.RestartRequest();
-        }
-        private void PanelControlKill_Click(object sender, EventArgs e)
-        {
-            ServerManager.Kill();
-        }
+        private void PanelControlStart_Click(object sender, EventArgs e) => ServerManager.Start();
+        private void PanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
+        private void PanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RestartRequest();
+        private void PanelControlKill_Click(object sender, EventArgs e) => ServerManager.Kill();
+
         private void PanelConsoleEnter_Click(object sender, EventArgs e)
         {
             ServerManager.InputCommand(PanelConsoleInput.Text);
             PanelConsoleInput.Clear();
             PanelConsoleInput.Focus();
         }
+
         private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -75,6 +64,7 @@ namespace Serein.Ui
                 }
             }
         }
+
         private void PanelConsoleInput_Update(string Text = "")
         {
             PanelConsoleInput.Text = Text;
@@ -82,6 +72,7 @@ namespace Serein.Ui
             PanelConsoleInput.Select(PanelConsoleInput.TextLength, 0);
             PanelConsoleInput.ScrollToCaret();
         }
+
         private void PanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))

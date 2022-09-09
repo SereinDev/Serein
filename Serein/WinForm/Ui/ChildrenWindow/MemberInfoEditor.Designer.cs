@@ -125,7 +125,6 @@
         #endregion
         private System.Windows.Forms.Label ID;
         private System.Windows.Forms.Label NickName;
-        private System.Windows.Forms.Label GameIDLabel;
         private System.Windows.Forms.Button Confirm;
         private System.Windows.Forms.Button Cancel;
         public System.Windows.Forms.TextBox GameIDBox;

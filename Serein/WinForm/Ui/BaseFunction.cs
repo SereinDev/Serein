@@ -24,7 +24,7 @@ namespace Serein.Ui
             {
                 case 5:
                     Loader.ReadMember();
-                    LoadMembers();
+                    LoadMember();
                     break;
                 case 6:
                     LoadSereinPlugin();

@@ -75,6 +75,7 @@ namespace Serein.Ui
                 Thread.Sleep(2000);
             }
         }
+
         private void Ui_Update(string NewText)
         {
             if (InvokeRequired)
@@ -83,6 +84,7 @@ namespace Serein.Ui
                 Invoke(actionDelegate, NewText);
             }
         }
+
         public void SettingSereinVersion_Update(string NewText)
         {
             if (SettingSereinVersion.InvokeRequired)
@@ -91,6 +93,7 @@ namespace Serein.Ui
                 SettingSereinVersion.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoStatus2_Update(string NewText)
         {
             if (PanelInfoStatus2.InvokeRequired)
@@ -99,6 +102,7 @@ namespace Serein.Ui
                 PanelInfoStatus2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoVersion2_Update(string NewText)
         {
             if (PanelInfoVersion2.InvokeRequired)
@@ -107,6 +111,7 @@ namespace Serein.Ui
                 PanelInfoVersion2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoDifficulty2_Update(string NewText)
         {
             if (PanelInfoDifficulty2.InvokeRequired)
@@ -115,6 +120,7 @@ namespace Serein.Ui
                 PanelInfoDifficulty2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoLevel2_Update(string NewText)
         {
             if (PanelInfoLevel2.InvokeRequired)
@@ -123,6 +129,7 @@ namespace Serein.Ui
                 PanelInfoLevel2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoTime2_Update(string NewText)
         {
             if (PanelInfoTime2.InvokeRequired)
@@ -131,6 +138,7 @@ namespace Serein.Ui
                 PanelInfoTime2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void PanelInfoCPU2_Update(string NewText)
         {
             if (PanelInfoCPU2.InvokeRequired)
@@ -139,6 +147,7 @@ namespace Serein.Ui
                 PanelInfoCPU2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void BotInfoStatus2_Update(string NewText)
         {
             if (BotInfoStatus2.InvokeRequired)
@@ -147,6 +156,7 @@ namespace Serein.Ui
                 BotInfoStatus2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void BotInfoQQ2_Update(string NewText)
         {
             if (BotInfoQQ2.InvokeRequired)
@@ -155,6 +165,7 @@ namespace Serein.Ui
                 BotInfoQQ2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void BotInfoMessageReceived2_Update(string NewText)
         {
             if (BotInfoMessageReceived2.InvokeRequired)
@@ -163,6 +174,7 @@ namespace Serein.Ui
                 BotInfoMessageReceived2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void BotInfoMessageSent2_Update(string NewText)
         {
             if (BotInfoMessageSent2.InvokeRequired)
@@ -171,6 +183,7 @@ namespace Serein.Ui
                 BotInfoMessageSent2.Invoke(actionDelegate, NewText);
             }
         }
+
         private void BotInfoTime2_Update(string NewText)
         {
             if (BotInfoTime2.InvokeRequired)

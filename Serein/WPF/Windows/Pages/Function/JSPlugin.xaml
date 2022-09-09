@@ -11,6 +11,13 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     Title="JSPlugin">
+    <ui:UiPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Controls/ListviewEx.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ui:UiPage.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -29,12 +36,50 @@
         <GridSplitter Grid.Column="1"
             Width="5"
             HorizontalAlignment="Stretch" />
-        <GroupBox Margin="3"
+        <ListView Name="JSPluginListView"
+                   Margin="3"
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Header="插件列表">
-            <ListView/>
-        </GroupBox>
+            SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="名称"
+                        DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="版本"
+                        DisplayMemberBinding="{Binding Version}"/>
+                    <GridViewColumn Header="作者"
+                        DisplayMemberBinding="{Binding Author}"/>
+                    <GridViewColumn Header="介绍"
+                        DisplayMemberBinding="{Binding Description}"/>
+                </GridView>
+            </ListView.View>
+            <ListView.Style>
+                <Style TargetType="{x:Type ListView}">
+                    <Setter Property="BorderThickness"
+                        Value="0"/>
+                </Style>
+            </ListView.Style>
+            <ListView.ContextMenu>
+                <ContextMenu Name="TaskContextMenu">
+                    <ui:MenuItem Header="重新加载所有插件"
+                        SymbolIcon="ArrowClockwise24"
+                        Name="Reload"
+                        Tag="Reload"
+                        Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="清空控制台"
+                        SymbolIcon="Delete24"
+                        Name="ClearConsole"
+                        Tag="ClearConsole"
+                        Click="MenuItem_Click"/>
+                    <Separator/>
+                    <ui:MenuItem Header="查看文档"
+                        SymbolIcon="DocumentFlowchart24"
+                        Name="LookupDocs"
+                        Tag="LookupDocs"
+                        Click="MenuItem_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
     </Grid>
 </ui:UiPage>

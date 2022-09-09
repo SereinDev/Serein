@@ -1,6 +1,5 @@
 ﻿using Serein.Server;
 using System;
-using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -16,32 +15,20 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.ScriptErrorsSuppressed = true;
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
-            PanelWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=panel");
+            PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=panel");
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
             Window.Server.Panel = this;
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
-        {
-            ServerManager.Start();
-        }
+        private void Start_Click(object sender, RoutedEventArgs e) => ServerManager.Start();
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            ServerManager.Stop();
-        }
+        private void Stop_Click(object sender, RoutedEventArgs e) => ServerManager.Stop();
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
-        {
-            ServerManager.RestartRequest();
-        }
+        private void Restart_Click(object sender, RoutedEventArgs e) => ServerManager.RestartRequest();
 
-        private void Kill_Click(object sender, RoutedEventArgs e)
-        {
-            ServerManager.Kill();
-        }
+        private void Kill_Click(object sender, RoutedEventArgs e) => ServerManager.Kill();
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {

@@ -65,6 +65,17 @@
                         Tag="Clear"
                         Click="MenuItem_Click"/>
                     <Separator />
+                    <ui:MenuItem Header="启用"
+                            SymbolIcon="CheckmarkCircle24"
+                            Name="Enable"
+                            Tag="Enable"
+                                  Click="MenuItem_Click"/>
+                    <ui:MenuItem Header="禁用"
+                            SymbolIcon="DismissCircle24"
+                            Name="Disable"
+                                 Tag="Disable"
+                                  Click="MenuItem_Click"/>
+                    <Separator />
                     <ui:MenuItem Header="查看命令"
                         SymbolIcon="DocumentFlowchart24"
                         Name="LookupCommand"

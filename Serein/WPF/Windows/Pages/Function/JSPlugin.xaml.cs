@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Serein.Plugin;
+using System;
+using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -24,7 +15,8 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.ScriptErrorsSuppressed = true;
             PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
-            PluginWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=plugin");
+            PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=plugin");
+            Load();
             Window.Function.JSPlugin = this;
         }
 
@@ -34,6 +26,35 @@ namespace Serein.Windows.Pages.Function
             {
                 PluginWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
             }));
+        }
+
+        private void Load()
+        {
+            JSPluginListView.Items.Clear();
+            foreach (PluginItem Item in Plugins.PluginItems)
+            {
+                JSPluginListView.Items.Add(Item);
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            {
+                switch (Tag)
+                {
+                    case "ReLoad":
+                        Plugins.Reload();
+                        Load();
+                        break;
+                    case "ClearConsole":
+                        AppendText("#clear");
+                        break;
+                    case "LookupDocs":
+                        Process.Start(new ProcessStartInfo("https://serein.cc/Javascript.html") { UseShellExecute = true });
+                        break;
+                }
+            }
         }
     }
 }

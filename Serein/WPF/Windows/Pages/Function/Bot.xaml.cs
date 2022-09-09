@@ -1,17 +1,7 @@
 ﻿using Serein.Base;
-using System.Collections.Generic;
-using System.IO;
 using System;
-using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -24,7 +14,10 @@ namespace Serein.Windows.Pages.Function
             BotWebBrowser.ScriptErrorsSuppressed = true;
             BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
             BotWebBrowser.WebBrowserShortcutsEnabled = false;
-            BotWebBrowser.Navigate(@"file:\\\" + Directory.GetCurrentDirectory() + "\\console\\console.html?type=bot");
+            BotWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=bot");
+            Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+            UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
+            UpdateInfoTimer.Start();
             Window.Function.Bot = this;
         }
 
@@ -44,6 +37,20 @@ namespace Serein.Windows.Pages.Function
             {
                 BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
             }));
+        }
+
+        private void UpdateInfos()
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                Status.Content = Websocket.Status ? "已连接" : "未连接";
+                ID.Content = Message.SelfId ?? "-";
+                MessageReceived.Content = Message.MessageReceived ?? "-";
+                MessageSent.Content = Message.MessageSent ?? "-";
+                TimeSpan t = DateTime.Now - Websocket.StartTime;
+                Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N2}d" : "-";
+            }
+            ));
         }
     }
 }
