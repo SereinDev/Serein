@@ -16,12 +16,12 @@ namespace Serein.Plugin
         {
             get
             {
-                List<string> list = new List<string>();
+                List<string> PluginList = new List<string>();
                 foreach (PluginItem Item in PluginItems)
                 {
-                    list.Add(Item.Name);
+                    PluginList.Add(Item.Name);
                 }
-                return list;
+                return PluginList;
             }
         }
 

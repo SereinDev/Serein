@@ -17,10 +17,10 @@ namespace Serein.Base
 
         public static void StartSavingAndUpdating()
         {
-            Timer timer = new Timer(2000) { AutoReset = true };
-            timer.Elapsed += (sender, e) => UpdateSettings();
-            timer.Elapsed += (sender, e) => SaveSettings();
-            timer.Start();
+            Timer _Timer = new Timer(2000) { AutoReset = true };
+            _Timer.Elapsed += (sender, e) => UpdateSettings();
+            _Timer.Elapsed += (sender, e) => SaveSettings();
+            _Timer.Start();
         }
 
         public static void ReadAll()
@@ -90,7 +90,7 @@ namespace Serein.Base
             }
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "REGEX");
-            ListJObject.Add("comment", "·Ç±ØÒªÇë²»ÒªÖ±½ÓĞŞ¸ÄÎÄ¼ş£¬Óï·¨´íÎó¿ÉÄÜµ¼ÖÂÊı¾İ¶ªÊ§");
+            ListJObject.Add("comment", "éå¿…è¦è¯·ä¸è¦ç›´æ¥ä¿®æ”¹æ–‡ä»¶ï¼Œè¯­æ³•é”™è¯¯å¯èƒ½å¯¼è‡´æ•°æ®ä¸¢å¤±");
             ListJObject.Add("data", JArray.FromObject(Global.RegexItems));
             File.WriteAllText($"{Global.Path}\\data\\regex.json", ListJObject.ToString());
         }
@@ -121,29 +121,29 @@ namespace Serein.Base
                     catch { }
                 }
             }
-            List<Member> memberItems = Global.MemberItems;
-            memberItems.Sort(
+            List<Member> Items = Global.MemberItems;
+            Items.Sort(
                 (Item1, Item2) =>
                 {
                     return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
-            Global.UpdateMemberItems(memberItems);
+            Global.UpdateMemberItems(Items);
         }
 
         /// <summary>
-        /// ±£´æÊı¾İ
+        /// ä¿å­˜æ•°æ®
         /// </summary>
         public static void SaveMember()
         {
-            List<Member> memberItems = Global.MemberItems;
-            memberItems.Sort(
+            List<Member> Items = Global.MemberItems;
+            Items.Sort(
                 (Item1, Item2) =>
                 {
                     return Item1.ID > Item2.ID ? 1 : -1;
                 }
                 );
-            Global.UpdateMemberItems(memberItems);
+            Global.UpdateMemberItems(Items);
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
@@ -155,7 +155,7 @@ namespace Serein.Base
                 ListJArray.Add(JObject.FromObject(Item));
             }
             ListJObject.Add("type", "MEMBERS");
-            ListJObject.Add("comment", "·Ç±ØÒªÇë²»ÒªÖ±½ÓĞŞ¸ÄÎÄ¼ş£¬Óï·¨´íÎó¿ÉÄÜµ¼ÖÂÊı¾İ¶ªÊ§");
+            ListJObject.Add("comment", "éå¿…è¦è¯·ä¸è¦ç›´æ¥ä¿®æ”¹æ–‡ä»¶ï¼Œè¯­æ³•é”™è¯¯å¯èƒ½å¯¼è‡´æ•°æ®ä¸¢å¤±");
             ListJObject.Add("data", ListJArray);
             File.WriteAllText(
                 $"{Global.Path}\\data\\members.json",
@@ -223,7 +223,7 @@ namespace Serein.Base
             }
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "TASK");
-            ListJObject.Add("comment", "·Ç±ØÒªÇë²»ÒªÖ±½ÓĞŞ¸ÄÎÄ¼ş£¬Óï·¨´íÎó¿ÉÄÜµ¼ÖÂÊı¾İ¶ªÊ§");
+            ListJObject.Add("comment", "éå¿…è¦è¯·ä¸è¦ç›´æ¥ä¿®æ”¹æ–‡ä»¶ï¼Œè¯­æ³•é”™è¯¯å¯èƒ½å¯¼è‡´æ•°æ®ä¸¢å¤±");
             ListJObject.Add("data", JArray.FromObject(Global.TaskItems));
             File.WriteAllText($"{Global.Path}\\data\\task.json", ListJObject.ToString());
         }

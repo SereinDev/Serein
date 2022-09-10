@@ -12,10 +12,20 @@
     Title="Bot">
     <StackPanel>
         <ui:ToggleSwitch Margin="0,7"
-            Content="获取更新"/>
+            Content="获取更新"
+                         x:Name="EnableGetUpdate"
+                         Click="EnableGetUpdate_Click"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="获取公告"/>
+            Content="获取公告"
+                         x:Name="EnableGetAnnouncement"
+                         Click="EnableGetAnnouncement_Click"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="使用暗黑主题"/>
+            Content="使用暗黑主题"
+                         x:Name="UseDarkTheme"
+                         Click="UseDarkTheme_Click"/>
+        <ui:ToggleSwitch Margin="0,7"
+            Content="主题跟随系统"
+                         x:Name="ThemeFollowSystem"
+                         Click="ThemeFollowSystem_Click"/>
     </StackPanel>
 </ui:UiPage>

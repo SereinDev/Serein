@@ -25,7 +25,8 @@
         </Grid.RowDefinitions>
         <ListView Name="RegexListView"
             ContextMenuOpening="RegexListView_ContextMenuOpening"
-            SelectionMode="Single" SelectionChanged="RegexListView_SelectionChanged">
+            SelectionMode="Single"
+            SelectionChanged="RegexListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="正则表达式"
@@ -44,6 +45,7 @@
                 <Style TargetType="{x:Type ListView}">
                     <Setter Property="BorderThickness"
                         Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
@@ -94,12 +96,12 @@
             <ui:Button Margin="5"
                 Icon="ArrowDown24"
                 Tag="Down"
-                       x:Name="Down"
+                x:Name="Down"
                 Click="Button_Click"/>
             <ui:Button Margin="5"
                 Icon="ArrowUp24"
                 Tag="Up"
-                       x:Name="Up"
+                x:Name="Up"
                 Click="Button_Click"/>
         </StackPanel>
     </Grid>

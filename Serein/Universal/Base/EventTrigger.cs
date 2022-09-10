@@ -16,7 +16,7 @@ namespace Serein.Base
             string Type,
             long GroupId = -1,
             long UserId = -1,
-            Motd motd = null
+            Motd Motd = null
             )
         {
             Logger.Out(999, "[EventTrigger]", "Trigger:" + Type);
@@ -124,7 +124,7 @@ namespace Serein.Base
                         {
                             Base.Command.Run(
                                 4,
-                                Regex.Replace(Command, "%Exception%", motd.Exception, RegexOptions.IgnoreCase),
+                                Regex.Replace(Command, "%Exception%", Motd.Exception, RegexOptions.IgnoreCase),
                                 GroupId: GroupId,
                                 DisableMotd: true
                                 );
@@ -136,15 +136,15 @@ namespace Serein.Base
                     string Command_Copy = Command;
                     if (Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
                     {
-                        Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%OnlinePlayer%", motd.OnlinePlayer, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%MaxPlayer%", motd.MaxPlayer, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Original%", motd.Original, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);
-                        Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", Motd.GameMode, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Description%", Motd.Description, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Protocol%", Motd.Protocol, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%OnlinePlayer%", Motd.OnlinePlayer, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%MaxPlayer%", Motd.MaxPlayer, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Original%", Motd.Original, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Delay%", Motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Version%", Motd.Version, RegexOptions.IgnoreCase);
+                        Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", Motd.Favicon, RegexOptions.IgnoreCase);
                     }
                     Base.Command.Run(
                         4,

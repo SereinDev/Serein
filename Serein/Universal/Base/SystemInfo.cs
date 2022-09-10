@@ -7,7 +7,7 @@ namespace Serein.Base
 {
     internal static class SystemInfo
     {
-        private static readonly PerformanceCounter pcCpuLoad = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+        private static readonly PerformanceCounter Counter = new PerformanceCounter("Processor", "% Processor Time", "_Total")
         {
             MachineName = "."
         };
@@ -37,6 +37,6 @@ namespace Serein.Base
                     (double)(ulong.TryParse(UsedRAM, out ulong i) ? i : 1) /
                     (ulong.TryParse(TotalRAM, out ulong j) ? j : 1) * 100
                 ).ToString("N1");
-        public static string CPUPercentage => pcCpuLoad.NextValue().ToString("N1");
+        public static string CPUPercentage => Counter.NextValue().ToString("N1");
     }
 }

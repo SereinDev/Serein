@@ -43,8 +43,9 @@
         </ui:NavigationCompact>
         <Border Margin="0"
             Background="{DynamicResource ControlFillColorDefaultBrush}"
-            CornerRadius="8,0,0,0"
-            Grid.Column="1">
+            CornerRadius="8"
+            Grid.Column="1"
+                Padding="10,5">
             <Frame x:Name="RootFrame"/>
         </Border>
     </Grid>

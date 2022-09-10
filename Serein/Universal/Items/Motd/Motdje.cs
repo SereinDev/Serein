@@ -9,9 +9,9 @@ namespace Serein.Items.Motd
 {
     internal class Motdje : Motd
     {
-        public Motdje(string newip = "127.0.0.1", string newPort = "25565")
+        public Motdje(string NewIP = "127.0.0.1", string NewPort = "25565")
         {
-            if (!Init(newip, newPort))
+            if (!Init(NewIP, NewPort))
             {
                 return;
             }
@@ -19,26 +19,26 @@ namespace Serein.Items.Motd
             DateTime StartTime = DateTime.Now;
             try
             {
-                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
-                client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
-                client.Connect(
+                Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
+                Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
+                Client.Connect(
                     new IPEndPoint(
                         IP,
                         Port
                         )
                     );
                 StartTime = DateTime.Now;
-                client.Send(
+                Client.Send(
                     new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 }
                     );
-                byte[] buffer = new byte[1024 * 1024];
-                int length = client.Receive(buffer);
+                byte[] Buffer = new byte[1024 * 1024];
+                int Length = Client.Receive(Buffer);
                 Delay = DateTime.Now - StartTime;
-                Data = length > 5 ?
-                    Encoding.UTF8.GetString(buffer, 5, length - 5) :
-                    Encoding.UTF8.GetString(buffer, 0, length);
-                client.Close();
+                Data = Length > 5 ?
+                    Encoding.UTF8.GetString(Buffer, 5, Length - 5) :
+                    Encoding.UTF8.GetString(Buffer, 0, Length);
+                Client.Close();
                 Original = Data;
                 Logger.Out(999, "[Motdje]", $"Original: {Data}");
             }

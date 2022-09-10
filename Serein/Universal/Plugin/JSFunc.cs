@@ -108,7 +108,7 @@ namespace Serein.Plugin
         /// <param name="Args">参数</param>
         public static void Trigger(string EventName, params object[] Args)
         {
-            Engine engine = new Engine();
+            Engine _Engine = new Engine();
             Logger.Out(999, "[JSFunc:Tigger()]", EventName);
             try
             {
@@ -122,73 +122,73 @@ namespace Serein.Plugin
                     case "onServerStop":
                         Plugins.Event.onServerStop.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0])})
+                                JsValue.FromObject(_Engine, Args[0])})
                             );
                         break;
                     case "onServerOutput":
                         Plugins.Event.onServerOutput.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0])})
+                                JsValue.FromObject(_Engine, Args[0])})
                             );
                         break;
                     case "onServerOriginalOutput":
                         Plugins.Event.onServerOriginalOutput.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0])})
+                                JsValue.FromObject(_Engine, Args[0])})
                             );
                         break;
                     case "onServerSendCommand":
                         Plugins.Event.onServerSendCommand.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0])})
+                                JsValue.FromObject(_Engine, Args[0])})
                             );
                         break;
                     case "onServerSendSpecifiedCommand":
                         ((Delegate)Args[1]).DynamicInvoke(
-                            JsValue.Undefined, new[] { JsValue.FromObject(engine, Args[0]) });
+                            JsValue.Undefined, new[] { JsValue.FromObject(_Engine, Args[0]) });
                         break;
                     case "onGroupIncrease":
                         Plugins.Event.onGroupIncrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]),
-                                JsValue.FromObject(engine, Args[1]) })
+                                JsValue.FromObject(_Engine, Args[0]),
+                                JsValue.FromObject(_Engine, Args[1]) })
                             );
                         break;
                     case "onGroupDecrease":
                         Plugins.Event.onGroupDecrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]),
-                                JsValue.FromObject(engine, Args[1])})
+                                JsValue.FromObject(_Engine, Args[0]),
+                                JsValue.FromObject(_Engine, Args[1])})
                             );
                         break;
                     case "onGroupPoke":
                         Plugins.Event.onGroupPoke.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]),
-                                JsValue.FromObject(engine, Args[1])})
+                                JsValue.FromObject(_Engine, Args[0]),
+                                JsValue.FromObject(_Engine, Args[1])})
                             );
                         break;
                     case "onReceiveGroupMessage":
                         Plugins.Event.onReceiveGroupMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]),
-                                JsValue.FromObject(engine, Args[1]),
-                                JsValue.FromObject(engine, Args[2]),
-                                JsValue.FromObject(engine, Args[3])})
+                                JsValue.FromObject(_Engine, Args[0]),
+                                JsValue.FromObject(_Engine, Args[1]),
+                                JsValue.FromObject(_Engine, Args[2]),
+                                JsValue.FromObject(_Engine, Args[3])})
                             );
                         break;
                     case "onReceivePrivateMessage":
                         Plugins.Event.onReceivePrivateMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0]),
-                                JsValue.FromObject(engine, Args[1]),
-                                JsValue.FromObject(engine, Args[2])})
+                                JsValue.FromObject(_Engine, Args[0]),
+                                JsValue.FromObject(_Engine, Args[1]),
+                                JsValue.FromObject(_Engine, Args[2])})
                             );
                         break;
                     case "onReceivePacket":
                         Plugins.Event.onReceivePacket.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(engine, Args[0])})
+                                JsValue.FromObject(_Engine, Args[0])})
                             );
                         break;
                     case "onSereinStart":
@@ -207,7 +207,7 @@ namespace Serein.Plugin
                             );
                         break;
                 }
-                engine = null;
+                _Engine = null;
             }
             catch (Exception e)
             {
@@ -252,21 +252,21 @@ namespace Serein.Plugin
         /// <returns>定时器哈希值</returns>
         public static JsValue SetTimer(Delegate Function, JsValue Interval, bool AutoReset)
         {
-            Timer timer = new Timer(Interval.AsNumber())
+            Timer _Timer = new Timer(Interval.AsNumber())
             {
                 AutoReset = AutoReset,
             };
-            timer.Elapsed += (e, args) =>
+            _Timer.Elapsed += (e, args) =>
             {
                 Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 if (!AutoReset)
                 {
-                    timer.Dispose();
+                    _Timer.Dispose();
                 }
             };
-            timer.Start();
-            int ID = timer.GetHashCode();
-            Plugins.Timers.Add(ID, timer);
+            _Timer.Start();
+            int ID = _Timer.GetHashCode();
+            Plugins.Timers.Add(ID, _Timer);
             return JsValue.FromObject(new Engine(), ID);
         }
 
@@ -311,12 +311,11 @@ namespace Serein.Plugin
         public static string GetMD5(string myString)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] fromData = Encoding.UTF8.GetBytes(myString);
-            byte[] targetData = md5.ComputeHash(fromData);
+            byte[] Datas = md5.ComputeHash(Encoding.UTF8.GetBytes(myString));
             string Result = string.Empty;
-            for (int i = 0; i < targetData.Length; i++)
+            for (int i = 0; i < Datas.Length; i++)
             {
-                Result += targetData[i].ToString("x2");
+                Result += Datas[i].ToString("x2");
             }
             return Result;
         }

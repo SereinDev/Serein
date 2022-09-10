@@ -14,14 +14,14 @@ namespace Serein.Ui
     {
         private void TaskList_MouseUp(object sender, MouseEventArgs e)
         {
-            isdrag = false;
-            if ((TaskList.SelectedItems.Count != 0) && (itemDraged != null))
+            IsDragging = false;
+            if ((TaskList.SelectedItems.Count != 0) && (ItemDraged != null))
             {
-                if (itemDraged.Index != TaskList.SelectedItems[0].Index && itemDraged.Index >= 0)
+                if (ItemDraged.Index != TaskList.SelectedItems[0].Index && ItemDraged.Index >= 0)
                 {
-                    TaskList.Items.RemoveAt(itemDraged.Index);
-                    TaskList.Items.Insert(TaskList.SelectedItems[0].Index, itemDraged);
-                    itemDraged = null;
+                    TaskList.Items.RemoveAt(ItemDraged.Index);
+                    TaskList.Items.Insert(TaskList.SelectedItems[0].Index, ItemDraged);
+                    ItemDraged = null;
                     SaveTask();
                 }
             }
@@ -29,13 +29,13 @@ namespace Serein.Ui
 
         private void TaskList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            itemDraged = (ListViewItem)e.Item;
-            isdrag = true;
+            ItemDraged = (ListViewItem)e.Item;
+            IsDragging = true;
         }
 
         private void TaskList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            e.Item.Selected = isdrag;
+            e.Item.Selected = IsDragging;
         }
 
         private void TaskContextMenuStrip_Opening(object sender, CancelEventArgs e)

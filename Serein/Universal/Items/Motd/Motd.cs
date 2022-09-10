@@ -20,27 +20,27 @@ namespace Serein.Items.Motd
         public string Exception { get; set; } = string.Empty;
         public bool Success { get; set; } = false;
 
-        public bool Init(string newip = "127.0.0.1", string newPort = "19132")
+        public bool Init(string NewIp = "127.0.0.1", string NewPort = "19132")
         {
             try
             {
-                if (newip.Contains(":"))
+                if (NewIp.Contains(":"))
                 {
-                    newPort = newip.Split(':')[1];
-                    newip = newip.Split(':')[0];
+                    NewPort = NewIp.Split(':')[1];
+                    NewIp = NewIp.Split(':')[0];
                 }
                 if (!new System.Text.RegularExpressions.Regex(
                     @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
-                    .IsMatch(newip))
+                    .IsMatch(NewIp))
                 {
-                    IPAddress[] IPs = Dns.GetHostAddresses(newip);
+                    IPAddress[] IPs = Dns.GetHostAddresses(NewIp);
                     IP = IPs[0];
                 }
                 else
                 {
-                    IP = IPAddress.Parse(newip);
+                    IP = IPAddress.Parse(NewIp);
                 }
-                Port = int.Parse(newPort);
+                Port = int.Parse(NewPort);
                 return true;
             }
             catch (Exception e)

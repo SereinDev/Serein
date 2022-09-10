@@ -106,13 +106,13 @@ namespace Serein.Ui
             this.RegexListRemark = new System.Windows.Forms.ColumnHeader();
             this.RegexListCommand = new System.Windows.Forms.ColumnHeader();
             this.RegexContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.RegexContextMenuStripAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.RegexContextMenuStripEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.RegexContextMenuStripDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.RegexContextMenuStripClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.RegexContextMenuStripCommand = new System.Windows.Forms.ToolStripMenuItem();
-            this.RegexContextMenuStripVariables = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Command = new System.Windows.Forms.ToolStripMenuItem();
+            this.RegexContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.RegexContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Task = new System.Windows.Forms.TabPage();
@@ -790,59 +790,59 @@ namespace Serein.Ui
             // 
             this.RegexContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.RegexContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RegexContextMenuStripAdd,
-            this.RegexContextMenuStripEdit,
-            this.RegexContextMenuStripDelete,
-            this.RegexContextMenuStripClear,
+            this.RegexContextMenuStrip_Add,
+            this.RegexContextMenuStrip_Edit,
+            this.RegexContextMenuStrip_Delete,
+            this.RegexContextMenuStrip_Clear,
             this.toolStripSeparator3,
-            this.RegexContextMenuStripCommand,
-            this.RegexContextMenuStripVariables,
+            this.RegexContextMenuStrip_Command,
+            this.RegexContextMenuStrip_Variables,
             this.toolStripSeparator7,
             this.RegexContextMenuStripRefresh});
             this.RegexContextMenuStrip.Name = "RegexMenuStrip";
             resources.ApplyResources(this.RegexContextMenuStrip, "RegexContextMenuStrip");
             this.RegexContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.RegexContextMenuStrip_Opening);
             // 
-            // RegexContextMenuStripAdd
+            // RegexContextMenuStrip_Add
             // 
-            this.RegexContextMenuStripAdd.Name = "RegexContextMenuStripAdd";
-            resources.ApplyResources(this.RegexContextMenuStripAdd, "RegexContextMenuStripAdd");
-            this.RegexContextMenuStripAdd.Click += new System.EventHandler(this.RegexContextMenuStripAdd_Click);
+            this.RegexContextMenuStrip_Add.Name = "RegexContextMenuStrip_Add";
+            resources.ApplyResources(this.RegexContextMenuStrip_Add, "RegexContextMenuStrip_Add");
+            this.RegexContextMenuStrip_Add.Click += new System.EventHandler(this.RegexContextMenuStrip_Add_Click);
             // 
-            // RegexContextMenuStripEdit
+            // RegexContextMenuStrip_Edit
             // 
-            this.RegexContextMenuStripEdit.Name = "RegexContextMenuStripEdit";
-            resources.ApplyResources(this.RegexContextMenuStripEdit, "RegexContextMenuStripEdit");
-            this.RegexContextMenuStripEdit.Click += new System.EventHandler(this.RegexContextMenuStripEdit_Click);
+            this.RegexContextMenuStrip_Edit.Name = "RegexContextMenuStrip_Edit";
+            resources.ApplyResources(this.RegexContextMenuStrip_Edit, "RegexContextMenuStrip_Edit");
+            this.RegexContextMenuStrip_Edit.Click += new System.EventHandler(this.RegexContextMenuStrip_Edit_Click);
             // 
-            // RegexContextMenuStripDelete
+            // RegexContextMenuStrip_Delete
             // 
-            this.RegexContextMenuStripDelete.Name = "RegexContextMenuStripDelete";
-            resources.ApplyResources(this.RegexContextMenuStripDelete, "RegexContextMenuStripDelete");
-            this.RegexContextMenuStripDelete.Click += new System.EventHandler(this.RegexContextMenuStripDelete_Click);
+            this.RegexContextMenuStrip_Delete.Name = "RegexContextMenuStrip_Delete";
+            resources.ApplyResources(this.RegexContextMenuStrip_Delete, "RegexContextMenuStrip_Delete");
+            this.RegexContextMenuStrip_Delete.Click += new System.EventHandler(this.RegexContextMenuStrip_Delete_Click);
             // 
-            // RegexContextMenuStripClear
+            // RegexContextMenuStrip_Clear
             // 
-            this.RegexContextMenuStripClear.Name = "RegexContextMenuStripClear";
-            resources.ApplyResources(this.RegexContextMenuStripClear, "RegexContextMenuStripClear");
-            this.RegexContextMenuStripClear.Click += new System.EventHandler(this.RegexContextMenuStripClear_Click);
+            this.RegexContextMenuStrip_Clear.Name = "RegexContextMenuStrip_Clear";
+            resources.ApplyResources(this.RegexContextMenuStrip_Clear, "RegexContextMenuStrip_Clear");
+            this.RegexContextMenuStrip_Clear.Click += new System.EventHandler(this.RegexContextMenuStrip_Clear_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
-            // RegexContextMenuStripCommand
+            // RegexContextMenuStrip_Command
             // 
-            this.RegexContextMenuStripCommand.Name = "RegexContextMenuStripCommand";
-            resources.ApplyResources(this.RegexContextMenuStripCommand, "RegexContextMenuStripCommand");
-            this.RegexContextMenuStripCommand.Click += new System.EventHandler(this.RegexContextMenuStripCommand_Click);
+            this.RegexContextMenuStrip_Command.Name = "RegexContextMenuStrip_Command";
+            resources.ApplyResources(this.RegexContextMenuStrip_Command, "RegexContextMenuStrip_Command");
+            this.RegexContextMenuStrip_Command.Click += new System.EventHandler(this.RegexContextMenuStrip_Command_Click);
             // 
-            // RegexContextMenuStripVariables
+            // RegexContextMenuStrip_Variables
             // 
-            this.RegexContextMenuStripVariables.Name = "RegexContextMenuStripVariables";
-            resources.ApplyResources(this.RegexContextMenuStripVariables, "RegexContextMenuStripVariables");
-            this.RegexContextMenuStripVariables.Click += new System.EventHandler(this.RegexContextMenuStripVariables_Click);
+            this.RegexContextMenuStrip_Variables.Name = "RegexContextMenuStrip_Variables";
+            resources.ApplyResources(this.RegexContextMenuStrip_Variables, "RegexContextMenuStrip_Variables");
+            this.RegexContextMenuStrip_Variables.Click += new System.EventHandler(this.RegexContextMenuStrip_Variables_Click);
             // 
             // toolStripSeparator7
             // 
@@ -1780,9 +1780,9 @@ namespace Serein.Ui
         private System.Windows.Forms.Button SettingServerPathSelect;
         private System.Windows.Forms.TextBox SettingServerPath;
         private System.Windows.Forms.ContextMenuStrip RegexContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripAdd;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripDelete;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripClear;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Add;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Delete;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Clear;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripRefresh;
         private System.Windows.Forms.ColumnHeader RegexListArea;
@@ -1790,7 +1790,7 @@ namespace Serein.Ui
         private System.Windows.Forms.ColumnHeader RegexListRemark;
         private System.Windows.Forms.ColumnHeader RegexListCommand;
         private System.Windows.Forms.ColumnHeader RegexListIsAdmin;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripEdit;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripShow;
         private System.Windows.Forms.ColumnHeader TaskListCron;
@@ -1821,12 +1821,12 @@ namespace Serein.Ui
         private System.Windows.Forms.TabPage Debug;
         private System.Windows.Forms.TextBox DebugTextBox;
         private System.Windows.Forms.Label SettingSereinTutorial;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripVariables;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Variables;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Variables;
         private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Command;
-        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStripCommand;
+        private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Command;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Label SettingSereinStatement2;
         private System.Windows.Forms.Label SettingSereinStatement;

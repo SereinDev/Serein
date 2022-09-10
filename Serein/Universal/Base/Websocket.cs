@@ -12,8 +12,8 @@ namespace Serein.Base
     public class Websocket
     {
         public static bool Status = false;
-        private static bool Restart = false;
-        public static WebSocket webSocket;
+        private static bool Reconnect = false;
+        private static WebSocket WSClient;
         public static DateTime StartTime = DateTime.Now;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Serein.Base
             {
                 Logger.MsgBox(":(\nWebsocket已连接", "Serein", 0, 48);
             }
-            else if (ExecutedByUser && Restart)
+            else if (ExecutedByUser && Reconnect)
             {
                 Logger.MsgBox(":(\n请先结束重启倒计时", "Serein", 0, 48);
             }
@@ -38,7 +38,7 @@ namespace Serein.Base
                 Message.SelfId = "-";
                 try
                 {
-                    webSocket = new WebSocket(
+                    WSClient = new WebSocket(
                         "ws://" + Global.Settings.Bot.Uri,
                         "",
                         null,
@@ -46,17 +46,17 @@ namespace Serein.Base
                             new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                             }
                         );
-                    webSocket.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
-                    webSocket.Error += (sender, e) =>
+                    WSClient.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
+                    WSClient.Error += (sender, e) =>
                     {
                         Logger.Out(24, e.Exception.Message);
                     };
-                    webSocket.Closed += (sender, e) =>
+                    WSClient.Closed += (sender, e) =>
                     {
                         Status = false;
                         Logger.Out(20, "");
                         Logger.Out(21, "WebSocket连接已断开");
-                        if (Global.Settings.Bot.AutoReconnect && Restart)
+                        if (Global.Settings.Bot.AutoReconnect && Reconnect)
                         {
                             Task.Run(() =>
                             {
@@ -65,24 +65,24 @@ namespace Serein.Base
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
-                                    if (!Restart || Status)
+                                    if (!Reconnect || Status)
                                     {
                                         break;
                                     }
                                 }
-                                if (Restart && !Status)
+                                if (Reconnect && !Status)
                                 {
                                     Connect(false);
                                 }
                             });
                         }
                     };
-                    webSocket.Opened += (sender, e) =>
+                    WSClient.Opened += (sender, e) =>
                     {
-                        Restart = true;
+                        Reconnect = true;
                         Logger.Out(21, $"连接到{Global.Settings.Bot.Uri}");
                     };
-                    webSocket.Open();
+                    WSClient.Open();
                     StartTime = DateTime.Now;
                     Status = true;
                 }
@@ -93,8 +93,17 @@ namespace Serein.Base
             }
         }
 
+        public static bool Send(string Msg)
+        {
+            if (Status)
+            {
+                WSClient.Send(Msg);
+            }
+            return Status;
+        }
+
         /// <summary>
-        /// 发送消息
+        /// 发送数据包
         /// </summary>
         /// <param name="IsPrivate">是否私聊消息</param>
         /// <param name="Message">消息内容</param>
@@ -113,7 +122,7 @@ namespace Serein.Base
                 ParamsJObject.Add("message", Message);
                 ParamsJObject.Add("auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape);
                 TextJObject.Add("params", ParamsJObject);
-                webSocket.Send(TextJObject.ToString());
+                WSClient.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Out(23, TextJObject.ToString());
@@ -133,12 +142,12 @@ namespace Serein.Base
         {
             if (Status)
             {
-                Restart = false;
-                webSocket.Close();
+                Reconnect = false;
+                WSClient.Close();
             }
-            else if (Restart)
+            else if (Reconnect)
             {
-                Restart = false;
+                Reconnect = false;
                 Logger.Out(21, "重启已取消");
             }
             else

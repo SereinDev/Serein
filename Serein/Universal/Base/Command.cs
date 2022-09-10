@@ -141,21 +141,21 @@ namespace Serein.Base
                 case 30:
                     if (InputType == 1 && GroupId != -1)
                     {
-                        Motd motd = new Motdpe(Value);
+                        Motd _Motd = new Motdpe(Value);
                         EventTrigger.Trigger(
-                            motd.Success ? "Motdpe_Success" : "Motd_Failure",
+                            _Motd.Success ? "Motdpe_Success" : "Motd_Failure",
                             GroupId,
-                            motd: motd);
+                            Motd: _Motd);
                     }
                     break;
                 case 31:
                     if (InputType == 1 && GroupId != -1)
                     {
-                        Motd motd = new Motdje(Value);
+                        Motd _Motd = new Motdje(Value);
                         EventTrigger.Trigger(
-                            motd.Success ? "Motdje_Success" : "Motd_Failure",
+                            _Motd.Success ? "Motdje_Success" : "Motd_Failure",
                             GroupId,
-                            motd: motd);
+                            Motd: _Motd);
                     }
                     break;
                 case 40:
@@ -281,8 +281,8 @@ namespace Serein.Base
         /// <returns>值</returns>
         public static string GetValue(string command, Match MsgMatch = null)
         {
-            int index = command.IndexOf('|');
-            string Value = command.Substring(index + 1);
+            int Index = command.IndexOf('|');
+            string Value = command.Substring(Index + 1);
             if (MsgMatch != null)
             {
                 for (int i = MsgMatch.Groups.Count; i >= 0; i--)
@@ -312,24 +312,24 @@ namespace Serein.Base
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
-                        Motdpe motdpe = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
-                        Text = Regex.Replace(Text, "%GameMode%", motdpe.GameMode, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Description%", motdpe.Description, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Protocol%", motdpe.Protocol, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%OnlinePlayer%", motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%MaxPlayer%", motdpe.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Original%", motdpe.Original, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Delay%", motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        Motdpe _Motdpe = new Motdpe(NewPort: Global.Settings.Server.Port.ToString());
+                        Text = Regex.Replace(Text, "%GameMode%", _Motdpe.GameMode, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Description%", _Motdpe.Description, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Protocol%", _Motdpe.Protocol, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%MaxPlayer%", _Motdpe.MaxPlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Original%", _Motdpe.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Delay%", _Motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         break;
                     case 2:
-                        Motdje motdje = new Motdje(newPort: Global.Settings.Server.Port.ToString());
-                        Text = Regex.Replace(Text, "%Description%", motdje.Description, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Protocol%", motdje.Protocol, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%OnlinePlayer%", motdje.OnlinePlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%MaxPlayer%", motdje.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Original%", motdje.Original, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Delay%", motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Favicon%", motdje.Favicon, RegexOptions.IgnoreCase);
+                        Motdje _Motdje = new Motdje(NewPort: Global.Settings.Server.Port.ToString());
+                        Text = Regex.Replace(Text, "%Description%", _Motdje.Description, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Protocol%", _Motdje.Protocol, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdje.OnlinePlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%MaxPlayer%", _Motdje.MaxPlayer, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Original%", _Motdje.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Delay%", _Motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
                         break;
                 }
             }

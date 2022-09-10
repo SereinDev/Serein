@@ -72,7 +72,7 @@ namespace Serein.Plugin
             engine.SetValue("Serein_ServerManager_GetFilename", new Func<string>(() => { return ServerManager.StartFileName; }));
             engine.SetValue("Serein_Websocket_SendGroup", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(false, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
-            engine.SetValue("Serein_Websocket_SendPacket", new Func<string, bool>((Json) => { if (Websocket.Status) { Websocket.webSocket.Send(Json); } return Websocket.Status; }));
+            engine.SetValue("Serein_Websocket_SendPacket", new Func<string, bool>((Msg) => Websocket.Send(Msg)));
             engine.SetValue("Serein_Websocket_Status", new Func<bool>(() => { return Websocket.Status; }));
             engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Members.Bind));
             engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));

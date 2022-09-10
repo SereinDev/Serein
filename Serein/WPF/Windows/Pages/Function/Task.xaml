@@ -23,7 +23,8 @@
         </Grid.RowDefinitions>
         <ListView Name="TaskListView"
             ContextMenuOpening="TaskListView_ContextMenuOpening"
-            SelectionMode="Single" SelectionChanged="TaskListView_SelectionChanged">
+            SelectionMode="Single"
+            SelectionChanged="TaskListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Cron表达式"
@@ -66,15 +67,15 @@
                         Click="MenuItem_Click"/>
                     <Separator />
                     <ui:MenuItem Header="启用"
-                            SymbolIcon="CheckmarkCircle24"
-                            Name="Enable"
-                            Tag="Enable"
-                                  Click="MenuItem_Click"/>
+                        SymbolIcon="CheckmarkCircle24"
+                        Name="Enable"
+                        Tag="Enable"
+                        Click="MenuItem_Click"/>
                     <ui:MenuItem Header="禁用"
-                            SymbolIcon="DismissCircle24"
-                            Name="Disable"
-                                 Tag="Disable"
-                                  Click="MenuItem_Click"/>
+                        SymbolIcon="DismissCircle24"
+                        Name="Disable"
+                        Tag="Disable"
+                        Click="MenuItem_Click"/>
                     <Separator />
                     <ui:MenuItem Header="查看命令"
                         SymbolIcon="DocumentFlowchart24"
@@ -101,12 +102,12 @@
             <ui:Button Margin="5"
                 Icon="ArrowDown24"
                 Tag="Down"
-                       x:Name="Down"
+                x:Name="Down"
                 Click="Button_Click"/>
             <ui:Button Margin="5"
                 Icon="ArrowUp24"
                 Tag="Up"
-                       x:Name="Up"
+                x:Name="Up"
                 Click="Button_Click"/>
         </StackPanel>
     </Grid>

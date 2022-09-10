@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
@@ -17,6 +18,19 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Window.MainWindow = this;
+        }
+
+        private void UiWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Global.Settings.Serein.ThemeFollowSystem)
+            {
+                Watcher.Watch(
+                    this,
+                    BackgroundType.Tabbed,
+                    true
+                    );
+            }
+            Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 
         private void UiWindow_StateChanged(object sender, EventArgs e)

@@ -25,7 +25,7 @@
     Icon="/Windows/Serein.ico"
     Closing="UiWindow_Closing"
     IsVisibleChanged="UiWindow_IsVisibleChanged"
-    SizeChanged="UiWindow_SizeChanged">
+    SizeChanged="UiWindow_SizeChanged" Loaded="UiWindow_Loaded">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -155,19 +155,25 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Margin="0,5,0,0"
-                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="作用域"/>
-                        <ComboBox Grid.Row="1" Name="RegexEditor_Area"  SelectionChanged="RegexEditor_Area_SelectionChanged">
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Text="作用域"/>
+                        <ComboBox Grid.Row="1"
+                            Name="RegexEditor_Area"
+                            SelectionChanged="RegexEditor_Area_SelectionChanged">
                             <ComboBoxItem Content="禁用"/>
                             <ComboBoxItem Content="控制台"/>
                             <ComboBoxItem Content="消息（群聊）"/>
                             <ComboBoxItem Content="消息（私聊）"/>
                             <ComboBoxItem Content="消息（自身发送）"/>
                         </ComboBox>
-                        <CheckBox Name="RegexEditor_IsAdmain" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" Content="需要管理权限" HorizontalAlignment="Right"/>
+                        <CheckBox Name="RegexEditor_IsAdmain"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="15,0,0,0"
+                            Content="需要管理权限"
+                            HorizontalAlignment="Right"/>
                     </Grid>
-                    <TextBlock 
-                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="正则"/>
                     <ui:TextBox Icon="CodeText20"
                         x:Name="RegexEditor_Regex"
@@ -195,13 +201,12 @@
             DialogWidth="325">
             <Grid>
                 <StackPanel Margin="0,5">
-                    <TextBlock 
-                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="Cron表达式"
-                        />
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="Cron表达式" />
                     <ui:TextBox Icon="CodeText20"
                         x:Name="TaskEditor_Cron"
-                        Margin="0,0,0,5" TextChanged="TaskEditor_Cron_TextChanged"/>
+                        Margin="0,0,0,5"
+                        TextChanged="TaskEditor_Cron_TextChanged"/>
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="命令"/>
                     <ui:TextBox Icon="KeyCommand24"
@@ -213,7 +218,9 @@
                         x:Name="TaskEditor_Remark"
                         Margin="0,0,0,15"/>
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="-" Name="TaskEditor_NextTime" TextWrapping="Wrap"/>
+                        Text="-"
+                        Name="TaskEditor_NextTime"
+                        TextWrapping="Wrap"/>
                 </StackPanel>
             </Grid>
         </ui:Dialog>

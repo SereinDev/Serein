@@ -42,10 +42,9 @@ namespace Serein.Console
             InputMode &= ~ENABLE_QUICK_EDIT_MODE;
             InputMode &= ~ENABLE_INSERT_MODE;
             SetConsoleMode(Handle, InputMode);
-            IntPtr windowHandle = FindWindow(null, System.Console.Title);
-            IntPtr closeMenu = GetSystemMenu(windowHandle, IntPtr.Zero);
-            uint SC_CLOSE = 0xF060;
-            RemoveMenu(closeMenu, SC_CLOSE, 0x0);
+            IntPtr WindowHandle = FindWindow(null, System.Console.Title);
+            IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
+            RemoveMenu(CloseMenu, 0xF060, 0x0);
             System.Console.OutputEncoding = Encoding.UTF8;
         }
 

@@ -1641,43 +1641,43 @@
   <metadata name="RegexContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>575, 17</value>
   </metadata>
-  <data name="RegexContextMenuStripAdd.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripAdd.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Add.Text" xml:space="preserve">
     <value>新建记录</value>
   </data>
-  <data name="RegexContextMenuStripEdit.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripEdit.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Edit.Text" xml:space="preserve">
     <value>修改记录</value>
   </data>
-  <data name="RegexContextMenuStripDelete.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripDelete.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Delete.Text" xml:space="preserve">
     <value>删除记录</value>
   </data>
-  <data name="RegexContextMenuStripClear.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Clear.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripClear.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Clear.Text" xml:space="preserve">
     <value>清空记录</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
-  <data name="RegexContextMenuStripCommand.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Command.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripCommand.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Command.Text" xml:space="preserve">
     <value>查看命令</value>
   </data>
-  <data name="RegexContextMenuStripVariables.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegexContextMenuStrip_Variables.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="RegexContextMenuStripVariables.Text" xml:space="preserve">
+  <data name="RegexContextMenuStrip_Variables.Text" xml:space="preserve">
     <value>查看变量</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
@@ -4288,28 +4288,28 @@
   <data name="&gt;&gt;RegexListCommand.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripAdd.Name" xml:space="preserve">
-    <value>RegexContextMenuStripAdd</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Add.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Add</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripAdd.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Add.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripEdit.Name" xml:space="preserve">
-    <value>RegexContextMenuStripEdit</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Edit.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Edit</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripEdit.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Edit.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripDelete.Name" xml:space="preserve">
-    <value>RegexContextMenuStripDelete</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Delete.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Delete</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripDelete.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Delete.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripClear.Name" xml:space="preserve">
-    <value>RegexContextMenuStripClear</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Clear.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Clear</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripClear.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Clear.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
@@ -4318,16 +4318,16 @@
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripCommand.Name" xml:space="preserve">
-    <value>RegexContextMenuStripCommand</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Command.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Command</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripCommand.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Command.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripVariables.Name" xml:space="preserve">
-    <value>RegexContextMenuStripVariables</value>
+  <data name="&gt;&gt;RegexContextMenuStrip_Variables.Name" xml:space="preserve">
+    <value>RegexContextMenuStrip_Variables</value>
   </data>
-  <data name="&gt;&gt;RegexContextMenuStripVariables.Type" xml:space="preserve">
+  <data name="&gt;&gt;RegexContextMenuStrip_Variables.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">

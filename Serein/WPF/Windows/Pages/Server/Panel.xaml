@@ -40,42 +40,42 @@
                             Content="状态"/>
                         <Label DockPanel.Dock="Left"
                             FlowDirection="RightToLeft"
-                               Name="Status">未启动</Label>
+                            Name="Status">未启动</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="1">
                         <Label DockPanel.Dock="Left"
                             Content="版本"/>
                         <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft" 
-                               Name="Version">-</Label>
+                            FlowDirection="RightToLeft"
+                            Name="Version">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="2">
                         <Label DockPanel.Dock="Left"
                             Content="难度"/>
                         <Label DockPanel.Dock="Left"
                             FlowDirection="RightToLeft"
-                               Name="Difficulity">-</Label>
+                            Name="Difficulity">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="3">
                         <Label DockPanel.Dock="Left"
                             Content="存档"/>
                         <Label DockPanel.Dock="Left"
                             FlowDirection="RightToLeft"
-                               Name="Level">-</Label>
+                            Name="Level">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="4">
                         <Label DockPanel.Dock="Left"
                             Content="运行时长"/>
                         <Label DockPanel.Dock="Left"
                             FlowDirection="RightToLeft"
-                               Name="Time">-</Label>
+                            Name="Time">-</Label>
                     </DockPanel>
                     <DockPanel Grid.Row="5">
                         <Label DockPanel.Dock="Left"
                             Content="进程占用"/>
                         <Label DockPanel.Dock="Left"
                             FlowDirection="RightToLeft"
-                               Name="CPUPerc">-</Label>
+                            Name="CPUPerc">-</Label>
                     </DockPanel>
                 </Grid>
             </GroupBox>

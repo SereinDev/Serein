@@ -475,17 +475,17 @@ namespace Serein.Server
         /// <returns>输出字符串</returns>
         private static string ConvertToUnicode(string Text)
         {
-            string result = "";
+            string Result = "";
             for (int i = 0; i < Text.Length; i++)
             {
                 if (Text[i] < 127)
                 {
-                    result += Text[i].ToString();
+                    Result += Text[i].ToString();
                 }
                 else
-                    result += string.Format("\\u{0:x4}", (int)Text[i]);
+                    Result += string.Format("\\u{0:x4}", (int)Text[i]);
             }
-            return result;
+            return Result;
         }
     }
 }

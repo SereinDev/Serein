@@ -1,28 +1,4 @@
-﻿
-/* 项目“Serein-Winform (net6.0-windows)”的未合并的更改
-在此之前:
-using System;
-在此之后:
-using Microsoft.Win32;
-using System;
-*/
-
-/* 项目“Serein-WPF (net472)”的未合并的更改
-在此之前:
-using System;
-在此之后:
-using Microsoft.Win32;
-using System;
-*/
-
-/* 项目“Serein-Winform (net472)”的未合并的更改
-在此之前:
-using System;
-在此之后:
-using Microsoft.Win32;
-using System;
-*/
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;

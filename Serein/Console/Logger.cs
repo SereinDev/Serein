@@ -1,23 +1,5 @@
-﻿
-/* 项目“Serein-Console (net472)”的未合并的更改
-在此之前:
+﻿using Serein.Server;
 using System;
-在此之后:
-using Serein.Console;
-using Serein.Server;
-using System;
-*/
-using Serein.Server;
-using System
-/* 项目“Serein-Console (net472)”的未合并的更改
-在此之前:
-using System.Threading.Tasks;
-using Serein.Console;
-using Serein.Server;
-在此之后:
-using System.Threading.Tasks;
-*/
-;
 
 namespace Serein
 {

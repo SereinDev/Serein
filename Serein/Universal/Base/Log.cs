@@ -29,16 +29,16 @@ namespace Serein.Base
             Result = Regex.Replace(Input, @"\[.*?m", string.Empty);
             Result = Regex.Replace(Result, @"", string.Empty);
             Result = Regex.Replace(Result, @"\s+?$", string.Empty);
-            StringBuilder sBuilder = new StringBuilder();
+            StringBuilder Builder = new StringBuilder();
             for (int i = 0; i < Result.Length; i++)
             {
                 int Unicode = Result[i];
                 if (Unicode > 31 && Unicode != 127)
                 {
-                    sBuilder.Append(Result[i].ToString());
+                    Builder.Append(Result[i].ToString());
                 }
             }
-            return sBuilder.ToString();
+            return Builder.ToString();
         }
 
         /// <summary>

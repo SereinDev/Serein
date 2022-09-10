@@ -15,38 +15,38 @@ namespace Serein.Ui
 
         private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            itemDraged = (ListViewItem)e.Item;
-            isdrag = true;
+            ItemDraged = (ListViewItem)e.Item;
+            IsDragging = true;
         }
 
         private void RegexList_MouseUp(object sender, MouseEventArgs e)
         {
-            isdrag = false;
-            if ((RegexList.SelectedItems.Count != 0) && (itemDraged != null))
+            IsDragging = false;
+            if ((RegexList.SelectedItems.Count != 0) && (ItemDraged != null))
             {
-                if (itemDraged.Index != RegexList.SelectedItems[0].Index && itemDraged.Index >= 0)
+                if (ItemDraged.Index != RegexList.SelectedItems[0].Index && ItemDraged.Index >= 0)
                 {
-                    RegexList.Items.RemoveAt(itemDraged.Index);
-                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index, itemDraged);
+                    RegexList.Items.RemoveAt(ItemDraged.Index);
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index, ItemDraged);
                     SaveRegex();
-                    itemDraged = null;
+                    ItemDraged = null;
                 }
             }
         }
 
         private void RegexList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            e.Item.Selected = isdrag;
+            e.Item.Selected = IsDragging;
         }
 
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            RegexContextMenuStripEdit.Enabled = RegexList.SelectedItems.Count > 0;
-            RegexContextMenuStripDelete.Enabled = RegexList.SelectedItems.Count > 0;
-            RegexContextMenuStripClear.Enabled = RegexList.Items.Count > 0;
+            RegexContextMenuStrip_Edit.Enabled = RegexList.SelectedItems.Count > 0;
+            RegexContextMenuStrip_Delete.Enabled = RegexList.SelectedItems.Count > 0;
+            RegexContextMenuStrip_Clear.Enabled = RegexList.Items.Count > 0;
         }
 
-        private void RegexContextMenuStripAdd_Click(object sender, EventArgs e)
+        private void RegexContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
             RegexEditor regexEditer = new RegexEditor();
             regexEditer.ShowDialog(this);
@@ -64,7 +64,7 @@ namespace Serein.Ui
             SaveRegex();
         }
 
-        private void RegexContextMenuStripEdit_Click(object sender, EventArgs e)
+        private void RegexContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
             if (RegexList.SelectedItems.Count <= 0)
             {
@@ -93,7 +93,7 @@ namespace Serein.Ui
             SaveRegex();
         }
 
-        private void RegexContextMenuStripClear_Click(object sender, EventArgs e)
+        private void RegexContextMenuStrip_Clear_Click(object sender, EventArgs e)
         {
             if (RegexList.Items.Count > 0)
             {
@@ -110,7 +110,7 @@ namespace Serein.Ui
             }
         }
 
-        private void RegexContextMenuStripDelete_Click(object sender, EventArgs e)
+        private void RegexContextMenuStrip_Delete_Click(object sender, EventArgs e)
         {
             if (RegexList.SelectedItems.Count > 0)
             {
@@ -207,7 +207,7 @@ namespace Serein.Ui
             Loader.SaveRegex();
         }
 
-        private void RegexContextMenuStripVariables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
-        private void RegexContextMenuStripCommand_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
+        private void RegexContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
+        private void RegexContextMenuStrip_Command_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
     }
 }

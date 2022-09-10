@@ -8,9 +8,9 @@ namespace Serein.Plugin
     internal class JSWebSocket
     {
         public static Delegate onopen = null, onclose = null, onerror = null, onmessage = null;
-        private WebSocket webSocket = null;
-        private Engine engine = new Engine();
-        public int state => webSocket != null ? -1 : ((int)webSocket.State);
+        private WebSocket _WebSocket = null;
+        private Engine _Engine = new Engine();
+        public int state => _WebSocket != null ? -1 : ((int)_WebSocket.State);
 
         /// <summary>
         /// 入口函数
@@ -19,62 +19,60 @@ namespace Serein.Plugin
         /// <param name="Token">鉴权Token</param>
         public JSWebSocket(string Uri)
         {
-            webSocket = new WebSocket(
+            _WebSocket = new WebSocket(
                 Uri,
                 "",
                 null,
                 null
                 );
-            webSocket.Opened += (sender, e) =>
+            _WebSocket.Opened += (sender, e) =>
             {
                 if (onopen != null)
                 {
                     onopen.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 }
             };
-            webSocket.Closed += (sender, e) =>
+            _WebSocket.Closed += (sender, e) =>
             {
                 if (onclose != null)
                 {
                     onclose.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 }
             };
-            webSocket.MessageReceived += (sender, e) =>
+            _WebSocket.MessageReceived += (sender, e) =>
             {
                 if (onmessage != null)
                 {
                     try
                     {
-                        onmessage.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(engine, e.Message) });
+                        onmessage.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Message) });
                     }
                     catch { }
                 }
             };
-            webSocket.Error += (sender, e) =>
+            _WebSocket.Error += (sender, e) =>
             {
                 if (onerror != null)
                 {
-                    onerror.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(engine, e.Exception.Message) });
+                    onerror.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Exception.Message) });
                 }
             };
-            webSocket.Open();
         }
+
+        /// <summary>
+        /// 开启ws
+        /// </summary>
+        public void open() => _WebSocket.Open();
 
         /// <summary>
         /// 关闭ws
         /// </summary>
-        public void close()
-        {
-            webSocket.Close();
-        }
+        public void close() => _WebSocket.Close();
 
         /// <summary>
         /// 发送消息
         /// </summary>
         /// <param name="Msg"></param>
-        public void send(string Msg)
-        {
-            webSocket.Send(Msg);
-        }
+        public void send(string Msg) => _WebSocket.Send(Msg);
     }
 }
