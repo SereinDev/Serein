@@ -17,7 +17,7 @@ namespace Serein.Ui
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
             Loader.ReadMember();
-            foreach (MemberItem memberItem in Global.MemberItems)
+            foreach (Member memberItem in Global.MemberItems)
             {
                 ListViewItem Item = new ListViewItem();
                 Item.Text = memberItem.ID.ToString();
@@ -32,10 +32,10 @@ namespace Serein.Ui
 
         private void SaveMember()
         {
-            List<MemberItem> MemberItems = new List<MemberItem>();
+            List<Member> MemberItems = new List<Member>();
             foreach (ListViewItem Item in MemberList.Items)
             {
-                MemberItem memberItem = new MemberItem()
+                Member memberItem = new Member()
                 {
                     ID = long.TryParse(Item.Text, out long i) ? i : -1,
                     Role = Array.IndexOf(Roles_Chinese, Item.SubItems[1].Text),

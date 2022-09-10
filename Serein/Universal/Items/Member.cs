@@ -3,7 +3,7 @@
 namespace Serein.Items
 {
     [JsonObject(MemberSerialization.OptOut)]
-    internal class MemberItem
+    internal class Member
     {
         public long ID { get; set; } = 0;
         public string Card { get; set; } = string.Empty;

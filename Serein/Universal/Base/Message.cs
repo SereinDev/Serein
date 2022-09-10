@@ -18,18 +18,18 @@ namespace Serein.Base
         /// <param name="Line">控制台的消息</param>
         public static void ProcessMsgFromConsole(string Line)
         {
-            foreach (RegexItem Item in Global.RegexItems)
+            foreach (Items.Regex Item in Global.RegexItems)
             {
-                if (string.IsNullOrEmpty(Item.Regex) || Item.Area != 1)
+                if (string.IsNullOrEmpty(Item.Expression) || Item.Area != 1)
                 {
                     continue;
                 }
-                if (Regex.IsMatch(Line, Item.Regex))
+                if (System.Text.RegularExpressions.Regex.IsMatch(Line, Item.Expression))
                 {
                     Command.Run(
                         2,
                         Item.Command,
-                        MsgMatch: Regex.Match(Line, Item.Regex)
+                        MsgMatch: System.Text.RegularExpressions.Regex.Match(Line, Item.Expression)
                         );
                 }
             }
@@ -60,17 +60,17 @@ namespace Serein.Base
                 long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
                 Logger.Out(22, $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" + RawMessage);
-                foreach (RegexItem Item in Global.RegexItems)
+                foreach (Items.Regex Item in Global.RegexItems)
                 {
                     if (
-                        string.IsNullOrEmpty(Item.Regex) ||
+                        string.IsNullOrEmpty(Item.Expression) ||
                         Item.Area <= 1 ||
                         !(
                             IsSelfMessage && Item.Area == 4 ||
                             !IsSelfMessage && Item.Area != 4
                         ) ||
                         MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
-                        !Regex.IsMatch(RawMessage, Item.Regex)
+                        !System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression)
                         )
                         continue;
                     if (
@@ -96,7 +96,7 @@ namespace Serein.Base
                         }
                         continue;
                     }
-                    if (Regex.IsMatch(RawMessage, Item.Regex))
+                    if (System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression))
                     {
                         if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                         {
@@ -104,9 +104,9 @@ namespace Serein.Base
                                 1,
                                 Item.Command,
                                 JsonObject,
-                                Regex.Match(
+                                System.Text.RegularExpressions.Regex.Match(
                                     RawMessage,
-                                    Item.Regex
+                                    Item.Expression
                                 ),
                                 UserId,
                                 GroupId
@@ -118,9 +118,9 @@ namespace Serein.Base
                                 1,
                                 Item.Command,
                                 JsonObject,
-                                Regex.Match(
+                                System.Text.RegularExpressions.Regex.Match(
                                     RawMessage,
-                                    Item.Regex
+                                    Item.Expression
                                     ),
                                 UserId
                             );
@@ -201,7 +201,7 @@ namespace Serein.Base
         /// <returns>处理后文本</returns>
         public static string DeUnicode(string str)
         {
-            Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})");
             return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
         }
     }

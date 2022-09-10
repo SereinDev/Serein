@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System.Text.RegularExpressions;
 
 namespace Serein.Items
 {
     [JsonObject(MemberSerialization.OptOut)]
-    internal class RegexItem
+    internal class Regex
     {
-        public string Regex { get; set; } = string.Empty;
+        [JsonProperty(PropertyName = "Regex")]
+        public string Expression { get; set; } = string.Empty;
         public string Remark { get; set; } = string.Empty;
         public string Command { get; set; } = string.Empty;
         public int Area { get; set; } = 0;
@@ -30,14 +30,14 @@ namespace Serein.Items
             }
         }
 
-        public void ConvertToItem(string Text)
+        public void ToObject(string Text)
         {
             string[] Texts = Text.Split('\t');
             if (Texts.Length != 5)
             {
                 return;
             }
-            Regex = Texts[0];
+            Expression = Texts[0];
             Area = int.TryParse(Texts[1], out int s) ? s : 0;
             IsAdmin = Texts[2] == "True";
             Remark = Texts[3];
@@ -47,7 +47,7 @@ namespace Serein.Items
         public bool Check()
         {
             if (
-                !(string.IsNullOrWhiteSpace(Regex) || string.IsNullOrEmpty(Regex) ||
+                !(string.IsNullOrWhiteSpace(Expression) || string.IsNullOrEmpty(Expression) ||
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
@@ -57,7 +57,7 @@ namespace Serein.Items
                 }
                 try
                 {
-                    new Regex(Regex).Match(string.Empty);
+                    new System.Text.RegularExpressions.Regex(Expression).Match(string.Empty);
                     return true;
                 }
                 catch

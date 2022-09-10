@@ -31,7 +31,7 @@ namespace Serein.Ui
             Task UpdateInfoThread = new Task(UpdateInfo);
             UpdateInfoThread.Start();
             Loader.StartSavingAndUpdating();
-            TaskManager.RunnerThread.Start();
+            TaskRunner.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);

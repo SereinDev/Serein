@@ -178,11 +178,11 @@ namespace Serein.Ui
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
             Loader.ReadRegex(FileName);
-            foreach (RegexItem Item in Global.RegexItems)
+            foreach (Regex Item in Global.RegexItems)
             {
                 if (Item.Check())
                 {
-                    AddRegex(Item.Area, Item.Regex, Item.IsAdmin, Item.Remark, Item.Command);
+                    AddRegex(Item.Area, Item.Expression, Item.IsAdmin, Item.Remark, Item.Command);
                 }
             }
             RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -191,16 +191,16 @@ namespace Serein.Ui
 
         private void SaveRegex()
         {
-            List<RegexItem> regexItems = new List<RegexItem>();
-            foreach (ListViewItem item in RegexList.Items)
+            List<Regex> regexItems = new List<Regex>();
+            foreach (ListViewItem Item in RegexList.Items)
             {
-                regexItems.Add(new RegexItem()
+                regexItems.Add(new Regex()
                 {
-                    Regex = item.Text,
-                    Area = Array.IndexOf(areas, item.SubItems[1].Text),
-                    IsAdmin = item.SubItems[2].Text == "是",
-                    Remark = item.SubItems[3].Text,
-                    Command = item.SubItems[4].Text
+                    Expression = Item.Text,
+                    Area = Array.IndexOf(areas, Item.SubItems[1].Text),
+                    IsAdmin = Item.SubItems[2].Text == "是",
+                    Remark = Item.SubItems[3].Text,
+                    Command = Item.SubItems[4].Text
                 });
             }
             Global.UpdateRegexItems(regexItems);

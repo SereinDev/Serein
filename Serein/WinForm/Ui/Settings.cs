@@ -19,10 +19,10 @@ namespace Serein.Ui
             SettingServerEnableLog.Checked = Global.Settings.Server.EnableLog;
             SettingServerEnableUnicode.Checked = Global.Settings.Server.EnableUnicode;
             SettingServerOutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
-            SettingServerEncoding.SelectedIndex = Global.Settings.Server.EncodingIndex;
+            SettingServerEncoding.SelectedIndex = Global.Settings.Server.InputEncoding;
             SettingServerAutoStop.Checked = Global.Settings.Server.AutoStop;
             SettingServerPath.Text = Global.Settings.Server.Path;
-            SettingServerStopCommand.Text = Global.Settings.Server.StopCommand;
+            SettingServerStopCommand.Text = string.Join(";", Global.Settings.Server.StopCommands);
             SettingServerPort.Value = Global.Settings.Server.Port;
             SettingServerType.SelectedIndex = Global.Settings.Server.Type;
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
@@ -32,7 +32,7 @@ namespace Serein.Ui
             SettingBotEnbaleOutputData.Checked = Global.Settings.Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings.Bot.EnableLog;
             SettingBotAutoEscape.Checked = Global.Settings.Bot.AutoEscape;
-            SettingBotRestart.Checked = Global.Settings.Bot.Restart;
+            SettingBotRestart.Checked = Global.Settings.Bot.AutoReconnect;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
             SettingSereinEnableGetAnnouncement.Checked = Global.Settings.Serein.EnableGetAnnouncement;
@@ -48,7 +48,7 @@ namespace Serein.Ui
         private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableLog = SettingServerEnableLog.Checked;
         private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableUnicode = SettingServerEnableUnicode.Checked;
         private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e) => Global.Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
-        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e) => Global.Settings.Server.EncodingIndex = SettingServerEncoding.SelectedIndex;
+        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e) => Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
         private void SettingServerPort_ValueChanged(object sender, EventArgs e) => Global.Settings.Server.Port = (int)SettingServerPort.Value;
         private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e) => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
         private void SettingBotUri_TextChanged(object sender, EventArgs e) => Global.Settings.Bot.Uri = SettingBotUri.Text;
@@ -56,7 +56,7 @@ namespace Serein.Ui
         private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
         private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
         private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
-        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.Restart = SettingBotRestart.Checked;
+        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
         private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
         private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
@@ -153,16 +153,14 @@ namespace Serein.Ui
 
         private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
         {
-            Global.Settings.Server.StopCommand = string.IsNullOrEmpty(SettingServerStopCommand.Text) || string.IsNullOrWhiteSpace(SettingServerStopCommand.Text)
-                ? "stop"
-                : SettingServerStopCommand.Text;
+            Global.Settings.Server.StopCommands=SettingServerStopCommand.Text.Split(';');
         }
 
         private void SettingServerStopCommand_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(SettingServerStopCommand.Text) || string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
             {
-                Global.Settings.Server.StopCommand = "stop";
+                Global.Settings.Server.StopCommands = new[] { "stop" };
                 SettingServerStopCommand.Text = "stop";
             }
         }

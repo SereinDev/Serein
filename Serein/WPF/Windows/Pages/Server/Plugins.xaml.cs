@@ -4,13 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using System.Net;
-using Wpf.Ui.Mvvm.Contracts;
 
 namespace Serein.Windows.Pages.Server
 {
@@ -28,7 +27,7 @@ namespace Serein.Windows.Pages.Server
             Window.Server.Plugins = this;
         }
 
-        private void Load()
+        public void Load()
         {
             PluginsListview.Items.Clear();
             if (PluginManager.Get() != null)

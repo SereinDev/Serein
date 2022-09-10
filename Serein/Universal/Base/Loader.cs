@@ -49,11 +49,11 @@ namespace Serein.Base
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
-                    List<RegexItem> Items = new List<RegexItem>();
+                    List<Regex> Items = new List<Regex>();
                     while ((Line = Reader.ReadLine()) != null)
                     {
-                        RegexItem Item = new RegexItem();
-                        Item.ConvertToItem(Line);
+                        Regex Item = new Regex();
+                        Item.ToObject(Line);
                         if (!Item.Check())
                         {
                             continue;
@@ -73,7 +73,7 @@ namespace Serein.Base
                         {
                             return;
                         }
-                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<RegexItem>>());
+                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<Regex>>());
                     }
                     catch { }
                 }
@@ -116,12 +116,12 @@ namespace Serein.Base
                         {
                             return;
                         }
-                        Global.UpdateMemberItems(((JArray)JsonObject["data"]).ToObject<List<MemberItem>>());
+                        Global.UpdateMemberItems(((JArray)JsonObject["data"]).ToObject<List<Member>>());
                     }
                     catch { }
                 }
             }
-            List<MemberItem> memberItems = Global.MemberItems;
+            List<Member> memberItems = Global.MemberItems;
             memberItems.Sort(
                 (Item1, Item2) =>
                 {
@@ -136,7 +136,7 @@ namespace Serein.Base
         /// </summary>
         public static void SaveMember()
         {
-            List<MemberItem> memberItems = Global.MemberItems;
+            List<Member> memberItems = Global.MemberItems;
             memberItems.Sort(
                 (Item1, Item2) =>
                 {
@@ -150,7 +150,7 @@ namespace Serein.Base
             }
             JObject ListJObject = new JObject();
             JArray ListJArray = new JArray();
-            foreach (MemberItem Item in Global.MemberItems)
+            foreach (Member Item in Global.MemberItems)
             {
                 ListJArray.Add(JObject.FromObject(Item));
             }
@@ -182,12 +182,12 @@ namespace Serein.Base
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
-                    List<TaskItem> Items = new List<TaskItem>();
+                    List<Task> Items = new List<Task>();
                     while ((Line = Reader.ReadLine()) != null)
                     {
-                        TaskItem Item = new TaskItem();
-                        Item.ConvertToItem(Line);
-                        if (!Item.CheckItem())
+                        Task Item = new Task();
+                        Item.ToObject(Line);
+                        if (!Item.Check())
                         {
                             continue;
                         }
@@ -206,7 +206,7 @@ namespace Serein.Base
                         {
                             return;
                         }
-                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<TaskItem>>());
+                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<Task>>());
                     }
                     catch { }
                 }

@@ -56,7 +56,7 @@ namespace Serein.Base
                         Status = false;
                         Logger.Out(20, "");
                         Logger.Out(21, "WebSocket连接已断开");
-                        if (Global.Settings.Bot.Restart && Restart)
+                        if (Global.Settings.Bot.AutoReconnect && Restart)
                         {
                             Task.Run(() =>
                             {

@@ -95,7 +95,7 @@ namespace Serein.Server
                 ServerProcess = Process.Start(ServerProcessInfo);
                 CommandWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
-                    EncodingList[Global.Settings.Server.EncodingIndex]
+                    EncodingList[Global.Settings.Server.InputEncoding]
                    )
                 {
                     AutoFlush = true,
@@ -131,7 +131,7 @@ namespace Serein.Server
         {
             if (Status)
             {
-                foreach (string Command in Global.Settings.Server.StopCommand.Split(';'))
+                foreach (string Command in Global.Settings.Server.StopCommands)
                 {
                     if (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
                     {

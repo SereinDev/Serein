@@ -155,10 +155,10 @@ namespace Serein.Ui
 
         private void SaveTask()
         {
-            List<TaskItem> TaskItems = new List<TaskItem>();
+            List<Task> TaskItems = new List<Task>();
             foreach (ListViewItem Item in TaskList.Items)
             {
-                TaskItem TI = new TaskItem()
+                Task TI = new Task()
                 {
                     Cron = Item.Text,
                     Remark = Item.SubItems[1].Text,
@@ -176,7 +176,7 @@ namespace Serein.Ui
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
             Loader.ReadTask();
-            foreach (TaskItem Item in Global.TaskItems)
+            foreach (Task Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new ListViewItem(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);

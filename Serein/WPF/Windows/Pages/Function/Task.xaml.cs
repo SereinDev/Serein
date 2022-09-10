@@ -1,6 +1,5 @@
 ﻿using NCrontab;
 using Serein.Base;
-using Serein.Items;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -24,7 +23,7 @@ namespace Serein.Windows.Pages.Function
         {
             Loader.ReadTask();
             TaskListView.Items.Clear();
-            foreach (TaskItem Item in Global.TaskItems)
+            foreach (Items.Task Item in Global.TaskItems)
             {
                 TaskListView.Items.Add(Item);
             }
@@ -32,10 +31,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<TaskItem> Items = new List<TaskItem>();
+            List<Items.Task> Items = new List<Items.Task>();
             foreach (var obj in TaskListView.Items)
             {
-                if (obj is TaskItem Item && Item != null)
+                if (obj is Items.Task Item && Item != null)
                 {
                     Items.Add(Item);
                 }
@@ -61,7 +60,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             TaskListView.Items.Insert(
                                 TaskListView.SelectedIndex,
-                                new TaskItem()
+                                new Items.Task()
                                 {
                                     Cron = CronExp,
                                     Command = Command,
@@ -71,7 +70,7 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             TaskListView.Items.Add(
-                                new TaskItem()
+                                new Items.Task()
                                 {
                                     Cron = CronExp,
                                     Command = Command,
@@ -79,7 +78,7 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && TaskListView.SelectedItem is TaskItem SelectedItem && SelectedItem != null)
+                    else if (ActionType == 2 && TaskListView.SelectedItem is Items.Task SelectedItem && SelectedItem != null)
                     {
                         SelectedItem.Cron = CronExp;
                         SelectedItem.Command = Command;
@@ -108,7 +107,7 @@ namespace Serein.Windows.Pages.Function
                     Window.MainWindow.TaskEditor.Hide();
                     ActionType = 0;
                 }
-                TaskItem SelectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as TaskItem : null;
+                Items.Task SelectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Items.Task : null;
                 string Tag = Item.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
@@ -189,7 +188,7 @@ namespace Serein.Windows.Pages.Function
             Edit.IsEnabled = TaskListView.SelectedIndex != -1;
             Delete.IsEnabled = TaskListView.SelectedIndex != -1;
             Clear.IsEnabled = TaskListView.Items.Count > 0;
-            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is TaskItem SelectedItem && SelectedItem != null)
+            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Items.Task SelectedItem && SelectedItem != null)
             {
                 Enable.IsEnabled = !SelectedItem.Enable;
                 Disable.IsEnabled = SelectedItem.Enable;

@@ -14,32 +14,46 @@
         <TextBlock Text="启动路径"
             ToolTip="111"
             HorizontalAlignment="Left"/>
-        <Grid Margin="0,7">
+        <Grid Margin="0,5,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox IsReadOnly="True"/>
+            <TextBox IsReadOnly="True" Name="Path"/>
             <ui:Button Icon="OpenFolder24"
                 Margin="5,0,0,0"
                 Content="选择文件"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                       x:Name="Select"
+                       Click="Select_Click"/>
         </Grid>
         <TextBlock Text="关服指令（一行一条）"
             HorizontalAlignment="Left"/>
-        <TextBox Margin="0,7"
+        <TextBox Margin="0,0,0,10"
             AcceptsReturn="True"
-            Text="stop" />
+            Text="stop"
+                 Name="StopCommands"
+                 TextChanged="StopCommands_TextChanged"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="Serein崩溃时自动关服"/>
+            Content="Serein崩溃时自动关服"
+                         x:Name="AutoStop"
+                         Click="AutoStop_Click"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="非正常退出时自动重启"/>
+            Content="非正常退出时自动重启"
+                         x:Name="EnableRestart"
+                         Click="EnableRestart_Click"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="在控制台显示输入的命令"/>
+            Content="在控制台显示输入的命令"
+                         x:Name="EnableOutputCommand"
+                         Click="EnableOutputCommand_Click"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="使用Unicode字符"/>
+            Content="使用Unicode字符"
+                         Click="EnableUnicode_Click"
+                         x:Name="EnableUnicode"/>
         <ui:ToggleSwitch Margin="0,7"
-            Content="保存日志"/>
+            Content="保存日志（./log/console）"
+                         Click="EnableLog_Click"
+                         x:Name="EnableLog"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -54,7 +68,9 @@
             <StackPanel Margin="0,7">
                 <TextBlock Text="输出样式"/>
                 <ComboBox SelectedIndex="1"
-                    HorizontalAlignment="Left">
+                    HorizontalAlignment="Left"
+                          Name="OutputStyle"
+                          SelectionChanged="OutputStyle_SelectionChanged">
                     <ComboBoxItem Content="单色"/>
                     <ComboBoxItem Content="原始彩色"/>
                     <ComboBoxItem Content="语法高亮"/>
@@ -65,7 +81,9 @@
                 Grid.Column="1">
                 <TextBlock Text="服务端类型"/>
                 <ComboBox SelectedIndex="1"
-                    HorizontalAlignment="Left">
+                    HorizontalAlignment="Left"
+                          Name="Type"
+                          SelectionChanged="Type_SelectionChanged">
                     <ComboBoxItem Content="未知/其他"/>
                     <ComboBoxItem Content="基岩版"/>
                     <ComboBoxItem Content="Java版"/>
@@ -75,7 +93,9 @@
                 Grid.Row="1">
                 <TextBlock Text="输入编码"/>
                 <ComboBox SelectedIndex="0"
-                    HorizontalAlignment="Left">
+                    HorizontalAlignment="Left"
+                          Name="InputEncoding"
+                          SelectionChanged="InputEncoding_SelectionChanged">
                     <ComboBoxItem Content="UTF-8"/>
                     <ComboBoxItem Content="UTF-8 (With BOM)"/>
                     <ComboBoxItem Content="UTF-16 (LittleEndian)"/>
@@ -88,7 +108,9 @@
                 Grid.Row="2">
                 <TextBlock Text="输出编码"/>
                 <ComboBox SelectedIndex="0"
-                    HorizontalAlignment="Left">
+                    HorizontalAlignment="Left"
+                          Name="OutputEncoding"
+                          SelectionChanged="OutputEncoding_SelectionChanged">
                     <ComboBoxItem Content="UTF-8"/>
                     <ComboBoxItem Content="UTF-8 (With BOM)"/>
                     <ComboBoxItem Content="UTF-16 (LittleEndian)"/>
@@ -107,7 +129,9 @@
                     Min="0"
                     Step="1"
                     Value="19132"
-                    HorizontalAlignment="Left"/>
+                              x:Name="Port"
+                              
+                    HorizontalAlignment="Left" TextChanged="Port_TextChanged"/>
             </StackPanel>
         </Grid>
     </StackPanel>

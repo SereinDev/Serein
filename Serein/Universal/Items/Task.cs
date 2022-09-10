@@ -1,14 +1,12 @@
 ﻿using NCrontab;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Serein.Items
 {
     [JsonObject(MemberSerialization.OptOut)]
-    internal class TaskItem
+    internal class Task
     {
         public string Cron { get; set; } = string.Empty;
         public string Command { get; set; } = string.Empty;
@@ -26,20 +24,20 @@ namespace Serein.Items
 
         [JsonIgnore]
         public DateTime NextTime { get; set; } = DateTime.Now;
+
         public void Run()
         {
             Enable = false;
-            Task RunTask = new Task(() =>
+            System.Threading.Tasks.Task RunTask = new System.Threading.Tasks.Task(() =>
             {
                 Base.Command.Run(3, Command);
-                List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-                NextTime = Occurrences[0];
+                NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
                 Enable = true;
-            }
-            );
+            });
             RunTask.Start();
         }
-        public bool CheckItem()
+
+        public bool Check()
         {
             if (
                 !(string.IsNullOrWhiteSpace(Cron) || string.IsNullOrEmpty(Cron) ||
@@ -52,7 +50,7 @@ namespace Serein.Items
                 }
                 try
                 {
-                    List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
+                    NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
                     return true;
                 }
                 catch
@@ -62,7 +60,8 @@ namespace Serein.Items
             }
             return false;
         }
-        public void ConvertToItem(string Text)
+
+        public void ToObject(string Text)
         {
             string[] Texts = Text.Split('\t');
             if (Texts.Length != 4)
@@ -73,8 +72,7 @@ namespace Serein.Items
             Enable = Texts[1] == "True";
             Remark = Texts[2];
             Command = Texts[3];
-            List<DateTime> Occurrences = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-            NextTime = Occurrences[0];
+            NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Windows.Forms;
-using Serein.Base;
 
 namespace Serein
 {

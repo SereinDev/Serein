@@ -29,7 +29,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="正则表达式"
-                        DisplayMemberBinding="{Binding Regex}"/>
+                        DisplayMemberBinding="{Binding Expression}"/>
                     <GridViewColumn Header="作用域"
                         DisplayMemberBinding="{Binding Area_Text}"/>
                     <GridViewColumn Header="管理权限"

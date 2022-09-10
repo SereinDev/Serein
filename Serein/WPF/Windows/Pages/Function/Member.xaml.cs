@@ -1,5 +1,4 @@
 ﻿using Serein.Base;
-using Serein.Items;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +22,7 @@ namespace Serein.Windows.Pages.Function
         {
             Loader.ReadMember();
             MemberListView.Items.Clear();
-            foreach (MemberItem Item in Global.MemberItems)
+            foreach (Items.Member Item in Global.MemberItems)
             {
                 MemberListView.Items.Add(Item);
             }
@@ -31,10 +30,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<MemberItem> Items = new List<MemberItem>();
+            List<Items.Member> Items = new List<Items.Member>();
             foreach (var obj in MemberListView.Items)
             {
-                if (obj is MemberItem Item && Item != null)
+                if (obj is Items.Member Item && Item != null)
                 {
                     Items.Add(Item);
                 }
@@ -60,7 +59,7 @@ namespace Serein.Windows.Pages.Function
                         Window.MainWindow.OpenMemberEditor();
                         break;
                     case "Edit":
-                        if (MemberListView.SelectedItem is MemberItem SelectedItem && SelectedItem != null)
+                        if (MemberListView.SelectedItem is Items.Member SelectedItem && SelectedItem != null)
                         {
                             ActionType = 2;
                             Window.MainWindow.OpenMemberEditor(false, SelectedItem.ID.ToString(), SelectedItem.GameID);
@@ -122,7 +121,7 @@ namespace Serein.Windows.Pages.Function
                     else
                     {
                         Window.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
-                        if (MemberListView.SelectedItem is MemberItem SelectedItem && SelectedItem != null)
+                        if (MemberListView.SelectedItem is Items.Member SelectedItem && SelectedItem != null)
                         {
                             SelectedItem.GameID = GameID;
                             MemberListView.SelectedItem = SelectedItem;

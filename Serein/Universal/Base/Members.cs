@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Serein.Base
 {
@@ -19,7 +15,7 @@ namespace Serein.Base
             get
             {
                 List<long> list = new List<long>();
-                foreach (MemberItem Item in Items)
+                foreach (Member Item in Items)
                 {
                     list.Add(Item.ID);
                 }
@@ -35,7 +31,7 @@ namespace Serein.Base
             get
             {
                 List<string> list = new List<string>();
-                foreach (MemberItem Item in Items)
+                foreach (Member Item in Items)
                 {
                     list.Add(Item.GameID);
                 }
@@ -46,11 +42,11 @@ namespace Serein.Base
         /// <summary>
         /// 只读的 Global.MemberItems 副本
         /// </summary>
-        private static List<MemberItem> Items
+        private static List<Member> Items
         {
             get
             {
-                List<MemberItem> TempList = new List<MemberItem>();
+                List<Member> TempList = new List<Member>();
                 Global.MemberItems.ForEach(i => TempList.Add(i));
                 return TempList;
             }
@@ -66,16 +62,16 @@ namespace Serein.Base
         /// <returns>绑定结果</returns>
         public static bool Bind(long UserId, string Value)
         {
-            if (IDs.Contains(UserId) || !Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
+            if (IDs.Contains(UserId) || !System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
                 return false;
             else
             {
-                MemberItem Item = new MemberItem()
+                Member Item = new Member()
                 {
                     ID = UserId,
                     GameID = Value
                 };
-                List<MemberItem> memberItems = Items;
+                List<Member> memberItems = Items;
                 memberItems.Add(Item);
                 Global.UpdateMemberItems(memberItems);
                 Loader.SaveMember();
@@ -96,7 +92,7 @@ namespace Serein.Base
             {
                 EventTrigger.Trigger("Bind_Already", GroupId, UserId);
             }
-            else if (!Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
                 EventTrigger.Trigger("Bind_Invalid", GroupId, UserId);
             }
@@ -106,7 +102,7 @@ namespace Serein.Base
             }
             else
             {
-                MemberItem Item = new MemberItem()
+                Member Item = new Member()
                 {
                     ID = UserId,
                     Card = JsonObject["sender"]["card"].ToString(),
@@ -114,7 +110,7 @@ namespace Serein.Base
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
                     GameID = Value.Trim()
                 };
-                List<MemberItem> memberItems = Items;
+                List<Member> memberItems = Items;
                 memberItems.Add(Item);
                 Global.UpdateMemberItems(memberItems);
                 Loader.SaveMember();
@@ -135,8 +131,8 @@ namespace Serein.Base
             }
             else
             {
-                List<MemberItem> memberItems = Items;
-                foreach (MemberItem Item in memberItems)
+                List<Member> memberItems = Items;
+                foreach (Member Item in memberItems)
                 {
                     if (Item.ID == UserId && memberItems.Remove(Item))
                     {
@@ -158,8 +154,8 @@ namespace Serein.Base
         {
             if (IDs.Contains(UserId))
             {
-                List<MemberItem> memberItems = Items;
-                foreach (MemberItem Item in memberItems)
+                List<Member> memberItems = Items;
+                foreach (Member Item in memberItems)
                 {
                     if (Item.ID == UserId && memberItems.Remove(Item))
                     {
@@ -185,7 +181,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in Items)
+                foreach (Member Item in Items)
                 {
                     if (Item.ID == UserId)
                     {
@@ -209,7 +205,7 @@ namespace Serein.Base
             }
             else
             {
-                foreach (MemberItem Item in Items)
+                foreach (Member Item in Items)
                 {
                     if (Item.GameID == GameID)
                     {

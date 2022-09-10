@@ -4,7 +4,6 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Serein.Items.Motd
 {
@@ -82,7 +81,7 @@ namespace Serein.Items.Motd
                             Favicon = string.Empty;
                         }
                     }
-                    Description = Regex.Replace(Regex.Unescape(Description), "§.", string.Empty);
+                    Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
                     Success = true;
                 }
                 catch (Exception e)

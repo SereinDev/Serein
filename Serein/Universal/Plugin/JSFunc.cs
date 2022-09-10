@@ -1,10 +1,10 @@
 ﻿using Jint;
 using Jint.Native;
 using System;
-using System.Security.Cryptography;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Timers;
 
 namespace Serein.Plugin
@@ -225,7 +225,7 @@ namespace Serein.Plugin
         {
             if (
                 Command.Contains(" ") ||
-                ((IList<string>)Global.Settings.Server.StopCommand.Split(';')).Contains(Command)
+                ((IList<string>)Global.Settings.Server.StopCommands).Contains(Command)
                 )
             {
                 Logger.Out(32, $"插件注册命令\"{Command}\"失败");

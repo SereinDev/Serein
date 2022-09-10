@@ -1,5 +1,4 @@
 ﻿using Serein.Base;
-using Serein.Items;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +23,7 @@ namespace Serein.Windows.Pages.Function
         {
             Loader.ReadRegex();
             RegexListView.Items.Clear();
-            foreach (RegexItem Item in Global.RegexItems)
+            foreach (Items.Regex Item in Global.RegexItems)
             {
                 RegexListView.Items.Add(Item);
             }
@@ -32,10 +31,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<RegexItem> Items = new List<RegexItem>();
+            List<Items.Regex> Items = new List<Items.Regex>();
             foreach (var obj in RegexListView.Items)
             {
-                if (obj is RegexItem Item && Item != null)
+                if (obj is Items.Regex Item && Item != null)
                 {
                     Items.Add(Item);
                 }
@@ -68,12 +67,12 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (RegexListView.SelectedItem is RegexItem SelectedItem && SelectedItem != null)
+                        if (RegexListView.SelectedItem is Items.Regex SelectedItem && SelectedItem != null)
                         {
                             Window.MainWindow.OpenRegexEditor(
                                 SelectedItem.Area,
                                 SelectedItem.IsAdmin,
-                                SelectedItem.Regex,
+                                SelectedItem.Expression,
                                 SelectedItem.Command,
                                 SelectedItem.Remark
                                 );
@@ -124,10 +123,10 @@ namespace Serein.Windows.Pages.Function
                         {
                             RegexListView.Items.Insert(
                                 RegexListView.SelectedIndex,
-                                new RegexItem()
+                                new Items.Regex()
                                 {
                                     Area = AreaIndex,
-                                    Regex = Regex,
+                                    Expression = Regex,
                                     Command = Command,
                                     Remark = Remark,
                                     IsAdmin = IsAdmin
@@ -136,20 +135,20 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             RegexListView.Items.Add(
-                                new RegexItem()
+                                new Items.Regex()
                                 {
                                     Area = AreaIndex,
-                                    Regex = Regex,
+                                    Expression = Regex,
                                     Command = Command,
                                     Remark = Remark,
                                     IsAdmin = IsAdmin
                                 });
                         }
                     }
-                    else if (ActionType == 2 && RegexListView.SelectedItem is RegexItem SelectedItem && SelectedItem != null)
+                    else if (ActionType == 2 && RegexListView.SelectedItem is Items.Regex SelectedItem && SelectedItem != null)
                     {
                         SelectedItem.Area = AreaIndex;
-                        SelectedItem.Regex = Regex;
+                        SelectedItem.Expression = Regex;
                         SelectedItem.Command = Command;
                         SelectedItem.Remark = Remark;
                         SelectedItem.IsAdmin = IsAdmin;

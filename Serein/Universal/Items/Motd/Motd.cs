@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Serein.Items.Motd
 {
@@ -20,6 +19,7 @@ namespace Serein.Items.Motd
         public string Original { get; set; } = "-";
         public string Exception { get; set; } = string.Empty;
         public bool Success { get; set; } = false;
+
         public bool Init(string newip = "127.0.0.1", string newPort = "19132")
         {
             try
@@ -29,7 +29,7 @@ namespace Serein.Items.Motd
                     newPort = newip.Split(':')[1];
                     newip = newip.Split(':')[0];
                 }
-                if (!new Regex(
+                if (!new System.Text.RegularExpressions.Regex(
                     @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
                     .IsMatch(newip))
                 {

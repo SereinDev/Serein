@@ -5,8 +5,12 @@ using System.Management;
 
 namespace Serein.Base
 {
-    internal class SystemInfo
+    internal static class SystemInfo
     {
+        private static readonly PerformanceCounter pcCpuLoad = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+        {
+            MachineName = "."
+        };
         public static string OS = new ComputerInfo().OSFullName;
         public static string NET = Environment.Version.ToString();
         public static string CPUName
@@ -33,11 +37,6 @@ namespace Serein.Base
                     (double)(ulong.TryParse(UsedRAM, out ulong i) ? i : 1) /
                     (ulong.TryParse(TotalRAM, out ulong j) ? j : 1) * 100
                 ).ToString("N1");
-
-        private static readonly PerformanceCounter pcCpuLoad = new PerformanceCounter("Processor", "% Processor Time", "_Total")
-        {
-            MachineName = "."
-        };
         public static string CPUPercentage => pcCpuLoad.NextValue().ToString("N1");
     }
 }

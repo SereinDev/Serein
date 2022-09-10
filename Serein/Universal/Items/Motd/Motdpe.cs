@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Serein.Items.Motd
 {
@@ -54,7 +53,7 @@ namespace Serein.Items.Motd
                 string[] Datas = Data.Split(';');
                 if (Datas.Length >= 12)
                 {
-                    Description = Regex.Replace(Datas[1], "§.", string.Empty);
+                    Description = System.Text.RegularExpressions.Regex.Replace(Datas[1], "§.", string.Empty);
                     Protocol = Datas[2];
                     Version = Datas[3];
                     OnlinePlayer = Datas[4];

@@ -1,7 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
 using System;
-using System.Collections.Generic;
 using WebSocket4Net;
 
 namespace Serein.Plugin

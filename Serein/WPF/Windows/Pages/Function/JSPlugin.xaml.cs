@@ -1,7 +1,6 @@
 ﻿using Serein.Plugin;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using Wpf.Ui.Controls;
 
@@ -39,9 +38,9 @@ namespace Serein.Windows.Pages.Function
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is MenuItem Item && Item != null)
             {
-                switch (Tag)
+                switch (Item.Tag)
                 {
                     case "ReLoad":
                         Plugins.Reload();
