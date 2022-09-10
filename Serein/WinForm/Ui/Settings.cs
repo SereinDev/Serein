@@ -153,7 +153,7 @@ namespace Serein.Ui
 
         private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
         {
-            Global.Settings.Server.StopCommands=SettingServerStopCommand.Text.Split(';');
+            Global.Settings.Server.StopCommands = SettingServerStopCommand.Text.Split(';');
         }
 
         private void SettingServerStopCommand_Leave(object sender, EventArgs e)
