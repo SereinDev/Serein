@@ -3,7 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ui:ControlsDictionary />
-        <ui:ThemesDictionary Theme="Light" />
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="ListViewItem">
         <Setter Property="Foreground">
@@ -67,10 +66,15 @@
     </Style>
     <Style TargetType="GridViewColumnHeader">
         <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
-                    <Grid Background="{DynamicResource ControlFillColorDefaultBrush}" >
+                    <Grid Background="Transparent" >
                         <Border Padding="{TemplateBinding Padding}" MaxHeight="{TemplateBinding Height}" BorderThickness="0,0,0,1" BorderBrush="#5aaa">
                             <ContentPresenter RecognizesAccessKey="True" 
                                           Content="{TemplateBinding ContentControl.Content}" 

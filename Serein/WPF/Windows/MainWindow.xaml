@@ -224,5 +224,24 @@
                 </StackPanel>
             </Grid>
         </ui:Dialog>
+        <ui:Dialog x:Name="EventEditor"
+            ButtonLeftName="确定"
+            ButtonRightName="取消"
+            ButtonLeftClick="EventEditor_ButtonLeftClick"
+            ButtonRightClick="EventEditor_ButtonRightClick"
+            Title="事件编辑器"
+            DialogHeight="210"
+            DialogWidth="300">
+            <Grid>
+                <DockPanel Margin="0,5">
+                    <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="命令" DockPanel.Dock="Top"/>
+                    <ui:TextBox Icon="KeyCommand24"
+                        x:Name="EventEditor_Command"
+                        Margin="0,0,0,5"
+                                DockPanel.Dock="Bottom"/>
+                </DockPanel>
+            </Grid>
+        </ui:Dialog>
     </Grid>
 </ui:UiWindow>

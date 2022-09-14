@@ -13,10 +13,77 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <TreeView>
-        </TreeView>
-        <ListView Grid.Column="1"/>
+        <DockPanel Margin="5,0">
+            <TextBlock Text="事件列表" DockPanel.Dock="Top" Margin="0,3"/>
+            <TreeView Name="Events" 
+                  SelectedItemChanged="Events_SelectedItemChanged">
+                <TreeViewItem Header="绑定/解绑">
+                    <TreeViewItem Header="绑定成功" Tag="BindSuccess"/>
+                    <TreeViewItem Header="绑定失败-名称被占用" Tag="BindOccupied"/>
+                    <TreeViewItem Header="绑定失败-名称不可用" Tag="BindInvalid"/>
+                    <TreeViewItem Header="绑定失败-已经绑定" Tag="BindAlready"/>
+                    <TreeViewItem Header="解绑成功" Tag="UnbindSuccess"/>
+                    <TreeViewItem Header="解绑失败" Tag="UnbindFailure"/>
+                </TreeViewItem>
+                <TreeViewItem Header="服务器状态变更">
+                    <TreeViewItem Header="启动" Tag="ServerStart"/>
+                    <TreeViewItem Header="关闭" Tag="ServerStop"/>
+                    <TreeViewItem Header="异常关闭" Tag="ServerError"/>
+                </TreeViewItem>
+                <TreeViewItem Header="群事件">
+                    <TreeViewItem Header="群成员增加" Tag="GroupIncrease"/>
+                    <TreeViewItem Header="群成员减少" Tag="GroupDecrease"/>
+                    <TreeViewItem Header="被戳一戳" Tag="GroupPoke"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Serein">
+                    <TreeViewItem Header="崩溃" Tag="SereinCrash"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Motd命令反馈">
+                    <TreeViewItem Header="获取成功（基岩版）" Tag="MotdpeSuccess"/>
+                    <TreeViewItem Header="获取成功（Java版）" Tag="MotdjeSuccess"/>
+                    <TreeViewItem Header="获取失败" Tag="MotdFailure"/>
+                </TreeViewItem>
+                <TreeViewItem Header="权限不足反馈">
+                    <TreeViewItem Header="私聊触发" Tag="PermissionDeniedPrivate"/>
+                    <TreeViewItem Header="群聊触发" Tag="PermissionDeniedGroup"/>
+                </TreeViewItem>
+            </TreeView>
+        </DockPanel>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" 
+                      Margin="2,0"
+                      Width="5"/>
+        <DockPanel Margin="5,0"  Grid.Column="2" >
+            <TextBlock Text="命令列表" DockPanel.Dock="Top" Margin="0,3"/>
+            <ListView Name="EventListView" ContextMenuOpening="EventListView_ContextMenuOpening">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <ui:MenuItem Header="新增"
+                        SymbolIcon="Add24"
+                        Name="Add"
+                        Tag="Add"
+                        Click="MenuItem_Click"/>
+                        <ui:MenuItem Header="修改"
+                        SymbolIcon="Edit24"
+                        Name="Edit"
+                        Tag="Edit"
+                        Click="MenuItem_Click"/>
+                        <ui:MenuItem Header="删除"
+                        SymbolIcon="Delete24"
+                        Name="Delete"
+                        Tag="Delete"
+                        Click="MenuItem_Click"/>
+                        <Separator />
+                        <ui:MenuItem Header="查看文档"
+                        SymbolIcon="Document24"
+                        Name="LookupEvent"
+                        Tag="LookupEvent"
+                        Click="MenuItem_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </DockPanel>
     </Grid>
 </ui:UiPage>

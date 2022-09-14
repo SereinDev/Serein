@@ -58,6 +58,7 @@
                 <Style TargetType="{x:Type ListView}">
                     <Setter Property="BorderThickness"
                         Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>

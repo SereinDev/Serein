@@ -306,5 +306,13 @@ namespace Serein.Base
                 File.WriteAllText(Global.SettingPath + "\\Serein.json", JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
             }
         }
+
+        public static void SaveEventSetting()
+        {
+            lock (Global.Settings.Event)
+            {
+                File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+            }
+        }
     }
 }

@@ -180,5 +180,27 @@ namespace Serein.Windows
 
         private void TaskEditor_ButtonRightClick(object sender, RoutedEventArgs e) => TaskEditor.Hide();
         #endregion
+
+        #region 事件编辑器代码
+        public void OpenEventrEditor(string Command = "")
+        {
+            EventEditor_Command.Text = Command;
+            EventEditor.Show();
+        }
+
+        private void EventEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
+        {
+            if (Window.Settings.Event.Confirm(EventEditor_Command.Text))
+            {
+                EventEditor.Hide();
+            }
+        }
+
+        private void EventEditor_ButtonRightClick(object sender, RoutedEventArgs e)
+        {
+            EventEditor.Hide();
+        }
+
+        #endregion
     }
 }

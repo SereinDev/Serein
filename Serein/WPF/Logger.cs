@@ -12,7 +12,7 @@ namespace Serein
         {
             if (Type / 10 == 1 && Window.Server.Panel != null ||
                 Type / 10 == 2 && Window.Function.Bot != null ||
-                Type / 10 == 3 && Window.Function.Bot != null)
+                Type / 10 == 3 && Window.Function.JSPlugin != null)
             {
                 string Line = string.Empty;
                 foreach (var o in objects)
