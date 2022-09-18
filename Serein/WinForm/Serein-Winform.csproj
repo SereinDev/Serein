@@ -54,6 +54,7 @@
     <Compile Remove="..\Universal\ConsoleHtml\console.js" />
     <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
     <Compile Remove="..\Universal\ConsoleHtml\vanilla.css" />
+    <Compile Remove="..\Universal\Init.bat" />
     <Compile Remove="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +110,9 @@
     <EmbeddedResource Include="..\Universal\Build_Info.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Universal\Init.bat" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -141,4 +145,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
+  </Target>
 </Project>

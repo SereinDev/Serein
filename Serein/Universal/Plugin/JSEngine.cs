@@ -74,10 +74,10 @@ namespace Serein.Plugin
             engine.SetValue("Serein_Websocket_SendPrivate", new Func<long, string, bool>((Target, Message) => { return (Websocket.Send(true, Message, Target)); }));
             engine.SetValue("Serein_Websocket_SendPacket", new Func<string, bool>((Msg) => Websocket.Send(Msg)));
             engine.SetValue("Serein_Websocket_Status", new Func<bool>(() => { return Websocket.Status; }));
-            engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Members.Bind));
-            engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Members.UnBind));
-            engine.SetValue("Serein_Member_GetID", new Func<string, long>(Members.GetID));
-            engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Members.GetGameID));
+            engine.SetValue("Serein_Member_Bind", new Func<long, string, bool>(Binder.Bind));
+            engine.SetValue("Serein_Member_UnBind", new Func<long, bool>(Binder.UnBind));
+            engine.SetValue("Serein_Member_GetID", new Func<string, long>(Binder.GetID));
+            engine.SetValue("Serein_Member_GetGameID", new Func<long, string>(Binder.GetGameID));
             engine.SetValue("setTimeout", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, false); }));
             engine.SetValue("setInterval", new Func<Delegate, JsValue, JsValue>((Function, Interval) => { return JSFunc.SetTimer(Function, Interval, true); }));
             engine.SetValue("clearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
@@ -116,6 +116,7 @@ namespace Serein.Plugin
                 "};");
             return engine;
         }
+
         public static string Run(string Code)
         {
             try
@@ -127,17 +128,6 @@ namespace Serein.Plugin
             {
                 Logger.Out(999, "[JSEngine:Run()]", e.ToString());
                 return e.Message;
-            }
-        }
-        public static void Invoke(string FuncitonName, params object[] Args)
-        {
-            try
-            {
-                engine.Invoke(FuncitonName, Args);
-            }
-            catch (Exception e)
-            {
-                Logger.Out(999, "[JSEngine:Invoke()]", e.ToString());
             }
         }
     }

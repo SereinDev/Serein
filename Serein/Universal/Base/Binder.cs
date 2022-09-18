@@ -2,27 +2,12 @@
 using Serein.Items;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Serein.Base
 {
-    internal class Members
+    internal class Binder
     {
-        /// <summary>
-        /// 用户ID集合
-        /// </summary>
-        public static List<long> IDs
-        {
-            get
-            {
-                List<long> IDList = new List<long>();
-                foreach (Member Item in Items)
-                {
-                    IDList.Add(Item.ID);
-                }
-                return IDList;
-            }
-        }
-
         /// <summary>
         /// 游戏ID集合
         /// </summary>
@@ -46,13 +31,9 @@ namespace Serein.Base
         {
             get
             {
-                List<Member> TempList = new List<Member>();
-                Global.MemberItems.ForEach(i => TempList.Add(i));
-                return TempList;
+                return Global.MemberItems.Values.ToList();
             }
         }
-
-
 
         /// <summary>
         /// 绑定（无群反馈）
@@ -62,18 +43,17 @@ namespace Serein.Base
         /// <returns>绑定结果</returns>
         public static bool Bind(long UserId, string Value)
         {
-            if (IDs.Contains(UserId) || !System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
+            if (Global.MemberItems.Keys.Contains(UserId) || !System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
+            {
                 return false;
+            }
             else
             {
-                Member Item = new Member()
+                Global.MemberItems.Add(UserId, new Member()
                 {
                     ID = UserId,
                     GameID = Value
-                };
-                List<Member> Items = Members.Items;
-                Items.Add(Item);
-                Global.UpdateMemberItems(Items);
+                });
                 Loader.SaveMember();
                 return true;
             }
@@ -88,7 +68,7 @@ namespace Serein.Base
         /// <param name="GroupId">群聊ID</param>
         public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
         {
-            if (IDs.Contains(UserId))
+            if (Global.MemberItems.Keys.Contains(UserId))
             {
                 EventTrigger.Trigger("Bind_Already", GroupId, UserId);
             }
@@ -110,8 +90,8 @@ namespace Serein.Base
                     Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
                     GameID = Value.Trim()
                 };
-                List<Member> Items = Members.Items;
-                Items.Add(Item);
+                Dictionary<long, Member> Items = Global.MemberItems;
+                Items.Add(UserId, Item);
                 Global.UpdateMemberItems(Items);
                 Loader.SaveMember();
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
@@ -125,22 +105,17 @@ namespace Serein.Base
         /// <param name="GroupId">群聊ID</param>
         public static void UnBind(long UserId, long GroupId = -1)
         {
-            if (!IDs.Contains(UserId))
+            if (!Global.MemberItems.Keys.Contains(UserId))
             {
                 EventTrigger.Trigger("Unbind_Failure", GroupId, UserId);
             }
             else
             {
-                List<Member> Items = Members.Items;
-                foreach (Member Item in Items)
+                lock (Global.MemberItems)
                 {
-                    if (Item.ID == UserId && Items.Remove(Item))
-                    {
-                        Global.UpdateMemberItems(Items);
-                        Loader.SaveMember();
-                        EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
-                        break;
-                    }
+                    Global.MemberItems.Remove(UserId);
+                    Loader.SaveMember();
+                    EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
                 }
             }
         }
@@ -152,20 +127,15 @@ namespace Serein.Base
         /// <returns>解绑结果</returns>
         public static bool UnBind(long UserId)
         {
-            if (IDs.Contains(UserId))
+            if (Global.MemberItems.Keys.Contains(UserId))
             {
-                List<Member> Items = Members.Items;
-                foreach (Member Item in Items)
+                lock (Global.MemberItems)
                 {
-                    if (Item.ID == UserId && Items.Remove(Item))
-                    {
-                        Global.UpdateMemberItems(Items);
-                        Loader.SaveMember();
-                        return true;
-                    }
+                    Global.MemberItems.Remove(UserId);
+                    Loader.SaveMember();
                 }
             }
-            return false;
+            return Global.MemberItems.Keys.Contains(UserId);
         }
 
         /// <summary>
@@ -175,7 +145,7 @@ namespace Serein.Base
         /// <returns>对应的游戏ID</returns>
         public static string GetGameID(long UserId)
         {
-            if (!IDs.Contains(UserId))
+            if (!Global.MemberItems.Keys.Contains(UserId))
             {
                 return string.Empty;
             }
@@ -223,24 +193,15 @@ namespace Serein.Base
         /// <param name="UserId">用户ID</param>
         public static void Update(JObject JsonObject, long UserId)
         {
-            /*
-            if (IDs.Contains(UserId))
+            if (Global.MemberItems.Keys.Contains(UserId))
             {
-                List<MemberItem> Items = Items;
-                foreach (MemberItem Item in Items)
+                lock (Global.MemberItems)
                 {
-                    if (Item.ID == UserId && Items.Remove(Item))
-                    {
-                        Item.Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString());
-                        Item.Nickname = JsonObject["sender"]["nickname"].ToString();
-                        Item.Card = JsonObject["sender"]["card"].ToString();
-                        Items.Add(Item);
-                        Global.UpdateMemberItems(Items);
-                        Loader.SaveMember();
-                        break;
-                    }
+                    Global.MemberItems[UserId].Nickname = JsonObject["sender"]["nickname"].ToString();
+                    Global.MemberItems[UserId].Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString());
+                    Global.MemberItems[UserId].Card = JsonObject["sender"]["card"].ToString();
                 }
-            }*/
+            }
         }
     }
 }

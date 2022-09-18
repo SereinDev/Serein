@@ -125,7 +125,7 @@ namespace Serein.Base
                     break;
                 case 20:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
-                        Members.Bind(
+                        Binder.Bind(
                             JsonObject,
                             Value,
                             UserId,
@@ -134,7 +134,7 @@ namespace Serein.Base
                     break;
                 case 21:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
-                        Members.UnBind(
+                        Binder.UnBind(
                             long.TryParse(Value, out long i) ? i : -1, GroupId
                             );
                     break;
@@ -173,7 +173,7 @@ namespace Serein.Base
             }
             if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
             {
-                Members.Update(JsonObject, UserId);
+                Binder.Update(JsonObject, UserId);
             }
         }
 
@@ -350,7 +350,7 @@ namespace Serein.Base
                 try
                 {
                     Text = Regex.Replace(Text, "%ID%", JsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%GameID%", Members.GetGameID(long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long result) ? result : -1), RegexOptions.IgnoreCase);
+                    Text = Regex.Replace(Text, "%GameID%", Binder.GetGameID(long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long result) ? result : -1), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, JsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Nickname%", JsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%Age%", JsonObject["sender"]["age"].ToString(), RegexOptions.IgnoreCase);
@@ -405,7 +405,7 @@ namespace Serein.Base
                 Text = Regex.Replace(
                     Text,
                     @"%GameID:(\d+?)%",
-                    Members.GetGameID(UserId),
+                    Binder.GetGameID(UserId),
                     RegexOptions.IgnoreCase
                     );
             }
@@ -414,7 +414,7 @@ namespace Serein.Base
                 Text = Regex.Replace(
                     Text,
                     @"%ID:(.+?)%",
-                    Members.GetID(
+                    Binder.GetID(
                         Regex.Match(
                             Text,
                             @"%ID:(.+?)%",

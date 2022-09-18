@@ -29,7 +29,7 @@
                 <GridView>
                     <GridViewColumn Header="Cron表达式"
                         DisplayMemberBinding="{Binding Cron}"/>
-                    <GridViewColumn Header="可用性"
+                    <GridViewColumn Header="状态"
                         DisplayMemberBinding="{Binding Enable_Text}"/>
                     <GridViewColumn Header="备注"
                         DisplayMemberBinding="{Binding Remark}"/>

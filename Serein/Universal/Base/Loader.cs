@@ -4,6 +4,7 @@ using Serein.Items;
 using Serein.Plugin;
 using Serein.Settings;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -116,19 +117,21 @@ namespace Serein.Base
                         {
                             return;
                         }
-                        Global.UpdateMemberItems(((JArray)JsonObject["data"]).ToObject<List<Member>>());
+                        List<Member> Items = ((JArray)JsonObject["data"]).ToObject<List<Member>>();
+                        Items.Sort(
+                            (Item1, Item2) =>
+                            {
+                                return Item1.ID > Item2.ID ? 1 : -1;
+                            }
+                            );
+                        Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
+                        Items.ForEach((x) => _Dictionary.Add(x.ID, x));
+                        Global.UpdateMemberItems(_Dictionary);
                     }
                     catch { }
                 }
             }
-            List<Member> Items = Global.MemberItems;
-            Items.Sort(
-                (Item1, Item2) =>
-                {
-                    return Item1.ID > Item2.ID ? 1 : -1;
-                }
-                );
-            Global.UpdateMemberItems(Items);
+           
         }
 
         /// <summary>
@@ -136,27 +139,19 @@ namespace Serein.Base
         /// </summary>
         public static void SaveMember()
         {
-            List<Member> Items = Global.MemberItems;
-            Items.Sort(
-                (Item1, Item2) =>
-                {
-                    return Item1.ID > Item2.ID ? 1 : -1;
-                }
-                );
-            Global.UpdateMemberItems(Items);
+            List<Member> Items = Global.MemberItems.Values.ToList();
+            Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
+            Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
+            Items.ForEach((x) => _Dictionary.Add(x.ID, x));
+            Global.UpdateMemberItems(_Dictionary);
             if (!Directory.Exists(Global.Path + "\\data"))
             {
                 Directory.CreateDirectory(Global.Path + "\\data");
             }
             JObject ListJObject = new JObject();
-            JArray ListJArray = new JArray();
-            foreach (Member Item in Global.MemberItems)
-            {
-                ListJArray.Add(JObject.FromObject(Item));
-            }
             ListJObject.Add("type", "MEMBERS");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", ListJArray);
+            ListJObject.Add("data", JArray.FromObject(_Dictionary.ToList()));
             File.WriteAllText(
                 $"{Global.Path}\\data\\members.json",
                 ListJObject.ToString(),

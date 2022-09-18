@@ -137,21 +137,9 @@ namespace Serein.Ui
                     }
                     DebugTextBox.Text = DebugTextBox.Text + Text + "\r\n";
                 }
-                if (!Directory.Exists(Global.Path + "\\logs\\debug"))
-                {
-                    Directory.CreateDirectory(Global.Path + "\\logs\\debug");
-                }
-                try
-                {
-                    File.AppendAllText(
-                        Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                        Text + "\n",
-                        Encoding.UTF8
-                        );
-                }
-                catch { }
             }
         }
+
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
             Array data = (Array)e.Data.GetData(DataFormats.FileDrop);

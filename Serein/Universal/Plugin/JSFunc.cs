@@ -48,6 +48,7 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string EventName, Delegate Function)
         {
+            Logger.Out(999, "[JSFunc:SetListener()]", EventName);
             if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName))
                 return false;
             switch (EventName)
@@ -223,6 +224,7 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool RegisterCommand(string Command, Delegate Function)
         {
+            Logger.Out(999, "[JSFunc:RegisterCommand()]", Command);
             if (
                 Command.Contains(" ") ||
                 ((IList<string>)Global.Settings.Server.StopCommands).Contains(Command)

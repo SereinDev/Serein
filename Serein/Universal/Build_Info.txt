@@ -1,0 +1,5 @@
+Local (Visual Studio Community 2022 With msbuild.exe)
+周日 2022/09/18 14:13:40.92
+C:\Users\Administrator\Source\Repos\Serein\Serein\Universal
+Windows_NT
+null

@@ -4,6 +4,7 @@ using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -17,7 +18,7 @@ namespace Serein.Ui
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
             Loader.ReadMember();
-            foreach (Member memberItem in Global.MemberItems)
+            foreach (Member memberItem in Global.MemberItems.Values.ToList())
             {
                 ListViewItem Item = new ListViewItem();
                 Item.Text = memberItem.ID.ToString();
@@ -32,7 +33,7 @@ namespace Serein.Ui
 
         private void SaveMember()
         {
-            List<Member> MemberItems = new List<Member>();
+            Dictionary<long, Member> MemberItems = new Dictionary<long, Member>();
             foreach (ListViewItem Item in MemberList.Items)
             {
                 Member memberItem = new Member()
@@ -45,7 +46,7 @@ namespace Serein.Ui
                 };
                 if (memberItem.ID != -1)
                 {
-                    MemberItems.Add(memberItem);
+                    MemberItems.Add(memberItem.ID, memberItem);
                 }
             }
             Global.UpdateMemberItems(MemberItems);

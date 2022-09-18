@@ -1,5 +1,7 @@
 ﻿using Serein.Base;
 using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Serein
@@ -20,7 +22,23 @@ namespace Serein
                 switch (Type)
                 {
                     case 999:
-                        Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
+                        if (Global.Settings.Serein.Debug)
+                        {
+                            Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
+                            if (!Directory.Exists(Global.Path + "\\logs\\debug"))
+                            {
+                                Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                            }
+                            try
+                            {
+                                File.AppendAllText(
+                                    Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                                    $"{DateTime.Now:T} {Line}" + "\n",
+                                    Encoding.UTF8
+                                    );
+                            }
+                            catch { }
+                        }
                         break;
                     case 10:
                         Program.Ui.PanelConsoleWebBrowser_Invoke(Line);

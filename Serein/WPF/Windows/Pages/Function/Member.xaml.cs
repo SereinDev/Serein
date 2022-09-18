@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
@@ -22,7 +23,7 @@ namespace Serein.Windows.Pages.Function
         {
             Loader.ReadMember();
             MemberListView.Items.Clear();
-            foreach (Items.Member Item in Global.MemberItems)
+            foreach (Items.Member Item in Global.MemberItems.Values.ToList())
             {
                 MemberListView.Items.Add(Item);
             }
@@ -30,12 +31,12 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<Items.Member> Items = new List<Items.Member>();
+            Dictionary<long, Items.Member> Items = new Dictionary<long, Items.Member>();
             foreach (var obj in MemberListView.Items)
             {
                 if (obj is Items.Member Item && Item != null)
                 {
-                    Items.Add(Item);
+                    Items.Add(Item.ID, Item);
                 }
             }
             Global.UpdateMemberItems(Items);
@@ -98,7 +99,7 @@ namespace Serein.Windows.Pages.Function
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "ID不合法", SymbolRegular.Warning24);
                     }
-                    else if (!Members.Bind(IDNumber, GameID))
+                    else if (!Binder.Bind(IDNumber, GameID))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定", SymbolRegular.Warning24);
                     }
@@ -114,7 +115,7 @@ namespace Serein.Windows.Pages.Function
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
                     }
-                    else if (Members.GameIDs.Contains(GameID))
+                    else if (Binder.GameIDs.Contains(GameID))
                     {
                         Window.MainWindow.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
                     }

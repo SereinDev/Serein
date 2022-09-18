@@ -1,9 +1,11 @@
 ﻿using NCrontab;
+using Serein.Base;
 using Serein.Server;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Appearance;
@@ -18,10 +20,13 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Window.MainWindow = this;
+            Task.Run(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w'))); 
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            DebugNavigationItem.Visibility = Global.Settings.Serein.Debug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)
             {
                 Watcher.Watch(
@@ -31,6 +36,7 @@ namespace Serein.Windows
                     );
             }
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
+            Checker.Start();
         }
 
         private void UiWindow_StateChanged(object sender, EventArgs e)
@@ -43,6 +49,12 @@ namespace Serein.Windows
         private void UiWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = ServerManager.Status;
+            if (ServerManager.Status)
+            {
+                ShowInTaskbar = false;
+                Hide();
+                Window.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+            }
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)

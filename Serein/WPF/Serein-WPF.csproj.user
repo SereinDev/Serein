@@ -4,7 +4,15 @@
     <ActiveDebugFramework>net472</ActiveDebugFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="Windows\Pages\Debug.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Windows\Controls\ListViewEx.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Pages\Debug.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Pages\Function\Container.xaml">

@@ -50,6 +50,7 @@
     <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
     <Compile Remove="..\Universal\ConsoleHtml\vanilla.css" />
     <Compile Remove="..\Universal\Base\ResourcesManager.cs" />
+    <Compile Remove="..\Universal\Init.bat" />
     <Compile Remove="..\Universal\Server\PluginManager.cs" />
     <Compile Remove="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
@@ -76,6 +77,7 @@
     <None Include="..\Universal\ConsoleHtml\console.js" />
     <None Include="..\Universal\ConsoleHtml\preset.css" />
     <None Include="..\Universal\ConsoleHtml\vanilla.css" />
+    <None Include="..\Universal\Init.bat" />
     <None Include="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -136,4 +138,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
+  </Target>
 </Project>

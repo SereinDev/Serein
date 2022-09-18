@@ -1,5 +1,8 @@
 ﻿using Serein.Base;
 using Serein.Windows;
+using System;
+using System.IO;
+using System.Text;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
@@ -12,7 +15,8 @@ namespace Serein
         {
             if (Type / 10 == 1 && Window.Server.Panel != null ||
                 Type / 10 == 2 && Window.Function.Bot != null ||
-                Type / 10 == 3 && Window.Function.JSPlugin != null)
+                Type / 10 == 3 && Window.Function.JSPlugin != null ||
+                Type == 999 && Window.Debug != null)
             {
                 string Line = string.Empty;
                 foreach (var o in objects)
@@ -23,7 +27,10 @@ namespace Serein
                 switch (Type)
                 {
                     case 999:
-                        //Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
+                        if (Global.Settings.Serein.Debug)
+                        {
+                            Window.Debug.AppendText($"{DateTime.Now:T} {Line}");
+                        }
                         break;
                     case 10:
                         Window.Server.Panel.AppendText(Line);
@@ -58,6 +65,22 @@ namespace Serein
                     case 33:
                         Window.Function.JSPlugin.AppendText(Log.EscapeLog(Line));
                         break;
+                }
+                if (Type == 999 && Global.Settings.Serein.Debug)
+                {
+                    if (!Directory.Exists(Global.Path + "\\logs\\debug"))
+                    {
+                        Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                    }
+                    try
+                    {
+                        File.AppendAllText(
+                            Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                            $"{DateTime.Now:T} {Line}" + "\n",
+                            Encoding.UTF8
+                            );
+                    }
+                    catch { }
                 }
             }
         }

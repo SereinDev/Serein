@@ -9,10 +9,10 @@ namespace Serein
     {
         public static string Path = AppDomain.CurrentDomain.BaseDirectory;
         public static string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-        public static string VERSION = "v1.3.1";
+        public static string VERSION = "v1.3.2";
         public static List<Regex> RegexItems = new List<Regex>();
         public static List<Task> TaskItems = new List<Task>();
-        public static List<Member> MemberItems = new List<Member>();
+        public static Dictionary<long, Member> MemberItems = new Dictionary<long, Member>();
         public static Item Settings = new Item();
         public static bool Crash = false;
         public static bool MultiOpen = false;
@@ -36,7 +36,7 @@ namespace Serein
             }
         }
 
-        public static void UpdateMemberItems(List<Member> New)
+        public static void UpdateMemberItems(Dictionary<long, Member> New)
         {
             lock (MemberItems)
             {

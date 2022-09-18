@@ -8,6 +8,7 @@
     xmlns:function_pages="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:settgins_pages="clr-namespace:Serein.Windows.Pages.Settings"
     xmlns:home_page="clr-namespace:Serein.Windows.Pages"
+    xmlns:debug_page="clr-namespace:Serein.Windows.Pages"
     xmlns:controls="clr-namespace:Serein.Windows.Controls"
     Width="800"
     Height="500"
@@ -86,6 +87,11 @@
                             Icon="Box24"
                             PageType="{x:Type function_pages:Container}"
                             PageTag="functions" />
+                        <ui:NavigationItem Content="调试输出"
+                            Icon="WindowDevTools24"
+                            x:Name="DebugNavigationItem"
+                            PageType="{x:Type debug_page:Debug}"
+                            PageTag="debug" />
                     </ui:NavigationStore.Items>
                     <ui:NavigationStore.Footer>
                         <ui:NavigationItem Content="设置"
@@ -230,7 +236,7 @@
             ButtonLeftClick="EventEditor_ButtonLeftClick"
             ButtonRightClick="EventEditor_ButtonRightClick"
             Title="事件编辑器"
-            DialogHeight="210"
+            DialogHeight="215"
             DialogWidth="300">
             <Grid>
                 <DockPanel Margin="0,5">
@@ -238,7 +244,6 @@
                         Text="命令" DockPanel.Dock="Top"/>
                     <ui:TextBox Icon="KeyCommand24"
                         x:Name="EventEditor_Command"
-                        Margin="0,0,0,5"
                                 DockPanel.Dock="Bottom"/>
                 </DockPanel>
             </Grid>
