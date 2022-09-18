@@ -20,7 +20,7 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Window.MainWindow = this;
-            Task.Run(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w'))); 
+            Task.Run(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
