@@ -43,6 +43,7 @@ namespace Serein.Ui
                 Thread.Sleep(120000);
             }
         }
+
         public static void GetVersion()
         {
             string OldPreVersion = string.Empty;
@@ -85,6 +86,7 @@ namespace Serein.Ui
                 Thread.Sleep(120000);
             }
         }
+
         public static string RequestInfo(string Url, bool isApi = false)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;

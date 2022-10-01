@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Timers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 
 namespace Serein.Windows
 {
@@ -29,8 +29,7 @@ namespace Serein.Windows
                     JObject JsonObject = (JObject)JsonConvert.DeserializeObject(RequestInfo("https://api.github.com/repos/Zaitonn/Serein/releases/latest", true));
                     string Version = JsonObject["tag_name"].ToString();
                     if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
-                        Version != Global.VERSION && OldVersion != Version &&
-                        Global.VERSION.Contains(Version))
+                        Version != Global.VERSION && OldVersion != Version)
                     {
                         Window.Notification.Show("Serein", "发现新版本:\n" + Version);
                         Window.Settings.Serein?.UpdateVersion($"（发现新版本:{Version}，你可以点击下方链接获取最新版）");

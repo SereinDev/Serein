@@ -1,5 +1,0 @@
-Local (Visual Studio Community 2022 With msbuild.exe)
-周日 2022/09/18 17:24:32.59
-C:\Users\Administrator\Source\Repos\Serein\Serein\WPF
-Windows_NT
-null

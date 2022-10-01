@@ -31,15 +31,13 @@ namespace Serein.Ui
                     break;
             }
         }
+
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
         {
             Global.FirstOpen = true;
             Ui_Shown(sender, e);
         }
-        private void TaskDialog_HyperLinkClicked(object sender, HyperlinkClickedEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
-        }
+
         private void Ui_Shown(object sender, EventArgs e)
         {
             if (Global.FirstOpen)
@@ -63,7 +61,7 @@ namespace Serein.Ui
                         "Serein is licensed under <a href=\"https://github.com/Zaitonn/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n" +
                         "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
                 };
-                TaskDialog.HyperlinkClicked += new EventHandler<HyperlinkClickedEventArgs>(TaskDialog_HyperLinkClicked);
+                TaskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
                 TaskDialog.ShowDialog();
             }
             new Task(() => { if (Global.Args.Contains("auto_connect")) { Websocket.Connect(false); } }).Start();
@@ -74,22 +72,6 @@ namespace Serein.Ui
                     Plugins.Load();
                     JSFunc.Trigger("onSereinStart");
                 }).Start();
-        }
-        private void FocusWindow()
-        {
-            Visible = true;
-            ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
-            Activate();
-        }
-        private void SereinIcon_BalloonTipClicked(object sender, EventArgs e)
-        {
-            FocusWindow();
-        }
-
-        private void SereinIcon_MouseClick(object sender, MouseEventArgs e)
-        {
-            FocusWindow();
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
@@ -107,12 +89,14 @@ namespace Serein.Ui
                 JSFunc.Trigger("onSereinClose");
             }
         }
+
         public void ShowBalloonTip(string text)
         {
             SereinIcon.BalloonTipTitle = "Serein";
             SereinIcon.BalloonTipText = text;
             SereinIcon.ShowBalloonTip(10000);
         }
+
         public void Debug_Append(string Text)
         {
             if (Global.Settings.Serein.Debug)
@@ -276,26 +260,26 @@ namespace Serein.Ui
                 }
             }
         }
-        private void Ui_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.All;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
+
+
         private void UpdateVersion()
         {
             SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
             UpdateStatusLabel(Global.VERSION);
             DebugTextBox.Text = Global.VERSION + "\r\n";
         }
-        private void UpdateStatusLabel(string Text)
+
+        private void FocusWindow()
         {
-            StripStatusLabel.Text = Text;
+            Visible = true;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+            Activate();
         }
+
+        private void SereinIcon_BalloonTipClicked(object sender, EventArgs e) => FocusWindow();
+        private void SereinIcon_MouseClick(object sender, MouseEventArgs e) => FocusWindow();
+        private void UpdateStatusLabel(string Text) => StripStatusLabel.Text = Text;
+        private void Ui_DragEnter(object sender, DragEventArgs e) => e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
     }
 }

@@ -1,70 +1,70 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Function.Member"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Function.Member"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:controls="clr-namespace:Serein.Windows.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
-    mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Member"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Title="Member">
+    mc:Ignorable="d">
     <ui:UiPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Controls/ListviewEx.xaml"/>
+                <ResourceDictionary Source="../../Controls/ListviewEx.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ui:UiPage.Resources>
     <Grid>
-        <ListView Name="MemberListView"
+        <ListView
+            Name="MemberListView"
             ContextMenuOpening="MemberListView_ContextMenuOpening"
             SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID"
-                        DisplayMemberBinding="{Binding ID}"/>
-                    <GridViewColumn Header="群角色"
-                        DisplayMemberBinding="{Binding Role_Text}"/>
-                    <GridViewColumn Header="昵称"
-                        DisplayMemberBinding="{Binding Nickname}"/>
-                    <GridViewColumn Header="群名片"
-                        DisplayMemberBinding="{Binding Card}"/>
-                    <GridViewColumn Header="游戏ID"
-                        DisplayMemberBinding="{Binding GameID}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="ID" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Role_Text}" Header="群角色" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Nickname}" Header="昵称" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Card}" Header="群名片" />
+                    <GridViewColumn DisplayMemberBinding="{Binding GameID}" Header="游戏ID" />
                 </GridView>
             </ListView.View>
             <ListView.Style>
                 <Style TargetType="{x:Type ListView}">
-                   <Setter Property="BorderThickness"
-                        Value="0"/>
-                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
                 <ContextMenu Name="MemberContextMenu">
-                    <ui:MenuItem Header="新增"
-                        SymbolIcon="PersonAdd24"
+                    <ui:MenuItem
                         Name="Add"
-                        Tag="Add"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="修改"
-                        SymbolIcon="PersonEdit24"
+                        Click="MenuItem_Click"
+                        Header="新增"
+                        SymbolIcon="PersonAdd24"
+                        Tag="Add" />
+                    <ui:MenuItem
                         Name="Edit"
-                        Tag="Edit"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="删除"
-                        SymbolIcon="PersonDelete24"
+                        Click="MenuItem_Click"
+                        Header="修改"
+                        SymbolIcon="PersonEdit24"
+                        Tag="Edit" />
+                    <ui:MenuItem
                         Name="Delete"
-                        Tag="Delete"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="删除"
+                        SymbolIcon="PersonDelete24"
+                        Tag="Delete" />
                     <Separator />
-                    <ui:MenuItem Header="刷新"
-                        SymbolIcon="ArrowClockwise24"
+                    <ui:MenuItem
                         Name="Refresh"
-                        Tag="Refresh"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="刷新"
+                        SymbolIcon="ArrowClockwise24"
+                        Tag="Refresh" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

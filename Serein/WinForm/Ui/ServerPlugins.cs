@@ -16,6 +16,7 @@ namespace Serein.Ui
             PluginManager.Add();
             LoadPlugins();
         }
+
         private void PluginContextMenuStripRemove_Click(object sender, EventArgs e)
         {
             var Items = PluginList.SelectedItems;

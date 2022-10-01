@@ -13,75 +13,66 @@ namespace Serein
         public static int Type = 2;
         public static void Out(int Type, params object[] objects)
         {
-            if (Type / 10 == 1 && Window.Server.Panel != null ||
-                Type / 10 == 2 && Window.Function.Bot != null ||
-                Type / 10 == 3 && Window.Function.JSPlugin != null ||
-                Type == 999 && Window.Debug != null)
+            string Line = string.Empty;
+            foreach (var o in objects)
             {
-                string Line = string.Empty;
-                foreach (var o in objects)
-                {
-                    if (o != null) { Line += o.ToString() + " "; }
-                }
-                Line = Line.TrimEnd();
-                switch (Type)
-                {
-                    case 999:
-                        if (Global.Settings.Serein.Debug)
+                if (o != null) { Line += o.ToString() + " "; }
+            }
+            Line = Line.TrimEnd();
+            switch (Type)
+            {
+                case 999:
+                    if (Global.Settings.Serein.Debug)
+                    {
+                        Window.Debug?.AppendText($"{DateTime.Now:T} {Line}");
+                        if (!Directory.Exists(Global.Path + "\\logs\\debug"))
                         {
-                            Window.Debug.AppendText($"{DateTime.Now:T} {Line}");
+                            Directory.CreateDirectory(Global.Path + "\\logs\\debug");
                         }
-                        break;
-                    case 10:
-                        Window.Server.Panel.AppendText(Line);
-                        break;
-                    case 11:
-                        Window.Server.Panel.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 20:
-                        Window.Function.Bot.AppendText(Line);
-                        break;
-                    case 21:
-                        Window.Function.Bot.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 22:
-                        Window.Function.Bot.AppendText("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 23:
-                        Window.Function.Bot.AppendText("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 24:
-                        Window.Function.Bot.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 30:
-                        Window.Function.JSPlugin.AppendText(Line);
-                        break;
-                    case 31:
-                        Window.Function.JSPlugin.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 32:
-                        Window.Function.JSPlugin.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
-                        break;
-                    case 33:
-                        Window.Function.JSPlugin.AppendText(Log.EscapeLog(Line));
-                        break;
-                }
-                if (Type == 999 && Global.Settings.Serein.Debug)
-                {
-                    if (!Directory.Exists(Global.Path + "\\logs\\debug"))
-                    {
-                        Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                        try
+                        {
+                            File.AppendAllText(
+                                Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                                $"{DateTime.Now:T} {Line}" + "\n",
+                                Encoding.UTF8
+                                );
+                        }
+                        catch { }
                     }
-                    try
-                    {
-                        File.AppendAllText(
-                            Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                            $"{DateTime.Now:T} {Line}" + "\n",
-                            Encoding.UTF8
-                            );
-                    }
-                    catch { }
-                }
+                    break;
+                case 10:
+                    Window.Server.Panel?.AppendText(Line);
+                    break;
+                case 11:
+                    Window.Server.Panel?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 20:
+                    Window.Function.Bot?.AppendText(Line);
+                    break;
+                case 21:
+                    Window.Function.Bot?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 22:
+                    Window.Function.Bot?.AppendText("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 23:
+                    Window.Function.Bot?.AppendText("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 24:
+                    Window.Function.Bot?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 30:
+                    Window.Function.JSPlugin?.AppendText(Line);
+                    break;
+                case 31:
+                    Window.Function.JSPlugin?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 32:
+                    Window.Function.JSPlugin?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    break;
+                case 33:
+                    Window.Function.JSPlugin?.AppendText(Log.EscapeLog(Line));
+                    break;
             }
         }
 

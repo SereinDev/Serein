@@ -1,149 +1,170 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Server.Panel"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Server.Panel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+    xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     d:DesignHeight="850"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel>
-            <GroupBox Margin="3"
-                Header="详细信息"
+            <GroupBox
+                Margin="3"
+                Padding="10"
                 DockPanel.Dock="Top"
-                Padding="10">
+                Header="详细信息">
                 <Grid Margin="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <DockPanel>
-                        <Label DockPanel.Dock="Left"
-                            Content="状态"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="Status">未启动</Label>
+                        <Label Content="状态" DockPanel.Dock="Left" />
+                        <Label
+                            Name="Status"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            未启动
+                        </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="1">
-                        <Label DockPanel.Dock="Left"
-                            Content="版本"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="Version">-</Label>
+                        <Label Content="版本" DockPanel.Dock="Left" />
+                        <Label
+                            Name="Version"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            -
+                        </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="2">
-                        <Label DockPanel.Dock="Left"
-                            Content="难度"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="Difficulity">-</Label>
+                        <Label Content="难度" DockPanel.Dock="Left" />
+                        <Label
+                            Name="Difficulity"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            -
+                        </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="3">
-                        <Label DockPanel.Dock="Left"
-                            Content="存档"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="Level">-</Label>
+                        <Label Content="存档" DockPanel.Dock="Left" />
+                        <Label
+                            Name="Level"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            -
+                        </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="4">
-                        <Label DockPanel.Dock="Left"
-                            Content="运行时长"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="Time">-</Label>
+                        <Label Content="运行时长" DockPanel.Dock="Left" />
+                        <Label
+                            Name="Time"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            -
+                        </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="5">
-                        <Label DockPanel.Dock="Left"
-                            Content="进程占用"/>
-                        <Label DockPanel.Dock="Left"
-                            FlowDirection="RightToLeft"
-                            Name="CPUPerc">-</Label>
+                        <Label Content="进程占用" DockPanel.Dock="Left" />
+                        <Label
+                            Name="CPUPerc"
+                            DockPanel.Dock="Left"
+                            FlowDirection="RightToLeft">
+                            -
+                        </Label>
                     </DockPanel>
                 </Grid>
             </GroupBox>
-            <GroupBox Margin="3"
-                Header="控制"
-                Padding="3">
+            <GroupBox
+                Margin="3"
+                Padding="3"
+                Header="控制">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ui:Button Icon="Play24"
+                    <ui:Button
                         Margin="3"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Click="Start_Click"
                         Content="启动"
+                        Icon="Play24" />
+                    <ui:Button
+                        Grid.Column="1"
+                        Margin="3"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Click="Start_Click"/>
-                    <ui:Button Icon="Pause24"
-                        Margin="3"
+                        Click="Stop_Click"
                         Content="停止"
-                        Grid.Column="1"
+                        Icon="Pause24" />
+                    <ui:Button
+                        Grid.Row="1"
+                        Margin="3"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Click="Stop_Click"/>
-                    <ui:Button Icon="ArrowClockwise24"
-                        Margin="3"
+                        Click="Restart_Click"
                         Content="重启"
-                        Grid.Row="1"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        Click="Restart_Click"/>
-                    <ui:Button Icon="TabProhibited24"
-                        Margin="3"
-                        Content="结束进程"
+                        Icon="ArrowClockwise24" />
+                    <ui:Button
                         Grid.Row="1"
                         Grid.Column="1"
+                        Margin="3"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Click="Kill_Click"/>
+                        Click="Kill_Click"
+                        Content="结束进程"
+                        Icon="TabProhibited24" />
                 </Grid>
             </GroupBox>
         </StackPanel>
-        <GroupBox Margin="3"
-            Header="控制台"
-            Grid.Column="1"
+        <GroupBox
             Grid.RowSpan="2"
-            Grid.ColumnSpan="2">
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Margin="3"
+            Header="控制台">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Bottom">
-                    <ui:Button Margin="3"
+                    <ui:Button
+                        Margin="3"
                         Padding="0,3"
                         Appearance="Transparent"
+                        Click="Enter_Click"
                         DockPanel.Dock="Right"
-                        Icon="ChevronCircleUp24"
-                        Click="Enter_Click"/>
-                    <TextBox Name="InputBox"
+                        Icon="ChevronCircleUp24" />
+                    <TextBox
+                        Name="InputBox"
                         Margin="3"
                         DockPanel.Dock="Left"
-                        KeyDown="InputBox_KeyDown"/>
+                        KeyDown="InputBox_KeyDown" />
                 </DockPanel>
-                <wfi:WindowsFormsHost Margin="3"
-                    DockPanel.Dock="Top">
-                    <wf:WebBrowser x:Name="PanelWebBrowser"/>
+                <wfi:WindowsFormsHost Margin="3" DockPanel.Dock="Top">
+                    <wf:WebBrowser x:Name="PanelWebBrowser" />
                 </wfi:WindowsFormsHost>
             </DockPanel>
         </GroupBox>

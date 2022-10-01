@@ -21,6 +21,7 @@ namespace Serein.Ui
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
             SereinPluginsWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
         }
+
         private void Initialize()
         {
             InitWebBrowser();

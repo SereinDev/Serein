@@ -1,8 +1,8 @@
-﻿using Serein.Windows.Pages;
+﻿using Notification.Wpf;
+using Serein.Windows.Pages;
 using Serein.Windows.Pages.Function;
 using Serein.Windows.Pages.Server;
 using Serein.Windows.Pages.Settings;
-using Notification.Wpf;
 
 namespace Serein.Windows
 {

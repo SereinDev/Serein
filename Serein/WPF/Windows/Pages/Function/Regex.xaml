@@ -1,108 +1,114 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Function.Regex"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Function.Regex"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
-    mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Regex"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Title="Regex"
     AllowDrop="True"
-    Drop="UiPage_Drop">
+    Drop="UiPage_Drop"
+    mc:Ignorable="d">
     <ui:UiPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Controls/ListviewEx.xaml"/>
+                <ResourceDictionary Source="../../Controls/ListviewEx.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ui:UiPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ListView Name="RegexListView"
+        <ListView
+            Name="RegexListView"
             ContextMenuOpening="RegexListView_ContextMenuOpening"
-            SelectionMode="Single"
-            SelectionChanged="RegexListView_SelectionChanged">
+            SelectionChanged="RegexListView_SelectionChanged"
+            SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="正则表达式"
-                        DisplayMemberBinding="{Binding Expression}"/>
-                    <GridViewColumn Header="作用域"
-                        DisplayMemberBinding="{Binding Area_Text}"/>
-                    <GridViewColumn Header="管理权限"
-                        DisplayMemberBinding="{Binding IsAdmin_Text}"/>
-                    <GridViewColumn Header="备注"
-                        DisplayMemberBinding="{Binding Remark}"/>
-                    <GridViewColumn Header="命令"
-                        DisplayMemberBinding="{Binding Command}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Expression}" Header="正则表达式" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Area_Text}" Header="作用域" />
+                    <GridViewColumn DisplayMemberBinding="{Binding IsAdmin_Text}" Header="管理权限" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Remark}" Header="备注" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Command}" Header="命令" />
                 </GridView>
             </ListView.View>
             <ListView.Style>
                 <Style TargetType="{x:Type ListView}">
-                    <Setter Property="BorderThickness"
-                        Value="0"/>
-                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
                 <ContextMenu Name="RegexContextMenu">
-                    <ui:MenuItem Header="新增"
-                        SymbolIcon="Add24"
+                    <ui:MenuItem
                         Name="Add"
-                        Tag="Add"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="修改"
-                        SymbolIcon="Edit24"
+                        Click="MenuItem_Click"
+                        Header="新增"
+                        SymbolIcon="Add24"
+                        Tag="Add" />
+                    <ui:MenuItem
                         Name="Edit"
-                        Tag="Edit"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="删除"
-                        SymbolIcon="Delete24"
+                        Click="MenuItem_Click"
+                        Header="修改"
+                        SymbolIcon="Edit24"
+                        Tag="Edit" />
+                    <ui:MenuItem
                         Name="Delete"
-                        Tag="Delete"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="清空"
-                        SymbolIcon="DeleteDismiss24"
+                        Click="MenuItem_Click"
+                        Header="删除"
+                        SymbolIcon="Delete24"
+                        Tag="Delete" />
+                    <ui:MenuItem
                         Name="Clear"
-                        Tag="Clear"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="清空"
+                        SymbolIcon="DeleteDismiss24"
+                        Tag="Clear" />
                     <Separator />
-                    <ui:MenuItem Header="查看命令"
-                        SymbolIcon="DocumentFlowchart24"
+                    <ui:MenuItem
                         Name="LookupCommand"
-                        Tag="LookupCommand"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="查看变量"
-                        SymbolIcon="DocumentEndnote24"
+                        Click="MenuItem_Click"
+                        Header="查看命令"
+                        SymbolIcon="DocumentFlowchart24"
+                        Tag="LookupCommand" />
+                    <ui:MenuItem
                         Name="LookupVariables"
-                        Tag="LookupVariables"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="查看变量"
+                        SymbolIcon="DocumentEndnote24"
+                        Tag="LookupVariables" />
                     <Separator />
-                    <ui:MenuItem Header="刷新"
-                        SymbolIcon="ArrowClockwise24"
+                    <ui:MenuItem
                         Name="Refresh"
-                        Tag="Refresh"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="刷新"
+                        SymbolIcon="ArrowClockwise24"
+                        Tag="Refresh" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <StackPanel Grid.Row="1"
+        <StackPanel
+            Grid.Row="1"
             FlowDirection="RightToLeft"
             Orientation="Horizontal">
-            <ui:Button Margin="5"
-                Icon="ArrowDown24"
-                Tag="Down"
+            <ui:Button
                 x:Name="Down"
-                Click="Button_Click"/>
-            <ui:Button Margin="5"
-                Icon="ArrowUp24"
-                Tag="Up"
+                Margin="5"
+                Click="Button_Click"
+                Icon="ArrowDown24"
+                Tag="Down" />
+            <ui:Button
                 x:Name="Up"
-                Click="Button_Click"/>
+                Margin="5"
+                Click="Button_Click"
+                Icon="ArrowUp24"
+                Tag="Up" />
         </StackPanel>
     </Grid>
 </ui:UiPage>

@@ -1,61 +1,66 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Settings.Serein"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Settings.Serein"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Settings"
-    mc:Ignorable="d"
-    Scrollable="True"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Bot"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Title="Bot">
+    Scrollable="True"
+    mc:Ignorable="d">
     <StackPanel>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="获取更新"
-                         x:Name="EnableGetUpdate"
-                         Click="EnableGetUpdate_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="获取公告"
-                         x:Name="EnableGetAnnouncement"
-                         Click="EnableGetAnnouncement_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="使用暗黑主题"
-                         x:Name="UseDarkTheme"
-                         Click="UseDarkTheme_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="主题跟随系统"
-                         x:Name="ThemeFollowSystem"
-                         Click="ThemeFollowSystem_Click"/>
-        <Expander ExpandDirection="Down" Margin="0,15,0,7">
-            <Expander.Header>
-                <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                    Name="Version"/>
-            </Expander.Header>
-            <TextBlock TextWrapping="Wrap" Name="BuildInfo"/>
-        </Expander>
+        <ui:ToggleSwitch
+            x:Name="EnableGetUpdate"
+            Margin="0,7"
+            Click="EnableGetUpdate_Click"
+            Content="获取更新" />
+        <ui:ToggleSwitch
+            x:Name="EnableGetAnnouncement"
+            Margin="0,7"
+            Click="EnableGetAnnouncement_Click"
+            Content="获取公告" />
+        <ui:ToggleSwitch
+            x:Name="UseDarkTheme"
+            Margin="0,7"
+            Click="UseDarkTheme_Click"
+            Content="使用暗黑主题" />
+        <ui:ToggleSwitch
+            x:Name="ThemeFollowSystem"
+            Margin="0,7"
+            Click="ThemeFollowSystem_Click"
+            Content="主题跟随系统" />
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ui:Hyperlink 
-                    Content="GitHub仓库"
-                    NavigateUri="https://github.com/Zaitonn/Serein"
-                    Icon="Link48" />
-            <ui:Hyperlink 
-                    Content="下载最新版"
-                    NavigateUri="https://github.com/Zaitonn/Serein/releases/latest"
-                    Icon="Link48" 
-                Grid.Column="1"/>
-            <ui:Hyperlink 
-                    Content="文档"
-                    NavigateUri="https://serein.cc/"
-                    Icon="Link48"
-                Grid.Column="2"/>
+            <ui:Hyperlink
+                Content="GitHub仓库"
+                Icon="Link48"
+                NavigateUri="https://github.com/Zaitonn/Serein" />
+            <ui:Hyperlink
+                Grid.Column="1"
+                Content="下载最新版"
+                Icon="Link48"
+                NavigateUri="https://github.com/Zaitonn/Serein/releases/latest" />
+            <ui:Hyperlink
+                Grid.Column="2"
+                Content="文档"
+                Icon="Link48"
+                NavigateUri="https://serein.cc/" />
         </Grid>
+        <Expander Margin="0,15,0,7" ExpandDirection="Down">
+            <Expander.Header>
+                <TextBlock
+                    Name="Version"
+                    Grid.Column="1"
+                    VerticalAlignment="Center" />
+            </Expander.Header>
+            <TextBlock Name="BuildInfo" TextWrapping="Wrap" />
+        </Expander>
     </StackPanel>
 </ui:UiPage>

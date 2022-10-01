@@ -1,138 +1,150 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Settings.Server"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Settings.Server"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Settings"
-    mc:Ignorable="d"
-    Scrollable="True"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Server"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Title="Server">
+    Scrollable="True"
+    mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Text="启动路径"
-            ToolTip="111"
-            HorizontalAlignment="Left"/>
-        <Grid Margin="0,5,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox IsReadOnly="True"
-                Name="Path"/>
-            <ui:Button Icon="OpenFolder24"
-                Margin="5,0,0,0"
-                Content="选择文件"
-                Grid.Column="1"
-                x:Name="Select"
-                Click="Select_Click"/>
-        </Grid>
-        <TextBlock Text="关服指令（一行一条）"
-            HorizontalAlignment="Left"/>
-        <TextBox Margin="0,0,0,10"
-            AcceptsReturn="True"
-            Text="stop"
-            Name="StopCommands"
-            TextChanged="StopCommands_TextChanged"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="Serein崩溃时自动关服"
-            x:Name="AutoStop"
-            Click="AutoStop_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="非正常退出时自动重启"
-            x:Name="EnableRestart"
-            Click="EnableRestart_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="在控制台显示输入的命令"
-            x:Name="EnableOutputCommand"
-            Click="EnableOutputCommand_Click"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="使用Unicode字符"
-            Click="EnableUnicode_Click"
-            x:Name="EnableUnicode"/>
-        <ui:ToggleSwitch Margin="0,7"
-            Content="保存日志（./log/console）"
-            Click="EnableLog_Click"
-            x:Name="EnableLog"/>
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,15,0,5" />
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="启动路径"
+            ToolTip="111" />
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="Path" IsReadOnly="True" />
+            <ui:Button
+                x:Name="Select"
+                Grid.Column="1"
+                Margin="5,0,0,0"
+                Click="Select_Click"
+                Content="选择文件"
+                Icon="OpenFolder24" />
+        </Grid>
+        <TextBlock HorizontalAlignment="Left" Text="关服指令（一行一条）" />
+        <TextBox
+            Name="StopCommands"
+            Margin="0,0,0,10"
+            AcceptsReturn="True"
+            Text="stop"
+            TextChanged="StopCommands_TextChanged" />
+        <ui:ToggleSwitch
+            x:Name="AutoStop"
+            Margin="0,7"
+            Click="AutoStop_Click"
+            Content="Serein崩溃时自动关服" />
+        <ui:ToggleSwitch
+            x:Name="EnableRestart"
+            Margin="0,7"
+            Click="EnableRestart_Click"
+            Content="非正常退出时自动重启" />
+        <ui:ToggleSwitch
+            x:Name="EnableOutputCommand"
+            Margin="0,7"
+            Click="EnableOutputCommand_Click"
+            Content="在控制台显示输入的命令" />
+        <ui:ToggleSwitch
+            x:Name="EnableUnicode"
+            Margin="0,7"
+            Click="EnableUnicode_Click"
+            Content="使用Unicode字符" />
+        <ui:ToggleSwitch
+            x:Name="EnableLog"
+            Margin="0,7"
+            Click="EnableLog_Click"
+            Content="保存日志（./log/console）" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            <StackPanel Margin="0,7">
-                <TextBlock Text="输出样式"/>
-                <ComboBox SelectedIndex="1"
-                    HorizontalAlignment="Left"
+            <StackPanel>
+                <TextBlock Text="输出样式" />
+                <ComboBox
                     Name="OutputStyle"
+                    HorizontalAlignment="Left"
+                    SelectedIndex="1"
                     SelectionChanged="OutputStyle_SelectionChanged">
-                    <ComboBoxItem Content="单色"/>
-                    <ComboBoxItem Content="原始彩色"/>
-                    <ComboBoxItem Content="语法高亮"/>
-                    <ComboBoxItem Content="混合"/>
+                    <ComboBoxItem Content="单色" />
+                    <ComboBoxItem Content="原始彩色" />
+                    <ComboBoxItem Content="语法高亮" />
+                    <ComboBoxItem Content="混合" />
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,7"
-                Grid.Column="1">
-                <TextBlock Text="服务端类型"/>
-                <ComboBox SelectedIndex="1"
-                    HorizontalAlignment="Left"
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="服务端类型" />
+                <ComboBox
                     Name="Type"
+                    HorizontalAlignment="Left"
+                    SelectedIndex="1"
                     SelectionChanged="Type_SelectionChanged">
-                    <ComboBoxItem Content="未知/其他"/>
-                    <ComboBoxItem Content="基岩版"/>
-                    <ComboBoxItem Content="Java版"/>
+                    <ComboBoxItem Content="未知/其他" />
+                    <ComboBoxItem Content="基岩版" />
+                    <ComboBoxItem Content="Java版" />
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,7"
-                Grid.Row="1">
-                <TextBlock Text="输入编码"/>
-                <ComboBox SelectedIndex="0"
-                    HorizontalAlignment="Left"
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="输入编码" />
+                <ComboBox
                     Name="InputEncoding"
-                    SelectionChanged="InputEncoding_SelectionChanged">
-                    <ComboBoxItem Content="UTF-8"/>
-                    <ComboBoxItem Content="UTF-8 (With BOM)"/>
-                    <ComboBoxItem Content="UTF-16 (LittleEndian)"/>
-                    <ComboBoxItem Content="UTF-16 (BigEndian)"/>
-                    <ComboBoxItem Content="UTF-32"/>
-                    <ComboBoxItem Content="ASCII"/>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Margin="0,7"
-                Grid.Row="2">
-                <TextBlock Text="输出编码"/>
-                <ComboBox SelectedIndex="0"
                     HorizontalAlignment="Left"
-                    Name="OutputEncoding"
-                    SelectionChanged="OutputEncoding_SelectionChanged">
-                    <ComboBoxItem Content="UTF-8"/>
-                    <ComboBoxItem Content="UTF-8 (With BOM)"/>
-                    <ComboBoxItem Content="UTF-16 (LittleEndian)"/>
-                    <ComboBoxItem Content="UTF-16 (BigEndian)"/>
-                    <ComboBoxItem Content="UTF-32"/>
-                    <ComboBoxItem Content="ASCII"/>
+                    SelectedIndex="0"
+                    SelectionChanged="InputEncoding_SelectionChanged">
+                    <ComboBoxItem Content="UTF-8" />
+                    <ComboBoxItem Content="UTF-8 (With BOM)" />
+                    <ComboBoxItem Content="UTF-16 (LittleEndian)" />
+                    <ComboBoxItem Content="UTF-16 (BigEndian)" />
+                    <ComboBoxItem Content="UTF-32" />
+                    <ComboBoxItem Content="ASCII" />
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="0,7"
-                Grid.Column="1"
-                Grid.Row="1">
-                <TextBlock Text="服务器端口"/>
-                <ui:NumberBox IntegersOnly="True"
+            <StackPanel Grid.Row="2">
+                <TextBlock Text="输出编码" />
+                <ComboBox
+                    Name="OutputEncoding"
+                    HorizontalAlignment="Left"
+                    SelectedIndex="0"
+                    SelectionChanged="OutputEncoding_SelectionChanged">
+                    <ComboBoxItem Content="UTF-8" />
+                    <ComboBoxItem Content="UTF-8 (With BOM)" />
+                    <ComboBoxItem Content="UTF-16 (LittleEndian)" />
+                    <ComboBoxItem Content="UTF-16 (BigEndian)" />
+                    <ComboBoxItem Content="UTF-32" />
+                    <ComboBoxItem Content="ASCII" />
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <TextBlock Text="服务器端口" />
+                <ui:NumberBox
+                    x:Name="Port"
+                    HorizontalAlignment="Left"
                     Icon="Server24"
+                    IntegersOnly="True"
                     Max="65535"
                     Min="0"
                     Step="1"
-                    Value="19132"
-                    x:Name="Port"
-                    HorizontalAlignment="Left"
-                    TextChanged="Port_TextChanged"/>
+                    TextChanged="Port_TextChanged"
+                    Value="19132" />
             </StackPanel>
         </Grid>
     </StackPanel>

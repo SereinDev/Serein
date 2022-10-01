@@ -7,7 +7,6 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         private delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
-
         private void PanelConsoleWebBrowser_AppendText(object[] objects) => PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
 
         public void PanelConsoleWebBrowser_Invoke(string str)

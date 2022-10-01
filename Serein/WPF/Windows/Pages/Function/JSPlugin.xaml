@@ -1,20 +1,21 @@
-﻿<ui:UiPage x:Class="Serein.Windows.Pages.Function.JSPlugin"
+﻿<ui:UiPage
+    x:Class="Serein.Windows.Pages.Function.JSPlugin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
-    xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
-    mc:Ignorable="d"
+    xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+    Title="JSPlugin"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Title="JSPlugin">
+    mc:Ignorable="d">
     <ui:UiPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Controls/ListviewEx.xaml"/>
+                <ResourceDictionary Source="../../Controls/ListviewEx.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ui:UiPage.Resources>
@@ -22,63 +23,63 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="7" />
-            <ColumnDefinition Width="*"
-                MinWidth="100" />
+            <ColumnDefinition Width="*" MinWidth="100" />
         </Grid.ColumnDefinitions>
-        <GroupBox Margin="3"
+        <GroupBox
+            Margin="3"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Header="控制台">
             <wfi:WindowsFormsHost Margin="3">
-                <wf:WebBrowser x:Name="PluginWebBrowser"/>
+                <wf:WebBrowser x:Name="PluginWebBrowser" />
             </wfi:WindowsFormsHost>
         </GroupBox>
-        <GridSplitter Grid.Column="1"
+        <GridSplitter
+            Grid.Column="1"
             Width="5"
             HorizontalAlignment="Stretch" />
-        <ListView Name="JSPluginListView"
-                   Margin="3"
+        <ListView
+            Name="JSPluginListView"
             Grid.Column="2"
+            Margin="3"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="名称"
-                        DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="版本"
-                        DisplayMemberBinding="{Binding Version}"/>
-                    <GridViewColumn Header="作者"
-                        DisplayMemberBinding="{Binding Author}"/>
-                    <GridViewColumn Header="介绍"
-                        DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="名称" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Version}" Header="版本" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Author}" Header="作者" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="介绍" />
                 </GridView>
             </ListView.View>
             <ListView.Style>
                 <Style TargetType="{x:Type ListView}">
-                    <Setter Property="BorderThickness"
-                        Value="0"/>
-                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
                 <ContextMenu Name="TaskContextMenu">
-                    <ui:MenuItem Header="重新加载所有插件"
-                        SymbolIcon="ArrowClockwise24"
+                    <ui:MenuItem
                         Name="Reload"
-                        Tag="Reload"
-                        Click="MenuItem_Click"/>
-                    <ui:MenuItem Header="清空控制台"
-                        SymbolIcon="Delete24"
+                        Click="MenuItem_Click"
+                        Header="重新加载所有插件"
+                        SymbolIcon="ArrowClockwise24"
+                        Tag="Reload" />
+                    <ui:MenuItem
                         Name="ClearConsole"
-                        Tag="ClearConsole"
-                        Click="MenuItem_Click"/>
-                    <Separator/>
-                    <ui:MenuItem Header="查看文档"
-                        SymbolIcon="DocumentFlowchart24"
+                        Click="MenuItem_Click"
+                        Header="清空控制台"
+                        SymbolIcon="Delete24"
+                        Tag="ClearConsole" />
+                    <Separator />
+                    <ui:MenuItem
                         Name="LookupDocs"
-                        Tag="LookupDocs"
-                        Click="MenuItem_Click"/>
+                        Click="MenuItem_Click"
+                        Header="查看文档"
+                        SymbolIcon="DocumentFlowchart24"
+                        Tag="LookupDocs" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
