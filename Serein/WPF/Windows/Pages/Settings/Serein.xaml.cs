@@ -10,7 +10,7 @@ namespace Serein.Windows.Pages.Settings
         {
             InitializeComponent();
             Load();
-            Window.Settings.Serein = this;
+            Catalog.Settings.Serein = this;
         }
 
         private void Load()

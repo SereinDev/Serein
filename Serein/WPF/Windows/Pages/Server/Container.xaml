@@ -15,6 +15,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ui:NavigationCompact
+            x:Name="Navigation"
             Grid.Column="0"
             Margin="6,0,6,0"
             Frame="{Binding ElementName=RootFrame}"

@@ -24,7 +24,7 @@ namespace Serein.Windows.Pages.Server
         {
             InitializeComponent();
             Load();
-            Window.Server.Plugins = this;
+            Catalog.Server.Plugins = this;
         }
 
         public void Load()
@@ -69,7 +69,7 @@ namespace Serein.Windows.Pages.Server
                 string Msg = PluginManager.Add(Dialog.FileNames.ToList());
                 if (!string.IsNullOrEmpty(Msg))
                 {
-                    Window.MainWindow.OpenSnackbar("导入失败", Msg, SymbolRegular.ErrorCircle24);
+                    Catalog.MainWindow.OpenSnackbar("导入失败", Msg, SymbolRegular.ErrorCircle24);
                 }
                 Load();
             }

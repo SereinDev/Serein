@@ -10,7 +10,7 @@ namespace Serein.Windows.Pages
         public Debug()
         {
             InitializeComponent();
-            Window.Debug = this;
+            Catalog.Debug = this;
         }
 
         public void AppendText(string Line)

@@ -6,18 +6,20 @@ using Serein.Windows.Pages.Settings;
 
 namespace Serein.Windows
 {
-    internal static class Window
+    internal static class Catalog
     {
         public static NotificationManager Notification = new NotificationManager();
-
         public static MainWindow MainWindow { get; set; }
         public static Home Home { get; set; }
         public static Debug Debug { get; set; }
+
         public static class Server
         {
             public static Panel Panel { get; set; }
             public static Plugins Plugins { get; set; }
+            public static Pages.Server.Container Container { get; set; }
         }
+
         public static class Function
         {
             public static Regex Regex { get; set; }
@@ -25,13 +27,16 @@ namespace Serein.Windows
             public static Member Member { get; set; }
             public static JSPlugin JSPlugin { get; set; }
             public static Pages.Function.Bot Bot { get; set; }
+            public static Pages.Function.Container Container { get; set; }
         }
+
         public static class Settings
         {
             public static Event Event { get; set; }
             public static Pages.Settings.Bot Bot { get; set; }
             public static Pages.Settings.Server Server { get; set; }
             public static Pages.Settings.Serein Serein { get; set; }
+            public static Pages.Settings.Container Container { get; set; }
         }
     }
 }

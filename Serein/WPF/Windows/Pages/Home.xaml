@@ -9,6 +9,7 @@
     Title="Home"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="UiPage_Loaded"
     Scrollable="True"
     mc:Ignorable="d">
     <StackPanel>
@@ -38,6 +39,7 @@
                     <DockPanel>
                         <TextBlock Text="状态" />
                         <TextBlock
+                            Name="Server_Status"
                             DockPanel.Dock="Right"
                             Text="未启动"
                             TextAlignment="Right" />
@@ -45,6 +47,7 @@
                     <DockPanel>
                         <TextBlock Text="在线人数" />
                         <TextBlock
+                            Name="Server_Online"
                             DockPanel.Dock="Right"
                             Text="- / -"
                             TextAlignment="Right" />
@@ -52,6 +55,7 @@
                     <DockPanel>
                         <TextBlock Text="进程占用" />
                         <TextBlock
+                            Name="Server_Occupancy"
                             DockPanel.Dock="Right"
                             Text="-"
                             TextAlignment="Right" />
@@ -59,6 +63,7 @@
                     <DockPanel>
                         <TextBlock Text="运行时长" />
                         <TextBlock
+                            Name="Server_Time"
                             DockPanel.Dock="Right"
                             Text="-"
                             TextAlignment="Right" />
@@ -73,11 +78,22 @@
                     <TextBlock Text="CPU" />
                 </ui:Card.Footer>
                 <StackPanel>
-                    <ui:ProgressRing IsIndeterminate="True" Progress="20" />
+                    <ProgressBar
+                        Name="CPU_Percent_Bar"
+                        Margin="0,5,0,5"
+                        IsIndeterminate="True"
+                        Value="20" />
                     <TextBlock
-                        Margin="6"
+                        Name="CPU_Percent"
+                        HorizontalAlignment="Right"
                         Text="-%"
                         TextAlignment="Center" />
+                    <TextBlock
+                        Name="CPU_Name"
+                        Height="40"
+                        Margin="0,10,0,0"
+                        Text="未知的CPU"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </ui:Card>
             <ui:Card
@@ -88,10 +104,14 @@
                     <TextBlock Text="内存使用" />
                 </ui:Card.Footer>
                 <StackPanel>
-                    <ui:ProgressRing IsIndeterminate="True" Progress="20" />
+                    <ui:ProgressRing
+                        x:Name="RAM_Percent_Ring"
+                        IsIndeterminate="True"
+                        Progress="20" />
                     <TextBlock
+                        x:Name="RAM_Percent"
                         Margin="0,5,0,6"
-                        Text="- / - GB    -%"
+                        Text="- / - MB    -%"
                         TextAlignment="Center" />
                 </StackPanel>
             </ui:Card>
@@ -108,7 +128,11 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ui:CardAction Margin="5" Icon="Server24">
+            <ui:CardAction
+                Margin="5"
+                Click="CardAction_Click"
+                Icon="Server24"
+                Tag="Server">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"
@@ -123,7 +147,9 @@
             <ui:CardAction
                 Grid.Column="1"
                 Margin="5"
-                Icon="Bot24">
+                Click="CardAction_Click"
+                Icon="Bot24"
+                Tag="Bot">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"
@@ -138,6 +164,8 @@
             <ui:CardAction
                 Grid.Column="2"
                 Margin="5"
+                Tag="Regex"
+                Click="CardAction_Click"
                 Icon="TextBulletListSquare24">
                 <StackPanel>
                     <TextBlock
@@ -153,6 +181,8 @@
             <ui:CardAction
                 Grid.Row="1"
                 Margin="5"
+                Tag="Task"
+                Click="CardAction_Click"
                 Icon="Timer24">
                 <StackPanel>
                     <TextBlock
@@ -169,6 +199,8 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="5"
+                Tag="Plugins"
+                Click="CardAction_Click"
                 Icon="PuzzleCubePiece20">
                 <StackPanel>
                     <TextBlock
@@ -185,7 +217,9 @@
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="5"
-                Icon="Settings24">
+                Click="CardAction_Click"
+                Icon="Settings24"
+                Tag="Settings">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"

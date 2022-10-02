@@ -12,7 +12,7 @@ namespace Serein.Windows.Pages.Settings
         {
             InitializeComponent();
             Load();
-            Window.Settings.Bot = this;
+            Catalog.Settings.Bot = this;
         }
 
         private void Load()

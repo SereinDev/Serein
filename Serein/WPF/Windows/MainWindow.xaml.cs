@@ -19,7 +19,7 @@ namespace Serein.Windows
         public MainWindow()
         {
             InitializeComponent();
-            Window.MainWindow = this;
+            Catalog.MainWindow = this;
             Task.Run(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
@@ -53,7 +53,7 @@ namespace Serein.Windows
             {
                 ShowInTaskbar = false;
                 Hide();
-                Window.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+                Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Serein.Windows
         private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) => MemberEditor.Hide();
         private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Window.Function.Member.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text))
+            if (Catalog.Function.Member.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text))
             {
                 MemberEditor.Hide();
             }
@@ -147,7 +147,7 @@ namespace Serein.Windows
 
         private void RegexEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Window.Function.Regex.Confirm(
+            if (Catalog.Function.Regex.Confirm(
                 RegexEditor_Area.SelectedIndex,
                 RegexEditor_IsAdmain.IsChecked ?? false,
                 RegexEditor_Regex.Text,
@@ -172,7 +172,7 @@ namespace Serein.Windows
 
         private void TaskEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Window.Function.Task.Confirm(TaskEditor_Cron.Text, TaskEditor_Command.Text, TaskEditor_Remark.Text))
+            if (Catalog.Function.Task.Confirm(TaskEditor_Cron.Text, TaskEditor_Command.Text, TaskEditor_Remark.Text))
             {
                 TaskEditor.Hide();
             }
@@ -202,7 +202,7 @@ namespace Serein.Windows
 
         private void EventEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Window.Settings.Event.Confirm(EventEditor_Command.Text))
+            if (Catalog.Settings.Event.Confirm(EventEditor_Command.Text))
             {
                 EventEditor.Hide();
             }

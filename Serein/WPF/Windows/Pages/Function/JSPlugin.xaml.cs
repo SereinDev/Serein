@@ -16,7 +16,7 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
             PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=plugin");
             Load();
-            Window.Function.JSPlugin = this;
+            Catalog.Function.JSPlugin = this;
         }
 
         public void AppendText(string Line)

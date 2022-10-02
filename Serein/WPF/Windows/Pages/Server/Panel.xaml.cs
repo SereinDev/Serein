@@ -19,7 +19,7 @@ namespace Serein.Windows.Pages.Server
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
-            Window.Server.Panel = this;
+            Catalog.Server.Panel = this;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e) => ServerManager.Start();
@@ -48,15 +48,15 @@ namespace Serein.Windows.Pages.Server
 
         public void AppendText(string Line)
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Line });
-            }));
+            });
         }
 
         private void UpdateInfos()
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 Status.Content = ServerManager.Status ? "已启动" : "未启动";
                 Version.Content = ServerManager.Status ? ServerManager.Version : "-";
@@ -64,7 +64,7 @@ namespace Serein.Windows.Pages.Server
                 Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
                 CPUPerc.Content = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2") : "-";
-            }));
+            });
         }
     }
 }

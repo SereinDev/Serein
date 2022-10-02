@@ -7,6 +7,7 @@ namespace Serein.Windows.Pages.Function
         public Container()
         {
             InitializeComponent();
+            Catalog.Function.Container = this;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Serein.Windows.Pages.Settings
         public Event()
         {
             InitializeComponent();
-            Window.Settings.Event = this;
+            Catalog.Settings.Event = this;
         }
 
         private int ActionType = 0;
@@ -29,13 +29,13 @@ namespace Serein.Windows.Pages.Settings
                 {
                     case "Add":
                         ActionType = 1;
-                        Window.MainWindow.OpenEventrEditor();
+                        Catalog.MainWindow.OpenEventrEditor();
                         break;
                     case "Edit":
                         if (EventListView.SelectedItem is string SelectedItem && SelectedItem != null)
                         {
                             ActionType = 2;
-                            Window.MainWindow.OpenEventrEditor(SelectedItem);
+                            Catalog.MainWindow.OpenEventrEditor(SelectedItem);
                         }
                         break;
                     case "Delete":
@@ -55,7 +55,7 @@ namespace Serein.Windows.Pages.Settings
         {
             if (Base.Command.GetType(Command) < 0)
             {
-                Window.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
             }
             else if (ActionType == 1)

@@ -7,6 +7,7 @@ namespace Serein.Windows.Pages.Server
         public Container()
         {
             InitializeComponent();
+            Catalog.Server.Container= this;
         }
     }
 }

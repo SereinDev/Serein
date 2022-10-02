@@ -24,7 +24,7 @@ namespace Serein
                 case 999:
                     if (Global.Settings.Serein.Debug)
                     {
-                        Window.Debug?.AppendText($"{DateTime.Now:T} {Line}");
+                        Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
                         if (!Directory.Exists(Global.Path + "\\logs\\debug"))
                         {
                             Directory.CreateDirectory(Global.Path + "\\logs\\debug");
@@ -41,37 +41,37 @@ namespace Serein
                     }
                     break;
                 case 10:
-                    Window.Server.Panel?.AppendText(Line);
+                    Catalog.Server.Panel?.AppendText(Line);
                     break;
                 case 11:
-                    Window.Server.Panel?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Catalog.Server.Panel?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                     break;
                 case 20:
-                    Window.Function.Bot?.AppendText(Line);
+                    Catalog.Function.Bot?.AppendText(Line);
                     break;
                 case 21:
-                    Window.Function.Bot?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.Bot?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                     break;
                 case 22:
-                    Window.Function.Bot?.AppendText("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.Bot?.AppendText("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
                     break;
                 case 23:
-                    Window.Function.Bot?.AppendText("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.Bot?.AppendText("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
                     break;
                 case 24:
-                    Window.Function.Bot?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.Bot?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                     break;
                 case 30:
-                    Window.Function.JSPlugin?.AppendText(Line);
+                    Catalog.Function.JSPlugin?.AppendText(Line);
                     break;
                 case 31:
-                    Window.Function.JSPlugin?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.JSPlugin?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                     break;
                 case 32:
-                    Window.Function.JSPlugin?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    Catalog.Function.JSPlugin?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                     break;
                 case 33:
-                    Window.Function.JSPlugin?.AppendText(Log.EscapeLog(Line));
+                    Catalog.Function.JSPlugin?.AppendText(Log.EscapeLog(Line));
                     break;
             }
         }
@@ -88,7 +88,7 @@ namespace Serein
         {
             if (Buttons == 0)
             {
-                Window.MainWindow.OpenSnackbar(
+                Catalog.MainWindow.OpenSnackbar(
                     "执行失败",
                     Text.Replace(":(\n", string.Empty),
                     Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24

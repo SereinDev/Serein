@@ -16,7 +16,7 @@ namespace Serein.Windows.Pages.Function
         {
             InitializeComponent();
             Load();
-            Window.Function.Regex = this;
+            Catalog.Function.Regex = this;
         }
 
         private void Load()
@@ -56,20 +56,20 @@ namespace Serein.Windows.Pages.Function
             {
                 if (ActionType != 0)
                 {
-                    Window.MainWindow.RegexEditor.Hide();
+                    Catalog.MainWindow.RegexEditor.Hide();
                     ActionType = 0;
                 }
                 string Tag = Item.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
-                        Window.MainWindow.OpenRegexEditor();
+                        Catalog.MainWindow.OpenRegexEditor();
                         ActionType = 1;
                         break;
                     case "Edit":
                         if (RegexListView.SelectedItem is Items.Regex SelectedItem && SelectedItem != null)
                         {
-                            Window.MainWindow.OpenRegexEditor(
+                            Catalog.MainWindow.OpenRegexEditor(
                                 SelectedItem.Area,
                                 SelectedItem.IsAdmin,
                                 SelectedItem.Expression,
@@ -110,7 +110,7 @@ namespace Serein.Windows.Pages.Function
         {
             if (Base.Command.GetType(Command) < 0)
             {
-                Window.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
             else
             {
@@ -161,7 +161,7 @@ namespace Serein.Windows.Pages.Function
                 }
                 catch
                 {
-                    Window.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
+                    Catalog.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
                 }
             }
             return false;
@@ -172,7 +172,7 @@ namespace Serein.Windows.Pages.Function
             Array Data = (Array)e.Data.GetData(DataFormats.FileDrop);
             if (Data.Length > 0)
             {
-                Window.MainWindow.OpenSnackbar("", Data.GetValue(0).ToString(), SymbolRegular.Sanitize20);
+                Catalog.MainWindow.OpenSnackbar("", Data.GetValue(0).ToString(), SymbolRegular.Sanitize20);
             }
         }
 

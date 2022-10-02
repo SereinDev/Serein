@@ -31,23 +31,23 @@ namespace Serein.Windows
                     if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
                         Version != Global.VERSION && OldVersion != Version)
                     {
-                        Window.Notification.Show("Serein", "发现新版本:\n" + Version);
-                        Window.Settings.Serein?.UpdateVersion($"（发现新版本:{Version}，你可以点击下方链接获取最新版）");
+                        Catalog.Notification.Show("Serein", "发现新版本:\n" + Version);
+                        Catalog.Settings.Serein?.UpdateVersion($"（发现新版本:{Version}，你可以点击下方链接获取最新版）");
                         OldVersion = Version;
                     }
                     else if (OldVersion != Version)
                     {
-                        Window.Notification.Show(
+                        Catalog.Notification.Show(
                             "Serein",
                             "获取更新成功\n" +
                             "当前已是最新版:)");
                         OldVersion = Version;
-                        Window.Settings.Serein?.UpdateVersion("（已是最新版qwq）");
+                        Catalog.Settings.Serein?.UpdateVersion("（已是最新版qwq）");
                     }
                 }
                 catch (Exception e)
                 {
-                    Window.Notification.Show("Serein", "更新获取异常：\n" + e.Message);
+                    Catalog.Notification.Show("Serein", "更新获取异常：\n" + e.Message);
                 }
             }
         }

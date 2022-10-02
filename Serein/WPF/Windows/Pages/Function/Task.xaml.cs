@@ -16,7 +16,7 @@ namespace Serein.Windows.Pages.Function
         {
             InitializeComponent();
             Load();
-            Window.Function.Task = this;
+            Catalog.Function.Task = this;
         }
 
         private void Load()
@@ -47,7 +47,7 @@ namespace Serein.Windows.Pages.Function
         {
             if (Base.Command.GetType(Command) == -1)
             {
-                Window.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace Serein.Windows.Pages.Function
                 }
                 catch
                 {
-                    Window.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
+                    Catalog.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
                 }
             }
             return false;
@@ -104,7 +104,7 @@ namespace Serein.Windows.Pages.Function
             {
                 if (ActionType != 0)
                 {
-                    Window.MainWindow.TaskEditor.Hide();
+                    Catalog.MainWindow.TaskEditor.Hide();
                     ActionType = 0;
                 }
                 Items.Task SelectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Items.Task : null;
@@ -112,13 +112,13 @@ namespace Serein.Windows.Pages.Function
                 switch (Tag)
                 {
                     case "Add":
-                        Window.MainWindow.OpenTaskEditor();
+                        Catalog.MainWindow.OpenTaskEditor();
                         ActionType = 1;
                         break;
                     case "Edit":
                         if (SelectedItem != null)
                         {
-                            Window.MainWindow.OpenTaskEditor(SelectedItem.Cron, SelectedItem.Command, SelectedItem.Remark);
+                            Catalog.MainWindow.OpenTaskEditor(SelectedItem.Cron, SelectedItem.Command, SelectedItem.Remark);
                             ActionType = 2;
                         }
                         break;

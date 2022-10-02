@@ -18,7 +18,7 @@ namespace Serein.Windows.Pages.Function
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
-            Window.Function.Bot = this;
+            Catalog.Function.Bot = this;
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)

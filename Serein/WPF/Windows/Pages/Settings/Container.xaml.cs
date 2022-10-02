@@ -7,6 +7,7 @@ namespace Serein.Windows.Pages.Settings
         public Container()
         {
             InitializeComponent();
+            Catalog.Settings.Container = this;
         }
     }
 }

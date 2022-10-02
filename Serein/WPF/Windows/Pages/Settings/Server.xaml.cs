@@ -11,7 +11,7 @@ namespace Serein.Windows.Pages.Settings
         {
             InitializeComponent();
             Load();
-            Window.Settings.Server = this;
+            Catalog.Settings.Server = this;
         }
 
         private void Load()
@@ -50,7 +50,7 @@ namespace Serein.Windows.Pages.Settings
             {
                 Path.Text = dialog.FileName;
                 Global.Settings.Server.Path = dialog.FileName;
-                if (Window.Server.Plugins != null) { Window.Server.Plugins.Load(); }
+                if (Catalog.Server.Plugins != null) { Catalog.Server.Plugins.Load(); }
             }
         }
     }
