@@ -44,7 +44,7 @@ namespace Serein.Windows.Pages
                 RAM_Percent_Ring.IsIndeterminate = false;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
-                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2")+"%" : "-";
+                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2") + "%" : "-";
                 if (ServerManager.Status && Global.Settings.Server.Type != 0)
                 {
                     Motd _Motd;
@@ -79,7 +79,7 @@ namespace Serein.Windows.Pages
                 case null:
                     break;
                 case "Server":
-                    Catalog.MainWindow.Navigation.Navigate(1); 
+                    Catalog.MainWindow.Navigation.Navigate(1);
                     Catalog.Server.Container?.Navigation?.Navigate(0);
                     break;
                 case "Regex":
