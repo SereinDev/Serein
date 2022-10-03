@@ -9,6 +9,7 @@
     Title="Task"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    AllowDrop="True"
     mc:Ignorable="d">
     <ui:UiPage.Resources>
         <ResourceDictionary>

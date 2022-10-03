@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using WebSocket4Net;
@@ -33,9 +36,9 @@ namespace Serein.Base
             else if (!Status)
             {
                 Logger.Out(20, "#clear");
-                Message.MessageReceived = "-";
-                Message.MessageSent = "-";
-                Message.SelfId = "-";
+                Matcher.MessageReceived = "-";
+                Matcher.MessageSent = "-";
+                Matcher.SelfId = "-";
                 try
                 {
                     WSClient = new WebSocket(
@@ -185,9 +188,20 @@ namespace Serein.Base
             }
             try
             {
-                Message.ProcessMsgFromBot(e.Message);
+                Matcher.Process((JObject)JsonConvert.DeserializeObject(WebUtility.HtmlDecode(DeUnicode(e.Message))));
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 处理Unicode转义
+        /// </summary>
+        /// <param name="str">文本</param>
+        /// <returns>处理后文本</returns>
+        public static string DeUnicode(string str)
+        {
+            Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+            return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
         }
     }
 }

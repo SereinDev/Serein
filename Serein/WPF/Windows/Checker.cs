@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Serein.Windows
@@ -17,7 +18,7 @@ namespace Serein.Windows
         {
             VersionTimer.Elapsed += (sender, e) => CheckVersion();
             VersionTimer.Start();
-            CheckVersion();
+            Task.Run(CheckVersion);
         }
 
         private static void CheckVersion()

@@ -1219,7 +1219,9 @@ namespace Serein.Ui
             // SettingSereinVersion
             // 
             resources.ApplyResources(this.SettingSereinVersion, "SettingSereinVersion");
+            this.SettingSereinVersion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingSereinVersion.Name = "SettingSereinVersion";
+            this.SettingSereinVersion.Click += new System.EventHandler(this.SettingSereinVersion_Click);
             // 
             // SettingSereinEnableGetAnnouncement
             // 

@@ -19,9 +19,9 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Regex = this;
         }
 
-        private void Load()
+        public void Load(string FileName = null)
         {
-            Loader.ReadRegex();
+            Loader.ReadRegex(FileName);
             RegexListView.Items.Clear();
             foreach (Items.Regex Item in Global.RegexItems)
             {
@@ -165,15 +165,6 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             return false;
-        }
-
-        private void UiPage_Drop(object sender, DragEventArgs e)
-        {
-            Array Data = (Array)e.Data.GetData(DataFormats.FileDrop);
-            if (Data.Length > 0)
-            {
-                Catalog.MainWindow.OpenSnackbar("", Data.GetValue(0).ToString(), SymbolRegular.Sanitize20);
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

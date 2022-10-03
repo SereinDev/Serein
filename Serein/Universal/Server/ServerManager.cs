@@ -345,11 +345,11 @@ namespace Serein.Server
                     {
                         string TempLine_ = TempLine + "\n" + Line;
                         TempLine = string.Empty;
-                        Base.Message.ProcessMsgFromConsole(TempLine_);
+                        Base.Matcher.Process(TempLine_);
                     }
                     else
                     {
-                        Base.Message.ProcessMsgFromConsole(Line);
+                        Base.Matcher.Process(Line);
                     }
                 }
                 JSFunc.Trigger("onServerOutput", Line);

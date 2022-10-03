@@ -9,8 +9,8 @@
     Title="Home"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="UiPage_Loaded"
     Scrollable="True"
+    AllowDrop="True"
     mc:Ignorable="d">
     <StackPanel>
         <TextBlock
@@ -80,7 +80,7 @@
                 <StackPanel>
                     <ProgressBar
                         Name="CPU_Percent_Bar"
-                        Margin="0,5,0,5"
+                        Margin="0,5,0,7"
                         IsIndeterminate="True"
                         Value="20" />
                     <TextBlock
@@ -104,13 +104,10 @@
                     <TextBlock Text="内存使用" />
                 </ui:Card.Footer>
                 <StackPanel>
-                    <ui:ProgressRing
-                        x:Name="RAM_Percent_Ring"
-                        IsIndeterminate="True"
-                        Progress="20" />
+                    <ui:ProgressRing x:Name="RAM_Percent_Ring" Progress="0" />
                     <TextBlock
                         x:Name="RAM_Percent"
-                        Margin="0,5,0,6"
+                        Margin="0,7"
                         Text="- / - MB    -%"
                         TextAlignment="Center" />
                 </StackPanel>
@@ -164,9 +161,9 @@
             <ui:CardAction
                 Grid.Column="2"
                 Margin="5"
-                Tag="Regex"
                 Click="CardAction_Click"
-                Icon="TextBulletListSquare24">
+                Icon="TextBulletListSquare24"
+                Tag="Regex">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"
@@ -181,9 +178,9 @@
             <ui:CardAction
                 Grid.Row="1"
                 Margin="5"
-                Tag="Task"
                 Click="CardAction_Click"
-                Icon="Timer24">
+                Icon="Timer24"
+                Tag="Task">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"
@@ -199,9 +196,9 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="5"
-                Tag="Plugins"
                 Click="CardAction_Click"
-                Icon="PuzzleCubePiece20">
+                Icon="PuzzleCubePiece20"
+                Tag="Plugins">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"

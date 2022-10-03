@@ -9,6 +9,7 @@
     Title="Event"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    AllowDrop="True"
     Scrollable="True"
     mc:Ignorable="d">
     <Grid>

@@ -2,8 +2,10 @@
 using Serein.Base;
 using Serein.Server;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -214,5 +216,85 @@ namespace Serein.Windows
         }
 
         #endregion
+
+        private void UiWindow_Drop(object sender, DragEventArgs e)
+        {
+            Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
+            string FileName = string.Empty;
+            List<string> SingleList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
+            if (
+                data.Length == 1 &&
+                SingleList.Contains(
+                    Path.GetExtension(
+                        data.GetValue(0)?.ToString()
+                        ).ToLower()
+                    )
+                )
+            {
+                Focus();
+                FileName = data.GetValue(0)?.ToString();
+                if (
+                    Path.GetExtension(FileName).ToUpper() == ".EXE" ||
+                    Path.GetExtension(FileName).ToUpper() == ".BAT"
+                    )
+                {
+                    if (Logger.MsgBox(
+                        $"是否以\"{FileName}\"为启动文件？",
+                        "Serein", 1, 48))
+                    {
+                        if (Catalog.Settings.Server != null && Catalog.Settings.Server.Path != null)
+                        {
+                            Catalog.Settings.Server.Path.Text = FileName;
+                        }
+                        Global.Settings.Server.Path = FileName;
+                        Catalog.Server.Plugins?.Load();
+                    }
+                }
+                else if (Path.GetExtension(FileName).ToLower() == ".json" || Path.GetExtension(FileName).ToLower() == ".tsv")
+                {
+                    if (Logger.MsgBox("是否导入该文件？\n将覆盖原有文件且不可逆",
+                            "Serein",
+                            1,
+                            48))
+                    {
+                        Catalog.Function.Regex?.Load(FileName);
+                        Catalog.Function.Task?.Load(FileName);
+                        Loader.SaveRegex();
+                        Loader.SaveTask();
+                    }
+                }
+            }
+            else if (data.Length > 0)
+            {
+                List<string> AcceptableList = new List<string>() { ".py", ".dll", ".js", ".jar" };
+                List<string> FileList = new List<string>();
+                string FileListText = string.Empty;
+                foreach (object File in data)
+                {
+                    if (AcceptableList.Contains(Path.GetExtension(File.ToString().ToLower())))
+                    {
+                        FileList.Add(File.ToString());
+                        FileListText = FileListText + Path.GetFileName(File.ToString()) + "\n";
+                    }
+                }
+                if (FileList.Count > 0 &&
+                    Logger.MsgBox($"是否将以下文件复制到插件文件夹内？\n{FileListText}",
+                            "Serein",
+                            1,
+                            48))
+                {
+                    PluginManager.Add(FileList);
+                    Catalog.Server.Plugins?.Load();
+                }
+                else if (FileList.Count == 0 && data.Length > 0)
+                {
+                    Logger.MsgBox("无法识别所选文件",
+                        "Serein",
+                        0,
+                        48);
+                }
+            }
+        }
+
     }
 }

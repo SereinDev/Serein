@@ -47,9 +47,9 @@ namespace Serein.Ui
                 if (Websocket.Status)
                 {
                     BotInfoStatus2_Update("已连接");
-                    BotInfoQQ2_Update(Base.Message.SelfId);
-                    BotInfoMessageReceived2_Update(Base.Message.MessageReceived);
-                    BotInfoMessageSent2_Update(Base.Message.MessageSent);
+                    BotInfoQQ2_Update(Base.Matcher.SelfId);
+                    BotInfoMessageReceived2_Update(Base.Matcher.MessageReceived);
+                    BotInfoMessageSent2_Update(Base.Matcher.MessageSent);
                     t = DateTime.Now - Websocket.StartTime;
                     if (t.TotalSeconds < 3600)
                     {

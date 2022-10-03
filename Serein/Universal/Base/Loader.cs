@@ -34,19 +34,10 @@ namespace Serein.Base
 
         public static void ReadRegex(string FileName = null)
         {
-            if (string.IsNullOrEmpty(FileName))
-            {
-                FileName = $"{Global.Path}\\data\\regex.json";
-            }
+            FileName = FileName ?? $"{Global.Path}\\data\\regex.json";
             if (File.Exists(FileName))
             {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        FileName,
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8
-                    );
+                StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
@@ -161,19 +152,10 @@ namespace Serein.Base
 
         public static void ReadTask(string FileName = null)
         {
-            if (string.IsNullOrEmpty(FileName))
-            {
-                FileName = $"{Global.Path}\\data\\task.json";
-            }
+            FileName = FileName ?? $"{Global.Path}\\data\\task.json";
             if (File.Exists(FileName))
             {
-                StreamReader Reader = new StreamReader(
-                    File.Open(
-                        FileName,
-                        FileMode.Open
-                    ),
-                    Encoding.UTF8
-                    );
+                StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;

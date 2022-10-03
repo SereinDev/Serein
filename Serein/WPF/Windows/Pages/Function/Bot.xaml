@@ -11,6 +11,7 @@
     Title="Bot"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    AllowDrop="True"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>

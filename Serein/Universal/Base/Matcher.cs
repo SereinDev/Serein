@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Serein.Plugin;
-using System;
-using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Serein.Base
 {
-    public class Message
+    public class Matcher
     {
         public static string MessageReceived, MessageSent, SelfId;
 
@@ -15,7 +11,7 @@ namespace Serein.Base
         /// 处理来自控制台的消息
         /// </summary>
         /// <param name="Line">控制台的消息</param>
-        public static void ProcessMsgFromConsole(string Line)
+        public static void Process(string Line)
         {
             foreach (Items.Regex Item in Global.RegexItems)
             {
@@ -38,27 +34,23 @@ namespace Serein.Base
         /// 处理来自机器人的消息
         /// </summary>
         /// <param name="Packet">数据包</param>
-        public static void ProcessMsgFromBot(string Packet)
+        public static void Process(JObject Packet)
         {
-            string Json = Packet ?? "";
-            Json = DeUnicode(Json);
-            Json = WebUtility.HtmlDecode(Json);
-            JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Json);
-            if (JsonObject["post_type"] == null)
+            if (Packet["post_type"] == null)
             {
                 return;
             }
             if (
-                JsonObject["post_type"].ToString() == "message" ||
-                JsonObject["post_type"].ToString() == "message_sent"
+                Packet["post_type"].ToString() == "message" ||
+                Packet["post_type"].ToString() == "message_sent"
                 )
             {
-                bool IsSelfMessage = JsonObject["post_type"].ToString() == "message_sent";
-                string MessageType = JsonObject["message_type"].ToString();
-                string RawMessage = JsonObject["raw_message"].ToString();
-                long UserId = long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
-                long GroupId = MessageType == "group" && long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
-                Logger.Out(22, $"{JsonObject["sender"]["nickname"]}({JsonObject["sender"]["user_id"]})" + ":" + RawMessage);
+                bool IsSelfMessage = Packet["post_type"].ToString() == "message_sent";
+                string MessageType = Packet["message_type"].ToString();
+                string RawMessage = Packet["raw_message"].ToString();
+                long UserId = long.TryParse(Packet["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
+                long GroupId = MessageType == "group" && long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
+                Logger.Out(22, $"{Packet["sender"]["nickname"]}({Packet["sender"]["user_id"]})" + ":" + RawMessage);
                 foreach (Items.Regex Item in Global.RegexItems)
                 {
                     if (
@@ -77,8 +69,8 @@ namespace Serein.Base
                         Global.Settings.Bot.PermissionList.Contains(UserId) ||
                         Global.Settings.Bot.GivePermissionToAllAdmin &&
                         MessageType == "group" && (
-                            JsonObject["sender"]["role"].ToString() == "admin" ||
-                            JsonObject["sender"]["role"].ToString() == "owner")
+                            Packet["sender"]["role"].ToString() == "admin" ||
+                            Packet["sender"]["role"].ToString() == "owner")
                         ) &&
                         Item.IsAdmin &&
                         !IsSelfMessage
@@ -102,7 +94,7 @@ namespace Serein.Base
                             Command.Run(
                                 1,
                                 Item.Command,
-                                JsonObject,
+                                Packet,
                                 System.Text.RegularExpressions.Regex.Match(
                                     RawMessage,
                                     Item.Expression
@@ -116,7 +108,7 @@ namespace Serein.Base
                             Command.Run(
                                 1,
                                 Item.Command,
-                                JsonObject,
+                                Packet,
                                 System.Text.RegularExpressions.Regex.Match(
                                     RawMessage,
                                     Item.Expression
@@ -129,25 +121,25 @@ namespace Serein.Base
                 if (!IsSelfMessage)
                 {
                     if (MessageType == "private")
-                        JSFunc.Trigger("onReceivePrivateMessage", UserId, RawMessage, JsonObject["sender"]["nickname"].ToString());
+                        JSFunc.Trigger("onReceivePrivateMessage", UserId, RawMessage, Packet["sender"]["nickname"].ToString());
                     else if (MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
-                        JSFunc.Trigger("onReceiveGroupMessage", GroupId, UserId, RawMessage, string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString());
+                        JSFunc.Trigger("onReceiveGroupMessage", GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
                 }
             }
             else if (
-                JsonObject["post_type"].ToString() == "meta_event"
+                Packet["post_type"].ToString() == "meta_event"
                 &&
-                JsonObject["meta_event_type"].ToString() == "heartbeat"
+                Packet["meta_event_type"].ToString() == "heartbeat"
                 )
             {
-                SelfId = JsonObject["self_id"].ToString();
+                SelfId = Packet["self_id"].ToString();
                 MessageReceived = (
-                    JsonObject["status"]["stat"]["message_received"] ??
-                    JsonObject["status"]["stat"]["MessageReceived"]
+                    Packet["status"]["stat"]["message_received"] ??
+                    Packet["status"]["stat"]["MessageReceived"]
                     ).ToString();
                 MessageSent = (
-                    JsonObject["status"]["stat"]["message_sent"] ??
-                    JsonObject["status"]["stat"]["MessageSent"]
+                    Packet["status"]["stat"]["message_sent"] ??
+                    Packet["status"]["stat"]["MessageSent"]
                     ).ToString();
                 if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
                 {
@@ -158,17 +150,17 @@ namespace Serein.Base
                     MessageSent = (TempNumber / 10000).ToString("N1") + "w";
                 }
             }
-            else if (JsonObject["post_type"].ToString() == "notice")
+            else if (Packet["post_type"].ToString() == "notice")
             {
-                long UserId = long.TryParse(JsonObject["user_id"].ToString(), out long Result) ? Result : -1;
-                long GroupId = long.TryParse(JsonObject["group_id"].ToString(), out Result) ? Result : -1;
+                long UserId = long.TryParse(Packet["user_id"].ToString(), out long Result) ? Result : -1;
+                long GroupId = long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
                 if (Global.Settings.Bot.GroupList.Contains(GroupId))
                 {
                     if (
-                        JsonObject["notice_type"].ToString() == "group_decrease" ||
-                        JsonObject["notice_type"].ToString() == "group_increase")
+                        Packet["notice_type"].ToString() == "group_decrease" ||
+                        Packet["notice_type"].ToString() == "group_increase")
                     {
-                        switch (JsonObject["notice_type"].ToString())
+                        switch (Packet["notice_type"].ToString())
                         {
                             case "group_decrease":
                                 EventTrigger.Trigger("Group_Decrease", GroupId, UserId);
@@ -181,9 +173,9 @@ namespace Serein.Base
                         }
                     }
                     else if (
-                        JsonObject["notice_type"].ToString() == "notify" &&
-                        JsonObject["sub_type"].ToString() == "poke" &&
-                        JsonObject["target_id"].ToString() == SelfId)
+                        Packet["notice_type"].ToString() == "notify" &&
+                        Packet["sub_type"].ToString() == "poke" &&
+                        Packet["target_id"].ToString() == SelfId)
                     {
                         EventTrigger.Trigger("Group_Poke", GroupId, UserId);
                         JSFunc.Trigger("onGroupPoke", GroupId, UserId);
@@ -191,17 +183,6 @@ namespace Serein.Base
                 }
             }
             JSFunc.Trigger("onReceivePacket", Packet);
-        }
-
-        /// <summary>
-        /// 处理Unicode转义
-        /// </summary>
-        /// <param name="str">文本</param>
-        /// <returns>处理后文本</returns>
-        public static string DeUnicode(string str)
-        {
-            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})");
-            return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
         }
     }
 }

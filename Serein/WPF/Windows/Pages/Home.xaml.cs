@@ -1,7 +1,6 @@
 ﻿using Serein.Base;
 using Serein.Items.Motd;
 using Serein.Server;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using Wpf.Ui.Controls;
@@ -18,30 +17,17 @@ namespace Serein.Windows.Pages
         public Home()
         {
             InitializeComponent();
+            _Timer.Elapsed += (_sender, _e) => Update();
+            _Timer.Start();
+            CPU_Name.Text = SystemInfo.CPUName;
         }
 
         private void Update()
         {
             Dispatcher.Invoke(() =>
             {
-                if (Catalog.MainWindow.Navigation.SelectedPageIndex != 0)
-                {
-                    return;
-                }
-                CPU_Name.Text = SystemInfo.CPUName;
-                Task.Run(() =>
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        string CPUPercentage = SystemInfo.CPUPercentage;
-                        CPU_Percent.Text = CPUPercentage + "%";
-                        CPU_Percent_Bar.Value = double.TryParse(CPUPercentage, out double _Result1) ? _Result1 : 0;
-                        CPU_Percent_Bar.IsIndeterminate = false;
-                    });
-                });
                 RAM_Percent.Text = $"{SystemInfo.UsedRAM} / {SystemInfo.TotalRAM} MB   {SystemInfo.RAMPercentage}%";
                 RAM_Percent_Ring.Progress = double.TryParse(SystemInfo.RAMPercentage, out double _Result2) ? _Result2 : 0;
-                RAM_Percent_Ring.IsIndeterminate = false;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
                 Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2") + "%" : "-";
@@ -62,14 +48,13 @@ namespace Serein.Windows.Pages
                 {
                     Server_Online.Text = "-";
                 }
+                string CPUPercentage = SystemInfo.CPUPercentage;
+                CPU_Percent.Text = CPUPercentage + "%";
+                CPU_Percent_Bar.Value = double.TryParse(CPUPercentage, out double _Result1) ? _Result1 : 0;
+                CPU_Percent_Bar.IsIndeterminate = false;
             });
         }
 
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            _Timer.Elapsed += (_sender, _e) => Update();
-            _Timer.Start();
-        }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
         {
@@ -81,6 +66,7 @@ namespace Serein.Windows.Pages
                 case "Server":
                     Catalog.MainWindow.Navigation.Navigate(1);
                     Catalog.Server.Container?.Navigation?.Navigate(0);
+                    ServerManager.Start();
                     break;
                 case "Regex":
                     Catalog.MainWindow.Navigation.Navigate(2);
@@ -89,6 +75,7 @@ namespace Serein.Windows.Pages
                 case "Bot":
                     Catalog.MainWindow.Navigation.Navigate(2);
                     Catalog.Function.Container?.Navigation?.Navigate(0);
+                    Websocket.Connect();
                     break;
                 case "Task":
                     Catalog.MainWindow.Navigation.Navigate(2);

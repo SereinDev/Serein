@@ -42,9 +42,9 @@ namespace Serein.Plugin
                     case "cpupercentage":
                         return SystemInfo.CPUPercentage;
                     case "usedram":
-                        return SystemInfo.UsedRAM;
+                        return SystemInfo.UsedRAM.ToString();
                     case "totalram":
-                        return SystemInfo.TotalRAM;
+                        return SystemInfo.TotalRAM.ToString();
                     case "rampercentage":
                         return SystemInfo.RAMPercentage;
                     default:

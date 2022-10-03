@@ -3,3 +3,4 @@ obj/
 .vs/
 packages/
 MigrationBackup/
+Build_Info.txt

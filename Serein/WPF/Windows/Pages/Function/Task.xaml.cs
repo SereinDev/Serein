@@ -19,9 +19,9 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Task = this;
         }
 
-        private void Load()
+        public void Load(string FileName = null)
         {
-            Loader.ReadTask();
+            Loader.ReadTask(FileName);
             TaskListView.Items.Clear();
             foreach (Items.Task Item in Global.TaskItems)
             {

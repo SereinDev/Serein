@@ -1,4 +1,5 @@
-﻿using Serein.Settings;
+﻿using Ookii.Dialogs.Wpf;
+using Serein.Settings;
 using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
@@ -378,6 +379,30 @@ namespace Serein.Ui
                 Commands.Add(Item.Text.Replace("\\n", "\n"));
             }
             return Commands.ToArray();
+        }
+
+        private void SettingSereinVersion_Click(object sender, EventArgs e)
+        {
+            Ookii.Dialogs.Wpf.TaskDialog TaskDialog = new Ookii.Dialogs.Wpf.TaskDialog
+            {
+                Buttons = {
+                        new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
+                    },
+                MainInstruction = "详细信息",
+                WindowTitle = "Serein",
+                Content = "" +
+                    $"当前版本：{Global.VERSION}\n" +
+                    $"编译类型：{Global.BuildInfo.Type}\n" +
+                    $"编译时间：{Global.BuildInfo.Time}\n" +
+                    $"编译路径：{Global.BuildInfo.Dir}\n" +
+                    $"系统类型：{Global.BuildInfo.OS}\n" +
+                    $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}",
+                Footer = "开源地址：<a href=\"https://github.com/Zaitonn/Serein\">GitHub</a>",
+                FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
+                EnableHyperlinks = true
+            };
+            TaskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
+            TaskDialog.ShowDialog();
         }
     }
 }

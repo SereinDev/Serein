@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.Devices;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Management;
 
@@ -11,7 +12,9 @@ namespace Serein.Base
         {
             MachineName = "."
         };
-        public static string OS = new ComputerInfo().OSFullName;
+        private static ComputerInfo Info = new ComputerInfo();
+
+        public static string OS = Info.OSFullName;
         public static string NET = Environment.Version.ToString();
         public static string CPUName
         {
@@ -31,12 +34,10 @@ namespace Serein.Base
                 }
             }
         }
-        public static string UsedRAM => ((ulong.TryParse(TotalRAM, out ulong i) ? i : 0) - new ComputerInfo().AvailablePhysicalMemory / 1024 / 1024).ToString();
-        public static string TotalRAM = (new ComputerInfo().TotalPhysicalMemory / 1024 / 1024).ToString();
-        public static string RAMPercentage => (
-                    (double)(ulong.TryParse(UsedRAM, out ulong i) ? i : 1) /
-                    (ulong.TryParse(TotalRAM, out ulong j) ? j : 1) * 100
-                ).ToString("N1");
+        public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024 ;
+        public static ulong TotalRAM = Info.TotalPhysicalMemory / 1024 / 1024;
+        public static string RAMPercentage =>
+           ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
         public static string CPUPercentage => Counter.NextValue().ToString("N1");
     }
 }

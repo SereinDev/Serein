@@ -26,6 +26,7 @@ namespace Serein.Windows.Pages.Settings
             InputEncoding.SelectedIndex = Global.Settings.Server.InputEncoding;
             OutputEncoding.SelectedIndex = Global.Settings.Server.OutputEncoding;
             OutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
+            Path.Text = Global.Settings.Server.Path;
         }
 
         private void StopCommands_TextChanged(object sender, TextChangedEventArgs e) => Global.Settings.Server.StopCommands = StopCommands.Text.Replace("\r", string.Empty).Trim('\r', '\n', ' ').Split('\n');

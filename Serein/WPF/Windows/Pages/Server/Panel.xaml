@@ -9,6 +9,7 @@
     xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     d:DesignHeight="850"
     d:DesignWidth="800"
+    AllowDrop="True"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>

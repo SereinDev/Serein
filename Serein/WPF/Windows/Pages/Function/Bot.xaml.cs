@@ -44,9 +44,9 @@ namespace Serein.Windows.Pages.Function
             Dispatcher.Invoke(new Action(() =>
             {
                 Status.Content = Websocket.Status ? "已连接" : "未连接";
-                ID.Content = Message.SelfId ?? "-";
-                MessageReceived.Content = Message.MessageReceived ?? "-";
-                MessageSent.Content = Message.MessageSent ?? "-";
+                ID.Content = Matcher.SelfId ?? "-";
+                MessageReceived.Content = Matcher.MessageReceived ?? "-";
+                MessageSent.Content = Matcher.MessageSent ?? "-";
                 TimeSpan t = DateTime.Now - Websocket.StartTime;
                 Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N2}d" : "-";
             }
