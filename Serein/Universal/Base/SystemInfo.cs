@@ -34,7 +34,7 @@ namespace Serein.Base
                 }
             }
         }
-        public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024 ;
+        public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024;
         public static ulong TotalRAM = Info.TotalPhysicalMemory / 1024 / 1024;
         public static string RAMPercentage =>
            ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
