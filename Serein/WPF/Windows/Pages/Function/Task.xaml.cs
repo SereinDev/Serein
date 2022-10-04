@@ -21,7 +21,7 @@ namespace Serein.Windows.Pages.Function
 
         public void Load(string FileName = null)
         {
-            Loader.ReadTask(FileName);
+            IO.ReadTask(FileName);
             TaskListView.Items.Clear();
             foreach (Items.Task Item in Global.TaskItems)
             {
@@ -40,7 +40,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.UpdateTaskItems(Items);
-            Loader.SaveTask();
+            IO.SaveTask();
         }
 
         public bool Confirm(string CronExp, string Command, string Remark)

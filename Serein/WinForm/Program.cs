@@ -35,7 +35,7 @@ namespace Serein
             CrashInterception.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception.ToString());
-            Loader.ReadAll();
+            IO.ReadAll();
             Global.Args = args;
             if (((IList)args).Contains("debug"))
             {

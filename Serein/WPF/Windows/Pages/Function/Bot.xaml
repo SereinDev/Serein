@@ -24,6 +24,7 @@
         <StackPanel>
             <GroupBox
                 Margin="3"
+                Padding="10"
                 DockPanel.Dock="Top"
                 Header="详细信息">
                 <Grid Margin="0">
@@ -112,7 +113,7 @@
             Margin="3"
             Header="控制台">
             <wfi:WindowsFormsHost Margin="3">
-                <wf:WebBrowser x:Name="BotWebBrowser" />
+                <wf:WebBrowser x:Name="BotWebBrowser" DocumentCompleted="BotWebBrowser_DocumentCompleted" />
             </wfi:WindowsFormsHost>
         </GroupBox>
     </Grid>

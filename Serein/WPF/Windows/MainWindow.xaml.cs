@@ -81,11 +81,11 @@ namespace Serein.Windows
         /// <param name="Icon">图标</param>
         public void OpenSnackbar(string Title, string Message, SymbolRegular Icon)
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 PopupEx.VerticalOffset = Height * 0.5 - 60; // 自动调整底部距离，使之刚好与底部重合
                 Snackbar.Show(Title, Message, Icon);
-            }));
+            });
         }
 
         private void UiWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -259,8 +259,8 @@ namespace Serein.Windows
                     {
                         Catalog.Function.Regex?.Load(FileName);
                         Catalog.Function.Task?.Load(FileName);
-                        Loader.SaveRegex();
-                        Loader.SaveTask();
+                        IO.SaveRegex();
+                        IO.SaveTask();
                     }
                 }
             }

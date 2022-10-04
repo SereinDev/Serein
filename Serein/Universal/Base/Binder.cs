@@ -54,7 +54,7 @@ namespace Serein.Base
                     ID = UserId,
                     GameID = Value
                 });
-                Loader.SaveMember();
+                IO.SaveMember();
                 return true;
             }
         }
@@ -93,7 +93,7 @@ namespace Serein.Base
                 Dictionary<long, Member> Items = Global.MemberItems;
                 Items.Add(UserId, Item);
                 Global.UpdateMemberItems(Items);
-                Loader.SaveMember();
+                IO.SaveMember();
                 EventTrigger.Trigger("Bind_Success", GroupId, UserId);
             }
         }
@@ -114,7 +114,7 @@ namespace Serein.Base
                 lock (Global.MemberItems)
                 {
                     Global.MemberItems.Remove(UserId);
-                    Loader.SaveMember();
+                    IO.SaveMember();
                     EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
                 }
             }
@@ -132,7 +132,7 @@ namespace Serein.Base
                 lock (Global.MemberItems)
                 {
                     Global.MemberItems.Remove(UserId);
-                    Loader.SaveMember();
+                    IO.SaveMember();
                 }
             }
             return Global.MemberItems.Keys.Contains(UserId);

@@ -85,7 +85,7 @@ namespace Serein.Console
         /// <param name="args">启动参数</param>
         public static void Load(string[] args = null)
         {
-            Loader.ReadAll();
+            IO.ReadAll();
             Global.Args = args ?? Global.Args;
             Global.Settings.Serein.Debug = Global.Args.Contains("debug");
         }

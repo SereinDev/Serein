@@ -177,7 +177,7 @@ namespace Serein.Ui
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            Loader.ReadRegex(FileName);
+            IO.ReadRegex(FileName);
             foreach (Regex Item in Global.RegexItems)
             {
                 if (Item.Check())
@@ -204,7 +204,7 @@ namespace Serein.Ui
                 });
             }
             Global.UpdateRegexItems(regexItems);
-            Loader.SaveRegex();
+            IO.SaveRegex();
         }
 
         private void RegexContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });

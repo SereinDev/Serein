@@ -21,7 +21,7 @@ namespace Serein.Windows.Pages.Function
 
         private void Load()
         {
-            Loader.ReadMember();
+            IO.ReadMember();
             MemberListView.Items.Clear();
             foreach (Items.Member Item in Global.MemberItems.Values.ToList())
             {
@@ -40,7 +40,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.UpdateMemberItems(Items);
-            Loader.SaveMember();
+            IO.SaveMember();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

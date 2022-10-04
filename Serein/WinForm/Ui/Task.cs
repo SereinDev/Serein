@@ -168,14 +168,14 @@ namespace Serein.Ui
                 TaskItems.Add(TI);
             }
             Global.UpdateTaskItems(TaskItems);
-            Loader.SaveTask();
+            IO.SaveTask();
         }
 
         private void LoadTask(string FileName = null)
         {
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            Loader.ReadTask();
+            IO.ReadTask();
             foreach (Task Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new ListViewItem(Item.Cron);

@@ -3,12 +3,13 @@ using Serein.Windows.Pages;
 using Serein.Windows.Pages.Function;
 using Serein.Windows.Pages.Server;
 using Serein.Windows.Pages.Settings;
+using System.Collections.Generic;
 
 namespace Serein.Windows
 {
     internal static class Catalog
     {
-        public static NotificationManager Notification = new NotificationManager();
+        public static NotificationManager Notification { get; set; }
         public static MainWindow MainWindow { get; set; }
         public static Home Home { get; set; }
         public static Debug Debug { get; set; }
@@ -18,6 +19,7 @@ namespace Serein.Windows
             public static Panel Panel { get; set; }
             public static Plugins Plugins { get; set; }
             public static Pages.Server.Container Container { get; set; }
+            public static List<string> Cache = new List<string>();
         }
 
         public static class Function
@@ -28,6 +30,7 @@ namespace Serein.Windows
             public static JSPlugin JSPlugin { get; set; }
             public static Pages.Function.Bot Bot { get; set; }
             public static Pages.Function.Container Container { get; set; }
+            public static List<string> Cache = new List<string>();
         }
 
         public static class Settings

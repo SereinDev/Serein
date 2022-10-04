@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Notification.Wpf;
 
 namespace Serein.Windows
 {
@@ -16,6 +18,7 @@ namespace Serein.Windows
 
         public static void Start()
         {
+            Catalog.Notification = new NotificationManager();
             VersionTimer.Elapsed += (sender, e) => CheckVersion();
             VersionTimer.Start();
             Task.Run(CheckVersion);
@@ -32,13 +35,19 @@ namespace Serein.Windows
                     if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) &&
                         Version != Global.VERSION && OldVersion != Version)
                     {
-                        Catalog.Notification.Show("Serein", "发现新版本:\n" + Version);
+                        Catalog.Notification?.Show(
+                            "Serein",
+                            "发现新版本:\n" + Version + "\n点击此处打开下载页面",
+                            onClick: () => Process.Start(
+                                new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true }
+                                )
+                            );
                         Catalog.Settings.Serein?.UpdateVersion($"（发现新版本:{Version}，你可以点击下方链接获取最新版）");
                         OldVersion = Version;
                     }
                     else if (OldVersion != Version)
                     {
-                        Catalog.Notification.Show(
+                        Catalog.Notification?.Show(
                             "Serein",
                             "获取更新成功\n" +
                             "当前已是最新版:)");
@@ -48,7 +57,7 @@ namespace Serein.Windows
                 }
                 catch (Exception e)
                 {
-                    Catalog.Notification.Show("Serein", "更新获取异常：\n" + e.Message);
+                    Catalog.Notification?.Show("Serein", "更新获取异常：\n" + e.Message);
                 }
             }
         }

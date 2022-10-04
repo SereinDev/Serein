@@ -131,15 +131,14 @@
                         Click="Restart_Click"
                         Content="重启"
                         Icon="ArrowClockwise24" />
-                    <ui:Button
+                    <Button
                         Grid.Row="1"
                         Grid.Column="1"
                         Margin="3"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Click="Kill_Click"
-                        Content="结束进程"
-                        Icon="TabProhibited24" />
+                        Content="结束进程" />
                 </Grid>
             </GroupBox>
         </StackPanel>
@@ -162,10 +161,10 @@
                         Name="InputBox"
                         Margin="3"
                         DockPanel.Dock="Left"
-                        KeyDown="InputBox_KeyDown" />
+                        PreviewKeyDown="InputBox_PreviewKeyDown" />
                 </DockPanel>
                 <wfi:WindowsFormsHost Margin="3" DockPanel.Dock="Top">
-                    <wf:WebBrowser x:Name="PanelWebBrowser" />
+                    <wf:WebBrowser x:Name="PanelWebBrowser" DocumentCompleted="PanelWebBrowser_DocumentCompleted" />
                 </wfi:WindowsFormsHost>
             </DockPanel>
         </GroupBox>

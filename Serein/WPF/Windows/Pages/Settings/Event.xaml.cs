@@ -141,7 +141,7 @@ namespace Serein.Windows.Pages.Settings
                     Global.Settings.Event.PermissionDenied_Group = GetEventCommands();
                     break;
             }
-            Loader.SaveEventSetting();
+            IO.SaveEventSetting();
         }
 
         private string[] GetEventCommands()

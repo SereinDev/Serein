@@ -23,7 +23,7 @@ namespace Serein.Ui
             switch (tabControl.SelectedIndex)
             {
                 case 5:
-                    Loader.ReadMember();
+                    IO.ReadMember();
                     LoadMember();
                     break;
                 case 6:

@@ -12,10 +12,13 @@ using System.Timers;
 
 namespace Serein.Base
 {
-    internal static class Loader
+    internal static class IO
     {
         private static string OldSettings = string.Empty;
 
+        /// <summary>
+        /// 启动保存和更新设置定时器
+        /// </summary>
         public static void StartSavingAndUpdating()
         {
             Timer _Timer = new Timer(2000) { AutoReset = true };
@@ -24,6 +27,9 @@ namespace Serein.Base
             _Timer.Start();
         }
 
+        /// <summary>
+        /// 读取所有文件
+        /// </summary>
         public static void ReadAll()
         {
             ReadRegex();
@@ -32,6 +38,10 @@ namespace Serein.Base
             Plugins.Load();
         }
 
+        /// <summary>
+        /// 读取正则文件
+        /// </summary>
+        /// <param name="FileName">路径</param>
         public static void ReadRegex(string FileName = null)
         {
             FileName = FileName ?? $"{Global.Path}\\data\\regex.json";
@@ -74,6 +84,9 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 保存正则
+        /// </summary>
         public static void SaveRegex()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -87,6 +100,9 @@ namespace Serein.Base
             File.WriteAllText($"{Global.Path}\\data\\regex.json", ListJObject.ToString());
         }
 
+        /// <summary>
+        /// 读取成员文件
+        /// </summary>
         public static void ReadMember()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -109,12 +125,7 @@ namespace Serein.Base
                             return;
                         }
                         List<Member> Items = ((JArray)JsonObject["data"]).ToObject<List<Member>>();
-                        Items.Sort(
-                            (Item1, Item2) =>
-                            {
-                                return Item1.ID > Item2.ID ? 1 : -1;
-                            }
-                            );
+                        Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
                         Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
                         Items.ForEach((x) => _Dictionary.Add(x.ID, x));
                         Global.UpdateMemberItems(_Dictionary);
@@ -122,11 +133,10 @@ namespace Serein.Base
                     catch { }
                 }
             }
-
         }
 
         /// <summary>
-        /// 保存数据
+        /// 保存成员数据
         /// </summary>
         public static void SaveMember()
         {
@@ -150,6 +160,10 @@ namespace Serein.Base
                 );
         }
 
+        /// <summary>
+        /// 读取任务文件
+        /// </summary>
+        /// <param name="FileName">路径</param>
         public static void ReadTask(string FileName = null)
         {
             FileName = FileName ?? $"{Global.Path}\\data\\task.json";
@@ -192,6 +206,9 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 保存任务
+        /// </summary>
         public static void SaveTask()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
@@ -205,6 +222,9 @@ namespace Serein.Base
             File.WriteAllText($"{Global.Path}\\data\\task.json", ListJObject.ToString());
         }
 
+        /// <summary>
+        /// 读取设置
+        /// </summary>
         public static void ReadSettings()
         {
             if (!Directory.Exists(Global.SettingPath))
@@ -246,6 +266,9 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 更新设置
+        /// </summary>
         public static void UpdateSettings()
         {
             try
@@ -272,6 +295,9 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 保存设置
+        /// </summary>
         public static void SaveSettings()
         {
             string NewSettings = JsonConvert.SerializeObject(Global.Settings);
@@ -284,6 +310,9 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 保存事件设置
+        /// </summary>
         public static void SaveEventSetting()
         {
             lock (Global.Settings.Event)

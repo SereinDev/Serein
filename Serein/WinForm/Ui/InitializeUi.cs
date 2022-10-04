@@ -31,7 +31,7 @@ namespace Serein.Ui
             LoadTask();
             Task UpdateInfoThread = new Task(UpdateInfo);
             UpdateInfoThread.Start();
-            Loader.StartSavingAndUpdating();
+            IO.StartSavingAndUpdating();
             TaskRunner.Start();
             GetInfo.GetAnnouncementThread.Start();
             GetInfo.GetVersionThread.Start();

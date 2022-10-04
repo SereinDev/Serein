@@ -22,6 +22,7 @@ namespace Serein.Windows.Pages
                     DebugTextBox.Text = string.Empty;
                 }
                 DebugTextBox.Text += Line + "\r\n";
+                DebugTextBox.ScrollToEnd();
             });
         }
     }

@@ -22,21 +22,19 @@ namespace Serein.Windows.Pages.Function
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
-        {
-            Websocket.Connect();
-        }
-
+            => Websocket.Connect();
         private void Disconnect_Click(object sender, RoutedEventArgs e)
-        {
-            Websocket.Close();
-        }
+            => Websocket.Close();
 
         public void AppendText(string Line)
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(() =>
             {
                 BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
-            }));
+                Catalog.Function.Cache.Add(Line);
+            });
+            if (Catalog.Function.Cache.Count > 25)
+                Catalog.Function.Cache.RemoveRange(0, Catalog.Function.Cache.Count - 25);
         }
 
         private void UpdateInfos()
@@ -52,5 +50,8 @@ namespace Serein.Windows.Pages.Function
             }
             ));
         }
+
+        private void BotWebBrowser_DocumentCompleted(object sender, System.Windows.Forms.WebBrowserDocumentCompletedEventArgs e)
+            => Catalog.Function.Cache.ForEach((Text) => BotWebBrowser.Document.InvokeScript("AppendText", new object[] { Text }));
     }
 }

@@ -42,7 +42,7 @@ namespace Serein.Windows.Pages.Function
             {
                 switch (Item.Tag)
                 {
-                    case "ReLoad":
+                    case "Reload":
                         Plugins.Reload();
                         Load();
                         break;

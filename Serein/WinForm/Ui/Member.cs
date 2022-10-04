@@ -17,7 +17,7 @@ namespace Serein.Ui
         {
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
-            Loader.ReadMember();
+            IO.ReadMember();
             foreach (Member memberItem in Global.MemberItems.Values.ToList())
             {
                 ListViewItem Item = new ListViewItem();
@@ -50,7 +50,7 @@ namespace Serein.Ui
                 }
             }
             Global.UpdateMemberItems(MemberItems);
-            Loader.SaveMember();
+            IO.SaveMember();
         }
 
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)

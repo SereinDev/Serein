@@ -21,7 +21,7 @@ namespace Serein.Windows.Pages.Function
 
         public void Load(string FileName = null)
         {
-            Loader.ReadRegex(FileName);
+            IO.ReadRegex(FileName);
             RegexListView.Items.Clear();
             foreach (Items.Regex Item in Global.RegexItems)
             {
@@ -40,7 +40,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.UpdateRegexItems(Items);
-            Loader.SaveRegex();
+            IO.SaveRegex();
         }
 
         private void RegexListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)

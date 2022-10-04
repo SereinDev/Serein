@@ -15,8 +15,8 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
-            Loader.ReadAll();
-            Loader.StartSavingAndUpdating();
+            IO.ReadAll();
+            IO.StartSavingAndUpdating();
             TaskRunner.Start();
         }
     }
