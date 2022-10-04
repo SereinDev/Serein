@@ -52,7 +52,7 @@ namespace Serein.Windows.Pages.Server
                     if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
                         InputBox.Text = ServerManager.CommandList[ServerManager.CommandListIndex];
                     InputBox.SelectionStart = InputBox.Text.Length;
-                    break; 
+                    break;
                 case Key.Down:
                 case Key.PageDown:
                     if (ServerManager.CommandListIndex < ServerManager.CommandList.Count)
