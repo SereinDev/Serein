@@ -18,8 +18,11 @@ namespace Serein.Windows.Pages.Server
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
+            Restored = false;
             Catalog.Server.Panel = this;
         }
+
+        private bool Restored = false;
 
         private void Start_Click(object sender, RoutedEventArgs e)
             => ServerManager.Start();
@@ -67,19 +70,10 @@ namespace Serein.Windows.Pages.Server
         }
 
         public void AppendText(string Line)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Line });
-                Catalog.Server.Cache.Add(Line);
-            });
-            if (Catalog.Server.Cache.Count > 25)
-                Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - 25);
-        }
+            => Dispatcher.Invoke(() => PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Line }));
 
         private void UpdateInfos()
-        {
-            Dispatcher.Invoke(() =>
+            => Dispatcher.Invoke(() =>
             {
                 Status.Content = ServerManager.Status ? "已启动" : "未启动";
                 Version.Content = ServerManager.Status ? ServerManager.Version : "-";
@@ -92,12 +86,27 @@ namespace Serein.Windows.Pages.Server
                 }
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUPersent.ToString("N2") : "-";
-                if (ServerManager.Status)
-                    Catalog.Server.Cache.Clear();
+                Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
             });
-        }
 
-        private void PanelWebBrowser_DocumentCompleted(object sender, System.Windows.Forms.WebBrowserDocumentCompletedEventArgs e)
-            => Catalog.Server.Cache.ForEach((Text) => PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Text }));
+        private void UiPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Timer Restorer = new Timer(500) { AutoReset = true };
+            Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
+            {
+                Logger.Out(999, "[Panel:Restore]", string.Join(";", Catalog.Server.Cache));
+                if (!Restored && PanelWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
+                {
+                    Catalog.Server.Cache.ForEach((Text) => AppendText(Text));
+                    Restored = true;
+                }
+                if (Restored)
+                {
+                    Restorer.Stop();
+                    Restorer.Dispose();
+                }
+            });
+            Restorer.Start();
+        }
     }
 }

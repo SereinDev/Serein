@@ -2,9 +2,6 @@
 
 namespace Serein.Windows.Pages
 {
-    /// <summary>
-    /// Debug.xaml 的交互逻辑
-    /// </summary>
     public partial class Debug : Page
     {
         public Debug()
@@ -14,8 +11,7 @@ namespace Serein.Windows.Pages
         }
 
         public void AppendText(string Line)
-        {
-            Dispatcher.Invoke(() =>
+            => Dispatcher.Invoke(() =>
             {
                 if (DebugTextBox.Text.Split('\n').Length > 50000)
                 {
@@ -24,6 +20,5 @@ namespace Serein.Windows.Pages
                 DebugTextBox.Text += Line + "\r\n";
                 DebugTextBox.ScrollToEnd();
             });
-        }
     }
 }

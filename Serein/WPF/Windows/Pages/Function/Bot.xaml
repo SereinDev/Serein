@@ -12,6 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     AllowDrop="True"
+    Loaded="UiPage_Loaded"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -113,7 +114,7 @@
             Margin="3"
             Header="控制台">
             <wfi:WindowsFormsHost Margin="3">
-                <wf:WebBrowser x:Name="BotWebBrowser" DocumentCompleted="BotWebBrowser_DocumentCompleted" />
+                <wf:WebBrowser x:Name="BotWebBrowser" />
             </wfi:WindowsFormsHost>
         </GroupBox>
     </Grid>

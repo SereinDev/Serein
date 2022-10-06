@@ -30,7 +30,8 @@ namespace Serein.Windows
             public static JSPlugin JSPlugin { get; set; }
             public static Pages.Function.Bot Bot { get; set; }
             public static Pages.Function.Container Container { get; set; }
-            public static List<string> Cache = new List<string>();
+            public static List<string> BotCache = new List<string>();
+            public static List<string> PluginCache = new List<string>();
         }
 
         public static class Settings

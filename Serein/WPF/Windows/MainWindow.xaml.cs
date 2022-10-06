@@ -296,5 +296,7 @@ namespace Serein.Windows
             }
         }
 
+        public void UpdateTitle(string Title = null)
+            => Dispatcher.Invoke(() => this.Title.Title = string.IsNullOrEmpty(Title) ? "Serein" : $"Serein - {Title}");
     }
 }

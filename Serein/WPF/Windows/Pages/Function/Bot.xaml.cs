@@ -18,28 +18,20 @@ namespace Serein.Windows.Pages.Function
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
+            Restored = false;
             Catalog.Function.Bot = this;
         }
+
+        private bool Restored = false;
 
         private void Connect_Click(object sender, RoutedEventArgs e)
             => Websocket.Connect();
         private void Disconnect_Click(object sender, RoutedEventArgs e)
             => Websocket.Close();
-
         public void AppendText(string Line)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line });
-                Catalog.Function.Cache.Add(Line);
-            });
-            if (Catalog.Function.Cache.Count > 25)
-                Catalog.Function.Cache.RemoveRange(0, Catalog.Function.Cache.Count - 25);
-        }
-
+            => Dispatcher.Invoke(() => BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line }));
         private void UpdateInfos()
-        {
-            Dispatcher.Invoke(new Action(() =>
+            => Dispatcher.Invoke(() =>
             {
                 Status.Content = Websocket.Status ? "已连接" : "未连接";
                 ID.Content = Matcher.SelfId ?? "-";
@@ -47,11 +39,26 @@ namespace Serein.Windows.Pages.Function
                 MessageSent.Content = Matcher.MessageSent ?? "-";
                 TimeSpan t = DateTime.Now - Websocket.StartTime;
                 Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N2}d" : "-";
-            }
-            ));
-        }
+            });
 
-        private void BotWebBrowser_DocumentCompleted(object sender, System.Windows.Forms.WebBrowserDocumentCompletedEventArgs e)
-            => Catalog.Function.Cache.ForEach((Text) => BotWebBrowser.Document.InvokeScript("AppendText", new object[] { Text }));
+        private void UiPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Timer Restorer = new Timer(500) { AutoReset = true };
+            Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
+            {
+                Logger.Out(999, "[Bot:Restore]", string.Join(";", Catalog.Function.BotCache));
+                if (!Restored && BotWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
+                {
+                    Catalog.Function.BotCache.ForEach((Text) => AppendText(Text));
+                    Restored = true;
+                }
+                if (Restored)
+                {
+                    Restorer.Stop();
+                    Restorer.Dispose();
+                }
+            });
+            Restorer.Start();
+        }
     }
 }

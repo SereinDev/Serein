@@ -10,6 +10,7 @@ namespace Serein
 {
     internal static class Logger
     {
+        const int MaxLines = 40;
         public static int Type = 2;
         public static void Out(int Type, params object[] objects)
         {
@@ -42,36 +43,77 @@ namespace Serein
                     break;
                 case 10:
                     Catalog.Server.Panel?.AppendText(Line);
+                    Catalog.Server.Cache.Add(Line);
+                    if (Catalog.Server.Cache.Count > MaxLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - MaxLines);
                     break;
                 case 11:
-                    Catalog.Server.Panel?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
+                    Catalog.Server.Panel?.AppendText(Line);
+                    Catalog.Server.Cache.Add(Line);
+                    if (Catalog.Server.Cache.Count > MaxLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - MaxLines);
                     break;
                 case 20:
                     Catalog.Function.Bot?.AppendText(Line);
+                    Catalog.Function.BotCache.Add(Line);
+                    if (Catalog.Function.BotCache.Count > MaxLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
                     break;
                 case 21:
-                    Catalog.Function.Bot?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.Bot?.AppendText(Line);
+                    Catalog.Function.BotCache.Add(Line);
+                    if (Catalog.Function.BotCache.Count > MaxLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
                     break;
                 case 22:
-                    Catalog.Function.Bot?.AppendText("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.Bot?.AppendText(Line);
+                    Catalog.Function.BotCache.Add(Line);
+                    if (Catalog.Function.BotCache.Count > MaxLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
                     break;
                 case 23:
-                    Catalog.Function.Bot?.AppendText("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.Bot?.AppendText(Line);
+                    Catalog.Function.BotCache.Add(Line);
+                    if (Catalog.Function.BotCache.Count > MaxLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
                     break;
                 case 24:
-                    Catalog.Function.Bot?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.Bot?.AppendText(Line);
+                    Catalog.Function.BotCache.Add(Line);
+                    if (Catalog.Function.BotCache.Count > MaxLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
                     break;
                 case 30:
                     Catalog.Function.JSPlugin?.AppendText(Line);
+                    Catalog.Function.PluginCache.Add(Line);
+                    if (Catalog.Function.PluginCache.Count > MaxLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
                     break;
                 case 31:
-                    Catalog.Function.JSPlugin?.AppendText("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.JSPlugin?.AppendText(Line);
+                    Catalog.Function.PluginCache.Add(Line);
+                    if (Catalog.Function.PluginCache.Count > MaxLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
                     break;
                 case 32:
-                    Catalog.Function.JSPlugin?.AppendText("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
+                    Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
+                    Catalog.Function.JSPlugin?.AppendText(Line);
+                    Catalog.Function.PluginCache.Add(Line);
+                    if (Catalog.Function.PluginCache.Count > MaxLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
                     break;
                 case 33:
-                    Catalog.Function.JSPlugin?.AppendText(Log.EscapeLog(Line));
+                    Line = Log.EscapeLog(Line);
+                    Catalog.Function.JSPlugin?.AppendText(Line);
+                    Catalog.Function.PluginCache.Add(Line);
+                    if (Catalog.Function.PluginCache.Count > MaxLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
                     break;
             }
         }
