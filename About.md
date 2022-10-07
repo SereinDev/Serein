@@ -10,31 +10,13 @@
     \/_____/\/____/ \/_/ \/____/ \/_/\/_/\/_/
 ```
 
-- [关于](#关于)
-  - [许可证](#许可证)
-  - [版权](#版权)
-  - [声明](#声明)
-  - [Bug反馈](#bug反馈)
-  - [帮助改进文档](#帮助改进文档)
-    - [具体方法](#具体方法)
-  - [转载授权 / 商用 / 合作事宜](#转载授权--商用--合作事宜)
-  - [联系方式](#联系方式)
-
-### 许可证
-
-[GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)  
-
-### 版权
-
-Copyright © 2022 Zaitonn. All Rights Reserved.
-
-### 声明
-
-此软件与`Mojang Studio`、`网易`、`Microsoft`没有从属关系
+- 许可证 [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)
+- Copyright © 2022 Zaitonn. All Rights Reserved.
+- 此软件与`Mojang Studio`、`网易`、`Microsoft`没有从属关系
 
 ### Bug反馈
 
-- 提交Issue，记得附上崩溃截图和复现步骤
+- 提交Issue，麻烦附上崩溃截图和复现步骤
 - 进群反馈：[954829203](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)
 
 ### 帮助改进文档
