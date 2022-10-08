@@ -9,6 +9,7 @@
 - 可使用WS正向连接
 
 > **⚠ 提示**  
+>
 >- 由于不同机器人之间标准可能存在差异，不一定保证100%适配所有机器人
 >- 目前已完全支持的机器人：[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)  
 >- **此处列举的机器人只代表已经经过测试且可用，并不是只有以上两种机器人可用**
