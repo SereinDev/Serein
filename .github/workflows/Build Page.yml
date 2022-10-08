@@ -29,7 +29,7 @@ jobs:
       - name: Install and build
         run: |
           npm i docsify-cli -g
-          docsify generate ./
+          docsify init ./_site
 
       - name: Commit and Push
         run: |
