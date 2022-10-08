@@ -29,7 +29,8 @@ jobs:
       - name: Install and build
         run: |
           npm i docsify-cli -g
-          docsify init ./
+          docsify generate ./
+
       - name: Commit and Push
         run: |
           git config --local user.name "github-actions[bot]"
