@@ -1,69 +1,34 @@
-## Javascript
 
-- [Javascript](#javascript)
-  - [推荐列表](#推荐列表)
-  - [标准](#标准)
-  - [直接使用的NET对象/类](#直接使用的net对象类)
-    - [示例](#示例)
-  - [内置属性](#内置属性)
-    - [Serein.exe所在文件夹](#sereinexe所在文件夹)
-    - [Serein版本](#serein版本)
-  - [内置函数](#内置函数)
-    - [输出日志](#输出日志)
-    - [Debug输出](#debug输出)
-    - [注册插件](#注册插件)
-    - [设置监听器](#设置监听器)
-    - [注册服务器命令](#注册服务器命令)
-    - [获取Serein设置](#获取serein设置)
-    - [获取系统信息](#获取系统信息)
-    - [执行命令](#执行命令)
-    - [获取Motd原文](#获取motd原文)
-    - [启动服务器](#启动服务器)
-    - [关闭服务器](#关闭服务器)
-    - [强制结束服务器](#强制结束服务器)
-    - [发送服务器命令](#发送服务器命令)
-    - [获取服务器状态](#获取服务器状态)
-    - [获取服务器运行时长](#获取服务器运行时长)
-    - [获取服务器进程占用](#获取服务器进程占用)
-    - [获取服务器文件](#获取服务器文件)
-    - [发送群聊消息](#发送群聊消息)
-    - [发送私聊消息](#发送私聊消息)
-    - [发送数据包](#发送数据包)
-    - [获取ws连接状态](#获取ws连接状态)
-    - [绑定游戏ID](#绑定游戏id)
-    - [删除绑定记录](#删除绑定记录)
-    - [获取指定用户QQ](#获取指定用户qq)
-    - [获取指定游戏ID](#获取指定游戏id)
-  - [内置类](#内置类)
-    - [WebSocket客户端](#websocket客户端)
-
-### 推荐列表
-
-- [**示例插件**](https://github.com/Zaitonn/Serein/blob/main/js_plugins/Example.js)
-- [机器人功能扩展](https://github.com/Zaitonn/Serein/blob/main/js_plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js)
-
-> **⭐ Tips**  
->如果你有优秀的插件，欢迎提交Issue、提交pr或与作者私聊  
->
->经过审核后你的插件也有机会出现在上面ヾ(≧▽≦*)o
-
-### 标准
+### JS标准
 
 [ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
 
-### 直接使用的NET对象/类
+>[!ATTENTION]
+>以下情况将导致Serein无响应
+>
+>- 在插件中写死循环
+>
+>   ```js
+>   while(true){
+>     serein.log("?");  
+>   }
+>   ```
+>
+> - 以极快的速度重复执行语句
+
+### 直接使用NET对象/类
 
 由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类和属性
 
 `importNamespace(name:String)` 导入命名空间
 
-> **⭐ Tips**  
->配合一定`C#`基础食用更佳
+>[!TIP] 配合一定`C#`基础食用更佳  
+>`C#`语法详见<https://learn.microsoft.com/zh-cn/dotnet/api/?view=net-6.0>
 
 #### 示例
 
 ```js
-// https://docs.microsoft.com/zh-cn/dotnet/api/system.io.file?view=net-6.0
+// https://learn.microsoft.com/zh-cn/dotnet/api/system.io.file?view=net-6.0
 var File = importNamespace("System.IO").File;
 File.WriteAllText(
     "1.txt", // 路径
@@ -73,7 +38,7 @@ File.WriteAllText(
 ```
 
 ```js
-// https://docs.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process?view=net-6.0
+// https://learn.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process?view=net-6.0
 var Process = importNamespace("System.Diagnostics").Process;
 Process.Start("cmd.exe");
 // 启动cmd.exe
@@ -351,11 +316,11 @@ var cpuname = serein.getSysInfo("CPUName");
     - `UsedRAM` 已用内存（MB)
     - `RAMPercentage` 内存占用率
     - `CPUPercentage` CPU占用率
-    > **⚠ 提示**  
-    >
+    >[!WARNING]
+    >  
     >- 不区分大小写  
     >- 若不在以上列表中则为返回空值
-    >
+
 - 返回
   - `String` 对应的值
 
@@ -369,8 +334,7 @@ serein.runCommand("g|hello")
 
 - 参数
   - `cmd` 一条[Serein命令](Command.md)
-  > **⚠ 提示**  
-  >此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
+  >[!WARNING] 此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
 - 返回
   - 空
 
@@ -386,8 +350,7 @@ var je = serein.getMotdje("127.0.0.1:25565");
 
 - 参数
   - `ip` 服务器IP
-  > **⚠ 提示**  
-  >可含端口，如`example.com:11451`  
+  >[!WARNING] 可含端口，如`example.com:11451`  
   >不填端口基岩版默认`19132`，Java版默认`25565`
 - 返回
   - `String` Motd原文
@@ -431,8 +394,7 @@ serein.stopServer();
 - 返回
   - 空
 
-> **⚠ 提示**  
->此函数不能保证服务器被关闭
+>[!WARNING] 此函数不能保证服务器被关闭
 
 #### 强制结束服务器
 
@@ -531,8 +493,7 @@ var success = serein.sendGroup(114514,"大家好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**  
-    >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送私聊消息
 
@@ -548,8 +509,7 @@ var success = serein.sendPrivate(114514,"你好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**  
-    >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 发送数据包
 
@@ -565,8 +525,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    > **⚠ 提示**  
-    >此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
 
 #### 获取ws连接状态
 

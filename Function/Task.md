@@ -1,10 +1,9 @@
-## 定时任务
 
-![定时任务](imgs/task.png)
+![定时任务](../imgs/task.png)
 
 任务数据保存在`data/task.json`
 
-> **⭐ Tips**  
+> [!TIP]
 >
 >- 将他人的记录复制在该文件中以合并添加他人的任务
 >- 直接将此文件分享给其他人供他人使用
@@ -14,11 +13,10 @@
 
 在任务表格中右键打开菜单
 
-> **⭐ Tips**  
+> [!TIP]
 >在编辑窗口中你可以直接看到下一次的执行时间
 
-> **⚠ 提示**  
->Cron表达式或命令为空或不合法时无法保存
+>[!WARNING]Cron表达式或命令为空或不合法时无法保存
 
 ### 功能介绍
 
@@ -26,12 +24,11 @@
 
 指定任务执行的时间和周期
 
-> **⭐ Tips**  
+> [!TIP]
 >生成器（推荐）：[Crontab guru](https://crontab.guru/)  
 >语法：[POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) ，[Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression)
 
-> **⚠ 提示**  
->为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
+>[!WARNING]为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
 >例：假设一定时任务为`* * * * *`，代表在每一分钟执行该任务，但是可能在这分钟的第0秒到第4秒的任意时刻执行
 
 #### 执行命令
@@ -42,7 +39,7 @@
 
 对这项内容的备注或注释，不影响匹配
 
-### 示例文件
+### 文件格式
 
 ```jsonc
 {

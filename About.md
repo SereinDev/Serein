@@ -1,16 +1,6 @@
-## 关于
 
-```txt
- ____ 
-/\  _`\                        __            
-\ \,\L\_\     __   _ __    __ /\_\    ___    
- \/_\__ \   /'__`\/\`'__\/'__`\/\ \ /' _ `\  
-   /\ \L\ \/\  __/\ \ \//\  __/\ \ \/\ \/\ \ 
-   \ `\____\ \____\\ \_\\ \____\\ \_\ \_\ \_\
-    \/_____/\/____/ \/_/ \/____/ \/_/\/_/\/_/
-```
-
-- 许可证 [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)
+### 声明
+- 软件许可证 [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)
 - Copyright © 2022 Zaitonn. All Rights Reserved.
 - 此软件与`Mojang Studio`、`网易`、`Microsoft`没有从属关系
 
@@ -38,5 +28,5 @@
 | 平台     | 用户名                                                    |
 | -------- | --------------------------------------------------------- |
 | Minebbs  | [Zaiton_](https://www.minebbs.com/members/zaiton_.21326/) |
-| BiliBili | [Zaiton_](https://space.bilibili.com/406125728)           |
+| BiliBili | [Zaitonn](https://space.bilibili.com/406125728)           |
 | 爱发电   | [@Zaiton](https://afdian.net/@Zaiton)                     |

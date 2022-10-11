@@ -1,41 +1,13 @@
-## 事件
 
-- [事件](#事件)
-  - [这是个啥](#这是个啥)
-  - [事件一览表](#事件一览表)
-  - [绑定/解绑](#绑定解绑)
-    - [Bind_Success](#bind_success)
-    - [Bind_Occupied](#bind_occupied)
-    - [Bind_Invalid](#bind_invalid)
-    - [Bind_Already](#bind_already)
-    - [Unbind_Success](#unbind_success)
-    - [Unbind_Failure](#unbind_failure)
-  - [服务器状态变更](#服务器状态变更)
-    - [Server_Start](#server_start)
-    - [Server_Stop](#server_stop)
-    - [Server_Error](#server_error)
-  - [QQ群事件](#qq群事件)
-    - [Group_Increase](#group_increase)
-    - [Group_Decrease](#group_decrease)
-    - [Group_Poke](#group_poke)
-  - [Motd指令反馈](#motd指令反馈)
-    - [Motdpe_Success](#motdpe_success)
-    - [Motdje_Success](#motdje_success)
-    - [Motd_Failure](#motd_failure)
-  - [权限不足反馈](#权限不足反馈)
-    - [PermissionDenied_Private](#permissiondenied_private)
-    - [PermissionDenied_Group](#permissiondenied_group)
-  - [Serein](#serein)
-    - [Serein_Crash](#serein_crash)
+![事件](../imgs/Event.png)
 
-### 这是个啥
+### 介绍
 
-`Serein`可以根据`settings/Event.json`中的设置响应触发的事件  
+根据`settings/Event.json`中的设置的命令响应触发的事件  
 
 在配置文件中，每个事件下有一个`JSON`数组，你可以在里面填写该事件被触发时执行的[命令](Command.md)，并且可以在其中插入[变量](Variables.md)
 
-> **⚠ 提示**
->所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
+>[!WARNING]所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
 
 <details>
   <summary>配置文件预览</summary>
@@ -105,8 +77,7 @@
 
 ### 事件一览表
 
-> **⚠ 提示**
->以下所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
+>[!WARNING]以下所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
 
 | 事件名                   | 描述                           |
 | ------------------------ | ------------------------------ |
@@ -131,8 +102,7 @@
 
 ### 绑定/解绑
 
-> **⚠ 提示**
->本节的所有事件可以使用`ID`变量获取触发这个事件的QQ
+>[!WARNING]本节的所有事件可以使用`ID`变量获取触发这个事件的QQ
 
 #### Bind_Success
 
@@ -183,8 +153,7 @@
 
 ### QQ群事件
 
-> **⚠ 提示**
->本节的所有事件可以使用`ID`变量获取触发这个事件的QQ
+>[!WARNING]本节的所有事件可以使用`ID`变量获取触发这个事件的QQ
 
 #### Group_Increase
 
@@ -206,7 +175,7 @@ ubind|%ID%
 监听群内当前账号被他人戳一戳  
 默认值： `g|别戳我……(*/ω＼*)`
 
-> **⭐ Tips**  
+>[!TIP]
 >以上三个事件其实很有用，可以欢迎新成员/引导玩家绑定ID/快捷获取服务器状态/提示退群消息/~~整活~~  
 >
 >- 示例：
@@ -265,8 +234,7 @@ Motd获取失败
 %Exception%
 ```
 
-> **⚠ 提示**
->`Motd_Failure`可以使用额外的`Exception`变量输出错误信息
+>[!WARNING]`Motd_Failure`可以使用额外的`Exception`变量输出错误信息
 
 ### 权限不足反馈
 

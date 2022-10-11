@@ -1,4 +1,3 @@
-## 自定义控制台
 
 ### 具体步骤
 
@@ -20,5 +19,7 @@ body {
 }
 ```
 
+>[!NOTE]
+这是一些示例图片  
 ![自定义背景图](../imgs/Tutorial/customconsole.png)
 ![自定义背景图2](../imgs/Tutorial/customconsole2.png)
