@@ -17,12 +17,24 @@
 
 <body>
     <div id="app"></div>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+    <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/search.min.js" defer></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/emoji.min.js" defer></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/zoom-image.min.js" defer></script>
+    <script src="https://unpkg.com/docsify-copy-code/dist/docsify-copy-code.min.js" defer></script>
+    <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js" defer></script>
+    <script src="https://unpkg.com/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js" defer></script>
+    <script src="//unpkg.com/docsify-count/dist/countable.js" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js" defer></script>
     <script>
         window.$docsify = {
             name: 'Serein',
             repo: 'https://github.com/Zaitonn/Serein',
             subMaxLevel: 5,
             loadNavbar: true,
+            relativePath:true,
             autoHeader: true,
             loadSidebar: true,
             auto2top: true,
@@ -32,27 +44,22 @@
             loadFooter: '_footer.md',
             externalLinkTarget: '_blank',
             search: {
-                placeholder: "🔍 搜索...",
-                namespace: 'serein'
+                placeholder: "🔍 搜我所想...",
+                namespace: 'serein',
+                noData: '👉👈没有找到你想要的内容呢'
             },
             pagination: {
                 previousText: '👈上一节',
                 nextText: '下一节👉',
                 crossChapter: true,
                 crossChapterText: true,
-            }
+            },
+            plugins: [
+                EditOnGithubPlugin.create('https://github.com/Zaitonn/Serein/blob/docs/')
+            ]
         }
     </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
-    <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/search.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
-    <script src="https://unpkg.com/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-    <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-    <script src="https://unpkg.com/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js"></script>
-    <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
+    
 
 </body>
 

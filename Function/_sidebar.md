@@ -1,18 +1,19 @@
 
-- [**📫 主页**](README.md)
-- [**🔮 教程**](Tutorial/README.md)
-- [**📔 关于**](About.md)
+- [**📫 主页**](../README.md)
+- [**🔮 教程**](../Tutorial/README.md)
+- [**🌌 扩展**](../Extension/README.md)
+- [**📔 关于**](../About.md)
 
 ---
 
 - 📻 **功能**
-  - [📖 目录](Function/README.md)
-  - [🤖 机器人](Function/Bot.md)
-  - [🔩 命令](Function/Command.md)
-  - [🎄 事件](Function/Event.md)
-  - [🧩 插件](Function/JSPlugin.md)
-  - [📝 插件语法](Function/JSDocs.md)
-  - [👨‍💼 成员管理](Function/Member.md)
-  - [📜 正则](Function/Regex.md)
-  - [⏰ 定时任务](Function/Task.md)
-  - [🎨 变量](Function/Variables.md)
+  - [📖 目录](README.md)
+  - [🤖 机器人](Bot.md)
+  - [🔩 命令](Command.md)
+  - [🎄 事件](Event.md)
+  - [🧩 插件](JSPlugin.md)
+  - [📝 插件语法](JSDocs.md)
+  - [👨‍💼 成员管理](Member.md)
+  - [📜 正则](Regex.md)
+  - [⏰ 定时任务](Task.md)
+  - [🎨 变量](Variables.md)

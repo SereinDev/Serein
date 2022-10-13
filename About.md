@@ -33,9 +33,9 @@
   <img src="./imgs/afdian.png">
 </details>
 
-| Supporters | 发电金额 |日期|
-|---- |----: |----|
-| [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640)| $ 10.00 | 2022.7.25|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.17|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.10|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
+| Supporters                                                     | 发电金额 | 日期      |
+| -------------------------------------------------------------- | -------: | --------- |
+| [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640) |  $ 10.00 | 2022.7.25 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.17 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.10 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.9  |

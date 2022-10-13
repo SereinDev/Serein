@@ -89,7 +89,7 @@
 >[!WARNING]此命令只能被群聊消息触发
 
 >[!WARNING]若该ID不合法或已经绑定会返回消息提示  
-提示内容可在`settings/Event.json`中自定义，详见[事件](Function/Event.md)  
+提示内容可在`settings/Event.json`中自定义，详见[事件](Event.md)  
 
 ### 解绑游戏ID
 
@@ -100,7 +100,7 @@
 >[!WARNING]此命令只能被群聊消息触发
 
 >[!WARNING]若该QQID未绑定会返回消息提示  
-提示内容可在`settings/Event.json`中自定义，详见[事件](Function/Event.md)
+提示内容可在`settings/Event.json`中自定义，详见[事件](Event.md)
 
 ### 获取服务器信息
 
@@ -122,7 +122,7 @@
 >- 连接超时  
 >- 数据包无法识别
 >
->错误消息可在`settings/Event.json`中自定义，详见[事件](Function/Event.md)
+>错误消息可在`settings/Event.json`中自定义，详见[事件](Event.md)
 
 ### 执行Javascript代码
 
@@ -131,7 +131,7 @@
 
 - 运行超时：1min
 - js标准：[ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
-- 详见[插件](Function/JSPlugin.md)
+- 详见[插件](JSPlugin.md)
 
 ### 调试输出
 

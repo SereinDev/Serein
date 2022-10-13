@@ -1,7 +1,7 @@
 
 ![插件](../imgs/javacriptplugins.png)
 
-**👉[极其详细的文档](Function/JSDocs.md)👈**  
+**👉[极其详细的文档](JSDocs.md)👈**  
 **👉[一看就会的示例插件](https://github.com/Zaitonn/Serein/blob/plugins/%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6.js)👈**
 
 ### 推荐列表

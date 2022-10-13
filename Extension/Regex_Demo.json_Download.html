@@ -13,6 +13,9 @@
             aTag.href = URL.createObjectURL(blob);
             aTag.click();
             URL.revokeObjectURL(blob);
+            setTimeout(() => {
+                window.close();
+            }, 200);
         }
     </script>
     <title>Download | Serein</title>

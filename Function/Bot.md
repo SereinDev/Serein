@@ -11,4 +11,4 @@
 目前已完全支持的机器人：[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)  
 **此处列举的机器人只代表已经经过测试且可用，并不是只有以上两种机器人可用**
 
->[!TIP] 👉[机器人详细配置教程](Tutorial/Bot.md)👈
+>[!TIP] 👉[机器人详细配置教程](../Tutorial/Bot.md)👈

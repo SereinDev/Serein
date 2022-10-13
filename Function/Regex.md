@@ -3,8 +3,6 @@
 
 正则数据保存在`data/regex.json`
 
-- 例子下载：[Regex_Demo](https://serein.cc/Function/Regex_Demo.html)
-
 > [!TIP]
 >
 >- 将他人的记录复制在该文件中以合并添加他人的正则

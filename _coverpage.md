@@ -3,5 +3,5 @@
 
 >新时代极简服务器面板
 
-[GitHub](https://github.com/Zaitonn/Serein)
-[Get Started](/README.md)
+[下载](https://github.com/Zaitonn/Serein/releases/latest)
+[开始阅读](README.md)
