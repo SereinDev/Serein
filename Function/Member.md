@@ -12,9 +12,9 @@
 - 通过[JavaScript插件](Javascript.md)执行`serein.bindMember()`或`serein.unbindMember()`增删绑定记录
 - 在列表中右键可编辑绑定的游戏ID或删除所选记录
 
-### 示例文件
+### 文件格式
 
-```jsonc
+```json
 {
   "type": "MEMBERS",
   "comment": "非必要请不要直接修改文件，语法错误可能导致数据丢失",

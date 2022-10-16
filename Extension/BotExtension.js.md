@@ -1,9 +1,10 @@
 
-| 作者    | 介绍               | 更新日期  |
-| ------- | ------------------ | --------- |
-| Zationn | 拓展机器人功能 | 2022.8.24 |
-
->[!TIP] [发布链接](https://github.com/Zaitonn/Serein/blob/plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js)
+|     作者     | Zaitonn                                                                                                                     |
+| :----------: | --------------------------------------------------------------------------------------------------------------------------- |
+|   **介绍**   | 拓展机器人功能                                                                                                              |
+| **更新日期** | 2022.8.24                                                                                                                   |
+| **下载链接** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js) |
+| **开源仓库** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%9F%E8%83%BD%E6%89%A9%E5%B1%95.js) |
 
 ### 功能
 

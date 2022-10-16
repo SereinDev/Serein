@@ -10,14 +10,14 @@
 - 有着更精美的界面Ui
 - 适合小白服主使用
 
-![wpf](../imgs/type/wpf.png)
+![wpf](../imgs/type_wpf.png)
 
 #### 极简版（Winform）
   
 - 顾名思义，这种版本提供了极简的图形化操作界面
 - 相同情况下占用更低，运行更流畅
 
-![winform](../imgs/type/winform.png)
+![winform](../imgs/type_winform.png)
 
 #### 命令行版（Console）
 
@@ -25,7 +25,7 @@
 - 适合有一定开服基础或者面板服商家使用（门槛可能会有一点点高）
 - 这种版本更适用于群组服，可以极大降低系统占用
 
-![console](../imgs/type/console.png)
+![console](../imgs/type_console.png)
 
 ### 运行库NET版本的选择
 
