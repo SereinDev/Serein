@@ -8,7 +8,7 @@
 
 这个插件是供开发者阅读和学习的，不建议直接投入使用
 
-### 试读片段
+### 预览
 
 ```js
 // 注册插件，注册成功后会在插件栏显示具体内容
@@ -33,4 +33,5 @@ serein.registerCommand("example",example);
 function example(cmd){
     serein.log("你输入了注册的命令："+cmd);
 }
+// .....
 ```

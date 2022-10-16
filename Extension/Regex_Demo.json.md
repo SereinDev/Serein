@@ -5,6 +5,8 @@
 | **更新日期** | 2022.10.13                                                               |
 | **下载链接** | [Here](Extension/Regex_Demo.json_Download.html ':ignore') |
 
+### 预览
+
 ```json
 {
     "type": "REGEX",
