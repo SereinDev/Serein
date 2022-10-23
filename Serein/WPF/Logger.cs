@@ -96,7 +96,7 @@ namespace Serein
                     break;
                 case LogType.Bot_Clear:
                     Catalog.Function.Bot?.AppendText("#clear");
-                    Catalog.Function.BotCache.Clear(); 
+                    Catalog.Function.BotCache.Clear();
                     break;
                 case LogType.Plugin_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
