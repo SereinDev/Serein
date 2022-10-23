@@ -53,8 +53,8 @@ namespace Serein.Console
         /// </summary>
         public static void Start()
         {
-            Logger.Out(1, "Welcome.");
-            Logger.Out(1, "你可以输入\"help\"获取更多信息");
+            Logger.Out(Items.LogType.Info, "Welcome.");
+            Logger.Out(Items.LogType.Info, "你可以输入\"help\"获取更多信息");
             if (Global.Args.Contains("auto_connect"))
             {
                 Task.Run(() => Websocket.Connect(false));
@@ -67,7 +67,7 @@ namespace Serein.Console
             System.Console.CancelKeyPress += (sender, e) =>
             {
                 e.Cancel = true;
-                Logger.Out(2, "若要关闭Serein请使用\"exit\"命令");
+                Logger.Out(Items.LogType.Error, "若要关闭Serein请使用\"exit\"命令");
             };
             while (true)
             {

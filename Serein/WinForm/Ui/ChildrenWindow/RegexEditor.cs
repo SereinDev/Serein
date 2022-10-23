@@ -139,7 +139,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void RegexEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Tutorial.html#%E6%AD%A3%E5%88%99") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Regex") { UseShellExecute = true });
         }
     }
 }

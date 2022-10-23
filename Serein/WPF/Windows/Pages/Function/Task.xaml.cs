@@ -140,10 +140,10 @@ namespace Serein.Windows.Pages.Function
                         Load();
                         break;
                     case "LookupCommand":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/Command.html") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Command") { UseShellExecute = true });
                         break;
                     case "LookupVariables":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/Variables.html") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Variables") { UseShellExecute = true });
                         break;
                     case "Enable":
                     case "Disable":

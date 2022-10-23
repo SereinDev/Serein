@@ -36,7 +36,6 @@ namespace Serein.Ui
             SettingBotRestart.Checked = Global.Settings.Bot.AutoReconnect;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
-            SettingSereinEnableGetAnnouncement.Checked = Global.Settings.Serein.EnableGetAnnouncement;
             SettingSereinEnableDPIAware.Checked = Global.Settings.Serein.DPIAware;
             if (!Global.Settings.Serein.Debug)
             {
@@ -60,14 +59,12 @@ namespace Serein.Ui
         private void SettingBotRestart_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
         private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-        private void SettingSereinEnableGetAnnouncement_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.EnableGetAnnouncement = SettingSereinEnableGetAnnouncement.Checked;
         private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
-        private void SettingSereinAbout_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/About") { UseShellExecute = true });
+        private void SettingSereinAbout_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/About") { UseShellExecute = true });
         private void SettingSereinPage_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
-        private void SettingSereinHelp_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Help") { UseShellExecute = true });
-        private void SettingSereinTutorial_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Tutorial") { UseShellExecute = true });
+        private void SettingSereinTutorial_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/README") { UseShellExecute = true });
         private void SettingSereinDownload_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
-        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/Event") { UseShellExecute = true });
+        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
         private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
 
         private void SettingBotAuthorization_Leave(object sender, EventArgs e)

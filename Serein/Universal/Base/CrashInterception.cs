@@ -47,7 +47,7 @@ namespace Serein.Base
             EventTrigger.Trigger("Serein_Crash");
             if (Logger.Type == 0)
             {
-                Logger.Out(3, $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
+                Logger.Out(Items.LogType.Error, $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
                     $"{ExceptionMsg}\r\n\r\n" +
                     $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\r\n" +
                     "反馈此问题可以帮助作者更好的改进Serein");

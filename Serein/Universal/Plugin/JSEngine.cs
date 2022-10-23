@@ -3,6 +3,7 @@ using Jint.Native;
 using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
+using Serein.Items;
 using Serein.Items.Motd;
 using Serein.Server;
 using System;
@@ -51,11 +52,11 @@ namespace Serein.Plugin
                         return string.Empty;
                 }
             }));
-            engine.SetValue("Serein_Log", new Action<object>((Content) => { Logger.Out(33, Content); }));
+            engine.SetValue("Serein_Log", new Action<object>((Content) => { Logger.Out(LogType.Plugin_Info, Content); }));
             engine.SetValue("Serein_Command_Run", new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Path", Global.Path);
             engine.SetValue("Serein_Global_Version", Global.VERSION);
-            engine.SetValue("Serein_Global_Debug", new Action<object>((Content) => { Logger.Out(999, Content); }));
+            engine.SetValue("Serein_Global_Debug", new Action<object>((Content) => { Logger.Out(LogType.Debug, Content); }));
             engine.SetValue("Serein_Global_Settings", new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register", new Func<string, string, string, string, bool>(JSFunc.Register));
             engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand", new Func<string, Delegate, bool>(JSFunc.RegisterCommand));
@@ -84,6 +85,7 @@ namespace Serein.Plugin
             engine.SetValue("clearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("getMD5", new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("WebSocket", TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
+            engine.SetValue("Logger", TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             engine.Execute("var serein={" +
                 "log:Serein_Log," +
                 "path:Serein_Global_Path," +
@@ -126,7 +128,7 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Logger.Out(999, "[JSEngine:Run()]", e.ToString());
+                Logger.Out(LogType.Debug, "[JSEngine:Run()]", e.ToString());
                 return e.Message;
             }
         }

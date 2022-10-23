@@ -1,5 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
+using Serein.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string EventName, Delegate Function)
         {
-            Logger.Out(999, "[JSFunc:SetListener()]", EventName);
+            Logger.Out(LogType.Debug, "[JSFunc:SetListener()]", EventName);
             if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName))
                 return false;
             switch (EventName)
@@ -96,7 +97,7 @@ namespace Serein.Plugin
                     Plugins.Event.onPluginsReload.Add(Function);
                     break;
                 default:
-                    Logger.Out(32, $"插件注册了一个未知事件：{EventName}");
+                    Logger.Out(LogType.Plugin_Error, $"插件注册了一个未知事件：{EventName}");
                     return false;
             }
             return true;
@@ -110,7 +111,7 @@ namespace Serein.Plugin
         public static void Trigger(string EventName, params object[] Args)
         {
             Engine _Engine = new Engine();
-            Logger.Out(999, "[JSFunc:Tigger()]", EventName);
+            Logger.Out(LogType.Debug, "[JSFunc:Tigger()]", EventName);
             try
             {
                 switch (EventName)
@@ -212,8 +213,8 @@ namespace Serein.Plugin
             }
             catch (Exception e)
             {
-                Logger.Out(32, $"触发事件{EventName}时出现异常：{e.Message}");
-                Logger.Out(999, e.ToString());
+                Logger.Out(LogType.Plugin_Error, $"触发事件{EventName}时出现异常：{e.Message}");
+                Logger.Out(LogType.Debug, e.ToString());
             }
         }
 
@@ -224,13 +225,13 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool RegisterCommand(string Command, Delegate Function)
         {
-            Logger.Out(999, "[JSFunc:RegisterCommand()]", Command);
+            Logger.Out(LogType.Debug, "[JSFunc:RegisterCommand()]", Command);
             if (
                 Command.Contains(" ") ||
                 ((IList<string>)Global.Settings.Server.StopCommands).Contains(Command)
                 )
             {
-                Logger.Out(32, $"插件注册命令\"{Command}\"失败");
+                Logger.Out(LogType.Plugin_Error, $"插件注册命令\"{Command}\"失败");
                 return false;
             }
             else

@@ -45,7 +45,7 @@ namespace Serein.Windows.Pages.Settings
                         }
                         break;
                     case "LookupEvent":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/Event.html") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
                         break;
                 }
             }

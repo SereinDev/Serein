@@ -18,7 +18,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void EventEditor_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/Event") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
         }
 
         private void Confirm_Click(object sender, EventArgs e)

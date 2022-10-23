@@ -33,8 +33,7 @@ namespace Serein.Ui
             UpdateInfoThread.Start();
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
-            GetInfo.GetAnnouncementThread.Start();
-            GetInfo.GetVersionThread.Start();
+            Checker.Start();
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
@@ -45,7 +44,7 @@ namespace Serein.Ui
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            new Task(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
+            new Task(() => Logger.Out(Items.LogType.Debug, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w'))).Start();
             TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }

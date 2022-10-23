@@ -40,10 +40,9 @@ namespace Serein.Ui
         private void SettingBotPermission_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "设定有管理权限的用户");
         private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "启动后自动获取更新（建议开启）");
-        private void SettingSereinAbout_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开关于页面（https://serein.cc/About）");
+        private void SettingSereinAbout_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开关于页面（https://serein.cc/#/About）");
         private void SettingSereinPage_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开介绍页面（https://serein.cc）");
-        private void SettingSereinHelp_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开帮助页面（https://serein.cc/Help）");
-        private void SettingSereinTutorial_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开教程页面（https://serein.cc/Tutorial）");
+        private void SettingSereinTutorial_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开教程页面（https://serein.cc/#/Tutorial/README）");
         private void SettingSereinDownload_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "打开最新版下载页面（https://github.com/Zaitonn/Serein/releases/latest）");
         private void SettingSereinEnableDPIAware_MouseHover(object sender, EventArgs e) => ShowToolTip(sender, "启用DPI感知\n若界面异常或模糊可选择开启此项");
 

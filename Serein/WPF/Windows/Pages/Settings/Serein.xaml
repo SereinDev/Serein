@@ -19,11 +19,6 @@
             Click="EnableGetUpdate_Click"
             Content="获取更新" />
         <ui:ToggleSwitch
-            x:Name="EnableGetAnnouncement"
-            Margin="0,7"
-            Click="EnableGetAnnouncement_Click"
-            Content="获取公告" />
-        <ui:ToggleSwitch
             x:Name="UseDarkTheme"
             Margin="0,7"
             Click="UseDarkTheme_Click"

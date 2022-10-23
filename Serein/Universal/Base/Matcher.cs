@@ -50,7 +50,7 @@ namespace Serein.Base
                 string RawMessage = Packet["raw_message"].ToString();
                 long UserId = long.TryParse(Packet["sender"]["user_id"].ToString(), out long Result) ? Result : -1;
                 long GroupId = MessageType == "group" && long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
-                Logger.Out(22, $"{Packet["sender"]["nickname"]}({Packet["sender"]["user_id"]})" + ":" + RawMessage);
+                Logger.Out(Items.LogType.Bot_Receive, $"{Packet["sender"]["nickname"]}({Packet["sender"]["user_id"]})" + ":" + RawMessage);
                 foreach (Items.Regex Item in Global.RegexItems)
                 {
                     if (

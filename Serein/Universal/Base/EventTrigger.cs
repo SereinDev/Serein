@@ -19,7 +19,7 @@ namespace Serein.Base
             Motd Motd = null
             )
         {
-            Logger.Out(999, "[EventTrigger]", "Trigger:" + Type);
+            Logger.Out(Items.LogType.Debug, "[EventTrigger]", "Trigger:" + Type);
             string[] CommandGroup = new string[] { };
             if (
                 Type.StartsWith("Bind_") ||
@@ -177,7 +177,7 @@ namespace Serein.Base
             }
             else
             {
-                Logger.Out(999, "[EventTrigger]", "未知的事件名" + Type);
+                Logger.Out(Items.LogType.Debug, "[EventTrigger]", "未知的事件名" + Type);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Catalog.MainWindow = this;
-            Task.Run(() => Logger.Out(999, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
+            Task.Run(() => Logger.Out(Items.LogType.Debug, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
@@ -38,7 +38,6 @@ namespace Serein.Windows
                     );
             }
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
-            Checker.Start();
         }
 
         private void UiWindow_StateChanged(object sender, EventArgs e)
@@ -68,9 +67,9 @@ namespace Serein.Windows
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             if (!ServerManager.Status)
-            {
                 Close();
-            }
+            else
+                Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
         }
 
         /// <summary>
@@ -96,8 +95,11 @@ namespace Serein.Windows
             }
         }
 
-        private void Help_Click(object sender, RoutedEventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
-        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e) => ShowInTaskbar = IsVisible;
+        private void Help_Click(object sender, RoutedEventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
+
+        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+            => ShowInTaskbar = IsVisible;
 
         #region 成员编辑器代码
 
@@ -252,7 +254,7 @@ namespace Serein.Windows
                 }
                 else if (Path.GetExtension(FileName).ToLower() == ".json" || Path.GetExtension(FileName).ToLower() == ".tsv")
                 {
-                    if (Logger.MsgBox("是否导入该文件？\n将覆盖原有文件且不可逆",
+                    if (Logger.MsgBox($"是否导入{Path.GetFileName(FileName)}？\n将覆盖原有文件且不可逆",
                             "Serein",
                             1,
                             48))

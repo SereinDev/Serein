@@ -1,4 +1,5 @@
-﻿using Serein.Plugin;
+﻿using Serein.Items;
+using Serein.Plugin;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;
@@ -49,7 +50,7 @@ namespace Serein.Windows.Pages.Function
                         Catalog.Function.PluginCache.Clear();
                         break;
                     case "LookupDocs":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/Javascript.html") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs") { UseShellExecute = true });
                         break;
                 }
             }
@@ -60,7 +61,7 @@ namespace Serein.Windows.Pages.Function
             Timer Restorer = new Timer(500) { AutoReset = true };
             Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
             {
-                Logger.Out(999, "[JSPlugin:Restore]", string.Join(";", Catalog.Function.PluginCache));
+                Logger.Out(LogType.Debug, "[JSPlugin:Restore]", string.Join(";", Catalog.Function.PluginCache));
                 if (!Restored && PluginWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
                 {
                     Catalog.Function.PluginCache.ForEach((Text) => AppendText(Text));

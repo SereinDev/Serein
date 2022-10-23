@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.Items;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -40,7 +41,7 @@ namespace Serein.Plugin
                 long Temp;
                 foreach (string Filename in Files)
                 {
-                    Logger.Out(31, $"正在加载{Path.GetFileName(Filename)}");
+                    Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(Filename)}");
                     Temp = PluginItems.Count;
                     try
                     {
@@ -50,7 +51,7 @@ namespace Serein.Plugin
                         if (!Success)
                         {
                             ErrorFiles.Add(Path.GetFileName(Filename));
-                            Logger.Out(32, ExceptionMessage);
+                            Logger.Out(LogType.Plugin_Error, ExceptionMessage);
                         }
                         else
                         {
@@ -77,13 +78,13 @@ namespace Serein.Plugin
                     catch (Exception e)
                     {
                         ErrorFiles.Add(Path.GetFileName(Filename));
-                        Logger.Out(32, e.ToString());
+                        Logger.Out(LogType.Plugin_Error, e.ToString());
                     }
                 }
-                Logger.Out(31, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
+                Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
                 {
-                    Logger.Out(32, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
+                    Logger.Out(LogType.Plugin_Error, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
                 }
             }
         }
@@ -93,7 +94,7 @@ namespace Serein.Plugin
         /// </summary>
         public static void Reload()
         {
-            Logger.Out(30, "#clear");
+            Logger.Out(LogType.Plugin_Clear);
             JSFunc.Trigger("onPluginsReload");
             PluginItems.ForEach((x) => { x.Engine = null; });
             PluginItems.Clear();

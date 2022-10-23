@@ -16,7 +16,6 @@ namespace Serein.Windows.Pages.Settings
         private void Load()
         {
             UseDarkTheme.IsChecked = Global.Settings.Serein.UseDarkTheme;
-            EnableGetAnnouncement.IsChecked = Global.Settings.Serein.EnableGetAnnouncement;
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
             Version.Text = "当前版本：" + Global.VERSION;
             BuildInfo.Text =
@@ -27,7 +26,6 @@ namespace Serein.Windows.Pages.Settings
                 $"详细信息：{Global.BuildInfo.Detail}";
         }
 
-        private void EnableGetAnnouncement_Click(object sender, RoutedEventArgs e) => Global.Settings.Serein.EnableGetAnnouncement = EnableGetAnnouncement.IsChecked ?? false;
         private void EnableGetUpdate_Click(object sender, RoutedEventArgs e) => Global.Settings.Serein.EnableGetUpdate = EnableGetUpdate.IsChecked ?? false;
 
         private void ThemeFollowSystem_Click(object sender, RoutedEventArgs e)

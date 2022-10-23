@@ -64,4 +64,4 @@ Win7或WinServer2012以上
 
 ## 关于
 
-> [About](https://serein.cc/About.html)
+> [About](https://serein.cc/#/About)

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,6 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using WebSocket4Net;
 
 namespace Serein.Base
@@ -35,7 +35,7 @@ namespace Serein.Base
             }
             else if (!Status)
             {
-                Logger.Out(20, "#clear");
+                Logger.Out(LogType.Bot_Clear);
                 Matcher.MessageReceived = "-";
                 Matcher.MessageSent = "-";
                 Matcher.SelfId = "-";
@@ -49,22 +49,22 @@ namespace Serein.Base
                             new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                             }
                         );
-                    WSClient.MessageReceived += new EventHandler<MessageReceivedEventArgs>(Recieve);
+                    WSClient.MessageReceived += Receive;
                     WSClient.Error += (sender, e) =>
                     {
-                        Logger.Out(24, e.Exception.Message);
+                        Logger.Out(LogType.Bot_Error, e.Exception.Message);
                     };
                     WSClient.Closed += (sender, e) =>
                     {
                         Status = false;
-                        Logger.Out(20, "");
-                        Logger.Out(21, "WebSocket连接已断开");
+                        Logger.Out(LogType.Bot_Output);
+                        Logger.Out(LogType.Bot_Notice, "WebSocket连接已断开");
                         if (Global.Settings.Bot.AutoReconnect && Reconnect)
                         {
-                            Task.Run(() =>
+                            System.Threading.Tasks.Task.Run(() =>
                             {
-                                Logger.Out(21, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Logger.Out(21, "你可以按下断开按钮来取消重启");
+                                Logger.Out(LogType.Bot_Notice, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重启");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
@@ -83,7 +83,7 @@ namespace Serein.Base
                     WSClient.Opened += (sender, e) =>
                     {
                         Reconnect = true;
-                        Logger.Out(21, $"连接到{Global.Settings.Bot.Uri}");
+                        Logger.Out(LogType.Bot_Notice, $"连接到{Global.Settings.Bot.Uri}");
                     };
                     WSClient.Open();
                     StartTime = DateTime.Now;
@@ -91,7 +91,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(24, e.Message);
+                    Logger.Out(LogType.Bot_Error, e.Message);
                 }
             }
         }
@@ -128,11 +128,11 @@ namespace Serein.Base
                 WSClient.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Logger.Out(23, TextJObject.ToString());
+                    Logger.Out(LogType.Bot_Send, TextJObject.ToString());
                 }
                 else
                 {
-                    Logger.Out(23, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
+                    Logger.Out(LogType.Bot_Send, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
                 }
             }
             return Status;
@@ -151,7 +151,7 @@ namespace Serein.Base
             else if (Reconnect)
             {
                 Reconnect = false;
-                Logger.Out(21, "重启已取消");
+                Logger.Out(LogType.Bot_Notice, "重启已取消");
             }
             else
             {
@@ -164,11 +164,11 @@ namespace Serein.Base
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">消息接收事件参数</param>
-        public static void Recieve(object sender, MessageReceivedEventArgs e)
+        public static void Receive(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
-                Logger.Out(22, e.Message);
+                Logger.Out(LogType.Bot_Receive, e.Message);
             }
             if (Global.Settings.Bot.EnableLog)
             {
@@ -200,7 +200,7 @@ namespace Serein.Base
         /// <returns>处理后文本</returns>
         public static string DeUnicode(string str)
         {
-            Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})");
             return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
         }
     }

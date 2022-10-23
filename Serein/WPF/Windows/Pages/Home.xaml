@@ -234,7 +234,7 @@
                 HorizontalAlignment="Center"
                 Content="查看文档页面"
                 Icon="Link24"
-                NavigateUri="https://serein.cc/Tutorial.html" />
+                NavigateUri="https://serein.cc/#/Tutorial/README" />
             <ui:Anchor
                 Grid.Row="2"
                 Grid.Column="1"

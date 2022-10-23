@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Items;
 using System;
 using System.IO;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Serein
     internal static class Logger
     {
         public static int Type = 1;
-        public static void Out(int Type, params object[] objects)
+        public static void Out(LogType Type, params object[] objects)
         {
             if (Program.Ui != null && !Program.Ui.Disposing)
             {
@@ -21,14 +22,12 @@ namespace Serein
                 Line = Line.TrimEnd();
                 switch (Type)
                 {
-                    case 999:
+                    case LogType.Debug:
                         if (Global.Settings.Serein.Debug)
                         {
                             Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
                             if (!Directory.Exists(Global.Path + "\\logs\\debug"))
-                            {
                                 Directory.CreateDirectory(Global.Path + "\\logs\\debug");
-                            }
                             try
                             {
                                 File.AppendAllText(
@@ -40,38 +39,47 @@ namespace Serein
                             catch { }
                         }
                         break;
-                    case 10:
+                    case LogType.Server_Output:
                         Program.Ui.PanelConsoleWebBrowser_Invoke(Line);
                         break;
-                    case 11:
+                    case LogType.Server_Notice:
                         Program.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 20:
+                    case LogType.Server_Clear:
+                        Program.Ui.PanelConsoleWebBrowser_Invoke("#clear");
+                        break;
+                    case LogType.Bot_Output:
                         Program.Ui.BotWebBrowser_Invoke(Line);
                         break;
-                    case 21:
+                    case LogType.Bot_Notice:
                         Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 22:
+                    case LogType.Bot_Receive:
                         Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 23:
+                    case LogType.Bot_Send:
                         Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 24:
+                    case LogType.Bot_Error:
                         Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 30:
-                        Program.Ui.SereinPluginsWebBrowser_Invoke(Line);
+                    case LogType.Bot_Clear:
+                        Program.Ui.BotWebBrowser_Invoke("#clear");
                         break;
-                    case 31:
+                    case LogType.Plugin_Info:
+                        Program.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(Line));
+                        break;
+                    case LogType.Plugin_Notice:
                         Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 32:
+                    case LogType.Plugin_Error:
                         Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line));
                         break;
-                    case 33:
-                        Program.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(Line));
+                    case LogType.Plugin_Warn:
+                        Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(Line));
+                        break;
+                    case LogType.Plugin_Clear:
+                        Program.Ui.SereinPluginsWebBrowser_Invoke("#clear");
                         break;
                 }
             }

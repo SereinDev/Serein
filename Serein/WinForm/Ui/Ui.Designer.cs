@@ -161,11 +161,9 @@ namespace Serein.Ui
             this.SettingSereinStatement = new System.Windows.Forms.Label();
             this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
-            this.SettingSereinHelp = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
             this.SettingSereinTutorial = new System.Windows.Forms.Label();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
-            this.SettingSereinEnableGetAnnouncement = new System.Windows.Forms.CheckBox();
             this.SettingEvent = new System.Windows.Forms.GroupBox();
             this.SettingEventSplitContainer = new System.Windows.Forms.SplitContainer();
             this.SettingEventTreeView = new System.Windows.Forms.TreeView();
@@ -1119,11 +1117,9 @@ namespace Serein.Ui
             this.SettingSerein.Controls.Add(this.SettingSereinStatement);
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
-            this.SettingSerein.Controls.Add(this.SettingSereinHelp);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
             this.SettingSerein.Controls.Add(this.SettingSereinTutorial);
             this.SettingSerein.Controls.Add(this.SettingSereinVersion);
-            this.SettingSerein.Controls.Add(this.SettingSereinEnableGetAnnouncement);
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
             this.SettingSerein.TabStop = false;
@@ -1190,15 +1186,6 @@ namespace Serein.Ui
             this.SettingSereinAbout.Click += new System.EventHandler(this.SettingSereinAbout_Click);
             this.SettingSereinAbout.MouseHover += new System.EventHandler(this.SettingSereinAbout_MouseHover);
             // 
-            // SettingSereinHelp
-            // 
-            resources.ApplyResources(this.SettingSereinHelp, "SettingSereinHelp");
-            this.SettingSereinHelp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingSereinHelp.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.SettingSereinHelp.Name = "SettingSereinHelp";
-            this.SettingSereinHelp.Click += new System.EventHandler(this.SettingSereinHelp_Click);
-            this.SettingSereinHelp.MouseHover += new System.EventHandler(this.SettingSereinHelp_MouseHover);
-            // 
             // SettingSereinEnableGetUpdate
             // 
             resources.ApplyResources(this.SettingSereinEnableGetUpdate, "SettingSereinEnableGetUpdate");
@@ -1222,14 +1209,6 @@ namespace Serein.Ui
             this.SettingSereinVersion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SettingSereinVersion.Name = "SettingSereinVersion";
             this.SettingSereinVersion.Click += new System.EventHandler(this.SettingSereinVersion_Click);
-            // 
-            // SettingSereinEnableGetAnnouncement
-            // 
-            resources.ApplyResources(this.SettingSereinEnableGetAnnouncement, "SettingSereinEnableGetAnnouncement");
-            this.SettingSereinEnableGetAnnouncement.Name = "SettingSereinEnableGetAnnouncement";
-            this.SettingSereinEnableGetAnnouncement.UseVisualStyleBackColor = true;
-            this.SettingSereinEnableGetAnnouncement.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_CheckedChanged);
-            this.SettingSereinEnableGetAnnouncement.MouseHover += new System.EventHandler(this.SettingSereinEnableGetAnnouncement_MouseHover);
             // 
             // SettingEvent
             // 
@@ -1762,7 +1741,6 @@ namespace Serein.Ui
         private System.Windows.Forms.Panel SettingPanel;
         private System.Windows.Forms.GroupBox SettingSerein;
         private System.Windows.Forms.Label SettingSereinVersion;
-        private System.Windows.Forms.CheckBox SettingSereinEnableGetAnnouncement;
         private System.Windows.Forms.GroupBox SettingBot;
         private System.Windows.Forms.Label SettingBotPermission;
         private System.Windows.Forms.Label SettingBotGroup;
@@ -1818,7 +1796,6 @@ namespace Serein.Ui
         private System.Windows.Forms.CheckBox SettingServerAutoStop;
         private System.Windows.Forms.Label SettingServerStopCommandLabel;
         private System.Windows.Forms.TextBox SettingServerStopCommand;
-        private System.Windows.Forms.Label SettingSereinHelp;
         private System.Windows.Forms.CheckBox SettingBotEnbaleOutputData;
         private System.Windows.Forms.TabPage Debug;
         private System.Windows.Forms.TextBox DebugTextBox;

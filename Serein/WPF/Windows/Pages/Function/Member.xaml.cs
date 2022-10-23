@@ -10,7 +10,6 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Member : UiPage
     {
-        private object Lock = new object();
         private int ActionType = 0;
         public Member()
         {
@@ -107,6 +106,7 @@ namespace Serein.Windows.Pages.Function
                     {
                         Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
                         ActionType = 0;
+                        Load();
                         return true;
                     }
                     break;

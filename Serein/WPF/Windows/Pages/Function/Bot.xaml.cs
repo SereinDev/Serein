@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Items;
 using System;
 using System.Timers;
 using System.Windows;
@@ -46,7 +47,7 @@ namespace Serein.Windows.Pages.Function
             Timer Restorer = new Timer(500) { AutoReset = true };
             Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
             {
-                Logger.Out(999, "[Bot:Restore]", string.Join(";", Catalog.Function.BotCache));
+                Logger.Out(LogType.Debug, "[Bot:Restore]", string.Join(";", Catalog.Function.BotCache));
                 if (!Restored && BotWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
                 {
                     Catalog.Function.BotCache.ForEach((Text) => AppendText(Text));

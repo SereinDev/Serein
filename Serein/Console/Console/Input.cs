@@ -22,7 +22,7 @@ namespace Serein.Console
                     case "exit":
                         if (ServerManager.Status)
                         {
-                            Logger.Out(2, "服务器未关闭");
+                            Logger.Out(Items.LogType.Warn, "服务器未关闭");
                         }
                         else
                         {
@@ -48,16 +48,16 @@ namespace Serein.Console
                         try
                         {
                             Base.Load();
-                            Logger.Out(1, "重新加载成功");
+                            Logger.Out(Items.LogType.Info, "重新加载成功");
                         }
                         catch (Exception e)
                         {
-                            Logger.Out(3, "加载失败:" + e.Message);
+                            Logger.Out(Items.LogType.Error, "加载失败:" + e.Message);
                         }
                         break;
                     case "help":
                         Logger.Out(
-                            0,
+                            Items.LogType.Null,
                             "\x1b[96m ____ \r\n" +
                             "\x1b[96m/\\  _`\\                        __            \r\n" +
                             "\x1b[96m\\ \\,\\L\\_\\     __   _ __    __ /\\_\\    ___    \r\n" +
@@ -79,7 +79,7 @@ namespace Serein.Console
                             "=================================================");
                         break;
                     default:
-                        Logger.Out(2, "未知的命令，请检查后重试或输入\"help\"获取更多信息");
+                        Logger.Out(Items.LogType.Warn, "未知的命令，请检查后重试或输入\"help\"获取更多信息");
                         break;
                 }
             }

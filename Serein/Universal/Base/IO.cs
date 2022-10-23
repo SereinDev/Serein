@@ -152,7 +152,7 @@ namespace Serein.Base
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "MEMBERS");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
-            ListJObject.Add("data", JArray.FromObject(_Dictionary.ToList()));
+            ListJObject.Add("data", JArray.FromObject(Items));
             File.WriteAllText(
                 $"{Global.Path}\\data\\members.json",
                 ListJObject.ToString(),
@@ -280,7 +280,7 @@ namespace Serein.Base
             }
             catch (Exception e)
             {
-                Logger.Out(999, "[Setting] Fail to update Matches.json:", e.ToString());
+                Logger.Out(LogType.Debug, "[Setting] Fail to update Matches.json:", e.ToString());
             }
             try
             {
@@ -291,7 +291,7 @@ namespace Serein.Base
             }
             catch (Exception e)
             {
-                Logger.Out(999, "[Setting] Fail to update Event.json:", e.ToString());
+                Logger.Out(LogType.Debug, "[Setting] Fail to update Event.json:", e.ToString());
             }
         }
 
