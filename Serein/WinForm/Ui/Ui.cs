@@ -6,7 +6,6 @@ namespace Serein.Ui
     {
         public Ui()
         {
-            MultiOpenCheck();
             InitializeComponent();
             Initialize();
             UpdateVersion();

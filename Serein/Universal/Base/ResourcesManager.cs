@@ -24,9 +24,7 @@ namespace Serein.Base
         private static void ExtractConsoleFile(string Resource, string Name)
         {
             if (!Directory.Exists(Global.Path + "console"))
-            {
                 Directory.CreateDirectory(Global.Path + "console");
-            }
             File.WriteAllText(Global.Path + "console\\" + Name, Resource, Encoding.UTF8);
         }
     }

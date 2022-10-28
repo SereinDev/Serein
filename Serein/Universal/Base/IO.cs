@@ -15,13 +15,13 @@ namespace Serein.Base
     internal static class IO
     {
         private static string OldSettings = string.Empty;
+        private static Timer _Timer = new Timer(2000) { AutoReset = true };
 
         /// <summary>
         /// 启动保存和更新设置定时器
         /// </summary>
         public static void StartSavingAndUpdating()
         {
-            Timer _Timer = new Timer(2000) { AutoReset = true };
             _Timer.Elapsed += (sender, e) => UpdateSettings();
             _Timer.Elapsed += (sender, e) => SaveSettings();
             _Timer.Start();
@@ -57,9 +57,7 @@ namespace Serein.Base
                         Regex Item = new Regex();
                         Item.ToObject(Line);
                         if (!Item.Check())
-                        {
                             continue;
-                        }
                         Items.Add(Item);
                     }
                     Global.UpdateRegexItems(Items);
@@ -67,14 +65,13 @@ namespace Serein.Base
                 else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
                     string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text)) { return; }
+                    if (string.IsNullOrEmpty(Text)) 
+                        return;
                     try
                     {
                         JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
                         if (JsonObject["type"].ToString().ToUpper() != "REGEX")
-                        {
                             return;
-                        }
                         Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<Regex>>());
                     }
                     catch { }
@@ -90,9 +87,7 @@ namespace Serein.Base
         public static void SaveRegex()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
-            {
                 Directory.CreateDirectory(Global.Path + "\\data");
-            }
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "REGEX");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
@@ -106,9 +101,7 @@ namespace Serein.Base
         public static void ReadMember()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
-            {
                 Directory.CreateDirectory(Global.Path + "\\data");
-            }
             if (File.Exists($"{Global.Path}\\data\\members.json"))
             {
                 string Text = File.ReadAllText(
@@ -121,9 +114,7 @@ namespace Serein.Base
                     {
                         JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
                         if (JsonObject["type"].ToString().ToUpper() != "MEMBERS")
-                        {
                             return;
-                        }
                         List<Member> Items = ((JArray)JsonObject["data"]).ToObject<List<Member>>();
                         Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
                         Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
@@ -146,9 +137,7 @@ namespace Serein.Base
             Items.ForEach((x) => _Dictionary.Add(x.ID, x));
             Global.UpdateMemberItems(_Dictionary);
             if (!Directory.Exists(Global.Path + "\\data"))
-            {
                 Directory.CreateDirectory(Global.Path + "\\data");
-            }
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "MEMBERS");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
@@ -212,9 +201,7 @@ namespace Serein.Base
         public static void SaveTask()
         {
             if (!Directory.Exists(Global.Path + "\\data"))
-            {
                 Directory.CreateDirectory(Global.Path + "\\data");
-            }
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "TASK");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
@@ -233,37 +220,19 @@ namespace Serein.Base
                 return;
             }
             if (File.Exists(Global.SettingPath + "\\Server.json"))
-            {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Global.SettingPath + "\\Server.json", Encoding.UTF8))
-                    ?? new Settings.Server();
-            }
+                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Global.SettingPath + "\\Server.json", Encoding.UTF8)) ?? new Settings.Server();
             if (File.Exists(Global.SettingPath + "\\Bot.json"))
-            {
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Global.SettingPath + "\\Bot.json", Encoding.UTF8))
-                    ?? new Bot();
-            }
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Global.SettingPath + "\\Bot.json", Encoding.UTF8)) ?? new Bot();
             if (File.Exists(Global.SettingPath + "\\Serein.json"))
-            {
-                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8))
-                    ?? new Settings.Serein();
-            }
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8)) ?? new Settings.Serein();
             if (File.Exists(Global.SettingPath + "\\Matches.json"))
-            {
-                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8))
-                    ?? new Matches();
-            }
+                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)) ?? new Matches();
             else
-            {
                 File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-            }
             if (File.Exists(Global.SettingPath + "\\Event.json"))
-            {
                 Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)) ?? new Settings.Event();
-            }
             else
-            {
-                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
-            }
+                File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
         }
 
         /// <summary>
@@ -274,9 +243,7 @@ namespace Serein.Base
             try
             {
                 if (File.Exists(Global.SettingPath + "\\Matches.json"))
-                {
                     Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8));
-                }
             }
             catch (Exception e)
             {
@@ -285,9 +252,7 @@ namespace Serein.Base
             try
             {
                 if (File.Exists(Global.SettingPath + "\\Event.json"))
-                {
                     Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8));
-                }
             }
             catch (Exception e)
             {
@@ -316,9 +281,7 @@ namespace Serein.Base
         public static void SaveEventSetting()
         {
             lock (Global.Settings.Event)
-            {
                 File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
-            }
         }
     }
 }

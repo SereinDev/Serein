@@ -73,11 +73,6 @@
     <EmbeddedResource Include="..\Universal\Build_Info.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Universal\ConsoleHtml\console.html" />
-    <None Include="..\Universal\ConsoleHtml\console.js" />
-    <None Include="..\Universal\ConsoleHtml\preset.css" />
-    <None Include="..\Universal\ConsoleHtml\vanilla.css" />
-    <None Include="..\Universal\Init.bat" />
     <None Include="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
   <ItemGroup>

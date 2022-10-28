@@ -9,7 +9,8 @@ namespace Serein
 {
     internal static class Logger
     {
-        public static int Type = 1;
+        public static readonly int Type = 1;
+
         public static void Out(LogType Type, params object[] objects)
         {
             if (Program.Ui != null && !Program.Ui.Disposing)
@@ -17,7 +18,8 @@ namespace Serein
                 string Line = string.Empty;
                 foreach (var o in objects)
                 {
-                    if (o != null) { Line += o.ToString() + " "; }
+                    if (o != null)
+                        Line += o.ToString() + " ";
                 }
                 Line = Line.TrimEnd();
                 switch (Type)
@@ -80,6 +82,19 @@ namespace Serein
                         break;
                     case LogType.Plugin_Clear:
                         Program.Ui.SereinPluginsWebBrowser_Invoke("#clear");
+                        break;
+                    case LogType.Version_New:
+                        Program.Ui.ShowBalloonTip("发现新版本:\n" + Line);
+                        Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以点击下方链接获取最新版）");
+                        break;
+                    case LogType.Version_Latest:
+                        Program.Ui.ShowBalloonTip(
+                            "获取更新成功\n" +
+                            "当前已是最新版:)");
+                        Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版qwq）");
+                        break;
+                    case LogType.Version_Failure:
+                        Program.Ui.ShowBalloonTip("更新获取异常：\n" + Line);
                         break;
                 }
             }

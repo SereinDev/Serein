@@ -47,50 +47,71 @@
                     NavigateUri="https://github.com/botuniverse/onebot-11" />
             </TextBlock>
         </Expander>
-        <TextBlock HorizontalAlignment="Left" Text="WebSocket地址" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="WebSocket地址"
+            ToolTip="Websocket服务器的地址" />
         <ui:TextBox
             x:Name="Uri"
             Icon="CompassNorthwest24"
-            TextChanged="Uri_TextChanged" />
-        <TextBlock HorizontalAlignment="Left" Text="鉴权凭证（Token）" />
+            TextChanged="Uri_TextChanged"
+            ToolTip="Websocket服务器的地址" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="鉴权凭证（Token）"
+            ToolTip="用于鉴权的Access-Token（可为空）" />
         <ui:PasswordBox
             x:Name="Authorization"
             Icon="Fluent24"
-            TextChanged="Authorization_TextChanged" />
+            TextChanged="Authorization_TextChanged"
+            ToolTip="用于鉴权的Access-Token（可为空）" />
         <ui:ToggleSwitch
             x:Name="EnableLog"
             Margin="0,7"
             Click="EnableLog_Click"
-            Content="保存所有消息和数据包到日志（./log/msg）" />
+            Content="保存所有消息和数据包到日志（./log/msg）"
+            ToolTip="将收到的数据包以文本格式保存到日志文件" />
         <ui:ToggleSwitch
             x:Name="GivePermissionToAllAdmin"
             Margin="0,7"
             Click="GivePermissionToAllAdmin_Click"
-            Content="赋予所有群主和管理员管理权限" />
+            Content="赋予所有群主和管理员管理权限"
+            ToolTip="使监听群的群主和管理员与下面的管理权限列表中的用户拥有相同权限" />
         <ui:ToggleSwitch
             x:Name="EnbaleOutputData"
             Margin="0,7"
             Click="EnbaleOutputData_Click"
-            Content="输出接收和发送的数据" />
+            Content="输出接收和发送的数据"
+            ToolTip="在机器人控制台中输出接收和发送的数据" />
         <ui:ToggleSwitch
             x:Name="AutoReconnect"
             Margin="0,7"
             Click="AutoReconnect_Click"
-            Content="断线自动重连" />
+            Content="断线自动重连"
+            ToolTip="ws连接异常断开时自动重连" />
         <ui:ToggleSwitch
             x:Name="AutoEscape"
             Margin="0,7"
             Click="AutoEscape_Click"
-            Content="纯文本发送" />
-        <TextBlock HorizontalAlignment="Left" Text="监听群列表（使用&quot;;&quot;分隔）" />
+            Content="纯文本发送"
+            ToolTip="消息内容是否作为纯文本发送（即不解析CQ码）" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="监听群列表（使用&quot;;&quot;分隔）"
+            ToolTip="要监听消息的群聊" />
         <ui:TextBox
             x:Name="GroupList"
             Icon="PeopleTeam24"
-            TextChanged="GroupList_TextChanged" />
-        <TextBlock HorizontalAlignment="Left" Text="管理权限列表（使用&quot;;&quot;分隔）" />
+            TextChanged="GroupList_TextChanged"
+            ToolTip="要监听消息的群聊" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="管理权限列表（使用&quot;;&quot;分隔）"
+            ToolTip="有管理权限的用户" />
         <ui:TextBox
             x:Name="PermissionList"
             Icon="ShieldPerson20"
-            TextChanged="PermissionList_TextChanged" />
+            TextChanged="PermissionList_TextChanged"
+            ToolTip="有管理权限的用户" />
     </StackPanel>
 </ui:UiPage>

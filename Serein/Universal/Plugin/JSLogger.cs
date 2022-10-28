@@ -7,7 +7,7 @@ namespace Serein.Plugin
     {
         public JSLogger(string Name)
         {
-            this.Name = Name ?? throw new ArgumentNullException("Name");
+            this.Name = Name ?? throw new ArgumentNullException(nameof(Name));
         }
 
         private string Name { get; set; }

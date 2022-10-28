@@ -11,7 +11,7 @@ namespace Serein.Base
         {
             MachineName = "."
         };
-        private static ComputerInfo Info = new ComputerInfo();
+        private static readonly ComputerInfo Info = new ComputerInfo();
 
         public static string OS = Info.OSFullName;
         public static string NET = Environment.Version.ToString();
@@ -35,8 +35,7 @@ namespace Serein.Base
         }
         public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024;
         public static ulong TotalRAM = Info.TotalPhysicalMemory / 1024 / 1024;
-        public static string RAMPercentage =>
-           ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
+        public static string RAMPercentage => ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
         public static string CPUPercentage => Counter.NextValue().ToString("N1");
     }
 }

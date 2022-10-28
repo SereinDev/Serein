@@ -313,8 +313,7 @@ namespace Serein.Plugin
 
         public static string GetMD5(string myString)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] Datas = md5.ComputeHash(Encoding.UTF8.GetBytes(myString));
+            byte[] Datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(myString));
             string Result = string.Empty;
             for (int i = 0; i < Datas.Length; i++)
             {

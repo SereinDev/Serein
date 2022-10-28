@@ -25,20 +25,8 @@ namespace Serein.Plugin
                 null,
                 null
                 );
-            _WebSocket.Opened += (sender, e) =>
-            {
-                if (onopen != null)
-                {
-                    onopen.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                }
-            };
-            _WebSocket.Closed += (sender, e) =>
-            {
-                if (onclose != null)
-                {
-                    onclose.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                }
-            };
+            _WebSocket.Opened += (sender, e) => onopen?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+            _WebSocket.Closed += (sender, e) => onclose?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
             _WebSocket.MessageReceived += (sender, e) =>
             {
                 if (onmessage != null)
@@ -50,14 +38,10 @@ namespace Serein.Plugin
                     catch { }
                 }
             };
-            _WebSocket.Error += (sender, e) =>
-            {
-                if (onerror != null)
-                {
-                    onerror.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Exception.Message) });
-                }
-            };
+            _WebSocket.Error += (sender, e) => onerror?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Exception.Message) });
         }
+
+#pragma warning disable IDE1006
 
         /// <summary>
         /// 开启ws
@@ -74,5 +58,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Msg"></param>
         public void send(string Msg) => _WebSocket.Send(Msg);
+
+#pragma warning restore IDE1006
     }
 }

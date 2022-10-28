@@ -6,7 +6,7 @@ namespace Serein
 {
     internal static class Logger
     {
-        public static int Type = 0;
+        public static readonly int Type = 0;
         private static readonly object Lock = new object();
 
         public static void Out(LogType Type, params object[] objects)
@@ -49,6 +49,15 @@ namespace Serein
                     break;
                 case LogType.Plugin_Info:
                     WriteLine(0, $"\x1b[94m[插件]\x1b[0m{Line}");
+                    break;
+                case LogType.Version_New:
+                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开[https://github.com/Zaitonn/Serein/releases/latest]获取最新版）");
+                    break;
+                case LogType.Version_Latest:
+                    WriteLine(1, "获取更新成功，当前已是最新版:)");
+                    break;
+                case LogType.Version_Failure:
+                    WriteLine(3, "更新获取异常：\n" + Line);
                     break;
             }
         }

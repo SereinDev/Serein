@@ -18,6 +18,7 @@ namespace Serein
             IO.ReadAll();
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
+            Net.StartChecking();
         }
     }
 }

@@ -17,17 +17,20 @@
             x:Name="EnableGetUpdate"
             Margin="0,7"
             Click="EnableGetUpdate_Click"
-            Content="获取更新" />
+            Content="获取更新"
+            ToolTip="启动后自动获取更新（建议开启）" />
         <ui:ToggleSwitch
             x:Name="UseDarkTheme"
             Margin="0,7"
             Click="UseDarkTheme_Click"
-            Content="使用暗黑主题" />
+            Content="使用暗黑主题"
+            ToolTip="使用暗黑主题（部分控件可能不兼容）" />
         <ui:ToggleSwitch
             x:Name="ThemeFollowSystem"
             Margin="0,7"
             Click="ThemeFollowSystem_Click"
-            Content="主题跟随系统" />
+            Content="主题跟随系统"
+            ToolTip="Win10及以上的版本中，主题颜色自动跟随&quot;设置&gt;颜色&quot;调整" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

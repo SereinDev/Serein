@@ -38,7 +38,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ui:TitleBar
-                x:Name="Title"
+                x:Name="TitleBar"
                 Title="Serein"
                 Grid.Row="0"
                 Margin="5,0,0,0"
@@ -54,17 +54,14 @@
                         <ui:NotifyIcon.Menu>
                             <ContextMenu>
                                 <ui:MenuItem
-                                    Name="Hide"
                                     Click="Hide_Click"
                                     Header="隐藏窗口"
                                     SymbolIcon="SlideHide24" />
                                 <ui:MenuItem
-                                    Name="Help"
                                     Click="Help_Click"
                                     Header="帮助"
                                     SymbolIcon="SearchInfo24" />
                                 <ui:MenuItem
-                                    Name="Exit"
                                     Click="Exit_Click"
                                     Header="退出"
                                     SymbolIcon="ArrowExit20" />

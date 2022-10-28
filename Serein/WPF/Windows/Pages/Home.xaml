@@ -9,8 +9,8 @@
     Title="Home"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Scrollable="True"
     AllowDrop="True"
+    Scrollable="True"
     mc:Ignorable="d">
     <StackPanel>
         <TextBlock
@@ -189,7 +189,7 @@
                     <TextBlock
                         FontSize="12"
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                        Text="创建定时任务" />
+                        Text="定时执行指定任务命令" />
                 </StackPanel>
             </ui:CardAction>
             <ui:CardAction

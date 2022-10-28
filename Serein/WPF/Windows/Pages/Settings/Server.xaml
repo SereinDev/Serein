@@ -20,13 +20,16 @@
         <TextBlock
             HorizontalAlignment="Left"
             Text="启动路径"
-            ToolTip="111" />
+            ToolTip="服务端的启动路径" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Name="Path" IsReadOnly="True" />
+            <TextBox
+                Name="Path"
+                IsReadOnly="True"
+                ToolTip="服务端的启动路径" />
             <ui:Button
                 x:Name="Select"
                 Grid.Column="1"
@@ -35,38 +38,47 @@
                 Content="选择文件"
                 Icon="OpenFolder24" />
         </Grid>
-        <TextBlock HorizontalAlignment="Left" Text="关服指令（一行一条）" />
+        <TextBlock
+            HorizontalAlignment="Left"
+            Text="关服指令（一行一条）"
+            ToolTip="使用关服功能时执行的命令" />
         <TextBox
             Name="StopCommands"
             Margin="0,0,0,10"
             AcceptsReturn="True"
             Text="stop"
-            TextChanged="StopCommands_TextChanged" />
+            TextChanged="StopCommands_TextChanged"
+            ToolTip="使用关服功能时执行的命令" />
         <ui:ToggleSwitch
             x:Name="AutoStop"
             Margin="0,7"
             Click="AutoStop_Click"
-            Content="Serein崩溃时自动关服" />
+            Content="Serein崩溃时自动关服"
+            ToolTip="Serein发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）" />
         <ui:ToggleSwitch
             x:Name="EnableRestart"
             Margin="0,7"
             Click="EnableRestart_Click"
-            Content="非正常退出时自动重启" />
+            Content="非正常退出时自动重启"
+            ToolTip="若服务器进程退出时返回代码不为0则自动重启" />
         <ui:ToggleSwitch
             x:Name="EnableOutputCommand"
             Margin="0,7"
             Click="EnableOutputCommand_Click"
-            Content="在控制台显示输入的命令" />
+            Content="在控制台显示输入的命令"
+            ToolTip="将输入的指令在控制台中显示" />
         <ui:ToggleSwitch
             x:Name="EnableUnicode"
             Margin="0,7"
             Click="EnableUnicode_Click"
-            Content="使用Unicode字符" />
+            Content="使用Unicode字符"
+            ToolTip="将所有指令中的非ASCII字符转为Unicode后输出" />
         <ui:ToggleSwitch
             x:Name="EnableLog"
             Margin="0,7"
             Click="EnableLog_Click"
-            Content="保存日志（./log/console）" />
+            Content="保存日志（./log/console）"
+            ToolTip="将控制台输出和输入的指令一并保存到日志文件" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -79,32 +91,32 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel>
-                <TextBlock Text="输出样式" />
+                <TextBlock Text="输出样式" ToolTip="指定控制台的输出样式" />
                 <ComboBox
                     Name="OutputStyle"
                     HorizontalAlignment="Left"
                     SelectedIndex="1"
                     SelectionChanged="OutputStyle_SelectionChanged">
-                    <ComboBoxItem Content="单色" />
-                    <ComboBoxItem Content="原始彩色" />
-                    <ComboBoxItem Content="语法高亮" />
-                    <ComboBoxItem Content="混合" />
+                    <ComboBoxItem Content="单色" ToolTip="禁用彩色输出" />
+                    <ComboBoxItem Content="原始彩色" ToolTip="按照原控制台的样式输出（推荐）" />
+                    <ComboBoxItem Content="语法高亮" ToolTip="匹配部分文本并高亮（可在preset.css中设置）" />
+                    <ComboBoxItem Content="混合" ToolTip="综合&quot;原始彩色&quot;和&quot;语法高亮&quot;的优点" />
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <TextBlock Text="服务端类型" />
+                <TextBlock Text="服务端类型" ToolTip="指定服务器的类型\n用于获取服务器的Motd" />
                 <ComboBox
                     Name="Type"
                     HorizontalAlignment="Left"
                     SelectedIndex="1"
                     SelectionChanged="Type_SelectionChanged">
-                    <ComboBoxItem Content="未知/其他" />
-                    <ComboBoxItem Content="基岩版" />
-                    <ComboBoxItem Content="Java版" />
+                    <ComboBoxItem Content="未知/其他" ToolTip="不指定任何类型（将禁用Motd获取）" />
+                    <ComboBoxItem Content="基岩版" ToolTip="Minecraft: Bedrock Edition" />
+                    <ComboBoxItem Content="Java版" ToolTip="Minecraft: Java Edition" />
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <TextBlock Text="输入编码" />
+                <TextBlock Text="输入编码" ToolTip="指定输入到服务器的编码格式（重启服务器生效）" />
                 <ComboBox
                     Name="InputEncoding"
                     HorizontalAlignment="Left"
@@ -119,7 +131,7 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="2">
-                <TextBlock Text="输出编码" />
+                <TextBlock Text="输出编码" ToolTip="指定输出到服务器的编码格式（重启服务器生效）" />
                 <ComboBox
                     Name="OutputEncoding"
                     HorizontalAlignment="Left"
@@ -134,7 +146,7 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <TextBlock Text="服务器端口" />
+                <TextBlock Text="服务器端口" ToolTip="指定服务器的本地端口（用于获取服务器的Motd）" />
                 <ui:NumberBox
                     x:Name="Port"
                     HorizontalAlignment="Left"
@@ -144,6 +156,7 @@
                     Min="0"
                     Step="1"
                     TextChanged="Port_TextChanged"
+                    ToolTip="指定服务器的本地端口（用于获取服务器的Motd）"
                     Value="19132" />
             </StackPanel>
         </Grid>

@@ -2,6 +2,7 @@
 using Serein.Items;
 using Serein.Windows;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Wpf.Ui.Common;
@@ -12,14 +13,15 @@ namespace Serein
     internal static class Logger
     {
         const int MaxLines = 40;
-        public static int Type = 2;
+        public static readonly int Type = 2;
 
         public static void Out(LogType Type, params object[] objects)
         {
             string Line = string.Empty;
             foreach (var o in objects)
             {
-                if (o != null) { Line += o.ToString() + " "; }
+                if (o != null)
+                    Line += o.ToString() + " ";
             }
             Line = Line.TrimEnd();
             switch (Type)
@@ -29,9 +31,7 @@ namespace Serein
                     {
                         Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
                         if (!Directory.Exists(Global.Path + "\\logs\\debug"))
-                        {
                             Directory.CreateDirectory(Global.Path + "\\logs\\debug");
-                        }
                         try
                         {
                             File.AppendAllText(
@@ -129,6 +129,27 @@ namespace Serein
                 case LogType.Plugin_Clear:
                     Catalog.Function.JSPlugin?.AppendText("#clear");
                     Catalog.Function.PluginCache.Clear();
+                    break;
+                case LogType.Version_New:
+                    Catalog.Notification?.Show(
+                        "Serein",
+                        "发现新版本:\n" + Line + "\n点击此处打开下载页面",
+                        onClick: () => Process.Start(
+                            new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true }
+                            ),
+                        expirationTime: new TimeSpan(100)
+                        );
+                    Catalog.Settings.Serein?.UpdateVersion($"（发现新版本:{Line}，你可以点击下方链接获取最新版）");
+                    break;
+                case LogType.Version_Latest:
+                    Catalog.Notification?.Show(
+                        "Serein",
+                        "获取更新成功\n" +
+                        "当前已是最新版:)");
+                    Catalog.Settings.Serein?.UpdateVersion("（已是最新版）");
+                    break;
+                case LogType.Version_Failure:
+                    Catalog.Notification?.Show("Serein", "更新获取异常：\n" + Line);
                     break;
             }
         }
