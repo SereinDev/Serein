@@ -65,7 +65,7 @@ namespace Serein.Base
                 else if (FileName.ToUpper().EndsWith(".JSON"))
                 {
                     string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text)) 
+                    if (string.IsNullOrEmpty(Text))
                         return;
                     try
                     {
