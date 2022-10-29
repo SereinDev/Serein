@@ -1,15 +1,31 @@
-﻿using Microsoft.Win32;
+﻿using Serein.Items;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Windows;
+using System.Net;
 
 namespace Serein.Server
 {
-    internal partial class PluginManager
+    internal static class PluginManager
     {
-        public static string PluginPath = string.Empty;
-        public static bool Available = false;
+        public static string BasePath = string.Empty;
+
+        public static bool Available
+        {
+            get
+            {
+                if (ServerManager.Status)
+                {
+                    Logger.MsgBox("服务器仍在运行中", "Serein", 0, 48);
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(BasePath) && Directory.Exists(BasePath))
+                    return false;
+                else
+                    return true;
+            }
+        }
 
         /// <summary>
         /// 获取插件列表
@@ -19,38 +35,25 @@ namespace Serein.Server
         {
             if (File.Exists(Global.Settings.Server.Path))
             {
-                Available = true;
                 if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin"))
-                {
-                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin";
-                }
+                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin";
                 else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins"))
-                {
-                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins";
-                }
+                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins";
                 else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod"))
-                {
-                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod";
-                }
+                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod";
                 else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods"))
-                {
-                    PluginPath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods";
-                }
+                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods";
                 else
                 {
-                    PluginPath = Global.Path;
-                    Available = false;
+                    BasePath = string.Empty;
                     return null;
                 }
-                if (!string.IsNullOrWhiteSpace(PluginPath))
+                Logger.Out(LogType.Debug, "[PluginManager:Get()]", BasePath);
+                if (!string.IsNullOrWhiteSpace(BasePath))
                 {
-                    string[] Files = Directory.GetFiles(PluginPath, "*", SearchOption.TopDirectoryOnly);
+                    string[] Files = Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
                     return Files;
                 }
-            }
-            else
-            {
-                Available = false;
             }
             return null;
         }
@@ -58,69 +61,114 @@ namespace Serein.Server
         /// <summary>
         /// 导入插件
         /// </summary>
-        public static void Add()
-        {
-            OpenFileDialog Dialog = new OpenFileDialog()
-            {
-                Filter = "所有文件|*.*",
-                Multiselect = true
-            };
-            if (Dialog.ShowDialog() == true)
-            {
-                foreach (string FileName in Dialog.FileNames)
-                {
-                    try
-                    {
-                        File.Copy(FileName, PluginPath + "\\" + Path.GetFileName(FileName));
-                    }
-                    catch (Exception Exp)
-                    {
-                        MessageBox.Show(
-                            $"文件\"{FileName}\"复制失败\n" +
-                            $"详细原因：\n" +
-                            $"{Exp.Message}", "Serein",
-                            MessageBoxButton.OK, MessageBoxImage.Warning
-                            );
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 导入插件
-        /// </summary>
         /// <param name="Files">文件列表</param>
-        public static string Add(List<string> Files)
+        public static void Add(IList<string> Files)
         {
             foreach (string FileName in Files)
             {
                 try
                 {
-                    File.Copy(FileName, PluginPath + "\\" + Path.GetFileName(FileName));
+                    File.Copy(FileName, BasePath + "\\" + Path.GetFileName(FileName));
                 }
-                catch (Exception Exp)
+                catch (Exception e)
                 {
-                    return Exp.Message;
+                    Logger.MsgBox($"文件\"{FileName}\"删除失败\n{e.Message}", "Serein", 0, 48);
+                    break;
                 }
             }
-            return string.Empty;
         }
 
         /// <summary>
-        /// 服务器状态检测
+        /// 删除文件
         /// </summary>
-        /// <returns>服务器状态</returns>
-        public static bool Check()
+        /// <param name="Files">文件列表</param>
+        public static void Remove(List<string> Files)
         {
-            if (ServerManager.Status)
+            if (Available)
             {
-                MessageBox.Show("服务器仍在运行中", "Serein", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return true;
-            }
-            else
-            {
-                return false;
+                if (Files.Count <= 0)
+                    Logger.Out(LogType.Debug, "[PluginManager:Remove()]", "数据不合法");
+                else if (Logger.MsgBox($"确定删除\"{Files[0]}\"{(Files.Count > 1 ? $"等{Files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
+                {
+                    foreach (string FileName in Files)
+                    {
+                        try
+                        {
+                            File.Delete(FileName);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Out(LogType.Debug, "[PluginManager:Remove()]", e);
+                            Logger.MsgBox(
+                                $"文件\"{FileName}\"删除失败\n{e.Message}", "Serein",
+                                0, 48
+                            );
+                            break;
+                        }
+                    }
+                }
             }
         }
+
+        public static void Disable(List<string> Files)
+        {
+            foreach (string FileName in Files)
+            {
+                try
+                {
+                    if (FileName.ToLower().EndsWith(".lock"))
+                        continue;
+                    File.Move(FileName, FileName + ".lock");
+                }
+                catch (Exception Exp)
+                {
+                    Logger.Out(LogType.Debug, "[PluginManager:Disable()]", FileName);
+                    Logger.MsgBox(
+                        $"文件\"{FileName}\"禁用失败\n" +
+                        $"{Exp.Message}", "Serein",
+                        0, 48
+                        );
+                    break;
+                }
+            }
+        }
+
+        public static void Enable(List<string> Files)
+        {
+            foreach (string FileName in Files)
+            {
+                try
+                {
+                    File.Move(FileName, System.Text.RegularExpressions.Regex.Replace(FileName, @"\.lock", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
+                }
+                catch (Exception Exp)
+                {
+                    Logger.MsgBox(
+                        $"文件\"{FileName}\"启用失败\n" +
+                        $"{Exp.Message}", "Serein",
+                        0, 48
+                        );
+                    break;
+                }
+            }
+        }
+
+        public static string GetRelativeUri(string File)
+        {
+            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new Uri(File)).OriginalString);
+        }
+
+        public static string GetAbsoluteUri(string File)
+        {
+            return Path.Combine(Directory.GetParent(BasePath).FullName, File).Replace('/', '\\').TrimStart('\u202a');
+        }
+
+        public static void OpenFolder(string Path = null)
+            => Process.Start(new ProcessStartInfo("Explorer.exe")
+            {
+                Arguments = !string.IsNullOrEmpty(Path)
+                    ? $"/e,/select,\"{Path}\""
+                    : $"/e,\"{BasePath}\""
+            });
     }
 }

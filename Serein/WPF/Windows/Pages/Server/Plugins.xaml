@@ -18,35 +18,40 @@
                     <ContextMenu Name="PluginsContextMenu">
                         <ui:MenuItem
                             Name="Import"
-                            Click="Import_Click"
+                            Tag="Import"
+                            Click="MenuItem_Click"
                             Header="导入"
                             SymbolIcon="DocumentAdd24" />
                         <ui:MenuItem
                             Name="Delete"
-                            Click="Delete_Click"
+                            Tag="Delete"
+                            Click="MenuItem_Click"
                             Header="删除"
                             SymbolIcon="Delete24" />
                         <Separator />
                         <ui:MenuItem
                             Name="Enable"
-                            Click="Enable_Click"
+                            Tag="Enable"
+                            Click="MenuItem_Click"
                             Header="启用"
                             SymbolIcon="CheckmarkCircle24" />
                         <ui:MenuItem
                             Name="Disable"
-                            Click="Disable_Click"
+                            Tag="Disable"
+                            Click="MenuItem_Click"
                             Header="禁用"
                             SymbolIcon="DismissCircle24" />
                         <Separator />
                         <ui:MenuItem
                             Name="OpenFolder"
-                            Click="OpenFolder_Click"
+                            Tag="OpenFolder"
+                            Click="MenuItem_Click"
                             Header="打开文件夹"
                             SymbolIcon="FolderOpen24" />
                         <Separator />
                         <ui:MenuItem
                             Name="Refresh"
-                            Click="Refresh_Click"
+                            Click="MenuItem_Click"
                             Header="刷新"
                             SymbolIcon="ArrowClockwise24" />
                     </ContextMenu>
