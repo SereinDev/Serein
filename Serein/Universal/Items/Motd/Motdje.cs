@@ -77,7 +77,7 @@ namespace Serein.Items.Motd
                 Exception = e.Message;
                 return;
             }
-           
+
         }
     }
 }
