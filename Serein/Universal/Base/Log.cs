@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Base
 {
-    public class Log
+    internal static class Log
     {
         /// <summary>
         /// 颜色代码列表
         /// </summary>
-        private static List<string> ColorList = new List<string>
+        private static readonly List<string> ColorList = new List<string>
         {
             "30", "31", "32", "33", "34", "35", "36", "37",
             "40", "41", "42", "43", "44", "45", "46", "47",

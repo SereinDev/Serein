@@ -9,14 +9,15 @@ namespace Serein.Items.Motd
 {
     internal class Motdje : Motd
     {
+        /// <summary>
+        /// Java版Motd获取入口
+        /// </summary>
+        /// <param name="NewIp">IP</param>
+        /// <param name="NewPort">端口</param>
         public Motdje(string NewIP = "127.0.0.1", string NewPort = "25565")
         {
             if (!Init(NewIP, NewPort))
-            {
                 return;
-            }
-            string Data = string.Empty;
-            DateTime StartTime = DateTime.Now;
             try
             {
                 Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -28,29 +29,20 @@ namespace Serein.Items.Motd
                         Port
                         )
                     );
-                StartTime = DateTime.Now;
+                DateTime StartTime = DateTime.Now;
                 Client.Send(
                     new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 }
                     );
                 byte[] Buffer = new byte[1024 * 1024];
                 int Length = Client.Receive(Buffer);
                 Delay = DateTime.Now - StartTime;
-                Data = Length > 5 ?
+                string Data = Length > 5 ?
                     Encoding.UTF8.GetString(Buffer, 5, Length - 5) :
                     Encoding.UTF8.GetString(Buffer, 0, Length);
                 Client.Close();
                 Original = Data;
                 Logger.Out(LogType.Debug, "[Motdje]", $"Original: {Data}");
-            }
-            catch (Exception e)
-            {
-                Logger.Out(LogType.Debug, "[Motdje]", e.ToString());
-                Exception = e.Message;
-                return;
-            }
-            if (Data != string.Empty)
-            {
-                try
+                if (string.IsNullOrEmpty(Data))
                 {
                     JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Data);
                     OnlinePlayer = JsonObject["players"]["online"].ToString();
@@ -58,9 +50,7 @@ namespace Serein.Items.Motd
                     Version = JsonObject["version"]["name"].ToString();
                     Protocol = JsonObject["version"]["protocol"].ToString();
                     if (JsonObject["description"]["text"] != null)
-                    {
                         Description = JsonObject["description"]["text"].ToString();
-                    }
                     if (JsonObject["description"]["extra"] != null)
                     {
                         Description = string.Empty;
@@ -73,23 +63,21 @@ namespace Serein.Items.Motd
                     {
                         Favicon = (string)JsonObject["favicon"];
                         if (Favicon.Contains(","))
-                        {
                             Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
-                        }
                         else
-                        {
                             Favicon = string.Empty;
-                        }
                     }
                     Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
                     Success = true;
                 }
-                catch (Exception e)
-                {
-                    Logger.Out(LogType.Debug, "[Motdje]", e.ToString());
-                    Exception = e.Message;
-                }
             }
+            catch (Exception e)
+            {
+                Logger.Out(LogType.Debug, "[Motdje]", e.ToString());
+                Exception = e.Message;
+                return;
+            }
+           
         }
     }
 }

@@ -7,10 +7,12 @@ namespace Serein.Windows.Pages.Settings
 {
     public partial class Server : UiPage
     {
+        private new bool Loaded = false;
         public Server()
         {
             InitializeComponent();
             Load();
+            Loaded = true;
             Catalog.Settings.Server = this;
         }
 
@@ -29,17 +31,28 @@ namespace Serein.Windows.Pages.Settings
             Path.Text = Global.Settings.Server.Path;
         }
 
-        private void StopCommands_TextChanged(object sender, TextChangedEventArgs e) => Global.Settings.Server.StopCommands = StopCommands.Text.Replace("\r", string.Empty).Trim('\r', '\n', ' ').Split('\n');
-        private void AutoStop_Click(object sender, RoutedEventArgs e) => Global.Settings.Server.AutoStop = AutoStop.IsChecked ?? false;
-        private void EnableRestart_Click(object sender, RoutedEventArgs e) => Global.Settings.Server.EnableRestart = EnableRestart.IsChecked ?? false;
-        private void EnableOutputCommand_Click(object sender, RoutedEventArgs e) => Global.Settings.Server.EnableOutputCommand = EnableOutputCommand.IsChecked ?? false;
-        private void EnableUnicode_Click(object sender, RoutedEventArgs e) => Global.Settings.Server.EnableUnicode = EnableUnicode.IsChecked ?? false;
-        private void EnableLog_Click(object sender, RoutedEventArgs e) => Global.Settings.Server.EnableLog = EnableLog.IsChecked ?? false;
-        private void Type_SelectionChanged(object sender, SelectionChangedEventArgs e) => Global.Settings.Server.Type = Type.SelectedIndex;
-        private void InputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e) => Global.Settings.Server.InputEncoding = InputEncoding.SelectedIndex;
-        private void OutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e) => Global.Settings.Server.OutputEncoding = OutputEncoding.SelectedIndex;
-        private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e) => Global.Settings.Server.OutputStyle = OutputStyle.SelectedIndex;
-        private void Port_TextChanged(object sender, TextChangedEventArgs e) => Global.Settings.Server.Port = int.TryParse(Port.Text, out int i) ? i : 0;
+        private void StopCommands_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Server.StopCommands = StopCommands.Text.Replace("\r", string.Empty).Trim('\r', '\n', ' ').Split('\n');
+        private void AutoStop_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Server.AutoStop = AutoStop.IsChecked ?? false;
+        private void EnableRestart_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Server.EnableRestart = EnableRestart.IsChecked ?? false;
+        private void EnableOutputCommand_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Server.EnableOutputCommand = EnableOutputCommand.IsChecked ?? false;
+        private void EnableUnicode_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Server.EnableUnicode = EnableUnicode.IsChecked ?? false;
+        private void EnableLog_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Server.EnableLog = EnableLog.IsChecked ?? false;
+        private void Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => Global.Settings.Server.Type = Loaded ? Type.SelectedIndex : Global.Settings.Server.Type;
+        private void InputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => Global.Settings.Server.InputEncoding = Loaded ? InputEncoding.SelectedIndex : Global.Settings.Server.InputEncoding;
+        private void OutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => Global.Settings.Server.OutputEncoding = Loaded ? OutputEncoding.SelectedIndex : Global.Settings.Server.OutputEncoding;
+        private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            => Global.Settings.Server.OutputStyle = Loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
+        private void Port_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Server.Port = int.TryParse(Port.Text, out int i) ? i : 0;
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {

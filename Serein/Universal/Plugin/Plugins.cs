@@ -9,22 +9,30 @@ namespace Serein.Plugin
 {
     internal class Plugins
     {
+        /// <summary>
+        /// 事件对象
+        /// </summary>
         public static Event Event = new Event();
+
+        /// <summary>
+        /// 命令项列表
+        /// </summary>
         public static List<CommandItem> CommandItems = new List<CommandItem>();
-        public static List<PluginItem> PluginItems = new List<PluginItem>();
+
+        /// <summary>
+        /// 插件项列表
+        /// </summary>
+        public static List<Items.Plugin> PluginItems = new List<Items.Plugin>();
+
+        /// <summary>
+        /// 定时器字典
+        /// </summary>
         public static Dictionary<int, Timer> Timers = new Dictionary<int, Timer>();
-        public static List<string> PluginNames
-        {
-            get
-            {
-                List<string> PluginList = new List<string>();
-                foreach (PluginItem Item in PluginItems)
-                {
-                    PluginList.Add(Item.Name);
-                }
-                return PluginList;
-            }
-        }
+
+        /// <summary>
+        /// WS客户端列表
+        /// </summary>
+        public static List<JSWebSocket> WebSockets = new List<JSWebSocket>();
 
         /// <summary>
         /// 加载插件
@@ -45,7 +53,7 @@ namespace Serein.Plugin
                     Temp = PluginItems.Count;
                     try
                     {
-                        JSEngine.engine = JSEngine.Init();
+                        Jint.Engine Engine = JSEngine.Init();
                         string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8));
                         bool Success = string.IsNullOrEmpty(ExceptionMessage);
                         if (!Success)
@@ -56,23 +64,17 @@ namespace Serein.Plugin
                         else
                         {
                             if (Temp == PluginItems.Count - 1)
-                            {
-                                PluginItems[PluginItems.Count - 1].Path = Filename;
-                                PluginItems[PluginItems.Count - 1].Engine = JSEngine.engine;
-                            }
+                                PluginItems[PluginItems.Count - 1].Engine = Engine;
                             else
-                            {
                                 PluginItems.Add(
-                                new PluginItem()
-                                {
-                                    Name = Path.GetFileNameWithoutExtension(Filename),
-                                    Version = "-",
-                                    Author = "-",
-                                    Description = "-",
-                                    Path = Filename,
-                                    Engine = JSEngine.engine
-                                });
-                            }
+                                    new Items.Plugin()
+                                    {
+                                        Name = Path.GetFileNameWithoutExtension(Filename),
+                                        Version = "-",
+                                        Author = "-",
+                                        Description = "-",
+                                        Engine = Engine
+                                    });
                         }
                     }
                     catch (Exception e)
@@ -83,9 +85,7 @@ namespace Serein.Plugin
                 }
                 Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
-                {
                     Logger.Out(LogType.Plugin_Error, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
-                }
             }
         }
 
@@ -96,9 +96,12 @@ namespace Serein.Plugin
         {
             Logger.Out(LogType.Plugin_Clear);
             JSFunc.Trigger("onPluginsReload");
-            PluginItems.ForEach((x) => { x.Engine = null; });
+            WebSockets.ForEach((WSC) => WSC.Dispose());
+            WebSockets.Clear();
+            PluginItems.ForEach((x) => x.Engine = null);
             PluginItems.Clear();
             CommandItems.Clear();
+            Event.Dispose();
             Event = new Event();
             JSFunc.ClearAllTimers();
             Load();

@@ -9,8 +9,14 @@ namespace Serein.Server
 {
     internal static class PluginManager
     {
+        /// <summary>
+        /// 根路径
+        /// </summary>
         public static string BasePath = string.Empty;
 
+        /// <summary>
+        /// 操作可用性
+        /// </summary>
         public static bool Available
         {
             get
@@ -110,6 +116,10 @@ namespace Serein.Server
             }
         }
 
+        /// <summary>
+        /// 禁用插件
+        /// </summary>
+        /// <param name="Files">文件列表</param>
         public static void Disable(List<string> Files)
         {
             foreach (string FileName in Files)
@@ -133,6 +143,10 @@ namespace Serein.Server
             }
         }
 
+        /// <summary>
+        /// 启用插件
+        /// </summary>
+        /// <param name="Files">文件列表</param>
         public static void Enable(List<string> Files)
         {
             foreach (string FileName in Files)
@@ -153,16 +167,30 @@ namespace Serein.Server
             }
         }
 
+        /// <summary>
+        /// 获取相对路径
+        /// </summary>
+        /// <param name="File">文件路径</param>
+        /// <returns>相对路径</returns>
         public static string GetRelativeUri(string File)
         {
             return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new Uri(File)).OriginalString);
         }
 
+        /// <summary>
+        /// 获取绝对路径
+        /// </summary>
+        /// <param name="File">文件路径</param>
+        /// <returns>绝对路径</returns>
         public static string GetAbsoluteUri(string File)
         {
             return Path.Combine(Directory.GetParent(BasePath).FullName, File).Replace('/', '\\').TrimStart('\u202a');
         }
 
+        /// <summary>
+        /// 打开文件夹
+        /// </summary>
+        /// <param name="Path">路径</param>
         public static void OpenFolder(string Path = null)
             => Process.Start(new ProcessStartInfo("Explorer.exe")
             {

@@ -8,11 +8,29 @@ namespace Serein.Items
     [JsonObject(MemberSerialization.OptOut)]
     internal class Task
     {
+        /// <summary>
+        /// Cron表达式
+        /// </summary>
         public string Cron { get; set; } = string.Empty;
-        public string Command { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 备注
+        /// </summary>
         public string Remark { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 命令
+        /// </summary>
+        public string Command { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
         public bool Enable { get; set; } = true;
 
+        /// <summary>
+        /// 是否启用 - 文本
+        /// </summary>
         [JsonIgnore]
         public string Enable_Text
         {
@@ -22,9 +40,15 @@ namespace Serein.Items
             }
         }
 
+        /// <summary>
+        /// 预计执行时间
+        /// </summary>
         [JsonIgnore]
         public DateTime NextTime { get; set; } = DateTime.Now;
 
+        /// <summary>
+        /// 运行
+        /// </summary>
         public void Run()
         {
             Enable = false;
@@ -37,6 +61,10 @@ namespace Serein.Items
             RunTask.Start();
         }
 
+        /// <summary>
+        /// 检查是否合法
+        /// </summary>
+        /// <returns>是否合法</returns>
         public bool Check()
         {
             if (

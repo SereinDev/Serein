@@ -10,15 +10,21 @@ namespace Serein.Base
 {
     internal static class CrashInterception
     {
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public static void Init()
         {
             AppDomain.CurrentDomain.UnhandledException += (sneder, e) => ShowException(e.ExceptionObject.ToString());
             TaskScheduler.UnobservedTaskException += (sender, e) => ShowException(e.Exception.ToString());
         }
 
+        /// <summary>
+        /// 显示错误消息
+        /// </summary>
+        /// <param name="ExceptionMsg">错误消息</param>
         public static void ShowException(string ExceptionMsg)
         {
-            Global.Crash = true;
             if (ServerManager.Status && Global.Settings.Server.AutoStop)
             {
                 foreach (string Command in Global.Settings.Server.StopCommands)
@@ -27,9 +33,7 @@ namespace Serein.Base
                 }
             }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
-            {
                 Directory.CreateDirectory(Global.Path + "\\logs\\crash");
-            }
             try
             {
                 File.AppendAllText(
@@ -46,12 +50,10 @@ namespace Serein.Base
             catch { }
             EventTrigger.Trigger("Serein_Crash");
             if (Logger.Type == 0)
-            {
                 Logger.Out(Items.LogType.Error, $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
                     $"{ExceptionMsg}\r\n\r\n" +
                     $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\r\n" +
                     "反馈此问题可以帮助作者更好的改进Serein");
-            }
             else
             {
                 TaskDialog TaskDialog = new TaskDialog
@@ -75,7 +77,6 @@ namespace Serein.Base
                 };
                 TaskDialog.HyperlinkClicked += (sender, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
                 TaskDialog.ShowDialog();
-                Global.Crash = false;
             }
         }
     }

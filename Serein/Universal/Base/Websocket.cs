@@ -14,9 +14,24 @@ namespace Serein.Base
 {
     public class Websocket
     {
+        /// <summary>
+        /// 连接状态
+        /// </summary>
         public static bool Status = false;
+
+        /// <summary>
+        /// 重连状态
+        /// </summary>
         private static bool Reconnect = false;
+
+        /// <summary>
+        /// WS客户端
+        /// </summary>
         private static WebSocket WSClient;
+
+        /// <summary>
+        /// 启动时刻
+        /// </summary>
         public static DateTime StartTime = DateTime.Now;
 
         /// <summary>
@@ -96,6 +111,11 @@ namespace Serein.Base
             }
         }
 
+        /// <summary>
+        /// 发送文本
+        /// </summary>
+        /// <param name="Msg">文本</param>
+        /// <returns>是否成功发送</returns>
         public static bool Send(string Msg)
         {
             if (Status)

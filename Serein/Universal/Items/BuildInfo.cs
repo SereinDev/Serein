@@ -19,10 +19,29 @@ namespace Serein.Items
             }
         }
 
+        /// <summary>
+        /// 编译类型
+        /// </summary>
         public string Type { get; set; } = "未指定";
+
+        /// <summary>
+        /// 编译时间
+        /// </summary>
         public string Time { get; set; } = "-";
+
+        /// <summary>
+        /// 系统
+        /// </summary>
         public string OS { get; set; } = "-";
+
+        /// <summary>
+        /// 路径
+        /// </summary>
         public string Dir { get; set; } = "-";
+
+        /// <summary>
+        /// 详细信息
+        /// </summary>
         public string Detail { get; set; } = "-";
     }
 }

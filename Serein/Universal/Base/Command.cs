@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Serein.Base
 {
-    internal class Command
+    internal static class Command
     {
-        public static string[] Sexs = { "unknown", "male", "female" };
-        public static string[] Sexs_Chinese = { "未知", "男", "女" };
-        public static string[] Roles = { "owner", "admin", "member" };
-        public static string[] Roles_Chinese = { "群主", "管理员", "成员" };
+        public static readonly string[] Sexs = { "unknown", "male", "female" };
+        public static readonly string[] Sexs_Chinese = { "未知", "男", "女" };
+        public static readonly string[] Roles = { "owner", "admin", "member" };
+        public static readonly string[] Roles_Chinese = { "群主", "管理员", "成员" };
 
         /// <summary>
         /// 启动cmd.exe

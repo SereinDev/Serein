@@ -22,7 +22,7 @@ namespace Serein.Ui
         {
             SereinPluginsList.BeginUpdate();
             SereinPluginsList.Items.Clear();
-            foreach (PluginItem Item in Plugins.PluginItems)
+            foreach (Items.Plugin Item in Plugins.PluginItems)
             {
                 ListViewItem item = new ListViewItem(Item.Name);
                 item.SubItems.Add(Item.Version);

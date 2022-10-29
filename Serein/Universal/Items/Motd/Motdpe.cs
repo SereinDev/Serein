@@ -7,15 +7,17 @@ namespace Serein.Items.Motd
 {
     internal class Motdpe : Motd
     {
+        /// <summary>
+        /// 基岩版Motd获取入口
+        /// </summary>
+        /// <param name="NewIp">IP</param>
+        /// <param name="NewPort">端口</param>
         public Motdpe(string NewIp = "127.0.0.1", string NewPort = "19132")
         {
             if (!Init(NewIp, NewPort))
             {
                 return;
             }
-            int Lenth = 0;
-            string Data = string.Empty;
-            DateTime StartTime = DateTime.Now;
             try
             {
                 Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -30,38 +32,37 @@ namespace Serein.Items.Motd
                 {
                     SendBytes[i] = Convert.ToByte(Text.Substring(i * 2, 2), 16);
                 }
-                StartTime = DateTime.Now;
+                DateTime StartTime = DateTime.Now;
                 Client.SendTo(SendBytes, new IPEndPoint(IP, Port));
                 EndPoint Point = new IPEndPoint(IPAddress.Any, 0);
                 byte[] Buffer = new byte[1024];
-                Lenth = Client.ReceiveFrom(Buffer, ref Point);
+                int Lenth = Client.ReceiveFrom(Buffer, ref Point);
                 Delay = DateTime.Now - StartTime;
-                Data = Lenth > 35 ?
-                    Encoding.UTF8.GetString(Buffer, 35, Lenth - 35) :
-                    Encoding.UTF8.GetString(Buffer, 0, Lenth);
+                string Data = Lenth > 35 ?
+                   Encoding.UTF8.GetString(Buffer, 35, Lenth - 35) :
+                   Encoding.UTF8.GetString(Buffer, 0, Lenth);
                 Client.Close();
+                if (Lenth > 35)
+                {
+                    Original = Data;
+                    string[] Datas = Data.Split(';');
+                    if (Datas.Length >= 12)
+                    {
+                        Description = System.Text.RegularExpressions.Regex.Replace(Datas[1], "§.", string.Empty);
+                        Protocol = Datas[2];
+                        Version = Datas[3];
+                        OnlinePlayer = Datas[4];
+                        MaxPlayer = Datas[5];
+                        LevelName = Datas[7];
+                        GameMode = Datas[8];
+                        Success = true;
+                    }
+                }
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "[Motdpe]", e.ToString());
+                Logger.Out(LogType.Debug, "[Motdpe]", e);
                 Exception = e.Message;
-                return;
-            }
-            if (Lenth > 35)
-            {
-                Original = Data;
-                string[] Datas = Data.Split(';');
-                if (Datas.Length >= 12)
-                {
-                    Description = System.Text.RegularExpressions.Regex.Replace(Datas[1], "§.", string.Empty);
-                    Protocol = Datas[2];
-                    Version = Datas[3];
-                    OnlinePlayer = Datas[4];
-                    MaxPlayer = Datas[5];
-                    LevelName = Datas[7];
-                    GameMode = Datas[8];
-                    Success = true;
-                }
             }
         }
     }

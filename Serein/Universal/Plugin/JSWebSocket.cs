@@ -5,12 +5,29 @@ using WebSocket4Net;
 
 namespace Serein.Plugin
 {
-    internal class JSWebSocket
+    internal class JSWebSocket : IDisposable
     {
+        /// <summary>
+        /// 事件函数
+        /// </summary>
         public static Delegate onopen = null, onclose = null, onerror = null, onmessage = null;
+
+        /// <summary>
+        /// WS客户端
+        /// </summary>
         private WebSocket _WebSocket = null;
-        private Engine _Engine = new Engine();
+
+        /// <summary>
+        /// 状态
+        /// </summary>
         public int state => _WebSocket != null ? -1 : ((int)_WebSocket.State);
+
+        public void Dispose()
+        {
+            if (_WebSocket != null && _WebSocket.State == WebSocketState.Open)
+                _WebSocket.Close();
+            _WebSocket.Dispose();
+        }
 
         /// <summary>
         /// 入口函数
@@ -33,12 +50,13 @@ namespace Serein.Plugin
                 {
                     try
                     {
-                        onmessage.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Message) });
+                        onmessage.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e.Message) });
                     }
                     catch { }
                 }
             };
-            _WebSocket.Error += (sender, e) => onerror?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(_Engine, e.Exception.Message) });
+            _WebSocket.Error += (sender, e) => onerror?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e.Exception.Message) });
+            Plugins.WebSockets.Add(this);
         }
 
 #pragma warning disable IDE1006

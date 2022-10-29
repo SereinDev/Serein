@@ -5,6 +5,9 @@ namespace Serein.Base
 {
     public class Matcher
     {
+        /// <summary>
+        /// 统计信息
+        /// </summary>
         public static string MessageReceived, MessageSent, SelfId;
 
         /// <summary>

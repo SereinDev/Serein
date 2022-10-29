@@ -6,6 +6,9 @@ namespace Serein.Base
 {
     internal static class TaskRunner
     {
+        /// <summary>
+        /// 检查定时器
+        /// </summary>
         private static Timer Timer = new Timer(2000)
         {
             AutoReset = true,

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Serein.Base
 {
-    internal class ResourcesManager
+    internal static class ResourcesManager
     {
         /// <summary>
         /// 初始化控制台

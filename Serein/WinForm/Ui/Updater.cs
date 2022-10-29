@@ -17,10 +17,6 @@ namespace Serein.Ui
                 {
                     Thread.Sleep(5000);
                 }
-                if (Global.Crash)
-                {
-                    Ui_Update("Serein | 崩溃啦:(");
-                }
                 else if (ServerManager.Status)
                 {
                     PanelInfoTime2_Update(ServerManager.GetTime());

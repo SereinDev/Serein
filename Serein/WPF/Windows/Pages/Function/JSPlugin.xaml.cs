@@ -29,7 +29,7 @@ namespace Serein.Windows.Pages.Function
         private void Load()
         {
             JSPluginListView.Items.Clear();
-            foreach (PluginItem Item in Plugins.PluginItems)
+            foreach (Items.Plugin Item in Plugins.PluginItems)
             {
                 JSPluginListView.Items.Add(Item);
             }

@@ -57,6 +57,9 @@ namespace Serein.Ui
         private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
             => PluginManager.OpenFolder(PluginList.SelectedItems.Count > 0 ? GetSelectedPlugins()[0] : null);
 
+        /// <summary>
+        /// 加载插件列表
+        /// </summary>
         private void LoadPlugins()
         {
             if (PluginManager.Get() != null)
@@ -80,8 +83,10 @@ namespace Serein.Ui
                 PluginList.Groups.Add(PluginGroupDisable);
                 foreach (string PluginFile in Files)
                 {
-                    ListViewItem Item = new ListViewItem();
-                    Item.Text = Regex.Replace(Path.GetFileName(PluginFile), @"\.lock$", string.Empty);
+                    ListViewItem Item = new ListViewItem
+                    {
+                        Text = Regex.Replace(Path.GetFileName(PluginFile), @"\.lock$", string.Empty)
+                    };
                     if (PluginFile.ToUpper().EndsWith(".JS"))
                         PluginGroupJs.Items.Add(Item);
                     else if (PluginFile.ToUpper().EndsWith(".DLL"))
@@ -107,6 +112,10 @@ namespace Serein.Ui
             }
         }
 
+        /// <summary>
+        /// 获取选择的插件路径列表
+        /// </summary>
+        /// <returns>插件路径列表</returns>
         private List<string> GetSelectedPlugins()
         {
             List<string> Files = new List<string>();

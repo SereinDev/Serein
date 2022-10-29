@@ -31,7 +31,7 @@ namespace Serein.Plugin
             {
                 return false;
             }
-            Plugins.PluginItems.Add(new PluginItem()
+            Plugins.PluginItems.Add(new Items.Plugin()
             {
                 Name = Name,
                 Version = Version,
@@ -311,9 +311,15 @@ namespace Serein.Plugin
             }
         }
 
-        public static string GetMD5(string myString)
+
+        /// <summary>
+        /// 获取MD5
+        /// </summary>
+        /// <param name="Text">文本</param>
+        /// <returns>MD5文本</returns>
+        public static string GetMD5(string Text)
         {
-            byte[] Datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(myString));
+            byte[] Datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(Text));
             string Result = string.Empty;
             for (int i = 0; i < Datas.Length; i++)
             {

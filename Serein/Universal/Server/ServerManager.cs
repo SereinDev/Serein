@@ -35,8 +35,8 @@ namespace Serein.Server
         {
             new UTF8Encoding(false),
             new UTF8Encoding(true),
-            Encoding.Unicode,
-            Encoding.BigEndianUnicode,
+            new UnicodeEncoding(false, false),
+            new UnicodeEncoding(true, false),
             Encoding.UTF32,
             Encoding.ASCII,
             Encoding.GetEncoding("ISO-8859-1")
@@ -78,7 +78,7 @@ namespace Serein.Server
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardInput = true,
-                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardOutputEncoding = EncodingList[Global.Settings.Server.OutputEncoding],
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 };
                 ServerProcess = Process.Start(ServerProcessInfo);
@@ -128,7 +128,7 @@ namespace Serein.Server
             }
             else if (!Status && Restart)
                 Restart = false;
-            else
+            else if (!Quiet)
                 Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
         }
 

@@ -14,7 +14,14 @@ namespace Serein.Base
 {
     internal static class IO
     {
+        /// <summary>
+        /// 旧设置文本
+        /// </summary>
         private static string OldSettings = string.Empty;
+
+        /// <summary>
+        /// 保存更新设置定时器
+        /// </summary>
         private static Timer _Timer = new Timer(2000) { AutoReset = true };
 
         /// <summary>

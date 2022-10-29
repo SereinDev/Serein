@@ -11,6 +11,9 @@ namespace Serein.Windows.Pages.Server
 {
     public partial class Plugins : UiPage
     {
+        /// <summary>
+        /// 可识别的扩展名
+        /// </summary>
         private static readonly List<string> Extensions = new List<string>()
         {
             ".dll",".js",".jar",".py",".lua",".ts",".lock"
@@ -23,6 +26,9 @@ namespace Serein.Windows.Pages.Server
             Catalog.Server.Plugins = this;
         }
 
+        /// <summary>
+        /// 加载插件列表
+        /// </summary>
         public void Load()
         {
             PluginsListview.Items.Clear();
