@@ -17,11 +17,6 @@ namespace Serein.Plugin
         /// </summary>
         private WebSocket _WebSocket = null;
 
-        /// <summary>
-        /// 状态
-        /// </summary>
-        public int state => _WebSocket != null ? -1 : ((int)_WebSocket.State);
-
         public void Dispose()
         {
             if (_WebSocket != null && _WebSocket.State == WebSocketState.Open)
@@ -60,6 +55,15 @@ namespace Serein.Plugin
         }
 
 #pragma warning disable IDE1006
+        /// <summary>
+        /// 释放对象
+        /// </summary>
+        public void dispose() => Dispose();
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int state => _WebSocket != null ? -1 : ((int)_WebSocket.State);
 
         /// <summary>
         /// 开启ws

@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Serein.Server
 {
-    public class ServerManager
+    public static class ServerManager
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
         private static string TempLine = string.Empty;
@@ -24,14 +24,14 @@ namespace Serein.Server
         }
         public static bool Restart = false, Finished = false;
         private static bool Killed;
-        public static double CPUPersent = 0.0;
-        public static int CommandListIndex = 0, Port = 0;
+        public static double CPUPersent = 0;
+        public static int CommandListIndex = 0;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static ProcessStartInfo ServerProcessInfo;
         public static Process ServerProcess;
         public static StreamWriter CommandWriter;
         public static List<string> CommandList = new List<string>();
-        public static Encoding[] EncodingList =
+        public static readonly Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
             new UTF8Encoding(true),
@@ -82,6 +82,7 @@ namespace Serein.Server
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 };
                 ServerProcess = Process.Start(ServerProcessInfo);
+                ServerProcess.EnableRaisingEvents = true;
                 ServerProcess.Exited += (sender, e) => WaitForExit();
                 CommandWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
@@ -92,7 +93,7 @@ namespace Serein.Server
                     NewLine = "\n"
                 };
                 ServerProcess.BeginOutputReadLine();
-                ServerProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
+                ServerProcess.OutputDataReceived += SortOutputHandler;
                 Restart = false;
                 Killed = false;
                 Finished = false;
@@ -100,7 +101,6 @@ namespace Serein.Server
                 LevelName = "-";
                 Difficulty = "-";
                 TempLine = string.Empty;
-                Port = 0;
                 CommandList.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
@@ -215,8 +215,8 @@ namespace Serein.Server
                         JSFunc.Trigger("onServerSendSpecifiedCommand", Command_Copy, Item.Function);
                     }
                 }
-                while (CommandList.Count >= 50)
-                    CommandList.RemoveAt(0);
+                if (CommandList.Count > 50)
+                    CommandList.RemoveRange(0, CommandList.Count - 50);
                 if (
                     (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command_Copy || CommandList.Count == 0) &&
                     (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
@@ -322,6 +322,7 @@ namespace Serein.Server
         private static void WaitForExit()
         {
             CommandWriter.Close();
+            CommandWriter.Dispose();
             Logger.Out(LogType.Server_Output, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
@@ -361,22 +362,22 @@ namespace Serein.Server
         /// <summary>
         /// 重启计时器
         /// </summary>
-        private static void RestartTimer()
+        private static async void RestartTimer()
         {
             Logger.Out(LogType.Server_Notice,
                 "服务器将在5s后重新启动"
                 );
             Logger.Out(LogType.Server_Notice,
-                "你可以按下停止按钮来取消这次重启"
+                Logger.Type > 0 ? "你可以按下停止按钮来取消这次重启" : "你可以输入\"stop\"来取消这次重启"
                 );
             for (int i = 0; i < 10; i++)
             {
-                Thread.CurrentThread.Join(500);
+                await System.Threading.Tasks.Task.Delay(500);
                 if (!Restart)
                     break;
             }
             if (Restart)
-                Start();
+                Start(true);
             else
                 Logger.Out(LogType.Server_Notice, "重启已取消");
         }

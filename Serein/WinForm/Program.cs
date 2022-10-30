@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -37,14 +38,10 @@ namespace Serein
             Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception.ToString());
             IO.ReadAll();
             Global.Args = args;
-            if (((IList)args).Contains("debug"))
-            {
+            if (Global.Args.Contains("debug"))
                 Global.Settings.Serein.Debug = true;
-            }
             if (Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
-            {
                 SetProcessDPIAware();
-            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (!File.Exists(Global.Path + "console\\console.html"))

@@ -21,6 +21,7 @@ namespace Serein.Ui
             SettingServerEnableUnicode.Checked = Global.Settings.Server.EnableUnicode;
             SettingServerOutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
             SettingServerEncoding.SelectedIndex = Global.Settings.Server.InputEncoding;
+            SettingServerOutputEncoding.SelectedIndex = Global.Settings.Server.OutputEncoding;
             SettingServerAutoStop.Checked = Global.Settings.Server.AutoStop;
             SettingServerPath.Text = Global.Settings.Server.Path;
             SettingServerStopCommand.Text = string.Join(";", Global.Settings.Server.StopCommands);
@@ -43,29 +44,54 @@ namespace Serein.Ui
             }
         }
 
-        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
-        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
-        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableLog = SettingServerEnableLog.Checked;
-        private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.EnableUnicode = SettingServerEnableUnicode.Checked;
-        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e) => Global.Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
-        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e) => Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
-        private void SettingServerPort_ValueChanged(object sender, EventArgs e) => Global.Settings.Server.Port = (int)SettingServerPort.Value;
-        private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e) => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
-        private void SettingBotUri_TextChanged(object sender, EventArgs e) => Global.Settings.Bot.Uri = SettingBotUri.Text;
-        private void SettingBotAuthorization_Enter(object sender, EventArgs e) => SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
-        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
-        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
-        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
-        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e) => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
-        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e) => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
-        private void SettingSereinAbout_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/About") { UseShellExecute = true });
-        private void SettingSereinPage_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
-        private void SettingSereinTutorial_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/README") { UseShellExecute = true });
-        private void SettingSereinDownload_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
-        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
-        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e) => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
+        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
+           => Global.Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
+        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
+        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Server.EnableLog = SettingServerEnableLog.Checked;
+        private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Server.EnableUnicode = SettingServerEnableUnicode.Checked;
+        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
+            => Global.Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
+        private void SettingServerOutputEncoding_SelectedIndexChanged(object sender, EventArgs e)
+            => Global.Settings.Server.OutputEncoding = SettingServerOutputEncoding.SelectedIndex;
+        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e)
+            => Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
+        private void SettingServerPort_ValueChanged(object sender, EventArgs e)
+            => Global.Settings.Server.Port = (int)SettingServerPort.Value;
+        private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e)
+            => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
+        private void SettingBotUri_TextChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.Uri = SettingBotUri.Text;
+        private void SettingBotAuthorization_Enter(object sender, EventArgs e)
+            => SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
+        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
+        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
+        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
+        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
+        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
+        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
+        private void SettingSereinAbout_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/About") { UseShellExecute = true });
+        private void SettingSereinPage_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
+        private void SettingSereinTutorial_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/README") { UseShellExecute = true });
+        private void SettingSereinDownload_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
+        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
+        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
 
         private void SettingBotAuthorization_Leave(object sender, EventArgs e)
         {
@@ -84,11 +110,8 @@ namespace Serein.Ui
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
                 {
-                    if (qq.Length >= 6 && qq.Length <= 16)
-                    {
-                        long.TryParse(qq, out long qq_);
+                    if (qq.Length >= 6 && qq.Length <= 16 && long.TryParse(qq, out long qq_))
                         list.Add(qq_);
-                    }
                 }
                 Global.Settings.Bot.GroupList = list;
             }
@@ -115,11 +138,8 @@ namespace Serein.Ui
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))
                 {
-                    if (qq.Length >= 5 && qq.Length <= 13)
-                    {
-                        long.TryParse(qq, out long qq_);
+                    if (qq.Length >= 5 && qq.Length <= 13 && long.TryParse(qq, out long qq_))
                         list.Add(qq_);
-                    }
                 }
                 Global.Settings.Bot.PermissionList = list;
             }
@@ -166,10 +186,8 @@ namespace Serein.Ui
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node == null)
-            {
                 return;
-            }
-            string[] TargetEvent = new string[] { };
+            string[] TargetEvent = null;
             switch (e.Node.Name)
             {
                 case "BindSuccess":
@@ -226,10 +244,13 @@ namespace Serein.Ui
                 case "PermissionDeniedGroup":
                     TargetEvent = Global.Settings.Event.PermissionDenied_Group;
                     break;
+                default:
+                    TargetEvent = Array.Empty<string>();
+                    break;
             }
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
-            TargetEvent.ToList().ForEach((Command) => { SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); });
+            TargetEvent.ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")));
             SettingEventList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SettingEventList.EndUpdate();
         }

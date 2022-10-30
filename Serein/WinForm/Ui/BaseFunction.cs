@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -51,6 +50,7 @@ namespace Serein.Ui
                     WindowTitle = "Serein",
                     Content = "" +
                     "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助(๑•̀ㅂ•́)و✧\n" +
+                    "◦ 官网：<a href=\"https://serein.cc\">https://serein.cc</a>\n" +
                     "◦ 实用教程：<a href=\"https://serein.cc/#/Tutorial/README\">https://serein.cc/#/Tutorial/README</a>\n" +
                     "◦ 交流群：<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">954829203</a>",
                     Footer = "此面板已发布在<a href=\"https://www.minebbs.com/resources/serein.4169/\">Minebbs</a>上，欢迎支持~",
@@ -63,14 +63,11 @@ namespace Serein.Ui
                 TaskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
                 TaskDialog.ShowDialog();
             }
-            new Task(() => { if (Global.Args.Contains("auto_connect")) { Websocket.Connect(false); } }).Start();
-            new Task(() => { if (Global.Args.Contains("auto_start")) { ServerManager.Start(true); } }).Start();
-            new Task(
-                () =>
-                {
-                    Plugins.Load();
-                    JSFunc.Trigger("onSereinStart");
-                }).Start();
+            if (Global.Args.Contains("auto_connect"))
+                System.Threading.Tasks.Task.Run(() => Websocket.Connect(false));
+            if (Global.Args.Contains("auto_start"))
+                System.Threading.Tasks.Task.Run(() => ServerManager.Start(true));
+            System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onSereinStart"));
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
@@ -102,7 +99,7 @@ namespace Serein.Ui
             {
                 if (DebugTextBox.InvokeRequired)
                 {
-                    Action<string> actionDelegate = (_Text) =>
+                    Action<string> ActionDelegate = (_Text) =>
                     {
                         if (DebugTextBox.Text.Length > 50000)
                         {
@@ -110,7 +107,7 @@ namespace Serein.Ui
                         }
                         DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n";
                     };
-                    PanelInfoTime2.Invoke(actionDelegate, Text);
+                    PanelInfoTime2.Invoke(ActionDelegate, Text);
                 }
                 else
                 {
@@ -226,7 +223,7 @@ namespace Serein.Ui
             }
             if (data.Length > 0)
             {
-                List<string> AcceptableList = new List<string>() { ".py", ".dll", ".js", ".go", ".jar" };
+                List<string> AcceptableList = new List<string>() { ".py", ".dll", ".js", ".ts", ".jar" };
                 List<string> FileList = new List<string>();
                 string FileListText = string.Empty;
                 foreach (object File in data)

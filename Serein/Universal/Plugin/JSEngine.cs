@@ -168,11 +168,11 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="Code">代码</param>
         /// <returns>错误信息</returns>
-        public static string Run(string Code)
+        public static string Run(string Code, Engine Engine = null)
         {
             try
             {
-                engine.Execute(Code);
+                (Engine ?? engine).Execute(Code);
                 return string.Empty;
             }
             catch (Exception e)

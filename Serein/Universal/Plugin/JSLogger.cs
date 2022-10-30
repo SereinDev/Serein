@@ -12,16 +12,18 @@ namespace Serein.Plugin
 
         private string Name { get; set; }
 
-        public void Info(object Line)
-            => Logger.Out(LogType.Info, $"[{Name}]", (Line ?? string.Empty).ToString());
+#pragma warning disable IDE1006
+        public void info(object Line)
+            => Logger.Out(LogType.Plugin_Info, $"[{Name}]", (Line ?? string.Empty).ToString());
 
-        public void Warn(object Line)
-            => Logger.Out(LogType.Warn, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void warn(object Line)
+            => Logger.Out(LogType.Plugin_Warn, $"[{Name}]", (Line ?? string.Empty).ToString());
 
-        public void Error(object Line)
-            => Logger.Out(LogType.Error, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void error(object Line)
+            => Logger.Out(LogType.Plugin_Error, $"[{Name}]", (Line ?? string.Empty).ToString());
 
-        public void Debug(object Line)
+        public void debug(object Line)
             => Logger.Out(LogType.Debug, $"[{Name}]", (Line ?? string.Empty).ToString());
+#pragma warning restore IDE1006
     }
 }

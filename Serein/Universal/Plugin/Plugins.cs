@@ -54,7 +54,7 @@ namespace Serein.Plugin
                     try
                     {
                         Jint.Engine Engine = JSEngine.Init();
-                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8));
+                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), Engine);
                         bool Success = string.IsNullOrEmpty(ExceptionMessage);
                         if (!Success)
                         {
