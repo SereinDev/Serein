@@ -602,23 +602,48 @@ var id = serein.getGameID(114514);
 ```js
 // 由于该js解释器不支持ws，所以这里用C#封装了一个，部分函数和js原生的有所不同
 var ws = new WebSocket("ws://127.0.0.1:11451"); // 实例化ws
+
 ws.onopen = function(){
-  // ws开启
+  // ws开启事件
   // ...
 };
 ws.onclose = function(){
-  // ws关闭
+  // ws关闭事件
   // ...
 };
 ws.onerror = function(message){ // 错误信息
-  // ws发生错误
+  // ws发生错误事件
   // ...
 };
 ws.onmessage = function(message){ // 收到数据
-  // ws收到数据
+  // ws收到数据事件
   // ...
 };
+
+ws.open(); // 连接ws
+var state = ws.state; // 连接状态
+/*
+ * 此状态有以下五个可能的枚举值
+ *
+ *  -1  未知或无效
+ *  0   正在连接
+ *  1   连接成功
+ *  2   正在关闭
+ *  3   已关闭
+*/
 ws.send("hello"); // 发送数据
-ws.close(); //关闭ws
-// [!] 插件重载和Serein关闭时不会自动关闭ws连接，请配合"onPluginsReload"和"onSereinClose"事件执行关闭操作
+ws.close(); // 关闭ws
+ws.dispose(); // 释放对象
 ```
+
+#### Logger
+
+```js
+var logger = Logger("Example"); // 插件名称
+logger.info("这是一条信息输出");
+logger.warn("这是一条警告输出");
+logger.error("这是一条错误输出");
+logger.debug("这是一条信息输出"); // 此消息将输出到Serein的debug窗口而不是插件控制台
+```
+
+![logger](../imgs/logger.png)
