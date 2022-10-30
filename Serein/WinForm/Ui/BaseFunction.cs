@@ -68,6 +68,7 @@ namespace Serein.Ui
             if (Global.Args.Contains("auto_start"))
                 System.Threading.Tasks.Task.Run(() => ServerManager.Start(true));
             System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onSereinStart"));
+            System.Threading.Tasks.Task.Run(() => Plugins.Load());
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)

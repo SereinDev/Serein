@@ -191,6 +191,8 @@ namespace Serein.Ui
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerOutputEncodingLabel = new System.Windows.Forms.Label();
+            this.SettingServerOutputEncoding = new System.Windows.Forms.ComboBox();
             this.SettingServerTypeLabel = new System.Windows.Forms.Label();
             this.SettingServerPortLabel = new System.Windows.Forms.Label();
             this.SettingServerType = new System.Windows.Forms.ComboBox();
@@ -1422,6 +1424,8 @@ namespace Serein.Ui
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerOutputEncodingLabel);
+            this.SettingServer.Controls.Add(this.SettingServerOutputEncoding);
             this.SettingServer.Controls.Add(this.SettingServerTypeLabel);
             this.SettingServer.Controls.Add(this.SettingServerPortLabel);
             this.SettingServer.Controls.Add(this.SettingServerType);
@@ -1443,6 +1447,29 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingServer, "SettingServer");
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
+            // 
+            // SettingServerOutputEncodingLabel
+            // 
+            resources.ApplyResources(this.SettingServerOutputEncodingLabel, "SettingServerOutputEncodingLabel");
+            this.SettingServerOutputEncodingLabel.Name = "SettingServerOutputEncodingLabel";
+            this.SettingServerOutputEncodingLabel.MouseHover += new System.EventHandler(this.SettingServerOutputEncodingLabel_MouseHover);
+            // 
+            // SettingServerOutputEncoding
+            // 
+            this.SettingServerOutputEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SettingServerOutputEncoding.FormattingEnabled = true;
+            this.SettingServerOutputEncoding.Items.AddRange(new object[] {
+            resources.GetString("SettingServerOutputEncoding.Items"),
+            resources.GetString("SettingServerOutputEncoding.Items1"),
+            resources.GetString("SettingServerOutputEncoding.Items2"),
+            resources.GetString("SettingServerOutputEncoding.Items3"),
+            resources.GetString("SettingServerOutputEncoding.Items4"),
+            resources.GetString("SettingServerOutputEncoding.Items5"),
+            resources.GetString("SettingServerOutputEncoding.Items6")});
+            resources.ApplyResources(this.SettingServerOutputEncoding, "SettingServerOutputEncoding");
+            this.SettingServerOutputEncoding.Name = "SettingServerOutputEncoding";
+            this.SettingServerOutputEncoding.SelectedIndexChanged += new System.EventHandler(this.SettingServerOutputEncoding_SelectedIndexChanged);
+            this.SettingServerOutputEncoding.MouseHover += new System.EventHandler(this.SettingServerOutputEncoding_MouseHover);
             // 
             // SettingServerTypeLabel
             // 
@@ -1865,6 +1892,8 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Remove;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Docs;
+        private System.Windows.Forms.ComboBox SettingServerOutputEncoding;
+        private System.Windows.Forms.Label SettingServerOutputEncodingLabel;
     }
 }
 

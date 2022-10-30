@@ -1,8 +1,6 @@
 ﻿using Serein.Base;
 using System;
-using System.Collections;
 using System.IO;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -36,7 +34,7 @@ namespace Serein
             CrashInterception.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception.ToString());
-            IO.ReadAll();
+            IO.ReadAll(true);
             Global.Args = args;
             if (Global.Args.Contains("debug"))
                 Global.Settings.Serein.Debug = true;

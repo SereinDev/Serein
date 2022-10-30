@@ -37,12 +37,14 @@ namespace Serein.Base
         /// <summary>
         /// 读取所有文件
         /// </summary>
-        public static void ReadAll()
+        /// <param name="SkipLoadingPlugins">跳过插件加载</param>
+        public static void ReadAll(bool SkipLoadingPlugins = false)
         {
             ReadRegex();
             ReadMember();
             ReadSettings();
-            Plugins.Load();
+            if (!SkipLoadingPlugins)
+                Plugins.Load();
         }
 
         /// <summary>
