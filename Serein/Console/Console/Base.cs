@@ -7,26 +7,31 @@ using System.Threading.Tasks;
 
 namespace Serein.Console
 {
-    internal class Base
+    internal static class Base
     {
-        const int STD_INPUT_HANDLE = -10;
-        const int STD_OUTPUT_HANDLE = -11;
-        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
-        const uint ENABLE_QUICK_EDIT_MODE = 0x0040;
-        const uint ENABLE_INSERT_MODE = 0x0020;
+        private const int STD_INPUT_HANDLE = -10;
+        private const int STD_OUTPUT_HANDLE = -11;
+        private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+        private const uint ENABLE_QUICK_EDIT_MODE = 0x0040;
+        private const uint ENABLE_INSERT_MODE = 0x0020;
 
-        [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll", EntryPoint = "FindWindow", CharSet = CharSet.Unicode)]
+        private extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+
         [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
-        extern static IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);
+        private extern static IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);
+
         [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
-        extern static IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+        private extern static IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr GetStdHandle(int nStdHandle);
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+        
         [DllImport("kernel32.dll")]
-        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        
         [DllImport("kernel32.dll")]
-        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
         /// <summary>
         /// 初始化控制台
@@ -56,13 +61,9 @@ namespace Serein.Console
             Logger.Out(Items.LogType.Info, "Welcome.");
             Logger.Out(Items.LogType.Info, "你可以输入\"help\"获取更多信息");
             if (Global.Args.Contains("auto_connect"))
-            {
                 Task.Run(() => Websocket.Connect(false));
-            }
             if (Global.Args.Contains("auto_start"))
-            {
                 Task.Run(() => ServerManager.Start(true));
-            }
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (sender, e) =>
             {
@@ -73,9 +74,7 @@ namespace Serein.Console
             {
                 string Line = System.Console.ReadLine();
                 if (!string.IsNullOrEmpty(Line))
-                {
                     Input.Process(Line.Trim());
-                }
             }
         }
 
@@ -86,6 +85,7 @@ namespace Serein.Console
         public static void Load(string[] args = null)
         {
             IO.ReadAll();
+            IO.SaveSettings();
             Global.Args = args ?? Global.Args;
             Global.Settings.Serein.Debug = Global.Args.Contains("debug");
         }

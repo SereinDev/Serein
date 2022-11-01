@@ -25,25 +25,32 @@
 - **介绍页：<https://serein.cc/>**
 - **下载最新版：<https://github.com/Zaitonn/Serein/releases/latest>**
 - Minebbs：<https://www.minebbs.com/resources/serein.4169/>
-- 查看 **[教程](docs/Tutorial.md)** 丨 __[帮助](docs/Help.md)__
 
 ## 运行环境 Environment
 
 Win7或WinServer2012以上
 
 > 更低的系统版本不保证能稳定运行，必要时务必备份数据
-  
-> x86理论可正常运行，但考虑到bds好像不能在x86下运行(？)，故还是推荐64位
 
-### 缺少运行库？
+## 使用的Package包
 
-[![.NET 6.0](https://img.shields.io/badge/.NET-6.0-%23512BD4?style=for-the-badge)](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)
-[![.NET Framework 4.7.2](https://img.shields.io/badge/.NET%20Framework-4.7.2-%23512BD4?style=for-the-badge)](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472)
+详见 <https://github.com/Zaitonn/Serein/network/dependencies>
+
+- [Costura.Fody](https://github.com/Fody/Costura)
+- [Jint](https://github.com/sebastienros/jint)
+- [Microsoft.VisualBasic](https://github.com/dotnet/source-build)
+- [NCrontab](https://github.com/atifaziz/NCrontab)
+- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+- [Notification.Wpf](https://github.com/Platonenkov/Notification.Wpf)
+- [Ookii.Dialogs.Wpf](https://github.com/ookii-dialogs/ookii-dialogs-wpf)
+- [WebSocket4Net](https://github.com/kerryjiang/WebSocket4Net)
+- [System.Management](https://github.com/dotnet/runtime)
+- [System.Net.Http](https://github.com/dotnet/corefx)
+- [WPF-UI](https://github.com/lepoco/wpfui)
 
 ## 编译 Build
 
-~~反正我用VS~~  
-记得安装SDK
+推荐VS2022
 
 ## 发电 Donate
 
@@ -55,12 +62,12 @@ Win7或WinServer2012以上
   <img src="https://serein.cc/imgs/afdian.png">
 </details>
 
-| Supporters | 发电金额 |日期|
-|---- |----: |----|
-| [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640)| $ 10.00 | 2022.7.25|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.17|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.10|
-| [binggggg](https://www.minebbs.com/members/binggggg.12096/)| ￥20.00 | 2022.7.9|
+| Supporters                                                     | 发电金额 | 日期      |
+| -------------------------------------------------------------- | -------: | --------- |
+| [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640) |  $ 10.00 | 2022.7.25 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.17 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.10 |
+| [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.9  |
 
 ## 关于
 

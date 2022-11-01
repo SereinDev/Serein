@@ -1,4 +1,5 @@
-﻿using Serein.Items;
+﻿using Serein.Base;
+using Serein.Items;
 using Serein.Server;
 using System;
 
@@ -69,54 +70,61 @@ namespace Serein
         /// <param name="Line">输出行</param>
         private static void WriteLine(int Level, string Line)
         {
-            if (Line == "#clear") { return; }
+            System.Console.ForegroundColor = ConsoleColor.White;
+            if (Line == "#clear")
+                return;
+            string Prefix = string.Empty;
             lock (Lock)
             {
                 switch (Level)
                 {
                     case 1:
-                        System.Console.Write("\x1b[96m");
+                        Prefix = "\x1b[96m";
                         if (ServerManager.Status)
                         {
-                            System.Console.Write("[Serein]");
+                            Prefix += ("[Serein]");
                         }
-                        System.Console.Write("[Info]\x1b[0m");
+                        Prefix += ("[Info]\x1b[0m");
                         break;
                     case 2:
-                        System.Console.Write("\x1b[93m");
+                        Prefix += ("\x1b[93m");
                         if (ServerManager.Status)
                         {
-                            System.Console.Write("[Serein]");
+                            Prefix += ("[Serein]");
                         }
-                        System.Console.Write("[Warn]");
+                        Prefix += ("[Warn]");
                         break;
                     case 3:
-                        System.Console.Write("\x1b[91m");
+                        Prefix += ("\x1b[91m");
                         if (ServerManager.Status)
                         {
-                            System.Console.Write("[Serein]");
+                            Prefix += ("[Serein]");
                         }
-                        System.Console.Write("[Error]");
+                        Prefix += ("[Error]");
                         break;
                     case 4:
-                        System.Console.Write("\x1b[95m");
+                        Prefix += ("\x1b[95m");
                         if (ServerManager.Status)
                         {
-                            System.Console.Write("[Serein]");
+                            Prefix += ("[Serein]");
                         }
-                        System.Console.Write("[Debug]");
+                        Prefix += ("[Debug]");
                         break;
                     default:
-                        System.Console.Write("\x1b[97m");
+                        Prefix += ("\x1b[97m");
                         break;
                 }
-                System.Console.WriteLine(Line + "\x1b[97m");
+                if (!Global.Settings.Serein.ColorfulLog)
+                    System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(Prefix + Line, @"\[.*?m", string.Empty));
+                else
+                    System.Console.WriteLine(Prefix + Line + "\x1b[0m");
                 System.Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
         public static bool MsgBox(string Text, string Caption, int Buttons, int Icon)
         {
+            Text = Text.Replace(":(", string.Empty).Trim('\r', '\n');
             switch (Icon)
             {
                 case 48:

@@ -7,5 +7,6 @@
         public bool EnableGetUpdate { get; set; } = true;
         public bool ThemeFollowSystem { get; set; } = true;
         public bool UseDarkTheme { get; set; } = false;
+        public bool ColorfulLog { get; set; } = true;
     }
 }
