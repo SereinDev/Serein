@@ -1,11 +1,11 @@
 
->[!NOTE] 本处的`调试模式`指开启Serein自带的调试输出窗口
+>[!NOTE] 本处的*调试模式*指开启Serein自带的调试输出窗口
 
 ![调试窗口](../imgs/debug.png)
 
 ### 用途
 
-供开发者确定函数的执行情况、变量的变化等，并总是自动保存日志到`logs/debug`文件夹下
+供开发者确定函数的执行情况、变量的变化等，并总是自动保存日志到*logs/debug*文件夹下
 
 #### C\#
 
@@ -32,7 +32,7 @@ internal static class Logger
 
 #### 命令行参数
 
-使用cmd或PowerShell启动`Serein-???.exe`，在路径后面写上`debug`即可
+使用cmd或PowerShell启动*Serein-???.exe*，在路径后面写上`debug`即可
 
 ```powershell
 PS C:\> Serein-???.exe debug
@@ -40,7 +40,7 @@ PS C:\> Serein-???.exe debug
 
 #### 更改设置
 
-打开`settings/Serein.json`，将`Debug`后面的`false`改为`true`即可
+打开*settings/Serein.json*，将`Debug`后面的`false`改为`true`即可
 
 ```json
 {

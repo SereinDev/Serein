@@ -1,7 +1,7 @@
 
 ![定时任务](../imgs/task.png)
 
-任务数据保存在`data/task.json`
+任务数据保存在*data/task.json*
 
 > [!TIP]
 >

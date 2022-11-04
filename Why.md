@@ -4,13 +4,13 @@
 ## 麻雀虽小，五脏俱全
 
 **以极小的文件体积囊括多种功能**  
-截至`Serein v1.3.2`，所有发行包大小均不超过3MB  
+截至v1.3.2，所有发行包大小均不超过3MB  
 也就是说，不到一张~~色图~~表情包体积的软件就可以实现控制服务器等功能
 [![文件体积](imgs/size.png)](https://github.com/Zaitonn/Serein/releases/latest)
 
 ## 永不收费且无广告
 
-- `Serein`自从一开始便确定不提供任何增值服务  
+- 自从一开始便确定不提供任何增值服务  
 - 软件中永远不会加入任何广告，广告统统给爷爪巴
 
 ## 永久免费咨询
@@ -35,12 +35,12 @@
     - 启动进程的CPU占用率
 - 理论上**可适配所有服务器**
   - 据群友反馈，可以**启动BDS、Java乃至于Terraria服务器**
-  - ~~只有你想不到，没有`Serein`做不到~~
+  - ~~只有你想不到，没有*Serein*做不到~~
 - 方便的一键控制按钮，包括大部分日常使用的操作，帮助您**一键管理服务器**
 - **简洁且可自定义的彩色控制台**
   - 使用自研的正则处理原始输出中的彩色样式，并使用内嵌HTML渲染输出
-  - 还有`语法高亮`的显示主题可供选择！可自动用不同颜色高亮`Info`、`Error`、`Warning`、插件前缀和长数字，使得更易于查找关键信息
-  - 得益于使用内嵌浏览器渲染控制台，您可以在`./console`文件夹中自定义背景图片、高亮颜色、高亮内容、字体大小颜色等风格
+  - 还有*语法高亮*的显示主题可供选择！可自动用不同颜色高亮*Info*、*Error*、*Warning*、插件前缀和长数字，使得更易于查找关键信息
+  - 得益于使用内嵌浏览器渲染控制台，您可以在*./console*文件夹中自定义背景图片、高亮颜色、高亮内容、字体大小颜色等风格
     > 可能需要一点点HTML5、CSS3和JS的入门技巧
     >[!TIP]具体方法详见[教程](Tutorial/CustomConsole.md)
 - 自动后台运行
@@ -87,12 +87,12 @@
 
 >[!TIP]详见👉[机器人](Function/Bot.md)👈
 
-- 支持多种主流机器人，如[`go-cqhttp`](https://github.com/Mrs4s/go-cqhttp)、[`OneBot Mirai`](https://github.com/yyuueexxiinngg/onebot-kotlin)
-- `Serein`与机器人窗口分离，方便拓展
+- 支持多种主流机器人，如[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)、[OneBot Mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)
+- Serein与机器人窗口分离，方便拓展
   >[!TIP]
-  >你可以使用`Nonebot`、`Nonebot2`等机器人框架或[Serein插件](Function/JSPlugin.md)继续拓展实现更多功能
+  >你可以使用*Nonebot*、*Nonebot2*等机器人框架或[Serein插件](Function/JSPlugin.md)继续拓展实现更多功能
 - 通过Websocket一键连接机器人实现消息收发功能
-- 允许多开`Serein`实现群组服的消息互通功能
+- 允许[多开](Tutorial/MulitOpen.md)实现群组服的消息互通功能
 - 显示状态和其他统计信息，帮助您了解运行状态
 - 可以直接通过QQ控制服务器或消息互通（需要自行配置）
 
@@ -112,7 +112,7 @@
 >[!TIP]详见👉[插件](Function/JSPlugin.md)👈  👉[插件文档](Function/JSDocs.md)👈
 
 - 你可以使用他人编写好的插件直接实现指定功能，方便服主使用
-- 由于js引擎的特性，你可以在js中插入部分`C#`代码，增添更多功能
+- 由于js引擎的特性，你可以在js中插入部分C#代码，增添更多功能
 - 提供二十余个函数可供使用和十余个事件可供监听
 - 自定义机器人回复/交互/签到等功能
 

@@ -6,7 +6,7 @@
     <title>Serein</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="Description" content="Serein —— 新时代我的世界极简服务器面板">
-    <meta name="Keywords" content="面板，服务器，我的世界，Minecraft，BDS，Java，基岩版，开服，机器人，简单，易用"/>
+    <meta name="Keywords" content="面板，服务器，我的世界，Minecraft，BDS，Java，基岩版，开服，机器人，简单，易用" />
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">加载中...</div>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js" defer></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js" defer></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js" defer></script>
@@ -34,19 +34,21 @@
     <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js" defer></script>
     <script>
         window.$docsify = {
-            name: 'Serein',
-            repo: 'https://github.com/Zaitonn/Serein',
-            subMaxLevel: 5,
-            loadNavbar: true,
-            relativePath: true,
             autoHeader: true,
-            loadSidebar: true,
             auto2top: true,
             coverpage: true,
-            mergeNavbar: true,
-            onlyCover: true,
-            loadFooter: '_footer.md',
             externalLinkTarget: '_blank',
+            loadFooter: '_footer.md',
+            loadNavbar: true,
+            loadSidebar: true,
+            mergeNavbar: true,
+            name: 'Serein',
+            nativeEmoji: true,
+            onlyCover: true,
+            relativePath: true,
+            repo: 'https://github.com/Zaitonn/Serein',
+            subMaxLevel: 5,
+            themeColor: '#1772b4',
             search: {
                 placeholder: "🔍 搜我所想...",
                 namespace: 'serein',
@@ -56,7 +58,7 @@
                 previousText: '👈上一节',
                 nextText: '下一节👉',
                 crossChapter: true,
-                crossChapterText: true,
+                crossChapterText: true
             },
             plugins: [
                 EditOnGithubPlugin.create('https://github.com/Zaitonn/Serein/blob/docs/')

@@ -2,13 +2,13 @@
 ### 帮助改进文档
 
 💖 **欢迎所有人提出建议或帮忙改进~** 💖  
-不需要任何基础，只要有一颗奉献的心ヾ(•ω•`)o
+不需要任何基础，只要有一颗奉献的心ヾ(•ω•)o
 
 ### 版权声明
 
 - 软件许可证 [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.zh-cn.html)
 - Copyright © 2022 Zaitonn. All Rights Reserved.
-- 此软件与`Mojang Studio`、`网易`、`Microsoft`没有从属关系
+- 此软件与Mojang Studio、网易、Microsoft没有从属关系
 
 ### 反馈
 

@@ -7,7 +7,7 @@
 ![GitHub bulid](https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue ":no-zoom")
 ![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein ":no-zoom")
 
-`Serein` 是一个基于`NET 6`或`NET Framework 4.7.2`的新时代我的世界极简服务器面板
+Serein 是一个基于NET 6或NET Framework 4.7.2的新时代我的世界极简服务器面板
 
 ![控制台](imgs/console.png)
 
@@ -19,7 +19,7 @@ Win7或WinServer2012以上
 
 ## 运行库
 
-- 由于大部分系统自带`.NET Framework 4.7.2`运行库，可以选择下载`Serein net472`版本，不需要再安装
+- 由于大部分系统自带.NET Framework 4.7.2运行库，可以选择下载Serein net472版本，不需要再安装
 - 根据下载的版本自行选择即可，并都要安装  
 
 [![.NET 6.0](https://img.shields.io/badge/.NET-6.0-%23512BD4?style=for-the-badge)](https://dotnet.microsoft.com/download/dotnet/6.0/runtime/desktop/x64)

@@ -89,7 +89,7 @@
 >[!WARNING]此命令只能被群聊消息触发
 
 >[!WARNING]若该ID不合法或已经绑定会返回消息提示  
-提示内容可在`settings/Event.json`中自定义，详见[事件](Event.md)  
+提示内容可在*settings/Event.json*中自定义，详见[事件](Event.md)  
 
 ### 解绑游戏ID
 
@@ -100,7 +100,7 @@
 >[!WARNING]此命令只能被群聊消息触发
 
 >[!WARNING]若该QQID未绑定会返回消息提示  
-提示内容可在`settings/Event.json`中自定义，详见[事件](Event.md)
+提示内容可在*settings/Event.json*中自定义，详见[事件](Event.md)
 
 ### 获取服务器信息
 
@@ -122,7 +122,7 @@
 >- 连接超时  
 >- 数据包无法识别
 >
->错误消息可在`settings/Event.json`中自定义，详见[事件](Event.md)
+>错误消息可在*settings/Event.json*中自定义，详见[事件](Event.md)
 
 ### 执行Javascript代码
 
@@ -138,4 +138,4 @@
 `debug|<消息>`  
 输出调试消息到Debug窗口
 
->[!TIP]你需要在`settings/Serein.json`中手动开启`Debug模式`
+>[!TIP]你需要在*settings/Serein.json*中手动开启`Debug模式`

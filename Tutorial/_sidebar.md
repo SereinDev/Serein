@@ -1,6 +1,7 @@
 - [**📫 主页**](../README.md)
 - [**📻 功能**](../Function/README.md)
 - [**🌌 扩展**](../Extension/README.md)
+- [**🎡 版本列表**](../Versions/README.md)
 - [**📔 关于**](../About.md)
 
 ---
@@ -15,5 +16,6 @@
 
   - 进阶
     - [💻 自定义控制台](CustomConsole.md)
+    - [📑 多行匹配](MuiltLineMatch.md)
     - [📂 多开](MulitOpen.md)
     - [🔧 开启调试模式](DebugMode.md)

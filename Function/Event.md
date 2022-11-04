@@ -3,7 +3,7 @@
 
 ### 介绍
 
-根据`settings/Event.json`中的设置的命令响应触发的事件  
+根据*settings/Event.json*中的设置的命令响应触发的事件  
 
 在配置文件中，每个事件下有一个`JSON`数组，你可以在里面填写该事件被触发时执行的[命令](Command.md)，并且可以在其中插入[变量](Variables.md)
 
@@ -93,16 +93,16 @@
 | Group_Increase           | 监听群有人进群                 |
 | Group_Decrease           | 监听群有人退群                 |
 | Group_Poke               | 监听群内当前账号被他人戳一戳   |
-| Motdpe_Success           | 命令`motdpe`执行成功           |
-| Motdje_Success           | 命令`motdje`执行成功           |
-| Motd_Failure             | 命令`motdpe`或`motdje`执行失败 |
+| Motdpe_Success           | 命令*motdpe*执行成功           |
+| Motdje_Success           | 命令*motdje*执行成功           |
+| Motd_Failure             | 命令*motdpe*或*motdje*执行失败 |
 | PermissionDenied_Private | 权限不足（私聊）               |
 | PermissionDenied_Group   | 权限不足（群聊）               |
-| Serein_Crash             | `Serein`崩溃                   |
+| Serein_Crash             | Serein崩溃                   |
 
 ### 绑定/解绑
 
->[!WARNING]本节的所有事件可以使用`ID`变量获取触发这个事件的QQ
+>[!WARNING]本节的所有事件可以使用*ID*变量获取触发这个事件的QQ
 
 #### Bind_Success
 
@@ -197,7 +197,7 @@ ubind|%ID%
 
 #### Motdpe_Success
 
-命令`motdpe`执行成功  
+命令*motdpe*执行成功  
 默认值：
 
 ```txt
@@ -211,7 +211,7 @@ g|
 
 #### Motdje_Success
 
-命令`motdje`执行成功  
+命令*motdje*执行成功  
 默认值：
 
 ```txt
@@ -225,7 +225,7 @@ g|
 
 #### Motd_Failure
 
-命令`motdpe`或`motdje`执行失败  
+命令*motdpe*或*motdje*执行失败  
 默认值：
 
 ```txt
@@ -234,7 +234,7 @@ Motd获取失败
 %Exception%
 ```
 
->[!WARNING]`Motd_Failure`可以使用额外的`Exception`变量输出错误信息
+>[!WARNING]*Motd_Failure*可以使用额外的*Exception*变量输出错误信息
 
 ### 权限不足反馈
 
@@ -252,7 +252,7 @@ Motd获取失败
 
 #### Serein_Crash
 
-`Serein`崩溃  
+`erein崩溃  
 默认值：
 
 ```txt

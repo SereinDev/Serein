@@ -1,7 +1,7 @@
 
 |     作者     | Zaitonn                                                                                          |
 | :----------: | ------------------------------------------------------------------------------------------------ |
-|   **介绍**   | `Serein`的一个JS示例文件                                                                         |
+|   **介绍**   | Serein的一个JS示例文件                                                                         |
 | **更新日期** | 2022.8.24                                                                                        |
 | **下载链接** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6.js) |
 | **开源仓库** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6.js) |
