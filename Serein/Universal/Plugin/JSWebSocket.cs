@@ -1,5 +1,4 @@
-﻿using Jint;
-using Jint.Native;
+﻿using Jint.Native;
 using System;
 using WebSocket4Net;
 

@@ -235,11 +235,17 @@ namespace Serein.Base
             if (File.Exists(Global.SettingPath + "\\Serein.json"))
                 Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8)) ?? new Settings.Serein();
             if (File.Exists(Global.SettingPath + "\\Matches.json"))
+            {
                 Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)) ?? new Matches();
+                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
+            }
             else
                 File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
             if (File.Exists(Global.SettingPath + "\\Event.json"))
+            {
                 Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)) ?? new Settings.Event();
+                SaveEventSetting();
+            }
             else
                 File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
         }

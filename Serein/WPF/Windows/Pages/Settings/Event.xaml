@@ -25,17 +25,17 @@
                 Text="事件列表" />
             <TreeView Name="Events" SelectedItemChanged="Events_SelectedItemChanged">
                 <TreeViewItem Header="绑定/解绑">
-                    <TreeViewItem Header="绑定成功" Tag="BindSuccess" />
-                    <TreeViewItem Header="绑定失败-名称被占用" Tag="BindOccupied" />
-                    <TreeViewItem Header="绑定失败-名称不可用" Tag="BindInvalid" />
-                    <TreeViewItem Header="绑定失败-已经绑定" Tag="BindAlready" />
-                    <TreeViewItem Header="解绑成功" Tag="UnbindSuccess" />
-                    <TreeViewItem Header="解绑失败" Tag="UnbindFailure" />
+                    <TreeViewItem Header="绑定成功" Tag="BindingSucceed" />
+                    <TreeViewItem Header="绑定失败-名称被占用" Tag="BindingFailDueToOccupation" />
+                    <TreeViewItem Header="绑定失败-名称不可用" Tag="BindingFailDueToInvalid" />
+                    <TreeViewItem Header="绑定失败-已经绑定" Tag="BindingFailDueToAlreadyBinded" />
+                    <TreeViewItem Header="解绑成功" Tag="UnbindingSucceed" />
+                    <TreeViewItem Header="解绑失败" Tag="UnbindingFail" />
                 </TreeViewItem>
                 <TreeViewItem Header="服务器状态变更">
                     <TreeViewItem Header="启动" Tag="ServerStart" />
                     <TreeViewItem Header="关闭" Tag="ServerStop" />
-                    <TreeViewItem Header="异常关闭" Tag="ServerError" />
+                    <TreeViewItem Header="异常关闭" Tag="ServerExitUnexpectedly" />
                 </TreeViewItem>
                 <TreeViewItem Header="群事件">
                     <TreeViewItem Header="群成员增加" Tag="GroupIncrease" />
@@ -46,13 +46,13 @@
                     <TreeViewItem Header="崩溃" Tag="SereinCrash" />
                 </TreeViewItem>
                 <TreeViewItem Header="Motd命令反馈">
-                    <TreeViewItem Header="获取成功（基岩版）" Tag="MotdpeSuccess" />
-                    <TreeViewItem Header="获取成功（Java版）" Tag="MotdjeSuccess" />
-                    <TreeViewItem Header="获取失败" Tag="MotdFailure" />
+                    <TreeViewItem Header="获取成功（基岩版）" Tag="RequestingMotdpeSucceed" />
+                    <TreeViewItem Header="获取成功（Java版）" Tag="RequestingMotdjeSucceed" />
+                    <TreeViewItem Header="获取失败" Tag="RequestingMotdFail" />
                 </TreeViewItem>
                 <TreeViewItem Header="权限不足反馈">
-                    <TreeViewItem Header="私聊触发" Tag="PermissionDeniedPrivate" />
-                    <TreeViewItem Header="群聊触发" Tag="PermissionDeniedGroup" />
+                    <TreeViewItem Header="私聊触发" Tag="PermissionDeniedFromPrivateMsg" />
+                    <TreeViewItem Header="群聊触发" Tag="PermissionDeniedFromGroupMsg" />
                 </TreeViewItem>
             </TreeView>
         </DockPanel>

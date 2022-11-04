@@ -48,7 +48,7 @@ namespace Serein.Base
                     );
             }
             catch { }
-            EventTrigger.Trigger("Serein_Crash");
+            EventTrigger.Trigger(Items.EventType.SereinCrash);
             if (Logger.Type == 0)
                 Logger.Out(Items.LogType.Error, $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
                     $"{ExceptionMsg}\r\n\r\n" +

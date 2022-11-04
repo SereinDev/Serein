@@ -28,8 +28,8 @@ namespace Serein.Server
         public static int CommandListIndex = 0;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static ProcessStartInfo ServerProcessInfo;
-        public static Process ServerProcess;
-        public static StreamWriter CommandWriter;
+        private static Process ServerProcess;
+        private static StreamWriter CommandWriter;
         public static List<string> CommandList = new List<string>();
         public static readonly Encoding[] EncodingList =
         {
@@ -105,7 +105,7 @@ namespace Serein.Server
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 System.Threading.Tasks.Task.Factory.StartNew(GetCPUPercent);
-                EventTrigger.Trigger("Server_Start");
+                EventTrigger.Trigger(EventType.ServerStart);
                 JSFunc.Trigger("onServerStart");
                 return true;
             }
@@ -248,8 +248,10 @@ namespace Serein.Server
                     catch { }
                 }
             }
-            else if (Command.Trim().ToUpper() == "START")
+            else if (Command.Trim().ToLower() == "start")
                 Start(Quiet);
+            else if (Command.Trim().ToLower() == "stop")
+                Restart = false;
         }
 
         /// <summary>
@@ -330,14 +332,14 @@ namespace Serein.Server
                     $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
                 );
                 Restart = Global.Settings.Server.EnableRestart;
-                EventTrigger.Trigger("Server_Error");
+                EventTrigger.Trigger(EventType.ServerExitUnexpectedly);
             }
             else
             {
                 Logger.Out(LogType.Server_Notice,
                     $"进程已退出（返回：{ServerProcess.ExitCode}）"
                 );
-                EventTrigger.Trigger("Server_Stop");
+                EventTrigger.Trigger(EventType.ServerStop);
             }
             if (Restart)
                 System.Threading.Tasks.Task.Factory.StartNew(RestartTimer);

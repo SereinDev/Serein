@@ -82,10 +82,10 @@ namespace Serein.Base
                         switch (Item.Area)
                         {
                             case 2:
-                                EventTrigger.Trigger("PermissionDenied_Group", GroupId, UserId);
+                                EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, GroupId, UserId);
                                 break;
                             case 3:
-                                EventTrigger.Trigger("PermissionDenied_Private", UserId: UserId);
+                                EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, UserId: UserId);
                                 break;
                         }
                         continue;
@@ -160,17 +160,17 @@ namespace Serein.Base
                 if (Global.Settings.Bot.GroupList.Contains(GroupId))
                 {
                     if (
-                        Packet["notice_type"].ToString() == "group_decrease" ||
-                        Packet["notice_type"].ToString() == "group_increase")
+                        Packet["notice_type"].ToString() == "GroupDecrease" ||
+                        Packet["notice_type"].ToString() == "GroupIncrease")
                     {
                         switch (Packet["notice_type"].ToString())
                         {
-                            case "group_decrease":
-                                EventTrigger.Trigger("Group_Decrease", GroupId, UserId);
+                            case "GroupDecrease":
+                                EventTrigger.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
                                 JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
                                 break;
-                            case "group_increase":
-                                EventTrigger.Trigger("Group_Increase", GroupId, UserId);
+                            case "GroupIncrease":
+                                EventTrigger.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
                                 JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
                                 break;
                         }
@@ -180,7 +180,7 @@ namespace Serein.Base
                         Packet["sub_type"].ToString() == "poke" &&
                         Packet["target_id"].ToString() == SelfId)
                     {
-                        EventTrigger.Trigger("Group_Poke", GroupId, UserId);
+                        EventTrigger.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
                         JSFunc.Trigger("onGroupPoke", GroupId, UserId);
                     }
                 }

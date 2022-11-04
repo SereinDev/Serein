@@ -47,9 +47,7 @@ namespace Serein.Base
             {
                 CMDProcess.WaitForExit(600000);
                 if (!CMDProcess.HasExited)
-                {
                     CMDProcess.Kill();
-                }
                 CMDProcess.Dispose();
             });
         }
@@ -82,14 +80,10 @@ namespace Serein.Base
             */
             Logger.Out(Items.LogType.Debug, "[Command:Run()]", $"InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
-            {
                 GroupId = Global.Settings.Bot.GroupList[0];
-            }
             int Type = GetType(Command);
             if (Type == -1)
-            {
                 return;
-            }
             string Value = GetValue(Command, MsgMatch);
             Value = ApplyVariables(Value, JsonObject, DisableMotd);
             switch (Type)
@@ -139,42 +133,33 @@ namespace Serein.Base
                             );
                     break;
                 case 30:
-                    if (InputType == 1 && GroupId != -1)
+                    if (InputType == 1 && (GroupId != -1 || UserId != -1))
                     {
                         Motd _Motd = new Motdpe(Value);
                         EventTrigger.Trigger(
-                            _Motd.Success ? "Motdpe_Success" : "Motd_Failure",
-                            GroupId,
-                            Motd: _Motd);
+                            _Motd.Success ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
+                            GroupId, UserId, _Motd);
                     }
                     break;
                 case 31:
-                    if (InputType == 1 && GroupId != -1)
+                    if (InputType == 1 && (GroupId != -1 || UserId != -1))
                     {
                         Motd _Motd = new Motdje(Value);
                         EventTrigger.Trigger(
-                            _Motd.Success ? "Motdje_Success" : "Motd_Failure",
-                            GroupId,
-                            Motd: _Motd);
+                            _Motd.Success ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
+                            GroupId, UserId, _Motd);
                     }
                     break;
                 case 40:
                     if (Type != 5)
-                    {
-                        Task.Run(() =>
-                        {
-                            JSEngine.Init(true).Execute(Value);
-                        });
-                    }
+                        Task.Run(() => JSEngine.Init(true).Execute(Value));
                     break;
                 case 50:
                     Logger.Out(Items.LogType.Debug, "[DebugOutput]", Value);
                     break;
             }
             if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
-            {
                 Binder.Update(JsonObject, UserId);
-            }
         }
 
         /// <summary>
@@ -204,72 +189,44 @@ namespace Serein.Base
                 !Command.Contains("|") ||
                 !Regex.IsMatch(Command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
                 )
-            {
                 return -1;
-            }
             if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
-            {
                 return 1;
-            }
             if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
-            {
                 return 2;
-            }
             if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
-            {
                 return 3;
-            }
             if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
-            {
                 return 11;
-            }
             if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
-            {
                 return 12;
-            }
             if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
-            {
                 return 13;
-            }
             if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
-            {
                 return 14;
-            }
             if (Regex.IsMatch(Command, @"^b\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^bind\|", RegexOptions.IgnoreCase))
-            {
                 return 20;
-            }
             if (Regex.IsMatch(Command, @"^ub\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
-            {
                 return 21;
-            }
             if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
-            {
                 return 30;
-            }
             if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
-            {
                 return 31;
-            }
             if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
-            {
                 return 40;
-            }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
-            {
                 return 50;
-            }
             return -1;
         }
 
@@ -284,12 +241,10 @@ namespace Serein.Base
             int Index = command.IndexOf('|');
             string Value = command.Substring(Index + 1);
             if (MsgMatch != null)
-            {
                 for (int i = MsgMatch.Groups.Count; i >= 0; i--)
                 {
                     Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
                 }
-            }
             Logger.Out(Items.LogType.Debug, "[Command:GetValue()]", $"Value:{Value}");
             return Value;
         }
@@ -304,11 +259,8 @@ namespace Serein.Base
         public static string ApplyVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
         {
             if (!Text.Contains("%"))
-            {
                 return Text.Replace("\\n", "\n");
-            }
-            if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay)%", RegexOptions.IgnoreCase))
-            {
+            if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
@@ -332,7 +284,6 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
                         break;
                 }
-            }
             DateTime CurrentTime = DateTime.Now;
             Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
@@ -346,7 +297,6 @@ namespace Serein.Base
             Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
             if (JsonObject != null)
-            {
                 try
                 {
                     Text = Regex.Replace(Text, "%ID%", JsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
@@ -361,11 +311,7 @@ namespace Serein.Base
                     Text = Regex.Replace(Text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, JsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
-                catch (Exception e)
-                {
-                    Logger.Out(Items.LogType.Debug, "[Command:GetVariables()]", e.ToString());
-                }
-            }
+                catch (Exception e) { Logger.Out(Items.LogType.Debug, "[Command:GetVariables()]", e.ToString()); }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
@@ -410,20 +356,7 @@ namespace Serein.Base
                     );
             }
             if (Regex.IsMatch(Text, @"%ID:.+?%", RegexOptions.IgnoreCase))
-            {
-                Text = Regex.Replace(
-                    Text,
-                    @"%ID:(.+?)%",
-                    Binder.GetID(
-                        Regex.Match(
-                            Text,
-                            @"%ID:(.+?)%",
-                            RegexOptions.IgnoreCase
-                            ).Groups[1].Value
-                        ).ToString(),
-                    RegexOptions.IgnoreCase
-                    );
-            }
+                Text = Regex.Replace(Text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(Text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
             return Text.Replace("\\n", "\n");
         }
     }

@@ -185,72 +185,11 @@ namespace Serein.Ui
 
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node == null)
+            if (e.Node == null || !Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
                 return;
-            string[] TargetEvent = null;
-            switch (e.Node.Name)
-            {
-                case "BindSuccess":
-                    TargetEvent = Global.Settings.Event.Bind_Success;
-                    break;
-                case "BindOccupied":
-                    TargetEvent = Global.Settings.Event.Bind_Occupied;
-                    break;
-                case "BindInvalid":
-                    TargetEvent = Global.Settings.Event.Bind_Invalid;
-                    break;
-                case "BindAlready":
-                    TargetEvent = Global.Settings.Event.Bind_Already;
-                    break;
-                case "UnbindSuccess":
-                    TargetEvent = Global.Settings.Event.Unbind_Success;
-                    break;
-                case "UnbindFailure":
-                    TargetEvent = Global.Settings.Event.Unbind_Failure;
-                    break;
-                case "ServerStart":
-                    TargetEvent = Global.Settings.Event.Server_Start;
-                    break;
-                case "ServerStop":
-                    TargetEvent = Global.Settings.Event.Server_Stop;
-                    break;
-                case "ServerError":
-                    TargetEvent = Global.Settings.Event.Server_Error;
-                    break;
-                case "GroupIncrease":
-                    TargetEvent = Global.Settings.Event.Group_Increase;
-                    break;
-                case "GroupDecrease":
-                    TargetEvent = Global.Settings.Event.Group_Decrease;
-                    break;
-                case "GroupPoke":
-                    TargetEvent = Global.Settings.Event.Group_Poke;
-                    break;
-                case "SereinCrash":
-                    TargetEvent = Global.Settings.Event.Serein_Crash;
-                    break;
-                case "MotdpeSuccess":
-                    TargetEvent = Global.Settings.Event.Motdpe_Success;
-                    break;
-                case "MotdjeSuccess":
-                    TargetEvent = Global.Settings.Event.Motdje_Success;
-                    break;
-                case "MotdFailure":
-                    TargetEvent = Global.Settings.Event.Motd_Failure;
-                    break;
-                case "PermissionDeniedPrivate":
-                    TargetEvent = Global.Settings.Event.PermissionDenied_Private;
-                    break;
-                case "PermissionDeniedGroup":
-                    TargetEvent = Global.Settings.Event.PermissionDenied_Group;
-                    break;
-                default:
-                    TargetEvent = Array.Empty<string>();
-                    break;
-            }
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
-            TargetEvent.ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")));
+            Global.Settings.Event.Get((Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name)).ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")));
             SettingEventList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SettingEventList.EndUpdate();
         }
@@ -316,77 +255,8 @@ namespace Serein.Ui
 
         private void SaveEventCommand()
         {
-            if (SettingEventTreeView.SelectedNode != null)
-            {
-                bool Available = false;
-                typeof(Event).GetProperties().ToList().ForEach((x) =>
-                {
-                    if (!Available && x.Name.Replace("_", "") == SettingEventTreeView.SelectedNode.Name)
-                    {
-                        Available = true;
-                    }
-                });
-                if (Available)
-                {
-                    switch (SettingEventTreeView.SelectedNode.Name)
-                    {
-                        case "BindSuccess":
-                            Global.Settings.Event.Bind_Success = GetEventCommands();
-                            break;
-                        case "BindOccupied":
-                            Global.Settings.Event.Bind_Occupied = GetEventCommands();
-                            break;
-                        case "BindInvalid":
-                            Global.Settings.Event.Bind_Invalid = GetEventCommands();
-                            break;
-                        case "BindAlready":
-                            Global.Settings.Event.Bind_Already = GetEventCommands();
-                            break;
-                        case "UnbindSuccess":
-                            Global.Settings.Event.Unbind_Success = GetEventCommands();
-                            break;
-                        case "UnbindFailure":
-                            Global.Settings.Event.Unbind_Failure = GetEventCommands();
-                            break;
-                        case "ServerStart":
-                            Global.Settings.Event.Server_Start = GetEventCommands();
-                            break;
-                        case "ServerStop":
-                            Global.Settings.Event.Server_Stop = GetEventCommands();
-                            break;
-                        case "ServerError":
-                            Global.Settings.Event.Server_Error = GetEventCommands();
-                            break;
-                        case "GroupIncrease":
-                            Global.Settings.Event.Group_Increase = GetEventCommands();
-                            break;
-                        case "GroupDecrease":
-                            Global.Settings.Event.Group_Decrease = GetEventCommands();
-                            break;
-                        case "GroupPoke":
-                            Global.Settings.Event.Group_Poke = GetEventCommands();
-                            break;
-                        case "SereinCrash":
-                            Global.Settings.Event.Serein_Crash = GetEventCommands();
-                            break;
-                        case "MotdpeSuccess":
-                            Global.Settings.Event.Motdpe_Success = GetEventCommands();
-                            break;
-                        case "MotdjeSuccess":
-                            Global.Settings.Event.Motdje_Success = GetEventCommands();
-                            break;
-                        case "MotdFailure":
-                            Global.Settings.Event.Motd_Failure = GetEventCommands();
-                            break;
-                        case "PermissionDeniedPrivate":
-                            Global.Settings.Event.PermissionDenied_Private = GetEventCommands();
-                            break;
-                        case "PermissionDeniedGroup":
-                            Global.Settings.Event.PermissionDenied_Group = GetEventCommands();
-                            break;
-                    }
-                }
-            }
+            if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+                Global.Settings.Event.Edit(GetEventCommands(), (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name));
         }
 
         private string[] GetEventCommands()

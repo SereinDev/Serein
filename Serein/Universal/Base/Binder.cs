@@ -70,15 +70,15 @@ namespace Serein.Base
         {
             if (Global.MemberItems.Keys.Contains(UserId))
             {
-                EventTrigger.Trigger("Bind_Already", GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, GroupId, UserId);
             }
             else if (!System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
-                EventTrigger.Trigger("Bind_Invalid", GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, GroupId, UserId);
             }
             else if (GameIDs.Contains(Value.Trim()))
             {
-                EventTrigger.Trigger("Bind_Occupied", GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, GroupId, UserId);
             }
             else
             {
@@ -94,7 +94,7 @@ namespace Serein.Base
                 Items.Add(UserId, Item);
                 Global.UpdateMemberItems(Items);
                 IO.SaveMember();
-                EventTrigger.Trigger("Bind_Success", GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingSucceed, GroupId, UserId);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Serein.Base
         {
             if (!Global.MemberItems.Keys.Contains(UserId))
             {
-                EventTrigger.Trigger("Unbind_Failure", GroupId, UserId);
+                EventTrigger.Trigger(EventType.UnbindingFail, GroupId, UserId);
             }
             else
             {
@@ -115,7 +115,7 @@ namespace Serein.Base
                 {
                     Global.MemberItems.Remove(UserId);
                     IO.SaveMember();
-                    EventTrigger.Trigger("Unbind_Success", GroupId, UserId);
+                    EventTrigger.Trigger(EventType.UnbindingSucceed, GroupId, UserId);
                 }
             }
         }
