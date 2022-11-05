@@ -17,7 +17,7 @@ namespace Serein.Base
         /// <summary>
         /// 旧文本
         /// </summary>
-        private static string OldSettings = string.Empty,OldMembers = string.Empty;
+        private static string OldSettings = string.Empty, OldMembers = string.Empty;
 
         /// <summary>
         /// 保存更新设置定时器

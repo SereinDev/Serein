@@ -28,7 +28,7 @@ namespace Serein.Windows.Pages.Settings
                 $"详细信息：{Global.BuildInfo.Detail}";
         }
 
-        private void EnableGetUpdate_Click(object sender, RoutedEventArgs e) 
+        private void EnableGetUpdate_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Serein.EnableGetUpdate = EnableGetUpdate.IsChecked ?? false;
 
         private void ThemeFollowSystem_Click(object sender, RoutedEventArgs e)
