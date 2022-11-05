@@ -15,9 +15,9 @@ namespace Serein.Base
     internal static class IO
     {
         /// <summary>
-        /// 旧设置文本
+        /// 旧文本
         /// </summary>
-        private static string OldSettings = string.Empty;
+        private static string OldSettings = string.Empty,OldMembers = string.Empty;
 
         /// <summary>
         /// 保存更新设置定时器
@@ -31,6 +31,7 @@ namespace Serein.Base
         {
             _Timer.Elapsed += (sender, e) => UpdateSettings();
             _Timer.Elapsed += (sender, e) => SaveSettings();
+            _Timer.Elapsed += (sender, e) => SaveMember();
             _Timer.Start();
         }
 
@@ -145,6 +146,9 @@ namespace Serein.Base
             Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
             Items.ForEach((x) => _Dictionary.Add(x.ID, x));
             Global.UpdateMemberItems(_Dictionary);
+            if (JsonConvert.SerializeObject(_Dictionary) == OldMembers)
+                return;
+            OldMembers = JsonConvert.SerializeObject(_Dictionary);
             if (!Directory.Exists(Global.Path + "\\data"))
                 Directory.CreateDirectory(Global.Path + "\\data");
             JObject ListJObject = new JObject();
@@ -196,6 +200,8 @@ namespace Serein.Base
                             return;
                         }
                         Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<Task>>());
+                        lock (Global.TaskItems)
+                            Global.TaskItems.ForEach((Task) => Task.Check());
                     }
                     catch { }
                 }

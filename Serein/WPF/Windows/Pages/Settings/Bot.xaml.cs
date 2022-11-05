@@ -24,24 +24,32 @@ namespace Serein.Windows.Pages.Settings
             EnbaleOutputData.IsChecked = Global.Settings.Bot.EnbaleOutputData;
             AutoReconnect.IsChecked = Global.Settings.Bot.AutoReconnect;
             AutoEscape.IsChecked = Global.Settings.Bot.AutoEscape;
+            EnbaleParseAt.IsChecked = Global.Settings.Bot.EnbaleParseAt;
             GroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             PermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
         }
 
-        private void Uri_TextChanged(object sender, TextChangedEventArgs e) => Global.Settings.Bot.Uri = Uri.Text;
-        private void Authorization_TextChanged(object sender, TextChangedEventArgs e) => Global.Settings.Bot.Authorization = Authorization.Text;
-        private void EnableLog_Click(object sender, RoutedEventArgs e) => Global.Settings.Bot.EnableLog = EnableLog.IsChecked ?? false;
-        private void GivePermissionToAllAdmin_Click(object sender, RoutedEventArgs e) => Global.Settings.Bot.GivePermissionToAllAdmin = GivePermissionToAllAdmin.IsChecked ?? false;
-        private void EnbaleOutputData_Click(object sender, RoutedEventArgs e) => Global.Settings.Bot.EnbaleOutputData = EnbaleOutputData.IsChecked ?? false;
-        private void AutoReconnect_Click(object sender, RoutedEventArgs e) => Global.Settings.Bot.AutoReconnect = AutoReconnect.IsChecked ?? false;
-        private void AutoEscape_Click(object sender, RoutedEventArgs e) => Global.Settings.Bot.AutoEscape = AutoEscape.IsChecked ?? false;
+        private void Uri_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Bot.Uri = Uri.Text;
+        private void Authorization_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Bot.Authorization = Authorization.Password;
+        private void EnableLog_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.EnableLog = EnableLog.IsChecked ?? false;
+        private void GivePermissionToAllAdmin_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.GivePermissionToAllAdmin = GivePermissionToAllAdmin.IsChecked ?? false;
+        private void EnbaleOutputData_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.EnbaleOutputData = EnbaleOutputData.IsChecked ?? false;
+        private void AutoReconnect_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.AutoReconnect = AutoReconnect.IsChecked ?? false;
+        private void EnbaleParseAt_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.EnbaleParseAt = EnbaleParseAt.IsChecked ?? false;
+        private void AutoEscape_Click(object sender, RoutedEventArgs e)
+            => Global.Settings.Bot.AutoEscape = AutoEscape.IsChecked ?? false;
 
         private void GroupList_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(GroupList.Text))
-            {
                 Global.Settings.Bot.GroupList.Clear();
-            }
             else if (Regex.IsMatch(GroupList.Text, @"^[\d;]+?$"))
             {
                 List<long> Groups = new List<long>();
@@ -66,9 +74,7 @@ namespace Serein.Windows.Pages.Settings
         private void PermissionList_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(PermissionList.Text))
-            {
                 Global.Settings.Bot.PermissionList.Clear();
-            }
             else if (Regex.IsMatch(PermissionList.Text, @"^[\d;]+?$"))
             {
                 List<long> IDs = new List<long>();

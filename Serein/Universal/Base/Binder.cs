@@ -195,11 +195,13 @@ namespace Serein.Base
         {
             if (Global.MemberItems.Keys.Contains(UserId))
             {
+                Logger.Out(LogType.Debug, "[Binder:Update()]", JsonObject["sender"]);
                 lock (Global.MemberItems)
                 {
                     Global.MemberItems[UserId].Nickname = JsonObject["sender"]["nickname"].ToString();
                     Global.MemberItems[UserId].Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString());
                     Global.MemberItems[UserId].Card = JsonObject["sender"]["card"].ToString();
+                    Logger.Out(LogType.Debug, Newtonsoft.Json.JsonConvert.SerializeObject(Global.MemberItems[UserId]));
                 }
             }
         }

@@ -12,7 +12,6 @@ namespace Serein
 {
     internal static class Logger
     {
-        const int MaxLines = 40;
         public static readonly int Type = 2;
 
         public static void Out(LogType Type, params object[] objects)
@@ -46,15 +45,15 @@ namespace Serein
                 case LogType.Server_Output:
                     Catalog.Server.Panel?.AppendText(Line);
                     Catalog.Server.Cache.Add(Line);
-                    if (Catalog.Server.Cache.Count > MaxLines)
-                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - MaxLines);
+                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Server_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Server.Panel?.AppendText(Line);
                     Catalog.Server.Cache.Add(Line);
-                    if (Catalog.Server.Cache.Count > MaxLines)
-                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - MaxLines);
+                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Server_Clear:
                     Catalog.Server.Panel?.AppendText("#clear");
@@ -63,36 +62,36 @@ namespace Serein
                 case LogType.Bot_Output:
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > MaxLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Bot_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > MaxLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Bot_Receive:
                     Line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > MaxLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Bot_Send:
                     Line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > MaxLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Bot_Error:
                     Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > MaxLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - MaxLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Bot_Clear:
                     Catalog.Function.Bot?.AppendText("#clear");
@@ -102,29 +101,29 @@ namespace Serein
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > MaxLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Plugin_Error:
                     Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > MaxLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Plugin_Info:
                     Line = Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > MaxLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Plugin_Warn:
                     Line = "<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > MaxLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - MaxLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
                     break;
                 case LogType.Plugin_Clear:
                     Catalog.Function.JSPlugin?.AppendText("#clear");

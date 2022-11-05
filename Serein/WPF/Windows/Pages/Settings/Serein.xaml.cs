@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -17,6 +18,7 @@ namespace Serein.Windows.Pages.Settings
         {
             UseDarkTheme.IsChecked = Global.Settings.Serein.UseDarkTheme;
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
+            MaxCacheLines.Value = Global.Settings.Serein.MaxCacheLines;
             Version.Text = "当前版本：" + Global.VERSION;
             BuildInfo.Text =
                 $"编译类型：{Global.BuildInfo.Type}\r\n" +
@@ -26,7 +28,8 @@ namespace Serein.Windows.Pages.Settings
                 $"详细信息：{Global.BuildInfo.Detail}";
         }
 
-        private void EnableGetUpdate_Click(object sender, RoutedEventArgs e) => Global.Settings.Serein.EnableGetUpdate = EnableGetUpdate.IsChecked ?? false;
+        private void EnableGetUpdate_Click(object sender, RoutedEventArgs e) 
+            => Global.Settings.Serein.EnableGetUpdate = EnableGetUpdate.IsChecked ?? false;
 
         private void ThemeFollowSystem_Click(object sender, RoutedEventArgs e)
         {
@@ -42,6 +45,10 @@ namespace Serein.Windows.Pages.Settings
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 
-        public void UpdateVersion(string Text) => Dispatcher.Invoke(() => { Version.Text = "当前版本：" + Global.VERSION + Text; });
+        public void UpdateVersion(string Text)
+            => Dispatcher.Invoke(() => { Version.Text = "当前版本：" + Global.VERSION + Text; });
+
+        private void MaxCacheLines_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Serein.MaxCacheLines = (int)MaxCacheLines.Value;
     }
 }

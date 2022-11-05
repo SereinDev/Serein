@@ -176,6 +176,7 @@ namespace Serein.Ui
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.SettingEventListContextMenuStrip_Docs = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingBot = new System.Windows.Forms.GroupBox();
+            this.SettingBotEnbaleParseAt = new System.Windows.Forms.CheckBox();
             this.SettingBotAutoEscape = new System.Windows.Forms.CheckBox();
             this.SettingBotRestart = new System.Windows.Forms.CheckBox();
             this.SettingBotAuthorization = new System.Windows.Forms.TextBox();
@@ -1306,6 +1307,7 @@ namespace Serein.Ui
             // 
             // SettingBot
             // 
+            this.SettingBot.Controls.Add(this.SettingBotEnbaleParseAt);
             this.SettingBot.Controls.Add(this.SettingBotAutoEscape);
             this.SettingBot.Controls.Add(this.SettingBotRestart);
             this.SettingBot.Controls.Add(this.SettingBotAuthorization);
@@ -1323,6 +1325,14 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingBot, "SettingBot");
             this.SettingBot.Name = "SettingBot";
             this.SettingBot.TabStop = false;
+            // 
+            // SettingBotEnbaleParseAt
+            // 
+            resources.ApplyResources(this.SettingBotEnbaleParseAt, "SettingBotEnbaleParseAt");
+            this.SettingBotEnbaleParseAt.Name = "SettingBotEnbaleParseAt";
+            this.SettingBotEnbaleParseAt.UseVisualStyleBackColor = true;
+            this.SettingBotEnbaleParseAt.CheckedChanged += new System.EventHandler(this.SettingBotEnbaleParseAt_CheckedChanged);
+            this.SettingBotEnbaleParseAt.MouseHover += new System.EventHandler(this.SettingBotEnbaleParseAt_MouseHover);
             // 
             // SettingBotAutoEscape
             // 
@@ -1894,6 +1904,7 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem SettingEventListContextMenuStrip_Docs;
         private System.Windows.Forms.ComboBox SettingServerOutputEncoding;
         private System.Windows.Forms.Label SettingServerOutputEncodingLabel;
+        private System.Windows.Forms.CheckBox SettingBotEnbaleParseAt;
     }
 }
 

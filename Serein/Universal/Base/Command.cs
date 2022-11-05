@@ -258,6 +258,23 @@ namespace Serein.Base
         /// <returns>应用变量后的文本</returns>
         public static string ApplyVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
         {
+            if (Global.Settings.Bot.EnbaleParseAt && JsonObject != null)
+            {
+                foreach (Match match in Regex.Matches(Text, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
+                {
+                    if (
+                        match.Groups.Count >= 3 &&
+                        long.TryParse(match.Groups[2].Value, out long ID) &&
+                        Global.MemberItems.TryGetValue(ID, out Items.Member Member)
+                        )
+                    {
+                        Text = Text.Replace(
+                            match.Value,
+                            "@" + (!string.IsNullOrEmpty(Member.Card) ? Member.Card : !string.IsNullOrEmpty(Member.Nickname) ? Member.Nickname : ID.ToString())
+                            );
+                    }
+                }
+            }
             if (!Text.Contains("%"))
                 return Text.Replace("\\n", "\n");
             if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
@@ -297,6 +314,7 @@ namespace Serein.Base
             Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
             if (JsonObject != null)
+            {
                 try
                 {
                     Text = Regex.Replace(Text, "%ID%", JsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
@@ -312,6 +330,7 @@ namespace Serein.Base
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
                 catch (Exception e) { Logger.Out(Items.LogType.Debug, "[Command:GetVariables()]", e.ToString()); }
+            }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);

@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using System.IO;
+using System;
 using System.Windows;
 
 namespace Serein
@@ -15,6 +16,9 @@ namespace Serein
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;
             }
+            Global.Args = Environment.GetCommandLineArgs();
+            if (Global.Args.Contains("debug"))
+                Global.Settings.Serein.Debug = true;
             IO.ReadAll();
             IO.StartSavingAndUpdating();
             TaskRunner.Start();

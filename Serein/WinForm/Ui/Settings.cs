@@ -36,6 +36,7 @@ namespace Serein.Ui
             SettingBotAutoEscape.Checked = Global.Settings.Bot.AutoEscape;
             SettingBotRestart.Checked = Global.Settings.Bot.AutoReconnect;
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
+            SettingBotEnbaleParseAt.Checked = Global.Settings.Bot.EnbaleParseAt;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
             SettingSereinEnableDPIAware.Checked = Global.Settings.Serein.DPIAware;
             if (!Global.Settings.Serein.Debug)
@@ -60,8 +61,11 @@ namespace Serein.Ui
             => Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
         private void SettingServerPort_ValueChanged(object sender, EventArgs e)
             => Global.Settings.Server.Port = (int)SettingServerPort.Value;
+        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
         private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e)
             => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
+
         private void SettingBotUri_TextChanged(object sender, EventArgs e)
             => Global.Settings.Bot.Uri = SettingBotUri.Text;
         private void SettingBotAuthorization_Enter(object sender, EventArgs e)
@@ -76,10 +80,11 @@ namespace Serein.Ui
             => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
         private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
+        private void SettingBotEnbaleParseAt_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnbaleParseAt = SettingBotEnbaleParseAt.Checked;
+
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
         private void SettingSereinAbout_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://serein.cc/#/About") { UseShellExecute = true });
         private void SettingSereinPage_Click(object sender, EventArgs e)

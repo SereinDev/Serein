@@ -43,6 +43,7 @@ namespace Serein.Ui
             => ShowToolTip(sender, "指定服务器的类型\n用于获取服务器的Motd");
         private void SettingServerPortLabel_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "指定服务器的本地端口\n用于获取服务器的Motd");
+
         private void SettingBotUriLabel_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings.Bot.Uri} 上开启");
         private void SettingBotUri_MouseHover(object sender, EventArgs e)
@@ -69,6 +70,9 @@ namespace Serein.Ui
             => ShowToolTip(sender, "设定有管理权限的用户");
         private void SettingBotPermission_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "设定有管理权限的用户");
+        private void SettingBotEnbaleParseAt_MouseHover(object sender, EventArgs e)
+            => ShowToolTip(sender, "自动替换\"@***\"和\"[CQ:at,qq=***]\"为@群昵称");
+
         private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "启动后自动获取公告（建议开启）");
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
