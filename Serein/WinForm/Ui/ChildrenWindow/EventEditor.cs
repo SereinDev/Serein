@@ -27,7 +27,7 @@ namespace Serein.Ui.ChildrenWindow
             {
                 MessageBox.Show("命令内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else if (Command.GetType(CommandTextBox.Text) == -1)
+            else if (Command.GetType(CommandTextBox.Text) == Items.CommandType.Invalid)
             {
                 MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }

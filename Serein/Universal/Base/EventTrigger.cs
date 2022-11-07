@@ -1,4 +1,5 @@
 ﻿using Serein.Items.Motd;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Serein.Base
@@ -9,18 +10,45 @@ namespace Serein.Base
         /// 触发指定事件
         /// </summary>
         /// <param name="Type">类型</param>
+        public static void Trigger(Items.EventType Type)
+        {
+            Logger.Out(Items.LogType.Debug, "[EventTrigger]", "Trigger:" + Type);
+            string[] CommandGroup = Array.Empty<string>();
+            switch (Type)
+            {
+                case Items.EventType.ServerStart:
+                    CommandGroup = Global.Settings.Event.ServerStart;
+                    break;
+                case Items.EventType.ServerStop:
+                    CommandGroup = Global.Settings.Event.ServerStop;
+                    break;
+                case Items.EventType.ServerExitUnexpectedly:
+                    CommandGroup = Global.Settings.Event.ServerExitUnexpectedly;
+                    break;
+                case Items.EventType.SereinCrash:
+                    CommandGroup = Global.Settings.Event.SereinCrash;
+                    break;
+                default:
+                    Logger.Out(Items.LogType.Debug, "[EventTrigger]", "未知的事件名", Type);
+                    break;
+            }
+            foreach (string Command in CommandGroup)
+            {
+                Base.Command.Run(4, Command);
+            }
+        }
+
+        /// <summary>
+        /// 触发指定事件
+        /// </summary>
+        /// <param name="Type">类型</param>
         /// <param name="GroupId">群聊ID</param>
         /// <param name="UserId">用户ID</param>
         /// <param name="Motd">Motd对象</param>
-        public static void Trigger(
-            Items.EventType Type,
-            long GroupId = -1,
-            long UserId = -1,
-            Motd Motd = null
-            )
+        public static void Trigger(Items.EventType Type, long GroupId, long UserId, Motd Motd = null)
         {
             Logger.Out(Items.LogType.Debug, "[EventTrigger]", "Trigger:" + Type);
-            string[] CommandGroup = System.Array.Empty<string>();
+            string[] CommandGroup = Array.Empty<string>();
             switch (Type)
             {
                 case Items.EventType.BindingSucceed:
@@ -29,6 +57,11 @@ namespace Serein.Base
                 case Items.EventType.BindingFailDueToAlreadyBinded:
                 case Items.EventType.UnbindingSucceed:
                 case Items.EventType.UnbindingFail:
+                case Items.EventType.GroupIncrease:
+                case Items.EventType.GroupDecrease:
+                case Items.EventType.GroupPoke:
+                case Items.EventType.PermissionDeniedFromPrivateMsg:
+                case Items.EventType.PermissionDeniedFromGroupMsg:
                     switch (Type)
                     {
                         case Items.EventType.BindingSucceed:
@@ -49,41 +82,6 @@ namespace Serein.Base
                         case Items.EventType.UnbindingFail:
                             CommandGroup = Global.Settings.Event.UnbindingFail;
                             break;
-                    }
-                    foreach (string Command in CommandGroup)
-                    {
-                        Base.Command.Run(
-                            4,
-                            Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
-                            GroupId: GroupId
-                            );
-                    }
-                    break;
-                case Items.EventType.ServerStart:
-                case Items.EventType.ServerStop:
-                case Items.EventType.ServerExitUnexpectedly:
-                    switch (Type)
-                    {
-                        case Items.EventType.ServerStart:
-                            CommandGroup = Global.Settings.Event.ServerStart;
-                            break;
-                        case Items.EventType.ServerStop:
-                            CommandGroup = Global.Settings.Event.ServerStop;
-                            break;
-                        case Items.EventType.ServerExitUnexpectedly:
-                            CommandGroup = Global.Settings.Event.ServerExitUnexpectedly;
-                            break;
-                    }
-                    foreach (string Command in CommandGroup)
-                    {
-                        Base.Command.Run(4, Command);
-                    }
-                    break;
-                case Items.EventType.GroupIncrease:
-                case Items.EventType.GroupDecrease:
-                case Items.EventType.GroupPoke:
-                    switch (Type)
-                    {
                         case Items.EventType.GroupIncrease:
                             CommandGroup = Global.Settings.Event.GroupIncrease;
                             break;
@@ -91,6 +89,13 @@ namespace Serein.Base
                             CommandGroup = Global.Settings.Event.GroupDecrease;
                             break;
                         case Items.EventType.GroupPoke:
+                            CommandGroup = Global.Settings.Event.GroupPoke;
+                            break;
+                        case Items.EventType.PermissionDeniedFromPrivateMsg:
+                            CommandGroup = Global.Settings.Event.PermissionDeniedFromPrivateMsg;
+                            break;
+                        case Items.EventType.PermissionDeniedFromGroupMsg:
+                            CommandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
                             break;
                     }
                     foreach (string Command in CommandGroup)
@@ -99,15 +104,6 @@ namespace Serein.Base
                             4,
                             Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
                             GroupId: GroupId
-                            );
-                    }
-                    break;
-                case Items.EventType.SereinCrash:
-                    foreach (string Command in Global.Settings.Event.SereinCrash)
-                    {
-                        Base.Command.Run(
-                            4,
-                            Command
                             );
                     }
                     break;
@@ -123,21 +119,13 @@ namespace Serein.Base
                             CommandGroup = Global.Settings.Event.RequestingMotdjeSucceed;
                             break;
                         case Items.EventType.RequestingMotdFail:
-                            foreach (string Command in Global.Settings.Event.RequestingMotdFail)
-                            {
-                                Base.Command.Run(
-                                    4,
-                                    Regex.Replace(Command, "%Exception%", Motd.Exception, RegexOptions.IgnoreCase),
-                                    GroupId: GroupId,
-                                    DisableMotd: true
-                                    );
-                            }
+                            CommandGroup = Global.Settings.Event.RequestingMotdFail;
                             break;
                     }
                     foreach (string Command in CommandGroup)
                     {
                         string Command_Copy = Command;
-                        if (Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
+                        if (Motd != null && Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
                         {
                             Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", Motd.GameMode, RegexOptions.IgnoreCase);
                             Command_Copy = Regex.Replace(Command_Copy, "%Description%", Motd.Description, RegexOptions.IgnoreCase);
@@ -148,33 +136,14 @@ namespace Serein.Base
                             Command_Copy = Regex.Replace(Command_Copy, "%Delay%", Motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
                             Command_Copy = Regex.Replace(Command_Copy, "%Version%", Motd.Version, RegexOptions.IgnoreCase);
                             Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", Motd.Favicon, RegexOptions.IgnoreCase);
+                            Command_Copy = Regex.Replace(Command_Copy, "%Exception%", Motd.Exception, RegexOptions.IgnoreCase);
                         }
                         Base.Command.Run(
                             4,
                             Command_Copy,
+                            UserId: UserId,
                             GroupId: GroupId,
                             DisableMotd: true
-                            );
-                    }
-                    break;
-                case Items.EventType.PermissionDeniedFromPrivateMsg:
-                case Items.EventType.PermissionDeniedFromGroupMsg:
-                    switch (Type)
-                    {
-                        case Items.EventType.PermissionDeniedFromPrivateMsg:
-                            CommandGroup = Global.Settings.Event.PermissionDeniedFromPrivateMsg;
-                            break;
-                        case Items.EventType.PermissionDeniedFromGroupMsg:
-                            CommandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
-                            break;
-                    }
-                    foreach (string Command in CommandGroup)
-                    {
-                        Base.Command.Run(
-                            4,
-                            Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
-                            UserId: UserId,
-                            GroupId: GroupId
                             );
                     }
                     break;

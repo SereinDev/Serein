@@ -85,7 +85,7 @@ namespace Serein.Base
                                 EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, GroupId, UserId);
                                 break;
                             case 3:
-                                EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, UserId: UserId);
+                                EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, UserId);
                                 break;
                         }
                         continue;
@@ -159,29 +159,26 @@ namespace Serein.Base
                 long GroupId = long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
                 if (Global.Settings.Bot.GroupList.Contains(GroupId))
                 {
-                    if (
-                        Packet["notice_type"].ToString() == "GroupDecrease" ||
-                        Packet["notice_type"].ToString() == "GroupIncrease")
+                    switch (Packet["notice_type"].ToString())
                     {
-                        switch (Packet["notice_type"].ToString())
-                        {
-                            case "GroupDecrease":
-                                EventTrigger.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
-                                JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
-                                break;
-                            case "GroupIncrease":
-                                EventTrigger.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
-                                JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
-                                break;
-                        }
-                    }
-                    else if (
-                        Packet["notice_type"].ToString() == "notify" &&
-                        Packet["sub_type"].ToString() == "poke" &&
-                        Packet["target_id"].ToString() == SelfId)
-                    {
-                        EventTrigger.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
-                        JSFunc.Trigger("onGroupPoke", GroupId, UserId);
+                        case "GroupDecrease":
+                        case "group_decrease":
+                            EventTrigger.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
+                            JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
+                            break;
+                        case "GroupIncrease":
+                        case "group_increase":
+                            EventTrigger.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
+                            JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
+                            break;
+                        case "notify":
+                            if (Packet["sub_type"].ToString() == "poke" &&
+                                Packet["target_id"].ToString() == SelfId)
+                            {
+                                EventTrigger.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
+                                JSFunc.Trigger("onGroupPoke", GroupId, UserId);
+                            }
+                            break;
                     }
                 }
             }

@@ -77,47 +77,44 @@ namespace Serein.Base
                 2   控制台输出
                 3   定时任务
                 4   EventTrigger
+                5   Javascript
             */
             Logger.Out(Items.LogType.Debug, "[Command:Run()]", $"InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
                 GroupId = Global.Settings.Bot.GroupList[0];
-            int Type = GetType(Command);
-            if (Type == -1)
+            Items.CommandType Type = GetType(Command);
+            if (Type == Items.CommandType.Invalid || ((Type == Items.CommandType.RequestMotdpe || Type == Items.CommandType.RequestMotdje) && DisableMotd))
                 return;
             string Value = GetValue(Command, MsgMatch);
             Value = ApplyVariables(Value, JsonObject, DisableMotd);
             switch (Type)
             {
-                case 1:
+                case Items.CommandType.ExecuteCmd:
                     StartCmd(Value);
                     break;
-                case 2:
+                case Items.CommandType.ServerInput:
+                case Items.CommandType.ServerInputWithUnicode:
                     Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
                     Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    ServerManager.InputCommand(Value, true);
+                    ServerManager.InputCommand(Value, true, Type == Items.CommandType.ServerInputWithUnicode);
                     break;
-                case 3:
-                    Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
-                    Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    ServerManager.InputCommand(Value, true, true);
-                    break;
-                case 11:
+                case Items.CommandType.SendGivenGroupMsg:
                     if (Websocket.Status)
                         Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
-                case 12:
+                case Items.CommandType.SendGivenPrivateMsg:
                     if (Websocket.Status)
                         Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
                     break;
-                case 13:
+                case Items.CommandType.SendGroupMsg:
                     if (Websocket.Status)
                         Websocket.Send(false, Value, GroupId, InputType != 4);
                     break;
-                case 14:
+                case Items.CommandType.SendPrivateMsg:
                     if ((InputType == 1 || InputType == 4) && Websocket.Status)
                         Websocket.Send(true, Value, UserId, InputType != 4);
                     break;
-                case 20:
+                case Items.CommandType.Bind:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
                         Binder.Bind(
                             JsonObject,
@@ -126,13 +123,13 @@ namespace Serein.Base
                             GroupId
                             );
                     break;
-                case 21:
+                case Items.CommandType.Unbind:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
                         Binder.UnBind(
                             long.TryParse(Value, out long i) ? i : -1, GroupId
                             );
                     break;
-                case 30:
+                case Items.CommandType.RequestMotdpe:
                     if (InputType == 1 && (GroupId != -1 || UserId != -1))
                     {
                         Motd _Motd = new Motdpe(Value);
@@ -141,7 +138,7 @@ namespace Serein.Base
                             GroupId, UserId, _Motd);
                     }
                     break;
-                case 31:
+                case Items.CommandType.RequestMotdje:
                     if (InputType == 1 && (GroupId != -1 || UserId != -1))
                     {
                         Motd _Motd = new Motdje(Value);
@@ -150,15 +147,15 @@ namespace Serein.Base
                             GroupId, UserId, _Motd);
                     }
                     break;
-                case 40:
-                    if (Type != 5)
+                case Items.CommandType.ExecuteJavascriptCodes:
+                    if (InputType != 5)
                         Task.Run(() => JSEngine.Init(true).Execute(Value));
                     break;
-                case 50:
+                case Items.CommandType.DebugOutput:
                     Logger.Out(Items.LogType.Debug, "[DebugOutput]", Value);
                     break;
             }
-            if (InputType == 1 && Type != 20 && Type != 21 && GroupId != -1)
+            if (InputType == 1 && Type != Items.CommandType.Bind && Type != Items.CommandType.Unbind && GroupId != -1)
                 Binder.Update(JsonObject, UserId);
         }
 
@@ -167,67 +164,51 @@ namespace Serein.Base
         /// </summary>
         /// <param name="Command">命令</param>
         /// <returns>类型</returns>
-        public static int GetType(string Command)
+        public static Items.CommandType GetType(string Command)
         {
-            /*
-            Type类型     描述
-            -1          错误的，会谢的，栓q的，yyds的，暴风吸入的，绝绝子的，属于是的，剁jiojio的，homo特有的，现充的，一整个的，乌鱼子的，集美的，咱就是说的，退退退的，别急的，抛开事实不谈的，9敏的
-            1           cmd
-            2           服务器命令
-            3           服务器命令 with Unicode
-            11          群聊（带参）
-            12          私聊（带参）
-            13          群聊
-            14          私聊
-            20          绑定id
-            21          解绑id
-            30          Motdpe
-            31          Motdje
-            50          debug
-            */
             if (
                 !Command.Contains("|") ||
                 !Regex.IsMatch(Command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
                 )
-                return -1;
+                return Items.CommandType.Invalid;
             if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
-                return 1;
+                return Items.CommandType.ExecuteCmd;
             if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
-                return 2;
+                return Items.CommandType.ServerInput;
             if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
-                return 3;
+                return Items.CommandType.ServerInputWithUnicode;
             if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
-                return 11;
+                return Items.CommandType.SendGivenGroupMsg;
             if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
-                return 12;
+                return Items.CommandType.SendGivenPrivateMsg;
             if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
-                return 13;
+                return Items.CommandType.SendGroupMsg;
             if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
-                return 14;
+                return Items.CommandType.SendPrivateMsg;
             if (Regex.IsMatch(Command, @"^b\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^bind\|", RegexOptions.IgnoreCase))
-                return 20;
+                return Items.CommandType.Bind;
             if (Regex.IsMatch(Command, @"^ub\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
-                return 21;
+                return Items.CommandType.Unbind;
             if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
-                return 30;
+                return Items.CommandType.RequestMotdpe;
             if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
-                return 31;
+                return Items.CommandType.RequestMotdje;
             if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
-                return 40;
+                return Items.CommandType.ExecuteJavascriptCodes;
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
-                return 50;
-            return -1;
+                return Items.CommandType.DebugOutput;
+            return Items.CommandType.Invalid;
         }
 
         /// <summary>

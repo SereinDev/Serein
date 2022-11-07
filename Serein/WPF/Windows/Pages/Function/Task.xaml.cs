@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using Serein.Items;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
@@ -45,7 +46,7 @@ namespace Serein.Windows.Pages.Function
 
         public bool Confirm(string CronExp, string Command, string Remark)
         {
-            if (Base.Command.GetType(Command) == -1)
+            if (Base.Command.GetType(Command) == CommandType.Invalid)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }

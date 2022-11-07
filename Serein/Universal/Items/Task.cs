@@ -72,7 +72,7 @@ namespace Serein.Items
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Base.Command.GetType(Command) == -1)
+                if (Base.Command.GetType(Command) == CommandType.Invalid)
                 {
                     return false;
                 }

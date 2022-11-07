@@ -83,7 +83,7 @@ namespace Serein.Items
                 !(string.IsNullOrWhiteSpace(Expression) || string.IsNullOrEmpty(Expression) ||
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 )
-                && Base.Command.GetType(Command) != -1)
+                && Base.Command.GetType(Command) != CommandType.Invalid)
             {
                 try
                 {
