@@ -3,7 +3,6 @@
 - [**🔮 教程**](../Tutorial/README.md)
 - [**🌌 扩展**](../Extension/README.md)
 - [**🎡 版本列表**](../Versions/README.md)
-- [**📔 关于**](../About.md)
 
 ---
 

@@ -21,5 +21,5 @@ body {
 
 >[!NOTE]
 这是一些示例图片  
-![自定义背景图](../imgs/customconsole.png)
-![自定义背景图2](../imgs/customconsole2.png)
+![自定义背景图](../imgs/Tutorial/CustomConsole/1.png)
+![自定义背景图2](../imgs/Tutorial/CustomConsole/2.png)

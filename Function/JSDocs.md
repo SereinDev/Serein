@@ -23,9 +23,11 @@
 `importNamespace(name:String)` 导入命名空间
 
 >[!TIP] 配合一定C#基础食用更佳  
->C#语法详见<https://learn.microsoft.com/zh-cn/dotnet/api/?view=net-6.0>
+>C#语法详见 [.NET API 浏览器](https://learn.microsoft.com/zh-cn/dotnet/api/?view=net-6.0)
 
 #### 示例
+
+>[!TIP] 在[这里](../Extension/JS/Example.js.md)你可以找到更详细的示例
 
 ```js
 // https://learn.microsoft.com/zh-cn/dotnet/api/system.io.file?view=net-6.0

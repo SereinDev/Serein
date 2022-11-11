@@ -5,7 +5,7 @@
 
 | 版本&更新日志       | 更新日期 | 下载                                                                                                                                                                 |
 | ------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [v1.3.2](v1.3.2.md) | 22/11/4  | [![github](https://img.shields.io/github/downloads/Zaitonn/Serein/v1.3.2/total?style=flat-square ":no-zoom")](https://github.com/Zaitonn/Serein/releases/tag/v1.3.2) |
+| [v1.3.2](v1.3.2.md)| 22/11/4  | [![github](https://img.shields.io/github/downloads/Zaitonn/Serein/v1.3.2/total?style=flat-square ":no-zoom")](https://github.com/Zaitonn/Serein/releases/tag/v1.3.2) |
 | [v1.3.1](v1.3.1.md) | 22/8/10  | [![github](https://img.shields.io/github/downloads/Zaitonn/Serein/v1.3.1/total?style=flat-square ":no-zoom")](https://github.com/Zaitonn/Serein/releases/tag/v1.3.1) |
 | v1.3.0              | 22/7/28  | [![github](https://img.shields.io/github/downloads/Zaitonn/Serein/v1.3.0/total?style=flat-square ":no-zoom")](https://github.com/Zaitonn/Serein/releases/tag/v1.3.0) |
 | v1.2.9              | 22/7/13  | [![github](https://img.shields.io/github/downloads/Zaitonn/Serein/v1.2.9/total?style=flat-square ":no-zoom")](https://github.com/Zaitonn/Serein/releases/tag/v1.2.9) |
@@ -25,4 +25,4 @@
 
 ### 测试版
 
-详见<https://github.com/Zaitonn/Serein/actions/workflows/Build.yml>
+详见    [Actions · Zaitonn/Serein](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)

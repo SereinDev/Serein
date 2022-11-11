@@ -123,6 +123,6 @@
 | Role      | 角色                           | *群主*/*管理员*/*成员*  |
 | ShownName | 显示名称（群名片若空则为昵称） | *我是群名片*/*我是昵称* |
 
->[!NOTE]参考资料：[Post_Message_MessageSender](https://docs.go-cqhttp.org/reference/data_struct.html#post-message-messagesender)
+>参考资料：[Post_Message_MessageSender](https://docs.go-cqhttp.org/reference/data_struct.html#post-message-messagesender)
 
 >[!WARNING]需要注意的是， 各字段是尽最大努力提供的， 也就是说， **不保证每个字段都一定存在**， **也不保证存在的字段都是完全正确的** ( 缓存可能过期 ) 。尤其对于匿名消息， 此字段**不具有参考价值**。

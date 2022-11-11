@@ -3,10 +3,10 @@
 | :----------: | ------------------------------------------------------------------------------------------ |
 |   **介绍**   | 普通成员绑定，退群解绑，管理员解绑成员，在机器人有群管理或群主权限时成员绑定自动更该群名片 |
 | **更新日期** | 2022.10.16 (v1.0)                                                                          |
-| **下载链接** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/SLbind.js)                         |
+| **下载链接** | [Serein扩展 - 百度网盘](https://pan.baidu.com/s/1aDcF4ofPpjUIU3jbCMgL5Q?pwd=1234)          |
 | **开源仓库** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/SLbind.js)                         |
 
-![效果图](../imgs/Extension/SLbind.js.jpg)
+![效果图](../../imgs/Extension/SLbind.js.jpg)
 
 ### 使用方法
 
@@ -19,4 +19,4 @@
 
 绑定以及解绑都会发送BDS原版白名单指令进行添加或删除白名单
 
->[!ATTENTION]该插件会修改原面板自带的退群事件文件，来实现退群解绑
+>[!WARNING]该插件会修改原面板自带的退群事件文件，以实现退群解绑

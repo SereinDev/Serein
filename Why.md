@@ -1,5 +1,5 @@
 
-![logo](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light ":no-zoom")
+![logo](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fserein.cc%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light ":no-zoom")
 
 ## 麻雀虽小，五脏俱全
 
@@ -118,8 +118,8 @@
 
 ## 设置
 
-![设置](imgs/setting.png)
-> 设置内容可能因版本不同而有所差别，图片仅供参考
+![设置](imgs/setting.png)  
+*设置内容可能因版本不同而有所差别，图片仅供参考*
 
 - 提供尽可能多的设置，满足不同服主的使用需求
 - 将鼠标指针放在不同设置上方，可查看关于这一项的详细提示，不用担心不理解设置的意思

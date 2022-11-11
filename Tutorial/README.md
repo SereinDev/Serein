@@ -6,6 +6,7 @@
   - [🤖 配置机器人](Bot.md)
 - 进阶
   - [💻 自定义控制台](CustomConsole.md)
+  - [🧵 自定义正则](CustomRegex.md)
   - [📑 多行匹配](MuiltLineMatch.md)
   - [📂 多开](MulitOpen.md)
   - [🔧 开启调试模式](DebugMode.md)
