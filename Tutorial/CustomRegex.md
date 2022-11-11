@@ -36,12 +36,13 @@
 ![图片](../imgs/Tutorial/CustomRegex/2.png)
 3. 打开正则表达式添加页面新建一条正则表达式，作用域选择*控制台*，并把刚刚复制的控制台输出粘贴在正则输入框内
 4. 在特殊符号前面加上`\`将它转换为原意字符，空格替换为`\s`用于匹配空格，玩家名和玩家消息替换为`(.+?)`，末尾加上符号`$`表示匹配至这段字符的末端  
-![图片](../imgs/Tutorial/CustomRegex/1.png)
+![图片](../imgs/Tutorial/CustomRegex/3.png)
 5. 填写命令
 
 ```Serein命令
 g|$1 $2
 ```
+![图片](../imgs/Tutorial/CustomRegex/4.png)
 
 `g`代表发送至QQ群，`$1`代表正则表达式内第一个匹配项也就是玩家名，`$2`代表第二个匹配项也就是玩家发送的消息，则发送至QQ群的消息样式为`玩家名 玩家消息`
 
@@ -52,10 +53,9 @@ g|<$1>$2
 ```
 
 发送至QQ群的消息格式就会变为`<玩家名>消息`  
-![图片](../imgs/Tutorial/CustomRegex/1.png)
 
 现在我们连上机器人进服测试一下
-![图片](../imgs/Tutorial/CustomRegex/1.png)
+![图片](../imgs/Tutorial/CustomRegex/5.png)
 
 **恭喜！现在服务器内的消息可以发送进QQ群了**
 
