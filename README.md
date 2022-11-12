@@ -1,7 +1,7 @@
 # Serein - 新时代极简服务器面板
 
 <p align="center">
-    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fzaitonn.github.io%2FSerein%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light">
+    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fserein.cc%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light">
     <br>
     <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
     <a href="https://github.com/Zaitonn/Serein/releases/latest">
@@ -26,7 +26,7 @@
 - **下载最新版：<https://github.com/Zaitonn/Serein/releases/latest>**
 - Minebbs：<https://www.minebbs.com/resources/serein.4169/>
 
-## 运行环境 Environment
+## 运行环境
 
 Win7或WinServer2012以上
 
@@ -48,11 +48,11 @@ Win7或WinServer2012以上
 - [System.Net.Http](https://github.com/dotnet/corefx)
 - [WPF-UI](https://github.com/lepoco/wpfui)
 
-## 编译 Build
+## 编译
 
-推荐VS2022
+VS2022; NET Framework 4.7.2 & NET 6.0
 
-## 发电 Donate
+## 发电
 
 >如果觉得这个软件对你很有帮助的话可以稍微鼓励一下  
 我会很感谢你的(*￣3￣)╭❤
@@ -71,4 +71,4 @@ Win7或WinServer2012以上
 
 ## 关于
 
-> [About](https://serein.cc/#/About)
+详见 [关于 - Serein](https://serein.cc/#/About)

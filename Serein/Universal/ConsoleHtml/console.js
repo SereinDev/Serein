@@ -1,6 +1,5 @@
-"use strict";
-
 var line = 0;
+
 function AppendText(str) {
     var ConsoleDiv = document.querySelector("#console");
     line = line + 1;
@@ -17,6 +16,7 @@ function AppendText(str) {
     }
     ConsoleDiv.scrollTop = ConsoleDiv.scrollHeight;
 }
+
 function Clear() {
     document.querySelector("#console").innerHTML = "";
     line = 0;

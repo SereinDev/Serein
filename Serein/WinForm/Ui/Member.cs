@@ -15,9 +15,9 @@ namespace Serein.Ui
 
         private void LoadMember()
         {
+            IO.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
-            IO.ReadMember();
             foreach (Member memberItem in Global.MemberItems.Values.ToList())
             {
                 ListViewItem Item = new ListViewItem();
@@ -28,6 +28,7 @@ namespace Serein.Ui
                 Item.SubItems.Add(memberItem.GameID);
                 MemberList.Items.Add(Item);
             }
+            MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.EndUpdate();
         }
 

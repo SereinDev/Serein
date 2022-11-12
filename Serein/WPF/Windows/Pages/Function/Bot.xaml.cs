@@ -31,13 +31,14 @@ namespace Serein.Windows.Pages.Function
             => Websocket.Close();
         public void AppendText(string Line)
             => Dispatcher.Invoke(() => BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line }));
+
         private void UpdateInfos()
             => Dispatcher.Invoke(() =>
             {
                 Status.Content = Websocket.Status ? "已连接" : "未连接";
-                ID.Content = Matcher.SelfId ?? "-";
-                MessageReceived.Content = Matcher.MessageReceived ?? "-";
-                MessageSent.Content = Matcher.MessageSent ?? "-";
+                ID.Content = Websocket.Status ? (Matcher.SelfId ?? "-") : "-";
+                MessageReceived.Content = Websocket.Status ? (Matcher.MessageReceived ?? "-") : "-";
+                MessageSent.Content = Websocket.Status ? (Matcher.MessageSent ?? "-") : "-";
                 TimeSpan t = DateTime.Now - Websocket.StartTime;
                 Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N2}d" : "-";
             });

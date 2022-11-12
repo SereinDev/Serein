@@ -173,9 +173,9 @@ namespace Serein.Ui
 
         private void LoadTask(string FileName = null)
         {
+            IO.ReadTask();
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            IO.ReadTask();
             foreach (Task Item in Global.TaskItems)
             {
                 ListViewItem listViewItem = new ListViewItem(Item.Cron);
@@ -189,6 +189,7 @@ namespace Serein.Ui
                 }
                 TaskList.Items.Add(listViewItem);
             }
+            TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             TaskList.EndUpdate();
         }
 

@@ -15,12 +15,13 @@ namespace Serein.Windows.Pages.Function
         {
             InitializeComponent();
             Catalog.Function.Member = this;
-            Load();
+            Load(false);
         }
 
-        private void Load()
+        private void Load(bool FromFile = true)
         {
-            IO.ReadMember();
+            if (FromFile)
+                IO.ReadMember();
             MemberListView.Items.Clear();
             foreach (Items.Member Item in Global.MemberItems.Values.ToList())
             {

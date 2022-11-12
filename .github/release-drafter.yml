@@ -2,15 +2,10 @@ name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  ## Changes in v$RESOLVED_VERSION
-  ### 🚀 新功能|Features
+  ## Main Changes in v$RESOLVED_VERSION
 
-  ### 🐛 修复|Bug Fixes
-
-  ### 📃 文档|Docs
-
-  ### 🧰 其他|Maintenance
-
+  >查看 **[✨完整更新日志](http://serein.cc/#/Versions/v$RESOLVED_VERSION)**
+  
   ---
-  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/v$RESOLVED_VERSION/total)
-  > [如何选择不同的版本](https://serein.cc/#/Tutorial/DifferentVersions)
+  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/v$RESOLVED_VERSION/total?style=for-the-badge)
+  > 推荐阅读：[如何选择不同的版本](https://serein.cc/#/Tutorial/DifferentVersions)

@@ -3,35 +3,44 @@
   - 需以 ".noColored>" 开头
   - 用".[NAME]"指定高亮对象
 */
-.noColored > .file {
+.noColored>.file {
     color: #688292;
 }
-.noColored > .server {
+
+.noColored>.server {
     color: #8bd645;
 }
-.noColored > .debug {
+
+.noColored>.debug {
     color: #865fc5;
 }
-.noColored > .error {
+
+.noColored>.error {
     color: #d16969;
 }
-.noColored > .warn {
+
+.noColored>.warn {
     color: #aa5612;
 }
-.noColored > .info {
+
+.noColored>.info {
     color: #20b2aa;
 }
-.noColored > .plugins {
+
+.noColored>.plugins {
     color: #e4b44c;
 }
-.noColored > .LiteLoader,
-.noColored > .LiteXLoader,
-.noColored > .LLMoney {
+
+.noColored>.LiteLoader,
+.noColored>.LiteXLoader,
+.noColored>.LLMoney {
     color: #5a93c2;
 }
-.noColored > .Chakra {
+
+.noColored>.Chakra {
     color: #a93eca;
 }
-.noColored > .int {
+
+.noColored>.int {
     color: #b1ac64;
 }

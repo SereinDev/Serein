@@ -42,8 +42,6 @@ namespace Serein.Ui
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             System.Threading.Tasks.Task.Run(UpdateInfo);
             System.Threading.Tasks.Task.Run(() => Logger.Out(Items.LogType.Debug, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
-            TaskList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
     }
 }
