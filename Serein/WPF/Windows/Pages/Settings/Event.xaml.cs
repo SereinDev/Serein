@@ -107,7 +107,10 @@ namespace Serein.Windows.Pages.Settings
                 EventListView.Items.Clear();
                 SelectedTag = Item.Tag as string ?? string.Empty;
                 if (Enum.IsDefined(typeof(Items.EventType), SelectedTag))
-                    Global.Settings.Event.Get((Items.EventType)Enum.Parse(typeof(Items.EventType), SelectedTag)).ToList().ForEach((Command) => { EventListView.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); });
+                    Global.Settings.Event.Get(
+                        (Items.EventType)Enum.Parse(typeof(Items.EventType), SelectedTag)).ToList()
+                        .ForEach((Command) => { EventListView.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); }
+                        );
             }
             else
                 SelectedTag = string.Empty;

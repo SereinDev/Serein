@@ -232,6 +232,7 @@ namespace Serein.Base
             if (!Directory.Exists(Global.SettingPath))
             {
                 Directory.CreateDirectory(Global.SettingPath);
+                Global.FirstOpen = true;
                 return;
             }
             if (File.Exists(Global.SettingPath + "\\Server.json"))
@@ -269,15 +270,6 @@ namespace Serein.Base
             catch (Exception e)
             {
                 Logger.Out(LogType.Debug, "[Setting] Fail to update Matches.json:", e.ToString());
-            }
-            try
-            {
-                if (File.Exists(Global.SettingPath + "\\Event.json"))
-                    Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8));
-            }
-            catch (Exception e)
-            {
-                Logger.Out(LogType.Debug, "[Setting] Fail to update Event.json:", e.ToString());
             }
         }
 

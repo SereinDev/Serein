@@ -29,6 +29,7 @@ namespace Serein.Windows.Pages.Settings
             OutputEncoding.SelectedIndex = Global.Settings.Server.OutputEncoding;
             OutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
             Path.Text = Global.Settings.Server.Path;
+            Port.Value = Global.Settings.Server.Port;
         }
 
         private void StopCommands_TextChanged(object sender, TextChangedEventArgs e)
@@ -52,7 +53,7 @@ namespace Serein.Windows.Pages.Settings
         private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
             => Global.Settings.Server.OutputStyle = Loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
         private void Port_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.Port = int.TryParse(Port.Text, out int i) ? i : 0;
+            => Global.Settings.Server.Port = Loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {

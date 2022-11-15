@@ -7,10 +7,12 @@ namespace Serein.Windows.Pages.Settings
 {
     public partial class Serein : UiPage
     {
+        private new bool Loaded = false;
         public Serein()
         {
             InitializeComponent();
             Load();
+            Loaded = true;
             Catalog.Settings.Serein = this;
         }
 
@@ -49,6 +51,6 @@ namespace Serein.Windows.Pages.Settings
             => Dispatcher.Invoke(() => { Version.Text = "当前版本：" + Global.VERSION + Text; });
 
         private void MaxCacheLines_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Serein.MaxCacheLines = (int)MaxCacheLines.Value;
+            => Global.Settings.Serein.MaxCacheLines = Loaded ? (int)MaxCacheLines.Value : Global.Settings.Serein.MaxCacheLines;
     }
 }
