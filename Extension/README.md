@@ -16,5 +16,3 @@
   - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/threads/serein.12192/)
 - 🧀 适用于服务器的插件
   - [PSerein - 账号绑定系统](https://www.minebbs.com/resources/pserein.4211/)
-
->[!NOTE]部分插件或正则文件仅发布在[交流群](https://jq.qq.com/?_wv=1027&k=XNZqPSPv)内，故不在此写出

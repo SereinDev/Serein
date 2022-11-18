@@ -4,6 +4,8 @@
   - [❔ Serein 是什么](README.md)
 
   - [👀 为什么选择Serein](Why.md)
+  
+  - [💖 捐赠名单](Donate.md)
 
   - [📔 关于](About.md)
 

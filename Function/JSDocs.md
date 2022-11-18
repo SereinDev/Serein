@@ -365,8 +365,27 @@ var je = serein.getMotdje("127.0.0.1:25565");
 
     - Java版为Json文本
 
-    ```txt
-    {"description":{"text":"§bMinecraftOnline§f - §6Home of Freedonia§r\n§3Survival, Without the Grief!"},"players":{"max":120,"online":1,"sample":[{"id":"a4740a2c-1eec-4b7d-9d22-1c861e7045d7","name":"Biolord101"}]},"version":{"name":"1.12.2","protocol":340},"favicon":"……"}
+    ```json
+    {
+      "description": {
+        "text": "§bMinecraftOnline§f - §6Home of Freedonia§r\n§3Survival, Without the Grief!"
+      },
+      "players": {
+        "max": 120,
+        "online": 1,
+        "sample": [
+            {
+                "id": "a4740a2c-1eec-4b7d-9d22-1c861e7045d7",
+                "name": "Biolord101"
+            }
+        ]
+      },
+      "version": {
+        "name": "1.12.2",
+        "protocol": 340
+      },
+      "favicon": "……" // 此处限于篇幅省略其内容，实际上是base64编码的图片
+    }
     ```
 
 #### 启动服务器

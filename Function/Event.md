@@ -11,7 +11,7 @@
 
 <details>
   <summary>配置文件预览</summary>
-  <code>
+  <code lang="json">
   <pre>
 {
   "Notice": "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/Command.html、https://serein.cc/Event.html",
@@ -165,7 +165,7 @@
 监听群有人退群  
 默认值：
 
-```txt
+```Serein命令
 g|用户%ID%退出了群聊，已自动解绑游戏ID
 ubind|%ID%
 ```
@@ -180,11 +180,11 @@ ubind|%ID%
 >
 >- 示例：
 >
->   ```txt
+>   ```Serein命令
 >   [CQ:at,qq=%ID%] 呐呐呐~！欢迎来到XXX服务器★(笑)♡今后也.请.多.多.指.教.喔?~
 >   ```
 >
->   ```txt
+>   ```Serein命令
 >   [CQ:at,qq=%ID%]
 >   服务器描述：Dedicated Server
 >   版本：1.19.2(527)
@@ -200,7 +200,7 @@ ubind|%ID%
 命令*motdpe*执行成功  
 默认值：
 
-```txt
+```Serein命令
 g|
 服务器描述：%Description%
 版本：%Version%(%Protocol%)
@@ -214,7 +214,7 @@ g|
 命令*motdje*执行成功  
 默认值：
 
-```txt
+```Serein命令
 g|
 服务器描述：%Description%
 版本：%Version%(%Protocol%)
@@ -228,7 +228,7 @@ g|
 命令*motdpe*或*motdje*执行失败  
 默认值：
 
-```txt
+```Serein命令
 g|
 Motd获取失败
 %Exception%
@@ -255,7 +255,7 @@ Motd获取失败
 Serein崩溃  
 默认值：
 
-```txt
+```Serein命令
 g|
 唔……发生了一点小问题(っ °Д °;)っ
 请查看Serein错误弹窗获取更多信息
