@@ -14,9 +14,7 @@ namespace Serein.Windows.Pages
             => Dispatcher.Invoke(() =>
             {
                 if (DebugTextBox.Text.Split('\n').Length > 50000)
-                {
                     DebugTextBox.Text = string.Empty;
-                }
                 DebugTextBox.Text += Line + "\r\n";
                 DebugTextBox.ScrollToEnd();
             });

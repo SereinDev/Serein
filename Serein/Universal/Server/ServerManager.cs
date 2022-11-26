@@ -15,17 +15,12 @@ namespace Serein.Server
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
         private static string TempLine = string.Empty;
-        public static bool Status
-        {
-            get
-            {
-                return ServerProcess != null && !ServerProcess.HasExited;
-            }
-        }
+        public static bool Status => ServerProcess != null && !ServerProcess.HasExited;
         public static bool Restart = false, Finished = false;
         private static bool Killed;
         public static double CPUPersent = 0;
         public static int CommandListIndex = 0;
+        public static object Lock = new object();
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static ProcessStartInfo ServerProcessInfo;
         private static Process ServerProcess;
@@ -205,7 +200,7 @@ namespace Serein.Server
             if (Status)
             {
                 bool IsSpecifiedCommand = false;
-                string Command_Copy = Command.TrimEnd('\r', '\n');
+                string Command_Copy = Command.TrimEnd('\n');
                 string Command_Copy_Prefix = Command_Copy.Split(' ')[0];
                 foreach (CommandItem Item in Plugins.CommandItems)
                 {
@@ -313,8 +308,15 @@ namespace Serein.Server
                     else
                         Matcher.Process(Line);
                 }
-                JSFunc.Trigger("onServerOutput", Line);
-                JSFunc.Trigger("onServerOriginalOutput", outLine.Data);
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    lock (Lock)
+                    {
+                        System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOutput", Line));
+                        System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOriginalOutput", outLine.Data));
+                        System.Threading.Tasks.Task.Delay(50).GetAwaiter().GetResult();
+                    }
+                });
             }
         }
 

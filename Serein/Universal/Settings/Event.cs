@@ -157,7 +157,6 @@ namespace Serein.Settings
                     Global.Settings.Event.PermissionDeniedFromGroupMsg = Commands;
                     break;
             }
-
         }
 
         public string[] Get(EventType Type)

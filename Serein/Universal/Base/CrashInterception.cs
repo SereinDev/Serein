@@ -26,12 +26,10 @@ namespace Serein.Base
         public static void ShowException(string ExceptionMsg)
         {
             if (ServerManager.Status && Global.Settings.Server.AutoStop)
-            {
                 foreach (string Command in Global.Settings.Server.StopCommands)
                 {
                     ServerManager.InputCommand(Command);
                 }
-            }
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
                 Directory.CreateDirectory(Global.Path + "\\logs\\crash");
             try
@@ -64,11 +62,11 @@ namespace Serein.Base
                     MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
                     WindowTitle = "Serein",
                     Content = "" +
-                $"版本： {Global.VERSION}\n" +
-                $"时间：{DateTime.Now}\n" +
-                $"NET版本：{Environment.Version}\n\n" +
-                $"◦ 崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
-                $"◦ 反馈此问题可以帮助作者更好的改进Serein",
+                        $"版本： {Global.VERSION}\n" +
+                        $"时间：{DateTime.Now}\n" +
+                        $"NET版本：{Environment.Version}\n\n" +
+                        $"◦ 崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
+                        $"◦ 反馈此问题可以帮助作者更好的改进Serein",
                     MainIcon = TaskDialogIcon.Error,
                     Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
                     FooterIcon = TaskDialogIcon.Information,

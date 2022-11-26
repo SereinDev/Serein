@@ -1,4 +1,5 @@
 ﻿using Ookii.Dialogs.Wpf;
+using Serein.Base;
 using Serein.Settings;
 using Serein.Ui.ChildrenWindow;
 using System;
@@ -262,6 +263,7 @@ namespace Serein.Ui
         {
             if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
                 Global.Settings.Event.Edit(GetEventCommands(), (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name));
+            IO.SaveEventSetting();
         }
 
         private string[] GetEventCommands()
