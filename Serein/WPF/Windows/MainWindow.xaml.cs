@@ -1,6 +1,7 @@
 ﻿using NCrontab;
 using Serein.Base;
 using Serein.Server;
+using Serein.Plugin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,6 +57,8 @@ namespace Serein.Windows
                 Hide();
                 Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
             }
+            else
+                JSFunc.Trigger("onSereinClose");
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)

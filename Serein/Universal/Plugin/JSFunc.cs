@@ -199,6 +199,7 @@ namespace Serein.Plugin
                             );
                         break;
                     case "onSereinClose":
+                        Plugins.WebSockets.ForEach((WSC) => WSC.Dispose());
                         Plugins.Event.onSereinClose.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined })
                             );

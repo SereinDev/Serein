@@ -357,7 +357,7 @@ namespace Serein.Base
             }
             if (Regex.IsMatch(Text, @"%ID:.+?%", RegexOptions.IgnoreCase))
                 Text = Regex.Replace(Text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(Text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
-            return Text.Replace("\\n", "\n").Replace("\\r", "\r");
+            return Text.Replace("\\n", "\n");
         }
     }
 }

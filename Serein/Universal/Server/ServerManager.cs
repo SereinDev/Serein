@@ -225,7 +225,7 @@ namespace Serein.Server
                 {
                     if (Unicode || Global.Settings.Server.EnableUnicode)
                         Command_Copy = ConvertToUnicode(Command_Copy);
-                    CommandWriter.WriteLine(Command_Copy);
+                    CommandWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
                     JSFunc.Trigger("onServerSendCommand", Command);
                 }
                 if (Global.Settings.Server.EnableLog)
@@ -308,15 +308,12 @@ namespace Serein.Server
                     else
                         Matcher.Process(Line);
                 }
-                System.Threading.Tasks.Task.Run(() =>
+                lock (Lock)
                 {
-                    lock (Lock)
-                    {
-                        System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOutput", Line));
-                        System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOriginalOutput", outLine.Data));
-                        System.Threading.Tasks.Task.Delay(50).GetAwaiter().GetResult();
-                    }
-                });
+                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOutput", Line));
+                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOriginalOutput", outLine.Data));
+                    System.Threading.Tasks.Task.Delay(75).GetAwaiter().GetResult();
+                }
             }
         }
 

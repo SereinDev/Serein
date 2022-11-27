@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Plugin;
 using Serein.Server;
 using System;
 using System.Text.RegularExpressions;
@@ -23,7 +24,10 @@ namespace Serein.Console
                         if (ServerManager.Status)
                             Logger.Out(Items.LogType.Warn, "服务器未关闭");
                         else
+                        {
+                            JSFunc.Trigger("onSereinClose");
                             Environment.Exit(0);
+                        }
                         break;
                     case "start":
                         ServerManager.Start();
