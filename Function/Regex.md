@@ -41,7 +41,7 @@
 
 | 高级功能                                                                                                                                                                                     | 可用性     |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| [替换已编号的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-a-numbered-group) （`$1` `$114514`）                      | 可用       |
+| [替换已编号的组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-a-numbered-group) （`$1` `$114514`）                          | 可用       |
 | [条件匹配的表达式](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-with-an-expression)                        | 理论可用   |
 | [基于有效的捕获组的条件匹配](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/alternation-constructs-in-regular-expressions#conditional-matching-based-on-a-valid-captured-group) | 理论可用   |
 | [替换命名组](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/substitutions-in-regular-expressions#substituting-a-named-group)                                                    | *暂不可用* |
