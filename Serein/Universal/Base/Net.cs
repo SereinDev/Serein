@@ -48,8 +48,8 @@ namespace Serein.Base
             Client.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
             Client.DefaultRequestHeaders.Add("user-agent", UserAgent);
             HttpResponseMessage Response = await Client.GetAsync(Url);
-            Logger.Out(Items.LogType.Debug, "[Net:Get() - Headers]", Response.Headers.ToString());
-            Logger.Out(Items.LogType.Debug, "[Net:Get() - Content ]", await Response.Content.ReadAsStringAsync());
+            //Logger.Out(Items.LogType.Debug, "Headers\n", Response.Headers.ToString());
+            //Logger.Out(Items.LogType.Debug, "Content\n", await Response.Content.ReadAsStringAsync());
             return await Response.Content.ReadAsStringAsync();
         }
 
@@ -79,7 +79,7 @@ namespace Serein.Base
                 catch (Exception e)
                 {
                     Logger.Out(Items.LogType.Version_Failure, e.Message);
-                    Logger.Out(Items.LogType.Debug, "[Net:CheckVersion()]", e);
+                    Logger.Out(Items.LogType.Debug, e);
                 }
             }
         }

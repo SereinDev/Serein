@@ -1,6 +1,6 @@
 ﻿using Serein.Base;
-using System.IO;
 using System;
+using System.IO;
 using System.Windows;
 
 namespace Serein
@@ -10,7 +10,7 @@ namespace Serein
         public App()
         {
             CrashInterception.Init();
-            DispatcherUnhandledException += (sender, e) => CrashInterception.ShowException(e.Exception.StackTrace);
+            DispatcherUnhandledException += (sender, e) => CrashInterception.ShowException(e.Exception);
             if (!File.Exists(Global.Path + "console\\console.html"))
             {
                 ResourcesManager.InitConsole();

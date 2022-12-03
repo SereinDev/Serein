@@ -1,4 +1,5 @@
 ﻿using Jint.Native;
+using Jint.Runtime;
 using System;
 using WebSocket4Net;
 
@@ -14,7 +15,7 @@ namespace Serein.Plugin
         /// <summary>
         /// WS客户端
         /// </summary>
-        private WebSocket _WebSocket = null;
+        private readonly WebSocket _WebSocket = null;
 
         public void Dispose()
         {
@@ -36,21 +37,51 @@ namespace Serein.Plugin
                 null,
                 null
                 );
-            _WebSocket.Opened += (sender, e) => onopen?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-            _WebSocket.Closed += (sender, e) => onclose?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-            _WebSocket.MessageReceived += (sender, e) =>
-            {
-                if (onmessage != null)
-                {
-                    try
-                    {
-                        onmessage.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e.Message) });
-                    }
-                    catch { }
-                }
-            };
-            _WebSocket.Error += (sender, e) => onerror?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e.Exception.Message) });
+            _WebSocket.Opened += (sender, e) => Trigger(onopen, "Opened");
+            _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed"); ;
+            _WebSocket.MessageReceived += (sender, e) => Trigger(onmessage, "MessageReceived", e);
+            _WebSocket.Error += (sender, e) => Trigger(onerror, "Opened", e);
             Plugins.WebSockets.Add(this);
+        }
+
+        /// <summary>
+        /// 触发事件
+        /// </summary>
+        /// <param name="Event">事件</param>
+        /// <param name="Name">名称</param>
+        /// <param name="Args">参数</param>
+        private void Trigger(Delegate Event, string Name, object Args = null)
+        {
+            try
+            {
+                switch (Name)
+                {
+                    case "Opened":
+                    case "Closed":
+                        Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                        break;
+                    case "MessageReceived":
+                        if (Args is MessageReceivedEventArgs e1 && e1 != null)
+                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
+                        break;
+                    case "Error":
+                        if (Args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
+                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                string Message;
+                if (e.InnerException is JavaScriptException JSe)
+                    Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                else
+                    Message = e.Message;
+                Logger.Out(Items.LogType.Plugin_Error, $"Websocket的{Name}事件调用失败：", Message);
+                Logger.Out(Items.LogType.Debug,
+                    $"{Name}事件调用失败\r\n",
+                    e);
+            }
         }
 
 #pragma warning disable IDE1006

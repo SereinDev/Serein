@@ -19,6 +19,16 @@ namespace Serein.Items
             }
         }
 
+        public override string ToString()
+        {
+            return "" +
+                $"编译类型：{Type}\r\n" +
+                $"编译时间：{Time}\r\n" +
+                $"编译路径：{Dir}\r\n" +
+                $"系统类型：{OS}\r\n" +
+                $"详细信息：{Detail}";
+        }
+
         /// <summary>
         /// 编译类型
         /// </summary>

@@ -12,7 +12,7 @@ namespace Serein.Base
         /// <param name="Type">类型</param>
         public static void Trigger(Items.EventType Type)
         {
-            Logger.Out(Items.LogType.Debug, "[EventTrigger]", "Trigger:" + Type);
+            Logger.Out(Items.LogType.Debug, "Trigger:" + Type);
             string[] CommandGroup = Array.Empty<string>();
             switch (Type)
             {
@@ -29,7 +29,7 @@ namespace Serein.Base
                     CommandGroup = Global.Settings.Event.SereinCrash;
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "[EventTrigger]", "未知的事件名", Type);
+                    Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
                     break;
             }
             foreach (string Command in CommandGroup)
@@ -47,7 +47,7 @@ namespace Serein.Base
         /// <param name="Motd">Motd对象</param>
         public static void Trigger(Items.EventType Type, long GroupId, long UserId, Motd Motd = null)
         {
-            Logger.Out(Items.LogType.Debug, "[EventTrigger]", "Trigger:" + Type);
+            Logger.Out(Items.LogType.Debug, "Trigger:" + Type);
             string[] CommandGroup = Array.Empty<string>();
             switch (Type)
             {
@@ -148,7 +148,7 @@ namespace Serein.Base
                     }
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "[EventTrigger]", "未知的事件名", Type);
+                    Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
                     break;
             }
         }

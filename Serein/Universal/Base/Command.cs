@@ -79,7 +79,13 @@ namespace Serein.Base
                 4   EventTrigger
                 5   Javascript
             */
-            Logger.Out(Items.LogType.Debug, "[Command:Run()]", $"InputType:{InputType} | Command:\"{Command}\" | UserId:\"{UserId}\" | GroupId:\"{GroupId}\"");
+            Logger.Out(
+                Items.LogType.Debug,
+                    "命令运行",
+                    $"InputType:{InputType} ",
+                    $"Command:{Command}",
+                    $"UserId:{UserId}",
+                    $"GroupId:{GroupId}");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
                 GroupId = Global.Settings.Bot.GroupList[0];
             Items.CommandType Type = GetType(Command);
@@ -226,7 +232,7 @@ namespace Serein.Base
                 {
                     Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
                 }
-            Logger.Out(Items.LogType.Debug, "[Command:GetValue()]", $"Value:{Value}");
+            Logger.Out(Items.LogType.Debug, $"Value:{Value}");
             return Value;
         }
 
@@ -310,7 +316,7 @@ namespace Serein.Base
                     Text = Regex.Replace(Text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, JsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
                     Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
-                catch (Exception e) { Logger.Out(Items.LogType.Debug, "[Command:GetVariables()]", e.ToString()); }
+                catch { }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);

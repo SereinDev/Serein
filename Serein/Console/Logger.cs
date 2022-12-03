@@ -1,7 +1,9 @@
-﻿using Serein.Base;
-using Serein.Items;
+﻿using Serein.Items;
 using Serein.Server;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace Serein
 {
@@ -15,13 +17,33 @@ namespace Serein
             string Line = string.Empty;
             foreach (var o in objects)
             {
-                if (o != null) { Line += o.ToString() + " "; }
+                if (o != null)
+                    Line += o.ToString() + " ";
             }
             Line = Line.TrimEnd();
             switch (Type)
             {
                 case LogType.Debug:
-                    if (Global.Settings.Serein.Debug) { WriteLine(4, Line); }
+                    if (Global.Settings.Serein.Debug)
+                    {
+                        StackTrace st = new StackTrace(true);
+                        Line = $"{DateTime.Now:T} " +
+                            $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
+                            $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
+                            $"{Line}";
+                        WriteLine(4, Line);
+                        if (!Directory.Exists(Global.Path + "\\logs\\debug"))
+                            Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                        try
+                        {
+                            File.AppendAllText(
+                                Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                                $"{Line}\n",
+                                Encoding.UTF8
+                                );
+                        }
+                        catch { }
+                    }
                     break;
                 case LogType.Info:
                 case LogType.Plugin_Notice:

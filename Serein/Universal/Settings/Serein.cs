@@ -4,6 +4,7 @@
     {
         public bool ColorfulLog { get; set; } = true;
         public bool Debug { get; set; } = false;
+        public bool DetailDebug { get; set; } = false;
         public bool DPIAware { get; set; } = false;
         public bool EnableGetUpdate { get; set; } = true;
         public int MaxCacheLines { get; set; } = 100;

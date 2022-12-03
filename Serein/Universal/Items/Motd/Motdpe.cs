@@ -61,7 +61,7 @@ namespace Serein.Items.Motd
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "[Motdpe]", e);
+                Logger.Out(LogType.Debug, e);
                 Exception = e.Message;
             }
         }

@@ -106,7 +106,7 @@ namespace Serein.Items.Motd
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "[Motd:Init()]", e.ToString());
+                Logger.Out(LogType.Debug, e);
                 Exception = e.Message;
                 return false;
             }

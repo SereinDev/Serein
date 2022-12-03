@@ -27,7 +27,7 @@ namespace Serein.Plugin
         /// <summary>
         /// 定时器字典
         /// </summary>
-        public static Dictionary<int, Timer> Timers = new Dictionary<int, Timer>();
+        public static Dictionary<long, Timer> Timers = new Dictionary<long, Timer>();
 
         /// <summary>
         /// WS客户端列表
@@ -104,6 +104,7 @@ namespace Serein.Plugin
             Event.Dispose();
             Event = new Event();
             JSFunc.ClearAllTimers();
+            JSFunc.ID = 0;
             Load();
         }
     }

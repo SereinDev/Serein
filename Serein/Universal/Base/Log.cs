@@ -26,8 +26,8 @@ namespace Serein.Base
         public static string OutputRecognition(string Input)
         {
             string Result;
-            Result = Regex.Replace(Input, @"\[.*?m", string.Empty);
-            Result = Regex.Replace(Result, @"", string.Empty);
+            Result = Regex.Replace(Input, @"\x1b\[.*?m", string.Empty);
+            Result = Regex.Replace(Result, @"\x1b", string.Empty);
             Result = Regex.Replace(Result, @"\s+?$", string.Empty);
             StringBuilder Builder = new StringBuilder();
             for (int i = 0; i < Result.Length; i++)
@@ -62,11 +62,11 @@ namespace Serein.Base
         {
             Input = EscapeLog(Input);
             Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
-            Input = Input.Replace("[m", "[0m");
+            Input = Input.Replace("\x1b[m", "\x1b[0m");
             if (Type == 1 || Type == 3)
             {
                 string Output = Input;
-                string Pattern = @"\[([^]+?)m([^]*)";
+                string Pattern = @"\x1b\[([^\x1b]+?)m([^\x1b]*)";
                 if (Regex.IsMatch(Input, Pattern))
                 {
                     Output = string.Empty;
@@ -84,72 +84,66 @@ namespace Serein.Base
                         for (int ChildArgIndex = 0; ChildArgIndex < ArgList.Length; ChildArgIndex++)
                         {
                             string ChildArg = ArgList[ChildArgIndex];
-                            if (ChildArg == "1")
+                            switch (int.TryParse(ChildArg, out int IntArg) ? IntArg : 0)
                             {
-                                Style += "font-weight:bold;";
-                            }
-                            else if (ChildArg == "3")
-                            {
-                                Style += "font-style: italic;";
-                            }
-                            else if (ChildArg == "4")
-                            {
-                                Style += "text-decoration: underline;";
-                            }
-                            else if (ChildArg == "38" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
-                            {
-                                Style += $"color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                Colored = true;
-                            }
-                            else if (ChildArg == "48" && ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
-                            {
-                                Style += $"background-color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                Colored = true;
-                            }
-                            else if (ColorList.Contains(ChildArg))
-                            {
-                                SpanClass += "vanillaColor" + ChildArg + " ";
-                                Colored = !(ChildArg == "37" || ChildArg == "47" || ChildArg == "97" || ChildArg == "107");
+                                case 1:
+                                    Style += "font-weight:bold;";
+                                    break;
+                                case 3:
+                                    Style += "font-style: italic;";
+                                    break;
+                                case 4:
+                                    Style += "text-decoration: underline;";
+                                    break;
+                                case 38:
+                                    if (ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
+                                    {
+                                        Style += $"color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
+                                        Colored = true;
+                                    }
+                                    break;
+                                case 48:
+                                    if (ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
+                                    {
+                                        Style += $"background-color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
+                                        Colored = true;
+                                    }
+                                    break;
+                                default:
+                                    if (ColorList.Contains(ChildArg))
+                                    {
+                                        SpanClass += "vanillaColor" + ChildArg + " ";
+                                        Colored = !(ChildArg == "37" || ChildArg == "47" || ChildArg == "97" || ChildArg == "107");
+                                    }
+                                    break;
                             }
                         }
                         if (!Colored)
-                        {
                             SpanClass += "noColored";
-                        }
                         Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
-                    }
-                    if (Type == 3)
-                    {
-                        Output = Regex.Replace(Output, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
-                        Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
-                        Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
-                        Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                     }
                 }
                 else
-                {
                     Output = $"<span class=\"noColored\">{Output}</span>";
-                }
                 if (Type == 3)
                 {
-                    Output = Regex.Replace(Output, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
-                    Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
-                    Output = Regex.Replace(Output, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
+                    Output = Regex.Replace(Output, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
+                    Output = Regex.Replace(Output, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
+                    Output = Regex.Replace(Output, @"(WARN(ING)?)", "<span class='warn'>$1</span>", RegexOptions.IgnoreCase);
+                    Output = Regex.Replace(Output, @"(ERROR)", "<span class='error'>$1</span>", RegexOptions.IgnoreCase);
+                    Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
                     Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
                 }
                 return Output;
             }
             else if (Type == 2)
             {
-                Input = Regex.Replace(Input, @"\[.*?m", string.Empty);
-                Input = Regex.Replace(Input, @"", string.Empty);
-                Input = Regex.Replace(Input, @"([\[\s])(INFO|info|Info)", "$1<span class='info'>$2</span>");
-                Input = Regex.Replace(Input, @"([\[\s])(WARNING|warning|Warning)", "$1<span class='warn'><b>$2</b></span>");
-                Input = Regex.Replace(Input, @"([\[\s])(WARN|warn|Warn)", "$1<span class='warn'><b>$2</b></span>");
-                Input = Regex.Replace(Input, @"([\[\s])(ERROR|error|Error)", "$1<span class='error'><b>$2</b></span>");
-                Input = Regex.Replace(Input, @"\[(SERVER|server|Server)\]", "[<span class='server'>$1</span>]");
-                Input = Regex.Replace(Input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]");
-                Input = Regex.Replace(Input, @"([0-9A-Za-z\._-]+\.)(py|jar|dll|exe|bat|json|lua|js|yaml|jpeg|png|jpg|csv|log)", "<span class='file'>$1$2</span>");
+                Input = Regex.Replace(Input, @"\x1b\[.*?m", string.Empty);
+                Input = Regex.Replace(Input, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
+                Input = Regex.Replace(Input, @"(WARN(ING)?)", "<span class='warn'><b>$1</b></span>", RegexOptions.IgnoreCase);
+                Input = Regex.Replace(Input, @"(ERROR)", "<span class='error'><b>$1</b></span>", RegexOptions.IgnoreCase);
+                Input = Regex.Replace(Input, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
+                Input = Regex.Replace(Input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
                 Input = Regex.Replace(Input, @"(\d{5,})", "<span class='int'>$1</span>");
                 Input = $"<span class=\"noColored\">{Input}</span>";
                 return Input;

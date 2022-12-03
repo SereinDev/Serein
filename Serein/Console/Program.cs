@@ -29,7 +29,7 @@ namespace Serein
         {
             CrashInterception.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception.ToString());
+            Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception);
             Console.Base.Init();
             Console.Base.Load(args);
             Console.Base.Start();

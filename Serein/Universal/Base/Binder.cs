@@ -172,7 +172,7 @@ namespace Serein.Base
         {
             if (Global.MemberItems.Keys.Contains(UserId))
             {
-                Logger.Out(LogType.Debug, "[Binder:Update()]", JsonObject["sender"]);
+                Logger.Out(LogType.Debug, JsonObject["sender"]);
                 lock (Global.MemberItems)
                 {
                     Global.MemberItems[UserId].Nickname = JsonObject["sender"]["nickname"].ToString();

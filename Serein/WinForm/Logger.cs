@@ -1,6 +1,7 @@
 ﻿using Serein.Base;
 using Serein.Items;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -27,14 +28,19 @@ namespace Serein
                     case LogType.Debug:
                         if (Global.Settings.Serein.Debug)
                         {
-                            Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
+                            StackTrace st = new StackTrace(true);
+                            Line = $"{DateTime.Now:T} " +
+                                $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
+                                $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
+                                $"{Line}";
+                            Program.Ui.Debug_Append(Line);
                             if (!Directory.Exists(Global.Path + "\\logs\\debug"))
                                 Directory.CreateDirectory(Global.Path + "\\logs\\debug");
                             try
                             {
                                 File.AppendAllText(
                                     Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                                    $"{DateTime.Now:T} {Line}" + "\n",
+                                    $"{Line}\n",
                                     Encoding.UTF8
                                     );
                             }

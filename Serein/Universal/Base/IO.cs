@@ -269,7 +269,7 @@ namespace Serein.Base
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "[Setting] Fail to update Matches.json:", e.ToString());
+                Logger.Out(LogType.Debug, "Fail to update Matches.json:", e.ToString());
             }
         }
 

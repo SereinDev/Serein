@@ -15,23 +15,21 @@ namespace Serein.Base
         /// </summary>
         public static void Init()
         {
-            AppDomain.CurrentDomain.UnhandledException += (sneder, e) => ShowException(e.ExceptionObject.ToString());
-            TaskScheduler.UnobservedTaskException += (sender, e) => ShowException(e.Exception.ToString());
+            AppDomain.CurrentDomain.UnhandledException += (sneder, e) => ShowException((Exception)e.ExceptionObject);
+            TaskScheduler.UnobservedTaskException += (sender, e) => ShowException(e.Exception);
         }
 
         /// <summary>
         /// 显示错误消息
         /// </summary>
-        /// <param name="ExceptionMsg">错误消息</param>
-        public static void ShowException(string ExceptionMsg)
+        /// <param name="e">错误消息</param>
+        public static void ShowException(Exception e)
         {
-            if (ServerManager.Status && Global.Settings.Server.AutoStop)
-                foreach (string Command in Global.Settings.Server.StopCommands)
-                {
-                    ServerManager.InputCommand(Command);
-                }
+            if (Global.Settings.Server.AutoStop)
+                ServerManager.Stop(true);
             if (!Directory.Exists(Global.Path + "\\logs\\crash"))
                 Directory.CreateDirectory(Global.Path + "\\logs\\crash");
+            string ExceptionMsg = MergeException(e);
             try
             {
                 File.AppendAllText(
@@ -40,8 +38,10 @@ namespace Serein.Base
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
                     "\n" +
+                    Global.BuildInfo.ToString() +
+                    "\n\n" +
                     ExceptionMsg +
-                    "\n===============================================\n",
+                    "\n\n",
                     Encoding.UTF8
                     );
             }
@@ -64,7 +64,8 @@ namespace Serein.Base
                     Content = "" +
                         $"版本： {Global.VERSION}\n" +
                         $"时间：{DateTime.Now}\n" +
-                        $"NET版本：{Environment.Version}\n\n" +
+                        $"NET版本：{Environment.Version}\n" +
+                        $"编译时间：{Global.BuildInfo.Time}\n\n" +
                         $"◦ 崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
                         $"◦ 反馈此问题可以帮助作者更好的改进Serein",
                     MainIcon = TaskDialogIcon.Error,
@@ -73,9 +74,31 @@ namespace Serein.Base
                     EnableHyperlinks = true,
                     ExpandedInformation = ExceptionMsg,
                 };
-                TaskDialog.HyperlinkClicked += (sender, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+                TaskDialog.HyperlinkClicked += HyperlinkClicked;
                 TaskDialog.ShowDialog();
             }
+        }
+
+        /// <summary>
+        /// 链接点击处理
+        /// </summary>
+        private static void HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
+            => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+
+        /// <summary>
+        /// 合并错误信息
+        /// </summary>
+        /// <param name="e">错误信息</param>
+        /// <returns>错误信息</returns>
+        private static string MergeException(Exception e)
+        {
+            string Message = string.Empty;
+            while (e != null)
+            {
+                Message += e.ToString() + "\r\n";
+                e = e.InnerException;
+            }
+            return Message;
         }
     }
 }

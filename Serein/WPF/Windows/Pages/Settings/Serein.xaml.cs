@@ -22,12 +22,7 @@ namespace Serein.Windows.Pages.Settings
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
             MaxCacheLines.Value = Global.Settings.Serein.MaxCacheLines;
             Version.Text = "当前版本：" + Global.VERSION;
-            BuildInfo.Text =
-                $"编译类型：{Global.BuildInfo.Type}\r\n" +
-                $"编译时间：{Global.BuildInfo.Time}\r\n" +
-                $"编译路径：{Global.BuildInfo.Dir}\r\n" +
-                $"系统类型：{Global.BuildInfo.OS}\r\n" +
-                $"详细信息：{Global.BuildInfo.Detail}";
+            BuildInfo.Text = Global.BuildInfo.ToString();
         }
 
         private void EnableGetUpdate_Click(object sender, RoutedEventArgs e)

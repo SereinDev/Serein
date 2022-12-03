@@ -28,14 +28,19 @@ namespace Serein
                 case LogType.Debug:
                     if (Global.Settings.Serein.Debug)
                     {
-                        Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
+                        StackTrace st = new StackTrace(true);
+                        Line = $"{DateTime.Now:T} " +
+                            $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
+                            $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
+                            $"{Line}";
+                        Catalog.Debug?.AppendText(Line);
                         if (!Directory.Exists(Global.Path + "\\logs\\debug"))
                             Directory.CreateDirectory(Global.Path + "\\logs\\debug");
                         try
                         {
                             File.AppendAllText(
                                 Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                                $"{DateTime.Now:T} {Line}" + "\n",
+                                $"{Line}\n",
                                 Encoding.UTF8
                                 );
                         }

@@ -61,7 +61,7 @@ namespace Serein.Windows.Pages.Function
             Timer Restorer = new Timer(500) { AutoReset = true };
             Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
             {
-                Logger.Out(LogType.Debug, "[JSPlugin:Restore]", string.Join(";", Catalog.Function.PluginCache));
+                Logger.Out(LogType.Debug, string.Join(";", Catalog.Function.PluginCache));
                 if (!Restored && PluginWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
                 {
                     Catalog.Function.PluginCache.ForEach((Text) => AppendText(Text));

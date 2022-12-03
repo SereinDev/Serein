@@ -1,5 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
+using Jint.Runtime;
 using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
@@ -175,9 +176,14 @@ namespace Serein.Plugin
                 (Engine ?? engine).Execute(Code);
                 return string.Empty;
             }
+            catch (JavaScriptException e)
+            {
+                Logger.Out(LogType.Debug, e);
+                return $"{e.Message} (at line {e.Location.Start.Line}:{e.Location.Start.Column})";
+            }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "[JSEngine:Run()]", e.ToString());
+                Logger.Out(LogType.Debug, e);
                 return e.Message;
             }
         }

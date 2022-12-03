@@ -1,5 +1,5 @@
-﻿using Jint;
-using Jint.Native;
+﻿using Jint.Native;
+using Jint.Runtime;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,8 @@ namespace Serein.Plugin
 {
     partial class JSFunc
     {
+        public static long ID = 0;
+
         /// <summary>
         /// 注册插件
         /// </summary>
@@ -49,7 +51,7 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string EventName, Delegate Function)
         {
-            Logger.Out(LogType.Debug, "[JSFunc:SetListener()]", EventName);
+            Logger.Out(LogType.Debug, EventName);
             if (string.IsNullOrEmpty(EventName) || string.IsNullOrWhiteSpace(EventName))
                 return false;
             switch (EventName)
@@ -110,8 +112,7 @@ namespace Serein.Plugin
         /// <param name="Args">参数</param>
         public static void Trigger(string EventName, params object[] Args)
         {
-            Engine _Engine = new Engine();
-            Logger.Out(LogType.Debug, "[JSFunc:Tigger()]", EventName);
+            Logger.Out(LogType.Debug, EventName);
             try
             {
                 switch (EventName)
@@ -124,73 +125,73 @@ namespace Serein.Plugin
                     case "onServerStop":
                         Plugins.Event.onServerStop.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0])})
                             );
                         break;
                     case "onServerOutput":
                         Plugins.Event.onServerOutput.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0])})
                             );
                         break;
                     case "onServerOriginalOutput":
                         Plugins.Event.onServerOriginalOutput.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0])})
                             );
                         break;
                     case "onServerSendCommand":
                         Plugins.Event.onServerSendCommand.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0])})
                             );
                         break;
                     case "onServerSendSpecifiedCommand":
                         ((Delegate)Args[1]).DynamicInvoke(
-                            JsValue.Undefined, new[] { JsValue.FromObject(_Engine, Args[0]) });
+                            JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, Args[0]) });
                         break;
                     case "onGroupIncrease":
                         Plugins.Event.onGroupIncrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0]),
-                                JsValue.FromObject(_Engine, Args[1]) })
+                                JsValue.FromObject(JSEngine.Converter, Args[0]),
+                                JsValue.FromObject(JSEngine.Converter, Args[1]) })
                             );
                         break;
                     case "onGroupDecrease":
                         Plugins.Event.onGroupDecrease.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0]),
-                                JsValue.FromObject(_Engine, Args[1])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0]),
+                                JsValue.FromObject(JSEngine.Converter, Args[1])})
                             );
                         break;
                     case "onGroupPoke":
                         Plugins.Event.onGroupPoke.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0]),
-                                JsValue.FromObject(_Engine, Args[1])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0]),
+                                JsValue.FromObject(JSEngine.Converter, Args[1])})
                             );
                         break;
                     case "onReceiveGroupMessage":
                         Plugins.Event.onReceiveGroupMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0]),
-                                JsValue.FromObject(_Engine, Args[1]),
-                                JsValue.FromObject(_Engine, Args[2]),
-                                JsValue.FromObject(_Engine, Args[3])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0]),
+                                JsValue.FromObject(JSEngine.Converter, Args[1]),
+                                JsValue.FromObject(JSEngine.Converter, Args[2]),
+                                JsValue.FromObject(JSEngine.Converter, Args[3])})
                             );
                         break;
                     case "onReceivePrivateMessage":
                         Plugins.Event.onReceivePrivateMessage.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0]),
-                                JsValue.FromObject(_Engine, Args[1]),
-                                JsValue.FromObject(_Engine, Args[2])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0]),
+                                JsValue.FromObject(JSEngine.Converter, Args[1]),
+                                JsValue.FromObject(JSEngine.Converter, Args[2])})
                             );
                         break;
                     case "onReceivePacket":
                         Plugins.Event.onReceivePacket.ForEach(
                             (x) => x.DynamicInvoke(JsValue.Undefined, new[] {
-                                JsValue.FromObject(_Engine, Args[0])})
+                                JsValue.FromObject(JSEngine.Converter, Args[0])})
                             );
                         break;
                     case "onSereinStart":
@@ -210,12 +211,16 @@ namespace Serein.Plugin
                             );
                         break;
                 }
-                _Engine = null;
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Plugin_Error, $"触发事件{EventName}时出现异常：{e.Message}");
-                Logger.Out(LogType.Debug, e.ToString());
+                string Message;
+                if (e.InnerException is JavaScriptException JSe)
+                    Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                else
+                    Message = e.Message;
+                Logger.Out(LogType.Plugin_Error, $"触发事件{EventName}时出现异常：{Message}");
+                Logger.Out(LogType.Debug, $"触发事件{EventName}时出现异常：\n", e);
             }
         }
 
@@ -226,7 +231,7 @@ namespace Serein.Plugin
         /// <returns>注册结果</returns>
         public static bool RegisterCommand(string Command, Delegate Function)
         {
-            Logger.Out(LogType.Debug, "[JSFunc:RegisterCommand()]", Command);
+            Logger.Out(LogType.Debug, "Register:", Command);
             if (
                 Command.Contains(" ") ||
                 ((IList<string>)Global.Settings.Server.StopCommands).Contains(Command)
@@ -256,22 +261,36 @@ namespace Serein.Plugin
         /// <returns>定时器哈希值</returns>
         public static JsValue SetTimer(Delegate Function, JsValue Interval, bool AutoReset)
         {
+            long TimerID = ID;
+            ID++;
             Timer _Timer = new Timer(Interval.AsNumber())
             {
                 AutoReset = AutoReset,
             };
-            _Timer.Elapsed += (e, args) =>
+            _Timer.Elapsed += (sender, args) =>
             {
-                Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                if (!AutoReset)
+                try
                 {
-                    _Timer.Dispose();
+                    Function?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 }
+                catch (Exception e)
+                {
+                    string Message;
+                    if (e.InnerException is JavaScriptException JSe)
+                        Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                    else if (e.InnerException is ArgumentException || e.InnerException is InvalidOperationException)
+                        return;
+                    else
+                        Message = e.Message;
+                    Logger.Out(LogType.Plugin_Error, $"触发定时器[ID:{TimerID}]时出现异常：{Message}");
+                    Logger.Out(LogType.Debug, $"触发定时器[ID:{TimerID}]时出现异常：\n", e);
+                }
+                if (!AutoReset)
+                    _Timer.Dispose();
             };
             _Timer.Start();
-            int ID = _Timer.GetHashCode();
-            Plugins.Timers.Add(ID, _Timer);
-            return JsValue.FromObject(new Engine(), ID);
+            Plugins.Timers.Add(TimerID, _Timer);
+            return JsValue.FromObject(JSEngine.Converter, TimerID);
         }
 
         /// <summary>
@@ -279,7 +298,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="ID">哈希值</param>
         /// <returns>清除结果</returns>
-        private static bool ClearTimer(int ID)
+        private static bool ClearTimer(long ID)
         {
             if (Plugins.Timers.ContainsKey(ID))
             {
@@ -295,18 +314,15 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="ID">哈希值</param>
         /// <returns>清除结果</returns>
-        public static bool ClearTimer(JsValue ID)
-        {
-            return ClearTimer((int)ID.AsNumber());
-        }
+        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.AsNumber());
 
         /// <summary>
         /// 清除所有定时器
         /// </summary>
         public static void ClearAllTimers()
         {
-            IList<int> IDs = Plugins.Timers.Keys.ToArray();
-            foreach (int ID in IDs)
+            IList<long> IDs = Plugins.Timers.Keys.ToArray();
+            foreach (long ID in IDs)
             {
                 ClearTimer(ID);
             }

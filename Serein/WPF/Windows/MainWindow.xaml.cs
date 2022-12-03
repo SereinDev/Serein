@@ -1,7 +1,8 @@
 ﻿using NCrontab;
+using Notification.Wpf;
 using Serein.Base;
-using Serein.Server;
 using Serein.Plugin;
+using Serein.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +15,6 @@ using System.Windows.Controls;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Notification.Wpf;
 
 namespace Serein.Windows
 {
