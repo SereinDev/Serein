@@ -263,7 +263,7 @@ namespace Serein.Plugin
         {
             long TimerID = ID;
             ID++;
-            Timer _Timer = new Timer(Interval.AsNumber())
+            Timer _Timer = new Timer((double)Interval.ToObject())
             {
                 AutoReset = AutoReset,
             };
@@ -314,7 +314,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="ID">哈希值</param>
         /// <returns>清除结果</returns>
-        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.AsNumber());
+        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.ToObject());
 
         /// <summary>
         /// 清除所有定时器
