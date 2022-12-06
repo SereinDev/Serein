@@ -18,36 +18,36 @@
                     <ContextMenu Name="PluginsContextMenu">
                         <ui:MenuItem
                             Name="Import"
-                            Tag="Import"
                             Click="MenuItem_Click"
                             Header="导入"
-                            SymbolIcon="DocumentAdd24" />
+                            SymbolIcon="DocumentAdd24"
+                            Tag="Import" />
                         <ui:MenuItem
                             Name="Delete"
-                            Tag="Delete"
                             Click="MenuItem_Click"
                             Header="删除"
-                            SymbolIcon="Delete24" />
+                            SymbolIcon="Delete24"
+                            Tag="Delete" />
                         <Separator />
                         <ui:MenuItem
                             Name="Enable"
-                            Tag="Enable"
                             Click="MenuItem_Click"
                             Header="启用"
-                            SymbolIcon="CheckmarkCircle24" />
+                            SymbolIcon="CheckmarkCircle24"
+                            Tag="Enable" />
                         <ui:MenuItem
                             Name="Disable"
-                            Tag="Disable"
                             Click="MenuItem_Click"
                             Header="禁用"
-                            SymbolIcon="DismissCircle24" />
+                            SymbolIcon="DismissCircle24"
+                            Tag="Disable" />
                         <Separator />
                         <ui:MenuItem
                             Name="OpenFolder"
-                            Tag="OpenFolder"
                             Click="MenuItem_Click"
                             Header="打开文件夹"
-                            SymbolIcon="FolderOpen24" />
+                            SymbolIcon="FolderOpen24"
+                            Tag="OpenFolder" />
                         <Separator />
                         <ui:MenuItem
                             Name="Refresh"

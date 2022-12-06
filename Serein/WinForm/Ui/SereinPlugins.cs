@@ -1,4 +1,4 @@
-﻿using Serein.Plugin;
+﻿using Serein.JSPlugin;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -22,7 +22,7 @@ namespace Serein.Ui
         {
             SereinPluginsList.BeginUpdate();
             SereinPluginsList.Items.Clear();
-            foreach (Items.Plugin Item in Plugins.PluginItems)
+            foreach (Items.Plugin Item in JSPluginManager.PluginDict.Values)
             {
                 ListViewItem item = new ListViewItem(Item.Name);
                 item.SubItems.Add(Item.Version);
@@ -36,7 +36,7 @@ namespace Serein.Ui
 
         private void SereinPluginsListContextMenuStrip_Reload_Click(object sender, EventArgs e)
         {
-            Plugins.Reload();
+            JSPluginManager.Reload();
             LoadSereinPlugin();
         }
 

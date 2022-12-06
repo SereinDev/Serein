@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Items.Motd;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using Serein.Server;
 using System;
 using System.Diagnostics;

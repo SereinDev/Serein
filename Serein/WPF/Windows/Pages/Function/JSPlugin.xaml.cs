@@ -1,5 +1,5 @@
 ﻿using Serein.Items;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;
@@ -29,7 +29,7 @@ namespace Serein.Windows.Pages.Function
         private void Load()
         {
             JSPluginListView.Items.Clear();
-            foreach (Items.Plugin Item in Plugins.PluginItems)
+            foreach (Plugin Item in JSPluginManager.PluginDict.Values)
             {
                 JSPluginListView.Items.Add(Item);
             }
@@ -42,7 +42,7 @@ namespace Serein.Windows.Pages.Function
                 switch (Item.Tag)
                 {
                     case "Reload":
-                        Plugins.Reload();
+                        JSPluginManager.Reload();
                         Load();
                         break;
                     case "ClearConsole":

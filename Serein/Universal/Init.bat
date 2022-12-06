@@ -6,6 +6,6 @@ echo %cd%| findstr Universal >nul && (
     cd ../Universal
     echo.%cd%
 )
-if exist ./Build_Info.txt echo.Local (Visual Studio)>Build_Info.txt & echo.%date% %time%>>Build_Info.txt & echo.%cd%>>Build_Info.txt & echo.%os%>>Build_Info.txt & echo.null>>Build_Info.txt
+if exist ./Build_Info.txt echo.Local>Build_Info.txt & echo.%date% %time%>>Build_Info.txt & echo.%cd%>>Build_Info.txt & echo.%os%>>Build_Info.txt & echo.null>>Build_Info.txt
 )
 exit 0

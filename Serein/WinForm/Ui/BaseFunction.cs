@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.Wpf;
 using Serein.Base;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using Serein.Server;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace Serein.Ui
             if (Global.Args.Contains("auto_start"))
                 System.Threading.Tasks.Task.Run(() => ServerManager.Start(true));
             System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onSereinStart"));
-            System.Threading.Tasks.Task.Run(() => Plugins.Load());
+            System.Threading.Tasks.Task.Run(() => JSPluginManager.Load());
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)

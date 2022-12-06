@@ -1,6 +1,6 @@
 ﻿using Serein.Base;
 using Serein.Items;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -201,15 +201,6 @@ namespace Serein.Server
             {
                 bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\n');
-                string Command_Copy_Prefix = Command_Copy.Split(' ')[0];
-                foreach (CommandItem Item in Plugins.CommandItems)
-                {
-                    if (Command_Copy_Prefix == Item.Command)
-                    {
-                        IsSpecifiedCommand = true;
-                        JSFunc.Trigger("onServerSendSpecifiedCommand", Command_Copy, Item.Function);
-                    }
-                }
                 if (CommandList.Count > 50)
                     CommandList.RemoveRange(0, CommandList.Count - 50);
                 if (

@@ -1,7 +1,7 @@
 using Serein.Items;
 using System;
 
-namespace Serein.Plugin
+namespace Serein.JSPlugin
 {
     internal class JSLogger
     {

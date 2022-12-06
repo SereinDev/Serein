@@ -1,7 +1,7 @@
 ﻿using NCrontab;
 using Notification.Wpf;
 using Serein.Base;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using Serein.Server;
 using System;
 using System.Collections.Generic;

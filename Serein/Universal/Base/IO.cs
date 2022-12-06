@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Items;
-using Serein.Plugin;
+using Serein.JSPlugin;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace Serein.Base
             ReadMember();
             ReadSettings();
             if (!SkipLoadingPlugins)
-                Plugins.Load();
+                JSPluginManager.Load();
         }
 
         /// <summary>

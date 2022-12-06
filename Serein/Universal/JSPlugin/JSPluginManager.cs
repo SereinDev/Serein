@@ -2,27 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Timers;
 
-namespace Serein.Plugin
+namespace Serein.JSPlugin
 {
-    internal class Plugins
+    internal class JSPluginManager
     {
         /// <summary>
-        /// 事件对象
+        /// 最后加载的文件
         /// </summary>
-        public static Event Event = new Event();
-
-        /// <summary>
-        /// 命令项列表
-        /// </summary>
-        public static List<CommandItem> CommandItems = new List<CommandItem>();
+        public static string LatestFile { get; private set; } = string.Empty;
 
         /// <summary>
         /// 插件项列表
         /// </summary>
-        public static List<Items.Plugin> PluginItems = new List<Items.Plugin>();
+        public static Dictionary<string, Plugin> PluginDict = new Dictionary<string, Plugin>();
 
         /// <summary>
         /// 定时器字典
@@ -44,48 +40,41 @@ namespace Serein.Plugin
                 Directory.CreateDirectory(PluginPath);
             else
             {
-                List<string> ErrorFiles = new List<string>();
                 string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
-                long Temp;
                 foreach (string Filename in Files)
                 {
+                    LatestFile = Path.GetFileName(Filename);
                     Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(Filename)}");
-                    Temp = PluginItems.Count;
                     try
                     {
-                        Jint.Engine Engine = JSEngine.Init();
-                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), Engine);
-                        bool Success = string.IsNullOrEmpty(ExceptionMessage);
-                        if (!Success)
+                        PluginDict.Add(LatestFile, new Plugin
                         {
-                            ErrorFiles.Add(Path.GetFileName(Filename));
+                            Engine = JSEngine.Init(Name: LatestFile),
+                            Name = Path.GetFileNameWithoutExtension(Filename),
+                            File = LatestFile
+                        });
+                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), PluginDict[LatestFile].Engine);
+                        if (!string.IsNullOrEmpty(ExceptionMessage))
                             Logger.Out(LogType.Plugin_Error, ExceptionMessage);
-                        }
                         else
-                        {
-                            if (Temp == PluginItems.Count - 1)
-                                PluginItems[PluginItems.Count - 1].Engine = Engine;
-                            else
-                                PluginItems.Add(
-                                    new Items.Plugin()
-                                    {
-                                        Name = Path.GetFileNameWithoutExtension(Filename),
-                                        Version = "-",
-                                        Author = "-",
-                                        Description = "-",
-                                        Engine = Engine
-                                    });
-                        }
+                            PluginDict[LatestFile].LoadedSuccessfully = false;
                     }
                     catch (Exception e)
                     {
-                        ErrorFiles.Add(Path.GetFileName(Filename));
-                        Logger.Out(LogType.Plugin_Error, e.ToString());
+                        Logger.Out(LogType.Plugin_Error, e.Message);
+                        Logger.Out(LogType.Debug, e);
                     }
                 }
+                List<string> ErrorFiles = new List<string>();
+                PluginDict.Keys.ToList().ForEach((Key) =>
+                {
+                    if (PluginDict.TryGetValue(Key, out Plugin Value) && Value.LoadedSuccessfully)
+                        ErrorFiles.Add(Value.File);
+                });
                 Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
                     Logger.Out(LogType.Plugin_Error, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
+                LatestFile = null;
             }
         }
 
@@ -98,11 +87,14 @@ namespace Serein.Plugin
             JSFunc.Trigger("onPluginsReload");
             WebSockets.ForEach((WSC) => WSC.Dispose());
             WebSockets.Clear();
-            PluginItems.ForEach((x) => x.Engine = null);
-            PluginItems.Clear();
-            CommandItems.Clear();
-            Event.Dispose();
-            Event = new Event();
+            PluginDict.Keys.ToList().ForEach((Key) =>
+            {
+                if (PluginDict.ContainsKey(Key)){
+                    PluginDict[Key].Engine.Dispose();
+                    PluginDict[Key].Engine = null;
+                }
+            });
+            PluginDict.Clear();
             JSFunc.ClearAllTimers();
             JSFunc.ID = 0;
             Load();

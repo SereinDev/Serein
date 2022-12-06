@@ -10,7 +10,7 @@ using Serein.Server;
 using System;
 using System.Diagnostics;
 
-namespace Serein.Plugin
+namespace Serein.JSPlugin
 {
     internal static class JSEngine
     {
@@ -29,7 +29,7 @@ namespace Serein.Plugin
         /// </summary>
         /// <param name="ExecuteByCommand">被命令执行</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool ExecuteByCommand = false)
+        public static Engine Init(bool ExecuteByCommand = false,string Name = null)
         {
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
@@ -76,10 +76,8 @@ namespace Serein.Plugin
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register",
                 new Func<string, string, string, string, bool>(JSFunc.Register));
-            engine.SetValue("Serein_Plugin_JSFunc_RegisterCommand",
-                new Func<string, Delegate, bool>(JSFunc.RegisterCommand));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener",
-                new Func<string, Delegate, bool>(JSFunc.SetListener));
+                new Func<string, Delegate, bool>((EventName,Function)=> JSFunc.SetListener(Name,EventName, Function)));
             engine.SetValue("Serein_Motdpe",
                 new Func<string, string>((IP) => new Motdpe(IP).Original));
             engine.SetValue("Serein_Motdje",
@@ -139,7 +137,6 @@ namespace Serein.Plugin
                 "debugLog:Serein_Global_Debug," +
                 "runCommand:Serein_Command_Run," +
                 "registerPlugin:Serein_Plugin_JSFunc_Register," +
-                "registerCommand:Serein_Plugin_JSFunc_RegisterCommand," +
                 "setListener:Serein_Plugin_JSFunc_SetListener," +
                 "getSysInfo:Serein_SystemInfo," +
                 "getMotdpe:Serein_Motdpe," +

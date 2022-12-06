@@ -27,7 +27,7 @@ namespace Serein.Windows
             public static Regex Regex { get; set; }
             public static Task Task { get; set; }
             public static Member Member { get; set; }
-            public static JSPlugin JSPlugin { get; set; }
+            public static Pages.Function.JSPlugin JSPlugin { get; set; }
             public static Pages.Function.Bot Bot { get; set; }
             public static Pages.Function.Container Container { get; set; }
             public static List<string> BotCache = new List<string>();

@@ -3,7 +3,7 @@ using Jint.Runtime;
 using System;
 using WebSocket4Net;
 
-namespace Serein.Plugin
+namespace Serein.JSPlugin
 {
     internal class JSWebSocket : IDisposable
     {
@@ -41,7 +41,7 @@ namespace Serein.Plugin
             _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed"); ;
             _WebSocket.MessageReceived += (sender, e) => Trigger(onmessage, "MessageReceived", e);
             _WebSocket.Error += (sender, e) => Trigger(onerror, "Opened", e);
-            Plugins.WebSockets.Add(this);
+            JSPluginManager.WebSockets.Add(this);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Serein.Plugin
         /// <summary>
         /// 状态
         /// </summary>
-        public int state => _WebSocket != null ? -1 : ((int)_WebSocket.State);
+        public int state => _WebSocket == null ? -1 : ((int)_WebSocket.State);
 
         /// <summary>
         /// 开启ws

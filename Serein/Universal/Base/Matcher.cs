@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Serein.Plugin;
+using Serein.JSPlugin;
 
 namespace Serein.Base
 {
