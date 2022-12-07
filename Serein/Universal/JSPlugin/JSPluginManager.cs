@@ -89,7 +89,8 @@ namespace Serein.JSPlugin
             WebSockets.Clear();
             PluginDict.Keys.ToList().ForEach((Key) =>
             {
-                if (PluginDict.ContainsKey(Key)){
+                if (PluginDict.ContainsKey(Key))
+                {
                     PluginDict[Key].Engine.Dispose();
                     PluginDict[Key].Engine = null;
                 }

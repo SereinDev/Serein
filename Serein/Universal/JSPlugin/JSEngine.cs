@@ -29,7 +29,7 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="ExecuteByCommand">被命令执行</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool ExecuteByCommand = false,string Name = null)
+        public static Engine Init(bool ExecuteByCommand = false, string Name = null)
         {
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
@@ -77,7 +77,7 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Plugin_JSFunc_Register",
                 new Func<string, string, string, string, bool>(JSFunc.Register));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener",
-                new Func<string, Delegate, bool>((EventName,Function)=> JSFunc.SetListener(Name,EventName, Function)));
+                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(Name, EventName, Function)));
             engine.SetValue("Serein_Motdpe",
                 new Func<string, string>((IP) => new Motdpe(IP).Original));
             engine.SetValue("Serein_Motdje",
