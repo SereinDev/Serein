@@ -25,7 +25,7 @@ namespace Serein.Console
                             Logger.Out(Items.LogType.Warn, "服务器未关闭");
                         else
                         {
-                            JSFunc.Trigger("onSereinClose");
+                            JSFunc.Trigger(Items.EventType.SereinClose);
                             Environment.Exit(0);
                         }
                         break;

@@ -124,9 +124,9 @@ namespace Serein.Base
                 if (!IsSelfMessage)
                 {
                     if (MessageType == "private")
-                        JSFunc.Trigger("onReceivePrivateMessage", UserId, RawMessage, Packet["sender"]["nickname"].ToString());
+                        JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
                     else if (MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
-                        JSFunc.Trigger("onReceiveGroupMessage", GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
+                        JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
                 }
             }
             else if (
@@ -164,25 +164,25 @@ namespace Serein.Base
                         case "GroupDecrease":
                         case "group_decrease":
                             EventTrigger.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
-                            JSFunc.Trigger("onGroupDecrease", GroupId, UserId);
+                            JSFunc.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
                             break;
                         case "GroupIncrease":
                         case "group_increase":
                             EventTrigger.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
-                            JSFunc.Trigger("onGroupIncrease", GroupId, UserId);
+                            JSFunc.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
                             break;
                         case "notify":
                             if (Packet["sub_type"].ToString() == "poke" &&
                                 Packet["target_id"].ToString() == SelfId)
                             {
                                 EventTrigger.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
-                                JSFunc.Trigger("onGroupPoke", GroupId, UserId);
+                                JSFunc.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
                             }
                             break;
                     }
                 }
             }
-            JSFunc.Trigger("onReceivePacket", Packet);
+            JSFunc.Trigger(Items.EventType.ReceivePacket, Packet);
         }
     }
 }

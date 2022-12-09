@@ -67,7 +67,7 @@ namespace Serein.Ui
                 System.Threading.Tasks.Task.Run(() => Websocket.Connect(false));
             if (Global.Args.Contains("auto_start"))
                 System.Threading.Tasks.Task.Run(() => ServerManager.Start(true));
-            System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onSereinStart"));
+            System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(Items.EventType.SereinStart));
             System.Threading.Tasks.Task.Run(() => JSPluginManager.Load());
         }
 
@@ -83,7 +83,7 @@ namespace Serein.Ui
             else
             {
                 SereinIcon.Dispose();
-                JSFunc.Trigger("onSereinClose");
+                JSFunc.Trigger(Items.EventType.SereinClose);
             }
         }
 

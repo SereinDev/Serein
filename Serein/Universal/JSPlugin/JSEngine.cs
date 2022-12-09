@@ -28,8 +28,9 @@ namespace Serein.JSPlugin
         /// 初始化JS引擎
         /// </summary>
         /// <param name="ExecuteByCommand">被命令执行</param>
+        /// <param name="Namespace">命名空间</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool ExecuteByCommand = false, string Name = null)
+        public static Engine Init(bool ExecuteByCommand = false, string Namespace = null)
         {
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
@@ -66,6 +67,8 @@ namespace Serein.JSPlugin
                 Global.Path);
             engine.SetValue("Serein_Global_Version",
                 Global.VERSION);
+            engine.SetValue("Serein_Current_Namespace",
+                Namespace);
             engine.SetValue("Serein_Log",
                 new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, Content)));
             engine.SetValue("Serein_Command_Run",
@@ -75,9 +78,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Global_Settings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register",
-                new Func<string, string, string, string, bool>(JSFunc.Register));
+                new Func<string, string, string, string, string>((Name, Version, Author, Description) => JSFunc.Register(Namespace, Name, Version, Author, Description)));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener",
-                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(Name, EventName, Function)));
+                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(Namespace, EventName, Function)));
             engine.SetValue("Serein_Motdpe",
                 new Func<string, string>((IP) => new Motdpe(IP).Original));
             engine.SetValue("Serein_Motdje",
@@ -115,9 +118,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Member_GetGameID",
                 new Func<long, string>(Binder.GetGameID));
             engine.SetValue("setTimeout",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Function, Interval, false)));
+                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Namespace, Function, Interval, false)));
             engine.SetValue("setInterval",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Function, Interval, true)));
+                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Namespace, Function, Interval, true)));
             engine.SetValue("clearTimeout",
                 new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("clearInterval",
@@ -129,35 +132,37 @@ namespace Serein.JSPlugin
             engine.SetValue("Logger",
                 TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             engine.Execute(
-                "var serein={" +
-                "log:Serein_Log," +
-                "path:Serein_Global_Path," +
-                "version:Serein_Global_Version," +
-                "getSettings:Serein_Global_Settings," +
-                "debugLog:Serein_Global_Debug," +
-                "runCommand:Serein_Command_Run," +
-                "registerPlugin:Serein_Plugin_JSFunc_Register," +
-                "setListener:Serein_Plugin_JSFunc_SetListener," +
-                "getSysInfo:Serein_SystemInfo," +
-                "getMotdpe:Serein_Motdpe," +
-                "getMotdje:Serein_Motdje," +
-                "startServer:Serein_ServerManager_Start," +
-                "stopServer:Serein_ServerManager_Stop," +
-                "sendCmd:Serein_ServerManager_Send," +
-                "killServer:Serein_ServerManager_Kill," +
-                "getServerStatus:Serein_ServerManager_Status," +
-                "getServerTime:Serein_ServerManager_GetTime," +
-                "getServerCPUPersent:Serein_ServerManager_GetCPUPersent," +
-                "getServerFile:Serein_ServerManager_GetFilename," +
-                "sendGroup:Serein_Websocket_SendGroup," +
-                "sendPrivate:Serein_Websocket_SendPrivate," +
-                "sendPacket:Serein_Websocket_SendPacket," +
-                "getWsStatus:Serein_Websocket_Status," +
-                "bindMember:Serein_Member_Bind," +
-                "unbindMember:Serein_Member_UnBind," +
-                "getID:Serein_Member_GetID," +
-                "getGameID:Serein_Member_GetGameID" +
-                "};");
+                @"var serein = {
+                    log: Serein_Log,
+                    path: Serein_Global_Path,
+                    namespace: Serein_Current_Namespace,
+                    version: Serein_Global_Version,
+                    getSettings: Serein_Global_Settings,
+                    debugLog: Serein_Global_Debug,
+                    runCommand: Serein_Command_Run,
+                    registerPlugin: Serein_Plugin_JSFunc_Register,
+                    setListener: Serein_Plugin_JSFunc_SetListener,
+                    getSysInfo: Serein_SystemInfo,
+                    getMotdpe: Serein_Motdpe,
+                    getMotdje: Serein_Motdje,
+                    startServer: Serein_ServerManager_Start,
+                    stopServer: Serein_ServerManager_Stop,
+                    sendCmd: Serein_ServerManager_Send,
+                    killServer: Serein_ServerManager_Kill,
+                    getServerStatus: Serein_ServerManager_Status,
+                    getServerTime: Serein_ServerManager_GetTime,
+                    getServerCPUPersent: Serein_ServerManager_GetCPUPersent,
+                    getServerFile: Serein_ServerManager_GetFilename,
+                    sendGroup: Serein_Websocket_SendGroup,
+                    sendPrivate: Serein_Websocket_SendPrivate,
+                    sendPacket: Serein_Websocket_SendPacket,
+                    getWsStatus: Serein_Websocket_Status,
+                    bindMember: Serein_Member_Bind,
+                    unbindMember: Serein_Member_UnBind,
+                    getID: Serein_Member_GetID,
+                    getGameID: Serein_Member_GetGameID
+                    };"
+            );
             return engine;
         }
 
@@ -166,23 +171,24 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="Code">代码</param>
         /// <returns>错误信息</returns>
-        public static string Run(string Code, Engine Engine = null)
+        public static Engine Run(string Code, Engine Engine, out string ExceptionMessage)
         {
             try
             {
                 (Engine ?? engine).Execute(Code);
-                return string.Empty;
+                ExceptionMessage = string.Empty;
             }
             catch (JavaScriptException e)
             {
                 Logger.Out(LogType.Debug, e);
-                return $"{e.Message} (at line {e.Location.Start.Line}:{e.Location.Start.Column})";
+                ExceptionMessage = $"{e.Message} (at line {e.Location.Start.Line}:{e.Location.Start.Column})";
             }
             catch (Exception e)
             {
                 Logger.Out(LogType.Debug, e);
-                return e.Message;
+                ExceptionMessage = e.Message;
             }
+            return (Engine ?? engine);
         }
     }
 }

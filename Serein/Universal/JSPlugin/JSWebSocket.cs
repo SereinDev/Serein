@@ -1,5 +1,6 @@
 ﻿using Jint.Native;
 using Jint.Runtime;
+using Newtonsoft.Json;
 using System;
 using WebSocket4Net;
 
@@ -8,6 +9,11 @@ namespace Serein.JSPlugin
     internal class JSWebSocket : IDisposable
     {
         /// <summary>
+        /// 命名空间
+        /// </summary>
+        private readonly string Namespace = null;
+
+        /// <summary>
         /// 事件函数
         /// </summary>
         public static Delegate onopen = null, onclose = null, onerror = null, onmessage = null;
@@ -15,6 +21,7 @@ namespace Serein.JSPlugin
         /// <summary>
         /// WS客户端
         /// </summary>
+        [JsonIgnore]
         private readonly WebSocket _WebSocket = null;
 
         public void Dispose()
@@ -28,9 +35,14 @@ namespace Serein.JSPlugin
         /// 入口函数
         /// </summary>
         /// <param name="Uri">ws地址</param>
-        /// <param name="Token">鉴权Token</param>
-        public JSWebSocket(string Uri)
+        /// <param name="Namespace">命名空间</param>
+        public JSWebSocket(string Uri, string Namespace = null)
         {
+            if (Namespace == null)
+                throw new ArgumentNullException(nameof(Namespace));
+            if (!JSPluginManager.PluginDict.ContainsKey(Namespace))
+                throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+            this.Namespace = Namespace;
             _WebSocket = new WebSocket(
                 Uri,
                 "",
@@ -41,7 +53,7 @@ namespace Serein.JSPlugin
             _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed"); ;
             _WebSocket.MessageReceived += (sender, e) => Trigger(onmessage, "MessageReceived", e);
             _WebSocket.Error += (sender, e) => Trigger(onerror, "Opened", e);
-            JSPluginManager.WebSockets.Add(this);
+            JSPluginManager.PluginDict[Namespace].WebSockets.Add(this);
         }
 
         /// <summary>
@@ -54,21 +66,22 @@ namespace Serein.JSPlugin
         {
             try
             {
-                switch (Name)
-                {
-                    case "Opened":
-                    case "Closed":
-                        Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                        break;
-                    case "MessageReceived":
-                        if (Args is MessageReceivedEventArgs e1 && e1 != null)
-                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
-                        break;
-                    case "Error":
-                        if (Args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
-                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
-                        break;
-                }
+                lock (JSPluginManager.PluginDict[Namespace].Engine)
+                    switch (Name)
+                    {
+                        case "Opened":
+                        case "Closed":
+                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                            break;
+                        case "MessageReceived":
+                            if (Args is MessageReceivedEventArgs e1 && e1 != null)
+                                Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
+                            break;
+                        case "Error":
+                            if (Args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
+                                Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
+                            break;
+                    }
             }
             catch (Exception e)
             {

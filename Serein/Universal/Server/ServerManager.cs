@@ -101,7 +101,7 @@ namespace Serein.Server
                 PrevCpuTime = TimeSpan.Zero;
                 System.Threading.Tasks.Task.Factory.StartNew(GetCPUPercent);
                 EventTrigger.Trigger(EventType.ServerStart);
-                JSFunc.Trigger("onServerStart");
+                JSFunc.Trigger(EventType.ServerStart);
                 return true;
             }
             return false;
@@ -217,7 +217,7 @@ namespace Serein.Server
                     if (Unicode || Global.Settings.Server.EnableUnicode)
                         Command_Copy = ConvertToUnicode(Command_Copy);
                     CommandWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
-                    JSFunc.Trigger("onServerSendCommand", Command);
+                    JSFunc.Trigger(EventType.ServerSendCommand, Command);
                 }
                 if (Global.Settings.Server.EnableLog)
                 {
@@ -301,8 +301,8 @@ namespace Serein.Server
                 }
                 lock (Lock)
                 {
-                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOutput", Line));
-                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger("onServerOriginalOutput", outLine.Data));
+                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerOutput, Line));
+                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerOriginalOutput, outLine.Data));
                     System.Threading.Tasks.Task.Delay(75).GetAwaiter().GetResult();
                 }
             }
@@ -336,7 +336,7 @@ namespace Serein.Server
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
-            JSFunc.Trigger("onServerStop", ServerProcess.ExitCode);
+            JSFunc.Trigger(EventType.ServerStop, ServerProcess.ExitCode);
         }
 
         /// <summary>

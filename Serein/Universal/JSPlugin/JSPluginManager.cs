@@ -1,4 +1,5 @@
-﻿using Serein.Items;
+﻿using Newtonsoft.Json;
+using Serein.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +11,6 @@ namespace Serein.JSPlugin
 {
     internal class JSPluginManager
     {
-        /// <summary>
-        /// 最后加载的文件
-        /// </summary>
-        public static string LatestFile { get; private set; } = string.Empty;
-
         /// <summary>
         /// 插件项列表
         /// </summary>
@@ -43,21 +39,23 @@ namespace Serein.JSPlugin
                 string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
                 foreach (string Filename in Files)
                 {
-                    LatestFile = Path.GetFileName(Filename);
+                    string Namespace = Path.GetFileNameWithoutExtension(Filename);
                     Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(Filename)}");
                     try
                     {
-                        PluginDict.Add(LatestFile, new Plugin
+                        PluginDict.Add(Namespace, new Plugin
                         {
-                            Engine = JSEngine.Init(Name: LatestFile),
-                            Name = Path.GetFileNameWithoutExtension(Filename),
-                            File = LatestFile
+                            Engine = JSEngine.Init(Namespace: Namespace),
+                            Name = Namespace,
+                            File = Path.GetFileName(Filename),
+                            Namespace = Namespace
                         });
-                        string ExceptionMessage = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), PluginDict[LatestFile].Engine);
+                        PluginDict[Namespace].Event.Namespace = Namespace;
+                        PluginDict[Namespace].Engine = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), PluginDict[Namespace].Engine, out string ExceptionMessage);
                         if (!string.IsNullOrEmpty(ExceptionMessage))
                             Logger.Out(LogType.Plugin_Error, ExceptionMessage);
                         else
-                            PluginDict[LatestFile].LoadedSuccessfully = false;
+                            PluginDict[Namespace].LoadedSuccessfully = true;
                     }
                     catch (Exception e)
                     {
@@ -68,13 +66,17 @@ namespace Serein.JSPlugin
                 List<string> ErrorFiles = new List<string>();
                 PluginDict.Keys.ToList().ForEach((Key) =>
                 {
-                    if (PluginDict.TryGetValue(Key, out Plugin Value) && Value.LoadedSuccessfully)
+                    if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.LoadedSuccessfully)
                         ErrorFiles.Add(Value.File);
                 });
                 Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
                     Logger.Out(LogType.Plugin_Error, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
-                LatestFile = null;
+                System.Threading.Tasks.Task.Run(async () =>
+                {
+                    await System.Threading.Tasks.Task.Delay(5000);
+                    Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                });
             }
         }
 
@@ -84,15 +86,14 @@ namespace Serein.JSPlugin
         public static void Reload()
         {
             Logger.Out(LogType.Plugin_Clear);
-            JSFunc.Trigger("onPluginsReload");
-            WebSockets.ForEach((WSC) => WSC.Dispose());
-            WebSockets.Clear();
+            JSFunc.Trigger(EventType.PluginsReload);
             PluginDict.Keys.ToList().ForEach((Key) =>
             {
                 if (PluginDict.ContainsKey(Key))
                 {
                     PluginDict[Key].Engine.Dispose();
                     PluginDict[Key].Engine = null;
+                    PluginDict[Key].WebSockets.ForEach((ws) => ws.Dispose());
                 }
             });
             PluginDict.Clear();

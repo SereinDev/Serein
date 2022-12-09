@@ -17,46 +17,49 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 注册插件
         /// </summary>
+        /// <param name="Namespace">命名空间</param>
         /// <param name="Name">名称</param>
         /// <param name="Version">版本</param>
         /// <param name="Author">作者</param>
         /// <param name="Description">介绍</param>
         /// <returns>注册结果</returns>
-        public static bool Register(
+        public static string Register(
+            string Namespace,
             string Name,
             string Version,
             string Author,
             string Description
             )
         {
-            if (!JSPluginManager.PluginDict.ContainsKey(JSPluginManager.LatestFile))
-                return false;
+            if (Namespace == null || !JSPluginManager.PluginDict.ContainsKey(Namespace))
+                throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
             lock (JSPluginManager.PluginDict)
             {
-                JSPluginManager.PluginDict[JSPluginManager.LatestFile].Name = Name;
-                JSPluginManager.PluginDict[JSPluginManager.LatestFile].Version = Version;
-                JSPluginManager.PluginDict[JSPluginManager.LatestFile].Author = Author;
-                JSPluginManager.PluginDict[JSPluginManager.LatestFile].Description = Description;
+                JSPluginManager.PluginDict[Namespace].Name = Name;
+                JSPluginManager.PluginDict[Namespace].Version = Version;
+                JSPluginManager.PluginDict[Namespace].Author = Author;
+                JSPluginManager.PluginDict[Namespace].Description = Description;
             }
-            return true;
+            return Namespace;
         }
 
         /// <summary>
         /// 注册事件监听器
         /// </summary>
+        /// <param name="Namespace">命名空间</param>
         /// <param name="EventName">事件名称</param>
         /// <param name="Function">函数</param>
         /// <returns>注册结果</returns>
-        public static bool SetListener(string Target, string EventName, Delegate Function)
+        public static bool SetListener(string Namespace, string EventName, Delegate Function)
         {
-            Logger.Out(LogType.Debug, EventName);
+            Logger.Out(LogType.Debug, "Namespace:", Namespace, "EventName:", EventName);
+            EventName = System.Text.RegularExpressions.Regex.Replace(EventName ?? string.Empty, "^on", string.Empty);
+            if (!Enum.IsDefined(typeof(EventType), EventName))
+                throw new Exception("未知的事件：" + EventName);
             lock (JSPluginManager.PluginDict)
-            {
                 return
-                    Enum.IsDefined(typeof(EventType), EventName ?? string.Empty) &&
-                    JSPluginManager.PluginDict.ContainsKey(Target) &&
-                    JSPluginManager.PluginDict[Target].Event.Add((EventType)Enum.Parse(typeof(EventType), EventName), Function);
-            }
+                    JSPluginManager.PluginDict.ContainsKey(Namespace) &&
+                    JSPluginManager.PluginDict[Namespace].Event.Add((EventType)Enum.Parse(typeof(EventType), EventName), Function);
         }
 
         /// <summary>
@@ -64,27 +67,25 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="EventName">事件名称</param>
         /// <param name="Args">参数</param>
-        public static void Trigger(string EventName, params object[] Args)
+        public static void Trigger(EventType Type, params object[] Args)
         {
-            Logger.Out(LogType.Debug, EventName);
-            if (Enum.IsDefined(typeof(EventType), EventName ?? string.Empty))
-                lock (JSPluginManager.PluginDict)
-                {
-                    JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) =>
-                        JSPluginManager.PluginDict[Key].Event.Trigger((EventType)Enum.Parse(typeof(EventType), EventName), Args)
-                    );
-                }
+            Logger.Out(LogType.Debug, Type);
+            lock (JSPluginManager.PluginDict)
+                JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) =>JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
         }
 
         /// <summary>
         /// 设置定时器
         /// </summary>
+        /// <param name="Namespace">命名空间</param>
         /// <param name="Function">函数</param>
         /// <param name="Interval">间隔</param>
         /// <param name="AutoReset"自动重置></param>
         /// <returns>定时器哈希值</returns>
-        public static JsValue SetTimer(Delegate Function, JsValue Interval, bool AutoReset)
+        public static JsValue SetTimer(string Namespace, Delegate Function, JsValue Interval, bool AutoReset)
         {
+            if (Namespace == null && !JSPluginManager.PluginDict.ContainsKey(Namespace))
+                throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
             long TimerID = ID;
             ID++;
             Logger.Out(LogType.Debug, "Interval:", Interval.ToString(), "AutoReset:", AutoReset, "ID:", TimerID);
@@ -96,7 +97,10 @@ namespace Serein.JSPlugin
             {
                 try
                 {
-                    Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                    if (Namespace == null && !JSPluginManager.PluginDict.ContainsKey(Namespace))
+                        throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+                    lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 }
                 catch (Exception e)
                 {
@@ -137,9 +141,9 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 清除定时器
         /// </summary>
-        /// <param name="ID">哈希值</param>
+        /// <param name="ID">定时器ID</param>
         /// <returns>清除结果</returns>
-        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.ToObject());
+        public static bool ClearTimer(JsValue ID) => ClearTimer((long)(double)ID.ToObject());
 
         /// <summary>
         /// 清除所有定时器
