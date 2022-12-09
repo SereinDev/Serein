@@ -71,7 +71,7 @@ namespace Serein.JSPlugin
         {
             Logger.Out(LogType.Debug, Type);
             lock (JSPluginManager.PluginDict)
-                JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) =>JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
+                JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
         }
 
         /// <summary>

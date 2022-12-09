@@ -169,7 +169,7 @@ namespace Serein.JSPlugin
                 Logger.Out(LogType.Debug, $"触发事件{Type}时出现异常：\n", e);
             }
         }
-        
+
         #region 事件成员
         [JsonIgnore]
         public List<Delegate> ServerStart = new List<Delegate>();
