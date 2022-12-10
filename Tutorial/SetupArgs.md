@@ -1,4 +1,6 @@
 
+>通过命令行启动时可以键入参数实现某些功能
+
 ```powershell
 Serein.exe [debug] [auto_connect] [auto_start]
 ```

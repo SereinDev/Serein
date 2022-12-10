@@ -1,4 +1,6 @@
 
+>用于连接机器人ws服务器接收消息
+
 ![机器人](../imgs/bot.png)
 
 ### 支持的条件
@@ -13,4 +15,4 @@
 >- [OneBot Mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)  
 >- *其他机器人暂未测试*
 
->[!TIP] 👉[机器人详细配置教程](../Tutorial/Bot.md)👈
+>[!TIP] 👉[机器人详细配置教程](Tutorial/Bot.md)👈

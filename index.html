@@ -10,34 +10,24 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
     <link rel="shortcut icon"
         href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYYAAB2GAV2iE4EAAAJvSURBVDhPdVNLbhNBEH3d8/GMnWSGxAkmEBFgAUIskJBAsGEByo4jcASOwYYbcAZYcwLW2UUgEqQQFGKIE9szSTzfHl61bZQNZZerurrqddXrtvr4vW7QAFDUmZGlyGV/LhJTSmFQXmDFDaHnQSzSLtEztLGCkkqqiqhiuSWF4pimQddrT8+VDjqhxtv3H7AQBkjqGkuOYzdNCHgFwBAz7RdpbZCmCd69eY2zCwMtwUEFLLQDtKnXVhbRClrYvLGGXhhhJYpw8/oqet0YQRCgt9DBehz/G02Ls9YCqsMvqPt7qA++YXSww+McGGPgRy6THZx83Ubzew9Vf9fm2naWCCAoHBtwXNa41satFi6yHCE7cTiCJGvXQ9oo6FmOBRjPAKxYRhTydGi19DwuG5ydF1BaI0+GCCYJGuZIkYyt6EwBWKz4My5KMt5YliPXwXlWoB36aLiWJGs5liGRa11G2PoUQK5u/R427z7ExpOXuProBYosIyhhpbYq4T94hltPt0jYHeiN+zAnjM87kHGSosDpKIEpC/ik1vN53wETOG+jHfTaIco8A3yHgNK/VHL/pLIUImbLNkid5AVq5kTeIvY/f8IPqvZ8Elsg9ph3SXTX1XaWmo/GjjL7uI7G0WBIwh1okjiuajh8NaN0glExkXMsd1qKsUw9a7Acd+zpHkH7g5Eda/3xFm4/fwUvY5E8ZUlvTZ+xBbAsnAI5idr5eYjB6RhfjwYoyhKBqfCr/wfbu/s4Hia2oyzPkSpyIQfH7Hj+b+wE2t6rIM/4mZ5CkfXct8LFeUYEGdkCCNoV6pBKECk4Lg1WPfJD//8C/AUqawii6DJ04gAAAABJRU5ErkJggg=="
         type="image/x-icon" />
+    <script src="switchToHttps.js" ></script>
 </head>
 
 <body>
-    <div id="app">很快！等我一下！</div>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-regex.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js" defer></script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js"
-        defer></script>
-    <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js" defer></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js" defer></script>
+    <div id="app">很快！等我一下！</div>
+
     <script>
         window.$docsify = {
             autoHeader: true,
             auto2top: true,
             coverpage: true,
             externalLinkTarget: '_blank',
-            homePage:'README.md',
+            homePage: 'README.md',
             loadFooter: true,
             loadNavbar: true,
             loadSidebar: true,
@@ -45,10 +35,10 @@
             name: 'Serein',
             nativeEmoji: true,
             onlyCover: true,
-            relativePath: true,
+            relativePath: false,
             repo: 'https://github.com/Zaitonn/Serein',
+            sidebarDisplayLevel: 6,
             subMaxLevel: 5,
-            themeColor: '#1772b4',
             search: {
                 placeholder: "🔍 搜我所想...",
                 namespace: 'serein',
@@ -86,7 +76,20 @@
             }
         }
     </script>
-
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-regex.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js"
+        ></script>
+    <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js" ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js" ></script>
 
 </body>
 

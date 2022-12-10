@@ -1,7 +1,9 @@
 
+>Serein JS插件的详细文档
+
 ### JS标准
 
-[ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
+ECMAScript 2022
 
 >[!ATTENTION]
 >以下情况将导致Serein无响应
@@ -27,7 +29,7 @@
 
 #### 示例
 
->[!TIP] 在[这里](../Extension/JS/Example.js.md)你可以找到更详细的示例
+>[!TIP] 在[这里](Extension/JS/Example.js.md)你可以找到更详细的示例
 
 ```js
 // https://learn.microsoft.com/zh-cn/dotnet/api/system.io.file?view=net-6.0
@@ -70,7 +72,15 @@ var version = serein.version; // Serein版本，如v1.3.0
 - 返回
   - `String`
 
-### 内置函数
+#### JS命名空间
+
+`serein.currentNamespace`
+
+用于内部区分JS解释器和其他属性，实例化[WebSocket](#websocket客户端)时需要提供此参数
+
+此外，你也可以通过[注册插件](#注册插件)来获取命名空间
+
+### 内置方法
 
 #### 输出日志
 
@@ -87,6 +97,8 @@ serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
     - 支持`Number` `String`等类型
 - 返回
   - 空
+
+>[!TIP]个人更推荐使用[`Logger`](#logger)输出，可以方便区分插件名称
 
 #### Debug输出
 
@@ -116,8 +128,10 @@ serein.registerPlugin("示例插件","v1.0","Zaitonn","这是一个示例插件"
   - `author` 作者或版权信息
   - `description` 介绍
 - 返回
-  - `Boolean`
+  - `Boolean` *(v1.3.2及以前)*
     - 成功为`true`，否则为`false`
+  - `String`
+    - 当前的命名空间
 
 #### 设置监听器
 
@@ -161,29 +175,6 @@ function onGroupPoke(group,user){
 | onSereinStart           | Serein启动           | `( )`                                                          |
 | onSereinClose           | Serein关闭           | `( )`                                                          |
 | onPluginsReload         | 插件重载             | `( )`                                                          |
-
-#### 注册服务器命令
-
-`serein.registerCommand(command:String,func:Function)`
-
-```js
-serein.registerCommand("example",example);
-function example(cmd){
-    serein.log("你输入了注册的命令："+cmd);
-}
-```
-
->本质上是拦截命令输入
-
-- 参数
-  - `command` 命令名称
-  - `func` 命令处理函数
-    - 不要包含`()`和参数
-    - 函数原型：`(cmd:String)`
-      - `cmd` 输入的命令全文
-    - 例：
-- 返回
-  - 空
 
 #### 获取Serein设置
 
@@ -415,7 +406,7 @@ serein.stopServer();
 - 返回
   - 空
 
->[!WARNING] 此函数不能保证服务器被关闭
+>[!WARNING] 此方法不能保证服务器被关闭
 
 #### 强制结束服务器
 
@@ -514,7 +505,7 @@ var success = serein.sendGroup(114514,"大家好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
 #### 发送私聊消息
 
@@ -530,7 +521,7 @@ var success = serein.sendPrivate(114514,"你好");
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
 #### 发送数据包
 
@@ -546,7 +537,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
-    >[!WARNING] 此值仅代表此消息是否成功发送至机器人，并不代表消息能够成功发出
+    >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
 #### 获取ws连接状态
 
@@ -567,7 +558,7 @@ var connected = serein.getWsStatus();
 `serein.bindMember(userId:Number,gameId:String)`
 
 ```js
-var success = serein.bindMember(114514,"Li_Tiansuo");
+var success = serein.bindMember(114514, "Li_Tiansuo");
 ```
 
 - 参数
@@ -621,8 +612,8 @@ var id = serein.getGameID(114514);
 #### WebSocket客户端
 
 ```js
-// 由于该js解释器不支持ws，所以这里用C#封装了一个，部分函数和js原生的有所不同
-var ws = new WebSocket("ws://127.0.0.1:11451"); // 实例化ws
+// 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
+var ws = new WebSocket("ws://127.0.0.1:11451", serein.currentNamespace); // 实例化ws
 
 ws.onopen = function(){
   // ws开启事件

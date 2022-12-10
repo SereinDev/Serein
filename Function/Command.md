@@ -1,3 +1,6 @@
+
+>Serein中最重要的组成部分
+
 ### 命令格式
 
 `<命令名称>[:<参数>]|<执行内容>`
@@ -90,7 +93,7 @@
 >[!WARNING]  
 >
 >- 此命令只能被群聊消息触发
->- 若该ID不合法或已经绑定会返回消息提示，示内容可在*settings/Event.json*中自定义，详见[事件](Event.md)  
+>- 若该ID不合法或已经绑定会返回消息提示，内容可在[事件](Functions/Event.md) 中自定义
 
 ### 解绑游戏ID
 
@@ -101,7 +104,7 @@
 >[!WARNING]  
 >
 >- 此命令只能被群聊消息触发
->- 若该ID不合法或已经绑定会返回消息提示，消息提示内容可通过[事件](Event.md)自定义
+>- 若该ID不合法或已经绑定会返回消息提示，内容可通过[事件](Functions/Event.md)自定义
 
 ### 获取服务器信息
 
@@ -122,7 +125,7 @@
 >   - 域名无法解析  
 >   - 连接超时  
 >   - 数据包无法识别
->- 错误消息可通过[事件](Event.md)自定义
+>- 错误消息可通过[事件](Function/Event.md)自定义
 
 ### 执行Javascript代码
 
@@ -130,12 +133,12 @@
 `javascript|<代码>`
 
 - 运行超时：1min
-- js标准：[ECMAScript 5.1(ES5)](http://www.ecma-international.org/ecma-262/5.1/)
-- 详见[插件语法](JSDocs.md.md)
+- js标准：ECMAScript 2022
+- 详见[插件语法](Function/JSDocs.md.md)
 
 ### 调试输出
 
 `debug|<消息>`  
 输出调试消息到Debug窗口
 
->[!TIP]你需要在*settings/Serein.json*中手动开启`Debug模式`
+>[!TIP]你需要[开启Debug模式](Tutorial/DebugMode.md)

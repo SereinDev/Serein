@@ -1,7 +1,9 @@
 
+>安排定期执行的任务
+
 ![定时任务](../imgs/task.png)
 
-任务数据保存在*data/task.json*
+任务数据保存在 data/task.json
 
 > [!TIP]
 >
@@ -28,12 +30,13 @@
 >生成器（推荐）：[Crontab guru](https://crontab.guru/)  
 >语法：[POSIX cron 语法](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) ，[Crontab Expression](https://github.com/atifaziz/NCrontab/wiki/Crontab-Expression)
 
->[!WARNING]为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
+>[!WARNING]
+>为减少计算量，可能存在一定偏差（<4000ms），但不会叠加  
 >例：假设一定时任务为`* * * * *`，代表在每一分钟执行该任务，但是可能在这分钟的第0秒到第4秒的任意时刻执行
 
 #### 执行命令
 
-执行一条[Serein命令](Command.md)，你可以在其中插入[变量](Variables.md)
+执行一条[Serein命令](Function/Command.md)，你可以在其中插入[变量](Function/Variables.md)
 
 #### 备注
 

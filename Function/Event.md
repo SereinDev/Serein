@@ -1,9 +1,11 @@
 
+>设定特定条件下触发的命令
+
 ![事件](../imgs/event.png)
 
 ### 介绍
 
-根据*settings/Event.json*中的设置的命令响应触发的事件  
+根据settings/Event.json中的设置的命令响应触发的事件  
 
 在配置文件中，每个事件下有一个`JSON`数组，你可以在里面填写该事件被触发时执行的[命令](Command.md)，并且可以在其中插入[变量](Variables.md)
 
