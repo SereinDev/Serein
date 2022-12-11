@@ -2,13 +2,13 @@
 {
     internal class Serein
     {
-        public bool ColorfulLog { get; set; } = true;
-        public bool Debug { get; set; } = false;
-        public bool DetailDebug { get; set; } = false;
-        public bool DPIAware { get; set; } = false;
-        public bool EnableGetUpdate { get; set; } = true;
-        public int MaxCacheLines { get; set; } = 100;
-        public bool ThemeFollowSystem { get; set; } = true;
-        public bool UseDarkTheme { get; set; } = false;
+        public bool ColorfulLog = true;
+        public bool Debug = false;
+        public bool DetailDebug = false;
+        public bool DPIAware = false;
+        public bool EnableGetUpdate = true;
+        public int MaxCacheLines = 100;
+        public bool ThemeFollowSystem = true;
+        public bool UseDarkTheme = false;
     }
 }

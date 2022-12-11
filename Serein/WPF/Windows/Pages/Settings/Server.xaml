@@ -104,7 +104,7 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <TextBlock Text="服务端类型" ToolTip="指定服务器的类型\n用于获取服务器的Motd" />
+                <TextBlock Text="服务端类型" ToolTip="指定服务器的类型（用于获取服务器的Motd）" />
                 <ComboBox
                     Name="Type"
                     HorizontalAlignment="Left"
@@ -158,6 +158,16 @@
                     TextChanged="Port_TextChanged"
                     ToolTip="指定服务器的本地端口（用于获取服务器的Motd）"
                     Value="19132" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <TextBlock Text="行终止符" ToolTip="当前使用的行结束符字符串" />
+                <TextBox
+                    Name="LineTerminator"
+                    MaxWidth="150"
+                    MinWidth="100"
+                    HorizontalAlignment="Left"
+                    TextChanged="LineTerminator_TextChanged"
+                    ToolTip="当前使用的行结束符字符串" />
             </StackPanel>
         </Grid>
     </StackPanel>

@@ -20,7 +20,7 @@ namespace Serein
         /// <summary>
         /// 版本号
         /// </summary>
-        public const string VERSION = "v1.3.2";
+        public const string VERSION = "v1.3.3";
 
         /// <summary>
         /// 正则项列表
@@ -40,7 +40,7 @@ namespace Serein
         /// <summary>
         /// 设置项
         /// </summary>
-        public static Item Settings = new Item();
+        public static Category Settings = new Category();
 
         /// <summary>
         /// 首次开启

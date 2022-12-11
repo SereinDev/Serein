@@ -103,58 +103,58 @@ namespace Serein.Settings
             switch (Type)
             {
                 case EventType.BindingSucceed:
-                    Global.Settings.Event.BindingSucceed = Commands;
+                    BindingSucceed = Commands;
                     break;
                 case EventType.BindingFailDueToOccupation:
-                    Global.Settings.Event.BindingFailDueToOccupation = Commands;
+                    BindingFailDueToOccupation = Commands;
                     break;
                 case EventType.BindingFailDueToInvalid:
-                    Global.Settings.Event.BindingFailDueToInvalid = Commands;
+                    BindingFailDueToInvalid = Commands;
                     break;
                 case EventType.BindingFailDueToAlreadyBinded:
-                    Global.Settings.Event.BindingFailDueToAlreadyBinded = Commands;
+                    BindingFailDueToAlreadyBinded = Commands;
                     break;
                 case EventType.UnbindingSucceed:
-                    Global.Settings.Event.UnbindingSucceed = Commands;
+                    UnbindingSucceed = Commands;
                     break;
                 case EventType.UnbindingFail:
-                    Global.Settings.Event.UnbindingFail = Commands;
+                    UnbindingFail = Commands;
                     break;
                 case EventType.ServerStart:
-                    Global.Settings.Event.ServerStart = Commands;
+                    ServerStart = Commands;
                     break;
                 case EventType.ServerStop:
-                    Global.Settings.Event.ServerStop = Commands;
+                    ServerStop = Commands;
                     break;
                 case EventType.ServerExitUnexpectedly:
-                    Global.Settings.Event.ServerExitUnexpectedly = Commands;
+                    ServerExitUnexpectedly = Commands;
                     break;
                 case EventType.GroupIncrease:
-                    Global.Settings.Event.GroupIncrease = Commands;
+                    GroupIncrease = Commands;
                     break;
                 case EventType.GroupDecrease:
-                    Global.Settings.Event.GroupDecrease = Commands;
+                    GroupDecrease = Commands;
                     break;
                 case EventType.GroupPoke:
-                    Global.Settings.Event.GroupPoke = Commands;
+                    GroupPoke = Commands;
                     break;
                 case EventType.SereinCrash:
-                    Global.Settings.Event.SereinCrash = Commands;
+                    SereinCrash = Commands;
                     break;
                 case EventType.RequestingMotdpeSucceed:
-                    Global.Settings.Event.RequestingMotdpeSucceed = Commands;
+                    RequestingMotdpeSucceed = Commands;
                     break;
                 case EventType.RequestingMotdjeSucceed:
-                    Global.Settings.Event.RequestingMotdjeSucceed = Commands;
+                    RequestingMotdjeSucceed = Commands;
                     break;
                 case EventType.RequestingMotdFail:
-                    Global.Settings.Event.RequestingMotdFail = Commands;
+                    RequestingMotdFail = Commands;
                     break;
                 case EventType.PermissionDeniedFromPrivateMsg:
-                    Global.Settings.Event.PermissionDeniedFromPrivateMsg = Commands;
+                    PermissionDeniedFromPrivateMsg = Commands;
                     break;
                 case EventType.PermissionDeniedFromGroupMsg:
-                    Global.Settings.Event.PermissionDeniedFromGroupMsg = Commands;
+                    PermissionDeniedFromGroupMsg = Commands;
                     break;
             }
         }
@@ -164,41 +164,41 @@ namespace Serein.Settings
             switch (Type)
             {
                 case EventType.BindingSucceed:
-                    return Global.Settings.Event.BindingSucceed;
+                    return BindingSucceed;
                 case EventType.BindingFailDueToOccupation:
-                    return Global.Settings.Event.BindingFailDueToOccupation;
+                    return BindingFailDueToOccupation;
                 case EventType.BindingFailDueToInvalid:
-                    return Global.Settings.Event.BindingFailDueToInvalid;
+                    return BindingFailDueToInvalid;
                 case EventType.BindingFailDueToAlreadyBinded:
-                    return Global.Settings.Event.BindingFailDueToAlreadyBinded;
+                    return BindingFailDueToAlreadyBinded;
                 case EventType.UnbindingSucceed:
-                    return Global.Settings.Event.UnbindingSucceed;
+                    return UnbindingSucceed;
                 case EventType.UnbindingFail:
-                    return Global.Settings.Event.UnbindingFail;
+                    return UnbindingFail;
                 case EventType.ServerStart:
-                    return Global.Settings.Event.ServerStart;
+                    return ServerStart;
                 case EventType.ServerStop:
-                    return Global.Settings.Event.ServerStop;
+                    return ServerStop;
                 case EventType.ServerExitUnexpectedly:
-                    return Global.Settings.Event.ServerExitUnexpectedly;
+                    return ServerExitUnexpectedly;
                 case EventType.GroupIncrease:
-                    return Global.Settings.Event.GroupIncrease;
+                    return GroupIncrease;
                 case EventType.GroupDecrease:
-                    return Global.Settings.Event.GroupDecrease;
+                    return GroupDecrease;
                 case EventType.GroupPoke:
-                    return Global.Settings.Event.GroupPoke;
+                    return GroupPoke;
                 case EventType.SereinCrash:
-                    return Global.Settings.Event.SereinCrash;
+                    return SereinCrash;
                 case EventType.RequestingMotdpeSucceed:
-                    return Global.Settings.Event.RequestingMotdpeSucceed;
+                    return RequestingMotdpeSucceed;
                 case EventType.RequestingMotdjeSucceed:
-                    return Global.Settings.Event.RequestingMotdjeSucceed;
+                    return RequestingMotdjeSucceed;
                 case EventType.RequestingMotdFail:
-                    return Global.Settings.Event.RequestingMotdFail;
+                    return RequestingMotdFail;
                 case EventType.PermissionDeniedFromPrivateMsg:
-                    return Global.Settings.Event.PermissionDeniedFromPrivateMsg;
+                    return PermissionDeniedFromPrivateMsg;
                 case EventType.PermissionDeniedFromGroupMsg:
-                    return Global.Settings.Event.PermissionDeniedFromGroupMsg;
+                    return PermissionDeniedFromGroupMsg;
                 default:
                     return Array.Empty<string>();
             }

@@ -3292,6 +3292,54 @@
   <data name="&gt;&gt;SettingBot.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="SettingServerLineTerminator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>571, 498</value>
+  </data>
+  <data name="SettingServerLineTerminator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 38</value>
+  </data>
+  <data name="SettingServerLineTerminator.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminator.Name" xml:space="preserve">
+    <value>SettingServerLineTerminator</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminator.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminator.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingServerLineTerminatorLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingServerLineTerminatorLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>455, 501</value>
+  </data>
+  <data name="SettingServerLineTerminatorLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 31</value>
+  </data>
+  <data name="SettingServerLineTerminatorLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="SettingServerLineTerminatorLabel.Text" xml:space="preserve">
+    <value>行终止符</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminatorLabel.Name" xml:space="preserve">
+    <value>SettingServerLineTerminatorLabel</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminatorLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminatorLabel.Parent" xml:space="preserve">
+    <value>SettingServer</value>
+  </data>
+  <data name="&gt;&gt;SettingServerLineTerminatorLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="SettingServerOutputEncodingLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3317,7 +3365,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputEncodingLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="SettingServerOutputEncoding.Items" xml:space="preserve">
     <value>UTF-8</value>
@@ -3359,7 +3407,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputEncoding.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="SettingServerTypeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3386,7 +3434,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerTypeLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="SettingServerPortLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3413,7 +3461,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPortLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="SettingServerType.Items" xml:space="preserve">
     <value>未知/其他</value>
@@ -3443,7 +3491,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerType.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="SettingServerPort.Location" type="System.Drawing.Point, System.Drawing">
     <value>571, 403</value>
@@ -3464,7 +3512,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPort.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="SettingServerOutputStyle.Items" xml:space="preserve">
     <value>无</value>
@@ -3497,7 +3545,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyle.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="SettingServerStopCommand.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -3521,7 +3569,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommand.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="SettingServerEnableUnicode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3554,7 +3602,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableUnicode.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="SettingServerEncoding.Items" xml:space="preserve">
     <value>UTF-8</value>
@@ -3596,7 +3644,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEncoding.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="SettingServerEncodingLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3623,7 +3671,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEncodingLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="SettingServerAutoStop.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3650,7 +3698,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerAutoStop.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="SettingServerStopCommandLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3677,7 +3725,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerStopCommandLabel.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="SettingServerOutputStyleLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3710,7 +3758,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerOutputStyleLabel.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="SettingServerEnableLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3743,7 +3791,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableLog.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="SettingServerEnableOutputCommand.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3776,7 +3824,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableOutputCommand.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="SettingServerEnableRestart.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3809,7 +3857,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerEnableRestart.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="SettingServerPathLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3842,7 +3890,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPathLabel.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="SettingServerPathSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -3872,7 +3920,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPathSelect.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <data name="SettingServerPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -3896,7 +3944,7 @@
     <value>SettingServer</value>
   </data>
   <data name="&gt;&gt;SettingServerPath.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <data name="SettingServer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>

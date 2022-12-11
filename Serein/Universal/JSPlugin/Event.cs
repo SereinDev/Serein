@@ -174,85 +174,71 @@ namespace Serein.JSPlugin
         [JsonIgnore]
         public List<Delegate> ServerStart = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ServerStartCount")]
         public int ServerStartCount => ServerStart.Count;
 
         [JsonIgnore]
         public List<Delegate> ServerStop = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ServerStop")]
         public int ServerStopCount => ServerStop.Count;
 
         [JsonIgnore]
         public List<Delegate> ServerSendCommand = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ServerSendCommand")]
         public int ServerSendCommandCount => ServerSendCommand.Count;
 
         [JsonIgnore]
         public List<Delegate> ServerOutput = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ServerOutput")]
         public int ServerOutputCount => ServerOutput.Count;
 
         [JsonIgnore]
         public List<Delegate> ServerOriginalOutput = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ServerOriginalOutput")]
         public int ServerOriginalOutputCount => ServerOriginalOutput.Count;
 
         [JsonIgnore]
         public List<Delegate> GroupIncrease = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "GroupIncrease")]
         public int GroupIncreaseCount => GroupIncrease.Count;
 
         [JsonIgnore]
         public List<Delegate> GroupDecrease = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "GroupDecrease")]
         public int GroupDecreaseCount => GroupDecrease.Count;
 
         [JsonIgnore]
         public List<Delegate> GroupPoke = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "GroupPoke")]
         public int GroupPokeCount => GroupPoke.Count;
 
         [JsonIgnore]
         public List<Delegate> ReceiveGroupMessage = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ReceiveGroupMessage")]
         public int ReceiveGroupMessageCount => ReceiveGroupMessage.Count;
 
         [JsonIgnore]
         public List<Delegate> ReceivePrivateMessage = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ReceivePrivateMessage")]
         public int ReceivePrivateMessageCount => ReceivePrivateMessage.Count;
 
         [JsonIgnore]
         public List<Delegate> ReceivePacket = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "ReceivePacket")]
         public int ReceivePacketCount => ReceivePacket.Count;
 
         [JsonIgnore]
         public List<Delegate> SereinStart = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "SereinStart")]
         public int SereinStartCount => SereinStart.Count;
 
         [JsonIgnore]
         public List<Delegate> SereinClose = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "SereinClose")]
         public int SereinCloseCount => SereinClose.Count;
 
         [JsonIgnore]
         public List<Delegate> PluginsReload = new List<Delegate>();
 
-        [JsonProperty(PropertyName = "PluginsReload")]
         public int PluginsReloadCount => PluginsReload.Count;
 
         #endregion

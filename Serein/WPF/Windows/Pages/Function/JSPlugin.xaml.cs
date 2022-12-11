@@ -1,6 +1,8 @@
 ﻿using Serein.Items;
 using Serein.JSPlugin;
 using System.Diagnostics;
+using System.Linq;
+using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
 using Wpf.Ui.Controls;
@@ -32,6 +34,7 @@ namespace Serein.Windows.Pages.Function
             foreach (Plugin Item in JSPluginManager.PluginDict.Values)
             {
                 JSPluginListView.Items.Add(Item);
+                Logger.Out(LogType.Debug, Item.Name);
             }
         }
 

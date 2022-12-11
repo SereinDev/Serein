@@ -4,11 +4,11 @@ namespace Serein.Settings
 {
     internal class Matches
     {
-        public string Version { get; set; } = @"(\d+\.\d+\.\d+\.\d+)";
-        public string Difficulty { get; set; } = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
-        public string LevelName { get; set; } = "Level Name: (.+?)$";
-        public string Finished { get; set; } = "(Done|Started)";
-        public string[] MuiltLines { get; set; } =
+        public string Version = @"(\d+\.\d+\.\d+\.\d+)";
+        public string Difficulty = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
+        public string LevelName = "Level Name: (.+?)$";
+        public string Finished = "(Done|Started)";
+        public string[] MuiltLines =
         {
             @"players\sonline:"
         };

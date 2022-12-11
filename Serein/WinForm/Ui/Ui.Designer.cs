@@ -192,6 +192,8 @@ namespace Serein.Ui
             this.SettingBotGivePermissionToAllAdmin = new System.Windows.Forms.CheckBox();
             this.SettingBotEnableLog = new System.Windows.Forms.CheckBox();
             this.SettingServer = new System.Windows.Forms.GroupBox();
+            this.SettingServerLineTerminator = new System.Windows.Forms.TextBox();
+            this.SettingServerLineTerminatorLabel = new System.Windows.Forms.Label();
             this.SettingServerOutputEncodingLabel = new System.Windows.Forms.Label();
             this.SettingServerOutputEncoding = new System.Windows.Forms.ComboBox();
             this.SettingServerTypeLabel = new System.Windows.Forms.Label();
@@ -1434,6 +1436,8 @@ namespace Serein.Ui
             // 
             // SettingServer
             // 
+            this.SettingServer.Controls.Add(this.SettingServerLineTerminator);
+            this.SettingServer.Controls.Add(this.SettingServerLineTerminatorLabel);
             this.SettingServer.Controls.Add(this.SettingServerOutputEncodingLabel);
             this.SettingServer.Controls.Add(this.SettingServerOutputEncoding);
             this.SettingServer.Controls.Add(this.SettingServerTypeLabel);
@@ -1463,6 +1467,19 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingServerOutputEncodingLabel, "SettingServerOutputEncodingLabel");
             this.SettingServerOutputEncodingLabel.Name = "SettingServerOutputEncodingLabel";
             this.SettingServerOutputEncodingLabel.MouseHover += new System.EventHandler(this.SettingServerOutputEncodingLabel_MouseHover);
+            //
+            // SettingServerLineTerminator
+            // 
+            resources.ApplyResources(this.SettingServerLineTerminator, "SettingServerLineTerminator");
+            this.SettingServerLineTerminator.Name = "SettingServerLineTerminator";
+            this.SettingServerLineTerminator.TextChanged += new System.EventHandler(this.SettingServerLineTerminator_TextChanged);
+            this.SettingServerLineTerminator.MouseHover += new System.EventHandler(this.SettingServerLineTerminator_MouseHover);
+            // 
+            // SettingServerLineTerminatorLabel
+            // 
+            resources.ApplyResources(this.SettingServerLineTerminatorLabel, "SettingServerLineTerminatorLabel");
+            this.SettingServerLineTerminatorLabel.Name = "SettingServerLineTerminatorLabel";
+            this.SettingServerLineTerminatorLabel.MouseHover += new System.EventHandler(this.SettingServerLineTerminatorLabel_MouseHover);
             // 
             // SettingServerOutputEncoding
             // 
@@ -1905,6 +1922,8 @@ namespace Serein.Ui
         private System.Windows.Forms.ComboBox SettingServerOutputEncoding;
         private System.Windows.Forms.Label SettingServerOutputEncodingLabel;
         private System.Windows.Forms.CheckBox SettingBotEnbaleParseAt;
+        private System.Windows.Forms.TextBox SettingServerLineTerminator;
+        private System.Windows.Forms.Label SettingServerLineTerminatorLabel;
     }
 }
 

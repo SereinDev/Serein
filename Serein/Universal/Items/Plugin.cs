@@ -20,22 +20,22 @@ namespace Serein.Items
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version = string.Empty;
+        public string Version { get; set; } = string.Empty;
 
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author = string.Empty;
+        public string Author { get; set; } = string.Empty;
 
         /// <summary>
         /// 介绍
         /// </summary>
-        public string Description = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// 文件名

@@ -20,7 +20,7 @@ namespace Serein.Server
         private static bool Killed;
         public static double CPUPersent = 0;
         public static int CommandListIndex = 0;
-        public static object Lock = new object();
+        private static readonly object Lock = new object();
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
         private static ProcessStartInfo ServerProcessInfo;
         private static Process ServerProcess;
@@ -85,7 +85,7 @@ namespace Serein.Server
                    )
                 {
                     AutoFlush = true,
-                    NewLine = "\n"
+                    NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator) ? Environment.NewLine : Global.Settings.Server.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
                 };
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += SortOutputHandler;

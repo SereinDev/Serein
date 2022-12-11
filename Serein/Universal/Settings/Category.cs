@@ -1,6 +1,6 @@
 ﻿namespace Serein.Settings
 {
-    internal class Item
+    internal class Category
     {
         public Server Server = new Server();
         public Matches Matches = new Matches();

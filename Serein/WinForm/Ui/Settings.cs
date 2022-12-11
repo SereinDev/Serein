@@ -28,6 +28,7 @@ namespace Serein.Ui
             SettingServerStopCommand.Text = string.Join(";", Global.Settings.Server.StopCommands);
             SettingServerPort.Value = Global.Settings.Server.Port;
             SettingServerType.SelectedIndex = Global.Settings.Server.Type;
+            SettingServerLineTerminator.Text=Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             SettingBotUri.Text = Global.Settings.Bot.Uri;
@@ -66,6 +67,8 @@ namespace Serein.Ui
             => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
         private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e)
             => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
+        private void SettingServerLineTerminator_TextChanged(object sender, EventArgs e)
+            => Global.Settings.Server.LineTerminator = SettingServerLineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
 
         private void SettingBotUri_TextChanged(object sender, EventArgs e)
             => Global.Settings.Bot.Uri = SettingBotUri.Text;

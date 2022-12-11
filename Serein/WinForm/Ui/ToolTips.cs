@@ -43,6 +43,10 @@ namespace Serein.Ui
             => ShowToolTip(sender, "指定服务器的类型\n用于获取服务器的Motd");
         private void SettingServerPortLabel_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "指定服务器的本地端口\n用于获取服务器的Motd");
+        private void SettingServerLineTerminator_MouseHover(object sender, EventArgs e)
+            => ShowToolTip(sender, "当前使用的行结束符字符串");
+        private void SettingServerLineTerminatorLabel_MouseHover(object sender, EventArgs e)
+            => ShowToolTip(sender, "当前使用的行结束符字符串");
 
         private void SettingBotUriLabel_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, $"Websocket服务器的地址\n即Websocket服务器应在 ws://{Global.Settings.Bot.Uri} 上开启");

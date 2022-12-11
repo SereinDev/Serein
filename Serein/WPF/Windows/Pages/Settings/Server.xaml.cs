@@ -30,6 +30,7 @@ namespace Serein.Windows.Pages.Settings
             OutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
             Path.Text = Global.Settings.Server.Path;
             Port.Value = Global.Settings.Server.Port;
+            LineTerminator.Text = Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
         }
 
         private void StopCommands_TextChanged(object sender, TextChangedEventArgs e)
@@ -54,6 +55,8 @@ namespace Serein.Windows.Pages.Settings
             => Global.Settings.Server.OutputStyle = Loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
         private void Port_TextChanged(object sender, TextChangedEventArgs e)
             => Global.Settings.Server.Port = Loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
+        private void LineTerminator_TextChanged(object sender, TextChangedEventArgs e)
+            => Global.Settings.Server.LineTerminator = LineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
