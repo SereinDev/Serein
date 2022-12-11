@@ -51,9 +51,7 @@
   <ItemGroup>
     <Compile Remove="..\Universal\Build_Info.txt" />
     <Compile Remove="..\Universal\ConsoleHtml\console.html" />
-    <Compile Remove="..\Universal\ConsoleHtml\console.js" />
     <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
-    <Compile Remove="..\Universal\ConsoleHtml\vanilla.css" />
     <Compile Remove="..\Universal\Init.bat" />
     <Compile Remove="..\Universal\Sources\Serein.ico" />
   </ItemGroup>
@@ -71,9 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\Universal\ConsoleHtml\console.html" />
-    <EmbeddedResource Include="..\Universal\ConsoleHtml\console.js" />
     <EmbeddedResource Include="..\Universal\ConsoleHtml\preset.css" />
-    <EmbeddedResource Include="..\Universal\ConsoleHtml\vanilla.css" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -118,11 +114,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
@@ -138,12 +129,6 @@
     <EmbeddedResource Update="Ui\ChildrenWindow\TaskEditor.resx">
       <DependentUpon>TaskEditor.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
