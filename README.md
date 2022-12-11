@@ -1,5 +1,5 @@
 
-![logo](https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light ":no-zoom")
+![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
 
 ![GitHub stars](https://img.shields.io/github/stars/Zaitonn/Serein?color=blue ":no-zoom")
 ![GitHub latest version](https://img.shields.io/github/v/release/Zaitonn/Serein?color=blue ":no-zoom")
