@@ -28,7 +28,7 @@ namespace Serein.Ui
             SettingServerStopCommand.Text = string.Join(";", Global.Settings.Server.StopCommands);
             SettingServerPort.Value = Global.Settings.Server.Port;
             SettingServerType.SelectedIndex = Global.Settings.Server.Type;
-            SettingServerLineTerminator.Text=Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
+            SettingServerLineTerminator.Text = Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             SettingBotUri.Text = Global.Settings.Bot.Uri;
