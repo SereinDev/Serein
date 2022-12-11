@@ -4,7 +4,7 @@
 
 - ⛳ 相遇
   - [❔ Serein 是什么](README.md)
-  - [👀 为什么选择Serein](Why.md)
+  - [👀 为什么选择Serein](Feature.md)
 
 - 📻 功能
   - [🤖 机器人](Function/Bot.md)

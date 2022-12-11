@@ -1,5 +1,5 @@
 
-# ![logo](Serein.png ':size=25') Serein
+# ![logo](assets/Serein.png ':size=25') Serein
 
 >新时代极简服务器面板
 
