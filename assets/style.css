@@ -1,0 +1,18 @@
+.markdown-section p a,
+.markdown-section table a,
+.markdown-section li a {
+    text-decoration: none;
+    font-weight: inherit !important;
+    border-bottom: 1px solid #00000000;
+    transition: border-bottom 0.3s;
+}
+
+.markdown-section p a:not(.anchor):hover,
+.markdown-section table a:not(.anchor):hover,
+.markdown-section li a:not(.anchor):hover {
+    border-bottom: 1px solid var(--theme-color, #42b983);
+}
+
+* {
+    transition: 0.1s;
+}

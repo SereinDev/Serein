@@ -98,7 +98,7 @@ serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
 - 返回
   - 空
 
->[!TIP]个人更推荐使用[`Logger`](#logger)输出，可以方便区分插件名称
+>[!TIP]个人更推荐使用[Logger](#logger)输出，可以方便区分插件名称
 
 #### Debug输出
 

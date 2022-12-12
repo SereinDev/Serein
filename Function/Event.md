@@ -95,16 +95,16 @@
 | GroupIncrease                  | 监听群有人进群                 |
 | GroupDecrease                  | 监听群有人退群                 |
 | GroupPoke                      | 监听群内当前账号被他人戳一戳   |
-| RequestingMotdpeSucceed        | 命令*motdpe*执行成功           |
-| RequestingMotdjeSucceed        | 命令*motdje*执行成功           |
-| RequestingMotdFail             | 命令*motdpe*或*motdje*执行失败 |
+| RequestingMotdpeSucceed        | 命令motdpe执行成功           |
+| RequestingMotdjeSucceed        | 命令motdje执行成功           |
+| RequestingMotdFail             | 命令motdpe或motdje执行失败 |
 | PermissionDeniedFromPrivateMsg | 权限不足（私聊）               |
 | PermissionDeniedFromGroupMsg   | 权限不足（群聊）               |
 | SereinCrash                    | Serein崩溃                     |
 
 ### 绑定/解绑
 
->[!WARNING]本节的所有事件可以使用*ID*变量获取触发这个事件的QQ
+>[!TIP]本节的所有事件可以使用 ID 变量获取触发这个事件的QQ
 
 #### BindingSucceed
 
@@ -199,7 +199,7 @@ ubind|%ID%
 
 #### RequestingMotdpeSucceed
 
-命令*motdpe*执行成功  
+命令motdpe执行成功  
 默认值：
 
 ```Serein命令
@@ -213,7 +213,7 @@ g|
 
 #### RequestingMotdjeSucceed
 
-命令*motdje*执行成功  
+命令motdje执行成功  
 默认值：
 
 ```Serein命令
@@ -227,7 +227,7 @@ g|
 
 #### RequestingMotdFail
 
-命令*motdpe*或*motdje*执行失败  
+命令motdpe或motdje执行失败  
 默认值：
 
 ```Serein命令
@@ -236,7 +236,7 @@ Motd获取失败
 %Exception%
 ```
 
->[!WARNING]*RequestingMotdFail*可以使用额外的*Exception*变量输出错误信息
+>[!TIP]*RequestingMotdFail*可以使用额外的*Exception*变量输出错误信息
 
 ### 权限不足反馈
 

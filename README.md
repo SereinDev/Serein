@@ -1,11 +1,26 @@
 
-![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
+![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board ":no-zoom")
 
-![GitHub stars](https://img.shields.io/github/stars/Zaitonn/Serein?color=blue ":no-zoom")
-![GitHub latest version](https://img.shields.io/github/v/release/Zaitonn/Serein?color=blue ":no-zoom")
-![GitHub all releases](https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue ":no-zoom")
-![GitHub bulid](https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue ":no-zoom")
-![GitHub repo file count](https://img.shields.io/github/languages/code-size/Zaitonn/Serein ":no-zoom")
+<p align="center">
+    <a href="https://github.com/Zaitonn/Serein/stargazers">
+        <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/releases/latest">
+        <img src="https://img.shields.io/github/v/release/Zaitonn/Serein?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/releases/latest">
+        <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml">
+        <img alt="GitHub bulid" src="https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue">
+    </a>
+    <a href="https://github.com/Zaitonn/Serein">
+        <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">
+    </a>
+    <a href="https://www.codefactor.io/repository/github/zaitonn/serein">
+        <img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/Zaitonn/Serein/main?color=blue">
+    </a>
+</p>
 
 Serein 是一个基于NET 6或NET Framework 4.7.2的新时代我的世界极简服务器面板
 

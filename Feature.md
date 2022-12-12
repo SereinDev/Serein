@@ -1,5 +1,5 @@
 
-![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
+![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board ":no-zoom")
 
 ## 麻雀虽小，五脏俱全
 
