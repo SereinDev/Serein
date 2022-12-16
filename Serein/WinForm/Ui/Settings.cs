@@ -90,11 +90,11 @@ namespace Serein.Ui
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
         private void SettingSereinAbout_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/About") { UseShellExecute = true });
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/More/About") { UseShellExecute = true });
         private void SettingSereinPage_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
         private void SettingSereinTutorial_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/README") { UseShellExecute = true });
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/Install") { UseShellExecute = true });
         private void SettingSereinDownload_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
         private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)

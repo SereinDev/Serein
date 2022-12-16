@@ -232,9 +232,9 @@
                 Grid.Row="2"
                 Margin="10"
                 HorizontalAlignment="Center"
-                Content="查看文档页面"
+                Content="查看官网页面"
                 Icon="Link24"
-                NavigateUri="https://serein.cc/#/Tutorial/README" />
+                NavigateUri="https://serein.cc" />
             <ui:Anchor
                 Grid.Row="2"
                 Grid.Column="1"

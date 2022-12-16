@@ -9,7 +9,7 @@ namespace Serein.Settings
 
         public string[] BindingSucceed { get; set; } = new string[]
         {
-             "g|[CQ:at,qq=%ID] 绑定成功"
+             "g|[CQ:at,qq=%ID%] 绑定成功"
         };
 
         public string[] BindingFailDueToOccupation { get; set; } = new string[]

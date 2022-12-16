@@ -1,7 +1,7 @@
 # Serein - 新时代极简服务器面板
 
 <p align="center">
-    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%96%B0%E6%97%B6%E4%BB%A3%E6%9E%81%E7%AE%80%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF&font=KoHo&logo=https%3A%2F%2Fserein.cc%2FSerein.png&owner=1&pattern=Circuit%20Board&theme=Light">
+    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board">
     <br>
     <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
     <a href="https://github.com/Zaitonn/Serein/releases/latest">
@@ -11,7 +11,7 @@
         <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue">
     </a>
     <a href="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml">
-    <img alt="GitHub bulid" src="https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue">
+    <img alt="GitHub bulid" src="https://img.shields.io/github/actions/workflow/status/Zaitonn/Serein/Build.yml?branch=main&color=blue">
     </a>
     <a href="https://github.com/Zaitonn/Serein">
         <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">
@@ -71,4 +71,4 @@ VS2022; NET Framework 4.7.2 & NET 6.0
 
 ## 关于
 
-详见 [关于 - Serein](https://serein.cc/#/About)
+详见 [关于 - Serein](https://serein.cc/#/More/About)

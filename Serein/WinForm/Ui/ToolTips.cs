@@ -82,11 +82,11 @@ namespace Serein.Ui
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "启动后自动获取更新（建议开启）");
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)
-            => ShowToolTip(sender, "打开文档页面（https://serein.cc/#/About）");
+            => ShowToolTip(sender, "打开文档页面（https://serein.cc/#/More/About）");
         private void SettingSereinPage_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "打开介绍页面（https://serein.cc）");
         private void SettingSereinTutorial_MouseHover(object sender, EventArgs e)
-            => ShowToolTip(sender, "打开教程页面（https://serein.cc/#/Tutorial/README）");
+            => ShowToolTip(sender, "打开教程页面（https://serein.cc/#/Tutorial）");
         private void SettingSereinDownload_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "打开最新版下载页面（https://github.com/Zaitonn/Serein/releases/latest）");
         private void SettingSereinEnableDPIAware_MouseHover(object sender, EventArgs e)

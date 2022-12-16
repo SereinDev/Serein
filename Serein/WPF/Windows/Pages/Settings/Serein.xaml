@@ -46,15 +46,15 @@
                     ToolTip="控制台的最大缓存行数（建议大于50）" />
                 <ui:NumberBox
                     x:Name="MaxCacheLines"
-                    Max="250"
-                    Step="1"
-                    IntegersOnly="True"
-                    Min="0"
-                    Icon="TextFirstLine24"
-                    ToolTip="控制台的最大缓存行数（建议大于50）"
-                    Value="100"
                     HorizontalAlignment="Left"
-                    TextChanged="MaxCacheLines_TextChanged"/>
+                    Icon="TextFirstLine24"
+                    IntegersOnly="True"
+                    Max="250"
+                    Min="0"
+                    Step="1"
+                    TextChanged="MaxCacheLines_TextChanged"
+                    ToolTip="控制台的最大缓存行数（建议大于50）"
+                    Value="100" />
             </StackPanel>
         </Grid>
         <Grid>
@@ -74,7 +74,7 @@
                 NavigateUri="https://github.com/Zaitonn/Serein/releases/latest" />
             <ui:Hyperlink
                 Grid.Column="2"
-                Content="文档"
+                Content="官网"
                 Icon="Link48"
                 NavigateUri="https://serein.cc/" />
         </Grid>
