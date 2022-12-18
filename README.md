@@ -2,9 +2,7 @@
 ![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board ":no-zoom")
 
 <p align="center">
-    <a href="https://github.com/Zaitonn/Serein/stargazers">
-        <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
-    </a>
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
     <a href="https://github.com/Zaitonn/Serein/releases/latest">
         <img src="https://img.shields.io/github/v/release/Zaitonn/Serein?color=blue">
     </a>
@@ -12,7 +10,7 @@
         <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue">
     </a>
     <a href="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml">
-        <img alt="GitHub bulid" src="https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?color=blue">
+    <img alt="GitHub bulid" src="https://img.shields.io/github/actions/workflow/status/Zaitonn/Serein/Build.yml?branch=main&color=blue">
     </a>
     <a href="https://github.com/Zaitonn/Serein">
         <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/Zaitonn/Serein">

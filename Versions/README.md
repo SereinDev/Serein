@@ -30,6 +30,6 @@
 
 ### 测试版
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/Zaitonn/Serein/Build/main?style=for-the-badge ":no-zoom")](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml) [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Zaitonn/Serein/main?style=for-the-badge ":no-zoom")](https://github.com/Zaitonn/Serein/commits/main)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/Zaitonn/Serein/Build.yml?branch=main&style=for-the-badge ":no-zoom")](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml) [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Zaitonn/Serein/main?style=for-the-badge ":no-zoom")](https://github.com/Zaitonn/Serein/commits/main)
 
-详见    [Actions · Zaitonn/Serein](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)
+详见 [Actions · Zaitonn/Serein](https://github.com/Zaitonn/Serein/actions/workflows/Build.yml)
