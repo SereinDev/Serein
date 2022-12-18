@@ -23,16 +23,9 @@ namespace Serein.Items.Motd
                 Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
                 Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
-                Client.Connect(
-                    new IPEndPoint(
-                        IP,
-                        Port
-                        )
-                    );
+                Client.Connect(new IPEndPoint(IP, Port));
                 DateTime StartTime = DateTime.Now;
-                Client.Send(
-                    new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 }
-                    );
+                Client.Send(new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 });
                 byte[] Buffer = new byte[1024 * 1024];
                 int Length = Client.Receive(Buffer);
                 Delay = DateTime.Now - StartTime;
@@ -40,9 +33,9 @@ namespace Serein.Items.Motd
                     Encoding.UTF8.GetString(Buffer, 5, Length - 5) :
                     Encoding.UTF8.GetString(Buffer, 0, Length);
                 Client.Close();
-                Original = Data;
+                Origin = Data;
                 Logger.Out(LogType.Debug, $"Original: {Data}");
-                if (string.IsNullOrEmpty(Data))
+                if (!string.IsNullOrEmpty(Data))
                 {
                     JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Data);
                     OnlinePlayer = JsonObject["players"]["online"].ToString();

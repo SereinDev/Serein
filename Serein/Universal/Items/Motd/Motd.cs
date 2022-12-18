@@ -63,7 +63,7 @@ namespace Serein.Items.Motd
         /// <summary>
         /// 原文
         /// </summary>
-        public string Original { get; set; } = "-";
+        public string Origin { get; set; } = "-";
 
         /// <summary>
         /// 错误消息

@@ -44,7 +44,7 @@ namespace Serein.Items.Motd
                 Client.Close();
                 if (Lenth > 35)
                 {
-                    Original = Data;
+                    Origin = Data;
                     string[] Datas = Data.Split(';');
                     if (Datas.Length >= 12)
                     {

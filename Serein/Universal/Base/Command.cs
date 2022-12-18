@@ -274,7 +274,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Protocol%", _Motdpe.Protocol, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%MaxPlayer%", _Motdpe.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Original%", _Motdpe.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Origin%", _Motdpe.Origin, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Delay%", _Motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         break;
                     case 2:
@@ -283,7 +283,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Protocol%", _Motdje.Protocol, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdje.OnlinePlayer, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%MaxPlayer%", _Motdje.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Original%", _Motdje.Original, RegexOptions.IgnoreCase);
+                        Text = Regex.Replace(Text, "%Origin%", _Motdje.Origin, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Delay%", _Motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
                         break;

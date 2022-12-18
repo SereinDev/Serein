@@ -13,6 +13,7 @@ namespace Serein.Windows.Pages.Function
     public partial class Task : UiPage
     {
         private int ActionType = 0;
+
         public Task()
         {
             InitializeComponent();
