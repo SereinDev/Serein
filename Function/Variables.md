@@ -83,7 +83,7 @@
 | GameMode     | 游戏模式   | *Survival*                                                                                                                                                  |
 | Delay        | 延迟(ms)   | *20.22*                                                                                                                                                     |
 | Favicon      | 图标       | ![favicon.png](../imgs/favicon.png) ![favicon_hypixel.png](../imgs/favicon_hypixel.png) ![favicon_mcol.png](../imgs/favicon_mcol.png)*(仅供参考；仅Java版)* |
-| Original     | Motd原文   | *MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;*                                                          |
+| Origin       | Motd原文   | *MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;*                                                          |
 
 ### 成员管理变量
 

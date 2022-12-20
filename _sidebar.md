@@ -42,6 +42,7 @@
     - [机器人功能拓展](Extension/JS/BotExtension.js.md)
     - [网页版控制台](Extension/JS/iPanel.js.md)
     - [白名单与账号绑定插件](Extension/JS/SLbind.js.md)
+    - [HTTPApi控制](Extension/JS/HTTPApi.js.md)
   - 💼 整合包
     - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)

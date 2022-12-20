@@ -525,7 +525,7 @@ var success = serein.sendPrivate(114514,"你好");
 
 #### 发送数据包
 
-`serein.sendPacket(json:String)`
+`serein.sendPacket(packet:String)`
 
 ```js
 serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": \"10001\",\"message\": \"你好\"}}")
@@ -533,7 +533,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
 ```
 
 - 参数
-  - `json` 发送的json数据
+  - `packet` 发送的数据包
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
@@ -563,6 +563,7 @@ var success = serein.bindMember(114514, "Li_Tiansuo");
 
 - 参数
   - `userId` QQ号
+  - `gameId` 游戏ID
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`

@@ -1,5 +1,5 @@
 
->极大拓展了Serein的玩法
+>可以极大拓展Serein的玩法
 
 ![插件](../imgs/javacriptplugins.png)
 
