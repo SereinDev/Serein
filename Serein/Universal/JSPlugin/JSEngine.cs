@@ -39,6 +39,8 @@ namespace Serein.JSPlugin
                     cfg.CatchClrExceptions();
                     if (ExecuteByCommand)
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
+                    else
+                        cfg.CancellationToken(JSPluginManager.TokenSource.Token);
                 }
                 ));
             engine.SetValue("Serein_SystemInfo", new Func<string, string>((Type) =>

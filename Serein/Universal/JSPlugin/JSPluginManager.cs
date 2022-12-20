@@ -5,12 +5,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Timers;
+using System.Threading;
 
 namespace Serein.JSPlugin
 {
-    internal class JSPluginManager
+    internal static class JSPluginManager
     {
+        /// <summary>
+        /// CancellationToken
+        /// </summary>
+        public static CancellationTokenSource TokenSource = new CancellationTokenSource();
+
         /// <summary>
         /// 插件项列表
         /// </summary>
@@ -19,7 +24,7 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 定时器字典
         /// </summary>
-        public static Dictionary<long, Timer> Timers = new Dictionary<long, Timer>();
+        public static Dictionary<long, System.Timers.Timer> Timers = new Dictionary<long, System.Timers.Timer>();
 
         /// <summary>
         /// WS客户端列表
@@ -37,6 +42,7 @@ namespace Serein.JSPlugin
             else
             {
                 string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
+                TokenSource = new CancellationTokenSource();
                 foreach (string Filename in Files)
                 {
                     string Namespace = Path.GetFileNameWithoutExtension(Filename);
@@ -86,7 +92,10 @@ namespace Serein.JSPlugin
         public static void Reload()
         {
             Logger.Out(LogType.Plugin_Clear);
+            JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
+            Thread.Sleep(500);
+            TokenSource.Cancel();
             PluginDict.Keys.ToList().ForEach((Key) =>
             {
                 if (PluginDict.ContainsKey(Key))
@@ -97,7 +106,6 @@ namespace Serein.JSPlugin
                 }
             });
             PluginDict.Clear();
-            JSFunc.ClearAllTimers();
             JSFunc.ID = 0;
             Load();
         }

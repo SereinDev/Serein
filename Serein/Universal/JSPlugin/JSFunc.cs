@@ -59,7 +59,7 @@ namespace Serein.JSPlugin
             lock (JSPluginManager.PluginDict)
                 return
                     JSPluginManager.PluginDict.ContainsKey(Namespace) &&
-                    JSPluginManager.PluginDict[Namespace].Event.Add((EventType)Enum.Parse(typeof(EventType), EventName), Function);
+                    JSPluginManager.PluginDict[Namespace].Event.Set((EventType)Enum.Parse(typeof(EventType), EventName), Function);
         }
 
         /// <summary>
