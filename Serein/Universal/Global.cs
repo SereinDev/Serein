@@ -13,11 +13,6 @@ namespace Serein
         public static readonly string Path = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
-        /// 设置文件夹路径
-        /// </summary>
-        public static readonly string SettingPath = AppDomain.CurrentDomain.BaseDirectory + "settings";
-
-        /// <summary>
         /// 版本号
         /// </summary>
         public const string VERSION = "v1.3.3";

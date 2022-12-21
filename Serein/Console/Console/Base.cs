@@ -39,21 +39,24 @@ namespace Serein.Console
         /// </summary>
         public static void Init()
         {
-            var Handle = GetStdHandle(STD_OUTPUT_HANDLE);
-            GetConsoleMode(Handle, out uint OutputMode);
-            OutputMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-            SetConsoleMode(Handle, OutputMode);
-            Handle = GetStdHandle(STD_INPUT_HANDLE);
-            GetConsoleMode(Handle, out uint InputMode);
-            InputMode &= ~ENABLE_QUICK_EDIT_MODE;
-            InputMode &= ~ENABLE_INSERT_MODE;
-            SetConsoleMode(Handle, InputMode);
-            IntPtr WindowHandle = FindWindow(null, System.Console.Title);
-            IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
-            RemoveMenu(CloseMenu, 0xF060, 0x0);
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                var Handle = GetStdHandle(STD_OUTPUT_HANDLE);
+                GetConsoleMode(Handle, out uint OutputMode);
+                OutputMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+                SetConsoleMode(Handle, OutputMode);
+                Handle = GetStdHandle(STD_INPUT_HANDLE);
+                GetConsoleMode(Handle, out uint InputMode);
+                InputMode &= ~ENABLE_QUICK_EDIT_MODE;
+                InputMode &= ~ENABLE_INSERT_MODE;
+                SetConsoleMode(Handle, InputMode);
+                IntPtr WindowHandle = FindWindow(null, System.Console.Title);
+                IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
+                RemoveMenu(CloseMenu, 0xF060, 0x0);
+            }
             System.Console.OutputEncoding = Encoding.UTF8;
         }
-
+        
         /// <summary>
         /// 启动输入循环
         /// </summary>

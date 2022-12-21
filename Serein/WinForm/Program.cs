@@ -42,7 +42,7 @@ namespace Serein
                 SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!File.Exists(Global.Path + "console\\console.html"))
+            if (!Directory.Exists("console") || !File.Exists("console/console.html"))
             {
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;

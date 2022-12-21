@@ -29,13 +29,13 @@ namespace Serein.Base
         {
             if (Global.Settings.Server.AutoStop)
                 ServerManager.Stop(true);
-            if (!Directory.Exists(Global.Path + "\\logs\\crash"))
-                Directory.CreateDirectory(Global.Path + "\\logs\\crash");
+            if (!Directory.Exists("logs/crash"))
+                Directory.CreateDirectory("logs/crash");
             string ExceptionMsg = MergeException(e);
             try
             {
                 File.AppendAllText(
-                    Global.Path + $"\\logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log",
+                    $"logs/crash/{DateTime.Now:yyyy-MM-dd}.log",
                     DateTime.Now + "  |  "
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
@@ -52,7 +52,7 @@ namespace Serein.Base
             if (Logger.Type == 0)
                 Logger.Out(Items.LogType.Error, $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
                     $"{ExceptionMsg}\r\n\r\n" +
-                    $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\r\n" +
+                    $"崩溃日志已保存在 logs/crash/{DateTime.Now:yyyy-MM-dd}.log\r\n" +
                     "反馈此问题可以帮助作者更好的改进Serein");
 #if !CONSOLE
             else
@@ -69,7 +69,7 @@ namespace Serein.Base
                         $"时间：{DateTime.Now}\n" +
                         $"NET版本：{Environment.Version}\n" +
                         $"编译时间：{Global.BuildInfo.Time}\n\n" +
-                        $"◦ 崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\n" +
+                        $"◦ 崩溃日志已保存在 logs/crash/{DateTime.Now:yyyy-MM-dd}.log\n" +
                         $"◦ 反馈此问题可以帮助作者更好的改进Serein",
                     MainIcon = TaskDialogIcon.Error,
                     Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",

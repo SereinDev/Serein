@@ -54,7 +54,7 @@ namespace Serein.Base
         /// <param name="FileName">路径</param>
         public static void ReadRegex(string FileName = null)
         {
-            FileName = FileName ?? $"{Global.Path}\\data\\regex.json";
+            FileName = FileName ?? "data/regex.json";
             if (File.Exists(FileName))
             {
                 StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
@@ -96,13 +96,13 @@ namespace Serein.Base
         /// </summary>
         public static void SaveRegex()
         {
-            if (!Directory.Exists(Global.Path + "\\data"))
-                Directory.CreateDirectory(Global.Path + "\\data");
+            if (!Directory.Exists("data"))
+                Directory.CreateDirectory("data");
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "REGEX");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", JArray.FromObject(Global.RegexItems));
-            File.WriteAllText($"{Global.Path}\\data\\regex.json", ListJObject.ToString());
+            File.WriteAllText("data/regex.json", ListJObject.ToString());
         }
 
         /// <summary>
@@ -110,12 +110,12 @@ namespace Serein.Base
         /// </summary>
         public static void ReadMember()
         {
-            if (!Directory.Exists(Global.Path + "\\data"))
-                Directory.CreateDirectory(Global.Path + "\\data");
-            if (File.Exists($"{Global.Path}\\data\\members.json"))
+            if (!Directory.Exists("data"))
+                Directory.CreateDirectory("data");
+            if (File.Exists("data/members.json"))
             {
                 string Text = File.ReadAllText(
-                    $"{Global.Path}\\data\\members.json",
+                    "data/members.json",
                     Encoding.UTF8
                     );
                 if (!string.IsNullOrEmpty(Text))
@@ -149,14 +149,14 @@ namespace Serein.Base
             if (JsonConvert.SerializeObject(_Dictionary) == OldMembers)
                 return;
             OldMembers = JsonConvert.SerializeObject(_Dictionary);
-            if (!Directory.Exists(Global.Path + "\\data"))
-                Directory.CreateDirectory(Global.Path + "\\data");
+            if (!Directory.Exists("data"))
+                Directory.CreateDirectory("data");
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "MEMBERS");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", JArray.FromObject(Items));
             File.WriteAllText(
-                $"{Global.Path}\\data\\members.json",
+                "data/members.json",
                 ListJObject.ToString(),
                 Encoding.UTF8
                 );
@@ -168,7 +168,7 @@ namespace Serein.Base
         /// <param name="FileName">路径</param>
         public static void ReadTask(string FileName = null)
         {
-            FileName = FileName ?? $"{Global.Path}\\data\\task.json";
+            FileName = FileName ?? "data/task.json";
             if (File.Exists(FileName))
             {
                 StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
@@ -215,13 +215,13 @@ namespace Serein.Base
         /// </summary>
         public static void SaveTask()
         {
-            if (!Directory.Exists(Global.Path + "\\data"))
-                Directory.CreateDirectory(Global.Path + "\\data");
+            if (!Directory.Exists("data"))
+                Directory.CreateDirectory("data");
             JObject ListJObject = new JObject();
             ListJObject.Add("type", "TASK");
             ListJObject.Add("comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失");
             ListJObject.Add("data", JArray.FromObject(Global.TaskItems));
-            File.WriteAllText($"{Global.Path}\\data\\task.json", ListJObject.ToString());
+            File.WriteAllText("data/task.json", ListJObject.ToString());
         }
 
         /// <summary>
@@ -229,32 +229,32 @@ namespace Serein.Base
         /// </summary>
         public static void ReadSettings()
         {
-            if (!Directory.Exists(Global.SettingPath))
+            if (!Directory.Exists("settings"))
             {
-                Directory.CreateDirectory(Global.SettingPath);
+                Directory.CreateDirectory("settings");
                 Global.FirstOpen = true;
                 return;
             }
-            if (File.Exists(Global.SettingPath + "\\Server.json"))
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Global.SettingPath + "\\Server.json", Encoding.UTF8)) ?? new Settings.Server();
-            if (File.Exists(Global.SettingPath + "\\Bot.json"))
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Global.SettingPath + "\\Bot.json", Encoding.UTF8)) ?? new Bot();
-            if (File.Exists(Global.SettingPath + "\\Serein.json"))
-                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Global.SettingPath + "\\Serein.json", Encoding.UTF8)) ?? new Settings.Serein();
-            if (File.Exists(Global.SettingPath + "\\Matches.json"))
+            if (File.Exists("settings/Server.json"))
+                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText("settings/Server.json", Encoding.UTF8)) ?? new Settings.Server();
+            if (File.Exists("settings/Bot.json"))
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText("settings/Bot.json", Encoding.UTF8)) ?? new Bot();
+            if (File.Exists("settings/Serein.json"))
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText("settings/Serein.json", Encoding.UTF8)) ?? new Settings.Serein();
+            if (File.Exists("settings/Matches.json"))
             {
-                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8)) ?? new Matches();
-                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
+                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText("settings/Matches.json", Encoding.UTF8)) ?? new Matches();
+                File.WriteAllText("settings/Matches.json", JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
             }
             else
-                File.WriteAllText(Global.SettingPath + "\\Matches.json", JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-            if (File.Exists(Global.SettingPath + "\\Event.json"))
+                File.WriteAllText("settings/Matches.json", JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
+            if (File.Exists("settings/Event.json"))
             {
-                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Global.SettingPath + "\\Event.json", Encoding.UTF8)) ?? new Settings.Event();
+                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText("settings/Event.json", Encoding.UTF8)) ?? new Settings.Event();
                 SaveEventSetting();
             }
             else
-                File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
+                File.WriteAllText("settings/Event.json", JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
         }
 
         /// <summary>
@@ -264,8 +264,8 @@ namespace Serein.Base
         {
             try
             {
-                if (File.Exists(Global.SettingPath + "\\Matches.json"))
-                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Global.SettingPath + "\\Matches.json", Encoding.UTF8));
+                if (File.Exists("settings/Matches.json"))
+                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText("settings/Matches.json", Encoding.UTF8));
             }
             catch (Exception e)
             {
@@ -282,9 +282,9 @@ namespace Serein.Base
             if (NewSettings != OldSettings)
             {
                 OldSettings = NewSettings;
-                File.WriteAllText(Global.SettingPath + "\\Server.json", JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
-                File.WriteAllText(Global.SettingPath + "\\Bot.json", JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
-                File.WriteAllText(Global.SettingPath + "\\Serein.json", JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
+                File.WriteAllText("settings/Server.json", JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
+                File.WriteAllText("settings/Bot.json", JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
+                File.WriteAllText("settings/Serein.json", JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Serein.Base
         public static void SaveEventSetting()
         {
             lock (Global.Settings.Event)
-                File.WriteAllText(Global.SettingPath + "\\Event.json", JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+                File.WriteAllText("settings/Event.json", JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
         }
     }
 }

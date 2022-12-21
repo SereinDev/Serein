@@ -1,0 +1,1 @@
+dotnet build ./Serein.sln /p:EnableWindowsTargeting=true

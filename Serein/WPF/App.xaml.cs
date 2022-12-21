@@ -11,7 +11,7 @@ namespace Serein
         {
             CrashInterception.Init();
             DispatcherUnhandledException += (sender, e) => CrashInterception.ShowException(e.Exception);
-            if (!File.Exists(Global.Path + "console\\console.html"))
+            if (!Directory.Exists("console") || !File.Exists("console/console.html"))
             {
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;

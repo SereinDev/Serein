@@ -36,7 +36,7 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Load()
         {
-            string PluginPath = Global.Path + "\\plugins";
+            string PluginPath = "plugins";
             if (!Directory.Exists(PluginPath))
                 Directory.CreateDirectory(PluginPath);
             else

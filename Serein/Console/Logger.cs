@@ -32,12 +32,12 @@ namespace Serein
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
                         WriteLine(4, Line);
-                        if (!Directory.Exists(Global.Path + "\\logs\\debug"))
-                            Directory.CreateDirectory(Global.Path + "\\logs\\debug");
+                        if (!Directory.Exists("logs/debug"))
+                            Directory.CreateDirectory("logs/debug");
                         try
                         {
                             File.AppendAllText(
-                                Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
+                                $"logs/debug/{DateTime.Now:yyyy-MM-dd}.log",
                                 $"{DateTime.Now:T} {Line}\n",
                                 Encoding.UTF8
                                 );
@@ -97,7 +97,7 @@ namespace Serein
         /// <param name="Line">输出行</param>
         private static void WriteLine(int Level, string Line, bool SereinTitle = false)
         {
-            if (Line == "#clear")
+            if (Line == "#clear" || string.IsNullOrEmpty(Line) || string.IsNullOrWhiteSpace(Line))
                 return;
             if (Line.Contains("\r\n"))
             {

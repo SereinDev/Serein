@@ -221,12 +221,12 @@ namespace Serein.Server
                 }
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists(Global.Path + "\\logs\\console"))
-                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
+                    if (!Directory.Exists("logs/console"))
+                        Directory.CreateDirectory("logs/console");
                     try
                     {
                         File.AppendAllText(
-                            Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            $"logs/console/{DateTime.Now:yyyy-MM-dd}.log",
                             ">" + Log.OutputRecognition(Command_Copy) + "\n",
                             Encoding.UTF8
                         );
@@ -266,12 +266,12 @@ namespace Serein.Server
                     );
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists(Global.Path + "\\logs\\console"))
-                        Directory.CreateDirectory(Global.Path + "\\logs\\console");
+                    if (!Directory.Exists("logs/console"))
+                        Directory.CreateDirectory("logs/console");
                     try
                     {
                         File.AppendAllText(
-                            Global.Path + $"\\logs\\console\\{DateTime.Now:yyyy-MM-dd}.log",
+                            $"logs/console/{DateTime.Now:yyyy-MM-dd}.log",
                             Log.OutputRecognition(Line) + "\n",
                             Encoding.UTF8
                         );

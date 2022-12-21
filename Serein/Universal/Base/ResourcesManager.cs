@@ -21,9 +21,9 @@ namespace Serein.Base
         /// <param name="Name">文件名</param>
         private static void ExtractConsoleFile(string Resource, string Name)
         {
-            if (!Directory.Exists(Global.Path + "console"))
-                Directory.CreateDirectory(Global.Path + "console");
-            File.WriteAllText(Global.Path + "console\\" + Name, Resource, Encoding.UTF8);
+            if (!Directory.Exists("console"))
+                Directory.CreateDirectory("console");
+            File.WriteAllText("console/" + Name, Resource, Encoding.UTF8);
         }
     }
 }
