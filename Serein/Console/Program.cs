@@ -1,6 +1,5 @@
 ﻿using Serein.Base;
 using System;
-using System.Windows.Forms;
 
 namespace Serein
 {
@@ -28,8 +27,6 @@ namespace Serein
         private static void Main(string[] args)
         {
             CrashInterception.Init();
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception);
             Console.Base.Init();
             Console.Base.Load(args);
             Console.Base.Start();

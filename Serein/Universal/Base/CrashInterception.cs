@@ -1,4 +1,6 @@
-﻿using Ookii.Dialogs.Wpf;
+﻿#if !CONSOLE
+using Ookii.Dialogs.Wpf;
+#endif 
 using Serein.Server;
 using System;
 using System.Diagnostics;
@@ -52,6 +54,7 @@ namespace Serein.Base
                     $"{ExceptionMsg}\r\n\r\n" +
                     $"崩溃日志已保存在{Global.Path + $"logs\\crash\\{DateTime.Now:yyyy-MM-dd}.log"}\r\n" +
                     "反馈此问题可以帮助作者更好的改进Serein");
+#if !CONSOLE
             else
             {
                 TaskDialog TaskDialog = new TaskDialog
@@ -77,13 +80,17 @@ namespace Serein.Base
                 TaskDialog.HyperlinkClicked += HyperlinkClicked;
                 TaskDialog.ShowDialog();
             }
+#endif
         }
+
+#if !CONSOLE
 
         /// <summary>
         /// 链接点击处理
         /// </summary>
         private static void HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
             => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+#endif
 
         /// <summary>
         /// 合并错误信息

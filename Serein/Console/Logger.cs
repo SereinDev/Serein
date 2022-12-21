@@ -1,8 +1,8 @@
 ﻿using Serein.Items;
-using Serein.Server;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Serein
@@ -27,7 +27,7 @@ namespace Serein
                     if (Global.Settings.Serein.Debug)
                     {
                         StackTrace st = new StackTrace(true);
-                        Line = $"{DateTime.Now:T} " +
+                        Line =
                             $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
@@ -38,7 +38,7 @@ namespace Serein
                         {
                             File.AppendAllText(
                                 Global.Path + $"\\logs\\debug\\{DateTime.Now:yyyy-MM-dd}.log",
-                                $"{Line}\n",
+                                $"{DateTime.Now:T} {Line}\n",
                                 Encoding.UTF8
                                 );
                         }
@@ -46,16 +46,20 @@ namespace Serein
                     }
                     break;
                 case LogType.Info:
-                case LogType.Plugin_Notice:
                 case LogType.Server_Notice:
-                    WriteLine(1, Line);
+                case LogType.Plugin_Notice:
+                    WriteLine(1, Line, true);
                     break;
                 case LogType.Warn:
+                    WriteLine(2, Line, true);
+                    break;
                 case LogType.Plugin_Warn:
                     WriteLine(2, Line);
                     break;
                 case LogType.Error:
                 case LogType.Bot_Error:
+                    WriteLine(3, Line, true);
+                    break;
                 case LogType.Plugin_Error:
                     WriteLine(3, Line);
                     break;
@@ -65,16 +69,17 @@ namespace Serein
                     WriteLine(0, Line);
                     break;
                 case LogType.Bot_Receive:
-                    WriteLine(0, $"\x1b[92m[↓]\x1b[0m{Line}");
+                    WriteLine(1, $"\x1b[92m[↓]\x1b[0m {Line}");
                     break;
                 case LogType.Bot_Send:
-                    WriteLine(0, $"\x1b[36m[↑]\x1b[0m{Line}");
+                    WriteLine(1, $"\x1b[36m[↑]\x1b[0m {Line}");
                     break;
                 case LogType.Plugin_Info:
-                    WriteLine(0, $"\x1b[94m[插件]\x1b[0m{Line}");
+                    WriteLine(1, $"{Line}");
                     break;
                 case LogType.Version_New:
-                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开[https://github.com/Zaitonn/Serein/releases/latest]获取最新版）");
+                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开" +
+                        $"\x1b[4m\x1b https://github.com/Zaitonn/Serein/releases/latest \x1b[0m获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     WriteLine(1, "获取更新成功，当前已是最新版:)");
@@ -90,56 +95,48 @@ namespace Serein
         /// </summary>
         /// <param name="Level">输出等级</param>
         /// <param name="Line">输出行</param>
-        private static void WriteLine(int Level, string Line)
+        private static void WriteLine(int Level, string Line, bool SereinTitle = false)
         {
-            System.Console.ForegroundColor = ConsoleColor.White;
             if (Line == "#clear")
                 return;
-            string Prefix = string.Empty;
+            if (Line.Contains("\r\n"))
+            {
+                Line.Split('\n').ToList().ForEach((i) => WriteLine(Level, i.Replace("\r", string.Empty), SereinTitle));
+                return;
+            }
+            System.Console.ForegroundColor = ConsoleColor.Gray;
+            string Prefix = $"{DateTime.Now:T} ";
             lock (Lock)
             {
                 switch (Level)
                 {
                     case 1:
-                        Prefix = "\x1b[96m";
-                        if (ServerManager.Status)
-                        {
-                            Prefix += ("[Serein]");
-                        }
-                        Prefix += ("[Info]\x1b[0m");
+                        Prefix += "\x1b[97m[Info]\x1b[0m ";
                         break;
                     case 2:
-                        Prefix += ("\x1b[93m");
-                        if (ServerManager.Status)
-                        {
-                            Prefix += ("[Serein]");
-                        }
-                        Prefix += ("[Warn]");
+                        Prefix += "\x1b[1m\x1b[93m[Warn]\x1b[0m\x1b[93m ";
                         break;
                     case 3:
-                        Prefix += ("\x1b[91m");
-                        if (ServerManager.Status)
-                        {
-                            Prefix += ("[Serein]");
-                        }
-                        Prefix += ("[Error]");
+                        Prefix += "\x1b[1m\x1b[91m[Error]\x1b[0m\x1b[91m";
                         break;
                     case 4:
-                        Prefix += ("\x1b[95m");
-                        if (ServerManager.Status)
-                        {
-                            Prefix += ("[Serein]");
-                        }
-                        Prefix += ("[Debug]");
+                        Prefix += "\x1b[95m[Debug]\x1b[0m";
                         break;
                     default:
-                        Prefix += ("\x1b[97m");
+                        Prefix += "\x1b[97m";
                         break;
                 }
+                if (SereinTitle)
+                    if (Level == 1)
+                        Prefix += "\x1b[96m[Serein]\x1b[0m ";
+                    else if (Level <= 3)
+                        Prefix += "[Serein] ";
+                if (Level >= 1)
+                    Line = Prefix + Line;
                 if (!Global.Settings.Serein.ColorfulLog)
-                    System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(Prefix + Line, @"\[.*?m", string.Empty));
+                    System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(Line, @"\[.*?m", string.Empty));
                 else
-                    System.Console.WriteLine(Prefix + Line + "\x1b[0m");
+                    System.Console.WriteLine(Line + "\x1b[0m");
                 System.Console.ForegroundColor = ConsoleColor.White;
             }
         }

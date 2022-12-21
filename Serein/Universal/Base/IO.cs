@@ -45,7 +45,7 @@ namespace Serein.Base
             ReadMember();
             ReadSettings();
             if (!SkipLoadingPlugins)
-                JSPluginManager.Load();
+                System.Threading.Tasks.Task.Run(JSPluginManager.Load);
         }
 
         /// <summary>

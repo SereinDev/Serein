@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.JSPlugin;
 using Serein.Server;
 using System;
 using System.Runtime.InteropServices;
@@ -67,8 +68,14 @@ namespace Serein.Console
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (sender, e) =>
             {
-                e.Cancel = true;
-                Logger.Out(Items.LogType.Error, "若要关闭Serein请使用\"exit\"命令");
+                e.Cancel = ServerManager.Status;
+                if (ServerManager.Status)
+                    Logger.Out(Items.LogType.Warn, "服务器未关闭");
+                else
+                {
+                    JSFunc.Trigger(Items.EventType.SereinClose);
+                    Environment.Exit(0);
+                }
             };
             while (true)
             {
