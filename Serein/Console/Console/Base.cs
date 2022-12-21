@@ -56,7 +56,7 @@ namespace Serein.Console
             }
             System.Console.OutputEncoding = Encoding.UTF8;
         }
-        
+
         /// <summary>
         /// 启动输入循环
         /// </summary>
