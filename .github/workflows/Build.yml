@@ -87,13 +87,13 @@ jobs:
           cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\Build_Info.txt
 
       - name: NuGet restore
-        run: nuget restore Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
+        run: nuget restore "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
+        run: msbuild -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
+        run: msbuild -p:Configuration=Debug "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
 
       - name: Upload Serein(Release,dotnet6)
         uses: actions/upload-artifact@v3
