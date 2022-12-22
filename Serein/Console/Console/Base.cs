@@ -39,6 +39,7 @@ namespace Serein.Console
         /// </summary>
         public static void Init()
         {
+            System.Console.OutputEncoding = Encoding.UTF8;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 var Handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -54,7 +55,13 @@ namespace Serein.Console
                 IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
                 RemoveMenu(CloseMenu, 0xF060, 0x0);
             }
-            System.Console.OutputEncoding = Encoding.UTF8;
+#if LINUX
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
+                Logger.Out(Items.LogType.Warn, "此版本为Linux专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+#else
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                Logger.Out(Items.LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Linux类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+#endif
         }
 
         /// <summary>

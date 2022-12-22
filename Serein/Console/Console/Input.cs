@@ -59,15 +59,16 @@ namespace Serein.Console
                     case "help":
                         Logger.Out(
                             Items.LogType.Info,
-                            "start\t\t启动服务器\r\n" +
-                            "stop\t\t关闭服务器\r\n" +
-                            "kill\t\t强制结束服务器\r\n" +
+                            "start  \t启动服务器\r\n" +
+                            "stop   \t关闭服务器\r\n" +
+                            "kill   \t强制结束服务器\r\n" +
                             "connect\t连接机器人\r\n" +
-                            "close\t\t断开机器人连接\r\n" +
-                            "reload\t\t重新加载所有文件\r\n" +
-                            "exit\t\t退出Serein\r\n" +
-                            "help\t\t显示此页面\r\n" +
-                            "version\t查看版本信息\r\n");
+                            "close  \t断开机器人连接\r\n" +
+                            "reload \t重新加载所有文件\r\n" +
+                            "help   \t显示此页面\r\n" +
+                            "version\t查看版本信息\r\n" +
+                            "exit   \t退出Serein\r\n"
+                            );
                         break;
                     case "version":
                         Logger.Out(Items.LogType.Info,

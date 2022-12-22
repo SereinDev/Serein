@@ -47,6 +47,7 @@ namespace Serein
                     break;
                 case LogType.Info:
                 case LogType.Server_Notice:
+                case LogType.Bot_Notice:
                 case LogType.Plugin_Notice:
                     WriteLine(1, Line, true);
                     break;

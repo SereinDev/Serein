@@ -3,26 +3,26 @@ name: Build
 on:
   push:
     paths:
-      - '**.cs'
-      - '**.yml'
+      - "**.cs"
+      - "**.yml"
   pull_request:
 
 jobs:
-    draft_release:
-      outputs:
-        tag_name:  ${{ steps.Draft.outputs.tag_name }}
-      name: Draft release
-      runs-on: ubuntu-latest
-      steps:
-        - uses: release-drafter/release-drafter@v5
-          id: Draft
-          name: Draft
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  draft_release:
+    outputs:
+      tag_name: ${{ steps.Draft.outputs.tag_name }}
+    name: Draft release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        id: Draft
+        name: Draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    Format:
-      runs-on: windows-latest
-      steps:
+  Format:
+    runs-on: windows-latest
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
@@ -51,13 +51,13 @@ jobs:
           git push "${remote_repo}" HEAD:${GITHUB_REF}
         continue-on-error: true
 
-    Build:
-      needs: [draft_release]
-      runs-on: windows-latest
-      strategy:
-        matrix:
-          project: [Console,WPF,WinForm]
-      steps:
+  Build:
+    needs: [draft_release]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        project: [Console, Console For Linux, WPF, WinForm]
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
@@ -75,16 +75,16 @@ jobs:
         uses: nuget/setup-nuget@v1
         with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
-          nuget-version: '5.x'
-          
+          nuget-version: "5.x"
+
       - name: Write Build info
         shell: cmd
         run: |
-            cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Serein\Universal\Build_Info.txt
-            cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-            cmd /c echo %cd% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-            cmd /c echo %os% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-            cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo %cd% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo %os% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\Build_Info.txt
 
       - name: NuGet restore
         run: nuget restore Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj
@@ -118,4 +118,3 @@ jobs:
         with:
           name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnetframework472_debug
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net472
-

@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic.Devices;
+﻿#if !LINUX
+using Microsoft.VisualBasic.Devices;
+#endif
 using System;
 using System.Diagnostics;
 using System.Management;
@@ -16,19 +18,9 @@ namespace Serein.Base
         };
 
         /// <summary>
-        /// 设备信息实例
+        /// CPU使用率
         /// </summary>
-        private static readonly ComputerInfo Info = new ComputerInfo();
-
-        /// <summary>
-        /// 系统名称
-        /// </summary>
-        public static string OS = Info.OSFullName;
-
-        /// <summary>
-        /// NET版本号
-        /// </summary>
-        public static string NET = Environment.Version.ToString();
+        public static string CPUPercentage => Counter.NextValue().ToString("N1");
 
         /// <summary>
         /// CPU名称
@@ -53,6 +45,27 @@ namespace Serein.Base
         }
 
         /// <summary>
+        /// NET版本号
+        /// </summary>
+        public static string NET = Environment.Version.ToString();
+
+#if LINUX
+        public static string OS = string.Empty, RAMPercentage = string.Empty;
+
+        public static ulong TotalRAM = 0, UsedRAM = 0;
+#else
+
+        /// <summary>
+        /// 设备信息实例
+        /// </summary>
+        private static readonly ComputerInfo Info = new ComputerInfo();
+
+        /// <summary>
+        /// 系统名称
+        /// </summary>
+        public static string OS = Info.OSFullName;
+
+        /// <summary>
         /// 已用内存
         /// </summary>
         public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024;
@@ -66,10 +79,7 @@ namespace Serein.Base
         /// 内存占用百分比
         /// </summary>
         public static string RAMPercentage => ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
+#endif
 
-        /// <summary>
-        /// CPU使用率
-        /// </summary>
-        public static string CPUPercentage => Counter.NextValue().ToString("N1");
     }
 }
