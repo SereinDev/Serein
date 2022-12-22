@@ -138,22 +138,22 @@ namespace Serein.Base
             if (Status)
             {
                 long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
-                JObject TextJObject = new JObject();
-                JObject ParamsJObject = new JObject();
-                TextJObject.Add("action", IsPrivate ? "send_private_msg" : "send_group_msg");
-                ParamsJObject.Add(IsPrivate ? "user_id" : "group_id", Target_Long);
-                ParamsJObject.Add("message", Message);
-                ParamsJObject.Add("auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape);
-                TextJObject.Add("params", ParamsJObject);
+                JObject ParamsJObject = new JObject
+                {
+                    { IsPrivate ? "user_id" : "group_id", Target_Long },
+                    { "message", Message },
+                    { "auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape }
+                };
+                JObject TextJObject = new JObject
+                {
+                    { "action", IsPrivate ? "send_private_msg" : "send_group_msg" },
+                    { "params", ParamsJObject }
+                };
                 WSClient.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
-                {
                     Logger.Out(LogType.Bot_Send, TextJObject.ToString());
-                }
                 else
-                {
                     Logger.Out(LogType.Bot_Send, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
-                }
             }
             return Status;
         }
@@ -187,19 +187,15 @@ namespace Serein.Base
         public static void Receive(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)
-            {
                 Logger.Out(LogType.Bot_Receive, e.Message);
-            }
             if (Global.Settings.Bot.EnableLog)
             {
-                if (!Directory.Exists("logs/msg"))
-                {
-                    Directory.CreateDirectory("logs/msg");
-                }
+                if (!Directory.Exists(IO.GetPath("logs", "msg")))
+                    Directory.CreateDirectory(IO.GetPath("logs", "msg"));
                 try
                 {
                     File.AppendAllText(
-                        $"logs/msg{DateTime.Now:yyyy-MM-dd}.log",
+                        IO.GetPath("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
                         $"{DateTime.Now:T}  {Log.OutputRecognition(e.Message)}\n",
                         Encoding.UTF8
                         );

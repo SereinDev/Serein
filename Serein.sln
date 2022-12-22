@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-WPF", "Serein\WPF\Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Winform", "Serein\WinForm\Serein-Winform.csproj", "{64923BFD-B79D-4E78-B11B-4CB268C6DA53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console For Linux", "Serein\Console For Linux\Serein-Console For Linux.csproj", "{8C55D677-78D9-4F5C-8C9E-052A12EA194D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console_For_Linux", "Serein\Console_For_Linux\Serein-Console_For_Linux.csproj", "{736A7ABC-54A1-4CCE-8CBF-41F2E8A5E7E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +34,10 @@ Global
 		{64923BFD-B79D-4E78-B11B-4CB268C6DA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64923BFD-B79D-4E78-B11B-4CB268C6DA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64923BFD-B79D-4E78-B11B-4CB268C6DA53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C55D677-78D9-4F5C-8C9E-052A12EA194D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C55D677-78D9-4F5C-8C9E-052A12EA194D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C55D677-78D9-4F5C-8C9E-052A12EA194D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C55D677-78D9-4F5C-8C9E-052A12EA194D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{736A7ABC-54A1-4CCE-8CBF-41F2E8A5E7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{736A7ABC-54A1-4CCE-8CBF-41F2E8A5E7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{736A7ABC-54A1-4CCE-8CBF-41F2E8A5E7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{736A7ABC-54A1-4CCE-8CBF-41F2E8A5E7E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Serein.Base;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Load()
         {
-            string PluginPath = "plugins";
+            string PluginPath = IO.GetPath("plugins");
             if (!Directory.Exists(PluginPath))
                 Directory.CreateDirectory(PluginPath);
             else

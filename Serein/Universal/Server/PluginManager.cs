@@ -33,6 +33,10 @@ namespace Serein.Server
             }
         }
 
+        private static string Check(string SubPath)
+            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), SubPath)) ?
+            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), SubPath) : null;
+
         /// <summary>
         /// 获取插件列表
         /// </summary>
@@ -41,25 +45,10 @@ namespace Serein.Server
         {
             if (File.Exists(Global.Settings.Server.Path))
             {
-                if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin"))
-                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugin";
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins"))
-                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\plugins";
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod"))
-                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mod";
-                else if (Directory.Exists(Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods"))
-                    BasePath = Path.GetDirectoryName(Global.Settings.Server.Path) + "\\mods";
-                else
-                {
-                    BasePath = string.Empty;
-                    return null;
-                }
-                Logger.Out(LogType.Debug, "[PluginManager:Get()]", BasePath);
+                BasePath = Check("plugin") ?? Check("plugins") ?? Check("mod") ?? Check("mods") ?? string.Empty;
+                Logger.Out(LogType.Debug, BasePath);
                 if (!string.IsNullOrWhiteSpace(BasePath))
-                {
-                    string[] Files = Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
-                    return Files;
-                }
+                    return Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
             }
             return null;
         }
@@ -74,11 +63,12 @@ namespace Serein.Server
             {
                 try
                 {
-                    File.Copy(FileName, BasePath + "\\" + Path.GetFileName(FileName));
+                    File.Copy(FileName, Path.Combine(BasePath, Path.GetFileName(FileName)));
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox($"文件\"{FileName}\"删除失败\n{e.Message}", "Serein", 0, 48);
+                    Logger.MsgBox($"文件\"{FileName}\" 导入失败\n{e.Message}", "Serein", 0, 48);
+                    Logger.Out(LogType.Debug, e);
                     break;
                 }
             }
@@ -93,7 +83,7 @@ namespace Serein.Server
             if (Available)
             {
                 if (Files.Count <= 0)
-                    Logger.Out(LogType.Debug, "[PluginManager:Remove()]", "数据不合法");
+                    Logger.Out(LogType.Debug, "数据不合法");
                 else if (Logger.MsgBox($"确定删除\"{Files[0]}\"{(Files.Count > 1 ? $"等{Files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
                 {
                     foreach (string FileName in Files)
@@ -104,7 +94,7 @@ namespace Serein.Server
                         }
                         catch (Exception e)
                         {
-                            Logger.Out(LogType.Debug, "[PluginManager:Remove()]", e);
+                            Logger.Out(LogType.Debug, e);
                             Logger.MsgBox(
                                 $"文件\"{FileName}\"删除失败\n{e.Message}", "Serein",
                                 0, 48
@@ -130,12 +120,12 @@ namespace Serein.Server
                         continue;
                     File.Move(FileName, FileName + ".lock");
                 }
-                catch (Exception Exp)
+                catch (Exception e)
                 {
-                    Logger.Out(LogType.Debug, "[PluginManager:Disable()]", FileName);
+                    Logger.Out(LogType.Debug, e);
                     Logger.MsgBox(
                         $"文件\"{FileName}\"禁用失败\n" +
-                        $"{Exp.Message}", "Serein",
+                        $"{e.Message}", "Serein",
                         0, 48
                         );
                     break;
@@ -153,13 +143,14 @@ namespace Serein.Server
             {
                 try
                 {
-                    File.Move(FileName, System.Text.RegularExpressions.Regex.Replace(FileName, @"\.lock", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
+                    File.Move(FileName, System.Text.RegularExpressions.Regex.Replace(FileName, @"\.lock$", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
                 }
-                catch (Exception Exp)
+                catch (Exception e)
                 {
+                    Logger.Out(LogType.Debug, e);
                     Logger.MsgBox(
                         $"文件\"{FileName}\"启用失败\n" +
-                        $"{Exp.Message}", "Serein",
+                        $"{e.Message}", "Serein",
                         0, 48
                         );
                     break;
@@ -192,11 +183,14 @@ namespace Serein.Server
         /// </summary>
         /// <param name="Path">路径</param>
         public static void OpenFolder(string Path = null)
-            => Process.Start(new ProcessStartInfo("Explorer.exe")
-            {
-                Arguments = !string.IsNullOrEmpty(Path)
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                Process.Start(new ProcessStartInfo("Explorer.exe")
+                {
+                    Arguments = !string.IsNullOrEmpty(Path)
                     ? $"/e,/select,\"{Path}\""
                     : $"/e,\"{BasePath}\""
-            });
+                });
+        }
     }
 }

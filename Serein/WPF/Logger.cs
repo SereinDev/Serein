@@ -34,13 +34,13 @@ namespace Serein
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
                         Catalog.Debug?.AppendText(Line);
-                        if (!Directory.Exists("logs/debug"))
-                            Directory.CreateDirectory("logs/debug");
+                        if (!Directory.Exists(IO.GetPath("logs", "debug")))
+                            Directory.CreateDirectory(IO.GetPath("logs", "debug"));
                         try
                         {
                             File.AppendAllText(
-                                $"logs/debug/{DateTime.Now:yyyy-MM-dd}.log",
-                                $"{Line}\n",
+                                IO.GetPath("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                                $"{DateTime.Now:T} {Line}\n",
                                 Encoding.UTF8
                                 );
                         }

@@ -38,11 +38,11 @@ namespace Serein
             Global.Args = args;
             if (Global.Args.Contains("debug"))
                 Global.Settings.Serein.Debug = true;
-            if (Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
                 SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!Directory.Exists("console") || !File.Exists("console/console.html"))
+            if (!Directory.Exists(IO.GetPath("console")) || !File.Exists(IO.GetPath("console", "console.html")))
             {
                 ResourcesManager.InitConsole();
                 Global.FirstOpen = true;

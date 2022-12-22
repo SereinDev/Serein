@@ -1,4 +1,5 @@
-﻿using Serein.Items;
+﻿using Serein.Base;
+using Serein.Items;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -32,12 +33,12 @@ namespace Serein
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
                         WriteLine(4, Line);
-                        if (!Directory.Exists("logs/debug"))
-                            Directory.CreateDirectory("logs/debug");
+                        if (!Directory.Exists(IO.GetPath("logs", "debug")))
+                            Directory.CreateDirectory(IO.GetPath("logs", "debug"));
                         try
                         {
                             File.AppendAllText(
-                                $"logs/debug/{DateTime.Now:yyyy-MM-dd}.log",
+                                IO.GetPath("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
                                 $"{DateTime.Now:T} {Line}\n",
                                 Encoding.UTF8
                                 );

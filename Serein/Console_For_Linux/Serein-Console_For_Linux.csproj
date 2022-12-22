@@ -12,6 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Optimize>False</Optimize>
+	<DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -22,7 +23,6 @@
   <PropertyGroup>
     <ApplicationIcon>../Console/Serein.ico</ApplicationIcon>
     <RootNamespace>Serein</RootNamespace>
-    <AssemblyName>Serein-Console_For_Linux</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
 	  <Compile Include="../Universal/**" />
