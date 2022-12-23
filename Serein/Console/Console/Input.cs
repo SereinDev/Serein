@@ -56,6 +56,9 @@ namespace Serein.Console
                             Logger.Out(Items.LogType.Error, "加载失败:" + e.Message);
                         }
                         break;
+                    case "clear":
+                        System.Console.Clear();
+                        break;
                     case "help":
                         Logger.Out(
                             Items.LogType.Info,
@@ -64,6 +67,7 @@ namespace Serein.Console
                             "kill   \t强制结束服务器\r\n" +
                             "connect\t连接机器人\r\n" +
                             "close  \t断开机器人连接\r\n" +
+                            "clear  \t清屏\r\n" +
                             "reload \t重新加载所有文件\r\n" +
                             "help   \t显示此页面\r\n" +
                             "version\t查看版本信息\r\n" +

@@ -78,11 +78,12 @@ namespace Serein.Console
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (sender, e) =>
             {
-                e.Cancel = ServerManager.Status;
+                e.Cancel = true;
                 if (ServerManager.Status)
-                    Logger.Out(Items.LogType.Warn, "服务器未关闭");
+                    ServerManager.Kill();
                 else
                 {
+                    Logger.Out(Items.LogType.Info, "正在关闭...");
                     JSFunc.Trigger(Items.EventType.SereinClose);
                     Environment.Exit(0);
                 }
@@ -90,7 +91,7 @@ namespace Serein.Console
             while (true)
             {
                 string Line = System.Console.ReadLine();
-                if (!string.IsNullOrEmpty(Line))
+                if (Line != null)
                     Input.Process(Line.Trim());
             }
         }

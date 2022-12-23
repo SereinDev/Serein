@@ -1,109 +1,73 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
-    <OutputType>Exe</OutputType>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <Optimize>False</Optimize>
-	<DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>../Console/app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>../Console/Serein.ico</ApplicationIcon>
-    <RootNamespace>Serein</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-	  <Compile Include="../Universal/**" />
-	  <Compile Include="../Console/Console/**" />
-	  <Compile Include="../Console/Logger.cs" />
-	  <Compile Include="../Console/Program.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="..\Universal\Build_Info.txt" />
-    <Compile Remove="..\Universal\ConsoleHtml\console.html" />
-    <Compile Remove="..\Universal\ConsoleHtml\preset.css" />
-    <Compile Remove="..\Universal\Base\ResourcesManager.cs" />
-    <Compile Remove="..\Universal\Init.bat" />
-    <Compile Remove="..\Universal\Server\PluginManager.cs" />
-    <Compile Remove="..\Universal\Sources\Serein.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 和 x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Serein.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Universal\Build_Info.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Universal\Sources\Serein.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
-    <DefineConstants>$(DefineConstants)TRACE;CONSOLE;LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
-    <DefineConstants>$(DefineConstants)TRACE;CONSOLE;LINUX</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="5.7.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Fody" Version="6.6.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Jint" Version="3.0.0-beta-2044" />
-    <PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
-    <PackageReference Include="NCrontab.Signed" Version="3.3.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
-    <PackageReference Include="System.Management" Version="6.0.0" />
-    <PackageReference Include="WebSocket4Net" Version="0.15.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="run.sh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
-  </Target>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<UseApplicationTrust>false</UseApplicationTrust>
+		<BootstrapperEnabled>true</BootstrapperEnabled>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<Optimize>False</Optimize>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationManifest>../Console/app.manifest</ApplicationManifest>
+		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
+		<RootNamespace>Serein</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="../Universal/**/*.cs" />
+		<Compile Include="../Console/**/*.cs" />
+		<Compile Remove="../Console/Properties/*.cs" />
+		<Compile Remove="../Console/obj/**" />
+		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
+		<Compile Remove="..\Universal\Server\PluginManager.cs" />
+		<EmbeddedResource Include="..\Universal\Build_Info.txt" />
+	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE;CONSOLE;LINUX</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE;CONSOLE;LINUX</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Costura.Fody" Version="5.7.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Fody" Version="6.6.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Jint" Version="3.0.0-beta-2044" />
+		<PackageReference Include="Microsoft.VisualBasic" Version="10.4.0-preview.18571.3" />
+		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
+		<PackageReference Include="System.Management" Version="6.0.0" />
+		<PackageReference Include="WebSocket4Net" Version="0.15.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+		<DesignTime>True</DesignTime>
+		<AutoGen>True</AutoGen>
+		<DependentUpon>Resources.resx</DependentUpon>
+	</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="run.sh">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
+	</Target>
 </Project>

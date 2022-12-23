@@ -22,10 +22,25 @@ namespace Serein.Server
         public static int CommandListIndex = 0;
         private static readonly object Lock = new object();
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
-        private static ProcessStartInfo ServerProcessInfo;
+
+        /// <summary>
+        /// 服务器进程
+        /// </summary>
         private static Process ServerProcess;
-        private static StreamWriter CommandWriter;
-        public static List<string> CommandList = new List<string>();
+
+        /// <summary>
+        /// 输入流写入者
+        /// </summary>
+        private static StreamWriter InputWriter;
+
+        /// <summary>
+        /// 命令历史记录
+        /// </summary>
+        public static List<string> CommandHistory = new List<string>();
+
+        /// <summary>
+        /// 编码列表
+        /// </summary>
         public static readonly Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
@@ -36,6 +51,10 @@ namespace Serein.Server
             Encoding.ASCII,
             Encoding.GetEncoding("ISO-8859-1")
         };
+
+#if CONSOLE
+        private static DateTime LastKillTime = DateTime.Now;
+#endif
 
         /// <summary>
         /// 启动服务器
@@ -61,12 +80,13 @@ namespace Serein.Server
             }
             else
             {
-                if (Logger.Type == 0)
-                    Logger.Out(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
-                else
-                    Logger.Out(LogType.Server_Clear);
+#if CONSOLE
+                Logger.Out(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
+#else
+                Logger.Out(LogType.Server_Clear);
+#endif
                 Logger.Out(LogType.Server_Notice, "启动中");
-                ServerProcessInfo = new ProcessStartInfo(Global.Settings.Server.Path)
+                ServerProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
                     UseShellExecute = false,
@@ -75,11 +95,10 @@ namespace Serein.Server
                     RedirectStandardInput = true,
                     StandardOutputEncoding = EncodingList[Global.Settings.Server.OutputEncoding],
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
-                };
-                ServerProcess = Process.Start(ServerProcessInfo);
+                });
                 ServerProcess.EnableRaisingEvents = true;
                 ServerProcess.Exited += (sender, e) => WaitForExit();
-                CommandWriter = new StreamWriter(
+                InputWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
                     EncodingList[Global.Settings.Server.InputEncoding]
                    )
@@ -96,7 +115,7 @@ namespace Serein.Server
                 LevelName = "-";
                 Difficulty = "-";
                 TempLine = string.Empty;
-                CommandList.Clear();
+                CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
                 System.Threading.Tasks.Task.Factory.StartNew(GetCPUPercent);
@@ -134,28 +153,55 @@ namespace Serein.Server
         /// <returns>强制结束结果</returns>
         public static bool Kill(bool Quiet = false)
         {
-            if (Status
-                &&
-                (Logger.Type == 0 ||
-                !Quiet
-                &&
-                Logger.MsgBox(
-                    "确定结束进程吗？\n此操作可能导致存档损坏等问题",
-                    "Serein",
-                    1,
-                    48
-                    )
-                && (
-                    !ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") || (
-                    ServerProcessInfo.FileName.ToUpper().EndsWith(".BAT") &&
-                    Logger.MsgBox(
-                    "由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？",
-                    "Serein",
-                    1,
-                    48
-                    )
-                )))
-                )
+            if (Quiet)
+            {
+                if (!Status)
+                    return false;
+                try
+                {
+                    ServerProcess.Kill();
+                    Killed = true;
+                    Restart = false;
+                    return true;
+                }
+                catch { }
+                return false;
+            }
+            else if (!Status)
+                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
+#if CONSOLE
+            else
+            {
+                DateTime NowTime = DateTime.Now;
+                if ((NowTime - LastKillTime).TotalSeconds < 5)
+                {
+                    LastKillTime = NowTime;
+                    try
+                    {
+                        ServerProcess.Kill();
+                        Killed = true;
+                        Restart = false;
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Out(LogType.Warn, "强制结束失败：\r\n", e.Message);
+                        Logger.Out(LogType.Debug, e);
+                        return false;
+                    }
+                }
+                else
+                {
+                    LastKillTime = NowTime;
+                    Logger.Out(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein kill）以确认此操作");
+                    return false;
+                }
+            }
+#else
+            else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48) && (
+                    !StartFileName.ToUpper().EndsWith(".BAT") || (
+                    StartFileName.ToUpper().EndsWith(".BAT") &&
+                    Logger.MsgBox("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", "Serein", 1, 48))))
             {
                 try
                 {
@@ -167,25 +213,10 @@ namespace Serein.Server
                 catch (Exception e)
                 {
                     Logger.MsgBox(":(\n强制结束失败\n" + e.Message, "Serein", 0, 16);
+                    return false;
                 }
             }
-            else if (Quiet)
-            {
-                try
-                {
-                    ServerProcess.Kill();
-                    Killed = true;
-                    Restart = false;
-                    return true;
-                }
-                catch { }
-            }
-            else if (!Status && !Quiet)
-                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
-            if (ServerProcess != null && ServerProcess.HasExited)
-            {
-                return true;
-            }
+#endif
             return false;
         }
 
@@ -201,32 +232,34 @@ namespace Serein.Server
             {
                 bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\n');
-                if (CommandList.Count > 50)
-                    CommandList.RemoveRange(0, CommandList.Count - 50);
+                if (CommandHistory.Count > 50)
+                    CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
                 if (
-                    (CommandList.Count > 0 && CommandList[CommandList.Count - 1] != Command_Copy || CommandList.Count == 0) &&
+                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != Command_Copy || CommandHistory.Count == 0) &&
                     (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
                 {
-                    CommandListIndex = CommandList.Count + 1;
-                    CommandList.Add(Command_Copy);
+                    CommandListIndex = CommandHistory.Count + 1;
+                    CommandHistory.Add(Command_Copy);
                 }
-                if (Global.Settings.Server.EnableOutputCommand && Logger.Type != 0)
+#if !CONSOLE
+                if (Global.Settings.Server.EnableOutputCommand)
                     Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
+#endif
                 if (!IsSpecifiedCommand)
                 {
                     if (Unicode || Global.Settings.Server.EnableUnicode)
                         Command_Copy = ConvertToUnicode(Command_Copy);
-                    CommandWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
+                    InputWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
                     JSFunc.Trigger(EventType.ServerSendCommand, Command);
                 }
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists("logs/console"))
-                        Directory.CreateDirectory("logs/console");
+                    if (!Directory.Exists(IO.GetPath("logs", "console")))
+                        Directory.CreateDirectory(IO.GetPath("logs", "console"));
                     try
                     {
                         File.AppendAllText(
-                            $"logs/console/{DateTime.Now:yyyy-MM-dd}.log",
+                            IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             ">" + Log.OutputRecognition(Command_Copy) + "\n",
                             Encoding.UTF8
                         );
@@ -259,19 +292,19 @@ namespace Serein.Server
                     else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                         Difficulty = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
-                Logger.Out(
-                    LogType.Server_Output,
-                    Logger.Type == 0 ?
-                    outLine.Data : Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle)
-                    );
+#if CONSOLE
+                Logger.Out(LogType.Server_Output, outLine.Data);
+#else
+                Logger.Out(LogType.Server_Output, Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
+#endif
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists("logs/console"))
-                        Directory.CreateDirectory("logs/console");
+                    if (!Directory.Exists(IO.GetPath("logs", "console")))
+                        Directory.CreateDirectory(IO.GetPath("logs", "console"));
                     try
                     {
                         File.AppendAllText(
-                            $"logs/console/{DateTime.Now:yyyy-MM-dd}.log",
+                            IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             Log.OutputRecognition(Line) + "\n",
                             Encoding.UTF8
                         );
@@ -313,8 +346,8 @@ namespace Serein.Server
         /// </summary>
         private static void WaitForExit()
         {
-            CommandWriter.Close();
-            CommandWriter.Dispose();
+            InputWriter.Close();
+            InputWriter.Dispose();
             Logger.Out(LogType.Server_Output, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
@@ -359,9 +392,11 @@ namespace Serein.Server
             Logger.Out(LogType.Server_Notice,
                 "服务器将在5s后重新启动"
                 );
-            Logger.Out(LogType.Server_Notice,
-                Logger.Type > 0 ? "你可以按下停止按钮来取消这次重启" : "你可以输入\"stop\"来取消这次重启"
-                );
+#if CONSOLE
+            Logger.Out(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
+#else
+            Logger.Out(LogType.Server_Notice, "你可以按下停止按钮来取消这次重启");
+#endif
             for (int i = 0; i < 10; i++)
             {
                 await System.Threading.Tasks.Task.Delay(500);

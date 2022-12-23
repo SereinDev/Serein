@@ -206,7 +206,10 @@ namespace Serein.Base
             {
                 Matcher.Process((JObject)JsonConvert.DeserializeObject(WebUtility.HtmlDecode(DeUnicode(e.Message))));
             }
-            catch { }
+            catch (Exception _e)
+            {
+                Logger.Out(LogType.Debug, _e);
+            }
         }
 
         /// <summary>

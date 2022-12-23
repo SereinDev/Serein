@@ -1,4 +1,5 @@
-﻿using Serein.Items;
+﻿using Serein.Base;
+using Serein.Items;
 using Serein.Server;
 using System.Timers;
 using System.Windows;
@@ -53,17 +54,17 @@ namespace Serein.Windows.Pages.Server
                 case Key.PageUp:
                     if (ServerManager.CommandListIndex > 0)
                         ServerManager.CommandListIndex--;
-                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
-                        InputBox.Text = ServerManager.CommandList[ServerManager.CommandListIndex];
+                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandListIndex];
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;
                 case Key.Down:
                 case Key.PageDown:
-                    if (ServerManager.CommandListIndex < ServerManager.CommandList.Count)
+                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
                         ServerManager.CommandListIndex++;
-                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
-                        InputBox.Text = ServerManager.CommandList[ServerManager.CommandListIndex];
-                    else if (ServerManager.CommandListIndex == ServerManager.CommandList.Count && ServerManager.CommandList.Count != 0)
+                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandListIndex];
+                    else if (ServerManager.CommandListIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
                         InputBox.Text = "";
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;

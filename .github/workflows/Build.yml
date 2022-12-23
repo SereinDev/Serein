@@ -120,7 +120,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Serein_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6_debug
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0
           if-no-files-found: ignore 
   
       - name: Upload Serein(Debug,dotnet6-windows)

@@ -62,7 +62,7 @@ namespace Serein.Properties {
         
         /// <summary>
         ///   查找类似 Local 
-        ///2022/12/22 周四  8:04:41.89 
+        ///2022/12/23 周五 17:50:15.35 
         ///C:\Users\Administrator\Source\Repos\Serein\Serein\Universal 
         ///Windows_NT 
         ///null

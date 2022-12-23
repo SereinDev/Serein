@@ -1,5 +1,6 @@
 ﻿using Jint.Native;
 using Jint.Runtime;
+using Serein.Base;
 using Serein.Items;
 using System;
 using System.Collections.Generic;

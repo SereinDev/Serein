@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serein.Base;
+using System;
 using System.Net;
 
 namespace Serein.Items.Motd

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Base;
 using System;
 using System.Net;
 using System.Net.Sockets;

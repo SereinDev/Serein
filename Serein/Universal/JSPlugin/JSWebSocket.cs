@@ -1,6 +1,7 @@
 ﻿using Jint.Native;
 using Jint.Runtime;
 using Newtonsoft.Json;
+using Serein.Base;
 using System;
 using WebSocket4Net;
 

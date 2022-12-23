@@ -42,22 +42,22 @@ namespace Serein.Ui
                 {
                     ServerManager.CommandListIndex--;
                 }
-                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
+                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandList[ServerManager.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandListIndex]);
                 }
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
             {
-                if (ServerManager.CommandListIndex < ServerManager.CommandList.Count)
+                if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
                 {
                     ServerManager.CommandListIndex++;
                 }
-                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandList.Count)
+                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandList[ServerManager.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandListIndex]);
                 }
-                else if (ServerManager.CommandListIndex == ServerManager.CommandList.Count && ServerManager.CommandList.Count != 0)
+                else if (ServerManager.CommandListIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
                 {
                     PanelConsoleInput_Update();
                 }

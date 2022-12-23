@@ -43,12 +43,12 @@
                 Grid.Row="0"
                 Margin="5,0,0,0"
                 Padding="0"
-                Icon="./Serein.ico">
+                Icon="/Windows/Serein.ico">
                 <ui:TitleBar.Tray>
                     <ui:NotifyIcon
                         x:Name="NotifyIcon"
                         FocusOnLeftClick="True"
-                        Icon="./Serein.ico"
+                        Icon="/Windows/Serein.ico"
                         MenuOnRightClick="True"
                         TooltipText="Serein">
                         <ui:NotifyIcon.Menu>
