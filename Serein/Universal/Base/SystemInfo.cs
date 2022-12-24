@@ -1,14 +1,15 @@
-﻿#if !LINUX
-using Microsoft.VisualBasic.Devices;
+﻿#if !UNIX
+using System.Diagnostics;
 #endif
 using System;
-using System.Diagnostics;
-using System.Management;
+using System.Timers;
+using SystemInfoLibrary.OperatingSystem;
 
 namespace Serein.Base
 {
     internal static class SystemInfo
     {
+#if !UNIX
         /// <summary>
         /// CPU性能计数器
         /// </summary>
@@ -20,28 +21,26 @@ namespace Serein.Base
         /// <summary>
         /// CPU使用率
         /// </summary>
-        public static string CPUPercentage => Counter.NextValue().ToString("N1");
+        public static float CPUUsage => Counter.NextValue();
+#endif
+        /// <summary>
+        /// 刷新计时器
+        /// </summary>
+        private static readonly Timer RefreshTimer = new Timer(2500)
+        {
+            AutoReset = true
+        };
 
         /// <summary>
-        /// CPU名称
+        /// 初始化系统信息
         /// </summary>
-        public static string CPUName
+        public static void Init()
         {
-            get
-            {
-                try
-                {
-                    foreach (ManagementObject m in new ManagementClass("Win32_Processor").GetInstances())
-                    {
-                        return m["Name"].ToString();
-                    }
-                    return "Unknown";
-                }
-                catch
-                {
-                    return "Unknown";
-                }
-            }
+            RefreshTimer.Elapsed += (_, e) => Info.Update();
+            RefreshTimer.Start();
+#if !UNIX
+            System.Threading.Tasks.Task.Run(() => Logger.Out(Items.LogType.Debug, "Welcome. ", CPUUsage.ToString("N1").Replace('.', 'w')));
+#endif
         }
 
         /// <summary>
@@ -49,37 +48,44 @@ namespace Serein.Base
         /// </summary>
         public static string NET = Environment.Version.ToString();
 
-#if LINUX
-        public static string OS = string.Empty, RAMPercentage = string.Empty;
-
-        public static ulong TotalRAM = 0, UsedRAM = 0;
-#else
+        /// <summary>
+        /// 操作系统信息
+        /// </summary>
+        public static OperatingSystemInfo Info = OperatingSystemInfo.GetOperatingSystemInfo();
 
         /// <summary>
-        /// 设备信息实例
+        /// CPU频率
         /// </summary>
-        private static readonly ComputerInfo Info = new ComputerInfo();
+        public static double CPUFrequency => Info.Hardware.CPUs[0].Frequency;
+
+        /// <summary>
+        /// CPU名称
+        /// </summary>
+        public static string CPUName = Info.Hardware.CPUs[0].Name;
+
+        /// <summary>
+        /// CPU品牌
+        /// </summary>
+        public static string CPUBrand = Info.Hardware.CPUs[0].Brand;
 
         /// <summary>
         /// 系统名称
         /// </summary>
-        public static string OS = Info.OSFullName;
+        public static string OS = Info.Name;
 
         /// <summary>
         /// 已用内存
         /// </summary>
-        public static ulong UsedRAM => TotalRAM - Info.AvailablePhysicalMemory / 1024 / 1024;
+        public static ulong UsedRAM => TotalRAM - Info.Hardware.RAM.Free / 1024;
 
         /// <summary>
         /// 总内存
         /// </summary>
-        public static ulong TotalRAM = Info.TotalPhysicalMemory / 1024 / 1024;
+        public static ulong TotalRAM = Info.Hardware.RAM.Total / 1024;
 
         /// <summary>
         /// 内存占用百分比
         /// </summary>
-        public static string RAMPercentage => ((double)((double)UsedRAM / TotalRAM * 100)).ToString("N1");
-#endif
-
+        public static double RAMUsage => (double)((double)UsedRAM / TotalRAM * 100);
     }
 }

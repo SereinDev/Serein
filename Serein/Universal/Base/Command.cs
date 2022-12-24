@@ -319,19 +319,23 @@ namespace Serein.Base
                 catch { }
             }
             Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
+#if !UNIX
+            Text = Regex.Replace(Text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
+#endif
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%CPUBrand%", SystemInfo.CPUBrand, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%CPUFrequency%", SystemInfo.CPUFrequency.ToString("N1"), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%UsedRAM%", SystemInfo.UsedRAM.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%TotalRAM%", SystemInfo.TotalRAM.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%RAMPercentage%", SystemInfo.RAMPercentage, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%CPUPercentage%", SystemInfo.CPUPercentage, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%RAMUsage%", SystemInfo.RAMUsage.ToString("N1"), RegexOptions.IgnoreCase);
             if (ServerManager.Status)
             {
                 Text = Regex.Replace(Text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Version%", ServerManager.Version, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Percentage%", ServerManager.CPUPersent.ToString("N1"), RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%ServerCPUUsage%", ServerManager.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
@@ -341,7 +345,7 @@ namespace Serein.Base
                 Text = Regex.Replace(Text, "%Version%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Difficulty%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Percentage%", "-", RegexOptions.IgnoreCase);
+                Text = Regex.Replace(Text, "%ServerCPUUsage%", "0", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%FileName%", "-", RegexOptions.IgnoreCase);
                 Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);
             }

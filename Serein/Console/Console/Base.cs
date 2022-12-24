@@ -42,7 +42,7 @@ namespace Serein.Console
             System.Console.OutputEncoding = Encoding.UTF8;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                var Handle = GetStdHandle(STD_OUTPUT_HANDLE);
+                IntPtr Handle = GetStdHandle(STD_OUTPUT_HANDLE);
                 GetConsoleMode(Handle, out uint OutputMode);
                 OutputMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
                 SetConsoleMode(Handle, OutputMode);
@@ -55,12 +55,12 @@ namespace Serein.Console
                 IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
                 RemoveMenu(CloseMenu, 0xF060, 0x0);
             }
-#if LINUX
+#if UNIX
             if (Environment.OSVersion.Platform != PlatformID.Unix)
-                Logger.Out(Items.LogType.Warn, "此版本为Linux专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Out(Items.LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
 #else
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-                Logger.Out(Items.LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Linux类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Out(Items.LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Unix类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
 #endif
         }
 
@@ -104,8 +104,9 @@ namespace Serein.Console
         {
             IO.ReadAll();
             IO.SaveSettings();
+            SystemInfo.Init();
             Global.Args = args ?? Global.Args;
-            Global.Settings.Serein.Debug = Global.Args.Contains("debug");
+            Global.Settings.Serein.Debug = Global.Settings.Serein.Debug || Global.Args.Contains("debug");
         }
     }
 }

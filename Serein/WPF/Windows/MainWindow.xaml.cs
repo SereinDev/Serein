@@ -24,7 +24,7 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Catalog.MainWindow = this;
-            Task.Run(() => Logger.Out(Items.LogType.Debug, "[Serein] Welcome. ", SystemInfo.CPUPercentage.Replace('.', 'w')));
+            SystemInfo.Init();
             if (Global.Args.Contains("auto_connect"))
                 Task.Run(() => Websocket.Connect(false));
             if (Global.Args.Contains("auto_start"))

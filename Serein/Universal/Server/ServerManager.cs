@@ -18,7 +18,7 @@ namespace Serein.Server
         public static bool Status => ServerProcess != null && !ServerProcess.HasExited;
         public static bool Restart = false, Finished = false;
         private static bool Killed;
-        public static double CPUPersent = 0;
+        public static double CPUUsage = 0;
         public static int CommandListIndex = 0;
         private static readonly object Lock = new object();
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
@@ -118,7 +118,7 @@ namespace Serein.Server
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevCpuTime = TimeSpan.Zero;
-                System.Threading.Tasks.Task.Factory.StartNew(GetCPUPercent);
+                System.Threading.Tasks.Task.Factory.StartNew(UpdateCPUUsage);
                 EventTrigger.Trigger(EventType.ServerStart);
                 JSFunc.Trigger(EventType.ServerStart);
                 return true;
@@ -412,12 +412,12 @@ namespace Serein.Server
         /// <summary>
         /// 获取CPU占用
         /// </summary>
-        public static void GetCPUPercent()
+        public static async void UpdateCPUUsage()
         {
             while (Status)
             {
-                Thread.CurrentThread.Join(2000);
-                CPUPersent = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+                await System.Threading.Tasks.Task.Delay(2000);
+                CPUUsage = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
             }
         }

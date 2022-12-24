@@ -26,11 +26,11 @@ namespace Serein.Windows.Pages
         {
             Dispatcher.Invoke(() =>
             {
-                RAM_Percent.Text = $"{SystemInfo.UsedRAM} / {SystemInfo.TotalRAM} MB   {SystemInfo.RAMPercentage}%";
-                RAM_Percent_Ring.Progress = double.TryParse(SystemInfo.RAMPercentage, out double _Result2) ? _Result2 : 0;
+                RAM_Percent.Text = $"{SystemInfo.UsedRAM} / {SystemInfo.TotalRAM} MB   {SystemInfo.RAMUsage:N1}%";
+                RAM_Percent_Ring.Progress = SystemInfo.RAMUsage;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
-                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUPersent.ToString("N2") + "%" : "-";
+                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N2") + "%" : "-";
                 if (ServerManager.Status && Global.Settings.Server.Type != 0)
                 {
                     Motd _Motd;
@@ -48,7 +48,7 @@ namespace Serein.Windows.Pages
                 {
                     Server_Online.Text = "-";
                 }
-                string CPUPercentage = SystemInfo.CPUPercentage;
+                string CPUPercentage = SystemInfo.CPUUsage.ToString("N1");
                 CPU_Percent.Text = CPUPercentage + "%";
                 CPU_Percent_Bar.Value = double.TryParse(CPUPercentage, out double _Result1) ? _Result1 : 0;
                 CPU_Percent_Bar.IsIndeterminate = false;

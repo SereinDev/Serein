@@ -38,7 +38,7 @@ namespace Serein.Base
                     if (Global.Settings.Serein.Debug)
                     {
                         StackTrace st = new StackTrace(true);
-                        Line = $"{DateTime.Now:T} " +
+                        Line = 
                             $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
@@ -94,11 +94,13 @@ namespace Serein.Base
                     WriteLine(1, $"\x1b[36m[↑]\x1b[0m {Line}");
                     break;
                 case LogType.Plugin_Info:
+                    if (!Line.StartsWith("["))
+                        Line = $"\x1b[36m[JSPlugin]\x1b[0m {Line}";
                     WriteLine(1, $"{Line}");
                     break;
                 case LogType.Version_New:
                     WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开" +
-                        $"\x1b[4m\x1b https://github.com/Zaitonn/Serein/releases/latest \x1b[0m获取最新版）");
+                        $"\x1b[4m\x1b[36m https://github.com/Zaitonn/Serein/releases/latest \x1b[0m获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     WriteLine(1, "获取更新成功，当前已是最新版:)");

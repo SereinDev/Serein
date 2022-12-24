@@ -43,28 +43,8 @@ namespace Serein.JSPlugin
                         cfg.CancellationToken(JSPluginManager.TokenSource.Token);
                 }
                 ));
-            engine.SetValue("Serein_SystemInfo", new Func<string, string>((Type) =>
-            {
-                switch (Type.ToLower())
-                {
-                    case "os":
-                        return SystemInfo.OS;
-                    case "net":
-                        return SystemInfo.NET;
-                    case "cpuname":
-                        return SystemInfo.CPUName;
-                    case "cpupercentage":
-                        return SystemInfo.CPUPercentage;
-                    case "usedram":
-                        return SystemInfo.UsedRAM.ToString();
-                    case "totalram":
-                        return SystemInfo.TotalRAM.ToString();
-                    case "rampercentage":
-                        return SystemInfo.RAMPercentage;
-                    default:
-                        return string.Empty;
-                }
-            }));
+            engine.SetValue("Serein_SystemInfo", 
+                new Func<object>(() => { return SystemInfo.Info; }));
             engine.SetValue("Serein_Global_Path",
                 Global.Path);
             engine.SetValue("Serein_Global_Version",
@@ -100,7 +80,7 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_ServerManager_GetTime",
                 new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("Serein_ServerManager_GetCPUPersent",
-                new Func<string>(() => ServerManager.CPUPersent.ToString("N2")));
+                new Func<string>(() => ServerManager.CPUUsage.ToString("N2")));
             engine.SetValue("Serein_ServerManager_GetFilename",
                 new Func<string>(() => ServerManager.StartFileName));
             engine.SetValue("Serein_Websocket_SendGroup",

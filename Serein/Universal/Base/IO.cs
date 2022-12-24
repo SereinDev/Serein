@@ -102,6 +102,8 @@ namespace Serein.Base
                 Reader.Close();
                 Reader.Dispose();
             }
+            else
+                SaveRegex();
         }
 
         /// <summary>
@@ -149,6 +151,8 @@ namespace Serein.Base
                     catch { }
                 }
             }
+            else
+                SaveMember();
         }
 
         /// <summary>
@@ -225,6 +229,8 @@ namespace Serein.Base
                 Reader.Close();
                 Reader.Dispose();
             }
+            else
+                SaveTask();
         }
 
         /// <summary>
