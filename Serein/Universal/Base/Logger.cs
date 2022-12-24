@@ -38,7 +38,7 @@ namespace Serein.Base
                     if (Global.Settings.Serein.Debug)
                     {
                         StackTrace st = new StackTrace(true);
-                        Line = 
+                        Line =
                             $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
                             $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";

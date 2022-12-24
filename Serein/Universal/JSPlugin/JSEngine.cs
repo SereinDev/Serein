@@ -43,7 +43,7 @@ namespace Serein.JSPlugin
                         cfg.CancellationToken(JSPluginManager.TokenSource.Token);
                 }
                 ));
-            engine.SetValue("Serein_SystemInfo", 
+            engine.SetValue("Serein_SystemInfo",
                 new Func<object>(() => { return SystemInfo.Info; }));
             engine.SetValue("Serein_Global_Path",
                 Global.Path);
