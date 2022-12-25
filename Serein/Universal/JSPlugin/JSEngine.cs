@@ -52,7 +52,7 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Current_Namespace",
                 Namespace);
             engine.SetValue("Serein_Log",
-                new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, Content)));
+                new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, $"[{Namespace}]", Content)));
             engine.SetValue("Serein_Command_Run",
                 new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Debug",

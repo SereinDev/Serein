@@ -41,7 +41,7 @@ namespace Serein.Ui
             SettingBotEnbaleParseAt.Checked = Global.Settings.Bot.EnbaleParseAt;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
             SettingSereinEnableDPIAware.Checked = Global.Settings.Serein.DPIAware;
-            if (!Global.Settings.Serein.Debug)
+            if (!Global.Settings.Serein.DevelopmentTool.EnableDebug)
             {
                 Debug.Parent = null;
             }

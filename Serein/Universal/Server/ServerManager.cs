@@ -20,7 +20,6 @@ namespace Serein.Server
         private static bool Killed;
         public static double CPUUsage = 0;
         public static int CommandListIndex = 0;
-        private static readonly object Lock = new object();
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
 
         /// <summary>
@@ -332,12 +331,8 @@ namespace Serein.Server
                     else
                         Matcher.Process(Line);
                 }
-                lock (Lock)
-                {
-                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerOutput, Line));
-                    System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerOriginalOutput, outLine.Data));
-                    System.Threading.Tasks.Task.Delay(75).GetAwaiter().GetResult();
-                }
+                JSFunc.Trigger(EventType.ServerOutput, Line);
+                JSFunc.Trigger(EventType.ServerOriginalOutput, outLine.Data);
             }
         }
 

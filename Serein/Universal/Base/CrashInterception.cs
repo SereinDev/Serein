@@ -41,7 +41,7 @@ namespace Serein.Base
                     "NET" + Environment.Version.ToString() +
                     "\n" +
                     Global.BuildInfo.ToString() +
-                    "\n\n" +
+                    "\n" +
                     ExceptionMsg +
                     "\n\n",
                     Encoding.UTF8

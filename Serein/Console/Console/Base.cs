@@ -39,6 +39,7 @@ namespace Serein.Console
         /// </summary>
         public static void Init()
         {
+            System.Console.ForegroundColor = ConsoleColor.Gray;
             System.Console.OutputEncoding = Encoding.UTF8;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
@@ -71,12 +72,9 @@ namespace Serein.Console
         {
             Logger.Out(Items.LogType.Info, "Welcome.");
             Logger.Out(Items.LogType.Info, "你可以输入\"help\"获取更多信息");
-            if (Global.Args.Contains("auto_connect"))
-                Task.Run(() => Websocket.Connect(false));
-            if (Global.Args.Contains("auto_start"))
-                Task.Run(() => ServerManager.Start(true));
+            AutoRun.Check();
             System.Console.Title = "Serein " + Global.VERSION;
-            System.Console.CancelKeyPress += (sender, e) =>
+            System.Console.CancelKeyPress += (_, e) =>
             {
                 e.Cancel = true;
                 if (ServerManager.Status)
@@ -106,7 +104,7 @@ namespace Serein.Console
             IO.SaveSettings();
             SystemInfo.Init();
             Global.Args = args ?? Global.Args;
-            Global.Settings.Serein.Debug = Global.Settings.Serein.Debug || Global.Args.Contains("debug");
+            Global.Settings.Serein.DevelopmentTool.EnableDebug = Global.Settings.Serein.DevelopmentTool.EnableDebug || Global.Args.Contains("debug");
         }
     }
 }

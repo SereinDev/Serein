@@ -37,7 +37,7 @@ namespace Serein.Ui
             Ui_Shown(sender, e);
         }
 
-        private void Ui_Shown(object sender, EventArgs e)
+        private void Ui_Shown(object sender, EventArgs _)
         {
             if (Global.FirstOpen)
             {
@@ -60,15 +60,15 @@ namespace Serein.Ui
                         "Serein is licensed under <a href=\"https://github.com/Zaitonn/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n" +
                         "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
                 };
-                TaskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
+                TaskDialog.HyperlinkClicked += (sneder, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
                 TaskDialog.ShowDialog();
             }
-            if (Global.Args.Contains("auto_connect"))
-                System.Threading.Tasks.Task.Run(() => Websocket.Connect(false));
-            if (Global.Args.Contains("auto_start"))
-                System.Threading.Tasks.Task.Run(() => ServerManager.Start(true));
-            System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(Items.EventType.SereinStart));
-            System.Threading.Tasks.Task.Run(() => JSPluginManager.Load());
+            AutoRun.Check();
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                JSPluginManager.Load();
+                JSFunc.Trigger(Items.EventType.SereinStart);
+            });
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
@@ -96,28 +96,17 @@ namespace Serein.Ui
 
         public void Debug_Append(string Text)
         {
-            if (Global.Settings.Serein.Debug)
+            if (Global.Settings.Serein.DevelopmentTool.EnableDebug)
             {
-                if (DebugTextBox.InvokeRequired)
-                {
-                    Action<string> ActionDelegate = (_Text) =>
-                    {
-                        if (DebugTextBox.Text.Length > 50000)
-                        {
-                            DebugTextBox.Text = "";
-                        }
-                        DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n";
-                    };
-                    PanelInfoTime2.Invoke(ActionDelegate, Text);
-                }
-                else
+                Action<string> ActionDelegate = (_Text) =>
                 {
                     if (DebugTextBox.Text.Length > 50000)
                     {
                         DebugTextBox.Text = "";
                     }
-                    DebugTextBox.Text = DebugTextBox.Text + Text + "\r\n";
-                }
+                    DebugTextBox.Text = DebugTextBox.Text + _Text + "\r\n";
+                };
+                PanelInfoTime2.Invoke(ActionDelegate, Text);
             }
         }
 

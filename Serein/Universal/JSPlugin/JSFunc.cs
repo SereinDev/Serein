@@ -63,6 +63,8 @@ namespace Serein.JSPlugin
                     JSPluginManager.PluginDict[Namespace].Event.Set((EventType)Enum.Parse(typeof(EventType), EventName), Function);
         }
 
+        private static readonly object Lock = new object();
+
         /// <summary>
         /// 触发插件事件
         /// </summary>
@@ -70,9 +72,15 @@ namespace Serein.JSPlugin
         /// <param name="Args">参数</param>
         public static void Trigger(EventType Type, params object[] Args)
         {
-            Logger.Out(LogType.Debug, Type);
-            lock (JSPluginManager.PluginDict)
-                JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
+            if (JSPluginManager.PluginDict.Count == 0)
+                return;
+            lock (Lock)
+            {
+                Logger.Out(LogType.Debug, Type);
+                lock (JSPluginManager.PluginDict)
+                    JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
+                System.Threading.Tasks.Task.Delay(Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime).GetAwaiter().GetResult();
+            }
         }
 
         /// <summary>

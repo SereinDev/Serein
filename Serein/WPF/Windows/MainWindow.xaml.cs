@@ -25,17 +25,14 @@ namespace Serein.Windows
             InitializeComponent();
             Catalog.MainWindow = this;
             SystemInfo.Init();
-            if (Global.Args.Contains("auto_connect"))
-                Task.Run(() => Websocket.Connect(false));
-            if (Global.Args.Contains("auto_start"))
-                Task.Run(() => ServerManager.Start(true));
+            AutoRun.Check();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Catalog.Notification = Catalog.Notification ?? new NotificationManager();
-            DebugNavigationItem.Visibility = Global.Settings.Serein.Debug ? Visibility.Visible : Visibility.Hidden;
+            DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)
                 Watcher.Watch(this, BackgroundType.Tabbed, true);
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);

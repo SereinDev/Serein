@@ -25,6 +25,10 @@ namespace Serein.Base
         /// <param name="objects">内容</param>
         public static void Out(LogType Type, params object[] objects)
         {
+#if WINFORM
+            if (Program.Ui == null || Program.Ui.Disposing)
+                return;
+#endif
             string Line = string.Empty;
             foreach (var o in objects)
             {
@@ -35,19 +39,19 @@ namespace Serein.Base
             switch (Type)
             {
                 case LogType.Debug:
-                    if (Global.Settings.Serein.Debug)
+                    if (Global.Settings.Serein.DevelopmentTool.EnableDebug)
                     {
                         StackTrace st = new StackTrace(true);
                         Line =
                             $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
-                            $"{(Global.Settings.Serein.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
+                            $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
                             $"{Line}";
 #if CONSOLE
                         WriteLine(4, Line);
 #elif WINFORM
-                        Program.Ui.Debug_Append(Line);
+                        Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
 #elif WPF
-                        Catalog.Debug?.AppendText(Line);
+                        Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
 #endif
                         if (!Directory.Exists(IO.GetPath("logs", "debug")))
                             Directory.CreateDirectory(IO.GetPath("logs", "debug"));
@@ -94,9 +98,7 @@ namespace Serein.Base
                     WriteLine(1, $"\x1b[36m[↑]\x1b[0m {Line}");
                     break;
                 case LogType.Plugin_Info:
-                    if (!Line.StartsWith("["))
-                        Line = $"\x1b[36m[JSPlugin]\x1b[0m {Line}";
-                    WriteLine(1, $"{Line}");
+                    WriteLine(1, Line);
                     break;
                 case LogType.Version_New:
                     WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开" +
@@ -168,15 +170,15 @@ namespace Serein.Base
                 case LogType.Server_Output:
                     Catalog.Server.Panel?.AppendText(Line);
                     Catalog.Server.Cache.Add(Line);
-                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Server_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Server.Panel?.AppendText(Line);
                     Catalog.Server.Cache.Add(Line);
-                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Server_Clear:
                     Catalog.Server.Panel?.AppendText("#clear");
@@ -185,36 +187,36 @@ namespace Serein.Base
                 case LogType.Bot_Output:
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Bot_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Bot_Receive:
                     Line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Bot_Send:
                     Line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Bot_Error:
                     Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.Bot?.AppendText(Line);
                     Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Bot_Clear:
                     Catalog.Function.Bot?.AppendText("#clear");
@@ -224,29 +226,29 @@ namespace Serein.Base
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Plugin_Error:
                     Line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Plugin_Info:
                     Line = Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Plugin_Warn:
                     Line = "<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(Line);
                     Catalog.Function.JSPlugin?.AppendText(Line);
                     Catalog.Function.PluginCache.Add(Line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
+                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.DevelopmentTool.MaxCacheLines)
+                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.DevelopmentTool.MaxCacheLines);
                     break;
                 case LogType.Plugin_Clear:
                     Catalog.Function.JSPlugin?.AppendText("#clear");
@@ -297,7 +299,6 @@ namespace Serein.Base
                 Line.Split('\n').ToList().ForEach((i) => WriteLine(Level, i.Replace("\r", string.Empty), SereinTitle));
                 return;
             }
-            System.Console.ForegroundColor = ConsoleColor.Gray;
             string Prefix = $"{DateTime.Now:T} ";
             lock (Lock)
             {
@@ -330,7 +331,6 @@ namespace Serein.Base
                     System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(Line, @"\[.*?m", string.Empty));
                 else
                     System.Console.WriteLine(Line + "\x1b[0m");
-                System.Console.ForegroundColor = ConsoleColor.White;
             }
         }
 #endif

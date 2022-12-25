@@ -37,7 +37,7 @@ namespace Serein
             IO.ReadAll(true);
             Global.Args = args;
             if (Global.Args.Contains("debug"))
-                Global.Settings.Serein.Debug = true;
+                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT && Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
                 SetProcessDPIAware();
             Application.EnableVisualStyles();

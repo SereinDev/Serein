@@ -20,7 +20,7 @@ namespace Serein.Windows.Pages.Settings
         {
             UseDarkTheme.IsChecked = Global.Settings.Serein.UseDarkTheme;
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
-            MaxCacheLines.Value = Global.Settings.Serein.MaxCacheLines;
+            MaxCacheLines.Value = Global.Settings.Serein.DevelopmentTool.MaxCacheLines;
             Version.Text = "当前版本：" + Global.VERSION;
             BuildInfo.Text = Global.BuildInfo.ToString();
         }
@@ -46,6 +46,6 @@ namespace Serein.Windows.Pages.Settings
             => Dispatcher.Invoke(() => { Version.Text = "当前版本：" + Global.VERSION + Text; });
 
         private void MaxCacheLines_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Serein.MaxCacheLines = Loaded ? (int)MaxCacheLines.Value : Global.Settings.Serein.MaxCacheLines;
+            => Global.Settings.Serein.DevelopmentTool.MaxCacheLines = Loaded ? (int)MaxCacheLines.Value : Global.Settings.Serein.DevelopmentTool.MaxCacheLines;
     }
 }

@@ -59,9 +59,9 @@ namespace Serein.JSPlugin
         /// <param name="Args">参数</param>
         public void Trigger(EventType Type, params object[] Args)
         {
-            Logger.Out(LogType.Debug, Type);
-            if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !Dict.ContainsKey(Type) || Dict[Type] != null)
+            if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !Dict.ContainsKey(Type) || Dict[Type] == null)
                 return;
+            Logger.Out(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(Type)}:", Type, $"{nameof(Args)} Count:", Args.Length);
             System.Threading.Tasks.Task.Run(() =>
             {
                 try
