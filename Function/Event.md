@@ -7,9 +7,9 @@
 
 根据settings/Event.json中的设置的命令响应触发的事件  
 
-在配置文件中，每个事件下有一个`JSON`数组，你可以在里面填写该事件被触发时执行的[命令](Command.md)，并且可以在其中插入[变量](Variables.md)
+在配置文件中，每个事件下有一个`JSON`数组，你可以在里面填写该事件被触发时执行的[命令](Function/Command.md)，并且可以在其中插入[变量](Function/Variables.md)
 
->[!WARNING]所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
+>[!WARNING]所有事件均无法使用[消息变量（私聊）](Function/Variables.md#消息变量私聊)、[消息变量（群聊）](Function/Variables.md#消息变量群聊)变量
 
 <details>
   <summary>配置文件预览</summary>
@@ -79,7 +79,7 @@
 
 ### 事件一览表
 
->[!WARNING]以下所有事件均无法使用[消息变量（私聊）](Variables.md#消息变量私聊)、[消息变量（群聊）](Variables.md#消息变量群聊)变量
+>[!WARNING]以下所有事件均无法使用[消息变量（私聊）](Function/Variables.md#消息变量私聊)、[消息变量（群聊）](Function/Variables.md#消息变量群聊)变量
 
 | 事件名                         | 描述                           |
 | ------------------------------ | ------------------------------ |
@@ -248,7 +248,7 @@ Motd获取失败
 #### PermissionDeniedFromGroupMsg
 
 当没有管理权限的用户通过群聊方式触发了需要权限的命令时触发
-默认值：`g|[CQ:at,qq="id"] 你没有执行这个命令的权限`
+默认值：`g|[CQ:at,qq=%id%] 你没有执行这个命令的权限`
 
 ### Serein
 
