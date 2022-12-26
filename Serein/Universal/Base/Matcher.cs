@@ -125,7 +125,7 @@ namespace Serein.Base
                         {
                             MessageReceived = (TempNumber / 10000).ToString("N1") + "w";
                         }
-                        if ((long.TryParse(MessageSent, out  TempNumber) ? TempNumber : 0) > 10000000)
+                        if ((long.TryParse(MessageSent, out TempNumber) ? TempNumber : 0) > 10000000)
                         {
                             MessageSent = (TempNumber / 10000).ToString("N1") + "w";
                         }
