@@ -10,7 +10,7 @@ namespace Serein.Items
         /// <summary>
         /// 命名空间
         /// </summary>
-        public string Namespace = null;
+        public string Namespace;
 
         /// <summary>
         /// 被成功加载
@@ -46,7 +46,7 @@ namespace Serein.Items
         /// JS引擎
         /// </summary>
         [JsonIgnore]
-        public Engine Engine = null;
+        public Engine Engine;
 
         /// <summary>
         /// WebSocket列表

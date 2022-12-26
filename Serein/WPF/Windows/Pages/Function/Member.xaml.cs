@@ -21,7 +21,9 @@ namespace Serein.Windows.Pages.Function
         private void Load(bool FromFile = true)
         {
             if (FromFile)
+            {
                 IO.ReadMember();
+            }
             MemberListView.Items.Clear();
             foreach (Items.Member Item in Global.MemberItems.Values.ToList())
             {

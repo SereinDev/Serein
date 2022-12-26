@@ -19,7 +19,9 @@ namespace Serein.Ui
                 Multiselect = true
             };
             if (Dialog.ShowDialog() == DialogResult.OK)
+            {
                 PluginManager.Add(Dialog.FileNames);
+            }
             LoadPlugins();
         }
 
@@ -88,17 +90,29 @@ namespace Serein.Ui
                         Text = Regex.Replace(Path.GetFileName(PluginFile), @"\.lock$", string.Empty)
                     };
                     if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
                         PluginGroupJs.Items.Add(Item);
-                    else if (PluginFile.ToUpper().EndsWith(".DLL"))
-                        PluginGroupDll.Items.Add(Item);
-                    else if (PluginFile.ToUpper().EndsWith(".JAR"))
-                        PluginGroupJar.Items.Add(Item);
-                    else if (PluginFile.ToUpper().EndsWith(".PY"))
-                        PluginGroupPy.Items.Add(Item);
-                    else if (PluginFile.ToUpper().EndsWith(".LUA"))
-                        PluginGroupLua.Items.Add(Item);
-                    else if (PluginFile.ToUpper().EndsWith(".TS"))
-                        PluginGroupTs.Items.Add(Item);
+                    }
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
+                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    {
+                        PluginGroupJs.Items.Add(Item);
+                    }
                     else if (PluginFile.ToUpper().EndsWith(".LOCK"))
                     {
                         Item.ForeColor = Color.Gray;

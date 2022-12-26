@@ -120,7 +120,9 @@ namespace Serein.Ui
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
                 {
                     if (qq.Length >= 6 && qq.Length <= 16 && long.TryParse(qq, out long qq_))
+                    {
                         list.Add(qq_);
+                    }
                 }
                 Global.Settings.Bot.GroupList = list;
             }
@@ -148,7 +150,9 @@ namespace Serein.Ui
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))
                 {
                     if (qq.Length >= 5 && qq.Length <= 13 && long.TryParse(qq, out long qq_))
+                    {
                         list.Add(qq_);
+                    }
                 }
                 Global.Settings.Bot.PermissionList = list;
             }
@@ -195,7 +199,9 @@ namespace Serein.Ui
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node == null || !Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+            {
                 return;
+            }
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
             Global.Settings.Event.Get((Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name)).ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")));
@@ -265,7 +271,9 @@ namespace Serein.Ui
         private void SaveEventCommand()
         {
             if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+            {
                 Global.Settings.Event.Edit(GetEventCommands(), (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name));
+            }
             IO.SaveEventSetting();
         }
 

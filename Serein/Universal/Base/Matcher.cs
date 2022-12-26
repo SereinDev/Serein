@@ -19,7 +19,9 @@ namespace Serein.Base
             foreach (Items.Regex Item in Global.RegexItems)
             {
                 if (string.IsNullOrEmpty(Item.Expression) || Item.Area != 1)
+                {
                     continue;
+                }
                 if (System.Text.RegularExpressions.Regex.IsMatch(Line, Item.Expression))
                     Command.Run(
                         2,
@@ -36,7 +38,9 @@ namespace Serein.Base
         public static void Process(JObject Packet)
         {
             if (Packet["post_type"] == null)
+            {
                 return;
+            }
             string Post_Type = Packet["post_type"].ToString();
             long Result, UserId, GroupId;
             switch (Post_Type)
@@ -87,15 +91,23 @@ namespace Serein.Base
                         }
                         if (System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression))
                             if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
+                            {
                                 Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
-                            else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
-                                Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId);
+                            }
+                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
+                        {
+                            Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
+                        }
                     }
                     if (!IsSelfMessage)
                         if (MessageType == "private")
+                        {
                             JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
-                        else if (MessageType == "group" && Global.Settings.Bot.GroupList.Contains(GroupId))
-                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
+                        }
+                    if (MessageType == "private")
+                    {
+                        JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
+                    }
                     break;
                 case "meta_event":
                     if (Packet["meta_event_type"].ToString() == "heartbeat")
@@ -110,9 +122,13 @@ namespace Serein.Base
                             Packet["status"]["stat"]["MessageSent"]
                             ).ToString();
                         if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
+                        {
                             MessageReceived = (TempNumber / 10000).ToString("N1") + "w";
-                        if ((long.TryParse(MessageSent, out TempNumber) ? TempNumber : 0) > 10000000)
+                        }
+                        if ((long.TryParse(MessageSent, out  TempNumber) ? TempNumber : 0) > 10000000)
+                        {
                             MessageSent = (TempNumber / 10000).ToString("N1") + "w";
+                        }
                     }
                     break;
                 case "notice":

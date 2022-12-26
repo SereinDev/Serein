@@ -41,7 +41,9 @@ namespace Serein.Windows.Pages.Server
                         ListViewItem Item = new ListViewItem();
                         Item.Content = PluginManager.GetRelativeUri(Plugin);
                         if (Path.GetExtension(Plugin).ToLower() == ".lock")
+                        {
                             Item.Foreground = Brushes.LightGray;
+                        }
                         PluginsListview.Items.Add(Item);
                     }
                 }
@@ -72,7 +74,9 @@ namespace Serein.Windows.Pages.Server
                         foreach (object File in PluginsListview.SelectedItems)
                         {
                             if (File != null)
+                            {
                                 Files.Add(PluginManager.GetAbsoluteUri((File as ListViewItem).Content.ToString()));
+                            }
                         }
                         switch (Tag)
                         {
@@ -95,12 +99,16 @@ namespace Serein.Windows.Pages.Server
                             Multiselect = true
                         };
                         if (Dialog.ShowDialog() ?? false)
+                        {
                             PluginManager.Add(Dialog.FileNames);
+                        }
                         Load();
                         break;
                     case "OpenFolder":
                         if (PluginsListview.SelectedIndex < 0)
+                        {
                             PluginManager.OpenFolder();
+                        }
                         else
                             PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem).Content.ToString()));
                         break;

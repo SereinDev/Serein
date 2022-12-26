@@ -11,12 +11,12 @@ namespace Serein.Base
     internal static class Net
     {
         /// <summary>
-        /// ¼ì²é¸üÐÂ¼ÆÊ±Æ÷
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½Ê±ï¿½ï¿½
         /// </summary>
         private static Timer CheckTimer = new Timer(200000) { AutoReset = true };
 
         /// <summary>
-        /// ¿ªÊ¼¼ì²é¸üÐÂ
+        /// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         public static void StartChecking()
         {
@@ -30,12 +30,12 @@ namespace Serein.Base
         }
 
         /// <summary>
-        /// Òì²½Get
+        /// ï¿½ì²½Get
         /// </summary>
-        /// <param name="Url">Á´½Ó</param>
+        /// <param name="Url">ï¿½ï¿½ï¿½ï¿½</param>
         /// <param name="Accept">Header - Accept</param>
         /// <param name="UserAgent">Header - UserAgent</param>
-        /// <returns>ÕýÎÄ</returns>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½</returns>
         public static async Task<string> Get(string Url, string Accept = null, string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
         {
             HttpClient Client = new HttpClient();
@@ -54,12 +54,12 @@ namespace Serein.Base
         }
 
         /// <summary>
-        /// ÉÏÒ»¸ö»ñÈ¡µ½µÄ°æ±¾
+        /// ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ä°æ±¾
         /// </summary>
         private static string LastVersion;
 
         /// <summary>
-        /// ¼ì²é¸üÐÂ
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         public static void CheckVersion()
         {
@@ -71,9 +71,13 @@ namespace Serein.Base
                     JObject JsonObject = (JObject)JsonConvert.DeserializeObject(JSON);
                     string Version = JsonObject["tag_name"].ToString();
                     if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) && Version != Global.VERSION && LastVersion != Version)
+                    {
                         Logger.Out(Items.LogType.Version_New, Version);
-                    else if (LastVersion != Version)
-                        Logger.Out(Items.LogType.Version_Latest, Version);
+                    }
+                    if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) && Version != Global.VERSION && LastVersion != Version)
+                    {
+                        Logger.Out(Items.LogType.Version_New, Version);
+                    }
                     LastVersion = Version;
                 }
                 catch (Exception e)

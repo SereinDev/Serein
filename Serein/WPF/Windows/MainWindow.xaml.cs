@@ -34,7 +34,9 @@ namespace Serein.Windows
             Catalog.Notification = Catalog.Notification ?? new NotificationManager();
             DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)
+            {
                 Watcher.Watch(this, BackgroundType.Tabbed, true);
+            }
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 
@@ -67,7 +69,9 @@ namespace Serein.Windows
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             if (!ServerManager.Status)
+            {
                 Close();
+            }
             else
                 Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
         }
@@ -88,7 +92,9 @@ namespace Serein.Windows
         private void UiWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (Snackbar.IsShown)
+            {
                 PopupEx.VerticalOffset = Height * 0.5 - 60;
+            }
         }
 
         private void Help_Click(object sender, RoutedEventArgs e)
@@ -114,7 +120,9 @@ namespace Serein.Windows
         private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
             if (Catalog.Function.Member.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text))
+            {
                 MemberEditor.Hide();
+            }
         }
         #endregion
 
@@ -138,7 +146,9 @@ namespace Serein.Windows
             RegexEditor_IsAdmain.IsEnabled = RegexEditor_Area.SelectedIndex >= 2 && RegexEditor_Area.SelectedIndex <= 3;
             RegexEditor_IsAdmain.IsChecked = RegexEditor_IsAdmain.IsEnabled ? RegexEditor_IsAdmain.IsChecked : false;
             if (RegexEditor_Area.SelectedIndex == 4)
+            {
                 OpenSnackbar("警告", "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，\n配置错误可能导致机器人刷屏甚至被封号", SymbolRegular.Warning24);
+            }
         }
 
         private void RegexEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
@@ -167,7 +177,9 @@ namespace Serein.Windows
         private void TaskEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
             if (Catalog.Function.Task.Confirm(TaskEditor_Cron.Text, TaskEditor_Command.Text, TaskEditor_Remark.Text))
+            {
                 TaskEditor.Hide();
+            }
         }
 
         private void TaskEditor_Cron_TextChanged(object sender, TextChangedEventArgs e)
@@ -195,7 +207,9 @@ namespace Serein.Windows
         private void EventEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
             if (Catalog.Settings.Event.Confirm(EventEditor_Command.Text))
+            {
                 EventEditor.Hide();
+            }
         }
 
         private void EventEditor_ButtonRightClick(object sender, RoutedEventArgs e)
@@ -231,7 +245,9 @@ namespace Serein.Windows
                         "Serein", 1, 48))
                     {
                         if (Catalog.Settings.Server != null && Catalog.Settings.Server.Path != null)
+                        {
                             Catalog.Settings.Server.Path.Text = FileName;
+                        }
                         Global.Settings.Server.Path = FileName;
                         Catalog.Server.Plugins?.Load();
                     }
@@ -269,7 +285,9 @@ namespace Serein.Windows
                     Catalog.Server.Plugins?.Load();
                 }
                 else if (FileList.Count == 0 && data.Length > 0)
+                {
                     Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
+                }
             }
         }
 

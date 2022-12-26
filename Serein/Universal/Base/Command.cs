@@ -24,7 +24,7 @@ namespace Serein.Base
         /// <param name="Command">执行的命令</param>
         public static void StartCmd(string Command)
         {
-            Process CMDProcess = new Process()
+            Process CMDProcess = new Process
             {
                 StartInfo = new ProcessStartInfo()
                 {
@@ -47,7 +47,9 @@ namespace Serein.Base
             {
                 CMDProcess.WaitForExit(600000);
                 if (!CMDProcess.HasExited)
+                {
                     CMDProcess.Kill();
+                }
                 CMDProcess.Dispose();
             });
         }
@@ -87,10 +89,14 @@ namespace Serein.Base
                     $"UserId:{UserId}",
                     $"GroupId:{GroupId}");
             if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
+            {
                 GroupId = Global.Settings.Bot.GroupList[0];
+            }
             Items.CommandType Type = GetType(Command);
             if (Type == Items.CommandType.Invalid || ((Type == Items.CommandType.RequestMotdpe || Type == Items.CommandType.RequestMotdje) && DisableMotd))
+            {
                 return;
+            }
             string Value = GetValue(Command, MsgMatch);
             Value = ApplyVariables(Value, JsonObject, DisableMotd);
             switch (Type)
@@ -106,19 +112,27 @@ namespace Serein.Base
                     break;
                 case Items.CommandType.SendGivenGroupMsg:
                     if (Websocket.Status)
+                    {
                         Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
+                    }
                     break;
                 case Items.CommandType.SendGivenPrivateMsg:
                     if (Websocket.Status)
+                    {
                         Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
+                    }
                     break;
                 case Items.CommandType.SendGroupMsg:
                     if (Websocket.Status)
+                    {
                         Websocket.Send(false, Value, GroupId, InputType != 4);
+                    }
                     break;
                 case Items.CommandType.SendPrivateMsg:
                     if ((InputType == 1 || InputType == 4) && Websocket.Status)
+                    {
                         Websocket.Send(true, Value, UserId, InputType != 4);
+                    }
                     break;
                 case Items.CommandType.Bind:
                     if ((InputType == 1 || InputType == 4) && GroupId != -1)
@@ -155,14 +169,21 @@ namespace Serein.Base
                     break;
                 case Items.CommandType.ExecuteJavascriptCodes:
                     if (InputType != 5)
+                    {
                         Task.Run(() => JSEngine.Init(true).Execute(Value));
+                    }
                     break;
                 case Items.CommandType.DebugOutput:
                     Logger.Out(Items.LogType.Debug, "[DebugOutput]", Value);
                     break;
+                default:
+                    Logger.Out(Items.LogType.Debug, "[Unknown]", Value);
+                    break;
             }
             if (InputType == 1 && Type != Items.CommandType.Bind && Type != Items.CommandType.Unbind && GroupId != -1)
+            {
                 Binder.Update(JsonObject, UserId);
+            }
         }
 
         /// <summary>
@@ -178,7 +199,9 @@ namespace Serein.Base
                 )
                 return Items.CommandType.Invalid;
             if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.ExecuteCmd;
+            }
             if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
                 return Items.CommandType.ServerInput;
@@ -206,14 +229,20 @@ namespace Serein.Base
                 Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
                 return Items.CommandType.Unbind;
             if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.RequestMotdpe;
+            }
             if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.RequestMotdje;
+            }
             if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
                 return Items.CommandType.ExecuteJavascriptCodes;
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.DebugOutput;
+            }
             return Items.CommandType.Invalid;
         }
 
@@ -228,10 +257,12 @@ namespace Serein.Base
             int Index = command.IndexOf('|');
             string Value = command.Substring(Index + 1);
             if (MsgMatch != null)
+            {
                 for (int i = MsgMatch.Groups.Count; i >= 0; i--)
                 {
                     Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
                 }
+            }
             Logger.Out(Items.LogType.Debug, $"Value:{Value}");
             return Value;
         }
@@ -263,7 +294,9 @@ namespace Serein.Base
                 }
             }
             if (!Text.Contains("%"))
+            {
                 return Text.Replace("\\n", "\n");
+            }
             if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
                 switch (Global.Settings.Server.Type)
                 {
@@ -366,7 +399,9 @@ namespace Serein.Base
                     );
             }
             if (Regex.IsMatch(Text, @"%ID:.+?%", RegexOptions.IgnoreCase))
+            {
                 Text = Regex.Replace(Text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(Text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
+            }
             return Text.Replace("\\n", "\n");
         }
     }

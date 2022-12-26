@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Serein.Base
 {
-    internal class Binder
+    internal static class Binder
     {
         /// <summary>
         /// 游戏ID集合
@@ -39,7 +39,9 @@ namespace Serein.Base
         {
             Value = Value.Trim();
             if (Global.MemberItems.Keys.Contains(UserId) || !System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
+            {
                 return false;
+            }
             else
             {
                 Global.MemberItems.Add(UserId, new Member()
@@ -63,11 +65,17 @@ namespace Serein.Base
         {
             Value = Value.Trim();
             if (Global.MemberItems.Keys.Contains(UserId))
+            {
                 EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, GroupId, UserId);
+            }
             else if (!System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            {
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, GroupId, UserId);
+            }
             else if (GameIDs.Contains(Value))
+            {
                 EventTrigger.Trigger(EventType.BindingFailDueToOccupation, GroupId, UserId);
+            }
             else
             {
                 Member Item = new Member()
@@ -94,7 +102,9 @@ namespace Serein.Base
         public static void UnBind(long UserId, long GroupId = -1)
         {
             if (!Global.MemberItems.Keys.Contains(UserId))
+            {
                 EventTrigger.Trigger(EventType.UnbindingFail, GroupId, UserId);
+            }
             else
             {
                 lock (Global.MemberItems)
@@ -130,13 +140,17 @@ namespace Serein.Base
         public static string GetGameID(long UserId)
         {
             if (!Global.MemberItems.Keys.Contains(UserId))
+            {
                 return string.Empty;
+            }
             else
             {
                 foreach (Member Item in Items)
                 {
                     if (Item.ID == UserId)
+                    {
                         return Item.GameID;
+                    }
                 }
                 return string.Empty;
             }
@@ -151,13 +165,17 @@ namespace Serein.Base
         {
             GameID = GameID.Trim();
             if (!GameIDs.Contains(GameID))
+            {
                 return 0;
+            }
             else
             {
                 foreach (Member Item in Items)
                 {
                     if (Item.GameID == GameID)
+                    {
                         return Item.ID;
+                    }
                 }
                 return 0;
             }

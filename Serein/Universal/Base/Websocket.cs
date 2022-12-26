@@ -12,7 +12,7 @@ using WebSocket4Net;
 
 namespace Serein.Base
 {
-    public class Websocket
+    internal static class Websocket
     {
         /// <summary>
         /// 连接状态
@@ -151,7 +151,9 @@ namespace Serein.Base
                 };
                 WSClient.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
+                {
                     Logger.Out(LogType.Bot_Send, TextJObject.ToString());
+                }
                 else
                     Logger.Out(LogType.Bot_Send, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
             }
@@ -187,11 +189,15 @@ namespace Serein.Base
         public static void Receive(object sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)
+            {
                 Logger.Out(LogType.Bot_Receive, e.Message);
+            }
             if (Global.Settings.Bot.EnableLog)
             {
                 if (!Directory.Exists(IO.GetPath("logs", "msg")))
+                {
                     Directory.CreateDirectory(IO.GetPath("logs", "msg"));
+                }
                 try
                 {
                     File.AppendAllText(

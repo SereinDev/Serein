@@ -41,7 +41,9 @@ namespace Serein.Windows.Pages.Settings
                         break;
                     case "Delete":
                         if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && EventListView.SelectedIndex >= 0)
+                        {
                             EventListView.Items.RemoveAt(EventListView.SelectedIndex);
+                        }
                         break;
                     case "LookupEvent":
                         Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });

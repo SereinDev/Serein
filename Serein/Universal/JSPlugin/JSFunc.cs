@@ -33,7 +33,9 @@ namespace Serein.JSPlugin
             )
         {
             if (Namespace == null || !JSPluginManager.PluginDict.ContainsKey(Namespace))
+            {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+            }
             lock (JSPluginManager.PluginDict)
             {
                 JSPluginManager.PluginDict[Namespace].Name = Name;
@@ -56,7 +58,9 @@ namespace Serein.JSPlugin
             Logger.Out(LogType.Debug, "Namespace:", Namespace, "EventName:", EventName);
             EventName = System.Text.RegularExpressions.Regex.Replace(EventName ?? string.Empty, "^on", string.Empty);
             if (!Enum.IsDefined(typeof(EventType), EventName))
+            {
                 throw new Exception("未知的事件：" + EventName);
+            }
             lock (JSPluginManager.PluginDict)
                 return
                     JSPluginManager.PluginDict.ContainsKey(Namespace) &&
@@ -73,7 +77,9 @@ namespace Serein.JSPlugin
         public static void Trigger(EventType Type, params object[] Args)
         {
             if (JSPluginManager.PluginDict.Count == 0)
+            {
                 return;
+            }
             lock (Lock)
             {
                 Logger.Out(LogType.Debug, Type);
@@ -94,7 +100,9 @@ namespace Serein.JSPlugin
         public static JsValue SetTimer(string Namespace, Delegate Function, JsValue Interval, bool AutoReset)
         {
             if (Namespace == null && !JSPluginManager.PluginDict.ContainsKey(Namespace))
+            {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+            }
             long TimerID = ID;
             ID++;
             Logger.Out(LogType.Debug, "Interval:", Interval.ToString(), "AutoReset:", AutoReset, "ID:", TimerID);
@@ -107,7 +115,9 @@ namespace Serein.JSPlugin
                 try
                 {
                     if (Namespace == null && !JSPluginManager.PluginDict.ContainsKey(Namespace))
+                    {
                         throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+                    }
                     lock (JSPluginManager.PluginDict[Namespace].Engine)
                         Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                 }
@@ -115,16 +125,18 @@ namespace Serein.JSPlugin
                 {
                     string Message;
                     if (e.InnerException is JavaScriptException JSe)
+                    {
                         Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
-                    else if (e.InnerException is ArgumentException || e.InnerException is InvalidOperationException)
-                        return;
+                    }
                     else
                         Message = e.Message;
                     Logger.Out(LogType.Plugin_Error, $"触发定时器[ID:{TimerID}]时出现异常：{Message}");
                     Logger.Out(LogType.Debug, $"触发定时器[ID:{TimerID}]时出现异常：\n", e);
                 }
                 if (!AutoReset)
+                {
                     _Timer.Dispose();
+                }
             };
             _Timer.Start();
             JSPluginManager.Timers.Add(TimerID, _Timer);

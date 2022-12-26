@@ -22,7 +22,9 @@ namespace Serein.Console
                 {
                     case "exit":
                         if (ServerManager.Status)
+                        {
                             Logger.Out(Items.LogType.Warn, "服务器未关闭");
+                        }
                         else
                         {
                             JSFunc.Trigger(Items.EventType.SereinClose);

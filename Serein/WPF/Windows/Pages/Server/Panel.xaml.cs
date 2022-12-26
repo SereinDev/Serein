@@ -53,19 +53,29 @@ namespace Serein.Windows.Pages.Server
                 case Key.Up:
                 case Key.PageUp:
                     if (ServerManager.CommandListIndex > 0)
+                    {
                         ServerManager.CommandListIndex--;
-                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
-                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandListIndex];
+                    }
+                    if (ServerManager.CommandListIndex > 0)
+                    {
+                        ServerManager.CommandListIndex--;
+                    }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;
                 case Key.Down:
                 case Key.PageDown:
                     if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    {
                         ServerManager.CommandListIndex++;
-                    if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
-                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandListIndex];
-                    else if (ServerManager.CommandListIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
-                        InputBox.Text = "";
+                    }
+                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    {
+                        ServerManager.CommandListIndex++;
+                    }
+                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    {
+                        ServerManager.CommandListIndex++;
+                    }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;
             }

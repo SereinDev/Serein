@@ -28,9 +28,13 @@ namespace Serein.Base
         public static void ShowException(Exception e)
         {
             if (Global.Settings.Server.AutoStop)
+            {
                 ServerManager.Stop(true);
+            }
             if (!Directory.Exists(IO.GetPath("logs", "crash")))
+            {
                 Directory.CreateDirectory(IO.GetPath("logs", "crash"));
+            }
             string ExceptionMsg = MergeException(e);
             try
             {
@@ -95,12 +99,12 @@ namespace Serein.Base
         /// </summary>
         /// <param name="e">错误信息</param>
         /// <returns>错误信息</returns>
-        private static string MergeException(Exception e)
+        public static string MergeException(Exception e)
         {
             string Message = string.Empty;
             while (e != null)
             {
-                Message += e.ToString() + "\r\n";
+                Message = e.ToString() + "\r\n" + Message;
                 e = e.InnerException;
             }
             return Message;

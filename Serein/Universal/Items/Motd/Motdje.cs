@@ -18,7 +18,9 @@ namespace Serein.Items.Motd
         public Motdje(string NewIP = "127.0.0.1", string NewPort = "25565")
         {
             if (!Init(NewIP, NewPort))
+            {
                 return;
+            }
             try
             {
                 Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -44,7 +46,9 @@ namespace Serein.Items.Motd
                     Version = JsonObject["version"]["name"].ToString();
                     Protocol = JsonObject["version"]["protocol"].ToString();
                     if (JsonObject["description"]["text"] != null)
+                    {
                         Description = JsonObject["description"]["text"].ToString();
+                    }
                     if (JsonObject["description"]["extra"] != null)
                     {
                         Description = string.Empty;
@@ -57,7 +61,9 @@ namespace Serein.Items.Motd
                     {
                         Favicon = (string)JsonObject["favicon"];
                         if (Favicon.Contains(","))
+                        {
                             Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
+                        }
                         else
                             Favicon = string.Empty;
                     }

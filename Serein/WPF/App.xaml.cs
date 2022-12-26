@@ -18,7 +18,9 @@ namespace Serein
             }
             Global.Args = Environment.GetCommandLineArgs();
             if (Global.Args.Contains("debug"))
+            {
                 Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
+            }
             IO.ReadAll();
             IO.StartSavingAndUpdating();
             TaskRunner.Start();

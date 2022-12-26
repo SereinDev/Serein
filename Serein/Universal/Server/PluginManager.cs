@@ -28,7 +28,9 @@ namespace Serein.Server
                     return false;
                 }
                 else if (string.IsNullOrEmpty(BasePath) && Directory.Exists(BasePath))
+                {
                     return false;
+                }
                 else
                     return true;
             }
@@ -49,7 +51,9 @@ namespace Serein.Server
                 BasePath = Check("plugin") ?? Check("plugins") ?? Check("mod") ?? Check("mods") ?? string.Empty;
                 Logger.Out(LogType.Debug, BasePath);
                 if (!string.IsNullOrWhiteSpace(BasePath))
+                {
                     return Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
+                }
             }
             return null;
         }
@@ -84,7 +88,9 @@ namespace Serein.Server
             if (Available)
             {
                 if (Files.Count <= 0)
+                {
                     Logger.Out(LogType.Debug, "数据不合法");
+                }
                 else if (Logger.MsgBox($"确定删除\"{Files[0]}\"{(Files.Count > 1 ? $"等{Files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
                 {
                     foreach (string FileName in Files)
@@ -118,7 +124,9 @@ namespace Serein.Server
                 try
                 {
                     if (FileName.ToLower().EndsWith(".lock"))
+                    {
                         continue;
+                    }
                     File.Move(FileName, FileName + ".lock");
                 }
                 catch (Exception e)

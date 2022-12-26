@@ -38,7 +38,9 @@ namespace Serein.JSPlugin
                     cfg.AllowClr(typeof(Process).Assembly);
                     cfg.CatchClrExceptions();
                     if (ExecuteByCommand)
+                    {
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
+                    }
                     else
                         cfg.CancellationToken(JSPluginManager.TokenSource.Token);
                 }

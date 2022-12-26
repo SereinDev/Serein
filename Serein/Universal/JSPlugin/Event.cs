@@ -41,7 +41,9 @@ namespace Serein.JSPlugin
                 case EventType.SereinClose:
                 case EventType.PluginsReload:
                     if (Dict.ContainsKey(Type))
+                    {
                         Dict[Type] = Function;
+                    }
                     else
                         Dict.Add(Type, Function);
                     break;
@@ -60,7 +62,9 @@ namespace Serein.JSPlugin
         public void Trigger(EventType Type, params object[] Args)
         {
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !Dict.ContainsKey(Type) || Dict[Type] == null)
+            {
                 return;
+            }
             Logger.Out(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(Type)}:", Type, $"{nameof(Args)} Count:", Args.Length);
             System.Threading.Tasks.Task.Run(() =>
             {

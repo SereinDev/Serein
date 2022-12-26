@@ -119,7 +119,9 @@ namespace Serein.Base
                             }
                         }
                         if (!Colored)
+                        {
                             SpanClass += "noColored";
+                        }
                         Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
                     }
                 }

@@ -22,7 +22,9 @@ namespace Serein.Base
         private static void ExtractConsoleFile(string Resource, string Name)
         {
             if (!Directory.Exists(IO.GetPath("console")))
+            {
                 Directory.CreateDirectory(IO.GetPath("console"));
+            }
             File.WriteAllText(IO.GetPath("console", Name), Resource, Encoding.UTF8);
         }
     }

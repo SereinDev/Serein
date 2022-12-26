@@ -49,7 +49,9 @@ namespace Serein.Windows.Pages.Settings
         private void GroupList_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(GroupList.Text))
+            {
                 Global.Settings.Bot.GroupList.Clear();
+            }
             else if (Regex.IsMatch(GroupList.Text, @"^[\d;]+?$"))
             {
                 List<long> Groups = new List<long>();
@@ -74,7 +76,9 @@ namespace Serein.Windows.Pages.Settings
         private void PermissionList_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(PermissionList.Text))
+            {
                 Global.Settings.Bot.PermissionList.Clear();
+            }
             else if (Regex.IsMatch(PermissionList.Text, @"^[\d;]+?$"))
             {
                 List<long> IDs = new List<long>();

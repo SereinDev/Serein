@@ -39,7 +39,9 @@ namespace Serein.JSPlugin
         {
             string PluginPath = IO.GetPath("plugins");
             if (!Directory.Exists(PluginPath))
+            {
                 Directory.CreateDirectory(PluginPath);
+            }
             else
             {
                 string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
@@ -60,7 +62,9 @@ namespace Serein.JSPlugin
                         PluginDict[Namespace].Event.Namespace = Namespace;
                         PluginDict[Namespace].Engine = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), PluginDict[Namespace].Engine, out string ExceptionMessage);
                         if (!string.IsNullOrEmpty(ExceptionMessage))
+                        {
                             Logger.Out(LogType.Plugin_Error, ExceptionMessage);
+                        }
                         else
                             PluginDict[Namespace].LoadedSuccessfully = true;
                     }
@@ -74,11 +78,15 @@ namespace Serein.JSPlugin
                 PluginDict.Keys.ToList().ForEach((Key) =>
                 {
                     if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.LoadedSuccessfully)
+                    {
                         ErrorFiles.Add(Value.File);
+                    }
                 });
                 Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
                 if (ErrorFiles.Count > 0)
+                {
                     Logger.Out(LogType.Plugin_Error, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", ErrorFiles));
+                }
                 System.Threading.Tasks.Task.Run(async () =>
                 {
                     await System.Threading.Tasks.Task.Delay(5000);

@@ -28,7 +28,9 @@ namespace Serein.JSPlugin
         public void Dispose()
         {
             if (_WebSocket != null && _WebSocket.State == WebSocketState.Open)
+            {
                 _WebSocket.Close();
+            }
             _WebSocket.Dispose();
         }
 
@@ -40,9 +42,13 @@ namespace Serein.JSPlugin
         public JSWebSocket(string Uri, string Namespace = null)
         {
             if (Namespace == null)
+            {
                 throw new ArgumentNullException(nameof(Namespace));
-            if (!JSPluginManager.PluginDict.ContainsKey(Namespace))
-                throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+            }
+            if (Namespace == null)
+            {
+                throw new ArgumentNullException(nameof(Namespace));
+            }
             this.Namespace = Namespace;
             _WebSocket = new WebSocket(
                 Uri,
@@ -76,11 +82,15 @@ namespace Serein.JSPlugin
                             break;
                         case "MessageReceived":
                             if (Args is MessageReceivedEventArgs e1 && e1 != null)
+                            {
                                 Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
+                            }
                             break;
                         case "Error":
                             if (Args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
+                            {
                                 Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
+                            }
                             break;
                     }
             }
@@ -88,7 +98,9 @@ namespace Serein.JSPlugin
             {
                 string Message;
                 if (e.InnerException is JavaScriptException JSe)
+                {
                     Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                }
                 else
                     Message = e.Message;
                 Logger.Out(Items.LogType.Plugin_Error, $"Websocket的{Name}事件调用失败：", Message);

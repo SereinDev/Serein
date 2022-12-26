@@ -65,17 +65,23 @@ namespace Serein.Server
             if (Status)
             {
                 if (!Quiet)
+                {
                     Logger.MsgBox(":(\n服务器已在运行中", "Serein", 0, 48);
+                }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!Quiet)
+                {
                     Logger.MsgBox(":(\n启动路径为空", "Serein", 0, 48);
+                }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!Quiet)
+                {
                     Logger.MsgBox($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
+                }
             }
             else
             {
@@ -136,13 +142,19 @@ namespace Serein.Server
                 foreach (string Command in Global.Settings.Server.StopCommands)
                 {
                     if (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
+                    {
                         InputCommand(Command);
+                    }
                 }
             }
             else if (!Status && Restart)
+            {
                 Restart = false;
-            else if (!Quiet)
-                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
+            }
+            else if (!Status && Restart)
+            {
+                Restart = false;
+            }
         }
 
         /// <summary>
@@ -155,7 +167,9 @@ namespace Serein.Server
             if (Quiet)
             {
                 if (!Status)
+                {
                     return false;
+                }
                 try
                 {
                     ServerProcess.Kill();
@@ -167,7 +181,9 @@ namespace Serein.Server
                 return false;
             }
             else if (!Status)
+            {
                 Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
+            }
 #if CONSOLE
             else
             {
@@ -232,7 +248,9 @@ namespace Serein.Server
                 bool IsSpecifiedCommand = false;
                 string Command_Copy = Command.TrimEnd('\n');
                 if (CommandHistory.Count > 50)
+                {
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
+                }
                 if (
                     (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != Command_Copy || CommandHistory.Count == 0) &&
                     (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
@@ -242,19 +260,24 @@ namespace Serein.Server
                 }
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
-                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
+                    {Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
+}
 #endif
                 if (!IsSpecifiedCommand)
                 {
                     if (Unicode || Global.Settings.Server.EnableUnicode)
+                    {
                         Command_Copy = ConvertToUnicode(Command_Copy);
+                    }
                     InputWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
                     JSFunc.Trigger(EventType.ServerSendCommand, Command);
                 }
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(IO.GetPath("logs", "console")))
+                    {
                         Directory.CreateDirectory(IO.GetPath("logs", "console"));
+                    }
                     try
                     {
                         File.AppendAllText(
@@ -267,9 +290,13 @@ namespace Serein.Server
                 }
             }
             else if (Command.Trim().ToLower() == "start")
+            {
                 Start(Quiet);
-            else if (Command.Trim().ToLower() == "stop")
-                Restart = false;
+            }
+            else if (Command.Trim().ToLower() == "start")
+            {
+                Start(Quiet);
+            }
         }
 
         /// <summary>
@@ -283,13 +310,21 @@ namespace Serein.Server
                 if (!Finished)
                 {
                     if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    {
                         Finished = true;
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
-                        Version = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
-                        LevelName = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
-                        Difficulty = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    }
+                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    {
+                        Finished = true;
+                    }
+                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    {
+                        Finished = true;
+                    }
+                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    {
+                        Finished = true;
+                    }
                 }
 #if CONSOLE
                 Logger.Out(LogType.Server_Output, outLine.Data);
@@ -299,7 +334,9 @@ namespace Serein.Server
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(IO.GetPath("logs", "console")))
+                    {
                         Directory.CreateDirectory(IO.GetPath("logs", "console"));
+                    }
                     try
                     {
                         File.AppendAllText(
@@ -360,7 +397,9 @@ namespace Serein.Server
                 EventTrigger.Trigger(EventType.ServerStop);
             }
             if (Restart)
+            {
                 System.Threading.Tasks.Task.Factory.StartNew(RestartTimer);
+            }
             Version = "-";
             LevelName = "-";
             Difficulty = "-";
@@ -396,10 +435,14 @@ namespace Serein.Server
             {
                 await System.Threading.Tasks.Task.Delay(500);
                 if (!Restart)
+                {
                     break;
+                }
             }
             if (Restart)
+            {
                 Start(true);
+            }
             else
                 Logger.Out(LogType.Server_Notice, "重启已取消");
         }
@@ -447,7 +490,9 @@ namespace Serein.Server
             for (int i = 0; i < Text.Length; i++)
             {
                 if (Text[i] < 127)
+                {
                     Result += Text[i].ToString();
+                }
                 else
                     Result += string.Format("\\u{0:x4}", (int)Text[i]);
             }
