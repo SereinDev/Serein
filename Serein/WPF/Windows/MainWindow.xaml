@@ -38,7 +38,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ui:TitleBar
-                x:Name="TitleBar"
+                x:Name="_TitleBar"
                 Title="Serein"
                 Grid.Row="0"
                 Margin="5,0,0,0"

@@ -204,30 +204,46 @@ namespace Serein.Base
             }
             if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.ServerInput;
+            }
             if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.ServerInputWithUnicode;
+            }
             if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.SendGivenGroupMsg;
+            }
             if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.SendGivenPrivateMsg;
+            }
             if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.SendGroupMsg;
+            }
             if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.SendPrivateMsg;
+            }
             if (Regex.IsMatch(Command, @"^b\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^bind\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.Bind;
+            }
             if (Regex.IsMatch(Command, @"^ub\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.Unbind;
+            }
             if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.RequestMotdpe;

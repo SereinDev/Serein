@@ -37,7 +37,7 @@ namespace Serein.Windows.Pages.Settings
 
         private void UseDarkTheme_Click(object sender, RoutedEventArgs e)
         {
-            ThemeFollowSystem.IsChecked = ThemeFollowSystem.IsChecked ?? false && (UseDarkTheme.IsChecked ?? false) ? false : ThemeFollowSystem.IsChecked;
+            ThemeFollowSystem.IsChecked = (ThemeFollowSystem.IsChecked ?? false) && (UseDarkTheme.IsChecked ?? false) ? false : ThemeFollowSystem.IsChecked;
             Global.Settings.Serein.UseDarkTheme = UseDarkTheme.IsChecked ?? false;
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }

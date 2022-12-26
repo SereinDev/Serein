@@ -42,7 +42,9 @@ namespace Serein.JSPlugin
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
                     }
                     else
+                    {
                         cfg.CancellationToken(JSPluginManager.TokenSource.Token);
+                    }
                 }
                 ));
             engine.SetValue("Serein_SystemInfo",

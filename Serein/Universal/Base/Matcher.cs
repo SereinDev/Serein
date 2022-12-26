@@ -160,7 +160,6 @@ namespace Serein.Base
                     }
                     break;
             }
-            JSFunc.Trigger(Items.EventType.ReceivePacket, Packet);
         }
     }
 }

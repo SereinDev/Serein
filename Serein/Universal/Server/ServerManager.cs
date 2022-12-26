@@ -18,7 +18,7 @@ namespace Serein.Server
         public static bool Status => ServerProcess != null && !ServerProcess.HasExited;
         public static bool Restart = false, Finished = false;
         private static bool Killed;
-        public static double CPUUsage = 0;
+        public static double CPUUsage { get; private set; } = 0;
         public static int CommandListIndex = 0;
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
 
@@ -288,10 +288,7 @@ namespace Serein.Server
                     }
                     catch { }
                 }
-            }
-            else if (Command.Trim().ToLower() == "start")
-            {
-                Start(Quiet);
+                Command_Copy = null;
             }
             else if (Command.Trim().ToLower() == "start")
             {
@@ -421,7 +418,7 @@ namespace Serein.Server
         /// <summary>
         /// 重启计时器
         /// </summary>
-        private static async void RestartTimer()
+        private static void RestartTimer()
         {
             Logger.Out(LogType.Server_Notice,
                 "服务器将在5s后重新启动"
@@ -433,7 +430,7 @@ namespace Serein.Server
 #endif
             for (int i = 0; i < 10; i++)
             {
-                await System.Threading.Tasks.Task.Delay(500);
+                System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult(); ;
                 if (!Restart)
                 {
                     break;

@@ -17,8 +17,8 @@ namespace Serein.Base
         /// </summary>
         public static void Init()
         {
-            AppDomain.CurrentDomain.UnhandledException += (sneder, e) => ShowException((Exception)e.ExceptionObject);
-            TaskScheduler.UnobservedTaskException += (sender, e) => ShowException(e.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowException((Exception)e.ExceptionObject);
+            TaskScheduler.UnobservedTaskException += (_, e) => ShowException(e.Exception);
         }
 
         /// <summary>

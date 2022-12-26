@@ -27,12 +27,7 @@ namespace Serein.Server
                     Logger.MsgBox("服务器仍在运行中", "Serein", 0, 48);
                     return false;
                 }
-                else if (string.IsNullOrEmpty(BasePath) && Directory.Exists(BasePath))
-                {
-                    return false;
-                }
-                else
-                    return true;
+                return !(string.IsNullOrEmpty(BasePath) && !Directory.Exists(BasePath));
             }
         }
 

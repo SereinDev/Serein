@@ -284,13 +284,13 @@ namespace Serein.Base
             {
                 Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(GetPath("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
             }
-            if (File.Exists(GetPath("settings", "Server.json")))
+            if (File.Exists(GetPath("settings", "Serein.json")))
             {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(GetPath("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(GetPath("settings", "Serein.json"), Encoding.UTF8)) ?? new Settings.Serein();
             }
-            if (File.Exists(GetPath("settings", "Server.json")))
+            if (File.Exists(GetPath("settings", "Bot.json")))
             {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(GetPath("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Settings.Bot>(File.ReadAllText(GetPath("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
             }
             if (File.Exists(GetPath("settings", "Matches.json")))
             {

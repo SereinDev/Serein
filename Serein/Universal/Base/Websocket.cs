@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Items;
+using Serein.JSPlugin;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,11 +66,11 @@ namespace Serein.Base
                             }
                         );
                     WSClient.MessageReceived += Receive;
-                    WSClient.Error += (sender, e) =>
+                    WSClient.Error += (_, e) =>
                     {
                         Logger.Out(LogType.Bot_Error, e.Exception.Message);
                     };
-                    WSClient.Closed += (sender, e) =>
+                    WSClient.Closed += (_, e) =>
                     {
                         Status = false;
                         Logger.Out(LogType.Bot_Output);
@@ -95,7 +96,7 @@ namespace Serein.Base
                             });
                         }
                     };
-                    WSClient.Opened += (sender, e) =>
+                    WSClient.Opened += (_, e) =>
                     {
                         Reconnect = true;
                         Logger.Out(LogType.Bot_Notice, $"连接到{Global.Settings.Bot.Uri}");
@@ -210,6 +211,7 @@ namespace Serein.Base
             }
             try
             {
+                System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ReceivePacket, e.Message));
                 Matcher.Process((JObject)JsonConvert.DeserializeObject(WebUtility.HtmlDecode(DeUnicode(e.Message))));
             }
             catch (Exception _e)
