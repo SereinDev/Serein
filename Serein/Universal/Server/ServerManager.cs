@@ -14,7 +14,7 @@ namespace Serein.Server
     public static class ServerManager
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
-        
+
         private static string TempLine = string.Empty;
 
         public static bool Restart, Finished = false, Killed;

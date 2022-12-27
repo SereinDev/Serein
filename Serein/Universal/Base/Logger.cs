@@ -38,7 +38,7 @@ namespace Serein.Base
                 {
                     if (o is Exception e)
                     {
-                        bld.Append( "\r\n" + CrashInterception.MergeException(e));
+                        bld.Append("\r\n" + CrashInterception.MergeException(e));
                     }
                     else
                     {

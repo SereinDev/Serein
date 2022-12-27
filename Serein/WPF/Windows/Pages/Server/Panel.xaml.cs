@@ -27,13 +27,13 @@ namespace Serein.Windows.Pages.Server
 
         private void Start_Click(object sender, RoutedEventArgs e)
             => ServerManager.Start();
-        
+
         private void Stop_Click(object sender, RoutedEventArgs e)
             => ServerManager.Stop();
-        
+
         private void Restart_Click(object sender, RoutedEventArgs e)
             => ServerManager.RestartRequest();
-        
+
         private void Kill_Click(object sender, RoutedEventArgs e)
             => ServerManager.Kill();
 

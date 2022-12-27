@@ -31,25 +31,25 @@ namespace Serein.Windows.Pages.Settings
 
         private void Uri_TextChanged(object sender, TextChangedEventArgs e)
             => Global.Settings.Bot.Uri = Uri.Text;
-        
+
         private void Authorization_TextChanged(object sender, TextChangedEventArgs e)
             => Global.Settings.Bot.Authorization = Authorization.Password;
-        
+
         private void EnableLog_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.EnableLog = EnableLog.IsChecked ?? false;
-        
+
         private void GivePermissionToAllAdmin_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.GivePermissionToAllAdmin = GivePermissionToAllAdmin.IsChecked ?? false;
-        
+
         private void EnbaleOutputData_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.EnbaleOutputData = EnbaleOutputData.IsChecked ?? false;
-        
+
         private void AutoReconnect_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.AutoReconnect = AutoReconnect.IsChecked ?? false;
-        
+
         private void EnbaleParseAt_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.EnbaleParseAt = EnbaleParseAt.IsChecked ?? false;
-        
+
         private void AutoEscape_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Bot.AutoEscape = AutoEscape.IsChecked ?? false;
 
