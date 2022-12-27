@@ -38,26 +38,26 @@ namespace Serein.Ui
             }
             else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.PageUp)
             {
-                if (ServerManager.CommandListIndex > 0)
+                if (ServerManager.CommandHistoryIndex > 0)
                 {
-                    ServerManager.CommandListIndex--;
+                    ServerManager.CommandHistoryIndex--;
                 }
-                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
                 }
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
             {
-                if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                 {
-                    ServerManager.CommandListIndex++;
+                    ServerManager.CommandHistoryIndex++;
                 }
-                if (ServerManager.CommandListIndex >= 0 && ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandListIndex]);
+                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
                 }
-                else if (ServerManager.CommandListIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
+                else if (ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
                 {
                     PanelConsoleInput_Update();
                 }

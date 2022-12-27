@@ -23,11 +23,9 @@ namespace Serein.Base
                     continue;
                 }
                 if (System.Text.RegularExpressions.Regex.IsMatch(Line, Item.Expression))
-                    Command.Run(
-                        2,
-                        Item.Command,
-                        MsgMatch: System.Text.RegularExpressions.Regex.Match(Line, Item.Expression)
-                        );
+                {
+                    Command.Run(2, Item.Command, MsgMatch: System.Text.RegularExpressions.Regex.Match(Line, Item.Expression));
+                }
             }
         }
 
@@ -65,7 +63,9 @@ namespace Serein.Base
                             MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
                             !System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression)
                             )
+                        {
                             continue;
+                        }
                         if (
                             !(
                             Global.Settings.Bot.PermissionList.Contains(UserId) ||
@@ -90,20 +90,24 @@ namespace Serein.Base
                             continue;
                         }
                         if (System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression))
+                        {
                             if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                             {
                                 Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
                             }
+                        }
                         if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                         {
                             Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
                         }
                     }
                     if (!IsSelfMessage)
+                    {
                         if (MessageType == "private")
                         {
                             JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
                         }
+                    }
                     if (MessageType == "private")
                     {
                         JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());

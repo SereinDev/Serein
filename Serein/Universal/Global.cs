@@ -43,11 +43,6 @@ namespace Serein
         public static bool FirstOpen = false;
 
         /// <summary>
-        /// 启动参数
-        /// </summary>
-        public static IList<string> Args = null;
-
-        /// <summary>
         /// 编译信息
         /// </summary>
         public static readonly BuildInfo BuildInfo = new BuildInfo();

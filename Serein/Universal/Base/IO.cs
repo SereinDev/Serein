@@ -80,7 +80,7 @@ namespace Serein.Base
                     while ((Line = Reader.ReadLine()) != null)
                     {
                         Regex Item = new Regex();
-                        Item.ToObject(Line);
+                        Item.FromText(Line);
                         if (!Item.Check())
                         {
                             continue;
@@ -111,7 +111,9 @@ namespace Serein.Base
                 Reader.Dispose();
             }
             else
+            {
                 SaveRegex();
+            }
         }
 
         /// <summary>

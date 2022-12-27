@@ -129,7 +129,9 @@ namespace Serein.JSPlugin
                         Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
                     }
                     else
+                    {
                         Message = e.Message;
+                    }
                     Logger.Out(LogType.Plugin_Error, $"触发定时器[ID:{TimerID}]时出现异常：{Message}");
                     Logger.Out(LogType.Debug, $"触发定时器[ID:{TimerID}]时出现异常：\n", e);
                 }

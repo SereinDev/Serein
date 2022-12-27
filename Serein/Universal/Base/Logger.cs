@@ -27,23 +27,26 @@ namespace Serein.Base
         {
 #if WINFORM
             if (Program.Ui == null || Program.Ui.Disposing)
-                {return;
-}
+            {
+                return;
+            }
 #endif
-            string Line = string.Empty;
+            StringBuilder bld = new StringBuilder();
             foreach (var o in objects)
             {
                 if (o != null)
+                {
                     if (o is Exception e)
                     {
-                        Line += "\r\n" + CrashInterception.MergeException(e);
+                        bld.Append( "\r\n" + CrashInterception.MergeException(e));
                     }
                     else
                     {
-                        Line += o.ToString() + " ";
+                        bld.Append(o.ToString() + " ");
                     }
+                }
             }
-            Line = Line.TrimEnd();
+            string Line = bld.ToString().TrimEnd();
             switch (Type)
             {
 #if CONSOLE

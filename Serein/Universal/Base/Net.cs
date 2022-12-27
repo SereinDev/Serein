@@ -11,12 +11,12 @@ namespace Serein.Base
     internal static class Net
     {
         /// <summary>
-        /// �����¼�ʱ��
+        /// 检查更新计时器
         /// </summary>
-        private static Timer CheckTimer = new Timer(200000) { AutoReset = true };
+        private static readonly Timer CheckTimer = new Timer(200000) { AutoReset = true };
 
         /// <summary>
-        /// ��ʼ������
+        /// 开始检查更新
         /// </summary>
         public static void StartChecking()
         {
@@ -30,12 +30,12 @@ namespace Serein.Base
         }
 
         /// <summary>
-        /// �첽Get
+        /// 异步Get
         /// </summary>
-        /// <param name="Url">����</param>
+        /// <param name="Url">链接</param>
         /// <param name="Accept">Header - Accept</param>
         /// <param name="UserAgent">Header - UserAgent</param>
-        /// <returns>����</returns>
+        /// <returns>正文</returns>
         public static async Task<string> Get(string Url, string Accept = null, string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
         {
             HttpClient Client = new HttpClient();
@@ -48,18 +48,21 @@ namespace Serein.Base
             Client.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
             Client.DefaultRequestHeaders.Add("user-agent", UserAgent);
             HttpResponseMessage Response = await Client.GetAsync(Url);
-            //Logger.Out(Items.LogType.Debug, "Headers\n", Response.Headers.ToString());
-            //Logger.Out(Items.LogType.Debug, "Content\n", await Response.Content.ReadAsStringAsync());
+            if (Global.Settings.Serein.DevelopmentTool.DetailDebug)
+            {
+                Logger.Out(Items.LogType.Debug, "Headers\n", Response.Headers.ToString());
+                Logger.Out(Items.LogType.Debug, "Content\n", await Response.Content.ReadAsStringAsync());
+            }
             return await Response.Content.ReadAsStringAsync();
         }
 
         /// <summary>
-        /// ��һ����ȡ���İ汾
+        /// 上一个获取到的版本
         /// </summary>
         private static string LastVersion;
 
         /// <summary>
-        /// ������
+        /// 检查更新
         /// </summary>
         public static void CheckVersion()
         {

@@ -94,7 +94,9 @@ namespace Serein.Console
                 }
             }
             else
+            {
                 ServerManager.InputCommand(Line);
+            }
         }
     }
 }

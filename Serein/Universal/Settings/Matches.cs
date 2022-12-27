@@ -5,9 +5,13 @@ namespace Serein.Settings
     internal class Matches
     {
         public string Version = @"(\d+\.\d+\.\d+\.\d+)";
+
         public string Difficulty = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
+        
         public string LevelName = "Level Name: (.+?)$";
+        
         public string Finished = "(Done|Started)";
+        
         public string[] MuiltLines =
         {
             @"players\sonline:"

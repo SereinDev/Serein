@@ -254,7 +254,9 @@ namespace Serein.Base
             }
             if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
+            {
                 return Items.CommandType.ExecuteJavascriptCodes;
+            }
             if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.DebugOutput;
@@ -314,6 +316,7 @@ namespace Serein.Base
                 return Text.Replace("\\n", "\n");
             }
             if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
+            {
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
@@ -337,6 +340,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
                         break;
                 }
+            }
             DateTime CurrentTime = DateTime.Now;
             Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);

@@ -9,7 +9,8 @@ namespace Serein.Ui.ChildrenWindow
 {
     public partial class EventEditor : Form
     {
-        public bool CancelFlag = true;
+        public bool CancelFlag;
+        
         public EventEditor(string Command = "")
         {
             InitializeComponent();

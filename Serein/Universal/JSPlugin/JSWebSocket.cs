@@ -12,18 +12,18 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 命名空间
         /// </summary>
-        private readonly string Namespace = null;
+        private readonly string Namespace;
 
         /// <summary>
         /// 事件函数
         /// </summary>
-        public static Delegate onopen = null, onclose = null, onerror = null, onmessage = null;
+        public static Delegate onopen, onclose, onerror, onmessage;
 
         /// <summary>
         /// WS客户端
         /// </summary>
         [JsonIgnore]
-        private readonly WebSocket _WebSocket = null;
+        private readonly WebSocket _WebSocket;
 
         public void Dispose()
         {
@@ -31,7 +31,7 @@ namespace Serein.JSPlugin
             {
                 _WebSocket.Close();
             }
-            _WebSocket.Dispose();
+            _WebSocket?.Dispose();
         }
 
         /// <summary>
@@ -41,15 +41,7 @@ namespace Serein.JSPlugin
         /// <param name="Namespace">命名空间</param>
         public JSWebSocket(string Uri, string Namespace = null)
         {
-            if (Namespace == null)
-            {
-                throw new ArgumentNullException(nameof(Namespace));
-            }
-            if (Namespace == null)
-            {
-                throw new ArgumentNullException(nameof(Namespace));
-            }
-            this.Namespace = Namespace;
+            this.Namespace = Namespace ?? throw new ArgumentNullException(nameof(Namespace));
             _WebSocket = new WebSocket(
                 Uri,
                 "",
@@ -102,11 +94,11 @@ namespace Serein.JSPlugin
                     Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
                 }
                 else
+                {
                     Message = e.Message;
+                }
                 Logger.Out(Items.LogType.Plugin_Error, $"Websocket的{Name}事件调用失败：", Message);
-                Logger.Out(Items.LogType.Debug,
-                    $"{Name}事件调用失败\r\n",
-                    e);
+                Logger.Out(Items.LogType.Debug, $"{Name}事件调用失败\r\n", e);
             }
         }
 

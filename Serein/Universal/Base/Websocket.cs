@@ -18,12 +18,12 @@ namespace Serein.Base
         /// <summary>
         /// 连接状态
         /// </summary>
-        public static bool Status = false;
+        public static bool Status;
 
         /// <summary>
         /// 重连状态
         /// </summary>
-        private static bool Reconnect = false;
+        private static bool Reconnect;
 
         /// <summary>
         /// WS客户端

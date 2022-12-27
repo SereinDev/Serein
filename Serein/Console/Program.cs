@@ -22,13 +22,12 @@ namespace Serein
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        /// <param name="args">启动参数</param>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
             CrashInterception.Init();
             Console.Base.Init();
-            Console.Base.Load(args);
+            Console.Base.Load();
             Console.Base.Start();
         }
     }

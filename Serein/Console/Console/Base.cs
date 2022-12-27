@@ -105,13 +105,12 @@ namespace Serein.Console
         /// 加载配置文件
         /// </summary>
         /// <param name="args">启动参数</param>
-        public static void Load(string[] args = null)
+        public static void Load()
         {
             IO.ReadAll();
             IO.SaveSettings();
             SystemInfo.Init();
-            Global.Args = args ?? Global.Args;
-            Global.Settings.Serein.DevelopmentTool.EnableDebug = Global.Settings.Serein.DevelopmentTool.EnableDebug || Global.Args.Contains("debug");
+            AutoRun.Check();
         }
     }
 }

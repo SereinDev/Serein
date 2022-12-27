@@ -20,18 +20,20 @@ namespace Serein.Windows.Pages.Server
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
-            Restored = false;
             Catalog.Server.Panel = this;
         }
 
-        private bool Restored = false;
+        private bool Restored;
 
         private void Start_Click(object sender, RoutedEventArgs e)
             => ServerManager.Start();
+        
         private void Stop_Click(object sender, RoutedEventArgs e)
             => ServerManager.Stop();
+        
         private void Restart_Click(object sender, RoutedEventArgs e)
             => ServerManager.RestartRequest();
+        
         private void Kill_Click(object sender, RoutedEventArgs e)
             => ServerManager.Kill();
 
@@ -52,29 +54,25 @@ namespace Serein.Windows.Pages.Server
                     break;
                 case Key.Up:
                 case Key.PageUp:
-                    if (ServerManager.CommandListIndex > 0)
+                    if (ServerManager.CommandHistoryIndex > 0)
                     {
-                        ServerManager.CommandListIndex--;
-                    }
-                    if (ServerManager.CommandListIndex > 0)
-                    {
-                        ServerManager.CommandListIndex--;
+                        ServerManager.CommandHistoryIndex--;
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;
                 case Key.Down:
                 case Key.PageDown:
-                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                     {
-                        ServerManager.CommandListIndex++;
+                        ServerManager.CommandHistoryIndex++;
                     }
-                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                     {
-                        ServerManager.CommandListIndex++;
+                        ServerManager.CommandHistoryIndex++;
                     }
-                    if (ServerManager.CommandListIndex < ServerManager.CommandHistory.Count)
+                    if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                     {
-                        ServerManager.CommandListIndex++;
+                        ServerManager.CommandHistoryIndex++;
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;

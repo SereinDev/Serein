@@ -10,8 +10,12 @@ namespace Serein.Base
         /// </summary>
         public static void InitConsole()
         {
-            ExtractConsoleFile(Properties.Resources.console_html, "console.html");
-            ExtractConsoleFile(Properties.Resources.preset_css, "preset.css");
+            if (!Directory.Exists(IO.GetPath("console")) || !File.Exists(IO.GetPath("console", "console.html")))
+            {
+                ExtractConsoleFile(Properties.Resources.console_html, "console.html");
+                ExtractConsoleFile(Properties.Resources.preset_css, "preset.css");
+                Global.FirstOpen = true;
+            }
         }
 
         /// <summary>

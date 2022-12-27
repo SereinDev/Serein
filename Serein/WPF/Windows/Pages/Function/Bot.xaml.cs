@@ -19,11 +19,10 @@ namespace Serein.Windows.Pages.Function
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
-            Restored = false;
             Catalog.Function.Bot = this;
         }
 
-        private bool Restored = false;
+        private bool Restored;
 
         private void Connect_Click(object sender, RoutedEventArgs e)
             => Websocket.Connect();

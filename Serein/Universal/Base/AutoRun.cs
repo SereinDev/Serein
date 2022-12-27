@@ -8,15 +8,20 @@ namespace Serein.Base
     internal static class AutoRun
     {
         /// <summary>
-        /// ����Զ�����
+        /// 检查启动参数
         /// </summary>
         public static void Check()
         {
-            if (Global.Settings.Serein.AutoRun.ConnectWS || ((IList<string>)Environment.GetCommandLineArgs()).Contains("auto_connect"))
+            IList<string> args = Environment.GetCommandLineArgs();
+            if (args.Contains("debug"))
+            {
+                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
+            }
+            if (Global.Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
             {
                 Task.Run(() => Websocket.Connect(true));
             }
-            if (Global.Settings.Serein.AutoRun.StartServer || ((IList<string>)Environment.GetCommandLineArgs()).Contains("auto_start"))
+            if (Global.Settings.Serein.AutoRun.StartServer || args.Contains("auto_start"))
             {
                 Task.Run(() => ServerManager.Start(false));
             }

@@ -126,7 +126,9 @@ namespace Serein.Base
                     }
                 }
                 else
+                {
                     Output = $"<span class=\"noColored\">{Output}</span>";
+                }
                 if (Type == 3)
                 {
                     Output = Regex.Replace(Output, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);

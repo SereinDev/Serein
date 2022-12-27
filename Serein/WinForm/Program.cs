@@ -22,35 +22,21 @@ namespace Serein
 
     static class Program
     {
-        public static Ui.Ui Ui = null;
+        public static Ui.Ui Ui;
 
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        /// <param name="args">启动参数</param>
         [STAThread]
-        private static void Main(string[] args)
+        private static void Main()
         {
             CrashInterception.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception);
             IO.ReadAll(true);
-            Global.Args = args;
-            if (Global.Args.Contains("debug"))
-            {
-                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
-            }
-            if (Global.Args.Contains("debug"))
-            {
-                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
-            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!Directory.Exists(IO.GetPath("console")) || !File.Exists(IO.GetPath("console", "console.html")))
-            {
-                ResourcesManager.InitConsole();
-                Global.FirstOpen = true;
-            }
+            ResourcesManager.InitConsole();
             Ui = new Ui.Ui();
             Application.Run(Ui);
         }

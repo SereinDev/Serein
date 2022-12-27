@@ -24,12 +24,12 @@ namespace Serein.Items
         /// <summary>
         /// 作用域
         /// </summary>
-        public int Area { get; set; } = 0;
+        public int Area { get; set; }
 
         /// <summary>
         /// 需要管理权限
         /// </summary>
-        public bool IsAdmin { get; set; } = false;
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// 作用域 - 文本
@@ -59,7 +59,7 @@ namespace Serein.Items
         /// 转为对象
         /// </summary>
         /// <param name="Text">TSV格式文本</param>
-        public void ToObject(string Text)
+        public void FromText(string Text)
         {
             string[] Texts = Text.Split('\t');
             if (Texts.Length != 5)

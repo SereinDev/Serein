@@ -109,10 +109,13 @@ namespace Serein.JSPlugin
                 catch (TargetInvocationException e)
                 {
                     if (e.InnerException is JavaScriptException JSException)
-                        Logger.Out(LogType.Plugin_Error, $"{Namespace}触发事件{Type}时出现异常：" +
-                            $"{JSException.Message} (at line {JSException.Location.Start.Line}:{JSException.Location.Start.Column})");
+                    {
+                        Logger.Out(LogType.Plugin_Error, $"{Namespace}触发事件{Type}时出现异常：" + $"{JSException.Message} (at line {JSException.Location.Start.Line}:{JSException.Location.Start.Column})");
+                    }
                     else
+                    {
                         Logger.Out(LogType.Debug, $"{Namespace}触发事件{Type}时出现异常：\n", e);
+                    }
                 }
                 catch (Exception e)
                 {

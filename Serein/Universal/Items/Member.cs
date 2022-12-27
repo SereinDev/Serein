@@ -8,7 +8,7 @@ namespace Serein.Items
         /// <summary>
         /// 用户ID
         /// </summary>
-        public long ID { get; set; } = 0;
+        public long ID { get; set; }
 
         /// <summary>
         /// 群名片

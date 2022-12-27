@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
+using Serein.Base;
 using Serein.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -112,8 +114,10 @@ namespace Serein.Windows.Pages.Server
                         else
                             PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem).Content.ToString()));
                         break;
+                    default:
+                        Logger.Out(Items.LogType.Debug, new ArgumentException());
+                        break;
                 }
-
             }
         }
     }

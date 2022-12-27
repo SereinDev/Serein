@@ -97,6 +97,9 @@ namespace Serein.Base
                         case Items.EventType.PermissionDeniedFromGroupMsg:
                             CommandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
                             break;
+                        default:
+                            Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
+                            break;
                     }
                     foreach (string Command in CommandGroup)
                     {

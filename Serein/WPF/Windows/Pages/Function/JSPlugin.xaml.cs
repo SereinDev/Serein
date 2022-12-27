@@ -18,11 +18,10 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
             PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=plugin");
             Load();
-            Restored = false;
             Catalog.Function.JSPlugin = this;
         }
 
-        private bool Restored = false;
+        private bool Restored;
 
         public void AppendText(string Line)
             => Dispatcher.Invoke(() => PluginWebBrowser.Document.InvokeScript("AppendText", new[] { Line }));

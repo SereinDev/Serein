@@ -14,12 +14,24 @@ namespace Serein.Server
     public static class ServerManager
     {
         public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
+        
         private static string TempLine = string.Empty;
+
+        public static bool Restart, Finished = false, Killed;
+
+        /// <summary>
+        /// 服务器状态
+        /// </summary>
         public static bool Status => ServerProcess != null && !ServerProcess.HasExited;
-        public static bool Restart = false, Finished = false;
-        private static bool Killed;
-        public static double CPUUsage { get; private set; } = 0;
-        public static int CommandListIndex = 0;
+
+        /// <summary>
+        /// CPU使用率
+        /// </summary>
+        public static double CPUUsage { get; private set; }
+
+        /// <summary>
+        /// 当前CPU时间
+        /// </summary>
         private static TimeSpan PrevCpuTime = TimeSpan.Zero;
 
         /// <summary>
@@ -31,6 +43,11 @@ namespace Serein.Server
         /// 输入流写入者
         /// </summary>
         private static StreamWriter InputWriter;
+
+        /// <summary>
+        /// 命令历史记录列表下标
+        /// </summary>
+        public static int CommandHistoryIndex;
 
         /// <summary>
         /// 命令历史记录
@@ -255,7 +272,7 @@ namespace Serein.Server
                     (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != Command_Copy || CommandHistory.Count == 0) &&
                     (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
                 {
-                    CommandListIndex = CommandHistory.Count + 1;
+                    CommandHistoryIndex = CommandHistory.Count + 1;
                     CommandHistory.Add(Command_Copy);
                 }
 #if !CONSOLE
@@ -363,7 +380,9 @@ namespace Serein.Server
                         Matcher.Process(TempLine_);
                     }
                     else
+                    {
                         Matcher.Process(Line);
+                    }
                 }
                 JSFunc.Trigger(EventType.ServerOutput, Line);
                 JSFunc.Trigger(EventType.ServerOriginalOutput, outLine.Data);
