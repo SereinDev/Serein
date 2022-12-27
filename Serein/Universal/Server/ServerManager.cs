@@ -17,7 +17,7 @@ namespace Serein.Server
 
         private static string TempLine = string.Empty;
 
-        public static bool Restart, Finished = false, Killed;
+        public static bool Restart, Finished, Killed;
 
         /// <summary>
         /// 服务器状态
@@ -311,6 +311,10 @@ namespace Serein.Server
             {
                 Start(Quiet);
             }
+            else if (Command.Trim().ToLower() == "stop")
+            {
+                Restart = false;
+            }
         }
 
         /// <summary>
@@ -323,25 +327,22 @@ namespace Serein.Server
                 string Line = Log.OutputRecognition(outLine.Data);
                 if (!Finished)
                 {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    Finished = System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase);
+                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
                     {
-                        Finished = true;
+                        Version = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
                     {
-                        Finished = true;
+                        LevelName = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
+                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
-                        Finished = true;
-                    }
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase))
-                    {
-                        Finished = true;
+                        Difficulty = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
 #if CONSOLE
-                Logger.Out(LogType.Server_Output, outLine.Data);
+                    Logger.Out(LogType.Server_Output, outLine.Data);
 #else
                 Logger.Out(LogType.Server_Output, Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
 #endif

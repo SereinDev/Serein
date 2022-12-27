@@ -1,6 +1,5 @@
 ﻿using Serein.Base;
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -36,6 +35,10 @@ namespace Serein
             IO.ReadAll(true);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
             ResourcesManager.InitConsole();
             Ui = new Ui.Ui();
             Application.Run(Ui);

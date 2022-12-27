@@ -58,6 +58,10 @@ namespace Serein.Windows.Pages.Server
                     {
                         ServerManager.CommandHistoryIndex--;
                     }
+                    if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                    {
+                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandHistoryIndex];
+                    }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;
                 case Key.Down:
@@ -66,13 +70,13 @@ namespace Serein.Windows.Pages.Server
                     {
                         ServerManager.CommandHistoryIndex++;
                     }
-                    if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                    if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                     {
-                        ServerManager.CommandHistoryIndex++;
+                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandHistoryIndex];
                     }
-                    if (ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                    else if (ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
                     {
-                        ServerManager.CommandHistoryIndex++;
+                        InputBox.Text = string.Empty;
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     break;

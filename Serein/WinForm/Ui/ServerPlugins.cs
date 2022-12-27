@@ -13,7 +13,7 @@ namespace Serein.Ui
     {
         private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            OpenFileDialog Dialog = new OpenFileDialog()
+            OpenFileDialog Dialog = new OpenFileDialog
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
@@ -89,38 +89,33 @@ namespace Serein.Ui
                     {
                         Text = Regex.Replace(Path.GetFileName(PluginFile), @"\.lock$", string.Empty)
                     };
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
+                    switch (Path.GetExtension(PluginFile.ToLower()))
                     {
-                        PluginGroupJs.Items.Add(Item);
+                        case ".js":
+                            PluginGroupJs.Items.Add(Item);
+                            break;
+                        case ".dll":
+                            PluginGroupDll.Items.Add(Item);
+                            break;
+                        case ".jar":
+                            PluginGroupJar.Items.Add(Item);
+                            break;
+                        case ".py":
+                            PluginGroupPy.Items.Add(Item);
+                            break;
+                        case ".lua":
+                            PluginGroupLua.Items.Add(Item);
+                            break;
+                        case ".ts":
+                            PluginGroupTs.Items.Add(Item);
+                            break;
+                        case ".lock":
+                            Item.ForeColor = Color.Gray;
+                            PluginGroupDisable.Items.Add(Item);
+                            break;
+                        default:
+                            continue;
                     }
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    if (PluginFile.ToUpper().EndsWith(".JS"))
-                    {
-                        PluginGroupJs.Items.Add(Item);
-                    }
-                    else if (PluginFile.ToUpper().EndsWith(".LOCK"))
-                    {
-                        Item.ForeColor = Color.Gray;
-                        PluginGroupDisable.Items.Add(Item);
-                    }
-                    else
-                        return;
-                    PluginList.Items.Add(Item);
                 }
                 PluginList.EndUpdate();
             }
