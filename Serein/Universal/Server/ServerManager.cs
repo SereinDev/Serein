@@ -342,7 +342,7 @@ namespace Serein.Server
                     }
                 }
 #if CONSOLE
-                    Logger.Out(LogType.Server_Output, outLine.Data);
+                Logger.Out(LogType.Server_Output, outLine.Data);
 #else
                 Logger.Out(LogType.Server_Output, Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
 #endif
