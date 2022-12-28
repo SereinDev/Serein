@@ -66,7 +66,9 @@ namespace Serein.JSPlugin
                             Logger.Out(LogType.Plugin_Error, ExceptionMessage);
                         }
                         else
+                        {
                             PluginDict[Namespace].LoadedSuccessfully = true;
+                        }
                     }
                     catch (Exception e)
                     {
@@ -103,7 +105,7 @@ namespace Serein.JSPlugin
             Logger.Out(LogType.Plugin_Clear);
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
-            Thread.Sleep(500);
+            System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
             TokenSource.Cancel();
             PluginDict.Keys.ToList().ForEach((Key) =>
             {

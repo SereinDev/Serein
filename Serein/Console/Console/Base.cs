@@ -109,8 +109,8 @@ namespace Serein.Console
         {
             IO.ReadAll();
             IO.SaveSettings();
-            SystemInfo.Init();
             AutoRun.Check();
+            Task.Run(SystemInfo.Init);
         }
     }
 }

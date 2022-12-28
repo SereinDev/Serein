@@ -15,7 +15,7 @@ namespace Serein.Ui
             {
                 if (!Visible)
                 {
-                    Thread.Sleep(5000);
+                    System.Threading.Tasks.Task.Delay(5000).GetAwaiter().GetResult();
                 }
                 else if (ServerManager.Status)
                 {
@@ -43,9 +43,9 @@ namespace Serein.Ui
                 if (Websocket.Status)
                 {
                     BotInfoStatus2_Update("已连接");
-                    BotInfoQQ2_Update(Base.Matcher.SelfId);
-                    BotInfoMessageReceived2_Update(Base.Matcher.MessageReceived);
-                    BotInfoMessageSent2_Update(Base.Matcher.MessageSent);
+                    BotInfoQQ2_Update(Matcher.SelfId);
+                    BotInfoMessageReceived2_Update(Matcher.MessageReceived);
+                    BotInfoMessageSent2_Update(Matcher.MessageSent);
                     t = DateTime.Now - Websocket.StartTime;
                     if (t.TotalSeconds < 3600)
                     {
@@ -68,7 +68,7 @@ namespace Serein.Ui
                     BotInfoMessageSent2_Update("-");
                     BotInfoTime2_Update("-");
                 }
-                Thread.Sleep(2000);
+                System.Threading.Tasks.Task.Delay(2000).GetAwaiter().GetResult();
             }
         }
 

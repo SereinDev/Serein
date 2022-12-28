@@ -5,3 +5,4 @@ packages/
 MigrationBackup/
 Build_Info.txt
 TEST/
+FodyWeavers.xsd

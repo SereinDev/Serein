@@ -107,10 +107,10 @@ namespace Serein.Base
                         {
                             JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
                         }
-                    }
-                    if (MessageType == "private")
-                    {
-                        JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
+                        else if (MessageType == "group")
+                        {
+                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
+                        }
                     }
                     break;
                 case "meta_event":
@@ -119,11 +119,11 @@ namespace Serein.Base
                         SelfId = Packet["self_id"].ToString();
                         MessageReceived = (
                             Packet["status"]["stat"]["message_received"] ??
-                            Packet["status"]["stat"]["MessageReceived"]
+                            Packet["status"]["stat"]["MessageReceived"] ?? "-"
                             ).ToString();
                         MessageSent = (
                             Packet["status"]["stat"]["message_sent"] ??
-                            Packet["status"]["stat"]["MessageSent"]
+                            Packet["status"]["stat"]["MessageSent"] ?? "-"
                             ).ToString();
                         if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
                         {

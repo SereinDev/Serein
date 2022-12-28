@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.JSPlugin;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -30,6 +31,9 @@ namespace Serein.Ui
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
             Net.StartChecking();
+            System.Threading.Tasks.Task.Run(UpdateInfo);
+            System.Threading.Tasks.Task.Run(JSPluginManager.Load);
+            System.Threading.Tasks.Task.Run(SystemInfo.Init);
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
@@ -40,8 +44,6 @@ namespace Serein.Ui
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            System.Threading.Tasks.Task.Run(UpdateInfo);
-            SystemInfo.Init();
         }
     }
 }

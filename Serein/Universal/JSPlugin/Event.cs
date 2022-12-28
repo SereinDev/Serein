@@ -37,7 +37,6 @@ namespace Serein.JSPlugin
                 case EventType.ReceiveGroupMessage:
                 case EventType.ReceivePrivateMessage:
                 case EventType.ReceivePacket:
-                case EventType.SereinStart:
                 case EventType.SereinClose:
                 case EventType.PluginsReload:
                     if (Dict.ContainsKey(Type))
@@ -73,7 +72,6 @@ namespace Serein.JSPlugin
                     switch (Type)
                     {
                         case EventType.ServerStart:
-                        case EventType.SereinStart:
                         case EventType.SereinClose:
                         case EventType.PluginsReload:
                             lock (JSPluginManager.PluginDict[Namespace].Engine)

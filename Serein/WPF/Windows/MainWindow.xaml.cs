@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Appearance;
@@ -23,14 +22,13 @@ namespace Serein.Windows
         public MainWindow()
         {
             InitializeComponent();
-            Catalog.MainWindow = this;
-            SystemInfo.Init();
-            AutoRun.Check();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            Catalog.MainWindow = this;
         }
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            AutoRun.Check();
             Catalog.Notification = Catalog.Notification ?? new NotificationManager();
             DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)

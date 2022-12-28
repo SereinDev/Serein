@@ -18,7 +18,6 @@
         PermissionDeniedFromPrivateMsg,
         PermissionDeniedFromGroupMsg,
 
-        SereinStart,
         SereinClose,
         SereinCrash,
 

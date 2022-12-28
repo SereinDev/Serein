@@ -22,7 +22,6 @@ namespace Serein.Ui
             switch (tabControl.SelectedIndex)
             {
                 case 5:
-                    IO.ReadMember();
                     LoadMember();
                     break;
                 case 6:
@@ -64,11 +63,6 @@ namespace Serein.Ui
                 TaskDialog.ShowDialog();
             }
             AutoRun.Check();
-            System.Threading.Tasks.Task.Run(() =>
-            {
-                JSPluginManager.Load();
-                JSFunc.Trigger(Items.EventType.SereinStart);
-            });
         }
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)

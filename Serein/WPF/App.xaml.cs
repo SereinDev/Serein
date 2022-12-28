@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace Serein
 {
@@ -28,6 +29,7 @@ namespace Serein
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
             Net.StartChecking();
+            Task.Run(SystemInfo.Init);
         }
     }
 }
