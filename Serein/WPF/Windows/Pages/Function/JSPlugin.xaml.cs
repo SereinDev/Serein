@@ -91,7 +91,7 @@ namespace Serein.Windows.Pages.Function
         }
 
         private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-            => Disable.IsEnabled = 
+            => Disable.IsEnabled =
             JSPluginListView.SelectedIndex != -1 &&
             JSPluginListView.SelectedItem is ListViewItem item &&
             JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()) &&
