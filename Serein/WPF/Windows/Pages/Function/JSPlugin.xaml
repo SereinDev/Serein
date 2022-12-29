@@ -46,6 +46,7 @@
             Margin="3"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
+            ContextMenuOpening="JSPluginListView_ContextMenuOpening"
             SelectionMode="Single">
             <ListView.View>
                 <GridView>
@@ -63,6 +64,12 @@
             </ListView.Style>
             <ListView.ContextMenu>
                 <ContextMenu Name="TaskContextMenu">
+                    <ui:MenuItem
+                        Name="Disable"
+                        Click="MenuItem_Click"
+                        Header="禁用所选插件"
+                        SymbolIcon="DismissCircle24"
+                        Tag="Disable" />
                     <ui:MenuItem
                         Name="Reload"
                         Click="MenuItem_Click"

@@ -9,6 +9,7 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Serein.JSPlugin
 {
@@ -30,7 +31,7 @@ namespace Serein.JSPlugin
         /// <param name="ExecuteByCommand">被命令执行</param>
         /// <param name="Namespace">命名空间</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool ExecuteByCommand = false, string Namespace = null)
+        public static Engine Init(bool ExecuteByCommand = false, string Namespace = null, CancellationTokenSource TokenSource = null)
         {
             Engine engine = new Engine(
                 new Action<Options>((cfg) =>
@@ -41,9 +42,9 @@ namespace Serein.JSPlugin
                     {
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
                     }
-                    else
+                    else if (TokenSource != null)
                     {
-                        cfg.CancellationToken(JSPluginManager.TokenSource.Token);
+                        cfg.CancellationToken(TokenSource.Token);
                     }
                 }
                 ));
@@ -167,14 +168,14 @@ namespace Serein.JSPlugin
             catch (JavaScriptException e)
             {
                 Logger.Out(LogType.Debug, e);
-                ExceptionMessage = $"{e.Message} (at line {e.Location.Start.Line}:{e.Location.Start.Column})";
+                ExceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
             }
             catch (Exception e)
             {
                 Logger.Out(LogType.Debug, e);
                 ExceptionMessage = e.Message;
             }
-            return (Engine ?? engine);
+            return Engine ?? engine;
         }
     }
 }

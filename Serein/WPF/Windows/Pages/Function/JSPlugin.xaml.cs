@@ -4,6 +4,7 @@ using Serein.JSPlugin;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -31,14 +32,19 @@ namespace Serein.Windows.Pages.Function
             JSPluginListView.Items.Clear();
             foreach (Plugin Item in JSPluginManager.PluginDict.Values)
             {
-                JSPluginListView.Items.Add(Item);
-                Logger.Out(LogType.Debug, Item.Name);
+                ListViewItem listViewItem = new ListViewItem
+                {
+                    Content = Item,
+                    Tag = Item.Namespace,
+                    Opacity = Item.LoadedSuccessfully ? 1 : 0.5
+                };
+                JSPluginListView.Items.Add(listViewItem);
             }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
             {
                 switch (Item.Tag)
                 {
@@ -52,6 +58,13 @@ namespace Serein.Windows.Pages.Function
                         break;
                     case "LookupDocs":
                         Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs") { UseShellExecute = true });
+                        break;
+                    case "Disable":
+                        if (JSPluginListView.SelectedItem is ListViewItem item && JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()))
+                        {
+                            JSPluginManager.PluginDict[item.Tag.ToString()].Dispose();
+                            Load();
+                        }
                         break;
                 }
             }
@@ -76,5 +89,12 @@ namespace Serein.Windows.Pages.Function
             });
             Restorer.Start();
         }
+
+        private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+            => Disable.IsEnabled = 
+            JSPluginListView.SelectedIndex != -1 &&
+            JSPluginListView.SelectedItem is ListViewItem item &&
+            JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()) &&
+            JSPluginManager.PluginDict[item.Tag.ToString()].LoadedSuccessfully;
     }
 }

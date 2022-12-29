@@ -292,7 +292,7 @@ namespace Serein.Base
             }
             if (File.Exists(GetPath("settings", "Bot.json")))
             {
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Settings.Bot>(File.ReadAllText(GetPath("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(GetPath("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
             }
             if (File.Exists(GetPath("settings", "Matches.json")))
             {
@@ -300,14 +300,22 @@ namespace Serein.Base
                 File.WriteAllText(GetPath("settings", "Matches.json"), JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
             }
             else
+            {
                 File.WriteAllText(GetPath("settings", "Matches.json"), JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
+            }
             if (File.Exists(GetPath("settings", "Event.json")))
             {
                 Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(GetPath("settings", "Event.json"), Encoding.UTF8)) ?? new Settings.Event();
                 SaveEventSetting();
             }
             else
+            {
                 File.WriteAllText(GetPath("settings", "Event.json"), JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
+            }
+            if (((IList<string>)Environment.GetCommandLineArgs()).Contains("debug"))
+            {
+                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
+            }
         }
 
         /// <summary>

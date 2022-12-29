@@ -71,7 +71,6 @@ namespace Serein.Base
                     break;
                 case LogType.Null:
                 case LogType.Server_Output:
-                case LogType.Bot_Output:
                     WriteLine(0, Line);
                     break;
                 case LogType.Bot_Receive:
@@ -85,13 +84,13 @@ namespace Serein.Base
                     break;
                 case LogType.Version_New:
                     WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{Line}，你可以打开" +
-                        $"\x1b[4m\x1b[36m https://github.com/Zaitonn/Serein/releases/latest \x1b[0m获取最新版）");
+                        $"\x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein/releases/latest\x1b[0m获取最新版）", true);
                     break;
                 case LogType.Version_Latest:
-                    WriteLine(1, "获取更新成功，当前已是最新版:)");
+                    WriteLine(1, "获取更新成功，当前已是最新版:)", true);
                     break;
                 case LogType.Version_Failure:
-                    WriteLine(3, "更新获取异常：\n" + Line);
+                    WriteLine(3, "更新获取异常：\n" + Line, true);
                     break;
 #elif WINFORM
                 case LogType.Server_Output:
@@ -102,9 +101,6 @@ namespace Serein.Base
                     break;
                 case LogType.Server_Clear:
                     Program.Ui.PanelConsoleWebBrowser_Invoke("#clear");
-                    break;
-                case LogType.Bot_Output:
-                    Program.Ui.BotWebBrowser_Invoke(Line);
                     break;
                 case LogType.Bot_Notice:
                     Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line));
@@ -170,14 +166,6 @@ namespace Serein.Base
                 case LogType.Server_Clear:
                     Catalog.Server.Panel?.AppendText("#clear");
                     Catalog.Server.Cache.Clear();
-                    break;
-                case LogType.Bot_Output:
-                    Catalog.Function.Bot?.AppendText(Line);
-                    Catalog.Function.BotCache.Add(Line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
                     break;
                 case LogType.Bot_Notice:
                     Line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(Line);
@@ -282,35 +270,38 @@ namespace Serein.Base
                     break;
 #endif
                 case LogType.Debug:
+                case LogType.DetailDebug:
                 default:
-                    if (Global.Settings.Serein.DevelopmentTool.EnableDebug)
+                    if (!Global.Settings.Serein.DevelopmentTool.EnableDebug ||
+                        Global.Settings.Serein.DevelopmentTool.DetailDebug ^ Type == LogType.DetailDebug)
                     {
-                        StackTrace st = new StackTrace(true);
-                        Line =
-                            $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
-                            $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
-                            $"{Line}";
-#if CONSOLE
-                        WriteLine(4, Line);
-#elif WINFORM
-                        Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
-#elif WPF
-                        Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
-#endif
-                        if (!Directory.Exists(IO.GetPath("logs", "debug")))
-                        {
-                            Directory.CreateDirectory(IO.GetPath("logs", "debug"));
-                        }
-                        try
-                        {
-                            File.AppendAllText(
-                                IO.GetPath("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                                $"{DateTime.Now:T} {Line}\n",
-                                Encoding.UTF8
-                                );
-                        }
-                        catch { }
+                        return;
                     }
+                    StackTrace st = new StackTrace(true);
+                    Line =
+                        $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
+                        $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
+                        $"{Line}";
+#if CONSOLE
+                    WriteLine(4, Line);
+#elif WINFORM
+                    Program.Ui.Debug_Append($"{DateTime.Now:T} {Line}");
+#elif WPF
+                    Catalog.Debug?.AppendText($"{DateTime.Now:T} {Line}");
+#endif
+                    if (!Directory.Exists(IO.GetPath("logs", "debug")))
+                    {
+                        Directory.CreateDirectory(IO.GetPath("logs", "debug"));
+                    }
+                    try
+                    {
+                        File.AppendAllText(
+                            IO.GetPath("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            $"{DateTime.Now:T} {Line}\n",
+                            Encoding.UTF8
+                            );
+                    }
+                    catch { }
                     break;
             }
         }
@@ -332,7 +323,7 @@ namespace Serein.Base
             {
                 return;
             }
-            if (Line.Contains("\r\n"))
+            if (Line.Contains("\n"))
             {
                 Line.Split('\n').ToList().ForEach((i) => WriteLine(Level, i.Replace("\r", string.Empty), SereinTitle));
                 return;

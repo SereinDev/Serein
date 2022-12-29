@@ -64,7 +64,7 @@ namespace Serein.JSPlugin
             lock (JSPluginManager.PluginDict)
                 return
                     JSPluginManager.PluginDict.ContainsKey(Namespace) &&
-                    JSPluginManager.PluginDict[Namespace].Event.Set((EventType)Enum.Parse(typeof(EventType), EventName), Function);
+                    JSPluginManager.PluginDict[Namespace].SetListener((EventType)Enum.Parse(typeof(EventType), EventName), Function);
         }
 
         private static readonly object Lock = new object();
@@ -84,7 +84,9 @@ namespace Serein.JSPlugin
             {
                 Logger.Out(LogType.Debug, Type);
                 lock (JSPluginManager.PluginDict)
-                    JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Event.Trigger(Type, Args));
+                {
+                    JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Trigger(Type, Args));
+                }
                 System.Threading.Tasks.Task.Delay(Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime).GetAwaiter().GetResult();
             }
         }
@@ -118,22 +120,31 @@ namespace Serein.JSPlugin
                     {
                         throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
                     }
-                    lock (JSPluginManager.PluginDict[Namespace].Engine)
-                        Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                    else if (JSPluginManager.PluginDict[Namespace].Engine == null)
+                    {
+                        _Timer.Dispose();
+                    }
+                    else
+                    {
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            Function.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
                     string Message;
                     if (e.InnerException is JavaScriptException JSe)
                     {
-                        Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                        Message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
                     }
                     else
                     {
-                        Message = e.Message;
+                        Message = (e.InnerException ?? e).Message;
                     }
-                    Logger.Out(LogType.Plugin_Error, $"触发定时器[ID:{TimerID}]时出现异常：{Message}");
-                    Logger.Out(LogType.Debug, $"触发定时器[ID:{TimerID}]时出现异常：\n", e);
+                    Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发定时器[ID:{TimerID}]时出现异常：{Message}");
+                    Logger.Out(LogType.Debug, $"触发定时器[ID:{TimerID}]时出现异常：", e);
                 }
                 if (!AutoReset)
                 {
@@ -179,7 +190,6 @@ namespace Serein.JSPlugin
                 ClearTimer(ID);
             }
         }
-
 
         /// <summary>
         /// 获取MD5

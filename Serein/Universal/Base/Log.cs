@@ -48,9 +48,7 @@ namespace Serein.Base
         /// 将字符串转为HTML编码的字符串
         /// <returns>转义后的HTML</returns>
         public static string EscapeLog(string Input)
-        {
-            return Regex.Replace(WebUtility.HtmlEncode(Input), @"\s", "&nbsp;");
-        }
+            => Regex.Replace(WebUtility.HtmlEncode(Input).Replace("\n", "<br>"), @"\s", "&nbsp;");
 
         /// <summary>
         /// 彩色文本转义

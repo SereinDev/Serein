@@ -104,12 +104,11 @@ namespace Serein.Console
         /// <summary>
         /// 加载配置文件
         /// </summary>
-        /// <param name="args">启动参数</param>
         public static void Load()
         {
             IO.ReadAll();
             IO.SaveSettings();
-            AutoRun.Check();
+            Net.Init();
             Task.Run(SystemInfo.Init);
         }
     }

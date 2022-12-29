@@ -73,7 +73,6 @@ namespace Serein.Base
                     WSClient.Closed += (_, e) =>
                     {
                         Status = false;
-                        Logger.Out(LogType.Bot_Output);
                         Logger.Out(LogType.Bot_Notice, "WebSocket连接已断开");
                         if (Global.Settings.Bot.AutoReconnect && Reconnect)
                         {

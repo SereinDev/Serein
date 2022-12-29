@@ -37,7 +37,7 @@
     <Compile Update="Ui\InitializeUi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Ui\SereinPlugins.cs">
+    <Compile Update="Ui\JSPlugins.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Ui\Ui.cs">

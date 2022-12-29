@@ -18,7 +18,7 @@ namespace Serein.Base
         /// <summary>
         /// 开始检查更新
         /// </summary>
-        public static void StartChecking()
+        public static void Init()
         {
             CheckTimer.Elapsed += (sender, e) => CheckVersion();
             CheckTimer.Start();
@@ -53,6 +53,7 @@ namespace Serein.Base
                 Logger.Out(Items.LogType.Debug, "Headers\n", Response.Headers.ToString());
                 Logger.Out(Items.LogType.Debug, "Content\n", await Response.Content.ReadAsStringAsync());
             }
+            Client.Dispose();
             return await Response.Content.ReadAsStringAsync();
         }
 
@@ -71,17 +72,19 @@ namespace Serein.Base
                 try
                 {
                     string JSON = Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").GetAwaiter().GetResult();
-                    JObject JsonObject = (JObject)JsonConvert.DeserializeObject(JSON);
-                    string Version = JsonObject["tag_name"].ToString();
-                    if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) && Version != Global.VERSION && LastVersion != Version)
+                    string Version = ((JObject)JsonConvert.DeserializeObject(JSON))["tag_name"].ToString();
+                    if (LastVersion != Version)
                     {
-                        Logger.Out(Items.LogType.Version_New, Version);
+                        if (Version != Global.VERSION)
+                        {
+                            Logger.Out(Items.LogType.Version_New, Version);
+                        }
+                        else
+                        {
+                            Logger.Out(Items.LogType.Version_Latest, Version);
+                        }
+                        LastVersion = Version;
                     }
-                    if (!(string.IsNullOrEmpty(Version) && string.IsNullOrWhiteSpace(Version)) && Version != Global.VERSION && LastVersion != Version)
-                    {
-                        Logger.Out(Items.LogType.Version_New, Version);
-                    }
-                    LastVersion = Version;
                 }
                 catch (Exception e)
                 {

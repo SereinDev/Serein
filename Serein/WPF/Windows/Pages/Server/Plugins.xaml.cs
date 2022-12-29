@@ -40,12 +40,11 @@ namespace Serein.Windows.Pages.Server
                 {
                     if (Extensions.Contains(Path.GetExtension(Plugin).ToLower()))
                     {
-                        ListViewItem Item = new ListViewItem();
-                        Item.Content = PluginManager.GetRelativeUri(Plugin);
-                        if (Path.GetExtension(Plugin).ToLower() == ".lock")
+                        ListViewItem Item = new ListViewItem
                         {
-                            Item.Foreground = Brushes.LightGray;
-                        }
+                            Content = PluginManager.GetRelativeUri(Plugin),
+                            Opacity = Path.GetExtension(Plugin).ToLower() != ".lock" ? 1 : 0.5
+                        };
                         PluginsListview.Items.Add(Item);
                     }
                 }

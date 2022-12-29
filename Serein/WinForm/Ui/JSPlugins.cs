@@ -1,6 +1,7 @@
 ﻿using Serein.JSPlugin;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -22,9 +23,12 @@ namespace Serein.Ui
         {
             SereinPluginsList.BeginUpdate();
             SereinPluginsList.Items.Clear();
-            foreach (Items.Plugin Item in JSPluginManager.PluginDict.Values)
+            foreach (Plugin Item in JSPluginManager.PluginDict.Values)
             {
-                ListViewItem item = new ListViewItem(Item.Name);
+                ListViewItem item = new ListViewItem(Item.Name)
+                {
+                    ForeColor = Item.LoadedSuccessfully ? ForeColor : Color.Gray
+                };
                 item.SubItems.Add(Item.Version);
                 item.SubItems.Add(Item.Author);
                 item.SubItems.Add(Item.Description);

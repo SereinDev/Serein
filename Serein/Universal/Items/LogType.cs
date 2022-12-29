@@ -7,13 +7,13 @@
         Warn,
         Error,
         Debug,
+        DetailDebug,
 
         Server_Notice,
         Server_Output,
         Server_Clear,
 
         Bot_Notice,
-        Bot_Output,
         Bot_Error,
         Bot_Receive,
         Bot_Send,

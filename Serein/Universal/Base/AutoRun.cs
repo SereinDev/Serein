@@ -13,10 +13,6 @@ namespace Serein.Base
         public static void Check()
         {
             IList<string> args = Environment.GetCommandLineArgs();
-            if (args.Contains("debug"))
-            {
-                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
-            }
             if (Global.Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
             {
                 Task.Run(() => Websocket.Connect(true));

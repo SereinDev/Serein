@@ -1462,12 +1462,6 @@ namespace Serein.Ui
             this.SettingServer.Name = "SettingServer";
             this.SettingServer.TabStop = false;
             // 
-            // SettingServerOutputEncodingLabel
-            // 
-            resources.ApplyResources(this.SettingServerOutputEncodingLabel, "SettingServerOutputEncodingLabel");
-            this.SettingServerOutputEncodingLabel.Name = "SettingServerOutputEncodingLabel";
-            this.SettingServerOutputEncodingLabel.MouseHover += new System.EventHandler(this.SettingServerOutputEncodingLabel_MouseHover);
-            //
             // SettingServerLineTerminator
             // 
             resources.ApplyResources(this.SettingServerLineTerminator, "SettingServerLineTerminator");
@@ -1480,6 +1474,12 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingServerLineTerminatorLabel, "SettingServerLineTerminatorLabel");
             this.SettingServerLineTerminatorLabel.Name = "SettingServerLineTerminatorLabel";
             this.SettingServerLineTerminatorLabel.MouseHover += new System.EventHandler(this.SettingServerLineTerminatorLabel_MouseHover);
+            // 
+            // SettingServerOutputEncodingLabel
+            // 
+            resources.ApplyResources(this.SettingServerOutputEncodingLabel, "SettingServerOutputEncodingLabel");
+            this.SettingServerOutputEncodingLabel.Name = "SettingServerOutputEncodingLabel";
+            this.SettingServerOutputEncodingLabel.MouseHover += new System.EventHandler(this.SettingServerOutputEncodingLabel_MouseHover);
             // 
             // SettingServerOutputEncoding
             // 

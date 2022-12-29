@@ -30,7 +30,7 @@ namespace Serein.Ui
             LoadTask();
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
-            Net.StartChecking();
+            Net.Init();
             System.Threading.Tasks.Task.Run(UpdateInfo);
             System.Threading.Tasks.Task.Run(JSPluginManager.Load);
             System.Threading.Tasks.Task.Run(SystemInfo.Init);

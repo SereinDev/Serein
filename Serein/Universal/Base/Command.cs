@@ -376,6 +376,8 @@ namespace Serein.Base
             Text = Regex.Replace(Text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
 #endif
             Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%UploadSpeed%", SystemInfo.UploadSpeed, RegexOptions.IgnoreCase);
+            Text = Regex.Replace(Text, "%DownloadSpeed%", SystemInfo.DownloadSpeed, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUBrand%", SystemInfo.CPUBrand, RegexOptions.IgnoreCase);
             Text = Regex.Replace(Text, "%CPUFrequency%", SystemInfo.CPUFrequency.ToString("N1"), RegexOptions.IgnoreCase);

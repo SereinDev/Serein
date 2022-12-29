@@ -31,8 +31,14 @@ namespace Serein.JSPlugin
             {
                 _WebSocket.Close();
             }
-            _WebSocket?.Dispose();
+            if (!Disposed)
+            {
+                _WebSocket?.Dispose();
+                Disposed = true;
+            }
         }
+
+        private bool Disposed;
 
         /// <summary>
         /// 入口函数
@@ -63,6 +69,11 @@ namespace Serein.JSPlugin
         /// <param name="Args">参数</param>
         private void Trigger(Delegate Event, string Name, object Args = null)
         {
+            if (JSPluginManager.PluginDict[Namespace].Engine == null)
+            {
+                Dispose();
+                return;
+            }
             try
             {
                 lock (JSPluginManager.PluginDict[Namespace].Engine)
@@ -91,13 +102,13 @@ namespace Serein.JSPlugin
                 string Message;
                 if (e.InnerException is JavaScriptException JSe)
                 {
-                    Message = $"{JSe.Message} (at line {JSe.Location.Start.Line}:{JSe.Location.Start.Column})";
+                    Message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}"; ;
                 }
                 else
                 {
-                    Message = e.Message;
+                    Message = (e.InnerException ?? e).Message;
                 }
-                Logger.Out(Items.LogType.Plugin_Error, $"Websocket的{Name}事件调用失败：", Message);
+                Logger.Out(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{Name}事件调用失败：", Message);
                 Logger.Out(Items.LogType.Debug, $"{Name}事件调用失败\r\n", e);
             }
         }

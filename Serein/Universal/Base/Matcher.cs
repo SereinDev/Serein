@@ -93,12 +93,31 @@ namespace Serein.Base
                         {
                             if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
                             {
-                                Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
+                                Command.Run(
+                                    1,
+                                    Item.Command,
+                                    Packet,
+                                    System.Text.RegularExpressions.Regex.Match(
+                                        RawMessage,
+                                        Item.Expression
+                                    ),
+                                    UserId,
+                                    GroupId
+                                );
                             }
-                        }
-                        if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
-                        {
-                            Command.Run(1, Item.Command, Packet, System.Text.RegularExpressions.Regex.Match(RawMessage, Item.Expression), UserId, GroupId);
+                            else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
+                            {
+                                Command.Run(
+                                    1,
+                                    Item.Command,
+                                    Packet,
+                                    System.Text.RegularExpressions.Regex.Match(
+                                        RawMessage,
+                                        Item.Expression
+                                        ),
+                                    UserId
+                                );
+                            }
                         }
                     }
                     if (!IsSelfMessage)
