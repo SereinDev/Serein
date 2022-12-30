@@ -27,10 +27,12 @@
     - [🛒 服务器插件管理](Tutorial/ServerPlugins.md)
   - 进阶
     - [💻 自定义控制台](Tutorial/CustomConsole.md)
+    - [🎍 启动自动运行](Tutorial/AutoRun.md)
     - [🧵 自定义正则](Tutorial/CustomRegex.md)
     - [📑 多行匹配](Tutorial/MuiltLineMatch.md)
     - [📂 多开](Tutorial/MulitOpen.md)
     - [🔧 开启调试模式](Tutorial/DebugMode.md)
+    - [🔨 开发工具](Tutorial/DevelopmentTool.md)
 
 - 🌌 扩展
   - [➕ 贡献](Extension/Contribute.md)
@@ -38,11 +40,12 @@
     - [示例文件](Extension/JSON/Demo.json.md)
     - [PNX](Extension/JSON/PNX.json.md)
   - 🧩 插件
-    - [示例文件](Extension/JS/Example.js.md)
-    - [机器人功能拓展](Extension/JS/BotExtension.js.md)
-    - [网页版控制台](Extension/JS/iPanel.js.md)
-    - [白名单与账号绑定插件](Extension/JS/SLbind.js.md)
-    - [HTTPApi控制](Extension/JS/HTTPApi.js.md)
+    - [Example - 示例文件](Extension/JS/Example.js.md)
+    - [BotExtension - 机器人功能拓展](Extension/JS/BotExtension.js.md)
+    - [iPanel - 网页版控制台](https://ipanel.serein.cc)
+    - [SLbind - 白名单与账号绑定插件](Extension/JS/SLbind.js.md)
+    - [HTTPApi- HTTPApi控制](Extension/JS/HTTPApi.js.md)
+    - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)
   - 💼 整合包
     - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)
@@ -59,5 +62,4 @@
 - 🎆 更多
   - [📁 目录结构](More/Structure.md)
   - [📔 关于](More/About.md)
-
-- [**💖 捐赠**](Donate.md)
+  - [**💖 捐赠**](Donate.md)

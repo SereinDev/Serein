@@ -46,7 +46,7 @@ Serein没有设置重启上限次数，在投入生产环境前请确保服务�
 
 >[!NOTE]
 >在基岩版1.19之后，BDS服务端控制台输入编码被改为UTF-16，但由于一些问题，无论如何修改编码都无法正常输入中文。  
->因此对于类似于`tellraw`这类使用JSON文本输出的命令，可在设置中开启 使用Unicode字符 选项或使用[Unicode命令输入](Functions/Command.md#在服务器中执行命令)将命令内的非ASCII编码的符号使用Unicode字符表示
+>因此对于类似于`tellraw`这类使用JSON文本输出的命令，可在设置中开启 使用Unicode字符 选项或使用[Unicode命令输入](Function/Command.md#在服务器中执行命令)将命令内的非ASCII编码的符号使用Unicode字符表示
 
 ### 服务器输出乱码
 

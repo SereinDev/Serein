@@ -42,14 +42,14 @@ PS C:\> Serein-???.exe debug
 
 #### 更改设置
 
-打开 settings/Serein.json ，将`Debug`后面的`false`改为`true`即可
+打开 settings/Serein.json ，将`EnableDebug`后面的`false`改为`true`即可
 
 ```json
 {
-  "Debug": true,  // false -> true
-  "DPIAware": true,
-  "EnableGetUpdate": true,
-  "ThemeFollowSystem": true,
-  "UseDarkTheme": false
+    // ...
+    "DevelopmentTool": {
+        "EnableDebug": true,  // 开启调试模式
+        // ...
+    }
 }
 ```

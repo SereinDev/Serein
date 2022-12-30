@@ -22,7 +22,7 @@
 
 >[!TIP]
 >
->- 搭配使用[`7za.exe`](https://www.7-zip.org/download.html)实现压缩功能  
+>- 搭配使用 [7za.exe](https://www.7-zip.org/download.html) 实现压缩功能  
 >- 通过执行`echo.[文本内容]>>example.txt`实现写入文本  
 >- 调用批处理文件执行一系列的工作
   
@@ -93,7 +93,7 @@
 >[!WARNING]  
 >
 >- 此命令只能被群聊消息触发
->- 若该ID不合法或已经绑定会返回消息提示，内容可在[事件](Functions/Event.md) 中自定义
+>- 若该ID不合法或已经绑定会返回消息提示，内容可在[事件](Function/Event.md) 中自定义
 
 ### 解绑游戏ID
 
@@ -104,7 +104,7 @@
 >[!WARNING]  
 >
 >- 此命令只能被群聊消息触发
->- 若该ID不合法或已经绑定会返回消息提示，内容可通过[事件](Functions/Event.md)自定义
+>- 若该ID不合法或已经绑定会返回消息提示，内容可通过[事件](Function/Event.md)自定义
 
 ### 获取服务器信息
 
@@ -134,7 +134,7 @@
 
 - 运行超时：1min
 - js标准：ECMAScript 2022
-- 详见[插件语法](Function/JSDocs.md.md)
+- 详见[插件语法](Function/JSDocs.md)
 
 ### 调试输出
 

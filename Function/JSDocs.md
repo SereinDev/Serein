@@ -6,17 +6,10 @@
 ECMAScript 2022
 
 >[!ATTENTION]
->以下情况将导致Serein无响应
->
->- 在插件中写死循环
->
->   ```js
->   while(true){
->     serein.log("?");  
->   }
->   ```
+>以下情况将导致Serein无响应或崩溃
 >
 > - 以极快的速度重复执行语句
+> - 无限递归导致爆栈
 
 ### 直接使用NET对象/类
 
@@ -297,25 +290,65 @@ var settings = serein.getSettings();
 `serein.getSysInfo(type:String)`
 
 ```js
-var cpuname = serein.getSysInfo("CPUName");
+var info = serein.getSysInfo();
 ```
 
 - 参数
-  - `type` 信息类型，可为以下值之一
-    - `NET` 当前NET版本
-    - `OS` 操作系统名称
-    - `CPUName` CPU名称
-    - `TotalRAM` 总内存（MB）
-    - `UsedRAM` 已用内存（MB)
-    - `RAMPercentage` 内存占用率
-    - `CPUPercentage` CPU占用率
-    >[!WARNING]
-    >  
-    >- 不区分大小写  
-    >- 若不在以上列表中则为返回空值
-
+  - 空
 - 返回
-  - `String` 对应的值
+  - `object` 对应的值
+
+以json格式显示：
+
+```json
+{
+  "Architecture": "64 位",                              // 架构（32位、64位、AMD）
+  "Name": "Microsoft Windows 10 家庭版 SP0.0",
+  "Hardware": {                                         // 硬件信息
+    "CPUs": [                                           // CPU列表
+      {
+        "Name": "Intel Core i5-1035G4 CPU @ 1.10GHz",   // 名称
+        "Brand": "GenuineIntel",                        // 供应商/品牌
+        "Architecture": "x64",                          // 架构
+        "Cores": 4,                                     // 核心数
+        "Frequency": 1498                               // 频率（MHz）
+      }
+    ],
+    "GPUs": [                                           // GPU列表
+      {
+        "Name": "Intel(R) Iris(R) Graphics Family",     // 名称
+        "Brand": "Intel(R) Iris(R) Plus Graphics",      // 供应商/品牌
+        "Resolution": "2736x1824",                      // 分辨率
+        "RefreshRate": 59,                              // 刷新率（Hz）
+        "MemoryTotal": 1048576                          // GPU内存 / 显存
+      }
+    ],
+    "RAM": {
+      "Free": 2350688,                                  // 可用内存（KB）
+      "Total": 7964852                                  // 总内存（KB）
+    }
+  },
+  "FrameworkVersion": {                                 // NET框架版本
+    "Major": 4,
+    "Minor": 0,
+    "Build": 30319,
+    "Revision": 42000,
+    "MajorRevision": 0,
+    "MinorRevision": -23536
+  },
+  "JavaVersion": {                                      // Java运行库版本（-1为无运行库）
+    "Major": 0,
+    "Minor": 0,
+    "Build": -1,
+    "Revision": -1,
+    "MajorRevision": -1,
+    "MinorRevision": -1
+  },
+  "IsMono": false,                                      // 当前软件是否使用Mono运行
+  "OperatingSystemType": 4                              // 操作系统类型（枚举值）
+  // Windows = 0, Linux, MacOSX, BSD, WebAssembly, Solaris, Haiku, Unity5, Other
+}
+```
 
 #### 执行命令
 
@@ -614,7 +647,9 @@ var id = serein.getGameID(114514);
 
 ```js
 // 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
-var ws = new WebSocket("ws://127.0.0.1:11451", serein.currentNamespace); // 实例化ws
+var ws = new WebSocket("ws://127.0.0.1:11451", serein.currentNamespace); 
+// 实例化ws，
+// 此处需要提供当前的命名空间，用于区分和管理
 
 ws.onopen = function(){
   // ws开启事件
@@ -624,7 +659,7 @@ ws.onclose = function(){
   // ws关闭事件
   // ...
 };
-ws.onerror = function(message){ // 错误信息
+ws.onerror = function(e){ // 错误信息
   // ws发生错误事件
   // ...
 };
@@ -637,7 +672,6 @@ ws.open(); // 连接ws
 var state = ws.state; // 连接状态
 /*
  * 此状态有以下五个可能的枚举值
- *
  *  -1  未知或无效
  *  0   正在连接
  *  1   连接成功
