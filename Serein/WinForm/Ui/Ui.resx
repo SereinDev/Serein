@@ -1348,6 +1348,12 @@
   <metadata name="SereinPluginsListContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 75</value>
   </metadata>
+  <data name="SereinPluginsListContextMenuStrip_Disable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>280, 38</value>
+  </data>
+  <data name="SereinPluginsListContextMenuStrip_Disable.Text" xml:space="preserve">
+    <value>禁用所选插件</value>
+  </data>
   <data name="SereinPluginsListContextMenuStrip_Reload.Size" type="System.Drawing.Size, System.Drawing">
     <value>280, 38</value>
   </data>
@@ -1370,7 +1376,7 @@
     <value>查看文档</value>
   </data>
   <data name="SereinPluginsListContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>281, 124</value>
+    <value>281, 162</value>
   </data>
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip.Name" xml:space="preserve">
     <value>SereinPluginsListContextMenuStrip</value>
@@ -4247,6 +4253,12 @@
   </data>
   <data name="&gt;&gt;SereinPluginsListDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Disable.Name" xml:space="preserve">
+    <value>SereinPluginsListContextMenuStrip_Disable</value>
+  </data>
+  <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Disable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SereinPluginsListContextMenuStrip_Reload.Name" xml:space="preserve">
     <value>SereinPluginsListContextMenuStrip_Reload</value>

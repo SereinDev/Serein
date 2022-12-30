@@ -108,7 +108,7 @@
                     <TextBlock
                         x:Name="RAM_Percent"
                         Margin="0,7"
-                        Text="- / - MB    -%"
+                        Text="- / - GB    -%"
                         TextAlignment="Center" />
                 </StackPanel>
             </ui:Card>

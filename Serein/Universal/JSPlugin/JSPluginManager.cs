@@ -58,7 +58,7 @@ namespace Serein.JSPlugin
                         }
                         else
                         {
-                            PluginDict[Namespace].LoadedSuccessfully = true;
+                            PluginDict[Namespace].Available = true;
                         }
                     }
                     catch (Exception e)
@@ -70,7 +70,7 @@ namespace Serein.JSPlugin
                 List<string> ErrorFiles = new List<string>();
                 PluginDict.Keys.ToList().ForEach((Key) =>
                 {
-                    if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.LoadedSuccessfully)
+                    if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.Available)
                     {
                         ErrorFiles.Add(Value.File);
                     }

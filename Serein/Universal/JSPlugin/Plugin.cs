@@ -32,7 +32,7 @@ namespace Serein.JSPlugin
             Engine = null;
             WebSockets.ForEach((ws) => ws.Dispose());
             TokenSource.Dispose();
-            LoadedSuccessfully = false;
+            Available = false;
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Serein.JSPlugin
         public readonly string Namespace;
 
         /// <summary>
-        /// 被成功加载
+        /// 可用
         /// </summary>
-        public bool LoadedSuccessfully = false;
+        public bool Available;
 
         /// <summary>
         /// 名称

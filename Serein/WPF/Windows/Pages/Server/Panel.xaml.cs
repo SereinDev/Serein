@@ -4,6 +4,7 @@ using Serein.Server;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Server
@@ -16,7 +17,7 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.ScriptErrorsSuppressed = true;
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
-            PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=panel");
+            PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();

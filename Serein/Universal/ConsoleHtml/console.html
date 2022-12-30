@@ -10,6 +10,7 @@
         document.onmouseup = function () { document.execCommand("Copy") };
         document.onkeyup = function () { document.execCommand("Copy") };
 
+
         var line = 0;
 
         function AppendText(str) {
@@ -30,8 +31,20 @@
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         }
 
+        function setTheme() {
+            if (location.href.indexOf('theme=dark') >= 0) {
+                document.body.className = 'dark';
+            }
+            else {
+                document.body.className = 'light';
+            }
+        }
     </script>
     <style>
+        .dark {
+            color: white;
+        }
+
         body {
             margin: 0;
             width: 100%;
@@ -47,18 +60,26 @@
             right: 0;
             top: 0;
             bottom: 0;
-            border: solid 1px black;
             word-wrap: break-word;
             word-break: break-all;
             padding: 3px 5px;
             overflow: auto;
         }
 
+        .light #console {
+            border: solid 1px black;
+        }
+
+        .dark #console {
+            border: solid 1px white;
+            background-color: #393939;
+        }
+
         /* 
             颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code
         */
-        .vanillaColor30,
-        .vanillaColor40 {
+        .light .vanillaColor30,
+        .light .vanillaColor40 {
             color: #0c0c0c;
         }
 
@@ -92,11 +113,10 @@
             color: #3a96dd;
         }
 
-        /* 
-        .vanillaColor37,
-        .vanillaColor47 {
-            color: #CCCCCC;
-        } */
+        .dark .vanillaColor37,
+        .dark .vanillaColor47 {
+            color: #dddddd;
+        }
 
         .vanillaColor90,
         .vanillaColor100 {
@@ -133,11 +153,10 @@
             color: #61d6d6;
         }
 
-        /* 
-        .vanillaColor97,
-        .vanillaColor107 {
+        .dark .vanillaColor97,
+        .dark .vanillaColor107 {
             color: #F2F2F2;
-        } */
+        }
     </style>
     <link rel="stylesheet" href="preset.css" />
     <link rel="shortcut icon"
@@ -145,7 +164,7 @@
         type="image/x-icon" />
 </head>
 
-<body>
+<body onload="setTheme()">
     <div id="console"></div>
 </body>
 

@@ -26,7 +26,7 @@ namespace Serein.Windows.Pages
         {
             Dispatcher.Invoke(() =>
             {
-                RAM_Percent.Text = $"{SystemInfo.UsedRAM} / {SystemInfo.TotalRAM} MB   {SystemInfo.RAMUsage:N1}%";
+                RAM_Percent.Text = $"{(double)SystemInfo.UsedRAM / 1024:N1} / {(double)SystemInfo.TotalRAM / 1024:N1} GB   {SystemInfo.RAMUsage:N1}%";
                 RAM_Percent_Ring.Progress = SystemInfo.RAMUsage;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";

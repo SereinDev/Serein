@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -17,7 +18,7 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.ScriptErrorsSuppressed = true;
             PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
-            PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=plugin");
+            PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=plugin&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Load();
             Catalog.Function.JSPlugin = this;
         }
@@ -36,7 +37,7 @@ namespace Serein.Windows.Pages.Function
                 {
                     Content = Item,
                     Tag = Item.Namespace,
-                    Opacity = Item.LoadedSuccessfully ? 1 : 0.5
+                    Opacity = Item.Available ? 1 : 0.5
                 };
                 JSPluginListView.Items.Add(listViewItem);
             }
@@ -95,6 +96,6 @@ namespace Serein.Windows.Pages.Function
             JSPluginListView.SelectedIndex != -1 &&
             JSPluginListView.SelectedItem is ListViewItem item &&
             JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()) &&
-            JSPluginManager.PluginDict[item.Tag.ToString()].LoadedSuccessfully;
+            JSPluginManager.PluginDict[item.Tag.ToString()].Available;
     }
 }

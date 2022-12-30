@@ -76,6 +76,7 @@ namespace Serein.Ui
             this.SereinPluginsListAuthor = new System.Windows.Forms.ColumnHeader();
             this.SereinPluginsListDescription = new System.Windows.Forms.ColumnHeader();
             this.SereinPluginsListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SereinPluginsListContextMenuStrip_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.SereinPluginsListContextMenuStrip_Reload = new System.Windows.Forms.ToolStripMenuItem();
             this.SereinPluginsListContextMenuStrip_ClearConsole = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -580,12 +581,20 @@ namespace Serein.Ui
             // 
             this.SereinPluginsListContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.SereinPluginsListContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SereinPluginsListContextMenuStrip_Disable,
             this.SereinPluginsListContextMenuStrip_Reload,
             this.SereinPluginsListContextMenuStrip_ClearConsole,
             this.toolStripSeparator9,
             this.SereinPluginsListContextMenuStrip_Docs});
             this.SereinPluginsListContextMenuStrip.Name = "SereinPluginsListContextMenuStrip";
             resources.ApplyResources(this.SereinPluginsListContextMenuStrip, "SereinPluginsListContextMenuStrip");
+            this.SereinPluginsListContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.SereinPluginsListContextMenuStrip_Opening);
+            // 
+            // SereinPluginsListContextMenuStrip_Disable
+            // 
+            this.SereinPluginsListContextMenuStrip_Disable.Name = "SereinPluginsListContextMenuStrip_Disable";
+            resources.ApplyResources(this.SereinPluginsListContextMenuStrip_Disable, "SereinPluginsListContextMenuStrip_Disable");
+            this.SereinPluginsListContextMenuStrip_Disable.Click += new System.EventHandler(this.SereinPluginsListContextMenuStrip_Disable_Click);
             // 
             // SereinPluginsListContextMenuStrip_Reload
             // 
@@ -1924,6 +1933,7 @@ namespace Serein.Ui
         private System.Windows.Forms.CheckBox SettingBotEnbaleParseAt;
         private System.Windows.Forms.TextBox SettingServerLineTerminator;
         private System.Windows.Forms.Label SettingServerLineTerminatorLabel;
+        private System.Windows.Forms.ToolStripMenuItem SereinPluginsListContextMenuStrip_Disable;
     }
 }
 

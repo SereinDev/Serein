@@ -3,6 +3,7 @@ using Serein.Items;
 using System;
 using System.Timers;
 using System.Windows;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -15,7 +16,7 @@ namespace Serein.Windows.Pages.Function
             BotWebBrowser.ScriptErrorsSuppressed = true;
             BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
             BotWebBrowser.WebBrowserShortcutsEnabled = false;
-            BotWebBrowser.Navigate(@"file:\\\" + Global.Path + "console\\console.html?type=bot");
+            BotWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=bot&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
             UpdateInfoTimer.Start();
