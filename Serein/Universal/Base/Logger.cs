@@ -391,7 +391,7 @@ namespace Serein.Base
             switch (Icon)
             {
                 case 48:
-                    WriteLine(2, Text,true);
+                    WriteLine(2, Text, true);
                     break;
                 case 16:
                     WriteLine(3, Text, true);
