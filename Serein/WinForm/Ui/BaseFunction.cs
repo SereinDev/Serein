@@ -15,7 +15,7 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private bool IsDragging = false;
+        private bool IsDragging;
         private ListViewItem ItemDraged;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -32,36 +32,11 @@ namespace Serein.Ui
 
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
         {
-            Global.FirstOpen = true;
-            Ui_Shown(sender, e);
+            AutoRun.ShowWelcomePage();
         }
 
-        private void Ui_Shown(object sender, EventArgs _)
+        private void Ui_Shown(object sender, EventArgs e)
         {
-            if (Global.FirstOpen)
-            {
-                Ookii.Dialogs.Wpf.TaskDialog TaskDialog = new Ookii.Dialogs.Wpf.TaskDialog
-                {
-                    Buttons = {
-                        new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
-                    },
-                    MainInstruction = "欢迎使用Sereinヾ(≧▽≦*)o",
-                    WindowTitle = "Serein",
-                    Content = "" +
-                    "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助(๑•̀ㅂ•́)و✧\n" +
-                    "◦ 官网：<a href=\"https://serein.cc\">https://serein.cc</a>\n" +
-                    "◦ 实用教程：<a href=\"https://serein.cc/#/Tutorial/README\">https://serein.cc/#/Tutorial/README</a>\n" +
-                    "◦ 交流群：<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">954829203</a>",
-                    Footer = "此面板已发布在<a href=\"https://www.minebbs.com/resources/serein.4169/\">Minebbs</a>上，欢迎支持~",
-                    FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
-                    EnableHyperlinks = true,
-                    ExpandedInformation = "此软件与Mojang Studio、网易、Microsoft没有从属关系.\n" +
-                        "Serein is licensed under <a href=\"https://github.com/Zaitonn/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n" +
-                        "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
-                };
-                TaskDialog.HyperlinkClicked += (sneder, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
-                TaskDialog.ShowDialog();
-            }
             AutoRun.Check();
         }
 

@@ -52,7 +52,7 @@ namespace Serein.Server
         /// <summary>
         /// 命令历史记录
         /// </summary>
-        public static List<string> CommandHistory = new List<string>();
+        public static readonly List<string> CommandHistory = new List<string>();
 
         /// <summary>
         /// 编码列表
@@ -164,13 +164,13 @@ namespace Serein.Server
                     }
                 }
             }
-            else if (!Status && Restart)
+            else if (Restart)
             {
                 Restart = false;
             }
-            else if (!Status && Restart)
+            else if (!Quiet)
             {
-                Restart = false;
+                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
             }
         }
 
@@ -441,7 +441,7 @@ namespace Serein.Server
         private static void RestartTimer()
         {
             Logger.Out(LogType.Server_Notice,
-                "服务器将在5s后重新启动"
+                $"服务器将在5s后（{DateTime.Now.AddSeconds(5):T}）重新启动"
                 );
 #if CONSOLE
             Logger.Out(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
@@ -450,7 +450,7 @@ namespace Serein.Server
 #endif
             for (int i = 0; i < 10; i++)
             {
-                System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult(); ;
+                System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
                 if (!Restart)
                 {
                     break;

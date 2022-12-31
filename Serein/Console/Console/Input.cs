@@ -85,7 +85,7 @@ namespace Serein.Console
                             $"系统类型：{Global.BuildInfo.OS}\r\n" +
                             $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}\r\n" +
                             "=========================================\r\n" +
-                            "\x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein \x1b[0m\r\n" +
+                            "GitHub Repo: \x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein\x1b[0m\r\n" +
                             "Copyright © 2022 Zaitonn. All Rights Reserved.\r\n");
                         break;
                     default:

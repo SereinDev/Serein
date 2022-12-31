@@ -20,6 +20,7 @@
     Background="{DynamicResource ApplicationBackgroundBrush}"
     Closing="UiWindow_Closing"
     Drop="UiWindow_Drop"
+    ContentRendered="UiWindow_ContentRendered"
     ExtendsContentIntoTitleBar="True"
     Icon="/Windows/Serein.ico"
     IsVisibleChanged="UiWindow_IsVisibleChanged"

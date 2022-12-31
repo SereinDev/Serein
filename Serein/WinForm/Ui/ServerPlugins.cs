@@ -116,6 +116,7 @@ namespace Serein.Ui
                         default:
                             continue;
                     }
+                    PluginList.Items.Add(Item);
                 }
                 PluginList.EndUpdate();
             }

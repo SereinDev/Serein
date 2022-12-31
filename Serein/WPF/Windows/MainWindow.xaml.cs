@@ -28,7 +28,6 @@ namespace Serein.Windows
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            AutoRun.Check();
             Catalog.Notification = Catalog.Notification ?? new NotificationManager();
             DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)
@@ -36,6 +35,11 @@ namespace Serein.Windows
                 Watcher.Watch(this, BackgroundType.Tabbed, true);
             }
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
+        }
+
+        private void UiWindow_ContentRendered(object sender, EventArgs e)
+        {
+            AutoRun.Check();
         }
 
         private void UiWindow_StateChanged(object sender, EventArgs e)

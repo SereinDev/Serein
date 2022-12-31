@@ -391,10 +391,10 @@ namespace Serein.Base
             switch (Icon)
             {
                 case 48:
-                    Out(LogType.Warn, Text);
+                    WriteLine(2, Text,true);
                     break;
                 case 16:
-                    Out(LogType.Error, Text);
+                    WriteLine(3, Text, true);
                     break;
             }
             return true;
@@ -404,11 +404,23 @@ namespace Serein.Base
 #elif WPF
             if (Buttons == 0)
             {
-                Catalog.MainWindow.OpenSnackbar(
-                    "执行失败",
-                    Text.Replace(":(\n", string.Empty),
-                    Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
-                    );
+                Text = Text.Replace(":(\n", string.Empty);
+                if (Text.Contains("\n"))
+                {
+                    Catalog.MainWindow.OpenSnackbar(
+                        Text.Split('\n')[0],
+                        Text.Substring(Text.IndexOf('\n')).TrimStart('\n'),
+                        Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
+                        );
+                }
+                else
+                {
+                    Catalog.MainWindow.OpenSnackbar(
+                        "执行失败",
+                        Text,
+                        Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
+                        );
+                }
                 return true;
             }
             else

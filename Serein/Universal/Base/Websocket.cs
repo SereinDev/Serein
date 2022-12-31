@@ -78,8 +78,8 @@ namespace Serein.Base
                         {
                             System.Threading.Tasks.Task.Run(() =>
                             {
-                                Logger.Out(LogType.Bot_Notice, "将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重启");
+                                Logger.Out(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     Thread.CurrentThread.Join(500);
@@ -173,7 +173,7 @@ namespace Serein.Base
             else if (Reconnect)
             {
                 Reconnect = false;
-                Logger.Out(LogType.Bot_Notice, "重启已取消");
+                Logger.Out(LogType.Bot_Notice, "重连已取消");
             }
             else
             {

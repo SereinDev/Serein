@@ -15,6 +15,7 @@ namespace Serein.Windows.Pages.Function
         public JSPlugin()
         {
             InitializeComponent();
+            ResourcesManager.InitConsole();
             PluginWebBrowser.ScriptErrorsSuppressed = true;
             PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;

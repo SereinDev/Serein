@@ -55,7 +55,7 @@ namespace Serein.JSPlugin
                 null
                 );
             _WebSocket.Opened += (sender, e) => Trigger(onopen, "Opened");
-            _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed"); ;
+            _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed");
             _WebSocket.MessageReceived += (sender, e) => Trigger(onmessage, "MessageReceived", e);
             _WebSocket.Error += (sender, e) => Trigger(onerror, "Opened", e);
             JSPluginManager.PluginDict[Namespace].WebSockets.Add(this);
@@ -102,7 +102,7 @@ namespace Serein.JSPlugin
                 string Message;
                 if (e.InnerException is JavaScriptException JSe)
                 {
-                    Message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}"; ;
+                    Message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
                 }
                 else
                 {

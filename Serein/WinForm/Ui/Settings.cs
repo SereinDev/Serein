@@ -200,11 +200,15 @@ namespace Serein.Ui
         {
             if (e.Node == null || !Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
             {
+                SettingEventList.Items.Clear();
                 return;
             }
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
-            Global.Settings.Event.Get((Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name)).ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")));
+            Global.Settings.Event.Get(
+                (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+                .ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n"))
+                );
             SettingEventList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SettingEventList.EndUpdate();
         }

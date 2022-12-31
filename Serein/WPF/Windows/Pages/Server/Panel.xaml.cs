@@ -14,6 +14,7 @@ namespace Serein.Windows.Pages.Server
         public Panel()
         {
             InitializeComponent();
+            ResourcesManager.InitConsole();
             PanelWebBrowser.ScriptErrorsSuppressed = true;
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;

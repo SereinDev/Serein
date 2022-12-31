@@ -13,6 +13,7 @@ namespace Serein.Windows.Pages.Function
         public Bot()
         {
             InitializeComponent();
+            ResourcesManager.InitConsole();
             BotWebBrowser.ScriptErrorsSuppressed = true;
             BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
             BotWebBrowser.WebBrowserShortcutsEnabled = false;
