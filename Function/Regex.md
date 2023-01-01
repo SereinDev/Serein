@@ -38,8 +38,8 @@
 
 > [!TIP]
 > **基础语法：**  
->[.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)  
->[C# 正则表达式  菜鸟教程](https://www.runoob.com/csharp/csharp-regular-expressions.html)
+>[正则表达式  菜鸟教程](https://www.runoob.com/regexp/regexp-tutorial.html)  
+>[.NET 正则表达式  Microsoft Docs](https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/regular-expressions)
 
 | 高级功能                                                                                                                                                                                     | 可用性     |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |

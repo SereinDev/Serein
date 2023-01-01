@@ -42,7 +42,7 @@
 
 - 检查网络连接
 - 打开 设置>机器人>输出接收和发送的数据 ，在机器人控制台检查是否有输出
-- 提交[Issue](https://github.com/Zaitonn/Serein/issues/new)，附上机器人名称、下载链接和相关配置文件（上传前记得自行去除敏感信息）
+- [提交ISSUE](https://github.com/Zaitonn/Serein/issues/new)，附上机器人名称、下载链接和相关配置文件（上传前记得自行去除敏感信息）
 - 无法发送消息
   - 检查网络连接
   - 检查是否被禁言
@@ -50,4 +50,4 @@
 
 #### 其他异常现象上报
 
-提交[Issue](https://github.com/Zaitonn/Serein/issues/new)，附上机器人名称、下载链接和相关配置文件（上传前记得自行去除敏感信息）
+[提交ISSUE](https://github.com/Zaitonn/Serein/issues/new)，附上机器人名称、下载链接和相关配置文件（上传前记得自行去除敏感信息）

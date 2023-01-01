@@ -16,3 +16,18 @@
 * {
     transition: 0.1s;
 }
+
+span,
+div,
+p {
+    font-family: Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5,
+.markdown-section h6 {
+    border-bottom: #D8DEE4 solid 2px;
+}

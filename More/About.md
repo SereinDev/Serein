@@ -13,7 +13,7 @@
 
 ### 反馈
 
-- 提交Issue，麻烦附上崩溃截图和复现步骤
+- [提交ISSUE](https://github.com/Zaitonn/Serein/issues/new)，麻烦附上崩溃截图和复现步骤
 - 进群反馈：[954829203](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)
 
 ### 联系方式

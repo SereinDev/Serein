@@ -1,5 +1,5 @@
 
->[!TIP]如果你有好的插件或正则、任务文件，你也可以提交[ISSUE](https://github.com/Zaitonn/Serein/issues/new/choose)/[PR](https://github.com/Zaitonn/Serein/compare)或与作者联系后即可发布在这里
+>[!TIP]如果你有好的插件或正则、任务文件，你也可以[提交ISSUE](https://github.com/Zaitonn/Serein/issues/new/choose)/[PR](https://github.com/Zaitonn/Serein/compare)或与作者联系后即可发布在这里
 
 提交时记得附加以下内容：
 
