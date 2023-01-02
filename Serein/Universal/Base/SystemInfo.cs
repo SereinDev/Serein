@@ -106,17 +106,17 @@ namespace Serein.Base
         /// <summary>
         /// CPU频率
         /// </summary>
-        public static double CPUFrequency => Info.Hardware.CPUs[0].Frequency;
+        public static double CPUFrequency => Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Frequency : 0;
 
         /// <summary>
         /// CPU名称
         /// </summary>
-        public static string CPUName = Info.Hardware.CPUs[0].Name;
+        public static string CPUName = Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Name : string.Empty;
 
         /// <summary>
         /// CPU品牌
         /// </summary>
-        public static string CPUBrand = Info.Hardware.CPUs[0].Brand;
+        public static string CPUBrand = Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Brand : string.Empty;
 
         /// <summary>
         /// 系统名称

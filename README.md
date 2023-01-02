@@ -36,18 +36,6 @@ Win7或WinServer2012以上
 
 详见 <https://github.com/Zaitonn/Serein/network/dependencies>
 
-- [Costura.Fody](https://github.com/Fody/Costura)
-- [Jint](https://github.com/sebastienros/jint)
-- [Microsoft.VisualBasic](https://github.com/dotnet/source-build)
-- [NCrontab](https://github.com/atifaziz/NCrontab)
-- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
-- [Notification.Wpf](https://github.com/Platonenkov/Notification.Wpf)
-- [Ookii.Dialogs.Wpf](https://github.com/ookii-dialogs/ookii-dialogs-wpf)
-- [WebSocket4Net](https://github.com/kerryjiang/WebSocket4Net)
-- [System.Management](https://github.com/dotnet/runtime)
-- [System.Net.Http](https://github.com/dotnet/corefx)
-- [WPF-UI](https://github.com/lepoco/wpfui)
-
 ## 编译
 
 VS2022; NET Framework 4.7.2 & NET 6.0
