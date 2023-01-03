@@ -26,9 +26,10 @@ Serein 是一个基于NET 6或NET Framework 4.7.2的新时代我的世界极简�
 
 ## 运行环境
 
-Win7 / WinServer2012以上
+- Win7 / WinServer2012以上
+- Linux with Bash
 
->[!WARNING] 更低的版本以及`Linux`等其他系统不保证能稳定运行，必要时务必备份数据  
+>[!WARNING] 更低的版本以及其他系统不保证能稳定运行，必要时务必备份数据  
 
 ## 运行库
 

@@ -61,5 +61,6 @@
 
 - 🎆 更多
   - [📁 目录结构](More/Structure.md)
-  - [📔 关于](More/About.md)
+  - [📊 统计信息](More/Status.md)
   - [**💖 捐赠**](Donate.md)
+  - [📔 关于](More/About.md)
