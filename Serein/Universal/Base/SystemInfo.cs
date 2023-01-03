@@ -106,22 +106,64 @@ namespace Serein.Base
         /// <summary>
         /// CPU频率
         /// </summary>
-        public static double CPUFrequency => Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Frequency : 0;
+        public static double CPUFrequency
+        {
+            get
+            {
+                try
+                {
+                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Frequency : 0;
+                }
+                catch (Exception e)
+                {
+                    Logger.Out(Items.LogType.Debug, e);
+                    return 0;
+                }
+            }
+        }
 
         /// <summary>
         /// CPU名称
         /// </summary>
-        public static string CPUName = Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Name : string.Empty;
+        public static string CPUName
+        {
+            get
+            {
+                try
+                {
+                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Name : "未知";
+                }
+                catch (Exception e)
+                {
+                    Logger.Out(Items.LogType.Debug, e);
+                    return "未知";
+                }
+            }
+        }
 
         /// <summary>
         /// CPU品牌
         /// </summary>
-        public static string CPUBrand = Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Brand : string.Empty;
+        public static string CPUBrand
+        {
+            get
+            {
+                try
+                {
+                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Brand : "未知";
+                }
+                catch (Exception e)
+                {
+                    Logger.Out(Items.LogType.Debug, e);
+                    return "未知";
+                }
+            }
+        }
 
         /// <summary>
         /// 系统名称
         /// </summary>
-        public static string OS = Info.Name;
+        public static string OS => Info.Name;
 
         /// <summary>
         /// 已用内存

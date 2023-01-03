@@ -65,7 +65,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="Exists('c:\')">
 		<Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
 	</Target>
 </Project>

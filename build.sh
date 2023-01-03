@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet build ./Serein.sln /p:EnableWindowsTargeting=true
+dotnet build ./Serein.sln -p:EnableWindowsTargeting=true

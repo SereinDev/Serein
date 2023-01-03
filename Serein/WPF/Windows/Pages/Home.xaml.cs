@@ -19,7 +19,6 @@ namespace Serein.Windows.Pages
             InitializeComponent();
             _Timer.Elapsed += (_sender, _e) => Update();
             _Timer.Start();
-            CPU_Name.Text = SystemInfo.CPUName;
         }
 
         private void Update()
@@ -52,6 +51,7 @@ namespace Serein.Windows.Pages
                 CPU_Percent.Text = CPUPercentage + "%";
                 CPU_Percent_Bar.Value = double.TryParse(CPUPercentage, out double _Result1) ? _Result1 : 0;
                 CPU_Percent_Bar.IsIndeterminate = false;
+                CPU_Name.Text = SystemInfo.CPUName;
             });
         }
 
