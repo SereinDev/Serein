@@ -20,14 +20,14 @@ updates:
       - "dependencies"
 
   - package-ecosystem: "nuget"
-    directory: "Serein/Console_For_Unix/"
+    directory: "Serein/WinForm/"
     schedule:
       interval: "weekly"
     labels:
       - "dependencies"
 
   - package-ecosystem: "nuget"
-    directory: "Serein/Console_For_Unix/"
+    directory: "Serein/WPF/"
     schedule:
       interval: "weekly"
     labels:
