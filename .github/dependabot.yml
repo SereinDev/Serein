@@ -5,7 +5,37 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "Serein/" # Location of package manifests
+  - package-ecosystem: "nuget"
+    directory: "Serein/Console/"
     schedule:
       interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "nuget"
+    directory: "Serein/Console_For_Unix/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "nuget"
+    directory: "Serein/Console_For_Unix/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "nuget"
+    directory: "Serein/Console_For_Unix/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
