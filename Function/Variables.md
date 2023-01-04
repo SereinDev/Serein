@@ -31,6 +31,8 @@
 | NET           | 当前NET版本                 | `4.0.30319.42000`                           |
 | OS            | 操作系统名称                | `Microsoft Windows 10 家庭版`               |
 | CPUName       | CPU名称                     | `Intel(R) Core(TM) i5-1035G4 CPU @ 1.10GHz` |
+| CPUBrand      | CPU品牌                     | `GenuineIntel`                              |
+| CPUFrequency  | CPU频率 (MHz)               | `1498`                                      |
 | TotalRAM      | 总内存（MB）                | `7778`                                      |
 | UsedRAM       | 已用内存（MB)               | `6072`                                      |
 | RAMUsage      | 内存使用率                  | `78.1`                                      |
