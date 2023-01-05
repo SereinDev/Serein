@@ -18,6 +18,9 @@
     <a href="https://www.codefactor.io/repository/github/zaitonn/serein">
         <img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/Zaitonn/Serein/main?color=blue">
     </a>
+    <a href="#">
+        <img alt="visitor" src="https://visitor-badge.glitch.me/badge?page_id=Zaitonn.Serein&left_text=Serein%20Visitor">
+    </a>
 </p>
 
 Serein 是一个基于NET 6或NET Framework 4.7.2的新时代我的世界极简服务器面板
