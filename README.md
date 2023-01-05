@@ -19,6 +19,9 @@
     <a href="https://www.codefactor.io/repository/github/zaitonn/serein">
         <img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/Zaitonn/Serein/main?color=blue">
     </a>
+    <a href="#">
+        <img alt="visitor" src="https://visitor-badge.glitch.me/badge?page_id=Zaitonn.Serein&left_text=Serein%20Visitor">
+    </a>
 </p>
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板

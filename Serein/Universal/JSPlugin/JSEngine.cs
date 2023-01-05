@@ -49,7 +49,15 @@ namespace Serein.JSPlugin
                 }
                 ));
             engine.SetValue("Serein_SystemInfo",
-                new Func<object>(() => { return SystemInfo.Info; }));
+                new Func<object>(() => SystemInfo.Info));
+#if !UNIX
+            engine.SetValue("Serein_CPUUsage",
+                new Func<float>(() => SystemInfo.CPUUsage));
+#else
+            engine.SetValue("Serein_CPUUsage", JsValue.Undefined);
+#endif
+            engine.SetValue("Serein_NetSpeed",
+                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
             engine.SetValue("Serein_Global_Path",
                 Global.Path);
             engine.SetValue("Serein_Global_Version",
@@ -84,7 +92,7 @@ namespace Serein.JSPlugin
                 new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));
             engine.SetValue("Serein_ServerManager_GetTime",
                 new Func<string>(() => ServerManager.GetTime()));
-            engine.SetValue("Serein_ServerManager_GetCPUPersent",
+            engine.SetValue("Serein_ServerManager_GetCPUUsage",
                 new Func<string>(() => ServerManager.CPUUsage.ToString("N2")));
             engine.SetValue("Serein_ServerManager_GetFilename",
                 new Func<string>(() => ServerManager.StartFileName));
@@ -129,6 +137,8 @@ namespace Serein.JSPlugin
                     runCommand: Serein_Command_Run,
                     registerPlugin: Serein_Plugin_JSFunc_Register,
                     setListener: Serein_Plugin_JSFunc_SetListener,
+                    getCPUUsage: Serein_CPUUsage,
+                    getNetSpeed: Serein_NetSpeed,
                     getSysInfo: Serein_SystemInfo,
                     getMotdpe: Serein_Motdpe,
                     getMotdje: Serein_Motdje,
@@ -138,7 +148,7 @@ namespace Serein.JSPlugin
                     killServer: Serein_ServerManager_Kill,
                     getServerStatus: Serein_ServerManager_Status,
                     getServerTime: Serein_ServerManager_GetTime,
-                    getServerCPUPersent: Serein_ServerManager_GetCPUPersent,
+                    getServerCPUUsage: Serein_ServerManager_GetCPUUsage,
                     getServerFile: Serein_ServerManager_GetFilename,
                     sendGroup: Serein_Websocket_SendGroup,
                     sendPrivate: Serein_Websocket_SendPrivate,
