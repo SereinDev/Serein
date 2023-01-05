@@ -7,6 +7,10 @@
 
 >[!WARNING] 此插件需要在v1.3.3及以上的版本运行，否则可能出现一些意想不到的问题
 
+## 使用示例
+
+[BackupManager对接serein](https://www.minebbs.com/resources/backupmanager-serein.5294/)
+
 ## 功能
 
 提供HTTPApi控制，可外接第三方软件使用Serein的部分功能
