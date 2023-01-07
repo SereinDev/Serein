@@ -13,20 +13,27 @@ namespace Serein.Base
         /// <summary>
         /// 检查更新计时器
         /// </summary>
-        private static readonly Timer CheckTimer = new Timer(200000) { AutoReset = true };
+        private static readonly Timer CheckTimer = new(200000) { AutoReset = true };
+
+        /// <summary>
+        /// 在线统计计时器
+        /// </summary>
+        private static readonly Timer HeartbeatTimer = new(20000) { AutoReset = true };
 
         /// <summary>
         /// 开始检查更新
         /// </summary>
         public static void Init()
         {
-            CheckTimer.Elapsed += (sender, e) => CheckVersion();
+            CheckTimer.Elapsed += (_, _) => CheckVersion();
             CheckTimer.Start();
             Task.Run(async delegate
             {
                 await Task.Delay(10000);
                 CheckVersion();
             });
+            HeartbeatTimer.Elapsed += (_, _) => Get("http://count.ongsat.com/api/online/heartbeat?uri=127469ef347447698dd74c449881b877").GetAwaiter().GetResult();
+            HeartbeatTimer.Start();
         }
 
         /// <summary>

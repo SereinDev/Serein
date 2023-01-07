@@ -18,32 +18,32 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 注册插件
         /// </summary>
-        /// <param name="Namespace">命名空间</param>
-        /// <param name="Name">名称</param>
-        /// <param name="Version">版本</param>
-        /// <param name="Author">作者</param>
-        /// <param name="Description">介绍</param>
+        /// <param name="namespace">命名空间</param>
+        /// <param name="name">名称</param>
+        /// <param name="version">版本</param>
+        /// <param name="author">作者</param>
+        /// <param name="description">介绍</param>
         /// <returns>注册结果</returns>
         public static string Register(
-            string Namespace,
-            string Name,
-            string Version,
-            string Author,
-            string Description
+            string @namespace,
+            string name,
+            string version,
+            string author,
+            string description
             )
         {
-            if (Namespace == null || !JSPluginManager.PluginDict.ContainsKey(Namespace))
+            if (@namespace == null || !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
-                throw new ArgumentException("无法找到对应的命名空间", nameof(Namespace));
+                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
             lock (JSPluginManager.PluginDict)
             {
-                JSPluginManager.PluginDict[Namespace].Name = Name;
-                JSPluginManager.PluginDict[Namespace].Version = Version;
-                JSPluginManager.PluginDict[Namespace].Author = Author;
-                JSPluginManager.PluginDict[Namespace].Description = Description;
+                JSPluginManager.PluginDict[@namespace].Name = name;
+                JSPluginManager.PluginDict[@namespace].Version = version;
+                JSPluginManager.PluginDict[@namespace].Author = author;
+                JSPluginManager.PluginDict[@namespace].Description = description;
             }
-            return Namespace;
+            return @namespace;
         }
 
         /// <summary>
@@ -67,12 +67,12 @@ namespace Serein.JSPlugin
                     JSPluginManager.PluginDict[Namespace].SetListener((EventType)Enum.Parse(typeof(EventType), EventName), Function);
         }
 
-        private static readonly object Lock = new object();
+        private static readonly object Lock = new();
 
         /// <summary>
         /// 触发插件事件
         /// </summary>
-        /// <param name="EventName">事件名称</param>
+        /// <param name="Type">事件名称</param>
         /// <param name="Args">参数</param>
         public static void Trigger(EventType Type, params object[] Args)
         {
@@ -108,7 +108,7 @@ namespace Serein.JSPlugin
             long TimerID = ID;
             ID++;
             Logger.Out(LogType.Debug, "Interval:", Interval.ToString(), "AutoReset:", AutoReset, "ID:", TimerID);
-            Timer _Timer = new Timer((double)Interval.ToObject())
+            Timer _Timer = new((double)Interval.ToObject())
             {
                 AutoReset = AutoReset,
             };

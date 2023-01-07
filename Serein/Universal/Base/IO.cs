@@ -22,7 +22,7 @@ namespace Serein.Base
         /// <summary>
         /// 保存更新设置定时器
         /// </summary>
-        private static readonly Timer _Timer = new Timer(2000) { AutoReset = true };
+        private static readonly Timer _Timer = new(2000) { AutoReset = true };
 
         /// <summary>
         /// 启动保存和更新设置定时器
@@ -69,17 +69,17 @@ namespace Serein.Base
         /// <param name="FileName">路径</param>
         public static void ReadRegex(string FileName = null)
         {
-            FileName = FileName ?? GetPath("data", "regex.json");
+            FileName ??= GetPath("data", "regex.json");
             if (File.Exists(FileName))
             {
-                StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
+                StreamReader Reader = new(FileName, Encoding.UTF8);
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
-                    List<Regex> Items = new List<Regex>();
+                    List<Regex> Items = new();
                     while ((Line = Reader.ReadLine()) != null)
                     {
-                        Regex Item = new Regex();
+                        Regex Item = new();
                         Item.FromText(Line);
                         if (!Item.Check())
                         {
@@ -125,7 +125,7 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new JObject
+            JObject ListJObject = new()
             {
                 { "type", "REGEX" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
@@ -160,7 +160,7 @@ namespace Serein.Base
                         }
                         List<Member> Items = ((JArray)JsonObject["data"]).ToObject<List<Member>>();
                         Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
-                        Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
+                        Dictionary<long, Member> _Dictionary = new();
                         Items.ForEach((x) => _Dictionary.Add(x.ID, x));
                         Global.UpdateMemberItems(_Dictionary);
                     }
@@ -168,7 +168,9 @@ namespace Serein.Base
                 }
             }
             else
+            {
                 SaveMember();
+            }
         }
 
         /// <summary>
@@ -178,19 +180,19 @@ namespace Serein.Base
         {
             List<Member> Items = Global.MemberItems.Values.ToList();
             Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
-            Dictionary<long, Member> _Dictionary = new Dictionary<long, Member>();
-            Items.ForEach((x) => _Dictionary.Add(x.ID, x));
-            Global.UpdateMemberItems(_Dictionary);
-            if (JsonConvert.SerializeObject(_Dictionary) == OldMembers)
+            Dictionary<long, Member> dictionary = new();
+            Items.ForEach((x) => dictionary.Add(x.ID, x));
+            Global.UpdateMemberItems(dictionary);
+            if (JsonConvert.SerializeObject(dictionary) == OldMembers)
             {
                 return;
             }
-            OldMembers = JsonConvert.SerializeObject(_Dictionary);
+            OldMembers = JsonConvert.SerializeObject(dictionary);
             if (!Directory.Exists(GetPath("data")))
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new JObject
+            JObject ListJObject = new()
             {
                 { "type", "MEMBERS" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
@@ -209,17 +211,17 @@ namespace Serein.Base
         /// <param name="FileName">路径</param>
         public static void ReadTask(string FileName = null)
         {
-            FileName = FileName ?? GetPath("data", "task.json");
+            FileName ??= GetPath("data", "task.json");
             if (File.Exists(FileName))
             {
-                StreamReader Reader = new StreamReader(FileName, Encoding.UTF8);
+                StreamReader Reader = new(FileName, Encoding.UTF8);
                 if (FileName.ToUpper().EndsWith(".TSV"))
                 {
                     string Line;
-                    List<Task> Items = new List<Task>();
+                    List<Task> Items = new();
                     while ((Line = Reader.ReadLine()) != null)
                     {
-                        Task Item = new Task();
+                        Task Item = new();
                         Item.ToObject(Line);
                         if (!Item.Check())
                         {
@@ -262,7 +264,7 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new JObject
+            JObject ListJObject = new()
             {
                 { "type", "TASK" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },

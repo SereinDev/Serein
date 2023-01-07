@@ -6,9 +6,6 @@ dotnet_diagnostic.CS7035.severity = none
 dotnet_diagnostic.CS0649.severity = none
 
 [*.{cs,vb}]
-dotnet_diagnostic.IDE0090.severity = none
-
-[*.{cs,vb}]
 #### 命名样式 ####
 
 # 命名规则

@@ -9,7 +9,7 @@ namespace Serein.Base
         /// <summary>
         /// 检查定时器
         /// </summary>
-        private static Timer Timer = new Timer(2000)
+        private static readonly Timer timer = new(2000)
         {
             AutoReset = true,
         };
@@ -19,8 +19,8 @@ namespace Serein.Base
         /// </summary>
         public static void Start()
         {
-            Timer.Elapsed += (sender, e) => Run();
-            Timer.Start();
+            timer.Elapsed += (sender, e) => Run();
+            timer.Start();
         }
 
         /// <summary>

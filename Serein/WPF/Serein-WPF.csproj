@@ -9,6 +9,7 @@
 		<RootNamespace>Serein</RootNamespace>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<UseWindowsForms>True</UseWindowsForms>
+		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">

@@ -54,10 +54,10 @@ namespace Serein.JSPlugin
                 null,
                 null
                 );
-            _WebSocket.Opened += (sender, e) => Trigger(onopen, "Opened");
-            _WebSocket.Closed += (sender, e) => Trigger(onclose, "Closed");
-            _WebSocket.MessageReceived += (sender, e) => Trigger(onmessage, "MessageReceived", e);
-            _WebSocket.Error += (sender, e) => Trigger(onerror, "Opened", e);
+            _WebSocket.Opened += (_, _) => Trigger(onopen, "Opened");
+            _WebSocket.Closed += (_, _) => Trigger(onclose, "Closed");
+            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, "MessageReceived", e);
+            _WebSocket.Error += (_, e) => Trigger(onerror, "Opened", e);
             JSPluginManager.PluginDict[Namespace].WebSockets.Add(this);
         }
 

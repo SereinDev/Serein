@@ -42,8 +42,8 @@ namespace Serein.Ui
         {
             TaskContextMenuStrip_Edit.Enabled = TaskList.SelectedItems.Count > 0;
             TaskContextMenuStrip_Delete.Enabled = TaskList.SelectedItems.Count > 0;
-            TaskContextMenuStrip_Enable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor != Color.Gray;
-            TaskContextMenuStrip_Disable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor == Color.Gray;
+            TaskContextMenuStrip_Enable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor == Color.Gray;
+            TaskContextMenuStrip_Disable.Enabled = TaskList.SelectedItems.Count > 0 && TaskList.SelectedItems[0].ForeColor != Color.Gray;
             TaskContextMenuStrip_Clear.Enabled = TaskList.Items.Count > 0;
         }
 
@@ -71,13 +71,13 @@ namespace Serein.Ui
 
         private void TaskContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            TaskEditor Editor = new TaskEditor();
+            TaskEditor Editor = new();
             Editor.ShowDialog();
             if (Editor.CancelFlag)
             {
                 return;
             }
-            ListViewItem Item = new ListViewItem(Editor.Cron.Text);
+            ListViewItem Item = new(Editor.Cron.Text);
             Item.SubItems.Add(Editor.Remark.Text);
             Item.SubItems.Add(Editor.Command.Text);
             if (TaskList.SelectedItems.Count > 0)
@@ -95,7 +95,7 @@ namespace Serein.Ui
         {
             if (TaskList.SelectedItems.Count >= 1)
             {
-                TaskEditor Editor = new TaskEditor();
+                TaskEditor Editor = new();
                 Editor.Update(
                     TaskList.SelectedItems[0].Text,
                     TaskList.SelectedItems[0].SubItems[1].Text,
@@ -155,17 +155,16 @@ namespace Serein.Ui
 
         private void SaveTask()
         {
-            List<Task> TaskItems = new List<Task>();
+            List<Task> TaskItems = new();
             foreach (ListViewItem Item in TaskList.Items)
             {
-                Task TI = new Task()
+                TaskItems.Add(new()
                 {
                     Cron = Item.Text,
                     Remark = Item.SubItems[1].Text,
                     Command = Item.SubItems[2].Text,
                     Enable = Item.ForeColor != Color.Gray
-                };
-                TaskItems.Add(TI);
+                });
             }
             Global.UpdateTaskItems(TaskItems);
             IO.SaveTask();
@@ -178,7 +177,7 @@ namespace Serein.Ui
             TaskList.Items.Clear();
             foreach (Task Item in Global.TaskItems)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Cron);
+                ListViewItem listViewItem = new(Item.Cron);
                 listViewItem.SubItems.Add(Item.Remark);
                 listViewItem.SubItems.Add(Item.Command);
                 if (!Item.Enable)

@@ -38,7 +38,7 @@ namespace Serein.JSPlugin
         /// <summary>
         /// CancellationToken
         /// </summary>
-        private readonly CancellationTokenSource TokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource TokenSource = new();
 
         /// <summary>
         /// 命名空间
@@ -84,13 +84,13 @@ namespace Serein.JSPlugin
         /// <summary>
         /// WebSocket列表
         /// </summary>
-        public List<JSWebSocket> WebSockets = new List<JSWebSocket>();
+        public List<JSWebSocket> WebSockets = new();
 
         /// <summary>
         /// 监听字典
         /// </summary>
         [JsonIgnore]
-        private readonly Dictionary<EventType, Delegate> EventDict = new Dictionary<EventType, Delegate>();
+        private readonly Dictionary<EventType, Delegate> EventDict = new();
 
         /// <summary>
         /// 事件列表

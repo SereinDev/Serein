@@ -15,17 +15,17 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 插件项列表
         /// </summary>
-        public static Dictionary<string, Plugin> PluginDict = new Dictionary<string, Plugin>();
+        public static Dictionary<string, Plugin> PluginDict = new();
 
         /// <summary>
         /// 定时器字典
         /// </summary>
-        public static Dictionary<long, Timer> Timers = new Dictionary<long, Timer>();
+        public static Dictionary<long, Timer> Timers = new();
 
         /// <summary>
         /// WS客户端列表
         /// </summary>
-        public static List<JSWebSocket> WebSockets = new List<JSWebSocket>();
+        public static List<JSWebSocket> WebSockets = new();
 
         /// <summary>
         /// 加载插件
@@ -67,7 +67,7 @@ namespace Serein.JSPlugin
                         Logger.Out(LogType.Debug, e);
                     }
                 }
-                List<string> ErrorFiles = new List<string>();
+                List<string> ErrorFiles = new();
                 PluginDict.Keys.ToList().ForEach((Key) =>
                 {
                     if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.Available)

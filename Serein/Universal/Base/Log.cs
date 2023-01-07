@@ -10,7 +10,7 @@ namespace Serein.Base
         /// <summary>
         /// 颜色代码列表
         /// </summary>
-        private static readonly List<string> ColorList = new List<string>
+        private static readonly List<string> ColorList = new()
         {
             "30", "31", "32", "33", "34", "35", "36", "37",
             "40", "41", "42", "43", "44", "45", "46", "47",
@@ -29,7 +29,7 @@ namespace Serein.Base
             Result = Regex.Replace(Input, @"\x1b\[.*?m", string.Empty);
             Result = Regex.Replace(Result, @"\x1b", string.Empty);
             Result = Regex.Replace(Result, @"\s+?$", string.Empty);
-            StringBuilder Builder = new StringBuilder();
+            StringBuilder Builder = new();
             for (int i = 0; i < Result.Length; i++)
             {
                 int Unicode = Result[i];

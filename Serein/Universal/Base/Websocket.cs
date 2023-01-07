@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using WebSocket4Net;
 
@@ -138,13 +137,13 @@ namespace Serein.Base
             if (Status)
             {
                 long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
-                JObject ParamsJObject = new JObject
+                JObject ParamsJObject = new()
                 {
                     { IsPrivate ? "user_id" : "group_id", Target_Long },
                     { "message", Message },
                     { "auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape }
                 };
-                JObject TextJObject = new JObject
+                JObject TextJObject = new()
                 {
                     { "action", IsPrivate ? "send_private_msg" : "send_group_msg" },
                     { "params", ParamsJObject }
@@ -226,8 +225,8 @@ namespace Serein.Base
         /// <returns>处理后文本</returns>
         public static string DeUnicode(string str)
         {
-            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})");
-            return reg.Replace(str, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
+            System.Text.RegularExpressions.Regex reg = new(@"(?i)\\[uU]([0-9a-f]{4})");
+            return reg.Replace(str, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
         }
     }
 }

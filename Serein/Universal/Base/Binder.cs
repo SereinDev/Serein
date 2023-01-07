@@ -15,7 +15,7 @@ namespace Serein.Base
         {
             get
             {
-                List<string> GameIDList = new List<string>();
+                List<string> GameIDList = new();
                 foreach (Member Item in Items)
                 {
                     GameIDList.Add(Item.GameID);
@@ -78,7 +78,7 @@ namespace Serein.Base
             }
             else
             {
-                Member Item = new Member()
+                Member Item = new()
                 {
                     ID = UserId,
                     Card = JsonObject["sender"]["card"].ToString(),

@@ -31,7 +31,7 @@ namespace Serein.Base
                 return;
             }
 #endif
-            StringBuilder bld = new StringBuilder();
+            StringBuilder bld = new();
             foreach (var o in objects)
             {
                 if (o != null)
@@ -277,7 +277,7 @@ namespace Serein.Base
                     {
                         return;
                     }
-                    StackTrace st = new StackTrace(true);
+                    StackTrace st = new(true);
                     Line =
                         $"[{st.GetFrame(1).GetMethod().DeclaringType}" +
                         $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + st.GetFrame(1).GetMethod() : "." + st.GetFrame(1).GetMethod().Name)}] " +
@@ -310,7 +310,7 @@ namespace Serein.Base
         /// <summary>
         /// 控制台输出互斥锁
         /// </summary>
-        private static readonly object Lock = new object();
+        private static readonly object Lock = new();
 
         /// <summary>
         /// 处理输出消息
@@ -331,24 +331,14 @@ namespace Serein.Base
             string Prefix = $"{DateTime.Now:T} ";
             lock (Lock)
             {
-                switch (Level)
+                Prefix += Level switch
                 {
-                    case 1:
-                        Prefix += "\x1b[97m[Info]\x1b[0m ";
-                        break;
-                    case 2:
-                        Prefix += "\x1b[1m\x1b[93m[Warn]\x1b[0m\x1b[93m ";
-                        break;
-                    case 3:
-                        Prefix += "\x1b[1m\x1b[91m[Error]\x1b[0m\x1b[91m";
-                        break;
-                    case 4:
-                        Prefix += "\x1b[95m[Debug]\x1b[0m";
-                        break;
-                    default:
-                        Prefix += "\x1b[97m";
-                        break;
-                }
+                    1 => "\x1b[97m[Info]\x1b[0m ",
+                    2 => "\x1b[1m\x1b[93m[Warn]\x1b[0m\x1b[93m ",
+                    3 => "\x1b[1m\x1b[91m[Error]\x1b[0m\x1b[91m",
+                    4 => "\x1b[95m[Debug]\x1b[0m",
+                    _ => "\x1b[97m",
+                };
                 if (SereinTitle)
                 {
                     if (Level == 1)
@@ -426,7 +416,7 @@ namespace Serein.Base
             else
             {
                 bool Confirmed = false;
-                MessageBox Msg = new MessageBox()
+                MessageBox Msg = new()
                 {
                     Title = Caption,
                     Content = Text,

@@ -18,12 +18,12 @@ namespace Serein.JSPlugin
         /// <summary>
         /// JS引擎
         /// </summary>
-        public static Engine engine = new Engine();
+        public static Engine engine = new();
 
         /// <summary>
         /// 转换专用JS引擎
         /// </summary>
-        public static Engine Converter = new Engine();
+        public static Engine Converter = new();
 
         /// <summary>
         /// 初始化JS引擎
@@ -33,7 +33,7 @@ namespace Serein.JSPlugin
         /// <returns>JS引擎</returns>
         public static Engine Init(bool ExecuteByCommand = false, string Namespace = null, CancellationTokenSource TokenSource = null)
         {
-            Engine engine = new Engine(
+            Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
                     cfg.AllowClr(typeof(Process).Assembly);

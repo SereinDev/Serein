@@ -24,9 +24,9 @@ namespace Serein.Base
         /// <param name="Command">执行的命令</param>
         public static void StartCmd(string Command)
         {
-            Process CMDProcess = new Process
+            Process CMDProcess = new()
             {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new()
                 {
                     FileName = "cmd.exe",
                     UseShellExecute = false,
@@ -36,11 +36,7 @@ namespace Serein.Base
                 }
             };
             CMDProcess.Start();
-            StreamWriter CommandWriter = new StreamWriter(CMDProcess.StandardInput.BaseStream, Encoding.Default)
-            {
-                AutoFlush = true,
-                NewLine = "\r\n"
-            };
+            StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default);
             CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
             CommandWriter.Close();
             Task.Run(() =>
@@ -320,7 +316,7 @@ namespace Serein.Base
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
-                        Motdpe _Motdpe = new Motdpe(NewPort: Global.Settings.Server.Port.ToString());
+                        Motdpe _Motdpe = new(NewPort: Global.Settings.Server.Port.ToString());
                         Text = Regex.Replace(Text, "%GameMode%", _Motdpe.GameMode, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Description%", _Motdpe.Description, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Protocol%", _Motdpe.Protocol, RegexOptions.IgnoreCase);
@@ -330,7 +326,7 @@ namespace Serein.Base
                         Text = Regex.Replace(Text, "%Delay%", _Motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         break;
                     case 2:
-                        Motdje _Motdje = new Motdje(NewPort: Global.Settings.Server.Port.ToString());
+                        Motdje _Motdje = new(NewPort: Global.Settings.Server.Port.ToString());
                         Text = Regex.Replace(Text, "%Description%", _Motdje.Description, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%Protocol%", _Motdje.Protocol, RegexOptions.IgnoreCase);
                         Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdje.OnlinePlayer, RegexOptions.IgnoreCase);

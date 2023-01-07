@@ -75,7 +75,7 @@ namespace Serein.Base
         /// <summary>
         /// CPU性能计数器
         /// </summary>
-        private static readonly PerformanceCounter Counter = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+        private static readonly PerformanceCounter Counter = new("Processor", "% Processor Time", "_Total")
         {
             MachineName = "."
         };
@@ -88,7 +88,7 @@ namespace Serein.Base
         /// <summary>
         /// 刷新计时器
         /// </summary>
-        private static readonly Timer RefreshTimer = new Timer(2500)
+        private static readonly Timer RefreshTimer = new(2500)
         {
             AutoReset = true
         };

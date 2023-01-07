@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Serein.Server
 {
@@ -52,7 +51,7 @@ namespace Serein.Server
         /// <summary>
         /// 命令历史记录
         /// </summary>
-        public static readonly List<string> CommandHistory = new List<string>();
+        public static readonly List<string> CommandHistory = new();
 
         /// <summary>
         /// 编码列表
@@ -277,8 +276,9 @@ namespace Serein.Server
                 }
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
-                    {Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
-}
+                {
+                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
+                }
 #endif
                 if (!IsSpecifiedCommand)
                 {

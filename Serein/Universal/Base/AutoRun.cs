@@ -39,7 +39,7 @@ namespace Serein.Base
         /// </summary>
         public static void ShowWelcomePage()
         {
-            TaskDialog TaskDialog = new TaskDialog
+            TaskDialog TaskDialog = new()
             {
                 Buttons = {
                         new TaskDialogButton(ButtonType.Ok)

@@ -5,6 +5,10 @@
 		<UseApplicationTrust>false</UseApplicationTrust>
 		<BootstrapperEnabled>true</BootstrapperEnabled>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<LangVersion>10</LangVersion>
+		<ApplicationManifest>../Console/app.manifest</ApplicationManifest>
+		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
+		<RootNamespace>Serein</RootNamespace>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>False</Optimize>
@@ -12,11 +16,6 @@
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DebugType>none</DebugType>
-	</PropertyGroup>
-	<PropertyGroup>
-		<ApplicationManifest>../Console/app.manifest</ApplicationManifest>
-		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
-		<RootNamespace>Serein</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
