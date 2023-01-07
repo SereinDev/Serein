@@ -24,8 +24,9 @@
     - [🎯 命令行启动参数](Tutorial/SetupArgs.md)
     - [🤖 配置机器人](Tutorial/Bot.md)
     - [🚛 运行服务器](Tutorial/RunServer.md)
-    - [🛒 服务器插件管理](Tutorial/ServerPlugins.md)
+    - [🧨 Serein卡顿](Tutorial/Lagging.md)
   - 进阶
+    - [🛒 服务器插件管理](Tutorial/ServerPlugins.md)
     - [💻 自定义控制台](Tutorial/CustomConsole.md)
     - [🎍 启动自动运行](Tutorial/AutoRun.md)
     - [🧵 自定义正则](Tutorial/CustomRegex.md)
