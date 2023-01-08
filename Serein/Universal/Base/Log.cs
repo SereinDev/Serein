@@ -49,139 +49,139 @@ namespace Serein.Base
         /// <summary>
         /// 去除彩色字符和控制字符
         /// </summary>
-        /// <param name="Input">输入文本</param>
+        /// <param name="input">输入文本</param>
         /// <returns>处理后的文本</returns>
-        public static string OutputRecognition(string Input)
+        public static string OutputRecognition(string input)
         {
-            string Result;
-            Result = Regex.Replace(Input, @"\x1b\[.*?m", string.Empty);
-            Result = Regex.Replace(Result, @"\x1b", string.Empty);
-            Result = Regex.Replace(Result, @"\s+?$", string.Empty);
-            StringBuilder Builder = new();
-            for (int i = 0; i < Result.Length; i++)
+            string result;
+            result = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
+            result = Regex.Replace(result, @"\x1b", string.Empty);
+            result = Regex.Replace(result, @"\s+?$", string.Empty);
+            StringBuilder stringBuilder = new();
+            for (int i = 0; i < result.Length; i++)
             {
-                int Unicode = Result[i];
+                int Unicode = result[i];
                 if (Unicode > 31 && Unicode != 127)
                 {
-                    Builder.Append(Result[i].ToString());
+                    stringBuilder.Append(result[i].ToString());
                 }
             }
-            return Builder.ToString();
+            return stringBuilder.ToString();
         }
 
         /// <summary>
         /// 将字符串转为HTML编码的字符串
         /// </summary>
-        /// <param name="Input">输入文本</param>
+        /// <param name="input">输入文本</param>
         /// 将字符串转为HTML编码的字符串
         /// <returns>转义后的HTML</returns>
-        public static string EscapeLog(string Input)
-            => Regex.Replace(WebUtility.HtmlEncode(Input).Replace("\n", "<br>"), @"\s", "&nbsp;");
+        public static string EscapeLog(string input)
+            => Regex.Replace(WebUtility.HtmlEncode(input).Replace("\n", "<br>"), @"\s", "&nbsp;");
 
         /// <summary>
         /// 彩色文本转义
         /// </summary>
-        /// <param name="Input">输入文本</param>
-        /// <param name="Type">输出样式</param>
+        /// <param name="input">输入文本</param>
+        /// <param name="type">输出样式</param>
         /// <returns>转义后的HTML文本</returns>
-        public static string ColorLog(string Input, int Type)
+        public static string ColorLog(string input, int type)
         {
-            Input = EscapeLog(Input);
-            Input = Regex.Replace(Input, @"^>\s+?", string.Empty);
-            Input = Input.Replace("\x1b[m", "\x1b[0m");
-            if (Type == 1 || Type == 3)
+            input = EscapeLog(input);
+            input = Regex.Replace(input, @"^>\s+?", string.Empty);
+            input = input.Replace("\x1b[m", "\x1b[0m");
+            if (type == 1 || type == 3)
             {
-                string Output = Input;
-                string Pattern = @"\x1b\[([^\x1b]+?)m([^\x1b]*)";
-                if (Regex.IsMatch(Input, Pattern))
+                string output = input;
+                string pattern = @"\x1b\[([^\x1b]+?)m([^\x1b]*)";
+                if (Regex.IsMatch(input, pattern))
                 {
-                    Output = string.Empty;
-                    foreach (Match Match in Regex.Matches(Input, Pattern))
+                    output = string.Empty;
+                    foreach (Match match in Regex.Matches(input, pattern))
                     {
-                        string Arg = Match.Groups[1].Value;
-                        if (string.IsNullOrEmpty(Match.Groups[2].Value))
+                        string arg = match.Groups[1].Value;
+                        if (string.IsNullOrEmpty(match.Groups[2].Value))
                         {
                             continue;
                         }
-                        bool Colored = true;
-                        string Style = string.Empty;
-                        string SpanClass = string.Empty;
-                        string[] ArgList = Arg.Split(';');
-                        for (int ChildArgIndex = 0; ChildArgIndex < ArgList.Length; ChildArgIndex++)
+                        bool colored = true;
+                        string style = string.Empty;
+                        string spanClass = string.Empty;
+                        string[] argList = arg.Split(';');
+                        for (int childArgIndex = 0; childArgIndex < argList.Length; childArgIndex++)
                         {
-                            string ChildArg = ArgList[ChildArgIndex];
-                            switch (int.TryParse(ChildArg, out int IntArg) ? IntArg : 0)
+                            string childArg = argList[childArgIndex];
+                            switch (int.TryParse(childArg, out int integerArg) ? integerArg : 0)
                             {
                                 case 1:
-                                    Style += "font-weight:bold;";
+                                    style += "font-weight:bold;";
                                     break;
                                 case 3:
-                                    Style += "font-style: italic;";
+                                    style += "font-style: italic;";
                                     break;
                                 case 4:
-                                    Style += "text-decoration: underline;";
+                                    style += "text-decoration: underline;";
                                     break;
                                 case 38:
-                                    if (ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
+                                    if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        Style += $"color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                        Colored = true;
+                                        style += $"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})";
+                                        colored = true;
                                     }
                                     break;
                                 case 48:
-                                    if (ArgList[ChildArgIndex + 1] == "2" && ChildArgIndex + 4 <= ArgList.Length)
+                                    if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        Style += $"background-color:rgb({ArgList[ChildArgIndex + 2]},{ArgList[ChildArgIndex + 3]},{ArgList[ChildArgIndex + 4]})";
-                                        Colored = true;
+                                        style += $"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})";
+                                        colored = true;
                                     }
                                     break;
                                 default:
-                                    if (ColorList.Contains(ChildArg))
+                                    if (ColorList.Contains(childArg))
                                     {
-                                        SpanClass += "vanillaColor" + ChildArg + " ";
-                                        Colored = !(ChildArg == "37" || ChildArg == "47" || ChildArg == "97" || ChildArg == "107");
+                                        spanClass += "vanillaColor" + childArg + " ";
+                                        colored = !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107");
                                     }
                                     break;
                             }
                         }
-                        if (!Colored)
+                        if (!colored)
                         {
-                            SpanClass += "noColored";
+                            spanClass += "noColored";
                         }
-                        Output += $"<span style='{Style}' class='{SpanClass}'>{Match.Groups[2].Value}</span>";
+                        output += $"<span style='{style}' class='{spanClass}'>{match.Groups[2].Value}</span>";
                     }
                 }
                 else
                 {
-                    Output = $"<span class=\"noColored\">{Output}</span>";
+                    output = $"<span class=\"noColored\">{output}</span>";
                 }
-                if (Type == 3)
+                if (type == 3)
                 {
-                    Output = Regex.Replace(Output, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
-                    Output = Regex.Replace(Output, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
-                    Output = Regex.Replace(Output, @"(WARN(ING)?)", "<span class='warn'>$1</span>", RegexOptions.IgnoreCase);
-                    Output = Regex.Replace(Output, @"(ERROR)", "<span class='error'>$1</span>", RegexOptions.IgnoreCase);
-                    Output = Regex.Replace(Output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
-                    Output = Regex.Replace(Output, @"(\d{5,})", "<span class='int'>$1</span>");
+                    output = Regex.Replace(output, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
+                    output = Regex.Replace(output, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
+                    output = Regex.Replace(output, @"(WARN(ING)?)", "<span class='warn'>$1</span>", RegexOptions.IgnoreCase);
+                    output = Regex.Replace(output, @"(ERROR)", "<span class='error'>$1</span>", RegexOptions.IgnoreCase);
+                    output = Regex.Replace(output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
+                    output = Regex.Replace(output, @"(\d{5,})", "<span class='int'>$1</span>");
                 }
-                return Output;
+                return output;
             }
-            else if (Type == 2)
+            else if (type == 2)
             {
-                Input = Regex.Replace(Input, @"\x1b\[.*?m", string.Empty);
-                Input = Regex.Replace(Input, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
-                Input = Regex.Replace(Input, @"(WARN(ING)?)", "<span class='warn'><b>$1</b></span>", RegexOptions.IgnoreCase);
-                Input = Regex.Replace(Input, @"(ERROR)", "<span class='error'><b>$1</b></span>", RegexOptions.IgnoreCase);
-                Input = Regex.Replace(Input, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
-                Input = Regex.Replace(Input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
-                Input = Regex.Replace(Input, @"(\d{5,})", "<span class='int'>$1</span>");
-                Input = $"<span class=\"noColored\">{Input}</span>";
-                return Input;
+                input = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
+                input = Regex.Replace(input, @"(INFO)", "<span class='info'>$1</span>", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, @"(WARN(ING)?)", "<span class='warn'><b>$1</b></span>", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, @"(ERROR)", "<span class='error'><b>$1</b></span>", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegexOptions.IgnoreCase);
+                input = Regex.Replace(input, @"(\d{5,})", "<span class='int'>$1</span>");
+                input = $"<span class=\"noColored\">{input}</span>";
+                return input;
             }
             else
             {
-                Input = OutputRecognition(Input);
-                return Input;
+                input = OutputRecognition(input);
+                return input;
             }
         }
     }

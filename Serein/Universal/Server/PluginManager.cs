@@ -31,9 +31,9 @@ namespace Serein.Server
             }
         }
 
-        private static string Check(string SubPath)
-            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), SubPath)) ?
-            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), SubPath) : null;
+        private static string Check(string subPath)
+            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), subPath)) ?
+            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), subPath) : null;
 
         /// <summary>
         /// 获取插件列表
@@ -56,10 +56,10 @@ namespace Serein.Server
         /// <summary>
         /// 导入插件
         /// </summary>
-        /// <param name="Files">文件列表</param>
-        public static void Add(IList<string> Files)
+        /// <param name="files">文件列表</param>
+        public static void Add(IList<string> files)
         {
-            foreach (string FileName in Files)
+            foreach (string FileName in files)
             {
                 try
                 {
@@ -77,28 +77,28 @@ namespace Serein.Server
         /// <summary>
         /// 删除文件
         /// </summary>
-        /// <param name="Files">文件列表</param>
-        public static void Remove(List<string> Files)
+        /// <param name="files">文件列表</param>
+        public static void Remove(List<string> files)
         {
             if (Available)
             {
-                if (Files.Count <= 0)
+                if (files.Count <= 0)
                 {
                     Logger.Out(LogType.Debug, "数据不合法");
                 }
-                else if (Logger.MsgBox($"确定删除\"{Files[0]}\"{(Files.Count > 1 ? $"等{Files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
+                else if (Logger.MsgBox($"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
                 {
-                    foreach (string FileName in Files)
+                    foreach (string file in files)
                     {
                         try
                         {
-                            File.Delete(FileName);
+                            File.Delete(file);
                         }
                         catch (Exception e)
                         {
                             Logger.Out(LogType.Debug, e);
                             Logger.MsgBox(
-                                $"文件\"{FileName}\"删除失败\n{e.Message}", "Serein",
+                                $"文件\"{file}\"删除失败\n{e.Message}", "Serein",
                                 0, 48
                             );
                             break;
@@ -114,21 +114,21 @@ namespace Serein.Server
         /// <param name="Files">文件列表</param>
         public static void Disable(List<string> Files)
         {
-            foreach (string FileName in Files)
+            foreach (string file in Files)
             {
                 try
                 {
-                    if (FileName.ToLower().EndsWith(".lock"))
+                    if (file.ToLower().EndsWith(".lock"))
                     {
                         continue;
                     }
-                    File.Move(FileName, FileName + ".lock");
+                    File.Move(file, file + ".lock");
                 }
                 catch (Exception e)
                 {
                     Logger.Out(LogType.Debug, e);
                     Logger.MsgBox(
-                        $"文件\"{FileName}\"禁用失败\n" +
+                        $"文件\"{file}\"禁用失败\n" +
                         $"{e.Message}", "Serein",
                         0, 48
                         );
@@ -140,20 +140,20 @@ namespace Serein.Server
         /// <summary>
         /// 启用插件
         /// </summary>
-        /// <param name="Files">文件列表</param>
-        public static void Enable(List<string> Files)
+        /// <param name="files">文件列表</param>
+        public static void Enable(List<string> files)
         {
-            foreach (string FileName in Files)
+            foreach (string file in files)
             {
                 try
                 {
-                    File.Move(FileName, System.Text.RegularExpressions.Regex.Replace(FileName, @"\.lock$", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
+                    File.Move(file, System.Text.RegularExpressions.Regex.Replace(file, @"\.lock$", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
                 }
                 catch (Exception e)
                 {
                     Logger.Out(LogType.Debug, e);
                     Logger.MsgBox(
-                        $"文件\"{FileName}\"启用失败\n" +
+                        $"文件\"{file}\"启用失败\n" +
                         $"{e.Message}", "Serein",
                         0, 48
                         );
@@ -165,21 +165,21 @@ namespace Serein.Server
         /// <summary>
         /// 获取相对路径
         /// </summary>
-        /// <param name="File">文件路径</param>
+        /// <param name="file">文件路径</param>
         /// <returns>相对路径</returns>
-        public static string GetRelativeUri(string File)
+        public static string GetRelativeUri(string file)
         {
-            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new Uri(File)).OriginalString);
+            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new Uri(file)).OriginalString);
         }
 
         /// <summary>
         /// 获取绝对路径
         /// </summary>
-        /// <param name="File">文件路径</param>
+        /// <param name="file">文件路径</param>
         /// <returns>绝对路径</returns>
-        public static string GetAbsoluteUri(string File)
+        public static string GetAbsoluteUri(string file)
         {
-            return Path.Combine(Directory.GetParent(BasePath).FullName, File).Replace('/', '\\').TrimStart('\u202a');
+            return Path.Combine(Directory.GetParent(BasePath).FullName, file).Replace('/', '\\').TrimStart('\u202a');
         }
 
         /// <summary>

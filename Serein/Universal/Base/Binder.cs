@@ -32,22 +32,22 @@ namespace Serein.Base
         /// <summary>
         /// 绑定（无群反馈）
         /// </summary>
-        /// <param name="UserId">用户ID</param>
-        /// <param name="Value">值</param>
+        /// <param name="userId">用户ID</param>
+        /// <param name="value">值</param>
         /// <returns>绑定结果</returns>
-        public static bool Bind(long UserId, string Value)
+        public static bool Bind(long userId, string value)
         {
-            Value = Value.Trim();
-            if (Global.MemberItems.ContainsKey(UserId) || !System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(Value))
+            value = value.Trim();
+            if (Global.MemberItems.ContainsKey(userId) || !System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(value))
             {
                 return false;
             }
             else
             {
-                Global.MemberItems.Add(UserId, new Member()
+                Global.MemberItems.Add(userId, new Member()
                 {
-                    ID = UserId,
-                    GameID = Value
+                    ID = userId,
+                    GameID = value
                 });
                 IO.SaveMember();
                 return true;
@@ -57,62 +57,62 @@ namespace Serein.Base
         /// <summary>
         /// 绑定
         /// </summary>
-        /// <param name="JsonObject">消息JSON对象</param>
-        /// <param name="Value">值</param>
-        /// <param name="UserId">用户ID</param>
-        /// <param name="GroupId">群聊ID</param>
-        public static void Bind(JObject JsonObject, string Value, long UserId, long GroupId = -1)
+        /// <param name="jsonObject">消息JSON对象</param>
+        /// <param name="value">值</param>
+        /// <param name="userId">用户ID</param>
+        /// <param name="groupId">群聊ID</param>
+        public static void Bind(JObject jsonObject, string value, long userId, long groupId = -1)
         {
-            Value = Value.Trim();
-            if (Global.MemberItems.ContainsKey(UserId))
+            value = value.Trim();
+            if (Global.MemberItems.ContainsKey(userId))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupId, userId);
             }
-            else if (!System.Text.RegularExpressions.Regex.IsMatch(Value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupId, userId);
             }
-            else if (GameIDs.Contains(Value))
+            else if (GameIDs.Contains(value))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, groupId, userId);
             }
             else
             {
-                Member Item = new()
+                Member member = new()
                 {
-                    ID = UserId,
-                    Card = JsonObject["sender"]["card"].ToString(),
-                    Nickname = JsonObject["sender"]["nickname"].ToString(),
-                    Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString()),
-                    GameID = Value
+                    ID = userId,
+                    Card = jsonObject["sender"]["card"].ToString(),
+                    Nickname = jsonObject["sender"]["nickname"].ToString(),
+                    Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
+                    GameID = value
                 };
                 lock (Global.MemberItems)
                 {
-                    Global.MemberItems.Add(UserId, Item);
+                    Global.MemberItems.Add(userId, member);
                 }
                 IO.SaveMember();
-                EventTrigger.Trigger(EventType.BindingSucceed, GroupId, UserId);
+                EventTrigger.Trigger(EventType.BindingSucceed, groupId, userId);
             }
         }
 
         /// <summary>
         /// 解绑
         /// </summary>
-        /// <param name="UserId">用户ID</param>
-        /// <param name="GroupId">群聊ID</param>
-        public static void UnBind(long UserId, long GroupId = -1)
+        /// <param name="userId">用户ID</param>
+        /// <param name="groupId">群聊ID</param>
+        public static void UnBind(long userId, long groupId = -1)
         {
-            if (!Global.MemberItems.ContainsKey(UserId))
+            if (!Global.MemberItems.ContainsKey(userId))
             {
-                EventTrigger.Trigger(EventType.UnbindingFail, GroupId, UserId);
+                EventTrigger.Trigger(EventType.UnbindingFail, groupId, userId);
             }
             else
             {
                 lock (Global.MemberItems)
                 {
-                    Global.MemberItems.Remove(UserId);
+                    Global.MemberItems.Remove(userId);
                     IO.SaveMember();
-                    EventTrigger.Trigger(EventType.UnbindingSucceed, GroupId, UserId);
+                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupId, userId);
                 }
             }
         }
@@ -120,39 +120,39 @@ namespace Serein.Base
         /// <summary>
         /// 解绑ID（无群反馈）
         /// </summary>
-        /// <param name="UserId">用户ID</param>
+        /// <param name="userId">用户ID</param>
         /// <returns>解绑结果</returns>
-        public static bool UnBind(long UserId)
+        public static bool UnBind(long userId)
         {
-            if (Global.MemberItems.ContainsKey(UserId))
+            if (Global.MemberItems.ContainsKey(userId))
             {
                 lock (Global.MemberItems)
                 {
-                    Global.MemberItems.Remove(UserId);
+                    Global.MemberItems.Remove(userId);
                     IO.SaveMember();
                 }
             }
-            return Global.MemberItems.ContainsKey(UserId);
+            return Global.MemberItems.ContainsKey(userId);
         }
 
         /// <summary>
         /// 获取指定用户ID对应的游戏ID
         /// </summary>
-        /// <param name="UserId">用户ID</param>
+        /// <param name="userId">用户ID</param>
         /// <returns>对应的游戏ID</returns>
-        public static string GetGameID(long UserId)
+        public static string GetGameID(long userId)
         {
-            if (!Global.MemberItems.ContainsKey(UserId))
+            if (!Global.MemberItems.ContainsKey(userId))
             {
                 return string.Empty;
             }
             else
             {
-                foreach (Member Item in Items)
+                foreach (Member member in Items)
                 {
-                    if (Item.ID == UserId)
+                    if (member.ID == userId)
                     {
-                        return Item.GameID;
+                        return member.GameID;
                     }
                 }
                 return string.Empty;
@@ -162,12 +162,12 @@ namespace Serein.Base
         /// <summary>
         /// 获取指定游戏ID对应的用户ID
         /// </summary>
-        /// <param name="GameID">游戏ID</param>
+        /// <param name="gameId">游戏ID</param>
         /// <returns>对应的用户ID</returns>
-        public static long GetID(string GameID)
+        public static long GetID(string gameId)
         {
-            GameID = GameID.Trim();
-            if (!GameIDs.Contains(GameID))
+            gameId = gameId.Trim();
+            if (!GameIDs.Contains(gameId))
             {
                 return 0;
             }
@@ -175,7 +175,7 @@ namespace Serein.Base
             {
                 foreach (Member Item in Items)
                 {
-                    if (Item.GameID == GameID)
+                    if (Item.GameID == gameId)
                     {
                         return Item.ID;
                     }
@@ -187,18 +187,18 @@ namespace Serein.Base
         /// <summary>
         /// 更新群成员信息
         /// </summary>
-        /// <param name="JsonObject">消息JSON对象</param>
-        /// <param name="UserId">用户ID</param>
-        public static void Update(JObject JsonObject, long UserId)
+        /// <param name="jsonObject">消息JSON对象</param>
+        /// <param name="userId">用户ID</param>
+        public static void Update(JObject jsonObject, long userId)
         {
-            if (Global.MemberItems.ContainsKey(UserId))
+            if (Global.MemberItems.ContainsKey(userId))
             {
-                Logger.Out(LogType.Debug, JsonObject["sender"]);
+                Logger.Out(LogType.Debug, jsonObject["sender"]);
                 lock (Global.MemberItems)
                 {
-                    Global.MemberItems[UserId].Nickname = JsonObject["sender"]["nickname"].ToString();
-                    Global.MemberItems[UserId].Role = Array.IndexOf(Command.Roles, JsonObject["sender"]["role"].ToString());
-                    Global.MemberItems[UserId].Card = JsonObject["sender"]["card"].ToString();
+                    Global.MemberItems[userId].Nickname = jsonObject["sender"]["nickname"].ToString();
+                    Global.MemberItems[userId].Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
+                    Global.MemberItems[userId].Card = jsonObject["sender"]["card"].ToString();
                 }
             }
         }

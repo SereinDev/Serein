@@ -22,9 +22,9 @@ namespace Serein.Base
         /// 启动cmd.exe
         /// </summary>
         /// <param name="Command">执行的命令</param>
-        public static void StartCmd(string Command)
+        public static void StartCmd(string command)
         {
-            Process CMDProcess = new()
+            Process process = new()
             {
                 StartInfo = new()
                 {
@@ -35,39 +35,43 @@ namespace Serein.Base
                     WorkingDirectory = Global.Path
                 }
             };
-            CMDProcess.Start();
-            StreamWriter CommandWriter = new(CMDProcess.StandardInput.BaseStream, Encoding.Default);
-            CommandWriter.WriteLine(Command.TrimEnd('\r', '\n'));
-            CommandWriter.Close();
+            process.Start();
+            StreamWriter commandWriter = new(process.StandardInput.BaseStream, Encoding.Default)
+            {
+                AutoFlush = true,
+                NewLine = "\r\n"
+            };
+            commandWriter.WriteLine(command.TrimEnd('\r', '\n'));
+            commandWriter.Close();
             Task.Run(() =>
             {
-                CMDProcess.WaitForExit(600000);
-                if (!CMDProcess.HasExited)
+                process.WaitForExit(600000);
+                if (!process.HasExited)
                 {
-                    CMDProcess.Kill();
+                    process.Kill();
                 }
-                CMDProcess.Dispose();
+                process.Dispose();
             });
         }
 
         /// <summary>
         /// 处理Serein命令
         /// </summary>
-        /// <param name="InputType">输入类型</param>
-        /// <param name="Command">命令</param>
-        /// <param name="JsonObject">消息JSON对象</param>
-        /// <param name="MsgMatch">消息匹配对象</param>
-        /// <param name="UserId">用户ID</param>
-        /// <param name="GroupId">群聊ID</param>
-        /// <param name="DisableMotd">禁用Motd获取</param>
+        /// <param name="inputType">输入类型</param>
+        /// <param name="command">命令</param>
+        /// <param name="json">消息JSON对象</param>
+        /// <param name="msgMatch">消息匹配对象</param>
+        /// <param name="userId">用户ID</param>
+        /// <param name="groupId">群聊ID</param>
+        /// <param name="disableMotd">禁用Motd获取</param>
         public static void Run(
-            int InputType,
-            string Command,
-            JObject JsonObject = null,
-            Match MsgMatch = null,
-            long UserId = -1,
-            long GroupId = -1,
-            bool DisableMotd = false
+            int inputType,
+            string command,
+            JObject json = null,
+            Match msgMatch = null,
+            long userId = -1,
+            long groupId = -1,
+            bool disableMotd = false
             )
         {
             /*
@@ -80,180 +84,180 @@ namespace Serein.Base
             Logger.Out(
                 Items.LogType.Debug,
                     "命令运行",
-                    $"InputType:{InputType} ",
-                    $"Command:{Command}",
-                    $"UserId:{UserId}",
-                    $"GroupId:{GroupId}");
-            if (GroupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
+                    $"InputType:{inputType} ",
+                    $"Command:{command}",
+                    $"userId:{userId}",
+                    $"groupId:{groupId}");
+            if (groupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
-                GroupId = Global.Settings.Bot.GroupList[0];
+                groupId = Global.Settings.Bot.GroupList[0];
             }
-            Items.CommandType Type = GetType(Command);
-            if (Type == Items.CommandType.Invalid || ((Type == Items.CommandType.RequestMotdpe || Type == Items.CommandType.RequestMotdje) && DisableMotd))
+            Items.CommandType type = GetType(command);
+            if (type == Items.CommandType.Invalid || ((type == Items.CommandType.RequestMotdpe || type == Items.CommandType.RequestMotdje) && disableMotd))
             {
                 return;
             }
-            string Value = GetValue(Command, MsgMatch);
-            Value = ApplyVariables(Value, JsonObject, DisableMotd);
-            switch (Type)
+            string value = GetValue(command, msgMatch);
+            value = ApplyVariables(value, json, disableMotd);
+            switch (type)
             {
                 case Items.CommandType.ExecuteCmd:
-                    StartCmd(Value);
+                    StartCmd(value);
                     break;
                 case Items.CommandType.ServerInput:
                 case Items.CommandType.ServerInputWithUnicode:
-                    Value = Regex.Replace(Value, @"\[CQ:face.+?\]", "[表情]");
-                    Value = Regex.Replace(Value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
-                    ServerManager.InputCommand(Value, true, Type == Items.CommandType.ServerInputWithUnicode);
+                    value = Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]");
+                    value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
+                    ServerManager.InputCommand(value, true, type == Items.CommandType.ServerInputWithUnicode);
                     break;
                 case Items.CommandType.SendGivenGroupMsg:
                     if (Websocket.Status)
                     {
-                        Websocket.Send(false, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
+                        Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
                     }
                     break;
                 case Items.CommandType.SendGivenPrivateMsg:
                     if (Websocket.Status)
                     {
-                        Websocket.Send(true, Value, Regex.Match(Command, @"(\d+)\|").Groups[1].Value, InputType != 4);
+                        Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
                     }
                     break;
                 case Items.CommandType.SendGroupMsg:
                     if (Websocket.Status)
                     {
-                        Websocket.Send(false, Value, GroupId, InputType != 4);
+                        Websocket.Send(false, value, groupId, inputType != 4);
                     }
                     break;
                 case Items.CommandType.SendPrivateMsg:
-                    if ((InputType == 1 || InputType == 4) && Websocket.Status)
+                    if ((inputType == 1 || inputType == 4) && Websocket.Status)
                     {
-                        Websocket.Send(true, Value, UserId, InputType != 4);
+                        Websocket.Send(true, value, userId, inputType != 4);
                     }
                     break;
                 case Items.CommandType.Bind:
-                    if ((InputType == 1 || InputType == 4) && GroupId != -1)
+                    if ((inputType == 1 || inputType == 4) && groupId != -1)
                         Binder.Bind(
-                            JsonObject,
-                            Value,
-                            UserId,
-                            GroupId
+                            json,
+                            value,
+                            userId,
+                            groupId
                             );
                     break;
                 case Items.CommandType.Unbind:
-                    if ((InputType == 1 || InputType == 4) && GroupId != -1)
+                    if ((inputType == 1 || inputType == 4) && groupId != -1)
                         Binder.UnBind(
-                            long.TryParse(Value, out long i) ? i : -1, GroupId
+                            long.TryParse(value, out long i) ? i : -1, groupId
                             );
                     break;
                 case Items.CommandType.RequestMotdpe:
-                    if (InputType == 1 && (GroupId != -1 || UserId != -1))
+                    if (inputType == 1 && (groupId != -1 || userId != -1))
                     {
-                        Motd _Motd = new Motdpe(Value);
+                        Motd _Motd = new Motdpe(value);
                         EventTrigger.Trigger(
                             _Motd.Success ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
-                            GroupId, UserId, _Motd);
+                            groupId, userId, _Motd);
                     }
                     break;
                 case Items.CommandType.RequestMotdje:
-                    if (InputType == 1 && (GroupId != -1 || UserId != -1))
+                    if (inputType == 1 && (groupId != -1 || userId != -1))
                     {
-                        Motd _Motd = new Motdje(Value);
+                        Motd _Motd = new Motdje(value);
                         EventTrigger.Trigger(
                             _Motd.Success ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
-                            GroupId, UserId, _Motd);
+                            groupId, userId, _Motd);
                     }
                     break;
                 case Items.CommandType.ExecuteJavascriptCodes:
-                    if (InputType != 5)
+                    if (inputType != 5)
                     {
-                        Task.Run(() => JSEngine.Init(true).Execute(Value));
+                        Task.Run(() => JSEngine.Init(true).Execute(value));
                     }
                     break;
                 case Items.CommandType.DebugOutput:
-                    Logger.Out(Items.LogType.Debug, "[DebugOutput]", Value);
+                    Logger.Out(Items.LogType.Debug, "[DebugOutput]", value);
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "[Unknown]", Value);
+                    Logger.Out(Items.LogType.Debug, "[Unknown]", value);
                     break;
             }
-            if (InputType == 1 && Type != Items.CommandType.Bind && Type != Items.CommandType.Unbind && GroupId != -1)
+            if (inputType == 1 && type != Items.CommandType.Bind && type != Items.CommandType.Unbind && groupId != -1)
             {
-                Binder.Update(JsonObject, UserId);
+                Binder.Update(json, userId);
             }
         }
 
         /// <summary>
         /// 获取命令类型
         /// </summary>
-        /// <param name="Command">命令</param>
+        /// <param name="command">命令</param>
         /// <returns>类型</returns>
-        public static Items.CommandType GetType(string Command)
+        public static Items.CommandType GetType(string command)
         {
             if (
-                !Command.Contains("|") ||
-                !Regex.IsMatch(Command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
+                !command.Contains("|") ||
+                !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
                 )
                 return Items.CommandType.Invalid;
-            if (Regex.IsMatch(Command, @"^cmd\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^cmd\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.ExecuteCmd;
             }
-            if (Regex.IsMatch(Command, @"^s\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^server\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^s\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^server\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.ServerInput;
             }
-            if (Regex.IsMatch(Command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^s:u\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^server:u\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^s:u\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^server:u\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.ServerInputWithUnicode;
             }
-            if (Regex.IsMatch(Command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^group:\d+\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.SendGivenGroupMsg;
             }
-            if (Regex.IsMatch(Command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.SendGivenPrivateMsg;
             }
-            if (Regex.IsMatch(Command, @"^g\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^group\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^g\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^group\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.SendGroupMsg;
             }
-            if (Regex.IsMatch(Command, @"^p\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^private\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^p\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^private\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.SendPrivateMsg;
             }
-            if (Regex.IsMatch(Command, @"^b\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^bind\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^b\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^bind\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.Bind;
             }
-            if (Regex.IsMatch(Command, @"^ub\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^unbind\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^ub\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^unbind\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.Unbind;
             }
-            if (Regex.IsMatch(Command, @"^motdpe\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^motdpe\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.RequestMotdpe;
             }
-            if (Regex.IsMatch(Command, @"^motdje\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^motdje\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.RequestMotdje;
             }
-            if (Regex.IsMatch(Command, @"^js\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(Command, @"^javascript\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^js\|", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(command, @"^javascript\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.ExecuteJavascriptCodes;
             }
-            if (Regex.IsMatch(Command, @"^debug\|", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(command, @"^debug\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.DebugOutput;
             }
@@ -284,15 +288,15 @@ namespace Serein.Base
         /// <summary>
         /// 应用变量
         /// </summary>
-        /// <param name="Text">文本</param>
-        /// <param name="JsonObject">消息JSON对象</param>
-        /// <param name="DisableMotd">禁用Motd获取</param>
+        /// <param name="text">文本</param>
+        /// <param name="jsonObject">消息JSON对象</param>
+        /// <param name="disableMotd">禁用Motd获取</param>
         /// <returns>应用变量后的文本</returns>
-        public static string ApplyVariables(string Text, JObject JsonObject = null, bool DisableMotd = false)
+        public static string ApplyVariables(string text, JObject jsonObject = null, bool disableMotd = false)
         {
-            if (Global.Settings.Bot.EnbaleParseAt && JsonObject != null)
+            if (Global.Settings.Bot.EnbaleParseAt && jsonObject != null)
             {
-                foreach (Match match in Regex.Matches(Text, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
+                foreach (Match match in Regex.Matches(text, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
                 {
                     if (
                         match.Groups.Count >= 3 &&
@@ -300,127 +304,127 @@ namespace Serein.Base
                         Global.MemberItems.TryGetValue(ID, out Items.Member Member)
                         )
                     {
-                        Text = Text.Replace(
+                        text = text.Replace(
                             match.Value,
                             "@" + (!string.IsNullOrEmpty(Member.Card) ? Member.Card : !string.IsNullOrEmpty(Member.Nickname) ? Member.Nickname : ID.ToString())
                             );
                     }
                 }
             }
-            if (!Text.Contains("%"))
+            if (!text.Contains("%"))
             {
-                return Text.Replace("\\n", "\n");
+                return text.Replace("\\n", "\n");
             }
-            if (!DisableMotd && Regex.IsMatch(Text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
+            if (!disableMotd && Regex.IsMatch(text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
             {
                 switch (Global.Settings.Server.Type)
                 {
                     case 1:
                         Motdpe _Motdpe = new(NewPort: Global.Settings.Server.Port.ToString());
-                        Text = Regex.Replace(Text, "%GameMode%", _Motdpe.GameMode, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Description%", _Motdpe.Description, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Protocol%", _Motdpe.Protocol, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%MaxPlayer%", _Motdpe.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Origin%", _Motdpe.Origin, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Delay%", _Motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%GameMode%", _Motdpe.GameMode, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Description%", _Motdpe.Description, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Protocol%", _Motdpe.Protocol, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%OnlinePlayer%", _Motdpe.OnlinePlayer, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%MaxPlayer%", _Motdpe.MaxPlayer, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Origin%", _Motdpe.Origin, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Delay%", _Motdpe.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
                         break;
                     case 2:
                         Motdje _Motdje = new(NewPort: Global.Settings.Server.Port.ToString());
-                        Text = Regex.Replace(Text, "%Description%", _Motdje.Description, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Protocol%", _Motdje.Protocol, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%OnlinePlayer%", _Motdje.OnlinePlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%MaxPlayer%", _Motdje.MaxPlayer, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Origin%", _Motdje.Origin, RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Delay%", _Motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
-                        Text = Regex.Replace(Text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Description%", _Motdje.Description, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Protocol%", _Motdje.Protocol, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%OnlinePlayer%", _Motdje.OnlinePlayer, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%MaxPlayer%", _Motdje.MaxPlayer, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Origin%", _Motdje.Origin, RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Delay%", _Motdje.Delay.Milliseconds.ToString(), RegexOptions.IgnoreCase);
+                        text = Regex.Replace(text, "%Favicon%", _Motdje.Favicon, RegexOptions.IgnoreCase);
                         break;
                 }
             }
             DateTime CurrentTime = DateTime.Now;
-            Text = Regex.Replace(Text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Day%", CurrentTime.Day.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Time%", CurrentTime.ToString("T"), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%Date%", CurrentTime.Date.ToString("d"), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
-            if (JsonObject != null)
+            text = Regex.Replace(text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Day%", CurrentTime.Day.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Time%", CurrentTime.ToString("T"), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%Date%", CurrentTime.Date.ToString("d"), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
+            if (jsonObject != null)
             {
                 try
                 {
-                    Text = Regex.Replace(Text, "%ID%", JsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%GameID%", Binder.GetGameID(long.TryParse(JsonObject["sender"]["user_id"].ToString(), out long result) ? result : -1), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, JsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Nickname%", JsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Age%", JsonObject["sender"]["age"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Area%", JsonObject["sender"]["area"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Card%", JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Level%", JsonObject["sender"]["level"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Title%", JsonObject["sender"]["title"].ToString(), RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, JsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
-                    Text = Regex.Replace(Text, "%ShownName%", string.IsNullOrEmpty(JsonObject["sender"]["card"].ToString()) ? JsonObject["sender"]["nickname"].ToString() : JsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%ID%", jsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%GameID%", Binder.GetGameID(long.TryParse(jsonObject["sender"]["user_id"].ToString(), out long result) ? result : -1), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, jsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Nickname%", jsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Age%", jsonObject["sender"]["age"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Area%", jsonObject["sender"]["area"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Card%", jsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Level%", jsonObject["sender"]["level"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Title%", jsonObject["sender"]["title"].ToString(), RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, jsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
+                    text = Regex.Replace(text, "%ShownName%", string.IsNullOrEmpty(jsonObject["sender"]["card"].ToString()) ? jsonObject["sender"]["nickname"].ToString() : jsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
                 }
                 catch { }
             }
-            Text = Regex.Replace(Text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
 #if !UNIX
-            Text = Regex.Replace(Text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
 #endif
-            Text = Regex.Replace(Text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%UploadSpeed%", SystemInfo.UploadSpeed, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%DownloadSpeed%", SystemInfo.DownloadSpeed, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%CPUBrand%", SystemInfo.CPUBrand, RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%CPUFrequency%", SystemInfo.CPUFrequency.ToString("N1"), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%UsedRAM%", SystemInfo.UsedRAM.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%TotalRAM%", SystemInfo.TotalRAM.ToString(), RegexOptions.IgnoreCase);
-            Text = Regex.Replace(Text, "%RAMUsage%", SystemInfo.RAMUsage.ToString("N1"), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%UploadSpeed%", SystemInfo.UploadSpeed, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%DownloadSpeed%", SystemInfo.DownloadSpeed, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%CPUBrand%", SystemInfo.CPUBrand, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%CPUFrequency%", SystemInfo.CPUFrequency.ToString("N1"), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%UsedRAM%", SystemInfo.UsedRAM.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%TotalRAM%", SystemInfo.TotalRAM.ToString(), RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%RAMUsage%", SystemInfo.RAMUsage.ToString("N1"), RegexOptions.IgnoreCase);
             if (ServerManager.Status)
             {
-                Text = Regex.Replace(Text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", ServerManager.Version, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%ServerCPUUsage%", ServerManager.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Status%", "已启动", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Version%", ServerManager.Version, RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%ServerCPUUsage%", ServerManager.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Status%", "已启动", RegexOptions.IgnoreCase);
             }
             else
             {
-                Text = Regex.Replace(Text, "%LevelName%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Version%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Difficulty%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%RunTime%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%ServerCPUUsage%", "0", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%FileName%", "-", RegexOptions.IgnoreCase);
-                Text = Regex.Replace(Text, "%Status%", "未启动", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%LevelName%", "-", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Version%", "-", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Difficulty%", "-", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%RunTime%", "-", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%ServerCPUUsage%", "0", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%FileName%", "-", RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, "%Status%", "未启动", RegexOptions.IgnoreCase);
             }
-            if (Regex.IsMatch(Text, @"%GameID:\d+%", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(text, @"%GameID:\d+%", RegexOptions.IgnoreCase))
             {
-                long UserId = long.TryParse(
+                long userId = long.TryParse(
                     Regex.Match(
-                        Text,
+                        text,
                         @"%GameID:(\d+?)%",
                         RegexOptions.IgnoreCase
                         ).Groups[1].Value,
                     out long i) ? i : -1;
-                Text = Regex.Replace(
-                    Text,
+                text = Regex.Replace(
+                    text,
                     @"%GameID:(\d+?)%",
-                    Binder.GetGameID(UserId),
+                    Binder.GetGameID(userId),
                     RegexOptions.IgnoreCase
                     );
             }
-            if (Regex.IsMatch(Text, @"%ID:.+?%", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(text, @"%ID:.+?%", RegexOptions.IgnoreCase))
             {
-                Text = Regex.Replace(Text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(Text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
+                text = Regex.Replace(text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
             }
-            return Text.Replace("\\n", "\n");
+            return text.Replace("\\n", "\n");
         }
     }
 }

@@ -58,19 +58,19 @@ namespace Serein.Items
         /// <summary>
         /// 转为对象
         /// </summary>
-        /// <param name="Text">TSV格式文本</param>
-        public void FromText(string Text)
+        /// <param name="text">TSV格式文本</param>
+        public void FromText(string text)
         {
-            string[] Texts = Text.Split('\t');
-            if (Texts.Length != 5)
+            string[] args = text.Split('\t');
+            if (args.Length != 5)
             {
                 return;
             }
-            Expression = Texts[0];
-            Area = int.TryParse(Texts[1], out int s) ? s : 0;
-            IsAdmin = Texts[2] == "True";
-            Remark = Texts[3];
-            Command = Texts[4];
+            Expression = args[0];
+            Area = int.TryParse(args[1], out int s) ? s : 0;
+            IsAdmin = args[2] == "True";
+            Remark = args[3];
+            Command = args[4];
         }
 
         /// <summary>

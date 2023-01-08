@@ -93,10 +93,10 @@ namespace Serein.Console
             };
             while (true)
             {
-                string Line = System.Console.ReadLine();
-                if (Line != null)
+                string line = System.Console.ReadLine();
+                if (line != null)
                 {
-                    Input.Process(Line.Trim());
+                    Input.Process(line.Trim());
                 }
             }
         }

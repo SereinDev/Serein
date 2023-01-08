@@ -8,8 +8,8 @@
         public int MaxCacheLines = 250;
         public bool ThemeFollowSystem = true;
         public bool UseDarkTheme;
-        public AutoRun AutoRun = new AutoRun();
-        public DevelopmentTool DevelopmentTool = new DevelopmentTool();
+        public AutoRun AutoRun = new();
+        public DevelopmentTool DevelopmentTool = new();
     }
 
     internal class AutoRun

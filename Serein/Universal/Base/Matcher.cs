@@ -13,18 +13,18 @@ namespace Serein.Base
         /// <summary>
         /// 处理来自控制台的消息
         /// </summary>
-        /// <param name="Line">控制台的消息</param>
-        public static void Process(string Line)
+        /// <param name="line">控制台的消息</param>
+        public static void Process(string line)
         {
-            foreach (Items.Regex Item in Global.RegexItems)
+            foreach (Items.Regex regex in Global.RegexItems)
             {
-                if (string.IsNullOrEmpty(Item.Expression) || Item.Area != 1)
+                if (string.IsNullOrEmpty(regex.Expression) || regex.Area != 1)
                 {
                     continue;
                 }
-                if (System.Text.RegularExpressions.Regex.IsMatch(Line, Item.Expression))
+                if (System.Text.RegularExpressions.Regex.IsMatch(line, regex.Expression))
                 {
-                    Command.Run(2, Item.Command, MsgMatch: System.Text.RegularExpressions.Regex.Match(Line, Item.Expression));
+                    Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression));
                 }
             }
         }
@@ -32,117 +32,117 @@ namespace Serein.Base
         /// <summary>
         /// 处理来自机器人的消息
         /// </summary>
-        /// <param name="Packet">数据包</param>
-        public static void Process(JObject Packet)
+        /// <param name="packet">数据包</param>
+        public static void Process(JObject packet)
         {
-            if (Packet["post_type"] == null)
+            if (packet["post_type"] == null)
             {
                 return;
             }
-            string Post_Type = Packet["post_type"].ToString();
-            long Result, UserId, GroupId;
-            switch (Post_Type)
+            string postType = packet["post_type"].ToString();
+            long result, userId, groupId;
+            switch (postType)
             {
                 case "message":
                 case "message_sent":
-                    bool IsSelfMessage = Post_Type == "message_sent";
-                    string MessageType = Packet["message_type"].ToString();
-                    string RawMessage = Packet["raw_message"].ToString();
-                    UserId = long.TryParse(Packet["sender"]["user_id"].ToString(), out Result) ? Result : -1;
-                    GroupId = MessageType == "group" && long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
-                    Logger.Out(Items.LogType.Bot_Receive, $"{Packet["sender"]["nickname"]}({Packet["sender"]["user_id"]})" + ":" + RawMessage);
-                    foreach (Items.Regex Item in Global.RegexItems)
+                    bool isSelfMessage = postType == "message_sent";
+                    string messageType = packet["message_type"].ToString();
+                    string rawMessage = packet["raw_message"].ToString();
+                    userId = long.TryParse(packet["sender"]["user_id"].ToString(), out result) ? result : -1;
+                    groupId = messageType == "group" && long.TryParse(packet["group_id"].ToString(), out result) ? result : -1;
+                    Logger.Out(Items.LogType.Bot_Receive, $"{packet["sender"]["nickname"]}({packet["sender"]["user_id"]})" + ":" + rawMessage);
+                    foreach (Items.Regex item in Global.RegexItems)
                     {
                         if (
-                            string.IsNullOrEmpty(Item.Expression) ||
-                            Item.Area <= 1 ||
+                            string.IsNullOrEmpty(item.Expression) ||
+                            item.Area <= 1 ||
                             !(
-                                IsSelfMessage && Item.Area == 4 ||
-                                !IsSelfMessage && Item.Area != 4
+                                isSelfMessage && item.Area == 4 ||
+                                !isSelfMessage && item.Area != 4
                             ) ||
-                            MessageType == "group" && !Global.Settings.Bot.GroupList.Contains(GroupId) ||
-                            !System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression)
+                            messageType == "group" && !Global.Settings.Bot.GroupList.Contains(groupId) ||
+                            !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, item.Expression)
                             )
                         {
                             continue;
                         }
                         if (
                             !(
-                            Global.Settings.Bot.PermissionList.Contains(UserId) ||
+                            Global.Settings.Bot.PermissionList.Contains(userId) ||
                             Global.Settings.Bot.GivePermissionToAllAdmin &&
-                            MessageType == "group" && (
-                                Packet["sender"]["role"].ToString() == "admin" ||
-                                Packet["sender"]["role"].ToString() == "owner")
+                            messageType == "group" && (
+                                packet["sender"]["role"].ToString() == "admin" ||
+                                packet["sender"]["role"].ToString() == "owner")
                             ) &&
-                            Item.IsAdmin &&
-                            !IsSelfMessage
+                            item.IsAdmin &&
+                            !isSelfMessage
                             )
                         {
-                            switch (Item.Area)
+                            switch (item.Area)
                             {
                                 case 2:
-                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, GroupId, UserId);
+                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupId, userId);
                                     break;
                                 case 3:
-                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, UserId);
+                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, userId);
                                     break;
                             }
                             continue;
                         }
-                        if (System.Text.RegularExpressions.Regex.IsMatch(RawMessage, Item.Expression))
+                        if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, item.Expression))
                         {
-                            if ((Item.Area == 4 || Item.Area == 2) && MessageType == "group")
+                            if ((item.Area == 4 || item.Area == 2) && messageType == "group")
                             {
                                 Command.Run(
                                     1,
-                                    Item.Command,
-                                    Packet,
+                                    item.Command,
+                                    packet,
                                     System.Text.RegularExpressions.Regex.Match(
-                                        RawMessage,
-                                        Item.Expression
+                                        rawMessage,
+                                        item.Expression
                                     ),
-                                    UserId,
-                                    GroupId
+                                    userId,
+                                    groupId
                                 );
                             }
-                            else if ((Item.Area == 4 || Item.Area == 3) && MessageType == "private")
+                            else if ((item.Area == 4 || item.Area == 3) && messageType == "private")
                             {
                                 Command.Run(
                                     1,
-                                    Item.Command,
-                                    Packet,
+                                    item.Command,
+                                    packet,
                                     System.Text.RegularExpressions.Regex.Match(
-                                        RawMessage,
-                                        Item.Expression
+                                        rawMessage,
+                                        item.Expression
                                         ),
-                                    UserId
+                                    userId
                                 );
                             }
                         }
                     }
-                    if (!IsSelfMessage)
+                    if (!isSelfMessage)
                     {
-                        if (MessageType == "private")
+                        if (messageType == "private")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, UserId, RawMessage, Packet["sender"]["nickname"].ToString());
+                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, userId, rawMessage, packet["sender"]["nickname"].ToString());
                         }
-                        else if (MessageType == "group")
+                        else if (messageType == "group")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, GroupId, UserId, RawMessage, string.IsNullOrEmpty(Packet["sender"]["card"].ToString()) ? Packet["sender"]["nickname"].ToString() : Packet["sender"]["card"].ToString());
+                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, groupId, userId, rawMessage, string.IsNullOrEmpty(packet["sender"]["card"].ToString()) ? packet["sender"]["nickname"].ToString() : packet["sender"]["card"].ToString());
                         }
                     }
                     break;
                 case "meta_event":
-                    if (Packet["meta_event_type"].ToString() == "heartbeat")
+                    if (packet["meta_event_type"].ToString() == "heartbeat")
                     {
-                        SelfId = Packet["self_id"].ToString();
+                        SelfId = packet["self_id"].ToString();
                         MessageReceived = (
-                            Packet["status"]["stat"]["message_received"] ??
-                            Packet["status"]["stat"]["MessageReceived"] ?? "-"
+                            packet["status"]["stat"]["message_received"] ??
+                            packet["status"]["stat"]["MessageReceived"] ?? "-"
                             ).ToString();
                         MessageSent = (
-                            Packet["status"]["stat"]["message_sent"] ??
-                            Packet["status"]["stat"]["MessageSent"] ?? "-"
+                            packet["status"]["stat"]["message_sent"] ??
+                            packet["status"]["stat"]["MessageSent"] ?? "-"
                             ).ToString();
                         if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
                         {
@@ -155,28 +155,28 @@ namespace Serein.Base
                     }
                     break;
                 case "notice":
-                    UserId = long.TryParse(Packet["user_id"].ToString(), out Result) ? Result : -1;
-                    GroupId = long.TryParse(Packet["group_id"].ToString(), out Result) ? Result : -1;
-                    if (Global.Settings.Bot.GroupList.Contains(GroupId))
+                    userId = long.TryParse(packet["user_id"].ToString(), out result) ? result : -1;
+                    groupId = long.TryParse(packet["group_id"].ToString(), out result) ? result : -1;
+                    if (Global.Settings.Bot.GroupList.Contains(groupId))
                     {
-                        switch (Packet["notice_type"].ToString())
+                        switch (packet["notice_type"].ToString())
                         {
                             case "GroupDecrease":
                             case "group_decrease":
-                                EventTrigger.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
-                                JSFunc.Trigger(Items.EventType.GroupDecrease, GroupId, UserId);
+                                EventTrigger.Trigger(Items.EventType.GroupDecrease, groupId, userId);
+                                JSFunc.Trigger(Items.EventType.GroupDecrease, groupId, userId);
                                 break;
                             case "GroupIncrease":
                             case "group_increase":
-                                EventTrigger.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
-                                JSFunc.Trigger(Items.EventType.GroupIncrease, GroupId, UserId);
+                                EventTrigger.Trigger(Items.EventType.GroupIncrease, groupId, userId);
+                                JSFunc.Trigger(Items.EventType.GroupIncrease, groupId, userId);
                                 break;
                             case "notify":
-                                if (Packet["sub_type"].ToString() == "poke" &&
-                                    Packet["target_id"].ToString() == SelfId)
+                                if (packet["sub_type"].ToString() == "poke" &&
+                                    packet["target_id"].ToString() == SelfId)
                                 {
-                                    EventTrigger.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
-                                    JSFunc.Trigger(Items.EventType.GroupPoke, GroupId, UserId);
+                                    EventTrigger.Trigger(Items.EventType.GroupPoke, groupId, userId);
+                                    JSFunc.Trigger(Items.EventType.GroupPoke, groupId, userId);
                                 }
                                 break;
                         }

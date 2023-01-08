@@ -18,7 +18,7 @@ namespace Serein.JSPlugin
         /// <summary>
         /// JS引擎
         /// </summary>
-        public static Engine engine = new();
+        public static Engine MainEngine = new();
 
         /// <summary>
         /// 转换专用JS引擎
@@ -28,23 +28,24 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 初始化JS引擎
         /// </summary>
-        /// <param name="ExecuteByCommand">被命令执行</param>
-        /// <param name="Namespace">命名空间</param>
+        /// <param name="executeByCommand">被命令执行</param>
+        /// <param name="namespace">命名空间</param>
+        /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool ExecuteByCommand = false, string Namespace = null, CancellationTokenSource TokenSource = null)
+        public static Engine Init(bool executeByCommand = false, string @namespace = null, CancellationTokenSource cancellationTokenSource = null)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
                     cfg.AllowClr(typeof(Process).Assembly);
                     cfg.CatchClrExceptions();
-                    if (ExecuteByCommand)
+                    if (executeByCommand)
                     {
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
                     }
-                    else if (TokenSource != null)
+                    else if (cancellationTokenSource != null)
                     {
-                        cfg.CancellationToken(TokenSource.Token);
+                        cfg.CancellationToken(cancellationTokenSource.Token);
                     }
                 }
                 ));
@@ -63,9 +64,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Global_Version",
                 Global.VERSION);
             engine.SetValue("Serein_Current_Namespace",
-                Namespace);
+                @namespace);
             engine.SetValue("Serein_Log",
-                new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, $"[{Namespace}]", Content)));
+                new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, $"[{@namespace}]", Content)));
             engine.SetValue("Serein_Command_Run",
                 new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("Serein_Global_Debug",
@@ -73,9 +74,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Global_Settings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("Serein_Plugin_JSFunc_Register",
-                new Func<string, string, string, string, string>((Name, Version, Author, Description) => JSFunc.Register(Namespace, Name, Version, Author, Description)));
+                new Func<string, string, string, string, string>((Name, Version, Author, Description) => JSFunc.Register(@namespace, Name, Version, Author, Description)));
             engine.SetValue("Serein_Plugin_JSFunc_SetListener",
-                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(Namespace, EventName, Function)));
+                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(@namespace, EventName, Function)));
             engine.SetValue("Serein_Motdpe",
                 new Func<string, string>((IP) => new Motdpe(IP).Origin));
             engine.SetValue("Serein_Motdje",
@@ -89,11 +90,11 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_ServerManager_Status",
                 new Func<bool>(() => ServerManager.Status));
             engine.SetValue("Serein_ServerManager_Send",
-                new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, Unicode: Unicode)));
+                new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, usingUnicode: Unicode)));
             engine.SetValue("Serein_ServerManager_GetTime",
                 new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("Serein_ServerManager_GetCPUUsage",
-                new Func<string>(() => ServerManager.CPUUsage.ToString("N2")));
+                new Func<string>(() => ServerManager.CPUUsage.ToString("N!")));
             engine.SetValue("Serein_ServerManager_GetFilename",
                 new Func<string>(() => ServerManager.StartFileName));
             engine.SetValue("Serein_Websocket_SendGroup",
@@ -113,9 +114,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Member_GetGameID",
                 new Func<long, string>(Binder.GetGameID));
             engine.SetValue("setTimeout",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Namespace, Function, Interval, false)));
+                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
             engine.SetValue("setInterval",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(Namespace, Function, Interval, true)));
+                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
             engine.SetValue("clearTimeout",
                 new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("clearInterval",
@@ -166,26 +167,26 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 运行代码
         /// </summary>
-        /// <param name="Code">代码</param>
+        /// <param name="code">代码</param>
         /// <returns>错误信息</returns>
-        public static Engine Run(string Code, Engine Engine, out string ExceptionMessage)
+        public static Engine Run(string code, Engine engine, out string exceptionMessage)
         {
             try
             {
-                (Engine ?? engine).Execute(Code);
-                ExceptionMessage = string.Empty;
+                (engine ?? MainEngine).Execute(code);
+                exceptionMessage = string.Empty;
             }
             catch (JavaScriptException e)
             {
                 Logger.Out(LogType.Debug, e);
-                ExceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
+                exceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
             }
             catch (Exception e)
             {
                 Logger.Out(LogType.Debug, e);
-                ExceptionMessage = e.Message;
+                exceptionMessage = e.Message;
             }
-            return Engine ?? engine;
+            return engine ?? MainEngine;
         }
     }
 }

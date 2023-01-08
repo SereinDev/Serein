@@ -150,16 +150,16 @@ namespace Serein.Server
         /// <summary>
         /// 关闭服务器
         /// </summary>
-        /// <param name="Quiet">静处理</param>
-        public static void Stop(bool Quiet = false)
+        /// <param name="quiet">静处理</param>
+        public static void Stop(bool quiet = false)
         {
             if (Status)
             {
-                foreach (string Command in Global.Settings.Server.StopCommands)
+                foreach (string command in Global.Settings.Server.StopCommands)
                 {
-                    if (!(string.IsNullOrEmpty(Command) || string.IsNullOrWhiteSpace(Command)))
+                    if (!(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command)))
                     {
-                        InputCommand(Command);
+                        InputCommand(command);
                     }
                 }
             }
@@ -167,7 +167,7 @@ namespace Serein.Server
             {
                 Restart = false;
             }
-            else if (!Quiet)
+            else if (!quiet)
             {
                 Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
             }
@@ -176,11 +176,11 @@ namespace Serein.Server
         /// <summary>
         /// 强制结束服务器
         /// </summary>
-        /// <param name="Quiet">静处理</param>
+        /// <param name="quiet">静处理</param>
         /// <returns>强制结束结果</returns>
-        public static bool Kill(bool Quiet = false)
+        public static bool Kill(bool quiet = false)
         {
-            if (Quiet)
+            if (quiet)
             {
                 if (!Status)
                 {
@@ -203,10 +203,10 @@ namespace Serein.Server
 #if CONSOLE
             else
             {
-                DateTime NowTime = DateTime.Now;
-                if ((NowTime - LastKillTime).TotalSeconds < 5)
+                DateTime nowTime = DateTime.Now;
+                if ((nowTime - LastKillTime).TotalSeconds < 5)
                 {
-                    LastKillTime = NowTime;
+                    LastKillTime = nowTime;
                     try
                     {
                         ServerProcess.Kill();
@@ -223,7 +223,7 @@ namespace Serein.Server
                 }
                 else
                 {
-                    LastKillTime = NowTime;
+                    LastKillTime = nowTime;
                     Logger.Out(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein kill）以确认此操作");
                     return false;
                 }
@@ -252,43 +252,33 @@ namespace Serein.Server
         }
 
         /// <summary>
-        /// 输入命令
+        /// 输入行
         /// </summary>
-        /// <param name="Command">命令</param>
-        /// <param name="Quiet">静处理</param>
-        /// <param name="Unicode">使用Unicode</param>
-        public static void InputCommand(string Command, bool Quiet = false, bool Unicode = false)
+        /// <param name="line">行</param>
+        /// <param name="quiet">静处理</param>
+        /// <param name="usingUnicode">使用Unicode</param>
+        public static void InputCommand(string line, bool quiet = false, bool usingUnicode = false)
         {
             if (Status)
             {
-                bool IsSpecifiedCommand = false;
-                string Command_Copy = Command.TrimEnd('\n');
+                string line_copy = line.TrimEnd('\n');
                 if (CommandHistory.Count > 50)
                 {
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
                 }
                 if (
-                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != Command_Copy || CommandHistory.Count == 0) &&
-                    (!Quiet || !(string.IsNullOrEmpty(Command_Copy) || string.IsNullOrWhiteSpace(Command_Copy))))
+                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != line_copy || CommandHistory.Count == 0) &&
+                    (!quiet || !(string.IsNullOrEmpty(line_copy) || string.IsNullOrWhiteSpace(line_copy))))
                 {
                     CommandHistoryIndex = CommandHistory.Count + 1;
-                    CommandHistory.Add(Command_Copy);
+                    CommandHistory.Add(line_copy);
                 }
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(Command_Copy)}");
+                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(line_copy)}");
                 }
 #endif
-                if (!IsSpecifiedCommand)
-                {
-                    if (Unicode || Global.Settings.Server.EnableUnicode)
-                    {
-                        Command_Copy = ConvertToUnicode(Command_Copy);
-                    }
-                    InputWriter.WriteLine(Command_Copy.Replace("\\r", "\r"));
-                    JSFunc.Trigger(EventType.ServerSendCommand, Command);
-                }
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(IO.GetPath("logs", "console")))
@@ -299,19 +289,19 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            ">" + Log.OutputRecognition(Command_Copy) + "\n",
+                            ">" + Log.OutputRecognition(line_copy) + "\n",
                             Encoding.UTF8
                         );
                     }
                     catch { }
                 }
-                Command_Copy = null;
+                line_copy = null;
             }
-            else if (Command.Trim().ToLower() == "start")
+            else if (line.Trim().ToLower() == "start")
             {
-                Start(Quiet);
+                Start(quiet);
             }
-            else if (Command.Trim().ToLower() == "stop")
+            else if (line.Trim().ToLower() == "stop")
             {
                 Restart = false;
             }
@@ -320,31 +310,31 @@ namespace Serein.Server
         /// <summary>
         /// 输出处理
         /// </summary>
-        private static void SortOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        private static void SortOutputHandler(object sender, DataReceivedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(outLine.Data))
+            if (!string.IsNullOrEmpty(e.Data))
             {
-                string Line = Log.OutputRecognition(outLine.Data);
+                string line = Log.OutputRecognition(e.Data);
                 if (!Finished)
                 {
-                    Finished = System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase);
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
+                    Finished = System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase);
+                    if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
                     {
-                        Version = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Version = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
+                    else if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
                     {
-                        LevelName = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        LevelName = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
+                    else if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                     {
-                        Difficulty = System.Text.RegularExpressions.Regex.Match(Line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                        Difficulty = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                     }
                 }
 #if CONSOLE
-                Logger.Out(LogType.Server_Output, outLine.Data);
+                Logger.Out(LogType.Server_Output, e.Data);
 #else
-                Logger.Out(LogType.Server_Output, Log.ColorLog(outLine.Data, Global.Settings.Server.OutputStyle));
+                Logger.Out(LogType.Server_Output, Log.ColorLog(e.Data, Global.Settings.Server.OutputStyle));
 #endif
                 if (Global.Settings.Server.EnableLog)
                 {
@@ -356,37 +346,37 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            Log.OutputRecognition(Line) + "\n",
+                            Log.OutputRecognition(line) + "\n",
                             Encoding.UTF8
                         );
                     }
                     catch { }
                 }
-                bool MuiltLines = false;
-                foreach (string RegExp in Global.Settings.Matches.MuiltLines)
+                bool isMuiltLines = false;
+                foreach (string regex in Global.Settings.Matches.MuiltLines)
                 {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(Line, RegExp, RegexOptions.IgnoreCase))
+                    if (System.Text.RegularExpressions.Regex.IsMatch(line, regex, RegexOptions.IgnoreCase))
                     {
-                        TempLine = Line.Trim('\r', '\n');
-                        MuiltLines = true;
+                        TempLine = line.Trim('\r', '\n');
+                        isMuiltLines = true;
                         break;
                     }
                 }
-                if (!MuiltLines)
+                if (!isMuiltLines)
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
-                        string TempLine_ = TempLine + "\n" + Line;
+                        string tempLine = TempLine + "\n" + line;
                         TempLine = string.Empty;
-                        Matcher.Process(TempLine_);
+                        Matcher.Process(tempLine);
                     }
                     else
                     {
-                        Matcher.Process(Line);
+                        Matcher.Process(line);
                     }
                 }
-                JSFunc.Trigger(EventType.ServerOutput, Line);
-                JSFunc.Trigger(EventType.ServerOriginalOutput, outLine.Data);
+                JSFunc.Trigger(EventType.ServerOutput, line);
+                JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data);
             }
         }
 
@@ -491,7 +481,7 @@ namespace Serein.Server
                     ? $"{t.TotalSeconds / 60:N1}m"
                     : t.TotalHours < 120
                     ? $"{t.TotalMinutes / 60:N1}h"
-                    : $"{t.TotalHours / 24:N2}d";
+                    : $"{t.TotalHours / 24:N1}d";
             }
             return Time;
         }
@@ -499,21 +489,21 @@ namespace Serein.Server
         /// <summary>
         /// Unicode转换
         /// </summary>
-        /// <param name="Text">输入</param>
+        /// <param name="text">输入</param>
         /// <returns>输出字符串</returns>
-        private static string ConvertToUnicode(string Text)
+        private static string ConvertToUnicode(string text)
         {
-            string Result = "";
-            for (int i = 0; i < Text.Length; i++)
+            string result = "";
+            for (int i = 0; i < text.Length; i++)
             {
-                if (Text[i] < 127)
+                if (text[i] < 127)
                 {
-                    Result += Text[i].ToString();
+                    result += text[i].ToString();
                 }
                 else
-                    Result += string.Format("\\u{0:x4}", (int)Text[i]);
+                    result += string.Format("\\u{0:x4}", (int)text[i]);
             }
-            return Result;
+            return result;
         }
     }
 }

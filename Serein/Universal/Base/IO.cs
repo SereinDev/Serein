@@ -22,42 +22,44 @@ namespace Serein.Base
         /// <summary>
         /// 保存更新设置定时器
         /// </summary>
-        private static readonly Timer _Timer = new(2000) { AutoReset = true };
+        private static readonly Timer timer = new(2000) { AutoReset = true };
 
         /// <summary>
         /// 启动保存和更新设置定时器
         /// </summary>
         public static void StartSavingAndUpdating()
         {
-            _Timer.Elapsed += (sender, e) => UpdateSettings();
-            _Timer.Elapsed += (sender, e) => SaveSettings();
-            _Timer.Elapsed += (sender, e) => SaveMember();
-            _Timer.Start();
+            timer.Elapsed += (sender, e) => UpdateSettings();
+            timer.Elapsed += (sender, e) => SaveSettings();
+            timer.Elapsed += (sender, e) => SaveMember();
+            timer.Start();
         }
 
         /// <summary>
         /// 获取完整路径
         /// </summary>
-        /// <param name="Paths">路径</param>
+        /// <param name="paths">路径</param>
         /// <returns>完整路径</returns>
-        public static string GetPath(params string[] Paths)
+        public static string GetPath(params string[] paths)
         {
-            string CombinedPath = Global.Path;
-            foreach (string i in Paths)
-                CombinedPath = Path.Combine(CombinedPath, i);
-            return CombinedPath;
+            string combinedPath = Global.Path;
+            foreach (string i in paths)
+            {
+                combinedPath = Path.Combine(combinedPath, i);
+            }
+            return combinedPath;
         }
 
         /// <summary>
         /// 读取所有文件
         /// </summary>
-        /// <param name="SkipLoadingPlugins">跳过插件加载</param>
-        public static void ReadAll(bool SkipLoadingPlugins = false)
+        /// <param name="skipLoadingPlugins">跳过插件加载</param>
+        public static void ReadAll(bool skipLoadingPlugins = false)
         {
             ReadRegex();
             ReadMember();
             ReadSettings();
-            if (!SkipLoadingPlugins)
+            if (!skipLoadingPlugins)
             {
                 System.Threading.Tasks.Task.Run(JSPluginManager.Load);
             }
@@ -66,49 +68,49 @@ namespace Serein.Base
         /// <summary>
         /// 读取正则文件
         /// </summary>
-        /// <param name="FileName">路径</param>
-        public static void ReadRegex(string FileName = null)
+        /// <param name="filename">路径</param>
+        public static void ReadRegex(string filename = null)
         {
-            FileName ??= GetPath("data", "regex.json");
-            if (File.Exists(FileName))
+            filename ??= GetPath("data", "regex.json");
+            if (File.Exists(filename))
             {
-                StreamReader Reader = new(FileName, Encoding.UTF8);
-                if (FileName.ToUpper().EndsWith(".TSV"))
+                StreamReader streamReader = new(filename, Encoding.UTF8);
+                if (filename.ToUpper().EndsWith(".TSV"))
                 {
-                    string Line;
-                    List<Regex> Items = new();
-                    while ((Line = Reader.ReadLine()) != null)
+                    string line;
+                    List<Regex> list = new();
+                    while ((line = streamReader.ReadLine()) != null)
                     {
                         Regex Item = new();
-                        Item.FromText(Line);
+                        Item.FromText(line);
                         if (!Item.Check())
                         {
                             continue;
                         }
-                        Items.Add(Item);
+                        list.Add(Item);
                     }
-                    Global.UpdateRegexItems(Items);
+                    Global.UpdateRegexItems(list);
                 }
-                else if (FileName.ToUpper().EndsWith(".JSON"))
+                else if (filename.ToUpper().EndsWith(".JSON"))
                 {
-                    string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text))
+                    string text = streamReader.ReadToEnd();
+                    if (string.IsNullOrEmpty(text))
                     {
                         return;
                     }
                     try
                     {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "REGEX")
+                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                        if (jsonObject["type"].ToString().ToUpper() != "REGEX")
                         {
                             return;
                         }
-                        Global.UpdateRegexItems(((JArray)JsonObject["data"]).ToObject<List<Regex>>());
+                        Global.UpdateRegexItems(((JArray)jsonObject["data"]).ToObject<List<Regex>>());
                     }
                     catch { }
                 }
-                Reader.Close();
-                Reader.Dispose();
+                streamReader.Close();
+                streamReader.Dispose();
             }
             else
             {
@@ -125,13 +127,13 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new()
+            JObject jsonObject = new()
             {
                 { "type", "REGEX" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
                 { "data", JArray.FromObject(Global.RegexItems) }
             };
-            File.WriteAllText(GetPath("data", "regex.json"), ListJObject.ToString());
+            File.WriteAllText(GetPath("data", "regex.json"), jsonObject.ToString());
         }
 
         /// <summary>
@@ -153,16 +155,16 @@ namespace Serein.Base
                 {
                     try
                     {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "MEMBERS")
+                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Text);
+                        if (jsonObject["type"].ToString().ToUpper() != "MEMBERS")
                         {
                             return;
                         }
-                        List<Member> Items = ((JArray)JsonObject["data"]).ToObject<List<Member>>();
-                        Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
-                        Dictionary<long, Member> _Dictionary = new();
-                        Items.ForEach((x) => _Dictionary.Add(x.ID, x));
-                        Global.UpdateMemberItems(_Dictionary);
+                        List<Member> list = ((JArray)jsonObject["data"]).ToObject<List<Member>>();
+                        list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
+                        Dictionary<long, Member> dictionary = new();
+                        list.ForEach((x) => dictionary.Add(x.ID, x));
+                        Global.UpdateMemberItems(dictionary);
                     }
                     catch { }
                 }
@@ -178,10 +180,10 @@ namespace Serein.Base
         /// </summary>
         public static void SaveMember()
         {
-            List<Member> Items = Global.MemberItems.Values.ToList();
-            Items.Sort((Item1, Item2) => Item1.ID > Item2.ID ? 1 : -1);
+            List<Member> list = Global.MemberItems.Values.ToList();
+            list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
             Dictionary<long, Member> dictionary = new();
-            Items.ForEach((x) => dictionary.Add(x.ID, x));
+            list.ForEach((x) => dictionary.Add(x.ID, x));
             Global.UpdateMemberItems(dictionary);
             if (JsonConvert.SerializeObject(dictionary) == OldMembers)
             {
@@ -192,15 +194,15 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new()
+            JObject jsonObject = new()
             {
                 { "type", "MEMBERS" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Items) }
+                { "data", JArray.FromObject(list) }
             };
             File.WriteAllText(
                 GetPath("data", "members.json"),
-                ListJObject.ToString(),
+                jsonObject.ToString(),
                 Encoding.UTF8
                 );
         }
@@ -208,51 +210,58 @@ namespace Serein.Base
         /// <summary>
         /// 读取任务文件
         /// </summary>
-        /// <param name="FileName">路径</param>
-        public static void ReadTask(string FileName = null)
+        /// <param name="filename">路径</param>
+        public static void ReadTask(string filename = null)
         {
-            FileName ??= GetPath("data", "task.json");
-            if (File.Exists(FileName))
+            filename ??= GetPath("data", "task.json");
+            if (File.Exists(filename))
             {
-                StreamReader Reader = new(FileName, Encoding.UTF8);
-                if (FileName.ToUpper().EndsWith(".TSV"))
+                StreamReader streamReader = new(filename, Encoding.UTF8);
+                if (filename.ToUpper().EndsWith(".TSV"))
                 {
-                    string Line;
-                    List<Task> Items = new();
-                    while ((Line = Reader.ReadLine()) != null)
+                    string line;
+                    List<Task> items = new();
+                    while ((line = streamReader.ReadLine()) != null)
                     {
-                        Task Item = new();
-                        Item.ToObject(Line);
-                        if (!Item.Check())
+                        Task task = new();
+                        task.FromText(line);
+                        if (!task.Check())
                         {
                             continue;
                         }
-                        Items.Add(Item);
+                        items.Add(task);
                     }
-                    Global.UpdateTaskItems(Items);
+                    Global.UpdateTaskItems(items);
                 }
-                else if (FileName.ToUpper().EndsWith(".JSON"))
+                else if (filename.ToUpper().EndsWith(".JSON"))
                 {
-                    string Text = Reader.ReadToEnd();
-                    if (string.IsNullOrEmpty(Text)) { return; }
+                    string text = streamReader.ReadToEnd();
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        return;
+                    }
                     try
                     {
-                        JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (JsonObject["type"].ToString().ToUpper() != "TASK")
+                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                        if (jsonObject["type"].ToString().ToUpper() != "TASK")
                         {
                             return;
                         }
-                        Global.UpdateTaskItems(((JArray)JsonObject["data"]).ToObject<List<Task>>());
+                        Global.UpdateTaskItems(((JArray)jsonObject["data"]).ToObject<List<Task>>());
                         lock (Global.TaskItems)
+                        {
                             Global.TaskItems.ForEach((Task) => Task.Check());
+                        }
                     }
                     catch { }
                 }
-                Reader.Close();
-                Reader.Dispose();
+                streamReader.Close();
+                streamReader.Dispose();
             }
             else
+            {
                 SaveTask();
+            }
         }
 
         /// <summary>
@@ -264,13 +273,13 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(GetPath("data"));
             }
-            JObject ListJObject = new()
+            JObject jsonObject = new()
             {
                 { "type", "TASK" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
                 { "data", JArray.FromObject(Global.TaskItems) }
             };
-            File.WriteAllText(GetPath("data", "task.json"), ListJObject.ToString());
+            File.WriteAllText(GetPath("data", "task.json"), jsonObject.ToString());
         }
 
         /// <summary>
@@ -308,6 +317,7 @@ namespace Serein.Base
             if (File.Exists(GetPath("settings", "Event.json")))
             {
                 Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(GetPath("settings", "Event.json"), Encoding.UTF8)) ?? new Settings.Event();
+                File.WriteAllText(GetPath("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
                 SaveEventSetting();
             }
             else
@@ -343,10 +353,10 @@ namespace Serein.Base
         /// </summary>
         public static void SaveSettings()
         {
-            string NewSettings = JsonConvert.SerializeObject(Global.Settings);
-            if (NewSettings != OldSettings)
+            string newSettings = JsonConvert.SerializeObject(Global.Settings);
+            if (newSettings != OldSettings)
             {
-                OldSettings = NewSettings;
+                OldSettings = newSettings;
                 File.WriteAllText(GetPath("settings", "Server.json"), JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
                 File.WriteAllText(GetPath("settings", "Bot.json"), JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
                 File.WriteAllText(GetPath("settings", "Serein.json"), JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
@@ -359,7 +369,9 @@ namespace Serein.Base
         public static void SaveEventSetting()
         {
             lock (Global.Settings.Event)
+            {
                 File.WriteAllText(GetPath("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+            }
         }
     }
 }

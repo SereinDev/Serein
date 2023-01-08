@@ -21,15 +21,15 @@ namespace Serein.Base
         /// <summary>
         /// 解压控制台文件
         /// </summary>
-        /// <param name="Resource">资源</param>
-        /// <param name="Name">文件名</param>
-        private static void ExtractConsoleFile(string Resource, string Name)
+        /// <param name="resource">资源</param>
+        /// <param name="name">文件名</param>
+        private static void ExtractConsoleFile(string resource, string name)
         {
             if (!Directory.Exists(IO.GetPath("console")))
             {
                 Directory.CreateDirectory(IO.GetPath("console"));
             }
-            File.WriteAllText(IO.GetPath("console", Name), Resource, Encoding.UTF8);
+            File.WriteAllText(IO.GetPath("console", name), resource, Encoding.UTF8);
         }
     }
 }

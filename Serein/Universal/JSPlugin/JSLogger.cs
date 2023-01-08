@@ -6,25 +6,25 @@ namespace Serein.JSPlugin
 {
     internal class JSLogger
     {
-        public JSLogger(string Name)
+        public JSLogger(string name)
         {
-            this.Name = Name ?? throw new ArgumentNullException(nameof(Name));
+            this.Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         private string Name { get; set; }
 
 #pragma warning disable IDE1006
-        public void info(object Line)
-            => Logger.Out(LogType.Plugin_Info, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void info(object line)
+            => Logger.Out(LogType.Plugin_Info, $"[{Name}]", (line ?? string.Empty).ToString());
 
-        public void warn(object Line)
-            => Logger.Out(LogType.Plugin_Warn, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void warn(object line)
+            => Logger.Out(LogType.Plugin_Warn, $"[{Name}]", (line ?? string.Empty).ToString());
 
-        public void error(object Line)
-            => Logger.Out(LogType.Plugin_Error, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void error(object line)
+            => Logger.Out(LogType.Plugin_Error, $"[{Name}]", (line ?? string.Empty).ToString());
 
-        public void debug(object Line)
-            => Logger.Out(LogType.Debug, $"[{Name}]", (Line ?? string.Empty).ToString());
+        public void debug(object line)
+            => Logger.Out(LogType.Debug, $"[{Name}]", (line ?? string.Empty).ToString());
 #pragma warning restore IDE1006
     }
 }

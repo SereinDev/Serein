@@ -39,29 +39,29 @@ namespace Serein.Base
         /// <summary>
         /// 异步Get
         /// </summary>
-        /// <param name="Url">链接</param>
-        /// <param name="Accept">Header - Accept</param>
-        /// <param name="UserAgent">Header - UserAgent</param>
+        /// <param name="url">链接</param>
+        /// <param name="accept">Header - Accept</param>
+        /// <param name="userAgent">Header - UserAgent</param>
         /// <returns>正文</returns>
-        public static async Task<string> Get(string Url, string Accept = null, string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
+        public static async Task<string> Get(string url, string accept = null, string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
         {
-            HttpClient Client = new HttpClient();
-            if (Accept != null)
+            HttpClient httpClient = new HttpClient();
+            if (accept != null)
             {
-                Client.DefaultRequestHeaders.Accept.Clear();
-                Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Accept));
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(accept));
             }
-            Client.DefaultRequestHeaders.AcceptCharset.Clear();
-            Client.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
-            Client.DefaultRequestHeaders.Add("user-agent", UserAgent);
-            HttpResponseMessage Response = await Client.GetAsync(Url);
+            httpClient.DefaultRequestHeaders.AcceptCharset.Clear();
+            httpClient.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
+            httpClient.DefaultRequestHeaders.Add("user-agent", userAgent);
+            HttpResponseMessage response = await httpClient.GetAsync(url);
             if (Global.Settings.Serein.DevelopmentTool.DetailDebug)
             {
-                Logger.Out(Items.LogType.Debug, "Headers\n", Response.Headers.ToString());
-                Logger.Out(Items.LogType.Debug, "Content\n", await Response.Content.ReadAsStringAsync());
+                Logger.Out(Items.LogType.Debug, "Headers\n", response.Headers.ToString());
+                Logger.Out(Items.LogType.Debug, "Content\n", await response.Content.ReadAsStringAsync());
             }
-            Client.Dispose();
-            return await Response.Content.ReadAsStringAsync();
+            httpClient.Dispose();
+            return await response.Content.ReadAsStringAsync();
         }
 
         /// <summary>
@@ -79,18 +79,18 @@ namespace Serein.Base
                 try
                 {
                     string JSON = Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").GetAwaiter().GetResult();
-                    string Version = ((JObject)JsonConvert.DeserializeObject(JSON))["tag_name"].ToString();
-                    if (LastVersion != Version)
+                    string version = ((JObject)JsonConvert.DeserializeObject(JSON))["tag_name"].ToString();
+                    if (LastVersion != version)
                     {
-                        if (Version != Global.VERSION)
+                        if (version != Global.VERSION)
                         {
-                            Logger.Out(Items.LogType.Version_New, Version);
+                            Logger.Out(Items.LogType.Version_New, version);
                         }
                         else
                         {
-                            Logger.Out(Items.LogType.Version_Latest, Version);
+                            Logger.Out(Items.LogType.Version_Latest, version);
                         }
-                        LastVersion = Version;
+                        LastVersion = version;
                     }
                 }
                 catch (Exception e)

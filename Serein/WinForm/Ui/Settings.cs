@@ -47,6 +47,7 @@ namespace Serein.Ui
             }
         }
 
+        #region 服务器
         private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
            => Global.Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
         private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
@@ -69,104 +70,6 @@ namespace Serein.Ui
             => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
         private void SettingServerLineTerminator_TextChanged(object sender, EventArgs e)
             => Global.Settings.Server.LineTerminator = SettingServerLineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
-
-        private void SettingBotUri_TextChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.Uri = SettingBotUri.Text;
-        private void SettingBotAuthorization_Enter(object sender, EventArgs e)
-            => SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
-        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
-        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
-        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
-        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
-        private void SettingBotEnbaleParseAt_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnbaleParseAt = SettingBotEnbaleParseAt.Checked;
-
-        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-        private void SettingSereinAbout_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/More/About") { UseShellExecute = true });
-        private void SettingSereinPage_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
-        private void SettingSereinTutorial_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/Install") { UseShellExecute = true });
-        private void SettingSereinDownload_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
-        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
-        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
-
-        private void SettingBotAuthorization_Leave(object sender, EventArgs e)
-        {
-            Global.Settings.Bot.Authorization = SettingBotAuthorization.Text;
-            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text, ".", "*");
-        }
-
-        private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(SettingBotGroupList.Text))
-            {
-                Global.Settings.Bot.GroupList.Clear();
-            }
-            else if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
-            {
-                List<long> list = new List<long>();
-                foreach (string qq in SettingBotGroupList.Text.Split(';'))
-                {
-                    if (qq.Length >= 6 && qq.Length <= 16 && long.TryParse(qq, out long qq_))
-                    {
-                        list.Add(qq_);
-                    }
-                }
-                Global.Settings.Bot.GroupList = list;
-            }
-            string Text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
-            Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", string.Empty);
-            if (Text != SettingBotGroupList.Text)
-            {
-                SettingBotGroupList.Text = Text;
-                SettingBotGroupList.Focus();
-                SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
-                SettingBotGroupList.ScrollToCaret();
-            }
-        }
-
-        private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(SettingBotPermissionList.Text))
-            {
-                Global.Settings.Bot.PermissionList.Clear();
-            }
-            else if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
-            {
-                List<long> list = new List<long>();
-                foreach (string qq in SettingBotPermissionList.Text.Split(';'))
-                {
-                    if (qq.Length >= 5 && qq.Length <= 13 && long.TryParse(qq, out long qq_))
-                    {
-                        list.Add(qq_);
-                    }
-                }
-                Global.Settings.Bot.PermissionList = list;
-            }
-            string Text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
-            Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", string.Empty);
-            if (Text != SettingBotPermissionList.Text)
-            {
-                SettingBotPermissionList.Text = Text;
-                SettingBotPermissionList.Focus();
-                SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
-                SettingBotPermissionList.ScrollToCaret();
-            }
-        }
 
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
@@ -195,6 +98,111 @@ namespace Serein.Ui
                 SettingServerStopCommand.Text = "stop";
             }
         }
+
+        #endregion
+        #region Serein
+        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+        private void SettingSereinAbout_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/More/About") { UseShellExecute = true });
+        private void SettingSereinPage_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
+        private void SettingSereinTutorial_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Tutorial/Install") { UseShellExecute = true });
+        private void SettingSereinDownload_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
+        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)
+            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
+        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
+        
+        #endregion
+        #region 机器人
+        
+        private void SettingBotUri_TextChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.Uri = SettingBotUri.Text;
+        private void SettingBotAuthorization_Enter(object sender, EventArgs e)
+            => SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
+        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
+        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
+        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
+        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
+        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
+        private void SettingBotEnbaleParseAt_CheckedChanged(object sender, EventArgs e)
+            => Global.Settings.Bot.EnbaleParseAt = SettingBotEnbaleParseAt.Checked;
+
+        private void SettingBotAuthorization_Leave(object sender, EventArgs e)
+        {
+            Global.Settings.Bot.Authorization = SettingBotAuthorization.Text;
+            SettingBotAuthorization.Text = Regex.Replace(SettingBotAuthorization.Text, ".", "*");
+        }
+
+        private void SettingBotGroupList_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SettingBotGroupList.Text))
+            {
+                Global.Settings.Bot.GroupList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
+            {
+                List<long> list = new List<long>();
+                foreach (string qq in SettingBotGroupList.Text.Split(';'))
+                {
+                    if (qq.Length >= 6 && qq.Length <= 16 && long.TryParse(qq, out long qq_))
+                    {
+                        list.Add(qq_);
+                    }
+                }
+                Global.Settings.Bot.GroupList = list;
+            }
+            string text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
+            text = Regex.Replace(text, @";+", ";");
+            text = Regex.Replace(text, "^;", string.Empty);
+            if (text != SettingBotGroupList.Text)
+            {
+                SettingBotGroupList.Text = text;
+                SettingBotGroupList.Focus();
+                SettingBotGroupList.Select(SettingBotGroupList.TextLength, 0);
+                SettingBotGroupList.ScrollToCaret();
+            }
+        }
+
+        private void SettingBotPermissionList_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SettingBotPermissionList.Text))
+            {
+                Global.Settings.Bot.PermissionList.Clear();
+            }
+            else if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
+            {
+                List<long> list = new List<long>();
+                foreach (string qq in SettingBotPermissionList.Text.Split(';'))
+                {
+                    if (qq.Length >= 5 && qq.Length <= 13 && long.TryParse(qq, out long qq_))
+                    {
+                        list.Add(qq_);
+                    }
+                }
+                Global.Settings.Bot.PermissionList = list;
+            }
+            string text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
+            text = Regex.Replace(text, @";+", ";");
+            text = Regex.Replace(text, "^;", string.Empty);
+            if (text != SettingBotPermissionList.Text)
+            {
+                SettingBotPermissionList.Text = text;
+                SettingBotPermissionList.Focus();
+                SettingBotPermissionList.Select(SettingBotPermissionList.TextLength, 0);
+                SettingBotPermissionList.ScrollToCaret();
+            }
+        }
+        #endregion
+        #region 事件
 
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -293,7 +301,7 @@ namespace Serein.Ui
 
         private void SettingSereinVersion_Click(object sender, EventArgs e)
         {
-            Ookii.Dialogs.Wpf.TaskDialog TaskDialog = new Ookii.Dialogs.Wpf.TaskDialog
+            Ookii.Dialogs.Wpf.TaskDialog taskDialog = new Ookii.Dialogs.Wpf.TaskDialog
             {
                 Buttons = {
                         new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
@@ -311,8 +319,9 @@ namespace Serein.Ui
                 FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
                 EnableHyperlinks = true
             };
-            TaskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
-            TaskDialog.ShowDialog();
+            taskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
+            taskDialog.ShowDialog();
         }
+        #endregion
     }
 }

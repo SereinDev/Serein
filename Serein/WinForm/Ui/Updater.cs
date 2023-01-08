@@ -20,7 +20,7 @@ namespace Serein.Ui
                 else if (ServerManager.Status)
                 {
                     PanelInfoTime2_Update(ServerManager.GetTime());
-                    PanelInfoCPU2_Update($"{ServerManager.CPUUsage:N2}%");
+                    PanelInfoCPU2_Update($"{ServerManager.CPUUsage:N!}%");
                     PanelInfoStatus2_Update("已启动");
                     Ui_Update($"Serein | {ServerManager.StartFileName}");
                     if (ServerManager.Finished)
@@ -57,7 +57,7 @@ namespace Serein.Ui
                     }
                     else
                     {
-                        BotInfoTime2_Update($"{t.TotalHours / 24:N2}d");
+                        BotInfoTime2_Update($"{t.TotalHours / 24:N!}d");
                     }
                 }
                 else

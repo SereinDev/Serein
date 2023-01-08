@@ -11,8 +11,8 @@ namespace Serein.Settings
         public bool EnbaleOutputData;
         public bool EnbaleParseAt = true;
         public bool GivePermissionToAllAdmin;
-        public List<long> GroupList = new List<long>();
-        public List<long> PermissionList = new List<long>();
+        public List<long> GroupList = new();
+        public List<long> PermissionList = new();
         public string Uri = "127.0.0.1:6700";
     }
 }

@@ -1,9 +1,11 @@
 ﻿#if !CONSOLE
 using Ookii.Dialogs.Wpf;
 #endif 
+#if !LINUX
+using System.Diagnostics;
+#endif
 using Serein.Server;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +37,7 @@ namespace Serein.Base
             {
                 Directory.CreateDirectory(IO.GetPath("logs", "crash"));
             }
-            string ExceptionMsg = MergeException(e);
+            string exceptionMsg = MergeException(e);
             try
             {
                 File.AppendAllText(
@@ -46,7 +48,7 @@ namespace Serein.Base
                     "\n" +
                     Global.BuildInfo.ToString() +
                     "\n" +
-                    ExceptionMsg +
+                    exceptionMsg +
                     "\n\n",
                     Encoding.UTF8
                     );
@@ -56,12 +58,12 @@ namespace Serein.Base
 #if CONSOLE
             Logger.Out(Items.LogType.Error,
                 $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
-                $"{ExceptionMsg}\r\n\r\n" +
+                $"{exceptionMsg}\r\n\r\n" +
                 $"崩溃日志已保存在 {IO.GetPath("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\r\n" +
                 "反馈此问题可以帮助作者更好的改进Serein");
 #else
 
-            TaskDialog TaskDialog = new()
+            TaskDialog taskDialog = new()
             {
                 Buttons = { new TaskDialogButton(ButtonType.Ok) },
                 MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
@@ -77,10 +79,10 @@ namespace Serein.Base
                 Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
                 FooterIcon = TaskDialogIcon.Information,
                 EnableHyperlinks = true,
-                ExpandedInformation = ExceptionMsg
+                ExpandedInformation = exceptionMsg
             };
-            TaskDialog.HyperlinkClicked += HyperlinkClicked;
-            TaskDialog.ShowDialog();
+            taskDialog.HyperlinkClicked += HyperlinkClicked;
+            taskDialog.ShowDialog();
 #endif
         }
 
@@ -99,13 +101,13 @@ namespace Serein.Base
         /// <returns>错误信息</returns>
         public static string MergeException(Exception e)
         {
-            string Message = string.Empty;
+            string message = string.Empty;
             while (e != null)
             {
-                Message = e.ToString() + "\r\n" + Message;
+                message = e.ToString() + "\r\n" + message;
                 e = e.InnerException;
             }
-            return Message;
+            return message;
         }
     }
 }

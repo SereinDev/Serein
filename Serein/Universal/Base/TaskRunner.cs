@@ -28,11 +28,11 @@ namespace Serein.Base
         /// </summary>
         private static void Run()
         {
-            foreach (Task Item in Global.TaskItems)
+            foreach (Task task in Global.TaskItems)
             {
-                if (Item.Enable && DateTime.Compare(Item.NextTime, DateTime.Now) <= 0)
+                if (task.Enable && DateTime.Compare(task.NextTime, DateTime.Now) <= 0)
                 {
-                    Item.Run();
+                    task.Run();
                 }
             }
         }

@@ -100,13 +100,13 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 设置事件
         /// </summary>
-        /// <param name="Type">事件类型</param>
-        /// <param name="Function">执行函数</param>
+        /// <param name="type">事件类型</param>
+        /// <param name="delegate">执行函数</param>
         /// <returns>设置结果</returns>
-        public bool SetListener(EventType Type, Delegate Function)
+        public bool SetListener(EventType type, Delegate @delegate)
         {
-            Logger.Out(LogType.Debug, Type);
-            switch (Type)
+            Logger.Out(LogType.Debug, type);
+            switch (type)
             {
                 case EventType.ServerStart:
                 case EventType.ServerStop:
@@ -121,17 +121,17 @@ namespace Serein.JSPlugin
                 case EventType.ReceivePacket:
                 case EventType.SereinClose:
                 case EventType.PluginsReload:
-                    if (EventDict.ContainsKey(Type))
+                    if (EventDict.ContainsKey(type))
                     {
-                        EventDict[Type] = Function;
+                        EventDict[type] = @delegate;
                     }
                     else
                     {
-                        EventDict.Add(Type, Function);
+                        EventDict.Add(type, @delegate);
                     }
                     break;
                 default:
-                    Logger.Out(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", Type);
+                    Logger.Out(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
                     return false;
             }
             return true;
@@ -200,9 +200,9 @@ namespace Serein.JSPlugin
                 }
                 catch (TargetInvocationException e)
                 {
-                    if (e.InnerException is JavaScriptException JSException)
+                    if (e.InnerException is JavaScriptException javaScriptException)
                     {
-                        Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{Type}时出现异常： {JSException.Message}\n{JSException.JavaScriptStackTrace}");
+                        Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{Type}时出现异常： {javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}");
                     }
                     else
                     {

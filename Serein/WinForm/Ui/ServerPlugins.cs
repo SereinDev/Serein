@@ -13,14 +13,14 @@ namespace Serein.Ui
     {
         private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            OpenFileDialog Dialog = new OpenFileDialog
+            OpenFileDialog dialog = new()
             {
                 Filter = "所有文件|*.*",
                 Multiselect = true
             };
-            if (Dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                PluginManager.Add(Dialog.FileNames);
+                PluginManager.Add(dialog.FileNames);
             }
             LoadPlugins();
         }
@@ -68,55 +68,55 @@ namespace Serein.Ui
             {
                 PluginList.BeginUpdate();
                 PluginList.Clear();
-                string[] Files = PluginManager.Get();
-                ListViewGroup PluginGroupJs = new ListViewGroup("Js", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDll = new ListViewGroup("Dll", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupJar = new ListViewGroup("Jar", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupPy = new ListViewGroup("Py", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupLua = new ListViewGroup("Lua", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupTs = new ListViewGroup("Ts", HorizontalAlignment.Left);
-                ListViewGroup PluginGroupDisable = new ListViewGroup("已禁用", HorizontalAlignment.Left);
-                PluginList.Groups.Add(PluginGroupJs);
-                PluginList.Groups.Add(PluginGroupDll);
-                PluginList.Groups.Add(PluginGroupJar);
-                PluginList.Groups.Add(PluginGroupPy);
-                PluginList.Groups.Add(PluginGroupLua);
-                PluginList.Groups.Add(PluginGroupTs);
-                PluginList.Groups.Add(PluginGroupDisable);
-                foreach (string PluginFile in Files)
+                string[] files = PluginManager.Get();
+                ListViewGroup pluginGroupJs = new("Js", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupDll = new("Dll", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupJar = new("Jar", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupPy = new("Py", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupLua = new("Lua", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupTs = new("Ts", HorizontalAlignment.Left);
+                ListViewGroup pluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
+                PluginList.Groups.Add(pluginGroupJs);
+                PluginList.Groups.Add(pluginGroupDll);
+                PluginList.Groups.Add(pluginGroupJar);
+                PluginList.Groups.Add(pluginGroupPy);
+                PluginList.Groups.Add(pluginGroupLua);
+                PluginList.Groups.Add(pluginGroupTs);
+                PluginList.Groups.Add(pluginGroupDisable);
+                foreach (string file in files)
                 {
-                    ListViewItem Item = new ListViewItem
+                    ListViewItem listViewItem = new()
                     {
-                        Text = Regex.Replace(Path.GetFileName(PluginFile), @"\.lock$", string.Empty)
+                        Text = Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty)
                     };
-                    switch (Path.GetExtension(PluginFile.ToLower()))
+                    switch (Path.GetExtension(file.ToLower()))
                     {
                         case ".js":
-                            PluginGroupJs.Items.Add(Item);
+                            pluginGroupJs.Items.Add(listViewItem);
                             break;
                         case ".dll":
-                            PluginGroupDll.Items.Add(Item);
+                            pluginGroupDll.Items.Add(listViewItem);
                             break;
                         case ".jar":
-                            PluginGroupJar.Items.Add(Item);
+                            pluginGroupJar.Items.Add(listViewItem);
                             break;
                         case ".py":
-                            PluginGroupPy.Items.Add(Item);
+                            pluginGroupPy.Items.Add(listViewItem);
                             break;
                         case ".lua":
-                            PluginGroupLua.Items.Add(Item);
+                            pluginGroupLua.Items.Add(listViewItem);
                             break;
                         case ".ts":
-                            PluginGroupTs.Items.Add(Item);
+                            pluginGroupTs.Items.Add(listViewItem);
                             break;
                         case ".lock":
-                            Item.ForeColor = Color.Gray;
-                            PluginGroupDisable.Items.Add(Item);
+                            listViewItem.ForeColor = Color.Gray;
+                            pluginGroupDisable.Items.Add(listViewItem);
                             break;
                         default:
                             continue;
                     }
-                    PluginList.Items.Add(Item);
+                    PluginList.Items.Add(listViewItem);
                 }
                 PluginList.EndUpdate();
             }
@@ -128,12 +128,12 @@ namespace Serein.Ui
         /// <returns>插件路径列表</returns>
         private List<string> GetSelectedPlugins()
         {
-            List<string> Files = new List<string>();
-            foreach (ListViewItem Item in PluginList.SelectedItems)
+            List<string> files = new List<string>();
+            foreach (ListViewItem listViewItem in PluginList.SelectedItems)
             {
-                Files.Add(PluginManager.BasePath + "\\" + Item.Text + (Item.ForeColor == Color.Gray ? ".lock" : string.Empty));
+                files.Add(PluginManager.BasePath + "\\" + listViewItem.Text + (listViewItem.ForeColor == Color.Gray ? ".lock" : string.Empty));
             }
-            return Files;
+            return files;
         }
     }
 }

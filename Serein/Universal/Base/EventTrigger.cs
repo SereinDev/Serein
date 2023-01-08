@@ -9,47 +9,47 @@ namespace Serein.Base
         /// <summary>
         /// 触发指定事件
         /// </summary>
-        /// <param name="Type">类型</param>
-        public static void Trigger(Items.EventType Type)
+        /// <param name="type">类型</param>
+        public static void Trigger(Items.EventType type)
         {
-            Logger.Out(Items.LogType.Debug, "Trigger:" + Type);
-            string[] CommandGroup = Array.Empty<string>();
-            switch (Type)
+            Logger.Out(Items.LogType.Debug, "Trigger:" + type);
+            string[] commandGroup = Array.Empty<string>();
+            switch (type)
             {
                 case Items.EventType.ServerStart:
-                    CommandGroup = Global.Settings.Event.ServerStart;
+                    commandGroup = Global.Settings.Event.ServerStart;
                     break;
                 case Items.EventType.ServerStop:
-                    CommandGroup = Global.Settings.Event.ServerStop;
+                    commandGroup = Global.Settings.Event.ServerStop;
                     break;
                 case Items.EventType.ServerExitUnexpectedly:
-                    CommandGroup = Global.Settings.Event.ServerExitUnexpectedly;
+                    commandGroup = Global.Settings.Event.ServerExitUnexpectedly;
                     break;
                 case Items.EventType.SereinCrash:
-                    CommandGroup = Global.Settings.Event.SereinCrash;
+                    commandGroup = Global.Settings.Event.SereinCrash;
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
+                    Logger.Out(Items.LogType.Debug, "未知的事件名", type);
                     break;
             }
-            foreach (string Command in CommandGroup)
+            foreach (string command in commandGroup)
             {
-                Base.Command.Run(4, Command);
+                Base.Command.Run(4, command);
             }
         }
 
         /// <summary>
         /// 触发指定事件
         /// </summary>
-        /// <param name="Type">类型</param>
-        /// <param name="GroupId">群聊ID</param>
-        /// <param name="UserId">用户ID</param>
-        /// <param name="Motd">Motd对象</param>
-        public static void Trigger(Items.EventType Type, long GroupId, long UserId, Motd Motd = null)
+        /// <param name="type">类型</param>
+        /// <param name="groupId">群聊ID</param>
+        /// <param name="userId">用户ID</param>
+        /// <param name="motd">Motd对象</param>
+        public static void Trigger(Items.EventType type, long groupId, long userId, Motd motd = null)
         {
-            Logger.Out(Items.LogType.Debug, "Trigger:" + Type);
-            string[] CommandGroup = Array.Empty<string>();
-            switch (Type)
+            Logger.Out(Items.LogType.Debug, "Trigger:" + type);
+            string[] commandGroup = Array.Empty<string>();
+            switch (type)
             {
                 case Items.EventType.BindingSucceed:
                 case Items.EventType.BindingFailDueToOccupation:
@@ -62,96 +62,96 @@ namespace Serein.Base
                 case Items.EventType.GroupPoke:
                 case Items.EventType.PermissionDeniedFromPrivateMsg:
                 case Items.EventType.PermissionDeniedFromGroupMsg:
-                    switch (Type)
+                    switch (type)
                     {
                         case Items.EventType.BindingSucceed:
-                            CommandGroup = Global.Settings.Event.BindingSucceed;
+                            commandGroup = Global.Settings.Event.BindingSucceed;
                             break;
                         case Items.EventType.BindingFailDueToOccupation:
-                            CommandGroup = Global.Settings.Event.BindingFailDueToOccupation;
+                            commandGroup = Global.Settings.Event.BindingFailDueToOccupation;
                             break;
                         case Items.EventType.BindingFailDueToInvalid:
-                            CommandGroup = Global.Settings.Event.BindingFailDueToInvalid;
+                            commandGroup = Global.Settings.Event.BindingFailDueToInvalid;
                             break;
                         case Items.EventType.BindingFailDueToAlreadyBinded:
-                            CommandGroup = Global.Settings.Event.BindingFailDueToAlreadyBinded;
+                            commandGroup = Global.Settings.Event.BindingFailDueToAlreadyBinded;
                             break;
                         case Items.EventType.UnbindingSucceed:
-                            CommandGroup = Global.Settings.Event.UnbindingSucceed;
+                            commandGroup = Global.Settings.Event.UnbindingSucceed;
                             break;
                         case Items.EventType.UnbindingFail:
-                            CommandGroup = Global.Settings.Event.UnbindingFail;
+                            commandGroup = Global.Settings.Event.UnbindingFail;
                             break;
                         case Items.EventType.GroupIncrease:
-                            CommandGroup = Global.Settings.Event.GroupIncrease;
+                            commandGroup = Global.Settings.Event.GroupIncrease;
                             break;
                         case Items.EventType.GroupDecrease:
-                            CommandGroup = Global.Settings.Event.GroupDecrease;
+                            commandGroup = Global.Settings.Event.GroupDecrease;
                             break;
                         case Items.EventType.GroupPoke:
-                            CommandGroup = Global.Settings.Event.GroupPoke;
+                            commandGroup = Global.Settings.Event.GroupPoke;
                             break;
                         case Items.EventType.PermissionDeniedFromPrivateMsg:
-                            CommandGroup = Global.Settings.Event.PermissionDeniedFromPrivateMsg;
+                            commandGroup = Global.Settings.Event.PermissionDeniedFromPrivateMsg;
                             break;
                         case Items.EventType.PermissionDeniedFromGroupMsg:
-                            CommandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
+                            commandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
                             break;
                         default:
-                            Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
+                            Logger.Out(Items.LogType.Debug, "未知的事件名", type);
                             break;
                     }
-                    foreach (string Command in CommandGroup)
+                    foreach (string command in commandGroup)
                     {
                         Base.Command.Run(
                             4,
-                            Regex.Replace(Command, "%ID%", UserId.ToString(), RegexOptions.IgnoreCase),
-                            GroupId: GroupId
+                            Regex.Replace(command, "%ID%", userId.ToString(), RegexOptions.IgnoreCase),
+                            groupId: groupId
                             );
                     }
                     break;
                 case Items.EventType.RequestingMotdpeSucceed:
                 case Items.EventType.RequestingMotdjeSucceed:
                 case Items.EventType.RequestingMotdFail:
-                    switch (Type)
+                    switch (type)
                     {
                         case Items.EventType.RequestingMotdpeSucceed:
-                            CommandGroup = Global.Settings.Event.RequestingMotdpeSucceed;
+                            commandGroup = Global.Settings.Event.RequestingMotdpeSucceed;
                             break;
                         case Items.EventType.RequestingMotdjeSucceed:
-                            CommandGroup = Global.Settings.Event.RequestingMotdjeSucceed;
+                            commandGroup = Global.Settings.Event.RequestingMotdjeSucceed;
                             break;
                         case Items.EventType.RequestingMotdFail:
-                            CommandGroup = Global.Settings.Event.RequestingMotdFail;
+                            commandGroup = Global.Settings.Event.RequestingMotdFail;
                             break;
                     }
-                    foreach (string Command in CommandGroup)
+                    foreach (string command in commandGroup)
                     {
-                        string Command_Copy = Command;
-                        if (Motd != null && Regex.IsMatch(Command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
+                        string command_copy = command;
+                        if (motd != null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
                         {
-                            Command_Copy = Regex.Replace(Command_Copy, "%GameMode%", Motd.GameMode, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Description%", Motd.Description, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Protocol%", Motd.Protocol, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%OnlinePlayer%", Motd.OnlinePlayer, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%MaxPlayer%", Motd.MaxPlayer, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Original%", Motd.Origin, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Delay%", Motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Version%", Motd.Version, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Favicon%", Motd.Favicon, RegexOptions.IgnoreCase);
-                            Command_Copy = Regex.Replace(Command_Copy, "%Exception%", Motd.Exception, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%OnlinePlayer%", motd.OnlinePlayer, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%MaxPlayer%", motd.MaxPlayer, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Original%", motd.Origin, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N2"), RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Exception%", motd.Exception, RegexOptions.IgnoreCase);
                         }
                         Base.Command.Run(
                             4,
-                            Command_Copy,
-                            UserId: UserId,
-                            GroupId: GroupId,
-                            DisableMotd: true
+                            command_copy,
+                            userId: userId,
+                            groupId: groupId,
+                            disableMotd: true
                             );
                     }
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "未知的事件名", Type);
+                    Logger.Out(Items.LogType.Debug, "未知的事件名", type);
                     break;
             }
         }

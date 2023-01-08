@@ -18,15 +18,15 @@ namespace Serein.Ui
             IO.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
-            foreach (Member memberItem in Global.MemberItems.Values.ToList())
+            foreach (Member member in Global.MemberItems.Values.ToList())
             {
-                ListViewItem Item = new ListViewItem();
-                Item.Text = memberItem.ID.ToString();
-                Item.SubItems.Add(Roles_Chinese[memberItem.Role]);
-                Item.SubItems.Add(memberItem.Nickname);
-                Item.SubItems.Add(memberItem.Card);
-                Item.SubItems.Add(memberItem.GameID);
-                MemberList.Items.Add(Item);
+                ListViewItem listViewItem = new();
+                listViewItem.Text = member.ID.ToString();
+                listViewItem.SubItems.Add(Roles_Chinese[member.Role]);
+                listViewItem.SubItems.Add(member.Nickname);
+                listViewItem.SubItems.Add(member.Card);
+                listViewItem.SubItems.Add(member.GameID);
+                MemberList.Items.Add(listViewItem);
             }
             MemberList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             MemberList.EndUpdate();
@@ -34,23 +34,23 @@ namespace Serein.Ui
 
         private void SaveMember()
         {
-            Dictionary<long, Member> MemberItems = new Dictionary<long, Member>();
-            foreach (ListViewItem Item in MemberList.Items)
+            Dictionary<long, Member> memberDict = new();
+            foreach (ListViewItem listViewItem in MemberList.Items)
             {
-                Member memberItem = new Member()
+                Member member = new()
                 {
-                    ID = long.TryParse(Item.Text, out long i) ? i : -1,
-                    Role = Array.IndexOf(Roles_Chinese, Item.SubItems[1].Text),
-                    Nickname = Item.SubItems[2].Text,
-                    Card = Item.SubItems[3].Text,
-                    GameID = Item.SubItems[4].Text
+                    ID = long.TryParse(listViewItem.Text, out long i) ? i : -1,
+                    Role = Array.IndexOf(Roles_Chinese, listViewItem.SubItems[1].Text),
+                    Nickname = listViewItem.SubItems[2].Text,
+                    Card = listViewItem.SubItems[3].Text,
+                    GameID = listViewItem.SubItems[4].Text
                 };
-                if (memberItem.ID != -1)
+                if (member.ID != -1)
                 {
-                    MemberItems.Add(memberItem.ID, memberItem);
+                    memberDict.Add(member.ID, member);
                 }
             }
-            Global.UpdateMemberItems(MemberItems);
+            Global.UpdateMemberItems(memberDict);
             IO.SaveMember();
         }
 

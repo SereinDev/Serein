@@ -32,33 +32,33 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Load()
         {
-            string PluginPath = IO.GetPath("plugins");
-            if (!Directory.Exists(PluginPath))
+            string pluginPath = IO.GetPath("plugins");
+            if (!Directory.Exists(pluginPath))
             {
-                Directory.CreateDirectory(PluginPath);
+                Directory.CreateDirectory(pluginPath);
             }
             else
             {
-                string[] Files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
-                foreach (string Filename in Files)
+                string[] files = Directory.GetFiles(pluginPath, "*.js", SearchOption.TopDirectoryOnly);
+                foreach (string file in files)
                 {
-                    string Namespace = Path.GetFileNameWithoutExtension(Filename);
-                    Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(Filename)}");
+                    string @namespace = Path.GetFileNameWithoutExtension(file);
+                    Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
                     try
                     {
-                        PluginDict.Add(Namespace, new Plugin(Namespace)
+                        PluginDict.Add(@namespace, new Plugin(@namespace)
                         {
-                            File = Path.GetFileName(Filename)
+                            File = Path.GetFileName(file)
                         });
-                        PluginDict[Namespace].Engine = JSEngine.Run(File.ReadAllText(Filename, Encoding.UTF8), PluginDict[Namespace].Engine, out string ExceptionMessage);
+                        PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string ExceptionMessage);
                         if (!string.IsNullOrEmpty(ExceptionMessage))
                         {
                             Logger.Out(LogType.Plugin_Error, ExceptionMessage);
-                            PluginDict[Namespace].Dispose();
+                            PluginDict[@namespace].Dispose();
                         }
                         else
                         {
-                            PluginDict[Namespace].Available = true;
+                            PluginDict[@namespace].Available = true;
                         }
                     }
                     catch (Exception e)
@@ -67,22 +67,22 @@ namespace Serein.JSPlugin
                         Logger.Out(LogType.Debug, e);
                     }
                 }
-                List<string> ErrorFiles = new();
+                List<string> failedFiles = new();
                 PluginDict.Keys.ToList().ForEach((Key) =>
                 {
                     if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.Available)
                     {
-                        ErrorFiles.Add(Value.File);
+                        failedFiles.Add(Value.File);
                     }
                 });
-                Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{Files.Length}个插件，其中{ErrorFiles.Count}个加载失败");
-                if (ErrorFiles.Count > 0)
+                Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
+                if (failedFiles.Count > 0)
                 {
-                    Logger.Out(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：  " + string.Join(" ,", ErrorFiles));
+                    Logger.Out(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：  " + string.Join(" ,", failedFiles));
                 }
-                System.Threading.Tasks.Task.Run(async () =>
+                System.Threading.Tasks.Task.Run(() =>
                 {
-                    await System.Threading.Tasks.Task.Delay(5000);
+                    System.Threading.Tasks.Task.Delay(5000).GetAwaiter().GetResult();
                     Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
                 });
             }

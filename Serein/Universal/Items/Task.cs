@@ -89,17 +89,17 @@ namespace Serein.Items
             return false;
         }
 
-        public void ToObject(string Text)
+        public void FromText(string text)
         {
-            string[] Texts = Text.Split('\t');
-            if (Texts.Length != 4)
+            string[] args = text.Split('\t');
+            if (args.Length != 4)
             {
                 return;
             }
-            Cron = Texts[0];
-            Enable = Texts[1] == "True";
-            Remark = Texts[2];
-            Command = Texts[3];
+            Cron = args[0];
+            Enable = args[1] == "True";
+            Remark = args[2];
+            Command = args[3];
             NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
         }
     }

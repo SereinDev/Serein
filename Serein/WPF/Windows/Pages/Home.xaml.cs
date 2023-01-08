@@ -29,7 +29,7 @@ namespace Serein.Windows.Pages
                 RAM_Percent_Ring.Progress = SystemInfo.RAMUsage;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
-                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N2") + "%" : "-";
+                Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N!") + "%" : "-";
                 if (ServerManager.Status && Global.Settings.Server.Type != 0)
                 {
                     Motd _Motd;

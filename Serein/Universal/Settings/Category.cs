@@ -2,10 +2,10 @@
 {
     internal class Category
     {
-        public Server Server = new Server();
-        public Matches Matches = new Matches();
-        public Bot Bot = new Bot();
-        public Serein Serein = new Serein();
-        public Event Event = new Event();
+        public Server Server = new();
+        public Matches Matches = new();
+        public Bot Bot = new();
+        public Serein Serein = new();
+        public Event Event = new();
     }
 }

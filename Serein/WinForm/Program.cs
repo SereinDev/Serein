@@ -40,7 +40,7 @@ namespace Serein
                 SetProcessDPIAware();
             }
             ResourcesManager.InitConsole();
-            Ui = new Ui.Ui();
+            Ui = new();
             Application.Run(Ui);
         }
 

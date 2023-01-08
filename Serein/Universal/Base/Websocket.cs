@@ -37,14 +37,14 @@ namespace Serein.Base
         /// <summary>
         /// 连接WS
         /// </summary>
-        /// <param name="ExecutedByUser">被用户执行</param>
-        public static void Connect(bool ExecutedByUser = true)
+        /// <param name="executedByUser">被用户执行</param>
+        public static void Connect(bool executedByUser = true)
         {
-            if (ExecutedByUser && Status)
+            if (executedByUser && Status)
             {
                 Logger.MsgBox(":(\nWebsocket已连接", "Serein", 0, 48);
             }
-            else if (ExecutedByUser && Reconnect)
+            else if (executedByUser && Reconnect)
             {
                 Logger.MsgBox(":(\n请先结束重启倒计时", "Serein", 0, 48);
             }
@@ -113,13 +113,13 @@ namespace Serein.Base
         /// <summary>
         /// 发送文本
         /// </summary>
-        /// <param name="Msg">文本</param>
+        /// <param name="text">文本</param>
         /// <returns>是否成功发送</returns>
-        public static bool Send(string Msg)
+        public static bool Send(string text)
         {
             if (Status)
             {
-                WSClient.Send(Msg);
+                WSClient.Send(text);
             }
             return Status;
         }
@@ -127,26 +127,26 @@ namespace Serein.Base
         /// <summary>
         /// 发送数据包
         /// </summary>
-        /// <param name="IsPrivate">是否私聊消息</param>
-        /// <param name="Message">消息内容</param>
-        /// <param name="Target">目标对象</param>
-        /// <param name="AutoEscape">纯文本发送</param>
+        /// <param name="isPrivate">是否私聊消息</param>
+        /// <param name="message">消息内容</param>
+        /// <param name="target">目标对象</param>
+        /// <param name="autoEscape">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool IsPrivate, string Message, object Target, bool AutoEscape = true)
+        public static bool Send(bool isPrivate, string message, object target, bool autoEscape = true)
         {
             if (Status)
             {
-                long Target_Long = long.TryParse(Target.ToString(), out long t) ? t : -1;
-                JObject ParamsJObject = new()
-                {
-                    { IsPrivate ? "user_id" : "group_id", Target_Long },
-                    { "message", Message },
-                    { "auto_escape", Global.Settings.Bot.AutoEscape && AutoEscape }
-                };
+                long targetNumber = long.TryParse(target.ToString(), out long t) ? t : -1;
                 JObject TextJObject = new()
                 {
-                    { "action", IsPrivate ? "send_private_msg" : "send_group_msg" },
-                    { "params", ParamsJObject }
+                    { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
+                    { "params", new JObject()
+                        {
+                            { isPrivate ? "user_id" : "group_id", targetNumber },
+                            { "message", message },
+                            { "auto_escape", Global.Settings.Bot.AutoEscape && autoEscape }
+                        }
+                    }
                 };
                 WSClient.Send(TextJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
@@ -154,7 +154,7 @@ namespace Serein.Base
                     Logger.Out(LogType.Bot_Send, TextJObject.ToString());
                 }
                 else
-                    Logger.Out(LogType.Bot_Send, $"{(IsPrivate ? "私聊" : "群聊")}({Target}):{Message}");
+                    Logger.Out(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
             }
             return Status;
         }

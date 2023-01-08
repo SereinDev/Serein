@@ -12,13 +12,13 @@ namespace Serein.Console
         /// <summary>
         /// 处理输入消息
         /// </summary>
-        /// <param name="Line">输入行</param>
-        public static void Process(string Line)
+        /// <param name="line">输入行</param>
+        public static void Process(string line)
         {
-            if (!ServerManager.Status || Line.StartsWith("serein"))
+            if (!ServerManager.Status || line.StartsWith("serein"))
             {
-                Line = Regex.Replace(Line, @"^serein\s?", string.Empty).ToLower();
-                switch (Line)
+                line = Regex.Replace(line, @"^serein\s?", string.Empty).ToLower();
+                switch (line)
                 {
                     case "exit":
                         if (ServerManager.Status)
@@ -95,7 +95,7 @@ namespace Serein.Console
             }
             else
             {
-                ServerManager.InputCommand(Line);
+                ServerManager.InputCommand(line);
             }
         }
     }

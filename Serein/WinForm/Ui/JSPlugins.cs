@@ -25,15 +25,15 @@ namespace Serein.Ui
             SereinPluginsList.Items.Clear();
             foreach (Plugin Item in JSPluginManager.PluginDict.Values)
             {
-                ListViewItem item = new ListViewItem(Item.Name)
+                ListViewItem listViewItem = new ListViewItem(Item.Name)
                 {
                     ForeColor = Item.Available ? ForeColor : Color.Gray,
                     Tag = Item.Namespace
                 };
-                item.SubItems.Add(Item.Version);
-                item.SubItems.Add(Item.Author);
-                item.SubItems.Add(Item.Description);
-                SereinPluginsList.Items.Add(item);
+                listViewItem.SubItems.Add(Item.Version);
+                listViewItem.SubItems.Add(Item.Author);
+                listViewItem.SubItems.Add(Item.Description);
+                SereinPluginsList.Items.Add(listViewItem);
             }
             SereinPluginsList.EndUpdate();
             SereinPluginsList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -49,10 +49,10 @@ namespace Serein.Ui
         {
             if (SereinPluginsList.SelectedItems.Count > 0)
             {
-                string Namespace = SereinPluginsList.SelectedItems[0].Tag as string ?? string.Empty;
-                if (JSPluginManager.PluginDict.ContainsKey(Namespace))
+                string @namespace = SereinPluginsList.SelectedItems[0].Tag as string ?? string.Empty;
+                if (JSPluginManager.PluginDict.ContainsKey(@namespace))
                 {
-                    JSPluginManager.PluginDict[Namespace].Dispose();
+                    JSPluginManager.PluginDict[@namespace].Dispose();
                     LoadSereinPlugin();
                 }
             }

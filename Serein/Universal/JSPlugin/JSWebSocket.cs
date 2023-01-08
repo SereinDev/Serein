@@ -43,13 +43,13 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 入口函数
         /// </summary>
-        /// <param name="Uri">ws地址</param>
-        /// <param name="Namespace">命名空间</param>
-        public JSWebSocket(string Uri, string Namespace = null)
+        /// <param name="uri">ws地址</param>
+        /// <param name="namespace">命名空间</param>
+        public JSWebSocket(string uri, string @namespace = null)
         {
-            this.Namespace = Namespace ?? throw new ArgumentNullException("无法找到对应的命名空间", nameof(Namespace));
+            Namespace = @namespace ?? throw new ArgumentNullException("无法找到对应的命名空间", nameof(@namespace));
             _WebSocket = new WebSocket(
-                Uri,
+                uri,
                 "",
                 null,
                 null
@@ -58,16 +58,16 @@ namespace Serein.JSPlugin
             _WebSocket.Closed += (_, _) => Trigger(onclose, "Closed");
             _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, "MessageReceived", e);
             _WebSocket.Error += (_, e) => Trigger(onerror, "Opened", e);
-            JSPluginManager.PluginDict[Namespace].WebSockets.Add(this);
+            JSPluginManager.PluginDict[@namespace].WebSockets.Add(this);
         }
 
         /// <summary>
         /// 触发事件
         /// </summary>
-        /// <param name="Event">事件</param>
-        /// <param name="Name">名称</param>
-        /// <param name="Args">参数</param>
-        private void Trigger(Delegate Event, string Name, object Args = null)
+        /// <param name="delegate">事件</param>
+        /// <param name="name">名称</param>
+        /// <param name="args">参数</param>
+        private void Trigger(Delegate @delegate, string name, object args = null)
         {
             if (JSPluginManager.PluginDict[Namespace].Engine == null)
             {
@@ -77,39 +77,39 @@ namespace Serein.JSPlugin
             try
             {
                 lock (JSPluginManager.PluginDict[Namespace].Engine)
-                    switch (Name)
+                    switch (name)
                     {
                         case "Opened":
                         case "Closed":
-                            Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                            @delegate?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
                             break;
                         case "MessageReceived":
-                            if (Args is MessageReceivedEventArgs e1 && e1 != null)
+                            if (args is MessageReceivedEventArgs e1 && e1 != null)
                             {
-                                Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
+                                @delegate?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e1.Message) });
                             }
                             break;
                         case "Error":
-                            if (Args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
+                            if (args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
                             {
-                                Event?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
+                                @delegate?.DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, e2.Exception.Message) });
                             }
                             break;
                     }
             }
             catch (Exception e)
             {
-                string Message;
+                string message;
                 if (e.InnerException is JavaScriptException JSe)
                 {
-                    Message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
+                    message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
                 }
                 else
                 {
-                    Message = (e.InnerException ?? e).Message;
+                    message = (e.InnerException ?? e).Message;
                 }
-                Logger.Out(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{Name}事件调用失败：", Message);
-                Logger.Out(Items.LogType.Debug, $"{Name}事件调用失败\r\n", e);
+                Logger.Out(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{name}事件调用失败：", message);
+                Logger.Out(Items.LogType.Debug, $"{name}事件调用失败\r\n", e);
             }
         }
 
@@ -137,8 +137,8 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 发送消息
         /// </summary>
-        /// <param name="Msg"></param>
-        public void send(string Msg) => _WebSocket.Send(Msg);
+        /// <param name="msg"></param>
+        public void send(string msg) => _WebSocket.Send(msg);
 
 #pragma warning restore IDE1006
     }
