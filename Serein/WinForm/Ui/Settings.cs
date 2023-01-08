@@ -115,10 +115,10 @@ namespace Serein.Ui
             => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
         private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
-        
+
         #endregion
         #region 机器人
-        
+
         private void SettingBotUri_TextChanged(object sender, EventArgs e)
             => Global.Settings.Bot.Uri = SettingBotUri.Text;
         private void SettingBotAuthorization_Enter(object sender, EventArgs e)

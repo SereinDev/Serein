@@ -35,7 +35,7 @@ namespace Serein
         /// <summary>
         /// 设置项
         /// </summary>
-        public static Category Settings = new ();
+        public static Category Settings = new();
 
         /// <summary>
         /// 首次开启
