@@ -130,14 +130,14 @@ namespace Serein.Base
         /// <param name="isPrivate">是否私聊消息</param>
         /// <param name="message">消息内容</param>
         /// <param name="target">目标对象</param>
-        /// <param name="autoEscape">纯文本发送</param>
+        /// <param name="canBeEscaped">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool isPrivate, string message, object target, bool autoEscape = true)
+        public static bool Send(bool isPrivate, string message, object target, bool canBeEscaped = true)
         {
             if (Status)
             {
-                long targetNumber = long.TryParse(target.ToString(), out long t) ? t : -1;
-                JObject TextJObject = new()
+                long targetNumber = long.TryParse(target.ToString(), out long result) ? result : -1;
+                JObject textJObject = new()
                 {
                     { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
                     {
@@ -146,17 +146,19 @@ namespace Serein.Base
                         {
                             { isPrivate ? "user_id" : "group_id", targetNumber },
                             { "message", message },
-                            { "auto_escape", Global.Settings.Bot.AutoEscape && autoEscape }
+                            { "auto_escape", canBeEscaped && Global.Settings.Bot.AutoEscape }
                         }
                     }
                 };
-                WSClient.Send(TextJObject.ToString());
+                WSClient.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Logger.Out(LogType.Bot_Send, TextJObject.ToString());
+                    Logger.Out(LogType.Bot_Send, textJObject.ToString());
                 }
                 else
+                {
                     Logger.Out(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
+                }
             }
             return Status;
         }
@@ -214,9 +216,9 @@ namespace Serein.Base
                 System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ReceivePacket, e.Message));
                 Matcher.Process((JObject)JsonConvert.DeserializeObject(WebUtility.HtmlDecode(DeUnicode(e.Message))));
             }
-            catch (Exception _e)
+            catch (Exception exception)
             {
-                Logger.Out(LogType.Debug, _e);
+                Logger.Out(LogType.Debug, exception);
             }
         }
 

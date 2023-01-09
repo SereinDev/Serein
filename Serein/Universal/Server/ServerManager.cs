@@ -451,19 +451,25 @@ namespace Serein.Server
                 Start(true);
             }
             else
+            {
                 Logger.Out(LogType.Server_Notice, "重启已取消");
+            }
         }
 
         /// <summary>
         /// 获取CPU占用
         /// </summary>
-        public static async void UpdateCPUUsage()
+        public static void UpdateCPUUsage()
         {
             while (Status)
             {
-                await System.Threading.Tasks.Task.Delay(2000);
+                System.Threading.Tasks.Task.Delay(2000).GetAwaiter().GetResult();
                 CPUUsage = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevCpuTime = ServerProcess.TotalProcessorTime;
+                if (CPUUsage > 100)
+                {
+                    CPUUsage = 100;
+                }
             }
         }
 
@@ -473,17 +479,17 @@ namespace Serein.Server
         /// <returns>运行时间</returns>
         public static string GetTime()
         {
-            string Time = "-";
+            string time = "-";
             if (Status)
             {
                 TimeSpan t = DateTime.Now - ServerProcess.StartTime;
-                Time = t.TotalSeconds < 3600
+                time = t.TotalSeconds < 3600
                     ? $"{t.TotalSeconds / 60:N1}m"
                     : t.TotalHours < 120
                     ? $"{t.TotalMinutes / 60:N1}h"
                     : $"{t.TotalHours / 24:N1}d";
             }
-            return Time;
+            return time;
         }
 
         /// <summary>

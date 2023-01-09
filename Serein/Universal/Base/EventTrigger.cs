@@ -14,24 +14,14 @@ namespace Serein.Base
         {
             Logger.Out(Items.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
-            switch (type)
+            commandGroup = type switch
             {
-                case Items.EventType.ServerStart:
-                    commandGroup = Global.Settings.Event.ServerStart;
-                    break;
-                case Items.EventType.ServerStop:
-                    commandGroup = Global.Settings.Event.ServerStop;
-                    break;
-                case Items.EventType.ServerExitUnexpectedly:
-                    commandGroup = Global.Settings.Event.ServerExitUnexpectedly;
-                    break;
-                case Items.EventType.SereinCrash:
-                    commandGroup = Global.Settings.Event.SereinCrash;
-                    break;
-                default:
-                    Logger.Out(Items.LogType.Debug, "未知的事件名", type);
-                    break;
-            }
+                Items.EventType.ServerStart => Global.Settings.Event.ServerStart,
+                Items.EventType.ServerStop => Global.Settings.Event.ServerStop,
+                Items.EventType.ServerExitUnexpectedly => Global.Settings.Event.ServerExitUnexpectedly,
+                Items.EventType.SereinCrash => Global.Settings.Event.SereinCrash,
+                _ => commandGroup
+            };
             foreach (string command in commandGroup)
             {
                 Base.Command.Run(4, command);
@@ -62,45 +52,21 @@ namespace Serein.Base
                 case Items.EventType.GroupPoke:
                 case Items.EventType.PermissionDeniedFromPrivateMsg:
                 case Items.EventType.PermissionDeniedFromGroupMsg:
-                    switch (type)
+                    commandGroup = type switch
                     {
-                        case Items.EventType.BindingSucceed:
-                            commandGroup = Global.Settings.Event.BindingSucceed;
-                            break;
-                        case Items.EventType.BindingFailDueToOccupation:
-                            commandGroup = Global.Settings.Event.BindingFailDueToOccupation;
-                            break;
-                        case Items.EventType.BindingFailDueToInvalid:
-                            commandGroup = Global.Settings.Event.BindingFailDueToInvalid;
-                            break;
-                        case Items.EventType.BindingFailDueToAlreadyBinded:
-                            commandGroup = Global.Settings.Event.BindingFailDueToAlreadyBinded;
-                            break;
-                        case Items.EventType.UnbindingSucceed:
-                            commandGroup = Global.Settings.Event.UnbindingSucceed;
-                            break;
-                        case Items.EventType.UnbindingFail:
-                            commandGroup = Global.Settings.Event.UnbindingFail;
-                            break;
-                        case Items.EventType.GroupIncrease:
-                            commandGroup = Global.Settings.Event.GroupIncrease;
-                            break;
-                        case Items.EventType.GroupDecrease:
-                            commandGroup = Global.Settings.Event.GroupDecrease;
-                            break;
-                        case Items.EventType.GroupPoke:
-                            commandGroup = Global.Settings.Event.GroupPoke;
-                            break;
-                        case Items.EventType.PermissionDeniedFromPrivateMsg:
-                            commandGroup = Global.Settings.Event.PermissionDeniedFromPrivateMsg;
-                            break;
-                        case Items.EventType.PermissionDeniedFromGroupMsg:
-                            commandGroup = Global.Settings.Event.PermissionDeniedFromGroupMsg;
-                            break;
-                        default:
-                            Logger.Out(Items.LogType.Debug, "未知的事件名", type);
-                            break;
-                    }
+                        Items.EventType.BindingSucceed => Global.Settings.Event.BindingSucceed,
+                        Items.EventType.BindingFailDueToOccupation => Global.Settings.Event.BindingFailDueToOccupation,
+                        Items.EventType.BindingFailDueToInvalid => Global.Settings.Event.BindingFailDueToInvalid,
+                        Items.EventType.BindingFailDueToAlreadyBinded => Global.Settings.Event.BindingFailDueToAlreadyBinded,
+                        Items.EventType.UnbindingSucceed => Global.Settings.Event.UnbindingSucceed,
+                        Items.EventType.UnbindingFail => Global.Settings.Event.UnbindingFail,
+                        Items.EventType.GroupIncrease => Global.Settings.Event.GroupIncrease,
+                        Items.EventType.GroupDecrease => Global.Settings.Event.GroupDecrease,
+                        Items.EventType.GroupPoke => Global.Settings.Event.GroupPoke,
+                        Items.EventType.PermissionDeniedFromPrivateMsg => Global.Settings.Event.PermissionDeniedFromPrivateMsg,
+                        Items.EventType.PermissionDeniedFromGroupMsg => Global.Settings.Event.PermissionDeniedFromGroupMsg,
+                        _ => commandGroup,
+                    };
                     foreach (string command in commandGroup)
                     {
                         Base.Command.Run(
@@ -113,18 +79,13 @@ namespace Serein.Base
                 case Items.EventType.RequestingMotdpeSucceed:
                 case Items.EventType.RequestingMotdjeSucceed:
                 case Items.EventType.RequestingMotdFail:
-                    switch (type)
+                    commandGroup = type switch
                     {
-                        case Items.EventType.RequestingMotdpeSucceed:
-                            commandGroup = Global.Settings.Event.RequestingMotdpeSucceed;
-                            break;
-                        case Items.EventType.RequestingMotdjeSucceed:
-                            commandGroup = Global.Settings.Event.RequestingMotdjeSucceed;
-                            break;
-                        case Items.EventType.RequestingMotdFail:
-                            commandGroup = Global.Settings.Event.RequestingMotdFail;
-                            break;
-                    }
+                        Items.EventType.RequestingMotdpeSucceed => Global.Settings.Event.RequestingMotdpeSucceed,
+                        Items.EventType.RequestingMotdjeSucceed => Global.Settings.Event.RequestingMotdjeSucceed,
+                        Items.EventType.RequestingMotdFail => Global.Settings.Event.RequestingMotdFail,
+                        _ => commandGroup
+                    };
                     foreach (string command in commandGroup)
                     {
                         string command_copy = command;

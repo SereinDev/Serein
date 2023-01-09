@@ -84,8 +84,8 @@ namespace Serein.Base
             Logger.Out(
                 Items.LogType.Debug,
                     "命令运行",
-                    $"InputType:{inputType} ",
-                    $"Command:{command}",
+                    $"inputType:{inputType} ",
+                    $"command:{command}",
                     $"userId:{userId}",
                     $"groupId:{groupId}");
             if (groupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
@@ -371,9 +371,11 @@ namespace Serein.Base
                 }
                 catch { }
             }
-            text = Regex.Replace(text, "%NET%", SystemInfo.NET, RegexOptions.IgnoreCase);
+            text = Regex.Replace(text, "%NET%", Environment.Version.ToString(), RegexOptions.IgnoreCase);
 #if !UNIX
             text = Regex.Replace(text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
+#else
+            text = Regex.Replace(text, "%CPUUsage%", "-", RegexOptions.IgnoreCase);
 #endif
             text = Regex.Replace(text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
             text = Regex.Replace(text, "%UploadSpeed%", SystemInfo.UploadSpeed, RegexOptions.IgnoreCase);

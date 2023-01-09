@@ -83,7 +83,7 @@ namespace Serein.Base
         /// <summary>
         /// CPU使用率
         /// </summary>
-        public static float CPUUsage => Counter.NextValue();
+        public static float CPUUsage => Counter.NextValue() / Environment.ProcessorCount;
 #endif
         /// <summary>
         /// 刷新计时器
@@ -92,11 +92,6 @@ namespace Serein.Base
         {
             AutoReset = true
         };
-
-        /// <summary>
-        /// NET版本号
-        /// </summary>
-        public static string NET = Environment.Version.ToString();
 
         /// <summary>
         /// 操作系统信息
