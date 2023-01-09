@@ -19,7 +19,9 @@ namespace Serein.Base
             RefreshTimer.Elapsed += (sender, e) => UpdateNetSpeed();
             RefreshTimer.Start();
 #if !UNIX
-            Logger.Out(Items.LogType.Debug, "Loaded. ", CPUUsage.ToString("N1").Replace('.', 'w'));
+            RefreshTimer.Elapsed += (sender, e) => CPUUsage = Counter.NextValue();
+            Counter.NextValue();
+            Logger.Out(Items.LogType.Debug, "Loaded.");
 #endif
         }
 
@@ -83,7 +85,7 @@ namespace Serein.Base
         /// <summary>
         /// CPU使用率
         /// </summary>
-        public static float CPUUsage => Counter.NextValue() / Environment.ProcessorCount;
+        public static float CPUUsage;
 #endif
         /// <summary>
         /// 刷新计时器
