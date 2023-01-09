@@ -57,7 +57,6 @@
 
     function syncScrollTop(_activeNode) {
         document.querySelectorAll("body > main > aside .sidebar-nav li, body > main > aside .sidebar-nav ui").forEach((x) => x.classList.add('open'));
-        document.querySelector('body > main > aside.sidebar').scrollTop += document.querySelector("body > main > aside > div.sidebar-nav li.active.open").getBoundingClientRect().top - 0.5 * document.body.clientHeight;
     }
 
     function scrollSyncMenuStatus() {
@@ -79,6 +78,8 @@
                 }
             }
         });
+        document.querySelector('body > main > aside.sidebar').scrollTop += document.querySelector("body > main > aside > div.sidebar-nav li.active.open").getBoundingClientRect().top - 0.5 * document.body.clientHeight;
+
     }
 
     function handleMenuClick(e) {
@@ -90,7 +91,7 @@
             newActiveNode.classList.remove('open'); // docsify 默认行为会操作 collapse，我们异步之后修补
 
             setTimeout(function () {
-                // newActiveNode.classList.add('collapse');
+                newActiveNode.classList.add('collapse');
             }, 0);
         } else {
             removeOpenToRoot(getActiveNode());
