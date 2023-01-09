@@ -67,7 +67,7 @@ var version = serein.version; // Serein版本，如v1.3.0
 
 #### JS命名空间
 
-`serein.currentNamespace`
+`serein.namespace`
 
 用于内部区分JS解释器和其他属性，实例化[WebSocket](#websocket客户端)时需要提供此参数
 
@@ -647,7 +647,7 @@ var id = serein.getGameID(114514);
 
 ```js
 // 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
-var ws = new WebSocket("ws://127.0.0.1:11451", serein.currentNamespace); 
+var ws = new WebSocket("ws://127.0.0.1:11451", serein.namespace); 
 // 实例化ws，
 // 此处需要提供当前的命名空间，用于区分和管理
 
