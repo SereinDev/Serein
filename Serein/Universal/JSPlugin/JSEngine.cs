@@ -10,6 +10,7 @@ using Serein.Server;
 using System;
 using System.Diagnostics;
 using System.Threading;
+using SystemInfoLibrary.OperatingSystem;
 
 namespace Serein.JSPlugin
 {
@@ -50,7 +51,7 @@ namespace Serein.JSPlugin
                 }
                 ));
             engine.SetValue("Serein_SystemInfo",
-                new Func<object>(() => SystemInfo.Info));
+                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo());
 #if !UNIX
             engine.SetValue("Serein_CPUUsage",
                 new Func<float>(() => SystemInfo.CPUUsage));

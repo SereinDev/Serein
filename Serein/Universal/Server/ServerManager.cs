@@ -261,22 +261,22 @@ namespace Serein.Server
         {
             if (Status)
             {
-                string line_copy = line.TrimEnd('\n');
+                line = line.TrimEnd('\n').Replace("\n", "\\n").Replace("\r", "\\n");
                 if (CommandHistory.Count > 50)
                 {
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
                 }
                 if (
-                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != line_copy || CommandHistory.Count == 0) &&
-                    (!quiet || !(string.IsNullOrEmpty(line_copy) || string.IsNullOrWhiteSpace(line_copy))))
+                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != line || CommandHistory.Count == 0) &&
+                    (!quiet || !(string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line))))
                 {
                     CommandHistoryIndex = CommandHistory.Count + 1;
-                    CommandHistory.Add(line_copy);
+                    CommandHistory.Add(line);
                 }
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(line_copy)}");
+                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(line)}");
                 }
 #endif
                 if (Global.Settings.Server.EnableLog)
@@ -289,13 +289,13 @@ namespace Serein.Server
                     {
                         File.AppendAllText(
                             IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            ">" + Log.OutputRecognition(line_copy) + "\n",
+                            ">" + Log.OutputRecognition(line) + "\n",
                             Encoding.UTF8
                         );
                     }
                     catch { }
                 }
-                line_copy = null;
+                line = null;
             }
             else if (line.Trim().ToLower() == "start")
             {

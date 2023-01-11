@@ -1,8 +1,8 @@
 ﻿#if !UNIX
 using System.Diagnostics;
 #endif
-using System;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Timers;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -15,6 +15,22 @@ namespace Serein.Base
         /// </summary>
         public static void Init()
         {
+#if !UNIX
+            Task.Run(() => Counter.NextValue());
+#endif
+            Info = OperatingSystemInfo.GetOperatingSystemInfo();
+            OS = Info.Name;
+            if (Info.Hardware.CPUs.Count > 0)
+            {
+                CPUName = Info.Hardware.CPUs[0].Name;
+                CPUBrand = Info.Hardware.CPUs[0].Brand;
+                CPUFrequency = Info.Hardware.CPUs[0].Frequency;
+            }
+            else
+            {
+                CPUName = "未知";
+                CPUBrand = "未知";
+            }
             RefreshTimer.Elapsed += (sender, e) => Info.Update();
             RefreshTimer.Elapsed += (sender, e) => UpdateNetSpeed();
             RefreshTimer.Start();
@@ -98,69 +114,27 @@ namespace Serein.Base
         /// <summary>
         /// 操作系统信息
         /// </summary>
-        public static OperatingSystemInfo Info = OperatingSystemInfo.GetOperatingSystemInfo();
+        public static OperatingSystemInfo Info;
 
         /// <summary>
         /// CPU频率
         /// </summary>
-        public static double CPUFrequency
-        {
-            get
-            {
-                try
-                {
-                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Frequency : 0;
-                }
-                catch (Exception e)
-                {
-                    Logger.Out(Items.LogType.Debug, e);
-                    return 0;
-                }
-            }
-        }
+        public static double CPUFrequency;
 
         /// <summary>
         /// CPU名称
         /// </summary>
-        public static string CPUName
-        {
-            get
-            {
-                try
-                {
-                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Name : "未知";
-                }
-                catch (Exception e)
-                {
-                    Logger.Out(Items.LogType.Debug, e);
-                    return "未知";
-                }
-            }
-        }
+        public static string CPUName = string.Empty;
 
         /// <summary>
         /// CPU品牌
         /// </summary>
-        public static string CPUBrand
-        {
-            get
-            {
-                try
-                {
-                    return Info.Hardware.CPUs.Count > 0 ? Info.Hardware.CPUs[0].Brand : "未知";
-                }
-                catch (Exception e)
-                {
-                    Logger.Out(Items.LogType.Debug, e);
-                    return "未知";
-                }
-            }
-        }
+        public static string CPUBrand = string.Empty;
 
         /// <summary>
         /// 系统名称
         /// </summary>
-        public static string OS => Info.Name;
+        public static string OS = string.Empty;
 
         /// <summary>
         /// 已用内存
@@ -170,7 +144,7 @@ namespace Serein.Base
         /// <summary>
         /// 总内存
         /// </summary>
-        public static ulong TotalRAM = Info.Hardware.RAM.Total / 1024;
+        public static ulong TotalRAM => Info.Hardware.RAM.Total / 1024;
 
         /// <summary>
         /// 内存占用百分比
