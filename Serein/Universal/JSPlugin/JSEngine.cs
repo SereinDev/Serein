@@ -51,7 +51,7 @@ namespace Serein.JSPlugin
                 }
                 ));
             engine.SetValue("Serein_SystemInfo",
-                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo());
+                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
             engine.SetValue("Serein_CPUUsage",
                 new Func<float>(() => SystemInfo.CPUUsage));
