@@ -65,23 +65,23 @@ namespace Serein.Base
                 }
                 else if (uploadSpeed < 1024 * 1024)
                 {
-                    UploadSpeed = (uploadSpeed / 1024).ToString("N!") + "MB/s";
+                    UploadSpeed = (uploadSpeed / 1024).ToString("N1") + "MB/s";
                 }
                 else
                 {
-                    UploadSpeed = (uploadSpeed / 1024 / 1024).ToString("N!") + "GB/s";
+                    UploadSpeed = (uploadSpeed / 1024 / 1024).ToString("N1") + "GB/s";
                 }
                 if (downloadSpeed < 1024)
                 {
-                    DownloadSpeed = downloadSpeed.ToString("N!") + "KB/s";
+                    DownloadSpeed = downloadSpeed.ToString("N1") + "KB/s";
                 }
                 else if (downloadSpeed < 1024 * 1024)
                 {
-                    DownloadSpeed = (downloadSpeed / 1024).ToString("N!") + "MB/s";
+                    DownloadSpeed = (downloadSpeed / 1024).ToString("N1") + "MB/s";
                 }
                 else
                 {
-                    DownloadSpeed = (downloadSpeed / 1024 / 1024).ToString("N!") + "GB/s";
+                    DownloadSpeed = (downloadSpeed / 1024 / 1024).ToString("N1") + "GB/s";
                 }
                 Logger.Out(Items.LogType.DetailDebug, "Upload:" + UploadSpeed, "Download:" + DownloadSpeed);
             }

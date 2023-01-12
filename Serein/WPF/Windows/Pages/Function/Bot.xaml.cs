@@ -41,7 +41,7 @@ namespace Serein.Windows.Pages.Function
                 MessageReceived.Content = Websocket.Status ? (Matcher.MessageReceived ?? "-") : "-";
                 MessageSent.Content = Websocket.Status ? (Matcher.MessageSent ?? "-") : "-";
                 TimeSpan t = DateTime.Now - Websocket.StartTime;
-                Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N!}d" : "-";
+                Time.Content = Websocket.Status ? t.TotalSeconds < 3600 ? $"{t.TotalSeconds / 60:N1}m" : t.TotalHours < 120 ? $"{t.TotalMinutes / 60:N1}h" : $"{t.TotalHours / 24:N1}d" : "-";
             });
 
         private void UiPage_Loaded(object sender, RoutedEventArgs e)

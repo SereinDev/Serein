@@ -57,7 +57,7 @@ namespace Serein.Ui
                     }
                     else
                     {
-                        BotInfoTime2_Update($"{t.TotalHours / 24:N!}d");
+                        BotInfoTime2_Update($"{t.TotalHours / 24:N1}d");
                     }
                 }
                 else

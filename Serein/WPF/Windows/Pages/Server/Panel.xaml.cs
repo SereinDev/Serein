@@ -101,7 +101,7 @@ namespace Serein.Windows.Pages.Server
                     Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
                 }
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
-                CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N!") : "-";
+                CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
             });
 
