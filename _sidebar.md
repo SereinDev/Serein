@@ -47,6 +47,7 @@
     - [SLbind - 白名单与账号绑定插件](Extension/JS/SLbind.js.md)
     - [HTTPApi- HTTPApi控制](Extension/JS/HTTPApi.js.md)
     - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)
+    - [CHATEX - 对群聊消息互通提供更多增强功能](Extension/JS/CHATEX.js.md)
   - 💼 整合包
     - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)
@@ -64,5 +65,5 @@
   - [📁 目录结构](More/Structure.md)
   - [📊 统计信息](More/Status.md)
   - [🚄 在线统计](More/Online.html)
-  - [**💖 捐赠**](Donate.md)
+  - [💖 捐赠](More/Donate.md)
   - [📔 关于](More/About.md)

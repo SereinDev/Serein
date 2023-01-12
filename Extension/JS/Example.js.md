@@ -6,7 +6,7 @@
 | **下载链接** | [Serein扩展 - 百度网盘](https://pan.baidu.com/s/1aDcF4ofPpjUIU3jbCMgL5Q?pwd=1234)                |
 | **开源仓库** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6.js) |
 
-这个插件主要供开发者阅读和学习，个人不建议直接投入使用
+这个插件主要供开发者阅读和学习，不建议直接投入使用
 
 ### 功能
 
