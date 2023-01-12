@@ -5,5 +5,3 @@
 | :-------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
 | ![GitHub last commit](https://img.shields.io/github/last-commit/Zaitonn/Serein?style=flat-square ":no-zoom")                | ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Zaitonn/Serein/Build.yml?style=flat-square ":no-zoom") |
 | ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Zaitonn/Serein?style=flat-square ":no-zoom")      | ![GitHub repo size](https://img.shields.io/github/repo-size/Zaitonn/Serein?style=flat-square ":no-zoom")                               |
-
-> **当前在线数** : <span id="online-count">-</span>

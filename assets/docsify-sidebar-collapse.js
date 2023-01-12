@@ -46,6 +46,7 @@
         });
         hook.ready(function () {
             document.querySelector('.sidebar-nav').addEventListener('click', handleMenuClick);
+            document.querySelector('body > main > aside.sidebar').scrollTop += document.querySelector("body > main > aside > div.sidebar-nav li.active.open").getBoundingClientRect().top - 0.5 * document.body.clientHeight;
         });
     }
 

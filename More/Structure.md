@@ -1,33 +1,30 @@
 
-## GitHub仓库
+## 主分支
 
-- main/develop分支
-  - .github *github相关*
-  - Serein
-    - Console
-      - Console *控制台输入输出处理*
-    - Universal *三个类型共通的代码*
-      - Base *一些基础的方法*
-      - ConsoleHtml *控制台html文件*
-      - Items *一坨类*
-        - Motd *关于Motd实现的类*
-      - JSPlugin *JS插件*
-      - Server *服务器及其插件管理*
-      - Settings *设置*
-      - Sources *图标资源*
-    - WinForm
-      - UI *界面代码*
-    - WPF
-      - Windows *界面代码*
+- .github *github相关*
+- Serein
+  - Console
+    - Console *控制台输入输出处理*
+  - Universal *三个类型共通的代码*
+    - Base *一些基础的方法*
+    - ConsoleHtml *控制台html文件*
+    - Items *一坨类*
+      - Motd *关于Motd实现的类*
+    - JSPlugin *JS插件*
+    - Server *服务器及其插件管理*
+    - Settings *设置*
+    - Sources *图标资源*
+  - WinForm
+    - UI *界面代码*
+  - WPF
+    - Windows *界面代码*
 
 ## 程序
 
 - 文件夹
   - console *仅WPF和Winform*
     - console.html *控制台html文件*
-    - console.js *控制台函数*
     - preset.css *预设*
-    - vanilla.css *颜色代码*
   - data *数据*
     - members.json *成员管理*
     - regex.json *正则*
