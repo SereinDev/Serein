@@ -262,6 +262,7 @@ namespace Serein.Server
             if (Status)
             {
                 line = line.TrimEnd('\n').Replace("\n", "\\n").Replace("\r", "\\n");
+                string line_copy = line;
                 if (CommandHistory.Count > 50)
                 {
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
@@ -279,6 +280,12 @@ namespace Serein.Server
                     Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(line)}");
                 }
 #endif
+                if (usingUnicode || Global.Settings.Server.EnableUnicode)
+                {
+                    line_copy = ConvertToUnicode(line_copy);
+                }
+                InputWriter.WriteLine(line_copy);
+                JSFunc.Trigger(EventType.ServerSendCommand, line);
                 if (Global.Settings.Server.EnableLog)
                 {
                     if (!Directory.Exists(IO.GetPath("logs", "console")))

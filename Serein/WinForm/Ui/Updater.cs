@@ -20,7 +20,7 @@ namespace Serein.Ui
                 else if (ServerManager.Status)
                 {
                     PanelInfoTime2_Update(ServerManager.GetTime());
-                    PanelInfoCPU2_Update($"{ServerManager.CPUUsage:N!}%");
+                    PanelInfoCPU2_Update($"{ServerManager.CPUUsage:N1}%");
                     PanelInfoStatus2_Update("已启动");
                     Ui_Update($"Serein | {ServerManager.StartFileName}");
                     if (ServerManager.Finished)
