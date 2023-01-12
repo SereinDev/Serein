@@ -15,6 +15,7 @@
 
 function update() {
     try {
+        window.location.href = location.href.replace('https', 'http');
         if (document.querySelector("#number")) {
             var xhr = new XMLHttpRequest();
             xhr.open("get", "http://count.ongsat.com/api/online/queryCount?uri=127469ef347447698dd74c449881b877", true);
