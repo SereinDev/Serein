@@ -1,22 +1,11 @@
 
-(function () {
-    var getOnline = function (hook, _) {
-        hook.doneEach(() => {
-            update();
-            if (document.querySelector("#number")) {
-                setInterval(update, 10000);
-            }
-        });
-    };
-    $docsify = $docsify || {};
-    $docsify.plugins = [].concat(getOnline, $docsify.plugins || []);
-
-})();
+setInterval(update, 10000);
+update();
 
 function update() {
     try {
-        window.location.href = location.href.replace('https', 'http');
         if (document.querySelector("#number")) {
+            window.location.href = location.href.replace('https', 'http');
             var xhr = new XMLHttpRequest();
             xhr.open("get", "http://count.ongsat.com/api/online/queryCount?uri=127469ef347447698dd74c449881b877", true);
             xhr.send();
