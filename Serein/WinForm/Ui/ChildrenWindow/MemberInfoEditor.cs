@@ -9,7 +9,7 @@ namespace Serein.Ui.ChildrenWindow
     public partial class MemberInfoEditor : Form
     {
         public bool CancelFlag { get; private set; } = true;
-        
+
         public MemberInfoEditor(ListViewItem listViewItem)
         {
             InitializeComponent();
