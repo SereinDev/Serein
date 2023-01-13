@@ -140,7 +140,7 @@ namespace Serein.Base
                     Program.Ui.ShowBalloonTip(
                         "获取更新成功\n" +
                         "当前已是最新版:)");
-                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版qwq）");
+                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版）");
                     break;
                 case LogType.Version_Failure:
                     Program.Ui.ShowBalloonTip("更新获取异常：\n" + line);
@@ -269,8 +269,6 @@ namespace Serein.Base
                     Catalog.Notification?.Show("Serein", "更新获取异常：\n" + line);
                     break;
 #endif
-                case LogType.Debug:
-                case LogType.DetailDebug:
                 default:
                     if (!Global.Settings.Serein.DevelopmentTool.EnableDebug ||
                         Global.Settings.Serein.DevelopmentTool.DetailDebug ^ type == LogType.DetailDebug)

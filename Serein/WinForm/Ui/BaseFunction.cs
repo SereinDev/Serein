@@ -15,6 +15,8 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
+        private readonly List<string> PluginExtensionsList = new List<string>() { ".py", ".dll", ".js", ".ts", ".jar" };
+
         private bool IsDragging;
         private ListViewItem ItemDraged;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,20 +184,17 @@ namespace Serein.Ui
             }
             if (data.Length > 0)
             {
-                List<string> pluginExtensionsList = new List<string>() { ".py", ".dll", ".js", ".ts", ".jar" };
                 List<string> fileList = new List<string>();
-                string filePath = string.Empty;
                 foreach (object file in data)
                 {
-                    if (pluginExtensionsList.Contains(Path.GetExtension(file.ToString().ToLower())))
+                    if (PluginExtensionsList.Contains(Path.GetExtension(file.ToString().ToLower())))
                     {
                         fileList.Add(file.ToString());
-                        filePath = filePath + Path.GetFileName(file.ToString()) + "\n";
                     }
                 }
                 if (fileList.Count > 0 &&
                     (int)MessageBox.Show(this,
-                    $"是否将以下文件复制到插件文件夹内？\n{filePath}",
+                    $"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", fileList)}",
                     "Serein",
                     MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Warning

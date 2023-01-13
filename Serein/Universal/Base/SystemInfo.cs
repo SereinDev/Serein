@@ -31,11 +31,11 @@ namespace Serein.Base
                 CPUName = "未知";
                 CPUBrand = "未知";
             }
-            RefreshTimer.Elapsed += (sender, e) => Info.Update();
-            RefreshTimer.Elapsed += (sender, e) => UpdateNetSpeed();
+            RefreshTimer.Elapsed += (_, _) => Info.Update();
+            RefreshTimer.Elapsed += (_, _) => UpdateNetSpeed();
             RefreshTimer.Start();
 #if !UNIX
-            RefreshTimer.Elapsed += (sender, e) => CPUUsage = Counter.NextValue();
+            RefreshTimer.Elapsed += (_, _) => CPUUsage = Counter.NextValue();
             Counter.NextValue();
             Logger.Out(Items.LogType.Debug, "Loaded.");
 #endif

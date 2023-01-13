@@ -44,10 +44,6 @@ namespace Serein.Base
             {
                 Logger.MsgBox(":(\nWebsocket已连接", "Serein", 0, 48);
             }
-            else if (executedByUser && Reconnect)
-            {
-                Logger.MsgBox(":(\n请先结束重启倒计时", "Serein", 0, 48);
-            }
             else if (!Status)
             {
                 Logger.Out(LogType.Bot_Clear);
@@ -69,7 +65,7 @@ namespace Serein.Base
                     {
                         Logger.Out(LogType.Bot_Error, e.Exception.Message);
                     };
-                    WSClient.Closed += (_, e) =>
+                    WSClient.Closed += (_, _) =>
                     {
                         Status = false;
                         Logger.Out(LogType.Bot_Notice, "WebSocket连接已断开");
@@ -81,7 +77,7 @@ namespace Serein.Base
                                 Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                                 for (int i = 0; i < 20; i++)
                                 {
-                                    Thread.CurrentThread.Join(500);
+                                    System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
                                     if (!Reconnect || Status)
                                     {
                                         break;
@@ -94,10 +90,10 @@ namespace Serein.Base
                             });
                         }
                     };
-                    WSClient.Opened += (_, e) =>
+                    WSClient.Opened += (_, _) =>
                     {
                         Reconnect = true;
-                        Logger.Out(LogType.Bot_Notice, $"连接到{Global.Settings.Bot.Uri}");
+                        Logger.Out(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
                     };
                     WSClient.Open();
                     StartTime = DateTime.Now;
@@ -214,23 +210,15 @@ namespace Serein.Base
             try
             {
                 System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ReceivePacket, e.Message));
-                Matcher.Process((JObject)JsonConvert.DeserializeObject(WebUtility.HtmlDecode(DeUnicode(e.Message))));
+                Matcher.Process((JObject)JsonConvert.DeserializeObject(
+                    WebUtility.HtmlDecode(
+                        new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString())
+                )));
             }
             catch (Exception exception)
             {
                 Logger.Out(LogType.Debug, exception);
             }
-        }
-
-        /// <summary>
-        /// 处理Unicode转义
-        /// </summary>
-        /// <param name="str">文本</param>
-        /// <returns>处理后文本</returns>
-        public static string DeUnicode(string str)
-        {
-            System.Text.RegularExpressions.Regex reg = new(@"(?i)\\[uU]([0-9a-f]{4})");
-            return reg.Replace(str, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
         }
     }
 }

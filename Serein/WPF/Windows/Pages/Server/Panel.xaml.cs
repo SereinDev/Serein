@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using Serein.Items;
+using Serein.Items.Motd;
 using Serein.Server;
 using System.Timers;
 using System.Windows;
@@ -11,6 +12,8 @@ namespace Serein.Windows.Pages.Server
 {
     public partial class Panel : UiPage
     {
+        private Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+
         public Panel()
         {
             InitializeComponent();
@@ -20,7 +23,7 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
             PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
-            UpdateInfoTimer.Elapsed += (sender, e) => UpdateInfos();
+            UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             Catalog.Server.Panel = this;
         }
@@ -92,14 +95,25 @@ namespace Serein.Windows.Pages.Server
             => Dispatcher.Invoke(() =>
             {
                 Status.Content = ServerManager.Status ? "已启动" : "未启动";
-                Version.Content = ServerManager.Status ? ServerManager.Version : "-";
-                Version.Content = ServerManager.Status ? ServerManager.Version : "-";
-                if (ServerManager.Finished)
+                if (ServerManager.Status)
                 {
-                    Version.Content = ServerManager.Status ? ServerManager.Version : "-";
-                    Difficulity.Content = ServerManager.Status ? ServerManager.Difficulty : "-";
-                    Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
+                    Motd motd;
+                    if (Global.Settings.Server.Type == 1)
+                    {
+                        motd = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
+                    }
+                    else
+                    {
+                        motd = new Motdje(newPort: Global.Settings.Server.Port.ToString());
+                    }
+                    Version.Content = motd.Version;
                 }
+                else
+                {
+                    Version.Content = "-";
+                }
+                Difficulity.Content = ServerManager.Status ? ServerManager.Difficulty : "-";
+                Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);

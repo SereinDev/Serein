@@ -9,7 +9,8 @@ namespace Serein.Ui.ChildrenWindow
 {
     public partial class RegexEditor : Form
     {
-        public bool CancelFlag = true;
+        public bool CancelFlag { get; private set; } = true;
+        
         public RegexEditor()
         {
             InitializeComponent();

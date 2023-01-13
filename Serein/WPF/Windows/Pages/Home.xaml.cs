@@ -17,7 +17,7 @@ namespace Serein.Windows.Pages
         public Home()
         {
             InitializeComponent();
-            _Timer.Elapsed += (_sender, _e) => Update();
+            _Timer.Elapsed += (_, e) => Update();
             _Timer.Start();
         }
 
@@ -32,16 +32,16 @@ namespace Serein.Windows.Pages
                 Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N1") + "%" : "-";
                 if (ServerManager.Status && Global.Settings.Server.Type != 0)
                 {
-                    Motd _Motd;
+                    Motd motd;
                     if (Global.Settings.Server.Type == 1)
                     {
-                        _Motd = new Motdpe(NewPort: Global.Settings.Server.Port.ToString());
+                        motd = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
                     }
                     else
                     {
-                        _Motd = new Motdje(NewPort: Global.Settings.Server.Port.ToString());
+                        motd = new Motdje(newPort: Global.Settings.Server.Port.ToString());
                     }
-                    Server_Online.Text = _Motd != null && _Motd.Success ? $"{_Motd.OnlinePlayer}/{_Motd.MaxPlayer}" : "获取失败";
+                    Server_Online.Text = motd != null && motd.Success ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "获取失败";
                 }
                 else
                 {
@@ -60,9 +60,6 @@ namespace Serein.Windows.Pages
         {
             switch ((sender as CardAction)?.Tag)
             {
-                default:
-                case null:
-                    break;
                 case "Server":
                     Catalog.MainWindow.Navigation.Navigate(1);
                     Catalog.Server.Container?.Navigation?.Navigate(0);
@@ -87,6 +84,8 @@ namespace Serein.Windows.Pages
                     break;
                 case "Settings":
                     Catalog.MainWindow.Navigation.Navigate(4);
+                    break;
+                default:
                     break;
             }
         }

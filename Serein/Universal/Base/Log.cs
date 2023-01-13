@@ -104,41 +104,41 @@ namespace Serein.Base
                             continue;
                         }
                         bool colored = true;
-                        string style = string.Empty;
                         string spanClass = string.Empty;
                         string[] argList = arg.Split(';');
+                        StringBuilder stringBuilder = new();
                         for (int childArgIndex = 0; childArgIndex < argList.Length; childArgIndex++)
                         {
                             string childArg = argList[childArgIndex];
                             switch (int.TryParse(childArg, out int integerArg) ? integerArg : 0)
                             {
                                 case 1:
-                                    style += "font-weight:bold;";
+                                    stringBuilder.Append("font-weight:bold;");
                                     break;
                                 case 3:
-                                    style += "font-style: italic;";
+                                    stringBuilder.Append("font-style: italic;");
                                     break;
                                 case 4:
-                                    style += "text-decoration: underline;";
+                                    stringBuilder.Append("text-decoration: underline;");
                                     break;
                                 case 38:
                                     if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        style += $"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})";
+                                        stringBuilder.Append($"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})");
                                         colored = true;
                                     }
                                     break;
                                 case 48:
                                     if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        style += $"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})";
+                                        stringBuilder.Append($"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})");
                                         colored = true;
                                     }
                                     break;
                                 default:
                                     if (ColorList.Contains(childArg))
                                     {
-                                        spanClass += "vanillaColor" + childArg + " ";
+                                        spanClass = "vanillaColor";
                                         colored = !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107");
                                     }
                                     break;
@@ -146,9 +146,9 @@ namespace Serein.Base
                         }
                         if (!colored)
                         {
-                            spanClass += "noColored";
+                            spanClass = "noColored";
                         }
-                        output += $"<span style='{style}' class='{spanClass}'>{match.Groups[2].Value}</span>";
+                        output += $"<span style='{stringBuilder}' class='{spanClass}'>{match.Groups[2].Value}</span>";
                     }
                 }
                 else

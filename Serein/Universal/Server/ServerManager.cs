@@ -1,6 +1,7 @@
 ﻿using Serein.Base;
 using Serein.Items;
 using Serein.JSPlugin;
+using Serein.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,11 +13,26 @@ namespace Serein.Server
 {
     public static class ServerManager
     {
-        public static string StartFileName = string.Empty, Version = string.Empty, LevelName = string.Empty, Difficulty = string.Empty;
+        /// <summary>
+        /// 启动文件名称
+        /// </summary>
+        public static string StartFileName { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 存档名称
+        /// </summary>
+        public static string LevelName { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 难度
+        /// </summary>
+        public static string Difficulty { get; private set; } = string.Empty;
 
         private static string TempLine = string.Empty;
 
-        public static bool Restart, Finished, Killed;
+        private static bool Restart;
+
+        public static bool Killed { get; private set; }
 
         /// <summary>
         /// 服务器状态
@@ -31,7 +47,7 @@ namespace Serein.Server
         /// <summary>
         /// 当前CPU时间
         /// </summary>
-        private static TimeSpan PrevCpuTime = TimeSpan.Zero;
+        private static TimeSpan PrevProcessCpuTime = TimeSpan.Zero;
 
         /// <summary>
         /// 服务器进程
@@ -74,27 +90,34 @@ namespace Serein.Server
         /// <summary>
         /// 启动服务器
         /// </summary>
-        /// <param name="Quiet">静处理</param>
         /// <returns>启动结果</returns>
-        public static bool Start(bool Quiet = false)
+        public static bool Start()
+            => Start(false);
+
+        /// <summary>
+        /// 启动服务器
+        /// </summary>
+        /// <param name="quiet">静处理</param>
+        /// <returns>启动结果</returns>
+        public static bool Start(bool quiet)
         {
             if (Status)
             {
-                if (!Quiet)
+                if (!quiet)
                 {
                     Logger.MsgBox(":(\n服务器已在运行中", "Serein", 0, 48);
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
-                if (!Quiet)
+                if (!quiet)
                 {
                     Logger.MsgBox(":(\n启动路径为空", "Serein", 0, 48);
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
-                if (!Quiet)
+                if (!quiet)
                 {
                     Logger.MsgBox($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
                 }
@@ -131,14 +154,12 @@ namespace Serein.Server
                 ServerProcess.OutputDataReceived += SortOutputHandler;
                 Restart = false;
                 Killed = false;
-                Finished = false;
-                Version = "-";
-                LevelName = "-";
-                Difficulty = "-";
+                LevelName = string.Empty;
+                Difficulty = string.Empty;
                 TempLine = string.Empty;
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
-                PrevCpuTime = TimeSpan.Zero;
+                PrevProcessCpuTime = TimeSpan.Zero;
                 System.Threading.Tasks.Task.Factory.StartNew(UpdateCPUUsage);
                 EventTrigger.Trigger(EventType.ServerStart);
                 JSFunc.Trigger(EventType.ServerStart);
@@ -150,8 +171,15 @@ namespace Serein.Server
         /// <summary>
         /// 关闭服务器
         /// </summary>
+        public static void Stop()
+            => Stop(false);
+
+
+        /// <summary>
+        /// 关闭服务器
+        /// </summary>
         /// <param name="quiet">静处理</param>
-        public static void Stop(bool quiet = false)
+        public static void Stop(bool quiet)
         {
             if (Status)
             {
@@ -176,9 +204,16 @@ namespace Serein.Server
         /// <summary>
         /// 强制结束服务器
         /// </summary>
+        /// <returns>强制结束结果</returns>
+        public static bool Kill()
+            => Kill(false);
+
+        /// <summary>
+        /// 强制结束服务器
+        /// </summary>
         /// <param name="quiet">静处理</param>
         /// <returns>强制结束结果</returns>
-        public static bool Kill(bool quiet = false)
+        public static bool Kill(bool quiet)
         {
             if (quiet)
             {
@@ -193,7 +228,10 @@ namespace Serein.Server
                     Restart = false;
                     return true;
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    Logger.Out(LogType.Debug, e);
+                }
                 return false;
             }
             else if (!Status)
@@ -322,21 +360,13 @@ namespace Serein.Server
             if (!string.IsNullOrEmpty(e.Data))
             {
                 string line = Log.OutputRecognition(e.Data);
-                if (!Finished)
+                if (string.IsNullOrEmpty(LevelName) && System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
                 {
-                    Finished = System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Finished, RegexOptions.IgnoreCase);
-                    if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase))
-                    {
-                        Version = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Version, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    }
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
-                    {
-                        LevelName = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    }
-                    else if (System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
-                    {
-                        Difficulty = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
-                    }
+                    LevelName = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                }
+                else if (string.IsNullOrEmpty(Difficulty) && System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
+                {
+                    Difficulty = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
 #if CONSOLE
                 Logger.Out(LogType.Server_Output, e.Data);
@@ -359,17 +389,17 @@ namespace Serein.Server
                     }
                     catch { }
                 }
-                bool isMuiltLines = false;
+                bool isMuiltLinesMode = false;
                 foreach (string regex in Global.Settings.Matches.MuiltLines)
                 {
                     if (System.Text.RegularExpressions.Regex.IsMatch(line, regex, RegexOptions.IgnoreCase))
                     {
                         TempLine = line.Trim('\r', '\n');
-                        isMuiltLines = true;
+                        isMuiltLinesMode = true;
                         break;
                     }
                 }
-                if (!isMuiltLines)
+                if (!isMuiltLinesMode)
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
@@ -397,26 +427,21 @@ namespace Serein.Server
             Logger.Out(LogType.Server_Output, "");
             if (!Killed && ServerProcess.ExitCode != 0)
             {
-                Logger.Out(LogType.Server_Notice,
-                    $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）"
-                );
+                Logger.Out(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
                 Restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger(EventType.ServerExitUnexpectedly);
             }
             else
             {
-                Logger.Out(LogType.Server_Notice,
-                    $"进程已退出（返回：{ServerProcess.ExitCode}）"
-                );
+                Logger.Out(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
                 EventTrigger.Trigger(EventType.ServerStop);
             }
             if (Restart)
             {
                 System.Threading.Tasks.Task.Factory.StartNew(RestartTimer);
             }
-            Version = "-";
-            LevelName = "-";
-            Difficulty = "-";
+            LevelName = string.Empty;
+            Difficulty = string.Empty;
             JSFunc.Trigger(EventType.ServerStop, ServerProcess.ExitCode);
         }
 
@@ -471,8 +496,8 @@ namespace Serein.Server
             while (Status)
             {
                 System.Threading.Tasks.Task.Delay(2000).GetAwaiter().GetResult();
-                CPUUsage = (ServerProcess.TotalProcessorTime - PrevCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
-                PrevCpuTime = ServerProcess.TotalProcessorTime;
+                CPUUsage = (ServerProcess.TotalProcessorTime - PrevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+                PrevProcessCpuTime = ServerProcess.TotalProcessorTime;
                 if (CPUUsage > 100)
                 {
                     CPUUsage = 100;
@@ -485,19 +510,7 @@ namespace Serein.Server
         /// </summary>
         /// <returns>运行时间</returns>
         public static string GetTime()
-        {
-            string time = "-";
-            if (Status)
-            {
-                TimeSpan t = DateTime.Now - ServerProcess.StartTime;
-                time = t.TotalSeconds < 3600
-                    ? $"{t.TotalSeconds / 60:N1}m"
-                    : t.TotalHours < 120
-                    ? $"{t.TotalMinutes / 60:N1}h"
-                    : $"{t.TotalHours / 24:N1}d";
-            }
-            return time;
-        }
+            => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
 
         /// <summary>
         /// Unicode转换
@@ -506,17 +519,19 @@ namespace Serein.Server
         /// <returns>输出字符串</returns>
         private static string ConvertToUnicode(string text)
         {
-            string result = "";
+            StringBuilder stringBuilder = new();
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] < 127)
                 {
-                    result += text[i].ToString();
+                    stringBuilder.Append(text[i].ToString());
                 }
                 else
-                    result += string.Format("\\u{0:x4}", (int)text[i]);
+                {
+                    stringBuilder.Append(string.Format("\\u{0:x4}", (int)text[i]));
+                }
             }
-            return result;
+            return stringBuilder.ToString();
         }
     }
 }

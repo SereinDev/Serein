@@ -29,9 +29,9 @@ namespace Serein.Base
         /// </summary>
         public static void StartSavingAndUpdating()
         {
-            timer.Elapsed += (sender, e) => UpdateSettings();
-            timer.Elapsed += (sender, e) => SaveSettings();
-            timer.Elapsed += (sender, e) => SaveMember();
+            timer.Elapsed += (_, _) => UpdateSettings();
+            timer.Elapsed += (_, _) => SaveSettings();
+            timer.Elapsed += (_, _) => SaveMember();
             timer.Start();
         }
 

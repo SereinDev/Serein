@@ -9,9 +9,12 @@ namespace Serein.Ui.ChildrenWindow
 {
     public partial class EventEditor : Form
     {
-        public bool CancelFlag;
+        public bool CancelFlag { get; private set; }
 
-        public EventEditor(string Command = "")
+        public EventEditor()
+           => InitializeComponent();
+
+        public EventEditor(string Command)
         {
             InitializeComponent();
             CommandTextBox.Text = Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\r\n");

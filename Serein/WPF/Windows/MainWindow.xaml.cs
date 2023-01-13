@@ -59,7 +59,9 @@ namespace Serein.Windows
                 Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
             }
             else
+            {
                 JSFunc.Trigger(Items.EventType.SereinClose);
+            }
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)
@@ -75,7 +77,9 @@ namespace Serein.Windows
                 Close();
             }
             else
+            {
                 Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+            }
         }
 
         /// <summary>
@@ -161,7 +165,9 @@ namespace Serein.Windows
                 RegexEditor_Regex.Text,
                 RegexEditor_Command.Text,
                 RegexEditor_Remark.Text))
+            {
                 RegexEditor.Hide();
+            }
         }
 
         private void RegexEditor_ButtonRightClick(object sender, RoutedEventArgs e) => RegexEditor.Hide();

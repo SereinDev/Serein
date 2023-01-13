@@ -70,10 +70,7 @@ namespace Serein.Windows.Controls
                     method.Invoke(this, null);
                 }
             }
-            catch
-            {
-                return;
-            }
+            catch { }
         }
 
         //是否最前默认为非最前（false）  

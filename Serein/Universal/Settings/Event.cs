@@ -1,4 +1,5 @@
 ﻿using Serein.Items;
+using Serein.Base;
 using System;
 
 namespace Serein.Settings
@@ -98,63 +99,66 @@ namespace Serein.Settings
             "g|[CQ:at,qq=%ID%] 你没有执行这个命令的权限"
         };
 
-        public void Edit(string[] Commands, EventType Type)
+        public void Edit(string[] commands, EventType type)
         {
-            switch (Type)
+            switch (type)
             {
                 case EventType.BindingSucceed:
-                    BindingSucceed = Commands;
+                    BindingSucceed = commands;
                     break;
                 case EventType.BindingFailDueToOccupation:
-                    BindingFailDueToOccupation = Commands;
+                    BindingFailDueToOccupation = commands;
                     break;
                 case EventType.BindingFailDueToInvalid:
-                    BindingFailDueToInvalid = Commands;
+                    BindingFailDueToInvalid = commands;
                     break;
                 case EventType.BindingFailDueToAlreadyBinded:
-                    BindingFailDueToAlreadyBinded = Commands;
+                    BindingFailDueToAlreadyBinded = commands;
                     break;
                 case EventType.UnbindingSucceed:
-                    UnbindingSucceed = Commands;
+                    UnbindingSucceed = commands;
                     break;
                 case EventType.UnbindingFail:
-                    UnbindingFail = Commands;
+                    UnbindingFail = commands;
                     break;
                 case EventType.ServerStart:
-                    ServerStart = Commands;
+                    ServerStart = commands;
                     break;
                 case EventType.ServerStop:
-                    ServerStop = Commands;
+                    ServerStop = commands;
                     break;
                 case EventType.ServerExitUnexpectedly:
-                    ServerExitUnexpectedly = Commands;
+                    ServerExitUnexpectedly = commands;
                     break;
                 case EventType.GroupIncrease:
-                    GroupIncrease = Commands;
+                    GroupIncrease = commands;
                     break;
                 case EventType.GroupDecrease:
-                    GroupDecrease = Commands;
+                    GroupDecrease = commands;
                     break;
                 case EventType.GroupPoke:
-                    GroupPoke = Commands;
+                    GroupPoke = commands;
                     break;
                 case EventType.SereinCrash:
-                    SereinCrash = Commands;
+                    SereinCrash = commands;
                     break;
                 case EventType.RequestingMotdpeSucceed:
-                    RequestingMotdpeSucceed = Commands;
+                    RequestingMotdpeSucceed = commands;
                     break;
                 case EventType.RequestingMotdjeSucceed:
-                    RequestingMotdjeSucceed = Commands;
+                    RequestingMotdjeSucceed = commands;
                     break;
                 case EventType.RequestingMotdFail:
-                    RequestingMotdFail = Commands;
+                    RequestingMotdFail = commands;
                     break;
                 case EventType.PermissionDeniedFromPrivateMsg:
-                    PermissionDeniedFromPrivateMsg = Commands;
+                    PermissionDeniedFromPrivateMsg = commands;
                     break;
                 case EventType.PermissionDeniedFromGroupMsg:
-                    PermissionDeniedFromGroupMsg = Commands;
+                    PermissionDeniedFromGroupMsg = commands;
+                    break;
+                default:
+                    Logger.Out(LogType.Debug, new ArgumentOutOfRangeException(nameof(commands)));
                     break;
             }
         }

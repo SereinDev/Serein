@@ -31,6 +31,8 @@ namespace Serein.Ui
             IO.StartSavingAndUpdating();
             TaskRunner.Start();
             Net.Init();
+            UpdateInfoTimer.Start();
+            UpdateInfoTimer.Elapsed += (_, _) => Invoke(UpdateInfo);
             System.Threading.Tasks.Task.Run(UpdateInfo);
             System.Threading.Tasks.Task.Run(JSPluginManager.Load);
             System.Threading.Tasks.Task.Run(SystemInfo.Init);

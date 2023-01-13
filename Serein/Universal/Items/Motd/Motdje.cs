@@ -13,59 +13,61 @@ namespace Serein.Items.Motd
         /// <summary>
         /// Java版Motd获取入口
         /// </summary>
-        /// <param name="NewIp">IP</param>
-        /// <param name="NewPort">端口</param>
-        public Motdje(string NewIP = "127.0.0.1", string NewPort = "25565")
+        /// <param name="newIp">IP</param>
+        /// <param name="newPort">端口</param>
+        public Motdje(string newIP = "127.0.0.1", string newPort = "25565")
         {
-            if (!Init(NewIP, NewPort))
+            if (!Init(newIP, newPort))
             {
                 return;
             }
             try
             {
-                Socket Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
-                Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
-                Client.Connect(new IPEndPoint(IP, Port));
-                DateTime StartTime = DateTime.Now;
-                Client.Send(new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 });
-                byte[] Buffer = new byte[1024 * 1024];
-                int Length = Client.Receive(Buffer);
-                Delay = DateTime.Now - StartTime;
-                string Data = Length > 5 ?
-                    Encoding.UTF8.GetString(Buffer, 5, Length - 5) :
-                    Encoding.UTF8.GetString(Buffer, 0, Length);
-                Client.Close();
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
+                socket.Connect(new IPEndPoint(IP, Port));
+                DateTime startTime = DateTime.Now;
+                socket.Send(new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 });
+                byte[] buffer = new byte[1024 * 1024];
+                int length = socket.Receive(buffer);
+                Delay = DateTime.Now - startTime;
+                string Data = length > 5 ?
+                    Encoding.UTF8.GetString(buffer, 5, length - 5) :
+                    Encoding.UTF8.GetString(buffer, 0, length);
+                socket.Close();
                 Origin = Data;
                 Logger.Out(LogType.Debug, $"Original: {Data}");
                 if (!string.IsNullOrEmpty(Data))
                 {
-                    JObject JsonObject = (JObject)JsonConvert.DeserializeObject(Data);
-                    OnlinePlayer = JsonObject["players"]["online"].ToString();
-                    MaxPlayer = JsonObject["players"]["max"].ToString();
-                    Version = JsonObject["version"]["name"].ToString();
-                    Protocol = JsonObject["version"]["protocol"].ToString();
-                    if (JsonObject["description"]["text"] != null)
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Data);
+                    OnlinePlayer = jsonObject["players"]["online"].ToString();
+                    MaxPlayer = jsonObject["players"]["max"].ToString();
+                    Version = jsonObject["version"]["name"].ToString();
+                    Protocol = jsonObject["version"]["protocol"].ToString();
+                    if (jsonObject["description"]["text"] != null)
                     {
-                        Description = JsonObject["description"]["text"].ToString();
+                        Description = jsonObject["description"]["text"].ToString();
                     }
-                    if (JsonObject["description"]["extra"] != null)
+                    if (jsonObject["description"]["extra"] != null)
                     {
                         Description = string.Empty;
-                        foreach (JObject ChildrenJObject in JsonObject["description"]["extra"])
+                        foreach (JObject childrenJObject in jsonObject["description"]["extra"])
                         {
-                            Description += ChildrenJObject["text"].ToString();
+                            Description += childrenJObject["text"].ToString();
                         }
                     }
-                    if (JsonObject["favicon"] != null)
+                    if (jsonObject["favicon"] != null)
                     {
-                        Favicon = (string)JsonObject["favicon"];
+                        Favicon = jsonObject["favicon"].ToString() ?? string.Empty;
                         if (Favicon.Contains(","))
                         {
                             Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
                         }
                         else
+                        {
                             Favicon = string.Empty;
+                        }
                     }
                     Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
                     Success = true;

@@ -11,7 +11,7 @@ using System.Timers;
 
 namespace Serein.JSPlugin
 {
-    partial class JSFunc
+    internal static class JSFunc
     {
         public static long ID = 0;
 

@@ -175,12 +175,12 @@ namespace Serein.Ui
             IO.ReadTask();
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            foreach (Task list in Global.TaskItems)
+            foreach (Task task in Global.TaskItems)
             {
-                ListViewItem listViewItem = new(list.Cron);
-                listViewItem.SubItems.Add(list.Remark);
-                listViewItem.SubItems.Add(list.Command);
-                if (!list.Enable)
+                ListViewItem listViewItem = new(task.Cron);
+                listViewItem.SubItems.Add(task.Remark);
+                listViewItem.SubItems.Add(task.Command);
+                if (!task.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;
