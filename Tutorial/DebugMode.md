@@ -28,7 +28,7 @@ internal static class Logger
 
 #### JS插件
 
-详见[debug输出](Function/JSDocs.md#debug输出)
+详见[debug输出](Function/JSDocs/Func.md#debug输出)
 
 ### 开启方法
 

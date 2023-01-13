@@ -11,7 +11,10 @@
   - [🔩 命令](Function/Command.md)
   - [🎄 事件](Function/Event.md)
   - [🧩 插件](Function/JSPlugin.md)
-  - [📝 插件语法](Function/JSDocs.md)
+  - 📝 插件语法
+    - [❔ 介绍](Function/JSDocs/README.md)
+    - [🍭函数](Function/JSDocs/Func.md)
+    - [🧷 类](Function/JSDocs/Class.md)
   - [👨‍💼 成员管理](Function/Member.md)
   - [📜 正则](Function/Regex.md)
   - [⏰ 定时任务](Function/Task.md)
@@ -45,9 +48,10 @@
     - [BotExtension - 机器人功能拓展](Extension/JS/BotExtension.js.md)
     - [iPanel - 网页版控制台](https://ipanel.serein.cc)
     - [SLbind - 白名单与账号绑定插件](Extension/JS/SLbind.js.md)
-    - [HTTPApi- HTTPApi控制](Extension/JS/HTTPApi.js.md)
+    - [HTTPApi - HTTP应用接口控制](Extension/JS/HTTPApi.js.md)
     - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)
     - [CHATEX - 对群聊消息互通提供更多增强功能](Extension/JS/CHATEX.js.md)
+    - [StatRecodrer - 统计信息记录](Extension/JS/StatRecodrer.js.md)
   - 💼 整合包
     - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)

@@ -134,7 +134,7 @@
 
 - 运行超时：1min
 - js标准：ECMAScript 2022
-- 详见[插件语法](Function/JSDocs.md)
+- 详见[插件语法](Function/JSDocs/README.md)
 
 ### 调试输出
 

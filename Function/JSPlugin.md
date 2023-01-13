@@ -17,7 +17,7 @@
 
 ### 插件开发
 
-详见[JS文档](Function/JSDocs.md)
+详见[JS文档](Function/JSDocs/README.md)
 
 ### 食用方法
 

@@ -1,81 +1,7 @@
 
->Serein JS插件的详细文档
+## 🧊 Serein相关
 
-### JS标准
-
-ECMAScript 2022
-
->[!ATTENTION]
->以下情况将导致Serein无响应或崩溃
->
-> - 以极快的速度重复执行语句
-> - 无限递归导致爆栈
-
-### 直接使用NET对象/类
-
-由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类和属性
-
-`importNamespace(name:String)` 导入命名空间
-
->[!TIP] 配合一定C#基础食用更佳  
->C#语法详见 [.NET API 浏览器](https://learn.microsoft.com/zh-cn/dotnet/api/?view=net-6.0)
-
-#### 示例
-
->[!TIP] 在[这里](Extension/JS/Example.js.md)你可以找到更详细的示例
-
-```js
-// https://learn.microsoft.com/zh-cn/dotnet/api/system.io.file?view=net-6.0
-var File = importNamespace("System.IO").File;
-File.WriteAllText(
-    "1.txt", // 路径
-    "一些文本"// 文本
-);
-// 输出到文件
-```
-
-```js
-// https://learn.microsoft.com/zh-cn/dotnet/api/system.diagnostics.process?view=net-6.0
-var Process = importNamespace("System.Diagnostics").Process;
-Process.Start("cmd.exe");
-// 启动cmd.exe
-```
-
-### 内置属性
-
-#### Serein.exe所在文件夹
-
-`serein.path`
-
-```js
-var path = serein.path; // Serein.exe所在文件夹，如C:\Serein
-```
-
-- 返回
-  - `String`
-
-#### Serein版本
-
-`serein.version`
-
-```js
-var version = serein.version; // Serein版本，如v1.3.0
-```
-
-- 返回
-  - `String`
-
-#### JS命名空间
-
-`serein.namespace`
-
-用于内部区分JS解释器和其他属性，实例化[WebSocket](#websocket客户端)时需要提供此参数
-
-此外，你也可以通过[注册插件](#注册插件)来获取命名空间
-
-### 内置方法
-
-#### 输出日志
+### 输出日志
 
 `serein.log(content:Object)`
 
@@ -93,7 +19,7 @@ serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
 
 >[!TIP]个人更推荐使用[Logger](#logger)输出，可以方便区分插件名称
 
-#### Debug输出
+### Debug输出
 
 `serein.debugLog(content:Object)`
 
@@ -107,7 +33,7 @@ serein.debugLog("这是一条Debug输出");
 - 返回
   - 空
 
-#### 注册插件
+### 注册插件
 
 `serein.registerPlugin(name:String,version:String,author:String,description:String)`
 
@@ -126,7 +52,7 @@ serein.registerPlugin("示例插件","v1.0","Zaitonn","这是一个示例插件"
   - `String`
     - 当前的命名空间
 
-#### 设置监听器
+### 设置监听器
 
 `serein.setListener(event:String,func:Function)`
 
@@ -169,7 +95,7 @@ function onGroupPoke(group,user){
 | onSereinClose           | Serein关闭           | `( )`                                                          |
 | onPluginsReload         | 插件重载             | `( )`                                                          |
 
-#### 获取Serein设置
+### 获取Serein设置
 
 `serein.getSettings()`
 
@@ -285,7 +211,23 @@ var settings = serein.getSettings();
 </code></pre>
 </details>
 
-#### 获取系统信息
+### 执行命令
+
+`serein.runCommand(cmd:String)`
+
+```js
+serein.runCommand("g|hello")
+```
+
+- 参数
+  - `cmd` 一条[Serein命令](Command.md)
+  >[!WARNING] 此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
+- 返回
+  - 空
+
+## 🌏 系统相关
+
+### 获取系统信息
 
 `serein.getSysInfo(type:String)`
 
@@ -350,21 +292,151 @@ var info = serein.getSysInfo();
 }
 ```
 
-#### 执行命令
+### 获取CPU使用率
 
-`serein.runCommand(cmd:String)`
+`serein.getCPUPersent()`
 
 ```js
-serein.runCommand("g|hello")
+var cpupersent = serein.getServerCPUPersent();
 ```
 
 - 参数
-  - `cmd` 一条[Serein命令](Command.md)
-  >[!WARNING] 此处无法执行绑定或解绑ID、获取motd和执行js代码的命令
+  - 空
+- 返回
+  - `Number` ∈ [0,100]
+    - 示例：`1.14514191981`
+  - `undefined` *Linux版本*
+
+### 获取网速
+
+`serein.getNetSpeed()`
+
+```js
+var netSpeed = serein.getServerCPUPersent();
+var uploadSpeed = netSpeed[0];
+var downloadSpeed = netSpeed[1];
+```
+
+- 参数
+  - 空
+- 返回
+  - `Array<String>[2]`，其中[0]为上传网速，[1]为下载网速
+
+## 🚛 服务器相关
+
+### 启动服务器
+
+`serein.startServer()`
+
+```js
+var success = serein.startServer();
+```
+
+- 参数
+  - 空
+- 返回
+  - `Boolean`
+    - 成功为`true`，否则为`false`
+
+### 关闭服务器
+
+`serein.stopServer()`
+
+```js
+serein.stopServer();
+```
+
+- 参数
+  - 空
 - 返回
   - 空
 
-#### 获取Motd原文
+>[!WARNING] 此方法不能保证服务器被关闭
+
+### 强制结束服务器
+
+`serein.killServer()`
+
+```js
+var success = serein.killServer();
+```
+
+- 参数
+  - 空
+- 返回
+  - `Boolean`
+    - 成功为`true`，否则为`false`
+
+### 发送服务器命令
+
+`serein.sendCmd(String:command)`
+
+```js
+serein.sendCmd("help");
+```
+
+- 参数
+  - `command` 输入的命令
+- 返回
+  - 空
+
+### 获取服务器状态
+
+`serein.getServerStatus()`
+
+```js
+var serverStatus = serein.getServerStatus();
+```
+
+- 参数
+  - 空
+- 返回
+  - `Boolean`
+    - 已启动为`true`，未启动则为`false`
+
+### 获取服务器运行时长
+
+`serein.getServerTime()`
+
+```js
+var time = serein.getServerTime();
+```
+
+- 参数
+  - 空
+- 返回
+  - `String`
+    - 示例：`0.2m` `1.5h` `3.02d`
+
+### 获取服务器进程占用
+
+`serein.getServerCPUPersent()`
+
+```js
+var cpupersent = serein.getServerCPUPersent();
+```
+
+- 参数
+  - 空
+- 返回
+  - `Number` ∈ [0,100]
+    - 示例：`1.14514191981`
+
+### 获取服务器文件
+
+`serein.getServerFile()`
+
+```js
+var file = serein.getServerFile();
+```
+
+- 参数
+  - 空
+- 返回
+  - `String`
+    - 示例：`bedrock_server.exe`
+
+### 获取Motd原文
 
 基岩版：`serein.getMotdpe(ip:String)`  
 Java版：`serein.getMotdje(ip:String)`
@@ -411,120 +483,9 @@ var je = serein.getMotdje("127.0.0.1:25565");
       "favicon": "……" // 此处限于篇幅省略其内容，实际上是base64编码的图片
     }
     ```
+## 🤖 消息收发
 
-#### 启动服务器
-
-`serein.startServer()`
-
-```js
-var success = serein.startServer();
-```
-
-- 参数
-  - 空
-- 返回
-  - `Boolean`
-    - 成功为`true`，否则为`false`
-
-#### 关闭服务器
-
-`serein.stopServer()`
-
-```js
-serein.stopServer();
-```
-
-- 参数
-  - 空
-- 返回
-  - 空
-
->[!WARNING] 此方法不能保证服务器被关闭
-
-#### 强制结束服务器
-
-`serein.killServer()`
-
-```js
-var success = serein.killServer();
-```
-
-- 参数
-  - 空
-- 返回
-  - `Boolean`
-    - 成功为`true`，否则为`false`
-
-#### 发送服务器命令
-
-`serein.sendCmd(String:command)`
-
-```js
-serein.sendCmd("help");
-```
-
-- 参数
-  - `command` 输入的命令
-- 返回
-  - 空
-
-#### 获取服务器状态
-
-`serein.getServerStatus()`
-
-```js
-var serverStatus = serein.getServerStatus();
-```
-
-- 参数
-  - 空
-- 返回
-  - `Boolean`
-    - 已启动为`true`，未启动则为`false`
-
-#### 获取服务器运行时长
-
-`serein.getServerTime()`
-
-```js
-var time = serein.getServerTime();
-```
-
-- 参数
-  - 空
-- 返回
-  - `String`
-    - 示例：`0.2m` `1.5h` `3.02d`
-
-#### 获取服务器进程占用
-
-`serein.getServerCPUPersent()`
-
-```js
-var cpupersent = serein.getServerCPUPersent();
-```
-
-- 参数
-  - 空
-- 返回
-  - `String`
-    - 示例：`1.14` `5.14`
-
-#### 获取服务器文件
-
-`serein.getServerFile()`
-
-```js
-var file = serein.getServerFile();
-```
-
-- 参数
-  - 空
-- 返回
-  - `String`
-    - 示例：`bedrock_server.exe`
-
-#### 发送群聊消息
+### 发送群聊消息
 
 `serein.sendGroup(target:Number,msg:String)`
 
@@ -540,7 +501,7 @@ var success = serein.sendGroup(114514,"大家好");
     - 成功为`true`，否则为`false`
     >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
-#### 发送私聊消息
+### 发送私聊消息
 
 `serein.sendPrivate(target:Number,msg:String)`
 
@@ -556,7 +517,7 @@ var success = serein.sendPrivate(114514,"你好");
     - 成功为`true`，否则为`false`
     >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
-#### 发送数据包
+### 发送数据包
 
 `serein.sendPacket(packet:String)`
 
@@ -572,7 +533,7 @@ serein.sendPackage("{\"action\": \"send_private_msg\",\"params\": {\"user_id\": 
     - 成功为`true`，否则为`false`
     >[!WARNING] 此值仅代表此消息是否成功由WebSocket发出，并不代表消息能够成功发送至聊天
 
-#### 获取ws连接状态
+### 获取ws连接状态
 
 `serein.getWsStatus()`
 
@@ -586,7 +547,9 @@ var connected = serein.getWsStatus();
   - `Boolean`
     - 已连接为`true`，否则为`false`
 
-#### 绑定游戏ID
+## 👨🏻‍🤝‍👨🏻 绑定/解绑
+
+### 绑定游戏ID
 
 `serein.bindMember(userId:Number,gameId:String)`
 
@@ -601,7 +564,7 @@ var success = serein.bindMember(114514, "Li_Tiansuo");
   - `Boolean`
     - 成功为`true`，否则为`false`
 
-#### 删除绑定记录
+### 删除绑定记录
 
 `serein.unbindMember(userId:Number)`
 
@@ -615,7 +578,7 @@ var success = serein.unbindMember(114514);
   - `Boolean`
     - 成功为`true`，否则为`false`
 
-#### 获取指定用户QQ
+### 获取指定用户QQ
 
 `serein.getID(gameId:String)`
 
@@ -628,7 +591,7 @@ var qq = serein.getID("Li_Tiansuo");
 - 返回
   - `Number` QQ号
 
-#### 获取指定游戏ID
+### 获取指定游戏ID
 
 `serein.getGameID(userId:Number)`
 
@@ -640,57 +603,3 @@ var id = serein.getGameID(114514);
   - `userId` QQ号
 - 返回
   - `String` 游戏ID
-
-### 内置类
-
-#### WebSocket客户端
-
-```js
-// 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
-var ws = new WebSocket("ws://127.0.0.1:11451", serein.namespace); 
-// 实例化ws，
-// 此处需要提供当前的命名空间，用于区分和管理
-
-ws.onopen = function(){
-  // ws开启事件
-  // ...
-};
-ws.onclose = function(){
-  // ws关闭事件
-  // ...
-};
-ws.onerror = function(e){ // 错误信息
-  // ws发生错误事件
-  // ...
-};
-ws.onmessage = function(message){ // 收到数据
-  // ws收到数据事件
-  // ...
-};
-
-ws.open(); // 连接ws
-var state = ws.state; // 连接状态
-/*
- * 此状态有以下五个可能的枚举值
- *  -1  未知或无效
- *  0   正在连接
- *  1   连接成功
- *  2   正在关闭
- *  3   已关闭
-*/
-ws.send("hello"); // 发送数据
-ws.close(); // 关闭ws
-ws.dispose(); // 释放对象
-```
-
-#### Logger
-
-```js
-var logger = Logger("Example"); // 插件名称
-logger.info("这是一条信息输出");
-logger.warn("这是一条警告输出");
-logger.error("这是一条错误输出");
-logger.debug("这是一条信息输出"); // 此消息将输出到Serein的debug窗口而不是插件控制台
-```
-
-![logger](../imgs/logger.png)
