@@ -36,16 +36,16 @@ namespace Serein.Windows.Pages.Server
             PluginsListview.Items.Clear();
             if (PluginManager.Get() != null)
             {
-                foreach (string Plugin in PluginManager.Get())
+                foreach (string plugin in PluginManager.Get())
                 {
-                    if (Extensions.Contains(Path.GetExtension(Plugin).ToLower()))
+                    if (Extensions.Contains(Path.GetExtension(plugin).ToLower()))
                     {
-                        ListViewItem Item = new ListViewItem
+                        ListViewItem listViewItem = new()
                         {
-                            Content = PluginManager.GetRelativeUri(Plugin),
-                            Opacity = Path.GetExtension(Plugin).ToLower() != ".lock" ? 1 : 0.5
+                            Content = PluginManager.GetRelativeUri(plugin),
+                            Opacity = Path.GetExtension(plugin).ToLower() != ".lock" ? 1 : 0.5
                         };
-                        PluginsListview.Items.Add(Item);
+                        PluginsListview.Items.Add(listViewItem);
                     }
                 }
             }
@@ -60,9 +60,9 @@ namespace Serein.Windows.Pages.Server
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Refresh":

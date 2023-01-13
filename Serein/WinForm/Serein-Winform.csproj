@@ -10,6 +10,7 @@
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
 		<RootNamespace>Serein</RootNamespace>
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>False</Optimize>
@@ -51,6 +52,7 @@
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
 		<PackageReference Include="SystemInfoLibrary" Version="1.4.3" />
 		<PackageReference Include="WebSocket4Net" Version="0.15.2" />
 	</ItemGroup>

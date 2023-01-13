@@ -32,13 +32,13 @@ namespace Serein.Windows.Pages.Function
         private void Load()
         {
             JSPluginListView.Items.Clear();
-            foreach (Plugin Item in JSPluginManager.PluginDict.Values)
+            foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
                 ListViewItem listViewItem = new ListViewItem
                 {
-                    Content = Item,
-                    Tag = Item.Namespace,
-                    Opacity = Item.Available ? 1 : 0.5
+                    Content = plugin,
+                    Tag = plugin.Namespace,
+                    Opacity = plugin.Available ? 1 : 0.5
                 };
                 JSPluginListView.Items.Add(listViewItem);
             }
@@ -46,9 +46,9 @@ namespace Serein.Windows.Pages.Function
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                switch (Item.Tag)
+                switch (menuItem.Tag)
                 {
                     case "Reload":
                         JSPluginManager.Reload();
@@ -62,9 +62,9 @@ namespace Serein.Windows.Pages.Function
                         Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs") { UseShellExecute = true });
                         break;
                     case "Disable":
-                        if (JSPluginListView.SelectedItem is ListViewItem item && JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()))
+                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.ContainsKey(listViewItem.Tag.ToString()))
                         {
-                            JSPluginManager.PluginDict[item.Tag.ToString()].Dispose();
+                            JSPluginManager.PluginDict[listViewItem.Tag.ToString()].Dispose();
                             Load();
                         }
                         break;

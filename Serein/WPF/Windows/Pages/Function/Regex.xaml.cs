@@ -22,23 +22,23 @@ namespace Serein.Windows.Pages.Function
         {
             IO.ReadRegex(FileName);
             RegexListView.Items.Clear();
-            foreach (Items.Regex Item in Global.RegexItems)
+            foreach (Items.Regex regex in Global.RegexItems)
             {
-                RegexListView.Items.Add(Item);
+                RegexListView.Items.Add(regex);
             }
         }
 
         private void Save()
         {
-            List<Items.Regex> Items = new List<Items.Regex>();
+            List<Items.Regex> list = new List<Items.Regex>();
             foreach (var obj in RegexListView.Items)
             {
-                if (obj is Items.Regex Item && Item != null)
+                if (obj is Items.Regex regex && regex != null)
                 {
-                    Items.Add(Item);
+                    list.Add(regex);
                 }
             }
-            Global.UpdateRegexItems(Items);
+            Global.UpdateRegexItems(list);
             IO.SaveRegex();
         }
 
@@ -51,14 +51,14 @@ namespace Serein.Windows.Pages.Function
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
                 if (ActionType != 0)
                 {
                     Catalog.MainWindow.RegexEditor.Hide();
                     ActionType = 0;
                 }
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
@@ -66,14 +66,14 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (RegexListView.SelectedItem is Items.Regex SelectedItem && SelectedItem != null)
+                        if (RegexListView.SelectedItem is Items.Regex selectedItem && selectedItem != null)
                         {
                             Catalog.MainWindow.OpenRegexEditor(
-                                SelectedItem.Area,
-                                SelectedItem.IsAdmin,
-                                SelectedItem.Expression,
-                                SelectedItem.Command,
-                                SelectedItem.Remark
+                                selectedItem.Area,
+                                selectedItem.IsAdmin,
+                                selectedItem.Expression,
+                                selectedItem.Command,
+                                selectedItem.Remark
                                 );
                             ActionType = 2;
                         }
@@ -144,14 +144,14 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && RegexListView.SelectedItem is Items.Regex SelectedItem && SelectedItem != null)
+                    else if (ActionType == 2 && RegexListView.SelectedItem is Items.Regex selectedItem && selectedItem != null)
                     {
-                        SelectedItem.Area = AreaIndex;
-                        SelectedItem.Expression = Regex;
-                        SelectedItem.Command = Command;
-                        SelectedItem.Remark = Remark;
-                        SelectedItem.IsAdmin = IsAdmin;
-                        RegexListView.SelectedItem = SelectedItem;
+                        selectedItem.Area = AreaIndex;
+                        selectedItem.Expression = Regex;
+                        selectedItem.Command = Command;
+                        selectedItem.Remark = Remark;
+                        selectedItem.IsAdmin = IsAdmin;
+                        RegexListView.SelectedItem = selectedItem;
                     }
                     Save();
                     Load();
@@ -168,10 +168,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (RegexListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button Item && Item != null)
+            if (RegexListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
             {
                 int Index = RegexListView.SelectedIndex;
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = button.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Up":

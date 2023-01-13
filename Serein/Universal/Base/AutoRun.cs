@@ -58,7 +58,7 @@ namespace Serein.Base
                      "Serein is licensed under <a href=\"https://github.com/Zaitonn/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n" +
                      "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
             };
-            taskDialog.HyperlinkClicked += (sneder, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+            taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
         }
 #endif

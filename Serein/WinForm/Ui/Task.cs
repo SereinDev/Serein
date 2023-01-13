@@ -155,18 +155,18 @@ namespace Serein.Ui
 
         private void SaveTask()
         {
-            List<Task> TaskItems = new();
-            foreach (ListViewItem Item in TaskList.Items)
+            List<Task> list = new();
+            foreach (ListViewItem listViewItem in TaskList.Items)
             {
-                TaskItems.Add(new()
+                list.Add(new()
                 {
-                    Cron = Item.Text,
-                    Remark = Item.SubItems[1].Text,
-                    Command = Item.SubItems[2].Text,
-                    Enable = Item.ForeColor != Color.Gray
+                    Cron = listViewItem.Text,
+                    Remark = listViewItem.SubItems[1].Text,
+                    Command = listViewItem.SubItems[2].Text,
+                    Enable = listViewItem.ForeColor != Color.Gray
                 });
             }
-            Global.UpdateTaskItems(TaskItems);
+            Global.UpdateTaskItems(list);
             IO.SaveTask();
         }
 
@@ -175,12 +175,12 @@ namespace Serein.Ui
             IO.ReadTask();
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            foreach (Task Item in Global.TaskItems)
+            foreach (Task list in Global.TaskItems)
             {
-                ListViewItem listViewItem = new(Item.Cron);
-                listViewItem.SubItems.Add(Item.Remark);
-                listViewItem.SubItems.Add(Item.Command);
-                if (!Item.Enable)
+                ListViewItem listViewItem = new(list.Cron);
+                listViewItem.SubItems.Add(list.Remark);
+                listViewItem.SubItems.Add(list.Command);
+                if (!list.Enable)
                 {
                     listViewItem.ForeColor = Color.Gray;
                     listViewItem.SubItems[1].ForeColor = Color.Gray;

@@ -9,12 +9,12 @@ namespace Serein.Ui.ChildrenWindow
     public partial class MemberInfoEditor : Form
     {
         public bool CancelFlag = true;
-        public MemberInfoEditor(ListViewItem Item)
+        public MemberInfoEditor(ListViewItem listViewItem)
         {
             InitializeComponent();
-            ID.Text += Item.Text;
-            NickName.Text += Item.SubItems[2].Text;
-            GameIDBox.Text = Item.SubItems[4].Text;
+            ID.Text += listViewItem.Text;
+            NickName.Text += listViewItem.SubItems[2].Text;
+            GameIDBox.Text = listViewItem.SubItems[4].Text;
         }
 
         private void Cancel_Click(object sender, EventArgs e)

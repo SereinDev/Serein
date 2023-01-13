@@ -23,16 +23,16 @@ namespace Serein.Ui
         {
             SereinPluginsList.BeginUpdate();
             SereinPluginsList.Items.Clear();
-            foreach (Plugin Item in JSPluginManager.PluginDict.Values)
+            foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
-                ListViewItem listViewItem = new ListViewItem(Item.Name)
+                ListViewItem listViewItem = new ListViewItem(plugin.Name)
                 {
-                    ForeColor = Item.Available ? ForeColor : Color.Gray,
-                    Tag = Item.Namespace
+                    ForeColor = plugin.Available ? ForeColor : Color.Gray,
+                    Tag = plugin.Namespace
                 };
-                listViewItem.SubItems.Add(Item.Version);
-                listViewItem.SubItems.Add(Item.Author);
-                listViewItem.SubItems.Add(Item.Description);
+                listViewItem.SubItems.Add(plugin.Version);
+                listViewItem.SubItems.Add(plugin.Author);
+                listViewItem.SubItems.Add(plugin.Description);
                 SereinPluginsList.Items.Add(listViewItem);
             }
             SereinPluginsList.EndUpdate();

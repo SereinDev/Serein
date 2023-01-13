@@ -173,11 +173,11 @@ namespace Serein.Base
             }
             else
             {
-                foreach (Member Item in Items)
+                foreach (Member member in Items)
                 {
-                    if (Item.GameID == gameId)
+                    if (member.GameID == gameId)
                     {
-                        return Item.ID;
+                        return member.ID;
                     }
                 }
                 return 0;

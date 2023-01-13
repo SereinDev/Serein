@@ -117,8 +117,8 @@ namespace Serein.Ui
             => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
 
         #endregion
-        #region 机器人
 
+        #region 机器人
         private void SettingBotUri_TextChanged(object sender, EventArgs e)
             => Global.Settings.Bot.Uri = SettingBotUri.Text;
         private void SettingBotAuthorization_Enter(object sender, EventArgs e)
@@ -299,7 +299,7 @@ namespace Serein.Ui
             return Commands.ToArray();
         }
 
-        private void SettingSereinVersion_Click(object sender, EventArgs e)
+        private void SettingSereinVersion_Click(object sender, EventArgs _)
         {
             Ookii.Dialogs.Wpf.TaskDialog taskDialog = new Ookii.Dialogs.Wpf.TaskDialog
             {
@@ -319,7 +319,7 @@ namespace Serein.Ui
                 FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
                 EnableHyperlinks = true
             };
-            taskDialog.HyperlinkClicked += (sneder, _e) => Process.Start(new ProcessStartInfo(_e.Href) { UseShellExecute = true });
+            taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
         }
         #endregion

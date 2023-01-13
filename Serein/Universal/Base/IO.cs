@@ -81,13 +81,13 @@ namespace Serein.Base
                     List<Regex> list = new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        Regex Item = new();
-                        Item.FromText(line);
-                        if (!Item.Check())
+                        Regex regex = new();
+                        regex.FromText(line);
+                        if (!regex.Check())
                         {
                             continue;
                         }
-                        list.Add(Item);
+                        list.Add(regex);
                     }
                     Global.UpdateRegexItems(list);
                 }
@@ -220,7 +220,7 @@ namespace Serein.Base
                 if (filename.ToUpper().EndsWith(".TSV"))
                 {
                     string line;
-                    List<Task> items = new();
+                    List<Task> list = new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
                         Task task = new();
@@ -229,9 +229,9 @@ namespace Serein.Base
                         {
                             continue;
                         }
-                        items.Add(task);
+                        list.Add(task);
                     }
-                    Global.UpdateTaskItems(items);
+                    Global.UpdateTaskItems(list);
                 }
                 else if (filename.ToUpper().EndsWith(".JSON"))
                 {

@@ -51,17 +51,17 @@ namespace Serein.Base
                     userId = long.TryParse(packet["sender"]["user_id"].ToString(), out result) ? result : -1;
                     groupId = messageType == "group" && long.TryParse(packet["group_id"].ToString(), out result) ? result : -1;
                     Logger.Out(Items.LogType.Bot_Receive, $"{packet["sender"]["nickname"]}({packet["sender"]["user_id"]})" + ":" + rawMessage);
-                    foreach (Items.Regex item in Global.RegexItems)
+                    foreach (Items.Regex regex in Global.RegexItems)
                     {
                         if (
-                            string.IsNullOrEmpty(item.Expression) ||
-                            item.Area <= 1 ||
+                            string.IsNullOrEmpty(regex.Expression) ||
+                            regex.Area <= 1 ||
                             !(
-                                isSelfMessage && item.Area == 4 ||
-                                !isSelfMessage && item.Area != 4
+                                isSelfMessage && regex.Area == 4 ||
+                                !isSelfMessage && regex.Area != 4
                             ) ||
                             messageType == "group" && !Global.Settings.Bot.GroupList.Contains(groupId) ||
-                            !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, item.Expression)
+                            !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression)
                             )
                         {
                             continue;
@@ -74,11 +74,11 @@ namespace Serein.Base
                                 packet["sender"]["role"].ToString() == "admin" ||
                                 packet["sender"]["role"].ToString() == "owner")
                             ) &&
-                            item.IsAdmin &&
+                            regex.IsAdmin &&
                             !isSelfMessage
                             )
                         {
-                            switch (item.Area)
+                            switch (regex.Area)
                             {
                                 case 2:
                                     EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupId, userId);
@@ -89,31 +89,31 @@ namespace Serein.Base
                             }
                             continue;
                         }
-                        if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, item.Expression))
+                        if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression))
                         {
-                            if ((item.Area == 4 || item.Area == 2) && messageType == "group")
+                            if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
                             {
                                 Command.Run(
                                     1,
-                                    item.Command,
+                                    regex.Command,
                                     packet,
                                     System.Text.RegularExpressions.Regex.Match(
                                         rawMessage,
-                                        item.Expression
+                                        regex.Expression
                                     ),
                                     userId,
                                     groupId
                                 );
                             }
-                            else if ((item.Area == 4 || item.Area == 3) && messageType == "private")
+                            else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
                             {
                                 Command.Run(
                                     1,
-                                    item.Command,
+                                    regex.Command,
                                     packet,
                                     System.Text.RegularExpressions.Regex.Match(
                                         rawMessage,
-                                        item.Expression
+                                        regex.Expression
                                         ),
                                     userId
                                 );

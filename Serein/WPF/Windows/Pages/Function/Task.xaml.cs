@@ -25,23 +25,23 @@ namespace Serein.Windows.Pages.Function
         {
             IO.ReadTask(FileName);
             TaskListView.Items.Clear();
-            foreach (Items.Task Item in Global.TaskItems)
+            foreach (Items.Task task in Global.TaskItems)
             {
-                TaskListView.Items.Add(Item);
+                TaskListView.Items.Add(task);
             }
         }
 
         private void Save()
         {
-            List<Items.Task> Items = new List<Items.Task>();
+            List<Items.Task> list = new List<Items.Task>();
             foreach (var obj in TaskListView.Items)
             {
-                if (obj is Items.Task Item && Item != null)
+                if (obj is Items.Task task && task != null)
                 {
-                    Items.Add(Item);
+                    list.Add(task);
                 }
             }
-            Global.UpdateTaskItems(Items);
+            Global.UpdateTaskItems(list);
             IO.SaveTask();
         }
 
@@ -80,12 +80,12 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && TaskListView.SelectedItem is Items.Task SelectedItem && SelectedItem != null)
+                    else if (ActionType == 2 && TaskListView.SelectedItem is Items.Task selectedItem && selectedItem != null)
                     {
-                        SelectedItem.Cron = CronExp;
-                        SelectedItem.Command = Command;
-                        SelectedItem.Remark = Remark;
-                        TaskListView.SelectedItem = SelectedItem;
+                        selectedItem.Cron = CronExp;
+                        selectedItem.Command = Command;
+                        selectedItem.Remark = Remark;
+                        TaskListView.SelectedItem = selectedItem;
                     }
                     Save();
                     Load();
@@ -102,15 +102,15 @@ namespace Serein.Windows.Pages.Function
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
                 if (ActionType != 0)
                 {
                     Catalog.MainWindow.TaskEditor.Hide();
                     ActionType = 0;
                 }
-                Items.Task SelectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Items.Task : null;
-                string Tag = Item.Tag as string ?? string.Empty;
+                Items.Task selectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Items.Task : null;
+                string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
@@ -118,9 +118,9 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (SelectedItem != null)
+                        if (selectedItem != null)
                         {
-                            Catalog.MainWindow.OpenTaskEditor(SelectedItem.Cron, SelectedItem.Command, SelectedItem.Remark);
+                            Catalog.MainWindow.OpenTaskEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
                             ActionType = 2;
                         }
                         break;
@@ -149,10 +149,10 @@ namespace Serein.Windows.Pages.Function
                         break;
                     case "Enable":
                     case "Disable":
-                        if (SelectedItem != null)
+                        if (selectedItem != null)
                         {
-                            SelectedItem.Enable = !SelectedItem.Enable;
-                            TaskListView.SelectedItem = SelectedItem;
+                            selectedItem.Enable = !selectedItem.Enable;
+                            TaskListView.SelectedItem = selectedItem;
                             Save();
                             Load();
                         }
@@ -163,10 +163,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TaskListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button Item && Item != null)
+            if (TaskListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
             {
                 int Index = TaskListView.SelectedIndex;
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = button.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Up":
@@ -190,10 +190,10 @@ namespace Serein.Windows.Pages.Function
             Edit.IsEnabled = TaskListView.SelectedIndex != -1;
             Delete.IsEnabled = TaskListView.SelectedIndex != -1;
             Clear.IsEnabled = TaskListView.Items.Count > 0;
-            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Items.Task SelectedItem && SelectedItem != null)
+            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Items.Task selectedItem && selectedItem != null)
             {
-                Enable.IsEnabled = !SelectedItem.Enable;
-                Disable.IsEnabled = SelectedItem.Enable;
+                Enable.IsEnabled = !selectedItem.Enable;
+                Disable.IsEnabled = selectedItem.Enable;
             }
             else
             {

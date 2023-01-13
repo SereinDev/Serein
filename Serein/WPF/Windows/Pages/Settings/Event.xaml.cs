@@ -23,9 +23,9 @@ namespace Serein.Windows.Pages.Settings
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem Item && Item != null)
+            if (sender is MenuItem menuItem && menuItem != null)
             {
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
@@ -33,10 +33,10 @@ namespace Serein.Windows.Pages.Settings
                         Catalog.MainWindow.OpenEventrEditor();
                         break;
                     case "Edit":
-                        if (EventListView.SelectedItem is string SelectedItem && SelectedItem != null)
+                        if (EventListView.SelectedItem is string selectedItem && selectedItem != null)
                         {
                             ActionType = 2;
-                            Catalog.MainWindow.OpenEventrEditor(SelectedItem);
+                            Catalog.MainWindow.OpenEventrEditor(selectedItem);
                         }
                         break;
                     case "Delete":
@@ -94,20 +94,20 @@ namespace Serein.Windows.Pages.Settings
 
         private string[] GetEventCommands()
         {
-            List<string> Commands = new List<string>();
-            foreach (object Item in EventListView.Items)
+            List<string> list = new List<string>();
+            foreach (object line in EventListView.Items)
             {
-                Commands.Add(Item as string ?? string.Empty);
+                list.Add(line as string ?? string.Empty);
             }
-            return Commands.ToArray();
+            return list.ToArray();
         }
 
         private void Load()
         {
-            if (Events.SelectedItem is System.Windows.Controls.TreeViewItem Item && Item != null)
+            if (Events.SelectedItem is System.Windows.Controls.TreeViewItem treeViewItemItem && treeViewItemItem != null)
             {
                 EventListView.Items.Clear();
-                SelectedTag = Item.Tag as string ?? string.Empty;
+                SelectedTag = treeViewItemItem.Tag as string ?? string.Empty;
                 if (Enum.IsDefined(typeof(Items.EventType), SelectedTag))
                     Global.Settings.Event.Get(
                         (Items.EventType)Enum.Parse(typeof(Items.EventType), SelectedTag)).ToList()

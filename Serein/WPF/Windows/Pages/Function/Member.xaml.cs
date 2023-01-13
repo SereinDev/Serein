@@ -25,36 +25,36 @@ namespace Serein.Windows.Pages.Function
                 IO.ReadMember();
             }
             MemberListView.Items.Clear();
-            foreach (Items.Member Item in Global.MemberItems.Values.ToList())
+            foreach (Items.Member member in Global.MemberItems.Values.ToList())
             {
-                MemberListView.Items.Add(Item);
+                MemberListView.Items.Add(member);
             }
         }
 
         private void Save()
         {
-            Dictionary<long, Items.Member> Items = new Dictionary<long, Items.Member>();
+            Dictionary<long, Items.Member> dictionary = new Dictionary<long, Items.Member>();
             foreach (var obj in MemberListView.Items)
             {
-                if (obj is Items.Member Item && Item != null)
+                if (obj is Items.Member member && member != null)
                 {
-                    Items.Add(Item.ID, Item);
+                    dictionary.Add(member.ID, member);
                 }
             }
-            Global.UpdateMemberItems(Items);
+            Global.UpdateMemberItems(dictionary);
             IO.SaveMember();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Wpf.Ui.Controls.MenuItem Item && Item != null)
+            if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
                 if (ActionType != 0)
                 {
                     Catalog.MainWindow.MemberEditor.Hide();
                     ActionType = 0;
                 }
-                string Tag = Item.Tag as string ?? string.Empty;
+                string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
@@ -62,10 +62,10 @@ namespace Serein.Windows.Pages.Function
                         Catalog.MainWindow.OpenMemberEditor();
                         break;
                     case "Edit":
-                        if (MemberListView.SelectedItem is Items.Member SelectedItem && SelectedItem != null)
+                        if (MemberListView.SelectedItem is Items.Member selectedItem && selectedItem != null)
                         {
                             ActionType = 2;
-                            Catalog.MainWindow.OpenMemberEditor(false, SelectedItem.ID.ToString(), SelectedItem.GameID);
+                            Catalog.MainWindow.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
                         }
                         else
                         {
@@ -125,10 +125,10 @@ namespace Serein.Windows.Pages.Function
                     else
                     {
                         Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
-                        if (MemberListView.SelectedItem is Items.Member SelectedItem && SelectedItem != null)
+                        if (MemberListView.SelectedItem is Items.Member selectedItem && selectedItem != null)
                         {
-                            SelectedItem.GameID = GameID;
-                            MemberListView.SelectedItem = SelectedItem;
+                            selectedItem.GameID = GameID;
+                            MemberListView.SelectedItem = selectedItem;
                             Save();
                             Load();
                         }
