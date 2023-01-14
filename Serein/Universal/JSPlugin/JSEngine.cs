@@ -95,7 +95,7 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_ServerManager_GetTime",
                 new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("Serein_ServerManager_GetCPUUsage",
-                new Func<string>(() => ServerManager.CPUUsage.ToString("N1")));
+                new Func<double>(() => ServerManager.CPUUsage));
             engine.SetValue("Serein_ServerManager_GetFilename",
                 new Func<string>(() => ServerManager.StartFileName));
             engine.SetValue("Serein_Websocket_SendGroup",

@@ -105,21 +105,21 @@ namespace Serein.Server
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox(":(\n服务器已在运行中", "Serein", 0, 48);
+                    Logger.MsgBox("服务器已在运行中", "Serein", 0, 48);
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox(":(\n启动路径为空", "Serein", 0, 48);
+                    Logger.MsgBox("启动路径为空", "Serein", 0, 48);
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox($":(\n启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
+                    Logger.MsgBox($"启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
                 }
             }
             else
@@ -161,8 +161,11 @@ namespace Serein.Server
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
                 System.Threading.Tasks.Task.Factory.StartNew(UpdateCPUUsage);
-                EventTrigger.Trigger(EventType.ServerStart);
-                JSFunc.Trigger(EventType.ServerStart);
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    EventTrigger.Trigger(EventType.ServerStart);
+                    JSFunc.Trigger(EventType.ServerStart);
+                });
                 return true;
             }
             return false;
@@ -173,7 +176,6 @@ namespace Serein.Server
         /// </summary>
         public static void Stop()
             => Stop(false);
-
 
         /// <summary>
         /// 关闭服务器
@@ -197,7 +199,7 @@ namespace Serein.Server
             }
             else if (!quiet)
             {
-                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
+                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
             }
         }
 
@@ -236,7 +238,7 @@ namespace Serein.Server
             }
             else if (!Status)
             {
-                Logger.MsgBox(":(\n服务器不在运行中", "Serein", 0, 48);
+                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
             }
 #if CONSOLE
             else
@@ -281,7 +283,7 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox(":(\n强制结束失败\n" + e.Message, "Serein", 0, 16);
+                    Logger.MsgBox("强制结束失败\n" + e.Message, "Serein", 0, 16);
                     return false;
                 }
             }
@@ -472,7 +474,7 @@ namespace Serein.Server
 #endif
             for (int i = 0; i < 10; i++)
             {
-                System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
+                500.ToSleepFor();
                 if (!Restart)
                 {
                     break;
@@ -495,7 +497,7 @@ namespace Serein.Server
         {
             while (Status)
             {
-                System.Threading.Tasks.Task.Delay(2000).GetAwaiter().GetResult();
+                2000.ToSleepFor();
                 CPUUsage = (ServerProcess.TotalProcessorTime - PrevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevProcessCpuTime = ServerProcess.TotalProcessorTime;
                 if (CPUUsage > 100)

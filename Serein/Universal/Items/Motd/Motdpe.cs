@@ -56,7 +56,7 @@ namespace Serein.Items.Motd
                         MaxPlayer = datas[5];
                         LevelName = datas[7];
                         GameMode = datas[8];
-                        Success = true;
+                        IsSuccessful = true;
                     }
                 }
             }

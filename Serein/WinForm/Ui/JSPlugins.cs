@@ -64,6 +64,6 @@ namespace Serein.Ui
             SereinPluginsList.SelectedItems[0].ForeColor != Color.Gray;
 
         private void SereinPluginsListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) => SereinPluginsWebBrowser_Invoke("#clear");
-        private void SereinPluginsListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs") { UseShellExecute = true });
+        private void SereinPluginsListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
     }
 }

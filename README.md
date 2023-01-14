@@ -41,7 +41,7 @@ Win7或WinServer2012以上
 
 ## 编译
 
-VS2022; NET Framework 4.7.2 & NET 6.0
+- NET SDK >= 6.0
 
 ## 发电
 

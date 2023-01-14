@@ -41,7 +41,7 @@ namespace Serein.Windows.Pages
                     {
                         motd = new Motdje(newPort: Global.Settings.Server.Port.ToString());
                     }
-                    Server_Online.Text = motd != null && motd.Success ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "获取失败";
+                    Server_Online.Text = motd != null && motd.IsSuccessful ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "获取失败";
                 }
                 else
                 {

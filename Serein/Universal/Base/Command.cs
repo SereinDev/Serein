@@ -154,7 +154,7 @@ namespace Serein.Base
                     {
                         Motd _Motd = new Motdpe(value);
                         EventTrigger.Trigger(
-                            _Motd.Success ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
+                            _Motd.IsSuccessful ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
                             groupId, userId, _Motd);
                     }
                     break;
@@ -163,7 +163,7 @@ namespace Serein.Base
                     {
                         Motd _Motd = new Motdje(value);
                         EventTrigger.Trigger(
-                            _Motd.Success ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
+                            _Motd.IsSuccessful ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
                             groupId, userId, _Motd);
                     }
                     break;

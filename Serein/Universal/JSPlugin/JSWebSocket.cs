@@ -47,7 +47,7 @@ namespace Serein.JSPlugin
         /// <param name="namespace">命名空间</param>
         public JSWebSocket(string uri, string @namespace = null)
         {
-            Namespace = @namespace ?? throw new ArgumentNullException("无法找到对应的命名空间", nameof(@namespace));
+            Namespace = @namespace ?? throw new ArgumentException("命名空间未提供", nameof(@namespace));
             _WebSocket = new WebSocket(
                 uri,
                 "",

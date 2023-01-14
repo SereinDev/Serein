@@ -53,15 +53,14 @@ namespace Serein.Base
         /// <returns>处理后的文本</returns>
         public static string OutputRecognition(string input)
         {
-            string result;
-            result = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
+            string result = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
             result = Regex.Replace(result, @"\x1b", string.Empty);
             result = Regex.Replace(result, @"\s+?$", string.Empty);
             StringBuilder stringBuilder = new();
             for (int i = 0; i < result.Length; i++)
             {
-                int Unicode = result[i];
-                if (Unicode > 31 && Unicode != 127)
+                int unicode = result[i];
+                if (unicode > 31 && unicode != 127)
                 {
                     stringBuilder.Append(result[i].ToString());
                 }
@@ -91,11 +90,11 @@ namespace Serein.Base
             input = input.Replace("\x1b[m", "\x1b[0m");
             if (type == 1 || type == 3)
             {
-                string output = input;
+                string output;
                 string pattern = @"\x1b\[([^\x1b]+?)m([^\x1b]*)";
                 if (Regex.IsMatch(input, pattern))
                 {
-                    output = string.Empty;
+                    StringBuilder mainStringBuild = new();
                     foreach (Match match in Regex.Matches(input, pattern))
                     {
                         string arg = match.Groups[1].Value;
@@ -103,57 +102,65 @@ namespace Serein.Base
                         {
                             continue;
                         }
-                        bool colored = true;
-                        string spanClass = string.Empty;
+                        bool isColored = false;
+                        string @class = string.Empty;
                         string[] argList = arg.Split(';');
-                        StringBuilder stringBuilder = new();
+                        StringBuilder styleStringBuilder = new();
                         for (int childArgIndex = 0; childArgIndex < argList.Length; childArgIndex++)
                         {
                             string childArg = argList[childArgIndex];
                             switch (int.TryParse(childArg, out int integerArg) ? integerArg : 0)
                             {
                                 case 1:
-                                    stringBuilder.Append("font-weight:bold;");
+                                    styleStringBuilder.Append("font-weight:bold;");
                                     break;
                                 case 3:
-                                    stringBuilder.Append("font-style: italic;");
+                                    styleStringBuilder.Append("font-style: italic;");
                                     break;
                                 case 4:
-                                    stringBuilder.Append("text-decoration: underline;");
+                                    styleStringBuilder.Append("text-decoration: underline;");
                                     break;
                                 case 38:
                                     if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        stringBuilder.Append($"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})");
-                                        colored = true;
+                                        styleStringBuilder.Append($"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});");
+                                        isColored = true;
                                     }
                                     break;
                                 case 48:
                                     if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
                                     {
-                                        stringBuilder.Append($"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]})");
-                                        colored = true;
+                                        styleStringBuilder.Append($"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});");
+                                        isColored = true;
                                     }
                                     break;
                                 default:
                                     if (ColorList.Contains(childArg))
                                     {
-                                        spanClass = "vanillaColor";
-                                        colored = !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107");
+                                        @class = $"vanillaColor{childArg}";
+                                        isColored = !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107");
                                     }
                                     break;
                             }
                         }
-                        if (!colored)
+                        if (!isColored)
                         {
-                            spanClass = "noColored";
+                            @class = "noColored";
                         }
-                        output += $"<span style='{stringBuilder}' class='{spanClass}'>{match.Groups[2].Value}</span>";
+                        if (string.IsNullOrEmpty(styleStringBuilder.ToString()))
+                        {
+                            mainStringBuild.Append($"<span class=\"{@class}\">{match.Groups[2].Value}</span>");
+                        }
+                        else
+                        {
+                            mainStringBuild.Append($"<span style=\"{styleStringBuilder}\" class=\"{@class}\">{match.Groups[2].Value}</span>");
+                        }
                     }
+                    output = mainStringBuild.ToString();
                 }
                 else
                 {
-                    output = $"<span class=\"noColored\">{output}</span>";
+                    output = $"<span class=\"noColored\">{input}</span>";
                 }
                 if (type == 3)
                 {

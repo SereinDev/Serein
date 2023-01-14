@@ -367,46 +367,49 @@ namespace Serein.Base
         /// <summary>
         /// 显示具有指定文本、标题、按钮和图标的消息框。
         /// </summary>
-        /// <param name="Text">要在消息框中显示的文本。</param>
-        /// <param name="Caption">要在消息框的标题栏中显示的文本。</param>
-        /// <param name="Buttons">MessageBoxButtons 值之一，可指定在消息框中显示哪些按钮。</param>
-        /// <param name="Icon">MessageBoxIcon 值之一，它指定在消息框中显示哪个图标。</param>
+        /// <param name="text">要在消息框中显示的文本。</param>
+        /// <param name="caption">要在消息框的标题栏中显示的文本。</param>
+        /// <param name="buttons">MessageBoxButtons 值之一，可指定在消息框中显示哪些按钮。</param>
+        /// <param name="icon">MessageBoxIcon 值之一，它指定在消息框中显示哪个图标。</param>
         /// <returns>按下的按钮为OK或Yes</returns>
-        public static bool MsgBox(string Text, string Caption, int Buttons, int Icon)
+        public static bool MsgBox(string text, string caption, int buttons, int icon)
         {
 #if CONSOLE
-            Text = Text.Replace(":(", string.Empty).Trim('\r', '\n');
-            switch (Icon)
+            text = text.Trim('\r', '\n');
+            switch (icon)
             {
                 case 48:
-                    WriteLine(2, Text, true);
+                    WriteLine(2, text, true);
                     break;
                 case 16:
-                    WriteLine(3, Text, true);
+                    WriteLine(3, text, true);
                     break;
             }
             return true;
 #elif WINFORM
-            DialogResult Result = MessageBox.Show(Text, Caption, (MessageBoxButtons)Buttons, (MessageBoxIcon)Icon);
+            if (buttons == 0 && icon == 48)
+            {
+                text = ":(\n" + text;
+            }
+            DialogResult Result = MessageBox.Show(text, caption, (MessageBoxButtons)buttons, (MessageBoxIcon)icon);
             return Result == DialogResult.OK || Result == DialogResult.Yes;
 #elif WPF
-            if (Buttons == 0)
+            if (buttons == 0)
             {
-                Text = Text.Replace(":(\n", string.Empty);
-                if (Text.Contains("\n"))
+                if (text.Contains("\n"))
                 {
                     Catalog.MainWindow.OpenSnackbar(
-                        Text.Split('\n')[0],
-                        Text.Substring(Text.IndexOf('\n')).TrimStart('\n'),
-                        Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
+                        text.Split('\n')[0],
+                        text.Substring(text.IndexOf('\n')).TrimStart('\n'),
+                        icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
                         );
                 }
                 else
                 {
                     Catalog.MainWindow.OpenSnackbar(
                         "执行失败",
-                        Text,
-                        Icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
+                        text,
+                        icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
                         );
                 }
                 return true;
@@ -416,13 +419,13 @@ namespace Serein.Base
                 bool Confirmed = false;
                 MessageBox Msg = new()
                 {
-                    Title = Caption,
-                    Content = Text,
+                    Title = caption,
+                    Content = text,
                     ShowInTaskbar = false,
                     ResizeMode = System.Windows.ResizeMode.NoResize,
                     Topmost = true,
-                    ButtonLeftName = Buttons <= 1 ? "确定" : "是",
-                    ButtonRightName = Buttons <= 1 ? "取消" : "否"
+                    ButtonLeftName = buttons <= 1 ? "确定" : "是",
+                    ButtonRightName = buttons <= 1 ? "取消" : "否"
                 };
                 Msg.ButtonRightClick += (sender, e) => Msg.Close();
                 Msg.ButtonLeftClick += (sender, e) =>

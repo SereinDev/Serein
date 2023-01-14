@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Serein.Base;
+using Serein.Extensions;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace Serein.JSPlugin
                 }
                 System.Threading.Tasks.Task.Run(() =>
                 {
-                    System.Threading.Tasks.Task.Delay(5000).GetAwaiter().GetResult();
+                    5000.ToSleepFor();
                     Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
                 });
             }
@@ -96,7 +97,7 @@ namespace Serein.JSPlugin
             Logger.Out(LogType.Plugin_Clear);
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
-            System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
+            500.ToSleepFor();
             PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
             PluginDict.Clear();
             JSFunc.ID = 0;

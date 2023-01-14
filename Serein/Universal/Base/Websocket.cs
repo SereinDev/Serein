@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Extensions;
 using Serein.Items;
 using Serein.JSPlugin;
 using System;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading;
 using WebSocket4Net;
 
 namespace Serein.Base
@@ -42,7 +42,7 @@ namespace Serein.Base
         {
             if (executedByUser && Status)
             {
-                Logger.MsgBox(":(\nWebsocket已连接", "Serein", 0, 48);
+                Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
             }
             else if (!Status)
             {
@@ -77,7 +77,7 @@ namespace Serein.Base
                                 Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                                 for (int i = 0; i < 20; i++)
                                 {
-                                    System.Threading.Tasks.Task.Delay(500).GetAwaiter().GetResult();
+                                    500.ToSleepFor();
                                     if (!Reconnect || Status)
                                     {
                                         break;
@@ -176,7 +176,7 @@ namespace Serein.Base
             }
             else
             {
-                Logger.MsgBox(":(\nWebsocket未连接", "Serein", 0, 48);
+                Logger.MsgBox("Websocket未连接", "Serein", 0, 48);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using Jint.Native;
 using Jint.Runtime;
 using Serein.Base;
+using Serein.Extensions;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace Serein.JSPlugin
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
             if (!Enum.IsDefined(typeof(EventType), eventName))
             {
-                throw new Exception("未知的事件：" + eventName);
+                throw new ArgumentException("未知的事件：" + eventName);
             }
             lock (JSPluginManager.PluginDict)
             {
@@ -93,7 +94,7 @@ namespace Serein.JSPlugin
                 {
                     JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Trigger(type, args));
                 }
-                System.Threading.Tasks.Task.Delay(Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime).GetAwaiter().GetResult();
+               Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
             }
         }
 
@@ -109,7 +110,7 @@ namespace Serein.JSPlugin
         {
             if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
-                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
+                throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
             }
             long timerID = ID;
             ID++;
@@ -124,7 +125,7 @@ namespace Serein.JSPlugin
                 {
                     if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
                     {
-                        throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
+                        throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
                     }
                     else if (JSPluginManager.PluginDict[@namespace].Engine == null)
                     {

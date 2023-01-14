@@ -74,7 +74,7 @@ namespace Serein.Items.Motd
         /// <summary>
         /// 获取成功
         /// </summary>
-        public bool Success { get; set; } = false;
+        public bool IsSuccessful { get; set; } = false;
 
         /// <summary>
         /// 初始化

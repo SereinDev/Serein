@@ -205,12 +205,7 @@ namespace Serein.Ui
                 }
                 else if (fileList.Count == 0 && data.Length > 0)
                 {
-                    MessageBox.Show(this,
-                        ":(\n无法识别所选文件",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
-                        );
+                    Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
                 }
             }
         }

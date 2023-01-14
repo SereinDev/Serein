@@ -70,7 +70,7 @@ namespace Serein.Items.Motd
                         }
                     }
                     Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
-                    Success = true;
+                    IsSuccessful = true;
                 }
             }
             catch (Exception e)

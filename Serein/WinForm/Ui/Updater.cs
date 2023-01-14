@@ -22,7 +22,7 @@ namespace Serein.Ui
             }
             else if (ServerManager.Status)
             {
-                Name = $"Serein | {ServerManager.StartFileName}";
+                Text = $"Serein | {ServerManager.StartFileName}";
                 PanelInfoTime2.Text = ServerManager.GetTime();
                 PanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
                 PanelInfoStatus2.Text = "已启动";
@@ -41,7 +41,7 @@ namespace Serein.Ui
             }
             else
             {
-                Name = "Serein";
+                Text = "Serein";
                 PanelInfoStatus2.Text = "未启动";
                 PanelInfoVersion2.Text = "-";
                 PanelInfoDifficulty2.Text = "-";

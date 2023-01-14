@@ -26,8 +26,8 @@ namespace Serein.Windows.Pages.Function
 
         private bool Restored;
 
-        public void AppendText(string Line)
-            => Dispatcher.Invoke(() => PluginWebBrowser.Document.InvokeScript("AppendText", new[] { Line }));
+        public void AppendText(string line)
+            => Dispatcher.Invoke(() => PluginWebBrowser.Document.InvokeScript("AppendText", new[] { line }));
 
         private void Load()
         {
@@ -59,7 +59,7 @@ namespace Serein.Windows.Pages.Function
                         Catalog.Function.PluginCache.Clear();
                         break;
                     case "LookupDocs":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
                         break;
                     case "Disable":
                         if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.ContainsKey(listViewItem.Tag.ToString()))
@@ -74,8 +74,8 @@ namespace Serein.Windows.Pages.Function
 
         private void UiPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Timer Restorer = new Timer(500) { AutoReset = true };
-            Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
+            Timer restorer = new Timer(500) { AutoReset = true };
+            restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
             {
                 Logger.Out(LogType.Debug, string.Join(";", Catalog.Function.PluginCache));
                 if (!Restored && PluginWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
@@ -85,11 +85,11 @@ namespace Serein.Windows.Pages.Function
                 }
                 if (Restored)
                 {
-                    Restorer.Stop();
-                    Restorer.Dispose();
+                    restorer.Stop();
+                    restorer.Dispose();
                 }
             });
-            Restorer.Start();
+            restorer.Start();
         }
 
         private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
