@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Console
 {
-    internal class Input
+    internal static class Input
     {
         /// <summary>
         /// 处理输入消息

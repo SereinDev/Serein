@@ -7,7 +7,7 @@ namespace Serein.Windows.Pages.Settings
 {
     public partial class Server : UiPage
     {
-        private new bool Loaded;
+        private readonly new bool Loaded;
 
         public Server()
         {

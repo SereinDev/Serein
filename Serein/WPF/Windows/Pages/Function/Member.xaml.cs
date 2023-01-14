@@ -10,7 +10,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Member : UiPage
     {
-        private int ActionType = 0;
+        private int ActionType;
         public Member()
         {
             InitializeComponent();

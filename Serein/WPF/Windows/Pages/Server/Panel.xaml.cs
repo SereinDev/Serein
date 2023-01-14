@@ -12,7 +12,7 @@ namespace Serein.Windows.Pages.Server
 {
     public partial class Panel : UiPage
     {
-        private Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+        private readonly Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
 
         public Panel()
         {

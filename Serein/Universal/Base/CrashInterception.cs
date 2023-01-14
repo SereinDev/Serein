@@ -104,7 +104,7 @@ namespace Serein.Base
             string message = string.Empty;
             while (e != null)
             {
-                message = e.ToString() + "\r\n" + message;
+                message = e + "\r\n" + message;
                 e = e.InnerException;
             }
             return message;

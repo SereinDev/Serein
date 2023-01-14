@@ -196,5 +196,38 @@ namespace Serein.Server
                     : $"/e,\"{BasePath}\""
                 });
         }
+
+        private static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar" };
+
+        /// <summary>
+        /// 尝试导入
+        /// </summary>
+        /// <param name="files">文件列表</param>
+        /// <returns>导入结果</returns>
+        public static bool TryImport(Array files)
+        {
+            List<string> fileList = new();
+            List<string> filenameList = new();
+            string filename;
+            foreach (object file in files)
+            {
+                filename = file.ToString();
+                if (string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename.ToLower())))
+                {
+                    fileList.Add(filename);
+                    filenameList.Add(Path.GetFileName(filename));
+                }
+            }
+            if (fileList.Count > 0 && Logger.MsgBox($"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", filenameList)}", "Serein", 1, 48))
+            {
+                Add(fileList);
+                return true;
+            }
+            else if (fileList.Count == 0 && files.Length > 0)
+            {
+                Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
+            }
+            return false;
+        }
     }
 }

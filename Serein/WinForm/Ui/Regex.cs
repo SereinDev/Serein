@@ -11,8 +11,6 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        public string[] areas = { "禁用", "控制台", "消息（群聊）", "消息（私聊）", "消息（自身发送）" };
-
         private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
             ItemDraged = (ListViewItem)e.Item;
@@ -71,7 +69,7 @@ namespace Serein.Ui
                 return;
             }
             RegexEditor regexEditer = new RegexEditor();
-            int index = Array.IndexOf(areas, RegexList.SelectedItems[0].SubItems[1].Text);
+            int index = Array.IndexOf(Regex.AreaArray, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,
                 RegexList.SelectedItems[0].Text,
@@ -86,7 +84,7 @@ namespace Serein.Ui
             }
             string isAdminText = regexEditer.Area.SelectedIndex <= 1 || regexEditer.Area.SelectedIndex == 4 ? "-" : regexEditer.IsAdmin.Checked ? "是" : "否";
             RegexList.SelectedItems[0].Text = regexEditer.RegexTextBox.Text;
-            RegexList.SelectedItems[0].SubItems[1].Text = areas[regexEditer.Area.SelectedIndex];
+            RegexList.SelectedItems[0].SubItems[1].Text = Regex.AreaArray[regexEditer.Area.SelectedIndex];
             RegexList.SelectedItems[0].SubItems[2].Text = isAdminText;
             RegexList.SelectedItems[0].SubItems[3].Text = regexEditer.RemarkTextBox.Text;
             RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.CommandTextBox.Text;
@@ -139,7 +137,7 @@ namespace Serein.Ui
             string isAdminText = string.Empty;
             ListViewItem Item = new ListViewItem(regex);
             isAdminText = areaIndex == 4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
-            Item.SubItems.Add(areas[areaIndex]);
+            Item.SubItems.Add(Regex.AreaArray[areaIndex]);
             Item.SubItems.Add(isAdminText);
             Item.SubItems.Add(remark);
             Item.SubItems.Add(command);
@@ -192,15 +190,15 @@ namespace Serein.Ui
         private void SaveRegex()
         {
             List<Regex> regexItems = new List<Regex>();
-            foreach (ListViewItem Item in RegexList.Items)
+            foreach (ListViewItem listViewItem in RegexList.Items)
             {
-                regexItems.Add(new Regex()
+                regexItems.Add(new Regex
                 {
-                    Expression = Item.Text,
-                    Area = Array.IndexOf(areas, Item.SubItems[1].Text),
-                    IsAdmin = Item.SubItems[2].Text == "是",
-                    Remark = Item.SubItems[3].Text,
-                    Command = Item.SubItems[4].Text
+                    Expression = listViewItem.Text,
+                    Area = Array.IndexOf(Regex.AreaArray, listViewItem.SubItems[1].Text),
+                    IsAdmin = listViewItem.SubItems[2].Text == "是",
+                    Remark = listViewItem.SubItems[3].Text,
+                    Command = listViewItem.SubItems[4].Text
                 });
             }
             Global.UpdateRegexItems(regexItems);

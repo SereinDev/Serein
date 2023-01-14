@@ -15,8 +15,6 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private readonly List<string> PluginExtensionsList = new List<string>() { ".py", ".dll", ".js", ".ts", ".jar" };
-
         private bool IsDragging;
         private ListViewItem ItemDraged;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,31 +180,9 @@ namespace Serein.Ui
                 }
                 return;
             }
-            if (data.Length > 0)
+            else if (data.Length > 0 && PluginManager.TryImport(data))
             {
-                List<string> fileList = new List<string>();
-                foreach (object file in data)
-                {
-                    if (PluginExtensionsList.Contains(Path.GetExtension(file.ToString().ToLower())))
-                    {
-                        fileList.Add(file.ToString());
-                    }
-                }
-                if (fileList.Count > 0 &&
-                    (int)MessageBox.Show(this,
-                    $"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", fileList)}",
-                    "Serein",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Warning
-                        ) == 1)
-                {
-                    PluginManager.Add(fileList);
-                    LoadPlugins();
-                }
-                else if (fileList.Count == 0 && data.Length > 0)
-                {
-                    Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
-                }
+                LoadPlugins();
             }
         }
 

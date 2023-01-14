@@ -81,7 +81,7 @@ namespace Serein.Ui
 
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog()
+            OpenFileDialog dialog = new()
             {
                 Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
             };

@@ -244,7 +244,7 @@ namespace Serein.Windows
         private void UiWindow_Drop(object sender, DragEventArgs e)
         {
             Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
-            string FileName = string.Empty;
+            string filename = string.Empty;
             List<string> SingleList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
             if (
                 data.Length == 1 &&
@@ -256,60 +256,41 @@ namespace Serein.Windows
                 )
             {
                 Focus();
-                FileName = data.GetValue(0)?.ToString();
+                filename = data.GetValue(0)?.ToString() ?? string.Empty;
                 if (
-                    Path.GetExtension(FileName).ToUpper() == ".EXE" ||
-                    Path.GetExtension(FileName).ToUpper() == ".BAT"
+                    Path.GetExtension(filename).ToUpper() == ".EXE" ||
+                    Path.GetExtension(filename).ToUpper() == ".BAT"
                     )
                 {
                     if (Logger.MsgBox(
-                        $"是否以\"{FileName}\"为启动文件？",
+                        $"是否以\"{filename}\"为启动文件？",
                         "Serein", 1, 48))
                     {
                         if (Catalog.Settings.Server != null && Catalog.Settings.Server.Path != null)
                         {
-                            Catalog.Settings.Server.Path.Text = FileName;
+                            Catalog.Settings.Server.Path.Text = filename;
                         }
-                        Global.Settings.Server.Path = FileName;
+                        Global.Settings.Server.Path = filename;
                         Catalog.Server.Plugins?.Load();
                     }
                 }
-                else if (Path.GetExtension(FileName).ToLower() == ".json" || Path.GetExtension(FileName).ToLower() == ".tsv")
+                else if (Path.GetExtension(filename).ToLower() == ".json" || Path.GetExtension(filename).ToLower() == ".tsv")
                 {
-                    if (Logger.MsgBox($"是否导入{Path.GetFileName(FileName)}？\n将覆盖原有文件且不可逆",
+                    if (Logger.MsgBox($"是否导入{Path.GetFileName(filename)}？\n将覆盖原有文件且不可逆",
                             "Serein",
                             1,
                             48))
                     {
-                        Catalog.Function.Regex?.Load(FileName);
-                        Catalog.Function.Task?.Load(FileName);
+                        Catalog.Function.Regex?.Load(filename);
+                        Catalog.Function.Task?.Load(filename);
                         IO.SaveRegex();
                         IO.SaveTask();
                     }
                 }
             }
-            else if (data.Length > 0)
+            else if (data.Length > 0 && PluginManager.TryImport(data))
             {
-                List<string> AcceptableList = new List<string>() { ".py", ".dll", ".js", ".jar" };
-                List<string> FileList = new List<string>();
-                string FileListText = string.Empty;
-                foreach (object File in data)
-                {
-                    if (AcceptableList.Contains(Path.GetExtension(File.ToString().ToLower())))
-                    {
-                        FileList.Add(File.ToString());
-                        FileListText = FileListText + Path.GetFileName(File.ToString()) + "\n";
-                    }
-                }
-                if (FileList.Count > 0 && Logger.MsgBox($"是否将以下文件复制到插件文件夹内？\n{FileListText}", "Serein", 1, 48))
-                {
-                    PluginManager.Add(FileList);
-                    Catalog.Server.Plugins?.Load();
-                }
-                else if (FileList.Count == 0 && data.Length > 0)
-                {
-                    Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
-                }
+                Catalog.Server.Plugins?.Load();
             }
         }
 

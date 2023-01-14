@@ -40,7 +40,7 @@ namespace Serein
         /// <summary>
         /// 首次开启
         /// </summary>
-        public static bool FirstOpen = false;
+        public static bool FirstOpen;
 
         /// <summary>
         /// 编译信息

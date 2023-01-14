@@ -44,7 +44,7 @@ namespace Serein.Base
             }
             else
             {
-                Global.MemberItems.Add(userId, new Member()
+                Global.MemberItems.Add(userId, new Member
                 {
                     ID = userId,
                     GameID = value

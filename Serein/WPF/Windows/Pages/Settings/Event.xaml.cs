@@ -18,7 +18,7 @@ namespace Serein.Windows.Pages.Settings
             Catalog.Settings.Event = this;
         }
 
-        private int ActionType = 0;
+        private int ActionType;
         private string SelectedTag = string.Empty;
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -117,7 +117,9 @@ namespace Serein.Windows.Pages.Settings
                 }
             }
             else
+            {
                 SelectedTag = string.Empty;
+            }
         }
 
         private void Events_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) => Load();

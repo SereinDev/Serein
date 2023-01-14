@@ -21,9 +21,9 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Task = this;
         }
 
-        public void Load(string FileName = null)
+        public void Load(string filename = null)
         {
-            IO.ReadTask(FileName);
+            IO.ReadTask(filename);
             TaskListView.Items.Clear();
             foreach (Items.Task task in Global.TaskItems)
             {
@@ -33,7 +33,7 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<Items.Task> list = new List<Items.Task>();
+            List<Items.Task> list = new();
             foreach (var obj in TaskListView.Items)
             {
                 if (obj is Items.Task task && task != null)
@@ -45,9 +45,9 @@ namespace Serein.Windows.Pages.Function
             IO.SaveTask();
         }
 
-        public bool Confirm(string CronExp, string Command, string Remark)
+        public bool Confirm(string cronExp, string command, string remark)
         {
-            if (Base.Command.GetType(Command) == CommandType.Invalid)
+            if (Base.Command.GetType(command) == CommandType.Invalid)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
@@ -55,7 +55,7 @@ namespace Serein.Windows.Pages.Function
             {
                 try
                 {
-                    CrontabSchedule.Parse(CronExp);
+                    CrontabSchedule.Parse(cronExp);
                     if (ActionType == 1)
                     {
                         if (TaskListView.SelectedIndex >= 0)
@@ -64,9 +64,9 @@ namespace Serein.Windows.Pages.Function
                                 TaskListView.SelectedIndex,
                                 new Items.Task()
                                 {
-                                    Cron = CronExp,
-                                    Command = Command,
-                                    Remark = Remark,
+                                    Cron = cronExp,
+                                    Command = command,
+                                    Remark = remark,
                                 });
                         }
                         else
@@ -74,17 +74,17 @@ namespace Serein.Windows.Pages.Function
                             TaskListView.Items.Add(
                                 new Items.Task()
                                 {
-                                    Cron = CronExp,
-                                    Command = Command,
-                                    Remark = Remark
+                                    Cron = cronExp,
+                                    Command = command,
+                                    Remark = remark
                                 });
                         }
                     }
                     else if (ActionType == 2 && TaskListView.SelectedItem is Items.Task selectedItem && selectedItem != null)
                     {
-                        selectedItem.Cron = CronExp;
-                        selectedItem.Command = Command;
-                        selectedItem.Remark = Remark;
+                        selectedItem.Cron = cronExp;
+                        selectedItem.Command = command;
+                        selectedItem.Remark = remark;
                         TaskListView.SelectedItem = selectedItem;
                     }
                     Save();
@@ -165,19 +165,19 @@ namespace Serein.Windows.Pages.Function
         {
             if (TaskListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
             {
-                int Index = TaskListView.SelectedIndex;
-                string Tag = button.Tag as string ?? string.Empty;
-                switch (Tag)
+                int index = TaskListView.SelectedIndex;
+                string tag = button.Tag as string ?? string.Empty;
+                switch (tag)
                 {
                     case "Up":
-                        TaskListView.Items.Insert(Index - 1, TaskListView.SelectedItem);
-                        TaskListView.Items.RemoveAt(Index + 1);
-                        TaskListView.SelectedIndex = Index - 1;
+                        TaskListView.Items.Insert(index - 1, TaskListView.SelectedItem);
+                        TaskListView.Items.RemoveAt(index + 1);
+                        TaskListView.SelectedIndex = index - 1;
                         break;
                     case "Down":
-                        TaskListView.Items.Insert(Index + 2, TaskListView.SelectedItem);
-                        TaskListView.Items.RemoveAt(Index);
-                        TaskListView.SelectedIndex = Index + 1;
+                        TaskListView.Items.Insert(index + 2, TaskListView.SelectedItem);
+                        TaskListView.Items.RemoveAt(index);
+                        TaskListView.SelectedIndex = index + 1;
                         break;
                 }
                 Save();

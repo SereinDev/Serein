@@ -75,7 +75,7 @@ namespace Serein.Windows.Pages.Function
         private void UiPage_Loaded(object sender, RoutedEventArgs e)
         {
             Timer restorer = new Timer(500) { AutoReset = true };
-            restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
+            restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
             {
                 Logger.Out(LogType.Debug, string.Join(";", Catalog.Function.PluginCache));
                 if (!Restored && PluginWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)

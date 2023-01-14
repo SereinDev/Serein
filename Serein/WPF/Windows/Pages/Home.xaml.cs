@@ -17,7 +17,7 @@ namespace Serein.Windows.Pages
         public Home()
         {
             InitializeComponent();
-            _Timer.Elapsed += (_, e) => Update();
+            _Timer.Elapsed += (_, _) => Update();
             _Timer.Start();
         }
 

@@ -136,12 +136,14 @@ namespace Serein.Base
                     break;
                 case Items.CommandType.Bind:
                     if ((inputType == 1 || inputType == 4) && groupId != -1)
+                    {
                         Binder.Bind(
-                            json,
-                            value,
-                            userId,
-                            groupId
-                            );
+                        json,
+                        value,
+                        userId,
+                        groupId
+                        );
+                    }
                     break;
                 case Items.CommandType.Unbind:
                     if ((inputType == 1 || inputType == 4) && groupId != -1)
@@ -197,7 +199,9 @@ namespace Serein.Base
                 !command.Contains("|") ||
                 !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
                 )
+            {
                 return Items.CommandType.Invalid;
+            }
             if (Regex.IsMatch(command, @"^cmd\|", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.ExecuteCmd;

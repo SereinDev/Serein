@@ -11,7 +11,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Bot : UiPage
     {
-        private Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+        private readonly Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
 
         public Bot()
         {

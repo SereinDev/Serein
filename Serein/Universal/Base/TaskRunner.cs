@@ -19,7 +19,7 @@ namespace Serein.Base
         /// </summary>
         public static void Start()
         {
-            timer.Elapsed += (sender, e) => Run();
+            timer.Elapsed += (_, _) => Run();
             timer.Start();
         }
 

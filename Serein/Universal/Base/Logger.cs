@@ -42,7 +42,7 @@ namespace Serein.Base
                     }
                     else
                     {
-                        bld.Append(o.ToString() + " ");
+                        bld.Append(o + " ");
                     }
                 }
             }

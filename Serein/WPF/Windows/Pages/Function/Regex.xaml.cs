@@ -10,7 +10,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Regex : UiPage
     {
-        private int ActionType = 0;
+        private int ActionType;
         public Regex()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<Items.Regex> list = new List<Items.Regex>();
+            List<Items.Regex> list = new();
             foreach (var obj in RegexListView.Items)
             {
                 if (obj is Items.Regex regex && regex != null)
@@ -122,7 +122,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             RegexListView.Items.Insert(
                                 RegexListView.SelectedIndex,
-                                new Items.Regex()
+                                new Items.Regex
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,

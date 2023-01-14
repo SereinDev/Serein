@@ -37,7 +37,6 @@ namespace Serein.Ui.ChildrenWindow
                     CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
                     CancelFlag = false;
                     Close();
-                    return;
                 }
                 catch
                 {
