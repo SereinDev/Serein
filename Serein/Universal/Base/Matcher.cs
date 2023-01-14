@@ -3,7 +3,7 @@ using Serein.JSPlugin;
 
 namespace Serein.Base
 {
-    public class Matcher
+    public static class Matcher
     {
         /// <summary>
         /// 统计信息

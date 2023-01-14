@@ -31,7 +31,7 @@ namespace Serein
         {
             CrashInterception.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += (sender, e) => CrashInterception.ShowException(e.Exception);
+            Application.ThreadException += (_, e) => CrashInterception.ShowException(e.Exception);
             IO.ReadAll(true);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

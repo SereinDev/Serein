@@ -37,12 +37,12 @@ namespace Serein.Windows.Pages.Server
             {
                 foreach (string plugin in PluginManager.Get())
                 {
-                    if (Extensions.Contains(Path.GetExtension(plugin).ToLower()))
+                    if (Extensions.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
                     {
                         ListViewItem listViewItem = new()
                         {
                             Content = PluginManager.GetRelativeUri(plugin),
-                            Opacity = Path.GetExtension(plugin).ToLower() != ".lock" ? 1 : 0.5
+                            Opacity = Path.GetExtension(plugin).ToLowerInvariant() != ".lock" ? 1 : 0.5
                         };
                         PluginsListview.Items.Add(listViewItem);
                     }

@@ -23,7 +23,7 @@ namespace Serein
         public App()
         {
             CrashInterception.Init();
-            DispatcherUnhandledException += (sender, e) => CrashInterception.ShowException(e.Exception);
+            DispatcherUnhandledException += (_, e) => CrashInterception.ShowException(e.Exception);
             ResourcesManager.InitConsole();
             IO.ReadAll();
             IO.StartSavingAndUpdating();

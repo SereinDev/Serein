@@ -75,7 +75,7 @@ namespace Serein.Base
             if (File.Exists(fileName))
             {
                 StreamReader streamReader = new(fileName, Encoding.UTF8);
-                if (fileName.ToUpper().EndsWith(".TSV"))
+                if (fileName.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
                     List<Regex> list = new();
@@ -91,7 +91,7 @@ namespace Serein.Base
                     }
                     Global.UpdateRegexItems(list);
                 }
-                else if (fileName.ToUpper().EndsWith(".JSON"))
+                else if (fileName.ToLowerInvariant().EndsWith(".json"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
@@ -101,7 +101,7 @@ namespace Serein.Base
                     try
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpper() != "REGEX")
+                        if (jsonObject["type"].ToString().ToUpperInvariant() != "REGEX")
                         {
                             return;
                         }
@@ -156,7 +156,7 @@ namespace Serein.Base
                     try
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (jsonObject["type"].ToString().ToUpper() != "MEMBERS")
+                        if (jsonObject["type"].ToString().ToUpperInvariant() != "MEMBERS")
                         {
                             return;
                         }
@@ -217,7 +217,7 @@ namespace Serein.Base
             if (File.Exists(fileName))
             {
                 StreamReader streamReader = new(fileName, Encoding.UTF8);
-                if (fileName.ToUpper().EndsWith(".TSV"))
+                if (fileName.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
                     List<Task> list = new();
@@ -233,7 +233,7 @@ namespace Serein.Base
                     }
                     Global.UpdateTaskItems(list);
                 }
-                else if (fileName.ToUpper().EndsWith(".JSON"))
+                else if (fileName.ToLowerInvariant().EndsWith(".json"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
@@ -243,7 +243,7 @@ namespace Serein.Base
                     try
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpper() != "TASK")
+                        if (jsonObject["type"].ToString().ToUpperInvariant() != "TASK")
                         {
                             return;
                         }

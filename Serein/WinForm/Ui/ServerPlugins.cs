@@ -89,7 +89,7 @@ namespace Serein.Ui
                     {
                         Text = Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty)
                     };
-                    switch (Path.GetExtension(file.ToLower()))
+                    switch (Path.GetExtension(file.ToLowerInvariant()))
                     {
                         case ".js":
                             pluginGroupJs.Items.Add(listViewItem);

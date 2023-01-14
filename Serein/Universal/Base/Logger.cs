@@ -427,8 +427,8 @@ namespace Serein.Base
                     ButtonLeftName = buttons <= 1 ? "确定" : "是",
                     ButtonRightName = buttons <= 1 ? "取消" : "否"
                 };
-                Msg.ButtonRightClick += (sender, e) => Msg.Close();
-                Msg.ButtonLeftClick += (sender, e) =>
+                Msg.ButtonRightClick += (_, _) => Msg.Close();
+                Msg.ButtonLeftClick += (_, _) =>
                 {
                     Confirmed = true;
                     Msg.Close();

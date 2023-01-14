@@ -118,7 +118,7 @@ namespace Serein.Server
             {
                 try
                 {
-                    if (file.ToLower().EndsWith(".lock"))
+                    if (file.ToLowerInvariant().EndsWith(".lock"))
                     {
                         continue;
                     }
@@ -197,7 +197,7 @@ namespace Serein.Server
                 });
         }
 
-        private static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar" };
+        private static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts" };
 
         /// <summary>
         /// 尝试导入
@@ -212,7 +212,7 @@ namespace Serein.Server
             foreach (object file in files)
             {
                 filename = file.ToString();
-                if (string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename.ToLower())))
+                if (string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename.ToLowerInvariant())))
                 {
                     fileList.Add(filename);
                     filenameList.Add(Path.GetFileName(filename));

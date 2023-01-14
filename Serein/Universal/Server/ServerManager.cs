@@ -141,7 +141,7 @@ namespace Serein.Server
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 });
                 ServerProcess.EnableRaisingEvents = true;
-                ServerProcess.Exited += (sender, e) => WaitForExit();
+                ServerProcess.Exited += (_, _) => WaitForExit();
                 InputWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
                     EncodingList[Global.Settings.Server.InputEncoding]
@@ -270,8 +270,8 @@ namespace Serein.Server
             }
 #else
             else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48) && (
-                    !StartFileName.ToUpper().EndsWith(".BAT") || (
-                    StartFileName.ToUpper().EndsWith(".BAT") &&
+                    !StartFileName.ToLowerInvariant().EndsWith(".bat") || (
+                    StartFileName.ToLowerInvariant().EndsWith(".bat") &&
                     Logger.MsgBox("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", "Serein", 1, 48))))
             {
                 try
@@ -344,11 +344,11 @@ namespace Serein.Server
                 }
                 line = null;
             }
-            else if (line.Trim().ToLower() == "start")
+            else if (line.Trim().ToLowerInvariant() == "start")
             {
                 Start(quiet);
             }
-            else if (line.Trim().ToLower() == "stop")
+            else if (line.Trim().ToLowerInvariant() == "stop")
             {
                 Restart = false;
             }

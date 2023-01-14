@@ -11,7 +11,7 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private string[] Roles_Chinese = { "群主", "管理员", "成员" };
+        private static readonly string[] Roles_Chinese = { "群主", "管理员", "成员" };
 
         private void LoadMember()
         {

@@ -14,7 +14,7 @@ namespace Serein.JSPlugin
 {
     internal static class JSFunc
     {
-        public static long ID = 0;
+        public static long GlobalID = 0;
 
         /// <summary>
         /// 注册插件
@@ -112,8 +112,8 @@ namespace Serein.JSPlugin
             {
                 throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
             }
-            long timerID = ID;
-            ID++;
+            long timerID = GlobalID;
+            GlobalID++;
             Logger.Out(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
             Timer timer = new((double)interval.ToObject())
             {
@@ -206,13 +206,13 @@ namespace Serein.JSPlugin
         /// <returns>MD5文本</returns>
         public static string GetMD5(string text)
         {
-            byte[] Datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(text));
-            string Result = string.Empty;
-            for (int i = 0; i < Datas.Length; i++)
+            byte[] datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(text));
+            string result = string.Empty;
+            for (int i = 0; i < datas.Length; i++)
             {
-                Result += Datas[i].ToString("x2");
+                result += datas[i].ToString("x2");
             }
-            return Result;
+            return result;
         }
     }
 }

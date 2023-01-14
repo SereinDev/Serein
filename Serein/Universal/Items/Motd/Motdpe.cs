@@ -28,7 +28,7 @@ namespace Serein.Items.Motd
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
                 socket.Bind(new IPEndPoint(IPAddress.Any, 0));
-                string[] guid = Guid.NewGuid().ToString().ToUpper().Split('-');
+                string[] guid = Guid.NewGuid().ToString().ToUpperInvariant().Split('-');
                 string text = $"01{Environment.TickCount.ToString("X").PadLeft(16, '0')}00FFFF00FEFEFEFEFDFDFDFD12345678{guid[2]}{guid[4]}";
                 byte[] sendBytes = new byte[text.Length / 2];
                 for (int i = 0; i < text.Length / 2; i++)

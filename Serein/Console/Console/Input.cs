@@ -17,7 +17,7 @@ namespace Serein.Console
         {
             if (!ServerManager.Status || line.StartsWith("serein"))
             {
-                line = Regex.Replace(line, @"^serein\s?", string.Empty).ToLower();
+                line = Regex.Replace(line, @"^serein\s?", string.Empty).ToLowerInvariant();
                 switch (line)
                 {
                     case "exit":

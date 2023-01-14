@@ -83,21 +83,21 @@ namespace Serein.Ui
         {
             Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
             string fileName;
-            List<string> extensionsList = new List<string> { ".EXE", ".BAT", ".JSON", ".TSV" };
+            List<string> extensionsList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
             if (
                 data.Length == 1 &&
                 extensionsList.Contains(
                     Path.GetExtension(
                         data.GetValue(0).ToString()
-                        ).ToUpper()
+                        ).ToLowerInvariant()
                     )
                 )
             {
                 FocusWindow();
                 fileName = data.GetValue(0).ToString();
                 if (
-                    Path.GetExtension(fileName).ToUpper() == ".EXE" ||
-                    Path.GetExtension(fileName).ToUpper() == ".BAT"
+                    Path.GetExtension(fileName).ToLowerInvariant() == ".exe" ||
+                    Path.GetExtension(fileName).ToLowerInvariant() == ".bat"
                     )
                 {
                     if ((int)MessageBox.Show(
@@ -113,7 +113,7 @@ namespace Serein.Ui
                     }
                     LoadPlugins();
                 }
-                else if (Path.GetExtension(fileName).ToUpper() == ".JSON")
+                else if (Path.GetExtension(fileName).ToLowerInvariant() == ".json")
                 {
                     StreamReader streamReader = new StreamReader(
                         File.Open(
@@ -125,7 +125,7 @@ namespace Serein.Ui
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd());
                     streamReader.Close();
                     if (
-                        jsonObject["type"].ToString().ToUpper() == "REGEX"
+                        jsonObject["type"].ToString().ToUpperInvariant() == "REGEX"
                         &&
                         (int)MessageBox.Show(
                             this,
@@ -138,7 +138,7 @@ namespace Serein.Ui
                         LoadRegex(fileName);
                         SaveRegex();
                     }
-                    else if (jsonObject["type"].ToString().ToUpper() == "TASK"
+                    else if (jsonObject["type"].ToString().ToUpperInvariant() == "TASK"
                         &&
                         (int)MessageBox.Show(
                             this,
@@ -153,7 +153,7 @@ namespace Serein.Ui
                     }
                 }
                 else if (
-                    Path.GetFileName(fileName).ToUpper() == "REGEX.TSV" &&
+                    Path.GetFileName(fileName).ToLowerInvariant() == "regex.tsv" &&
                     (int)MessageBox.Show(
                         this,
                         "是否导入正则记录？\n将覆盖原有文件且不可逆",
@@ -166,7 +166,7 @@ namespace Serein.Ui
                     SaveRegex();
                 }
                 else if (
-                    Path.GetFileName(fileName).ToUpper() == "TASK.TSV" &&
+                    Path.GetFileName(fileName).ToLowerInvariant() == "task.tsv" &&
                     (int)MessageBox.Show(
                         this,
                         "是否导入定时任务？\n将覆盖原有文件且不可逆",

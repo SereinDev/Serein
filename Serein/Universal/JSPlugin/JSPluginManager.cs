@@ -100,7 +100,7 @@ namespace Serein.JSPlugin
             500.ToSleepFor();
             PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
             PluginDict.Clear();
-            JSFunc.ID = 0;
+            JSFunc.GlobalID = 0;
             Load();
         }
     }

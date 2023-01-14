@@ -251,15 +251,15 @@ namespace Serein.Windows
                 SingleList.Contains(
                     Path.GetExtension(
                         data.GetValue(0)?.ToString()
-                        ).ToLower()
+                        ).ToLowerInvariant()
                     )
                 )
             {
                 Focus();
                 filename = data.GetValue(0)?.ToString() ?? string.Empty;
                 if (
-                    Path.GetExtension(filename).ToUpper() == ".EXE" ||
-                    Path.GetExtension(filename).ToUpper() == ".BAT"
+                    Path.GetExtension(filename).ToLowerInvariant() == ".exe" ||
+                    Path.GetExtension(filename).ToLowerInvariant() == ".bat"
                     )
                 {
                     if (Logger.MsgBox(
@@ -274,7 +274,7 @@ namespace Serein.Windows
                         Catalog.Server.Plugins?.Load();
                     }
                 }
-                else if (Path.GetExtension(filename).ToLower() == ".json" || Path.GetExtension(filename).ToLower() == ".tsv")
+                else if (Path.GetExtension(filename).ToLowerInvariant() == ".json" || Path.GetExtension(filename).ToLowerInvariant() == ".tsv")
                 {
                     if (Logger.MsgBox($"是否导入{Path.GetFileName(filename)}？\n将覆盖原有文件且不可逆",
                             "Serein",
@@ -294,7 +294,7 @@ namespace Serein.Windows
             }
         }
 
-        public void UpdateTitle(string Title = null)
-            => Dispatcher.Invoke(() => _TitleBar.Title = string.IsNullOrEmpty(Title) ? "Serein" : $"Serein - {Title}");
+        public void UpdateTitle(string title = null)
+            => Dispatcher.Invoke(() => _TitleBar.Title = string.IsNullOrEmpty(title) ? "Serein" : $"Serein - {title}");
     }
 }

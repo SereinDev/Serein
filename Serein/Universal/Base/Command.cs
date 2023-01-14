@@ -147,9 +147,11 @@ namespace Serein.Base
                     break;
                 case Items.CommandType.Unbind:
                     if ((inputType == 1 || inputType == 4) && groupId != -1)
+                    {
                         Binder.UnBind(
                             long.TryParse(value, out long i) ? i : -1, groupId
                             );
+                    }
                     break;
                 case Items.CommandType.RequestMotdpe:
                     if (inputType == 1 && (groupId != -1 || userId != -1))
