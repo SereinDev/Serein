@@ -94,7 +94,7 @@ namespace Serein.JSPlugin
                 {
                     JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Trigger(type, args));
                 }
-               Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
+                Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
             }
         }
 
