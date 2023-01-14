@@ -16,9 +16,9 @@ namespace Serein.Ui
 
         private void InitWebBrowser()
         {
-            PanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=panel");
+            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=ServerPanel");
             BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
-            SereinPluginsWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
+            JSPluginWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
         }
 
         private void Initialize()
@@ -39,12 +39,12 @@ namespace Serein.Ui
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
-            SetWindowTheme(SereinPluginsList.Handle, "Explorer", null);
+            SetWindowTheme(JSPluginList.Handle, "Explorer", null);
             SetWindowTheme(SettingEventList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            SendMessage(SereinPluginsList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            SendMessage(JSPluginList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
         }
     }

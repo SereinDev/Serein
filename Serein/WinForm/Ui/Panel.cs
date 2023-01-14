@@ -6,35 +6,35 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private delegate void PanelConsoleWebBrowser_Delegate(object[] objects);
-        private void PanelConsoleWebBrowser_AppendText(object[] objects) => PanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
+        private delegate void ServerPanelConsoleWebBrowser_Delegate(object[] objects);
+        private void ServerPanelConsoleWebBrowser_AppendText(object[] objects) => ServerPanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
 
-        public void PanelConsoleWebBrowser_Invoke(string str)
+        public void ServerPanelConsoleWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
-            Invoke((PanelConsoleWebBrowser_Delegate)PanelConsoleWebBrowser_AppendText, objects2);
+            Invoke((ServerPanelConsoleWebBrowser_Delegate)ServerPanelConsoleWebBrowser_AppendText, objects2);
         }
 
-        private void PanelControlStart_Click(object sender, EventArgs e) => ServerManager.Start();
-        private void PanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
-        private void PanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RestartRequest();
-        private void PanelControlKill_Click(object sender, EventArgs e) => ServerManager.Kill();
+        private void ServerPanelControlStart_Click(object sender, EventArgs e) => ServerManager.Start();
+        private void ServerPanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
+        private void ServerPanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RestartRequest();
+        private void ServerPanelControlKill_Click(object sender, EventArgs e) => ServerManager.Kill();
 
-        private void PanelConsoleEnter_Click(object sender, EventArgs e)
+        private void ServerPanelConsoleEnter_Click(object sender, EventArgs e)
         {
-            ServerManager.InputCommand(PanelConsoleInput.Text);
-            PanelConsoleInput.Clear();
-            PanelConsoleInput.Focus();
+            ServerManager.InputCommand(ServerPanelConsoleInput.Text);
+            ServerPanelConsoleInput.Clear();
+            ServerPanelConsoleInput.Focus();
         }
 
-        private void PanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
+        private void ServerPanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                ServerManager.InputCommand(PanelConsoleInput.Text);
-                PanelConsoleInput.Clear();
+                ServerManager.InputCommand(ServerPanelConsoleInput.Text);
+                ServerPanelConsoleInput.Clear();
             }
             else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.PageUp)
             {
@@ -44,7 +44,7 @@ namespace Serein.Ui
                 }
                 if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
+                    ServerPanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
                 }
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
@@ -55,24 +55,24 @@ namespace Serein.Ui
                 }
                 if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
                 {
-                    PanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
+                    ServerPanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
                 }
                 else if (ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
                 {
-                    PanelConsoleInput_Update();
+                    ServerPanelConsoleInput_Update();
                 }
             }
         }
 
-        private void PanelConsoleInput_Update(string Text = "")
+        private void ServerPanelConsoleInput_Update(string Text = "")
         {
-            PanelConsoleInput.Text = Text;
-            PanelConsoleInput.Focus();
-            PanelConsoleInput.Select(PanelConsoleInput.TextLength, 0);
-            PanelConsoleInput.ScrollToCaret();
+            ServerPanelConsoleInput.Text = Text;
+            ServerPanelConsoleInput.Focus();
+            ServerPanelConsoleInput.Select(ServerPanelConsoleInput.TextLength, 0);
+            ServerPanelConsoleInput.ScrollToCaret();
         }
 
-        private void PanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
+        private void ServerPanelConsoleInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))
             {

@@ -23,26 +23,31 @@
             SelectedPageIndex="0">
             <ui:NavigationCompact.Items>
                 <ui:NavigationItem
+                    x:Name="BotNavigationItem"
                     Content="机器人"
                     Icon="Bot24"
                     PageTag="bot"
                     PageType="{x:Type pages:Bot}" />
                 <ui:NavigationItem
+                    x:Name="MemberNavigationItem"
                     Content="成员管理"
                     Icon="PeopleCommunity24"
                     PageTag="member"
                     PageType="{x:Type pages:Member}" />
                 <ui:NavigationItem
+                    x:Name="RegexNavigationItem"
                     Content="正则"
                     Icon="TextBulletListSquare24"
                     PageTag="regex"
                     PageType="{x:Type pages:Regex}" />
                 <ui:NavigationItem
+                    x:Name="TaskNavigationItem"
                     Content="定时任务"
                     Icon="Timer24"
                     PageTag="task"
                     PageType="{x:Type pages:Task}" />
                 <ui:NavigationItem
+                    x:Name="JSPluginNavigationItem"
                     Content="JS插件"
                     Icon="PuzzleCubePiece20"
                     PageTag="jsplugin"

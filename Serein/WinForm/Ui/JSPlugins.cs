@@ -8,21 +8,21 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private delegate void SereinPluginsWebBrowser_Delegate(object[] objects);
+        private delegate void JSPluginWebBrowser_Delegate(object[] objects);
 
-        private void SereinPluginsWebBrowser_AppendText(object[] objects) => SereinPluginsWebBrowser.Document.InvokeScript("AppendText", objects);
+        private void JSPluginWebBrowser_AppendText(object[] objects) => JSPluginWebBrowser.Document.InvokeScript("AppendText", objects);
 
-        public void SereinPluginsWebBrowser_Invoke(string str)
+        public void JSPluginWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
-            Invoke((SereinPluginsWebBrowser_Delegate)SereinPluginsWebBrowser_AppendText, objects2);
+            Invoke((JSPluginWebBrowser_Delegate)JSPluginWebBrowser_AppendText, objects2);
         }
 
-        private void LoadSereinPlugin()
+        private void LoadJSPlugin()
         {
-            SereinPluginsList.BeginUpdate();
-            SereinPluginsList.Items.Clear();
+            JSPluginList.BeginUpdate();
+            JSPluginList.Items.Clear();
             foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
                 ListViewItem listViewItem = new ListViewItem(plugin.Name)
@@ -33,37 +33,37 @@ namespace Serein.Ui
                 listViewItem.SubItems.Add(plugin.Version);
                 listViewItem.SubItems.Add(plugin.Author);
                 listViewItem.SubItems.Add(plugin.Description);
-                SereinPluginsList.Items.Add(listViewItem);
+                JSPluginList.Items.Add(listViewItem);
             }
-            SereinPluginsList.EndUpdate();
-            SereinPluginsList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            JSPluginList.EndUpdate();
+            JSPluginList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void SereinPluginsListContextMenuStrip_Reload_Click(object sender, EventArgs e)
+        private void JSPluginListContextMenuStrip_Reload_Click(object sender, EventArgs e)
         {
             JSPluginManager.Reload();
-            LoadSereinPlugin();
+            LoadJSPlugin();
         }
 
-        private void SereinPluginsListContextMenuStrip_Disable_Click(object sender, EventArgs e)
+        private void JSPluginListContextMenuStrip_Disable_Click(object sender, EventArgs e)
         {
-            if (SereinPluginsList.SelectedItems.Count > 0)
+            if (JSPluginList.SelectedItems.Count > 0)
             {
-                string @namespace = SereinPluginsList.SelectedItems[0].Tag as string ?? string.Empty;
+                string @namespace = JSPluginList.SelectedItems[0].Tag as string ?? string.Empty;
                 if (JSPluginManager.PluginDict.ContainsKey(@namespace))
                 {
                     JSPluginManager.PluginDict[@namespace].Dispose();
-                    LoadSereinPlugin();
+                    LoadJSPlugin();
                 }
             }
         }
 
-        private void SereinPluginsListContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-         => SereinPluginsListContextMenuStrip_Disable.Enabled =
-            SereinPluginsList.SelectedItems.Count > 0 &&
-            SereinPluginsList.SelectedItems[0].ForeColor != Color.Gray;
+        private void JSPluginListContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+         => JSPluginListContextMenuStrip_Disable.Enabled =
+            JSPluginList.SelectedItems.Count > 0 &&
+            JSPluginList.SelectedItems[0].ForeColor != Color.Gray;
 
-        private void SereinPluginsListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) => SereinPluginsWebBrowser_Invoke("#clear");
-        private void SereinPluginsListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
+        private void JSPluginListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) => JSPluginWebBrowser_Invoke("#clear");
+        private void JSPluginListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
     }
 }

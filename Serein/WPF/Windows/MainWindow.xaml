@@ -9,7 +9,7 @@
     xmlns:home_page="clr-namespace:Serein.Windows.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:server_pages="clr-namespace:Serein.Windows.Pages.Server"
-    xmlns:settgins_pages="clr-namespace:Serein.Windows.Pages.Settings"
+    xmlns:settgings_pages="clr-namespace:Serein.Windows.Pages.Settings"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="Serein"
     Width="800"
@@ -91,10 +91,12 @@
                         <ui:NavigationSeparator />
                         <ui:NavigationItem
                             Content="服务器"
+                            x:Name="ServerNavigationItem"
                             Icon="Server24"
                             PageTag="server"
                             PageType="{x:Type server_pages:Container}" />
                         <ui:NavigationItem
+                            x:Name="FunctionNavigationItem"
                             Content="功能"
                             Icon="Box24"
                             PageTag="functions"
@@ -108,9 +110,10 @@
                     </ui:NavigationStore.Items>
                     <ui:NavigationStore.Footer>
                         <ui:NavigationItem
+                            x:Name="SettingsNavigationItem"
                             Content="设置"
                             Icon="Settings24"
-                            PageType="{x:Type settgins_pages:Container}" />
+                            PageType="{x:Type settgings_pages:Container}" />
                     </ui:NavigationStore.Footer>
                 </ui:NavigationStore>
                 <Border

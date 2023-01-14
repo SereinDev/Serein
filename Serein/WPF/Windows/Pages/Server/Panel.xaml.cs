@@ -22,7 +22,6 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
             PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
-            Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             Catalog.Server.Panel = this;
@@ -106,14 +105,15 @@ namespace Serein.Windows.Pages.Server
                     {
                         motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                     }
-                    Version.Content = motd.Version;
+                    Version.Content = motd != null ? motd.Version : "-";
+                    PlayCount.Content = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
                 }
                 else
                 {
+                    PlayCount.Content = "-";
                     Version.Content = "-";
                 }
                 Difficulity.Content = ServerManager.Status ? ServerManager.Difficulty : "-";
-                Level.Content = ServerManager.Status ? ServerManager.LevelName : "-";
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);

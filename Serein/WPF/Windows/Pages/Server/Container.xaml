@@ -23,11 +23,13 @@
             SelectedPageIndex="0">
             <ui:NavigationCompact.Items>
                 <ui:NavigationItem
+                    x:Name="PanelNavigationItem"
                     Content="控制面板"
                     Icon="PanelRight24"
                     PageTag="panel"
                     PageType="{x:Type pages:Panel}" />
                 <ui:NavigationItem
+                    x:Name="PluginManagerNavigationItem"
                     Content="插件管理"
                     Icon="PuzzlePiece24"
                     PageTag="plugins"

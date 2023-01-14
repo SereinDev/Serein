@@ -22,10 +22,10 @@ namespace Serein.Ui
             }
             else if (ServerManager.Status)
             {
-                Text = $"Serein | {ServerManager.StartFileName}";
-                PanelInfoTime2.Text = ServerManager.GetTime();
-                PanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
-                PanelInfoStatus2.Text = "已启动";
+                Text = $"Serein | {(string.IsNullOrEmpty(ServerManager.StartFileName) ? "unknown" : ServerManager.StartFileName)}";
+                ServerPanelInfoTime2.Text = ServerManager.GetTime();
+                ServerPanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
+                ServerPanelInfoStatus2.Text = "已启动";
                 Motd motd;
                 if (Global.Settings.Server.Type == 1)
                 {
@@ -35,19 +35,19 @@ namespace Serein.Ui
                 {
                     motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                 }
-                PanelInfoVersion2.Text = motd.Version;
-                PanelInfoLevel2.Text = ServerManager.LevelName;
-                PanelInfoDifficulty2.Text = ServerManager.Difficulty;
+                ServerPanelInfoVersion2.Text = motd != null ? motd.Version : "-";
+                ServerPanelInfoPlayerCount2.Text = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
+                ServerPanelInfoDifficulty2.Text = string.IsNullOrEmpty(ServerManager.Difficulty) ? "-" : ServerManager.Difficulty;
             }
             else
             {
                 Text = "Serein";
-                PanelInfoStatus2.Text = "未启动";
-                PanelInfoVersion2.Text = "-";
-                PanelInfoDifficulty2.Text = "-";
-                PanelInfoLevel2.Text = "-";
-                PanelInfoTime2.Text = "-";
-                PanelInfoCPU2.Text = "-";
+                ServerPanelInfoStatus2.Text = "未启动";
+                ServerPanelInfoVersion2.Text = "-";
+                ServerPanelInfoDifficulty2.Text = "-";
+                ServerPanelInfoPlayerCount2.Text = "-";
+                ServerPanelInfoTime2.Text = "-";
+                ServerPanelInfoCPU2.Text = "-";
             }
             if (Websocket.Status)
             {

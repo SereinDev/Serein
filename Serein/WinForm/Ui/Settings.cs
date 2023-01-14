@@ -45,6 +45,14 @@ namespace Serein.Ui
             {
                 Debug.Parent = null;
             }
+            ServerPanel.Parent = Global.Settings.Serein.Pages.ServerPanel ? ServerPanel.Parent : null;
+            ServerPluginManager.Parent = Global.Settings.Serein.Pages.ServerPluginManager ? ServerPluginManager.Parent : null;
+            Regular.Parent = Global.Settings.Serein.Pages.RegexList ? Regular.Parent : null;
+            Task.Parent = Global.Settings.Serein.Pages.Task ? Task.Parent : null;
+            Bot.Parent = Global.Settings.Serein.Pages.Bot ? Bot.Parent : null;
+            JSPlugin.Parent = Global.Settings.Serein.Pages.JSPlugin ? JSPlugin.Parent : null;
+            Member.Parent = Global.Settings.Serein.Pages.Member ? Member.Parent : null;
+            Setting.Parent = Global.Settings.Serein.Pages.Settings ? Setting.Parent : null;
         }
 
         #region 服务器

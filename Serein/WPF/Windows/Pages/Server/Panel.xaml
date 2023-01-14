@@ -67,9 +67,9 @@
                         </Label>
                     </DockPanel>
                     <DockPanel Grid.Row="3">
-                        <Label Content="存档" DockPanel.Dock="Left" />
+                        <Label Content="在线人数" DockPanel.Dock="Left" />
                         <Label
-                            Name="Level"
+                            Name="PlayCount"
                             DockPanel.Dock="Left"
                             FlowDirection="RightToLeft">
                             -

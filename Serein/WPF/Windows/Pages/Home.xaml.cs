@@ -61,29 +61,48 @@ namespace Serein.Windows.Pages
             switch ((sender as CardAction)?.Tag)
             {
                 case "Server":
-                    Catalog.MainWindow.Navigation.Navigate(1);
-                    Catalog.Server.Container?.Navigation?.Navigate(0);
-                    ServerManager.Start();
+                    if (Global.Settings.Serein.Pages.ServerPanel)
+                    {
+
+                        Catalog.MainWindow.Navigation.Navigate(1);
+                        Catalog.Server.Container?.Navigation?.Navigate(0);
+                        ServerManager.Start();
+                    }
                     break;
                 case "Regex":
-                    Catalog.MainWindow.Navigation.Navigate(2);
-                    Catalog.Function.Container?.Navigation?.Navigate(2);
+                    if (Global.Settings.Serein.Pages.RegexList)
+                    {
+                        Catalog.MainWindow.Navigation.Navigate(2);
+                        Catalog.Function.Container?.Navigation?.Navigate(2);
+                    }
                     break;
                 case "Bot":
-                    Catalog.MainWindow.Navigation.Navigate(2);
-                    Catalog.Function.Container?.Navigation?.Navigate(0);
-                    Websocket.Connect();
+                    if (Global.Settings.Serein.Pages.Bot)
+                    {
+                        Catalog.MainWindow.Navigation.Navigate(2);
+                        Catalog.Function.Container?.Navigation?.Navigate(0);
+                        Websocket.Connect();
+                    }
                     break;
                 case "Task":
-                    Catalog.MainWindow.Navigation.Navigate(2);
-                    Catalog.Function.Container?.Navigation?.Navigate(3);
+                    if (Global.Settings.Serein.Pages.Task)
+                    {
+                        Catalog.MainWindow.Navigation.Navigate(2);
+                        Catalog.Function.Container?.Navigation?.Navigate(3);
+                    }
                     break;
                 case "Plugins":
-                    Catalog.MainWindow.Navigation.Navigate(2);
-                    Catalog.Function.Container?.Navigation?.Navigate(4);
+                    if (Global.Settings.Serein.Pages.JSPlugin)
+                    {
+                        Catalog.MainWindow.Navigation.Navigate(2);
+                        Catalog.Function.Container?.Navigation?.Navigate(4);
+                    }
                     break;
                 case "Settings":
-                    Catalog.MainWindow.Navigation.Navigate(4);
+                    if (Global.Settings.Serein.Pages.Settings)
+                    {
+                        Catalog.MainWindow.Navigation.Navigate(4);
+                    }
                     break;
                 default:
                     break;

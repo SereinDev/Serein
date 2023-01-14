@@ -94,13 +94,13 @@ namespace Serein.Base
                     break;
 #elif WINFORM
                 case LogType.Server_Output:
-                    Program.Ui.PanelConsoleWebBrowser_Invoke(line);
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(line);
                     break;
                 case LogType.Server_Notice:
-                    Program.Ui.PanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
                     break;
                 case LogType.Server_Clear:
-                    Program.Ui.PanelConsoleWebBrowser_Invoke("#clear");
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke("#clear");
                     break;
                 case LogType.Bot_Notice:
                     Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
@@ -118,19 +118,19 @@ namespace Serein.Base
                     Program.Ui.BotWebBrowser_Invoke("#clear");
                     break;
                 case LogType.Plugin_Info:
-                    Program.Ui.SereinPluginsWebBrowser_Invoke(Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke(Log.EscapeLog(line));
                     break;
                 case LogType.Plugin_Notice:
-                    Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
                     break;
                 case LogType.Plugin_Error:
-                    Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line));
                     break;
                 case LogType.Plugin_Warn:
-                    Program.Ui.SereinPluginsWebBrowser_Invoke("<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(line));
                     break;
                 case LogType.Plugin_Clear:
-                    Program.Ui.SereinPluginsWebBrowser_Invoke("#clear");
+                    Program.Ui.JSPluginWebBrowser_Invoke("#clear");
                     break;
                 case LogType.Version_New:
                     Program.Ui.ShowBalloonTip("发现新版本:\n" + line);

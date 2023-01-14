@@ -149,7 +149,7 @@ namespace Serein.Ui
                 {
                     RegexList.Items.Add(Item);
                 };
-                PanelInfoLevel2.Invoke(actionDelegate, Item);
+                ServerPanelInfoPlayerCount2.Invoke(actionDelegate, Item);
             }
             else
             {

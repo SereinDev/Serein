@@ -27,7 +27,7 @@ namespace Serein.Ui
                     LoadMember();
                     break;
                 case 6:
-                    LoadSereinPlugin();
+                    LoadJSPlugin();
                     break;
             }
         }
@@ -77,7 +77,7 @@ namespace Serein.Ui
                     }
                     DebugTextBox.Text = DebugTextBox.Text + _text + "\r\n";
                 };
-                PanelInfoTime2.Invoke(action, text);
+                ServerPanelInfoTime2.Invoke(action, text);
             }
         }
 

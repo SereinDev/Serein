@@ -23,13 +23,27 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
+            SettingsNavigationItem.Visibility = Global.Settings.Serein.Pages.Settings ? Visibility.Visible : Visibility.Hidden;
+            if (!Global.Settings.Serein.Pages.ServerPanel && !Global.Settings.Serein.Pages.ServerPluginManager)
+            {
+                ServerNavigationItem.Visibility = Visibility.Hidden;
+            }
+            if (
+                !Global.Settings.Serein.Pages.Bot &&
+                !Global.Settings.Serein.Pages.Member &&
+                !Global.Settings.Serein.Pages.RegexList &&
+                !Global.Settings.Serein.Pages.Task &&
+                !Global.Settings.Serein.Pages.JSPlugin)
+            {
+                FunctionNavigationItem.Visibility = Visibility.Hidden;
+            }
             Catalog.MainWindow = this;
         }
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Catalog.Notification = Catalog.Notification ?? new NotificationManager();
-            DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.ThemeFollowSystem)
             {
                 Watcher.Watch(this, BackgroundType.Tabbed, true);
