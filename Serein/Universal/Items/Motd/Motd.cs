@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using System;
+using System.Linq;
 using System.Net;
 
 namespace Serein.Items.Motd
@@ -14,7 +15,7 @@ namespace Serein.Items.Motd
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port { get; set; } = 0;
+        public int Port { get; set; } = -1;
 
         /// <summary>
         /// 最大玩家数
@@ -76,33 +77,38 @@ namespace Serein.Items.Motd
         /// </summary>
         public bool IsSuccessful { get; set; } = false;
 
+        private static readonly System.Text.RegularExpressions.Regex IPv4Patten = new(@"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))", System.Text.RegularExpressions.RegexOptions.Compiled);
+
+        private static readonly System.Text.RegularExpressions.Regex IPv6Patten = new(@"^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$", System.Text.RegularExpressions.RegexOptions.Compiled);
+
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="NewIp">IP</param>
-        /// <param name="NewPort">端口</param>
+        /// <param name="addr">IP</param>
         /// <returns>是否成功</returns>
-        public bool Init(string NewIp = "127.0.0.1", string NewPort = "19132")
+        public bool TryParse(string addr = "127.0.0.1")
         {
             try
             {
-                if (NewIp.Contains(":"))
+                addr = addr.Trim();
+                if (addr.Contains(':') && !IPv6Patten.IsMatch(addr) && addr.LastIndexOf(':') != addr.Length - 1)
                 {
-                    NewPort = NewIp.Split(':')[1];
-                    NewIp = NewIp.Split(':')[0];
+                    // 分离端口号和IP/域名
+                    Port = int.Parse(addr.Substring(addr.LastIndexOf(':') + 1, addr.Length - addr.LastIndexOf(':') - 1));
+                    if (Port < 0 || Port > 65535)
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(addr), "无效的端口号");
+                    }
+                    addr = addr.Substring(0, addr.LastIndexOf(':')).Trim('[', ']');
                 }
-                if (!new System.Text.RegularExpressions.Regex(
-                    @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))")
-                    .IsMatch(NewIp))
+                if (!IPv4Patten.IsMatch(addr) && !IPv6Patten.IsMatch(addr))
                 {
-                    IPAddress[] IPs = Dns.GetHostAddresses(NewIp);
-                    IP = IPs[0];
+                    IP = Dns.GetHostAddresses(addr)[0];
                 }
                 else
                 {
-                    IP = IPAddress.Parse(NewIp);
+                    IP = IPAddress.Parse(addr);
                 }
-                Port = int.Parse(NewPort);
                 return true;
             }
             catch (Exception e)

@@ -100,11 +100,11 @@ namespace Serein.Windows.Pages.Server
                     Motd motd;
                     if (Global.Settings.Server.Type == 1)
                     {
-                        motd = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
+                        motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
                     }
                     else
                     {
-                        motd = new Motdje(newPort: Global.Settings.Server.Port.ToString());
+                        motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                     }
                     Version.Content = motd.Version;
                 }
@@ -121,8 +121,8 @@ namespace Serein.Windows.Pages.Server
 
         private void UiPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Timer Restorer = new Timer(500) { AutoReset = true };
-            Restorer.Elapsed += (_sender, _e) => Dispatcher.Invoke(() =>
+            Timer restorer = new Timer(500) { AutoReset = true };
+            restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
             {
                 Logger.Out(LogType.Debug, string.Join(";", Catalog.Server.Cache));
                 if (!Restored && PanelWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
@@ -132,11 +132,11 @@ namespace Serein.Windows.Pages.Server
                 }
                 if (Restored)
                 {
-                    Restorer.Stop();
-                    Restorer.Dispose();
+                    restorer.Stop();
+                    restorer.Dispose();
                 }
             });
-            Restorer.Start();
+            restorer.Start();
         }
     }
 }

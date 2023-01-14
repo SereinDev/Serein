@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Server
@@ -94,7 +93,7 @@ namespace Serein.Windows.Pages.Server
                         Load();
                         break;
                     case "Import":
-                        OpenFileDialog Dialog = new OpenFileDialog()
+                        OpenFileDialog Dialog = new()
                         {
                             Filter = "所有文件|*.*",
                             Multiselect = true
@@ -111,7 +110,9 @@ namespace Serein.Windows.Pages.Server
                             PluginManager.OpenFolder();
                         }
                         else
+                        {
                             PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem).Content.ToString()));
+                        }
                         break;
                     default:
                         Logger.Out(Items.LogType.Debug, new ArgumentException());

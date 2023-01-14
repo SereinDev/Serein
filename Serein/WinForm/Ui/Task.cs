@@ -170,9 +170,9 @@ namespace Serein.Ui
             IO.SaveTask();
         }
 
-        private void LoadTask(string FileName = null)
+        private void LoadTask(string fileName = null)
         {
-            IO.ReadTask();
+            IO.ReadTask(fileName);
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
             foreach (Task task in Global.TaskItems)

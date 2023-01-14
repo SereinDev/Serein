@@ -320,11 +320,11 @@ namespace Serein.Base
                 Motd motd;
                 if (Global.Settings.Server.Type == 1)
                 {
-                    motd = new Motdpe(newPort: Global.Settings.Server.Port.ToString());
+                    motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
                 }
                 else
                 {
-                    motd = new Motdje(newPort: Global.Settings.Server.Port.ToString());
+                    motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                 }
                 text = Regex.Replace(text, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
                 text = Regex.Replace(text, "%Description%", motd.Description, RegexOptions.IgnoreCase);

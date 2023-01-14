@@ -79,9 +79,9 @@ namespace Serein.JSPlugin
             engine.SetValue("Serein_Plugin_JSFunc_SetListener",
                 new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(@namespace, EventName, Function)));
             engine.SetValue("Serein_Motdpe",
-                new Func<string, string>((IP) => new Motdpe(IP).Origin));
+                new Func<string, string>((addr) => new Motdpe(addr).Origin));
             engine.SetValue("Serein_Motdje",
-                new Func<string, string>((IP) => new Motdje(IP).Origin));
+                new Func<string, string>((addr) => new Motdje(addr).Origin));
             engine.SetValue("Serein_ServerManager_Start",
                 new Func<bool>(() => ServerManager.Start(true)));
             engine.SetValue("Serein_ServerManager_Stop",

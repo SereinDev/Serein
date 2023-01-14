@@ -7,7 +7,7 @@ namespace Serein.Windows.Pages.Settings
 {
     public partial class Serein : UiPage
     {
-        private new bool Loaded = false;
+        private readonly new bool Loaded;
         public Serein()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace Serein.Windows.Pages.Settings
 
         private void ThemeFollowSystem_Click(object sender, RoutedEventArgs e)
         {
-            UseDarkTheme.IsChecked = UseDarkTheme.IsChecked ?? false && (ThemeFollowSystem.IsChecked ?? false) ? false : UseDarkTheme.IsChecked;
+            UseDarkTheme.IsChecked = (UseDarkTheme.IsChecked ?? false) && (ThemeFollowSystem.IsChecked ?? false) ? false : UseDarkTheme.IsChecked;
             Global.Settings.Serein.UseDarkTheme = UseDarkTheme.IsChecked ?? false;
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }

@@ -13,17 +13,20 @@ namespace Serein.Items.Motd
         /// <summary>
         /// Java版Motd获取入口
         /// </summary>
-        /// <param name="newIp">IP</param>
-        /// <param name="newPort">端口</param>
-        public Motdje(string newIP = "127.0.0.1", string newPort = "25565")
+        /// <param name="addr">地址</param>
+        public Motdje(string addr)
         {
-            if (!Init(newIP, newPort))
+            if (!base.TryParse(addr))
             {
                 return;
             }
+            if (Port == -1)
+            {
+                Port = 25565;
+            }
             try
             {
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                Socket socket = new Socket(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
                 socket.Connect(new IPEndPoint(IP, Port));
@@ -32,15 +35,15 @@ namespace Serein.Items.Motd
                 byte[] buffer = new byte[1024 * 1024];
                 int length = socket.Receive(buffer);
                 Delay = DateTime.Now - startTime;
-                string Data = length > 5 ?
+                string data = length > 5 ?
                     Encoding.UTF8.GetString(buffer, 5, length - 5) :
                     Encoding.UTF8.GetString(buffer, 0, length);
                 socket.Close();
-                Origin = Data;
-                Logger.Out(LogType.Debug, $"Original: {Data}");
-                if (!string.IsNullOrEmpty(Data))
+                Origin = data;
+                Logger.Out(LogType.Debug, $"Original: {data}");
+                if (!string.IsNullOrEmpty(data))
                 {
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Data);
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(data);
                     OnlinePlayer = jsonObject["players"]["online"].ToString();
                     MaxPlayer = jsonObject["players"]["max"].ToString();
                     Version = jsonObject["version"]["name"].ToString();

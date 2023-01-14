@@ -68,14 +68,14 @@ namespace Serein.Base
         /// <summary>
         /// 读取正则文件
         /// </summary>
-        /// <param name="filename">路径</param>
-        public static void ReadRegex(string filename = null)
+        /// <param name="fileName">路径</param>
+        public static void ReadRegex(string fileName = null)
         {
-            filename ??= GetPath("data", "regex.json");
-            if (File.Exists(filename))
+            fileName ??= GetPath("data", "regex.json");
+            if (File.Exists(fileName))
             {
-                StreamReader streamReader = new(filename, Encoding.UTF8);
-                if (filename.ToUpper().EndsWith(".TSV"))
+                StreamReader streamReader = new(fileName, Encoding.UTF8);
+                if (fileName.ToUpper().EndsWith(".TSV"))
                 {
                     string line;
                     List<Regex> list = new();
@@ -91,7 +91,7 @@ namespace Serein.Base
                     }
                     Global.UpdateRegexItems(list);
                 }
-                else if (filename.ToUpper().EndsWith(".JSON"))
+                else if (fileName.ToUpper().EndsWith(".JSON"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
@@ -210,14 +210,14 @@ namespace Serein.Base
         /// <summary>
         /// 读取任务文件
         /// </summary>
-        /// <param name="filename">路径</param>
-        public static void ReadTask(string filename = null)
+        /// <param name="fileName">路径</param>
+        public static void ReadTask(string fileName = null)
         {
-            filename ??= GetPath("data", "task.json");
-            if (File.Exists(filename))
+            fileName ??= GetPath("data", "task.json");
+            if (File.Exists(fileName))
             {
-                StreamReader streamReader = new(filename, Encoding.UTF8);
-                if (filename.ToUpper().EndsWith(".TSV"))
+                StreamReader streamReader = new(fileName, Encoding.UTF8);
+                if (fileName.ToUpper().EndsWith(".TSV"))
                 {
                     string line;
                     List<Task> list = new();
@@ -233,7 +233,7 @@ namespace Serein.Base
                     }
                     Global.UpdateTaskItems(list);
                 }
-                else if (filename.ToUpper().EndsWith(".JSON"))
+                else if (fileName.ToUpper().EndsWith(".JSON"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
