@@ -25,6 +25,6 @@ var version = serein.version; // Serein版本，如v1.3.0
 
 `serein.namespace`
 
-用于内部区分JS解释器和其他属性，实例化[WebSocket](#websocket客户端)时需要提供此参数
+用于内部区分JS解释器和其他属性，实例化[WebSocket](Function/JSDocs/Class.md#websocket客户端)时需要提供此参数
 
-此外，你也可以通过[注册插件](#注册插件)来获取命名空间
+此外，你也可以通过[注册插件](Function/JSDocs/Func.md#注册插件)来获取命名空间

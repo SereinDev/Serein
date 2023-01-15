@@ -56,10 +56,10 @@ logger.debug("这是一条信息输出"); // 此消息将输出到Serein的debug
 ~~Jvav~~版和基岩版的Motd对象
 
 ```js
-let motd = new Motdje('1.2.3.4',11451); // IP（支持域名；目前只支持IPv4），端口
+let motd = new Motdje('1.2.3.4:1234'); // 地址
 ```
 
-### 属性
+#### 属性
 
 - MaxPlayer 最大玩家数
 - OnlinePlayer 在线玩家数
@@ -73,6 +73,6 @@ let motd = new Motdje('1.2.3.4',11451); // IP（支持域名；目前只支持IP
 - Exception 错误消息
 - IsSuccess 是否获取成功
 
-### 默认值
+#### 默认值
 
 >详见<https://github.com/Zaitonn/Serein/blob/main/Serein/Universal/Items/Motd/Motd.cs>

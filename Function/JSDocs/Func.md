@@ -229,7 +229,7 @@ serein.runCommand("g|hello")
 
 ### 获取系统信息
 
-`serein.getSysInfo(type:String)`
+`serein.getSysInfo()`
 
 ```js
 var info = serein.getSysInfo();
@@ -483,6 +483,7 @@ var je = serein.getMotdje("127.0.0.1:25565");
       "favicon": "……" // 此处限于篇幅省略其内容，实际上是base64编码的图片
     }
     ```
+
 ## 🤖 消息收发
 
 ### 发送群聊消息

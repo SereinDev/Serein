@@ -37,3 +37,9 @@ ECMAScript 2022
 >```
 
 >[!TIP] 在[这里](Extension/JS/Example.js.md)你可以找到更详细的示例
+
+>[!NOTE]找不到想要的方法？有更好的建议？速速[联系作者](More/About.md#反馈)
+
+## JS插件开发助手
+
+>详见[SereinJSPluginHelper](Extension/JS/SereinJSPluginHelper.js.md)

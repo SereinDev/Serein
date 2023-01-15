@@ -18,8 +18,9 @@
 
 ### 联系方式
 
-| 平台     | 用户名                                                    |
-| -------- | --------------------------------------------------------- |
-| Minebbs  | [Zaiton_](https://www.minebbs.com/members/zaiton_.21326/) |
-| BiliBili | [Zaitonn](https://space.bilibili.com/406125728)           |
-| 爱发电   | [@Zaiton](https://afdian.net/@Zaiton)                     |
+| 平台           | 用户名                                                    |
+| -------------- | --------------------------------------------------------- |
+| GitHub (✨推荐) | [Zaitonn](https://github.com/Zaitonn)                     |
+| Minebbs        | [Zaiton_](https://www.minebbs.com/members/zaiton_.21326/) |
+| BiliBili       | [Zaitonn](https://space.bilibili.com/406125728)           |
+| 爱发电         | [@Zaiton](https://afdian.net/@Zaiton)                     |
