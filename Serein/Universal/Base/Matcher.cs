@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Serein.Extensions;
 using Serein.JSPlugin;
 
 namespace Serein.Base
@@ -35,22 +36,22 @@ namespace Serein.Base
         /// <param name="packet">数据包</param>
         public static void Process(JObject packet)
         {
-            if (packet["post_type"] == null)
+            if (string.IsNullOrEmpty(packet.TryGetString("post_type")))
             {
                 return;
             }
-            string postType = packet["post_type"].ToString();
+            string postType = packet.TryGetString("post_type").ToString();
             long result, userId, groupId;
             switch (postType)
             {
                 case "message":
                 case "message_sent":
                     bool isSelfMessage = postType == "message_sent";
-                    string messageType = packet["message_type"].ToString();
-                    string rawMessage = packet["raw_message"].ToString();
-                    userId = long.TryParse(packet["sender"]["user_id"].ToString(), out result) ? result : -1;
-                    groupId = messageType == "group" && long.TryParse(packet["group_id"].ToString(), out result) ? result : -1;
-                    Logger.Out(Items.LogType.Bot_Receive, $"{packet["sender"]["nickname"]}({packet["sender"]["user_id"]})" + ":" + rawMessage);
+                    string messageType = packet.TryGetString("$1").ToString();
+                    string rawMessage = packet.TryGetString("raw_message").ToString();
+                    userId = long.TryParse(packet.TryGetString("sender", "user_id").ToString(), out result) ? result : -1;
+                    groupId = messageType == "group" && long.TryParse(packet.TryGetString("group_id").ToString(), out result) ? result : -1;
+                    Logger.Out(Items.LogType.Bot_Receive, $"{packet.TryGetString("sender", "nickname")}({packet.TryGetString("sender", "user_id")})" + ":" + rawMessage);
                     foreach (Items.Regex regex in Global.RegexItems)
                     {
                         if (
@@ -71,8 +72,8 @@ namespace Serein.Base
                             Global.Settings.Bot.PermissionList.Contains(userId) ||
                             Global.Settings.Bot.GivePermissionToAllAdmin &&
                             messageType == "group" && (
-                                packet["sender"]["role"].ToString() == "admin" ||
-                                packet["sender"]["role"].ToString() == "owner")
+                                packet.TryGetString("sender", "role") == "admin" ||
+                                packet.TryGetString("sender", "role") == "owner")
                             ) &&
                             regex.IsAdmin &&
                             !isSelfMessage
@@ -124,26 +125,25 @@ namespace Serein.Base
                     {
                         if (messageType == "private")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, userId, rawMessage, packet["sender"]["nickname"].ToString());
+                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, userId, rawMessage, packet.TryGetString("sender", "nickname").ToString());
                         }
                         else if (messageType == "group")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, groupId, userId, rawMessage, string.IsNullOrEmpty(packet["sender"]["card"].ToString()) ? packet["sender"]["nickname"].ToString() : packet["sender"]["card"].ToString());
+                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, groupId, userId, rawMessage,
+                                string.IsNullOrEmpty(packet.TryGetString("sender", "card").ToString()) ? packet.TryGetString("sender", "nickname").ToString() : packet.TryGetString("sender", "card").ToString());
                         }
                     }
                     break;
                 case "meta_event":
-                    if (packet["meta_event_type"].ToString() == "heartbeat")
+                    if (packet.TryGetString("meta_event_type").ToString() == "heartbeat")
                     {
-                        SelfId = packet["self_id"].ToString();
+                        SelfId = packet.TryGetString("self_id").ToString();
                         MessageReceived = (
-                            packet["status"]["stat"]["message_received"] ??
-                            packet["status"]["stat"]["MessageReceived"] ?? "-"
-                            ).ToString();
-                        MessageSent = (
-                            packet["status"]["stat"]["message_sent"] ??
-                            packet["status"]["stat"]["MessageSent"] ?? "-"
-                            ).ToString();
+                            string.IsNullOrEmpty(packet.TryGetString("status", "stat", "message_received")) ?
+                            packet.TryGetString("status", "stat", "MessageReceived") : packet.TryGetString("status", "stat", "message_received"));
+                        MessageReceived = (
+                            string.IsNullOrEmpty(packet.TryGetString("status", "stat", "message_sent")) ?
+                            packet.TryGetString("status", "stat", "MessageSent") : packet.TryGetString("status", "stat", "message_sent"));
                         if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)
                         {
                             MessageReceived = (TempNumber / 10000).ToString("N1") + "w";
@@ -155,11 +155,11 @@ namespace Serein.Base
                     }
                     break;
                 case "notice":
-                    userId = long.TryParse(packet["user_id"].ToString(), out result) ? result : -1;
-                    groupId = long.TryParse(packet["group_id"].ToString(), out result) ? result : -1;
+                    userId = long.TryParse(packet.TryGetString("user_id").ToString(), out result) ? result : -1;
+                    groupId = long.TryParse(packet.TryGetString("group_id").ToString(), out result) ? result : -1;
                     if (Global.Settings.Bot.GroupList.Contains(groupId))
                     {
-                        switch (packet["notice_type"].ToString())
+                        switch (packet.TryGetString("notice_type").ToString())
                         {
                             case "GroupDecrease":
                             case "group_decrease":
@@ -172,8 +172,8 @@ namespace Serein.Base
                                 JSFunc.Trigger(Items.EventType.GroupIncrease, groupId, userId);
                                 break;
                             case "notify":
-                                if (packet["sub_type"].ToString() == "poke" &&
-                                    packet["target_id"].ToString() == SelfId)
+                                if (packet.TryGetString("sub_type").ToString() == "poke" &&
+                                    packet.TryGetString("target_id").ToString() == SelfId)
                                 {
                                     EventTrigger.Trigger(Items.EventType.GroupPoke, groupId, userId);
                                     JSFunc.Trigger(Items.EventType.GroupPoke, groupId, userId);

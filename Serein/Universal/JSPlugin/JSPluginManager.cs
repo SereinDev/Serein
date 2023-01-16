@@ -86,6 +86,11 @@ namespace Serein.JSPlugin
                     5000.ToSleepFor();
                     Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
                 });
+#if WINFORM
+                Program.Ui.LoadJSPluginPublicly();
+#elif WPF
+                Windows.Catalog.Function.JSPlugin?.LoadPublicly();
+#endif
             }
         }
 

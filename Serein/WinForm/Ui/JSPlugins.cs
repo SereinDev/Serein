@@ -19,6 +19,11 @@ namespace Serein.Ui
             Invoke((JSPluginWebBrowser_Delegate)JSPluginWebBrowser_AppendText, objects2);
         }
 
+        public void LoadJSPluginPublicly()
+        {
+            Invoke(LoadJSPlugin);
+        }
+
         private void LoadJSPlugin()
         {
             JSPluginList.BeginUpdate();

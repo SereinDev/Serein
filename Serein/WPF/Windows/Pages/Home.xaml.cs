@@ -35,11 +35,11 @@ namespace Serein.Windows.Pages
                     Motd motd;
                     if (Global.Settings.Server.Type == 1)
                     {
-                        motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
+                        motd = new Motdpe(Global.Settings.Server.Port);
                     }
                     else
                     {
-                        motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
+                        motd = new Motdje(Global.Settings.Server.Port);
                     }
                     Server_Online.Text = motd != null && motd.IsSuccessful ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "获取失败";
                 }

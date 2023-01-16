@@ -146,7 +146,7 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <TextBlock Text="服务器端口" ToolTip="指定服务器的本地端口（用于获取服务器的Motd）" />
+                <TextBlock Text="服务器端口" ToolTip="指定服务器的本地端口（用于获取服务器的Motd；建议填IPv4的端口）" />
                 <ui:NumberBox
                     x:Name="Port"
                     HorizontalAlignment="Left"

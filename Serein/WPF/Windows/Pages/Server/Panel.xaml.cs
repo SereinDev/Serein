@@ -99,13 +99,13 @@ namespace Serein.Windows.Pages.Server
                     Motd motd;
                     if (Global.Settings.Server.Type == 1)
                     {
-                        motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
+                        motd = new Motdpe(Global.Settings.Server.Port);
                     }
                     else
                     {
-                        motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
+                        motd = new Motdje(Global.Settings.Server.Port);
                     }
-                    Version.Content = motd != null ? motd.Version : "-";
+                    Version.Content = motd != null && !string.IsNullOrEmpty(motd.Version) ? motd.Version : "-";
                     PlayCount.Content = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
                 }
                 else
@@ -113,7 +113,7 @@ namespace Serein.Windows.Pages.Server
                     PlayCount.Content = "-";
                     Version.Content = "-";
                 }
-                Difficulity.Content = ServerManager.Status ? ServerManager.Difficulty : "-";
+                Difficulity.Content = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
                 Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);

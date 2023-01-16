@@ -29,6 +29,9 @@ namespace Serein.Windows.Pages.Function
         public void AppendText(string line)
             => Dispatcher.Invoke(() => PluginWebBrowser.Document.InvokeScript("AppendText", new[] { line }));
 
+        public void LoadPublicly()
+            => Dispatcher.Invoke(Load);
+
         private void Load()
         {
             JSPluginListView.Items.Clear();

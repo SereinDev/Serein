@@ -11,8 +11,6 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private static readonly string[] Roles_Chinese = { "群主", "管理员", "成员" };
-
         private void LoadMember()
         {
             IO.ReadMember();
@@ -22,7 +20,7 @@ namespace Serein.Ui
             {
                 ListViewItem listViewItem = new();
                 listViewItem.Text = member.ID.ToString();
-                listViewItem.SubItems.Add(Roles_Chinese[member.Role]);
+                listViewItem.SubItems.Add(Command.Roles_Chinese[member.Role]);
                 listViewItem.SubItems.Add(member.Nickname);
                 listViewItem.SubItems.Add(member.Card);
                 listViewItem.SubItems.Add(member.GameID);
@@ -40,7 +38,7 @@ namespace Serein.Ui
                 Member member = new()
                 {
                     ID = long.TryParse(listViewItem.Text, out long i) ? i : -1,
-                    Role = Array.IndexOf(Roles_Chinese, listViewItem.SubItems[1].Text),
+                    Role = Array.IndexOf(Command.Roles_Chinese, listViewItem.SubItems[1].Text),
                     Nickname = listViewItem.SubItems[2].Text,
                     Card = listViewItem.SubItems[3].Text,
                     GameID = listViewItem.SubItems[4].Text

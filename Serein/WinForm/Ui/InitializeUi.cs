@@ -32,7 +32,13 @@ namespace Serein.Ui
             TaskRunner.Start();
             Net.Init();
             UpdateInfoTimer.Start();
-            UpdateInfoTimer.Elapsed += (_, _) => Invoke(UpdateInfo);
+            UpdateInfoTimer.Elapsed += (_, _) =>
+            {
+                if (!Disposing)
+                {
+                    Invoke(UpdateInfo);
+                }
+            };
             System.Threading.Tasks.Task.Run(UpdateInfo);
             System.Threading.Tasks.Task.Run(JSPluginManager.Load);
             System.Threading.Tasks.Task.Run(SystemInfo.Init);

@@ -12,7 +12,7 @@ namespace Serein.Items.Motd
         /// 基岩版Motd获取入口
         /// </summary>
         /// <param name="addr">地址</param>
-        public Motdpe(string addr = "127.0.0.1")
+        public Motdpe(string addr)
         {
             if (!TryParse(addr))
             {
@@ -22,6 +22,21 @@ namespace Serein.Items.Motd
             {
                 Port = 19132;
             }
+            Get();
+        }
+
+        /// <summary>
+        /// 基岩版Motd获取入口（本地）
+        /// </summary>
+        /// <param name="port">端口</param>
+        public Motdpe(int port)
+        {
+            Port = port;
+            Get();
+        }
+
+        private void Get()
+        {
             try
             {
                 Socket socket = new Socket(IP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);

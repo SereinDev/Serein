@@ -2,8 +2,13 @@ using System;
 
 namespace Serein.Extensions
 {
-    internal static class Timespan
+    internal static class TimespanExtension
     {
+        /// <summary>
+        /// 转化为时间文本
+        /// </summary>
+        /// <param name="timeSpan">时间间隔</param>
+        /// <returns>时间文本</returns>
         public static string ToCustomString(this TimeSpan timeSpan)
         {
             if (timeSpan.TotalSeconds < 3600)

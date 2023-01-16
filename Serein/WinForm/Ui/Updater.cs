@@ -35,9 +35,9 @@ namespace Serein.Ui
                 {
                     motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                 }
-                ServerPanelInfoVersion2.Text = motd != null ? motd.Version : "-";
+                ServerPanelInfoVersion2.Text = motd != null && !string.IsNullOrEmpty(motd.Version) ? motd.Version : "-";
                 ServerPanelInfoPlayerCount2.Text = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
-                ServerPanelInfoDifficulty2.Text = string.IsNullOrEmpty(ServerManager.Difficulty) ? "-" : ServerManager.Difficulty;
+                ServerPanelInfoDifficulty2.Text = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
             }
             else
             {

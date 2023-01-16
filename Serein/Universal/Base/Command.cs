@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Serein.Extensions;
 using Serein.Items.Motd;
 using Serein.JSPlugin;
 using Serein.Server;
@@ -98,6 +99,23 @@ namespace Serein.Base
                 return;
             }
             string value = GetValue(command, msgMatch);
+            if (Global.Settings.Bot.EnbaleParseAt && inputType == 1)
+            {
+                foreach (Match match in Regex.Matches(value, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
+                {
+                    if (
+                        match.Groups.Count >= 3 &&
+                        long.TryParse(match.Groups[2].Value, out long ID) &&
+                        Global.MemberItems.TryGetValue(ID, out Items.Member member)
+                        )
+                    {
+                        value = value.Replace(
+                            match.Value,
+                            "@" + (!string.IsNullOrEmpty(member.Card) ? member.Card : !string.IsNullOrEmpty(member.Nickname) ? member.Nickname : ID.ToString())
+                            );
+                    }
+                }
+            }
             value = ApplyVariables(value, json, disableMotd);
             switch (type)
             {
@@ -204,70 +222,55 @@ namespace Serein.Base
             {
                 return Items.CommandType.Invalid;
             }
-            if (Regex.IsMatch(command, @"^cmd\|", RegexOptions.IgnoreCase))
+            switch (Regex.Match(command, @"^(.+?)\|").Groups[1].Value.ToLowerInvariant())
             {
-                return Items.CommandType.ExecuteCmd;
+                case "cmd":
+                    return Items.CommandType.ExecuteCmd;
+                case "s":
+                case "server":
+                    return Items.CommandType.ServerInput;
+                case "s:unicode":
+                case "server:unicode":
+                case "s:u":
+                case "server:u":
+                    return Items.CommandType.ServerInputWithUnicode;
+                case "g":
+                case "group":
+                    return Items.CommandType.SendGroupMsg;
+                case "p":
+                case "private":
+                    return Items.CommandType.SendPrivateMsg;
+                case "b":
+                case "bind":
+                    return Items.CommandType.Bind;
+                case "ub":
+                case "unbind":
+                    return Items.CommandType.Unbind;
+                case "motdpe":
+                    return Items.CommandType.RequestMotdpe;
+                case "motdje":
+                    return Items.CommandType.RequestMotdje;
+                case "js":
+                case "javascript":
+                    return Items.CommandType.ExecuteJavascriptCodes;
+                case "debug":
+                    return Items.CommandType.DebugOutput;
+                default:
+                    if (Regex.IsMatch(command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
+                        Regex.IsMatch(command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+                    {
+                        return Items.CommandType.SendGivenGroupMsg;
+                    }
+                    if (Regex.IsMatch(command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
+                        Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+                    {
+                        return Items.CommandType.SendGivenPrivateMsg;
+                    }
+                    else
+                    {
+                        return Items.CommandType.Invalid;
+                    }
             }
-            if (Regex.IsMatch(command, @"^s\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^server\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.ServerInput;
-            }
-            if (Regex.IsMatch(command, @"^s:unicode\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^server:unicode\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^s:u\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^server:u\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.ServerInputWithUnicode;
-            }
-            if (Regex.IsMatch(command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^group:\d+\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.SendGivenGroupMsg;
-            }
-            if (Regex.IsMatch(command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.SendGivenPrivateMsg;
-            }
-            if (Regex.IsMatch(command, @"^g\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^group\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.SendGroupMsg;
-            }
-            if (Regex.IsMatch(command, @"^p\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^private\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.SendPrivateMsg;
-            }
-            if (Regex.IsMatch(command, @"^b\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^bind\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.Bind;
-            }
-            if (Regex.IsMatch(command, @"^ub\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^unbind\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.Unbind;
-            }
-            if (Regex.IsMatch(command, @"^motdpe\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.RequestMotdpe;
-            }
-            if (Regex.IsMatch(command, @"^motdje\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.RequestMotdje;
-            }
-            if (Regex.IsMatch(command, @"^js\|", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(command, @"^javascript\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.ExecuteJavascriptCodes;
-            }
-            if (Regex.IsMatch(command, @"^debug\|", RegexOptions.IgnoreCase))
-            {
-                return Items.CommandType.DebugOutput;
-            }
-            return Items.CommandType.Invalid;
         }
 
         /// <summary>
@@ -300,137 +303,121 @@ namespace Serein.Base
         /// <returns>应用变量后的文本</returns>
         public static string ApplyVariables(string text, JObject jsonObject = null, bool disableMotd = false)
         {
-            if (Global.Settings.Bot.EnbaleParseAt && jsonObject != null)
-            {
-                foreach (Match match in Regex.Matches(text, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
-                {
-                    if (
-                        match.Groups.Count >= 3 &&
-                        long.TryParse(match.Groups[2].Value, out long ID) &&
-                        Global.MemberItems.TryGetValue(ID, out Items.Member Member)
-                        )
-                    {
-                        text = text.Replace(
-                            match.Value,
-                            "@" + (!string.IsNullOrEmpty(Member.Card) ? Member.Card : !string.IsNullOrEmpty(Member.Nickname) ? Member.Nickname : ID.ToString())
-                            );
-                    }
-                }
-            }
-            if (!text.Contains("%"))
-            {
-                return text.Replace("\\n", "\n");
-            }
-            if (!disableMotd && Global.Settings.Server.Type != 0 && Regex.IsMatch(text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
-            {
-                Motd motd;
-                if (Global.Settings.Server.Type == 1)
-                {
-                    motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
-                }
-                else
-                {
-                    motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
-                }
-                if (motd.IsSuccessful) { }
-                text = Regex.Replace(text, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Description%", motd.Description, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%OnlinePlayer%", motd.OnlinePlayer.ToString(), RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%MaxPlayer%", motd.MaxPlayer.ToString(), RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Original%", motd.Origin, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N1"), RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Version%", motd.Version, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Exception%", motd.Exception, RegexOptions.IgnoreCase);
-            }
+            bool serverStatus = ServerManager.Status;
             DateTime CurrentTime = DateTime.Now;
-            text = Regex.Replace(text, "%Year%", CurrentTime.Year.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Month%", CurrentTime.Month.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Day%", CurrentTime.Day.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Hour%", CurrentTime.Hour.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Minute%", CurrentTime.Minute.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Second%", CurrentTime.Second.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Time%", CurrentTime.ToString("T"), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%Date%", CurrentTime.Date.ToString("d"), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%DayOfWeek%", CurrentTime.DayOfWeek.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%DateTime%", CurrentTime.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%SereinVersion%", Global.VERSION, RegexOptions.IgnoreCase);
-            if (jsonObject != null)
+            Motd motd;
+            if (!disableMotd &&
+                Global.Settings.Server.Type != 0 &&
+                !Regex.IsMatch(text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
             {
-                try
-                {
-                    text = Regex.Replace(text, "%ID%", jsonObject["sender"]["user_id"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%GameID%", Binder.GetGameID(long.TryParse(jsonObject["sender"]["user_id"].ToString(), out long result) ? result : -1), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Sex%", Sexs_Chinese[Array.IndexOf(Sexs, jsonObject["sender"]["sex"].ToString())], RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Nickname%", jsonObject["sender"]["nickname"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Age%", jsonObject["sender"]["age"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Area%", jsonObject["sender"]["area"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Card%", jsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Level%", jsonObject["sender"]["level"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Title%", jsonObject["sender"]["title"].ToString(), RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%Role%", Roles_Chinese[Array.IndexOf(Roles, jsonObject["sender"]["role"].ToString())], RegexOptions.IgnoreCase);
-                    text = Regex.Replace(text, "%ShownName%", string.IsNullOrEmpty(jsonObject["sender"]["card"].ToString()) ? jsonObject["sender"]["nickname"].ToString() : jsonObject["sender"]["card"].ToString(), RegexOptions.IgnoreCase);
-                }
-                catch (Exception e)
-                {
-                    Logger.Out(Items.LogType.Debug, e);
-                }
+                motd = new();
             }
-            text = Regex.Replace(text, "%NET%", Environment.Version.ToString(), RegexOptions.IgnoreCase);
-#if !UNIX
-            text = Regex.Replace(text, "%CPUUsage%", SystemInfo.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
-#else
-            text = Regex.Replace(text, "%CPUUsage%", "-", RegexOptions.IgnoreCase);
-#endif
-            text = Regex.Replace(text, "%OS%", SystemInfo.OS, RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%UploadSpeed%", SystemInfo.UploadSpeed, RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%DownloadSpeed%", SystemInfo.DownloadSpeed, RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%CPUName%", SystemInfo.CPUName, RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%CPUBrand%", SystemInfo.CPUBrand, RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%CPUFrequency%", SystemInfo.CPUFrequency.ToString("N1"), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%UsedRAM%", SystemInfo.UsedRAM.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%TotalRAM%", SystemInfo.TotalRAM.ToString(), RegexOptions.IgnoreCase);
-            text = Regex.Replace(text, "%RAMUsage%", SystemInfo.RAMUsage.ToString("N1"), RegexOptions.IgnoreCase);
-            if (ServerManager.Status)
+            else if (Global.Settings.Server.Type == 1)
             {
-                text = Regex.Replace(text, "%LevelName%", ServerManager.LevelName, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Difficulty%", ServerManager.Difficulty, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%RunTime%", ServerManager.GetTime(), RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%ServerCPUUsage%", ServerManager.CPUUsage.ToString("N1"), RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%FileName%", ServerManager.StartFileName, RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Status%", "已启动", RegexOptions.IgnoreCase);
+                motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
             }
             else
             {
-                text = Regex.Replace(text, "%LevelName%", "-", RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Difficulty%", "-", RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%RunTime%", "-", RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%ServerCPUUsage%", "0", RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%FileName%", "-", RegexOptions.IgnoreCase);
-                text = Regex.Replace(text, "%Status%", "未启动", RegexOptions.IgnoreCase);
+                motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
             }
-            if (Regex.IsMatch(text, @"%GameID:\d+%", RegexOptions.IgnoreCase))
-            {
-                long userId = long.TryParse(
-                    Regex.Match(
-                        text,
-                        @"%GameID:(\d+?)%",
-                        RegexOptions.IgnoreCase
-                        ).Groups[1].Value,
-                    out long i) ? i : -1;
-                text = Regex.Replace(
-                    text,
-                    @"%GameID:(\d+?)%",
-                    Binder.GetGameID(userId),
-                    RegexOptions.IgnoreCase
-                    );
-            }
-            if (Regex.IsMatch(text, @"%ID:.+?%", RegexOptions.IgnoreCase))
-            {
-                text = Regex.Replace(text, @"%ID:(.+?)%", Binder.GetID(Regex.Match(text, @"%ID:(.+?)%", RegexOptions.IgnoreCase).Groups[1].Value).ToString(), RegexOptions.IgnoreCase);
-            }
+            text = Patterns.Variable.Replace(text, (match) =>
+                match.Groups[1].Value.ToLowerInvariant() switch
+                {
+                    #region 时间
+                    "year" => CurrentTime.Year.ToString(),
+                    "month" => CurrentTime.Month.ToString(),
+                    "day" => CurrentTime.Day.ToString(),
+                    "hour" => CurrentTime.Hour.ToString(),
+                    "minute" => CurrentTime.Minute.ToString(),
+                    "second" => CurrentTime.Second.ToString(),
+                    "time" => CurrentTime.ToString("T"),
+                    "date" => CurrentTime.Date.ToString("d"),
+                    "dayofweek" => CurrentTime.DayOfWeek.ToString(),
+                    "datetime" => CurrentTime.ToString(),
+                    #endregion
+
+                    "sereinversion" => Global.VERSION,
+
+                    #region motd
+                    "gamemode" => motd.GameMode,
+                    "description" => motd.Description,
+                    "protocol" => motd.Protocol,
+                    "onlineplayer" => motd.OnlinePlayer.ToString(),
+                    "maxplayer" => motd.MaxPlayer.ToString(),
+                    "original" => motd.Origin,
+                    "delay" => motd.Delay.TotalMilliseconds.ToString("N1"),
+                    "version" => motd.Version,
+                    "favicon" => motd.Favicon,
+                    "exception" => motd.Exception,
+                    #endregion
+
+                    #region 系统信息
+                    "net" => Environment.Version.ToString(),
+#if !UNIX
+                    "cpuusage" => SystemInfo.CPUUsage.ToString("N1"),
+#else
+                    "cpuusage" => "0",
+#endif
+                    "os" => SystemInfo.OS,
+                    "uploadspeed" => SystemInfo.UploadSpeed,
+                    "downloadspeed" => SystemInfo.DownloadSpeed,
+                    "cpuname" => SystemInfo.CPUName,
+                    "cpubrand" => SystemInfo.CPUBrand,
+                    "cpufrequency" => SystemInfo.CPUFrequency.ToString("N1"),
+                    "usedram" => SystemInfo.UsedRAM.ToString(),
+                    "totalram" => SystemInfo.TotalRAM.ToString(),
+                    "ramusage" => SystemInfo.RAMUsage.ToString("N1"),
+                    #endregion
+
+                    #region 服务器
+                    "levelname" => serverStatus ? ServerManager.LevelName : "-",
+                    "difficulty" => serverStatus ? ServerManager.Difficulty : "-",
+                    "runtime" => serverStatus ? ServerManager.GetTime() : "-",
+                    "servercpuusage" => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
+                    "filename" => serverStatus ? ServerManager.StartFileName : "-",
+                    "status" => serverStatus ? "已启动" : "未启动",
+                    #endregion
+
+                    #region 消息
+                    "id" => jsonObject.TryGetString("sender", "user_id"),
+                    "gameid" => Binder.GetGameID(long.TryParse(jsonObject.TryGetString("sender", "user_id"), out long result) ? result : -1),
+                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.TryGetString("sender", "sex"))],
+                    "nickname" => jsonObject.TryGetString("sender", "nickname"),
+                    "age" => jsonObject.TryGetString("sender", "age"),
+                    "area" => jsonObject.TryGetString("sender", "area"),
+                    "card" => jsonObject.TryGetString("sender", "card"),
+                    "level" => jsonObject.TryGetString("sender", "level"),
+                    "title" => jsonObject.TryGetString("sender", "title"),
+                    "role" => Roles_Chinese[Array.IndexOf(Roles, jsonObject.TryGetString("sender", "role"))],
+                    "shownname" => string.IsNullOrEmpty(jsonObject.TryGetString("sender", "card")) ? jsonObject.TryGetString("sender", "nickname") : jsonObject.TryGetString("sender", "card"),
+                    #endregion
+
+                    _ => match.Groups[0].Value
+                }
+            );
+            text = Patterns.GameID.Replace(text,
+                (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value)));
+            text = Patterns.ID.Replace(text,
+                (match) => Binder.GetID(match.Groups[1].Value).ToString());
             return text.Replace("\\n", "\n");
+        }
+
+        protected class Patterns
+        {
+            /// <summary>
+            /// 变量正则
+            /// </summary>
+            public static readonly Regex Variable = new Regex(@"%(\w+)%", RegexOptions.Compiled);
+
+            /// <summary>
+            /// 游戏ID正则
+            /// </summary>
+            public static readonly Regex GameID = new Regex(@"%GameID:(\d+)%", RegexOptions.Compiled);
+
+            /// <summary>
+            /// ID正则
+            /// </summary>
+            public static readonly Regex ID = new Regex(@"%ID:(.+?)%", RegexOptions.Compiled);
         }
     }
 }

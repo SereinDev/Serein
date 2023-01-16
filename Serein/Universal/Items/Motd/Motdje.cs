@@ -24,6 +24,21 @@ namespace Serein.Items.Motd
             {
                 Port = 25565;
             }
+            Get();
+        }
+
+        /// <summary>
+        /// Java版Motd获取入口（本地）
+        /// </summary>
+        /// <param name="port">端口</param>
+        public Motdje(int port)
+        {
+            Port = port;
+            Get();
+        }
+
+        private void Get()
+        {
             try
             {
                 Socket socket = new Socket(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -76,7 +91,6 @@ namespace Serein.Items.Motd
             {
                 Logger.Out(LogType.Debug, e);
                 Exception = e.Message;
-                return;
             }
         }
     }
