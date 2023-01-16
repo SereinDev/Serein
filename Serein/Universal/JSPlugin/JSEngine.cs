@@ -124,6 +124,10 @@ namespace Serein.JSPlugin
                 new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
+            engine.SetValue("Motdpe",
+                TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
+            engine.SetValue("Motdje",
+                TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.SetValue("WebSocket",
                 TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
             engine.SetValue("Logger",

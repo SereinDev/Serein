@@ -94,8 +94,8 @@ namespace Serein.Base
                             command_copy = Regex.Replace(command_copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%OnlinePlayer%", motd.OnlinePlayer, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%MaxPlayer%", motd.MaxPlayer, RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%OnlinePlayer%", motd.OnlinePlayer.ToString(), RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%MaxPlayer%", motd.MaxPlayer.ToString(), RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Original%", motd.Origin, RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N1"), RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);

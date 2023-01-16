@@ -44,8 +44,8 @@ namespace Serein.Items.Motd
                 if (!string.IsNullOrEmpty(data))
                 {
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(data);
-                    OnlinePlayer = jsonObject["players"]["online"].ToString();
-                    MaxPlayer = jsonObject["players"]["max"].ToString();
+                    OnlinePlayer = int.Parse(jsonObject["players"]["online"].ToString());
+                    MaxPlayer = int.Parse(jsonObject["players"]["max"].ToString());
                     Version = jsonObject["version"]["name"].ToString();
                     Protocol = jsonObject["version"]["protocol"].ToString();
                     if (jsonObject["description"]["text"] != null)
@@ -66,10 +66,6 @@ namespace Serein.Items.Motd
                         if (Favicon.Contains(","))
                         {
                             Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
-                        }
-                        else
-                        {
-                            Favicon = string.Empty;
                         }
                     }
                     Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);

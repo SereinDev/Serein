@@ -32,6 +32,10 @@ updates:
       interval: "weekly"
     labels:
       - "dependencies"
+    ignore:
+      - dependency-name: "WPF-UI"
+        versions:
+          - "2.0.*" # 暂时不更新依赖
 
   - package-ecosystem: "github-actions"
     directory: "/"

@@ -1,6 +1,5 @@
 ﻿using Serein.Base;
 using System;
-using System.Linq;
 using System.Net;
 
 namespace Serein.Items.Motd
@@ -10,72 +9,72 @@ namespace Serein.Items.Motd
         /// <summary>
         /// IP
         /// </summary>
-        public IPAddress IP { get; set; } = IPAddress.Parse("127.0.0.1");
+        public IPAddress IP { get; private set; } = IPAddress.Parse("127.0.0.1");
 
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port { get; set; } = -1;
+        public int Port = -1;
 
         /// <summary>
         /// 最大玩家数
         /// </summary>
-        public string MaxPlayer { get; set; } = "-";
+        public int MaxPlayer;
 
         /// <summary>
         /// 在线玩家数
         /// </summary>
-        public string OnlinePlayer { get; set; } = "-";
+        public int OnlinePlayer;
 
         /// <summary>
         /// 服务器描述
         /// </summary>
-        public string Description { get; set; } = "-";
+        public string Description = string.Empty;
 
         /// <summary>
         /// 协议
         /// </summary>
-        public string Protocol { get; set; } = "-";
+        public string Protocol = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version { get; set; } = "-";
+        public string Version = string.Empty;
 
         /// <summary>
         /// 存档名称
         /// </summary>
-        public string LevelName { get; set; } = "-";
+        public string LevelName = string.Empty;
 
         /// <summary>
         /// 游戏模式
         /// </summary>
-        public string GameMode { get; set; } = "-";
+        public string GameMode = string.Empty;
 
         /// <summary>
         /// 延迟
         /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.Zero;
+        public TimeSpan Delay = TimeSpan.Zero;
 
         /// <summary>
         /// 图标
         /// </summary>
-        public string Favicon { get; set; } = "-";
+        public string Favicon = string.Empty;
 
         /// <summary>
         /// 原文
         /// </summary>
-        public string Origin { get; set; } = "-";
+        public string Origin = string.Empty;
 
         /// <summary>
         /// 错误消息
         /// </summary>
-        public string Exception { get; set; } = string.Empty;
+        public string Exception = string.Empty;
 
         /// <summary>
         /// 获取成功
         /// </summary>
-        public bool IsSuccessful { get; set; } = false;
+        public bool IsSuccessful = false;
 
         private static readonly System.Text.RegularExpressions.Regex IPv4Patten = new(@"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))", System.Text.RegularExpressions.RegexOptions.Compiled);
 
