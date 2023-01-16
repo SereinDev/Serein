@@ -332,7 +332,7 @@ namespace Serein.Base
                 {
                     motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
                 }
-                if(motd.IsSuccessful){}
+                if (motd.IsSuccessful) { }
                 text = Regex.Replace(text, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
                 text = Regex.Replace(text, "%Description%", motd.Description, RegexOptions.IgnoreCase);
                 text = Regex.Replace(text, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
