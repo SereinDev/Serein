@@ -90,7 +90,7 @@ namespace Serein.Items.Motd
             try
             {
                 addr = addr.Trim();
-                if (addr.Contains(':') && !IPv6Patten.IsMatch(addr) && addr.LastIndexOf(':') != addr.Length - 1)
+                if (addr.Contains(":") && !IPv6Patten.IsMatch(addr) && addr.LastIndexOf(':') != addr.Length - 1)
                 {
                     // 分离端口号和IP/域名
                     Port = int.Parse(addr.Substring(addr.LastIndexOf(':') + 1, addr.Length - addr.LastIndexOf(':') - 1));

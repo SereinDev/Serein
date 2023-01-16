@@ -1,0 +1,48 @@
+name: Format
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Draft_Release: # 生成Release
+    outputs:
+      tag_name: ${{ steps.Draft.outputs.tag_name }}
+    name: Draft release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        id: Draft
+        name: Draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Format: # 格式化
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install dotnet-format
+        run: dotnet tool install -g dotnet-format
+
+      - name: Format
+        run: dotnet-format  ${{ github.workspace }}\Serein.sln
+
+      - name: Commit and Push
+        shell: bash
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "action@github.com"
+          git add -u
+          git commit -m "style: Automated dotnet-format update from commit ${GITHUB_SHA} on ${GITHUB_REF}"
+          git log -1
+          remote_repo="https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+          git push "${remote_repo}" HEAD:${GITHUB_REF}
+        continue-on-error: true
