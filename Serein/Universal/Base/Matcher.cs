@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Extensions;
 using Serein.JSPlugin;
+using System.Collections.Generic;
 
 namespace Serein.Base
 {
@@ -47,78 +48,89 @@ namespace Serein.Base
                 case "message":
                 case "message_sent":
                     bool isSelfMessage = postType == "message_sent";
-                    string messageType = packet.TryGetString("$1").ToString();
+                    string messageType = packet.TryGetString("message_type").ToString();
                     string rawMessage = packet.TryGetString("raw_message").ToString();
                     userId = long.TryParse(packet.TryGetString("sender", "user_id").ToString(), out result) ? result : -1;
                     groupId = messageType == "group" && long.TryParse(packet.TryGetString("group_id").ToString(), out result) ? result : -1;
                     Logger.Out(Items.LogType.Bot_Receive, $"{packet.TryGetString("sender", "nickname")}({packet.TryGetString("sender", "user_id")})" + ":" + rawMessage);
-                    foreach (Items.Regex regex in Global.RegexItems)
+                    if (!(messageType == "group" ^ Global.Settings.Bot.GroupList.Contains(groupId)))
                     {
-                        if (
-                            string.IsNullOrEmpty(regex.Expression) ||
-                            regex.Area <= 1 ||
-                            !(
-                                isSelfMessage && regex.Area == 4 ||
-                                !isSelfMessage && regex.Area != 4
-                            ) ||
-                            messageType == "group" && !Global.Settings.Bot.GroupList.Contains(groupId) ||
-                            !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression)
-                            )
+                        foreach (Items.Regex regex in Global.RegexItems)
                         {
-                            continue;
-                        }
-                        if (
-                            !(
-                            Global.Settings.Bot.PermissionList.Contains(userId) ||
-                            Global.Settings.Bot.GivePermissionToAllAdmin &&
-                            messageType == "group" && (
-                                packet.TryGetString("sender", "role") == "admin" ||
-                                packet.TryGetString("sender", "role") == "owner")
-                            ) &&
-                            regex.IsAdmin &&
-                            !isSelfMessage
-                            )
-                        {
-                            switch (regex.Area)
+                            if (
+                                string.IsNullOrEmpty(regex.Expression) || // 表达式为空
+                                regex.Area <= 1 ||  // 禁用或控制台
+                                isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
+                                !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) // 不匹配
+                                )
                             {
-                                case 2:
-                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupId, userId);
-                                    break;
-                                case 3:
-                                    EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, userId);
-                                    break;
+                                continue;
                             }
-                            continue;
-                        }
-                        if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression))
-                        {
-                            if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
+                            if (
+                                !(
+                                Global.Settings.Bot.PermissionList.Contains(userId) ||
+                                Global.Settings.Bot.GivePermissionToAllAdmin &&
+                                messageType == "group" && (
+                                    packet.TryGetString("sender", "role") == "admin" ||
+                                    packet.TryGetString("sender", "role") == "owner")
+                                ) &&
+                                regex.IsAdmin &&
+                                !isSelfMessage
+                                )
                             {
-                                Command.Run(
-                                    1,
-                                    regex.Command,
-                                    packet,
-                                    System.Text.RegularExpressions.Regex.Match(
-                                        rawMessage,
-                                        regex.Expression
-                                    ),
-                                    userId,
-                                    groupId
-                                );
+                                switch (regex.Area)
+                                {
+                                    case 2:
+                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupId, userId);
+                                        break;
+                                    case 3:
+                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, userId);
+                                        break;
+                                }
+                                continue;
                             }
-                            else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
+                            if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression))
                             {
-                                Command.Run(
-                                    1,
-                                    regex.Command,
-                                    packet,
-                                    System.Text.RegularExpressions.Regex.Match(
-                                        rawMessage,
-                                        regex.Expression
+                                if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
+                                {
+                                    Command.Run(
+                                        1,
+                                        regex.Command,
+                                        packet,
+                                        System.Text.RegularExpressions.Regex.Match(
+                                            rawMessage,
+                                            regex.Expression
                                         ),
-                                    userId
-                                );
+                                        userId,
+                                        groupId
+                                    );
+                                }
+                                else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
+                                {
+                                    Command.Run(
+                                        1,
+                                        regex.Command,
+                                        packet,
+                                        System.Text.RegularExpressions.Regex.Match(
+                                            rawMessage,
+                                            regex.Expression
+                                            ),
+                                        userId
+                                    );
+                                }
                             }
+                        }
+                        lock (Global.GroupCache)
+                        {
+                            if (!Global.GroupCache.ContainsKey(groupId))
+                            {
+                                Global.GroupCache.Add(groupId, new Dictionary<long, string>());
+                            }
+                            if (!Global.GroupCache[groupId].ContainsKey(userId))
+                            {
+                                Global.GroupCache[groupId].Add(userId, string.Empty);
+                            }
+                            Global.GroupCache[groupId][userId] = string.IsNullOrEmpty(packet.TryGetString("sender", "card").ToString()) ? packet.TryGetString("sender", "nickname").ToString() : packet.TryGetString("sender", "card").ToString();
                         }
                     }
                     if (!isSelfMessage)

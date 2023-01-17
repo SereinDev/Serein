@@ -171,11 +171,11 @@ namespace Serein.Ui
             RegexList.EndUpdate();
         }
 
-        private void LoadRegex(string FileName = null)
+        private void LoadRegex(string filename = null)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            IO.ReadRegex(FileName);
+            IO.ReadRegex(filename);
             foreach (Regex Item in Global.RegexItems)
             {
                 if (Item.Check())

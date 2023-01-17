@@ -29,9 +29,12 @@ namespace Serein.Base
         /// </summary>
         public static void StartSavingAndUpdating()
         {
+#if !CONSOLE
             timer.Elapsed += (_, _) => UpdateSettings();
             timer.Elapsed += (_, _) => SaveSettings();
+#endif
             timer.Elapsed += (_, _) => SaveMember();
+            timer.Elapsed += (_, _) => SaveGroupCache();
             timer.Start();
         }
 
@@ -58,6 +61,8 @@ namespace Serein.Base
         {
             ReadRegex();
             ReadMember();
+            ReadTask();
+            LoadGroupCache();
             ReadSettings();
             if (!skipLoadingPlugins)
             {
@@ -68,14 +73,14 @@ namespace Serein.Base
         /// <summary>
         /// 读取正则文件
         /// </summary>
-        /// <param name="fileName">路径</param>
-        public static void ReadRegex(string fileName = null)
+        /// <param name="filename">路径</param>
+        public static void ReadRegex(string filename = null)
         {
-            fileName ??= GetPath("data", "regex.json");
-            if (File.Exists(fileName))
+            filename ??= GetPath("data", "regex.json");
+            if (File.Exists(filename))
             {
-                StreamReader streamReader = new(fileName, Encoding.UTF8);
-                if (fileName.ToLowerInvariant().EndsWith(".tsv"))
+                StreamReader streamReader = new(filename, Encoding.UTF8);
+                if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
                     List<Regex> list = new();
@@ -91,7 +96,7 @@ namespace Serein.Base
                     }
                     Global.UpdateRegexItems(list);
                 }
-                else if (fileName.ToLowerInvariant().EndsWith(".json"))
+                else if (filename.ToLowerInvariant().EndsWith(".json"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
@@ -210,14 +215,14 @@ namespace Serein.Base
         /// <summary>
         /// 读取任务文件
         /// </summary>
-        /// <param name="fileName">路径</param>
-        public static void ReadTask(string fileName = null)
+        /// <param name="filename">路径</param>
+        public static void ReadTask(string filename = null)
         {
-            fileName ??= GetPath("data", "task.json");
-            if (File.Exists(fileName))
+            filename ??= GetPath("data", "task.json");
+            if (File.Exists(filename))
             {
-                StreamReader streamReader = new(fileName, Encoding.UTF8);
-                if (fileName.ToLowerInvariant().EndsWith(".tsv"))
+                StreamReader streamReader = new(filename, Encoding.UTF8);
+                if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
                     List<Task> list = new();
@@ -233,7 +238,7 @@ namespace Serein.Base
                     }
                     Global.UpdateTaskItems(list);
                 }
-                else if (fileName.ToLowerInvariant().EndsWith(".json"))
+                else if (filename.ToLowerInvariant().EndsWith(".json"))
                 {
                     string text = streamReader.ReadToEnd();
                     if (string.IsNullOrEmpty(text))
@@ -371,6 +376,39 @@ namespace Serein.Base
             lock (Global.Settings.Event)
             {
                 File.WriteAllText(GetPath("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+            }
+        }
+
+        /// <summary>
+        /// 保存群组缓存
+        /// </summary>
+        public static void SaveGroupCache()
+        {
+            if (Websocket.Status)
+            {
+                lock (Global.GroupCache)
+                {
+                    if (!Directory.Exists(GetPath("data")))
+                    {
+                        Directory.CreateDirectory(GetPath("data"));
+                    }
+                    File.WriteAllText(GetPath("data", "groupcache.json"), JsonConvert.SerializeObject(Global.GroupCache, Formatting.Indented));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 读取群组缓存
+        /// </summary>
+        public static void LoadGroupCache()
+        {
+            string filename = GetPath("data", "groupcache.json");
+            if (File.Exists(filename))
+            {
+                lock (Global.GroupCache)
+                {
+                    Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, string>>>(File.ReadAllText(GetPath("data", "groupcache.json")));
+                }
             }
         }
     }

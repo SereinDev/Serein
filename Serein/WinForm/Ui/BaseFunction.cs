@@ -82,7 +82,7 @@ namespace Serein.Ui
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
             Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
-            string fileName;
+            string filename;
             List<string> extensionsList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
             if (
                 data.Length == 1 &&
@@ -94,30 +94,30 @@ namespace Serein.Ui
                 )
             {
                 FocusWindow();
-                fileName = data.GetValue(0).ToString();
+                filename = data.GetValue(0).ToString();
                 if (
-                    Path.GetExtension(fileName).ToLowerInvariant() == ".exe" ||
-                    Path.GetExtension(fileName).ToLowerInvariant() == ".bat"
+                    Path.GetExtension(filename).ToLowerInvariant() == ".exe" ||
+                    Path.GetExtension(filename).ToLowerInvariant() == ".bat"
                     )
                 {
                     if ((int)MessageBox.Show(
                         this,
-                        $"是否以\"{fileName}\"为启动文件？",
+                        $"是否以\"{filename}\"为启动文件？",
                         "Serein",
                         MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Warning
                         ) == 1)
                     {
-                        SettingServerPath.Text = fileName;
-                        Global.Settings.Server.Path = fileName;
+                        SettingServerPath.Text = filename;
+                        Global.Settings.Server.Path = filename;
                     }
                     LoadPlugins();
                 }
-                else if (Path.GetExtension(fileName).ToLowerInvariant() == ".json")
+                else if (Path.GetExtension(filename).ToLowerInvariant() == ".json")
                 {
                     StreamReader streamReader = new StreamReader(
                         File.Open(
-                            fileName,
+                            filename,
                             FileMode.Open
                         ),
                         Encoding.UTF8
@@ -135,7 +135,7 @@ namespace Serein.Ui
                             MessageBoxIcon.Warning
                         ) == 1)
                     {
-                        LoadRegex(fileName);
+                        LoadRegex(filename);
                         SaveRegex();
                     }
                     else if (jsonObject["type"].ToString().ToUpperInvariant() == "TASK"
@@ -148,12 +148,12 @@ namespace Serein.Ui
                             MessageBoxIcon.Warning
                         ) == 1)
                     {
-                        LoadTask(fileName);
+                        LoadTask(filename);
                         SaveTask();
                     }
                 }
                 else if (
-                    Path.GetFileName(fileName).ToLowerInvariant() == "regex.tsv" &&
+                    Path.GetFileName(filename).ToLowerInvariant() == "regex.tsv" &&
                     (int)MessageBox.Show(
                         this,
                         "是否导入正则记录？\n将覆盖原有文件且不可逆",
@@ -162,11 +162,11 @@ namespace Serein.Ui
                         MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    LoadRegex(fileName);
+                    LoadRegex(filename);
                     SaveRegex();
                 }
                 else if (
-                    Path.GetFileName(fileName).ToLowerInvariant() == "task.tsv" &&
+                    Path.GetFileName(filename).ToLowerInvariant() == "task.tsv" &&
                     (int)MessageBox.Show(
                         this,
                         "是否导入定时任务？\n将覆盖原有文件且不可逆",
@@ -175,10 +175,9 @@ namespace Serein.Ui
                         MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    LoadTask(fileName);
+                    LoadTask(filename);
                     SaveTask();
                 }
-                return;
             }
             else if (data.Length > 0 && PluginManager.TryImport(data))
             {

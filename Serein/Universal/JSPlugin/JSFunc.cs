@@ -14,7 +14,7 @@ namespace Serein.JSPlugin
 {
     internal static class JSFunc
     {
-        public static long GlobalID = 0;
+        public static long GlobalID;
 
         /// <summary>
         /// 注册插件

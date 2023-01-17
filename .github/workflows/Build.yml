@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        project: [Console, Console_For_Unix, WPF, WinForm]
+        project: [Console, Console_For_Unix, WPF, Winform]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

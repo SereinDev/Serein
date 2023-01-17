@@ -21,9 +21,9 @@ namespace Serein.Windows.Controls
         public static readonly DependencyProperty IsPositionUpdateProperty =
             DependencyProperty.Register("IsPositionUpdate", typeof(bool), typeof(PopupEx), new PropertyMetadata(true, new PropertyChangedCallback(IsPositionUpdateChanged)));
 
-        private static void IsPositionUpdateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void IsPositionUpdateChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            (d as PopupEx).pup_Loaded(d as PopupEx, null);
+            (sender as PopupEx).pup_Loaded(sender as PopupEx, null);
         }
 
         /// <summary>  
@@ -80,9 +80,9 @@ namespace Serein.Windows.Controls
             get { return (bool)GetValue(TopmostProperty); }
             set { SetValue(TopmostProperty, value); }
         }
-        private static void OnTopmostChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        private static void OnTopmostChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            (obj as PopupEx).UpdateWindow();
+            (sender as PopupEx).UpdateWindow();
         }
 
         /// <summary>  

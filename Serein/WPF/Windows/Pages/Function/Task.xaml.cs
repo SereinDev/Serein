@@ -12,7 +12,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Task : UiPage
     {
-        private int ActionType = 0;
+        private int ActionType;
 
         public Task()
         {
@@ -62,7 +62,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             TaskListView.Items.Insert(
                                 TaskListView.SelectedIndex,
-                                new Items.Task()
+                                new Items.Task
                                 {
                                     Cron = cronExp,
                                     Command = command,
@@ -72,7 +72,7 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             TaskListView.Items.Add(
-                                new Items.Task()
+                                new Items.Task
                                 {
                                     Cron = cronExp,
                                     Command = command,

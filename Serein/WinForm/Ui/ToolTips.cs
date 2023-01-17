@@ -75,7 +75,7 @@ namespace Serein.Ui
         private void SettingBotPermission_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "设定有管理权限的用户");
         private void SettingBotEnbaleParseAt_MouseHover(object sender, EventArgs e)
-            => ShowToolTip(sender, "自动替换\"@***\"和\"[CQ:at,qq=***]\"为@群昵称");
+            => ShowToolTip(sender, "自动替换\"@***\"和\"[CQ:at,qq=***]\"为@群昵称（仅输出到服务器时替换）");
 
         private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "启动后自动获取公告（建议开启）");
@@ -90,7 +90,7 @@ namespace Serein.Ui
         private void SettingSereinDownload_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "打开最新版下载页面（https://github.com/Zaitonn/Serein/releases/latest）");
         private void SettingSereinEnableDPIAware_MouseHover(object sender, EventArgs e)
-            => ShowToolTip(sender, "启用DPI感知\n若界面异常或模糊可选择开启此项");
+            => ShowToolTip(sender, "启用DPI感知\n若界面控件错位或模糊可选择开启此项");
 
         private void SettingServerOutputStyle_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender,

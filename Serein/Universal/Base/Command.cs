@@ -4,6 +4,7 @@ using Serein.Items.Motd;
 using Serein.JSPlugin;
 using Serein.Server;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -99,23 +100,6 @@ namespace Serein.Base
                 return;
             }
             string value = GetValue(command, msgMatch);
-            if (Global.Settings.Bot.EnbaleParseAt && inputType == 1)
-            {
-                foreach (Match match in Regex.Matches(value, @"(\[CQ:at,qq=|@)(\d{5,14})\]?"))
-                {
-                    if (
-                        match.Groups.Count >= 3 &&
-                        long.TryParse(match.Groups[2].Value, out long ID) &&
-                        Global.MemberItems.TryGetValue(ID, out Items.Member member)
-                        )
-                    {
-                        value = value.Replace(
-                            match.Value,
-                            "@" + (!string.IsNullOrEmpty(member.Card) ? member.Card : !string.IsNullOrEmpty(member.Nickname) ? member.Nickname : ID.ToString())
-                            );
-                    }
-                }
-            }
             value = ApplyVariables(value, json, disableMotd);
             switch (type)
             {
@@ -124,8 +108,14 @@ namespace Serein.Base
                     break;
                 case Items.CommandType.ServerInput:
                 case Items.CommandType.ServerInputWithUnicode:
+                    if (Global.Settings.Bot.EnbaleParseAt
+                        && inputType == 1
+                        )
+                    {
+                        value = ParseAt(value, groupId);
+                    }
                     value = Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]");
-                    value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[CQ:$1]");
+                    value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[$1]");
                     ServerManager.InputCommand(value, true, type == Items.CommandType.ServerInputWithUnicode);
                     break;
                 case Items.CommandType.SendGivenGroupMsg:
@@ -215,10 +205,8 @@ namespace Serein.Base
         /// <returns>类型</returns>
         public static Items.CommandType GetType(string command)
         {
-            if (
-                !command.Contains("|") ||
-                !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
-                )
+            if (!command.Contains("|") ||
+                !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.Invalid;
             }
@@ -266,10 +254,7 @@ namespace Serein.Base
                     {
                         return Items.CommandType.SendGivenPrivateMsg;
                     }
-                    else
-                    {
-                        return Items.CommandType.Invalid;
-                    }
+                    return Items.CommandType.Invalid;
             }
         }
 
@@ -277,21 +262,20 @@ namespace Serein.Base
         /// 获取命令的值
         /// </summary>
         /// <param name="command">命令</param>
-        /// <param name="MsgMatch">消息匹配对象</param>
+        /// <param name="match">消息匹配对象</param>
         /// <returns>值</returns>
-        public static string GetValue(string command, Match MsgMatch = null)
+        public static string GetValue(string command, Match match = null)
         {
-            int Index = command.IndexOf('|');
-            string Value = command.Substring(Index + 1);
-            if (MsgMatch != null)
+            string value = command.Substring(command.IndexOf('|') + 1);
+            if (match != null)
             {
-                for (int i = MsgMatch.Groups.Count; i >= 0; i--)
+                for (int i = match.Groups.Count; i >= 0; i--)
                 {
-                    Value = Value.Replace($"${i}", MsgMatch.Groups[i].Value);
+                    value = value.Replace($"${i}", match.Groups[i].Value);
                 }
             }
-            Logger.Out(Items.LogType.Debug, $"Value:{Value}");
-            return Value;
+            Logger.Out(Items.LogType.Debug, value);
+            return value;
         }
 
         /// <summary>
@@ -303,6 +287,10 @@ namespace Serein.Base
         /// <returns>应用变量后的文本</returns>
         public static string ApplyVariables(string text, JObject jsonObject = null, bool disableMotd = false)
         {
+            if (!text.Contains("%"))
+            {
+                return text.Replace("\\n", "\n");
+            }
             bool serverStatus = ServerManager.Status;
             DateTime CurrentTime = DateTime.Now;
             Motd motd;
@@ -314,11 +302,11 @@ namespace Serein.Base
             }
             else if (Global.Settings.Server.Type == 1)
             {
-                motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
+                motd = new Motdpe(Global.Settings.Server.Port);
             }
             else
             {
-                motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
+                motd = new Motdje(Global.Settings.Server.Port);
             }
             text = Patterns.Variable.Replace(text, (match) =>
                 match.Groups[1].Value.ToLowerInvariant() switch
@@ -333,7 +321,7 @@ namespace Serein.Base
                     "time" => CurrentTime.ToString("T"),
                     "date" => CurrentTime.Date.ToString("d"),
                     "dayofweek" => CurrentTime.DayOfWeek.ToString(),
-                    "datetime" => CurrentTime.ToString(),
+                    "datetime" => CurrentTime.ToLocalTime().ToString(),
                     #endregion
 
                     "sereinversion" => Global.VERSION,
@@ -402,22 +390,41 @@ namespace Serein.Base
             return text.Replace("\\n", "\n");
         }
 
-        protected class Patterns
+        public static string ParseAt(string text, long groupid)
         {
+            text = text.Replace("[CQ:at,qq=all]", "@全体成员");
+            text = Patterns.CQAt.Replace(text, "@$1 ");
+            if (groupid < 0)
+            {
+                return text;
+            }
+            text = Regex.Replace(text, @"(?<=@)(\d+)(?=\s)", (match) =>
+            {
+                long userid = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
+                return Global.GroupCache.TryGetValue(groupid, out Dictionary<long, string> groupinfo) &&
+                    groupinfo.TryGetValue(userid, out string shownname) ? shownname : match.Groups[1].Value;
+            });
+            return text;
+        }
+
+        protected static class Patterns
+        {
+            public static readonly Regex CQAt = new(@"\[CQ:at,qq=(\d+)\]", RegexOptions.Compiled);
+
             /// <summary>
             /// 变量正则
             /// </summary>
-            public static readonly Regex Variable = new Regex(@"%(\w+)%", RegexOptions.Compiled);
+            public static readonly Regex Variable = new(@"%(\w+)%", RegexOptions.Compiled);
 
             /// <summary>
             /// 游戏ID正则
             /// </summary>
-            public static readonly Regex GameID = new Regex(@"%GameID:(\d+)%", RegexOptions.Compiled);
+            public static readonly Regex GameID = new(@"%GameID:(\d+)%", RegexOptions.Compiled);
 
             /// <summary>
             /// ID正则
             /// </summary>
-            public static readonly Regex ID = new Regex(@"%ID:(.+?)%", RegexOptions.Compiled);
+            public static readonly Regex ID = new(@"%ID:(.+?)%", RegexOptions.Compiled);
         }
     }
 }

@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console", "Serein\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-WPF", "Serein\WPF\Serein-WPF.csproj", "{8F3D398A-56EC-472C-A8A2-7FEFDA52802E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Winform", "Serein\WinForm\Serein-Winform.csproj", "{64923BFD-B79D-4E78-B11B-4CB268C6DA53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Winform", "Serein\Winform\Serein-Winform.csproj", "{64923BFD-B79D-4E78-B11B-4CB268C6DA53}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console_For_Unix", "Serein\Console_For_Unix\Serein-Console_For_Unix.csproj", "{7A32DAB6-3CC0-4318-A6F8-9355B9F35495}"
 EndProject

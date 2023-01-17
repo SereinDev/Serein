@@ -20,7 +20,7 @@ updates:
       - "dependencies"
 
   - package-ecosystem: "nuget"
-    directory: "Serein/WinForm/"
+    directory: "Serein/Winform/"
     schedule:
       interval: "weekly"
     labels:

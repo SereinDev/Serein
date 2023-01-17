@@ -105,9 +105,11 @@ namespace Serein.Base
                         Base.Command.Run(
                             4,
                             command_copy,
-                            userId: userId,
-                            groupId: groupId,
-                            disableMotd: true
+                            null,
+                            null,
+                            userId,
+                            groupId,
+                            true
                             );
                     }
                     break;

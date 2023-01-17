@@ -59,15 +59,15 @@ namespace Serein.Server
         /// <param name="files">文件列表</param>
         public static void Add(IList<string> files)
         {
-            foreach (string FileName in files)
+            foreach (string filename in files)
             {
                 try
                 {
-                    File.Copy(FileName, Path.Combine(BasePath, Path.GetFileName(FileName)));
+                    File.Copy(filename, Path.Combine(BasePath, Path.GetFileName(filename)));
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox($"文件\"{FileName}\" 导入失败\n{e.Message}", "Serein", 0, 48);
+                    Logger.MsgBox($"文件\"{filename}\" 导入失败\n{e.Message}", "Serein", 0, 48);
                     Logger.Out(LogType.Debug, e);
                     break;
                 }

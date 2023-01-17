@@ -18,9 +18,9 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Regex = this;
         }
 
-        public void Load(string FileName = null)
+        public void Load(string filename = null)
         {
-            IO.ReadRegex(FileName);
+            IO.ReadRegex(filename);
             RegexListView.Items.Clear();
             foreach (Items.Regex regex in Global.RegexItems)
             {

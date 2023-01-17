@@ -98,7 +98,7 @@
         <ui:ToggleSwitch 
             Margin="0,7"
             Content="自动替换消息中的at"
-            ToolTip="自动替换&quot;@***&quot;和&quot;[CQ:at,qq=***]&quot;为@群昵称"
+            ToolTip="自动替换&quot;@***&quot;和&quot;[CQ:at,qq=***]&quot;为@群昵称（仅输出到服务器时替换）"
             Click="EnbaleParseAt_Click"
             x:Name="EnbaleParseAt"/>
         <TextBlock

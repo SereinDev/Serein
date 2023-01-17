@@ -48,6 +48,11 @@ namespace Serein
         public static readonly BuildInfo BuildInfo = new();
 
         /// <summary>
+        /// 群组用户信息缓存
+        /// </summary>
+        public static Dictionary<long, Dictionary<long, string>> GroupCache = new();
+
+        /// <summary>
         /// 更新正则列表
         /// </summary>
         /// <param name="newList">新正则列表</param>

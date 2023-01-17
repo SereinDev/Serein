@@ -138,7 +138,7 @@ namespace Serein.Base
                     { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
                     {
                         "params",
-                        new JObject()
+                        new JObject
                         {
                             { isPrivate ? "user_id" : "group_id", targetNumber },
                             { "message", message },

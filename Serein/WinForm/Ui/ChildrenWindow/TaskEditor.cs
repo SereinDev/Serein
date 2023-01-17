@@ -10,7 +10,7 @@ namespace Serein.Ui.ChildrenWindow
 {
     public partial class TaskEditor : Form
     {
-        public bool CancelFlag = true;
+        public bool CancelFlag { get; private set; } = true;
         public TaskEditor()
         {
             InitializeComponent();

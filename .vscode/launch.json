@@ -5,17 +5,61 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Core Launch (default)",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Serein/WinForm/bin/Debug/net6.0-windows/Serein-Winform.dll",
-            // "program": "${workspaceFolder}/Serein/WPF/bin/Debug/net6.0-windows/Serein-WPF.dll",
+            "program": "${workspaceFolder}/Serein/Winform/bin/Debug/net6.0-windows/Serein-Winform.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
-            "console": "internalConsole"
+            "console": "internalConsole",
+            "requireExactSource": false
+        },
+        {
+            "name": ".NET Core Launch (optional)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein-${input:targetApplication}.${input:fileExtension}",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "requireExactSource": false
         }
-
+    ],
+    "inputs": [
+        {
+            "id": "targetApplication",
+            "type": "pickString",
+            "description": "目标调试对象",
+            "options": [
+                "Console",
+                "Console_For_Unix",
+                "Winform",
+                "WPF"
+            ],
+            "default": "Winform"
+        },
+        {
+            "id": "targetFramework",
+            "type": "pickString",
+            "description": "目标版本",
+            "options": [
+                "net472",
+                "net6.0-windows",
+                "net6.0",
+            ],
+            "default": "net6.0-windows"
+        },
+        {
+            "id": "fileExtension",
+            "type": "pickString",
+            "description": "扩展名",
+            "options": [
+                "dll",
+                "exe",
+            ],
+            "default": "dll"
+        }
     ]
 }
