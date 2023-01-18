@@ -45,8 +45,12 @@ namespace Serein.Base
                         bld.Append(o + " ");
                     }
                 }
+                else if (type == LogType.Debug || type == LogType.DetailDebug)
+                {
+                    bld.Append("null ");
+                }
             }
-            string line = bld.ToString().TrimEnd();
+            string line = bld.ToString();
             switch (type)
             {
 #if CONSOLE

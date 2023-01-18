@@ -70,7 +70,7 @@ namespace Serein.Properties {
         /// </summary>
         public static string buildinfo {
             get {
-                return ResourceManager.GetString("buildinfo", resourceCulture);
+                return ResourceManager.GetString("BuildInfo" , resourceCulture);
             }
         }
     }

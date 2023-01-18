@@ -85,7 +85,7 @@
                     Grid.Column="1"
                     VerticalAlignment="Center" />
             </Expander.Header>
-            <TextBlock Name="BuildInfo" TextWrapping="Wrap" />
+            <TextBlock Name="BuildInfo"  TextWrapping="Wrap" />
         </Expander>
     </StackPanel>
 </ui:UiPage>

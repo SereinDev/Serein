@@ -37,7 +37,7 @@
 		<Content Include="..\Universal\Sources\Serein.ico" />
 		<Resource Include="..\Universal\Sources\Serein.ico" />
 		<Resource Include="Windows\Serein.ico" />
-		<None Remove="buildinfo" />
+		<None Remove="buildinfo.info" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -102,17 +102,16 @@ namespace Serein.Base
         /// <param name="groupId">群聊ID</param>
         public static void UnBind(long userId, long groupId = -1)
         {
-            if (!Global.MemberItems.ContainsKey(userId))
+            lock (Global.MemberItems)
             {
-                EventTrigger.Trigger(EventType.UnbindingFail, groupId, userId);
-            }
-            else
-            {
-                lock (Global.MemberItems)
+                if (Global.MemberItems.Remove(userId))
                 {
-                    Global.MemberItems.Remove(userId);
                     IO.SaveMember();
                     EventTrigger.Trigger(EventType.UnbindingSucceed, groupId, userId);
+                }
+                else
+                {
+                    EventTrigger.Trigger(EventType.UnbindingFail, groupId, userId);
                 }
             }
         }
@@ -124,15 +123,15 @@ namespace Serein.Base
         /// <returns>解绑结果</returns>
         public static bool UnBind(long userId)
         {
-            if (Global.MemberItems.ContainsKey(userId))
+            lock (Global.MemberItems)
             {
-                lock (Global.MemberItems)
+                if (Global.MemberItems.Remove(userId))
                 {
-                    Global.MemberItems.Remove(userId);
                     IO.SaveMember();
+                    return true;
                 }
+                return false;
             }
-            return Global.MemberItems.ContainsKey(userId);
         }
 
         /// <summary>
@@ -141,23 +140,7 @@ namespace Serein.Base
         /// <param name="userId">用户ID</param>
         /// <returns>对应的游戏ID</returns>
         public static string GetGameID(long userId)
-        {
-            if (!Global.MemberItems.ContainsKey(userId))
-            {
-                return string.Empty;
-            }
-            else
-            {
-                foreach (Member member in Items)
-                {
-                    if (member.ID == userId)
-                    {
-                        return member.GameID;
-                    }
-                }
-                return string.Empty;
-            }
-        }
+            => Global.MemberItems.TryGetValue(userId, out Member member) ? member.GameID : string.Empty;
 
         /// <summary>
         /// 获取指定游戏ID对应的用户ID

@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
-		<EmbeddedResource Include="..\Universal\buildinfo" />
+		<EmbeddedResource Include="..\Universal\buildinfo.info" />
 		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\console.html" />
 		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\preset.css" />
 	</ItemGroup>
