@@ -2,11 +2,10 @@
 |     作者     | [SOURsLEMONS](https://github.com/SOURsLEMONS)                                              |
 | :----------: | :----------------------------------------------------------------------------------------- |
 |   **介绍**   | 普通成员绑定，退群解绑，管理员解绑成员，在机器人有群管理或群主权限时成员绑定自动更该群名片 |
-| **更新日期** | 2022.10.16 (v1.0)                                                                          |
-| **下载链接** | [Serein扩展 - 百度网盘](https://pan.baidu.com/s/1aDcF4ofPpjUIU3jbCMgL5Q?pwd=1234)          |
-| **开源仓库** | [GitHub](https://github.com/Zaitonn/Serein/blob/plugins/SLbind.js)                         |
+| **更新日期** | 2023.1.18 (v1.0_fix)                                                                       |
+| **下载** | [SLbind.js](JS/SLbind/SLbind.js ':ignore')                                                    |
 
-![效果图](../../imgs/Extension/SLbind.js.jpg)
+![效果图](1.jpg)
 
 ### 使用方法
 

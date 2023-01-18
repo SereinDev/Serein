@@ -1,0 +1,83 @@
+﻿{
+  "type": "REGEX",
+  "comment": "非必要请不要直接修改文件，语法错误可能导致数据丢失",
+  "data": [
+    {
+      "Regex": "\\]\\s\\<(.+?)\\>\\s(.+?)$",
+      "Remark": "服务器消息转发至群聊",
+      "Command": "g|<$1>$2",
+      "Area": 1,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "\\]\\s(.+?)\\s退出了游戏",
+      "Remark": "退服提醒转发至群聊",
+      "Command": "g|$1离开了服务器",
+      "Area": 1,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "\\]\\s(.+?)\\s加入了游戏",
+      "Remark": "进服提醒转发至群聊",
+      "Command": "g|$1进入了服务器",
+      "Area": 1,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "^(.+?)$",
+      "Remark": "消息群聊转发至服务器",
+      "Command": "s|tellraw @a {\"rawtext\":[{\"text\":\"§6[QQ群]§b%ShownName%： §f$1\"}]}",
+      "Area": 2,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "^cmd/(.+?)$",
+      "Remark": "cmd",
+      "Command": "s|$1",
+      "Area": 2,
+      "IsAdmin": true
+    },
+    {
+      "Regex": "\\]\\s启动完成",
+      "Remark": "启动完成提醒转发至群聊",
+      "Command": "g|服务器已经启动完成",
+      "Area": 1,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "\\]\\s当前共有\\s(.+?)\\s：",
+      "Remark": "查服监测",
+      "Command": "g|当前 $1",
+      "Area": 1,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "^服务器状态$",
+      "Remark": "群查服务器状态指令",
+      "Command": "g|服务器名称:星空殿\\n游戏版本:1.19.40\\n难度:%Difficulty%\\n运行状态:%Status%\\n本次运行时长:%RunTime%\\n内存占用率:%RAMPercentage%%\\nCPU占用率:%CPUPercentage%%",
+      "Area": 2,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "^查服$",
+      "Remark": "群查服指令",
+      "Command": "s|list",
+      "Area": 2,
+      "IsAdmin": false
+    },
+    {
+      "Regex": "^关服$",
+      "Remark": "群关服指令",
+      "Command": "s|stop",
+      "Area": 2,
+      "IsAdmin": true
+    },
+    {
+      "Regex": "^开服$",
+      "Remark": "群开服指令",
+      "Command": "s|start",
+      "Area": 2,
+      "IsAdmin": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+
+- [🏠**主站**](../ ':ignore')
+- **🌌 扩展市场**
+  - 🧱 基础
+    - [🚩 首页](README.md)
+    - [➕ 发布](Publish.md)
+    - [❔ 如何安装](HowToInstall.md)
+  - 📜 正则
+    - [示例文件](JSON/Demo.json.md)
+    - [PNX](JSON/PNX.json.md)
+  - 🧩 插件
+    - [**✨SereinJSPluginHelper - 插件开发助手**](JS/SereinJSPluginHelper/README.md)
+    - [Example - 示例文件](JS/Example/README.md)
+    - [BotExtension - 机器人功能拓展](JS/BotExtension/README.md)
+    - [iPanel - 网页版控制台 *(尚未完工)* ](https://ipanel.serein.cc)
+    - [SLbind - 白名单与账号绑定插件](JS/SLbind/README.md)
+    - [HTTPApi - HTTP应用接口控制](JS/HTTPApi/README.md)
+    - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)
+    - [CHATEX - 对群聊消息互通提供更多增强功能](JS/CHATEX/README.md)
+    - [StatRecodrer - 统计信息记录](JS/StatRecodrer/README.md)
+  - 💼 整合包
+    - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
+    - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)
+  - 🧀 适用于服务器的插件
+    - [PBind - 账号绑定系统](https://www.minebbs.com/resources/pbind.4211/)

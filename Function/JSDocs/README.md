@@ -42,4 +42,4 @@ ECMAScript 2022
 
 ## JS插件开发助手
 
->详见[SereinJSPluginHelper](Extension/JS/SereinJSPluginHelper.js.md)
+>详见[SereinJSPluginHelper](Extension/#/JS/SereinJSPluginHelper/README.md ':ignore')

@@ -2,7 +2,9 @@
 | :----------: | :-------------------------------------------------------------------------------- |
 |   **介绍**   | 自动按时间记录系统信息、在线人数等                                                |
 | **更新日期** | 2023.1.13                                                                         |
-| **下载链接** | [Serein扩展 - 百度网盘](https://pan.baidu.com/s/1aDcF4ofPpjUIU3jbCMgL5Q?pwd=1234) |
+| **下载** | [StatRecorder.js](JS/StatRecorder/StatRecorder.js ':ignore') |
+
+>[!WARNING] 此插件最低支持版本为`v1.3.4`
 
 ### 功能
 
@@ -27,4 +29,4 @@
 
 使用`Excel`或其他软件打开CSV文件，选择整个列生成即可
 
-![例子](../../imgs/Extension/StatRecorder.js.png)
+![例子](1.png)
