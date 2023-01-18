@@ -320,8 +320,6 @@ namespace Serein.Ui
                     $"当前版本：{Global.VERSION}\n" +
                     $"编译类型：{Global.BuildInfo.Type}\n" +
                     $"编译时间：{Global.BuildInfo.Time}\n" +
-                    $"编译路径：{Global.BuildInfo.Dir}\n" +
-                    $"系统类型：{Global.BuildInfo.OS}\n" +
                     $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}",
                 Footer = "开源地址：<a href=\"https://github.com/Zaitonn/Serein\">GitHub</a>",
                 FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,

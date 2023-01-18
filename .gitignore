@@ -3,6 +3,6 @@ obj/
 .vs/
 packages/
 MigrationBackup/
-Build_Info.txt
+# buildinfo
 TEST/
 FodyWeavers.xsd

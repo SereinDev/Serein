@@ -68,9 +68,9 @@ namespace Serein.Properties {
         ///null
         /// 的本地化字符串。
         /// </summary>
-        public static string Build_Info {
+        public static string buildinfo {
             get {
-                return ResourceManager.GetString("Build_Info", resourceCulture);
+                return ResourceManager.GetString("buildinfo", resourceCulture);
             }
         }
     }

@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Build_Info" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\Build_Info.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  <data name="buildinfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Universal\buildinfo;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
   <data name="console_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\console.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\..\Universal\Sources\ConsoleHtml\console.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="preset_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Universal\ConsoleHtml\preset.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\..\Universal\Sources\ConsoleHtml\preset.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

@@ -28,7 +28,7 @@
 		<Compile Include="../Universal/**/*.cs" />
 		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
 		<Compile Remove="..\Universal\Server\PluginManager.cs" />
-		<EmbeddedResource Include="..\Universal\Build_Info.txt" />
+		<EmbeddedResource Include="..\Universal\buildinfo" />
 	</ItemGroup>
 	<ItemGroup>
 		<WCFMetadata Include="Connected Services\" />

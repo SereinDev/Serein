@@ -37,11 +37,9 @@ jobs:
       - name: Write Build info
         shell: cmd
         run: |
-          cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Serein\Universal\Build_Info.txt
-          cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-          cmd /c echo %cd% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-          cmd /c echo %os% >>${{ github.workspace }}\Serein\Universal\Build_Info.txt
-          cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\Build_Info.txt
+          cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Serein\Universal\buildinfo
+          cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\buildinfo
+          cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\buildinfo
 
       - name: NuGet restore
         run: nuget restore "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"

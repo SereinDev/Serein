@@ -47,7 +47,7 @@
             "options": [
                 "net472",
                 "net6.0-windows",
-                "net6.0",
+                "net6.0"
             ],
             "default": "net6.0-windows"
         },
@@ -57,7 +57,7 @@
             "description": "扩展名",
             "options": [
                 "dll",
-                "exe",
+                "exe"
             ],
             "default": "dll"
         }

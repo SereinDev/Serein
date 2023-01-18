@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
 		<OutputType>WinExe</OutputType>
-		<UseApplicationTrust>false</UseApplicationTrust>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
@@ -12,29 +12,34 @@
 		<RootNamespace>Serein</RootNamespace>
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>False</Optimize>
 	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<DebugType>none</DebugType>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
-		<EmbeddedResource Include="..\Universal\Build_Info.txt" />
-		<EmbeddedResource Include="..\Universal\ConsoleHtml\console.html" />
-		<EmbeddedResource Include="..\Universal\ConsoleHtml\preset.css" />
+		<EmbeddedResource Include="..\Universal\buildinfo" />
+		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\console.html" />
+		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\preset.css" />
 	</ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
-		<Prefer32Bit>false</Prefer32Bit>
 		<WarningLevel>9999</WarningLevel>
 		<Optimize>True</Optimize>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
 		<DebugType>full</DebugType>
 		<WarningLevel>9999</WarningLevel>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
 		<DebugType>full</DebugType>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
@@ -43,6 +48,7 @@
 		<Optimize>True</Optimize>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Costura.Fody" Version="5.7.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -55,15 +61,11 @@
 		<PackageReference Include="System.Resources.Extensions" Version="7.0.0" />
 		<PackageReference Include="SystemInfoLibrary" Version="1.4.3" />
 		<PackageReference Include="WebSocket4Net" Version="0.15.2" />
-	</ItemGroup>
-	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
-	</ItemGroup>
-	<ItemGroup>
 		<EmbeddedResource Update="Properties\Resources.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -78,6 +80,7 @@
 			<DependentUpon>TaskEditor.cs</DependentUpon>
 		</EmbeddedResource>
 	</ItemGroup>
+
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="Exists('c:\')">
 		<Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
 	</Target>

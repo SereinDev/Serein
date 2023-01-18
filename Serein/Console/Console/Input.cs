@@ -81,8 +81,6 @@ namespace Serein.Console
                             $"Serein {Global.VERSION}\r\n" +
                             $"编译类型：{Global.BuildInfo.Type}\r\n" +
                             $"编译时间：{Global.BuildInfo.Time}\r\n" +
-                            $"编译路径：{Global.BuildInfo.Dir}\r\n" +
-                            $"系统类型：{Global.BuildInfo.OS}\r\n" +
                             $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}\r\n" +
                             "=========================================\r\n" +
                             "GitHub Repo: \x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein\x1b[0m\r\n" +

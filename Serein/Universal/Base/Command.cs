@@ -353,7 +353,11 @@ namespace Serein.Base
                     "cpubrand" => SystemInfo.CPUBrand,
                     "cpufrequency" => SystemInfo.CPUFrequency.ToString("N1"),
                     "usedram" => SystemInfo.UsedRAM.ToString(),
+                    "usedramgb" => (SystemInfo.UsedRAM / 1024).ToString("N1"),
                     "totalram" => SystemInfo.TotalRAM.ToString(),
+                    "totalramgb" => (SystemInfo.TotalRAM / 1024).ToString("N1"),
+                    "freeram" => (SystemInfo.Info.Hardware.RAM.Free / 1024 / 1024).ToString("N1"),
+                    "freeramgb" => (SystemInfo.Info.Hardware.RAM.Free / 1024 / 1024 / 1024).ToString("N1"),
                     "ramusage" => SystemInfo.RAMUsage.ToString("N1"),
                     #endregion
 
