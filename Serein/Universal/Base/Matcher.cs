@@ -2,6 +2,7 @@
 using Serein.Extensions;
 using Serein.JSPlugin;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Serein.Base
 {
@@ -61,7 +62,8 @@ namespace Serein.Base
                                 string.IsNullOrEmpty(regex.Expression) || // 表达式为空
                                 regex.Area <= 1 ||  // 禁用或控制台
                                 isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
-                                !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) // 不匹配
+                                !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) || // 不匹配
+                                regex.Area == 2 && regex.IgnoredGroups.Length != 0 && regex.IgnoredGroups.ToList().Contains(groupId) // 草走忽略！
                                 )
                             {
                                 continue;

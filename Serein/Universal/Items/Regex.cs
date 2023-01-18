@@ -32,6 +32,11 @@ namespace Serein.Items
         public bool IsAdmin { get; set; }
 
         /// <summary>
+        /// 忽略的群聊
+        /// </summary>
+        public long[] IgnoredGroups = { };
+
+        /// <summary>
         /// 作用域文本列表
         /// </summary>
         public static readonly string[] AreaArray = { "禁用", "控制台", "消息（群聊）", "消息（私聊）", "消息（自身发送）" };

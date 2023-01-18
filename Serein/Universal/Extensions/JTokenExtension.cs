@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Serein.Extensions
@@ -26,5 +27,8 @@ namespace Serein.Extensions
             }
             return (jtoken ?? string.Empty).ToString();
         }
+
+        public static string ToJson(this object obj)
+            => obj != null ? JsonConvert.SerializeObject(obj) : string.Empty;
     }
 }
