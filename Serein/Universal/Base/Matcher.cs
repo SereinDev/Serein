@@ -63,7 +63,7 @@ namespace Serein.Base
                                 regex.Area <= 1 ||  // 禁用或控制台
                                 isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
                                 !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) || // 不匹配
-                                regex.Area == 2 && regex.IgnoredGroups.Length != 0 && regex.IgnoredGroups.ToList().Contains(groupId) // 草走忽略！
+                                regex.Area == 2 && regex.GroupsIgnored.Length != 0 && regex.GroupsIgnored.ToList().Contains(groupId) // 草走忽略！
                                 )
                             {
                                 continue;

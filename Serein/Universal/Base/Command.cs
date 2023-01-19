@@ -428,7 +428,7 @@ namespace Serein.Base
             /// <summary>
             /// ID正则
             /// </summary>
-            public static readonly Regex ID = new(@"%ID:(.+?)%", RegexOptions.Compiled);
+            public static readonly Regex ID = new(@"%ID:(.+)%", RegexOptions.Compiled);
         }
     }
 }

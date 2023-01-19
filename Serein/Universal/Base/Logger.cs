@@ -291,14 +291,14 @@ namespace Serein.Base
 #elif WPF
                     Catalog.Debug?.AppendText($"{DateTime.Now:T} {line}");
 #endif
-                    if (!Directory.Exists(IO.GetPath("logs", "debug")))
+                    if (!Directory.Exists(Path.Combine("logs", "debug")))
                     {
-                        Directory.CreateDirectory(IO.GetPath("logs", "debug"));
+                        Directory.CreateDirectory(Path.Combine("logs", "debug"));
                     }
                     try
                     {
                         File.AppendAllText(
-                            IO.GetPath("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             $"{DateTime.Now:T} {line}\n",
                             Encoding.UTF8
                             );

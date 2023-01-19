@@ -328,14 +328,14 @@ namespace Serein.Server
                 JSFunc.Trigger(EventType.ServerSendCommand, line);
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists(IO.GetPath("logs", "console")))
+                    if (!Directory.Exists(Path.Combine("logs", "console")))
                     {
-                        Directory.CreateDirectory(IO.GetPath("logs", "console"));
+                        Directory.CreateDirectory(Path.Combine("logs", "console"));
                     }
                     try
                     {
                         File.AppendAllText(
-                            IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             ">" + Log.OutputRecognition(line) + "\n",
                             Encoding.UTF8
                         );
@@ -377,14 +377,14 @@ namespace Serein.Server
 #endif
                 if (Global.Settings.Server.EnableLog)
                 {
-                    if (!Directory.Exists(IO.GetPath("logs", "console")))
+                    if (!Directory.Exists(Path.Combine("logs", "console")))
                     {
-                        Directory.CreateDirectory(IO.GetPath("logs", "console"));
+                        Directory.CreateDirectory(Path.Combine("logs", "console"));
                     }
                     try
                     {
                         File.AppendAllText(
-                            IO.GetPath("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             Log.OutputRecognition(line) + "\n",
                             Encoding.UTF8
                         );

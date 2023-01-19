@@ -33,15 +33,15 @@ namespace Serein.Base
             {
                 ServerManager.Stop(true);
             }
-            if (!Directory.Exists(IO.GetPath("logs", "crash")))
+            if (!Directory.Exists(Path.Combine("logs", "crash")))
             {
-                Directory.CreateDirectory(IO.GetPath("logs", "crash"));
+                Directory.CreateDirectory(Path.Combine("logs", "crash"));
             }
             string exceptionMsg = MergeException(e);
             try
             {
                 File.AppendAllText(
-                    IO.GetPath("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                    Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),
                     DateTime.Now + "  |  "
                     + Global.VERSION + "  |  " +
                     "NET" + Environment.Version.ToString() +
@@ -59,7 +59,7 @@ namespace Serein.Base
             Logger.Out(Items.LogType.Error,
                 $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
                 $"{exceptionMsg}\r\n\r\n" +
-                $"崩溃日志已保存在 {IO.GetPath("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\r\n" +
+                $"崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\r\n" +
                 "反馈此问题可以帮助作者更好的改进Serein");
 #else
 
@@ -73,7 +73,7 @@ namespace Serein.Base
                     $"时间：{DateTime.Now}\n" +
                     $"NET版本：{Environment.Version}\n" + 
                     $"编译时间：{Global.BuildInfo.Time}\n\n" +
-                    $"◦ 崩溃日志已保存在 {IO.GetPath("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\n" + 
+                    $"◦ 崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\n" + 
                     $"◦ 反馈此问题可以帮助作者更好的改进Serein",
                 MainIcon = TaskDialogIcon.Error,
                 Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",

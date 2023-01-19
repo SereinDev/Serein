@@ -193,14 +193,14 @@ namespace Serein.Base
             }
             if (Global.Settings.Bot.EnableLog)
             {
-                if (!Directory.Exists(IO.GetPath("logs", "msg")))
+                if (!Directory.Exists(Path.Combine("logs", "msg")))
                 {
-                    Directory.CreateDirectory(IO.GetPath("logs", "msg"));
+                    Directory.CreateDirectory(Path.Combine("logs", "msg"));
                 }
                 try
                 {
                     File.AppendAllText(
-                        IO.GetPath("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                        Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
                         $"{DateTime.Now:T}  {Log.OutputRecognition(e.Message)}\n",
                         Encoding.UTF8
                         );

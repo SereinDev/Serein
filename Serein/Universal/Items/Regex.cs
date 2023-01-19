@@ -34,7 +34,7 @@ namespace Serein.Items
         /// <summary>
         /// 忽略的群聊
         /// </summary>
-        public long[] IgnoredGroups = { };
+        public long[] GroupsIgnored = { };
 
         /// <summary>
         /// 作用域文本列表
