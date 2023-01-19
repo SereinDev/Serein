@@ -38,6 +38,7 @@ namespace Serein.JSPlugin
         /// <summary>
         /// CancellationToken
         /// </summary>
+        [JsonIgnore]
         private readonly CancellationTokenSource TokenSource = new();
 
         /// <summary>
@@ -198,20 +199,11 @@ namespace Serein.JSPlugin
                             break;
                     }
                 }
-                catch (TargetInvocationException e)
-                {
-                    if (e.InnerException is JavaScriptException javaScriptException)
-                    {
-                        Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{Type}时出现异常： {javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}");
-                    }
-                    else
-                    {
-                        Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{Type}时出现异常：", (e.InnerException ?? e).Message);
-                    }
-                }
                 catch (Exception e)
                 {
-                    Logger.Out(LogType.Debug, $"{Namespace}触发事件{Type}时出现异常：\n", e);
+                    string message = e.GetFullMsg();
+                    Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{Type}时出现异常：", message);
+                    Logger.Out(LogType.Debug, $"{Namespace}触发事件{Type}时出现异常：\n", message);
                 }
             });
         }

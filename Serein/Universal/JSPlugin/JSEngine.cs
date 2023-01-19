@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
+using System.Collections.Generic;
 using Jint;
 using Jint.Native;
 using Jint.Runtime;
@@ -11,6 +12,7 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -18,11 +20,6 @@ namespace Serein.JSPlugin
 {
     internal static class JSEngine
     {
-        /// <summary>
-        /// JS引擎
-        /// </summary>
-        public static Engine MainEngine = new();
-
         /// <summary>
         /// 转换专用JS引擎
         /// </summary>
@@ -49,9 +46,27 @@ namespace Serein.JSPlugin
                     else if (cancellationTokenSource != null)
                     {
                         cfg.CancellationToken(cancellationTokenSource.Token);
+                        cfg.Modules.RegisterRequire = true;
                     }
                 }
                 ));
+            if (!string.IsNullOrEmpty(@namespace) && Directory.Exists(JSPluginManager.ModulesPath))
+            {
+                foreach (string filename in Directory.GetFiles(JSPluginManager.ModulesPath, "*.js", SearchOption.TopDirectoryOnly))
+                {
+                    try
+                    {
+                        engine.AddModule(Path.GetFileName(filename), File.ReadAllText(filename));
+                        engine.ImportModule(Path.GetFileName(filename));
+                    }
+                    catch (Exception e)
+                    {
+                        string message = e.GetFullMsg();
+                        Logger.Out(LogType.Plugin_Error, $"加载模块{Path.GetFileName(filename)}时出现异常：{message}");
+                        Logger.Out(LogType.Debug, e);
+                    }
+                }
+            }
             engine.SetValue("serein_getSysinfo",
                 new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
@@ -67,7 +82,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_version",
                 Global.VERSION);
             engine.SetValue("serein_namespace",
-                @namespace);
+                string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
             engine.SetValue("serein_log",
                 new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, $"[{@namespace}]", Content)));
             engine.SetValue("serein_runCommand",
@@ -120,6 +135,8 @@ namespace Serein.JSPlugin
                 new Func<long, string>(Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
                 new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
+            engine.SetValue("serein_getPluginList",
+                new Func<object>(() => JsonConvert.DeserializeObject(JSPluginManager.PluginDict.Values.ToJson())));
             engine.SetValue("setTimeout",
                 new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
             engine.SetValue("setInterval",
@@ -172,6 +189,7 @@ namespace Serein.JSPlugin
                     getID: serein_getID,
                     getGameID: serein_getGameID,
                     getGroupCache: serein_getGroupCache,
+                    getPluginList: serein_getPluginList
                     };"
             );
             return engine;
@@ -186,7 +204,7 @@ namespace Serein.JSPlugin
         {
             try
             {
-                (engine ?? MainEngine).Execute(code);
+                engine.Execute(code);
                 exceptionMessage = string.Empty;
             }
             catch (JavaScriptException e)
@@ -199,7 +217,7 @@ namespace Serein.JSPlugin
                 Logger.Out(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
-            return engine ?? MainEngine;
+            return engine;
         }
     }
 }

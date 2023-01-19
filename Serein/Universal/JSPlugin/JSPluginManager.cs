@@ -13,6 +13,9 @@ namespace Serein.JSPlugin
 {
     internal static class JSPluginManager
     {
+        public const string PluginPath = "plugins";
+        public static readonly string ModulesPath = Path.Combine(JSPluginManager.PluginPath, "modules");
+
         /// <summary>
         /// 插件项列表
         /// </summary>
@@ -33,14 +36,13 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Load()
         {
-            string pluginPath = Path.Combine("plugins");
-            if (!Directory.Exists(pluginPath))
+            if (!Directory.Exists(PluginPath))
             {
-                Directory.CreateDirectory(pluginPath);
+                Directory.CreateDirectory(PluginPath);
             }
             else
             {
-                string[] files = Directory.GetFiles(pluginPath, "*.js", SearchOption.TopDirectoryOnly);
+                string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
                 foreach (string file in files)
                 {
                     string @namespace = Path.GetFileNameWithoutExtension(file);
@@ -49,7 +51,7 @@ namespace Serein.JSPlugin
                     {
                         PluginDict.Add(@namespace, new Plugin(@namespace)
                         {
-                            File = Path.GetFileName(file)
+                            File = file
                         });
                         PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string ExceptionMessage);
                         if (!string.IsNullOrEmpty(ExceptionMessage))
@@ -69,17 +71,17 @@ namespace Serein.JSPlugin
                     }
                 }
                 List<string> failedFiles = new();
-                PluginDict.Keys.ToList().ForEach((Key) =>
+                PluginDict.Keys.ToList().ForEach((key) =>
                 {
-                    if (PluginDict.TryGetValue(Key, out Plugin Value) && !Value.Available)
+                    if (PluginDict.TryGetValue(key, out Plugin plugin) && !plugin.Available)
                     {
-                        failedFiles.Add(Value.File);
+                        failedFiles.Add(Path.GetFileName(plugin.File));
                     }
                 });
                 Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
                 if (failedFiles.Count > 0)
                 {
-                    Logger.Out(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：  " + string.Join(" ,", failedFiles));
+                    Logger.Out(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", failedFiles));
                 }
                 System.Threading.Tasks.Task.Run(() =>
                 {
@@ -87,10 +89,14 @@ namespace Serein.JSPlugin
                     Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
                 });
 #if WINFORM
-                Program.Ui.LoadJSPluginPublicly();
+                Program.Ui?.LoadJSPluginPublicly();
 #elif WPF
                 Windows.Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
+            }
+            if (!Directory.Exists(ModulesPath))
+            {
+                Directory.CreateDirectory(ModulesPath);
             }
         }
 

@@ -114,9 +114,9 @@ namespace Serein.Base
         /// </summary>
         public static void SaveRegex()
         {
-            if (!Directory.Exists(Path.Combine("data")))
+            if (!Directory.Exists("data"))
             {
-                Directory.CreateDirectory(Path.Combine("data"));
+                Directory.CreateDirectory("data");
             }
             JObject jsonObject = new()
             {
@@ -132,7 +132,7 @@ namespace Serein.Base
         /// </summary>
         public static void ReadMember()
         {
-            if (!Directory.Exists(Path.Combine("data")))
+            if (!Directory.Exists("data"))
             {
                 Directory.CreateDirectory("data");
             }
@@ -181,9 +181,9 @@ namespace Serein.Base
                 return;
             }
             OldMembers = JsonConvert.SerializeObject(dictionary);
-            if (!Directory.Exists(Path.Combine("data")))
+            if (!Directory.Exists("data"))
             {
-                Directory.CreateDirectory(Path.Combine("data"));
+                Directory.CreateDirectory("data");
             }
             JObject jsonObject = new()
             {
@@ -260,9 +260,9 @@ namespace Serein.Base
         /// </summary>
         public static void SaveTask()
         {
-            if (!Directory.Exists(Path.Combine("data")))
+            if (!Directory.Exists("data"))
             {
-                Directory.CreateDirectory(Path.Combine("data"));
+                Directory.CreateDirectory("data");
             }
             JObject jsonObject = new()
             {
@@ -278,9 +278,9 @@ namespace Serein.Base
         /// </summary>
         public static void ReadSettings()
         {
-            if (!Directory.Exists(Path.Combine("settings")))
+            if (!Directory.Exists("settings"))
             {
-                Directory.CreateDirectory(Path.Combine("settings"));
+                Directory.CreateDirectory("settings");
                 Global.FirstOpen = true;
                 return;
             }
@@ -374,9 +374,9 @@ namespace Serein.Base
             {
                 lock (Global.GroupCache)
                 {
-                    if (!Directory.Exists(Path.Combine("data")))
+                    if (!Directory.Exists("data"))
                     {
-                        Directory.CreateDirectory(Path.Combine("data"));
+                        Directory.CreateDirectory("data");
                     }
                     File.WriteAllText(Path.Combine("data", "groupcache.json"), JsonConvert.SerializeObject(Global.GroupCache, Formatting.Indented));
                 }

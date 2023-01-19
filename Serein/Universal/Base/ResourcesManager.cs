@@ -10,7 +10,7 @@ namespace Serein.Base
         /// </summary>
         public static void InitConsole()
         {
-            if (!Directory.Exists(Path.Combine("console")) || !File.Exists(Path.Combine("console", "console.html")))
+            if (!Directory.Exists("console") || !File.Exists(Path.Combine("console", "console.html")))
             {
                 ExtractConsoleFile(Properties.Resources.console_html, "console.html");
                 ExtractConsoleFile(Properties.Resources.preset_css, "preset.css");
@@ -25,9 +25,9 @@ namespace Serein.Base
         /// <param name="name">文件名</param>
         private static void ExtractConsoleFile(string resource, string name)
         {
-            if (!Directory.Exists(Path.Combine("console")))
+            if (!Directory.Exists("console"))
             {
-                Directory.CreateDirectory(Path.Combine("console"));
+                Directory.CreateDirectory("console");
             }
             File.WriteAllText(Path.Combine("console", name), resource, Encoding.UTF8);
         }

@@ -99,15 +99,7 @@ namespace Serein.JSPlugin
             }
             catch (Exception e)
             {
-                string message;
-                if (e.InnerException is JavaScriptException JSe)
-                {
-                    message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
-                }
-                else
-                {
-                    message = (e.InnerException ?? e).Message;
-                }
+                string message = e.GetFullMsg();
                 Logger.Out(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{name}事件调用失败：", message);
                 Logger.Out(Items.LogType.Debug, $"{name}事件调用失败\r\n", e);
             }

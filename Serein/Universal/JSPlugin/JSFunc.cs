@@ -141,15 +141,7 @@ namespace Serein.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    string message;
-                    if (e.InnerException is JavaScriptException JSe)
-                    {
-                        message = $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
-                    }
-                    else
-                    {
-                        message = (e.InnerException ?? e).Message;
-                    }
+                    string message = e.GetFullMsg();
                     Logger.Out(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：{message}");
                     Logger.Out(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
@@ -213,6 +205,18 @@ namespace Serein.JSPlugin
                 result += datas[i].ToString("x2");
             }
             return result;
+        }
+
+        public static string GetFullMsg(this Exception e)
+        {
+            if (e.InnerException is JavaScriptException JSe)
+            {
+                return $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
+            }
+            else
+            {
+                return (e.InnerException ?? e).Message;
+            }
         }
     }
 }
