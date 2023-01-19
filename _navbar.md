@@ -1,5 +1,5 @@
 
-- [:pen:**问卷调查**](https://docs.qq.com/form/page/DTndVd0dmVWl4VFph)
+- [:pen:**问卷调查**](https://wj.qq.com/s2/11559426/5a2e/)
 - [🌌 扩展市场](Extension/ ':ignore')
 - [👨🏻‍🤝‍👨🏻交流群](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)
 - 🛹下载
