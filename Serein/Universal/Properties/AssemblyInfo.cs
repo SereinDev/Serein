@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Serein")]
 [assembly: AssemblyDescription("新时代极简服务器面板")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://github.com/Zaitonn/Serein")]
+[assembly: AssemblyCompany("https://serein.cc")]
 [assembly: AssemblyProduct("Serein - 新时代极简服务器面板")]
 [assembly: AssemblyCopyright("Copyright © Zaitonn 2022")]
 [assembly: AssemblyTrademark("")]

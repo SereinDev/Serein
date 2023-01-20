@@ -1,5 +1,4 @@
 ﻿using Serein.Base;
-using Serein.Items.Motd;
 using Serein.Server;
 using System.Timers;
 using System.Windows;
@@ -30,18 +29,9 @@ namespace Serein.Windows.Pages
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
                 Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
                 Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N1") + "%" : "-";
-                if (ServerManager.Status && Global.Settings.Server.Type != 0)
+                if (ServerManager.Status)
                 {
-                    Motd motd;
-                    if (Global.Settings.Server.Type == 1)
-                    {
-                        motd = new Motdpe(Global.Settings.Server.Port);
-                    }
-                    else
-                    {
-                        motd = new Motdje(Global.Settings.Server.Port);
-                    }
-                    Server_Online.Text = motd != null && motd.IsSuccessful ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "获取失败";
+                    Server_Online.Text = ServerManager.Motd != null && ServerManager.Motd.IsSuccessful ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "获取失败";
                 }
                 else
                 {

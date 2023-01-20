@@ -1,5 +1,7 @@
-﻿using Serein.Base;
+﻿using System.Timers;
+using Serein.Base;
 using Serein.Items;
+using Serein.Items.Motd;
 using Serein.JSPlugin;
 using Serein.Extensions;
 using System;
@@ -43,6 +45,10 @@ namespace Serein.Server
         /// CPU使用率
         /// </summary>
         public static double CPUUsage { get; private set; }
+
+        public static Motd Motd = new();
+
+        private static Timer UpdateTimer;
 
         /// <summary>
         /// 当前CPU时间
@@ -160,11 +166,13 @@ namespace Serein.Server
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
-                System.Threading.Tasks.Task.Factory.StartNew(UpdateCPUUsage);
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
                     JSFunc.Trigger(EventType.ServerStart);
+                    UpdateTimer = new Timer(2000) { AutoReset = true };
+                    UpdateTimer.Elapsed += (_, _) => UpdateInfo();
+                    UpdateTimer.Start();
                 });
                 return true;
             }
@@ -427,6 +435,7 @@ namespace Serein.Server
             InputWriter.Close();
             InputWriter.Dispose();
             Logger.Out(LogType.Server_Output, "");
+            UpdateTimer?.Stop();
             if (!Killed && ServerProcess.ExitCode != 0)
             {
                 Logger.Out(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
@@ -493,16 +502,23 @@ namespace Serein.Server
         /// <summary>
         /// 获取CPU占用
         /// </summary>
-        public static void UpdateCPUUsage()
+        public static void UpdateInfo()
         {
-            while (Status)
+            if (Status)
             {
-                2000.ToSleepFor();
                 CPUUsage = (ServerProcess.TotalProcessorTime - PrevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 PrevProcessCpuTime = ServerProcess.TotalProcessorTime;
                 if (CPUUsage > 100)
                 {
                     CPUUsage = 100;
+                }
+                if (Global.Settings.Server.Type == 1)
+                {
+                    Motd = new Motdpe(Global.Settings.Server.Port);
+                }
+                else
+                {
+                    Motd = new Motdje(Global.Settings.Server.Port);
                 }
             }
         }

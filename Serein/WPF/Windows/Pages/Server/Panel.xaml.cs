@@ -1,6 +1,5 @@
 ﻿using Serein.Base;
 using Serein.Items;
-using Serein.Items.Motd;
 using Serein.Server;
 using System.Timers;
 using System.Windows;
@@ -96,17 +95,8 @@ namespace Serein.Windows.Pages.Server
                 Status.Content = ServerManager.Status ? "已启动" : "未启动";
                 if (ServerManager.Status)
                 {
-                    Motd motd;
-                    if (Global.Settings.Server.Type == 1)
-                    {
-                        motd = new Motdpe(Global.Settings.Server.Port);
-                    }
-                    else
-                    {
-                        motd = new Motdje(Global.Settings.Server.Port);
-                    }
-                    Version.Content = motd != null && !string.IsNullOrEmpty(motd.Version) ? motd.Version : "-";
-                    PlayCount.Content = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
+                    Version.Content = ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-";
+                    PlayCount.Content = ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-";
                 }
                 else
                 {

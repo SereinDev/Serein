@@ -92,9 +92,15 @@ namespace Serein.JSPlugin
                 Logger.Out(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
-                    JSPluginManager.PluginDict.Keys.ToList().ForEach((Key) => JSPluginManager.PluginDict[Key].Trigger(type, args));
+                    if (JSPluginManager.PluginDict.Keys.ToList().TrueForAll((key) =>
+                    {
+                        JSPluginManager.PluginDict[key].Trigger(type, args);
+                        return JSPluginManager.PluginDict[key].EventList.Contains(type);
+                    }))
+                    {
+                        Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
+                    }
                 }
-                Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
             }
         }
 

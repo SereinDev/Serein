@@ -35,13 +35,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<WarningLevel>9999</WarningLevel>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">

@@ -25,18 +25,18 @@ namespace Serein.Windows.Pages.Settings
         {
             if (sender is MenuItem menuItem && menuItem != null)
             {
-                string Tag = menuItem.Tag as string ?? string.Empty;
-                switch (Tag)
+                string tag = menuItem.Tag as string ?? string.Empty;
+                switch (tag)
                 {
                     case "Add":
                         ActionType = 1;
-                        Catalog.MainWindow.OpenEventrEditor();
+                        Catalog.MainWindow.OpenEventEditor(string.Empty);
                         break;
                     case "Edit":
                         if (EventListView.SelectedItem is string selectedItem && selectedItem != null)
                         {
                             ActionType = 2;
-                            Catalog.MainWindow.OpenEventrEditor(selectedItem);
+                            Catalog.MainWindow.OpenEventEditor(selectedItem);
                         }
                         break;
                     case "Delete":
@@ -44,6 +44,7 @@ namespace Serein.Windows.Pages.Settings
                         {
                             EventListView.Items.RemoveAt(EventListView.SelectedIndex);
                         }
+                        Save();
                         break;
                     case "LookupEvent":
                         Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });

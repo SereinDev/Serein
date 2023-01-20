@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Serein.Items.Motd
 {
-    internal class Motdpe : Motd
+    public class Motdpe : Motd
     {
         /// <summary>
         /// 基岩版Motd获取入口
@@ -40,8 +40,8 @@ namespace Serein.Items.Motd
             try
             {
                 Socket socket = new Socket(IP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 5000);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000);
                 socket.Bind(new IPEndPoint(IPAddress.Any, 0));
                 string[] guid = Guid.NewGuid().ToString().ToUpperInvariant().Split('-');
                 string text = $"01{Environment.TickCount.ToString("X").PadLeft(16, '0')}00FFFF00FEFEFEFEFDFDFDFD12345678{guid[2]}{guid[4]}";

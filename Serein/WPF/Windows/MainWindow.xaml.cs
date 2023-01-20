@@ -220,9 +220,9 @@ namespace Serein.Windows
         #endregion
 
         #region 事件编辑器代码
-        public void OpenEventrEditor(string Command = "")
+        public void OpenEventEditor(string command)
         {
-            EventEditor_Command.Text = Command;
+            EventEditor_Command.Text = command;
             EventEditor.Show();
         }
 
@@ -238,7 +238,6 @@ namespace Serein.Windows
         {
             EventEditor.Hide();
         }
-
         #endregion
 
         private void UiWindow_Drop(object sender, DragEventArgs e)
@@ -294,7 +293,7 @@ namespace Serein.Windows
             }
         }
 
-        public void UpdateTitle(string title = null)
+        public void UpdateTitle(string title)
             => Dispatcher.Invoke(() => _TitleBar.Title = string.IsNullOrEmpty(title) ? "Serein" : $"Serein - {title}");
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Serein.Base;
 using Serein.Server;
-using Serein.Items.Motd;
 using Serein.Extensions;
 using System;
 using System.Windows.Forms;
@@ -26,17 +25,8 @@ namespace Serein.Ui
                 ServerPanelInfoTime2.Text = ServerManager.GetTime();
                 ServerPanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
                 ServerPanelInfoStatus2.Text = "已启动";
-                Motd motd;
-                if (Global.Settings.Server.Type == 1)
-                {
-                    motd = new Motdpe($"127.0.0.1:{Global.Settings.Server.Port}");
-                }
-                else
-                {
-                    motd = new Motdje($"127.0.0.1:{Global.Settings.Server.Port}");
-                }
-                ServerPanelInfoVersion2.Text = motd != null && !string.IsNullOrEmpty(motd.Version) ? motd.Version : "-";
-                ServerPanelInfoPlayerCount2.Text = motd != null ? $"{motd.OnlinePlayer}/{motd.MaxPlayer}" : "-";
+                ServerPanelInfoVersion2.Text = ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-";
+                ServerPanelInfoPlayerCount2.Text = ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-";
                 ServerPanelInfoDifficulty2.Text = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
             }
             else
