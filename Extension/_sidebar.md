@@ -23,3 +23,4 @@
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)
   - 🧀 适用于服务器的插件
     - [PBind - 账号绑定系统](https://www.minebbs.com/resources/pbind.4211/)
+    - [Unescaper for Serein - 解决中文乱码问题](https://www.minebbs.com/resources/unescaper-for-serein.5441/)

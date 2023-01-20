@@ -73,7 +73,7 @@ serein.setListener('onReceiveGroupMessage', (groupid, userid, msg, shownName) =>
                     serein.sendCmd(`tellraw @a ${JSON.stringify({
                         rawtext: [
                             {
-                                text: escape(`§b[${time}]§r${config.disableColorSymbol ? shownName.replace(/\u00a7./, '') : shownName}:${text}`).replace(/\%u/g, '\\u')
+                                text: `§b[${time}]§r${config.disableColorSymbol ? shownName.replace(/\u00a7./, '') : shownName}:${text}`.replace(/\%u/g, '\\u')
                             }
                         ]
                     })
