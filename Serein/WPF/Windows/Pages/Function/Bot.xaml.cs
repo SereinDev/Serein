@@ -51,7 +51,7 @@ namespace Serein.Windows.Pages.Function
             Timer restorer = new Timer(500) { AutoReset = true };
             restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
             {
-                Logger.Out(LogType.Debug, string.Join(";", Catalog.Function.BotCache));
+                Logger.Output(LogType.Debug, string.Join(";", Catalog.Function.BotCache));
                 if (!Restored && BotWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
                 {
                     Catalog.Function.BotCache.ForEach((Text) => AppendText(Text));

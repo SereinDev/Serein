@@ -12,7 +12,6 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -62,8 +61,8 @@ namespace Serein.JSPlugin
                     catch (Exception e)
                     {
                         string message = e.GetFullMsg();
-                        Logger.Out(LogType.Plugin_Error, $"加载模块{Path.GetFileName(filename)}时出现异常：{message}");
-                        Logger.Out(LogType.Debug, e);
+                        Logger.Output(LogType.Plugin_Error, $"加载模块{Path.GetFileName(filename)}时出现异常：{message}");
+                        Logger.Output(LogType.Debug, e);
                     }
                 }
             }
@@ -84,19 +83,19 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_namespace",
                 string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
             engine.SetValue("serein_log",
-                new Action<object>((Content) => Logger.Out(LogType.Plugin_Info, $"[{@namespace}]", Content)));
+                new Action<object>((content) => Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
             engine.SetValue("serein_runCommand",
                 new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("serein_debugLog",
-                new Action<object>((Content) => Logger.Out(LogType.Debug, Content)));
+                new Action<object>((Content) => Logger.Output(LogType.Debug, Content)));
             engine.SetValue("serein_getSettings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("serein_getSettingsObject",
                 new Func<object>(() => Global.Settings));
             engine.SetValue("serein_registerPlugin",
-                new Func<string, string, string, string, string>((Name, Version, Author, Description) => JSFunc.Register(@namespace, Name, Version, Author, Description)));
+                new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
             engine.SetValue("serein_setListener",
-                new Func<string, Delegate, bool>((EventName, Function) => JSFunc.SetListener(@namespace, EventName, Function)));
+                new Func<string, Delegate, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
             engine.SetValue("serein_getMotdpe",
                 new Func<string, string>((addr) => new Motdpe(addr).Origin));
             engine.SetValue("serein_getMotdje",
@@ -110,7 +109,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_getServerStatus",
                 new Func<bool>(() => ServerManager.Status));
             engine.SetValue("serein_sendCmd",
-                new Action<string, bool>((Commnad, Unicode) => ServerManager.InputCommand(Commnad, usingUnicode: Unicode)));
+                new Action<string, bool>((commnad, usingUnicode) => ServerManager.InputCommand(commnad, usingUnicode, false)));
             engine.SetValue("serein_getServerTime",
                 new Func<string>(() => ServerManager.GetTime()));
             engine.SetValue("serein_getServerCPUUsage",
@@ -118,11 +117,11 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_getServerFile",
                 new Func<string>(() => ServerManager.StartFileName));
             engine.SetValue("serein_sendGroup",
-                new Func<long, string, bool>((Target, Message) => Websocket.Send(false, Message, Target)));
+                new Func<long, string, bool>((target, message) => Websocket.Send(false, message, target)));
             engine.SetValue("serein_sendPrivate",
-                new Func<long, string, bool>((Target, Message) => Websocket.Send(true, Message, Target)));
+                new Func<long, string, bool>((target, message) => Websocket.Send(true, message, target)));
             engine.SetValue("serein_sendPacket",
-                new Func<string, bool>((Msg) => Websocket.Send(Msg)));
+                new Func<string, bool>((message) => Websocket.Send(message)));
             engine.SetValue("serein_getWsStatus",
                 new Func<bool>(() => Websocket.Status));
             engine.SetValue("serein_bindMember",
@@ -135,8 +134,10 @@ namespace Serein.JSPlugin
                 new Func<long, string>(Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
                 new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
+            engine.SetValue("serein_getUserName",
+                new Func<long, long, string>((groupid, userid) => Global.GroupCache.TryGetValue(groupid, out Dictionary<long, string> groupinfo) && groupinfo.TryGetValue(userid, out string shownname) ? shownname : string.Empty));
             engine.SetValue("serein_getPluginList",
-                new Func<object>(() => JsonConvert.DeserializeObject(JSPluginManager.PluginDict.Values.ToJson())));
+                new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
             engine.SetValue("setTimeout",
                 new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
             engine.SetValue("setInterval",
@@ -189,7 +190,9 @@ namespace Serein.JSPlugin
                     getID: serein_getID,
                     getGameID: serein_getGameID,
                     getGroupCache: serein_getGroupCache,
-                    getPluginList: serein_getPluginList
+                    getPluginList: serein_getPluginList,
+                    getUserName: serein_getUserName,
+                    loadFrom: require
                     };"
             );
             return engine;
@@ -209,12 +212,12 @@ namespace Serein.JSPlugin
             }
             catch (JavaScriptException e)
             {
-                Logger.Out(LogType.Debug, e);
+                Logger.Output(LogType.Debug, e);
                 exceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, e);
+                Logger.Output(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
             return engine;

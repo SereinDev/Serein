@@ -25,7 +25,7 @@ namespace Serein.Windows.Pages.Function
                 IO.ReadMember();
             }
             MemberListView.Items.Clear();
-            foreach (Items.Member member in Global.MemberItems.Values.ToList())
+            foreach (Items.Member member in Global.MemberDict.Values.ToList())
             {
                 MemberListView.Items.Add(member);
             }
@@ -41,7 +41,10 @@ namespace Serein.Windows.Pages.Function
                     dictionary.Add(member.ID, member);
                 }
             }
-            Global.UpdateMemberItems(dictionary);
+            lock (Global.MemberDict)
+            {
+                Global.MemberDict = dictionary;
+            }
             IO.SaveMember();
         }
 

@@ -79,7 +79,7 @@ namespace Serein.Items.Motd
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, e);
+                Logger.Output(LogType.Debug, e);
                 Exception = e.Message;
             }
         }

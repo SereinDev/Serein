@@ -16,7 +16,7 @@ namespace Serein.Ui
             IO.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
-            foreach (Member member in Global.MemberItems.Values.ToList())
+            foreach (Member member in Global.MemberDict.Values.ToList())
             {
                 ListViewItem listViewItem = new();
                 listViewItem.Text = member.ID.ToString();
@@ -48,7 +48,10 @@ namespace Serein.Ui
                     memberDict.Add(member.ID, member);
                 }
             }
-            Global.UpdateMemberItems(memberDict);
+            lock (Global.MemberDict)
+            {
+                Global.MemberDict = memberDict;
+            }
             IO.SaveMember();
         }
 

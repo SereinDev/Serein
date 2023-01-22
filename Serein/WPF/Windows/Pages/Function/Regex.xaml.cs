@@ -18,11 +18,13 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Regex = this;
         }
 
-        public void Load(string filename = null)
+        public void Load() => Load(null);
+
+        public void Load(string filename)
         {
             IO.ReadRegex(filename);
             RegexListView.Items.Clear();
-            foreach (Items.Regex regex in Global.RegexItems)
+            foreach (Items.Regex regex in Global.RegexList)
             {
                 RegexListView.Items.Add(regex);
             }
@@ -38,7 +40,7 @@ namespace Serein.Windows.Pages.Function
                     list.Add(regex);
                 }
             }
-            Global.UpdateRegexItems(list);
+            Global.RegexList = list;
             IO.SaveRegex();
         }
 

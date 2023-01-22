@@ -176,7 +176,7 @@ namespace Serein.Ui
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
             IO.ReadRegex(filename);
-            foreach (Regex Item in Global.RegexItems)
+            foreach (Regex Item in Global.RegexList)
             {
                 if (Item.Check())
                 {
@@ -201,7 +201,7 @@ namespace Serein.Ui
                     Command = listViewItem.SubItems[4].Text
                 });
             }
-            Global.UpdateRegexItems(regexItems);
+            Global.RegexList = regexItems;
             IO.SaveRegex();
         }
 

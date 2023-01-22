@@ -25,7 +25,7 @@ namespace Serein.Items
                     Detail = arg[2].Trim().Replace("\\n", "\n");
                     break;
                 default:
-                    Logger.Out(LogType.Debug, "未找到有效的编译信息");
+                    Logger.Output(LogType.Debug, "未找到有效的编译信息");
                     break;
             }
         }

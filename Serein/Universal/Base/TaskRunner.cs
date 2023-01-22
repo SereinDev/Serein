@@ -28,7 +28,7 @@ namespace Serein.Base
         /// </summary>
         private static void Run()
         {
-            foreach (Task task in Global.TaskItems)
+            foreach (Task task in Global.TaskList)
             {
                 if (task.Enable && DateTime.Compare(task.NextTime, DateTime.Now) <= 0)
                 {

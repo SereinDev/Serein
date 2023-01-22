@@ -44,7 +44,7 @@ namespace Serein.Server
             if (File.Exists(Global.Settings.Server.Path))
             {
                 BasePath = Check("plugin") ?? Check("plugins") ?? Check("mod") ?? Check("mods") ?? string.Empty;
-                Logger.Out(LogType.Debug, BasePath);
+                Logger.Output(LogType.Debug, BasePath);
                 if (!string.IsNullOrWhiteSpace(BasePath))
                 {
                     return Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
@@ -68,7 +68,7 @@ namespace Serein.Server
                 catch (Exception e)
                 {
                     Logger.MsgBox($"文件\"{filename}\" 导入失败\n{e.Message}", "Serein", 0, 48);
-                    Logger.Out(LogType.Debug, e);
+                    Logger.Output(LogType.Debug, e);
                     break;
                 }
             }
@@ -84,7 +84,7 @@ namespace Serein.Server
             {
                 if (files.Count <= 0)
                 {
-                    Logger.Out(LogType.Debug, "数据不合法");
+                    Logger.Output(LogType.Debug, "数据不合法");
                 }
                 else if (Logger.MsgBox($"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
                 {
@@ -96,7 +96,7 @@ namespace Serein.Server
                         }
                         catch (Exception e)
                         {
-                            Logger.Out(LogType.Debug, e);
+                            Logger.Output(LogType.Debug, e);
                             Logger.MsgBox(
                                 $"文件\"{file}\"删除失败\n{e.Message}", "Serein",
                                 0, 48
@@ -126,7 +126,7 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(LogType.Debug, e);
+                    Logger.Output(LogType.Debug, e);
                     Logger.MsgBox(
                         $"文件\"{file}\"禁用失败\n" +
                         $"{e.Message}", "Serein",
@@ -151,7 +151,7 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(LogType.Debug, e);
+                    Logger.Output(LogType.Debug, e);
                     Logger.MsgBox(
                         $"文件\"{file}\"启用失败\n" +
                         $"{e.Message}", "Serein",
@@ -197,7 +197,7 @@ namespace Serein.Server
                 });
         }
 
-        private static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts" };
+        public static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts" };
 
         /// <summary>
         /// 尝试导入

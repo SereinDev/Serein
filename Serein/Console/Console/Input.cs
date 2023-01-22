@@ -23,7 +23,7 @@ namespace Serein.Console
                     case "exit":
                         if (ServerManager.Status)
                         {
-                            Logger.Out(Items.LogType.Warn, "服务器未关闭");
+                            Logger.Output(Items.LogType.Warn, "服务器未关闭");
                         }
                         else
                         {
@@ -51,18 +51,18 @@ namespace Serein.Console
                         {
                             IO.ReadAll(true);
                             JSPluginManager.Reload();
-                            Logger.Out(Items.LogType.Info, "重新加载成功");
+                            Logger.Output(Items.LogType.Info, "重新加载成功");
                         }
                         catch (Exception e)
                         {
-                            Logger.Out(Items.LogType.Error, "加载失败:" + e.Message);
+                            Logger.Output(Items.LogType.Error, "加载失败:" + e.Message);
                         }
                         break;
                     case "clear":
                         System.Console.Clear();
                         break;
                     case "help":
-                        Logger.Out(
+                        Logger.Output(
                             Items.LogType.Info,
                             "start  \t启动服务器\r\n" +
                             "stop   \t关闭服务器\r\n" +
@@ -77,7 +77,7 @@ namespace Serein.Console
                             );
                         break;
                     case "version":
-                        Logger.Out(Items.LogType.Info,
+                        Logger.Output(Items.LogType.Info,
                             $"Serein {Global.VERSION}\r\n" +
                             $"编译类型：{Global.BuildInfo.Type}\r\n" +
                             $"编译时间：{Global.BuildInfo.Time}\r\n" +
@@ -87,7 +87,7 @@ namespace Serein.Console
                             "Copyright © 2022 Zaitonn. All Rights Reserved.\r\n");
                         break;
                     default:
-                        Logger.Out(Items.LogType.Warn, "未知的命令，请检查后重试或输入\"help\"获取更多信息");
+                        Logger.Output(Items.LogType.Warn, "未知的命令，请检查后重试或输入\"help\"获取更多信息");
                         break;
                 }
             }

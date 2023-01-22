@@ -57,8 +57,8 @@ namespace Serein.Base
             HttpResponseMessage response = await httpClient.GetAsync(url);
             if (Global.Settings.Serein.DevelopmentTool.DetailDebug)
             {
-                Logger.Out(Items.LogType.Debug, "Headers\n", response.Headers.ToString());
-                Logger.Out(Items.LogType.Debug, "Content\n", await response.Content.ReadAsStringAsync());
+                Logger.Output(Items.LogType.Debug, "Headers\n", response.Headers.ToString());
+                Logger.Output(Items.LogType.Debug, "Content\n", await response.Content.ReadAsStringAsync());
             }
             httpClient.Dispose();
             return await response.Content.ReadAsStringAsync();
@@ -84,19 +84,19 @@ namespace Serein.Base
                     {
                         if (version != Global.VERSION)
                         {
-                            Logger.Out(Items.LogType.Version_New, version);
+                            Logger.Output(Items.LogType.Version_New, version);
                         }
                         else
                         {
-                            Logger.Out(Items.LogType.Version_Latest, version);
+                            Logger.Output(Items.LogType.Version_Latest, version);
                         }
                         LastVersion = version;
                     }
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(Items.LogType.Version_Failure, e.Message);
-                    Logger.Out(Items.LogType.Debug, e);
+                    Logger.Output(Items.LogType.Version_Failure, e.Message);
+                    Logger.Output(Items.LogType.Debug, e);
                 }
             }
         }

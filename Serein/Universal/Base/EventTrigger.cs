@@ -12,7 +12,7 @@ namespace Serein.Base
         /// <param name="type">类型</param>
         public static void Trigger(Items.EventType type)
         {
-            Logger.Out(Items.LogType.Debug, "Trigger:" + type);
+            Logger.Output(Items.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
             commandGroup = type switch
             {
@@ -37,7 +37,7 @@ namespace Serein.Base
         /// <param name="motd">Motd对象</param>
         public static void Trigger(Items.EventType type, long groupId, long userId, Motd motd = null)
         {
-            Logger.Out(Items.LogType.Debug, "Trigger:" + type);
+            Logger.Output(Items.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
             switch (type)
             {
@@ -114,7 +114,7 @@ namespace Serein.Base
                     }
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "未知的事件名", type);
+                    Logger.Output(Items.LogType.Debug, "未知的事件名", type);
                     break;
             }
         }

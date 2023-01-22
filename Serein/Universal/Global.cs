@@ -20,17 +20,48 @@ namespace Serein
         /// <summary>
         /// 正则项列表
         /// </summary>
-        public static List<Regex> RegexItems = new();
+        public static List<Regex> RegexList
+        {
+            get
+            {
+                return _regexList;
+            }
+            set
+            {
+                lock (_regexList)
+                {
+                    _regexList = value;
+                }
+            }
+        }
+
+        private static List<Regex> _regexList = new();
 
         /// <summary>
         /// 任务项列表
         /// </summary>
-        public static List<Task> TaskItems = new();
+        public static List<Task> TaskList
+        {
+            get
+            {
+                return _taskList;
+            }
+            set
+            {
+                lock (_taskList)
+                {
+                    _taskList = value;
+                    _taskList.ForEach((task) => task.Check());
+                }
+            }
+        }
+
+        private static List<Task> _taskList = new();
 
         /// <summary>
         /// 成员项字典
         /// </summary>
-        public static Dictionary<long, Member> MemberItems = new();
+        public static Dictionary<long, Member> MemberDict = new();
 
         /// <summary>
         /// 设置项
@@ -51,41 +82,5 @@ namespace Serein
         /// 群组用户信息缓存
         /// </summary>
         public static Dictionary<long, Dictionary<long, string>> GroupCache = new();
-
-        /// <summary>
-        /// 更新正则列表
-        /// </summary>
-        /// <param name="newList">新正则列表</param>
-        public static void UpdateRegexItems(List<Regex> newList)
-        {
-            lock (RegexItems)
-            {
-                RegexItems = newList;
-            }
-        }
-
-        /// <summary>
-        /// 更新任务列表
-        /// </summary>
-        /// <param name="newList">新任务列表</param>
-        public static void UpdateTaskItems(List<Task> newList)
-        {
-            lock (TaskItems)
-            {
-                TaskItems = newList;
-            }
-        }
-
-        /// <summary>
-        /// 更新成员字典
-        /// </summary>
-        /// <param name="newDict">新成员字典</param>
-        public static void UpdateMemberItems(Dictionary<long, Member> newDict)
-        {
-            lock (MemberItems)
-            {
-                MemberItems = newDict;
-            }
-        }
     }
 }

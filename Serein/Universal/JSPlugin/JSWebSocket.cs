@@ -100,8 +100,8 @@ namespace Serein.JSPlugin
             catch (Exception e)
             {
                 string message = e.GetFullMsg();
-                Logger.Out(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{name}事件调用失败：", message);
-                Logger.Out(Items.LogType.Debug, $"{name}事件调用失败\r\n", e);
+                Logger.Output(Items.LogType.Plugin_Error, $"[{Namespace}]", $"Websocket的{name}事件调用失败：", message);
+                Logger.Output(Items.LogType.Debug, $"{name}事件调用失败\r\n", e);
             }
         }
 

@@ -166,7 +166,7 @@ namespace Serein.Ui
                     Enable = listViewItem.ForeColor != Color.Gray
                 });
             }
-            Global.UpdateTaskItems(list);
+            Global.TaskList = list;
             IO.SaveTask();
         }
 
@@ -175,7 +175,7 @@ namespace Serein.Ui
             IO.ReadTask(filename);
             TaskList.BeginUpdate();
             TaskList.Items.Clear();
-            foreach (Task task in Global.TaskItems)
+            foreach (Task task in Global.TaskList)
             {
                 ListViewItem listViewItem = new(task.Cron);
                 listViewItem.SubItems.Add(task.Remark);

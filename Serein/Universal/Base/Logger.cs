@@ -1,4 +1,5 @@
-﻿using Serein.Items;
+﻿using Serein.Extensions;
+using Serein.Items;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -23,7 +24,7 @@ namespace Serein.Base
         /// </summary>
         /// <param name="type">输出类型</param>
         /// <param name="objects">内容</param>
-        public static void Out(LogType type, params object[] objects)
+        public static void Output(LogType type, params object[] objects)
         {
 #if WINFORM
             if (Program.Ui == null || Program.Ui.Disposing)
@@ -38,7 +39,7 @@ namespace Serein.Base
                 {
                     if (o is Exception e)
                     {
-                        bld.Append("\r\n" + CrashInterception.MergeException(e));
+                        bld.Append(Environment.NewLine + CrashInterception.MergeException(e));
                     }
                     else
                     {
@@ -291,19 +292,22 @@ namespace Serein.Base
 #elif WPF
                     Catalog.Debug?.AppendText($"{DateTime.Now:T} {line}");
 #endif
-                    if (!Directory.Exists(Path.Combine("logs", "debug")))
-                    {
-                        Directory.CreateDirectory(Path.Combine("logs", "debug"));
-                    }
+                    IO.CreateDirectory(Path.Combine("logs", "debug"));
                     try
                     {
-                        File.AppendAllText(
-                            Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            $"{DateTime.Now:T} {line}\n",
-                            Encoding.UTF8
-                            );
+                        lock (IO.FileLock.Debug)
+                        {
+                            File.AppendAllText(
+                               Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                               $"{DateTime.Now:T} {line}\n",
+                               Encoding.UTF8
+                               );
+                        }
                     }
-                    catch { }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e);
+                    }
                     break;
             }
         }
@@ -378,6 +382,7 @@ namespace Serein.Base
         /// <returns>按下的按钮为OK或Yes</returns>
         public static bool MsgBox(string text, string caption, int buttons, int icon)
         {
+            Logger.Output(LogType.DetailDebug, new object[] { text, caption, buttons, icon }.ToJson());
 #if CONSOLE
             text = text.Trim('\r', '\n');
             switch (icon)
@@ -420,8 +425,8 @@ namespace Serein.Base
             }
             else
             {
-                bool Confirmed = false;
-                MessageBox Msg = new()
+                bool confirmed = false;
+                MessageBox messageBox = new()
                 {
                     Title = caption,
                     Content = text,
@@ -431,14 +436,14 @@ namespace Serein.Base
                     ButtonLeftName = buttons <= 1 ? "确定" : "是",
                     ButtonRightName = buttons <= 1 ? "取消" : "否"
                 };
-                Msg.ButtonRightClick += (_, _) => Msg.Close();
-                Msg.ButtonLeftClick += (_, _) =>
+                messageBox.ButtonRightClick += (_, _) => messageBox.Close();
+                messageBox.ButtonLeftClick += (_, _) =>
                 {
-                    Confirmed = true;
-                    Msg.Close();
+                    confirmed = true;
+                    messageBox.Close();
                 };
-                Msg.ShowDialog();
-                return Confirmed;
+                messageBox.ShowDialog();
+                return confirmed;
             }
 #endif
         }

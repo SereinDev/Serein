@@ -46,7 +46,7 @@ namespace Serein.Base
             }
             else if (!Status)
             {
-                Logger.Out(LogType.Bot_Clear);
+                Logger.Output(LogType.Bot_Clear);
                 Matcher.MessageReceived = "-";
                 Matcher.MessageSent = "-";
                 Matcher.SelfId = "-";
@@ -63,18 +63,18 @@ namespace Serein.Base
                     WSClient.MessageReceived += Receive;
                     WSClient.Error += (_, e) =>
                     {
-                        Logger.Out(LogType.Bot_Error, e.Exception.Message);
+                        Logger.Output(LogType.Bot_Error, e.Exception.Message);
                     };
                     WSClient.Closed += (_, _) =>
                     {
                         Status = false;
-                        Logger.Out(LogType.Bot_Notice, "WebSocket连接已断开");
+                        Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
                         if (Global.Settings.Bot.AutoReconnect && Reconnect)
                         {
                             System.Threading.Tasks.Task.Run(() =>
                             {
-                                Logger.Out(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Logger.Out(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
+                                Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                                Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                                 for (int i = 0; i < 20; i++)
                                 {
                                     500.ToSleepFor();
@@ -93,7 +93,7 @@ namespace Serein.Base
                     WSClient.Opened += (_, _) =>
                     {
                         Reconnect = true;
-                        Logger.Out(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
+                        Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
                     };
                     WSClient.Open();
                     StartTime = DateTime.Now;
@@ -101,7 +101,7 @@ namespace Serein.Base
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(LogType.Bot_Error, e.Message);
+                    Logger.Output(LogType.Bot_Error, e.Message);
                 }
             }
         }
@@ -149,12 +149,13 @@ namespace Serein.Base
                 WSClient.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Logger.Out(LogType.Bot_Send, textJObject.ToString());
+                    Logger.Output(LogType.Bot_Send, textJObject);
                 }
                 else
                 {
-                    Logger.Out(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
+                    Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
                 }
+                IO.MsgLog($"[Sent] {textJObject}");
             }
             return Status;
         }
@@ -172,7 +173,7 @@ namespace Serein.Base
             else if (Reconnect)
             {
                 Reconnect = false;
-                Logger.Out(LogType.Bot_Notice, "重连已取消");
+                Logger.Output(LogType.Bot_Notice, "重连已取消");
             }
             else
             {
@@ -189,24 +190,9 @@ namespace Serein.Base
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
-                Logger.Out(LogType.Bot_Receive, e.Message);
+                Logger.Output(LogType.Bot_Receive, e.Message);
             }
-            if (Global.Settings.Bot.EnableLog)
-            {
-                if (!Directory.Exists(Path.Combine("logs", "msg")))
-                {
-                    Directory.CreateDirectory(Path.Combine("logs", "msg"));
-                }
-                try
-                {
-                    File.AppendAllText(
-                        Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                        $"{DateTime.Now:T}  {Log.OutputRecognition(e.Message)}\n",
-                        Encoding.UTF8
-                        );
-                }
-                catch { }
-            }
+            IO.MsgLog($"[Received] {e.Message}");
             try
             {
                 System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ReceivePacket, e.Message));
@@ -217,7 +203,7 @@ namespace Serein.Base
             }
             catch (Exception exception)
             {
-                Logger.Out(LogType.Debug, exception);
+                Logger.Output(LogType.Debug, exception);
             }
         }
     }

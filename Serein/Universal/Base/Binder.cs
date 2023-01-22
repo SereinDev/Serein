@@ -25,9 +25,9 @@ namespace Serein.Base
         }
 
         /// <summary>
-        /// 只读的 Global.MemberItems Value副本
+        /// 只读的 Global.MemberDict Value副本
         /// </summary>
-        private static List<Member> Items => Global.MemberItems.Values.ToList();
+        private static List<Member> Items => Global.MemberDict.Values.ToList();
 
         /// <summary>
         /// 绑定（无群反馈）
@@ -38,13 +38,13 @@ namespace Serein.Base
         public static bool Bind(long userId, string value)
         {
             value = value.Trim();
-            if (Global.MemberItems.ContainsKey(userId) || !System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(value))
+            if (Global.MemberDict.ContainsKey(userId) || !System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(value))
             {
                 return false;
             }
             else
             {
-                Global.MemberItems.Add(userId, new Member
+                Global.MemberDict.Add(userId, new Member
                 {
                     ID = userId,
                     GameID = value
@@ -64,7 +64,7 @@ namespace Serein.Base
         public static void Bind(JObject jsonObject, string value, long userId, long groupId = -1)
         {
             value = value.Trim();
-            if (Global.MemberItems.ContainsKey(userId))
+            if (Global.MemberDict.ContainsKey(userId))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupId, userId);
             }
@@ -86,9 +86,9 @@ namespace Serein.Base
                     Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
                     GameID = value
                 };
-                lock (Global.MemberItems)
+                lock (Global.MemberDict)
                 {
-                    Global.MemberItems.Add(userId, member);
+                    Global.MemberDict.Add(userId, member);
                 }
                 IO.SaveMember();
                 EventTrigger.Trigger(EventType.BindingSucceed, groupId, userId);
@@ -100,11 +100,11 @@ namespace Serein.Base
         /// </summary>
         /// <param name="userId">用户ID</param>
         /// <param name="groupId">群聊ID</param>
-        public static void UnBind(long userId, long groupId = -1)
+        public static void UnBind(long userId, long groupId)
         {
-            lock (Global.MemberItems)
+            lock (Global.MemberDict)
             {
-                if (Global.MemberItems.Remove(userId))
+                if (Global.MemberDict.Remove(userId))
                 {
                     IO.SaveMember();
                     EventTrigger.Trigger(EventType.UnbindingSucceed, groupId, userId);
@@ -123,9 +123,9 @@ namespace Serein.Base
         /// <returns>解绑结果</returns>
         public static bool UnBind(long userId)
         {
-            lock (Global.MemberItems)
+            lock (Global.MemberDict)
             {
-                if (Global.MemberItems.Remove(userId))
+                if (Global.MemberDict.Remove(userId))
                 {
                     IO.SaveMember();
                     return true;
@@ -140,7 +140,7 @@ namespace Serein.Base
         /// <param name="userId">用户ID</param>
         /// <returns>对应的游戏ID</returns>
         public static string GetGameID(long userId)
-            => Global.MemberItems.TryGetValue(userId, out Member member) ? member.GameID : string.Empty;
+            => Global.MemberDict.TryGetValue(userId, out Member member) ? member.GameID : string.Empty;
 
         /// <summary>
         /// 获取指定游戏ID对应的用户ID
@@ -174,14 +174,14 @@ namespace Serein.Base
         /// <param name="userId">用户ID</param>
         public static void Update(JObject jsonObject, long userId)
         {
-            if (Global.MemberItems.ContainsKey(userId))
+            if (Global.MemberDict.ContainsKey(userId))
             {
-                Logger.Out(LogType.Debug, jsonObject["sender"]);
-                lock (Global.MemberItems)
+                Logger.Output(LogType.Debug, jsonObject["sender"]);
+                lock (Global.MemberDict)
                 {
-                    Global.MemberItems[userId].Nickname = jsonObject["sender"]["nickname"].ToString();
-                    Global.MemberItems[userId].Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
-                    Global.MemberItems[userId].Card = jsonObject["sender"]["card"].ToString();
+                    Global.MemberDict[userId].Nickname = jsonObject["sender"]["nickname"].ToString();
+                    Global.MemberDict[userId].Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
+                    Global.MemberDict[userId].Card = jsonObject["sender"]["card"].ToString();
                 }
             }
         }

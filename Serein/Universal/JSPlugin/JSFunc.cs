@@ -56,7 +56,7 @@ namespace Serein.JSPlugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string @namespace, string eventName, Delegate @delegate)
         {
-            Logger.Out(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
+            Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
             if (!Enum.IsDefined(typeof(EventType), eventName))
             {
@@ -89,7 +89,7 @@ namespace Serein.JSPlugin
             }
             lock (EventLock)
             {
-                Logger.Out(LogType.Debug, type);
+                Logger.Output(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
                     if (JSPluginManager.PluginDict.Keys.ToList().TrueForAll((key) =>
@@ -120,7 +120,7 @@ namespace Serein.JSPlugin
             }
             long timerID = GlobalID;
             GlobalID++;
-            Logger.Out(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
+            Logger.Output(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
             Timer timer = new((double)interval.ToObject())
             {
                 AutoReset = autoReset,
@@ -147,9 +147,8 @@ namespace Serein.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    string message = e.GetFullMsg();
-                    Logger.Out(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：{message}");
-                    Logger.Out(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：{e.GetFullMsg()}");
+                    Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
                 {
@@ -205,19 +204,19 @@ namespace Serein.JSPlugin
         public static string GetMD5(string text)
         {
             byte[] datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(text));
-            string result = string.Empty;
+            StringBuilder stringBuilder = new();
             for (int i = 0; i < datas.Length; i++)
             {
-                result += datas[i].ToString("x2");
+                stringBuilder.Append(datas[i].ToString("x2"));
             }
-            return result;
+            return stringBuilder.ToString();
         }
 
         public static string GetFullMsg(this Exception e)
         {
-            if (e.InnerException is JavaScriptException JSe)
+            if (e.InnerException is JavaScriptException javaScriptException)
             {
-                return $"{JSe.Message}\n{JSe.JavaScriptStackTrace}";
+                return $"{javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}";
             }
             else
             {

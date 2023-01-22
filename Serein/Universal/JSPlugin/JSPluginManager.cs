@@ -46,7 +46,7 @@ namespace Serein.JSPlugin
                 foreach (string file in files)
                 {
                     string @namespace = Path.GetFileNameWithoutExtension(file);
-                    Logger.Out(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+                    Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
                     try
                     {
                         PluginDict.Add(@namespace, new Plugin(@namespace)
@@ -56,7 +56,7 @@ namespace Serein.JSPlugin
                         PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string ExceptionMessage);
                         if (!string.IsNullOrEmpty(ExceptionMessage))
                         {
-                            Logger.Out(LogType.Plugin_Error, ExceptionMessage);
+                            Logger.Output(LogType.Plugin_Error, ExceptionMessage);
                             PluginDict[@namespace].Dispose();
                         }
                         else
@@ -66,8 +66,8 @@ namespace Serein.JSPlugin
                     }
                     catch (Exception e)
                     {
-                        Logger.Out(LogType.Plugin_Error, e.Message);
-                        Logger.Out(LogType.Debug, e);
+                        Logger.Output(LogType.Plugin_Error, e.Message);
+                        Logger.Output(LogType.Debug, e);
                     }
                 }
                 List<string> failedFiles = new();
@@ -78,15 +78,15 @@ namespace Serein.JSPlugin
                         failedFiles.Add(Path.GetFileName(plugin.File));
                     }
                 });
-                Logger.Out(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
                 if (failedFiles.Count > 0)
                 {
-                    Logger.Out(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", failedFiles));
+                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", failedFiles));
                 }
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     5000.ToSleepFor();
-                    Logger.Out(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                    Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
                 });
 #if WINFORM
                 Program.Ui?.LoadJSPluginPublicly();
@@ -105,7 +105,7 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Reload()
         {
-            Logger.Out(LogType.Plugin_Clear);
+            Logger.Output(LogType.Plugin_Clear);
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
             500.ToSleepFor();

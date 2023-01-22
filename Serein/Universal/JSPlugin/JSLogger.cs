@@ -15,16 +15,16 @@ namespace Serein.JSPlugin
 
 #pragma warning disable IDE1006
         public void info(object line)
-            => Logger.Out(LogType.Plugin_Info, $"[{Name}]", (line ?? string.Empty).ToString());
+            => Logger.Output(LogType.Plugin_Info, $"[{Name}]", (line ?? string.Empty).ToString());
 
         public void warn(object line)
-            => Logger.Out(LogType.Plugin_Warn, $"[{Name}]", (line ?? string.Empty).ToString());
+            => Logger.Output(LogType.Plugin_Warn, $"[{Name}]", (line ?? string.Empty).ToString());
 
         public void error(object line)
-            => Logger.Out(LogType.Plugin_Error, $"[{Name}]", (line ?? string.Empty).ToString());
+            => Logger.Output(LogType.Plugin_Error, $"[{Name}]", (line ?? string.Empty).ToString());
 
         public void debug(object line)
-            => Logger.Out(LogType.Debug, $"[{Name}]", (line ?? string.Empty).ToString());
+            => Logger.Output(LogType.Debug, $"[{Name}]", (line ?? string.Empty).ToString());
 #pragma warning restore IDE1006
     }
 }

@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Extensions;
 using Serein.Items;
 using Serein.JSPlugin;
 using Serein.Settings;
@@ -23,6 +24,18 @@ namespace Serein.Base
         /// 保存更新设置定时器
         /// </summary>
         private static readonly Timer timer = new(2000) { AutoReset = true };
+
+        /// <summary>
+        /// 创建目录
+        /// </summary>
+        /// <param name="path">路径</param>
+        public static void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
 
         /// <summary>
         /// 启动保存和更新设置定时器
@@ -62,46 +75,45 @@ namespace Serein.Base
         /// <param name="filename">路径</param>
         public static void ReadRegex(string filename = null)
         {
+            CreateDirectory("data");
             filename ??= Path.Combine("data", "regex.json");
             if (File.Exists(filename))
             {
-                StreamReader streamReader = new(filename, Encoding.UTF8);
-                if (filename.ToLowerInvariant().EndsWith(".tsv"))
+                lock (FileLock.Regex)
                 {
-                    string line;
-                    List<Regex> list = new();
-                    while ((line = streamReader.ReadLine()) != null)
+                    StreamReader streamReader = new(filename, Encoding.UTF8);
+                    if (filename.ToLowerInvariant().EndsWith(".tsv"))
                     {
-                        Regex regex = new();
-                        regex.FromText(line);
-                        if (!regex.Check())
+                        string line;
+                        List<Regex> list = new();
+                        while ((line = streamReader.ReadLine()) != null)
                         {
-                            continue;
+                            Regex regex = new();
+                            regex.FromText(line);
+                            if (!regex.Check())
+                            {
+                                continue;
+                            }
+                            list.Add(regex);
                         }
-                        list.Add(regex);
+                        Global.RegexList = list;
                     }
-                    Global.UpdateRegexItems(list);
-                }
-                else if (filename.ToLowerInvariant().EndsWith(".json"))
-                {
-                    string text = streamReader.ReadToEnd();
-                    if (string.IsNullOrEmpty(text))
+                    else if (filename.ToLowerInvariant().EndsWith(".json"))
                     {
-                        return;
-                    }
-                    try
-                    {
-                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpperInvariant() != "REGEX")
+                        string text = streamReader.ReadToEnd();
+                        if (string.IsNullOrEmpty(text))
                         {
                             return;
                         }
-                        Global.UpdateRegexItems(((JArray)jsonObject["data"]).ToObject<List<Regex>>());
+                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                        if (jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
+                        {
+                            Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                        }
                     }
-                    catch { }
+                    streamReader.Close();
+                    streamReader.Dispose();
                 }
-                streamReader.Close();
-                streamReader.Dispose();
             }
             else
             {
@@ -114,17 +126,17 @@ namespace Serein.Base
         /// </summary>
         public static void SaveRegex()
         {
-            if (!Directory.Exists("data"))
-            {
-                Directory.CreateDirectory("data");
-            }
+            CreateDirectory("data");
             JObject jsonObject = new()
             {
                 { "type", "REGEX" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Global.RegexItems) }
+                { "data", JArray.FromObject(Global.RegexList) }
             };
-            File.WriteAllText(Path.Combine("data", "regex.json"), jsonObject.ToString());
+            lock (FileLock.Regex)
+            {
+                File.WriteAllText(Path.Combine("data", "regex.json"), jsonObject.ToString());
+            }
         }
 
         /// <summary>
@@ -132,32 +144,28 @@ namespace Serein.Base
         /// </summary>
         public static void ReadMember()
         {
-            if (!Directory.Exists("data"))
-            {
-                Directory.CreateDirectory("data");
-            }
+            CreateDirectory("data");
             if (File.Exists(Path.Combine("data", "members.json")))
             {
-                string Text = File.ReadAllText(
-                    Path.Combine("data", "members.json"),
-                    Encoding.UTF8
-                    );
-                if (!string.IsNullOrEmpty(Text))
+                string text;
+                lock (FileLock.Member)
                 {
-                    try
+                    text = File.ReadAllText(Path.Combine("data", "members.json"), Encoding.UTF8);
+                }
+                if (!string.IsNullOrEmpty(text))
+                {
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                    if (jsonObject["type"].ToString().ToUpperInvariant() == "MEMBERS")
                     {
-                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Text);
-                        if (jsonObject["type"].ToString().ToUpperInvariant() != "MEMBERS")
-                        {
-                            return;
-                        }
                         List<Member> list = ((JArray)jsonObject["data"]).ToObject<List<Member>>();
                         list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
                         Dictionary<long, Member> dictionary = new();
                         list.ForEach((x) => dictionary.Add(x.ID, x));
-                        Global.UpdateMemberItems(dictionary);
+                        lock (Global.MemberDict)
+                        {
+                            Global.MemberDict = dictionary;
+                        }
                     }
-                    catch { }
                 }
             }
             else
@@ -171,31 +179,33 @@ namespace Serein.Base
         /// </summary>
         public static void SaveMember()
         {
-            List<Member> list = Global.MemberItems.Values.ToList();
-            list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
+            CreateDirectory("data");
+            List<Member> list = Global.MemberDict.Values.ToList();
             Dictionary<long, Member> dictionary = new();
+            list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
             list.ForEach((x) => dictionary.Add(x.ID, x));
-            Global.UpdateMemberItems(dictionary);
-            if (JsonConvert.SerializeObject(dictionary) == OldMembers)
+            lock (Global.MemberDict)
             {
-                return;
+                Global.MemberDict = dictionary;
             }
-            OldMembers = JsonConvert.SerializeObject(dictionary);
-            if (!Directory.Exists("data"))
+            if (JsonConvert.SerializeObject(dictionary) != OldMembers)
             {
-                Directory.CreateDirectory("data");
+                OldMembers = JsonConvert.SerializeObject(dictionary);
+                JObject jsonObject = new()
+                {
+                    { "type", "MEMBERS" },
+                    { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
+                    { "data", JArray.FromObject(list) }
+                };
+                lock (FileLock.Member)
+                {
+                    File.WriteAllText(
+                        Path.Combine("data", "members.json"),
+                        jsonObject.ToString(),
+                        Encoding.UTF8
+                        );
+                }
             }
-            JObject jsonObject = new()
-            {
-                { "type", "MEMBERS" },
-                { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(list) }
-            };
-            File.WriteAllText(
-                Path.Combine("data", "members.json"),
-                jsonObject.ToString(),
-                Encoding.UTF8
-                );
         }
 
         /// <summary>
@@ -204,6 +214,7 @@ namespace Serein.Base
         /// <param name="filename">路径</param>
         public static void ReadTask(string filename = null)
         {
+            CreateDirectory("data");
             filename ??= Path.Combine("data", "task.json");
             if (File.Exists(filename))
             {
@@ -216,35 +227,24 @@ namespace Serein.Base
                     {
                         Task task = new();
                         task.FromText(line);
-                        if (!task.Check())
+                        if (task.Check())
                         {
-                            continue;
+                            list.Add(task);
                         }
-                        list.Add(task);
                     }
-                    Global.UpdateTaskItems(list);
+                    Global.TaskList = list;
                 }
                 else if (filename.ToLowerInvariant().EndsWith(".json"))
                 {
                     string text = streamReader.ReadToEnd();
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        return;
-                    }
-                    try
+                    if (!string.IsNullOrEmpty(text))
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
                         if (jsonObject["type"].ToString().ToUpperInvariant() != "TASK")
                         {
-                            return;
-                        }
-                        Global.UpdateTaskItems(((JArray)jsonObject["data"]).ToObject<List<Task>>());
-                        lock (Global.TaskItems)
-                        {
-                            Global.TaskItems.ForEach((Task) => Task.Check());
+                            Global.TaskList = ((JArray)jsonObject["data"]).ToObject<List<Task>>();
                         }
                     }
-                    catch { }
                 }
                 streamReader.Close();
                 streamReader.Dispose();
@@ -260,17 +260,17 @@ namespace Serein.Base
         /// </summary>
         public static void SaveTask()
         {
-            if (!Directory.Exists("data"))
-            {
-                Directory.CreateDirectory("data");
-            }
+            CreateDirectory("data");
             JObject jsonObject = new()
             {
                 { "type", "TASK" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Global.TaskItems) }
+                { "data", JArray.FromObject(Global.TaskList) }
             };
-            File.WriteAllText(Path.Combine("data", "task.json"), jsonObject.ToString());
+            lock (FileLock.Task)
+            {
+                File.WriteAllText(Path.Combine("data", "task.json"), jsonObject.ToString());
+            }
         }
 
         /// <summary>
@@ -278,12 +278,7 @@ namespace Serein.Base
         /// </summary>
         public static void ReadSettings()
         {
-            if (!Directory.Exists("settings"))
-            {
-                Directory.CreateDirectory("settings");
-                Global.FirstOpen = true;
-                return;
-            }
+            CreateDirectory("settings");
             if (File.Exists(Path.Combine("settings", "Server.json")))
             {
                 Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
@@ -326,6 +321,7 @@ namespace Serein.Base
         /// </summary>
         public static void UpdateSettings()
         {
+            CreateDirectory("settings");
             try
             {
                 if (File.Exists(Path.Combine("settings", "Matches.json")))
@@ -335,7 +331,7 @@ namespace Serein.Base
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, "Fail to update Matches.json:", e.ToString());
+                Logger.Output(LogType.Debug, "Fail to update Matches.json:", e);
             }
         }
 
@@ -347,10 +343,14 @@ namespace Serein.Base
             string newSettings = JsonConvert.SerializeObject(Global.Settings);
             if (newSettings != OldSettings)
             {
+                CreateDirectory("settings");
                 OldSettings = newSettings;
-                File.WriteAllText(Path.Combine("settings", "Server.json"), JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
-                File.WriteAllText(Path.Combine("settings", "Bot.json"), JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
-                File.WriteAllText(Path.Combine("settings", "Serein.json"), JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
+                lock (FileLock.Settings)
+                {
+                    File.WriteAllText(Path.Combine("settings", "Server.json"), JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
+                    File.WriteAllText(Path.Combine("settings", "Bot.json"), JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
+                    File.WriteAllText(Path.Combine("settings", "Serein.json"), JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
+                }
             }
         }
 
@@ -359,6 +359,7 @@ namespace Serein.Base
         /// </summary>
         public static void SaveEventSetting()
         {
+            CreateDirectory("settings");
             lock (Global.Settings.Event)
             {
                 File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
@@ -372,12 +373,9 @@ namespace Serein.Base
         {
             if (Websocket.Status)
             {
+                CreateDirectory("data");
                 lock (Global.GroupCache)
                 {
-                    if (!Directory.Exists("data"))
-                    {
-                        Directory.CreateDirectory("data");
-                    }
                     File.WriteAllText(Path.Combine("data", "groupcache.json"), JsonConvert.SerializeObject(Global.GroupCache, Formatting.Indented));
                 }
             }
@@ -393,9 +391,90 @@ namespace Serein.Base
             {
                 lock (Global.GroupCache)
                 {
-                    Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, string>>>(File.ReadAllText(Path.Combine("data", "groupcache.json")));
+                    lock (FileLock.GroupCache)
+                    {
+                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, string>>>(
+                            File.ReadAllText(Path.Combine("data", "groupcache.json")));
+                    }
                 }
             }
+            else
+            {
+                lock (FileLock.GroupCache)
+                {
+                    File.WriteAllText(Path.Combine("data", "groupcache.json"), Global.GroupCache.ToJson());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 控制台日志
+        /// </summary>
+        /// <param name="line">行文本</param>
+        public static void ConsoleLog(string line)
+        {
+            if (Global.Settings.Server.EnableLog)
+            {
+                CreateDirectory(Path.Combine("logs", "console"));
+                try
+                {
+                    lock (FileLock.Console)
+                    {
+                        File.AppendAllText(
+                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            Log.OutputRecognition(line.TrimEnd('\n', '\r')) + Environment.NewLine,
+                            Encoding.UTF8
+                        );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Output(LogType.Debug, e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 机器人消息日志
+        /// </summary>
+        /// <param name="line">行文本</param>
+        public static void MsgLog(string line)
+        {
+            if (Global.Settings.Bot.EnableLog)
+            {
+                CreateDirectory(Path.Combine("logs", "msg"));
+                try
+                {
+                    lock (FileLock.Msg)
+                    {
+                        File.AppendAllText(
+                            Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                            Log.OutputRecognition(line.TrimEnd('\n', '\r')) + Environment.NewLine,
+                            Encoding.UTF8
+                        );
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Output(LogType.Debug, e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 文件读写锁
+        /// </summary>
+        public static class FileLock
+        {
+            public static object Console = new();
+            public static object Msg = new();
+            public static object Crash = new();
+            public static object Debug = new();
+            public static object Regex = new();
+            public static object Task = new();
+            public static object GroupCache = new();
+            public static object Member = new();
+            public static object Settings = new();
         }
     }
 }

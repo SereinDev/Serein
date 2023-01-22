@@ -46,7 +46,7 @@ namespace Serein.Server
         /// </summary>
         public static double CPUUsage { get; private set; }
 
-        public static Motd Motd = new();
+        public static Motd Motd { get; private set; } = new();
 
         private static Timer UpdateTimer;
 
@@ -131,11 +131,11 @@ namespace Serein.Server
             else
             {
 #if CONSOLE
-                Logger.Out(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
+                Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
 #else
-                Logger.Out(LogType.Server_Clear);
+                Logger.Output(LogType.Server_Clear);
 #endif
-                Logger.Out(LogType.Server_Notice, "启动中");
+                Logger.Output(LogType.Server_Notice, "启动中");
                 ServerProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
@@ -240,7 +240,7 @@ namespace Serein.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.Out(LogType.Debug, e);
+                    Logger.Output(LogType.Debug, e);
                 }
                 return false;
             }
@@ -264,15 +264,15 @@ namespace Serein.Server
                     }
                     catch (Exception e)
                     {
-                        Logger.Out(LogType.Warn, "强制结束失败：\r\n", e.Message);
-                        Logger.Out(LogType.Debug, e);
+                        Logger.Output(LogType.Warn, "强制结束失败：\r\n", e.Message);
+                        Logger.Output(LogType.Debug, e);
                         return false;
                     }
                 }
                 else
                 {
                     LastKillTime = nowTime;
-                    Logger.Out(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein kill）以确认此操作");
+                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein kill）以确认此操作");
                     return false;
                 }
             }
@@ -303,29 +303,36 @@ namespace Serein.Server
         /// 输入行
         /// </summary>
         /// <param name="line">行</param>
-        /// <param name="quiet">静处理</param>
+        public static void InputCommand(string command)
+            => InputCommand(command, false, false);
+
+        /// <summary>
+        /// 输入行
+        /// </summary>
+        /// <param name="command">行</param>
         /// <param name="usingUnicode">使用Unicode</param>
-        public static void InputCommand(string line, bool quiet = false, bool usingUnicode = false)
+        /// <param name="isFromCommand">来自命令</param>
+        public static void InputCommand(string command, bool usingUnicode, bool isFromCommand)
         {
             if (Status)
             {
-                line = line.TrimEnd('\n').Replace("\n", "\\n").Replace("\r", "\\n");
-                string line_copy = line;
+                command = command.TrimEnd('\n').Replace("\n", "\\n").Replace("\r", "\\n");
+                string line_copy = command;
                 if (CommandHistory.Count > 50)
                 {
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
                 }
                 if (
-                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != line || CommandHistory.Count == 0) &&
-                    (!quiet || !(string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line))))
+                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != command || CommandHistory.Count == 0) &&
+                    (!isFromCommand || !(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command))))
                 {
                     CommandHistoryIndex = CommandHistory.Count + 1;
-                    CommandHistory.Add(line);
+                    CommandHistory.Add(command);
                 }
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Out(LogType.Server_Output, $">{Log.EscapeLog(line)}");
+                    Logger.Output(LogType.Server_Output, $">{Log.EscapeLog(command)}");
                 }
 #endif
                 if (usingUnicode || Global.Settings.Server.EnableUnicode)
@@ -333,32 +340,20 @@ namespace Serein.Server
                     line_copy = ConvertToUnicode(line_copy);
                 }
                 InputWriter.WriteLine(line_copy);
-                JSFunc.Trigger(EventType.ServerSendCommand, line);
-                if (Global.Settings.Server.EnableLog)
+                JSFunc.Trigger(EventType.ServerSendCommand, command);
+                IO.ConsoleLog(">" + command);
+                command = null;
+            }
+            else if (isFromCommand)
+            {
+                if (command.Trim().ToLowerInvariant() == "start")
                 {
-                    if (!Directory.Exists(Path.Combine("logs", "console")))
-                    {
-                        Directory.CreateDirectory(Path.Combine("logs", "console"));
-                    }
-                    try
-                    {
-                        File.AppendAllText(
-                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            ">" + Log.OutputRecognition(line) + "\n",
-                            Encoding.UTF8
-                        );
-                    }
-                    catch { }
+                    Start(false);
                 }
-                line = null;
-            }
-            else if (line.Trim().ToLowerInvariant() == "start")
-            {
-                Start(quiet);
-            }
-            else if (line.Trim().ToLowerInvariant() == "stop")
-            {
-                Restart = false;
+                else if (command.Trim().ToLowerInvariant() == "stop")
+                {
+                    Restart = false;
+                }
             }
         }
 
@@ -379,26 +374,11 @@ namespace Serein.Server
                     Difficulty = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
 #if CONSOLE
-                Logger.Out(LogType.Server_Output, e.Data);
+                Logger.Output(LogType.Server_Output, e.Data);
 #else
-                Logger.Out(LogType.Server_Output, Log.ColorLog(e.Data, Global.Settings.Server.OutputStyle));
+                Logger.Output(LogType.Server_Output, Log.ColorLog(e.Data, Global.Settings.Server.OutputStyle));
 #endif
-                if (Global.Settings.Server.EnableLog)
-                {
-                    if (!Directory.Exists(Path.Combine("logs", "console")))
-                    {
-                        Directory.CreateDirectory(Path.Combine("logs", "console"));
-                    }
-                    try
-                    {
-                        File.AppendAllText(
-                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            Log.OutputRecognition(line) + "\n",
-                            Encoding.UTF8
-                        );
-                    }
-                    catch { }
-                }
+                IO.ConsoleLog(line);
                 bool isMuiltLinesMode = false;
                 foreach (string regex in Global.Settings.Matches.MuiltLines)
                 {
@@ -434,17 +414,17 @@ namespace Serein.Server
         {
             InputWriter.Close();
             InputWriter.Dispose();
-            Logger.Out(LogType.Server_Output, "");
+            Logger.Output(LogType.Server_Output, "");
             UpdateTimer?.Stop();
             if (!Killed && ServerProcess.ExitCode != 0)
             {
-                Logger.Out(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
+                Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
                 Restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger(EventType.ServerExitUnexpectedly);
             }
             else
             {
-                Logger.Out(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
+                Logger.Output(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
                 EventTrigger.Trigger(EventType.ServerStop);
             }
             if (Restart)
@@ -473,13 +453,13 @@ namespace Serein.Server
         /// </summary>
         private static void RestartTimer()
         {
-            Logger.Out(LogType.Server_Notice,
+            Logger.Output(LogType.Server_Notice,
                 $"服务器将在5s后（{DateTime.Now.AddSeconds(5):T}）重新启动"
                 );
 #if CONSOLE
-            Logger.Out(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
+            Logger.Output(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
 #else
-            Logger.Out(LogType.Server_Notice, "你可以按下停止按钮来取消这次重启");
+            Logger.Output(LogType.Server_Notice, "你可以按下停止按钮来取消这次重启");
 #endif
             for (int i = 0; i < 10; i++)
             {
@@ -495,7 +475,7 @@ namespace Serein.Server
             }
             else
             {
-                Logger.Out(LogType.Server_Notice, "重启已取消");
+                Logger.Output(LogType.Server_Notice, "重启已取消");
             }
         }
 

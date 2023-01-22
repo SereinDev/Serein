@@ -12,14 +12,6 @@ namespace Serein.Windows.Pages.Server
 {
     public partial class Plugins : UiPage
     {
-        /// <summary>
-        /// 可识别的扩展名
-        /// </summary>
-        private static readonly List<string> Extensions = new List<string>()
-        {
-            ".dll",".js",".jar",".py",".lua",".ts",".lock"
-        };
-
         public Plugins()
         {
             InitializeComponent();
@@ -37,7 +29,7 @@ namespace Serein.Windows.Pages.Server
             {
                 foreach (string plugin in PluginManager.Get())
                 {
-                    if (Extensions.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
+                    if (PluginManager.AcceptableList.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
                     {
                         ListViewItem listViewItem = new()
                         {
@@ -115,7 +107,7 @@ namespace Serein.Windows.Pages.Server
                         }
                         break;
                     default:
-                        Logger.Out(Items.LogType.Debug, new ArgumentException());
+                        Logger.Output(Items.LogType.Debug, new ArgumentException());
                         break;
                 }
             }

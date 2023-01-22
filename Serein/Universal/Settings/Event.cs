@@ -158,7 +158,7 @@ namespace Serein.Settings
                     PermissionDeniedFromGroupMsg = commands;
                     break;
                 default:
-                    Logger.Out(LogType.Debug, new ArgumentOutOfRangeException(nameof(commands)));
+                    Logger.Output(LogType.Debug, new ArgumentOutOfRangeException(nameof(commands)));
                     break;
             }
         }

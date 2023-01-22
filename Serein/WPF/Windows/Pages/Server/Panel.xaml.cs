@@ -114,7 +114,7 @@ namespace Serein.Windows.Pages.Server
             Timer restorer = new Timer(500) { AutoReset = true };
             restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
             {
-                Logger.Out(LogType.Debug, string.Join(";", Catalog.Server.Cache));
+                Logger.Output(LogType.Debug, string.Join(";", Catalog.Server.Cache));
                 if (!Restored && PanelWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
                 {
                     Catalog.Server.Cache.ForEach((Text) => AppendText(Text));

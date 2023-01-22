@@ -83,7 +83,7 @@ namespace Serein.Base
                 4   EventTrigger
                 5   Javascript
             */
-            Logger.Out(
+            Logger.Output(
                 Items.LogType.Debug,
                     "命令运行",
                     $"inputType:{inputType} ",
@@ -116,7 +116,7 @@ namespace Serein.Base
                     }
                     value = Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]");
                     value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[$1]");
-                    ServerManager.InputCommand(value, true, type == Items.CommandType.ServerInputWithUnicode);
+                    ServerManager.InputCommand(value, type == Items.CommandType.ServerInputWithUnicode, true);
                     break;
                 case Items.CommandType.SendGivenGroupMsg:
                     if (Websocket.Status)
@@ -186,10 +186,10 @@ namespace Serein.Base
                     }
                     break;
                 case Items.CommandType.DebugOutput:
-                    Logger.Out(Items.LogType.Debug, "[DebugOutput]", value);
+                    Logger.Output(Items.LogType.Debug, "[DebugOutput]", value);
                     break;
                 default:
-                    Logger.Out(Items.LogType.Debug, "[Unknown]", value);
+                    Logger.Output(Items.LogType.Debug, "[Unknown]", value);
                     break;
             }
             if (inputType == 1 && type != Items.CommandType.Bind && type != Items.CommandType.Unbind && groupId != -1)
@@ -274,7 +274,7 @@ namespace Serein.Base
                     value = value.Replace($"${i}", match.Groups[i].Value);
                 }
             }
-            Logger.Out(Items.LogType.Debug, value);
+            Logger.Output(Items.LogType.Debug, value);
             return value;
         }
 
@@ -293,21 +293,6 @@ namespace Serein.Base
             }
             bool serverStatus = ServerManager.Status;
             DateTime CurrentTime = DateTime.Now;
-            Motd motd;
-            if (!disableMotd &&
-                Global.Settings.Server.Type != 0 &&
-                !Regex.IsMatch(text, @"%(GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon)%", RegexOptions.IgnoreCase))
-            {
-                motd = new();
-            }
-            else if (Global.Settings.Server.Type == 1)
-            {
-                motd = new Motdpe(Global.Settings.Server.Port);
-            }
-            else
-            {
-                motd = new Motdje(Global.Settings.Server.Port);
-            }
             text = Patterns.Variable.Replace(text, (match) =>
                 match.Groups[1].Value.ToLowerInvariant() switch
                 {
@@ -321,22 +306,22 @@ namespace Serein.Base
                     "time" => CurrentTime.ToString("T"),
                     "date" => CurrentTime.Date.ToString("d"),
                     "dayofweek" => CurrentTime.DayOfWeek.ToString(),
-                    "datetime" => CurrentTime.ToLocalTime().ToString(),
+                    "datetime" => CurrentTime.ToString(),
                     #endregion
 
                     "sereinversion" => Global.VERSION,
 
                     #region motd
-                    "gamemode" => motd.GameMode,
-                    "description" => motd.Description,
-                    "protocol" => motd.Protocol,
-                    "onlineplayer" => motd.OnlinePlayer.ToString(),
-                    "maxplayer" => motd.MaxPlayer.ToString(),
-                    "original" => motd.Origin,
-                    "delay" => motd.Delay.TotalMilliseconds.ToString("N1"),
-                    "version" => motd.Version,
-                    "favicon" => motd.Favicon,
-                    "exception" => motd.Exception,
+                    "gamemode" => ServerManager.Motd.GameMode,
+                    "description" => ServerManager.Motd.Description,
+                    "protocol" => ServerManager.Motd.Protocol,
+                    "onlineplayer" => ServerManager.Motd.OnlinePlayer.ToString(),
+                    "maxplayer" => ServerManager.Motd.MaxPlayer.ToString(),
+                    "original" => ServerManager.Motd.Origin,
+                    "delay" => ServerManager.Motd.Delay.TotalMilliseconds.ToString("N1"),
+                    "version" => ServerManager.Motd.Version,
+                    "favicon" => ServerManager.Motd.Favicon,
+                    "exception" => ServerManager.Motd.Exception,
                     #endregion
 
                     #region 系统信息

@@ -73,6 +73,7 @@ namespace Serein.Windows.Pages.Settings
                     EventListView.Items.Add(Command);
                 }
                 Save();
+                Load();
             }
             else if (ActionType == 2 && EventListView.SelectedIndex >= 0)
             {

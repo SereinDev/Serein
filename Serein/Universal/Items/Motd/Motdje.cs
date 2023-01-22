@@ -55,7 +55,7 @@ namespace Serein.Items.Motd
                     Encoding.UTF8.GetString(buffer, 0, length);
                 socket.Close();
                 Origin = data;
-                Logger.Out(LogType.Debug, $"Original: {data}");
+                Logger.Output(LogType.Debug, $"Original: {data}");
                 if (!string.IsNullOrEmpty(data))
                 {
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(data);
@@ -89,7 +89,7 @@ namespace Serein.Items.Motd
             }
             catch (Exception e)
             {
-                Logger.Out(LogType.Debug, e);
+                Logger.Output(LogType.Debug, e);
                 Exception = e.Message;
             }
         }

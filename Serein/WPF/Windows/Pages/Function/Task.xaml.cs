@@ -21,11 +21,13 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Task = this;
         }
 
-        public void Load(string filename = null)
+        public void Load() => Load(null);
+
+        public void Load(string filename)
         {
             IO.ReadTask(filename);
             TaskListView.Items.Clear();
-            foreach (Items.Task task in Global.TaskItems)
+            foreach (Items.Task task in Global.TaskList)
             {
                 TaskListView.Items.Add(task);
             }
@@ -41,7 +43,7 @@ namespace Serein.Windows.Pages.Function
                     list.Add(task);
                 }
             }
-            Global.UpdateTaskItems(list);
+            Global.TaskList = list;
             IO.SaveTask();
         }
 

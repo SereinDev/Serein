@@ -106,7 +106,7 @@ namespace Serein.JSPlugin
         /// <returns>设置结果</returns>
         public bool SetListener(EventType type, Delegate @delegate)
         {
-            Logger.Out(LogType.Debug, type);
+            Logger.Output(LogType.Debug, type);
             switch (type)
             {
                 case EventType.ServerStart:
@@ -132,7 +132,7 @@ namespace Serein.JSPlugin
                     }
                     break;
                 default:
-                    Logger.Out(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
+                    Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
                     return false;
             }
             return true;
@@ -149,7 +149,7 @@ namespace Serein.JSPlugin
             {
                 return;
             }
-            Logger.Out(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(Args)} Count:", Args.Length);
+            Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(Args)} Count:", Args.Length);
             System.Threading.Tasks.Task.Run(() =>
             {
                 try
@@ -195,15 +195,15 @@ namespace Serein.JSPlugin
                             }
                             break;
                         default:
-                            Logger.Out(LogType.Plugin_Error, $"{Namespace}运行了了一个不支持的事件：", type);
+                            Logger.Output(LogType.Plugin_Error, $"{Namespace}运行了了一个不支持的事件：", type);
                             break;
                     }
                 }
                 catch (Exception e)
                 {
                     string message = e.GetFullMsg();
-                    Logger.Out(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
-                    Logger.Out(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
+                    Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
+                    Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
                 }
             });
         }

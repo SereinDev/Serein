@@ -37,7 +37,7 @@ namespace Serein.Base
 #if !UNIX
             RefreshTimer.Elapsed += (_, _) => CPUUsage = Counter.NextValue();
             Counter.NextValue();
-            Logger.Out(Items.LogType.Debug, "Loaded.");
+            Logger.Output(Items.LogType.Debug, "Loaded.");
 #endif
         }
 
@@ -83,7 +83,7 @@ namespace Serein.Base
                 {
                     DownloadSpeed = (downloadSpeed / 1024 / 1024).ToString("N1") + "GB/s";
                 }
-                Logger.Out(Items.LogType.DetailDebug, "Upload:" + UploadSpeed, "Download:" + DownloadSpeed);
+                Logger.Output(Items.LogType.DetailDebug, "Upload:" + UploadSpeed, "Download:" + DownloadSpeed);
             }
             BytesReceived = bytesReceived;
             BytesSent = bytesSent;
