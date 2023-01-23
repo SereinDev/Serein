@@ -46,26 +46,10 @@ namespace Serein.JSPlugin
                     {
                         cfg.CancellationToken(cancellationTokenSource.Token);
                         cfg.Modules.RegisterRequire = true;
+                        cfg.EnableModules(Path.Combine(Global.Path, "plugins"));
                     }
                 }
                 ));
-            if (!string.IsNullOrEmpty(@namespace) && Directory.Exists(JSPluginManager.ModulesPath))
-            {
-                foreach (string filename in Directory.GetFiles(JSPluginManager.ModulesPath, "*.js", SearchOption.TopDirectoryOnly))
-                {
-                    try
-                    {
-                        engine.AddModule(Path.GetFileName(filename), File.ReadAllText(filename));
-                        engine.ImportModule(Path.GetFileName(filename));
-                    }
-                    catch (Exception e)
-                    {
-                        string message = e.GetFullMsg();
-                        Logger.Output(LogType.Plugin_Error, $"加载模块{Path.GetFileName(filename)}时出现异常：{message}");
-                        Logger.Output(LogType.Debug, e);
-                    }
-                }
-            }
             engine.SetValue("serein_getSysinfo",
                 new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
@@ -135,7 +119,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_getGroupCache",
                 new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
             engine.SetValue("serein_getUserName",
-                new Func<long, long, string>((groupid, userid) => Global.GroupCache.TryGetValue(groupid, out Dictionary<long, string> groupinfo) && groupinfo.TryGetValue(userid, out string shownname) ? shownname : string.Empty));
+                new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, string> groupinfo) && groupinfo.TryGetValue(userID, out string shownname) ? shownname : string.Empty));
             engine.SetValue("serein_getPluginList",
                 new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
             engine.SetValue("setTimeout",

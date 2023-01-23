@@ -342,7 +342,6 @@ namespace Serein.Server
                 InputWriter.WriteLine(line_copy);
                 JSFunc.Trigger(EventType.ServerSendCommand, command);
                 IO.ConsoleLog(">" + command);
-                command = null;
             }
             else if (isFromCommand)
             {

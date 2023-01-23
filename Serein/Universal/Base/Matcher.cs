@@ -43,7 +43,7 @@ namespace Serein.Base
                 return;
             }
             string postType = packet.TryGetString("post_type");
-            long result, userId, groupId;
+            long result, userID, groupID;
             switch (postType)
             {
                 case "message":
@@ -51,10 +51,10 @@ namespace Serein.Base
                     bool isSelfMessage = postType == "message_sent";
                     string messageType = packet.TryGetString("message_type");
                     string rawMessage = packet.TryGetString("raw_message");
-                    userId = long.TryParse(packet.TryGetString("sender", "user_id"), out result) ? result : -1;
-                    groupId = messageType == "group" && long.TryParse(packet.TryGetString("group_id"), out result) ? result : -1;
+                    userID = long.TryParse(packet.TryGetString("sender", "user_id"), out result) ? result : -1;
+                    groupID = messageType == "group" && long.TryParse(packet.TryGetString("group_id"), out result) ? result : -1;
                     Logger.Output(Items.LogType.Bot_Receive, $"{packet.TryGetString("sender", "nickname")}({packet.TryGetString("sender", "user_id")})" + ":" + rawMessage);
-                    if (!(messageType == "group" ^ Global.Settings.Bot.GroupList.Contains(groupId)))
+                    if (!(messageType == "group" ^ Global.Settings.Bot.GroupList.Contains(groupID)))
                     {
                         foreach (Items.Regex regex in Global.RegexList)
                         {
@@ -63,14 +63,14 @@ namespace Serein.Base
                                 regex.Area <= 1 ||  // 禁用或控制台
                                 isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
                                 !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) || // 不匹配
-                                regex.Area == 2 && regex.GroupsIgnored.Length != 0 && regex.GroupsIgnored.ToList().Contains(groupId) // 草走忽略！
+                                regex.Area == 2 && regex.GroupsIgnored.Length != 0 && regex.GroupsIgnored.ToList().Contains(groupID) // 草走忽略！
                                 )
                             {
                                 continue;
                             }
                             if (
                                 !(
-                                Global.Settings.Bot.PermissionList.Contains(userId) ||
+                                Global.Settings.Bot.PermissionList.Contains(userID) ||
                                 Global.Settings.Bot.GivePermissionToAllAdmin &&
                                 messageType == "group" && (
                                     packet.TryGetString("sender", "role") == "admin" ||
@@ -83,10 +83,10 @@ namespace Serein.Base
                                 switch (regex.Area)
                                 {
                                     case 2:
-                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupId, userId);
+                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromGroupMsg, groupID, userID);
                                         break;
                                     case 3:
-                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, userId);
+                                        EventTrigger.Trigger(Items.EventType.PermissionDeniedFromPrivateMsg, -1, userID);
                                         break;
                                 }
                                 continue;
@@ -103,8 +103,8 @@ namespace Serein.Base
                                             rawMessage,
                                             regex.Expression
                                         ),
-                                        userId,
-                                        groupId
+                                        userID,
+                                        groupID
                                     );
                                 }
                                 else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
@@ -117,33 +117,33 @@ namespace Serein.Base
                                             rawMessage,
                                             regex.Expression
                                             ),
-                                        userId
+                                        userID
                                     );
                                 }
                             }
                         }
                         lock (Global.GroupCache)
                         {
-                            if (!Global.GroupCache.ContainsKey(groupId))
+                            if (!Global.GroupCache.ContainsKey(groupID))
                             {
-                                Global.GroupCache.Add(groupId, new Dictionary<long, string>());
+                                Global.GroupCache.Add(groupID, new Dictionary<long, string>());
                             }
-                            if (!Global.GroupCache[groupId].ContainsKey(userId))
+                            if (!Global.GroupCache[groupID].ContainsKey(userID))
                             {
-                                Global.GroupCache[groupId].Add(userId, string.Empty);
+                                Global.GroupCache[groupID].Add(userID, string.Empty);
                             }
-                            Global.GroupCache[groupId][userId] = string.IsNullOrEmpty(packet.TryGetString("sender", "card")) ? packet.TryGetString("sender", "nickname") : packet.TryGetString("sender", "card");
+                            Global.GroupCache[groupID][userID] = string.IsNullOrEmpty(packet.TryGetString("sender", "card")) ? packet.TryGetString("sender", "nickname") : packet.TryGetString("sender", "card");
                         }
                     }
                     if (!isSelfMessage)
                     {
                         if (messageType == "private")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, userId, rawMessage, packet.TryGetString("sender", "nickname"));
+                            JSFunc.Trigger(Items.EventType.ReceivePrivateMessage, userID, rawMessage, packet.TryGetString("sender", "nickname"));
                         }
                         else if (messageType == "group")
                         {
-                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, groupId, userId, rawMessage,
+                            JSFunc.Trigger(Items.EventType.ReceiveGroupMessage, groupID, userID, rawMessage,
                                 string.IsNullOrEmpty(packet.TryGetString("sender", "card")) ? packet.TryGetString("sender", "nickname") : packet.TryGetString("sender", "card"));
                         }
                     }
@@ -169,28 +169,28 @@ namespace Serein.Base
                     }
                     break;
                 case "notice":
-                    userId = long.TryParse(packet.TryGetString("user_id"), out result) ? result : -1;
-                    groupId = long.TryParse(packet.TryGetString("group_id"), out result) ? result : -1;
-                    if (Global.Settings.Bot.GroupList.Contains(groupId))
+                    userID = long.TryParse(packet.TryGetString("user_id"), out result) ? result : -1;
+                    groupID = long.TryParse(packet.TryGetString("group_id"), out result) ? result : -1;
+                    if (Global.Settings.Bot.GroupList.Contains(groupID))
                     {
                         switch (packet.TryGetString("notice_type"))
                         {
                             case "GroupDecrease":
                             case "group_decrease":
-                                EventTrigger.Trigger(Items.EventType.GroupDecrease, groupId, userId);
-                                JSFunc.Trigger(Items.EventType.GroupDecrease, groupId, userId);
+                                EventTrigger.Trigger(Items.EventType.GroupDecrease, groupID, userID);
+                                JSFunc.Trigger(Items.EventType.GroupDecrease, groupID, userID);
                                 break;
                             case "GroupIncrease":
                             case "group_increase":
-                                EventTrigger.Trigger(Items.EventType.GroupIncrease, groupId, userId);
-                                JSFunc.Trigger(Items.EventType.GroupIncrease, groupId, userId);
+                                EventTrigger.Trigger(Items.EventType.GroupIncrease, groupID, userID);
+                                JSFunc.Trigger(Items.EventType.GroupIncrease, groupID, userID);
                                 break;
                             case "notify":
                                 if (packet.TryGetString("sub_type") == "poke" &&
                                     packet.TryGetString("target_id") == SelfId)
                                 {
-                                    EventTrigger.Trigger(Items.EventType.GroupPoke, groupId, userId);
-                                    JSFunc.Trigger(Items.EventType.GroupPoke, groupId, userId);
+                                    EventTrigger.Trigger(Items.EventType.GroupPoke, groupID, userID);
+                                    JSFunc.Trigger(Items.EventType.GroupPoke, groupID, userID);
                                 }
                                 break;
                         }

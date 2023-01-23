@@ -107,6 +107,7 @@ namespace Serein.JSPlugin
         public bool SetListener(EventType type, Delegate @delegate)
         {
             Logger.Output(LogType.Debug, type);
+            @delegate = @delegate ?? throw new ArgumentNullException(nameof(@delegate));
             switch (type)
             {
                 case EventType.ServerStart:
@@ -142,14 +143,14 @@ namespace Serein.JSPlugin
         /// 触发事件
         /// </summary>
         /// <param name="type">事件类型</param>
-        /// <param name="Args">参数</param>
-        public void Trigger(EventType type, params object[] Args)
+        /// <param name="args">参数</param>
+        public void Trigger(EventType type, params object[] args)
         {
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !EventDict.ContainsKey(type) || EventDict[type] == null)
             {
                 return;
             }
-            Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(Args)} Count:", Args.Length);
+            Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
             System.Threading.Tasks.Task.Run(() =>
             {
                 try
@@ -171,7 +172,7 @@ namespace Serein.JSPlugin
                         case EventType.ReceivePacket:
                             lock (JSPluginManager.PluginDict[Namespace].Engine)
                             {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, Args[0]) });
+                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]) });
                             }
                             break;
                         case EventType.GroupIncrease:
@@ -179,19 +180,19 @@ namespace Serein.JSPlugin
                         case EventType.GroupPoke:
                             lock (JSPluginManager.PluginDict[Namespace].Engine)
                             {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, Args[0]), JsValue.FromObject(JSEngine.Converter, Args[1]) });
+                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]) });
                             }
                             break;
                         case EventType.ReceiveGroupMessage:
                             lock (JSPluginManager.PluginDict[Namespace].Engine)
                             {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, Args[0]), JsValue.FromObject(JSEngine.Converter, Args[1]), JsValue.FromObject(JSEngine.Converter, Args[2]), JsValue.FromObject(JSEngine.Converter, Args[3]) });
+                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]), JsValue.FromObject(JSEngine.Converter, args[2]), JsValue.FromObject(JSEngine.Converter, args[3]) });
                             }
                             break;
                         case EventType.ReceivePrivateMessage:
                             lock (JSPluginManager.PluginDict[Namespace].Engine)
                             {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, Args[0]), JsValue.FromObject(JSEngine.Converter, Args[1]), JsValue.FromObject(JSEngine.Converter, Args[2]) });
+                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]), JsValue.FromObject(JSEngine.Converter, args[2]) });
                             }
                             break;
                         default:

@@ -63,16 +63,16 @@ namespace Serein.Base
         /// <param name="command">命令</param>
         /// <param name="json">消息JSON对象</param>
         /// <param name="msgMatch">消息匹配对象</param>
-        /// <param name="userId">用户ID</param>
-        /// <param name="groupId">群聊ID</param>
+        /// <param name="userID">用户ID</param>
+        /// <param name="groupID">群聊ID</param>
         /// <param name="disableMotd">禁用Motd获取</param>
         public static void Run(
             int inputType,
             string command,
             JObject json = null,
             Match msgMatch = null,
-            long userId = -1,
-            long groupId = -1,
+            long userID = -1,
+            long groupID = -1,
             bool disableMotd = false
             )
         {
@@ -88,11 +88,11 @@ namespace Serein.Base
                     "命令运行",
                     $"inputType:{inputType} ",
                     $"command:{command}",
-                    $"userId:{userId}",
-                    $"groupId:{groupId}");
-            if (groupId == -1 && Global.Settings.Bot.GroupList.Count >= 1)
+                    $"userID:{userID}",
+                    $"groupID:{groupID}");
+            if (groupID == -1 && Global.Settings.Bot.GroupList.Count >= 1)
             {
-                groupId = Global.Settings.Bot.GroupList[0];
+                groupID = Global.Settings.Bot.GroupList[0];
             }
             Items.CommandType type = GetType(command);
             if (type == Items.CommandType.Invalid || ((type == Items.CommandType.RequestMotdpe || type == Items.CommandType.RequestMotdje) && disableMotd))
@@ -112,7 +112,7 @@ namespace Serein.Base
                         && inputType == 1
                         )
                     {
-                        value = ParseAt(value, groupId);
+                        value = ParseAt(value, groupID);
                     }
                     value = Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]");
                     value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[$1]");
@@ -133,50 +133,50 @@ namespace Serein.Base
                 case Items.CommandType.SendGroupMsg:
                     if (Websocket.Status)
                     {
-                        Websocket.Send(false, value, groupId, inputType != 4);
+                        Websocket.Send(false, value, groupID, inputType != 4);
                     }
                     break;
                 case Items.CommandType.SendPrivateMsg:
                     if ((inputType == 1 || inputType == 4) && Websocket.Status)
                     {
-                        Websocket.Send(true, value, userId, inputType != 4);
+                        Websocket.Send(true, value, userID, inputType != 4);
                     }
                     break;
                 case Items.CommandType.Bind:
-                    if ((inputType == 1 || inputType == 4) && groupId != -1)
+                    if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
                         Binder.Bind(
                         json,
                         value,
-                        userId,
-                        groupId
+                        userID,
+                        groupID
                         );
                     }
                     break;
                 case Items.CommandType.Unbind:
-                    if ((inputType == 1 || inputType == 4) && groupId != -1)
+                    if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
                         Binder.UnBind(
-                            long.TryParse(value, out long i) ? i : -1, groupId
+                            long.TryParse(value, out long i) ? i : -1, groupID
                             );
                     }
                     break;
                 case Items.CommandType.RequestMotdpe:
-                    if (inputType == 1 && (groupId != -1 || userId != -1))
+                    if (inputType == 1 && (groupID != -1 || userID != -1))
                     {
                         Motd _Motd = new Motdpe(value);
                         EventTrigger.Trigger(
                             _Motd.IsSuccessful ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
-                            groupId, userId, _Motd);
+                            groupID, userID, _Motd);
                     }
                     break;
                 case Items.CommandType.RequestMotdje:
-                    if (inputType == 1 && (groupId != -1 || userId != -1))
+                    if (inputType == 1 && (groupID != -1 || userID != -1))
                     {
                         Motd _Motd = new Motdje(value);
                         EventTrigger.Trigger(
                             _Motd.IsSuccessful ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
-                            groupId, userId, _Motd);
+                            groupID, userID, _Motd);
                     }
                     break;
                 case Items.CommandType.ExecuteJavascriptCodes:
@@ -192,9 +192,9 @@ namespace Serein.Base
                     Logger.Output(Items.LogType.Debug, "[Unknown]", value);
                     break;
             }
-            if (inputType == 1 && type != Items.CommandType.Bind && type != Items.CommandType.Unbind && groupId != -1)
+            if (inputType == 1 && type != Items.CommandType.Bind && type != Items.CommandType.Unbind && groupID != -1)
             {
-                Binder.Update(json, userId);
+                Binder.Update(json, userID);
             }
         }
 
@@ -210,7 +210,7 @@ namespace Serein.Base
             {
                 return Items.CommandType.Invalid;
             }
-            switch (Regex.Match(command, @"^(.+?)\|").Groups[1].Value.ToLowerInvariant())
+            switch (Regex.Match(command, @"^([^\|]+?)\|").Groups[1].Value.ToLowerInvariant())
             {
                 case "cmd":
                     return Items.CommandType.ExecuteCmd;
@@ -379,20 +379,19 @@ namespace Serein.Base
             return text.Replace("\\n", "\n");
         }
 
-        public static string ParseAt(string text, long groupid)
+        public static string ParseAt(string text, long groupID)
         {
             text = text.Replace("[CQ:at,qq=all]", "@全体成员");
             text = Patterns.CQAt.Replace(text, "@$1 ");
-            if (groupid < 0)
+            if (groupID > 0)
             {
-                return text;
+                text = Regex.Replace(text, @"(?<=@)(\d+)(?=\s)", (match) =>
+                {
+                    long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
+                    return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, string> groupinfo) &&
+                        groupinfo.TryGetValue(userID, out string shownname) ? shownname : match.Groups[1].Value;
+                });
             }
-            text = Regex.Replace(text, @"(?<=@)(\d+)(?=\s)", (match) =>
-            {
-                long userid = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
-                return Global.GroupCache.TryGetValue(groupid, out Dictionary<long, string> groupinfo) &&
-                    groupinfo.TryGetValue(userid, out string shownname) ? shownname : match.Groups[1].Value;
-            });
             return text;
         }
 

@@ -14,7 +14,6 @@ namespace Serein.JSPlugin
     internal static class JSPluginManager
     {
         public const string PluginPath = "plugins";
-        public static readonly string ModulesPath = Path.Combine(JSPluginManager.PluginPath, "modules");
 
         /// <summary>
         /// 插件项列表
@@ -25,11 +24,6 @@ namespace Serein.JSPlugin
         /// 定时器字典
         /// </summary>
         public static Dictionary<long, Timer> Timers = new();
-
-        /// <summary>
-        /// WS客户端列表
-        /// </summary>
-        public static List<JSWebSocket> WebSockets = new();
 
         /// <summary>
         /// 加载插件
@@ -45,29 +39,32 @@ namespace Serein.JSPlugin
                 string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
                 foreach (string file in files)
                 {
-                    string @namespace = Path.GetFileNameWithoutExtension(file);
-                    Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
-                    try
+                    if (file.ToLowerInvariant().EndsWith(".module.js"))
                     {
-                        PluginDict.Add(@namespace, new Plugin(@namespace)
+                        string @namespace = Path.GetFileNameWithoutExtension(file);
+                        Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+                        try
                         {
-                            File = file
-                        });
-                        PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string ExceptionMessage);
-                        if (!string.IsNullOrEmpty(ExceptionMessage))
-                        {
-                            Logger.Output(LogType.Plugin_Error, ExceptionMessage);
-                            PluginDict[@namespace].Dispose();
+                            PluginDict.Add(@namespace, new Plugin(@namespace)
+                            {
+                                File = file
+                            });
+                            PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string exceptionMessage);
+                            if (!string.IsNullOrEmpty(exceptionMessage))
+                            {
+                                Logger.Output(LogType.Plugin_Error, exceptionMessage);
+                                PluginDict[@namespace].Dispose();
+                            }
+                            else
+                            {
+                                PluginDict[@namespace].Available = true;
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            PluginDict[@namespace].Available = true;
+                            Logger.Output(LogType.Plugin_Error, e.Message);
+                            Logger.Output(LogType.Debug, e);
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Output(LogType.Plugin_Error, e.Message);
-                        Logger.Output(LogType.Debug, e);
                     }
                 }
                 List<string> failedFiles = new();
@@ -93,10 +90,7 @@ namespace Serein.JSPlugin
 #elif WPF
                 Windows.Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
-            }
-            if (!Directory.Exists(ModulesPath))
-            {
-                Directory.CreateDirectory(ModulesPath);
+                IO.CreateDirectory(Path.Combine("plugins", "modules"));
             }
         }
 

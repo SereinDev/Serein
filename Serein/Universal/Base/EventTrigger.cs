@@ -32,10 +32,10 @@ namespace Serein.Base
         /// 触发指定事件
         /// </summary>
         /// <param name="type">类型</param>
-        /// <param name="groupId">群聊ID</param>
-        /// <param name="userId">用户ID</param>
+        /// <param name="groupID">群聊ID</param>
+        /// <param name="userID">用户ID</param>
         /// <param name="motd">Motd对象</param>
-        public static void Trigger(Items.EventType type, long groupId, long userId, Motd motd = null)
+        public static void Trigger(Items.EventType type, long groupID, long userID, Motd motd = null)
         {
             Logger.Output(Items.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
@@ -71,8 +71,8 @@ namespace Serein.Base
                     {
                         Base.Command.Run(
                             4,
-                            Regex.Replace(command, "%ID%", userId.ToString(), RegexOptions.IgnoreCase),
-                            groupId: groupId
+                            Regex.Replace(command, "%ID%", userID.ToString(), RegexOptions.IgnoreCase),
+                            groupID: groupID
                             );
                     }
                     break;
@@ -107,8 +107,8 @@ namespace Serein.Base
                             command_copy,
                             null,
                             null,
-                            userId,
-                            groupId,
+                            userID,
+                            groupID,
                             true
                             );
                     }
