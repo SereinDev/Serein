@@ -3,7 +3,7 @@
 
 ```js
 // 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
-var ws = new WebSocket("ws://127.0.0.1:11451", serein.namespace); 
+var ws = new WSClient("ws://127.0.0.1:11451", serein.namespace); 
 // 实例化ws，
 // 此处需要提供当前的命名空间，用于区分和管理
 

@@ -5,12 +5,15 @@
 
 ECMAScript 2022
 
+>具体特性支持列表详见👉<https://github.com/sebastienros/jint#version-3x>
+
 >[!ATTENTION]
 >以下情况将导致Serein无响应或崩溃
 >
 > - 以极快的速度重复执行语句
 > - 无限递归导致爆栈
 
+## 特色
 
 由于JS引擎的特性，你可以导入NET几乎所有的命名空间以及其对象、类、方法和属性
 

@@ -40,6 +40,7 @@
 
 - 🎡 版本列表
   - [📖 目录](Versions/README.md)
+  - [v1.3.4](Versions/v1.3.4.md)
   - [v1.3.3](Versions/v1.3.3.md)
   - [v1.3.2](Versions/v1.3.2.md)
   - [v1.3.1](Versions/v1.3.1.md)

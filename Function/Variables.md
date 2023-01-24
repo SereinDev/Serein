@@ -73,17 +73,17 @@
 >   - 本地端口设置错误
 >   - 服务器不在运行
 
-| 变量名       | 描述       | 例子                                                                                                                                                        |
-| ------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| MaxPlayer    | 最大玩家数 | `10`                                                                                                                                                        |
-| OnlinePlayer | 当前玩家数 | `0`                                                                                                                                                         |
-| Description  | 服务器介绍 | `Dedicated Server`                                                                                                                                          |
-| Version      | 版本       | `1.19.1`                                                                                                                                                    |
-| Protocol     | 协议版本   | `527`                                                                                                                                                       |
-| GameMode     | 游戏模式   | `Survival`                                                                                                                                                  |
-| Delay        | 延迟(ms)   | `20.22`                                                                                                                                                     |
-| Favicon      | 图标       | ![favicon.png](../imgs/favicon.png) ![favicon_hypixel.png](../imgs/favicon_hypixel.png) ![favicon_mcol.png](../imgs/favicon_mcol.png)*(仅供参考；仅Java版)* |
-| Origin       | Motd原文   | `MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;`                                                          |
+| 变量名       | 描述                          | 例子                                                                                                                                              |
+| ------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MaxPlayer    | 最大玩家数                    | `10`                                                                                                                                              |
+| OnlinePlayer | 当前玩家数                    | `0`                                                                                                                                               |
+| Description  | 服务器介绍                    | `Dedicated Server`                                                                                                                                |
+| Version      | 版本                          | `1.19.1`                                                                                                                                          |
+| Protocol     | 协议版本                      | `527`                                                                                                                                             |
+| GameMode     | 游戏模式                      | `Survival`                                                                                                                                        |
+| Delay        | 延迟(ms)                      | `20.22`                                                                                                                                           |
+| Favicon      | 图标<small>[仅Java版]</small> | ![favicon.png](../imgs/favicon.png) ![favicon_hypixel.png](../imgs/favicon_hypixel.png) ![favicon_mcol.png](../imgs/favicon_mcol.png)*(仅供参考)* |
+| Origin       | Motd原文                      | `MCPE;Dedicated Server;527;1.19.1;0;10;10904212759644275432;Bedrock level;Survival;1;19132;19133;`                                                |
 
 ### 成员管理变量
 

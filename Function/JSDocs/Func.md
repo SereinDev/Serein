@@ -17,7 +17,7 @@ serein.log(new System.IO.StreamWriter('log.txt')); // 甚至可以输出对象
 - 返回
   - 空
 
->[!TIP]个人更推荐使用[Logger](#logger)输出，可以方便区分插件名称
+>[!TIP]个人更推荐使用[Logger](Function/JSDocs/Class.md#logger)输出，可以方便区分输出等级
 
 ### Debug输出
 
@@ -211,6 +211,20 @@ var settings = serein.getSettings();
 </code></pre>
 </details>
 
+### 获取Serein设置对象
+
+`serein.getSettingsObject()`
+
+- 参数
+  - 空
+- 返回
+  - `object` 设置内容对象（见上）
+
+>[!TIP]推荐使用该函数，而不是上面的`serein.getSettings()`
+>
+>- 你可以直接通过对象的属性获取对应的设置项，而不用将其转成JSON后再获取
+>- `serein.getSettings()`为了向下兼容将会存留两到三个版本，以后可能将被`serein.getSettingsObject()`取代
+
 ### 执行命令
 
 `serein.runCommand(cmd:String)`
@@ -225,6 +239,35 @@ serein.runCommand("g|hello")
 - 返回
   - 空
 
+### 获取插件列表
+
+`serein.getPluginList()`
+
+```js
+var list = serein.getPluginList();
+```
+
+- 参数
+  - 空
+- 返回
+  - `Array<PluginInfo>` 插件列表
+
+```json
+{ 
+  "Namespace": "test",  // 命名空间
+  "Available": true,    // 是否可用
+  "File": "plugins\\test.js", // 相对路径
+  "WebSockets": [], // 创建的WS对象状态列表
+  "Name": "test",   // 注册的名称
+  "Version": "-",   // 注册的版本
+  "Author": "-",    // 注册的作者
+  "Description": "-", // 注册的介绍
+  "EventList": []   // 监听的事件列表
+} 
+```
+
+>[!TIP]由于此函数为即时获取，获取时可能还未将所有插件载入，故建议使用`setTimeout()`延迟一段时间再获取
+
 ## 🌏 系统相关
 
 ### 获取系统信息
@@ -238,7 +281,7 @@ var info = serein.getSysInfo();
 - 参数
   - 空
 - 返回
-  - `object` 对应的值
+  - `object` 系统信息对象
 
 以json格式显示：
 
@@ -548,59 +591,143 @@ var connected = serein.getWsStatus();
   - `Boolean`
     - 已连接为`true`，否则为`false`
 
+### 获取群成员昵称缓存字典
+
+`serein.getGroupCache()`
+
+```js
+var dict = serein.getGroupCache();
+var myname = dict["114514"]["1919810"];
+```
+
+- 参数
+  - 无
+- 返回
+  - `Object` 群成员昵称缓存字典
+    - 第一个`key`为群号
+    - 第二个`key`为QQ号
+
+>[!WARNING] 此处的`key`必须为字符串形式的群号或QQ号，直接使用`Number`类型作为`key`获取将导致Serein引发超出内存的异常
+
+### 直接获取指定群的群成员昵称缓存
+
+`serein.getUserName(groupid: Number, userid: Number)`
+
+```js
+var myname = serein.getUserName(114514, 1919810); // 与上面的函数示例等价
+```
+
+- 参数
+  - `groupid` 群号
+  - `userid` QQ号
+- 返回
+  - `String`
+    - 若未找到或不存在则返回空字符串
+
 ## 👨🏻‍🤝‍👨🏻 绑定/解绑
 
 ### 绑定游戏ID
 
-`serein.bindMember(userId:Number,gameId:String)`
+`serein.bindMember(userid:Number, gameid:String)`
 
 ```js
 var success = serein.bindMember(114514, "Li_Tiansuo");
 ```
 
 - 参数
-  - `userId` QQ号
-  - `gameId` 游戏ID
+  - `userid` QQ号
+  - `gameid` 游戏ID
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
 
 ### 删除绑定记录
 
-`serein.unbindMember(userId:Number)`
+`serein.unbindMember(userid:Number)`
 
 ```js
 var success = serein.unbindMember(114514);
 ```
 
 - 参数
-  - `userId` QQ号
+  - `userid` QQ号
 - 返回
   - `Boolean`
     - 成功为`true`，否则为`false`
 
 ### 获取指定用户QQ
 
-`serein.getID(gameId:String)`
+`serein.getID(gameid:String)`
 
 ```js
 var qq = serein.getID("Li_Tiansuo");
 ```
 
 - 参数
-  - `gameId` 游戏ID
+  - `gameid` 游戏ID
 - 返回
   - `Number` QQ号
 
 ### 获取指定游戏ID
 
-`serein.getGameID(userId:Number)`
+`serein.getGameID(userid:Number)`
 
 ```js
 var id = serein.getGameID(114514);
 ```
 
 - 参数
-  - `userId` QQ号
+  - `userid` QQ号
 - 返回
   - `String` 游戏ID
+
+## 🧬 从模块中加载
+
+v1.3.4 后你可以创建新的js文件，并在里面写一些基本的函数方便日常调用，如判断是否为管理、格式化自定义的时间等
+
+### 导出
+
+>[!WARNING]
+>
+>- 对在 plugins 下的所有js文件有效
+>   - 加载插件时仅会加载 plugins 下的`.js`结尾的文件（不包含子文件夹，且不以`.modules.js`结尾）
+>   - 你可以把需要导出的函数直接放在 plugins 下或其子文件夹
+>- 目前支持导出的类型：
+>   - 值/对象
+>   - 函数
+>   - 类
+>- 必须为导出的成员加上`export`关键字
+>
+
+```js
+// plugins/eg.js
+
+export const myvalue = 1;
+
+export function isMyGroup(groupID) {
+    return Boolean(JSON.parse(serein.getSettings()).Bot.GroupList.indexOf(groupID) + 1);
+}
+
+// ...
+```
+
+### 导入
+
+`serein.loadFrom(file: String)` / `require(file: String)`
+
+此处的`file`参数对应为你在 plugins 文件夹创建的js文件路径
+
+>[!WARNING]
+>
+>- 必须使用相对路径（基目录为 plugins）
+>- 需以`./`开头
+>- 需包含扩展名
+>- 导入时会被完整运行一次
+>
+
+```js
+var isMyGroup = require('./eg.js').isMyGroup(114514);
+// var isMyGroup = serein.loadFrom('./eg.js').isMyGroup(114514); 二者等价
+```
+
+这样你就可以导入已经导出了的内容了
