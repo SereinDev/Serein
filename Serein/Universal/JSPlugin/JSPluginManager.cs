@@ -39,7 +39,7 @@ namespace Serein.JSPlugin
                 string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
                 foreach (string file in files)
                 {
-                    if (file.ToLowerInvariant().EndsWith(".module.js"))
+                    if (!file.ToLowerInvariant().EndsWith(".module.js"))
                     {
                         string @namespace = Path.GetFileNameWithoutExtension(file);
                         Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");

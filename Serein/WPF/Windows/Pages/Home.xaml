@@ -240,9 +240,9 @@
                 Grid.Column="1"
                 Margin="10"
                 HorizontalAlignment="Center"
-                Content="获取最新版"
+                Content="扩展市场"
                 Icon="Link24"
-                NavigateUri="https://github.com/Zaitonn/Serein/releases/latest" />
+                NavigateUri="https://serein.cc/Extension" />
             <ui:Anchor
                 Grid.Row="2"
                 Grid.Column="2"

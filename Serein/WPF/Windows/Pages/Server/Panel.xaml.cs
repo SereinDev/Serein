@@ -66,6 +66,7 @@ namespace Serein.Windows.Pages.Server
                         InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandHistoryIndex];
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
+                    e.Handled = true;
                     break;
                 case Key.Down:
                 case Key.PageDown:
@@ -82,6 +83,7 @@ namespace Serein.Windows.Pages.Server
                         InputBox.Text = string.Empty;
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
+                    e.Handled = true;
                     break;
             }
         }
@@ -104,7 +106,7 @@ namespace Serein.Windows.Pages.Server
                     Version.Content = "-";
                 }
                 Difficulity.Content = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
-                Time.Content = ServerManager.Status ? ServerManager.GetTime() : "-";
+                Time.Content = ServerManager.Status ? ServerManager.Time : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
             });

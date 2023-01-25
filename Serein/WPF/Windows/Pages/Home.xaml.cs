@@ -27,7 +27,7 @@ namespace Serein.Windows.Pages
                 RAM_Percent.Text = $"{(double)SystemInfo.UsedRAM / 1024:N1} / {(double)SystemInfo.TotalRAM / 1024:N1} GB   {SystemInfo.RAMUsage:N1}%";
                 RAM_Percent_Ring.Progress = SystemInfo.RAMUsage;
                 Server_Status.Text = ServerManager.Status ? "已启动" : "未启动";
-                Server_Time.Text = ServerManager.Status ? ServerManager.GetTime() : "-";
+                Server_Time.Text = ServerManager.Status ? ServerManager.Time : "-";
                 Server_Occupancy.Text = ServerManager.Status ? ServerManager.CPUUsage.ToString("N1") + "%" : "-";
                 if (ServerManager.Status)
                 {

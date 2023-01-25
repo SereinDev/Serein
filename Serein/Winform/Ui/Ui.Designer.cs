@@ -163,7 +163,7 @@ namespace Serein.Ui
             this.SettingSereinPage = new System.Windows.Forms.Label();
             this.SettingSereinAbout = new System.Windows.Forms.Label();
             this.SettingSereinEnableGetUpdate = new System.Windows.Forms.CheckBox();
-            this.SettingSereinTutorial = new System.Windows.Forms.Label();
+            this.SettingSereinExtension = new System.Windows.Forms.Label();
             this.SettingSereinVersion = new System.Windows.Forms.Label();
             this.SettingEvent = new System.Windows.Forms.GroupBox();
             this.SettingEventSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -1132,7 +1132,7 @@ namespace Serein.Ui
             this.SettingSerein.Controls.Add(this.SettingSereinPage);
             this.SettingSerein.Controls.Add(this.SettingSereinAbout);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableGetUpdate);
-            this.SettingSerein.Controls.Add(this.SettingSereinTutorial);
+            this.SettingSerein.Controls.Add(this.SettingSereinExtension);
             this.SettingSerein.Controls.Add(this.SettingSereinVersion);
             resources.ApplyResources(this.SettingSerein, "SettingSerein");
             this.SettingSerein.Name = "SettingSerein";
@@ -1208,14 +1208,14 @@ namespace Serein.Ui
             this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
             this.SettingSereinEnableGetUpdate.MouseHover += new System.EventHandler(this.SettingSereinEnableGetUpdate_MouseHover);
             // 
-            // SettingSereinTutorial
+            // SettingSereinExtension
             // 
-            resources.ApplyResources(this.SettingSereinTutorial, "SettingSereinTutorial");
-            this.SettingSereinTutorial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingSereinTutorial.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.SettingSereinTutorial.Name = "SettingSereinTutorial";
-            this.SettingSereinTutorial.Click += new System.EventHandler(this.SettingSereinTutorial_Click);
-            this.SettingSereinTutorial.MouseHover += new System.EventHandler(this.SettingSereinTutorial_MouseHover);
+            resources.ApplyResources(this.SettingSereinExtension, "SettingSereinExtension");
+            this.SettingSereinExtension.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SettingSereinExtension.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.SettingSereinExtension.Name = "SettingSereinExtension";
+            this.SettingSereinExtension.Click += new System.EventHandler(this.SettingSereinExtension_Click);
+            this.SettingSereinExtension.MouseHover += new System.EventHandler(this.SettingSereinExtension_MouseHover);
             // 
             // SettingSereinVersion
             // 
@@ -1862,7 +1862,7 @@ namespace Serein.Ui
         private System.Windows.Forms.CheckBox SettingBotEnbaleOutputData;
         private System.Windows.Forms.TabPage Debug;
         private System.Windows.Forms.TextBox DebugTextBox;
-        private System.Windows.Forms.Label SettingSereinTutorial;
+        private System.Windows.Forms.Label SettingSereinExtension;
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Variables;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;

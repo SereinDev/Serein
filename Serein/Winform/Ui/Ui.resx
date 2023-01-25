@@ -2247,9 +2247,6 @@
   <data name="SettingSereinDownload.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingSereinDownload.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
   <data name="SettingSereinDownload.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -2343,9 +2340,6 @@
   <data name="SettingSereinPage.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingSereinPage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
   <data name="SettingSereinPage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -2379,11 +2373,8 @@
   <data name="SettingSereinAbout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingSereinAbout.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
   <data name="SettingSereinAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>212, 214</value>
+    <value>230, 214</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
@@ -2433,37 +2424,34 @@
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="SettingSereinTutorial.AutoSize" type="System.Boolean, mscorlib">
+  <data name="SettingSereinExtension.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="SettingSereinTutorial.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Underline</value>
-  </data>
-  <data name="SettingSereinTutorial.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="SettingSereinExtension.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="SettingSereinTutorial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 214</value>
+  <data name="SettingSereinExtension.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 214</value>
   </data>
-  <data name="SettingSereinTutorial.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SettingSereinExtension.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 24</value>
   </data>
-  <data name="SettingSereinTutorial.TabIndex" type="System.Int32, mscorlib">
+  <data name="SettingSereinExtension.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <data name="SettingSereinTutorial.Text" xml:space="preserve">
-    <value>教程</value>
+  <data name="SettingSereinExtension.Text" xml:space="preserve">
+    <value>扩展市场</value>
   </data>
-  <data name="&gt;&gt;SettingSereinTutorial.Name" xml:space="preserve">
-    <value>SettingSereinTutorial</value>
+  <data name="&gt;&gt;SettingSereinExtension.Name" xml:space="preserve">
+    <value>SettingSereinExtension</value>
   </data>
-  <data name="&gt;&gt;SettingSereinTutorial.Type" xml:space="preserve">
+  <data name="&gt;&gt;SettingSereinExtension.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingSereinTutorial.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SettingSereinExtension.Parent" xml:space="preserve">
     <value>SettingSerein</value>
   </data>
-  <data name="&gt;&gt;SettingSereinTutorial.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SettingSereinExtension.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
   <data name="SettingSereinVersion.AutoSize" type="System.Boolean, mscorlib">

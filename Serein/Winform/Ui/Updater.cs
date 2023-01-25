@@ -22,7 +22,7 @@ namespace Serein.Ui
             else if (ServerManager.Status)
             {
                 Text = $"Serein | {(string.IsNullOrEmpty(ServerManager.StartFileName) ? "unknown" : ServerManager.StartFileName)}";
-                ServerPanelInfoTime2.Text = ServerManager.GetTime();
+                ServerPanelInfoTime2.Text = ServerManager.Time;
                 ServerPanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
                 ServerPanelInfoStatus2.Text = "已启动";
                 ServerPanelInfoVersion2.Text = ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-";

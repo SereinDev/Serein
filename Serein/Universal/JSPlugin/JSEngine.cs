@@ -50,6 +50,49 @@ namespace Serein.JSPlugin
                     }
                 }
                 ));
+            engine.SetValue("serein_path",
+                Global.Path);
+            engine.SetValue("serein_version",
+                Global.VERSION);
+            engine.SetValue("serein_namespace",
+                string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
+            if (!string.IsNullOrEmpty(@namespace))
+            {
+                engine.SetValue("serein_log",
+                    new Action<JsValue>((content) => Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
+                engine.SetValue("serein_debugLog",
+                    new Action<JsValue>((content) => Logger.Output(LogType.Debug, $"[{@namespace}]", content)));
+                engine.SetValue("serein_registerPlugin",
+                    new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
+                engine.SetValue("serein_setListener",
+                    new Func<string, Delegate, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
+                engine.SetValue("setTimeout",
+                    new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
+                engine.SetValue("setInterval",
+                    new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
+                engine.SetValue("clearTimeout",
+                    new Func<JsValue, bool>(JSFunc.ClearTimer));
+                engine.SetValue("clearInterval",
+                    new Func<JsValue, bool>(JSFunc.ClearTimer));
+                engine.SetValue("WSClient",
+                    TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
+                engine.SetValue("Logger",
+                    TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
+            }
+            else
+            {
+                engine.SetValue("serein_log", JsValue.Undefined);
+                engine.SetValue("serein_debugLog", JsValue.Undefined);
+                engine.SetValue("serein_registerPlugin", JsValue.Undefined);
+                engine.SetValue("serein_setListener", JsValue.Undefined);
+                engine.SetValue("setTimeout", JsValue.Undefined);
+                engine.SetValue("setInterval", JsValue.Undefined);
+                engine.SetValue("clearTimeout", JsValue.Undefined);
+                engine.SetValue("clearInterval", JsValue.Undefined);
+                engine.SetValue("WSClient", JsValue.Undefined);
+                engine.SetValue("Logger", JsValue.Undefined);
+
+            }
             engine.SetValue("serein_getSysinfo",
                 new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
@@ -60,26 +103,12 @@ namespace Serein.JSPlugin
 #endif
             engine.SetValue("serein_getNetSpeed",
                 new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
-            engine.SetValue("serein_path",
-                Global.Path);
-            engine.SetValue("serein_version",
-                Global.VERSION);
-            engine.SetValue("serein_namespace",
-                string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
-            engine.SetValue("serein_log",
-                new Action<object>((content) => Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
             engine.SetValue("serein_runCommand",
                 new Action<string>((command) => Command.Run(5, command)));
-            engine.SetValue("serein_debugLog",
-                new Action<object>((Content) => Logger.Output(LogType.Debug, Content)));
             engine.SetValue("serein_getSettings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("serein_getSettingsObject",
                 new Func<object>(() => Global.Settings));
-            engine.SetValue("serein_registerPlugin",
-                new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
-            engine.SetValue("serein_setListener",
-                new Func<string, Delegate, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
             engine.SetValue("serein_getMotdpe",
                 new Func<string, string>((addr) => new Motdpe(addr).Origin));
             engine.SetValue("serein_getMotdje",
@@ -95,7 +124,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_sendCmd",
                 new Action<string, bool>((commnad, usingUnicode) => ServerManager.InputCommand(commnad, usingUnicode, false)));
             engine.SetValue("serein_getServerTime",
-                new Func<string>(() => ServerManager.GetTime()));
+                new Func<string>(() => ServerManager.Time));
             engine.SetValue("serein_getServerCPUUsage",
                 new Func<double>(() => ServerManager.CPUUsage));
             engine.SetValue("serein_getServerFile",
@@ -122,24 +151,12 @@ namespace Serein.JSPlugin
                 new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, string> groupinfo) && groupinfo.TryGetValue(userID, out string shownname) ? shownname : string.Empty));
             engine.SetValue("serein_getPluginList",
                 new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
-            engine.SetValue("setTimeout",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
-            engine.SetValue("setInterval",
-                new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
-            engine.SetValue("clearTimeout",
-                new Func<JsValue, bool>(JSFunc.ClearTimer));
-            engine.SetValue("clearInterval",
-                new Func<JsValue, bool>(JSFunc.ClearTimer));
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
                 TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje",
                 TypeReference.CreateTypeReference(engine, typeof(Motdje)));
-            engine.SetValue("WebSocket",
-                TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
-            engine.SetValue("Logger",
-                TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             engine.Execute(
                 @"var serein = {
                     log: serein_log,

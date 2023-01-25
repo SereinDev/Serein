@@ -1,13 +1,11 @@
 ﻿using Jint;
 using Jint.Native;
-using Jint.Runtime;
 using Newtonsoft.Json;
 using System.Linq;
 using Serein.Base;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
 
 namespace Serein.JSPlugin

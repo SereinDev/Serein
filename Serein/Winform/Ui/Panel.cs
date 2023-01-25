@@ -30,9 +30,9 @@ namespace Serein.Ui
 
         private void ServerPanelConsoleInput_KeyDown(object sender, KeyEventArgs e)
         {
+            e.Handled = true;
             if (e.KeyCode == Keys.Enter)
             {
-                e.Handled = true;
                 ServerManager.InputCommand(ServerPanelConsoleInput.Text);
                 ServerPanelConsoleInput.Clear();
             }
@@ -61,6 +61,10 @@ namespace Serein.Ui
                 {
                     ServerPanelConsoleInput_Update();
                 }
+            }
+            else
+            {
+                e.Handled = false;
             }
         }
 

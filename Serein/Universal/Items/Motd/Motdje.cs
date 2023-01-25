@@ -47,7 +47,7 @@ namespace Serein.Items.Motd
                 socket.Connect(new IPEndPoint(IP, Port));
                 DateTime startTime = DateTime.Now;
                 socket.Send(new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 });
-                byte[] buffer = new byte[1024 * 1024];
+                byte[] buffer = new byte[1024 * 16];
                 int length = socket.Receive(buffer);
                 Delay = DateTime.Now - startTime;
                 string data = length > 5 ?

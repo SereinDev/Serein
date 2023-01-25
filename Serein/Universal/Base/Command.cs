@@ -349,7 +349,7 @@ namespace Serein.Base
                     #region 服务器
                     "levelname" => serverStatus ? ServerManager.LevelName : "-",
                     "difficulty" => serverStatus ? ServerManager.Difficulty : "-",
-                    "runtime" => serverStatus ? ServerManager.GetTime() : "-",
+                    "runtime" => serverStatus ? ServerManager.Time : "-",
                     "servercpuusage" => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
                     "filename" => serverStatus ? ServerManager.StartFileName : "-",
                     "status" => serverStatus ? "已启动" : "未启动",

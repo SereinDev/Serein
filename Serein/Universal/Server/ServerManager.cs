@@ -323,12 +323,16 @@ namespace Serein.Server
                     CommandHistory.RemoveRange(0, CommandHistory.Count - 50);
                 }
                 if (
-                    (CommandHistory.Count > 0 && CommandHistory[CommandHistory.Count - 1] != command || CommandHistory.Count == 0) &&
-                    (!isFromCommand || !(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command))))
+                    (
+                        CommandHistory.Count > 0 &&
+                        CommandHistory[CommandHistory.Count - 1] != command || // 与最后一项重复
+                        CommandHistory.Count == 0) &&
+                        !isFromCommand && // 通过Serein命令执行的不计入
+                        !(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command))) // 为空不计入
                 {
-                    CommandHistoryIndex = CommandHistory.Count + 1;
                     CommandHistory.Add(command);
                 }
+                CommandHistoryIndex = CommandHistory.Count;
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
@@ -506,7 +510,7 @@ namespace Serein.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string GetTime()
+        public static string Time
             => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
 
         /// <summary>
