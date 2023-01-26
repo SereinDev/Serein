@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Serein.Base;
 
 namespace Serein.Items
 {
@@ -31,15 +32,15 @@ namespace Serein.Items
         public string GameID { get; set; } = string.Empty;
 
         /// <summary>
+        /// 显示名字
+        /// </summary>
+        [JsonIgnore]
+        public string ShownName => string.IsNullOrEmpty(Card) ? Nickname : Card;
+
+        /// <summary>
         /// 群角色 - 文本
         /// </summary>
         [JsonIgnore]
-        public string Role_Text
-        {
-            get
-            {
-                return new[] { "群主", "管理员", "成员" }[Role];
-            }
-        }
+        public string Role_Text => Command.Roles_Chinese[Role];
     }
 }

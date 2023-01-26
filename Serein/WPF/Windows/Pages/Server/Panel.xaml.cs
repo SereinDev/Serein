@@ -20,7 +20,7 @@ namespace Serein.Windows.Pages.Server
             PanelWebBrowser.ScriptErrorsSuppressed = true;
             PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PanelWebBrowser.WebBrowserShortcutsEnabled = false;
-            PanelWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
+            PanelWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             Catalog.Server.Panel = this;

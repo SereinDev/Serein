@@ -102,37 +102,37 @@ namespace Serein.Base
                     Program.Ui.ServerPanelConsoleWebBrowser_Invoke(line);
                     break;
                 case LogType.Server_Notice:
-                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Server_Clear:
                     Program.Ui.ServerPanelConsoleWebBrowser_Invoke("#clear");
                     break;
                 case LogType.Bot_Notice:
-                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
+                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Bot_Receive:
-                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(line));
+                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Bot_Send:
-                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(line));
+                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Bot_Error:
-                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line));
+                    Program.Ui.BotWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Bot_Clear:
                     Program.Ui.BotWebBrowser_Invoke("#clear");
                     break;
                 case LogType.Plugin_Info:
-                    Program.Ui.JSPluginWebBrowser_Invoke(Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke(LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Plugin_Notice:
-                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Plugin_Error:
-                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Plugin_Warn:
-                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(line));
+                    Program.Ui.JSPluginWebBrowser_Invoke("<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Plugin_Clear:
                     Program.Ui.JSPluginWebBrowser_Invoke("#clear");
@@ -160,7 +160,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Server_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Server.Panel?.AppendText(line);
                     Catalog.Server.Cache.Add(line);
                     if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -173,7 +173,7 @@ namespace Serein.Base
                     Catalog.Server.Cache.Clear();
                     break;
                 case LogType.Bot_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.Bot?.AppendText(line);
                     Catalog.Function.BotCache.Add(line);
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -182,7 +182,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Bot_Receive:
-                    line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.Bot?.AppendText(line);
                     Catalog.Function.BotCache.Add(line);
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -191,7 +191,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Bot_Send:
-                    line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.Bot?.AppendText(line);
                     Catalog.Function.BotCache.Add(line);
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -200,7 +200,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Bot_Error:
-                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.Bot?.AppendText(line);
                     Catalog.Function.BotCache.Add(line);
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -213,7 +213,7 @@ namespace Serein.Base
                     Catalog.Function.BotCache.Clear();
                     break;
                 case LogType.Plugin_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.JSPlugin?.AppendText(line);
                     Catalog.Function.PluginCache.Add(line);
                     if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -222,7 +222,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Plugin_Error:
-                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.JSPlugin?.AppendText(line);
                     Catalog.Function.PluginCache.Add(line);
                     if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -231,7 +231,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Plugin_Info:
-                    line = Log.EscapeLog(line);
+                    line = LogPreProcessing.EscapeLog(line);
                     Catalog.Function.JSPlugin?.AppendText(line);
                     Catalog.Function.PluginCache.Add(line);
                     if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
@@ -240,7 +240,7 @@ namespace Serein.Base
                     }
                     break;
                 case LogType.Plugin_Warn:
-                    line = "<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + Log.EscapeLog(line);
+                    line = "<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + LogPreProcessing.EscapeLog(line);
                     Catalog.Function.JSPlugin?.AppendText(line);
                     Catalog.Function.PluginCache.Add(line);
                     if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)

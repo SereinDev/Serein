@@ -16,9 +16,9 @@ namespace Serein.Ui
 
         private void InitWebBrowser()
         {
-            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=ServerPanel");
-            BotWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
-            JSPluginWebBrowser.Navigate(@"file:\\\" + AppDomain.CurrentDomain.BaseDirectory + "console\\console.html?type=bot");
+            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=ServerPanel");
+            BotWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
+            JSPluginWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
         }
 
         private void Initialize()
@@ -28,9 +28,6 @@ namespace Serein.Ui
             LoadPlugins();
             LoadRegex();
             LoadTask();
-            IO.StartSavingAndUpdating();
-            TaskRunner.Start();
-            Net.Init();
             UpdateInfoTimer.Start();
             UpdateInfoTimer.Elapsed += (_, _) =>
             {
@@ -40,8 +37,6 @@ namespace Serein.Ui
                 }
             };
             System.Threading.Tasks.Task.Run(UpdateInfo);
-            System.Threading.Tasks.Task.Run(JSPluginManager.Load);
-            System.Threading.Tasks.Task.Run(SystemInfo.Init);
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(TaskList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);

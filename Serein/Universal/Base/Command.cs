@@ -34,7 +34,7 @@ namespace Serein.Base
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     CreateNoWindow = true,
-                    WorkingDirectory = Global.Path
+                    WorkingDirectory = Global.PATH
                 }
             };
             process.Start();
@@ -358,7 +358,7 @@ namespace Serein.Base
                     #region 消息
                     "id" => jsonObject.TryGetString("sender", "user_id"),
                     "gameid" => Binder.GetGameID(long.TryParse(jsonObject.TryGetString("sender", "user_id"), out long result) ? result : -1),
-                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.TryGetString("sender", "sex"))],
+                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.TryGetString("sender", "sex").ToLowerInvariant())],
                     "nickname" => jsonObject.TryGetString("sender", "nickname"),
                     "age" => jsonObject.TryGetString("sender", "age"),
                     "area" => jsonObject.TryGetString("sender", "area"),
@@ -382,14 +382,14 @@ namespace Serein.Base
         public static string ParseAt(string text, long groupID)
         {
             text = text.Replace("[CQ:at,qq=all]", "@全体成员");
-            text = Patterns.CQAt.Replace(text, "@$1 ");
+            text = Patterns.CQAt.Replace(text, "@$1");
             if (groupID > 0)
             {
-                text = Regex.Replace(text, @"(?<=@)(\d+)(?=\s)", (match) =>
+                text = Regex.Replace(text, @"(?<=@)(\d+)", (match) =>
                 {
                     long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
-                    return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, string> groupinfo) &&
-                        groupinfo.TryGetValue(userID, out string shownname) ? shownname : match.Groups[1].Value;
+                    return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Items.Member> groupinfo) &&
+                        groupinfo.TryGetValue(userID, out Items.Member member) ? member.ShownName : match.Groups[1].Value;
                 });
             }
             return text;

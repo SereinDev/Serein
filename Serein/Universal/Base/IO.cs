@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Extensions;
 using Serein.Items;
-using Serein.JSPlugin;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace Serein.Base
         /// <summary>
         /// 保存更新设置定时器
         /// </summary>
-        private static readonly Timer timer = new(2000) { AutoReset = true };
+        public static readonly Timer Timer = new(2000) { AutoReset = true };
 
         /// <summary>
         /// 创建目录
@@ -43,30 +42,24 @@ namespace Serein.Base
         public static void StartSavingAndUpdating()
         {
 #if !CONSOLE
-            timer.Elapsed += (_, _) => UpdateSettings();
-            timer.Elapsed += (_, _) => SaveSettings();
+            Timer.Elapsed += (_, _) => UpdateSettings();
+            Timer.Elapsed += (_, _) => SaveSettings();
 #endif
-            timer.Elapsed += (_, _) => SaveMember();
-            timer.Elapsed += (_, _) => SaveGroupCache();
-            timer.Start();
+            Timer.Elapsed += (_, _) => SaveMember();
+            Timer.Elapsed += (_, _) => SaveGroupCache();
+            Timer.Start();
         }
 
         /// <summary>
         /// 读取所有文件
         /// </summary>
-        /// <param name="skipLoadingPlugins">跳过插件加载</param>
-        public static void ReadAll(bool skipLoadingPlugins = false)
+        public static void ReadAll()
         {
-            Directory.SetCurrentDirectory(Global.Path);
             ReadRegex();
             ReadMember();
             ReadTask();
-            LoadGroupCache();
+            ReadGroupCache();
             ReadSettings();
-            if (!skipLoadingPlugins)
-            {
-                System.Threading.Tasks.Task.Run(JSPluginManager.Load);
-            }
         }
 
         /// <summary>
@@ -384,7 +377,7 @@ namespace Serein.Base
         /// <summary>
         /// 读取群组缓存
         /// </summary>
-        public static void LoadGroupCache()
+        public static void ReadGroupCache()
         {
             string filename = Path.Combine("data", "groupcache.json");
             if (File.Exists(filename))
@@ -393,7 +386,7 @@ namespace Serein.Base
                 {
                     lock (FileLock.GroupCache)
                     {
-                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, string>>>(
+                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, Member>>>(
                             File.ReadAllText(Path.Combine("data", "groupcache.json")));
                     }
                 }
@@ -421,8 +414,8 @@ namespace Serein.Base
                     lock (FileLock.Console)
                     {
                         File.AppendAllText(
-                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            Log.OutputRecognition(line.TrimEnd('\n', '\r')) + Environment.NewLine,
+                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.LogPreProcessing"),
+                            LogPreProcessing.Filter(line.TrimEnd('\n', '\r')) + Environment.NewLine,
                             Encoding.UTF8
                         );
                     }
@@ -448,8 +441,8 @@ namespace Serein.Base
                     lock (FileLock.Msg)
                     {
                         File.AppendAllText(
-                            Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                            Log.OutputRecognition(line.TrimEnd('\n', '\r')) + Environment.NewLine,
+                            Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.LogPreProcessing"),
+                            LogPreProcessing.Filter(line.TrimEnd('\n', '\r')) + Environment.NewLine,
                             Encoding.UTF8
                         );
                     }

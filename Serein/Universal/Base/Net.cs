@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Extensions;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,15 +22,15 @@ namespace Serein.Base
         private static readonly Timer HeartbeatTimer = new(20000) { AutoReset = true };
 
         /// <summary>
-        /// 开始检查更新
+        /// 开始网络计时器
         /// </summary>
         public static void Init()
         {
             CheckTimer.Elapsed += (_, _) => CheckVersion();
             CheckTimer.Start();
-            Task.Run(async delegate
+            Task.Run(() =>
             {
-                await Task.Delay(10000);
+                10000.ToSleepFor();
                 CheckVersion();
             });
             HeartbeatTimer.Elapsed += (_, _) => Get("http://count.ongsat.com/api/online/heartbeat?uri=127469ef347447698dd74c449881b877").GetAwaiter().GetResult();
@@ -55,11 +56,8 @@ namespace Serein.Base
             httpClient.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
             httpClient.DefaultRequestHeaders.Add("user-agent", userAgent);
             HttpResponseMessage response = await httpClient.GetAsync(url);
-            if (Global.Settings.Serein.DevelopmentTool.DetailDebug)
-            {
-                Logger.Output(Items.LogType.Debug, "Headers\n", response.Headers.ToString());
-                Logger.Output(Items.LogType.Debug, "Content\n", await response.Content.ReadAsStringAsync());
-            }
+            Logger.Output(Items.LogType.DetailDebug, "Response Headers\n", response.Headers.ToString());
+            Logger.Output(Items.LogType.DetailDebug, "Content\n", await response.Content.ReadAsStringAsync());
             httpClient.Dispose();
             return await response.Content.ReadAsStringAsync();
         }

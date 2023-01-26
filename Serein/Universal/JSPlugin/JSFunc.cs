@@ -14,7 +14,7 @@ namespace Serein.JSPlugin
 {
     internal static class JSFunc
     {
-        public static long GlobalID;
+        public static long CurrentID;
 
         /// <summary>
         /// 注册插件
@@ -118,8 +118,8 @@ namespace Serein.JSPlugin
             {
                 throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
             }
-            long timerID = GlobalID;
-            GlobalID++;
+            long timerID = CurrentID;
+            CurrentID++;
             Logger.Output(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
             Timer timer = new((double)interval.ToObject())
             {

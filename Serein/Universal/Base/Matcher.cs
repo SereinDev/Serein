@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
 using Serein.Extensions;
 using Serein.JSPlugin;
 using System.Collections.Generic;
@@ -126,13 +127,17 @@ namespace Serein.Base
                         {
                             if (!Global.GroupCache.ContainsKey(groupID))
                             {
-                                Global.GroupCache.Add(groupID, new Dictionary<long, string>());
+                                Global.GroupCache.Add(groupID, new Dictionary<long, Items.Member>());
                             }
                             if (!Global.GroupCache[groupID].ContainsKey(userID))
                             {
-                                Global.GroupCache[groupID].Add(userID, string.Empty);
+                                Global.GroupCache[groupID].Add(userID, new Items.Member());
                             }
-                            Global.GroupCache[groupID][userID] = string.IsNullOrEmpty(packet.TryGetString("sender", "card")) ? packet.TryGetString("sender", "nickname") : packet.TryGetString("sender", "card");
+                            Global.GroupCache[groupID][userID].ID = userID;
+                            Global.GroupCache[groupID][userID].Nickname = packet.TryGetString("sender", "nickname");
+                            Global.GroupCache[groupID][userID].Card = packet.TryGetString("sender", "card");
+                            Global.GroupCache[groupID][userID].Role = Array.IndexOf(Command.Roles, packet.TryGetString("sender", "role"));
+                            Global.GroupCache[groupID][userID].GameID = Binder.GetGameID(userID);
                         }
                     }
                     if (!isSelfMessage)

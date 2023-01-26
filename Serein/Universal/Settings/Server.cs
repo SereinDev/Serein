@@ -7,6 +7,7 @@
         public bool EnableOutputCommand = true;
         public bool EnableLog;
         public bool EnableUnicode;
+        public string[] ExcludedOutputs = new string[] { };
         public int InputEncoding;
         public string LineTerminator = "\r\n";
         public int OutputEncoding;

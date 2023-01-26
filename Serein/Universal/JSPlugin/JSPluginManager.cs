@@ -13,6 +13,14 @@ namespace Serein.JSPlugin
 {
     internal static class JSPluginManager
     {
+        /// <summary>
+        /// 加载插件ing
+        /// </summary>
+        private static bool IsLoading;
+
+        /// <summary>
+        /// 插件文件夹路径
+        /// </summary>
         public const string PluginPath = "plugins";
 
         /// <summary>
@@ -30,6 +38,7 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Load()
         {
+            IsLoading = true;
             if (!Directory.Exists(PluginPath))
             {
                 Directory.CreateDirectory(PluginPath);
@@ -92,6 +101,7 @@ namespace Serein.JSPlugin
 #endif
                 IO.CreateDirectory(Path.Combine("plugins", "modules"));
             }
+            IsLoading = false;
         }
 
         /// <summary>
@@ -99,14 +109,17 @@ namespace Serein.JSPlugin
         /// </summary>
         public static void Reload()
         {
-            Logger.Output(LogType.Plugin_Clear);
-            JSFunc.ClearAllTimers();
-            JSFunc.Trigger(EventType.PluginsReload);
-            500.ToSleepFor();
-            PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
-            PluginDict.Clear();
-            JSFunc.GlobalID = 0;
-            Load();
+            if (!IsLoading)
+            {
+                Logger.Output(LogType.Plugin_Clear);
+                JSFunc.ClearAllTimers();
+                JSFunc.Trigger(EventType.PluginsReload);
+                500.ToSleepFor();
+                PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
+                PluginDict.Clear();
+                JSFunc.CurrentID = 0;
+                System.Threading.Tasks.Task.Run(Load);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Serein.Windows.Pages.Function
             BotWebBrowser.ScriptErrorsSuppressed = true;
             BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
             BotWebBrowser.WebBrowserShortcutsEnabled = false;
-            BotWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=bot&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
+            BotWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=bot&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             Catalog.Function.Bot = this;

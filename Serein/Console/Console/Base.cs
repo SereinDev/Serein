@@ -75,8 +75,7 @@ namespace Serein.Console
         {
             Logger.Output(Items.LogType.Info, "Welcome.");
             Logger.Output(Items.LogType.Info, "你可以输入\"help\"获取更多信息");
-            AutoRun.Check();
-            IO.StartSavingAndUpdating();
+            Global.OnLoaded();
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (_, e) =>
             {
@@ -100,17 +99,6 @@ namespace Serein.Console
                     Input.Process(line.Trim());
                 }
             }
-        }
-
-        /// <summary>
-        /// 加载配置文件
-        /// </summary>
-        public static void Load()
-        {
-            IO.ReadAll();
-            IO.SaveSettings();
-            Net.Init();
-            Task.Run(SystemInfo.Init);
         }
     }
 }

@@ -29,17 +29,15 @@ namespace Serein
         [STAThread]
         private static void Main()
         {
-            CrashInterception.Init();
+            Global.OnStart();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (_, e) => CrashInterception.ShowException(e.Exception);
-            IO.ReadAll(true);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if (Environment.OSVersion.Platform == PlatformID.Win32NT && Global.Settings.Serein.DPIAware && Environment.OSVersion.Version.Major >= 6)
             {
                 SetProcessDPIAware();
             }
-            ResourcesManager.InitConsole();
             Ui = new();
             Application.Run(Ui);
         }

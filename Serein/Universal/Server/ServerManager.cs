@@ -30,11 +30,17 @@ namespace Serein.Server
         /// </summary>
         public static string Difficulty { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// 临时行储存
+        /// </summary>
         private static string TempLine = string.Empty;
 
+        /// <summary>
+        /// 重启
+        /// </summary>
         private static bool Restart;
 
-        public static bool Killed { get; private set; }
+        private static bool IsStoppedByUser;
 
         /// <summary>
         /// 服务器状态
@@ -158,14 +164,16 @@ namespace Serein.Server
                 };
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += SortOutputHandler;
+
                 Restart = false;
-                Killed = false;
+                IsStoppedByUser = false;
                 LevelName = string.Empty;
                 Difficulty = string.Empty;
                 TempLine = string.Empty;
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
+                
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
@@ -234,7 +242,7 @@ namespace Serein.Server
                 try
                 {
                     ServerProcess.Kill();
-                    Killed = true;
+                    IsStoppedByUser = true;
                     Restart = false;
                     return true;
                 }
@@ -258,7 +266,7 @@ namespace Serein.Server
                     try
                     {
                         ServerProcess.Kill();
-                        Killed = true;
+                        IsStoppedByUser = true;
                         Restart = false;
                         return true;
                     }
@@ -285,7 +293,7 @@ namespace Serein.Server
                 try
                 {
                     ServerProcess.Kill();
-                    Killed = true;
+                    IsStoppedByUser = true;
                     Restart = false;
                     return true;
                 }
@@ -336,7 +344,7 @@ namespace Serein.Server
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Output(LogType.Server_Output, $">{Log.EscapeLog(command)}");
+                    Logger.Output(LogType.Server_Output, $">{LogPreProcessing.EscapeLog(command)}");
                 }
 #endif
                 if (usingUnicode || Global.Settings.Server.EnableUnicode)
@@ -367,27 +375,39 @@ namespace Serein.Server
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                string line = Log.OutputRecognition(e.Data);
-                if (string.IsNullOrEmpty(LevelName) && System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
+                string lineFiltered = LogPreProcessing.Filter(e.Data);
+                if (string.IsNullOrEmpty(LevelName) && System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
                 {
-                    LevelName = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    LevelName = System.Text.RegularExpressions.Regex.Match(lineFiltered, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
-                else if (string.IsNullOrEmpty(Difficulty) && System.Text.RegularExpressions.Regex.IsMatch(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
+                else if (string.IsNullOrEmpty(Difficulty) && System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
                 {
-                    Difficulty = System.Text.RegularExpressions.Regex.Match(line, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    Difficulty = System.Text.RegularExpressions.Regex.Match(lineFiltered, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
+                bool excluded = false;
+                foreach (string expression in Global.Settings.Server.ExcludedOutputs)
+                {
+                    if (System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, expression))
+                    {
+                        excluded = true;
+                        break;
+                    }
+                }
+                if (!excluded)
+                {
 #if CONSOLE
-                Logger.Output(LogType.Server_Output, e.Data);
+                    Logger.Output(LogType.Server_Output, e.Data);
 #else
-                Logger.Output(LogType.Server_Output, Log.ColorLog(e.Data, Global.Settings.Server.OutputStyle));
+                    Logger.Output(LogType.Server_Output, LogPreProcessing.Color(e.Data, Global.Settings.Server.OutputStyle));
 #endif
-                IO.ConsoleLog(line);
+                }
+                IO.ConsoleLog(lineFiltered);
                 bool isMuiltLinesMode = false;
                 foreach (string regex in Global.Settings.Matches.MuiltLines)
                 {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(line, regex, RegexOptions.IgnoreCase))
+                    if (System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, regex, RegexOptions.IgnoreCase))
                     {
-                        TempLine = line.Trim('\r', '\n');
+                        TempLine = lineFiltered.Trim('\r', '\n');
                         isMuiltLinesMode = true;
                         break;
                     }
@@ -396,16 +416,16 @@ namespace Serein.Server
                 {
                     if (!string.IsNullOrEmpty(TempLine))
                     {
-                        string tempLine = TempLine + "\n" + line;
+                        string tempLine = TempLine + "\n" + lineFiltered;
                         TempLine = string.Empty;
                         Matcher.Process(tempLine);
                     }
                     else
                     {
-                        Matcher.Process(line);
+                        Matcher.Process(lineFiltered);
                     }
                 }
-                JSFunc.Trigger(EventType.ServerOutput, line);
+                JSFunc.Trigger(EventType.ServerOutput, lineFiltered);
                 JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data);
             }
         }
@@ -419,7 +439,7 @@ namespace Serein.Server
             InputWriter.Dispose();
             Logger.Output(LogType.Server_Output, "");
             UpdateTimer?.Stop();
-            if (!Killed && ServerProcess.ExitCode != 0)
+            if (!IsStoppedByUser && ServerProcess.ExitCode != 0)
             {
                 Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
                 Restart = Global.Settings.Server.EnableRestart;

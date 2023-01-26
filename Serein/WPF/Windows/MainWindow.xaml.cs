@@ -52,9 +52,7 @@ namespace Serein.Windows
         }
 
         private void UiWindow_ContentRendered(object sender, EventArgs e)
-        {
-            AutoRun.Check();
-        }
+            => Global.OnLoaded();
 
         private void UiWindow_StateChanged(object sender, EventArgs e)
         {

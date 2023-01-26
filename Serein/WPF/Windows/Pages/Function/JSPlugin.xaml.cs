@@ -19,7 +19,7 @@ namespace Serein.Windows.Pages.Function
             PluginWebBrowser.ScriptErrorsSuppressed = true;
             PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
             PluginWebBrowser.WebBrowserShortcutsEnabled = false;
-            PluginWebBrowser.Navigate(@"file:\\\" + Global.Path + $"console\\console.html?type=plugin&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
+            PluginWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=plugin&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Load();
             Catalog.Function.JSPlugin = this;
         }

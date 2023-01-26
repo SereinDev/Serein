@@ -22,14 +22,8 @@ namespace Serein
     {
         public App()
         {
-            CrashInterception.Init();
+            Global.OnStart();
             DispatcherUnhandledException += (_, e) => CrashInterception.ShowException(e.Exception);
-            ResourcesManager.InitConsole();
-            IO.ReadAll();
-            IO.StartSavingAndUpdating();
-            TaskRunner.Start();
-            Net.Init();
-            Task.Run(SystemInfo.Init);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Base
 {
-    internal static class Log
+    internal static class LogPreProcessing
     {
         /// <summary>
         /// 颜色代码列表
@@ -47,11 +47,11 @@ namespace Serein.Base
         };
 
         /// <summary>
-        /// 去除彩色字符和控制字符
+        /// 过滤彩色字符和控制字符
         /// </summary>
         /// <param name="input">输入文本</param>
         /// <returns>处理后的文本</returns>
-        public static string OutputRecognition(string input)
+        public static string Filter(string input)
         {
             string result = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
             result = Regex.Replace(result, @"\x1b", string.Empty);
@@ -83,7 +83,7 @@ namespace Serein.Base
         /// <param name="input">输入文本</param>
         /// <param name="type">输出样式</param>
         /// <returns>转义后的HTML文本</returns>
-        public static string ColorLog(string input, int type)
+        public static string Color(string input, int type)
         {
             input = EscapeLog(input);
             input = Regex.Replace(input, @"^>\s+?", string.Empty);
@@ -187,7 +187,7 @@ namespace Serein.Base
             }
             else
             {
-                input = OutputRecognition(input);
+                input = Filter(input);
                 return input;
             }
         }

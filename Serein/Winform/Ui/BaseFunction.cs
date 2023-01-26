@@ -31,14 +31,10 @@ namespace Serein.Ui
         }
 
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
-        {
-            AutoRun.ShowWelcomePage();
-        }
+            => Global.ShowWelcomePage();
 
         private void Ui_Shown(object sender, EventArgs e)
-        {
-            AutoRun.Check();
-        }
+            => Global.OnLoaded();
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {

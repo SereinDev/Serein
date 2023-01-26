@@ -46,12 +46,12 @@ namespace Serein.JSPlugin
                     {
                         cfg.CancellationToken(cancellationTokenSource.Token);
                         cfg.Modules.RegisterRequire = true;
-                        cfg.EnableModules(Path.Combine(Global.Path, "plugins"));
+                        cfg.EnableModules(Path.Combine(Global.PATH, "plugins"));
                     }
                 }
                 ));
             engine.SetValue("serein_path",
-                Global.Path);
+                Global.PATH);
             engine.SetValue("serein_version",
                 Global.VERSION);
             engine.SetValue("serein_namespace",
@@ -101,6 +101,15 @@ namespace Serein.JSPlugin
 #else
             engine.SetValue("serein_getCPUUsage", JsValue.Undefined);
 #endif
+#if CONSOLE
+            engine.SetValue("serein_type", 0);
+#elif WINFORM
+            engine.SetValue("serein_type", 1);
+#elif WPF
+            engine.SetValue("serein_type", 2);
+#else
+            engine.SetValue("serein_type", -1);
+#endif
             engine.SetValue("serein_getNetSpeed",
                 new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
             engine.SetValue("serein_runCommand",
@@ -148,7 +157,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_getGroupCache",
                 new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
             engine.SetValue("serein_getUserName",
-                new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, string> groupinfo) && groupinfo.TryGetValue(userID, out string shownname) ? shownname : string.Empty));
+                new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? member.ShownName : string.Empty));
             engine.SetValue("serein_getPluginList",
                 new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
             engine.SetValue("getMD5",
@@ -160,6 +169,7 @@ namespace Serein.JSPlugin
             engine.Execute(
                 @"var serein = {
                     log: serein_log,
+                    type: serein_type,
                     path: serein_path,
                     namespace: serein_namespace,
                     version: serein_version,

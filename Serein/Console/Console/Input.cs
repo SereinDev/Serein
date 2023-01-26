@@ -49,7 +49,7 @@ namespace Serein.Console
                     case "reload":
                         try
                         {
-                            IO.ReadAll(true);
+                            IO.ReadAll();
                             JSPluginManager.Reload();
                             Logger.Output(Items.LogType.Info, "重新加载成功");
                         }

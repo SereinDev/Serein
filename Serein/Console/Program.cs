@@ -25,9 +25,8 @@ namespace Serein
         [STAThread]
         private static void Main()
         {
-            CrashInterception.Init();
+            Global.OnStart();
             Console.Base.Init();
-            Console.Base.Load();
             Console.Base.Start();
         }
     }
