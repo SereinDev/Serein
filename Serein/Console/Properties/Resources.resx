@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BuildInfo"  type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="BuildInfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Universal\buildinfo.info;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="Updater" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Universal\Sources\net472\Updater.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -61,12 +61,24 @@ namespace Serein.Properties {
         }
         
         /// <summary>
-        ///   查找类似 local
+        ///   查找类似 local 
+        ///鍛ㄥ洓 2023/01/19 12:13:36.81 
+        ///null
         /// 的本地化字符串。
         /// </summary>
         public static string buildinfo {
             get {
-                return ResourceManager.GetString("BuildInfo" , resourceCulture);
+                return ResourceManager.GetString("BuildInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Updater {
+            get {
+                object obj = ResourceManager.GetObject("Updater", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

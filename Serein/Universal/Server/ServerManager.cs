@@ -1,5 +1,4 @@
-﻿using System.Timers;
-using Serein.Base;
+﻿using Serein.Base;
 using Serein.Items;
 using Serein.Items.Motd;
 using Serein.JSPlugin;
@@ -10,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Timers;
 
 namespace Serein.Server
 {
@@ -173,7 +173,7 @@ namespace Serein.Server
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
-                
+
                 System.Threading.Tasks.Task.Run(() =>
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
@@ -466,7 +466,7 @@ namespace Serein.Server
         {
             if (!Restart)
             {
-                Restart = Status;
+                Restart = false;
                 Stop();
             }
         }

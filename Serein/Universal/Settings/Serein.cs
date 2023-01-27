@@ -2,6 +2,7 @@
 {
     internal class Serein
     {
+        public bool AutoUpdate;
         public bool ColorfulLog = true;
         public bool DPIAware;
         public bool EnableGetUpdate = true;

@@ -61,16 +61,14 @@ namespace Serein.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Local 
-        ///2022/12/11 周日 14:22:18.01 
-        ///C:\Users\Administrator\Source\Repos\Serein\Serein\Universal 
-        ///Windows_NT 
+        ///   查找类似 local 
+        ///鍛ㄥ洓 2023/01/19 12:13:36.81 
         ///null
         /// 的本地化字符串。
         /// </summary>
         public static string buildinfo {
             get {
-                return ResourceManager.GetString("BuildInfo" , resourceCulture);
+                return ResourceManager.GetString("BuildInfo", resourceCulture);
             }
         }
         
@@ -85,11 +83,13 @@ namespace Serein.Properties {
         ///    &lt;meta name=&quot;description&quot; itemprop=&quot;description&quot; content=&quot;Serein https://github.com/Zaitonn/Serein&quot; /&gt;
         ///    &lt;script defer&gt;
         ///        document.onmouseup = function () { document.execCommand(&quot;Copy&quot;) };
+        ///        document.onkeyup = function () { document.execCommand(&quot;Copy&quot;) };
+        ///
+        ///
         ///        var line = 0;
         ///
         ///        function AppendText(str) {
-        ///            var consoleDiv = document.querySelector(&quot;#console&quot;);
-        ///            line =  [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///        [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string console_html {
             get {
@@ -100,48 +100,58 @@ namespace Serein.Properties {
         /// <summary>
         ///   查找类似 /*
         ///  用于自定义特殊高亮样式
-        ///  - 需以 &quot;.noColored&gt;&quot; 开头
+        ///  - 需以 &quot;.noColored&gt; &quot; 开头
         ///  - 用&quot;.[NAME]&quot;指定高亮对象
         ///*/
-        ///.noColored&gt;.file {
-        ///    color: #688292;
+        ///.noColored &gt; .file {
+        ///  color: #688292;
         ///}
         ///
-        ///.noColored&gt;.server {
-        ///    color: #8bd645;
+        ///.noColored &gt; .server {
+        ///  color: #8bd645;
         ///}
         ///
-        ///.noColored&gt;.debug {
-        ///    color: #865fc5;
+        ///.noColored &gt; .debug {
+        ///  color: #865fc5;
         ///}
         ///
-        ///.noColored&gt;.error {
-        ///    color: #d16969;
+        ///.noColored &gt; .error {
+        ///  color: #d16969;
         ///}
         ///
-        ///.noColored&gt;.warn {
-        ///    color: #aa5612;
+        ///.noColored &gt; .warn {
+        ///  color: #aa5612;
         ///}
         ///
-        ///.noColored&gt;.info {
-        ///    color: #20b2aa;
+        ///.noColored &gt; .info {
+        ///  color: #20b2aa;
         ///}
         ///
-        ///.noColored&gt;.plugins {
-        ///    color: #e4b44c;
+        ///.noColored &gt; .plugins {
+        ///  color: #e4b44c;
         ///}
         ///
-        ///.noColored&gt;.LiteLoader,
-        ///.noColored&gt;.LiteXLoader,
-        ///.noColored&gt;.LLMoney {
-        ///    color: #5a93c2;
+        ///.noColored &gt; .LiteLoader,
+        ///.noColored &gt; .LiteXLoader,
+        ///.noColored &gt; .LLMoney {
+        ///  color: #5a93c2;
         ///}
         ///
-        ///.noColored&gt;.C [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///.noColor [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         public static string preset_css {
             get {
                 return ResourceManager.GetString("preset_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        public static byte[] Updater {
+            get {
+                object obj = ResourceManager.GetObject("Updater", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

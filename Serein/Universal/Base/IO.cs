@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Extensions;
 using Serein.Items;
+using Serein.Properties;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -414,7 +416,7 @@ namespace Serein.Base
                     lock (FileLock.Console)
                     {
                         File.AppendAllText(
-                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.LogPreProcessing"),
+                            Path.Combine("logs", "console", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             LogPreProcessing.Filter(line.TrimEnd('\n', '\r')) + Environment.NewLine,
                             Encoding.UTF8
                         );
@@ -441,7 +443,7 @@ namespace Serein.Base
                     lock (FileLock.Msg)
                     {
                         File.AppendAllText(
-                            Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.LogPreProcessing"),
+                            Path.Combine("logs", "msg", $"{DateTime.Now:yyyy-MM-dd}.log"),
                             LogPreProcessing.Filter(line.TrimEnd('\n', '\r')) + Environment.NewLine,
                             Encoding.UTF8
                         );
@@ -451,6 +453,33 @@ namespace Serein.Base
                 {
                     Logger.Output(LogType.Debug, e);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        public static void Update()
+        {
+            if (!Global.Settings.Serein.AutoUpdate)
+            {
+                return;
+            }
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                if (!File.Exists("Updater.exe"))
+                {
+                    using (FileStream fileStream = new("Updater.exe", FileMode.CreateNew))
+                    {
+                        fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
+                    }
+                }
+                Process.Start(new ProcessStartInfo("Updater.exe")
+                {
+                    WorkingDirectory = Global.PATH,
+                    UseShellExecute = false,
+                });
+
             }
         }
 

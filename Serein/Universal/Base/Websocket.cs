@@ -35,10 +35,9 @@ namespace Serein.Base
         /// <summary>
         /// 连接WS
         /// </summary>
-        /// <param name="executedByUser">被用户执行</param>
-        public static void Connect(bool executedByUser = true)
+        public static void Connect()
         {
-            if (executedByUser && Status)
+            if (Status)
             {
                 Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
             }
@@ -83,7 +82,7 @@ namespace Serein.Base
                                 }
                                 if (Reconnect && !Status)
                                 {
-                                    Connect(false);
+                                    Connect();
                                 }
                             });
                         }

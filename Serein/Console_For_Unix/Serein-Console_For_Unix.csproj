@@ -20,7 +20,7 @@
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
 		<Compile Include="../Console/**/*.cs" />
-		<Compile Remove="../Console/Properties/*.cs" />
+		<EmbeddedResource Include="../Console/Properties/Resources.resx" />
 		<Compile Remove="../Console/obj/**" />
 		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
 		<Compile Remove="..\Universal\Server\PluginManager.cs" />
@@ -44,6 +44,7 @@
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="SystemInfoLibrary" Version="1.4.3" />
+		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="WebSocket4Net" Version="0.15.2" />
 	</ItemGroup>
 	<ItemGroup>

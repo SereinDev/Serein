@@ -106,6 +106,7 @@ namespace Serein
             Net.Init();
             System.Threading.Tasks.Task.Run(SystemInfo.Init);
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Update();
         }
 
         /// <summary>
@@ -124,20 +125,24 @@ namespace Serein
             IList<string> args = Environment.GetCommandLineArgs();
             if (Global.Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
             {
-                System.Threading.Tasks.Task.Run(() => Websocket.Connect(true));
+                System.Threading.Tasks.Task.Run(Websocket.Connect);
             }
             if (Global.Settings.Serein.AutoRun.StartServer || args.Contains("auto_start"))
             {
-                System.Threading.Tasks.Task.Run(() => ServerManager.Start(false));
+                System.Threading.Tasks.Task.Run(ServerManager.Start);
+            }
+            if (File.Exists("Updater.exe"))
+            {
+                File.Delete("Updater.exe");
             }
         }
 
-#if !CONSOLE
         /// <summary>
         /// 显示欢迎页面
         /// </summary>
         public static void ShowWelcomePage()
         {
+#if !CONSOLE
             TaskDialog taskDialog = new()
             {
                 Buttons = {
@@ -159,7 +164,7 @@ namespace Serein
             };
             taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
-        }
 #endif
+        }
     }
 }

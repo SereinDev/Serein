@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Winform", "Serein\Wi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serein-Console_For_Unix", "Serein\Console_For_Unix\Serein-Console_For_Unix.csproj", "{7A32DAB6-3CC0-4318-A6F8-9355B9F35495}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Updater", "Serein\Updater\Updater.csproj", "{7CF412EC-E39F-48B4-8DC0-CC8ECFC158F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{7A32DAB6-3CC0-4318-A6F8-9355B9F35495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A32DAB6-3CC0-4318-A6F8-9355B9F35495}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A32DAB6-3CC0-4318-A6F8-9355B9F35495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF412EC-E39F-48B4-8DC0-CC8ECFC158F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF412EC-E39F-48B4-8DC0-CC8ECFC158F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF412EC-E39F-48B4-8DC0-CC8ECFC158F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF412EC-E39F-48B4-8DC0-CC8ECFC158F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Serein.Properties;
+using System.IO;
 using System.Text;
 
 namespace Serein.Base
@@ -12,8 +13,8 @@ namespace Serein.Base
         {
             if (!Directory.Exists("console") || !File.Exists(Path.Combine("console", "console.html")))
             {
-                ExtractConsoleFile(Properties.Resources.console_html, "console.html");
-                ExtractConsoleFile(Properties.Resources.preset_css, "preset.css");
+                ExtractConsoleFile(Resources.console_html, "console.html");
+                ExtractConsoleFile(Resources.preset_css, "preset.css");
                 Global.FirstOpen = true;
             }
         }
@@ -25,10 +26,7 @@ namespace Serein.Base
         /// <param name="name">文件名</param>
         private static void ExtractConsoleFile(string resource, string name)
         {
-            if (!Directory.Exists("console"))
-            {
-                Directory.CreateDirectory("console");
-            }
+            IO.CreateDirectory("console");
             File.WriteAllText(Path.Combine("console", name), resource, Encoding.UTF8);
         }
     }
