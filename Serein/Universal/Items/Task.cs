@@ -29,6 +29,11 @@ namespace Serein.Items
         public bool Enable { get; set; } = true;
 
         /// <summary>
+        /// 是否正在运行
+        /// </summary>
+        public bool IsRunning { get; private set; }
+
+        /// <summary>
         /// 是否启用 - 文本
         /// </summary>
         [JsonIgnore]
@@ -51,14 +56,13 @@ namespace Serein.Items
         /// </summary>
         public void Run()
         {
-            Enable = false;
-            System.Threading.Tasks.Task RunTask = new System.Threading.Tasks.Task(() =>
+            IsRunning = true;
+            System.Threading.Tasks.Task.Run(() =>
             {
                 Base.Command.Run(3, Command);
                 NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
-                Enable = true;
+                IsRunning = false;
             });
-            RunTask.Start();
         }
 
         /// <summary>

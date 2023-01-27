@@ -16,6 +16,7 @@ namespace Serein.Ui
             OpenFileDialog dialog = new()
             {
                 Filter = "所有文件|*.*",
+                InitialDirectory = !string.IsNullOrEmpty(PluginManager.BasePath) && Directory.Exists(PluginManager.BasePath) ? PluginManager.BasePath : Global.PATH,
                 Multiselect = true
             };
             if (dialog.ShowDialog() == DialogResult.OK)

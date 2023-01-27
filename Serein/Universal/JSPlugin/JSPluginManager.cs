@@ -84,10 +84,17 @@ namespace Serein.JSPlugin
                         failedFiles.Add(Path.GetFileName(plugin.File));
                     }
                 });
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
-                if (failedFiles.Count > 0)
+                if (files.Length != 0)
                 {
-                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", failedFiles));
+                    Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
+                    if (failedFiles.Count > 0)
+                    {
+                        Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join(" ,", failedFiles));
+                    }
+                }
+                else
+                {
+                    Logger.Output(LogType.Plugin_Notice, $"并没有插件被加载");
                 }
                 System.Threading.Tasks.Task.Run(() =>
                 {

@@ -88,14 +88,20 @@ namespace Serein.Base
                     WriteLine(1, line);
                     break;
                 case LogType.Version_New:
-                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{line}，你可以打开" +
-                        $"\x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein/releases/latest\x1b[0m获取最新版）", true);
+                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{line}，已提交下载任务）", true);
                     break;
                 case LogType.Version_Latest:
                     WriteLine(1, "获取更新成功，当前已是最新版:)", true);
                     break;
+                case LogType.Version_DownloadFailed:
                 case LogType.Version_Failure:
-                    WriteLine(3, "更新获取异常：\n" + line, true);
+                    WriteLine(3, $"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：" + line, true);
+                    break;
+                case LogType.Version_Downloading:
+                    WriteLine(1, $"正在从[\x1b[4m\x1b[36m{line}\x1b[0m]下载新版本", true);
+                    break;
+                case LogType.Version_Ready:
+                    WriteLine(1, line.Replace("\n", "，"), true);
                     break;
 #elif WINFORM
                 case LogType.Server_Output:
@@ -139,7 +145,7 @@ namespace Serein.Base
                     break;
                 case LogType.Version_New:
                     Program.Ui.ShowBalloonTip("发现新版本:\n" + line);
-                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{line}，你可以点击下方链接获取最新版）");
+                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{line}，你可以等待后台自动下载或手动点击下方链接获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     Program.Ui.ShowBalloonTip(
@@ -148,7 +154,11 @@ namespace Serein.Base
                     Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （已是最新版）");
                     break;
                 case LogType.Version_Failure:
-                    Program.Ui.ShowBalloonTip("更新获取异常：\n" + line);
+                case LogType.Version_DownloadFailed:
+                    Program.Ui.ShowBalloonTip($"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：\n" + line);
+                    break;
+                case LogType.Version_Ready:
+                    Program.Ui.ShowBalloonTip(line);
                     break;
 #elif WPF
                 case LogType.Server_Output:
@@ -255,13 +265,13 @@ namespace Serein.Base
                 case LogType.Version_New:
                     Catalog.Notification?.Show(
                         "Serein",
-                        "发现新版本:\n" + line + "\n点击此处打开下载页面",
+                        "发现新版本:\n" + line + "\n你可以等待后台自动下载或手动点击本提示打开下载页面",
                         onClick: () => Process.Start(
                             new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true }
                             ),
-                        expirationTime: new TimeSpan(100)
+                        expirationTime: new TimeSpan(500)
                         );
-                    Catalog.Settings.Serein?.UpdateVersion($"（发现新版本:{line}，你可以点击下方链接获取最新版）");
+                    Catalog.Settings.Serein?.UpdateVersion($"\n（发现新版本:{line}，你可以等待后台自动下载或手动点击下方链接获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     Catalog.Notification?.Show(
@@ -271,7 +281,11 @@ namespace Serein.Base
                     Catalog.Settings.Serein?.UpdateVersion("（已是最新版）");
                     break;
                 case LogType.Version_Failure:
-                    Catalog.Notification?.Show("Serein", "更新获取异常：\n" + line);
+                case LogType.Version_DownloadFailed:
+                    Catalog.Notification?.Show("Serein", $"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：\n" + line);
+                    break;
+                case LogType.Version_Ready:
+                    Catalog.Notification?.Show("Serein", line);
                     break;
 #endif
                 default:

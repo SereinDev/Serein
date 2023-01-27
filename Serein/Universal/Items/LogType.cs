@@ -27,6 +27,9 @@
 
         Version_New,
         Version_Latest,
-        Version_Failure
+        Version_Failure,
+        Version_Downloading,
+        Version_DownloadFailed,
+        Version_Ready
     }
 }

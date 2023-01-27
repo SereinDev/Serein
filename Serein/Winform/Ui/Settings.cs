@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -83,6 +84,7 @@ namespace Serein.Ui
         {
             OpenFileDialog dialog = new()
             {
+                InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
                 Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
             };
             if (dialog.ShowDialog() == DialogResult.OK)

@@ -24,8 +24,14 @@
                     x:Name="EnableGetUpdate"
                     Margin="0,7"
                     Click="EnableGetUpdate_Click"
-                    Content="获取更新"
-                    ToolTip="启动后自动获取更新（建议开启）" />
+                    Content="获取更新提示"
+                    ToolTip="启动后自动获取更新提示（建议开启）" />
+                <ui:ToggleSwitch
+                    x:Name="AutoUpdate"
+                    Margin="0,7"
+                    Click="AutoUpdate_Click"
+                    Content="自动更新"
+                    ToolTip="Serein关闭后自动替换新版本" />
                 <ui:ToggleSwitch
                     x:Name="UseDarkTheme"
                     Margin="0,7"

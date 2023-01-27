@@ -461,7 +461,7 @@ namespace Serein.Base
         /// </summary>
         public static void Update()
         {
-            if (!Global.Settings.Serein.AutoUpdate)
+            if (!Global.Settings.Serein.AutoUpdate || !Net.IsReadyToUpdate)
             {
                 return;
             }

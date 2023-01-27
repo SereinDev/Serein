@@ -1,9 +1,10 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace Serein.Extensions
 {
-    internal static class JTokenExtension
+    internal static class StringExtension
     {
         /// <summary>
         /// 尝试获取JSON值
@@ -30,5 +31,40 @@ namespace Serein.Extensions
 
         public static string ToJson(this object obj)
             => obj != null ? JsonConvert.SerializeObject(obj) : string.Empty;
+
+        public static bool TestRegex(this string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                try
+                {
+                    _ = new Regex(text);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public static bool TryConvert(this string text, RegexOptions options, out Regex regex)
+        {
+            regex = null;
+            if (!string.IsNullOrEmpty(text))
+            {
+                try
+                {
+                    regex = new Regex(text, options);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
     }
 }

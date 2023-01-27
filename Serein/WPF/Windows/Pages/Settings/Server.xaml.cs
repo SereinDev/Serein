@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
@@ -61,8 +62,9 @@ namespace Serein.Windows.Pages.Settings
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog()
+            OpenFileDialog dialog = new()
             {
+                InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
                 Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
             };
             if (dialog.ShowDialog() ?? false)

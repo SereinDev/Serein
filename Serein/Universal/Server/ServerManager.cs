@@ -385,9 +385,9 @@ namespace Serein.Server
                     Difficulty = System.Text.RegularExpressions.Regex.Match(lineFiltered, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
                 bool excluded = false;
-                foreach (string expression in Global.Settings.Server.ExcludedOutputs)
+                foreach (string exp1 in Global.Settings.Server.ExcludedOutputs)
                 {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, expression))
+                    if (exp1.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
                     {
                         excluded = true;
                         break;
@@ -403,9 +403,9 @@ namespace Serein.Server
                 }
                 IO.ConsoleLog(lineFiltered);
                 bool isMuiltLinesMode = false;
-                foreach (string regex in Global.Settings.Matches.MuiltLines)
+                foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                 {
-                    if (System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, regex, RegexOptions.IgnoreCase))
+                    if (exp2.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
                     {
                         TempLine = lineFiltered.Trim('\r', '\n');
                         isMuiltLinesMode = true;

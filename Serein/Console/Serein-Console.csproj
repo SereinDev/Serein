@@ -40,12 +40,12 @@
 		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<WarningLevel>9999</WarningLevel>
 		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
@@ -60,7 +60,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Jint" Version="3.0.0-beta-2045" />
+		<PackageReference Include="Jint" Version="3.0.0-beta-2046" />
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="SystemInfoLibrary" Version="1.4.3" />

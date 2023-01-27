@@ -30,7 +30,7 @@ namespace Serein.Base
         {
             foreach (Task task in Global.TaskList)
             {
-                if (task.Enable && DateTime.Compare(task.NextTime, DateTime.Now) <= 0)
+                if (!task.IsRunning && DateTime.Compare(task.NextTime, DateTime.Now) <= 0)
                 {
                     task.Run();
                 }

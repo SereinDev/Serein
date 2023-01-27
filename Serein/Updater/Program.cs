@@ -1,7 +1,6 @@
-﻿using System.Text;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Serein.Updater
@@ -12,35 +11,21 @@ namespace Serein.Updater
         private static void Main()
         {
             ConsoleColor @default = Console.ForegroundColor;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Console.Title = "Updater";
+            }
             try
             {
                 Console.OutputEncoding = Encoding.UTF8;
-                Console.ForegroundColor = ConsoleColor.White;
-                string[] args = Environment.GetCommandLineArgs();
-                int pid = int.Parse(args[1]);
-                int i = 0;
-                while (true)
-                {
-                    if (IsExited(pid))
-                    {
-                        break;
-                    }
-                    Task.Delay(100).GetAwaiter().GetResult();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"进程{pid}未退出，即将进行第{i}次尝试");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    i++;
-                    if (i > 20)
-                    {
-                        throw new TimeoutException();
-                    }
-                }
-                Task.Delay(100).GetAwaiter().GetResult();
+                Console.WriteLine(" [ A Updater For Serein ]\r\nAll is ready to start.\r\n");
+                Task.Delay(1000).GetAwaiter().GetResult();
                 foreach (string file in Directory.GetFiles("cache", "*.*", SearchOption.TopDirectoryOnly))
                 {
                     if (Path.GetExtension(file.ToLowerInvariant()) != ".zip")
                     {
                         File.Copy(file, Path.GetFileName(file), true);
+                        File.Delete(file);
                         Console.WriteLine($"{Path.GetFileName(file)}复制成功");
                     }
                 }
@@ -51,20 +36,7 @@ namespace Serein.Updater
                 Console.WriteLine(e.ToString());
             }
             Console.ForegroundColor = @default;
-            Task.Delay(500).GetAwaiter().GetResult();
-        }
-
-        private static bool IsExited(int pid)
-        {
-            try
-            {
-                Process mainProcess = Process.GetProcessById(pid);
-                return mainProcess.HasExited;
-            }
-            catch (ArgumentException)
-            {
-                return true;
-            }
+            Task.Delay(1000).GetAwaiter().GetResult();
         }
     }
 }

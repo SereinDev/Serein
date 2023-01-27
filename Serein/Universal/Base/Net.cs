@@ -123,10 +123,9 @@ namespace Serein.Base
                     File.Delete(file);
                 }
             }
-            string filename;
             foreach (JToken asset in jobject["assets"])
             {
-                filename = asset.TryGetString("name");
+                string filename = asset.TryGetString("name");
                 if (IsFileMatched(filename.ToLowerInvariant()) && !string.IsNullOrEmpty(asset.TryGetString("browser_download_url")))
                 {
                     try
@@ -142,12 +141,13 @@ namespace Serein.Base
                         else
                         {
                             IsReadyToUpdate = false;
+                            Logger.Output(Items.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
                             Logger.Output(Items.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
                             using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
                             using (FileStream fileStream = new($"cache/{asset.TryGetString("name")}", FileMode.Create))
                             {
                                 byte[] bytes = new byte[stream.Length];
-                                stream.Read(bytes, 0, bytes.Length);
+                                _ = stream.Read(bytes, 0, bytes.Length);
                                 fileStream.Write(bytes, 0, bytes.Length);
                             }
                             Logger.Output(Items.LogType.Debug, "下载成功");
@@ -155,9 +155,11 @@ namespace Serein.Base
                         ZipFile.ExtractToDirectory($"cache/{asset.TryGetString("name")}", "cache");
                         Logger.Output(Items.LogType.Debug, "解压成功");
                         IsReadyToUpdate = true;
+                        Logger.Output(Items.LogType.Version_Ready, "新版本已下载完毕\n" + (Global.Settings.Serein.AutoUpdate && Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开\"cache\"文件夹复制替换"));
                     }
                     catch (Exception e)
                     {
+                        Logger.Output(Items.LogType.Version_DownloadFailed, e.Message);
                         Logger.Output(Items.LogType.Debug, e);
                     }
                     break;
@@ -184,7 +186,6 @@ namespace Serein.Base
                 return !(Environment.OSVersion.Platform == PlatformID.Unix ^ name.Contains("unix")) &&
                     !(netVer == "4" ^ name.Contains("dotnetframework472")) &&
                     !(netVer == "6" ^ name.Contains("dotnet6"));
-
             }
             return false;
         }

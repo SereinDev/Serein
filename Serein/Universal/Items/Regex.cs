@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Serein.Extensions;
 
 namespace Serein.Items
 {
@@ -88,24 +89,6 @@ namespace Serein.Items
         /// </summary>
         /// <returns>是否合法</returns>
         public bool Check()
-        {
-            if (
-                !(string.IsNullOrWhiteSpace(Expression) || string.IsNullOrEmpty(Expression) ||
-                string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
-                )
-                && Base.Command.GetType(Command) != CommandType.Invalid)
-            {
-                try
-                {
-                    new System.Text.RegularExpressions.Regex(Expression).Match(string.Empty);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            return false;
-        }
+            => Base.Command.GetType(Command) != CommandType.Invalid && Expression.TestRegex();
     }
 }

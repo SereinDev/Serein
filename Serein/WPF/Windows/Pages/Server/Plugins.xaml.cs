@@ -88,6 +88,7 @@ namespace Serein.Windows.Pages.Server
                         OpenFileDialog Dialog = new()
                         {
                             Filter = "所有文件|*.*",
+                            InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
                             Multiselect = true
                         };
                         if (Dialog.ShowDialog() ?? false)

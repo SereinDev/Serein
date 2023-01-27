@@ -1,10 +1,15 @@
-﻿using System.Text.RegularExpressions;
+﻿using Serein.Extensions;
+using System.Linq;
 
 namespace Serein.Settings
 {
     internal class Matches
     {
+        private const string _Difficulty = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
+
         public string Difficulty = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";
+
+        private const string _LevelName = @"Level\sName:\s(.+?)$";
 
         public string LevelName = @"Level\sName:\s(.+?)$";
 
@@ -15,22 +20,8 @@ namespace Serein.Settings
 
         public Matches()
         {
-            try
-            {
-                Regex.Match(string.Empty, Difficulty);
-            }
-            catch
-            {
-                Difficulty = "(PEACEFUL|EASY|NORMAL|DIFFICULT[^Y])";
-            }
-            try
-            {
-                Regex.Match(string.Empty, LevelName);
-            }
-            catch
-            {
-                LevelName = "Level Name: (.+?)$";
-            }
+            Difficulty = Difficulty.TestRegex() ? Difficulty : _Difficulty;
+            LevelName = LevelName.TestRegex() ? LevelName : _LevelName;
         }
     }
 }
