@@ -1,9 +1,11 @@
 
+# 机器人
+
 >用于连接机器人ws服务器接收消息
 
 ![机器人](../imgs/bot.png)
 
-### 支持的条件
+## 支持的条件
 
 - 使用[OneBot-11](https://github.com/botuniverse/onebot-11)标准
   - 使用新[OneBot-12](https://12.onebot.dev/)标准的机器人不确定是否可用，可自行尝试

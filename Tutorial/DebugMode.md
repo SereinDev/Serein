@@ -1,15 +1,17 @@
 
+# 开启调试模式
+
 >供开发使用，一般不建议开启
 
 >[!NOTE] 本处的 调试模式 指开启Serein自带的调试输出窗口
 
 ![调试窗口](../imgs/debug.png)
 
-### 用途
+## 用途
 
 供开发者确定函数的执行情况、变量的变化等，并总是自动保存日志到 logs/debug 文件夹下
 
-#### C\#
+### C\#
 
 你可以使用以下语句输出调试信息
 
@@ -26,13 +28,13 @@ internal static class Logger
 }
 ```
 
-#### JS插件
+### JS插件
 
 详见[debug输出](Function/JSDocs/Func.md#debug输出)
 
-### 开启方法
+## 开启方法
 
-#### 命令行参数
+### 命令行参数
 
 使用cmd或PowerShell启动 Serein-???.exe ，在路径后面写上`debug`即可
 
@@ -40,7 +42,7 @@ internal static class Logger
 PS C:\> Serein-???.exe debug
 ```
 
-#### 更改设置
+### 更改设置
 
 打开 settings/Serein.json ，将`EnableDebug`后面的`false`改为`true`即可
 

@@ -1,3 +1,4 @@
+#
 
 - [🏠**主站**](../ ':ignore')
 - **🌌 扩展市场**
@@ -12,7 +13,7 @@
     - [**✨SereinJSPluginHelper - 插件开发助手**](JS/SereinJSPluginHelper/README.md)
     - [Example - 示例文件](JS/Example/README.md)
     - [BotExtension - 机器人功能拓展](JS/BotExtension/README.md)
-    - [iPanel - 网页版控制台 *(尚未完工)* ](https://ipanel.serein.cc)
+    - [iPanel - 网页版控制台 *(尚未完工)*](https://ipanel.serein.cc)
     - [SLbind - 白名单与账号绑定插件](JS/SLbind/README.md)
     - [HTTPApi - HTTP应用接口控制](JS/HTTPApi/README.md)
     - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)

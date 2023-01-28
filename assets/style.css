@@ -25,3 +25,7 @@
 .markdown-section h6 {
     border-bottom: #D8DEE4 solid 2px;
 }
+
+.v[data-class=v] .vcards .vcard .vh .vmeta .vat {
+    color: var(--theme-color);
+}

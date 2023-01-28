@@ -1,3 +1,6 @@
+
+# SereinJSPluginHelper
+
 |     作者     | Zaitonn                                                                              |
 | :----------: | :----------------------------------------------------------------------------------- |
 |   **介绍**   | 插件开发助手                                                                         |
@@ -6,7 +9,7 @@
 
 ![SereinJSPluginHelper](1.png)
 
-### 使用方法
+## 使用方法
 
 - 建议使用 Visual Studio Code 编写插件 下载：https://code.visualstudio.com/
 

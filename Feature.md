@@ -1,14 +1,16 @@
 
+# 特色
+
 ![Serein](https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board ":no-zoom")
 
-### 📁 麻雀虽小五脏俱全
+## 📁 麻雀虽小五脏俱全
 
 - **以极小的文件体积囊括多种功能**
 - 截至v1.3.2，所有发行包大小均不超过3MB  
   也就是说，不到一张~~色图~~表情包体积的软件就可以实现控制服务器等功能
   [![文件体积](imgs/size.png ':size=500')](https://github.com/Zaitonn/Serein/releases/latest)
 
-### 💻 超强的兼容性
+## 💻 超强的兼容性
 
 - 已经经过测试的系统如下
   - Windows
@@ -27,7 +29,7 @@
   - **理论上支持所有支持命令行输出的可执行文件**
 - 你甚至可以用[MCSM](https://mcsmanager.com)等软件套娃实现网页版面板
 
-### 🔧 控制面板
+## 🔧 控制面板
 
 - 简洁的状态信息显示
   - 显示有关服务器的主要信息，快捷了解当前服务器状态
@@ -45,7 +47,7 @@
 
 ![控制台](imgs/console.png)
 
-### 🛒 服务器插件管理
+## 🛒 服务器插件管理
 
 - 自动识别插件文件夹，分组列出所有的插件
 - 一键拖入窗口导入插件，帮助小白服主解决导入难题
@@ -54,7 +56,7 @@
 
 ![插件管理](imgs/plugin.png)
 
-### 📜 正则  
+## 📜 正则  
 
 - 简单易上手的正则表达式和[命令](Function/Command.md)，可以执行服务器指令、发送消息甚至备份存档（基于cmd，需要自行下载7z）等高级功能
 - 自动校验准确性，有效防止错误的产生
@@ -64,7 +66,7 @@
 
 ![正则](imgs/regex.png)
 
-### ⏰ 定时任务
+## ⏰ 定时任务
 
 - 简单易上手的Cron表达式和[命令](Function/Command.md)，可以执行服务器指令、发送消息甚至备份存档（基于cmd命令行，需要自行下载7z）等高级功能
 - 通过此功能还能实现定时命令、准点报时和定时备份等功能
@@ -74,7 +76,7 @@
 
 ![定时任务](imgs/task.png)
 
-### 🤖 机器人
+## 🤖 机器人
 
 - 支持多种主流机器人，如[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)、[OneBot Mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)
 - Serein与机器人窗口分离，方便拓展
@@ -83,7 +85,7 @@
 
 ![机器人](imgs/bot.png)
 
-### 👨‍💼 成员管理
+## 👨‍💼 成员管理
 
 - 将用户的游戏ID与QQ号绑定，有效防止熊孩子使用小号作恶
 - 一键添加/删除/修改绑定用户，快捷管理
@@ -92,7 +94,7 @@
 
 ![成员管理](imgs/members.png)
 
-### 🧩 JS插件
+## 🧩 JS插件
 
 - 你可以使用[他人编写好的插件](Extension/JS/Example.js.md)直接实现指定功能，方便服主使用
 - 由于js引擎的特性，你可以在js中[插入部分C#代码](Function/JSDocs/README.md)，增添更多功能
@@ -103,20 +105,23 @@
 
 ![插件](imgs/javacriptplugins.png)
 
-### 🥖 其他
+## 🥖 其他
 
 - **👨‍💻 独特的开发者**
   - 开发者本人有数年的开服经验，更能了解服主们的心声
 
+---
 
 - **💸 永不收费且无广告**
   - 自从一开始便确定不提供任何增值服务  
   - 软件中永远不会加入任何广告，广告统统给爷爪巴
 
+---
 
 - **🎤 永久免费咨询**
   - [加群](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)询问作者或群内其他用户，我们将会尽己所能提供解答和支持
 
+---
 
 - **📢 倾听用户声音**
   - 如果你有好的建议或者需求，都可以[加群](https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv)或[提交Issue](https://github.com/Zaitonn/Serein/issues/new)提出建议

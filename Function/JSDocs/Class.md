@@ -1,5 +1,7 @@
 
-### WebSocket客户端
+# 类
+
+## WebSocket客户端
 
 ```js
 // 由于该js解释器不支持ws，所以这里用C#封装了一个，部分方法和js原生的有所不同
@@ -39,7 +41,7 @@ ws.close(); // 关闭ws
 ws.dispose(); // 释放对象
 ```
 
-### Logger
+## Logger
 
 ```js
 var logger = Logger("Example"); // 插件名称
@@ -51,7 +53,7 @@ logger.debug("这是一条信息输出"); // 此消息将输出到Serein的debug
 
 ![logger](../../imgs/logger.png)
 
-### Motdje/Motdpe
+## Motdje/Motdpe
 
 ~~Jvav~~版和基岩版的Motd对象
 
@@ -59,7 +61,7 @@ logger.debug("这是一条信息输出"); // 此消息将输出到Serein的debug
 let motd = new Motdje('1.2.3.4:1234'); // 地址
 ```
 
-#### 属性
+### 属性
 
 - MaxPlayer 最大玩家数
 - OnlinePlayer 在线玩家数
@@ -73,6 +75,6 @@ let motd = new Motdje('1.2.3.4:1234'); // 地址
 - Exception 错误消息
 - IsSuccess 是否获取成功
 
-#### 默认值
+### 默认值
 
 >详见<https://github.com/Zaitonn/Serein/blob/main/Serein/Universal/Items/Motd/Motd.cs>

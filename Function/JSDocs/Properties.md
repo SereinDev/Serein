@@ -1,5 +1,7 @@
 
-### Serein.exe所在文件夹
+# 属性
+
+## Serein.exe所在文件夹
 
 `serein.path`
 
@@ -10,7 +12,7 @@ var path = serein.path; // Serein.exe所在文件夹，如C:\Serein
 - 返回
   - `String`
 
-### Serein版本
+## Serein版本
 
 `serein.version`
 
@@ -21,7 +23,7 @@ var version = serein.version; // Serein版本，如v1.3.0
 - 返回
   - `String`
 
-### JS命名空间
+## JS命名空间
 
 `serein.namespace`
 

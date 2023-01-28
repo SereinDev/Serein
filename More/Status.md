@@ -1,4 +1,6 @@
 
+# 统计信息
+
 ![Star History Chart](https://api.star-history.com/svg?repos=Zaitonn/Serein&type=Date ":no-zoom")
 
 ![Alt](https://repobeats.axiom.co/api/embed/d29d2773958747edfeed6ee9f280c17f781882cb.svg "Repobeats analytics image")
