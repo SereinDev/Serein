@@ -205,10 +205,7 @@
         if (document.documentElement.clientWidth > 768) return;
         localStorage.setItem(PIN, false); // 添加覆盖标签
 
-        var btn = document.createElement('button');
-        btn.classList.add('sidebar-pin');
-        btn.onclick = togglePin;
-        document.body.append(btn);
+        
         window.addEventListener('load', function () {
             var content = document.querySelector('.content'); // 点击内容区域收起侧边栏
 
