@@ -41,6 +41,7 @@ namespace Serein.Ui
             SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
             SettingBotEnbaleParseAt.Checked = Global.Settings.Bot.EnbaleParseAt;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
+            SettingSereinAutoUpdate.Checked = Global.Settings.Serein.AutoUpdate;
             SettingSereinEnableDPIAware.Checked = Global.Settings.Serein.DPIAware;
             if (!Global.Settings.Serein.DevelopmentTool.EnableDebug)
             {
@@ -113,6 +114,8 @@ namespace Serein.Ui
         #region Serein
         private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+        private void SettingSereinAutoUpdate_Click(object sender, EventArgs e)
+            => Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
         private void SettingSereinAbout_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://serein.cc/#/More/About") { UseShellExecute = true });
         private void SettingSereinPage_Click(object sender, EventArgs e)

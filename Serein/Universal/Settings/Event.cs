@@ -1,4 +1,4 @@
-﻿using Serein.Items;
+using Serein.Items;
 using Serein.Base;
 using System;
 
@@ -6,7 +6,7 @@ namespace Serein.Settings
 {
     internal class Event
     {
-        public string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/#/Function/Command、https://serein.cc/#/Function/Event";
+        public static string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/#/Function/Command、https://serein.cc/#/Function/Event";
 
         public string[] BindingSucceed { get; set; } = new[]
         {
@@ -25,17 +25,22 @@ namespace Serein.Settings
 
         public string[] BindingFailDueToAlreadyBinded { get; set; } = new[]
         {
-             "g|[CQ:at,qq=%ID%] 你已经绑定过了"
+            "g|[CQ:at,qq=%ID%] 你已经绑定过了"
         };
 
         public string[] UnbindingSucceed { get; set; } = new[]
         {
-             "g|[CQ:at,qq=%ID%] 解绑成功"
+            "g|[CQ:at,qq=%ID%] 解绑成功"
         };
 
         public string[] UnbindingFail { get; set; } = new[]
         {
-             "g|[CQ:at,qq=%ID%] 该账号未绑定"
+            "g|[CQ:at,qq=%ID%] 该账号未绑定"
+        };
+
+        public string[] BinderDisable { get; set; } = new[]
+        {
+            "g|[CQ:at,qq=%ID%] 绑定功能已被禁用"
         };
 
         public string[] ServerStart { get; set; } = new[]
@@ -121,6 +126,9 @@ namespace Serein.Settings
                 case EventType.UnbindingFail:
                     UnbindingFail = commands;
                     break;
+                case EventType.BinderDisable:
+                    BinderDisable = commands;
+                    break;
                 case EventType.ServerStart:
                     ServerStart = commands;
                     break;
@@ -163,49 +171,30 @@ namespace Serein.Settings
             }
         }
 
-        public string[] Get(EventType Type)
-        {
-            switch (Type)
+        public string[] Get(EventType type)
+            => type switch
             {
-                case EventType.BindingSucceed:
-                    return BindingSucceed;
-                case EventType.BindingFailDueToOccupation:
-                    return BindingFailDueToOccupation;
-                case EventType.BindingFailDueToInvalid:
-                    return BindingFailDueToInvalid;
-                case EventType.BindingFailDueToAlreadyBinded:
-                    return BindingFailDueToAlreadyBinded;
-                case EventType.UnbindingSucceed:
-                    return UnbindingSucceed;
-                case EventType.UnbindingFail:
-                    return UnbindingFail;
-                case EventType.ServerStart:
-                    return ServerStart;
-                case EventType.ServerStop:
-                    return ServerStop;
-                case EventType.ServerExitUnexpectedly:
-                    return ServerExitUnexpectedly;
-                case EventType.GroupIncrease:
-                    return GroupIncrease;
-                case EventType.GroupDecrease:
-                    return GroupDecrease;
-                case EventType.GroupPoke:
-                    return GroupPoke;
-                case EventType.SereinCrash:
-                    return SereinCrash;
-                case EventType.RequestingMotdpeSucceed:
-                    return RequestingMotdpeSucceed;
-                case EventType.RequestingMotdjeSucceed:
-                    return RequestingMotdjeSucceed;
-                case EventType.RequestingMotdFail:
-                    return RequestingMotdFail;
-                case EventType.PermissionDeniedFromPrivateMsg:
-                    return PermissionDeniedFromPrivateMsg;
-                case EventType.PermissionDeniedFromGroupMsg:
-                    return PermissionDeniedFromGroupMsg;
-                default:
-                    return Array.Empty<string>();
-            }
-        }
+                EventType.BindingSucceed => BindingSucceed,
+                EventType.BindingFailDueToOccupation => BindingFailDueToOccupation,
+                EventType.BindingFailDueToInvalid => BindingFailDueToInvalid,
+                EventType.BindingFailDueToAlreadyBinded => BindingFailDueToAlreadyBinded,
+                EventType.UnbindingSucceed => UnbindingSucceed,
+                EventType.UnbindingFail => UnbindingFail,
+                EventType.BinderDisable => BinderDisable,
+                EventType.ServerStart => ServerStart,
+                EventType.ServerStop => ServerStop,
+                EventType.ServerExitUnexpectedly => ServerExitUnexpectedly,
+                EventType.GroupIncrease => GroupIncrease,
+                EventType.GroupDecrease => GroupDecrease,
+                EventType.GroupPoke => GroupPoke,
+                EventType.SereinCrash => SereinCrash,
+                EventType.RequestingMotdpeSucceed => RequestingMotdpeSucceed,
+                EventType.RequestingMotdjeSucceed => RequestingMotdjeSucceed,
+                EventType.RequestingMotdFail => RequestingMotdFail,
+                EventType.PermissionDeniedFromPrivateMsg => PermissionDeniedFromPrivateMsg,
+                EventType.PermissionDeniedFromGroupMsg => PermissionDeniedFromGroupMsg,
+                _ => Array.Empty<string>(),
+            };
+
     }
 }

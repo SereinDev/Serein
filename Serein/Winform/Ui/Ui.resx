@@ -2182,13 +2182,41 @@
     <value>SettingSerein</value>
   </data>
   <data name="&gt;&gt;SettingSereinShowWelcomePage.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  
+  <data name="SettingSereinAutoUpdate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SettingSereinAutoUpdate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 82</value>
+  </data>
+  <data name="SettingSereinAutoUpdate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 35</value>
+  </data>
+  <data name="SettingSereinAutoUpdate.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="SettingSereinAutoUpdate.Text" xml:space="preserve">
+    <value>自动更新</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAutoUpdate.Name" xml:space="preserve">
+    <value>SettingSereinAutoUpdate</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAutoUpdate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAutoUpdate.Parent" xml:space="preserve">
+    <value>SettingSerein</value>
+  </data>
+  <data name="&gt;&gt;SettingSereinAutoUpdate.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="SettingSereinEnableDPIAware.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="SettingSereinEnableDPIAware.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 88</value>
+    <value>266, 82</value>
   </data>
   <data name="SettingSereinEnableDPIAware.Size" type="System.Drawing.Size, System.Drawing">
     <value>326, 35</value>
@@ -2410,7 +2438,7 @@
     <value>17</value>
   </data>
   <data name="SettingSereinEnableGetUpdate.Text" xml:space="preserve">
-    <value>获取更新</value>
+    <value>获取更新提示</value>
   </data>
   <data name="&gt;&gt;SettingSereinEnableGetUpdate.Name" xml:space="preserve">
     <value>SettingSereinEnableGetUpdate</value>
@@ -2527,38 +2555,43 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        VHJlZU5vZGUPAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFn
+        VHJlZU5vZGUQAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFn
         ZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50CWNoaWxkcmVu
-        MAljaGlsZHJlbjEJY2hpbGRyZW4yCWNoaWxkcmVuMwljaGlsZHJlbjQJY2hpbGRyZW41AQEBAAABAAEA
-        BAQEBAQEAQgICB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3Mu
-        Rm9ybXMuVHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0ZW0u
-        V2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUCAAAA
-        HVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAAIAAAAGAwAAAA3nu5Hlrpov6Kej57uRBgQA
-        AAAABgUAAAALQmluZCZVbmJpbmQA/////wkEAAAA/////wkEAAAABgAAAAkHAAAACQgAAAAJCQAAAAkK
-        AAAACQsAAAAJDAAAAAUHAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCQAAAARUZXh0C1Rv
-        b2xUaXBUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUlu
-        ZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAQAAAQABAAEICAgCAAAABg0AAAAM57uR5a6a
-        5oiQ5YqfCQQAAAAGDwAAAA5CaW5kaW5nU3VjY2VlZAD/////CQQAAAD/////CQQAAAAAAAAABQgAAAAd
-        U3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0No
-        ZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtl
-        eQpDaGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGEQAAABznu5HlrprlpLHotKUt5ZCN56ew6KKr5Y2g
-        55SoCQQAAAAGEwAAABpCaW5kaW5nRmFpbER1ZVRvT2NjdXBhdGlvbgD/////CQQAAAD/////CQQAAAAA
-        AAAABQkAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQE
+        MAljaGlsZHJlbjEJY2hpbGRyZW4yCWNoaWxkcmVuMwljaGlsZHJlbjQJY2hpbGRyZW41CWNoaWxkcmVu
+        NgEBAQAAAQABAAQEBAQEBAQBCAgIHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUC
+        AAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5U
+        cmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dz
+        LkZvcm1zLlRyZWVOb2RlAgAAAAIAAAAGAwAAAA3nu5Hlrpov6Kej57uRBgQAAAAABgUAAAALQmluZCZV
+        bmJpbmQA/////wkEAAAA/////wkEAAAABwAAAAkHAAAACQgAAAAJCQAAAAkKAAAACQsAAAAJDAAAAAkN
+        AAAABQcAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQE
         TmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0
-        ZWRJbWFnZUtleQpDaGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGFQAAABznu5HlrprlpLHotKUt5ZCN
-        56ew5LiN5Y+v55SoCQQAAAAGFwAAABdCaW5kaW5nRmFpbER1ZVRvSW52YWxpZAD/////CQQAAAD/////
-        CQQAAAAAAAAABQoAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRp
-        cFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQ
-        U2VsZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGGQAAABnnu5HlrprlpLHo
-        tKUt5bey57uP57uR5a6aCQQAAAAGGwAAAB1CaW5kaW5nRmFpbER1ZVRvQWxyZWFkeUJpbmRlZAD/////
-        CQQAAAD/////CQQAAAAAAAAABQsAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRl
-        eHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZElt
-        YWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGHQAAAAzo
-        p6Pnu5HmiJDlip8JBAAAAAYfAAAAEFVuYmluZGluZ1N1Y2NlZWQA/////wkEAAAA/////wkEAAAAAAAA
-        AAUMAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCQAAAARUZXh0C1Rvb2xUaXBUZXh0BE5h
-        bWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUluZGV4EFNlbGVjdGVk
-        SW1hZ2VLZXkKQ2hpbGRDb3VudAEBAQAAAQABAAEICAgCAAAABiEAAAAM6Kej57uR5aSx6LSlCQQAAAAG
-        IwAAAA1VbmJpbmRpbmdGYWlsAP////8JBAAAAP////8JBAAAAAAAAAAL
+        ZWRJbWFnZUtleQpDaGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGDgAAAAznu5HlrprmiJDlip8JBAAA
+        AAYQAAAADkJpbmRpbmdTdWNjZWVkAP////8JBAAAAP////8JBAAAAAAAAAAFCAAAAB1TeXN0ZW0uV2lu
+        ZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFn
+        ZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291
+        bnQBAQEAAAEAAQABCAgIAgAAAAYSAAAAHOe7keWumuWksei0pS3lkI3np7DooqvljaDnlKgJBAAAAAYU
+        AAAAGkJpbmRpbmdGYWlsRHVlVG9PY2N1cGF0aW9uAP////8JBAAAAP////8JBAAAAAAAAAAFCQAAAB1T
+        eXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hl
+        Y2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5
+        CkNoaWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYWAAAAHOe7keWumuWksei0pS3lkI3np7DkuI3lj6/n
+        lKgJBAAAAAYYAAAAF0JpbmRpbmdGYWlsRHVlVG9JbnZhbGlkAP////8JBAAAAP////8JBAAAAAAAAAAF
+        CgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1l
+        CUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZElt
+        YWdlS2V5CkNoaWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYaAAAAGee7keWumuWksei0pS3lt7Lnu4/n
+        u5HlrpoJBAAAAAYcAAAAHUJpbmRpbmdGYWlsRHVlVG9BbHJlYWR5QmluZGVkAP////8JBAAAAP////8J
+        BAAAAAAAAAAFCwAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlw
+        VGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBT
+        ZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYeAAAADOino+e7keaIkOWK
+        nwkEAAAABiAAAAAQVW5iaW5kaW5nU3VjY2VlZAD/////CQQAAAD/////CQQAAAAAAAAABQwAAAAdU3lz
+        dGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNr
+        ZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpD
+        aGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGIgAAAAzop6Pnu5HlpLHotKUJBAAAAAYkAAAADVVuYmlu
+        ZGluZ0ZhaWwA/////wkEAAAA/////wkEAAAAAAAAAAUNAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRy
+        ZWVOb2RlCQAAAARUZXh0C1Rvb2xUaXBUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VL
+        ZXkSU2VsZWN0ZWRJbWFnZUluZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAQAAAQABAAEI
+        CAgCAAAABiYAAAAP5Yqf6IO96KKr56aB55SoCQQAAAAGKAAAAA1CaW5kZXJEaXNhYmxlAP////8JBAAA
+        AP////8JBAAAAAAAAAAL
 </value>
   </data>
   <data name="SettingEventTreeView.Nodes1" mimetype="application/x-microsoft.net.object.binary.base64">

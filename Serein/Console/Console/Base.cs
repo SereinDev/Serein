@@ -4,7 +4,6 @@ using Serein.Server;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Serein.Console
 {
@@ -74,8 +73,8 @@ namespace Serein.Console
         public static void Start()
         {
             Logger.Output(Items.LogType.Info, "Welcome.");
-            Logger.Output(Items.LogType.Info, "你可以输入\"help\"获取更多信息");
             Global.OnLoaded();
+            Logger.Output(Items.LogType.Info, "你可以输入“help”获取更多信息");
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (_, e) =>
             {

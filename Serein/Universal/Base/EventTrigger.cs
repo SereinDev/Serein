@@ -45,6 +45,7 @@ namespace Serein.Base
                 case Items.EventType.BindingFailDueToOccupation:
                 case Items.EventType.BindingFailDueToInvalid:
                 case Items.EventType.BindingFailDueToAlreadyBinded:
+                case Items.EventType.BinderDisable:
                 case Items.EventType.UnbindingSucceed:
                 case Items.EventType.UnbindingFail:
                 case Items.EventType.GroupIncrease:
@@ -60,6 +61,7 @@ namespace Serein.Base
                         Items.EventType.BindingFailDueToAlreadyBinded => Global.Settings.Event.BindingFailDueToAlreadyBinded,
                         Items.EventType.UnbindingSucceed => Global.Settings.Event.UnbindingSucceed,
                         Items.EventType.UnbindingFail => Global.Settings.Event.UnbindingFail,
+                        Items.EventType.BinderDisable => Global.Settings.Event.BinderDisable,
                         Items.EventType.GroupIncrease => Global.Settings.Event.GroupIncrease,
                         Items.EventType.GroupDecrease => Global.Settings.Event.GroupDecrease,
                         Items.EventType.GroupPoke => Global.Settings.Event.GroupPoke,

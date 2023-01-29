@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/obj/**": true,
+        "**/bin/**": true,
         "**/packages/**": true
     }
 }

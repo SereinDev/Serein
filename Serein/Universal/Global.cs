@@ -3,6 +3,7 @@ using Ookii.Dialogs.Wpf;
 using System.Diagnostics;
 #endif
 using Serein.Base;
+using Serein.Extensions;
 using Serein.Items;
 using Serein.JSPlugin;
 using Serein.Settings;
@@ -116,25 +117,27 @@ namespace Serein
         {
             IO.StartSavingAndUpdating();
             System.Threading.Tasks.Task.Run(JSPluginManager.Load);
-#if !CONSOLE
-            if (Global.FirstOpen)
+            if (FirstOpen)
             {
                 ShowWelcomePage();
             }
-#endif
             IList<string> args = Environment.GetCommandLineArgs();
-            if (Global.Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
-            {
-                System.Threading.Tasks.Task.Run(Websocket.Connect);
-            }
-            if (Global.Settings.Serein.AutoRun.StartServer || args.Contains("auto_start"))
-            {
-                System.Threading.Tasks.Task.Run(ServerManager.Start);
-            }
             if (File.Exists("Updater.exe"))
             {
                 File.Delete("Updater.exe");
             }
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                (Settings.Serein.AutoRun.Delay > 0 ? Settings.Serein.AutoRun.Delay : 0).ToSleepFor();
+                if (Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
+                {
+                    System.Threading.Tasks.Task.Run(Websocket.Open);
+                }
+                if (Settings.Serein.AutoRun.StartServer || args.Contains("auto_start"))
+                {
+                    System.Threading.Tasks.Task.Run(ServerManager.Start);
+                }
+            });
         }
 
         /// <summary>
@@ -164,6 +167,14 @@ namespace Serein
             };
             taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
+#else       
+            Logger.Output(LogType.Info,
+                "欢迎使用Serein！！\n"+
+                "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助OwO\n" +
+                "◦ 官网文档：\x1b[4m\x1b[36mhttps://serein.cc\x1b[0m\n" +
+                "◦ GitHub仓库：\x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein\x1b[0m\n" +
+                "◦ 交流群：\x1b[4m\x1b[36m954829203\x1b[0m\n" +
+                "（控制台不支持超链接，你可以复制后到浏览器中打开）");
 #endif
         }
     }

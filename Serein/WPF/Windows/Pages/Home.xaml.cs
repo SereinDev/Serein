@@ -71,7 +71,7 @@ namespace Serein.Windows.Pages
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(0);
-                        Websocket.Connect();
+                        Websocket.Open();
                     }
                     break;
                 case "Task":

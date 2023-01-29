@@ -5,6 +5,7 @@
         public bool AutoUpdate;
         public bool ColorfulLog = true;
         public bool DPIAware;
+        public bool DisableBinderWhenServerClosed;
         public bool EnableGetUpdate = true;
         public Pages Pages = new();
         public int MaxCacheLines = 250;
@@ -18,6 +19,7 @@
     {
         public bool StartServer;
         public bool ConnectWS;
+        public int Delay;
     }
 
     internal class DevelopmentTool

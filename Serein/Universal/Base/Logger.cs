@@ -306,6 +306,7 @@ namespace Serein.Base
 #elif WPF
                     Catalog.Debug?.AppendText($"{DateTime.Now:T} {line}");
 #endif
+                    Debug.WriteLine(line);
                     IO.CreateDirectory(Path.Combine("logs", "debug"));
                     try
                     {
@@ -339,7 +340,7 @@ namespace Serein.Base
         /// <param name="line">输出行</param>
         private static void WriteLine(int level, string line, bool usingTitle = false)
         {
-            if (line == "#clear" || string.IsNullOrEmpty(line) || string.IsNullOrWhiteSpace(line))
+            if (line == "#clear")
             {
                 return;
             }

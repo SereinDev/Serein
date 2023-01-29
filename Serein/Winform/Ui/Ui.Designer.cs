@@ -219,6 +219,7 @@ namespace Serein.Ui
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SettingSereinAutoUpdate = new System.Windows.Forms.CheckBox();
             ServerPanelInfo = new System.Windows.Forms.GroupBox();
             ServerPanelInfoCPU = new System.Windows.Forms.Label();
             ServerPanelInfoTime = new System.Windows.Forms.Label();
@@ -1122,6 +1123,7 @@ namespace Serein.Ui
             // 
             // SettingSerein
             // 
+            this.SettingSerein.Controls.Add(this.SettingSereinAutoUpdate);
             this.SettingSerein.Controls.Add(this.SettingSereinStatement1);
             this.SettingSerein.Controls.Add(this.SettingSereinShowWelcomePage);
             this.SettingSerein.Controls.Add(this.SettingSereinEnableDPIAware);
@@ -1696,6 +1698,14 @@ namespace Serein.Ui
             this.StripStatusLabel.Name = "StripStatusLabel";
             resources.ApplyResources(this.StripStatusLabel, "StripStatusLabel");
             // 
+            // SettingSereinAutoUpdate
+            // 
+            resources.ApplyResources(this.SettingSereinAutoUpdate, "SettingSereinAutoUpdate");
+            this.SettingSereinAutoUpdate.Name = "SettingSereinAutoUpdate";
+            this.SettingSereinAutoUpdate.UseVisualStyleBackColor = true;
+            this.SettingSereinAutoUpdate.Click += new System.EventHandler(this.SettingSereinAutoUpdate_Click);
+            this.SettingSereinAutoUpdate.MouseHover += new System.EventHandler(this.SettingSereinAutoUpdate_MouseHover);
+            // 
             // Ui
             // 
             this.AllowDrop = true;
@@ -1934,6 +1944,7 @@ namespace Serein.Ui
         private System.Windows.Forms.TextBox SettingServerLineTerminator;
         private System.Windows.Forms.Label SettingServerLineTerminatorLabel;
         private System.Windows.Forms.ToolStripMenuItem JSPluginListContextMenuStrip_Disable;
+        private System.Windows.Forms.CheckBox SettingSereinAutoUpdate;
     }
 }
 

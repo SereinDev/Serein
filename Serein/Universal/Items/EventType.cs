@@ -29,6 +29,7 @@
         BindingFailDueToAlreadyBinded,
         UnbindingSucceed,
         UnbindingFail,
+        BinderDisable,
 
         RequestingMotdpeSucceed,
         RequestingMotdjeSucceed,

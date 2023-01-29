@@ -137,7 +137,7 @@ namespace Serein.Server
             else
             {
 #if CONSOLE
-                Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\r\n");
+                Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\n");
 #else
                 Logger.Output(LogType.Server_Clear);
 #endif
@@ -235,11 +235,9 @@ namespace Serein.Server
         {
             if (quiet)
             {
-                if (!Status)
+                if (Status)
                 {
-                    return false;
-                }
-                try
+                    try
                 {
                     ServerProcess.Kill();
                     IsStoppedByUser = true;
@@ -250,7 +248,7 @@ namespace Serein.Server
                 {
                     Logger.Output(LogType.Debug, e);
                 }
-                return false;
+                }
             }
             else if (!Status)
             {
@@ -272,16 +270,14 @@ namespace Serein.Server
                     }
                     catch (Exception e)
                     {
-                        Logger.Output(LogType.Warn, "强制结束失败：\r\n", e.Message);
+                        Logger.Output(LogType.Warn, "强制结束失败：\n", e.Message);
                         Logger.Output(LogType.Debug, e);
-                        return false;
                     }
                 }
                 else
                 {
                     LastKillTime = nowTime;
-                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein kill）以确认此操作");
-                    return false;
+                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein s k）以确认此操作");
                 }
             }
 #else

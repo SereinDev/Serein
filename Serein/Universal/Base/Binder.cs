@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Items;
+using Serein.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace Serein.Base
         /// <param name="value">值</param>
         /// <param name="userID">用户ID</param>
         /// <param name="groupID">群聊ID</param>
-        public static void Bind(JObject jsonObject, string value, long userID, long groupID = -1)
+        public static void Bind(JObject jsonObject, string value, long userID, long groupID)
         {
             value = value.Trim();
             if (Global.MemberDict.ContainsKey(userID))
@@ -71,6 +72,10 @@ namespace Serein.Base
             else if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID);
+            }
+            if (Global.Settings.Serein.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
+            {
+                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
             }
             else if (GameIDs.Contains(value))
             {
@@ -102,16 +107,23 @@ namespace Serein.Base
         /// <param name="groupID">群聊ID</param>
         public static void UnBind(long userID, long groupID)
         {
-            lock (Global.MemberDict)
+            if (Global.Settings.Serein.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
-                if (Global.MemberDict.Remove(userID))
+                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
+            }
+            else
+            {
+                lock (Global.MemberDict)
                 {
-                    IO.SaveMember();
-                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID);
-                }
-                else
-                {
-                    EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID);
+                    if (Global.MemberDict.Remove(userID))
+                    {
+                        IO.SaveMember();
+                        EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID);
+                    }
+                    else
+                    {
+                        EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID);
+                    }
                 }
             }
         }

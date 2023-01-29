@@ -88,7 +88,7 @@ namespace Serein.Base
                 {
                     JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult()));
                     string version = jsonObject.TryGetString("tag_name");
-                    if (LastVersion != version)
+                    if (LastVersion != version && !string.IsNullOrEmpty(version))
                     {
                         if (version != Global.VERSION)
                         {

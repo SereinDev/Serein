@@ -29,7 +29,7 @@ namespace Serein.Windows.Pages.Function
         private bool Restored;
 
         private void Connect_Click(object sender, RoutedEventArgs e)
-            => Websocket.Connect();
+            => Websocket.Open();
         private void Disconnect_Click(object sender, RoutedEventArgs e)
             => Websocket.Close();
         public void AppendText(string Line)

@@ -35,7 +35,7 @@ namespace Serein.Base
         /// <summary>
         /// 连接WS
         /// </summary>
-        public static void Connect()
+        public static void Open()
         {
             if (Status)
             {
@@ -82,7 +82,7 @@ namespace Serein.Base
                                 }
                                 if (Reconnect && !Status)
                                 {
-                                    Connect();
+                                    Open();
                                 }
                             });
                         }

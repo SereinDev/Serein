@@ -15,7 +15,6 @@ namespace Serein.Base
             {
                 ExtractConsoleFile(Resources.console_html, "console.html");
                 ExtractConsoleFile(Resources.preset_css, "preset.css");
-                Global.FirstOpen = true;
             }
         }
 

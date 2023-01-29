@@ -31,6 +31,7 @@
                     <TreeViewItem Header="绑定失败-已经绑定" Tag="BindingFailDueToAlreadyBinded" />
                     <TreeViewItem Header="解绑成功" Tag="UnbindingSucceed" />
                     <TreeViewItem Header="解绑失败" Tag="UnbindingFail" />
+                    <TreeViewItem Header="绑定功能禁用" Tag="BinderDisable" />
                 </TreeViewItem>
                 <TreeViewItem Header="服务器状态变更">
                     <TreeViewItem Header="启动" Tag="ServerStart" />

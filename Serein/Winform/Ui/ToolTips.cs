@@ -77,8 +77,9 @@ namespace Serein.Ui
         private void SettingBotEnbaleParseAt_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "自动替换\"@***\"和\"[CQ:at,qq=***]\"为@群昵称（仅输出到服务器时替换）");
 
-        private void SettingSereinEnableGetAnnouncement_MouseHover(object sender, EventArgs e)
-            => ShowToolTip(sender, "启动后自动获取公告（建议开启）");
+        
+        private void SettingSereinAutoUpdate_MouseHover(object sender, System.EventArgs e)
+            => ShowToolTip(sender, "Serein关闭后自动替换新版本");
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "启动后自动获取更新（建议开启）");
         private void SettingSereinAbout_MouseHover(object sender, EventArgs e)

@@ -273,41 +273,41 @@ namespace Serein.Base
         /// </summary>
         public static void ReadSettings()
         {
-            CreateDirectory("settings");
-            if (File.Exists(Path.Combine("settings", "Server.json")))
-            {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
-            }
-            if (File.Exists(Path.Combine("settings", "Serein.json")))
-            {
-                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new Settings.Serein();
-            }
-            if (File.Exists(Path.Combine("settings", "Bot.json")))
-            {
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
-            }
-            if (File.Exists(Path.Combine("settings", "Matches.json")))
-            {
-                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)) ?? new Matches();
-                File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
-            }
-            else
-            {
-                File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-            }
-            if (File.Exists(Path.Combine("settings", "Event.json")))
-            {
-                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new Settings.Event();
-                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
-                SaveEventSetting();
-            }
-            else
-            {
-                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(new Settings.Event(), Formatting.Indented));
-            }
             if (((IList<string>)Environment.GetCommandLineArgs()).Contains("debug"))
             {
                 Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
+            }
+            if (!Directory.Exists("settings"))
+            {
+                Global.FirstOpen = true;
+                Directory.CreateDirectory("settings");
+                File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
+                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(new Event(), Formatting.Indented));
+            }
+            else
+            {
+                if (File.Exists(Path.Combine("settings", "Server.json")))
+                {
+                    Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
+                }
+                if (File.Exists(Path.Combine("settings", "Serein.json")))
+                {
+                    Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new Settings.Serein();
+                }
+                if (File.Exists(Path.Combine("settings", "Bot.json")))
+                {
+                    Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
+                }
+                if (File.Exists(Path.Combine("settings", "Matches.json")))
+                {
+                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)) ?? new Matches();
+                    File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
+                }
+                if (File.Exists(Path.Combine("settings", "Event.json")))
+                {
+                    Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new Settings.Event();
+                    File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+                }
             }
         }
 

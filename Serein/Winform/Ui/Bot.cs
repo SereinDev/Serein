@@ -16,7 +16,7 @@ namespace Serein.Ui
         }
 
         private void BotWebBrowser_AppendText(object[] objects) => BotWebBrowser.Document.InvokeScript("AppendText", objects);
-        private void BotConnect_Click(object sender, EventArgs e) => Websocket.Connect();
+        private void BotConnect_Click(object sender, EventArgs e) => Websocket.Open();
         private void BotClose_Click(object sender, EventArgs e) => Websocket.Close();
     }
 }
