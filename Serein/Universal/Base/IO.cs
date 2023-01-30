@@ -68,7 +68,7 @@ namespace Serein.Base
         /// 读取正则文件
         /// </summary>
         /// <param name="filename">路径</param>
-        public static void ReadRegex(string filename = null)
+        public static void ReadRegex(string filename = null, bool append = false)
         {
             CreateDirectory("data");
             filename ??= Path.Combine("data", "regex.json");
@@ -80,7 +80,7 @@ namespace Serein.Base
                     if (filename.ToLowerInvariant().EndsWith(".tsv"))
                     {
                         string line;
-                        List<Regex> list = new();
+                        List<Regex> list = append ? Global.RegexList : new();
                         while ((line = streamReader.ReadLine()) != null)
                         {
                             Regex regex = new();
@@ -103,17 +103,24 @@ namespace Serein.Base
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
                         if (jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
                         {
-                            Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                            if (append)
+                            {
+                                lock (Global.RegexList)
+                                {
+                                    ((JArray)jsonObject["data"]).ToObject<List<Regex>>().ForEach((i) => Global.RegexList.Add(i));
+                                }
+                            }
+                            else
+                            {
+                                Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                            }
                         }
                     }
                     streamReader.Close();
                     streamReader.Dispose();
                 }
             }
-            else
-            {
-                SaveRegex();
-            }
+            SaveRegex();
         }
 
         /// <summary>
@@ -244,10 +251,7 @@ namespace Serein.Base
                 streamReader.Close();
                 streamReader.Dispose();
             }
-            else
-            {
-                SaveTask();
-            }
+            SaveTask();
         }
 
         /// <summary>

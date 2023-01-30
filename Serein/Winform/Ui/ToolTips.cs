@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -77,7 +77,6 @@ namespace Serein.Ui
         private void SettingBotEnbaleParseAt_MouseHover(object sender, EventArgs e)
             => ShowToolTip(sender, "自动替换\"@***\"和\"[CQ:at,qq=***]\"为@群昵称（仅输出到服务器时替换）");
 
-        
         private void SettingSereinAutoUpdate_MouseHover(object sender, System.EventArgs e)
             => ShowToolTip(sender, "Serein关闭后自动替换新版本");
         private void SettingSereinEnableGetUpdate_MouseHover(object sender, EventArgs e)

@@ -1,4 +1,4 @@
-﻿#if !CONSOLE
+#if !CONSOLE
 using Ookii.Dialogs.Wpf;
 using System.Diagnostics;
 #endif
@@ -25,6 +25,20 @@ namespace Serein
         /// 版本号
         /// </summary>
         public const string VERSION = "v1.3.4";
+
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public const string TYPE =
+#if CONSOLE
+            "console";
+#elif WINFORM
+            "winform";
+#elif WPF
+            "wpf";
+#else
+            "unknown";
+#endif
 
         /// <summary>
         /// 正则项列表
@@ -169,7 +183,7 @@ namespace Serein
             taskDialog.ShowDialog();
 #else       
             Logger.Output(LogType.Info,
-                "欢迎使用Serein！！\n"+
+                "欢迎使用Serein！！\n" +
                 "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助OwO\n" +
                 "◦ 官网文档：\x1b[4m\x1b[36mhttps://serein.cc\x1b[0m\n" +
                 "◦ GitHub仓库：\x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein\x1b[0m\n" +

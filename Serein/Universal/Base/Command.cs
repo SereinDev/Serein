@@ -185,6 +185,28 @@ namespace Serein.Base
                         Task.Run(() => JSEngine.Init(true).Execute(value));
                     }
                     break;
+                case Items.CommandType.ExecuteJavascriptCodesWithNamespace:
+                    if (inputType != 5)
+                    {
+                        string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
+                        Task.Run(() =>
+                        {
+                            if (JSPluginManager.PluginDict.ContainsKey(key))
+                            {
+                                string e;
+                                lock (JSPluginManager.PluginDict[key].Engine)
+                                {
+                                    JSPluginManager.PluginDict[key].Engine = JSEngine.Run(value, JSPluginManager.PluginDict[key].Engine, out e);
+                                }
+                                if (!string.IsNullOrEmpty(e))
+                                {
+                                    Logger.Output(Items.LogType.Plugin_Error, $"[{key}]", "通过命令执行时错误：\n", e);
+                                }
+                            }
+                        });
+                    }
+
+                    break;
                 case Items.CommandType.DebugOutput:
                     Logger.Output(Items.LogType.Debug, "[DebugOutput]", value);
                     break;
@@ -205,7 +227,8 @@ namespace Serein.Base
         /// <returns>类型</returns>
         public static Items.CommandType GetType(string command)
         {
-            if (!command.Contains("|") ||
+            if (string.IsNullOrEmpty(command) ||
+                !command.Contains("|") ||
                 !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase))
             {
                 return Items.CommandType.Invalid;
@@ -253,6 +276,11 @@ namespace Serein.Base
                         Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
                     {
                         return Items.CommandType.SendGivenPrivateMsg;
+                    }
+                    if (Regex.IsMatch(command, @"^js:[^\|]+\|", RegexOptions.IgnoreCase) ||
+                        Regex.IsMatch(command, @"^javascript:[^\|]+\|", RegexOptions.IgnoreCase))
+                    {
+                        return Items.CommandType.ExecuteJavascriptCodesWithNamespace;
                     }
                     return Items.CommandType.Invalid;
             }

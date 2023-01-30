@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -8,7 +8,7 @@ namespace Serein.Windows.Pages.Settings
     public partial class Serein : UiPage
     {
         private readonly new bool Loaded;
-        
+
         public Serein()
         {
             InitializeComponent();

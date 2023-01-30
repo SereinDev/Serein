@@ -18,11 +18,11 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Regex = this;
         }
 
-        public void Load() => Load(null);
+        public void Load() => Load(null, false);
 
-        public void Load(string filename)
+        public void Load(string filename, bool append)
         {
-            IO.ReadRegex(filename);
+            IO.ReadRegex(filename, append);
             RegexListView.Items.Clear();
             foreach (Items.Regex regex in Global.RegexList)
             {

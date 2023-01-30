@@ -135,29 +135,29 @@ namespace Serein.Ui
                 return;
             }
             string isAdminText = string.Empty;
-            ListViewItem Item = new ListViewItem(regex);
+            ListViewItem item = new(regex);
             isAdminText = areaIndex == 4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
-            Item.SubItems.Add(Regex.AreaArray[areaIndex]);
-            Item.SubItems.Add(isAdminText);
-            Item.SubItems.Add(remark);
-            Item.SubItems.Add(command);
+            item.SubItems.Add(Regex.AreaArray[areaIndex]);
+            item.SubItems.Add(isAdminText);
+            item.SubItems.Add(remark);
+            item.SubItems.Add(command);
             if (RegexList.InvokeRequired)
             {
-                Action<ListViewItem> actionDelegate = (x) =>
+                Action actionDelegate = () =>
                 {
-                    RegexList.Items.Add(Item);
+                    RegexList.Items.Add(item);
                 };
-                ServerPanelInfoPlayerCount2.Invoke(actionDelegate, Item);
+                ServerPanelInfoPlayerCount2.Invoke(actionDelegate);
             }
             else
             {
                 if (RegexList.SelectedItems.Count > 0)
                 {
-                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index + 1, Item);
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index + 1, item);
                 }
                 else
                 {
-                    RegexList.Items.Add(Item);
+                    RegexList.Items.Add(item);
                 }
             }
         }
@@ -171,11 +171,11 @@ namespace Serein.Ui
             RegexList.EndUpdate();
         }
 
-        private void LoadRegex(string filename = null)
+        private void LoadRegex(string filename = null, bool append = false)
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            IO.ReadRegex(filename);
+            IO.ReadRegex(filename, append);
             foreach (Regex Item in Global.RegexList)
             {
                 if (Item.Check())

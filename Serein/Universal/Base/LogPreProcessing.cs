@@ -55,7 +55,6 @@ namespace Serein.Base
         {
             string result = Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
             result = Regex.Replace(result, @"\x1b", string.Empty);
-            result = Regex.Replace(result, @"\s+?$", string.Empty);
             StringBuilder stringBuilder = new();
             for (int i = 0; i < result.Length; i++)
             {

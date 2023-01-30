@@ -212,6 +212,9 @@ namespace Serein.JSPlugin
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// 获取完整报错信息
+        /// </summary>
         public static string GetFullMsg(this Exception e)
         {
             if (e.InnerException is JavaScriptException javaScriptException)
@@ -222,6 +225,77 @@ namespace Serein.JSPlugin
             {
                 return (e.InnerException ?? e).Message;
             }
+        }
+
+        /// <summary>
+        /// 添加正则
+        /// </summary>
+        /// <returns>结果</returns>
+        public static bool AddRegex(string exp, int area, bool needAdmin, string command, string remark)
+        {
+            if (exp.TestRegex() &&
+                area <= 4 && area >= 0 &&
+                Command.GetType(command) != CommandType.Invalid)
+            {
+                lock (Global.RegexList)
+                {
+                    Global.RegexList.Add(new()
+                    {
+                        Expression = exp,
+                        Area = area,
+                        IsAdmin = needAdmin,
+                        Command = command,
+                        Remark = remark ?? string.Empty
+                    });
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 修改正则
+        /// </summary>
+        /// <returns>结果</returns>
+        public static bool EditRegex(int index, string exp, int area, bool needAdmin, string command, string remark)
+        {
+            if (index < Global.RegexList.Count &&
+                index >= 0 &&
+                exp.TestRegex() &&
+                area <= 4 && area >= 0 &&
+                Command.GetType(command) != CommandType.Invalid)
+            {
+                lock (Global.RegexList)
+                {
+                    Global.RegexList[index] = new()
+                    {
+                        Expression = exp,
+                        Area = area,
+                        IsAdmin = needAdmin,
+                        Command = command,
+                        Remark = remark ?? string.Empty
+                    };
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 删除正则
+        /// </summary>
+        /// <returns>结果</returns>
+        public static bool RemoveRegex(int index)
+        {
+            if (index < Global.RegexList.Count && index >= 0)
+            {
+                lock (Global.RegexList)
+                {
+                    Global.RegexList.RemoveAt(index);
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

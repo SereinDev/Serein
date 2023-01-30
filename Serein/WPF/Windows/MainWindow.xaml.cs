@@ -260,7 +260,7 @@ namespace Serein.Windows
                     )
                 {
                     if (Logger.MsgBox(
-                        $"是否以\"{filename}\"为启动文件？",
+                        $"确定要以\"{filename}\"为启动文件吗？",
                         "Serein", 1, 48))
                     {
                         if (Catalog.Settings.Server != null && Catalog.Settings.Server.Path != null)
@@ -273,15 +273,16 @@ namespace Serein.Windows
                 }
                 else if (Path.GetExtension(filename).ToLowerInvariant() == ".json" || Path.GetExtension(filename).ToLowerInvariant() == ".tsv")
                 {
-                    if (Logger.MsgBox($"是否导入{Path.GetFileName(filename)}？\n将覆盖原有文件且不可逆",
-                            "Serein",
-                            1,
-                            48))
+                    if (File.ReadAllText(filename).ToLowerInvariant().Contains("regex"))
                     {
-                        Catalog.Function.Regex?.Load(filename);
+                        if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入正则记录吗？", "Serein", 1, 48))
+                        {
+                            Catalog.Function.Regex?.Load(filename, Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
+                        }
+                    }
+                    else if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
+                    {
                         Catalog.Function.Task?.Load(filename);
-                        IO.SaveRegex();
-                        IO.SaveTask();
                     }
                 }
             }

@@ -160,6 +160,14 @@ namespace Serein.JSPlugin
                 new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? member.ShownName : string.Empty));
             engine.SetValue("serein_getPluginList",
                 new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
+            engine.SetValue("serein_getRegexs",
+                new Func<List<Regex>>(() => Global.RegexList));
+            engine.SetValue("serein_addRegex",
+                new Func<string, int, bool, string, string, bool>(JSFunc.AddRegex));
+            engine.SetValue("serein_editRegex",
+                new Func<int, string, int, bool, string, string, bool>(JSFunc.EditRegex));
+            engine.SetValue("serein_removeRegex",
+                new Func<int, bool>(JSFunc.RemoveRegex));
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
@@ -203,7 +211,11 @@ namespace Serein.JSPlugin
                     getGroupCache: serein_getGroupCache,
                     getPluginList: serein_getPluginList,
                     getUserName: serein_getUserName,
-                    loadFrom: require
+                    loadFrom: require,
+                    getRegexs: serein_getRegexs,
+                    addRegex: serein_addRegex,
+                    editRegex: serein_editRegex,
+                    removeRegex: serein_removeRegex,
                     };"
             );
             return engine;

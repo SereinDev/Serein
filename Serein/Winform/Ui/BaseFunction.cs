@@ -121,24 +121,26 @@ namespace Serein.Ui
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd());
                     streamReader.Close();
                     if (
-                        jsonObject["type"].ToString().ToUpperInvariant() == "REGEX"
-                        &&
-                        (int)MessageBox.Show(
-                            this,
-                            "是否导入正则记录？\n将覆盖原有文件且不可逆",
-                            "Serein",
-                            MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Warning
-                        ) == 1)
+                        jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
                     {
-                        LoadRegex(filename);
-                        SaveRegex();
+                        DialogResult dialogResult = MessageBox.Show(
+                            this,
+                            $"确定要从{filename}导入正则记录并合并吗？\n否则将覆盖原有文件\n二者均将覆盖原有文件且不可逆",
+                            "Serein",
+                            MessageBoxButtons.YesNoCancel,
+                            MessageBoxIcon.Warning
+                        );
+                        if (dialogResult != DialogResult.Cancel)
+                        {
+                            LoadRegex(filename, dialogResult == DialogResult.Yes);
+                            SaveRegex();
+                        }
                     }
                     else if (jsonObject["type"].ToString().ToUpperInvariant() == "TASK"
                         &&
                         (int)MessageBox.Show(
                             this,
-                            "是否导入定时任务？\n将覆盖原有文件且不可逆",
+                            "确定从{filename}导入定时任务吗？\n此操作将覆盖原有文件且不可逆",
                             "Serein",
                             MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Warning

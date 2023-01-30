@@ -1,4 +1,4 @@
-﻿using Serein.Base;
+using Serein.Base;
 using Serein.Items;
 using Serein.Items.Motd;
 using Serein.JSPlugin;
@@ -238,16 +238,16 @@ namespace Serein.Server
                 if (Status)
                 {
                     try
-                {
-                    ServerProcess.Kill();
-                    IsStoppedByUser = true;
-                    Restart = false;
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Logger.Output(LogType.Debug, e);
-                }
+                    {
+                        ServerProcess.Kill();
+                        IsStoppedByUser = true;
+                        Restart = false;
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Output(LogType.Debug, e);
+                    }
                 }
             }
             else if (!Status)
@@ -515,7 +515,7 @@ namespace Serein.Server
                 {
                     Motd = new Motdpe(Global.Settings.Server.Port);
                 }
-                else
+                else if (Global.Settings.Server.Type == 2)
                 {
                     Motd = new Motdje(Global.Settings.Server.Port);
                 }

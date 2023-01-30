@@ -15,7 +15,8 @@ namespace Serein.Settings
 
         public string[] MuiltLines =
         {
-            @"players\sonline:"
+            @"players\sonline:",
+            "个玩家在线"
         };
 
         public Matches()

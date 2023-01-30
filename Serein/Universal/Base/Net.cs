@@ -172,15 +172,7 @@ namespace Serein.Base
         /// </summary>
         private static bool IsFileMatched(string name)
         {
-#if CONSOLE
-            if (name.Contains("console"))
-#elif WINFORM
-            if (name.Contains("winform"))
-#elif WPF
-            if (name.Contains("wpf"))
-#else
-            if (false)
-#endif
+            if (name.Contains(Global.TYPE))
             {
                 string netVer = Environment.Version.Major.ToString();
                 return !(Environment.OSVersion.Platform == PlatformID.Unix ^ name.Contains("unix")) &&

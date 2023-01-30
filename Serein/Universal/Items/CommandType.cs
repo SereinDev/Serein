@@ -71,6 +71,11 @@
         ExecuteJavascriptCodes,
 
         /// <summary>
+        /// 在指定命名空间执行JS代码
+        /// </summary>
+        ExecuteJavascriptCodesWithNamespace,
+
+        /// <summary>
         /// 调试输出
         /// </summary>
         DebugOutput
