@@ -19,13 +19,26 @@
 
 .markdown-section h1,
 .markdown-section h2,
-.markdown-section h3,
+.markdown-section h3 {
+    border-bottom: #D8DEE4 solid 2px;
+}
+
 .markdown-section h4,
 .markdown-section h5,
 .markdown-section h6 {
-    border-bottom: #D8DEE4 solid 2px;
+    border-bottom: #D8DEE4 solid 1px;
 }
 
 .v[data-class=v] .vcards .vcard .vh .vmeta .vat {
     color: var(--theme-color);
+}
+
+.leancloud_visitors {
+    text-align: right;
+    font-size: 5px !important;
+    position: absolute;
+    transform: translateY(15px);
+    right: 15px;
+    user-select: none;
+    color: #bbb;
 }
