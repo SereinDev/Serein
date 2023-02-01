@@ -6,16 +6,45 @@ using Serein.Base;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 
 namespace Serein.JSPlugin
 {
     internal class Plugin : IDisposable
     {
-        public Plugin(string @namespace = null)
+        public Plugin(string @namespace, PreLoadConfig config)
         {
             Namespace = @namespace ?? throw new ArgumentOutOfRangeException();
-            Engine = JSEngine.Init(false, Namespace, TokenSource);
+            PreLoadConfig = config;
+            List<Assembly> assemblies = new();
+            if (PreLoadConfig != null)
+            {
+                foreach (string assembly in config.Load)
+                {
+                    try
+                    {
+                        assemblies.Add(Assembly.Load(assembly));
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Output(LogType.Plugin_Error, $"加载程序集“{assembly}”时出现异常：", e.Message);
+                    }
+                }
+                foreach (string assemblyPath in config.LoadFrom)
+                {
+                    try
+                    {
+                        assemblies.Add(Assembly.LoadFrom(Path.Combine(Global.PATH, assemblyPath)));
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Output(LogType.Plugin_Error, $"从“{Path.Combine(Global.PATH, assemblyPath)}”加载程序集时出现异常：", e.Message);
+                    }
+                }
+            }
+            Engine = JSEngine.Init(false, Namespace, TokenSource, assemblies.ToArray());
             Name = @namespace;
         }
 
@@ -90,6 +119,11 @@ namespace Serein.JSPlugin
         /// </summary>
         [JsonIgnore]
         private readonly Dictionary<EventType, Delegate> EventDict = new();
+
+        /// <summary>
+        /// 预加载配置
+        /// </summary>
+        public readonly PreLoadConfig PreLoadConfig;
 
         /// <summary>
         /// 事件列表

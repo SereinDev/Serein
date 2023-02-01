@@ -57,8 +57,9 @@ namespace Serein.Console
             }
 #if UNIX
             if (Environment.OSVersion.Platform != PlatformID.Unix)
-                {Logger.Output(Items.LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
-}
+            {
+                Logger.Output(Items.LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+            }
 #else
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {

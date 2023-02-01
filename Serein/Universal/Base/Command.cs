@@ -30,7 +30,7 @@ namespace Serein.Base
             {
                 StartInfo = new()
                 {
-                    FileName = "cmd.exe",
+                    FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd.exe" : "/bin/bash",
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     CreateNoWindow = true,
@@ -40,8 +40,7 @@ namespace Serein.Base
             process.Start();
             StreamWriter commandWriter = new(process.StandardInput.BaseStream, Encoding.Default)
             {
-                AutoFlush = true,
-                NewLine = "\r\n"
+                AutoFlush = true
             };
             commandWriter.WriteLine(command.TrimEnd('\r', '\n'));
             commandWriter.Close();
@@ -114,30 +113,20 @@ namespace Serein.Base
                     {
                         value = ParseAt(value, groupID);
                     }
-                    value = Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]");
-                    value = Regex.Replace(value, @"\[CQ:([^,]+?),.+?\]", "[$1]");
+                    value = Regex.Replace(Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]"), @"\[CQ:([^,]+?),.+?\]", "[$1]");
                     ServerManager.InputCommand(value, type == Items.CommandType.ServerInputWithUnicode, true);
                     break;
                 case Items.CommandType.SendGivenGroupMsg:
-                    if (Websocket.Status)
-                    {
-                        Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
-                    }
+                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
                     break;
                 case Items.CommandType.SendGivenPrivateMsg:
-                    if (Websocket.Status)
-                    {
-                        Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
-                    }
+                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
                     break;
                 case Items.CommandType.SendGroupMsg:
-                    if (Websocket.Status)
-                    {
-                        Websocket.Send(false, value, groupID, inputType != 4);
-                    }
+                    Websocket.Send(false, value, groupID, inputType != 4);
                     break;
                 case Items.CommandType.SendPrivateMsg:
-                    if ((inputType == 1 || inputType == 4) && Websocket.Status)
+                    if ((inputType == 1 || inputType == 4))
                     {
                         Websocket.Send(true, value, userID, inputType != 4);
                     }
@@ -145,44 +134,37 @@ namespace Serein.Base
                 case Items.CommandType.Bind:
                     if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
-                        Binder.Bind(
-                        json,
-                        value,
-                        userID,
-                        groupID
-                        );
+                        Binder.Bind(json, value, userID, groupID);
                     }
                     break;
                 case Items.CommandType.Unbind:
                     if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
-                        Binder.UnBind(
-                            long.TryParse(value, out long i) ? i : -1, groupID
-                            );
+                        Binder.UnBind(long.TryParse(value, out long i) ? i : -1, groupID);
                     }
                     break;
                 case Items.CommandType.RequestMotdpe:
                     if (inputType == 1 && (groupID != -1 || userID != -1))
                     {
-                        Motd _Motd = new Motdpe(value);
+                        Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
-                            _Motd.IsSuccessful ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
-                            groupID, userID, _Motd);
+                            motd.IsSuccessful ? Items.EventType.RequestingMotdpeSucceed : Items.EventType.RequestingMotdFail,
+                            groupID, userID, motd);
                     }
                     break;
                 case Items.CommandType.RequestMotdje:
                     if (inputType == 1 && (groupID != -1 || userID != -1))
                     {
-                        Motd _Motd = new Motdje(value);
+                        Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
-                            _Motd.IsSuccessful ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
-                            groupID, userID, _Motd);
+                            motd.IsSuccessful ? Items.EventType.RequestingMotdjeSucceed : Items.EventType.RequestingMotdFail,
+                            groupID, userID, motd);
                     }
                     break;
                 case Items.CommandType.ExecuteJavascriptCodes:
                     if (inputType != 5)
                     {
-                        Task.Run(() => JSEngine.Init(true).Execute(value));
+                        Task.Run(() => JSEngine.Init().Execute(value));
                     }
                     break;
                 case Items.CommandType.ExecuteJavascriptCodesWithNamespace:
@@ -205,7 +187,6 @@ namespace Serein.Base
                             }
                         });
                     }
-
                     break;
                 case Items.CommandType.DebugOutput:
                     Logger.Output(Items.LogType.Debug, "[DebugOutput]", value);
@@ -320,21 +301,21 @@ namespace Serein.Base
                 return text.Replace("\\n", "\n");
             }
             bool serverStatus = ServerManager.Status;
-            DateTime CurrentTime = DateTime.Now;
+            DateTime currentTime = DateTime.Now;
             text = Patterns.Variable.Replace(text, (match) =>
                 match.Groups[1].Value.ToLowerInvariant() switch
                 {
                     #region 时间
-                    "year" => CurrentTime.Year.ToString(),
-                    "month" => CurrentTime.Month.ToString(),
-                    "day" => CurrentTime.Day.ToString(),
-                    "hour" => CurrentTime.Hour.ToString(),
-                    "minute" => CurrentTime.Minute.ToString(),
-                    "second" => CurrentTime.Second.ToString(),
-                    "time" => CurrentTime.ToString("T"),
-                    "date" => CurrentTime.Date.ToString("d"),
-                    "dayofweek" => CurrentTime.DayOfWeek.ToString(),
-                    "datetime" => CurrentTime.ToString(),
+                    "year" => currentTime.Year.ToString(),
+                    "month" => currentTime.Month.ToString(),
+                    "day" => currentTime.Day.ToString(),
+                    "hour" => currentTime.Hour.ToString(),
+                    "minute" => currentTime.Minute.ToString(),
+                    "second" => currentTime.Second.ToString(),
+                    "time" => currentTime.ToString("T"),
+                    "date" => currentTime.Date.ToString("d"),
+                    "dayofweek" => currentTime.DayOfWeek.ToString(),
+                    "datetime" => currentTime.ToString(),
                     #endregion
 
                     "sereinversion" => Global.VERSION,
@@ -397,7 +378,7 @@ namespace Serein.Base
                     "shownname" => string.IsNullOrEmpty(jsonObject.TryGetString("sender", "card")) ? jsonObject.TryGetString("sender", "nickname") : jsonObject.TryGetString("sender", "card"),
                     #endregion
 
-                    _ => match.Groups[0].Value
+                    _ => JSPluginManager.VariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
                 }
             );
             text = Patterns.GameID.Replace(text,
@@ -423,7 +404,7 @@ namespace Serein.Base
             return text;
         }
 
-        protected static class Patterns
+        public static class Patterns
         {
             public static readonly Regex CQAt = new(@"\[CQ:at,qq=(\d+)\]", RegexOptions.Compiled);
 

@@ -277,7 +277,7 @@ namespace Serein.Server
                 else
                 {
                     LastKillTime = nowTime;
-                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入 serein s k）以确认此操作");
+                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入“serein s k”）以确认此操作");
                 }
             }
 #else
@@ -396,31 +396,32 @@ namespace Serein.Server
 #else
                     Logger.Output(LogType.Server_Output, LogPreProcessing.Color(e.Data, Global.Settings.Server.OutputStyle));
 #endif
+                    bool isMuiltLinesMode = false;
+                    foreach (string exp2 in Global.Settings.Matches.MuiltLines)
+                    {
+                        if (exp2.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
+                        {
+                            TempLine = lineFiltered.Trim('\r', '\n');
+                            isMuiltLinesMode = true;
+                            break;
+                        }
+                    }
+                    if (!isMuiltLinesMode)
+                    {
+                        if (!string.IsNullOrEmpty(TempLine))
+                        {
+                            string tempLine = TempLine + "\n" + lineFiltered;
+                            TempLine = string.Empty;
+                            Matcher.Process(tempLine);
+                        }
+                        else
+                        {
+                            Matcher.Process(lineFiltered);
+                        }
+                    }
+
                 }
                 IO.ConsoleLog(lineFiltered);
-                bool isMuiltLinesMode = false;
-                foreach (string exp2 in Global.Settings.Matches.MuiltLines)
-                {
-                    if (exp2.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
-                    {
-                        TempLine = lineFiltered.Trim('\r', '\n');
-                        isMuiltLinesMode = true;
-                        break;
-                    }
-                }
-                if (!isMuiltLinesMode)
-                {
-                    if (!string.IsNullOrEmpty(TempLine))
-                    {
-                        string tempLine = TempLine + "\n" + lineFiltered;
-                        TempLine = string.Empty;
-                        Matcher.Process(tempLine);
-                    }
-                    else
-                    {
-                        Matcher.Process(lineFiltered);
-                    }
-                }
                 JSFunc.Trigger(EventType.ServerOutput, lineFiltered);
                 JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data);
             }

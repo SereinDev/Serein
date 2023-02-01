@@ -176,7 +176,7 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                     case "sysinfo":
                         Logger.Output(Items.LogType.Info,
                             $"系统   {SystemInfo.OS}\n" +
-                            $"内存   {SystemInfo.UsedRAM}/{SystemInfo.TotalRAM} （{SystemInfo.RAMUsage:N1}%）\n" +
+                            $"内存   {SystemInfo.UsedRAM}/{SystemInfo.TotalRAM}MB （{SystemInfo.RAMUsage:N1}%）\n" +
 #if UNIX
                             $"CPU    {SystemInfo.CPUName}\n" +
 #else

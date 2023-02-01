@@ -125,7 +125,7 @@ namespace Serein.Ui
             }
         }
 
-        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command)
+        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command, long[] ignored = null)
         {
             if (
               string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
@@ -136,6 +136,7 @@ namespace Serein.Ui
             }
             string isAdminText = string.Empty;
             ListViewItem item = new(regex);
+            item.Tag = ignored;
             isAdminText = areaIndex == 4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
             item.SubItems.Add(Regex.AreaArray[areaIndex]);
             item.SubItems.Add(isAdminText);
@@ -176,11 +177,11 @@ namespace Serein.Ui
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
             IO.ReadRegex(filename, append);
-            foreach (Regex Item in Global.RegexList)
+            foreach (Regex item in Global.RegexList)
             {
-                if (Item.Check())
+                if (item.Check())
                 {
-                    AddRegex(Item.Area, Item.Expression, Item.IsAdmin, Item.Remark, Item.Command);
+                    AddRegex(item.Area, item.Expression, item.IsAdmin, item.Remark, item.Command, item.Ignored);
                 }
             }
             RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -198,6 +199,7 @@ namespace Serein.Ui
                     Area = Array.IndexOf(Regex.AreaArray, listViewItem.SubItems[1].Text),
                     IsAdmin = listViewItem.SubItems[2].Text == "是",
                     Remark = listViewItem.SubItems[3].Text,
+                    Ignored = (listViewItem.Tag as long[]) ?? new long[] { },
                     Command = listViewItem.SubItems[4].Text
                 });
             }

@@ -20,7 +20,7 @@ namespace Serein.Updater
                 Console.OutputEncoding = Encoding.UTF8;
                 Console.WriteLine(" [ A Updater For Serein ]\r\nAll is ready to start.\r\n");
                 Task.Delay(1000).GetAwaiter().GetResult();
-                foreach (string file in Directory.GetFiles("cache", "*.*", SearchOption.TopDirectoryOnly))
+                foreach (string file in Directory.GetFiles("update", "*.*", SearchOption.TopDirectoryOnly))
                 {
                     if (Path.GetExtension(file.ToLowerInvariant()) != ".zip")
                     {

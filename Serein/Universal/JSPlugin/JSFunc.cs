@@ -297,5 +297,23 @@ namespace Serein.JSPlugin
             }
             return false;
         }
+
+        public static bool SetVariable(string key, JsValue jsValue)
+        {
+            string value = jsValue.ToString();
+            if (!string.IsNullOrEmpty(value) && System.Text.RegularExpressions.Regex.IsMatch(key ?? string.Empty, @"\w+"))
+            {
+                if (JSPluginManager.VariablesDict.ContainsKey(key))
+                {
+                    JSPluginManager.VariablesDict[key] = value;
+                }
+                else
+                {
+                    JSPluginManager.VariablesDict.Add(key, value);
+                }
+                return true;
+            }
+            return false;
+        }
     }
 }

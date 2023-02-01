@@ -29,6 +29,9 @@ namespace Serein.Extensions
             return (jtoken ?? string.Empty).ToString();
         }
 
+        public static string ToJson(this object obj, Formatting formatting)
+            => obj != null ? JsonConvert.SerializeObject(obj, formatting) : string.Empty;
+
         public static string ToJson(this object obj)
             => obj != null ? JsonConvert.SerializeObject(obj) : string.Empty;
 

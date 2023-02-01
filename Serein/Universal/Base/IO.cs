@@ -21,10 +21,17 @@ namespace Serein.Base
         /// </summary>
         private static string OldSettings = string.Empty, OldMembers = string.Empty;
 
+#if !CONSOLE
         /// <summary>
-        /// 保存更新设置定时器
+        /// 保存更新设置计时器
         /// </summary>
         public static readonly Timer Timer = new(2000) { AutoReset = true };
+#endif
+
+        /// <summary>
+        /// 懒惰计时器
+        /// </summary>
+        public static readonly Timer LazyTimer = new(60000) { AutoReset = true };
 
         /// <summary>
         /// 创建目录
@@ -41,15 +48,15 @@ namespace Serein.Base
         /// <summary>
         /// 启动保存和更新设置定时器
         /// </summary>
-        public static void StartSavingAndUpdating()
+        public static void StartSaving()
         {
 #if !CONSOLE
-            Timer.Elapsed += (_, _) => UpdateSettings();
             Timer.Elapsed += (_, _) => SaveSettings();
-#endif
-            Timer.Elapsed += (_, _) => SaveMember();
-            Timer.Elapsed += (_, _) => SaveGroupCache();
             Timer.Start();
+#endif
+            LazyTimer.Elapsed += (_, _) => SaveMember();
+            LazyTimer.Elapsed += (_, _) => SaveGroupCache();
+            LazyTimer.Start();
         }
 
         /// <summary>

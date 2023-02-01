@@ -13,14 +13,13 @@ namespace Serein.Base
         public static void Trigger(Items.EventType type)
         {
             Logger.Output(Items.LogType.Debug, "Trigger:" + type);
-            string[] commandGroup = Array.Empty<string>();
-            commandGroup = type switch
+            string[] commandGroup = type switch
             {
                 Items.EventType.ServerStart => Global.Settings.Event.ServerStart,
                 Items.EventType.ServerStop => Global.Settings.Event.ServerStop,
                 Items.EventType.ServerExitUnexpectedly => Global.Settings.Event.ServerExitUnexpectedly,
                 Items.EventType.SereinCrash => Global.Settings.Event.SereinCrash,
-                _ => commandGroup
+                _ => Array.Empty<string>()
             };
             foreach (string command in commandGroup)
             {

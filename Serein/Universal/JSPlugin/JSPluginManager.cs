@@ -34,6 +34,11 @@ namespace Serein.JSPlugin
         public static Dictionary<long, Timer> Timers = new();
 
         /// <summary>
+        /// 变量字典
+        /// </summary>
+        public static Dictionary<string, string> VariablesDict = new();
+
+        /// <summary>
         /// 加载插件
         /// </summary>
         public static void Load()
@@ -54,7 +59,19 @@ namespace Serein.JSPlugin
                         Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
                         try
                         {
-                            PluginDict.Add(@namespace, new Plugin(@namespace)
+                            PreLoadConfig config = null;
+                            if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
+                            {
+                                if (File.Exists(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json")))
+                                {
+                                     config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json")));
+                                }
+                                else
+                                {
+                                    File.WriteAllText(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json"), new PreLoadConfig().ToJson(Formatting.Indented));
+                                }
+                            }
+                            PluginDict.Add(@namespace, new Plugin(@namespace, config)
                             {
                                 File = file
                             });
@@ -121,6 +138,7 @@ namespace Serein.JSPlugin
                 Logger.Output(LogType.Plugin_Clear);
                 JSFunc.ClearAllTimers();
                 JSFunc.Trigger(EventType.PluginsReload);
+                VariablesDict.Clear();
                 500.ToSleepFor();
                 PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
                 PluginDict.Clear();

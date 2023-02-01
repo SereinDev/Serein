@@ -115,8 +115,8 @@ namespace Serein.Base
         /// </summary>
         private static void DownloadNewVersion(JObject jobject)
         {
-            IO.CreateDirectory("cache");
-            foreach (string file in Directory.GetFiles("cache", "*.*", SearchOption.AllDirectories))
+            IO.CreateDirectory("update");
+            foreach (string file in Directory.GetFiles("update", "*.*", SearchOption.AllDirectories))
             {
                 if (Path.GetExtension(file.ToLowerInvariant()) != ".zip")
                 {
@@ -130,7 +130,7 @@ namespace Serein.Base
                 {
                     try
                     {
-                        if (File.Exists($"cache/{asset.TryGetString("name")}"))
+                        if (File.Exists($"update/{asset.TryGetString("name")}"))
                         {
                             Logger.Output(Items.LogType.Debug, "文件已存在，自动跳过下载");
                         }
@@ -144,7 +144,7 @@ namespace Serein.Base
                             Logger.Output(Items.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
                             Logger.Output(Items.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
                             using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
-                            using (FileStream fileStream = new($"cache/{asset.TryGetString("name")}", FileMode.Create))
+                            using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
                             {
                                 byte[] bytes = new byte[stream.Length];
                                 _ = stream.Read(bytes, 0, bytes.Length);
@@ -152,10 +152,10 @@ namespace Serein.Base
                             }
                             Logger.Output(Items.LogType.Debug, "下载成功");
                         }
-                        ZipFile.ExtractToDirectory($"cache/{asset.TryGetString("name")}", "cache");
+                        ZipFile.ExtractToDirectory($"update/{asset.TryGetString("name")}", "update");
                         Logger.Output(Items.LogType.Debug, "解压成功");
                         IsReadyToUpdate = true;
-                        Logger.Output(Items.LogType.Version_Ready, "新版本已下载完毕\n" + (Global.Settings.Serein.AutoUpdate && Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开\"cache\"文件夹复制替换"));
+                        Logger.Output(Items.LogType.Version_Ready, "新版本已下载完毕\n" + (Global.Settings.Serein.AutoUpdate && Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开“update”文件夹复制替换"));
                     }
                     catch (Exception e)
                     {

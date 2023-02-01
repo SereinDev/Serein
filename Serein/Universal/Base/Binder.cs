@@ -45,11 +45,14 @@ namespace Serein.Base
             }
             else
             {
-                Global.MemberDict.Add(userID, new Member
+                lock (Global.MemberDict)
                 {
-                    ID = userID,
-                    GameID = value
-                });
+                    Global.MemberDict.Add(userID, new Member
+                    {
+                        ID = userID,
+                        GameID = value
+                    });
+                }
                 IO.SaveMember();
                 return true;
             }
@@ -83,17 +86,16 @@ namespace Serein.Base
             }
             else
             {
-                Member member = new()
-                {
-                    ID = userID,
-                    Card = jsonObject["sender"]["card"].ToString(),
-                    Nickname = jsonObject["sender"]["nickname"].ToString(),
-                    Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
-                    GameID = value
-                };
                 lock (Global.MemberDict)
                 {
-                    Global.MemberDict.Add(userID, member);
+                    Global.MemberDict.Add(userID, new()
+                    {
+                        ID = userID,
+                        Card = jsonObject["sender"]["card"].ToString(),
+                        Nickname = jsonObject["sender"]["nickname"].ToString(),
+                        Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
+                        GameID = value
+                    });
                 }
                 IO.SaveMember();
                 EventTrigger.Trigger(EventType.BindingSucceed, groupID, userID);

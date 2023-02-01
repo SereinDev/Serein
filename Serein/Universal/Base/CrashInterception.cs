@@ -40,7 +40,7 @@ namespace Serein.Base
                     File.AppendAllText(
                         Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),
                         DateTime.Now + "  |  "
-                        + Global.VERSION + "  |  " +
+                        + $"{Global.VERSION} - {Global.TYPE}" + "  |  " +
                         "NET" + Environment.Version.ToString() +
                         Environment.NewLine +
                         Global.BuildInfo.ToString() +
@@ -70,7 +70,7 @@ namespace Serein.Base
                 MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
                 WindowTitle = "Serein",
                 Content = "" +
-                    $"版本： {Global.VERSION}\n" +
+                    $"版本： {Global.VERSION} - {Global.TYPE}\n" +
                     $"时间：{DateTime.Now}\n" +
                     $"NET版本：{Environment.Version}\n" +
                     $"编译时间：{Global.BuildInfo.Time}\n\n" +
@@ -82,18 +82,10 @@ namespace Serein.Base
                 EnableHyperlinks = true,
                 ExpandedInformation = exceptionMsg
             };
-            taskDialog.HyperlinkClicked += HyperlinkClicked;
+            taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
 #endif
         }
-
-#if !CONSOLE
-        /// <summary>
-        /// 链接点击处理
-        /// </summary>
-        private static void HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-            => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
-#endif
 
         /// <summary>
         /// 合并错误信息

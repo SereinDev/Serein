@@ -33,9 +33,9 @@ namespace Serein.Items
         public bool IsAdmin { get; set; }
 
         /// <summary>
-        /// 忽略的群聊
+        /// 忽略的对象
         /// </summary>
-        public long[] GroupsIgnored = { };
+        public long[] Ignored = { };
 
         /// <summary>
         /// 作用域文本列表

@@ -120,7 +120,10 @@ namespace Serein
             TaskRunner.Start();
             Net.Init();
             System.Threading.Tasks.Task.Run(SystemInfo.Init);
+#if !CONSOLE
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
+#endif
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.LazyTimer.Stop();
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Update();
         }
 
@@ -129,7 +132,7 @@ namespace Serein
         /// </summary>
         public static void OnLoaded()
         {
-            IO.StartSavingAndUpdating();
+            IO.StartSaving();
             System.Threading.Tasks.Task.Run(JSPluginManager.Load);
             if (FirstOpen)
             {

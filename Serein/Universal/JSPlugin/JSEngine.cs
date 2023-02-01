@@ -12,6 +12,7 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -27,16 +28,26 @@ namespace Serein.JSPlugin
         /// <summary>
         /// 初始化JS引擎
         /// </summary>
+        /// <returns>JS引擎</returns>
+        public static Engine Init() => Init(true, null, null, null);
+
+        /// <summary>
+        /// 初始化JS引擎
+        /// </summary>
         /// <param name="executeByCommand">被命令执行</param>
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool executeByCommand = false, string @namespace = null, CancellationTokenSource cancellationTokenSource = null)
+        public static Engine Init(bool executeByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, Assembly[] assemblies)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
                     cfg.AllowClr(typeof(Process).Assembly);
+                    if (assemblies != null)
+                    {
+                        cfg.AllowClr(assemblies);
+                    }
                     cfg.CatchClrExceptions();
                     if (executeByCommand)
                     {
@@ -66,6 +77,8 @@ namespace Serein.JSPlugin
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
                     new Func<string, Delegate, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
+                engine.SetValue("serein_setVariable",
+                    new Func<string, JsValue, bool>(JSFunc.SetVariable));
                 engine.SetValue("setTimeout",
                     new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
                 engine.SetValue("setInterval",
@@ -79,22 +92,8 @@ namespace Serein.JSPlugin
                 engine.SetValue("Logger",
                     TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             }
-            else
-            {
-                engine.SetValue("serein_log", JsValue.Undefined);
-                engine.SetValue("serein_debugLog", JsValue.Undefined);
-                engine.SetValue("serein_registerPlugin", JsValue.Undefined);
-                engine.SetValue("serein_setListener", JsValue.Undefined);
-                engine.SetValue("setTimeout", JsValue.Undefined);
-                engine.SetValue("setInterval", JsValue.Undefined);
-                engine.SetValue("clearTimeout", JsValue.Undefined);
-                engine.SetValue("clearInterval", JsValue.Undefined);
-                engine.SetValue("WSClient", JsValue.Undefined);
-                engine.SetValue("Logger", JsValue.Undefined);
-
-            }
             engine.SetValue("serein_getSysinfo",
-                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
+                        new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
             engine.SetValue("serein_getCPUUsage",
                 new Func<float>(() => SystemInfo.CPUUsage));
@@ -111,7 +110,8 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_type", -1);
 #endif
             engine.SetValue("serein_getNetSpeed",
-                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
+                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed
+}));
             engine.SetValue("serein_runCommand",
                 new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("serein_getSettings",
@@ -147,13 +147,13 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_getWsStatus",
                 new Func<bool>(() => Websocket.Status));
             engine.SetValue("serein_bindMember",
-                new Func<long, string, bool>(Binder.Bind));
+                new Func<long, string, bool>(Base.Binder.Bind));
             engine.SetValue("serein_unbindMember",
-                new Func<long, bool>(Binder.UnBind));
+                new Func<long, bool>(Base.Binder.UnBind));
             engine.SetValue("serein_getID",
-                new Func<string, long>(Binder.GetID));
+                new Func<string, long>(Base.Binder.GetID));
             engine.SetValue("serein_getGameID",
-                new Func<long, string>(Binder.GetGameID));
+                new Func<long, string>(Base.Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
                 new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
             engine.SetValue("serein_getUserName",
@@ -216,6 +216,7 @@ namespace Serein.JSPlugin
                     addRegex: serein_addRegex,
                     editRegex: serein_editRegex,
                     removeRegex: serein_removeRegex,
+                    setVariable: serein_setVariable
                     };"
             );
             return engine;
