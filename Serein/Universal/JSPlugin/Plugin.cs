@@ -18,33 +18,7 @@ namespace Serein.JSPlugin
         {
             Namespace = @namespace ?? throw new ArgumentOutOfRangeException();
             PreLoadConfig = config;
-            List<Assembly> assemblies = new();
-            if (PreLoadConfig != null)
-            {
-                foreach (string assembly in config.Load)
-                {
-                    try
-                    {
-                        assemblies.Add(Assembly.Load(assembly));
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Output(LogType.Plugin_Error, $"加载程序集“{assembly}”时出现异常：", e.Message);
-                    }
-                }
-                foreach (string assemblyPath in config.LoadFrom)
-                {
-                    try
-                    {
-                        assemblies.Add(Assembly.LoadFrom(Path.Combine(Global.PATH, assemblyPath)));
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Output(LogType.Plugin_Error, $"从“{Path.Combine(Global.PATH, assemblyPath)}”加载程序集时出现异常：", e.Message);
-                    }
-                }
-            }
-            Engine = JSEngine.Init(false, Namespace, TokenSource, assemblies.ToArray());
+            Engine = JSEngine.Init(false, Namespace, TokenSource, PreLoadConfig);
             Name = @namespace;
         }
 

@@ -13,7 +13,7 @@ using System.Timers;
 
 namespace Serein.Server
 {
-    public static class ServerManager
+    internal static class ServerManager
     {
         /// <summary>
         /// 启动文件名称

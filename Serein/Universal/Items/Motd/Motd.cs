@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Serein.Items.Motd
 {
-    public class Motd
+    internal class Motd
     {
         /// <summary>
         /// IP

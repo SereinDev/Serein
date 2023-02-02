@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Serein.Items.Motd
 {
-    public class Motdje : Motd
+    internal class Motdje : Motd
     {
         /// <summary>
         /// Java版Motd获取入口

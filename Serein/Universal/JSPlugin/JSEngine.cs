@@ -12,6 +12,7 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
@@ -38,15 +39,32 @@ namespace Serein.JSPlugin
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool executeByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, Assembly[] assemblies)
+        public static Engine Init(bool executeByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
                     cfg.AllowClr(typeof(Process).Assembly);
-                    if (assemblies != null)
+                    if (preLoadConfig != null)
                     {
-                        cfg.AllowClr(assemblies);
+                        List<Assembly> assemblies = new();
+                        foreach (string assemblyString in preLoadConfig.AssemblyStrings)
+                        {
+                            try
+                            {
+                                assemblies.Add(Assembly.Load(assemblyString));
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
+                            }
+                        }
+                        cfg.AllowClr(assemblies.ToArray());
+                        cfg.Interop.AllowGetType = preLoadConfig.AllowGetType;
+                        cfg.Interop.AllowOperatorOverloading = preLoadConfig.AllowOperatorOverloading;
+                        cfg.Interop.AllowSystemReflection = preLoadConfig.AllowSystemReflection;
+                        cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
+                        cfg.Strict = preLoadConfig.Strict;
                     }
                     cfg.CatchClrExceptions();
                     if (executeByCommand)
@@ -92,8 +110,22 @@ namespace Serein.JSPlugin
                 engine.SetValue("Logger",
                     TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             }
+            else
+            {
+                engine.SetValue("serein_log", JsValue.Undefined);
+                engine.SetValue("serein_debugLog", JsValue.Undefined);
+                engine.SetValue("serein_registerPlugin", JsValue.Undefined);
+                engine.SetValue("serein_setListener", JsValue.Undefined);
+                engine.SetValue("setTimeout", JsValue.Undefined);
+                engine.SetValue("setInterval", JsValue.Undefined);
+                engine.SetValue("clearTimeout", JsValue.Undefined);
+                engine.SetValue("clearInterval", JsValue.Undefined);
+                engine.SetValue("WSClient", JsValue.Undefined);
+                engine.SetValue("Logger", JsValue.Undefined);
+                engine.SetValue("require", JsValue.Undefined);
+            }
             engine.SetValue("serein_getSysinfo",
-                        new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
+                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
 #if !UNIX
             engine.SetValue("serein_getCPUUsage",
                 new Func<float>(() => SystemInfo.CPUUsage));
@@ -110,8 +142,7 @@ namespace Serein.JSPlugin
             engine.SetValue("serein_type", -1);
 #endif
             engine.SetValue("serein_getNetSpeed",
-                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed
-}));
+                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
             engine.SetValue("serein_runCommand",
                 new Action<string>((command) => Command.Run(5, command)));
             engine.SetValue("serein_getSettings",

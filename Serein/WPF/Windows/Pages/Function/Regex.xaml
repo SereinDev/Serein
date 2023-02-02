@@ -58,6 +58,12 @@
                         SymbolIcon="Edit24"
                         Tag="Edit" />
                     <ui:MenuItem
+                        Name="Copy"
+                        Click="MenuItem_Click"
+                        Header="复制"
+                        SymbolIcon="Copy24"
+                        Tag="Copy" />
+                    <ui:MenuItem
                         Name="Delete"
                         Click="MenuItem_Click"
                         Header="删除"

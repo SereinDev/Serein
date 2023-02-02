@@ -47,6 +47,7 @@ namespace Serein.Windows.Pages.Function
         private void RegexListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             Edit.IsEnabled = RegexListView.SelectedIndex != -1;
+            Copy.IsEnabled = RegexListView.SelectedIndex != -1;
             Delete.IsEnabled = RegexListView.SelectedIndex != -1;
             Clear.IsEnabled = RegexListView.Items.Count > 0;
         }
@@ -68,16 +69,23 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (RegexListView.SelectedItem is Items.Regex selectedItem && selectedItem != null)
+                        if (RegexListView.SelectedItem is Items.Regex selectedItem1 && selectedItem1 != null)
                         {
                             Catalog.MainWindow.OpenRegexEditor(
-                                selectedItem.Area,
-                                selectedItem.IsAdmin,
-                                selectedItem.Expression,
-                                selectedItem.Command,
-                                selectedItem.Remark
+                                selectedItem1.Area,
+                                selectedItem1.IsAdmin,
+                                selectedItem1.Expression,
+                                selectedItem1.Command,
+                                selectedItem1.Remark
                                 );
                             ActionType = 2;
+                        }
+                        break;
+                    case "Copy":
+                        if (RegexListView.SelectedItem is Items.Regex selectedItem2 && selectedItem2 != null)
+                        {
+                            RegexListView.Items.Insert(RegexListView.SelectedIndex, selectedItem2);
+                            Save();
                         }
                         break;
                     case "Delete":

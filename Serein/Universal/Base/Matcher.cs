@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Serein.Base
 {
-    public static class Matcher
+    internal static class Matcher
     {
         /// <summary>
         /// 统计信息

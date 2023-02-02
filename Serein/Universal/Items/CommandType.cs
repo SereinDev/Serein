@@ -46,6 +46,11 @@
         SendGivenPrivateMsg,
 
         /// <summary>
+        /// 发送临时会话消息
+        /// </summary>
+        SendTempMsg,
+
+        /// <summary>
         /// 绑定
         /// </summary>
         Bind,

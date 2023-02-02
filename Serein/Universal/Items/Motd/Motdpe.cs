@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Serein.Items.Motd
 {
-    public class Motdpe : Motd
+    internal class Motdpe : Motd
     {
         /// <summary>
         /// 基岩版Motd获取入口

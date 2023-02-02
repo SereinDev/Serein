@@ -131,6 +131,25 @@ namespace Serein.Base
                         Websocket.Send(true, value, userID, inputType != 4);
                     }
                     break;
+                case Items.CommandType.SendTempMsg:
+                    if (inputType == 1 && groupID != -1 && userID != -1)
+                    {
+                        Websocket.Send(
+                            new JObject{
+                                { "action",  "send_private_msg" },
+                                {
+                                    "params",
+                                    new JObject{
+                                        { "user_id", userID},
+                                        { "group_id", groupID},
+                                        { "message", value },
+                                        { "auto_escape", Global.Settings.Bot.AutoEscape }
+                                        }
+                                    }
+                                }.ToString()
+                            );
+                    }
+                    break;
                 case Items.CommandType.Bind:
                     if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
@@ -232,6 +251,9 @@ namespace Serein.Base
                 case "p":
                 case "private":
                     return Items.CommandType.SendPrivateMsg;
+                case "t":
+                case "temp":
+                    return Items.CommandType.SendTempMsg;
                 case "b":
                 case "bind":
                     return Items.CommandType.Bind;
@@ -248,18 +270,15 @@ namespace Serein.Base
                 case "debug":
                     return Items.CommandType.DebugOutput;
                 default:
-                    if (Regex.IsMatch(command, @"^g:\d+\|", RegexOptions.IgnoreCase) ||
-                        Regex.IsMatch(command, @"^group:\d+\|", RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(command, @"^(g|group):\d+\|", RegexOptions.IgnoreCase))
                     {
                         return Items.CommandType.SendGivenGroupMsg;
                     }
-                    if (Regex.IsMatch(command, @"^p:\d+\|", RegexOptions.IgnoreCase) ||
-                        Regex.IsMatch(command, @"^private:\d+\|", RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(command, @"^(p|private):\d+\|", RegexOptions.IgnoreCase))
                     {
                         return Items.CommandType.SendGivenPrivateMsg;
                     }
-                    if (Regex.IsMatch(command, @"^js:[^\|]+\|", RegexOptions.IgnoreCase) ||
-                        Regex.IsMatch(command, @"^javascript:[^\|]+\|", RegexOptions.IgnoreCase))
+                    if (Regex.IsMatch(command, @"^(js|javascript):[^\|]+\|", RegexOptions.IgnoreCase))
                     {
                         return Items.CommandType.ExecuteJavascriptCodesWithNamespace;
                     }

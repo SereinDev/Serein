@@ -62,20 +62,22 @@ namespace Serein.JSPlugin
                             PreLoadConfig config = null;
                             if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
                             {
-                                if (File.Exists(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json")))
+                                string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
+                                if (File.Exists(configPath))
                                 {
-                                     config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json")));
+                                    config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
+                                    File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
                                 }
                                 else
                                 {
-                                    File.WriteAllText(Path.Combine(PluginPath, @namespace, "PreLoadConfig.json"), new PreLoadConfig().ToJson(Formatting.Indented));
+                                    File.WriteAllText(configPath, new PreLoadConfig().ToJson(Formatting.Indented));
                                 }
                             }
                             PluginDict.Add(@namespace, new Plugin(@namespace, config)
                             {
                                 File = file
                             });
-                            PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file, Encoding.UTF8), PluginDict[@namespace].Engine, out string exceptionMessage);
+                            PluginDict[@namespace].Engine = JSEngine.Run(File.ReadAllText(file), PluginDict[@namespace].Engine, out string exceptionMessage);
                             if (!string.IsNullOrEmpty(exceptionMessage))
                             {
                                 Logger.Output(LogType.Plugin_Error, exceptionMessage);
@@ -124,6 +126,7 @@ namespace Serein.JSPlugin
                 Windows.Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
                 IO.CreateDirectory(Path.Combine("plugins", "modules"));
+                GC.Collect();
             }
             IsLoading = false;
         }

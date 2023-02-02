@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 #elif WPF
 using Serein.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 #endif
@@ -285,7 +286,7 @@ namespace Serein.Base
                     Catalog.Notification?.Show("Serein", $"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：\n" + line);
                     break;
                 case LogType.Version_Ready:
-                    Catalog.Notification?.Show("Serein", line);
+                    Catalog.Notification?.Show("Serein", line, expirationTime: new TimeSpan(6000));
                     break;
 #endif
                 default:
@@ -444,10 +445,15 @@ namespace Serein.Base
                 MessageBox messageBox = new()
                 {
                     Title = caption,
-                    Content = text,
+                    Content = new TextBlock()
+                    {
+                        Text = text,
+                        TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
+                    },
                     ShowInTaskbar = false,
                     ResizeMode = System.Windows.ResizeMode.NoResize,
                     Topmost = true,
+                    Width = 350,
                     ButtonLeftName = buttons <= 1 ? "确定" : "是",
                     ButtonRightName = buttons <= 1 ? "取消" : "否"
                 };

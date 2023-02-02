@@ -20,7 +20,7 @@
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
 		<Compile Include="../Console/**/*.cs" />
-		<EmbeddedResource Include="../Console/Properties/Resources.resx" />
+		<Compile Remove="../Console/Properties/**" />
 		<Compile Remove="../Console/obj/**" />
 		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
 		<Compile Remove="..\Universal\Server\PluginManager.cs" />
