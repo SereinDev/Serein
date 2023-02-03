@@ -18,6 +18,7 @@
     - [SLwhiteList - LLbds白名单插件](https://www.minebbs.com/resources/serein-llbds-slwhitelist-llbds-js.5216/)
     - [CHATEX - 对群聊消息互通提供更多增强功能](JS/CHATEX/README.md)
     - [StatRecodrer - 统计信息记录](JS/StatRecodrer/README.md)
+    - [BetterWhitelist - 更好的白名单](JS/BetterWhitelist/README.md)
   - 💼 整合包
     - [Serein面板+机器人整合包](https://www.minebbs.com/resources/serein.4390/)
     - [Serein机器人整合包 *（版本较旧）*](https://www.minebbs.com/resources/serein.4201/)
