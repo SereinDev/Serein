@@ -439,33 +439,30 @@ namespace Serein.Base
                 }
                 return true;
             }
-            else
+            bool confirmed = false;
+            MessageBox messageBox = new()
             {
-                bool confirmed = false;
-                MessageBox messageBox = new()
+                Title = caption,
+                Content = new TextBlock()
                 {
-                    Title = caption,
-                    Content = new TextBlock()
-                    {
-                        Text = text,
-                        TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
-                    },
-                    ShowInTaskbar = false,
-                    ResizeMode = System.Windows.ResizeMode.NoResize,
-                    Topmost = true,
-                    Width = 350,
-                    ButtonLeftName = buttons <= 1 ? "确定" : "是",
-                    ButtonRightName = buttons <= 1 ? "取消" : "否"
-                };
-                messageBox.ButtonRightClick += (_, _) => messageBox.Close();
-                messageBox.ButtonLeftClick += (_, _) =>
-                {
-                    confirmed = true;
-                    messageBox.Close();
-                };
-                messageBox.ShowDialog();
-                return confirmed;
-            }
+                    Text = text,
+                    TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
+                },
+                ShowInTaskbar = false,
+                ResizeMode = System.Windows.ResizeMode.NoResize,
+                Topmost = true,
+                Width = 350,
+                ButtonLeftName = buttons <= 1 ? "确定" : "是",
+                ButtonRightName = buttons <= 1 ? "取消" : "否"
+            };
+            messageBox.ButtonRightClick += (_, _) => messageBox.Close();
+            messageBox.ButtonLeftClick += (_, _) =>
+            {
+                confirmed = true;
+                messageBox.Close();
+            };
+            messageBox.ShowDialog();
+            return confirmed;
 #endif
         }
     }

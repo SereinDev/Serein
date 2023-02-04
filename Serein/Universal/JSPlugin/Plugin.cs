@@ -6,8 +6,6 @@ using Serein.Base;
 using Serein.Items;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 
 namespace Serein.JSPlugin
@@ -92,7 +90,7 @@ namespace Serein.JSPlugin
         /// 监听字典
         /// </summary>
         [JsonIgnore]
-        private readonly Dictionary<EventType, Delegate> EventDict = new();
+        private readonly Dictionary<EventType, JsValue> EventDict = new();
 
         /// <summary>
         /// 预加载配置
@@ -110,7 +108,7 @@ namespace Serein.JSPlugin
         /// <param name="type">事件类型</param>
         /// <param name="delegate">执行函数</param>
         /// <returns>设置结果</returns>
-        public bool SetListener(EventType type, Delegate @delegate)
+        public bool SetListener(EventType type, JsValue @delegate)
         {
             Logger.Output(LogType.Debug, type);
             @delegate = @delegate ?? throw new ArgumentNullException(nameof(@delegate));
@@ -150,69 +148,99 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="type">事件类型</param>
         /// <param name="args">参数</param>
-        public void Trigger(EventType type, params object[] args)
+        public bool Trigger(EventType type, CancellationToken token, params object[] args)
         {
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !EventDict.ContainsKey(type) || EventDict[type] == null)
             {
-                return;
+                return false;
             }
             Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
-            System.Threading.Tasks.Task.Run(() =>
+            try
             {
-                try
+                switch (type)
                 {
-                    switch (type)
-                    {
-                        case EventType.ServerStart:
-                        case EventType.SereinClose:
-                        case EventType.PluginsReload:
-                            lock (JSPluginManager.PluginDict[Namespace].Engine)
-                            {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
-                            }
-                            break;
-                        case EventType.ServerStop:
-                        case EventType.ServerOutput:
-                        case EventType.ServerOriginalOutput:
-                        case EventType.ServerSendCommand:
-                        case EventType.ReceivePacket:
-                            lock (JSPluginManager.PluginDict[Namespace].Engine)
-                            {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]) });
-                            }
-                            break;
-                        case EventType.GroupIncrease:
-                        case EventType.GroupDecrease:
-                        case EventType.GroupPoke:
-                            lock (JSPluginManager.PluginDict[Namespace].Engine)
-                            {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]) });
-                            }
-                            break;
-                        case EventType.ReceiveGroupMessage:
-                            lock (JSPluginManager.PluginDict[Namespace].Engine)
-                            {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]), JsValue.FromObject(JSEngine.Converter, args[2]), JsValue.FromObject(JSEngine.Converter, args[3]) });
-                            }
-                            break;
-                        case EventType.ReceivePrivateMessage:
-                            lock (JSPluginManager.PluginDict[Namespace].Engine)
-                            {
-                                EventDict[type].DynamicInvoke(JsValue.Undefined, new[] { JsValue.FromObject(JSEngine.Converter, args[0]), JsValue.FromObject(JSEngine.Converter, args[1]), JsValue.FromObject(JSEngine.Converter, args[2]) });
-                            }
-                            break;
-                        default:
-                            Logger.Output(LogType.Plugin_Error, $"{Namespace}运行了了一个不支持的事件：", type);
-                            break;
-                    }
+                    case EventType.ServerStart:
+                    case EventType.SereinClose:
+                    case EventType.PluginsReload:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            Engine.Invoke(EventDict[type]);
+                        }
+                        break;
+                    case EventType.ServerStop:
+                    case EventType.ServerSendCommand:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            Engine.Invoke(EventDict[type], args[0]);
+                        }
+                        break;
+                    case EventType.ServerOutput:
+                    case EventType.ServerOriginalOutput:
+                    case EventType.ReceivePacket:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            return !token.IsCancellationRequested && GetJSBoolean(Engine.Invoke(EventDict[type], args[0]));
+                        }
+                    case EventType.GroupIncrease:
+                    case EventType.GroupDecrease:
+                    case EventType.GroupPoke:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            Engine.Invoke(EventDict[type], args[0], args[1]);
+                        }
+                        break;
+                    case EventType.ReceiveGroupMessage:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            return !token.IsCancellationRequested && GetJSBoolean(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
+                        }
+                    case EventType.ReceivePrivateMessage:
+                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        {
+                            return !token.IsCancellationRequested && GetJSBoolean(Engine.Invoke(EventDict[type], args[0], args[1], args[2]));
+                        }
+                    default:
+                        Logger.Output(LogType.Plugin_Error, $"{Namespace}运行了了一个不支持的事件：", type);
+                        break;
                 }
-                catch (Exception e)
-                {
-                    string message = e.GetFullMsg();
-                    Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
-                    Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
-                }
-            });
+            }
+            catch (Exception e)
+            {
+                string message = e.GetFullMsg();
+                Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
+                Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 获取该值在JS中的布尔值
+        /// </summary>
+        private static bool GetJSBoolean(JsValue jsValue)
+        {
+            if (jsValue is not null ||
+                jsValue.IsNull() ||
+                jsValue.IsUndefined())
+            {
+                return false;
+            }
+            if (jsValue.IsNumber())
+            {
+                return jsValue.AsNumber() != 0;
+            }
+            if (jsValue.IsArray())
+            {
+                return jsValue.AsArray().Length != 0;
+            }
+            if (jsValue.IsString())
+            {
+                return jsValue.AsString().Length != 0;
+            }
+            if (jsValue.IsBoolean())
+            {
+                return jsValue.AsBoolean();
+            }
+            return jsValue.IsObject();
         }
     }
 }

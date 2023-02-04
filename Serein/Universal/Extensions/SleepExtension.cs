@@ -8,7 +8,7 @@ namespace Serein.Extensions
         /// 睡觉觉
         /// </summary>
         /// <param name="ms">时长</param>
-        public static void ToSleepFor(this int ms)
+        public static void ToSleep(this int ms)
         {
             Task.Delay(ms).GetAwaiter().GetResult();
         }

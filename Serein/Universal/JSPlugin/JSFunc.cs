@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Timers;
+using System.Threading;
 
 namespace Serein.JSPlugin
 {
@@ -54,7 +54,7 @@ namespace Serein.JSPlugin
         /// <param name="eventName">事件名称</param>
         /// <param name="delegate">函数</param>
         /// <returns>注册结果</returns>
-        public static bool SetListener(string @namespace, string eventName, Delegate @delegate)
+        public static bool SetListener(string @namespace, string eventName, JsValue @delegate)
         {
             Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
@@ -81,27 +81,37 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="type">事件名称</param>
         /// <param name="args">参数</param>
-        public static void Trigger(EventType type, params object[] args)
+        public static bool Trigger(EventType type, params object[] args)
         {
             if (JSPluginManager.PluginDict.Count == 0)
             {
-                return;
+                return false;
             }
+            bool interdicted = false;
             lock (EventLock)
             {
                 Logger.Output(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
-                    if (JSPluginManager.PluginDict.Keys.ToList().TrueForAll((key) =>
+                    List<System.Threading.Tasks.Task<bool>> tasks = new();
+                    CancellationTokenSource tokenSource = new();
+                    foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
                     {
-                        JSPluginManager.PluginDict[key].Trigger(type, args);
-                        return JSPluginManager.PluginDict[key].EventList.Contains(type);
-                    }))
+                        tasks.Add(System.Threading.Tasks.Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
+                    }
+                    if (tasks.Count > 0)
                     {
-                        Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleepFor();
+                        System.Threading.Tasks.Task.WaitAll(tasks.ToArray(), 500);
+                        tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
+                    }
+                    tokenSource.Cancel();
+                    if (tasks.Count > 0)
+                    {
+                        Global.Settings.Serein.DevelopmentTool.JSEventCoolingDownTime.ToSleep();
                     }
                 }
             }
+            return interdicted;
         }
 
         /// <summary>
@@ -112,7 +122,7 @@ namespace Serein.JSPlugin
         /// <param name="interval">间隔</param>
         /// <param name="autoReset"自动重置></param>
         /// <returns>定时器哈希值</returns>
-        public static JsValue SetTimer(string @namespace, Delegate @delegate, JsValue interval, bool autoReset)
+        public static JsValue SetTimer(string @namespace, JsValue @delegate, JsValue interval, bool autoReset)
         {
             if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
@@ -121,7 +131,7 @@ namespace Serein.JSPlugin
             long timerID = CurrentID;
             CurrentID++;
             Logger.Output(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
-            Timer timer = new((double)interval.ToObject())
+            System.Timers.Timer timer = new((double)interval.ToObject())
             {
                 AutoReset = autoReset,
             };
@@ -135,13 +145,14 @@ namespace Serein.JSPlugin
                     }
                     else if (JSPluginManager.PluginDict[@namespace].Engine == null)
                     {
+                        timer.Stop();
                         timer.Dispose();
                     }
                     else
                     {
                         lock (JSPluginManager.PluginDict[@namespace].Engine)
                         {
-                            @delegate.DynamicInvoke(JsValue.Undefined, new[] { JsValue.Undefined });
+                            JSPluginManager.PluginDict[@namespace].Engine.Invoke(JsValue.Undefined);
                         }
                     }
                 }
@@ -267,13 +278,14 @@ namespace Serein.JSPlugin
             {
                 lock (Global.RegexList)
                 {
+                    Regex selected = Global.RegexList[index];
                     Global.RegexList[index] = new()
                     {
-                        Expression = exp,
+                        Expression = exp ?? selected.Expression,
                         Area = area,
                         IsAdmin = needAdmin,
-                        Command = command,
-                        Remark = remark ?? string.Empty
+                        Command = command ?? selected.Command,
+                        Remark = remark ?? selected.Remark
                     };
                 }
                 return true;

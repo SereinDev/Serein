@@ -12,7 +12,6 @@ using Serein.Items.Motd;
 using Serein.Server;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
@@ -94,13 +93,13 @@ namespace Serein.JSPlugin
                 engine.SetValue("serein_registerPlugin",
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
-                    new Func<string, Delegate, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
+                    new Func<string, JsValue, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
                 engine.SetValue("serein_setVariable",
                     new Func<string, JsValue, bool>(JSFunc.SetVariable));
                 engine.SetValue("setTimeout",
-                    new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
+                    new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
                 engine.SetValue("setInterval",
-                    new Func<Delegate, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
+                    new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
                 engine.SetValue("clearTimeout",
                     new Func<JsValue, bool>(JSFunc.ClearTimer));
                 engine.SetValue("clearInterval",
@@ -116,6 +115,7 @@ namespace Serein.JSPlugin
                 engine.SetValue("serein_debugLog", JsValue.Undefined);
                 engine.SetValue("serein_registerPlugin", JsValue.Undefined);
                 engine.SetValue("serein_setListener", JsValue.Undefined);
+                engine.SetValue("serein_setVariable", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
                 engine.SetValue("clearTimeout", JsValue.Undefined);
@@ -258,7 +258,7 @@ namespace Serein.JSPlugin
         /// </summary>
         /// <param name="code">代码</param>
         /// <returns>错误信息</returns>
-        public static Engine Run(string code, Engine engine, out string exceptionMessage)
+        public static Engine Run(this Engine engine, string code, out string exceptionMessage)
         {
             try
             {

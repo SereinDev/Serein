@@ -81,51 +81,48 @@ namespace Serein.Base
             filename ??= Path.Combine("data", "regex.json");
             if (File.Exists(filename))
             {
-                lock (FileLock.Regex)
+                StreamReader streamReader = new(filename, Encoding.UTF8);
+                if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
-                    StreamReader streamReader = new(filename, Encoding.UTF8);
-                    if (filename.ToLowerInvariant().EndsWith(".tsv"))
+                    string line;
+                    List<Regex> list = append ? Global.RegexList : new();
+                    while ((line = streamReader.ReadLine()) != null)
                     {
-                        string line;
-                        List<Regex> list = append ? Global.RegexList : new();
-                        while ((line = streamReader.ReadLine()) != null)
+                        Regex regex = new();
+                        regex.FromText(line);
+                        if (!regex.Check())
                         {
-                            Regex regex = new();
-                            regex.FromText(line);
-                            if (!regex.Check())
-                            {
-                                continue;
-                            }
-                            list.Add(regex);
+                            continue;
                         }
-                        Global.RegexList = list;
+                        list.Add(regex);
                     }
-                    else if (filename.ToLowerInvariant().EndsWith(".json"))
-                    {
-                        string text = streamReader.ReadToEnd();
-                        if (string.IsNullOrEmpty(text))
-                        {
-                            return;
-                        }
-                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
-                        {
-                            if (append)
-                            {
-                                lock (Global.RegexList)
-                                {
-                                    ((JArray)jsonObject["data"]).ToObject<List<Regex>>().ForEach((i) => Global.RegexList.Add(i));
-                                }
-                            }
-                            else
-                            {
-                                Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
-                            }
-                        }
-                    }
-                    streamReader.Close();
-                    streamReader.Dispose();
+                    Global.RegexList = list;
                 }
+                else if (filename.ToLowerInvariant().EndsWith(".json"))
+                {
+                    string text = streamReader.ReadToEnd();
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        return;
+                    }
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                    if (jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
+                    {
+                        if (append)
+                        {
+                            lock (Global.RegexList)
+                            {
+                                ((JArray)jsonObject["data"]).ToObject<List<Regex>>().ForEach((i) => Global.RegexList.Add(i));
+                            }
+                        }
+                        else
+                        {
+                            Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                        }
+                    }
+                }
+                streamReader.Close();
+                streamReader.Dispose();
             }
             SaveRegex();
         }
@@ -472,26 +469,22 @@ namespace Serein.Base
         /// </summary>
         public static void Update()
         {
-            if (!Global.Settings.Serein.AutoUpdate || !Net.IsReadyToUpdate)
+            if (!Global.Settings.Serein.AutoUpdate || !Net.IsReadyToUpdate || Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
                 return;
             }
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            if (!File.Exists("Updater.exe"))
             {
-                if (!File.Exists("Updater.exe"))
+                using (FileStream fileStream = new("Updater.exe", FileMode.CreateNew))
                 {
-                    using (FileStream fileStream = new("Updater.exe", FileMode.CreateNew))
-                    {
-                        fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
-                    }
+                    fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
                 }
-                Process.Start(new ProcessStartInfo("Updater.exe")
-                {
-                    WorkingDirectory = Global.PATH,
-                    UseShellExecute = false,
-                });
-
             }
+            Process.Start(new ProcessStartInfo("Updater.exe")
+            {
+                WorkingDirectory = Global.PATH,
+                UseShellExecute = false,
+            });
         }
 
         /// <summary>

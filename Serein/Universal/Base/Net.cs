@@ -40,7 +40,7 @@ namespace Serein.Base
         {
             Task.Run(() =>
             {
-                10000.ToSleepFor();
+                10000.ToSleep();
                 CheckVersion();
             });
             CheckTimer.Elapsed += (_, _) => CheckVersion();
@@ -65,6 +65,7 @@ namespace Serein.Base
             }
             HttpClient.DefaultRequestHeaders.AcceptCharset.Clear();
             HttpClient.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
+            HttpClient.DefaultRequestHeaders.Remove("user-agent");
             HttpClient.DefaultRequestHeaders.Add("user-agent", userAgent);
             HttpResponseMessage response = await HttpClient.GetAsync(url);
             Logger.Output(Items.LogType.DetailDebug, "Response Headers\n", response.Headers.ToString());
@@ -126,44 +127,40 @@ namespace Serein.Base
             foreach (JToken asset in jobject["assets"])
             {
                 string filename = asset.TryGetString("name");
-                if (IsFileMatched(filename.ToLowerInvariant()) && !string.IsNullOrEmpty(asset.TryGetString("browser_download_url")))
+                if (IsFileMatched(filename.ToLowerInvariant()) && !string.IsNullOrEmpty(asset.TryGetString("browser_download_url"))) { continue; }
+                try
                 {
-                    try
+                    if (File.Exists($"update/{asset.TryGetString("name")}"))
                     {
-                        if (File.Exists($"update/{asset.TryGetString("name")}"))
-                        {
-                            Logger.Output(Items.LogType.Debug, "文件已存在，自动跳过下载");
-                        }
-                        else if (IsReadyToUpdate)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            IsReadyToUpdate = false;
-                            Logger.Output(Items.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
-                            Logger.Output(Items.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
-                            using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
-                            using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
-                            {
-                                byte[] bytes = new byte[stream.Length];
-                                _ = stream.Read(bytes, 0, bytes.Length);
-                                fileStream.Write(bytes, 0, bytes.Length);
-                            }
-                            Logger.Output(Items.LogType.Debug, "下载成功");
-                        }
-                        ZipFile.ExtractToDirectory($"update/{asset.TryGetString("name")}", "update");
-                        Logger.Output(Items.LogType.Debug, "解压成功");
-                        IsReadyToUpdate = true;
-                        Logger.Output(Items.LogType.Version_Ready, "新版本已下载完毕\n" + (Global.Settings.Serein.AutoUpdate && Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开“update”文件夹复制替换"));
+                        Logger.Output(Items.LogType.Debug, "文件已存在，自动跳过下载");
+                        break;
                     }
-                    catch (Exception e)
+                    else if (IsReadyToUpdate)
                     {
-                        Logger.Output(Items.LogType.Version_DownloadFailed, e.Message);
-                        Logger.Output(Items.LogType.Debug, e);
+                        break;
                     }
-                    break;
+                    IsReadyToUpdate = false;
+                    Logger.Output(Items.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
+                    Logger.Output(Items.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
+                    using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
+                    using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
+                    {
+                        byte[] bytes = new byte[stream.Length];
+                        _ = stream.Read(bytes, 0, bytes.Length);
+                        fileStream.Write(bytes, 0, bytes.Length);
+                    }
+                    Logger.Output(Items.LogType.Debug, "下载成功");
+                    ZipFile.ExtractToDirectory($"update/{asset.TryGetString("name")}", "update");
+                    Logger.Output(Items.LogType.Debug, "解压成功");
+                    IsReadyToUpdate = true;
+                    Logger.Output(Items.LogType.Version_Ready, "新版本已下载完毕\n" + (Global.Settings.Serein.AutoUpdate && Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开“update”文件夹复制替换"));
                 }
+                catch (Exception e)
+                {
+                    Logger.Output(Items.LogType.Version_DownloadFailed, e.Message);
+                    Logger.Output(Items.LogType.Debug, e);
+                }
+                break;
             }
         }
 

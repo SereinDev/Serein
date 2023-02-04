@@ -197,7 +197,7 @@ namespace Serein.Base
                                 string e;
                                 lock (JSPluginManager.PluginDict[key].Engine)
                                 {
-                                    JSPluginManager.PluginDict[key].Engine = JSEngine.Run(value, JSPluginManager.PluginDict[key].Engine, out e);
+                                    JSPluginManager.PluginDict[key].Engine = JSPluginManager.PluginDict[key].Engine.Run(value, out e);
                                 }
                                 if (!string.IsNullOrEmpty(e))
                                 {
@@ -411,15 +411,16 @@ namespace Serein.Base
         {
             text = text.Replace("[CQ:at,qq=all]", "@全体成员");
             text = Patterns.CQAt.Replace(text, "@$1");
-            if (groupID > 0)
+            if (groupID <= 0)
             {
-                text = Regex.Replace(text, @"(?<=@)(\d+)", (match) =>
-                {
-                    long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
-                    return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Items.Member> groupinfo) &&
-                        groupinfo.TryGetValue(userID, out Items.Member member) ? member.ShownName : match.Groups[1].Value;
-                });
+                return text;
             }
+            text = Regex.Replace(text, @"(?<=@)(\d+)", (match) =>
+            {
+                long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
+                return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Items.Member> groupinfo) &&
+                    groupinfo.TryGetValue(userID, out Items.Member member) ? member.ShownName : match.Groups[1].Value;
+            });
             return text;
         }
 

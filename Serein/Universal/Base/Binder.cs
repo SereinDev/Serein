@@ -43,19 +43,16 @@ namespace Serein.Base
             {
                 return false;
             }
-            else
+            lock (Global.MemberDict)
             {
-                lock (Global.MemberDict)
+                Global.MemberDict.Add(userID, new Member
                 {
-                    Global.MemberDict.Add(userID, new Member
-                    {
-                        ID = userID,
-                        GameID = value
-                    });
-                }
-                IO.SaveMember();
-                return true;
+                    ID = userID,
+                    GameID = value
+                });
             }
+            IO.SaveMember();
+            return true;
         }
 
         /// <summary>
@@ -71,35 +68,36 @@ namespace Serein.Base
             if (Global.MemberDict.ContainsKey(userID))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupID, userID);
+                return;
             }
-            else if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID);
+                return;
             }
             if (Global.Settings.Serein.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
                 EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
+                return;
             }
-            else if (GameIDs.Contains(value))
+            if (GameIDs.Contains(value))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToOccupation, groupID, userID);
+                return;
             }
-            else
+            lock (Global.MemberDict)
             {
-                lock (Global.MemberDict)
+                Global.MemberDict.Add(userID, new()
                 {
-                    Global.MemberDict.Add(userID, new()
-                    {
-                        ID = userID,
-                        Card = jsonObject["sender"]["card"].ToString(),
-                        Nickname = jsonObject["sender"]["nickname"].ToString(),
-                        Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
-                        GameID = value
-                    });
-                }
-                IO.SaveMember();
-                EventTrigger.Trigger(EventType.BindingSucceed, groupID, userID);
+                    ID = userID,
+                    Card = jsonObject["sender"]["card"].ToString(),
+                    Nickname = jsonObject["sender"]["nickname"].ToString(),
+                    Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
+                    GameID = value
+                });
             }
+            IO.SaveMember();
+            EventTrigger.Trigger(EventType.BindingSucceed, groupID, userID);
         }
 
         /// <summary>
@@ -112,20 +110,18 @@ namespace Serein.Base
             if (Global.Settings.Serein.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
                 EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
+                return;
             }
-            else
+            lock (Global.MemberDict)
             {
-                lock (Global.MemberDict)
+                if (Global.MemberDict.Remove(userID))
                 {
-                    if (Global.MemberDict.Remove(userID))
-                    {
-                        IO.SaveMember();
-                        EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID);
-                    }
-                    else
-                    {
-                        EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID);
-                    }
+                    IO.SaveMember();
+                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID);
+                }
+                else
+                {
+                    EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID);
                 }
             }
         }
@@ -164,21 +160,14 @@ namespace Serein.Base
         public static long GetID(string gameId)
         {
             gameId = gameId.Trim();
-            if (!GameIDs.Contains(gameId))
+            foreach (Member member in Items)
             {
-                return 0;
-            }
-            else
-            {
-                foreach (Member member in Items)
+                if (member.GameID == gameId)
                 {
-                    if (member.GameID == gameId)
-                    {
-                        return member.ID;
-                    }
+                    return member.ID;
                 }
-                return 0;
             }
+            return 0;
         }
 
         /// <summary>

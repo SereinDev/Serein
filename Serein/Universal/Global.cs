@@ -145,7 +145,7 @@ namespace Serein
             }
             System.Threading.Tasks.Task.Run(() =>
             {
-                (Settings.Serein.AutoRun.Delay > 0 ? Settings.Serein.AutoRun.Delay : 0).ToSleepFor();
+                (Settings.Serein.AutoRun.Delay > 0 ? Settings.Serein.AutoRun.Delay : 0).ToSleep();
                 if (Settings.Serein.AutoRun.ConnectWS || args.Contains("auto_connect"))
                 {
                     System.Threading.Tasks.Task.Run(Websocket.Open);

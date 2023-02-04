@@ -348,8 +348,8 @@ namespace Serein.Server
                     line_copy = ConvertToUnicode(line_copy);
                 }
                 InputWriter.WriteLine(line_copy);
-                JSFunc.Trigger(EventType.ServerSendCommand, command);
                 IO.ConsoleLog(">" + command);
+                System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
             }
             else if (isFromCommand)
             {
@@ -389,7 +389,9 @@ namespace Serein.Server
                         break;
                     }
                 }
-                if (!excluded)
+                if (!excluded &&
+                    (JSFunc.Trigger(EventType.ServerOutput, lineFiltered) ||
+                    JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data)))
                 {
 #if CONSOLE
                     Logger.Output(LogType.Server_Output, e.Data);
@@ -422,8 +424,6 @@ namespace Serein.Server
 
                 }
                 IO.ConsoleLog(lineFiltered);
-                JSFunc.Trigger(EventType.ServerOutput, lineFiltered);
-                JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data);
             }
         }
 
@@ -483,7 +483,7 @@ namespace Serein.Server
 #endif
             for (int i = 0; i < 10; i++)
             {
-                500.ToSleepFor();
+                500.ToSleep();
                 if (!Restart)
                 {
                     break;

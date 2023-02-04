@@ -22,6 +22,7 @@ namespace Serein.Windows.Pages.Settings
             UseDarkTheme.IsChecked = Global.Settings.Serein.UseDarkTheme;
             AutoUpdate.IsChecked = Global.Settings.Serein.AutoUpdate;
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
+            ThemeFollowSystem.IsChecked = Global.Settings.Serein.ThemeFollowSystem;
             MaxCacheLines.Value = Global.Settings.Serein.MaxCacheLines;
             Version.Text = "当前版本：" + Global.VERSION;
             BuildInfo.Text = Global.BuildInfo.ToString();

@@ -40,66 +40,66 @@ namespace Serein.Base
             if (Status)
             {
                 Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
+                return;
             }
-            else if (!Status)
+            Logger.Output(LogType.Bot_Clear);
+            Matcher.MessageReceived = "-";
+            Matcher.MessageSent = "-";
+            Matcher.SelfId = "-";
+            try
             {
-                Logger.Output(LogType.Bot_Clear);
-                Matcher.MessageReceived = "-";
-                Matcher.MessageSent = "-";
-                Matcher.SelfId = "-";
-                try
-                {
-                    WSClient = new WebSocket(
-                        "ws://" + Global.Settings.Bot.Uri,
-                        "",
-                        null,
-                        new List<KeyValuePair<string, string>> {
-                            new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
-                            }
-                        );
-                    WSClient.MessageReceived += Receive;
-                    WSClient.Error += (_, e) =>
-                    {
-                        Logger.Output(LogType.Bot_Error, e.Exception.Message);
-                    };
-                    WSClient.Closed += (_, _) =>
-                    {
-                        Status = false;
-                        Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
-                        if (Global.Settings.Bot.AutoReconnect && Reconnect)
-                        {
-                            System.Threading.Tasks.Task.Run(() =>
-                            {
-                                Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                                Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
-                                for (int i = 0; i < 20; i++)
-                                {
-                                    500.ToSleepFor();
-                                    if (!Reconnect || Status)
-                                    {
-                                        break;
-                                    }
-                                }
-                                if (Reconnect && !Status)
-                                {
-                                    Open();
-                                }
-                            });
+                WSClient = new WebSocket(
+                    "ws://" + Global.Settings.Bot.Uri,
+                    "",
+                    null,
+                    new List<KeyValuePair<string, string>> {
+                        new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                         }
-                    };
-                    WSClient.Opened += (_, _) =>
-                    {
-                        Reconnect = true;
-                        Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
-                    };
-                    WSClient.Open();
-                    StartTime = DateTime.Now;
-                    Status = true;
-                }
-                catch (Exception e)
+                    );
+                WSClient.MessageReceived += Receive;
+                WSClient.Error += (_, e) =>
                 {
-                    Logger.Output(LogType.Bot_Error, e.Message);
-                }
+                    Logger.Output(LogType.Bot_Error, e.Exception.Message);
+                };
+                WSClient.Closed += Closed;
+                WSClient.Opened += (_, _) =>
+                {
+                    Reconnect = true;
+                    Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
+                };
+                WSClient.Open();
+                StartTime = DateTime.Now;
+                Status = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Output(LogType.Bot_Error, e.Message);
+            }
+        }
+
+        private static void Closed(object sender, EventArgs e)
+        {
+            Status = false;
+            Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
+            if (Global.Settings.Bot.AutoReconnect && Reconnect)
+            {
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                    Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
+                    for (int i = 0; i < 20; i++)
+                    {
+                        500.ToSleep();
+                        if (!Reconnect || Status)
+                        {
+                            break;
+                        }
+                    }
+                    if (Reconnect && !Status)
+                    {
+                        Open();
+                    }
+                });
             }
         }
 
@@ -190,9 +190,12 @@ namespace Serein.Base
                 Logger.Output(LogType.Bot_Receive, e.Message);
             }
             IO.MsgLog($"[Received] {e.Message}");
+            if (JSFunc.Trigger(EventType.ReceivePacket, e.Message))
+            {
+                return;
+            }
             try
             {
-                System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ReceivePacket, e.Message));
                 Matcher.Process((JObject)JsonConvert.DeserializeObject(
                     WebUtility.HtmlDecode(
                         new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString())
