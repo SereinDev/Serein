@@ -1,4 +1,4 @@
-﻿using Serein.Base;
+﻿using Serein.Utils;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -29,7 +29,7 @@ namespace Serein
         [STAThread]
         private static void Main()
         {
-            Global.OnStart();
+            Runtime.Init();
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += (_, e) => CrashInterception.ShowException(e.Exception);
             Application.EnableVisualStyles();

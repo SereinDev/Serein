@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Ookii.Dialogs.Wpf;
-using Serein.Base;
-using Serein.JSPlugin;
-using Serein.Server;
+using Serein.Utils;
+using Serein.Core.JSPlugin;
+using Serein.Core.Server;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -31,10 +29,10 @@ namespace Serein.Ui
         }
 
         private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
-            => Global.ShowWelcomePage();
+            => Runtime.ShowWelcomePage();
 
         private void Ui_Shown(object sender, EventArgs e)
-            => Global.OnLoaded();
+            => Runtime.Start();
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -48,7 +46,7 @@ namespace Serein.Ui
             else
             {
                 SereinIcon.Dispose();
-                JSFunc.Trigger(Items.EventType.SereinClose);
+                JSFunc.Trigger(Base.EventType.SereinClose);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using Serein.Extensions;
-using System.Linq;
 
 namespace Serein.Settings
 {

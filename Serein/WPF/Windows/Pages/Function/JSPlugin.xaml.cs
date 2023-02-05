@@ -1,6 +1,6 @@
 ﻿using Serein.Base;
-using Serein.Items;
-using Serein.JSPlugin;
+using Serein.Utils;
+using Serein.Core.JSPlugin;
 using System.Diagnostics;
 using System.Timers;
 using System.Windows;

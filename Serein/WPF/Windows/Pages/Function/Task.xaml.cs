@@ -1,6 +1,6 @@
 ﻿using NCrontab;
 using Serein.Base;
-using Serein.Items;
+using Serein.Utils;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -27,7 +27,7 @@ namespace Serein.Windows.Pages.Function
         {
             IO.ReadTask(filename);
             TaskListView.Items.Clear();
-            foreach (Items.Task task in Global.TaskList)
+            foreach (Base.Task task in Global.TaskList)
             {
                 TaskListView.Items.Add(task);
             }
@@ -35,10 +35,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<Items.Task> list = new();
+            List<Base.Task> list = new();
             foreach (var obj in TaskListView.Items)
             {
-                if (obj is Items.Task task && task != null)
+                if (obj is Base.Task task && task != null)
                 {
                     list.Add(task);
                 }
@@ -49,7 +49,7 @@ namespace Serein.Windows.Pages.Function
 
         public bool Confirm(string cronExp, string command, string remark)
         {
-            if (Base.Command.GetType(command) == CommandType.Invalid)
+            if (Core.Command.GetType(command) == CommandType.Invalid)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
@@ -64,7 +64,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             TaskListView.Items.Insert(
                                 TaskListView.SelectedIndex,
-                                new Items.Task
+                                new Base.Task
                                 {
                                     Cron = cronExp,
                                     Command = command,
@@ -74,7 +74,7 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             TaskListView.Items.Add(
-                                new Items.Task
+                                new Base.Task
                                 {
                                     Cron = cronExp,
                                     Command = command,
@@ -82,7 +82,7 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && TaskListView.SelectedItem is Items.Task selectedItem && selectedItem != null)
+                    else if (ActionType == 2 && TaskListView.SelectedItem is Base.Task selectedItem && selectedItem != null)
                     {
                         selectedItem.Cron = cronExp;
                         selectedItem.Command = command;
@@ -111,7 +111,7 @@ namespace Serein.Windows.Pages.Function
                     Catalog.MainWindow.TaskEditor.Hide();
                     ActionType = 0;
                 }
-                Items.Task selectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Items.Task : null;
+                Base.Task selectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Base.Task : null;
                 string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
@@ -192,7 +192,7 @@ namespace Serein.Windows.Pages.Function
             Edit.IsEnabled = TaskListView.SelectedIndex != -1;
             Delete.IsEnabled = TaskListView.SelectedIndex != -1;
             Clear.IsEnabled = TaskListView.Items.Count > 0;
-            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Items.Task selectedItem && selectedItem != null)
+            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Base.Task selectedItem && selectedItem != null)
             {
                 Enable.IsEnabled = !selectedItem.Enable;
                 Disable.IsEnabled = selectedItem.Enable;

@@ -26,8 +26,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
-		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
-		<Compile Remove="..\Universal\Server\PluginManager.cs" />
 		<EmbeddedResource Include="..\Universal\buildinfo.info" />
 	</ItemGroup>
 	<ItemGroup>

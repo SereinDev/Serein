@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
-using Serein.Base;
-using Serein.Server;
+using Serein.Utils;
+using Serein.Core.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -108,7 +108,7 @@ namespace Serein.Windows.Pages.Server
                         }
                         break;
                     default:
-                        Logger.Output(Items.LogType.Debug, new ArgumentException());
+                        Logger.Output(Base.LogType.Debug, new ArgumentException());
                         break;
                 }
             }

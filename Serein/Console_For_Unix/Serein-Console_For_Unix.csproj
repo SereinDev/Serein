@@ -22,8 +22,6 @@
 		<Compile Include="../Console/**/*.cs" />
 		<Compile Remove="../Console/Properties/**" />
 		<Compile Remove="../Console/obj/**" />
-		<Compile Remove="..\Universal\Base\ResourcesManager.cs" />
-		<Compile Remove="..\Universal\Server\PluginManager.cs" />
 		<EmbeddedResource Include="..\Universal\buildinfo.info" />
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">

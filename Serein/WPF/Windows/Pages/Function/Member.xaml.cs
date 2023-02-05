@@ -1,4 +1,5 @@
-﻿using Serein.Base;
+﻿using Serein.Utils;
+using Serein.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -25,7 +26,7 @@ namespace Serein.Windows.Pages.Function
                 IO.ReadMember();
             }
             MemberListView.Items.Clear();
-            foreach (Items.Member member in Global.MemberDict.Values.ToList())
+            foreach (Base.Member member in Global.MemberDict.Values.ToList())
             {
                 MemberListView.Items.Add(member);
             }
@@ -33,10 +34,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            Dictionary<long, Items.Member> dictionary = new Dictionary<long, Items.Member>();
+            Dictionary<long, Base.Member> dictionary = new Dictionary<long, Base.Member>();
             foreach (var obj in MemberListView.Items)
             {
-                if (obj is Items.Member member && member != null)
+                if (obj is Base.Member member && member != null)
                 {
                     dictionary.Add(member.ID, member);
                 }
@@ -65,7 +66,7 @@ namespace Serein.Windows.Pages.Function
                         Catalog.MainWindow.OpenMemberEditor();
                         break;
                     case "Edit":
-                        if (MemberListView.SelectedItem is Items.Member selectedItem && selectedItem != null)
+                        if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
                         {
                             ActionType = 2;
                             Catalog.MainWindow.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
@@ -128,7 +129,7 @@ namespace Serein.Windows.Pages.Function
                     else
                     {
                         Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
-                        if (MemberListView.SelectedItem is Items.Member selectedItem && selectedItem != null)
+                        if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
                         {
                             selectedItem.GameID = GameID;
                             MemberListView.SelectedItem = selectedItem;

@@ -1,5 +1,6 @@
 ﻿using Serein.Base;
 using System.Windows;
+using Serein.Utils;
 using System.Threading.Tasks;
 
 namespace Serein
@@ -22,7 +23,7 @@ namespace Serein
     {
         public App()
         {
-            Global.OnStart();
+            Runtime.Init();
             DispatcherUnhandledException += (_, e) => CrashInterception.ShowException(e.Exception);
         }
     }

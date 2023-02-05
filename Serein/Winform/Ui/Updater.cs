@@ -1,5 +1,5 @@
-﻿using Serein.Base;
-using Serein.Server;
+﻿using Serein.Core;
+using Serein.Core.Server;
 using Serein.Extensions;
 using System;
 using System.Windows.Forms;

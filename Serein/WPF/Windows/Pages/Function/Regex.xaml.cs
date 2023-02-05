@@ -1,4 +1,5 @@
-﻿using Serein.Base;
+﻿using Serein.Utils;
+using Serein.Core;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -24,7 +25,7 @@ namespace Serein.Windows.Pages.Function
         {
             IO.ReadRegex(filename, append);
             RegexListView.Items.Clear();
-            foreach (Items.Regex regex in Global.RegexList)
+            foreach (Base.Regex regex in Global.RegexList)
             {
                 RegexListView.Items.Add(regex);
             }
@@ -32,10 +33,10 @@ namespace Serein.Windows.Pages.Function
 
         private void Save()
         {
-            List<Items.Regex> list = new();
+            List<Base.Regex> list = new();
             foreach (var obj in RegexListView.Items)
             {
-                if (obj is Items.Regex regex && regex != null)
+                if (obj is Base.Regex regex && regex != null)
                 {
                     list.Add(regex);
                 }
@@ -69,7 +70,7 @@ namespace Serein.Windows.Pages.Function
                         ActionType = 1;
                         break;
                     case "Edit":
-                        if (RegexListView.SelectedItem is Items.Regex selectedItem1 && selectedItem1 != null)
+                        if (RegexListView.SelectedItem is Base.Regex selectedItem1 && selectedItem1 != null)
                         {
                             Catalog.MainWindow.OpenRegexEditor(
                                 selectedItem1.Area,
@@ -82,7 +83,7 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Copy":
-                        if (RegexListView.SelectedItem is Items.Regex selectedItem2 && selectedItem2 != null)
+                        if (RegexListView.SelectedItem is Base.Regex selectedItem2 && selectedItem2 != null)
                         {
                             RegexListView.Items.Insert(RegexListView.SelectedIndex, selectedItem2);
                             Save();
@@ -117,7 +118,7 @@ namespace Serein.Windows.Pages.Function
 
         public bool Confirm(int AreaIndex, bool IsAdmin, string Regex, string Command, string Remark)
         {
-            if (Base.Command.GetType(Command) < 0)
+            if (Core.Command.GetType(Command) < 0)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
@@ -132,7 +133,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             RegexListView.Items.Insert(
                                 RegexListView.SelectedIndex,
-                                new Items.Regex
+                                new Base.Regex
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,
@@ -144,7 +145,7 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             RegexListView.Items.Add(
-                                new Items.Regex()
+                                new Base.Regex()
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,
@@ -154,7 +155,7 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && RegexListView.SelectedItem is Items.Regex selectedItem && selectedItem != null)
+                    else if (ActionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
                     {
                         selectedItem.Area = AreaIndex;
                         selectedItem.Expression = Regex;

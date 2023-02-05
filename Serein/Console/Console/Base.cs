@@ -1,11 +1,12 @@
-﻿using Serein.Base;
-using Serein.JSPlugin;
-using Serein.Server;
+﻿using Serein.Utils;
+using Serein.Base;
+using Serein.Core.JSPlugin;
+using Serein.Core.Server;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Serein.Console
+namespace Serein.Utils.Console
 {
     internal static class Base
     {
@@ -58,12 +59,12 @@ namespace Serein.Console
 #if UNIX
             if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
-                Logger.Output(Items.LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
             }
 #else
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
-                Logger.Output(Items.LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Unix类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Unix类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
             }
 #endif
         }
@@ -73,9 +74,9 @@ namespace Serein.Console
         /// </summary>
         public static void Start()
         {
-            Logger.Output(Items.LogType.Info, "Welcome.");
-            Global.OnLoaded();
-            Logger.Output(Items.LogType.Info, "你可以输入“help”获取更多信息");
+            Logger.Output(LogType.Info, "Welcome.");
+            Runtime.Start();
+            Logger.Output(LogType.Info, "你可以输入“help”获取更多信息");
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (_, e) =>
             {
@@ -86,8 +87,8 @@ namespace Serein.Console
                 }
                 else
                 {
-                    Logger.Output(Items.LogType.Info, "正在关闭...");
-                    JSFunc.Trigger(Items.EventType.SereinClose);
+                    Logger.Output(LogType.Info, "正在关闭...");
+                    JSFunc.Trigger(EventType.SereinClose);
                     Environment.Exit(0);
                 }
             };

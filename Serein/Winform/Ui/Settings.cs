@@ -1,5 +1,5 @@
 ﻿using Ookii.Dialogs.Wpf;
-using Serein.Base;
+using Serein.Utils;
 using Serein.Settings;
 using Serein.Ui.ChildrenWindow;
 using System;
@@ -219,7 +219,7 @@ namespace Serein.Ui
 
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node == null || !Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+            if (e.Node == null || !Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
             {
                 SettingEventList.Items.Clear();
                 return;
@@ -227,7 +227,7 @@ namespace Serein.Ui
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
             Global.Settings.Event.Get(
-                (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+                (Base.EventType)Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
                 .ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n"))
                 );
             SettingEventList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -295,9 +295,9 @@ namespace Serein.Ui
 
         private void SaveEventCommand()
         {
-            if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name))
+            if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
             {
-                Global.Settings.Event.Edit(GetEventCommands(), (Items.EventType)Enum.Parse(typeof(Items.EventType), SettingEventTreeView.SelectedNode.Name));
+                Global.Settings.Event.Edit(GetEventCommands(), (Base.EventType)Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name));
             }
             IO.SaveEventSetting();
         }

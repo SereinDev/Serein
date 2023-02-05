@@ -1,9 +1,9 @@
 ﻿using Serein.Base;
+using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -55,7 +55,7 @@ namespace Serein.Windows.Pages.Settings
 
         public bool Confirm(string Command)
         {
-            if (Base.Command.GetType(Command) < 0)
+            if (Core.Command.GetType(Command) < 0)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
@@ -87,9 +87,9 @@ namespace Serein.Windows.Pages.Settings
 
         private void Save()
         {
-            if (Enum.IsDefined(typeof(Items.EventType), SelectedTag))
+            if (Enum.IsDefined(typeof(EventType), SelectedTag))
             {
-                Global.Settings.Event.Edit(GetEventCommands(), (Items.EventType)Enum.Parse(typeof(Items.EventType), SelectedTag));
+                Global.Settings.Event.Edit(GetEventCommands(), (EventType)Enum.Parse(typeof(EventType), SelectedTag));
                 IO.SaveEventSetting();
             }
         }
@@ -110,11 +110,11 @@ namespace Serein.Windows.Pages.Settings
             {
                 EventListView.Items.Clear();
                 SelectedTag = treeViewItemItem.Tag as string ?? string.Empty;
-                if (Enum.IsDefined(typeof(Items.EventType), SelectedTag))
+                if (Enum.IsDefined(typeof(EventType), SelectedTag))
                 {
                     Global.Settings.Event.Get(
-                        (Items.EventType)Enum.Parse(typeof(Items.EventType), SelectedTag)).ToList()
-                        .ForEach((Command) => { EventListView.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); }
+                        (EventType)Enum.Parse(typeof(EventType), SelectedTag)).ToList()
+                        .ForEach((Command) => { EventListView.Items.Add(System.Text.RegularExpressions.Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); }
                         );
                 }
             }

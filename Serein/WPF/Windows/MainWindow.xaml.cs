@@ -1,8 +1,8 @@
 ﻿using NCrontab;
 using Notification.Wpf;
-using Serein.Base;
-using Serein.JSPlugin;
-using Serein.Server;
+using Serein.Utils;
+using Serein.Core.JSPlugin;
+using Serein.Core.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,7 +52,7 @@ namespace Serein.Windows
         }
 
         private void UiWindow_ContentRendered(object sender, EventArgs e)
-            => Global.OnLoaded();
+            => Runtime.Start();
 
         private void UiWindow_StateChanged(object sender, EventArgs e)
         {
@@ -72,7 +72,7 @@ namespace Serein.Windows
             }
             else
             {
-                JSFunc.Trigger(Items.EventType.SereinClose);
+                JSFunc.Trigger(Base.EventType.SereinClose);
             }
         }
 

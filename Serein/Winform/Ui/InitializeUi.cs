@@ -1,5 +1,5 @@
 ﻿using Serein.Base;
-using Serein.JSPlugin;
+using Serein.Core.JSPlugin;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;

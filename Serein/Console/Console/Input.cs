@@ -1,12 +1,14 @@
 using Serein.Base;
+using Serein.Utils;
+using Serein.Core;
 using Serein.Extensions;
-using Serein.JSPlugin;
-using Serein.Server;
+using Serein.Core.JSPlugin;
+using Serein.Core.Server;
 using System;
 using System.Text.RegularExpressions;
 
 
-namespace Serein.Console
+namespace Serein.Utils.Console
 {
     internal static class Input
     {
@@ -44,17 +46,17 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
         {
             if (!ServerManager.Status || line.StartsWith("serein"))
             {
-                string[] args = Regex.Replace(line, @"^serein\s?", string.Empty).ToLowerInvariant().Split(' ');
+                string[] args = System.Text.RegularExpressions.Regex.Replace(line, @"^serein\s?", string.Empty).ToLowerInvariant().Split(' ');
                 switch (args[0])
                 {
                     case "exit":
                         if (ServerManager.Status)
                         {
-                            Logger.Output(Items.LogType.Warn, "服务器未关闭");
+                            Logger.Output(LogType.Warn, "服务器未关闭");
                         }
                         else
                         {
-                            JSFunc.Trigger(Items.EventType.SereinClose);
+                            JSFunc.Trigger(EventType.SereinClose);
                             Environment.Exit(0);
                         }
                         break;
@@ -86,7 +88,7 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                                     break;
                                 case "i":
                                 case "info":
-                                    Logger.Output(Items.LogType.Info,
+                                    Logger.Output(LogType.Info,
                                         $"服务器状态      {(ServerManager.Status ? "已启动" : "未启动")}\n" +
                                         $"版本            {(ServerManager.Status && ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-")}\n" +
                                         $"在线人数        {(ServerManager.Status && ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-")}\n" +
@@ -95,13 +97,13 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                                         );
                                     break;
                                 default:
-                                    Logger.Output(Items.LogType.Warn, "错误的参数：<operation>");
+                                    Logger.Output(LogType.Warn, "错误的参数：<operation>");
                                     break;
                             }
                         }
                         else
                         {
-                            Logger.Output(Items.LogType.Warn, "错误的参数：<operation>");
+                            Logger.Output(LogType.Warn, "错误的参数：<operation>");
                         }
                         break;
                     case "ws":
@@ -122,7 +124,7 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                                     break;
                                 case "i":
                                 case "info":
-                                    Logger.Output(Items.LogType.Info,
+                                    Logger.Output(LogType.Info,
                                         $"状态       {(Websocket.Status ? "已连接" : "未连接")}\n" +
                                         $"账号       {(Websocket.Status ? Matcher.SelfId : "-")}\n" +
                                         $"接收消息   {(Websocket.Status ? Matcher.MessageReceived : "-")}\n" +
@@ -131,13 +133,13 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                                         );
                                     break;
                                 default:
-                                    Logger.Output(Items.LogType.Warn, "错误的参数：<operation>");
+                                    Logger.Output(LogType.Warn, "错误的参数：<operation>");
                                     break;
                             }
                         }
                         else
                         {
-                            Logger.Output(Items.LogType.Warn, "错误的参数：<operation>");
+                            Logger.Output(LogType.Warn, "错误的参数：<operation>");
                         }
                         break;
                     case "r":
@@ -146,11 +148,11 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                         {
                             IO.ReadAll();
                             JSPluginManager.Reload();
-                            Logger.Output(Items.LogType.Info, "重新加载成功");
+                            Logger.Output(LogType.Info, "重新加载成功");
                         }
                         catch (Exception e)
                         {
-                            Logger.Output(Items.LogType.Error, "加载失败:" + e.Message);
+                            Logger.Output(LogType.Error, "加载失败:" + e.Message);
                         }
                         break;
                     case "clear":
@@ -160,11 +162,11 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                     case "？":
                     case "h":
                     case "help":
-                        Logger.Output(Items.LogType.Info, HelpMenu);
+                        Logger.Output(LogType.Info, HelpMenu);
                         break;
                     case "v":
                     case "version":
-                        Logger.Output(Items.LogType.Info,
+                        Logger.Output(LogType.Info,
                             $"Serein {Global.VERSION}\n" +
                             $"编译类型   {Global.BuildInfo.Type}\n" +
                             $"编译时间   {Global.BuildInfo.Time}\n" +
@@ -174,7 +176,7 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                             "Copyright © 2022 Zaitonn. All Rights Reserved.");
                         break;
                     case "sysinfo":
-                        Logger.Output(Items.LogType.Info,
+                        Logger.Output(LogType.Info,
                             $"系统   {SystemInfo.OS}\n" +
                             $"内存   {SystemInfo.UsedRAM}/{SystemInfo.TotalRAM}MB （{SystemInfo.RAMUsage:N1}%）\n" +
 #if UNIX
@@ -188,7 +190,7 @@ Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器
                             );
                         break;
                     default:
-                        Logger.Output(Items.LogType.Warn, "未知的命令，请检查后重试或输入“help”获取更多信息");
+                        Logger.Output(LogType.Warn, "未知的命令，请检查后重试或输入“help”获取更多信息");
                         break;
                 }
             }

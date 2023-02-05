@@ -1,4 +1,4 @@
-﻿using Serein.JSPlugin;
+﻿using Serein.Core.JSPlugin;
 using System;
 using System.Diagnostics;
 using System.Drawing;

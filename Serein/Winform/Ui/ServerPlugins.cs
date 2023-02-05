@@ -1,4 +1,4 @@
-﻿using Serein.Server;
+﻿using Serein.Core.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

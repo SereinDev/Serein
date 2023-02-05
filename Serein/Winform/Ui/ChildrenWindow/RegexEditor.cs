@@ -1,4 +1,4 @@
-﻿using Serein.Base;
+﻿using Serein.Core;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -24,7 +24,7 @@ namespace Serein.Ui.ChildrenWindow
                 string.IsNullOrWhiteSpace(CommandTextBox.Text) || string.IsNullOrEmpty(CommandTextBox.Text)
                 ))
             {
-                if (Command.GetType(CommandTextBox.Text) == Items.CommandType.Invalid)
+                if (Command.GetType(CommandTextBox.Text) == Base.CommandType.Invalid)
                 {
                     MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

@@ -5,28 +5,25 @@
         public bool AutoUpdate;
         public bool ColorfulLog = true;
         public bool DPIAware;
-        public bool DisableBinderWhenServerClosed;
         public bool EnableGetUpdate = true;
-        public Pages Pages = new();
         public int MaxCacheLines = 250;
         public bool ThemeFollowSystem = true;
         public bool UseDarkTheme;
         public AutoRun AutoRun = new();
         public DevelopmentTool DevelopmentTool = new();
+        public Function Function = new();
+        public Pages Pages = new();
     }
 
     internal class AutoRun
     {
-        public bool StartServer;
-        public bool ConnectWS;
+        public bool StartServer, ConnectWS;
         public int Delay;
     }
 
     internal class DevelopmentTool
     {
-        public bool EnableDebug;
-        public bool DetailDebug;
-        public int JSEventCoolingDownTime = 15;
+        public bool EnableDebug, DetailDebug;
         public string NOTE { get; } = "以上设置内容为开发专用选项，请在指导下修改";
     }
 
@@ -41,5 +38,12 @@
         Member = true,
         JSPlugin = true,
         Settings = true;
+    }
+
+    internal class Function
+    {
+        public int JSEventMaxWaitingTime = 500;
+        public int JSEventCoolingDownTime = 15;
+        public bool DisableBinderWhenServerClosed;
     }
 }

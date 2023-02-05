@@ -1,5 +1,5 @@
-﻿using Serein.Base;
-using System;
+﻿using System;
+using Serein.Utils;
 
 namespace Serein
 {
@@ -25,9 +25,9 @@ namespace Serein
         [STAThread]
         private static void Main()
         {
-            Global.OnStart();
-            Console.Base.Init();
-            Console.Base.Start();
+            Runtime.Init();
+            Serein.Utils.Console.Base.Init();
+            Serein.Utils.Console.Base.Start();
         }
     }
 }
