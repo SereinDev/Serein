@@ -27,7 +27,7 @@ namespace Serein.Ui
             LoadSettings();
             LoadPlugins();
             LoadRegex();
-            LoadTask();
+            LoadSchedule();
             UpdateInfoTimer.Start();
             UpdateInfoTimer.Elapsed += (_, _) =>
             {
@@ -38,12 +38,12 @@ namespace Serein.Ui
             };
             System.Threading.Tasks.Task.Run(UpdateInfo);
             SetWindowTheme(RegexList.Handle, "Explorer", null);
-            SetWindowTheme(TaskList.Handle, "Explorer", null);
+            SetWindowTheme(ScheduleList.Handle, "Explorer", null);
             SetWindowTheme(MemberList.Handle, "Explorer", null);
             SetWindowTheme(JSPluginList.Handle, "Explorer", null);
             SetWindowTheme(SettingEventList.Handle, "Explorer", null);
             SendMessage(RegexList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
-            SendMessage(TaskList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+            SendMessage(ScheduleList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(JSPluginList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);

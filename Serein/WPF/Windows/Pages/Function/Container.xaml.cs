@@ -11,7 +11,7 @@ namespace Serein.Windows.Pages.Function
             BotNavigationItem.Visibility = Global.Settings.Serein.Pages.Bot ? Visibility.Visible : Visibility.Hidden;
             MemberNavigationItem.Visibility = Global.Settings.Serein.Pages.Member ? Visibility.Visible : Visibility.Hidden;
             RegexNavigationItem.Visibility = Global.Settings.Serein.Pages.RegexList ? Visibility.Visible : Visibility.Hidden;
-            TaskNavigationItem.Visibility = Global.Settings.Serein.Pages.Task ? Visibility.Visible : Visibility.Hidden;
+            ScheduleNavigationItem.Visibility = Global.Settings.Serein.Pages.Schedule ? Visibility.Visible : Visibility.Hidden;
             JSPluginNavigationItem.Visibility = Global.Settings.Serein.Pages.JSPlugin ? Visibility.Visible : Visibility.Hidden;
             if (Global.Settings.Serein.Pages.Bot)
             {
@@ -25,7 +25,7 @@ namespace Serein.Windows.Pages.Function
             {
                 Navigation.Navigate(3);
             }
-            else if (Global.Settings.Serein.Pages.Task)
+            else if (Global.Settings.Serein.Pages.Schedule)
             {
                 Navigation.Navigate(4);
             }

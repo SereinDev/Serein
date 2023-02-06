@@ -1,7 +1,7 @@
 ﻿using Serein.Utils;
-using Serein.Core;
 using System.Collections.Generic;
 using System.Diagnostics;
+using RegExp = System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
@@ -126,7 +126,7 @@ namespace Serein.Windows.Pages.Function
             {
                 try
                 {
-                    System.Text.RegularExpressions.Regex.IsMatch(string.Empty, Regex);
+                    RegExp.Regex.IsMatch(string.Empty, Regex);
                     if (ActionType == 1)
                     {
                         if (RegexListView.SelectedIndex >= 0)
@@ -145,7 +145,7 @@ namespace Serein.Windows.Pages.Function
                         else
                         {
                             RegexListView.Items.Add(
-                                new Base.Regex()
+                                new Base.Regex
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,

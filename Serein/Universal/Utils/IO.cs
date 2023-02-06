@@ -67,7 +67,7 @@ namespace Serein.Utils
         {
             ReadRegex();
             ReadMember();
-            ReadTask();
+            ReadSchedule();
             ReadGroupCache();
             ReadSettings();
         }
@@ -219,27 +219,27 @@ namespace Serein.Utils
         /// 读取任务文件
         /// </summary>
         /// <param name="filename">路径</param>
-        public static void ReadTask(string filename = null)
+        public static void ReadSchedule(string filename = null)
         {
             CreateDirectory("data");
-            filename ??= Path.Combine("data", "task.json");
+            filename ??= Path.Combine("data", "schedule.json");
             if (File.Exists(filename))
             {
                 StreamReader streamReader = new(filename, Encoding.UTF8);
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
-                    List<Task> list = new();
+                    List<Schedule> list = new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        Task task = new();
-                        task.FromText(line);
-                        if (task.Check())
+                        Schedule schedule = new();
+                        schedule.FromText(line);
+                        if (schedule.Check())
                         {
-                            list.Add(task);
+                            list.Add(schedule);
                         }
                     }
-                    Global.TaskList = list;
+                    Global.Schedules = list;
                 }
                 else if (filename.ToLowerInvariant().EndsWith(".json"))
                 {
@@ -247,33 +247,34 @@ namespace Serein.Utils
                     if (!string.IsNullOrEmpty(text))
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpperInvariant() != "TASK")
+                        if (jsonObject["type"].ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject["type"].ToString().ToUpperInvariant() == "TASK")
                         {
-                            Global.TaskList = ((JArray)jsonObject["data"]).ToObject<List<Task>>();
+                            Global.Schedules = ((JArray)jsonObject["data"]).ToObject<List<Schedule>>();
                         }
                     }
                 }
                 streamReader.Close();
                 streamReader.Dispose();
             }
-            SaveTask();
+            SaveSchedule();
         }
 
         /// <summary>
         /// 保存任务
         /// </summary>
-        public static void SaveTask()
+        public static void SaveSchedule()
         {
             CreateDirectory("data");
             JObject jsonObject = new()
             {
-                { "type", "TASK" },
+                { "type", "SCHEDULE" },
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Global.TaskList) }
+                { "data", JArray.FromObject(Global.Schedules) }
             };
             lock (FileLock.Task)
             {
-                File.WriteAllText(Path.Combine("data", "task.json"), jsonObject.ToString());
+                File.WriteAllText(Path.Combine("data", "schedule.json"), jsonObject.ToString());
             }
         }
 

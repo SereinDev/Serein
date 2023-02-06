@@ -63,7 +63,7 @@
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
-                <ContextMenu Name="TaskContextMenu">
+                <ContextMenu Name="ScheduleContextMenu">
                     <ui:MenuItem
                         Name="Disable"
                         Click="MenuItem_Click"

@@ -10,41 +10,41 @@ using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
 {
-    public partial class Task : UiPage
+    public partial class Schedule : UiPage
     {
         private int ActionType;
 
-        public Task()
+        public Schedule()
         {
             InitializeComponent();
             Load();
-            Catalog.Function.Task = this;
+            Catalog.Function.Schedule = this;
         }
 
         public void Load() => Load(null);
 
         public void Load(string filename)
         {
-            IO.ReadTask(filename);
-            TaskListView.Items.Clear();
-            foreach (Base.Task task in Global.TaskList)
+            IO.ReadSchedule(filename);
+            ScheduleListView.Items.Clear();
+            foreach (Base.Schedule schedule in Global.Schedules)
             {
-                TaskListView.Items.Add(task);
+                ScheduleListView.Items.Add(schedule);
             }
         }
 
         private void Save()
         {
-            List<Base.Task> list = new();
-            foreach (var obj in TaskListView.Items)
+            List<Base.Schedule> list = new();
+            foreach (var obj in ScheduleListView.Items)
             {
-                if (obj is Base.Task task && task != null)
+                if (obj is Base.Schedule schedule && schedule != null)
                 {
-                    list.Add(task);
+                    list.Add(schedule);
                 }
             }
-            Global.TaskList = list;
-            IO.SaveTask();
+            Global.Schedules = list;
+            IO.SaveSchedule();
         }
 
         public bool Confirm(string cronExp, string command, string remark)
@@ -60,11 +60,11 @@ namespace Serein.Windows.Pages.Function
                     CrontabSchedule.Parse(cronExp);
                     if (ActionType == 1)
                     {
-                        if (TaskListView.SelectedIndex >= 0)
+                        if (ScheduleListView.SelectedIndex >= 0)
                         {
-                            TaskListView.Items.Insert(
-                                TaskListView.SelectedIndex,
-                                new Base.Task
+                            ScheduleListView.Items.Insert(
+                                ScheduleListView.SelectedIndex,
+                                new Base.Schedule
                                 {
                                     Cron = cronExp,
                                     Command = command,
@@ -73,8 +73,8 @@ namespace Serein.Windows.Pages.Function
                         }
                         else
                         {
-                            TaskListView.Items.Add(
-                                new Base.Task
+                            ScheduleListView.Items.Add(
+                                new Base.Schedule
                                 {
                                     Cron = cronExp,
                                     Command = command,
@@ -82,12 +82,12 @@ namespace Serein.Windows.Pages.Function
                                 });
                         }
                     }
-                    else if (ActionType == 2 && TaskListView.SelectedItem is Base.Task selectedItem && selectedItem != null)
+                    else if (ActionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
                     {
                         selectedItem.Cron = cronExp;
                         selectedItem.Command = command;
                         selectedItem.Remark = remark;
-                        TaskListView.SelectedItem = selectedItem;
+                        ScheduleListView.SelectedItem = selectedItem;
                     }
                     Save();
                     Load();
@@ -108,35 +108,35 @@ namespace Serein.Windows.Pages.Function
             {
                 if (ActionType != 0)
                 {
-                    Catalog.MainWindow.TaskEditor.Hide();
+                    Catalog.MainWindow.ScheduleEditor.Hide();
                     ActionType = 0;
                 }
-                Base.Task selectedItem = TaskListView.SelectedIndex >= 0 ? TaskListView.SelectedItem as Base.Task : null;
+                Base.Schedule selectedItem = ScheduleListView.SelectedIndex >= 0 ? ScheduleListView.SelectedItem as Base.Schedule : null;
                 string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
-                        Catalog.MainWindow.OpenTaskEditor();
+                        Catalog.MainWindow.OpenScheduleEditor();
                         ActionType = 1;
                         break;
                     case "Edit":
                         if (selectedItem != null)
                         {
-                            Catalog.MainWindow.OpenTaskEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
+                            Catalog.MainWindow.OpenScheduleEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
                             ActionType = 2;
                         }
                         break;
                     case "Delete":
-                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && TaskListView.SelectedIndex >= 0)
+                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && ScheduleListView.SelectedIndex >= 0)
                         {
-                            TaskListView.Items.RemoveAt(TaskListView.SelectedIndex);
+                            ScheduleListView.Items.RemoveAt(ScheduleListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Clear":
-                        if (Logger.MsgBox("确定删除所有数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && TaskListView.Items.Count > 0)
+                        if (Logger.MsgBox("确定删除所有数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && ScheduleListView.Items.Count > 0)
                         {
-                            TaskListView.Items.Clear();
+                            ScheduleListView.Items.Clear();
                             Save();
                         }
                         break;
@@ -154,7 +154,7 @@ namespace Serein.Windows.Pages.Function
                         if (selectedItem != null)
                         {
                             selectedItem.Enable = !selectedItem.Enable;
-                            TaskListView.SelectedItem = selectedItem;
+                            ScheduleListView.SelectedItem = selectedItem;
                             Save();
                             Load();
                         }
@@ -165,21 +165,21 @@ namespace Serein.Windows.Pages.Function
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (TaskListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
+            if (ScheduleListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
             {
-                int index = TaskListView.SelectedIndex;
+                int index = ScheduleListView.SelectedIndex;
                 string tag = button.Tag as string ?? string.Empty;
                 switch (tag)
                 {
                     case "Up":
-                        TaskListView.Items.Insert(index - 1, TaskListView.SelectedItem);
-                        TaskListView.Items.RemoveAt(index + 1);
-                        TaskListView.SelectedIndex = index - 1;
+                        ScheduleListView.Items.Insert(index - 1, ScheduleListView.SelectedItem);
+                        ScheduleListView.Items.RemoveAt(index + 1);
+                        ScheduleListView.SelectedIndex = index - 1;
                         break;
                     case "Down":
-                        TaskListView.Items.Insert(index + 2, TaskListView.SelectedItem);
-                        TaskListView.Items.RemoveAt(index);
-                        TaskListView.SelectedIndex = index + 1;
+                        ScheduleListView.Items.Insert(index + 2, ScheduleListView.SelectedItem);
+                        ScheduleListView.Items.RemoveAt(index);
+                        ScheduleListView.SelectedIndex = index + 1;
                         break;
                 }
                 Save();
@@ -187,12 +187,12 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        private void TaskListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        private void ScheduleListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            Edit.IsEnabled = TaskListView.SelectedIndex != -1;
-            Delete.IsEnabled = TaskListView.SelectedIndex != -1;
-            Clear.IsEnabled = TaskListView.Items.Count > 0;
-            if (TaskListView.Items.Count > 0 && TaskListView.SelectedItem is Base.Task selectedItem && selectedItem != null)
+            Edit.IsEnabled = ScheduleListView.SelectedIndex != -1;
+            Delete.IsEnabled = ScheduleListView.SelectedIndex != -1;
+            Clear.IsEnabled = ScheduleListView.Items.Count > 0;
+            if (ScheduleListView.Items.Count > 0 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
             {
                 Enable.IsEnabled = !selectedItem.Enable;
                 Disable.IsEnabled = selectedItem.Enable;
@@ -205,12 +205,12 @@ namespace Serein.Windows.Pages.Function
         }
 
 
-        private void TaskListView_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateButton();
+        private void ScheduleListView_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateButton();
 
         private void UpdateButton()
         {
-            Up.IsEnabled = TaskListView.SelectedIndex > 0;
-            Down.IsEnabled = TaskListView.SelectedIndex >= 0 && TaskListView.SelectedIndex < TaskListView.Items.Count - 1;
+            Up.IsEnabled = ScheduleListView.SelectedIndex > 0;
+            Down.IsEnabled = ScheduleListView.SelectedIndex >= 0 && ScheduleListView.SelectedIndex < ScheduleListView.Items.Count - 1;
         }
     }
 }

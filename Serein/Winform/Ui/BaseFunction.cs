@@ -134,18 +134,19 @@ namespace Serein.Ui
                             SaveRegex();
                         }
                     }
-                    else if (jsonObject["type"].ToString().ToUpperInvariant() == "TASK"
+                    else if ((jsonObject["type"].ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject["type"].ToString().ToUpperInvariant() == "TASK")
                         &&
                         (int)MessageBox.Show(
                             this,
-                            "确定从{filename}导入定时任务吗？\n此操作将覆盖原有文件且不可逆",
+                            $"确定从{filename}导入定时任务吗？\n此操作将覆盖原有文件且不可逆",
                             "Serein",
                             MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Warning
                         ) == 1)
                     {
-                        LoadTask(filename);
-                        SaveTask();
+                        LoadSchedule(filename);
+                        SaveSchedule();
                     }
                 }
                 else if (
@@ -171,8 +172,8 @@ namespace Serein.Ui
                         MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    LoadTask(filename);
-                    SaveTask();
+                    LoadSchedule(filename);
+                    SaveSchedule();
                 }
             }
             else if (data.Length > 0 && PluginManager.TryImport(data))

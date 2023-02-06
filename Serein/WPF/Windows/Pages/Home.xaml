@@ -180,7 +180,7 @@
                 Margin="5"
                 Click="CardAction_Click"
                 Icon="Timer24"
-                Tag="Task">
+                Tag="Schedule">
                 <StackPanel>
                     <TextBlock
                         FontSize="13"

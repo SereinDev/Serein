@@ -1,11 +1,11 @@
 ﻿using Jint;
 using Jint.Native;
 using Newtonsoft.Json;
-using System.Linq;
 using Serein.Base;
 using Serein.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Serein.Core.JSPlugin
@@ -29,7 +29,7 @@ namespace Serein.Core.JSPlugin
             EventDict.Clear();
             Engine?.Dispose();
             Engine = null;
-            WebSockets.ForEach((ws) => ws.Dispose());
+            WSClients.ForEach((ws) => ws.Dispose());
             TokenSource.Dispose();
             Available = false;
         }
@@ -84,7 +84,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// WebSocket列表
         /// </summary>
-        public List<JSWebSocket> WebSockets = new();
+        public List<WSClient> WSClients = new();
 
         /// <summary>
         /// 监听字典

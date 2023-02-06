@@ -1,12 +1,12 @@
 ﻿<ui:UiPage
-    x:Class="Serein.Windows.Pages.Function.Task"
+    x:Class="Serein.Windows.Pages.Function.Schedule"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="Task"
+    Title="Schedule"
     d:DesignHeight="450"
     d:DesignWidth="800"
     AllowDrop="True"
@@ -24,9 +24,9 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <ListView
-            Name="TaskListView"
-            ContextMenuOpening="TaskListView_ContextMenuOpening"
-            SelectionChanged="TaskListView_SelectionChanged"
+            Name="ScheduleListView"
+            ContextMenuOpening="ScheduleListView_ContextMenuOpening"
+            SelectionChanged="ScheduleListView_SelectionChanged"
             SelectionMode="Single">
             <ListView.View>
                 <GridView>
@@ -43,7 +43,7 @@
                 </Style>
             </ListView.Style>
             <ListView.ContextMenu>
-                <ContextMenu Name="TaskContextMenu">
+                <ContextMenu Name="ScheduleContextMenu">
                     <ui:MenuItem
                         Name="Add"
                         Click="MenuItem_Click"

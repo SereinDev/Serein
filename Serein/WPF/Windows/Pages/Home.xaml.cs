@@ -75,8 +75,8 @@ namespace Serein.Windows.Pages
                         Websocket.Open();
                     }
                     break;
-                case "Task":
-                    if (Global.Settings.Serein.Pages.Task)
+                case "Schedule":
+                    if (Global.Settings.Serein.Pages.Schedule)
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(3);

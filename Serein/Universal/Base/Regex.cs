@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Serein.Extensions;
-using Serein.Core;
 
 namespace Serein.Base
 {

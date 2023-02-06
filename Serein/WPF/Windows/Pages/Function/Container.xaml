@@ -41,11 +41,11 @@
                     PageTag="regex"
                     PageType="{x:Type pages:Regex}" />
                 <ui:NavigationItem
-                    x:Name="TaskNavigationItem"
+                    x:Name="ScheduleNavigationItem"
                     Content="定时任务"
                     Icon="Timer24"
-                    PageTag="task"
-                    PageType="{x:Type pages:Task}" />
+                    PageTag="schedule"
+                    PageType="{x:Type pages:Schedule}" />
                 <ui:NavigationItem
                     x:Name="JSPluginNavigationItem"
                     Content="JS插件"

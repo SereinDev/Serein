@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Jint.Native;
+using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Extensions;
 using Serein.Utils;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Serein.Core.JSPlugin
@@ -25,17 +27,22 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 插件项列表
         /// </summary>
-        public static Dictionary<string, Plugin> PluginDict = new();
+        public static readonly Dictionary<string, Plugin> PluginDict = new();
 
         /// <summary>
         /// 定时器字典
         /// </summary>
-        public static Dictionary<long, Timer> Timers = new();
+        public static readonly Dictionary<long, Timer> Timers = new();
 
         /// <summary>
         /// 变量字典
         /// </summary>
-        public static Dictionary<string, string> VariablesDict = new();
+        public static readonly Dictionary<string, string> CommandVariablesDict = new();
+
+        /// <summary>
+        /// 变量字典
+        /// </summary>
+        public static readonly Dictionary<string, JsValue> VariablesExportedDict = new();
 
         /// <summary>
         /// 加载插件
@@ -112,7 +119,7 @@ namespace Serein.Core.JSPlugin
             {
                 Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://serein.cc/Extension/");
             }
-            System.Threading.Tasks.Task.Run(() =>
+            Task.Run(() =>
             {
                 5000.ToSleep();
                 Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
@@ -133,14 +140,18 @@ namespace Serein.Core.JSPlugin
         {
             if (!IsLoading)
             {
-                Logger.Output(LogType.Plugin_Clear);
-                JSFunc.ClearAllTimers();
-                JSFunc.Trigger(EventType.PluginsReload);
-                VariablesDict.Clear();
-                PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
-                PluginDict.Clear();
-                JSFunc.CurrentID = 0;
-                System.Threading.Tasks.Task.Run(Load);
+                Task.Run(() =>
+                {
+                    Logger.Output(LogType.Plugin_Clear);
+                    JSFunc.ClearAllTimers();
+                    JSFunc.Trigger(EventType.PluginsReload);
+                    CommandVariablesDict.Clear();
+                    VariablesExportedDict.Clear();
+                    PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
+                    PluginDict.Clear();
+                    JSFunc.CurrentID = 0;
+                    Load();
+                });
             }
         }
     }

@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using RegExp = System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Serein.Core.JSPlugin
 {
@@ -35,7 +37,7 @@ namespace Serein.Core.JSPlugin
         {
             if (@namespace == null || !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
-                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
+                throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
             }
             lock (JSPluginManager.PluginDict)
             {
@@ -93,15 +95,15 @@ namespace Serein.Core.JSPlugin
                 Logger.Output(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
-                    List<System.Threading.Tasks.Task<bool>> tasks = new();
+                    List<Task<bool>> tasks = new();
                     CancellationTokenSource tokenSource = new();
                     foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
                     {
-                        tasks.Add(System.Threading.Tasks.Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
+                        tasks.Add(Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
                     }
                     if (tasks.Count > 0)
                     {
-                        System.Threading.Tasks.Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
+                        Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
                         tokenSource.Cancel();
                         tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
                         Global.Settings.Serein.Function.JSEventCoolingDownTime.ToSleep();
@@ -124,7 +126,7 @@ namespace Serein.Core.JSPlugin
         {
             if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
-                throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
+                throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
             }
             long timerID = CurrentID;
             CurrentID++;
@@ -137,21 +139,20 @@ namespace Serein.Core.JSPlugin
             {
                 try
                 {
-                    if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
+                    @namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
+                    if (!JSPluginManager.PluginDict.ContainsKey(@namespace))
                     {
-                        throw new ArgumentOutOfRangeException("无法找到对应的命名空间", nameof(@namespace));
+                        throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
                     }
-                    else if (JSPluginManager.PluginDict[@namespace].Engine == null)
+                    if (JSPluginManager.PluginDict[@namespace].Engine == null)
                     {
                         timer.Stop();
                         timer.Dispose();
+                        return;
                     }
-                    else
+                    lock (JSPluginManager.PluginDict[@namespace].Engine)
                     {
-                        lock (JSPluginManager.PluginDict[@namespace].Engine)
-                        {
-                            JSPluginManager.PluginDict[@namespace].Engine.Invoke(JsValue.Undefined);
-                        }
+                        JSPluginManager.PluginDict[@namespace].Engine.Invoke(@delegate);
                     }
                 }
                 catch (Exception e)
@@ -230,10 +231,7 @@ namespace Serein.Core.JSPlugin
             {
                 return $"{javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}";
             }
-            else
-            {
-                return (e.InnerException ?? e).Message;
-            }
+            return (e.InnerException ?? e).Message;
         }
 
         /// <summary>
@@ -308,22 +306,49 @@ namespace Serein.Core.JSPlugin
             return false;
         }
 
-        public static bool SetVariable(string key, JsValue jsValue)
+        /// <summary>
+        /// 设置命令变量
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="jsValue">值</param>
+        /// <returns>设置结果</returns>
+        public static bool SetCommandVariable(string key, JsValue jsValue)
         {
             string value = jsValue.ToString();
-            if (!string.IsNullOrEmpty(value) && System.Text.RegularExpressions.Regex.IsMatch(key ?? string.Empty, @"\w+"))
+            if (string.IsNullOrEmpty(value) || RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
             {
-                if (JSPluginManager.VariablesDict.ContainsKey(key))
-                {
-                    JSPluginManager.VariablesDict[key] = value;
-                }
-                else
-                {
-                    JSPluginManager.VariablesDict.Add(key, value);
-                }
-                return true;
+                return false;
             }
-            return false;
+            if (JSPluginManager.CommandVariablesDict.ContainsKey(key))
+            {
+                JSPluginManager.CommandVariablesDict[key] = value;
+            }
+            else
+            {
+                JSPluginManager.CommandVariablesDict.Add(key, value);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 导出变量
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="jsValue">值</param>
+        public static void Export(string key, JsValue jsValue)
+        {
+            if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException(nameof(key));
+            }
+            if (JSPluginManager.VariablesExportedDict.ContainsKey(key))
+            {
+                JSPluginManager.VariablesExportedDict[key] = jsValue;
+            }
+            else
+            {
+                JSPluginManager.VariablesExportedDict.Add(key, jsValue);
+            }
         }
     }
 }

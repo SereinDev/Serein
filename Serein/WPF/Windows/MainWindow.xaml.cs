@@ -33,7 +33,7 @@ namespace Serein.Windows
                 !Global.Settings.Serein.Pages.Bot &&
                 !Global.Settings.Serein.Pages.Member &&
                 !Global.Settings.Serein.Pages.RegexList &&
-                !Global.Settings.Serein.Pages.Task &&
+                !Global.Settings.Serein.Pages.Schedule &&
                 !Global.Settings.Serein.Pages.JSPlugin)
             {
                 FunctionNavigationItem.Visibility = Visibility.Hidden;
@@ -186,35 +186,35 @@ namespace Serein.Windows
         #endregion
 
         #region 任务编辑器代码
-        public void OpenTaskEditor(string CronExp = "", string Command = "", string Remark = "")
+        public void OpenScheduleEditor(string CronExp = "", string Command = "", string Remark = "")
         {
-            TaskEditor_Cron.Text = CronExp;
-            TaskEditor_Command.Text = Command;
-            TaskEditor_Remark.Text = Remark;
-            TaskEditor.Show();
+            ScheduleEditor_Cron.Text = CronExp;
+            ScheduleEditor_Command.Text = Command;
+            ScheduleEditor_Remark.Text = Remark;
+            ScheduleEditor.Show();
         }
 
-        private void TaskEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
+        private void ScheduleEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Task.Confirm(TaskEditor_Cron.Text, TaskEditor_Command.Text, TaskEditor_Remark.Text))
+            if (Catalog.Function.Schedule.Confirm(ScheduleEditor_Cron.Text, ScheduleEditor_Command.Text, ScheduleEditor_Remark.Text))
             {
-                TaskEditor.Hide();
+                ScheduleEditor.Hide();
             }
         }
 
-        private void TaskEditor_Cron_TextChanged(object sender, TextChangedEventArgs e)
+        private void ScheduleEditor_Cron_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                TaskEditor_NextTime.Text = $"预计执行时间: {CrontabSchedule.Parse(TaskEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString("g")}";
+                ScheduleEditor_NextTime.Text = $"预计执行时间: {CrontabSchedule.Parse(ScheduleEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString("g")}";
             }
             catch
             {
-                TaskEditor_NextTime.Text = "Cron表达式不合法";
+                ScheduleEditor_NextTime.Text = "Cron表达式不合法";
             }
         }
 
-        private void TaskEditor_ButtonRightClick(object sender, RoutedEventArgs e) => TaskEditor.Hide();
+        private void ScheduleEditor_ButtonRightClick(object sender, RoutedEventArgs e) => ScheduleEditor.Hide();
         #endregion
 
         #region 事件编辑器代码
@@ -282,7 +282,7 @@ namespace Serein.Windows
                     }
                     else if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
                     {
-                        Catalog.Function.Task?.Load(filename);
+                        Catalog.Function.Schedule?.Load(filename);
                     }
                 }
             }

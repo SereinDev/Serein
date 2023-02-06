@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Base;
+using Serein.Core.JSPlugin;
 using Serein.Extensions;
 using Serein.Utils;
-using Serein.Core.JSPlugin;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using WebSocket4Net;
 
 namespace Serein.Core
@@ -84,7 +85,7 @@ namespace Serein.Core
             Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
             if (Global.Settings.Bot.AutoReconnect && Reconnect)
             {
-                System.Threading.Tasks.Task.Run(() =>
+                Task.Run(() =>
                 {
                     Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
                     Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");

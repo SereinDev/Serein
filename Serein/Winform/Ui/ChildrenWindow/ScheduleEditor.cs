@@ -8,10 +8,10 @@ using System.Windows.Forms;
 
 namespace Serein.Ui.ChildrenWindow
 {
-    public partial class TaskEditor : Form
+    public partial class ScheduleEditor : Form
     {
         public bool CancelFlag { get; private set; } = true;
-        public TaskEditor()
+        public ScheduleEditor()
         {
             InitializeComponent();
         }
@@ -115,9 +115,9 @@ namespace Serein.Ui.ChildrenWindow
             }
         }
 
-        private void TaskEditer_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void ScheduleEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Task") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Schedule") { UseShellExecute = true });
         }
     }
 }

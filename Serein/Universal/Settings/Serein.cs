@@ -33,7 +33,7 @@
         ServerPanel = true,
         ServerPluginManager = true,
         RegexList = true,
-        Task = true,
+        Schedule = true,
         Bot = true,
         Member = true,
         JSPlugin = true,

@@ -1,14 +1,15 @@
 using Serein.Base;
-using Serein.Utils;
 using Serein.Base.Motd;
 using Serein.Core.JSPlugin;
 using Serein.Extensions;
+using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
+using RegExp = System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Serein.Core.Server
@@ -174,7 +175,7 @@ namespace Serein.Core.Server
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
 
-                System.Threading.Tasks.Task.Run(() =>
+                Task.Run(() =>
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
                     JSFunc.Trigger(EventType.ServerStart);
@@ -349,7 +350,7 @@ namespace Serein.Core.Server
                 }
                 InputWriter.WriteLine(line_copy);
                 IO.ConsoleLog(">" + command);
-                System.Threading.Tasks.Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
+                Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
             }
             else if (isFromCommand)
             {
@@ -372,18 +373,18 @@ namespace Serein.Core.Server
             if (!string.IsNullOrEmpty(e.Data))
             {
                 string lineFiltered = LogPreProcessing.Filter(e.Data);
-                if (string.IsNullOrEmpty(LevelName) && System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase))
+                if (string.IsNullOrEmpty(LevelName) && RegExp.Regex.IsMatch(lineFiltered, Global.Settings.Matches.LevelName, RegExp.RegexOptions.IgnoreCase))
                 {
-                    LevelName = System.Text.RegularExpressions.Regex.Match(lineFiltered, Global.Settings.Matches.LevelName, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    LevelName = RegExp.Regex.Match(lineFiltered, Global.Settings.Matches.LevelName, RegExp.RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
-                else if (string.IsNullOrEmpty(Difficulty) && System.Text.RegularExpressions.Regex.IsMatch(lineFiltered, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase))
+                else if (string.IsNullOrEmpty(Difficulty) && RegExp.Regex.IsMatch(lineFiltered, Global.Settings.Matches.Difficulty, RegExp.RegexOptions.IgnoreCase))
                 {
-                    Difficulty = System.Text.RegularExpressions.Regex.Match(lineFiltered, Global.Settings.Matches.Difficulty, RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    Difficulty = RegExp.Regex.Match(lineFiltered, Global.Settings.Matches.Difficulty, RegExp.RegexOptions.IgnoreCase).Groups[1].Value.Trim();
                 }
                 bool excluded = false;
                 foreach (string exp1 in Global.Settings.Server.ExcludedOutputs)
                 {
-                    if (exp1.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
+                    if (exp1.TryConvert(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
                     {
                         excluded = true;
                         break;
@@ -402,7 +403,7 @@ namespace Serein.Core.Server
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {
-                        if (exp2.TryConvert(RegexOptions.IgnoreCase, out System.Text.RegularExpressions.Regex regex) && regex.IsMatch(lineFiltered))
+                        if (exp2.TryConvert(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
                         {
                             TempLine = lineFiltered.Trim('\r', '\n');
                             isMuiltLinesMode = true;
@@ -450,7 +451,7 @@ namespace Serein.Core.Server
             }
             if (Restart)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(RestartTimer);
+                Task.Factory.StartNew(RestartTimer);
             }
             LevelName = string.Empty;
             Difficulty = string.Empty;

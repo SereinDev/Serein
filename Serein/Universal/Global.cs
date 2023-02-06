@@ -1,13 +1,7 @@
 using Serein.Base;
-using Serein.Core;
-using Serein.Extensions;
-using Serein.Utils;
-using Serein.Core.JSPlugin;
 using Serein.Settings;
-using Serein.Core.Server;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Serein
 {
@@ -60,23 +54,23 @@ namespace Serein
         /// <summary>
         /// 任务项列表
         /// </summary>
-        public static List<Task> TaskList
+        public static List<Schedule> Schedules
         {
             get
             {
-                return _taskList;
+                return _schedules;
             }
             set
             {
-                lock (_taskList)
+                lock (_schedules)
                 {
-                    _taskList = value;
-                    _taskList.ForEach((task) => task.Check());
+                    _schedules = value;
+                    _schedules.ForEach((schedule) => schedule.Check());
                 }
             }
         }
 
-        private static List<Task> _taskList = new();
+        private static List<Schedule> _schedules = new();
 
         /// <summary>
         /// 成员项字典

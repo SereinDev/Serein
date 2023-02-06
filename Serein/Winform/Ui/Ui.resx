@@ -1758,145 +1758,145 @@
   <data name="&gt;&gt;Regular.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="TaskListCron.Text" xml:space="preserve">
+  <data name="ScheduleListCron.Text" xml:space="preserve">
     <value>Cron表达式</value>
   </data>
-  <data name="TaskListCron.Width" type="System.Int32, mscorlib">
+  <data name="ScheduleListCron.Width" type="System.Int32, mscorlib">
     <value>200</value>
   </data>
-  <data name="TaskListRemark.Text" xml:space="preserve">
+  <data name="ScheduleListRemark.Text" xml:space="preserve">
     <value>备注</value>
   </data>
-  <data name="TaskListRemark.Width" type="System.Int32, mscorlib">
+  <data name="ScheduleListRemark.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
-  <data name="TaskListCommand.Text" xml:space="preserve">
+  <data name="ScheduleListCommand.Text" xml:space="preserve">
     <value>执行命令</value>
   </data>
-  <data name="TaskListCommand.Width" type="System.Int32, mscorlib">
+  <data name="ScheduleListCommand.Width" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
-  <metadata name="TaskContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="ScheduleContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>935, 17</value>
   </metadata>
-  <data name="TaskContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Add.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Add.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Add.Text" xml:space="preserve">
     <value>添加任务</value>
   </data>
-  <data name="TaskContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Edit.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Edit.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Edit.Text" xml:space="preserve">
     <value>修改任务</value>
   </data>
-  <data name="TaskContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Delete.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Delete.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Delete.Text" xml:space="preserve">
     <value>删除任务</value>
   </data>
-  <data name="TaskContextMenuStrip_Clear.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Clear.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Clear.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Clear.Text" xml:space="preserve">
     <value>清空任务</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
-  <data name="TaskContextMenuStrip_Enable.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Enable.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Enable.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Enable.Text" xml:space="preserve">
     <value>启用任务</value>
   </data>
-  <data name="TaskContextMenuStrip_Disable.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Disable.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Disable.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Disable.Text" xml:space="preserve">
     <value>禁用任务</value>
   </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
-  <data name="TaskContextMenuStrip_Command.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Command.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Command.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Command.Text" xml:space="preserve">
     <value>查看命令</value>
   </data>
-  <data name="TaskContextMenuStrip_Variables.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Variables.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Variables.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Variables.Text" xml:space="preserve">
     <value>查看变量</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 6</value>
   </data>
-  <data name="TaskContextMenuStrip_Refresh.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip_Refresh.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 38</value>
   </data>
-  <data name="TaskContextMenuStrip_Refresh.Text" xml:space="preserve">
+  <data name="ScheduleContextMenuStrip_Refresh.Text" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="TaskContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 364</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TaskList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ScheduleList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="TaskList.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ScheduleList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="TaskList.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ScheduleList.Size" type="System.Drawing.Size, System.Drawing">
     <value>1232, 789</value>
   </data>
-  <data name="TaskList.TabIndex" type="System.Int32, mscorlib">
+  <data name="ScheduleList.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;TaskList.Name" xml:space="preserve">
-    <value>TaskList</value>
+  <data name="&gt;&gt;ScheduleList.Name" xml:space="preserve">
+    <value>ScheduleList</value>
   </data>
-  <data name="&gt;&gt;TaskList.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleList.Type" xml:space="preserve">
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskList.Parent" xml:space="preserve">
-    <value>Task</value>
+  <data name="&gt;&gt;ScheduleList.Parent" xml:space="preserve">
+    <value>Schedule</value>
   </data>
-  <data name="&gt;&gt;TaskList.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Task.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="Schedule.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 45</value>
   </data>
-  <data name="Task.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Schedule.Size" type="System.Drawing.Size, System.Drawing">
     <value>1232, 789</value>
   </data>
-  <data name="Task.TabIndex" type="System.Int32, mscorlib">
+  <data name="Schedule.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="Task.Text" xml:space="preserve">
+  <data name="Schedule.Text" xml:space="preserve">
     <value>定时任务</value>
   </data>
-  <data name="&gt;&gt;Task.Name" xml:space="preserve">
-    <value>Task</value>
+  <data name="&gt;&gt;Schedule.Name" xml:space="preserve">
+    <value>Schedule</value>
   </data>
-  <data name="&gt;&gt;Task.Type" xml:space="preserve">
+  <data name="&gt;&gt;Schedule.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Task.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Schedule.Parent" xml:space="preserve">
     <value>tabControl</value>
   </data>
-  <data name="&gt;&gt;Task.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;Schedule.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="BotTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
@@ -4455,46 +4455,46 @@
   <data name="&gt;&gt;RegexContextMenuStripRefresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskListCron.Name" xml:space="preserve">
-    <value>TaskListCron</value>
+  <data name="&gt;&gt;ScheduleListCron.Name" xml:space="preserve">
+    <value>ScheduleListCron</value>
   </data>
-  <data name="&gt;&gt;TaskListCron.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleListCron.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskListRemark.Name" xml:space="preserve">
-    <value>TaskListRemark</value>
+  <data name="&gt;&gt;ScheduleListRemark.Name" xml:space="preserve">
+    <value>ScheduleListRemark</value>
   </data>
-  <data name="&gt;&gt;TaskListRemark.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleListRemark.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskListCommand.Name" xml:space="preserve">
-    <value>TaskListCommand</value>
+  <data name="&gt;&gt;ScheduleListCommand.Name" xml:space="preserve">
+    <value>ScheduleListCommand</value>
   </data>
-  <data name="&gt;&gt;TaskListCommand.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleListCommand.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Add.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Add</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Add.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Add</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Add.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Add.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Edit.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Edit</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Edit.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Edit</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Edit.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Edit.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Delete.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Delete</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Delete.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Delete</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Delete.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Delete.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Clear.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Clear</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Clear.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Clear</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Clear.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Clear.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
@@ -4503,16 +4503,16 @@
   <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Enable.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Enable</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Enable.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Enable</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Enable.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Enable.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Disable.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Disable</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Disable.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Disable</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Disable.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Disable.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
@@ -4521,16 +4521,16 @@
   <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Command.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Command</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Command.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Command</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Command.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Command.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Variables.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Variables</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Variables.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Variables</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Variables.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Variables.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
@@ -4539,10 +4539,10 @@
   <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Name" xml:space="preserve">
-    <value>TaskContextMenuStrip_Refresh</value>
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Refresh.Name" xml:space="preserve">
+    <value>ScheduleContextMenuStrip_Refresh</value>
   </data>
-  <data name="&gt;&gt;TaskContextMenuStrip_Refresh.Type" xml:space="preserve">
+  <data name="&gt;&gt;ScheduleContextMenuStrip_Refresh.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MemberListID.Name" xml:space="preserve">

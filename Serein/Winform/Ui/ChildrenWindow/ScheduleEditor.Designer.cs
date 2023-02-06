@@ -1,6 +1,6 @@
 ﻿namespace Serein.Ui.ChildrenWindow
 {
-    partial class TaskEditor
+    partial class ScheduleEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduleEditor));
             this.Cron = new System.Windows.Forms.TextBox();
             this.CronLabel = new System.Windows.Forms.Label();
             this.CommandLabel = new System.Windows.Forms.Label();
@@ -135,7 +135,7 @@
             this.CronNextTime.Size = new System.Drawing.Size(796, 38);
             this.CronNextTime.TabIndex = 8;
             // 
-            // TaskEditer
+            // ScheduleEditer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -157,11 +157,11 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "TaskEditer";
+            this.Name = "ScheduleEditer";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "任务编辑器";
-            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.TaskEditer_HelpButtonClicked);
+            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.ScheduleEditer_HelpButtonClicked);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,13 +1,13 @@
 ﻿using NCrontab;
 using Newtonsoft.Json;
-using Serein.Core;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Serein.Base
 {
     [JsonObject(MemberSerialization.OptOut)]
-    internal class Task
+    internal class Schedule
     {
         /// <summary>
         /// Cron表达式
@@ -58,7 +58,7 @@ namespace Serein.Base
         public void Run()
         {
             IsRunning = true;
-            System.Threading.Tasks.Task.Run(() =>
+            Task.Run(() =>
             {
                 Core.Command.Run(3, Command);
                 NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];

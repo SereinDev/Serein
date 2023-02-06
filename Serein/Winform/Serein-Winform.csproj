@@ -77,8 +77,8 @@
 		<EmbeddedResource Update="Ui\ChildrenWindow\RegexEditor.resx">
 			<DependentUpon>RegexEditor.cs</DependentUpon>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Ui\ChildrenWindow\TaskEditor.resx">
-			<DependentUpon>TaskEditor.cs</DependentUpon>
+		<EmbeddedResource Update="Ui\ChildrenWindow\ScheduleEditor.resx">
+			<DependentUpon>ScheduleEditor.cs</DependentUpon>
 		</EmbeddedResource>
 	</ItemGroup>
 

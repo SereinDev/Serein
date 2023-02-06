@@ -1,5 +1,5 @@
-﻿using Serein.Extensions;
-using Serein.Base;
+﻿using Serein.Base;
+using Serein.Extensions;
 using System;
 using System.Diagnostics;
 using System.IO;

@@ -6,10 +6,10 @@ using Jint.Runtime;
 using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
-using Serein.Extensions;
-using Serein.Utils;
 using Serein.Base.Motd;
 using Serein.Core.Server;
+using Serein.Extensions;
+using Serein.Utils;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -94,8 +94,10 @@ namespace Serein.Core.JSPlugin
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
                     new Func<string, JsValue, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
-                engine.SetValue("serein_setVariable",
-                    new Func<string, JsValue, bool>(JSFunc.SetVariable));
+                engine.SetValue("serein_setCommandVariable",
+                    new Func<string, JsValue, bool>(JSFunc.SetCommandVariable));
+                engine.SetValue("serein_export",
+                    new Action<string, JsValue>(JSFunc.Export));
                 engine.SetValue("setTimeout",
                     new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
                 engine.SetValue("setInterval",
@@ -105,7 +107,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("clearInterval",
                     new Func<JsValue, bool>(JSFunc.ClearTimer));
                 engine.SetValue("WSClient",
-                    TypeReference.CreateTypeReference(engine, typeof(JSWebSocket)));
+                    TypeReference.CreateTypeReference(engine, typeof(WSClient)));
                 engine.SetValue("Logger",
                     TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
             }
@@ -115,7 +117,8 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_debugLog", JsValue.Undefined);
                 engine.SetValue("serein_registerPlugin", JsValue.Undefined);
                 engine.SetValue("serein_setListener", JsValue.Undefined);
-                engine.SetValue("serein_setVariable", JsValue.Undefined);
+                engine.SetValue("serein_setCommandVariable", JsValue.Undefined);
+                engine.SetValue("serein_export", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
                 engine.SetValue("clearTimeout", JsValue.Undefined);
@@ -199,6 +202,8 @@ namespace Serein.Core.JSPlugin
                 new Func<int, string, int, bool, string, string, bool>(JSFunc.EditRegex));
             engine.SetValue("serein_removeRegex",
                 new Func<int, bool>(JSFunc.RemoveRegex));
+            engine.SetValue("serein_import",
+                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.ContainsKey(key) ? JSPluginManager.VariablesExportedDict[key] : JsValue.Undefined));
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
@@ -242,12 +247,13 @@ namespace Serein.Core.JSPlugin
                     getGroupCache: serein_getGroupCache,
                     getPluginList: serein_getPluginList,
                     getUserName: serein_getUserName,
-                    loadFrom: require,
                     getRegexs: serein_getRegexs,
                     addRegex: serein_addRegex,
                     editRegex: serein_editRegex,
                     removeRegex: serein_removeRegex,
-                    setVariable: serein_setVariable
+                    setCommandVariable: serein_setCommandVariable,
+                    import: serein_import,
+                    export: serein_export
                     };"
             );
             return engine;

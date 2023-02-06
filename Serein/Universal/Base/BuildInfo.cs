@@ -1,5 +1,5 @@
-﻿using Serein.Utils;
-using Serein.Properties;
+﻿using Serein.Properties;
+using Serein.Utils;
 
 namespace Serein.Base
 {

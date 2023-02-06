@@ -28,11 +28,11 @@ namespace Serein.Core
         /// </summary>
         private static void Run()
         {
-            foreach (Task task in Global.TaskList)
+            foreach (Schedule schedule in Global.Schedules)
             {
-                if (!task.IsRunning && DateTime.Compare(task.NextTime, DateTime.Now) <= 0)
+                if (!schedule.IsRunning && DateTime.Compare(schedule.NextTime, DateTime.Now) <= 0)
                 {
-                    task.Run();
+                    schedule.Run();
                 }
             }
         }

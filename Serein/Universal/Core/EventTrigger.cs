@@ -1,5 +1,5 @@
-﻿using Serein.Utils;
-using Serein.Base.Motd;
+﻿using Serein.Base.Motd;
+using Serein.Utils;
 using System;
 using System.Text.RegularExpressions;
 

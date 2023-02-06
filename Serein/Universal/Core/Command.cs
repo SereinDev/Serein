@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using Serein.Utils;
+using Serein.Base.Motd;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Extensions;
-using Serein.Base.Motd;
+using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -398,7 +398,7 @@ namespace Serein.Core
                     "shownname" => string.IsNullOrEmpty(jsonObject.TryGetString("sender", "card")) ? jsonObject.TryGetString("sender", "nickname") : jsonObject.TryGetString("sender", "card"),
                     #endregion
 
-                    _ => JSPluginManager.VariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
+                    _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
                 }
             );
             text = Patterns.GameID.Replace(text,

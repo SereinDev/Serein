@@ -116,24 +116,24 @@ namespace Serein.Ui
             this.RegexContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.RegexContextMenuStripRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.Task = new System.Windows.Forms.TabPage();
-            this.TaskList = new System.Windows.Forms.ListView();
-            this.TaskListCron = new System.Windows.Forms.ColumnHeader();
-            this.TaskListRemark = new System.Windows.Forms.ColumnHeader();
-            this.TaskListCommand = new System.Windows.Forms.ColumnHeader();
-            this.TaskContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TaskContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskContextMenuStrip_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskContextMenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.Schedule = new System.Windows.Forms.TabPage();
+            this.ScheduleList = new System.Windows.Forms.ListView();
+            this.ScheduleListCron = new System.Windows.Forms.ColumnHeader();
+            this.ScheduleListRemark = new System.Windows.Forms.ColumnHeader();
+            this.ScheduleListCommand = new System.Windows.Forms.ColumnHeader();
+            this.ScheduleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ScheduleContextMenuStrip_Add = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Edit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Clear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.TaskContextMenuStrip_Enable = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskContextMenuStrip_Disable = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Enable = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.TaskContextMenuStrip_Command = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Command = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Variables = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.TaskContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.ScheduleContextMenuStrip_Refresh = new System.Windows.Forms.ToolStripMenuItem();
             this.Bot = new System.Windows.Forms.TabPage();
             this.BotTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BotWebBrowser = new System.Windows.Forms.WebBrowser();
@@ -256,8 +256,8 @@ namespace Serein.Ui
             this.ServerPluginManager.SuspendLayout();
             this.Regular.SuspendLayout();
             this.RegexContextMenuStrip.SuspendLayout();
-            this.Task.SuspendLayout();
-            this.TaskContextMenuStrip.SuspendLayout();
+            this.Schedule.SuspendLayout();
+            this.ScheduleContextMenuStrip.SuspendLayout();
             this.Bot.SuspendLayout();
             this.BotTableLayoutPanel.SuspendLayout();
             this.Member.SuspendLayout();
@@ -705,7 +705,7 @@ namespace Serein.Ui
             this.tabControl.Controls.Add(this.ServerPanel);
             this.tabControl.Controls.Add(this.ServerPluginManager);
             this.tabControl.Controls.Add(this.Regular);
-            this.tabControl.Controls.Add(this.Task);
+            this.tabControl.Controls.Add(this.Schedule);
             this.tabControl.Controls.Add(this.Bot);
             this.tabControl.Controls.Add(this.Member);
             this.tabControl.Controls.Add(this.JSPlugin);
@@ -870,130 +870,130 @@ namespace Serein.Ui
             // 
             // Task
             // 
-            this.Task.Controls.Add(this.TaskList);
-            resources.ApplyResources(this.Task, "Task");
-            this.Task.Name = "Task";
-            this.Task.UseVisualStyleBackColor = true;
+            this.Schedule.Controls.Add(this.ScheduleList);
+            resources.ApplyResources(this.Schedule, "Schedule");
+            this.Schedule.Name = "Schedule";
+            this.Schedule.UseVisualStyleBackColor = true;
             // 
-            // TaskList
+            // ScheduleList
             // 
-            this.TaskList.AllowDrop = true;
-            this.TaskList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.TaskListCron,
-            this.TaskListRemark,
-            this.TaskListCommand});
-            this.TaskList.ContextMenuStrip = this.TaskContextMenuStrip;
-            resources.ApplyResources(this.TaskList, "TaskList");
-            this.TaskList.FullRowSelect = true;
-            this.TaskList.GridLines = true;
-            this.TaskList.MultiSelect = false;
-            this.TaskList.Name = "TaskList";
-            this.TaskList.UseCompatibleStateImageBehavior = false;
-            this.TaskList.View = System.Windows.Forms.View.Details;
-            this.TaskList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.TaskList_ItemDrag);
-            this.TaskList.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.TaskList_ItemMouseHover);
-            this.TaskList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TaskList_MouseUp);
+            this.ScheduleList.AllowDrop = true;
+            this.ScheduleList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ScheduleListCron,
+            this.ScheduleListRemark,
+            this.ScheduleListCommand});
+            this.ScheduleList.ContextMenuStrip = this.ScheduleContextMenuStrip;
+            resources.ApplyResources(this.ScheduleList, "ScheduleList");
+            this.ScheduleList.FullRowSelect = true;
+            this.ScheduleList.GridLines = true;
+            this.ScheduleList.MultiSelect = false;
+            this.ScheduleList.Name = "ScheduleList";
+            this.ScheduleList.UseCompatibleStateImageBehavior = false;
+            this.ScheduleList.View = System.Windows.Forms.View.Details;
+            this.ScheduleList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ScheduleList_ItemDrag);
+            this.ScheduleList.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.ScheduleList_ItemMouseHover);
+            this.ScheduleList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ScheduleList_MouseUp);
             // 
-            // TaskListCron
+            // ScheduleListCron
             // 
-            resources.ApplyResources(this.TaskListCron, "TaskListCron");
+            resources.ApplyResources(this.ScheduleListCron, "ScheduleListCron");
             // 
-            // TaskListRemark
+            // ScheduleListRemark
             // 
-            resources.ApplyResources(this.TaskListRemark, "TaskListRemark");
+            resources.ApplyResources(this.ScheduleListRemark, "ScheduleListRemark");
             // 
-            // TaskListCommand
+            // ScheduleListCommand
             // 
-            resources.ApplyResources(this.TaskListCommand, "TaskListCommand");
+            resources.ApplyResources(this.ScheduleListCommand, "ScheduleListCommand");
             // 
-            // TaskContextMenuStrip
+            // ScheduleContextMenuStrip
             // 
-            this.TaskContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.TaskContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TaskContextMenuStrip_Add,
-            this.TaskContextMenuStrip_Edit,
-            this.TaskContextMenuStrip_Delete,
-            this.TaskContextMenuStrip_Clear,
+            this.ScheduleContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.ScheduleContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ScheduleContextMenuStrip_Add,
+            this.ScheduleContextMenuStrip_Edit,
+            this.ScheduleContextMenuStrip_Delete,
+            this.ScheduleContextMenuStrip_Clear,
             this.toolStripSeparator6,
-            this.TaskContextMenuStrip_Enable,
-            this.TaskContextMenuStrip_Disable,
+            this.ScheduleContextMenuStrip_Enable,
+            this.ScheduleContextMenuStrip_Disable,
             this.toolStripSeparator8,
-            this.TaskContextMenuStrip_Command,
-            this.TaskContextMenuStrip_Variables,
+            this.ScheduleContextMenuStrip_Command,
+            this.ScheduleContextMenuStrip_Variables,
             this.toolStripSeparator5,
-            this.TaskContextMenuStrip_Refresh});
-            this.TaskContextMenuStrip.Name = "TaskContextMenuStrip";
-            resources.ApplyResources(this.TaskContextMenuStrip, "TaskContextMenuStrip");
-            this.TaskContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.TaskContextMenuStrip_Opening);
+            this.ScheduleContextMenuStrip_Refresh});
+            this.ScheduleContextMenuStrip.Name = "ScheduleContextMenuStrip";
+            resources.ApplyResources(this.ScheduleContextMenuStrip, "ScheduleContextMenuStrip");
+            this.ScheduleContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.ScheduleContextMenuStrip_Opening);
             // 
-            // TaskContextMenuStrip_Add
+            // ScheduleContextMenuStrip_Add
             // 
-            this.TaskContextMenuStrip_Add.Name = "TaskContextMenuStrip_Add";
-            resources.ApplyResources(this.TaskContextMenuStrip_Add, "TaskContextMenuStrip_Add");
-            this.TaskContextMenuStrip_Add.Click += new System.EventHandler(this.TaskContextMenuStrip_Add_Click);
+            this.ScheduleContextMenuStrip_Add.Name = "ScheduleContextMenuStrip_Add";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Add, "ScheduleContextMenuStrip_Add");
+            this.ScheduleContextMenuStrip_Add.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Add_Click);
             // 
-            // TaskContextMenuStrip_Edit
+            // ScheduleContextMenuStrip_Edit
             // 
-            this.TaskContextMenuStrip_Edit.Name = "TaskContextMenuStrip_Edit";
-            resources.ApplyResources(this.TaskContextMenuStrip_Edit, "TaskContextMenuStrip_Edit");
-            this.TaskContextMenuStrip_Edit.Click += new System.EventHandler(this.TaskContextMenuStrip_Edit_Click);
+            this.ScheduleContextMenuStrip_Edit.Name = "ScheduleContextMenuStrip_Edit";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Edit, "ScheduleContextMenuStrip_Edit");
+            this.ScheduleContextMenuStrip_Edit.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Edit_Click);
             // 
-            // TaskContextMenuStrip_Delete
+            // ScheduleContextMenuStrip_Delete
             // 
-            this.TaskContextMenuStrip_Delete.Name = "TaskContextMenuStrip_Delete";
-            resources.ApplyResources(this.TaskContextMenuStrip_Delete, "TaskContextMenuStrip_Delete");
-            this.TaskContextMenuStrip_Delete.Click += new System.EventHandler(this.TaskContextMenuStrip_Delete_Click);
+            this.ScheduleContextMenuStrip_Delete.Name = "ScheduleContextMenuStrip_Delete";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Delete, "ScheduleContextMenuStrip_Delete");
+            this.ScheduleContextMenuStrip_Delete.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Delete_Click);
             // 
-            // TaskContextMenuStrip_Clear
+            // ScheduleContextMenuStrip_Clear
             // 
-            this.TaskContextMenuStrip_Clear.Name = "TaskContextMenuStrip_Clear";
-            resources.ApplyResources(this.TaskContextMenuStrip_Clear, "TaskContextMenuStrip_Clear");
-            this.TaskContextMenuStrip_Clear.Click += new System.EventHandler(this.TaskContextMenuStrip_Clear_Click);
+            this.ScheduleContextMenuStrip_Clear.Name = "ScheduleContextMenuStrip_Clear";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Clear, "ScheduleContextMenuStrip_Clear");
+            this.ScheduleContextMenuStrip_Clear.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Clear_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             // 
-            // TaskContextMenuStrip_Enable
+            // ScheduleContextMenuStrip_Enable
             // 
-            this.TaskContextMenuStrip_Enable.Name = "TaskContextMenuStrip_Enable";
-            resources.ApplyResources(this.TaskContextMenuStrip_Enable, "TaskContextMenuStrip_Enable");
-            this.TaskContextMenuStrip_Enable.Click += new System.EventHandler(this.TaskContextMenuStrip_Enable_Click);
+            this.ScheduleContextMenuStrip_Enable.Name = "ScheduleContextMenuStrip_Enable";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Enable, "ScheduleContextMenuStrip_Enable");
+            this.ScheduleContextMenuStrip_Enable.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Enable_Click);
             // 
-            // TaskContextMenuStrip_Disable
+            // ScheduleContextMenuStrip_Disable
             // 
-            this.TaskContextMenuStrip_Disable.Name = "TaskContextMenuStrip_Disable";
-            resources.ApplyResources(this.TaskContextMenuStrip_Disable, "TaskContextMenuStrip_Disable");
-            this.TaskContextMenuStrip_Disable.Click += new System.EventHandler(this.TaskContextMenuStrip_Disable_Click);
+            this.ScheduleContextMenuStrip_Disable.Name = "ScheduleContextMenuStrip_Disable";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Disable, "ScheduleContextMenuStrip_Disable");
+            this.ScheduleContextMenuStrip_Disable.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Disable_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
             // 
-            // TaskContextMenuStrip_Command
+            // ScheduleContextMenuStrip_Command
             // 
-            this.TaskContextMenuStrip_Command.Name = "TaskContextMenuStrip_Command";
-            resources.ApplyResources(this.TaskContextMenuStrip_Command, "TaskContextMenuStrip_Command");
-            this.TaskContextMenuStrip_Command.Click += new System.EventHandler(this.TaskContextMenuStrip_Command_Click);
+            this.ScheduleContextMenuStrip_Command.Name = "ScheduleContextMenuStrip_Command";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Command, "ScheduleContextMenuStrip_Command");
+            this.ScheduleContextMenuStrip_Command.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Command_Click);
             // 
-            // TaskContextMenuStrip_Variables
+            // ScheduleContextMenuStrip_Variables
             // 
-            this.TaskContextMenuStrip_Variables.Name = "TaskContextMenuStrip_Variables";
-            resources.ApplyResources(this.TaskContextMenuStrip_Variables, "TaskContextMenuStrip_Variables");
-            this.TaskContextMenuStrip_Variables.Click += new System.EventHandler(this.TaskContextMenuStrip_Variables_Click);
+            this.ScheduleContextMenuStrip_Variables.Name = "ScheduleContextMenuStrip_Variables";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Variables, "ScheduleContextMenuStrip_Variables");
+            this.ScheduleContextMenuStrip_Variables.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Variables_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             // 
-            // TaskContextMenuStrip_Refresh
+            // ScheduleContextMenuStrip_Refresh
             // 
-            this.TaskContextMenuStrip_Refresh.Name = "TaskContextMenuStrip_Refresh";
-            resources.ApplyResources(this.TaskContextMenuStrip_Refresh, "TaskContextMenuStrip_Refresh");
-            this.TaskContextMenuStrip_Refresh.Click += new System.EventHandler(this.TaskContextMenuStrip_Refresh_Click);
+            this.ScheduleContextMenuStrip_Refresh.Name = "ScheduleContextMenuStrip_Refresh";
+            resources.ApplyResources(this.ScheduleContextMenuStrip_Refresh, "ScheduleContextMenuStrip_Refresh");
+            this.ScheduleContextMenuStrip_Refresh.Click += new System.EventHandler(this.ScheduleContextMenuStrip_Refresh_Click);
             // 
             // Bot
             // 
@@ -1741,8 +1741,8 @@ namespace Serein.Ui
             this.ServerPluginManager.ResumeLayout(false);
             this.Regular.ResumeLayout(false);
             this.RegexContextMenuStrip.ResumeLayout(false);
-            this.Task.ResumeLayout(false);
-            this.TaskContextMenuStrip.ResumeLayout(false);
+            this.Schedule.ResumeLayout(false);
+            this.ScheduleContextMenuStrip.ResumeLayout(false);
             this.Bot.ResumeLayout(false);
             this.BotTableLayoutPanel.ResumeLayout(false);
             this.Member.ResumeLayout(false);
@@ -1803,8 +1803,8 @@ namespace Serein.Ui
         private System.Windows.Forms.ColumnHeader columnHeader;
         private System.Windows.Forms.TabPage Regular;
         private System.Windows.Forms.ListView RegexList;
-        private System.Windows.Forms.TabPage Task;
-        private System.Windows.Forms.ListView TaskList;
+        private System.Windows.Forms.TabPage Schedule;
+        private System.Windows.Forms.ListView ScheduleList;
         private System.Windows.Forms.TabPage Bot;
         private System.Windows.Forms.TableLayoutPanel BotTableLayoutPanel;
         private System.Windows.Forms.WebBrowser BotWebBrowser;
@@ -1846,19 +1846,19 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem PluginContextMenuStripShow;
-        private System.Windows.Forms.ColumnHeader TaskListCron;
-        private System.Windows.Forms.ColumnHeader TaskListRemark;
-        private System.Windows.Forms.ColumnHeader TaskListCommand;
-        private System.Windows.Forms.ContextMenuStrip TaskContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Add;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Delete;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Clear;
+        private System.Windows.Forms.ColumnHeader ScheduleListCron;
+        private System.Windows.Forms.ColumnHeader ScheduleListRemark;
+        private System.Windows.Forms.ColumnHeader ScheduleListCommand;
+        private System.Windows.Forms.ContextMenuStrip ScheduleContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Add;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Delete;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Clear;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Refresh;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Edit;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Refresh;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Edit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Enable;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Disable;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Enable;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Disable;
         private System.Windows.Forms.Label SettingSereinAbout;
         private System.Windows.Forms.Label SettingSereinPage;
         private System.Windows.Forms.Label BotInfoTime2;
@@ -1876,8 +1876,8 @@ namespace Serein.Ui
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Variables;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Variables;
-        private System.Windows.Forms.ToolStripMenuItem TaskContextMenuStrip_Command;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Variables;
+        private System.Windows.Forms.ToolStripMenuItem ScheduleContextMenuStrip_Command;
         private System.Windows.Forms.ToolStripMenuItem RegexContextMenuStrip_Command;
         private System.Windows.Forms.CheckBox SettingSereinEnableGetUpdate;
         private System.Windows.Forms.Label SettingSereinStatement2;

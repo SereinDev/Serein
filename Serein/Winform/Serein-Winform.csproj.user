@@ -31,7 +31,7 @@
     <Compile Update="Ui\ChildrenWindow\RegexEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Ui\ChildrenWindow\TaskEditor.cs">
+    <Compile Update="Ui\ChildrenWindow\ScheduleEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Ui\InitializeUi.cs">
@@ -64,7 +64,7 @@
     <Compile Update="Ui\ToolTips.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Ui\Task.cs">
+    <Compile Update="Ui\Schedule.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Ui\Updater.cs">
@@ -79,8 +79,8 @@
       <DependentUpon>RegexEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="Ui\ChildrenWindow\TaskEditor.resx">
-      <DependentUpon>TaskEditor.cs</DependentUpon>
+    <EmbeddedResource Update="Ui\ChildrenWindow\ScheduleEditor.resx">
+      <DependentUpon>ScheduleEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Ui\ChildrenWindow\MemberInfoEditor.resx">

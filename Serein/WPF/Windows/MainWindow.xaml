@@ -224,11 +224,11 @@
             </Grid>
         </ui:Dialog>
         <ui:Dialog
-            x:Name="TaskEditor"
+            x:Name="ScheduleEditor"
             Title="任务编辑器"
-            ButtonLeftClick="TaskEditor_ButtonLeftClick"
+            ButtonLeftClick="ScheduleEditor_ButtonLeftClick"
             ButtonLeftName="确定"
-            ButtonRightClick="TaskEditor_ButtonRightClick"
+            ButtonRightClick="ScheduleEditor_ButtonRightClick"
             ButtonRightName="取消"
             DialogHeight="355"
             DialogWidth="325">
@@ -236,22 +236,22 @@
                 <StackPanel Margin="0,5">
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="Cron表达式" />
                     <ui:TextBox
-                        x:Name="TaskEditor_Cron"
+                        x:Name="ScheduleEditor_Cron"
                         Margin="0,0,0,5"
                         Icon="CodeText20"
-                        TextChanged="TaskEditor_Cron_TextChanged" />
+                        TextChanged="ScheduleEditor_Cron_TextChanged" />
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="命令" />
                     <ui:TextBox
-                        x:Name="TaskEditor_Command"
+                        x:Name="ScheduleEditor_Command"
                         Margin="0,0,0,5"
                         Icon="KeyCommand24" />
                     <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="备注" />
                     <ui:TextBox
-                        x:Name="TaskEditor_Remark"
+                        x:Name="ScheduleEditor_Remark"
                         Margin="0,0,0,15"
                         Icon="Pen24" />
                     <TextBlock
-                        Name="TaskEditor_NextTime"
+                        Name="ScheduleEditor_NextTime"
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="-"
                         TextWrapping="Wrap" />
