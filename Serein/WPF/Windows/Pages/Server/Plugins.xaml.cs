@@ -25,19 +25,21 @@ namespace Serein.Windows.Pages.Server
         public void Load()
         {
             PluginsListview.Items.Clear();
-            if (PluginManager.Get() != null)
+            string[] plugins = PluginManager.Get();
+            if (plugins == null)
             {
-                foreach (string plugin in PluginManager.Get())
+                return;
+            }
+            foreach (string plugin in plugins)
+            {
+                if (PluginManager.AcceptableList.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
                 {
-                    if (PluginManager.AcceptableList.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
+                    ListViewItem listViewItem = new()
                     {
-                        ListViewItem listViewItem = new()
-                        {
-                            Content = PluginManager.GetRelativeUri(plugin),
-                            Opacity = Path.GetExtension(plugin).ToLowerInvariant() != ".lock" ? 1 : 0.5
-                        };
-                        PluginsListview.Items.Add(listViewItem);
-                    }
+                        Content = PluginManager.GetRelativeUri(plugin),
+                        Opacity = Path.GetExtension(plugin).ToLowerInvariant() != ".lock" ? 1 : 0.5
+                    };
+                    PluginsListview.Items.Add(listViewItem);
                 }
             }
         }

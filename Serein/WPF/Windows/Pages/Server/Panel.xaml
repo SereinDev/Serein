@@ -10,7 +10,6 @@
     d:DesignHeight="850"
     d:DesignWidth="800"
     AllowDrop="True"
-    Loaded="UiPage_Loaded"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -152,7 +151,7 @@
             <DockPanel>
                 <DockPanel DockPanel.Dock="Bottom">
                     <ui:Button
-                        Margin="3"
+                        Margin="5"
                         Padding="0,3"
                         Appearance="Transparent"
                         Click="Enter_Click"
@@ -160,13 +159,17 @@
                         Icon="ChevronCircleUp24" />
                     <TextBox
                         Name="InputBox"
-                        Margin="3"
+                        Margin="5"
                         DockPanel.Dock="Left"
                         PreviewKeyDown="InputBox_PreviewKeyDown" />
                 </DockPanel>
-                <wfi:WindowsFormsHost Margin="3" DockPanel.Dock="Top">
-                    <wf:WebBrowser x:Name="PanelWebBrowser" />
-                </wfi:WindowsFormsHost>
+                <RichTextBox 
+                    Name="PanelRichTextBox" 
+                    Margin="5"
+                    DockPanel.Dock="Top"
+                    IsReadOnly="True"
+                    IsUndoEnabled="False"
+                    UndoLimit="0" />
             </DockPanel>
         </GroupBox>
     </Grid>

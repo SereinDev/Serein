@@ -9,6 +9,7 @@
         Debug,
         DetailDebug,
 
+        Server_Input,
         Server_Notice,
         Server_Output,
         Server_Clear,

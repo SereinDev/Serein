@@ -341,7 +341,7 @@ namespace Serein.Core.Server
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Output(LogType.Server_Output, $">{LogPreProcessing.EscapeLog(command)}");
+                    Logger.Output(LogType.Server_Input, $">{command}");
                 }
 #endif
                 if (usingUnicode || Global.Settings.Server.EnableUnicode)
@@ -395,11 +395,7 @@ namespace Serein.Core.Server
                 interdicted = JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data) || interdicted;
                 if (!excluded && !interdicted)
                 {
-#if CONSOLE
                     Logger.Output(LogType.Server_Output, e.Data);
-#else
-                    Logger.Output(LogType.Server_Output, LogPreProcessing.Color(e.Data, Global.Settings.Server.OutputStyle));
-#endif
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {

@@ -1,11 +1,10 @@
-﻿using Serein.Base;
-using Serein.Core;
+﻿using Serein.Core;
+using Serein.Extensions;
 using Serein.Utils;
 using System;
 using System.Timers;
 using System.Windows;
-using Serein.Extensions;
-using Wpf.Ui.Appearance;
+using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -17,24 +16,29 @@ namespace Serein.Windows.Pages.Function
         public Bot()
         {
             InitializeComponent();
-            ResourcesManager.InitConsole();
-            BotWebBrowser.ScriptErrorsSuppressed = true;
-            BotWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            BotWebBrowser.WebBrowserShortcutsEnabled = false;
-            BotWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=bot&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
+            BotRichTextBox.Document.Blocks.Clear();
+            Catalog.Function.BotCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line.LogType, line.Text))));
             Catalog.Function.Bot = this;
         }
-
-        private bool Restored;
 
         private void Connect_Click(object sender, RoutedEventArgs e)
             => Websocket.Open();
         private void Disconnect_Click(object sender, RoutedEventArgs e)
             => Websocket.Close();
-        public void AppendText(string Line)
-            => Dispatcher.Invoke(() => BotWebBrowser.Document.InvokeScript("AppendText", new[] { Line }));
+
+        public void Append(Paragraph paragraph)
+            => Dispatcher.Invoke(() =>
+            {
+                BotRichTextBox.Document = BotRichTextBox.Document ?? new();
+                BotRichTextBox.Document.Blocks.Add(paragraph);
+                while (BotRichTextBox.Document.Blocks.Count > 250)
+                {
+                    BotRichTextBox.Document.Blocks.Remove(BotRichTextBox.Document.Blocks.FirstBlock);
+                }
+                BotRichTextBox.ScrollToEnd();
+            });
 
         private void UpdateInfos()
             => Dispatcher.Invoke(() =>
@@ -46,25 +50,5 @@ namespace Serein.Windows.Pages.Function
                 TimeSpan t = DateTime.Now - Websocket.StartTime;
                 Time.Content = Websocket.Status ? t.ToCustomString() : "-";
             });
-
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Timer restorer = new Timer(500) { AutoReset = true };
-            restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
-            {
-                Logger.Output(LogType.Debug, string.Join(";", Catalog.Function.BotCache));
-                if (!Restored && BotWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
-                {
-                    Catalog.Function.BotCache.ForEach((Text) => AppendText(Text));
-                    Restored = true;
-                }
-                if (Restored)
-                {
-                    restorer.Stop();
-                    restorer.Dispose();
-                }
-            });
-            restorer.Start();
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Serein.Base;
+﻿using System.Drawing;
+using Serein.Base;
 using Serein.Extensions;
 using System;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Windows.Forms;
 #elif WPF
 using Serein.Windows;
+using System.Windows.Documents;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -20,6 +22,16 @@ namespace Serein.Utils
 {
     internal static class Logger
     {
+
+#if WINFORM || WPF
+        internal static class Colors
+        {
+            public static readonly System.Drawing.Color Serein = System.Drawing.Color.FromArgb(75, 115, 141);
+            public static readonly System.Drawing.Color Warn = System.Drawing.Color.FromArgb(156, 128, 34);
+            public static readonly System.Drawing.Color Error = System.Drawing.Color.FromArgb(186, 74, 0);
+        }
+#endif
+
         /// <summary>
         /// 输出
         /// </summary>
@@ -105,8 +117,11 @@ namespace Serein.Utils
                     WriteLine(1, line.Replace("\n", "，"), true);
                     break;
 #elif WINFORM
+                case LogType.Server_Input:
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(LogPreProcessing.EscapeLog(line));
+                    break;
                 case LogType.Server_Output:
-                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(line);
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(LogPreProcessing.ColorLine(line,Global.Settings.Server.OutputStyle));
                     break;
                 case LogType.Server_Notice:
                     Program.Ui.ServerPanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line));
@@ -162,105 +177,48 @@ namespace Serein.Utils
                     Program.Ui.ShowBalloonTip(line);
                     break;
 #elif WPF
+                case LogType.Server_Input:
                 case LogType.Server_Output:
-                    Catalog.Server.Panel?.AppendText(line);
-                    Catalog.Server.Cache.Add(line);
-                    if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Server_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Server.Panel?.AppendText(line);
-                    Catalog.Server.Cache.Add(line);
+                    Catalog.Server.Panel?.Dispatcher.Invoke(() => Catalog.Server.Panel?.Append(LogPreProcessing.Color(type, line)));
+                    Catalog.Server.Cache.Add(new(type, line));
                     if (Catalog.Server.Cache.Count > Global.Settings.Serein.MaxCacheLines)
                     {
                         Catalog.Server.Cache.RemoveRange(0, Catalog.Server.Cache.Count - Global.Settings.Serein.MaxCacheLines);
                     }
                     break;
                 case LogType.Server_Clear:
-                    Catalog.Server.Panel?.AppendText("#clear");
+                    Catalog.Server.Panel?.Dispatcher.Invoke(() => Catalog.Server.Panel?.PanelRichTextBox.Document.Blocks.Clear());
                     Catalog.Server.Cache.Clear();
                     break;
                 case LogType.Bot_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.Bot?.AppendText(line);
-                    Catalog.Function.BotCache.Add(line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Bot_Receive:
-                    line = "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.Bot?.AppendText(line);
-                    Catalog.Function.BotCache.Add(line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Bot_Send:
-                    line = "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.Bot?.AppendText(line);
-                    Catalog.Function.BotCache.Add(line);
-                    if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Bot_Error:
-                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.Bot?.AppendText(line);
-                    Catalog.Function.BotCache.Add(line);
+                    Catalog.Function.Bot?.Dispatcher.Invoke(() => Catalog.Function.Bot?.Append(LogPreProcessing.Color(type, line)));
+                    Catalog.Function.BotCache.Add(new(type, line));
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
                     {
                         Catalog.Function.BotCache.RemoveRange(0, Catalog.Function.BotCache.Count - Global.Settings.Serein.MaxCacheLines);
                     }
                     break;
                 case LogType.Bot_Clear:
-                    Catalog.Function.Bot?.AppendText("#clear");
+                    Catalog.Function.Bot?.Dispatcher.Invoke(() => Catalog.Function.Bot?.BotRichTextBox.Document.Blocks.Clear());
                     Catalog.Function.BotCache.Clear();
                     break;
                 case LogType.Plugin_Notice:
-                    line = "<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.JSPlugin?.AppendText(line);
-                    Catalog.Function.PluginCache.Add(line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Plugin_Error:
-                    line = "<span style=\"color:#BA4A00;font-weight: bold;\">[×]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.JSPlugin?.AppendText(line);
-                    Catalog.Function.PluginCache.Add(line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Plugin_Info:
-                    line = LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.JSPlugin?.AppendText(line);
-                    Catalog.Function.PluginCache.Add(line);
-                    if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
-                    {
-                        Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
-                    }
-                    break;
                 case LogType.Plugin_Warn:
-                    line = "<span style=\"color:#9c8022;font-weight: bold;\">[!]</span>" + LogPreProcessing.EscapeLog(line);
-                    Catalog.Function.JSPlugin?.AppendText(line);
-                    Catalog.Function.PluginCache.Add(line);
+                    Catalog.Function.JSPlugin?.Dispatcher.Invoke(() => Catalog.Function.JSPlugin?.Append(LogPreProcessing.Color(type, line)));
+                    Catalog.Function.PluginCache.Add(new(type, line));
                     if (Catalog.Function.PluginCache.Count > Global.Settings.Serein.MaxCacheLines)
                     {
                         Catalog.Function.PluginCache.RemoveRange(0, Catalog.Function.PluginCache.Count - Global.Settings.Serein.MaxCacheLines);
                     }
                     break;
                 case LogType.Plugin_Clear:
-                    Catalog.Function.JSPlugin?.AppendText("#clear");
+                    Catalog.Function.JSPlugin?.Dispatcher.Invoke(() => Catalog.Function.JSPlugin?.PluginRichTextBox.Document.Blocks.Clear());
                     Catalog.Function.PluginCache.Clear();
                     break;
                 case LogType.Version_New:

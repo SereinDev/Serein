@@ -6,13 +6,10 @@
     xmlns:local="clr-namespace:Serein.Windows.Pages.Function"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
     Title="JSPlugin"
     d:DesignHeight="450"
     d:DesignWidth="800"
     AllowDrop="True"
-    Loaded="UiPage_Loaded"
     mc:Ignorable="d">
     <ui:UiPage.Resources>
         <ResourceDictionary>
@@ -32,9 +29,12 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Header="控制台">
-            <wfi:WindowsFormsHost Margin="3">
-                <wf:WebBrowser x:Name="PluginWebBrowser" />
-            </wfi:WindowsFormsHost>
+            <RichTextBox 
+                Name="PluginRichTextBox" 
+                Margin="5"
+                IsReadOnly="True"
+                IsUndoEnabled="False"
+                UndoLimit="0" />
         </GroupBox>
         <GridSplitter
             Grid.Column="1"

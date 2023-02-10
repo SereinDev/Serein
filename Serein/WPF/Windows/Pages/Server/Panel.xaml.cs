@@ -1,10 +1,9 @@
-﻿using Serein.Base;
-using Serein.Utils;
+﻿using Serein.Utils;
 using Serein.Core.Server;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using Wpf.Ui.Appearance;
+using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Server
@@ -16,17 +15,12 @@ namespace Serein.Windows.Pages.Server
         public Panel()
         {
             InitializeComponent();
-            ResourcesManager.InitConsole();
-            PanelWebBrowser.ScriptErrorsSuppressed = true;
-            PanelWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            PanelWebBrowser.WebBrowserShortcutsEnabled = false;
-            PanelWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=panel&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
+            PanelRichTextBox.Document.Blocks.Clear();
+            Catalog.Server.Cache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line.LogType, line.Text))));
             Catalog.Server.Panel = this;
         }
-
-        private bool Restored;
 
         private void Start_Click(object sender, RoutedEventArgs e)
             => ServerManager.Start();
@@ -88,8 +82,17 @@ namespace Serein.Windows.Pages.Server
             }
         }
 
-        public void AppendText(string Line)
-            => Dispatcher.Invoke(() => PanelWebBrowser.Document.InvokeScript("AppendText", new object[] { Line }));
+        public void Append(Paragraph paragraph)
+            => Dispatcher.Invoke(() =>
+            {
+                PanelRichTextBox.Document = PanelRichTextBox.Document ?? new();
+                PanelRichTextBox.Document.Blocks.Add(paragraph);
+                while (PanelRichTextBox.Document.Blocks.Count > 250)
+                {
+                    PanelRichTextBox.Document.Blocks.Remove(PanelRichTextBox.Document.Blocks.FirstBlock);
+                }
+                PanelRichTextBox.ScrollToEnd();
+            });
 
         private void UpdateInfos()
             => Dispatcher.Invoke(() =>
@@ -110,25 +113,5 @@ namespace Serein.Windows.Pages.Server
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
                 Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
             });
-
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Timer restorer = new Timer(500) { AutoReset = true };
-            restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
-            {
-                Logger.Output(LogType.Debug, string.Join(";", Catalog.Server.Cache));
-                if (!Restored && PanelWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
-                {
-                    Catalog.Server.Cache.ForEach((Text) => AppendText(Text));
-                    Restored = true;
-                }
-                if (Restored)
-                {
-                    restorer.Stop();
-                    restorer.Dispose();
-                }
-            });
-            restorer.Start();
-        }
     }
 }

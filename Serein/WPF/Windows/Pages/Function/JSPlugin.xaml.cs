@@ -1,11 +1,9 @@
-﻿using Serein.Base;
-using Serein.Utils;
+﻿using Serein.Utils;
 using Serein.Core.JSPlugin;
 using System.Diagnostics;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using Wpf.Ui.Appearance;
+using System.Windows.Documents;
 using Wpf.Ui.Controls;
 
 namespace Serein.Windows.Pages.Function
@@ -15,19 +13,23 @@ namespace Serein.Windows.Pages.Function
         public JSPlugin()
         {
             InitializeComponent();
-            ResourcesManager.InitConsole();
-            PluginWebBrowser.ScriptErrorsSuppressed = true;
-            PluginWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            PluginWebBrowser.WebBrowserShortcutsEnabled = false;
-            PluginWebBrowser.Navigate(@"file:\\\" + Global.PATH + $"console\\console.html?type=plugin&theme={(Theme.GetAppTheme() == ThemeType.Light ? "light" : "dark")}");
             Load();
+            PluginRichTextBox.Document.Blocks.Clear();
+            Catalog.Function.PluginCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line.LogType, line.Text))));
             Catalog.Function.JSPlugin = this;
         }
 
-        private bool Restored;
-
-        public void AppendText(string line)
-            => Dispatcher.Invoke(() => PluginWebBrowser.Document.InvokeScript("AppendText", new[] { line }));
+        public void Append(Paragraph paragraph)
+            => Dispatcher.Invoke(() =>
+            {
+                PluginRichTextBox.Document = PluginRichTextBox.Document ?? new();
+                PluginRichTextBox.Document.Blocks.Add(paragraph);
+                while (PluginRichTextBox.Document.Blocks.Count > 250)
+                {
+                    PluginRichTextBox.Document.Blocks.Remove(PluginRichTextBox.Document.Blocks.FirstBlock);
+                }
+                PluginRichTextBox.ScrollToEnd();
+            });
 
         public void LoadPublicly()
             => Dispatcher.Invoke(Load);
@@ -58,7 +60,7 @@ namespace Serein.Windows.Pages.Function
                         Load();
                         break;
                     case "ClearConsole":
-                        AppendText("#clear");
+                        PluginRichTextBox.Document.Blocks.Clear();
                         Catalog.Function.PluginCache.Clear();
                         break;
                     case "LookupDocs":
@@ -73,26 +75,6 @@ namespace Serein.Windows.Pages.Function
                         break;
                 }
             }
-        }
-
-        private void UiPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Timer restorer = new Timer(500) { AutoReset = true };
-            restorer.Elapsed += (_, _) => Dispatcher.Invoke(() =>
-            {
-                Logger.Output(LogType.Debug, string.Join(";", Catalog.Function.PluginCache));
-                if (!Restored && PluginWebBrowser.ReadyState == System.Windows.Forms.WebBrowserReadyState.Complete)
-                {
-                    Catalog.Function.PluginCache.ForEach((Text) => AppendText(Text));
-                    Restored = true;
-                }
-                if (Restored)
-                {
-                    restorer.Stop();
-                    restorer.Dispose();
-                }
-            });
-            restorer.Start();
         }
 
         private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)

@@ -198,7 +198,7 @@ namespace Serein.Core.Server
                 });
         }
 
-        public static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts" };
+        public static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts", ".lock" };
 
         /// <summary>
         /// 尝试导入

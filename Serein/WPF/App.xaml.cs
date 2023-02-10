@@ -1,7 +1,5 @@
-﻿using Serein.Base;
+﻿using Serein.Utils;
 using System.Windows;
-using Serein.Utils;
-using System.Threading.Tasks;
 
 namespace Serein
 {
