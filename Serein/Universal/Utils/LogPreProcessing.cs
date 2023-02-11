@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using RegExp = System.Text.RegularExpressions;
 #if WPF
@@ -13,6 +12,8 @@ namespace Serein.Utils
 {
     internal static class LogPreProcessing
     {
+#if !CONSOLE
+
         /// <summary>
         /// 颜色代码列表
         /// </summary>
@@ -51,6 +52,7 @@ namespace Serein.Utils
             "106",
             "107"
         };
+#endif
 
         /// <summary>
         /// 过滤彩色字符和控制字符
@@ -73,6 +75,7 @@ namespace Serein.Utils
             return stringBuilder.ToString();
         }
 
+#if WINFORM
         /// <summary>
         /// 将字符串转为HTML编码的字符串
         /// </summary>
@@ -80,7 +83,7 @@ namespace Serein.Utils
         /// 将字符串转为HTML编码的字符串
         /// <returns>转义后的HTML</returns>
         public static string EscapeLog(string input)
-            => RegExp.Regex.Replace(WebUtility.HtmlEncode(input).Replace("\n", "<br>"), @"\s", "&nbsp;");
+            => RegExp.Regex.Replace(System.Net.WebUtility.HtmlEncode(input).Replace("\n", "<br>"), @"\s", "&nbsp;");
 
         /// <summary>
         /// 彩色文本转义
@@ -196,6 +199,7 @@ namespace Serein.Utils
                 return input;
             }
         }
+#endif
 
 #if WPF
         public static Paragraph Color(LogType level, string line)

@@ -47,7 +47,7 @@ namespace Serein.Core.JSPlugin
                     if (preLoadConfig != null)
                     {
                         List<Assembly> assemblies = new();
-                        foreach (string assemblyString in preLoadConfig.AssemblyStrings)
+                        foreach (string assemblyString in preLoadConfig.Assemblies)
                         {
                             try
                             {
@@ -129,12 +129,8 @@ namespace Serein.Core.JSPlugin
             }
             engine.SetValue("serein_getSysinfo",
                 new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
-#if !UNIX
             engine.SetValue("serein_getCPUUsage",
                 new Func<float>(() => SystemInfo.CPUUsage));
-#else
-            engine.SetValue("serein_getCPUUsage", JsValue.Undefined);
-#endif
 #if CONSOLE
             engine.SetValue("serein_type", 0);
 #elif WINFORM

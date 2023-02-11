@@ -52,7 +52,7 @@ namespace Serein.Windows.Pages
             switch ((sender as CardAction)?.Tag)
             {
                 case "Server":
-                    if (Global.Settings.Serein.Pages.ServerPanel)
+                    if (Global.Settings.Serein.PagesDisplayed.ServerPanel)
                     {
 
                         Catalog.MainWindow.Navigation.Navigate(1);
@@ -61,14 +61,14 @@ namespace Serein.Windows.Pages
                     }
                     break;
                 case "Regex":
-                    if (Global.Settings.Serein.Pages.RegexList)
+                    if (Global.Settings.Serein.PagesDisplayed.RegexList)
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(2);
                     }
                     break;
                 case "Bot":
-                    if (Global.Settings.Serein.Pages.Bot)
+                    if (Global.Settings.Serein.PagesDisplayed.Bot)
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(0);
@@ -76,21 +76,21 @@ namespace Serein.Windows.Pages
                     }
                     break;
                 case "Schedule":
-                    if (Global.Settings.Serein.Pages.Schedule)
+                    if (Global.Settings.Serein.PagesDisplayed.Schedule)
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(3);
                     }
                     break;
                 case "Plugins":
-                    if (Global.Settings.Serein.Pages.JSPlugin)
+                    if (Global.Settings.Serein.PagesDisplayed.JSPlugin)
                     {
                         Catalog.MainWindow.Navigation.Navigate(2);
                         Catalog.Function.Container?.Navigation?.Navigate(4);
                     }
                     break;
                 case "Settings":
-                    if (Global.Settings.Serein.Pages.Settings)
+                    if (Global.Settings.Serein.PagesDisplayed.Settings)
                     {
                         Catalog.MainWindow.Navigation.Navigate(4);
                     }

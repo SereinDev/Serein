@@ -2,7 +2,6 @@
     x:Class="Serein.Windows.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Serein.Windows.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:debug_page="clr-namespace:Serein.Windows.Pages"
     xmlns:function_pages="clr-namespace:Serein.Windows.Pages.Function"
@@ -125,17 +124,18 @@
                 </Border>
             </Grid>
         </Grid>
-        <controls:PopupEx
-            x:Name="PopupEx"
-            Grid.Row="0"
-            AllowsTransparency="True"
-            IsOpen="True"
-            Placement="Center">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <ui:Snackbar
                 x:Name="Snackbar"
+                Grid.Column="1"
                 Panel.ZIndex="999"
                 Timeout="5000" />
-        </controls:PopupEx>
+        </Grid>
         <ui:Dialog
             x:Name="MemberEditor"
             Title="成员编辑器"

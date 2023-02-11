@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Serein.Extensions
 {
-    internal static class SleepExtension
+    internal static partial class Extensions
     {
         /// <summary>
         /// 睡觉觉

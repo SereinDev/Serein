@@ -2,7 +2,7 @@ namespace Serein.Core.JSPlugin
 {
     internal class PreLoadConfig
     {
-        public string[] AssemblyStrings = { };
+        public string[] Assemblies = { };
 
         /// <remarks>
         /// https://github.com/sebastienros/jint/blob/main/Jint/Options.cs

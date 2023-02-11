@@ -224,11 +224,11 @@ namespace Serein.Utils
                 case LogType.Version_New:
                     Catalog.Notification?.Show(
                         "Serein",
-                        "发现新版本:\n" + line + "\n你可以等待后台自动下载或手动点击本提示打开下载页面",
+                        "发现新版本：" + line + "\n你可以等待后台自动下载或手动点击本提示打开下载页面",
                         onClick: () => Process.Start(
                             new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true }
                             ),
-                        expirationTime: new TimeSpan(500)
+                        expirationTime: TimeSpan.FromSeconds(10)
                         );
                     Catalog.Settings.Serein?.UpdateVersion($"\n（发现新版本:{line}，你可以等待后台自动下载或手动点击下方链接获取最新版）");
                     break;
@@ -244,7 +244,7 @@ namespace Serein.Utils
                     Catalog.Notification?.Show("Serein", $"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：\n" + line);
                     break;
                 case LogType.Version_Ready:
-                    Catalog.Notification?.Show("Serein", line, expirationTime: new TimeSpan(6000));
+                    Catalog.Notification?.Show("Serein", line, expirationTime: TimeSpan.FromSeconds(10));
                     break;
 #endif
                 default:

@@ -42,6 +42,7 @@ namespace Serein.Windows.Pages.Settings
         {
             UseDarkTheme.IsChecked = (UseDarkTheme.IsChecked ?? false) && (ThemeFollowSystem.IsChecked ?? false) ? false : UseDarkTheme.IsChecked;
             Global.Settings.Serein.UseDarkTheme = UseDarkTheme.IsChecked ?? false;
+            Global.Settings.Serein.ThemeFollowSystem = ThemeFollowSystem.IsChecked ?? false;
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 
@@ -49,6 +50,7 @@ namespace Serein.Windows.Pages.Settings
         {
             ThemeFollowSystem.IsChecked = (ThemeFollowSystem.IsChecked ?? false) && (UseDarkTheme.IsChecked ?? false) ? false : ThemeFollowSystem.IsChecked;
             Global.Settings.Serein.UseDarkTheme = UseDarkTheme.IsChecked ?? false;
+            Global.Settings.Serein.ThemeFollowSystem = ThemeFollowSystem.IsChecked ?? false;
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 

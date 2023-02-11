@@ -8,13 +8,13 @@ namespace Serein.Windows.Pages.Server
         public Container()
         {
             InitializeComponent();
-            PanelNavigationItem.Visibility = Global.Settings.Serein.Pages.ServerPanel ? Visibility.Visible : Visibility.Hidden;
-            PluginManagerNavigationItem.Visibility = Global.Settings.Serein.Pages.ServerPluginManager ? Visibility.Visible : Visibility.Hidden;
-            if (Global.Settings.Serein.Pages.ServerPanel)
+            PanelNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.ServerPanel ? Visibility.Visible : Visibility.Hidden;
+            PluginManagerNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.ServerPluginManager ? Visibility.Visible : Visibility.Hidden;
+            if (Global.Settings.Serein.PagesDisplayed.ServerPanel)
             {
                 Navigation.Navigate(0);
             }
-            else if (Global.Settings.Serein.Pages.ServerPluginManager)
+            else if (Global.Settings.Serein.PagesDisplayed.ServerPluginManager)
             {
                 Navigation.Navigate(1);
             }

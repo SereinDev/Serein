@@ -12,7 +12,7 @@
         public AutoRun AutoRun = new();
         public DevelopmentTool DevelopmentTool = new();
         public Function Function = new();
-        public Pages Pages = new();
+        public PagesDisplayed PagesDisplayed = new();
     }
 
     internal class AutoRun
@@ -27,7 +27,7 @@
         public string NOTE { get; } = "以上设置内容为开发专用选项，请在指导下修改";
     }
 
-    internal class Pages
+    internal class PagesDisplayed
     {
         public bool
         ServerPanel = true,

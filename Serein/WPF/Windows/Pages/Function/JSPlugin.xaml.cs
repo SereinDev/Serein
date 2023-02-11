@@ -66,6 +66,9 @@ namespace Serein.Windows.Pages.Function
                     case "LookupDocs":
                         Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
                         break;
+                    case "GotoMarket":
+                        Process.Start(new ProcessStartInfo("https://serein.cc/Extension/") { UseShellExecute = true });
+                        break;
                     case "Disable":
                         if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.ContainsKey(listViewItem.Tag.ToString()))
                         {

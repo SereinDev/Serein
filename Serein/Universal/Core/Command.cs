@@ -355,11 +355,7 @@ namespace Serein.Core
 
                     #region 系统信息
                     "net" => Environment.Version.ToString(),
-#if !UNIX
                     "cpuusage" => SystemInfo.CPUUsage.ToString("N1"),
-#else
-                    "cpuusage" => "0",
-#endif
                     "os" => SystemInfo.OS,
                     "uploadspeed" => SystemInfo.UploadSpeed,
                     "downloadspeed" => SystemInfo.DownloadSpeed,

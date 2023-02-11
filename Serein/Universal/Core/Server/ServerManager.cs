@@ -384,7 +384,7 @@ namespace Serein.Core.Server
                 bool excluded = false;
                 foreach (string exp1 in Global.Settings.Server.ExcludedOutputs)
                 {
-                    if (exp1.TryConvert(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
+                    if (exp1.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
                     {
                         excluded = true;
                         break;
@@ -399,7 +399,7 @@ namespace Serein.Core.Server
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {
-                        if (exp2.TryConvert(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
+                        if (exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
                         {
                             TempLine = lineFiltered.Trim('\r', '\n');
                             isMuiltLinesMode = true;

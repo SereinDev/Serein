@@ -2,7 +2,7 @@ using System;
 
 namespace Serein.Extensions
 {
-    internal static class TimespanExtension
+    internal static partial class Extensions
     {
         /// <summary>
         /// 转化为时间文本

@@ -36,7 +36,10 @@ namespace Serein.Utils.Console
   v|version     - 查看版本信息
   ?|h|help      - 显示此帮助页面
 
-Tip: 当服务器运行时，输入的内容将被作为命令发送至服务器；若要执行Serein命令请在原有命令前面加上“serein ”，如“serein help”";
+Tip: 
+  · 其中“<参数>”为必选参数，“|”表示该命令的别称
+  · 以上命令对大小写均不敏感
+  · 当服务器运行时，输入的内容将被作为命令发送至服务器；若要执行Serein命令请在原有命令前面加上“serein ”，如“serein help”";
 
         /// <summary>
         /// 处理输入消息

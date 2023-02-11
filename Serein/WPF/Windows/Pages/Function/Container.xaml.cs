@@ -8,28 +8,28 @@ namespace Serein.Windows.Pages.Function
         public Container()
         {
             InitializeComponent();
-            BotNavigationItem.Visibility = Global.Settings.Serein.Pages.Bot ? Visibility.Visible : Visibility.Hidden;
-            MemberNavigationItem.Visibility = Global.Settings.Serein.Pages.Member ? Visibility.Visible : Visibility.Hidden;
-            RegexNavigationItem.Visibility = Global.Settings.Serein.Pages.RegexList ? Visibility.Visible : Visibility.Hidden;
-            ScheduleNavigationItem.Visibility = Global.Settings.Serein.Pages.Schedule ? Visibility.Visible : Visibility.Hidden;
-            JSPluginNavigationItem.Visibility = Global.Settings.Serein.Pages.JSPlugin ? Visibility.Visible : Visibility.Hidden;
-            if (Global.Settings.Serein.Pages.Bot)
+            BotNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Bot ? Visibility.Visible : Visibility.Hidden;
+            MemberNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Member ? Visibility.Visible : Visibility.Hidden;
+            RegexNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.RegexList ? Visibility.Visible : Visibility.Hidden;
+            ScheduleNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Schedule ? Visibility.Visible : Visibility.Hidden;
+            JSPluginNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.JSPlugin ? Visibility.Visible : Visibility.Hidden;
+            if (Global.Settings.Serein.PagesDisplayed.Bot)
             {
                 Navigation.Navigate(0);
             }
-            else if (Global.Settings.Serein.Pages.Member)
+            else if (Global.Settings.Serein.PagesDisplayed.Member)
             {
                 Navigation.Navigate(1);
             }
-            else if (Global.Settings.Serein.Pages.RegexList)
+            else if (Global.Settings.Serein.PagesDisplayed.RegexList)
             {
                 Navigation.Navigate(3);
             }
-            else if (Global.Settings.Serein.Pages.Schedule)
+            else if (Global.Settings.Serein.PagesDisplayed.Schedule)
             {
                 Navigation.Navigate(4);
             }
-            else if (Global.Settings.Serein.Pages.JSPlugin)
+            else if (Global.Settings.Serein.PagesDisplayed.JSPlugin)
             {
                 Navigation.Navigate(5);
             }

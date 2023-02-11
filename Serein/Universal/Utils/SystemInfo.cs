@@ -97,12 +97,12 @@ namespace Serein.Utils
         {
             MachineName = "."
         };
+#endif
 
         /// <summary>
         /// CPU使用率
         /// </summary>
         public static float CPUUsage;
-#endif
         /// <summary>
         /// 刷新计时器
         /// </summary>

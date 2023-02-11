@@ -25,7 +25,7 @@
             <ColumnDefinition Width="*" MinWidth="100" />
         </Grid.ColumnDefinitions>
         <GroupBox
-            Margin="3"
+            Margin="0,3,10,3"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Header="控制台">
@@ -39,11 +39,12 @@
         <GridSplitter
             Grid.Column="1"
             Width="5"
+            Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
             HorizontalAlignment="Stretch" />
         <ListView
             Name="JSPluginListView"
             Grid.Column="2"
-            Margin="3"
+            Margin="10,3,0,3"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             ContextMenuOpening="JSPluginListView_ContextMenuOpening"
@@ -89,6 +90,12 @@
                         Header="查看文档"
                         SymbolIcon="DocumentFlowchart24"
                         Tag="LookupDocs" />
+                    <ui:MenuItem
+                        Name="GotoMarket"
+                        Click="MenuItem_Click"
+                        Header="查看扩展市场"
+                        SymbolIcon="DocumentBulletList24"
+                        Tag="GotoMarket" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

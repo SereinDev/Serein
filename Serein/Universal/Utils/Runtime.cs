@@ -22,12 +22,10 @@ namespace Serein.Utils
         {
             CrashInterception.Init();
             Directory.SetCurrentDirectory(Global.PATH);
-#if !CONSOLE
+#if WINFORM
             ResourcesManager.InitConsole();
 #endif
             IO.ReadAll();
-            TaskRunner.Start();
-            Net.Init();
             Task.Run(SystemInfo.Init);
 #if !CONSOLE
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
@@ -41,6 +39,8 @@ namespace Serein.Utils
         /// </summary>
         public static void Start()
         {
+            TaskRunner.Start();
+            Net.Init();
             IO.StartSaving();
             Task.Run(JSPluginManager.Load);
             if (Global.FirstOpen) { ShowWelcomePage(); }

@@ -8,7 +8,6 @@
 		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
 		<RootNamespace>Serein</RootNamespace>
 		<PlatformTarget>AnyCPU</PlatformTarget>
-		<UseWindowsForms>True</UseWindowsForms>
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 

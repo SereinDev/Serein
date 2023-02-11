@@ -38,11 +38,7 @@ namespace Serein.Utils
         /// </summary>
         public static void Init()
         {
-            Task.Run(() =>
-            {
-                10000.ToSleep();
-                CheckVersion();
-            });
+            Task.Run(CheckVersion);
             CheckTimer.Elapsed += (_, _) => CheckVersion();
             CheckTimer.Start();
             HeartbeatTimer.Elapsed += (_, _) => Get("http://count.ongsat.com/api/online/heartbeat?uri=127469ef347447698dd74c449881b877").GetAwaiter().GetResult();
@@ -127,29 +123,32 @@ namespace Serein.Utils
             foreach (JToken asset in jobject["assets"])
             {
                 string filename = asset.TryGetString("name");
-                if (IsFileMatched(filename.ToLowerInvariant()) && !string.IsNullOrEmpty(asset.TryGetString("browser_download_url"))) { continue; }
+                if (!IsFileMatched(filename.ToLowerInvariant()) || string.IsNullOrEmpty(asset.TryGetString("browser_download_url"))) { continue; }
                 try
                 {
                     if (File.Exists($"update/{asset.TryGetString("name")}"))
                     {
+                        IsReadyToUpdate = false;
                         Logger.Output(Base.LogType.Debug, "文件已存在，自动跳过下载");
-                        break;
                     }
                     else if (IsReadyToUpdate)
                     {
                         break;
                     }
-                    IsReadyToUpdate = false;
-                    Logger.Output(Base.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
-                    Logger.Output(Base.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
-                    using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
-                    using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
+                    else
                     {
-                        byte[] bytes = new byte[stream.Length];
-                        _ = stream.Read(bytes, 0, bytes.Length);
-                        fileStream.Write(bytes, 0, bytes.Length);
+                        IsReadyToUpdate = false;
+                        Logger.Output(Base.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
+                        Logger.Output(Base.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
+                        using (Stream stream = Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
+                        using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
+                        {
+                            byte[] bytes = new byte[stream.Length];
+                            _ = stream.Read(bytes, 0, bytes.Length);
+                            fileStream.Write(bytes, 0, bytes.Length);
+                        }
+                        Logger.Output(Base.LogType.Debug, "下载成功");
                     }
-                    Logger.Output(Base.LogType.Debug, "下载成功");
                     ZipFile.ExtractToDirectory($"update/{asset.TryGetString("name")}", "update");
                     Logger.Output(Base.LogType.Debug, "解压成功");
                     IsReadyToUpdate = true;

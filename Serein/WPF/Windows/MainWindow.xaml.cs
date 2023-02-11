@@ -24,17 +24,17 @@ namespace Serein.Windows
             InitializeComponent();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
-            SettingsNavigationItem.Visibility = Global.Settings.Serein.Pages.Settings ? Visibility.Visible : Visibility.Hidden;
-            if (!Global.Settings.Serein.Pages.ServerPanel && !Global.Settings.Serein.Pages.ServerPluginManager)
+            SettingsNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Settings ? Visibility.Visible : Visibility.Hidden;
+            if (!Global.Settings.Serein.PagesDisplayed.ServerPanel && !Global.Settings.Serein.PagesDisplayed.ServerPluginManager)
             {
                 ServerNavigationItem.Visibility = Visibility.Hidden;
             }
             if (
-                !Global.Settings.Serein.Pages.Bot &&
-                !Global.Settings.Serein.Pages.Member &&
-                !Global.Settings.Serein.Pages.RegexList &&
-                !Global.Settings.Serein.Pages.Schedule &&
-                !Global.Settings.Serein.Pages.JSPlugin)
+                !Global.Settings.Serein.PagesDisplayed.Bot &&
+                !Global.Settings.Serein.PagesDisplayed.Member &&
+                !Global.Settings.Serein.PagesDisplayed.RegexList &&
+                !Global.Settings.Serein.PagesDisplayed.Schedule &&
+                !Global.Settings.Serein.PagesDisplayed.JSPlugin)
             {
                 FunctionNavigationItem.Visibility = Visibility.Hidden;
             }
@@ -58,7 +58,6 @@ namespace Serein.Windows
         {
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
-            PopupEx.VerticalOffset = Height * 0.5 - 60;
         }
 
         private void UiWindow_Closing(object sender, CancelEventArgs e)
@@ -103,7 +102,6 @@ namespace Serein.Windows
         public void OpenSnackbar(string Title, string Message, SymbolRegular Icon)
             => Dispatcher.Invoke(() =>
             {
-                PopupEx.VerticalOffset = Height * 0.5 - 60; // 自动调整底部距离，使之刚好与底部重合
                 Snackbar.Show(Title, Message, Icon);
             });
 
@@ -111,7 +109,6 @@ namespace Serein.Windows
         {
             if (Snackbar.IsShown)
             {
-                PopupEx.VerticalOffset = Height * 0.5 - 60;
             }
         }
 

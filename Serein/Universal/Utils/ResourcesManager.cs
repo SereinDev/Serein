@@ -1,4 +1,4 @@
-﻿#if !CONSOLE
+﻿#if WINFORM
 using Serein.Properties;
 using System.IO;
 using System.Text;

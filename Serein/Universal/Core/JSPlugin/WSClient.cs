@@ -2,6 +2,7 @@
 using Jint.Native;
 using Newtonsoft.Json;
 using Serein.Utils;
+using SuperSocket.ClientEngine;
 using System;
 using WebSocket4Net;
 
@@ -69,6 +70,20 @@ namespace Serein.Core.JSPlugin
             JSPluginManager.PluginDict[@namespace].WSClients.Add(this);
         }
 
+        private bool Check(JsValue jsValue)
+        {
+            if (JSPluginManager.PluginDict[Namespace].Engine == null)
+            {
+                Dispose();
+                return false;
+            }
+            if (jsValue == null || jsValue.IsUndefined() || jsValue.IsNull())
+            {
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// 触发事件
         /// </summary>
@@ -77,12 +92,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="args">参数</param>
         private void Trigger(JsValue jsValue, string name, object args = null)
         {
-            if (JSPluginManager.PluginDict[Namespace].Engine == null)
-            {
-                Dispose();
-                return;
-            }
-            if (jsValue == null || jsValue.IsUndefined() || jsValue.IsNull())
+            if (!Check(jsValue))
             {
                 return;
             }
@@ -103,7 +113,7 @@ namespace Serein.Core.JSPlugin
                             }
                             break;
                         case "Error":
-                            if (args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
+                            if (args is ErrorEventArgs e2 && e2 != null)
                             {
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
                             }

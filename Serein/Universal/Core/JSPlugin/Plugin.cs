@@ -106,12 +106,12 @@ namespace Serein.Core.JSPlugin
         /// 设置事件
         /// </summary>
         /// <param name="type">事件类型</param>
-        /// <param name="delegate">执行函数</param>
+        /// <param name="jsValue">执行函数</param>
         /// <returns>设置结果</returns>
-        public bool SetListener(EventType type, JsValue @delegate)
+        public bool SetListener(EventType type, JsValue jsValue)
         {
             Logger.Output(LogType.Debug, type);
-            @delegate = @delegate ?? throw new ArgumentNullException(nameof(@delegate));
+            jsValue = jsValue ?? throw new ArgumentNullException(nameof(jsValue));
             switch (type)
             {
                 case EventType.ServerStart:
@@ -129,11 +129,11 @@ namespace Serein.Core.JSPlugin
                 case EventType.PluginsReload:
                     if (EventDict.ContainsKey(type))
                     {
-                        EventDict[type] = @delegate;
+                        EventDict[type] = jsValue;
                     }
                     else
                     {
-                        EventDict.Add(type, @delegate);
+                        EventDict.Add(type, jsValue);
                     }
                     break;
                 default:
@@ -150,7 +150,11 @@ namespace Serein.Core.JSPlugin
         /// <param name="args">参数</param>
         public bool Trigger(EventType type, CancellationToken token, params object[] args)
         {
-            if (!JSPluginManager.PluginDict.ContainsKey(Namespace) || !EventDict.ContainsKey(type) || EventDict[type] == null)
+            if (!JSPluginManager.PluginDict.ContainsKey(Namespace) ||
+                !EventDict.ContainsKey(type) ||
+                EventDict[type] == null ||
+                EventDict[type] != JsValue.Null||
+                EventDict[type] != JsValue.Undefined)
             {
                 return false;
             }
