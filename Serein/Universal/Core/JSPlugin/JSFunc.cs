@@ -312,7 +312,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="key">键</param>
         /// <param name="jsValue">值</param>
         /// <returns>设置结果</returns>
-        public static bool SetCommandVariable(string key, JsValue jsValue)
+        public static bool SetVariable(string key, JsValue jsValue)
         {
             string value = jsValue.ToString();
             if (string.IsNullOrEmpty(value) || RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))

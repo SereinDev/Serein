@@ -135,20 +135,7 @@ namespace Serein.Core
                 case Base.CommandType.SendTempMsg:
                     if (inputType == 1 && groupID != -1 && userID != -1)
                     {
-                        Websocket.Send(
-                            new JObject{
-                                { "action",  "send_private_msg" },
-                                {
-                                    "params",
-                                    new JObject{
-                                        { "user_id", userID},
-                                        { "group_id", groupID},
-                                        { "message", value },
-                                        { "auto_escape", Global.Settings.Bot.AutoEscape }
-                                        }
-                                    }
-                                }.ToString()
-                            );
+                        Websocket.Send(groupID, userID, value);
                     }
                     break;
                 case Base.CommandType.Bind:

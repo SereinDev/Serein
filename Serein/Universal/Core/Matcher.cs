@@ -11,9 +11,34 @@ namespace Serein.Core
     internal static class Matcher
     {
         /// <summary>
-        /// 统计信息
+        /// 已接收消息
         /// </summary>
-        public static string MessageReceived, MessageSent, SelfId;
+        public static string MessageReceived
+        {
+            get => !Websocket.Status || string.IsNullOrEmpty(messageReceived) ? "-" : messageReceived;
+            set => messageReceived = value;
+        }
+
+        /// <summary>
+        /// 已发送消息
+        /// </summary>
+        public static string MessageSent
+        {
+            get => !Websocket.Status || string.IsNullOrEmpty(messageSent) ? "-" : messageSent;
+            set => messageSent = value;
+        }
+
+        /// <summary>
+        /// 当前ID
+        /// </summary>
+        public static string SelfId
+        {
+            get => !Websocket.Status || string.IsNullOrEmpty(selfId) ? "-" : selfId;
+            set => selfId = value;
+        }
+
+        private static string messageReceived, messageSent, selfId;
+
 
         /// <summary>
         /// 处理来自控制台的消息
@@ -165,7 +190,7 @@ namespace Serein.Core
                         MessageReceived = (
                             string.IsNullOrEmpty(packet.TryGetString("status", "stat", "message_received")) ?
                             packet.TryGetString("status", "stat", "MessageReceived") : packet.TryGetString("status", "stat", "message_received"));
-                        MessageReceived = (
+                        MessageSent = (
                             string.IsNullOrEmpty(packet.TryGetString("status", "stat", "message_sent")) ?
                             packet.TryGetString("status", "stat", "MessageSent") : packet.TryGetString("status", "stat", "message_sent"));
                         if ((long.TryParse(MessageReceived, out long TempNumber) ? TempNumber : 0) > 10000000)

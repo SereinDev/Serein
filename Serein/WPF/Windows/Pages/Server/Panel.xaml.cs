@@ -23,7 +23,10 @@ namespace Serein.Windows.Pages.Server
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
-            => ServerManager.Start();
+        {
+            ServerManager.Start();
+            UpdateInfos();
+        }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
             => ServerManager.Stop();
@@ -32,7 +35,10 @@ namespace Serein.Windows.Pages.Server
             => ServerManager.RestartRequest();
 
         private void Kill_Click(object sender, RoutedEventArgs e)
-            => ServerManager.Kill();
+        {
+            ServerManager.Kill();
+            UpdateInfos();
+        }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {

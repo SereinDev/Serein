@@ -41,6 +41,9 @@ namespace Serein.Core.Server
         /// </summary>
         private static bool Restart;
 
+        /// <summary>
+        /// 由用户关闭服务器
+        /// </summary>
         private static bool IsStoppedByUser;
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace Serein.Core.Server
         private static Process ServerProcess;
 
         /// <summary>
-        /// 输入流写入者
+        /// 输入流写入
         /// </summary>
         private static StreamWriter InputWriter;
 
@@ -240,7 +243,11 @@ namespace Serein.Core.Server
                 {
                     try
                     {
+#if NET6_0
+                        ServerProcess.Kill(true);
+#else
                         ServerProcess.Kill();
+#endif
                         IsStoppedByUser = true;
                         Restart = false;
                         return true;
@@ -264,7 +271,11 @@ namespace Serein.Core.Server
                     LastKillTime = nowTime;
                     try
                     {
+#if NET6_0
+                        ServerProcess.Kill(true);
+#else
                         ServerProcess.Kill();
+#endif
                         IsStoppedByUser = true;
                         Restart = false;
                         return true;
@@ -289,7 +300,11 @@ namespace Serein.Core.Server
             {
                 try
                 {
+#if NET6_0
+                    ServerProcess.Kill(true);
+#else
                     ServerProcess.Kill();
+#endif
                     IsStoppedByUser = true;
                     Restart = false;
                     return true;

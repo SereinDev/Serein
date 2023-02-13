@@ -46,11 +46,23 @@ namespace Serein.Base
         /// <summary>
         /// 编译时间
         /// </summary>
-        public string Time = "-";
+        public string Time
+        {
+            get => string.IsNullOrEmpty(time) ? "-" : time;
+            set => time = value;
+        }
+
+        private string time = null;
 
         /// <summary>
         /// 详细信息
         /// </summary>
-        public string Detail = "-";
+        public string Detail
+        {
+            get => string.IsNullOrEmpty(detail) ? "-" : detail;
+            set => detail = value;
+        }
+
+        private string detail = "-";
     }
 }

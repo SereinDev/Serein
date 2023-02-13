@@ -16,10 +16,21 @@ namespace Serein.Ui
             Invoke((ServerPanelConsoleWebBrowser_Delegate)ServerPanelConsoleWebBrowser_AppendText, objects2);
         }
 
-        private void ServerPanelControlStart_Click(object sender, EventArgs e) => ServerManager.Start();
+        private void ServerPanelControlStart_Click(object sender, EventArgs e)
+        {
+            ServerManager.Start();
+            UpdateInfo();
+        }
+
         private void ServerPanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
+        
         private void ServerPanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RestartRequest();
-        private void ServerPanelControlKill_Click(object sender, EventArgs e) => ServerManager.Kill();
+        
+        private void ServerPanelControlKill_Click(object sender, EventArgs e)
+        {
+            ServerManager.Kill();
+            UpdateInfo();
+        }
 
         private void ServerPanelConsoleEnter_Click(object sender, EventArgs e)
         {

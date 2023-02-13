@@ -94,8 +94,8 @@ namespace Serein.Core.JSPlugin
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
                     new Func<string, JsValue, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
-                engine.SetValue("serein_setCommandVariable",
-                    new Func<string, JsValue, bool>(JSFunc.SetCommandVariable));
+                engine.SetValue("serein_setVariable",
+                    new Func<string, JsValue, bool>(JSFunc.SetVariable));
                 engine.SetValue("serein_export",
                     new Action<string, JsValue>(JSFunc.Export));
                 engine.SetValue("setTimeout",
@@ -117,7 +117,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_debugLog", JsValue.Undefined);
                 engine.SetValue("serein_registerPlugin", JsValue.Undefined);
                 engine.SetValue("serein_setListener", JsValue.Undefined);
-                engine.SetValue("serein_setCommandVariable", JsValue.Undefined);
+                engine.SetValue("serein_setVariable", JsValue.Undefined);
                 engine.SetValue("serein_export", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
@@ -172,6 +172,8 @@ namespace Serein.Core.JSPlugin
                 new Func<long, string, bool>((target, message) => Websocket.Send(false, message, target)));
             engine.SetValue("serein_sendPrivate",
                 new Func<long, string, bool>((target, message) => Websocket.Send(true, message, target)));
+            engine.SetValue("serein_sendTemp",
+                new Func<long, long, string, bool>((groupID, userID, message) => Websocket.Send(groupID, userID, message)));
             engine.SetValue("serein_sendPacket",
                 new Func<string, bool>((message) => Websocket.Send(message)));
             engine.SetValue("serein_getWsStatus",
@@ -234,6 +236,7 @@ namespace Serein.Core.JSPlugin
                     getServerFile: serein_getServerFile,
                     sendGroup: serein_sendGroup,
                     sendPrivate: serein_sendPrivate,
+                    sendTemp: serein_sendTemp,
                     sendPacket: serein_sendPacket,
                     getWsStatus: serein_getWsStatus,
                     bindMember: serein_bindMember,
@@ -247,7 +250,7 @@ namespace Serein.Core.JSPlugin
                     addRegex: serein_addRegex,
                     editRegex: serein_editRegex,
                     removeRegex: serein_removeRegex,
-                    setCommandVariable: serein_setCommandVariable,
+                    setVariable: serein_setVariable,
                     import: serein_import,
                     export: serein_export
                     };"

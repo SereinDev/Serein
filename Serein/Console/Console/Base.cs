@@ -56,6 +56,7 @@ namespace Serein.Utils.Console
                 IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
                 RemoveMenu(CloseMenu, 0xF060, 0x0);
             }
+            Logger.Output(LogType.Info, Global.LOGO);
 #if UNIX
             if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
@@ -74,16 +75,16 @@ namespace Serein.Utils.Console
         /// </summary>
         public static void Start()
         {
-            Logger.Output(LogType.Info, "Welcome.");
             Runtime.Start();
+            Logger.Output(LogType.Info, "启动成功");
             Logger.Output(LogType.Info, "你可以输入“help”获取更多信息");
             System.Console.Title = "Serein " + Global.VERSION;
             System.Console.CancelKeyPress += (_, e) =>
             {
-                e.Cancel = true;
                 if (ServerManager.Status)
                 {
                     ServerManager.Kill();
+                    e.Cancel = true;
                 }
                 else
                 {

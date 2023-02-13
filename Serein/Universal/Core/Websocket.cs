@@ -45,9 +45,9 @@ namespace Serein.Core
                 return;
             }
             Logger.Output(LogType.Bot_Clear);
-            Matcher.MessageReceived = "-";
-            Matcher.MessageSent = "-";
-            Matcher.SelfId = "-";
+            Matcher.MessageReceived = null;
+            Matcher.MessageSent = null;
+            Matcher.SelfId = null;
             try
             {
                 WSClient = new WebSocket(
@@ -153,6 +153,46 @@ namespace Serein.Core
                 else
                 {
                     Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
+                }
+                IO.MsgLog($"[Sent] {textJObject}");
+            }
+            return Status;
+        }
+
+        
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        /// <param name="groupID">群号</param>
+        /// <param name="userID">用户ID</param>
+        /// <param name="message">消息</param>
+        /// <returns>发送结果</returns>
+        public static bool Send(long groupID, long userID, string message)
+        {
+            if (Status)
+            {
+                JObject textJObject = new()
+                {
+                    { "action", "send_private_msg"},
+                    {
+                        "params",
+                        new JObject
+                        {
+                            { "user_id" , userID },
+                            { "group_id" , groupID },
+                            { "message", message },
+                            { "auto_escape", Global.Settings.Bot.AutoEscape }
+                        }
+                    }
+                };
+                WSClient.Send(textJObject.ToString());
+                if (Global.Settings.Bot.EnbaleOutputData)
+                {
+                    Logger.Output(LogType.Bot_Send, textJObject);
+                }
+                else
+                {
+                    Logger.Output(LogType.Bot_Send, $"\"临时会话\"({userID}):{message}");
                 }
                 IO.MsgLog($"[Sent] {textJObject}");
             }

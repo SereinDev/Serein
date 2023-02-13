@@ -22,16 +22,6 @@ namespace Serein.Utils
 {
     internal static class Logger
     {
-
-#if WINFORM || WPF
-        internal static class Colors
-        {
-            public static readonly System.Drawing.Color Serein = System.Drawing.Color.FromArgb(75, 115, 141);
-            public static readonly System.Drawing.Color Warn = System.Drawing.Color.FromArgb(156, 128, 34);
-            public static readonly System.Drawing.Color Error = System.Drawing.Color.FromArgb(186, 74, 0);
-        }
-#endif
-
         /// <summary>
         /// 输出
         /// </summary>
@@ -64,7 +54,7 @@ namespace Serein.Utils
                     bld.Append("null ");
                 }
             }
-            string line = bld.ToString();
+            string line = bld.ToString().TrimEnd(' ');
             switch (type)
             {
 #if CONSOLE
@@ -111,7 +101,7 @@ namespace Serein.Utils
                     WriteLine(3, $"更新{(type == LogType.Version_Failure ? "获取" : "下载")}异常：" + line, true);
                     break;
                 case LogType.Version_Downloading:
-                    WriteLine(1, $"正在从[\x1b[4m\x1b[36m{line}\x1b[0m]下载新版本", true);
+                    WriteLine(1, $"正在从[{line}]下载新版本", true);
                     break;
                 case LogType.Version_Ready:
                     WriteLine(1, line.Replace("\n", "，"), true);
@@ -340,6 +330,13 @@ namespace Serein.Utils
                 }
                 else
                 {
+                    if (line.Contains("https"))
+                    {
+                        line = System.Text.RegularExpressions.Regex.Replace(
+                            line,
+                            @"(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*))",
+                            "\x1b[4m\x1b[36m$1\x1b[0m");
+                    }
                     System.Console.WriteLine(line + "\x1b[0m");
                 }
             }

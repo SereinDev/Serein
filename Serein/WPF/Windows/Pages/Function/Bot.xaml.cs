@@ -24,9 +24,16 @@ namespace Serein.Windows.Pages.Function
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
-            => Websocket.Open();
+        {
+            Websocket.Open();
+            UpdateInfos();
+        }
+
         private void Disconnect_Click(object sender, RoutedEventArgs e)
-            => Websocket.Close();
+        {
+            Websocket.Close();
+            UpdateInfos();
+        }
 
         public void Append(Paragraph paragraph)
             => Dispatcher.Invoke(() =>

@@ -31,10 +31,11 @@ namespace Serein.Utils.Console
 
   sysinfo       - 系统信息
   clear         - 清屏
-  exit          - 退出
+  wp|welpage    - 显示欢迎页
   r|reload      - 重新加载设置文件、数据文件和插件
   v|version     - 查看版本信息
   ?|h|help      - 显示此帮助页面
+  exit          - 退出
 
 Tip: 
   · 其中“<参数>”为必选参数，“|”表示该命令的别称
@@ -129,9 +130,9 @@ Tip:
                                 case "info":
                                     Logger.Output(LogType.Info,
                                         $"状态       {(Websocket.Status ? "已连接" : "未连接")}\n" +
-                                        $"账号       {(Websocket.Status ? Matcher.SelfId : "-")}\n" +
-                                        $"接收消息   {(Websocket.Status ? Matcher.MessageReceived : "-")}\n" +
-                                        $"发送消息   {(Websocket.Status ? Matcher.MessageSent : "-")}\n" +
+                                        $"账号       {Matcher.SelfId}\n" +
+                                        $"接收消息   {Matcher.MessageReceived}\n" +
+                                        $"发送消息   {Matcher.MessageSent}\n" +
                                         $"连接时间   {(Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-")}"
                                         );
                                     break;
@@ -175,7 +176,9 @@ Tip:
                             $"编译时间   {Global.BuildInfo.Time}\n" +
                             $"详细信息   {Global.BuildInfo.Detail.Replace("\r", string.Empty)}\n" +
                             "\n" +
-                            "GitHub Repo: \x1b[4m\x1b[36mhttps://github.com/Zaitonn/Serein\x1b[0m\n" +
+                            "交流群: https://jq.qq.com/?_wv=1027&k=XNZqPSPv\n" +
+                            "官网: https://serein.cc\n" +
+                            "GitHub Repo: https://github.com/Zaitonn/Serein\n" +
                             "Copyright © 2022 Zaitonn. All Rights Reserved.");
                         break;
                     case "sysinfo":
@@ -191,6 +194,10 @@ Tip:
                             $"  - 上传   {SystemInfo.UploadSpeed}\n" +
                             $"  - 下载   {SystemInfo.DownloadSpeed}"
                             );
+                        break;
+                    case "wp":
+                    case "welpage":
+                        Runtime.ShowWelcomePage();
                         break;
                     default:
                         Logger.Output(LogType.Warn, "未知的命令，请检查后重试或输入“help”获取更多信息");

@@ -4,6 +4,6 @@
     <TargetFramework>net472</TargetFramework>
 		<LangVersion>10</LangVersion>
 		<DebugType>none</DebugType>
-    <OutputPath>../Universal/Sources</OutputPath>
+    <OutputPath>../../Universal/Sources</OutputPath>
   </PropertyGroup>
 </Project>

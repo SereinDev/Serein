@@ -53,22 +53,54 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; } = "-";
+        [JsonIgnore]
+        public string Name
+        {
+            get => string.IsNullOrEmpty(name) ? "-" : name;
+            set => name = value;
+        }
+
+        [JsonProperty(PropertyName = "Name")]
+        private string name { get; set; } = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version { get; set; } = "-";
+        [JsonIgnore]
+        public string Version
+        {
+            get => string.IsNullOrEmpty(version) ? "-" : version;
+            set => version = value;
+        }
+
+        [JsonProperty(PropertyName = "Version")]
+        private string version;
 
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { get; set; } = "-";
+        [JsonIgnore]
+        public string Author
+        {
+            get => string.IsNullOrEmpty(author) ? "-" : author;
+            set => author = value;
+        }
+
+        [JsonProperty(PropertyName = "Author")]
+        private string author;
 
         /// <summary>
         /// 介绍
         /// </summary>
-        public string Description { get; set; } = "-";
+        [JsonIgnore]
+        public string Description
+        {
+            get => string.IsNullOrEmpty(description) ? "-" : description;
+            set => description = value;
+        }
+
+        [JsonProperty(PropertyName = "Description")]
+        private string description;
 
         /// <summary>
         /// 文件名
@@ -153,7 +185,7 @@ namespace Serein.Core.JSPlugin
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace) ||
                 !EventDict.ContainsKey(type) ||
                 EventDict[type] == null ||
-                EventDict[type] != JsValue.Null||
+                EventDict[type] != JsValue.Null ||
                 EventDict[type] != JsValue.Undefined)
             {
                 return false;
