@@ -25,7 +25,7 @@ namespace Serein.Extensions
             }
             return false;
         }
-        
+
         /// <summary>
         /// 尝试转换正则
         /// </summary>

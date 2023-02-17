@@ -135,6 +135,16 @@ namespace Serein.Core.JSPlugin
         public EventType[] EventList => EventDict.Keys.ToArray();
 
         /// <summary>
+        /// 是否监听了指定的事件类型
+        /// </summary>
+        /// <param name="eventType">事件类型</param>
+        public bool HasListenedOn(EventType eventType)
+             => EventDict.ContainsKey(eventType) &&
+                EventDict[eventType] != null &&
+                EventDict[eventType] != JsValue.Null &&
+                EventDict[eventType] != JsValue.Undefined;
+
+        /// <summary>
         /// 设置事件
         /// </summary>
         /// <param name="type">事件类型</param>
@@ -167,12 +177,11 @@ namespace Serein.Core.JSPlugin
                     {
                         EventDict.Add(type, jsValue);
                     }
-                    break;
+                    return true;
                 default:
                     Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
                     return false;
             }
-            return true;
         }
 
         /// <summary>
@@ -182,11 +191,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="args">参数</param>
         public bool Trigger(EventType type, CancellationToken token, params object[] args)
         {
-            if (!JSPluginManager.PluginDict.ContainsKey(Namespace) ||
-                !EventDict.ContainsKey(type) ||
-                EventDict[type] == null ||
-                EventDict[type] != JsValue.Null ||
-                EventDict[type] != JsValue.Undefined)
+            if (!HasListenedOn(type))
             {
                 return false;
             }

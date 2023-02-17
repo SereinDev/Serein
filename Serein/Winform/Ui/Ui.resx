@@ -149,7 +149,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="ServerPanelInfoCPU2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 24</value>
+    <value>88, 31</value>
   </data>
   <data name="ServerPanelInfoCPU2.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -185,7 +185,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="ServerPanelInfoPlayerCount2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 24</value>
+    <value>145, 31</value>
   </data>
   <data name="ServerPanelInfoPlayerCount2.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -206,7 +206,7 @@
     <value>ServerPanelInfo</value>
   </data>
   <data name="&gt;&gt;ServerPanelInfoPlayerCount2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="ServerPanelInfoTime2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -221,7 +221,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="ServerPanelInfoTime2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 24</value>
+    <value>145, 31</value>
   </data>
   <data name="ServerPanelInfoTime2.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -257,7 +257,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="ServerPanelInfoDifficulty2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 24</value>
+    <value>175, 31</value>
   </data>
   <data name="ServerPanelInfoDifficulty2.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -293,7 +293,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="ServerPanelInfoVersion2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 24</value>
+    <value>173, 31</value>
   </data>
   <data name="ServerPanelInfoVersion2.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -848,7 +848,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoStatus2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 24</value>
+    <value>169, 31</value>
   </data>
   <data name="BotInfoStatus2.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -881,7 +881,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoMessageReceived2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+    <value>122, 31</value>
   </data>
   <data name="BotInfoMessageReceived2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -914,7 +914,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoMessageSent2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+    <value>122, 31</value>
   </data>
   <data name="BotInfoMessageSent2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -947,7 +947,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoTime2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 24</value>
+    <value>122, 31</value>
   </data>
   <data name="BotInfoTime2.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1016,7 +1016,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="BotInfoQQ2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 24</value>
+    <value>194, 31</value>
   </data>
   <data name="BotInfoQQ2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2282,7 +2282,7 @@
     <value>305, 214</value>
   </data>
   <data name="SettingSereinDownload.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 24</value>
+    <value>130, 31</value>
   </data>
   <data name="SettingSereinDownload.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -2378,7 +2378,7 @@
     <value>10, 10, 10, 10</value>
   </data>
   <data name="SettingSereinPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
+    <value>58, 31</value>
   </data>
   <data name="SettingSereinPage.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2405,7 +2405,7 @@
     <value>230, 214</value>
   </data>
   <data name="SettingSereinAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
+    <value>58, 31</value>
   </data>
   <data name="SettingSereinAbout.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2462,7 +2462,7 @@
     <value>110, 214</value>
   </data>
   <data name="SettingSereinExtension.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 24</value>
+    <value>58, 31</value>
   </data>
   <data name="SettingSereinExtension.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>

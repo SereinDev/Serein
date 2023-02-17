@@ -21,11 +21,6 @@ namespace Serein.Core.JSPlugin
     internal static class JSEngine
     {
         /// <summary>
-        /// 转换专用JS引擎
-        /// </summary>
-        public static Engine Converter = new();
-
-        /// <summary>
         /// 初始化JS引擎
         /// </summary>
         /// <returns>JS引擎</returns>
@@ -34,11 +29,11 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 初始化JS引擎
         /// </summary>
-        /// <param name="executeByCommand">被命令执行</param>
+        /// <param name="isExecuteByCommand">被命令执行</param>
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool executeByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
+        public static Engine Init(bool isExecuteByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
@@ -66,7 +61,7 @@ namespace Serein.Core.JSPlugin
                         cfg.Strict = preLoadConfig.Strict;
                     }
                     cfg.CatchClrExceptions();
-                    if (executeByCommand)
+                    if (isExecuteByCommand)
                     {
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
                     }

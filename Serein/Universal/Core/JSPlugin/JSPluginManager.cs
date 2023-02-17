@@ -78,7 +78,7 @@ namespace Serein.Core.JSPlugin
                             File.WriteAllText(configPath, new PreLoadConfig().ToJson(Formatting.Indented));
                         }
                     }
-                    PluginDict.Add(@namespace, new Plugin(@namespace, config)
+                    PluginDict.Add(@namespace, new(@namespace, config)
                     {
                         File = file
                     });

@@ -23,9 +23,9 @@ namespace Serein.Ui
         }
 
         private void ServerPanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
-        
+
         private void ServerPanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RestartRequest();
-        
+
         private void ServerPanelControlKill_Click(object sender, EventArgs e)
         {
             ServerManager.Kill();

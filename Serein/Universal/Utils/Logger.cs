@@ -54,7 +54,11 @@ namespace Serein.Utils
                     bld.Append("null ");
                 }
             }
-            string line = bld.ToString().TrimEnd(' ');
+            string line = bld.ToString();
+            if (type != LogType.Server_Output)
+            {
+                line = line.TrimEnd(' ');
+            }
             switch (type)
             {
 #if CONSOLE
@@ -77,7 +81,6 @@ namespace Serein.Utils
                 case LogType.Plugin_Error:
                     WriteLine(3, line);
                     break;
-                case LogType.Null:
                 case LogType.Server_Output:
                     WriteLine(0, line);
                     break;
@@ -111,7 +114,7 @@ namespace Serein.Utils
                     Program.Ui.ServerPanelConsoleWebBrowser_Invoke(LogPreProcessing.EscapeLog(line));
                     break;
                 case LogType.Server_Output:
-                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(LogPreProcessing.ColorLine(line,Global.Settings.Server.OutputStyle));
+                    Program.Ui.ServerPanelConsoleWebBrowser_Invoke(LogPreProcessing.ColorLine(line, Global.Settings.Server.OutputStyle));
                     break;
                 case LogType.Server_Notice:
                     Program.Ui.ServerPanelConsoleWebBrowser_Invoke("<span style=\"color:#4B738D;font-weight: bold;\">[Serein]</span>" + LogPreProcessing.EscapeLog(line));

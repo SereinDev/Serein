@@ -227,8 +227,7 @@ namespace Serein.Core.Server
         /// 强制结束服务器
         /// </summary>
         /// <returns>强制结束结果</returns>
-        public static bool Kill()
-            => Kill(false);
+        public static bool Kill() => Kill(false);
 
         /// <summary>
         /// 强制结束服务器
@@ -293,10 +292,14 @@ namespace Serein.Core.Server
                 }
             }
 #else
-            else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48) && (
+            else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48)
+#if !NET6_0
+                 && (
                     !StartFileName.ToLowerInvariant().EndsWith(".bat") || (
                     StartFileName.ToLowerInvariant().EndsWith(".bat") &&
-                    Logger.MsgBox("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", "Serein", 1, 48))))
+                    Logger.MsgBox("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", "Serein", 1, 48)))
+#endif
+                )
             {
                 try
                 {

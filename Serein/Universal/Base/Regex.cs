@@ -46,25 +46,13 @@ namespace Serein.Base
         /// 作用域 - 文本
         /// </summary>
         [JsonIgnore]
-        public string Area_Text
-        {
-            get
-            {
-                return AreaArray[Area];
-            }
-        }
+        public string Area_Text => AreaArray[Area];
 
         /// <summary>
         /// 需要管理权限 - 文本
         /// </summary>
         [JsonIgnore]
-        public string IsAdmin_Text
-        {
-            get
-            {
-                return Area == 2 || Area == 3 ? IsAdmin ? "是" : "否" : "-";
-            }
-        }
+        public string IsAdmin_Text => Area == 2 || Area == 3 ? IsAdmin ? "是" : "否" : "-";
 
         /// <summary>
         /// 转为对象

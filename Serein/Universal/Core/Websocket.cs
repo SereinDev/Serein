@@ -159,7 +159,7 @@ namespace Serein.Core
             return Status;
         }
 
-        
+
         /// <summary>
         /// 发送数据包
         /// </summary>
@@ -173,7 +173,7 @@ namespace Serein.Core
             {
                 JObject textJObject = new()
                 {
-                    { "action", "send_private_msg"},
+                    { "action", "send_private_msg" },
                     {
                         "params",
                         new JObject

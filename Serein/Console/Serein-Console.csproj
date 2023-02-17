@@ -12,44 +12,24 @@
 		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
 		<RootNamespace>Serein</RootNamespace>
 	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugType>portable</DebugType>
 		<Optimize>False</Optimize>
+		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
 	</PropertyGroup>
+
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<Optimize>True</Optimize>
 		<DebugType>none</DebugType>
+		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-		<OutputPath>bin\x86\Debug\</OutputPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-		<OutputPath>bin\x86\Release\</OutputPath>
-	</PropertyGroup>
+
 	<ItemGroup>
 		<Compile Include="../Universal/**/*.cs" />
 		<EmbeddedResource Include="..\Universal\buildinfo.info" />
 	</ItemGroup>
-	<ItemGroup>
-		<WCFMetadata Include="Connected Services\" />
-	</ItemGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
-		<Prefer32Bit>false</Prefer32Bit>
-		<WarningLevel>9999</WarningLevel>
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
-		<DebugType>portable</DebugType>
-		<WarningLevel>9999</WarningLevel>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-		<DebugType>portable</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
-	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Costura.Fody" Version="5.7.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -78,7 +58,9 @@
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="Exists('c:\')">
+	<Target Name="PreBuild"
+		BeforeTargets="PreBuildEvent"
+		Condition="Exists('c:\')">
 		<Exec Command="cmd /k $(SolutionDir)\Serein\Universal\Init.bat" />
 	</Target>
 </Project>

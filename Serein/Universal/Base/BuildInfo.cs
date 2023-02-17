@@ -51,8 +51,7 @@ namespace Serein.Base
             get => string.IsNullOrEmpty(time) ? "-" : time;
             set => time = value;
         }
-
-        private string time = null;
+        private string time;
 
         /// <summary>
         /// 详细信息
@@ -63,6 +62,6 @@ namespace Serein.Base
             set => detail = value;
         }
 
-        private string detail = "-";
+        private string detail;
     }
 }

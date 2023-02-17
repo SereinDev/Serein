@@ -2,7 +2,7 @@
 {
     internal enum LogType
     {
-        Null,
+        Undefined,
         Info,
         Warn,
         Error,

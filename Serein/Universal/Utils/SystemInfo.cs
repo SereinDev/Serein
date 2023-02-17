@@ -1,4 +1,5 @@
 ﻿#if !UNIX
+using System;
 using System.Diagnostics;
 #endif
 using System.Net.NetworkInformation;
@@ -16,7 +17,14 @@ namespace Serein.Utils
         public static void Init()
         {
 #if !UNIX
-            Task.Run(() => Counter.NextValue());
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Counter = new("Processor", "% Processor Time", "_Total")
+                {
+                    MachineName = "."
+                };
+                Task.Run(() => Counter?.NextValue());
+            }
 #endif
             Info = OperatingSystemInfo.GetOperatingSystemInfo();
             OS = Info.Name;
@@ -35,8 +43,7 @@ namespace Serein.Utils
             RefreshTimer.Elapsed += (_, _) => UpdateNetSpeed();
             RefreshTimer.Start();
 #if !UNIX
-            RefreshTimer.Elapsed += (_, _) => CPUUsage = Counter.NextValue();
-            Counter.NextValue();
+            RefreshTimer.Elapsed += (_, _) => CPUUsage = Counter?.NextValue() ?? 0;
             Logger.Output(Base.LogType.Debug, "Loaded.");
 #endif
         }
@@ -93,10 +100,7 @@ namespace Serein.Utils
         /// <summary>
         /// CPU性能计数器
         /// </summary>
-        private static readonly PerformanceCounter Counter = new("Processor", "% Processor Time", "_Total")
-        {
-            MachineName = "."
-        };
+        private static PerformanceCounter Counter;
 #endif
 
         /// <summary>

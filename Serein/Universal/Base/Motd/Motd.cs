@@ -74,7 +74,7 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 获取成功
         /// </summary>
-        public bool IsSuccessful = false;
+        public bool IsSuccessful;
 
         private static readonly System.Text.RegularExpressions.Regex IPv4Patten = new(@"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))", System.Text.RegularExpressions.RegexOptions.Compiled);
 

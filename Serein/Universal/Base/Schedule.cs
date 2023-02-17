@@ -38,13 +38,7 @@ namespace Serein.Base
         /// 是否启用 - 文本
         /// </summary>
         [JsonIgnore]
-        public string Enable_Text
-        {
-            get
-            {
-                return Enable ? "启用" : "禁用";
-            }
-        }
+        public string Enable_Text => Enable ? "启用" : "禁用";
 
         /// <summary>
         /// 预计执行时间

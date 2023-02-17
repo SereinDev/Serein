@@ -14,11 +14,15 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 		<Optimize>False</Optimize>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 		<DebugType>none</DebugType>
+		<Optimize>True</Optimize>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,27 +31,6 @@
 		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\console.html" />
 		<EmbeddedResource Include="..\Universal\Sources\ConsoleHtml\preset.css" />
 	</ItemGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
-		<WarningLevel>9999</WarningLevel>
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
-		<DebugType>portable</DebugType>
-		<WarningLevel>9999</WarningLevel>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-		<DebugType>portable</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Costura.Fody" Version="5.7.0">

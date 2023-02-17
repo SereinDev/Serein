@@ -11,7 +11,7 @@ namespace Serein.Core.JSPlugin
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
-        private string Name { get; set; }
+        private readonly string Name;
 
 #pragma warning disable IDE1006
         public void info(object line)

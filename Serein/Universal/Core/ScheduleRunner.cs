@@ -30,7 +30,7 @@ namespace Serein.Core
         {
             foreach (Schedule schedule in Global.Schedules)
             {
-                if (!schedule.IsRunning && DateTime.Compare(schedule.NextTime, DateTime.Now) <= 0)
+                if (!schedule.IsRunning && schedule.Enable && DateTime.Compare(schedule.NextTime, DateTime.Now) <= 0)
                 {
                     schedule.Run();
                 }

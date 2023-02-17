@@ -11,23 +11,14 @@
 		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
 		<DebugType>portable</DebugType>
 		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-		<DebugType>portable</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<DebugType>none</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
-		<DebugType>none</DebugType>
+		<Optimize>True</Optimize>
 		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
 	</PropertyGroup>
 

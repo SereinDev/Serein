@@ -83,6 +83,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="type">事件名称</param>
         /// <param name="args">参数</param>
+        /// <returns>是否拦截</returns>
         public static bool Trigger(EventType type, params object[] args)
         {
             if (JSPluginManager.PluginDict.Count == 0)
@@ -99,6 +100,10 @@ namespace Serein.Core.JSPlugin
                     CancellationTokenSource tokenSource = new();
                     foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
                     {
+                        if (!plugin.HasListenedOn(type))
+                        {
+                            continue;
+                        }
                         tasks.Add(Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
                     }
                     if (tasks.Count > 0)
@@ -130,7 +135,7 @@ namespace Serein.Core.JSPlugin
             }
             long timerID = CurrentID;
             CurrentID++;
-            Logger.Output(LogType.Debug, "Interval:", interval.ToString(), "AutoReset:", autoReset, "ID:", timerID);
+            Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
             System.Timers.Timer timer = new((double)interval.ToObject())
             {
                 AutoReset = autoReset,
@@ -167,7 +172,7 @@ namespace Serein.Core.JSPlugin
             };
             timer.Start();
             JSPluginManager.Timers.Add(timerID, timer);
-            return JsValue.FromObject(JSEngine.Converter, timerID);
+            return timerID;
         }
 
         /// <summary>
