@@ -14,15 +14,15 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 		<Optimize>False</Optimize>
 		<DebugType>portable</DebugType>
+		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-		<DebugType>none</DebugType>
+		<DebugType>embedded</DebugType>
 		<Optimize>True</Optimize>
+		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

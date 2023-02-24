@@ -22,6 +22,7 @@
         SereinCrash,
 
         PluginsReload,
+        PluginsLoaded,
 
         BindingSucceed,
         BindingFailDueToOccupation,

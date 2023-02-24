@@ -190,13 +190,13 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getRegexs",
                 new Func<List<Regex>>(() => Global.RegexList));
             engine.SetValue("serein_addRegex",
-                new Func<string, int, bool, string, string, bool>(JSFunc.AddRegex));
+                new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
             engine.SetValue("serein_editRegex",
-                new Func<int, string, int, bool, string, string, bool>(JSFunc.EditRegex));
+                new Func<int, string, int, bool, string, string, long[], bool>(JSFunc.EditRegex));
             engine.SetValue("serein_removeRegex",
                 new Func<int, bool>(JSFunc.RemoveRegex));
             engine.SetValue("serein_import",
-                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.ContainsKey(key) ? JSPluginManager.VariablesExportedDict[key] : JsValue.Undefined));
+                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
@@ -258,7 +258,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="code">代码</param>
         /// <returns>错误信息</returns>
-        public static Engine Run(this Engine engine, string code, out string exceptionMessage)
+        public static void Run(this Engine engine, string code, out string exceptionMessage)
         {
             try
             {
@@ -275,7 +275,6 @@ namespace Serein.Core.JSPlugin
                 Logger.Output(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
-            return engine;
         }
     }
 }

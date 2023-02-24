@@ -1,10 +1,8 @@
-using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serein.Base;
 using Serein.Core;
 using Serein.Extensions;
-using Serein.Base;
-using Serein.Properties;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -67,7 +65,15 @@ namespace Serein.Utils
         {
             ReadRegex();
             ReadMember();
-            ReadSchedule();
+            if (File.Exists(Path.Combine("data", "task.json")))
+            {
+                ReadSchedule(Path.Combine("data", "task.json"));
+                File.Delete(Path.Combine("data", "task.json"));
+            }
+            else
+            {
+                ReadSchedule();
+            }
             ReadGroupCache();
             ReadSettings();
             SaveSettings();
@@ -81,9 +87,9 @@ namespace Serein.Utils
         {
             CreateDirectory("data");
             filename ??= Path.Combine("data", "regex.json");
-            if (File.Exists(filename))
+            if (!File.Exists(filename)) { return; }
+            using (StreamReader streamReader = new(filename, Encoding.UTF8))
             {
-                StreamReader streamReader = new(filename, Encoding.UTF8);
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
@@ -123,8 +129,6 @@ namespace Serein.Utils
                         }
                     }
                 }
-                streamReader.Close();
-                streamReader.Dispose();
             }
             SaveRegex();
         }
@@ -224,9 +228,9 @@ namespace Serein.Utils
         {
             CreateDirectory("data");
             filename ??= Path.Combine("data", "schedule.json");
-            if (File.Exists(filename))
+            if (!File.Exists(filename)) { return; }
+            using (StreamReader streamReader = new(filename, Encoding.UTF8))
             {
-                StreamReader streamReader = new(filename, Encoding.UTF8);
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
                     string line;
@@ -248,15 +252,17 @@ namespace Serein.Utils
                     if (!string.IsNullOrEmpty(text))
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject["type"].ToString().ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject["type"].ToString().ToUpperInvariant() == "TASK")
+                        if (jsonObject.TryGetString("type").ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject.TryGetString("type").ToString().ToUpperInvariant() == "TASK")
                         {
                             Global.Schedules = ((JArray)jsonObject["data"]).ToObject<List<Schedule>>();
                         }
+                        else
+                        {
+                            Logger.MsgBox("不支持导入此文件", "Serein", 0, 48);
+                        }
                     }
                 }
-                streamReader.Close();
-                streamReader.Dispose();
             }
             SaveSchedule();
         }

@@ -123,7 +123,7 @@ namespace Serein.Ui
                     {
                         DialogResult dialogResult = MessageBox.Show(
                             this,
-                            $"确定要从{filename}导入正则记录并合并吗？\n否则将覆盖原有文件\n二者均将覆盖原有文件且不可逆",
+                            $"确定要从{filename}导入正则记录吗？（将覆盖原有文件且不可逆）\n“是” - 将导入并将所有导入项添加至末尾\n“否” - 将覆盖原有文件\n“取消” - 取消导入操作",
                             "Serein",
                             MessageBoxButtons.YesNoCancel,
                             MessageBoxIcon.Warning

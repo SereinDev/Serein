@@ -56,69 +56,8 @@ namespace Serein.Core.JSPlugin
                 IsLoading = false;
                 return;
             }
-            string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
-            foreach (string file in files)
-            {
-                if (file.ToLowerInvariant().EndsWith(".module.js")) { continue; }
-                string @namespace = Path.GetFileNameWithoutExtension(file);
-                Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
-                try
-                {
-                    PreLoadConfig config = null;
-                    if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
-                    {
-                        string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
-                        if (File.Exists(configPath))
-                        {
-                            config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
-                            File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
-                        }
-                        else
-                        {
-                            File.WriteAllText(configPath, new PreLoadConfig().ToJson(Formatting.Indented));
-                        }
-                    }
-                    PluginDict.Add(@namespace, new(@namespace, config)
-                    {
-                        File = file
-                    });
-                    PluginDict[@namespace].Engine = PluginDict[@namespace].Engine.Run(File.ReadAllText(file), out string exceptionMessage);
-                    if (!string.IsNullOrEmpty(exceptionMessage))
-                    {
-                        Logger.Output(LogType.Plugin_Error, exceptionMessage);
-                        PluginDict[@namespace].Dispose();
-                    }
-                    else
-                    {
-                        PluginDict[@namespace].Available = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.Output(LogType.Plugin_Error, e.Message);
-                    Logger.Output(LogType.Debug, e);
-                }
-            }
-            List<string> failedFiles = new();
-            PluginDict.Keys.ToList().ForEach((key) =>
-            {
-                if (PluginDict.TryGetValue(key, out Plugin plugin) && !plugin.Available)
-                {
-                    failedFiles.Add(Path.GetFileName(plugin.File));
-                }
-            });
-            if (files.Length != 0)
-            {
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{files.Length}个插件，其中{failedFiles.Count}个加载失败");
-                if (failedFiles.Count > 0)
-                {
-                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", failedFiles));
-                }
-            }
-            else
-            {
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://serein.cc/Extension/");
-            }
+            ReadAll();
+            SummaryAll();
             Task.Run(() =>
             {
                 5000.ToSleep();
@@ -134,25 +73,101 @@ namespace Serein.Core.JSPlugin
         }
 
         /// <summary>
+        /// 输出加载结果
+        /// </summary>
+        private static void SummaryAll()
+        {
+            List<string> failedFiles = new();
+            PluginDict.Keys.ToList().ForEach((key) =>
+            {
+                if (PluginDict.TryGetValue(key, out Plugin plugin) && !plugin.Available)
+                {
+                    failedFiles.Add(Path.GetFileName(plugin.File));
+                }
+            });
+            if (PluginDict.Count != 0)
+            {
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
+                if (failedFiles.Count > 0)
+                {
+                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", failedFiles));
+                }
+                JSFunc.Trigger(EventType.PluginsLoaded);
+            }
+            else
+            {
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://serein.cc/Extension/");
+            }
+        }
+
+        /// <summary>
+        /// 读取所有插件
+        /// </summary>
+        private static void ReadAll()
+        {
+            string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
+            foreach (string file in files)
+            {
+                if (file.ToLowerInvariant().EndsWith(".module.js")) { continue; }
+                string @namespace = Path.GetFileNameWithoutExtension(file);
+                Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+                try
+                {
+                    PreLoadConfig config = new();
+                    if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
+                    {
+                        string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
+                        if (File.Exists(configPath))
+                        {
+                            config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
+                        }
+                        File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
+                    }
+                    Plugin plugin = new(@namespace, config)
+                    {
+                        File = file
+                    };
+                    PluginDict.Add(@namespace, plugin);
+                    plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
+                    if (!string.IsNullOrEmpty(exceptionMessage))
+                    {
+                        Logger.Output(LogType.Plugin_Error, exceptionMessage);
+                        plugin.Dispose();
+                    }
+                    else
+                    {
+                        plugin.Available = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
+                    Logger.Output(LogType.Debug, e);
+                }
+            }
+        }
+
+        /// <summary>
         /// 重新加载插件
         /// </summary>
         public static void Reload()
         {
-            if (!IsLoading)
+            if (IsLoading)
             {
-                Task.Run(() =>
-                {
-                    Logger.Output(LogType.Plugin_Clear);
-                    JSFunc.ClearAllTimers();
-                    JSFunc.Trigger(EventType.PluginsReload);
-                    CommandVariablesDict.Clear();
-                    VariablesExportedDict.Clear();
-                    PluginDict.Keys.ToList().ForEach((Key) => PluginDict[Key].Dispose());
-                    PluginDict.Clear();
-                    JSFunc.CurrentID = 0;
-                    Load();
-                });
+                return;
             }
+            Task.Run(() =>
+            {
+                Logger.Output(LogType.Plugin_Clear);
+                JSFunc.ClearAllTimers();
+                JSFunc.Trigger(EventType.PluginsReload);
+                CommandVariablesDict.Clear();
+                VariablesExportedDict.Clear();
+                PluginDict.Values.ToList().ForEach((plugin) => plugin.Dispose());
+                PluginDict.Clear();
+                JSFunc.CurrentID = 0;
+                Load();
+            });
         }
     }
 }

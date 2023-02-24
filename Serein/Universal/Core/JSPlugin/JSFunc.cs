@@ -204,8 +204,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static void ClearAllTimers()
         {
-            IList<long> list = JSPluginManager.Timers.Keys.ToArray();
-            foreach (long ID in list)
+            foreach (long ID in JSPluginManager.Timers.Keys)
             {
                 ClearTimer(ID);
             }
@@ -243,7 +242,7 @@ namespace Serein.Core.JSPlugin
         /// 添加正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool AddRegex(string exp, int area, bool needAdmin, string command, string remark)
+        public static bool AddRegex(string exp, int area, bool needAdmin, string command, string remark, long[] ignored)
         {
             if (exp.TestRegex() &&
                 area <= 4 && area >= 0 &&
@@ -257,7 +256,8 @@ namespace Serein.Core.JSPlugin
                         Area = area,
                         IsAdmin = needAdmin,
                         Command = command,
-                        Remark = remark ?? string.Empty
+                        Remark = remark ?? string.Empty,
+                        Ignored = ignored ?? Array.Empty<long>()
                     });
                 }
                 return true;
@@ -269,7 +269,7 @@ namespace Serein.Core.JSPlugin
         /// 修改正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool EditRegex(int index, string exp, int area, bool needAdmin, string command, string remark)
+        public static bool EditRegex(int index, string exp, int area, bool needAdmin, string command, string remark, long[] ignored)
         {
             if (index < Global.RegexList.Count &&
                 index >= 0 &&
@@ -286,7 +286,8 @@ namespace Serein.Core.JSPlugin
                         Area = area,
                         IsAdmin = needAdmin,
                         Command = command ?? selected.Command,
-                        Remark = remark ?? selected.Remark
+                        Remark = remark ?? selected.Remark,
+                        Ignored = ignored ?? selected.Ignored
                     };
                 }
                 return true;
@@ -324,9 +325,9 @@ namespace Serein.Core.JSPlugin
             {
                 return false;
             }
-            if (JSPluginManager.CommandVariablesDict.ContainsKey(key))
+            if (JSPluginManager.CommandVariablesDict.TryGetValue(key, out string variable))
             {
-                JSPluginManager.CommandVariablesDict[key] = value;
+                variable = value;
             }
             else
             {
@@ -339,20 +340,20 @@ namespace Serein.Core.JSPlugin
         /// 导出变量
         /// </summary>
         /// <param name="key">键</param>
-        /// <param name="jsValue">值</param>
-        public static void Export(string key, JsValue jsValue)
+        /// <param name="newJsValue">值</param>
+        public static void Export(string key, JsValue newJsValue)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentException(nameof(key));
             }
-            if (JSPluginManager.VariablesExportedDict.ContainsKey(key))
+            if (JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue))
             {
-                JSPluginManager.VariablesExportedDict[key] = jsValue;
+                jsValue = newJsValue;
             }
             else
             {
-                JSPluginManager.VariablesExportedDict.Add(key, jsValue);
+                JSPluginManager.VariablesExportedDict.Add(key, newJsValue);
             }
         }
     }

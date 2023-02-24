@@ -265,7 +265,7 @@ namespace Serein.Core.Server
             else
             {
                 DateTime nowTime = DateTime.Now;
-                if ((nowTime - LastKillTime).TotalSeconds < 5)
+                if ((nowTime - LastKillTime).TotalSeconds < 2)
                 {
                     LastKillTime = nowTime;
                     try
@@ -288,7 +288,7 @@ namespace Serein.Core.Server
                 else
                 {
                     LastKillTime = nowTime;
-                    Logger.Output(LogType.Warn, "请在5s内再次执行强制结束服务器（Ctrl+C 或输入“serein s k”）以确认此操作");
+                    Logger.Output(LogType.Warn, "请在2s内再次执行强制结束服务器（Ctrl+C 或输入“serein s k”）以确认此操作");
                 }
             }
 #else
@@ -385,7 +385,7 @@ namespace Serein.Core.Server
 
         /// <summary>
         /// 输出处理
-        /// </summary>
+        /// /// </summary>
         private static void SortOutputHandler(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
@@ -437,7 +437,6 @@ namespace Serein.Core.Server
                             Matcher.Process(lineFiltered);
                         }
                     }
-
                 }
                 IO.ConsoleLog(lineFiltered);
             }

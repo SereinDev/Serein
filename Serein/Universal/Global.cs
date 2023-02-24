@@ -13,6 +13,11 @@ namespace Serein
         public static readonly string PATH = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
+        /// 启动时间
+        /// </summary>
+        public static DateTime StartTime = DateTime.Now;
+
+        /// <summary>
         /// 版本号
         /// </summary>
         public const string VERSION = "v1.3.4";

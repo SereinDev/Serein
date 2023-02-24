@@ -61,7 +61,7 @@ namespace Serein.Core
         /// </summary>
         /// <param name="inputType">输入类型</param>
         /// <param name="command">命令</param>
-        /// <param name="json">消息JSON对象</param>
+        /// <param name="jObject">消息JSON对象</param>
         /// <param name="msgMatch">消息匹配对象</param>
         /// <param name="userID">用户ID</param>
         /// <param name="groupID">群聊ID</param>
@@ -69,7 +69,7 @@ namespace Serein.Core
         public static void Run(
             int inputType,
             string command,
-            JObject json = null,
+            JObject jObject = null,
             Match msgMatch = null,
             long userID = -1,
             long groupID = -1,
@@ -95,12 +95,32 @@ namespace Serein.Core
                 groupID = Global.Settings.Bot.GroupList[0];
             }
             Base.CommandType type = GetType(command);
-            if (type == Base.CommandType.Invalid || ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd))
+            if (type == Base.CommandType.Invalid ||
+                ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd))
             {
                 return;
             }
             string value = GetValue(command, msgMatch);
-            value = ApplyVariables(value, json, disableMotd);
+            value = ApplyVariables(value, jObject, disableMotd);
+            ExecuteCommand(type, inputType, command, value, groupID, userID, jObject);
+            if (inputType == 1 && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
+            {
+                Binder.Update(jObject, userID);
+            }
+        }
+
+        /// <summary>
+        /// 执行指定的命令
+        /// </summary>
+        private static void ExecuteCommand(
+            Base.CommandType type,
+            int inputType,
+            string command,
+            string value,
+            long groupID,
+            long userID,
+            JObject jObject)
+        {
             switch (type)
             {
                 case Base.CommandType.ExecuteCmd:
@@ -141,7 +161,7 @@ namespace Serein.Core
                 case Base.CommandType.Bind:
                     if ((inputType == 1 || inputType == 4) && groupID != -1)
                     {
-                        Binder.Bind(json, value, userID, groupID);
+                        Binder.Bind(jObject, value, userID, groupID);
                     }
                     break;
                 case Base.CommandType.Unbind:
@@ -180,12 +200,12 @@ namespace Serein.Core
                         string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
                         Task.Run(() =>
                         {
-                            if (JSPluginManager.PluginDict.ContainsKey(key))
+                            if (JSPluginManager.PluginDict.TryGetValue(key, out Plugin plugin))
                             {
                                 string e;
-                                lock (JSPluginManager.PluginDict[key].Engine)
+                                lock (plugin.Engine)
                                 {
-                                    JSPluginManager.PluginDict[key].Engine = JSPluginManager.PluginDict[key].Engine.Run(value, out e);
+                                    plugin.Engine.Run(value, out e);
                                 }
                                 if (!string.IsNullOrEmpty(e))
                                 {
@@ -201,10 +221,6 @@ namespace Serein.Core
                 default:
                     Logger.Output(Base.LogType.Debug, "[Unknown]", value);
                     break;
-            }
-            if (inputType == 1 && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
-            {
-                Binder.Update(json, userID);
             }
         }
 
@@ -310,7 +326,7 @@ namespace Serein.Core
             bool serverStatus = ServerManager.Status;
             DateTime currentTime = DateTime.Now;
             text = Patterns.Variable.Replace(text, (match) =>
-                match.Groups[1].Value.ToLowerInvariant() switch
+                (match.Groups[1].Value.ToLowerInvariant() switch
                 {
                     #region 时间
                     "year" => currentTime.Year.ToString(),
@@ -382,7 +398,7 @@ namespace Serein.Core
                     #endregion
 
                     _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
-                }
+                }) ?? string.Empty
             );
             text = Patterns.GameID.Replace(text,
                 (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value)));
@@ -425,7 +441,7 @@ namespace Serein.Core
             /// <summary>
             /// ID正则
             /// </summary>
-            public static readonly Regex ID = new(@"%ID:(.+)%", RegexOptions.Compiled);
+            public static readonly Regex ID = new(@"%ID:([^%]+?)%", RegexOptions.Compiled);
         }
     }
 }

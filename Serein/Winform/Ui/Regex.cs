@@ -190,7 +190,7 @@ namespace Serein.Ui
 
         private void SaveRegex()
         {
-            List<Regex> regexItems = new List<Regex>();
+            List<Regex> regexItems = new();
             foreach (ListViewItem listViewItem in RegexList.Items)
             {
                 regexItems.Add(new Regex

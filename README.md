@@ -25,11 +25,11 @@
 </p>
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板
-- **介绍页：<https://serein.cc/>**
+- **官网：<https://serein.cc/>**
 - **下载最新版：<https://github.com/Zaitonn/Serein/releases/latest>**
 - Minebbs：<https://www.minebbs.com/resources/serein.4169/>
 
-## 运行环境
+## 建议运行环境
 
 Win7或WinServer2012以上
 
@@ -55,6 +55,8 @@ Win7或WinServer2012以上
 
 | Supporters                                                     | 发电金额 | 日期      |
 | -------------------------------------------------------------- | -------: | --------- |
+| [@SOURsLEMONS](https://github.com/SOURsLEMONS)                 |  ￥ 10.00 | 2023.2.1  |
+| 滴滴冉滴滴                                                     |  ￥ 20.00 | 2023.2.1  |
 | [c设阿森_Asen](https://q1.qlogo.cn/g?nk=1549033363&b=qq&s=640) |  $ 10.00 | 2022.7.25 |
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.17 |
 | [binggggg](https://www.minebbs.com/members/binggggg.12096/)    |   ￥20.00 | 2022.7.10 |

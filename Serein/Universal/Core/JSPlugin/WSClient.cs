@@ -72,7 +72,7 @@ namespace Serein.Core.JSPlugin
 
         private bool Check(JsValue jsValue)
         {
-            if (JSPluginManager.PluginDict[Namespace].Engine == null)
+            if (JSPluginManager.PluginDict[Namespace].Engine == null || !JSPluginManager.PluginDict[Namespace].Available)
             {
                 Dispose();
                 return false;

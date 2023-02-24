@@ -111,7 +111,7 @@ namespace Serein.Core.JSPlugin
         /// JS引擎
         /// </summary>
         [JsonIgnore]
-        public Engine Engine;
+        public Engine Engine { get; private set; }
 
         /// <summary>
         /// WebSocket列表
@@ -169,6 +169,7 @@ namespace Serein.Core.JSPlugin
                 case EventType.ReceivePacket:
                 case EventType.SereinClose:
                 case EventType.PluginsReload:
+                case EventType.PluginsLoaded:
                     if (EventDict.ContainsKey(type))
                     {
                         EventDict[type] = jsValue;
@@ -191,7 +192,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="args">参数</param>
         public bool Trigger(EventType type, CancellationToken token, params object[] args)
         {
-            if (!HasListenedOn(type))
+            if (!Available || Engine is null || !HasListenedOn(type))
             {
                 return false;
             }
@@ -202,15 +203,16 @@ namespace Serein.Core.JSPlugin
                 {
                     case EventType.ServerStart:
                     case EventType.SereinClose:
+                    case EventType.PluginsLoaded:
                     case EventType.PluginsReload:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             Engine.Invoke(EventDict[type]);
                         }
                         break;
                     case EventType.ServerStop:
                     case EventType.ServerSendCommand:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             Engine.Invoke(EventDict[type], args[0]);
                         }
@@ -218,30 +220,30 @@ namespace Serein.Core.JSPlugin
                     case EventType.ServerOutput:
                     case EventType.ServerOriginalOutput:
                     case EventType.ReceivePacket:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0]));
                         }
                     case EventType.GroupIncrease:
                     case EventType.GroupDecrease:
                     case EventType.GroupPoke:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             Engine.Invoke(EventDict[type], args[0], args[1]);
                         }
                         break;
                     case EventType.ReceiveGroupMessage:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
                         }
                     case EventType.ReceivePrivateMessage:
-                        lock (JSPluginManager.PluginDict[Namespace].Engine)
+                        lock (Engine)
                         {
                             return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2]));
                         }
                     default:
-                        Logger.Output(LogType.Plugin_Error, $"{Namespace}运行了了一个不支持的事件：", type);
+                        Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", "触发了一个不支持的事件：", type);
                         break;
                 }
             }
