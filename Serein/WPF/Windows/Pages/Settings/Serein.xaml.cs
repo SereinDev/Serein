@@ -20,8 +20,9 @@ namespace Serein.Windows.Pages.Settings
         private void Load()
         {
             UseDarkTheme.IsChecked = Global.Settings.Serein.UseDarkTheme;
-            AutoUpdate.IsChecked = Global.Settings.Serein.AutoUpdate;
             EnableGetUpdate.IsChecked = Global.Settings.Serein.EnableGetUpdate;
+            AutoUpdate.IsChecked = Global.Settings.Serein.AutoUpdate && Global.Settings.Serein.EnableGetUpdate;
+            AutoUpdate.IsEnabled = EnableGetUpdate.IsChecked ?? false;
             ThemeFollowSystem.IsChecked = Global.Settings.Serein.ThemeFollowSystem;
             MaxCacheLines.Value = Global.Settings.Serein.MaxCacheLines;
             Version.Text = "当前版本：" + Global.VERSION;
@@ -30,9 +31,10 @@ namespace Serein.Windows.Pages.Settings
 
         private void EnableGetUpdate_Click(object sender, RoutedEventArgs e)
         {
+            AutoUpdate.IsEnabled = EnableGetUpdate.IsChecked ?? false;
+            AutoUpdate.IsChecked = (AutoUpdate.IsChecked ?? false) ? EnableGetUpdate.IsChecked ?? false : false;
             Global.Settings.Serein.EnableGetUpdate = EnableGetUpdate.IsChecked ?? false;
-            AutoUpdate.IsEnabled = Global.Settings.Serein.EnableGetUpdate;
-            AutoUpdate.IsChecked = (AutoUpdate.IsChecked ?? false) ? Global.Settings.Serein.EnableGetUpdate : false;
+            Global.Settings.Serein.AutoUpdate = AutoUpdate.IsChecked ?? false;
         }
 
         private void AutoUpdate_Click(object sender, RoutedEventArgs e)

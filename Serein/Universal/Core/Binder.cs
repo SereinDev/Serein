@@ -178,15 +178,12 @@ namespace Serein.Core
         /// <param name="userID">用户ID</param>
         public static void Update(JObject jsonObject, long userID)
         {
-            if (Global.MemberDict.ContainsKey(userID))
+            if (Global.MemberDict.TryGetValue(userID, out Member member))
             {
                 Logger.Output(LogType.Debug, jsonObject["sender"]);
-                lock (Global.MemberDict)
-                {
-                    Global.MemberDict[userID].Nickname = jsonObject["sender"]["nickname"].ToString();
-                    Global.MemberDict[userID].Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
-                    Global.MemberDict[userID].Card = jsonObject["sender"]["card"].ToString();
-                }
+                member.Nickname = jsonObject["sender"]["nickname"].ToString();
+                member.Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
+                member.Card = jsonObject["sender"]["card"].ToString();
             }
         }
     }

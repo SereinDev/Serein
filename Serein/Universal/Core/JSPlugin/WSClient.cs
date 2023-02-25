@@ -63,13 +63,17 @@ namespace Serein.Core.JSPlugin
                 null,
                 null
                 );
-            _WebSocket.Opened += (_, _) => Trigger(onopen, "Opened");
-            _WebSocket.Closed += (_, _) => Trigger(onclose, "Closed");
-            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, "MessageReceived", e);
-            _WebSocket.Error += (_, e) => Trigger(onerror, "Opened", e);
+            _WebSocket.Opened += (_, _) => Trigger(onopen, WSEventType.Opened);
+            _WebSocket.Closed += (_, _) => Trigger(onclose, WSEventType.Closed);
+            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, WSEventType.MessageReceived, e);
+            _WebSocket.Error += (_, e) => Trigger(onerror, WSEventType.Error, e);
             JSPluginManager.PluginDict[@namespace].WSClients.Add(this);
         }
 
+        /// <summary>
+        /// 判断事件是否有效
+        /// </summary>
+        /// <param name="jsValue">事件函数</param>
         private bool Check(JsValue jsValue)
         {
             if (JSPluginManager.PluginDict[Namespace].Engine == null || !JSPluginManager.PluginDict[Namespace].Available)
@@ -88,9 +92,9 @@ namespace Serein.Core.JSPlugin
         /// 触发事件
         /// </summary>
         /// <param name="jsValue">事件</param>
-        /// <param name="name">名称</param>
+        /// <param name="eventType">名称</param>
         /// <param name="args">参数</param>
-        private void Trigger(JsValue jsValue, string name, object args = null)
+        private void Trigger(JsValue jsValue, WSEventType eventType, object args = null)
         {
             if (!Check(jsValue))
             {
@@ -100,19 +104,19 @@ namespace Serein.Core.JSPlugin
             {
                 lock (JSPluginManager.PluginDict[Namespace].Engine)
                 {
-                    switch (name)
+                    switch (eventType)
                     {
-                        case "Opened":
-                        case "Closed":
+                        case WSEventType.Opened:
+                        case WSEventType.Closed:
                             JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue);
                             break;
-                        case "MessageReceived":
+                        case WSEventType.MessageReceived:
                             if (args is MessageReceivedEventArgs e1 && e1 != null)
                             {
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e1.Message);
                             }
                             break;
-                        case "Error":
+                        case WSEventType.Error:
                             if (args is ErrorEventArgs e2 && e2 != null)
                             {
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
@@ -124,8 +128,8 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.GetFullMsg();
-                Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{name}事件调用失败：", message);
-                Logger.Output(Base.LogType.Debug, $"{name}事件调用失败\r\n", e);
+                Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
+                Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
         }
 
@@ -156,5 +160,13 @@ namespace Serein.Core.JSPlugin
         /// <param name="msg"></param>
         public void send(string msg) => _WebSocket.Send(msg);
 #pragma warning restore IDE1006
+
+        private enum WSEventType
+        {
+            Opened,
+            Closed,
+            MessageReceived,
+            Error
+        }
     }
 }

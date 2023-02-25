@@ -42,6 +42,7 @@ namespace Serein.Ui
             SettingBotEnbaleParseAt.Checked = Global.Settings.Bot.EnbaleParseAt;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
             SettingSereinAutoUpdate.Checked = Global.Settings.Serein.AutoUpdate;
+            SettingSereinAutoUpdate.Enabled = SettingSereinEnableGetUpdate.Checked;
             SettingSereinEnableDPIAware.Checked = Global.Settings.Serein.DPIAware;
             if (!Global.Settings.Serein.DevelopmentTool.EnableDebug)
             {
@@ -112,8 +113,13 @@ namespace Serein.Ui
 
         #endregion
         #region Serein
-        private void SettingSereinEnableGetUpdate_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+        private void SettingSereinEnableGetUpdate_Click(object sender, EventArgs e)
+        {
+            Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
+            SettingSereinAutoUpdate.Checked = SettingSereinEnableGetUpdate.Checked ? SettingSereinAutoUpdate.Checked : false;
+            SettingSereinAutoUpdate.Enabled = SettingSereinEnableGetUpdate.Checked;
+            Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
+        }
         private void SettingSereinAutoUpdate_Click(object sender, EventArgs e)
             => Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
         private void SettingSereinAbout_Click(object sender, EventArgs e)

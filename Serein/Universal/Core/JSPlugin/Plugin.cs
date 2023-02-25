@@ -56,7 +56,7 @@ namespace Serein.Core.JSPlugin
         [JsonIgnore]
         public string Name
         {
-            get => string.IsNullOrEmpty(name) ? "-" : name;
+            get => name == null ? "-" : name;
             set => name = value;
         }
 
@@ -69,7 +69,7 @@ namespace Serein.Core.JSPlugin
         [JsonIgnore]
         public string Version
         {
-            get => string.IsNullOrEmpty(version) ? "-" : version;
+            get => version == null ? "-" : version;
             set => version = value;
         }
 
@@ -82,7 +82,7 @@ namespace Serein.Core.JSPlugin
         [JsonIgnore]
         public string Author
         {
-            get => string.IsNullOrEmpty(author) ? "-" : author;
+            get => author == null ? "-" : author;
             set => author = value;
         }
 
@@ -95,7 +95,7 @@ namespace Serein.Core.JSPlugin
         [JsonIgnore]
         public string Description
         {
-            get => string.IsNullOrEmpty(description) ? "-" : description;
+            get => description == null ? "-" : description;
             set => description = value;
         }
 

@@ -1,10 +1,13 @@
-﻿using Jint.Native;
+﻿using Jint;
+using Jint.Native;
 using Jint.Runtime;
+using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Extensions;
 using Serein.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,17 +38,14 @@ namespace Serein.Core.JSPlugin
             string description
             )
         {
-            if (@namespace == null || !JSPluginManager.PluginDict.ContainsKey(@namespace))
+            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin plugin))
             {
                 throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
             }
-            lock (JSPluginManager.PluginDict)
-            {
-                JSPluginManager.PluginDict[@namespace].Name = name;
-                JSPluginManager.PluginDict[@namespace].Version = version;
-                JSPluginManager.PluginDict[@namespace].Author = author;
-                JSPluginManager.PluginDict[@namespace].Description = description;
-            }
+            plugin.Name = name;
+            plugin.Version = version;
+            plugin.Author = author;
+            plugin.Description = description;
             return @namespace;
         }
 
@@ -204,7 +204,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static void ClearAllTimers()
         {
-            foreach (long ID in JSPluginManager.Timers.Keys)
+            foreach (long ID in JSPluginManager.Timers.Keys.ToArray())
             {
                 ClearTimer(ID);
             }
@@ -355,6 +355,37 @@ namespace Serein.Core.JSPlugin
             {
                 JSPluginManager.VariablesExportedDict.Add(key, newJsValue);
             }
+        }
+
+        /// <summary>
+        /// 设置预加载配置
+        /// </summary>
+        public static void SetPreLoadConfig(
+            string @namespace,
+            JsValue assemblies,
+            JsValue allowGetType,
+            JsValue allowOperatorOverloading,
+            JsValue allowSystemReflection,
+            JsValue allowWrite,
+            JsValue strict)
+        {
+            if (string.IsNullOrEmpty(@namespace))
+            {
+                return;
+            }
+            IO.CreateDirectory(Path.Combine("plugins", @namespace));
+            File.WriteAllText(
+                Path.Combine("plugins", @namespace, "PreLoadConfig.json"),
+                JsonConvert.SerializeObject(new PreLoadConfig()
+                {
+                    Assemblies = assemblies.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray(),
+                    AllowGetType = allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
+                    AllowOperatorOverloading = allowOperatorOverloading?.IsBoolean() == true ? allowOperatorOverloading.AsBoolean() : true,
+                    AllowSystemReflection = allowSystemReflection?.IsBoolean() == true ? allowSystemReflection.AsBoolean() : false,
+                    AllowWrite = allowWrite?.IsBoolean() == true ? allowWrite.AsBoolean() : true,
+                    Strict = strict?.IsBoolean() == true ? strict.AsBoolean() : false
+                }, Formatting.Indented));
+            Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
     }
 }

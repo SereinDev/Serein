@@ -93,6 +93,8 @@ namespace Serein.Core.JSPlugin
                     new Func<string, JsValue, bool>(JSFunc.SetVariable));
                 engine.SetValue("serein_export",
                     new Action<string, JsValue>(JSFunc.Export));
+                engine.SetValue("serein_setPreLoadConfig",
+                    new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict)));
                 engine.SetValue("setTimeout",
                     new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
                 engine.SetValue("setInterval",
@@ -114,6 +116,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_setListener", JsValue.Undefined);
                 engine.SetValue("serein_setVariable", JsValue.Undefined);
                 engine.SetValue("serein_export", JsValue.Undefined);
+                engine.SetValue("serein_setPreLoadConfig", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
                 engine.SetValue("clearTimeout", JsValue.Undefined);
@@ -135,6 +138,8 @@ namespace Serein.Core.JSPlugin
 #else
             engine.SetValue("serein_type", -1);
 #endif
+            engine.SetValue("serein_typeName", Global.TYPE);
+            engine.SetValue("serein_startTime", Global.StartTime);
             engine.SetValue("serein_getNetSpeed",
                 new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
             engine.SetValue("serein_runCommand",
@@ -207,6 +212,8 @@ namespace Serein.Core.JSPlugin
                 @"var serein = {
                     log: serein_log,
                     type: serein_type,
+                    typeName: serein_typeName,
+                    startTime: serein_startTime,
                     path: serein_path,
                     namespace: serein_namespace,
                     version: serein_version,
@@ -247,7 +254,8 @@ namespace Serein.Core.JSPlugin
                     removeRegex: serein_removeRegex,
                     setVariable: serein_setVariable,
                     import: serein_import,
-                    export: serein_export
+                    export: serein_export,
+                    setPreLoadConfig: serein_setPreLoadConfig
                     };"
             );
             return engine;

@@ -3,7 +3,6 @@
     internal class Serein
     {
         public bool AutoUpdate;
-        public bool Invisible = true;
         public bool ColorfulLog = true;
         public bool DPIAware;
         public bool EnableGetUpdate = true;
@@ -43,6 +42,7 @@
 
     internal class Function
     {
+        public bool NoHeartbeat = false;
         public int JSEventMaxWaitingTime = 500;
         public int JSEventCoolingDownTime = 15;
         public bool DisableBinderWhenServerClosed;

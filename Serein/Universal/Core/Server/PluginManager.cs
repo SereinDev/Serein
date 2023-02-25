@@ -189,15 +189,21 @@ namespace Serein.Core.Server
         /// <param name="Path">路径</param>
         public static void OpenFolder(string Path = null)
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                Process.Start(new ProcessStartInfo("Explorer.exe")
-                {
-                    Arguments = !string.IsNullOrEmpty(Path)
-                    ? $"/e,/select,\"{Path}\""
-                    : $"/e,\"{BasePath}\""
-                });
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+                return;
+            }
+            Process.Start(new ProcessStartInfo("Explorer.exe")
+            {
+                Arguments = !string.IsNullOrEmpty(Path)
+                ? $"/e,/select,\"{Path}\""
+                : $"/e,\"{BasePath}\""
+            });
         }
 
+        /// <summary>
+        /// 可接受的插件扩展名列表
+        /// </summary>
         public static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts", ".lock" };
 
         /// <summary>

@@ -157,7 +157,7 @@ namespace Serein.Core.Server
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 });
                 ServerProcess.EnableRaisingEvents = true;
-                ServerProcess.Exited += (_, _) => WaitForExit();
+                ServerProcess.Exited += (_, _) => CloseAll();
                 InputWriter = new StreamWriter(
                     ServerProcess.StandardInput.BaseStream,
                     EncodingList[Global.Settings.Server.InputEncoding]
@@ -194,8 +194,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// 关闭服务器
         /// </summary>
-        public static void Stop()
-            => Stop(false);
+        public static void Stop() => Stop(false);
 
         /// <summary>
         /// 关闭服务器
@@ -326,8 +325,7 @@ namespace Serein.Core.Server
         /// 输入行
         /// </summary>
         /// <param name="line">行</param>
-        public static void InputCommand(string command)
-            => InputCommand(command, false, false);
+        public static void InputCommand(string command) => InputCommand(command, false, false);
 
         /// <summary>
         /// 输入行
@@ -443,9 +441,9 @@ namespace Serein.Core.Server
         }
 
         /// <summary>
-        /// 等待服务器退出
+        /// 关闭相关服务
         /// </summary>
-        private static void WaitForExit()
+        private static void CloseAll()
         {
             InputWriter.Close();
             InputWriter.Dispose();
@@ -542,8 +540,7 @@ namespace Serein.Core.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string Time
-            => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
+        public static string Time  => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
 
         /// <summary>
         /// Unicode转换

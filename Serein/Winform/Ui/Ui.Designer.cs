@@ -1207,7 +1207,7 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingSereinEnableGetUpdate, "SettingSereinEnableGetUpdate");
             this.SettingSereinEnableGetUpdate.Name = "SettingSereinEnableGetUpdate";
             this.SettingSereinEnableGetUpdate.UseVisualStyleBackColor = true;
-            this.SettingSereinEnableGetUpdate.CheckedChanged += new System.EventHandler(this.SettingSereinEnableGetUpdate_CheckedChanged);
+            this.SettingSereinEnableGetUpdate.Click += new System.EventHandler(this.SettingSereinEnableGetUpdate_Click);
             this.SettingSereinEnableGetUpdate.MouseHover += new System.EventHandler(this.SettingSereinEnableGetUpdate_MouseHover);
             // 
             // SettingSereinExtension

@@ -32,6 +32,7 @@ namespace Serein.Base
         /// <summary>
         /// 是否正在运行
         /// </summary>
+        [JsonIgnore]
         public bool IsRunning { get; private set; }
 
         /// <summary>
