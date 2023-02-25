@@ -540,7 +540,7 @@ namespace Serein.Core.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string Time  => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
+        public static string Time => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : "-";
 
         /// <summary>
         /// Unicode转换

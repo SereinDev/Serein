@@ -41,7 +41,7 @@ namespace Serein.Base
         /// <summary>
         /// 编译类型
         /// </summary>
-        public string Type { get; private set;} = "未知";
+        public string Type { get; private set; } = "未知";
 
         /// <summary>
         /// 编译时间
