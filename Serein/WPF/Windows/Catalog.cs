@@ -20,7 +20,7 @@ namespace Serein.Windows
             public static Panel Panel { get; set; }
             public static Plugins Plugins { get; set; }
             public static Pages.Server.Container Container { get; set; }
-            public static List<LogPreProcessing.Line> Cache = new();
+            public static List<(Serein.Base.LogType, string)> Cache = new();
         }
 
         public static class Function
@@ -31,8 +31,8 @@ namespace Serein.Windows
             public static Pages.Function.JSPlugin JSPlugin { get; set; }
             public static Pages.Function.Bot Bot { get; set; }
             public static Pages.Function.Container Container { get; set; }
-            public static List<LogPreProcessing.Line> BotCache = new();
-            public static List<LogPreProcessing.Line> PluginCache = new();
+            public static List<(Serein.Base.LogType, string)> BotCache = new();
+            public static List<(Serein.Base.LogType, string)> PluginCache = new();
         }
 
         public static class Settings

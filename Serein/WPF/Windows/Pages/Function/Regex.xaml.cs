@@ -1,4 +1,5 @@
-﻿using Serein.Utils;
+﻿using Serein.Core.Generic;
+using Serein.Utils;
 using System.Collections.Generic;
 using System.Diagnostics;
 using RegExp = System.Text.RegularExpressions;
@@ -116,9 +117,9 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        public bool Confirm(int AreaIndex, bool IsAdmin, string Regex, string Command, string Remark)
+        public bool Confirm(int AreaIndex, bool IsAdmin, string Regex, string command, string Remark)
         {
-            if (Core.Command.GetType(Command) < 0)
+            if (Command.GetType(command) < 0)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
@@ -137,7 +138,7 @@ namespace Serein.Windows.Pages.Function
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,
-                                    Command = Command,
+                                    Command = command,
                                     Remark = Remark,
                                     IsAdmin = IsAdmin
                                 });
@@ -149,7 +150,7 @@ namespace Serein.Windows.Pages.Function
                                 {
                                     Area = AreaIndex,
                                     Expression = Regex,
-                                    Command = Command,
+                                    Command = command,
                                     Remark = Remark,
                                     IsAdmin = IsAdmin
                                 });
@@ -159,7 +160,7 @@ namespace Serein.Windows.Pages.Function
                     {
                         selectedItem.Area = AreaIndex;
                         selectedItem.Expression = Regex;
-                        selectedItem.Command = Command;
+                        selectedItem.Command = command;
                         selectedItem.Remark = Remark;
                         selectedItem.IsAdmin = IsAdmin;
                         RegexListView.SelectedItem = selectedItem;

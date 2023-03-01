@@ -3,6 +3,7 @@ using Jint.Native;
 using Jint.Runtime;
 using Newtonsoft.Json;
 using Serein.Base;
+using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Utils;
 using System;
@@ -367,7 +368,8 @@ namespace Serein.Core.JSPlugin
             JsValue allowOperatorOverloading,
             JsValue allowSystemReflection,
             JsValue allowWrite,
-            JsValue strict)
+            JsValue strict,
+            JsValue stringCompilationAllowed)
         {
             if (string.IsNullOrEmpty(@namespace))
             {
@@ -376,16 +378,30 @@ namespace Serein.Core.JSPlugin
             IO.CreateDirectory(Path.Combine("plugins", @namespace));
             File.WriteAllText(
                 Path.Combine("plugins", @namespace, "PreLoadConfig.json"),
-                JsonConvert.SerializeObject(new PreLoadConfig()
+                JsonConvert.SerializeObject(new PreLoadConfig
                 {
-                    Assemblies = assemblies.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray(),
-                    AllowGetType = allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
-                    AllowOperatorOverloading = allowOperatorOverloading?.IsBoolean() == true ? allowOperatorOverloading.AsBoolean() : true,
-                    AllowSystemReflection = allowSystemReflection?.IsBoolean() == true ? allowSystemReflection.AsBoolean() : false,
-                    AllowWrite = allowWrite?.IsBoolean() == true ? allowWrite.AsBoolean() : true,
-                    Strict = strict?.IsBoolean() == true ? strict.AsBoolean() : false
+                    Assemblies =
+                        assemblies is not null ? assemblies.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() : new string[] { },
+                    AllowGetType =
+                        allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
+                    AllowOperatorOverloading =
+                        allowOperatorOverloading?.IsBoolean() == true ? allowOperatorOverloading.AsBoolean() : true,
+                    AllowSystemReflection =
+                        allowSystemReflection?.IsBoolean() == true ? allowSystemReflection.AsBoolean() : false,
+                    AllowWrite =
+                        allowWrite?.IsBoolean() == true ? allowWrite.AsBoolean() : true,
+                    Strict =
+                        strict?.IsBoolean() == true ? strict.AsBoolean() : false,
+                    StringCompilationAllowed =
+                        stringCompilationAllowed?.IsBoolean() == true ? stringCompilationAllowed.AsBoolean() : true,
                 }, Formatting.Indented));
             Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
+
+        /// <summary>
+        /// 强制转换为布尔值
+        /// </summary>
+        private static bool ToBoolean(this JsValue jsValue)
+            => jsValue is not null && jsValue.IsBoolean() && jsValue.AsBoolean();
     }
 }

@@ -202,23 +202,35 @@ namespace Serein.Utils
 #endif
 
 #if WPF
-        public static Paragraph Color(LogType level, string line)
+        /// <summary>
+        /// 上色
+        /// </summary>
+        /// <returns>段落</returns>
+        public static Paragraph Color((LogType, string) line) => Color(line.Item1, line.Item2);
+
+        /// <summary>
+        /// 上色
+        /// </summary>
+        /// <param name="type">输出类型</param>
+        /// <param name="text">文本</param>
+        /// <returns>段落</returns>
+        public static Paragraph Color(LogType type, string text)
         {
             Paragraph paragraph = new()
             {
                 Margin = new(0, 0, 0, 0),
                 FontFamily = new("Consolas,微软雅黑")
             };
-            switch (level)
+            switch (type)
             {
                 case LogType.Server_Output:
                     switch (Global.Settings.Server.OutputStyle)
                     {
                         case 1:
                         case 3:
-                            return paragraph.EscapeAnsiCode(line);
+                            return paragraph.EscapeAnsiCode(text);
                         case 2:
-                            return paragraph.Highlight(line);
+                            return paragraph.Highlight(text);
                     }
                     break;
                 case LogType.Plugin_Notice:
@@ -262,7 +274,7 @@ namespace Serein.Utils
                     paragraph.Inlines.Add(" ");
                     break;
             }
-            paragraph.Inlines.Add(line);
+            paragraph.Inlines.Add(text);
             return paragraph;
         }
 
@@ -391,18 +403,6 @@ namespace Serein.Utils
                 }
             }
             return paragraph;
-        }
-
-        public class Line
-        {
-            public LogType LogType;
-            public string Text;
-
-            public Line(LogType logType, string text)
-            {
-                LogType = logType;
-                Text = text;
-            }
         }
 #endif
     }

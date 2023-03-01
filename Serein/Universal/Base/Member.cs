@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Serein.Core;
+using Serein.Core.Generic;
 
 namespace Serein.Base
 {

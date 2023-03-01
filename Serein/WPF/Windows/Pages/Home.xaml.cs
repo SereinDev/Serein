@@ -1,5 +1,5 @@
 ﻿using Serein.Utils;
-using Serein.Core;
+using Serein.Core.Generic;
 using Serein.Core.Server;
 using System.Timers;
 using System.Windows;

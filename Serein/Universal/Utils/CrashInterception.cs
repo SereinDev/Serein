@@ -1,7 +1,7 @@
 ﻿#if !CONSOLE
 using Ookii.Dialogs.Wpf;
 #endif 
-using Serein.Core;
+using Serein.Core.Generic;
 using Serein.Core.Server;
 using System;
 using System.Diagnostics;

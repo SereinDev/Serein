@@ -122,6 +122,8 @@ namespace Serein.Core.JSPlugin
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
                             }
                             break;
+                        default:
+                            throw new NotSupportedException("未知的事件类型");
                     }
                 }
             }

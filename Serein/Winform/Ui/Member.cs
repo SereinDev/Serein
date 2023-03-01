@@ -1,5 +1,5 @@
 ﻿using Serein.Base;
-using Serein.Core;
+using Serein.Core.Generic;
 using Serein.Utils;
 using Serein.Ui.ChildrenWindow;
 using System;

@@ -3,7 +3,7 @@ using Serein.Utils;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Serein.Core
+namespace Serein.Core.Generic
 {
     internal static class EventTrigger
     {
@@ -99,7 +99,7 @@ namespace Serein.Core
                             command_copy = Regex.Replace(command_copy, "%OnlinePlayer%", motd.OnlinePlayer.ToString(), RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%MaxPlayer%", motd.MaxPlayer.ToString(), RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Original%", motd.Origin, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Delay%", motd.Delay.TotalMilliseconds.ToString("N1"), RegexOptions.IgnoreCase);
+                            command_copy = Regex.Replace(command_copy, "%Delay%", motd.Delay.ToString("N1"), RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
                             command_copy = Regex.Replace(command_copy, "%Exception%", motd.Exception, RegexOptions.IgnoreCase);

@@ -243,8 +243,7 @@ namespace Serein.Core.JSPlugin
                             return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2]));
                         }
                     default:
-                        Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", "触发了一个不支持的事件：", type);
-                        break;
+                        throw new NotSupportedException($"触发了一个不支持的事件：{type}");
                 }
             }
             catch (Exception e)

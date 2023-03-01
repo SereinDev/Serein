@@ -13,6 +13,11 @@ namespace Serein.Utils
         private readonly static string GUID = Guid.NewGuid().ToString("N");
 
         /// <summary>
+        /// 启动时刻时间戳
+        /// </summary>
+        private readonly static long StartTimeUnix = (long)((Global.StartTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds);
+
+        /// <summary>
         /// 在线统计计时器
         /// </summary>
         private static readonly Timer HeartbeatTimer = new(600_000) { AutoReset = true }; // 十分钟一次心跳事件
@@ -38,7 +43,7 @@ namespace Serein.Utils
             try
             {
                 Logger.Output(LogType.Debug,
-                    Net.Get($"https://count.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&isrunningserver={(ServerManager.Status ? 1 : 0)}&runtime={(DateTime.Now - Global.StartTime).TotalMinutes:N1}")
+                    Net.Get($"https://count.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&starttime={StartTimeUnix}&isrunningserver={(ServerManager.Status ? 1 : 0)}")
                     .GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult());
             }
             catch (Exception e)

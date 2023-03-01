@@ -8,6 +8,8 @@ namespace Serein.Base.Motd
 {
     internal class Motdpe : Motd
     {
+        internal Motdpe() { }
+
         /// <summary>
         /// 基岩版Motd获取入口
         /// </summary>
@@ -22,7 +24,7 @@ namespace Serein.Base.Motd
             {
                 Port = 19132;
             }
-            Get();
+            TryGet();
         }
 
         /// <summary>
@@ -32,14 +34,34 @@ namespace Serein.Base.Motd
         public Motdpe(int port)
         {
             Port = port;
-            Get();
+            TryGet();
         }
 
-        private void Get()
+        /// <summary>
+        /// 尝试获取信息
+        /// </summary>
+        internal void TryGet()
         {
             try
             {
-                Socket socket = new Socket(IP.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+                Get();
+            }
+            catch (Exception e)
+            {
+                Logger.Output(LogType.Debug, e);
+                Exception = e.Message;
+            }
+        }
+
+        /// <summary>
+        /// 获取信息
+        /// </summary>
+        internal void Get()
+        {
+            int length = 0;
+            string data;
+            using (Socket socket = new(IP.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
+            {
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000);
                 socket.Bind(new IPEndPoint(IPAddress.Any, 0));
@@ -54,33 +76,27 @@ namespace Serein.Base.Motd
                 socket.SendTo(sendBytes, new IPEndPoint(IP, Port));
                 EndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
                 byte[] buffer = new byte[1024 * 8];
-                int length = socket.ReceiveFrom(buffer, ref endPoint);
-                Delay = DateTime.Now - startTime;
-                string data = length > 35 ?
-                   Encoding.UTF8.GetString(buffer, 35, length - 35) :
-                   Encoding.UTF8.GetString(buffer, 0, length);
-                socket.Close();
-                if (length > 35)
-                {
-                    Origin = data;
-                    string[] datas = data.Split(';');
-                    if (datas.Length >= 12)
-                    {
-                        Description = System.Text.RegularExpressions.Regex.Replace(datas[1], "§.", string.Empty);
-                        Protocol = datas[2];
-                        Version = datas[3];
-                        OnlinePlayer = int.Parse(datas[4]);
-                        MaxPlayer = int.Parse(datas[5]);
-                        LevelName = datas[7];
-                        GameMode = datas[8];
-                        IsSuccessful = true;
-                    }
-                }
+                length = socket.ReceiveFrom(buffer, ref endPoint);
+                Delay = (DateTime.Now - startTime).TotalMilliseconds;
+                data = length > 35 ?
+                    Encoding.UTF8.GetString(buffer, 35, length - 35) :
+                    Encoding.UTF8.GetString(buffer, 0, length);
             }
-            catch (Exception e)
+            if (length > 35)
             {
-                Logger.Output(LogType.Debug, e);
-                Exception = e.Message;
+                Origin = data;
+                string[] datas = data.Split(';');
+                if (datas.Length >= 12)
+                {
+                    Description = System.Text.RegularExpressions.Regex.Replace(datas[1], "§.", string.Empty);
+                    Protocol = datas[2];
+                    Version = datas[3];
+                    OnlinePlayer = int.Parse(datas[4]);
+                    MaxPlayer = int.Parse(datas[5]);
+                    LevelName = datas[7];
+                    GameMode = datas[8];
+                    IsSuccessful = true;
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 using Serein.Base;
 using Serein.Base.Motd;
+using Serein.Core.Generic;
 using Serein.Core.JSPlugin;
 using Serein.Extensions;
 using Serein.Utils;

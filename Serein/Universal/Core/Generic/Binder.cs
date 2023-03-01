@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Serein.Core
+namespace Serein.Core.Generic
 {
     internal static class Binder
     {

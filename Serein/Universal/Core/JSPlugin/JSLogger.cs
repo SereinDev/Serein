@@ -1,3 +1,4 @@
+using Jint.Native;
 using Serein.Base;
 using Serein.Utils;
 using System;
@@ -14,17 +15,17 @@ namespace Serein.Core.JSPlugin
         private readonly string Name;
 
 #pragma warning disable IDE1006
-        public void info(object line)
-            => Logger.Output(LogType.Plugin_Info, $"[{Name}]", (line ?? string.Empty).ToString());
+        public void info(JsValue jsValue)
+            => Logger.Output(LogType.Plugin_Info, $"[{Name}]", jsValue);
 
-        public void warn(object line)
-            => Logger.Output(LogType.Plugin_Warn, $"[{Name}]", (line ?? string.Empty).ToString());
+        public void warn(JsValue jsValue)
+            => Logger.Output(LogType.Plugin_Warn, $"[{Name}]", jsValue);
 
-        public void error(object line)
-            => Logger.Output(LogType.Plugin_Error, $"[{Name}]", (line ?? string.Empty).ToString());
+        public void error(JsValue jsValue)
+            => Logger.Output(LogType.Plugin_Error, $"[{Name}]", jsValue);
 
-        public void debug(object line)
-            => Logger.Output(LogType.Debug, $"[{Name}]", (line ?? string.Empty).ToString());
+        public void debug(JsValue jsValue)
+            => Logger.Output(LogType.Debug, $"[{Name}]", jsValue);
 #pragma warning restore IDE1006
     }
 }

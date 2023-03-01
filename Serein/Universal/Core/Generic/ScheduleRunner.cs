@@ -2,7 +2,7 @@
 using System;
 using System.Timers;
 
-namespace Serein.Core
+namespace Serein.Core.Generic
 {
     internal static class TaskRunner
     {

@@ -1,5 +1,5 @@
 ﻿using Serein.Utils;
-using Serein.Core;
+using Serein.Core.Generic;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

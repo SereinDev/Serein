@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Serein.Core
+namespace Serein.Core.Generic
 {
     internal static class Command
     {
@@ -50,7 +50,11 @@ namespace Serein.Core
                 process.WaitForExit(600000);
                 if (!process.HasExited)
                 {
+#if NET
+                    process.Kill(true);
+#else
                     process.Kill();
+#endif
                 }
                 process.Dispose();
             });
@@ -350,7 +354,7 @@ namespace Serein.Core
                     "onlineplayer" => ServerManager.Motd.OnlinePlayer.ToString(),
                     "maxplayer" => ServerManager.Motd.MaxPlayer.ToString(),
                     "original" => ServerManager.Motd.Origin,
-                    "delay" => ServerManager.Motd.Delay.TotalMilliseconds.ToString("N1"),
+                    "delay" => ServerManager.Motd.Delay.ToString("N1"),
                     "version" => ServerManager.Motd.Version,
                     "favicon" => ServerManager.Motd.Favicon,
                     "exception" => ServerManager.Motd.Exception,

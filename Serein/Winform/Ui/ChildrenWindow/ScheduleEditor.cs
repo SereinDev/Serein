@@ -26,7 +26,7 @@ namespace Serein.Ui.ChildrenWindow
             if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
                 string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
             {
-                if (Core.Command.GetType(Command.Text) == Base.CommandType.Invalid)
+                if (Core.Generic.Command.GetType(Command.Text) == Base.CommandType.Invalid)
                 {
                     MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

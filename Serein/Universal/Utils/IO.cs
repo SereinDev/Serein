@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Base;
-using Serein.Core;
+using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Settings;
 using System;
@@ -65,7 +65,7 @@ namespace Serein.Utils
         {
             ReadRegex();
             ReadMember();
-            if (File.Exists(Path.Combine("data", "task.json")))
+            if (File.Exists(Path.Combine("data", "task.json")) && !File.Exists(Path.Combine("data", "schedule.json")))
             {
                 ReadSchedule(Path.Combine("data", "task.json"));
                 File.Delete(Path.Combine("data", "task.json"));

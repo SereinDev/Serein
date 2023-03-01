@@ -12,6 +12,7 @@ namespace Serein.Core.JSPlugin
             AllowOperatorOverloading = true,
             AllowSystemReflection,
             AllowWrite = true,
-            Strict;
+            Strict,
+            StringCompilationAllowed = true;
     }
 }

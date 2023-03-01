@@ -54,10 +54,7 @@ namespace Serein
         /// </summary>
         public static List<Regex> RegexList
         {
-            get
-            {
-                return _regexList;
-            }
+            get => _regexList;
             set
             {
                 lock (_regexList)
@@ -74,10 +71,7 @@ namespace Serein
         /// </summary>
         public static List<Schedule> Schedules
         {
-            get
-            {
-                return _schedules;
-            }
+            get => _schedules;
             set
             {
                 lock (_schedules)

@@ -1,4 +1,4 @@
-﻿using Serein.Core;
+﻿using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Utils;
 using System;
@@ -19,7 +19,7 @@ namespace Serein.Windows.Pages.Function
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             BotRichTextBox.Document.Blocks.Clear();
-            Catalog.Function.BotCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line.LogType, line.Text))));
+            Catalog.Function.BotCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
             Catalog.Function.Bot = this;
         }
 

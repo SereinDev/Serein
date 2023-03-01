@@ -42,7 +42,7 @@
 
     internal class Function
     {
-        public bool NoHeartbeat = false;
+        public bool NoHeartbeat;
         public int JSEventMaxWaitingTime = 500;
         public int JSEventCoolingDownTime = 15;
         public bool DisableBinderWhenServerClosed;

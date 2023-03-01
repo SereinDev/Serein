@@ -1,4 +1,4 @@
-﻿using Serein.Core;
+﻿using Serein.Core.Generic;
 using System;
 using System.Windows.Forms;
 

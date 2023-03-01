@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Core.Generic;
 using Serein.Utils;
 using System;
 using System.Collections.Generic;
@@ -53,9 +54,9 @@ namespace Serein.Windows.Pages.Settings
             }
         }
 
-        public bool Confirm(string Command)
+        public bool Confirm(string command)
         {
-            if (Core.Command.GetType(Command) < 0)
+            if (Command.GetType(command) < 0)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
@@ -66,18 +67,18 @@ namespace Serein.Windows.Pages.Settings
                 {
                     EventListView.Items.Insert(
                         EventListView.SelectedIndex,
-                        Command);
+                        command);
                 }
                 else
                 {
-                    EventListView.Items.Add(Command);
+                    EventListView.Items.Add(command);
                 }
                 Save();
                 Load();
             }
             else if (ActionType == 2 && EventListView.SelectedIndex >= 0)
             {
-                EventListView.Items[EventListView.SelectedIndex] = Command;
+                EventListView.Items[EventListView.SelectedIndex] = command;
                 Save();
                 Load();
             }

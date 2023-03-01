@@ -1,4 +1,4 @@
-﻿using Serein.Core;
+﻿using Serein.Core.Generic;
 using Serein.Core.Server;
 using Serein.Extensions;
 using System;

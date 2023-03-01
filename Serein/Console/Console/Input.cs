@@ -1,6 +1,6 @@
 using Serein.Base;
 using Serein.Utils;
-using Serein.Core;
+using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;

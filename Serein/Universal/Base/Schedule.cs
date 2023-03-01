@@ -55,7 +55,7 @@ namespace Serein.Base
             IsRunning = true;
             Task.Run(() =>
             {
-                Core.Command.Run(3, Command);
+                Core.Generic.Command.Run(3, Command);
                 NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
                 IsRunning = false;
             });
@@ -72,7 +72,7 @@ namespace Serein.Base
                 string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
                 ))
             {
-                if (Core.Command.GetType(Command) == CommandType.Invalid)
+                if (Core.Generic.Command.GetType(Command) == CommandType.Invalid)
                 {
                     return false;
                 }

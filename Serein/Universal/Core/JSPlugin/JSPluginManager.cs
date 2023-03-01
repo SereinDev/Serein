@@ -158,6 +158,7 @@ namespace Serein.Core.JSPlugin
             }
             Task.Run(() =>
             {
+                IsLoading = true;
                 Logger.Output(LogType.Plugin_Clear);
                 JSFunc.ClearAllTimers();
                 JSFunc.Trigger(EventType.PluginsReload);

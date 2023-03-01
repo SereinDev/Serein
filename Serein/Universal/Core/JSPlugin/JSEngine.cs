@@ -7,12 +7,13 @@ using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Base.Motd;
+using Serein.Core.Generic;
+using Serein.Core.JSPlugin.Motd;
 using Serein.Core.Server;
 using Serein.Extensions;
 using Serein.Utils;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -41,12 +42,12 @@ namespace Serein.Core.JSPlugin
                     cfg.AllowClr(typeof(Process).Assembly);
                     if (preLoadConfig != null)
                     {
-                        List<Assembly> assemblies = new();
+                        List<System.Reflection.Assembly> assemblies = new();
                         foreach (string assemblyString in preLoadConfig.Assemblies)
                         {
                             try
                             {
-                                assemblies.Add(Assembly.Load(assemblyString));
+                                assemblies.Add(System.Reflection.Assembly.Load(assemblyString));
                             }
                             catch (Exception e)
                             {
@@ -58,6 +59,7 @@ namespace Serein.Core.JSPlugin
                         cfg.Interop.AllowOperatorOverloading = preLoadConfig.AllowOperatorOverloading;
                         cfg.Interop.AllowSystemReflection = preLoadConfig.AllowSystemReflection;
                         cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
+                        cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
                         cfg.Strict = preLoadConfig.Strict;
                     }
                     cfg.CatchClrExceptions();
@@ -94,7 +96,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_export",
                     new Action<string, JsValue>(JSFunc.Export));
                 engine.SetValue("serein_setPreLoadConfig",
-                    new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict)));
+                    new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
                 engine.SetValue("setTimeout",
                     new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
                 engine.SetValue("setInterval",
@@ -205,9 +207,9 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("getMD5",
                 new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
-                TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
+                TypeReference.CreateTypeReference(engine, typeof(JSMotdpe)));
             engine.SetValue("Motdje",
-                TypeReference.CreateTypeReference(engine, typeof(Motdje)));
+                TypeReference.CreateTypeReference(engine, typeof(JSMotdje)));
             engine.Execute(
                 @"var serein = {
                     log: serein_log,

@@ -1,5 +1,6 @@
 ﻿using NCrontab;
 using Serein.Base;
+using Serein.Core.Generic;
 using Serein.Utils;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,7 +50,7 @@ namespace Serein.Windows.Pages.Function
 
         public bool Confirm(string cronExp, string command, string remark)
         {
-            if (Core.Command.GetType(command) == CommandType.Invalid)
+            if (Command.GetType(command) == CommandType.Invalid)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }

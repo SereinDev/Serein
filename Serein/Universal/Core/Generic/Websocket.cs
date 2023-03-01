@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using WebSocket4Net;
 
-namespace Serein.Core
+namespace Serein.Core.Generic
 {
     internal static class Websocket
     {

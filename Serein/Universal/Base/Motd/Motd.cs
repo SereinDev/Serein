@@ -54,7 +54,7 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 延迟
         /// </summary>
-        public TimeSpan Delay = TimeSpan.Zero;
+        public double Delay;
 
         /// <summary>
         /// 图标
