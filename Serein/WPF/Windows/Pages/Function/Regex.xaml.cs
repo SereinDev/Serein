@@ -1,8 +1,8 @@
 ﻿using Serein.Core.Generic;
+using Serein.Extensions;
 using Serein.Utils;
 using System.Collections.Generic;
 using System.Diagnostics;
-using RegExp = System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
@@ -117,7 +117,7 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        public bool Confirm(int AreaIndex, bool IsAdmin, string Regex, string command, string Remark)
+        public bool Confirm(int areaIndex, bool needAdmin, string regex, string command, string remark)
         {
             if (Command.GetType(command) < 0)
             {
@@ -125,55 +125,52 @@ namespace Serein.Windows.Pages.Function
             }
             else
             {
-                try
-                {
-                    RegExp.Regex.IsMatch(string.Empty, Regex);
-                    if (ActionType == 1)
-                    {
-                        if (RegexListView.SelectedIndex >= 0)
-                        {
-                            RegexListView.Items.Insert(
-                                RegexListView.SelectedIndex,
-                                new Base.Regex
-                                {
-                                    Area = AreaIndex,
-                                    Expression = Regex,
-                                    Command = command,
-                                    Remark = Remark,
-                                    IsAdmin = IsAdmin
-                                });
-                        }
-                        else
-                        {
-                            RegexListView.Items.Add(
-                                new Base.Regex
-                                {
-                                    Area = AreaIndex,
-                                    Expression = Regex,
-                                    Command = command,
-                                    Remark = Remark,
-                                    IsAdmin = IsAdmin
-                                });
-                        }
-                    }
-                    else if (ActionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
-                    {
-                        selectedItem.Area = AreaIndex;
-                        selectedItem.Expression = Regex;
-                        selectedItem.Command = command;
-                        selectedItem.Remark = Remark;
-                        selectedItem.IsAdmin = IsAdmin;
-                        RegexListView.SelectedItem = selectedItem;
-                    }
-                    Save();
-                    Load();
-                    ActionType = 0;
-                    return true;
-                }
-                catch
+                if (regex.TestRegex())
                 {
                     Catalog.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
+                    return false;
                 }
+                if (ActionType == 1)
+                {
+                    if (RegexListView.SelectedIndex >= 0)
+                    {
+                        RegexListView.Items.Insert(
+                            RegexListView.SelectedIndex,
+                            new Base.Regex
+                            {
+                                Area = areaIndex,
+                                Expression = regex,
+                                Command = command,
+                                Remark = remark,
+                                IsAdmin = needAdmin
+                            });
+                    }
+                    else
+                    {
+                        RegexListView.Items.Add(
+                            new Base.Regex
+                            {
+                                Area = areaIndex,
+                                Expression = regex,
+                                Command = command,
+                                Remark = remark,
+                                IsAdmin = needAdmin
+                            });
+                    }
+                }
+                else if (ActionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
+                {
+                    selectedItem.Area = areaIndex;
+                    selectedItem.Expression = regex;
+                    selectedItem.Command = command;
+                    selectedItem.Remark = remark;
+                    selectedItem.IsAdmin = needAdmin;
+                    RegexListView.SelectedItem = selectedItem;
+                }
+                Save();
+                Load();
+                ActionType = 0;
+                return true;
             }
             return false;
         }

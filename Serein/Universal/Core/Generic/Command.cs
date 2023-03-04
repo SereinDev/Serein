@@ -25,7 +25,7 @@ namespace Serein.Core.Generic
         /// 启动cmd.exe
         /// </summary>
         /// <param name="Command">执行的命令</param>
-        public static void StartCmd(string command)
+        public static void StartShell(string command)
         {
             Process process = new()
             {
@@ -127,8 +127,8 @@ namespace Serein.Core.Generic
         {
             switch (type)
             {
-                case Base.CommandType.ExecuteCmd:
-                    StartCmd(value);
+                case Base.CommandType.ExecuteShellCmd:
+                    StartShell(value);
                     break;
                 case Base.CommandType.ServerInput:
                 case Base.CommandType.ServerInputWithUnicode:
@@ -244,7 +244,7 @@ namespace Serein.Core.Generic
             switch (Regex.Match(command, @"^([^\|]+?)\|").Groups[1].Value.ToLowerInvariant())
             {
                 case "cmd":
-                    return Base.CommandType.ExecuteCmd;
+                    return Base.CommandType.ExecuteShellCmd;
                 case "s":
                 case "server":
                     return Base.CommandType.ServerInput;
@@ -411,6 +411,12 @@ namespace Serein.Core.Generic
             return text.Replace("\\n", "\n");
         }
 
+        /// <summary>
+        /// 转换艾特的CQ码
+        /// </summary>
+        /// <param name="text">待转换文本</param>
+        /// <param name="groupID">群号</param>
+        /// <returns>转换后文本</returns>
         public static string ParseAt(string text, long groupID)
         {
             text = text.Replace("[CQ:at,qq=all]", "@全体成员");

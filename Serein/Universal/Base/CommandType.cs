@@ -13,7 +13,7 @@
         /// <summary>
         /// 执行cmd
         /// </summary>
-        ExecuteCmd,
+        ExecuteShellCmd,
 
         /// <summary>
         /// 服务器输入命令

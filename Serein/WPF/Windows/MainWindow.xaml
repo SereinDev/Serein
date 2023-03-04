@@ -24,7 +24,6 @@
     Icon="/Windows/Serein.ico"
     IsVisibleChanged="UiWindow_IsVisibleChanged"
     Loaded="UiWindow_Loaded"
-    SizeChanged="UiWindow_SizeChanged"
     StateChanged="UiWindow_StateChanged"
     Style="{StaticResource UiWindow}"
     WindowBackdropType="Mica"

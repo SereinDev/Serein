@@ -54,12 +54,18 @@ namespace Serein.Ui.ChildrenWindow
         {
             try
             {
-                List<DateTime> Occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-                CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
+                List<DateTime> occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
+                if (occurrences.Count > 20)
+                {
+                    occurrences.RemoveRange(20, occurrences.Count - 20);
+                }
+                DateTimes = string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")));
+                CronNextTime.Text = "预计执行时间：" + occurrences[0].ToString("g");
             }
             catch
             {
-                CronNextTime.Text = "Cron表达式无效";
+                CronNextTime.Text = "Cron表达式无效或超过时间限制";
+                DateTimes = string.Empty;
             }
         }
         public void Update(string CronText, string RemarkText, string CommandText)
@@ -115,9 +121,22 @@ namespace Serein.Ui.ChildrenWindow
             }
         }
 
+        private void CronNextTime_MouseHover(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(DateTimes))
+            {
+                return;
+            }
+            ToolTip toolTip = new();
+            toolTip.SetToolTip((Control)sender, $"最近20次执行执行时间：\n{DateTimes}");
+        }
+
+
         private void ScheduleEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Schedule") { UseShellExecute = true });
         }
+
+        private string DateTimes = string.Empty;
     }
 }

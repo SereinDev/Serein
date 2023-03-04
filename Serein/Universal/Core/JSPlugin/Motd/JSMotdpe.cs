@@ -25,7 +25,7 @@ namespace Serein.Core.JSPlugin.Motd
 #pragma warning disable IDE1006
 
         public void get() => base.Get();
-        public void tryGet() => base.TryGet();
+        public bool tryGet() => base.TryGet();
         public string ip => IP.ToString();
         public int port => Port;
         public int onlinePlayer => onlinePlayer;

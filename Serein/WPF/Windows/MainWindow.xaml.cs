@@ -1,8 +1,8 @@
 ﻿using NCrontab;
 using Notification.Wpf;
-using Serein.Utils;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
+using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,9 +62,9 @@ namespace Serein.Windows
 
         private void UiWindow_Closing(object sender, CancelEventArgs e)
         {
-            e.Cancel = ServerManager.Status;
             if (ServerManager.Status)
             {
+                e.Cancel = true;
                 ShowInTaskbar = false;
                 Hide();
                 Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
@@ -96,21 +96,14 @@ namespace Serein.Windows
         /// <summary>
         /// 显示底部通知栏
         /// </summary>
-        /// <param name="Title">标题</param>
-        /// <param name="Message">信息</param>
-        /// <param name="Icon">图标</param>
-        public void OpenSnackbar(string Title, string Message, SymbolRegular Icon)
+        /// <param name="title">标题</param>
+        /// <param name="message">信息</param>
+        /// <param name="icon">图标</param>
+        public void OpenSnackbar(string title, string message, SymbolRegular icon)
             => Dispatcher.Invoke(() =>
             {
-                Snackbar.Show(Title, Message, Icon);
+                Snackbar.Show(title, message, icon);
             });
-
-        private void UiWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (Snackbar.IsShown)
-            {
-            }
-        }
 
         private void Help_Click(object sender, RoutedEventArgs e)
             => Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
@@ -123,11 +116,16 @@ namespace Serein.Windows
         /// <summary>
         /// 打开成员编辑器窗口
         /// </summary>
-        public void OpenMemberEditor(bool New = true, string ID = "", string GameID = "")
+        public void OpenMemberEditor() => OpenMemberEditor(false, string.Empty, string.Empty);
+
+        /// <summary>
+        /// 打开成员编辑器窗口
+        /// </summary>
+        public void OpenMemberEditor(bool isNew, string id, string gameid)
         {
-            MemberEditor_ID.Text = ID;
-            MemberEditor_GameID.Text = GameID;
-            MemberEditor_ID.IsEnabled = New;
+            MemberEditor_ID.Text = id;
+            MemberEditor_GameID.Text = gameid;
+            MemberEditor_ID.IsEnabled = isNew;
             MemberEditor.Show();
         }
 
@@ -146,13 +144,18 @@ namespace Serein.Windows
         /// <summary>
         /// 打开正则编辑器窗口
         /// </summary>
-        public void OpenRegexEditor(int AreaIndex = 0, bool IsAdmin = false, string Regex = "", string Command = "", string Remark = "")
+        public void OpenRegexEditor() => OpenRegexEditor(0, false, string.Empty, string.Empty, string.Empty);
+
+        /// <summary>
+        /// 打开正则编辑器窗口
+        /// </summary>
+        public void OpenRegexEditor(int areaIndex, bool needAdmin, string regex, string command, string remark)
         {
-            RegexEditor_Area.SelectedIndex = AreaIndex;
-            RegexEditor_IsAdmain.IsChecked = IsAdmin;
-            RegexEditor_Regex.Text = Regex;
-            RegexEditor_Command.Text = Command;
-            RegexEditor_Remark.Text = Remark;
+            RegexEditor_Area.SelectedIndex = areaIndex;
+            RegexEditor_IsAdmain.IsChecked = needAdmin;
+            RegexEditor_Regex.Text = regex;
+            RegexEditor_Command.Text = command;
+            RegexEditor_Remark.Text = remark;
             RegexEditor.Show();
         }
 
@@ -183,11 +186,12 @@ namespace Serein.Windows
         #endregion
 
         #region 任务编辑器代码
-        public void OpenScheduleEditor(string CronExp = "", string Command = "", string Remark = "")
+        public void OpenScheduleEditor() => OpenScheduleEditor(string.Empty, string.Empty, string.Empty);
+        public void OpenScheduleEditor(string cronExp, string command, string remark)
         {
-            ScheduleEditor_Cron.Text = CronExp;
-            ScheduleEditor_Command.Text = Command;
-            ScheduleEditor_Remark.Text = Remark;
+            ScheduleEditor_Cron.Text = cronExp;
+            ScheduleEditor_Command.Text = command;
+            ScheduleEditor_Remark.Text = remark;
             ScheduleEditor.Show();
         }
 
@@ -203,11 +207,18 @@ namespace Serein.Windows
         {
             try
             {
-                ScheduleEditor_NextTime.Text = $"预计执行时间: {CrontabSchedule.Parse(ScheduleEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString("g")}";
+                List<DateTime> occurrences = CrontabSchedule.Parse(ScheduleEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
+                if (occurrences.Count > 20)
+                {
+                    occurrences.RemoveRange(20, occurrences.Count - 20);
+                }
+                ScheduleEditor_NextTime.Text = $"预计执行时间： {occurrences[0]:g}";
+                ScheduleEditor_NextTime.ToolTip = $"最近20次执行执行时间：\n{string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")))}";
             }
             catch
             {
-                ScheduleEditor_NextTime.Text = "Cron表达式不合法";
+                ScheduleEditor_NextTime.Text = "Cron表达式无效或超过时间限制";
+                ScheduleEditor_NextTime.ToolTip = string.Empty;
             }
         }
 

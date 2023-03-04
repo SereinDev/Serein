@@ -40,16 +40,18 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 尝试获取信息
         /// </summary>
-        internal void TryGet()
+        internal bool TryGet()
         {
             try
             {
                 Get();
+                return true;
             }
             catch (Exception e)
             {
                 Logger.Output(LogType.Debug, e);
                 Exception = e.Message;
+                return false;
             }
         }
 

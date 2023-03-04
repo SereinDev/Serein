@@ -81,12 +81,12 @@ namespace Serein.Core.JSPlugin
                 Global.VERSION);
             engine.SetValue("serein_namespace",
                 string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
+            engine.SetValue("serein_debugLog",
+                new Action<JsValue>((content) => Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
             if (!string.IsNullOrEmpty(@namespace))
             {
                 engine.SetValue("serein_log",
                     new Action<JsValue>((content) => Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
-                engine.SetValue("serein_debugLog",
-                    new Action<JsValue>((content) => Logger.Output(LogType.Debug, $"[{@namespace}]", content)));
                 engine.SetValue("serein_registerPlugin",
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
@@ -113,7 +113,6 @@ namespace Serein.Core.JSPlugin
             else
             {
                 engine.SetValue("serein_log", JsValue.Undefined);
-                engine.SetValue("serein_debugLog", JsValue.Undefined);
                 engine.SetValue("serein_registerPlugin", JsValue.Undefined);
                 engine.SetValue("serein_setListener", JsValue.Undefined);
                 engine.SetValue("serein_setVariable", JsValue.Undefined);
@@ -211,7 +210,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("Motdje",
                 TypeReference.CreateTypeReference(engine, typeof(JSMotdje)));
             engine.Execute(
-                @"var serein = {
+                @"const serein = {
                     log: serein_log,
                     type: serein_type,
                     typeName: serein_typeName,

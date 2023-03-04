@@ -134,6 +134,7 @@
             this.CronNextTime.ReadOnly = true;
             this.CronNextTime.Size = new System.Drawing.Size(796, 38);
             this.CronNextTime.TabIndex = 8;
+            this.CronNextTime.MouseHover += new System.EventHandler(CronNextTime_MouseHover);
             // 
             // ScheduleEditer
             // 

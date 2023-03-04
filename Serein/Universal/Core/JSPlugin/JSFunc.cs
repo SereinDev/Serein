@@ -101,7 +101,7 @@ namespace Serein.Core.JSPlugin
                     CancellationTokenSource tokenSource = new();
                     foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
                     {
-                        if (!plugin.HasListenedOn(type))
+                        if (!plugin.Available && !plugin.HasListenedOn(type))
                         {
                             continue;
                         }
@@ -114,7 +114,6 @@ namespace Serein.Core.JSPlugin
                         tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
                         Global.Settings.Serein.Function.JSEventCoolingDownTime.ToSleep();
                     }
-                    tokenSource.Dispose();
                 }
             }
             return interdicted;
@@ -163,7 +162,7 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：{e.GetFullMsg()}");
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.GetFullMsg()}");
                     Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
@@ -232,9 +231,13 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static string GetFullMsg(this Exception e)
         {
-            if (e.InnerException is JavaScriptException javaScriptException)
+            if (e.InnerException is JavaScriptException javaScriptException1)
             {
-                return $"{javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}";
+                return $"{javaScriptException1.Message}\n{javaScriptException1.JavaScriptStackTrace}";
+            }
+            if (e is JavaScriptException javaScriptException2)
+            {
+                return $"{javaScriptException2.Message}\n{javaScriptException2.JavaScriptStackTrace}";
             }
             return (e.InnerException ?? e).Message;
         }
@@ -321,14 +324,17 @@ namespace Serein.Core.JSPlugin
         /// <returns>设置结果</returns>
         public static bool SetVariable(string key, JsValue jsValue)
         {
-            string value = jsValue.ToString();
-            if (string.IsNullOrEmpty(value) || RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
+            string value = jsValue?.ToString();
+            if (string.IsNullOrEmpty(value) || !RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
             {
                 return false;
             }
-            if (JSPluginManager.CommandVariablesDict.TryGetValue(key, out string variable))
+            if (JSPluginManager.CommandVariablesDict.ContainsKey(key))
             {
-                variable = value;
+                lock (JSPluginManager.CommandVariablesDict)
+                {
+                    JSPluginManager.CommandVariablesDict[key] = value;
+                }
             }
             else
             {
@@ -341,20 +347,23 @@ namespace Serein.Core.JSPlugin
         /// 导出变量
         /// </summary>
         /// <param name="key">键</param>
-        /// <param name="newJsValue">值</param>
-        public static void Export(string key, JsValue newJsValue)
+        /// <param name="jsValue">值</param>
+        public static void Export(string key, JsValue jsValue)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentException(nameof(key));
             }
-            if (JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue))
+            if (JSPluginManager.VariablesExportedDict.ContainsKey(key))
             {
-                jsValue = newJsValue;
+                lock (JSPluginManager.VariablesExportedDict)
+                {
+                    JSPluginManager.VariablesExportedDict[key] = jsValue;
+                }
             }
             else
             {
-                JSPluginManager.VariablesExportedDict.Add(key, newJsValue);
+                JSPluginManager.VariablesExportedDict.Add(key, jsValue);
             }
         }
 
@@ -373,7 +382,7 @@ namespace Serein.Core.JSPlugin
         {
             if (string.IsNullOrEmpty(@namespace))
             {
-                return;
+                throw new ArgumentException(nameof(@namespace));
             }
             IO.CreateDirectory(Path.Combine("plugins", @namespace));
             File.WriteAllText(
@@ -381,7 +390,7 @@ namespace Serein.Core.JSPlugin
                 JsonConvert.SerializeObject(new PreLoadConfig
                 {
                     Assemblies =
-                        assemblies is not null ? assemblies.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() : new string[] { },
+                        assemblies?.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() ?? new string[] { },
                     AllowGetType =
                         allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
                     AllowOperatorOverloading =
@@ -397,11 +406,5 @@ namespace Serein.Core.JSPlugin
                 }, Formatting.Indented));
             Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
-
-        /// <summary>
-        /// 强制转换为布尔值
-        /// </summary>
-        private static bool ToBoolean(this JsValue jsValue)
-            => jsValue is not null && jsValue.IsBoolean() && jsValue.AsBoolean();
     }
 }

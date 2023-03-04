@@ -30,7 +30,6 @@ namespace Serein.Core.JSPlugin
             Engine?.Dispose();
             Engine = null;
             WSClients.ForEach((ws) => ws.Dispose());
-            TokenSource.Dispose();
             Available = false;
         }
 
