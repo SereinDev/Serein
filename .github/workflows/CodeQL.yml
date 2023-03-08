@@ -6,7 +6,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       actions: read
       contents: read
@@ -29,6 +29,7 @@ jobs:
       - name: Build
         shell: cmd
         run: |
+          dotnet restore ${{ github.workspace }}\Serein.sln
           dotnet build ${{ github.workspace }}\Serein.sln
 
       - name: Perform CodeQL Analysis
