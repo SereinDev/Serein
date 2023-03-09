@@ -1,7 +1,7 @@
-﻿using Serein.Utils;
-using Serein.Base;
+﻿using Serein.Base;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
+using Serein.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -83,23 +83,19 @@ namespace Serein.Utils.Console
             {
                 if (ServerManager.Status)
                 {
-                    ServerManager.Kill();
                     e.Cancel = true;
+                    ServerManager.Kill();
                 }
                 else
                 {
                     Logger.Output(LogType.Info, "正在关闭...");
                     JSFunc.Trigger(EventType.SereinClose);
-                    Environment.Exit(0);
+                    500.ToSleep();
                 }
             };
             while (true)
             {
-                string line = System.Console.ReadLine();
-                if (line != null)
-                {
-                    Input.Process(line.Trim());
-                }
+                Input.Process(System.Console.ReadLine()?.Trim());
             }
         }
     }

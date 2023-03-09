@@ -197,7 +197,7 @@
                 Grid.Column="1"
                 Margin="5"
                 Click="CardAction_Click"
-                Icon="PuzzleCubePiece20"
+                Icon="Javascript24"
                 Tag="Plugins">
                 <StackPanel>
                     <TextBlock

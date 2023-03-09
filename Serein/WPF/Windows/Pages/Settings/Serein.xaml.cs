@@ -1,3 +1,4 @@
+using Serein.Utils;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Appearance;
@@ -57,9 +58,12 @@ namespace Serein.Windows.Pages.Settings
         }
 
         public void UpdateVersion(string text)
-            => Dispatcher.Invoke(() => { Version.Text = "当前版本：" + Global.VERSION + text; });
+            => Dispatcher.Invoke(() =>  Version.Text = "当前版本：" + Global.VERSION + text );
 
         private void MaxCacheLines_TextChanged(object sender, TextChangedEventArgs e)
             => Global.Settings.Serein.MaxCacheLines = Loaded ? (int)MaxCacheLines.Value : Global.Settings.Serein.MaxCacheLines;
+
+        private void WelPage_Click(object sender, RoutedEventArgs e)
+            => Runtime.ShowWelcomePage();
     }
 }

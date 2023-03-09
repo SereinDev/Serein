@@ -54,8 +54,10 @@ namespace Serein.Utils
             Update.Init();
             IO.StartSaving();
             Task.Run(JSPluginManager.Load);
-            if (Global.FirstOpen) { ShowWelcomePage(); }
-            if (File.Exists("Updater.exe")) { File.Delete("Updater.exe"); }
+            if (Global.FirstOpen)
+            {
+                ShowWelcomePage();
+            }
             Task.Run(() =>
             {
                 (Global.Settings.Serein.AutoRun.Delay > 0 ? Global.Settings.Serein.AutoRun.Delay : 0).ToSleep();
@@ -79,7 +81,7 @@ namespace Serein.Utils
             TaskDialog taskDialog = new()
             {
                 Buttons = {
-                        new TaskDialogButton(ButtonType.Ok)
+                        new(ButtonType.Ok)
                     },
                 MainInstruction = "欢迎使用Serein！！",
                 WindowTitle = "Serein",
@@ -88,10 +90,10 @@ namespace Serein.Utils
                     "◦ 官网文档：<a href=\"https://serein.cc\">https://serein.cc</a>\n" +
                     "◦ GitHub仓库：<a href=\"https://github.com/Zaitonn/Serein\">https://github.com/Zaitonn/Serein</a>\n" +
                     "◦ 交流群：<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">954829203</a>",
-                Footer = "此面板已发布在<a href=\"https://www.minebbs.com/resources/serein.4169/\">Minebbs</a>上，欢迎支持~",
+                Footer = "使用此软件即视为你已阅读并同意了<a href=\"https://serein.cc/#/More/Agreement\">用户协议</a>",
                 FooterIcon = TaskDialogIcon.Information,
                 EnableHyperlinks = true,
-                ExpandedInformation = "此软件与Mojang Studio、网易、Microsoft没有从属关系.\n" +
+                ExpandedInformation = "此软件与Mojang Studio、网易、Microsoft没有从属关系\n" +
                      "Serein is licensed under <a href=\"https://github.com/Zaitonn/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n" +
                      "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
             };
@@ -104,6 +106,8 @@ namespace Serein.Utils
                 "◦ 官网文档：https://serein.cc\n" +
                 "◦ GitHub仓库：https://github.com/Zaitonn/Serein\n" +
                 "◦ 交流群：\x1b[4m\x1b[36m954829203\x1b[0m\n" +
+                "◦ 关于&隐私：https://serein.cc/#/More/About\n" +
+                "◦ 使用此软件即视为你已阅读并同意了用户协议（https://serein.cc/#/More/Agreement）" +
                 "（控制台不支持超链接，你可以复制后到浏览器中打开）");
 #endif
         }

@@ -48,6 +48,10 @@ Tip:
         /// <param name="line">输入行</param>
         public static void Process(string line)
         {
+            if (line is null)
+            {
+                return;
+            }
             if (!ServerManager.Status || line.StartsWith("serein"))
             {
                 string[] args = System.Text.RegularExpressions.Regex.Replace(line, @"^serein\s?", string.Empty).ToLowerInvariant().Split(' ');
@@ -180,6 +184,13 @@ Tip:
                             "官网: https://serein.cc\n" +
                             "GitHub Repo: https://github.com/Zaitonn/Serein\n" +
                             "Copyright © 2022 Zaitonn. All Rights Reserved.");
+                        if (Global.Settings.Serein.AutoUpdate &&
+                            Update.LastVersion != null &&
+                            Update.IsReadyToUpdate &&
+                            Environment.OSVersion.Platform == PlatformID.Win32NT)
+                        {
+                            Logger.Output(LogType.Info, $"新版本（{Update.LastVersion}）已下载完毕，重启即可更新");
+                        }
                         break;
                     case "sysinfo":
                         Logger.Output(LogType.Info,

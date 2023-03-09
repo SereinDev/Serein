@@ -107,6 +107,7 @@ namespace Serein.Utils
         /// CPU使用率
         /// </summary>
         public static float CPUUsage;
+
         /// <summary>
         /// 刷新计时器
         /// </summary>
@@ -143,12 +144,12 @@ namespace Serein.Utils
         /// <summary>
         /// 已用内存
         /// </summary>
-        public static ulong UsedRAM => TotalRAM - Info.Hardware.RAM.Free / 1024;
+        public static ulong UsedRAM => TotalRAM - (Info?.Hardware?.RAM?.Free ?? 0) / 1024;
 
         /// <summary>
         /// 总内存
         /// </summary>
-        public static ulong TotalRAM => Info.Hardware.RAM.Total / 1024;
+        public static ulong TotalRAM => (Info?.Hardware?.RAM?.Free ?? 1) / 1024;
 
         /// <summary>
         /// 内存占用百分比

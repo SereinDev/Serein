@@ -475,15 +475,15 @@ namespace Serein.Utils
         /// </summary>
         public static class FileLock
         {
-            public static object Console = new();
-            public static object Msg = new();
-            public static object Crash = new();
-            public static object Debug = new();
-            public static object Regex = new();
-            public static object Task = new();
-            public static object GroupCache = new();
-            public static object Member = new();
-            public static object Settings = new();
+            public static readonly object Console = new();
+            public static readonly object Msg = new();
+            public static readonly object Crash = new();
+            public static readonly object Debug = new();
+            public static readonly object Regex = new();
+            public static readonly object Task = new();
+            public static readonly object GroupCache = new();
+            public static readonly object Member = new();
+            public static readonly object Settings = new();
         }
     }
 }

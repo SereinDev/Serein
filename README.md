@@ -26,8 +26,8 @@
 
 - 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板
 - **官网：<https://serein.cc/>**
-- **下载最新版：<https://github.com/Zaitonn/Serein/releases/latest>**
-- Minebbs：<https://www.minebbs.com/resources/serein.4169/>
+- **下载最新版：[Releases](https://github.com/Zaitonn/Serein/releases/latest)**
+- Minebbs：[Serein - Minebbs 我的世界中文论坛](https://www.minebbs.com/resources/serein.4169/)
 
 ## 建议运行环境
 
@@ -37,7 +37,7 @@ Win7或WinServer2012以上
 
 ## 使用的Package包
 
-详见 <https://github.com/Zaitonn/Serein/network/dependencies>
+详见 [](https://github.com/Zaitonn/Serein/network/dependencies)
 
 ## 编译
 
@@ -66,3 +66,13 @@ NET SDK >= 6.0
 ## 关于
 
 详见 [关于 - Serein](https://serein.cc/#/More/About)
+
+## 使用协议
+
+[使用协议 - Serein](https://serein.cc/#/More/Agreement)
+
+---
+
+![Star History Chart](https://api.star-history.com/svg?repos=Zaitonn/Serein&type=Date)
+
+![Alt](https://repobeats.axiom.co/api/embed/d29d2773958747edfeed6ee9f280c17f781882cb.svg "Repobeats analytics image")

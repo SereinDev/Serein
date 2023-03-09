@@ -94,7 +94,7 @@ namespace Serein.Utils
                     WriteLine(1, line);
                     break;
                 case LogType.Version_New:
-                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{line}，已提交下载任务）", true);
+                    WriteLine(1, $"当前版本：{Global.VERSION} （发现新版本:{line}{(Global.Settings.Serein.AutoUpdate ? "，下载任务已在后台开始" : string.Empty)}）", true);
                     break;
                 case LogType.Version_Latest:
                     WriteLine(1, "获取更新成功，当前已是最新版:)", true);
@@ -217,7 +217,7 @@ namespace Serein.Utils
                 case LogType.Version_New:
                     Catalog.Notification?.Show(
                         "Serein",
-                        "发现新版本：" + line + "\n你可以等待后台自动下载或手动点击本提示打开下载页面",
+                        "发现新版本：" + line + "\n" + (Global.Settings.Serein.AutoUpdate ? "你可以等待后台自动下载或手动点击本提示打开下载页面" : "点击本提示可打开下载页面"),
                         onClick: () => Process.Start(
                             new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true }
                             ),
@@ -330,18 +330,16 @@ namespace Serein.Utils
                 if (!Global.Settings.Serein.ColorfulLog)
                 {
                     System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(line, @"\[.*?m", string.Empty));
+                    return;
                 }
-                else
+                if (usingTitle && line.Contains("https"))
                 {
-                    if (line.Contains("https"))
-                    {
-                        line = System.Text.RegularExpressions.Regex.Replace(
-                            line,
-                            @"(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*))",
-                            "\x1b[4m\x1b[36m$1\x1b[0m");
-                    }
-                    System.Console.WriteLine(line + "\x1b[0m");
+                    line = System.Text.RegularExpressions.Regex.Replace(
+                        line,
+                        @"(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*))",
+                        "\x1b[4m\x1b[36m$1\x1b[0m");
                 }
+                System.Console.WriteLine(line + "\x1b[0m");
             }
         }
 #endif

@@ -88,7 +88,7 @@
                         Name="LookupDocs"
                         Click="MenuItem_Click"
                         Header="查看文档"
-                        SymbolIcon="DocumentFlowchart24"
+                        SymbolIcon="DocumentJavascript24"
                         Tag="LookupDocs" />
                     <ui:MenuItem
                         Name="GotoMarket"

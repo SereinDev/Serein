@@ -5,5 +5,4 @@ packages/
 MigrationBackup/
 TEST/
 FodyWeavers.xsd
-*.info
 Serein/Universal/buildinfo.info

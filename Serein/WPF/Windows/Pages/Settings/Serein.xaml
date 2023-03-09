@@ -61,10 +61,26 @@
                     TextChanged="MaxCacheLines_TextChanged"
                     ToolTip="控制台的最大缓存行数（建议大于50）"
                     Value="100" />
+                <ui:Button
+                    Content="显示欢迎页"
+                    Click="WelPage_Click"
+                    Icon="BookMark24"
+                    Margin="0,15"
+                    />
             </StackPanel>
         </Grid>
+        <Expander Margin="0,15" ExpandDirection="Down">
+            <Expander.Header>
+                <TextBlock
+                    Name="Version"
+                    Grid.Column="1"
+                    VerticalAlignment="Center" />
+            </Expander.Header>
+            <TextBlock Name="BuildInfo"  TextWrapping="Wrap" />
+        </Expander>
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -83,15 +99,11 @@
                 Content="官网"
                 Icon="Link48"
                 NavigateUri="https://serein.cc/" />
+            <ui:Hyperlink
+                Grid.Column="3"
+                Content="用户协议"
+                Icon="Link48"
+                NavigateUri="https://serein.cc/#/More/Agreement" />
         </Grid>
-        <Expander Margin="0,15,0,7" ExpandDirection="Down">
-            <Expander.Header>
-                <TextBlock
-                    Name="Version"
-                    Grid.Column="1"
-                    VerticalAlignment="Center" />
-            </Expander.Header>
-            <TextBlock Name="BuildInfo"  TextWrapping="Wrap" />
-        </Expander>
     </StackPanel>
 </ui:UiPage>

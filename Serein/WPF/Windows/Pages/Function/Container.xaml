@@ -49,7 +49,7 @@
                 <ui:NavigationItem
                     x:Name="JSPluginNavigationItem"
                     Content="JS插件"
-                    Icon="PuzzleCubePiece20"
+                    Icon="Javascript24"
                     PageTag="jsplugin"
                     PageType="{x:Type pages:JSPlugin}" />
             </ui:NavigationCompact.Items>

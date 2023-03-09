@@ -161,6 +161,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="msg"></param>
         public void send(string msg) => _WebSocket.Send(msg);
+        
 #pragma warning restore IDE1006
 
         private enum WSEventType

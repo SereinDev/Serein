@@ -43,7 +43,7 @@ namespace Serein.Utils
             try
             {
                 Logger.Output(LogType.Debug,
-                    Net.Get($"https://api.user.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&start_time={StartTimeStamp}&server_status={ServerManager.Status}")
+                    Net.Get($"https://api.online-count.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&start_time={StartTimeStamp}&server_status={ServerManager.Status}")
                     .GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult());
             }
             catch (Exception e)
