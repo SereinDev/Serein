@@ -325,7 +325,7 @@ namespace Serein.Ui
                 Buttons = {
                         new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
                     },
-                MainInstruction = "详细信息",
+                MainInstruction = "当前版本详细信息",
                 WindowTitle = "Serein",
                 Content = "" +
                     $"当前版本：{Global.VERSION}\n" +

@@ -57,8 +57,14 @@ namespace Serein.Core.Server
         /// </summary>
         public static double CPUUsage { get; private set; }
 
+        /// <summary>
+        /// Motd对象
+        /// </summary>
         public static Motd Motd { get; private set; } = new();
 
+        /// <summary>
+        /// 更新计时器
+        /// </summary>
         private static Timer UpdateTimer;
 
         /// <summary>
@@ -101,6 +107,9 @@ namespace Serein.Core.Server
         };
 
 #if CONSOLE
+        /// <summary>
+        /// 上一次执行强制结束时间
+        /// </summary>
         private static DateTime LastKillTime = DateTime.Now;
 #endif
 
@@ -108,8 +117,7 @@ namespace Serein.Core.Server
         /// 启动服务器
         /// </summary>
         /// <returns>启动结果</returns>
-        public static bool Start()
-            => Start(false);
+        public static bool Start() => Start(false);
 
         /// <summary>
         /// 启动服务器

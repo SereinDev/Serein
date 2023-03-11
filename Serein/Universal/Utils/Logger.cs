@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Serein.Base;
+﻿using Serein.Base;
 using Serein.Extensions;
 using System;
 using System.Diagnostics;
@@ -154,7 +153,7 @@ namespace Serein.Utils
                     break;
                 case LogType.Version_New:
                     Program.Ui.ShowBalloonTip("发现新版本:\n" + line);
-                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{line}，你可以等待后台自动下载或手动点击下方链接获取最新版）");
+                    Program.Ui.SettingSereinVersion_Update($"当前版本：{Global.VERSION} （发现新版本:{line}，你可以{(Global.Settings.Serein.AutoUpdate ? "等待后台自动下载或手动" : string.Empty)}点击下方链接获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     Program.Ui.ShowBalloonTip(
@@ -223,7 +222,7 @@ namespace Serein.Utils
                             ),
                         expirationTime: TimeSpan.FromSeconds(10)
                         );
-                    Catalog.Settings.Serein?.UpdateVersion($"\n（发现新版本:{line}，你可以等待后台自动下载或手动点击下方链接获取最新版）");
+                    Catalog.Settings.Serein?.UpdateVersion($"\n（发现新版本:{line}，你可以{(Global.Settings.Serein.AutoUpdate ? "等待后台自动下载或手动" : string.Empty)}点击下方链接获取最新版）");
                     break;
                 case LogType.Version_Latest:
                     Catalog.Notification?.Show(

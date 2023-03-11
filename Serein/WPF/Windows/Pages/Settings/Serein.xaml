@@ -55,7 +55,7 @@
                     HorizontalAlignment="Left"
                     Icon="TextFirstLine24"
                     IntegersOnly="True"
-                    Max="250"
+                    Max="300"
                     Min="0"
                     Step="1"
                     TextChanged="MaxCacheLines_TextChanged"
