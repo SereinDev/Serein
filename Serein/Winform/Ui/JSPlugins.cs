@@ -30,7 +30,7 @@ namespace Serein.Ui
             JSPluginList.Items.Clear();
             foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
-                ListViewItem listViewItem = new ListViewItem(plugin.Name)
+                ListViewItem listViewItem = new(plugin.Name)
                 {
                     ForeColor = plugin.Available ? ForeColor : Color.Gray,
                     Tag = plugin.Namespace

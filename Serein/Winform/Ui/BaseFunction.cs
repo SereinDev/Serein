@@ -19,6 +19,9 @@ namespace Serein.Ui
         {
             switch (tabControl.SelectedIndex)
             {
+                case 2:
+                    LoadRegex();
+                    break;
                 case 5:
                     LoadMember();
                     break;

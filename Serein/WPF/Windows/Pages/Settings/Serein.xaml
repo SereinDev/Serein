@@ -91,19 +91,19 @@
                 NavigateUri="https://github.com/Zaitonn/Serein" />
             <ui:Hyperlink
                 Grid.Column="1"
-                Content="下载最新版"
-                Icon="Link48"
-                NavigateUri="https://github.com/Zaitonn/Serein/releases/latest" />
-            <ui:Hyperlink
-                Grid.Column="2"
                 Content="官网"
                 Icon="Link48"
                 NavigateUri="https://serein.cc/" />
             <ui:Hyperlink
-                Grid.Column="3"
+                Grid.Column="2"
                 Content="用户协议"
                 Icon="Link48"
                 NavigateUri="https://serein.cc/#/More/Agreement" />
+            <ui:Hyperlink
+                Grid.Column="3"
+                Content="下载最新版"
+                Icon="Link48"
+                NavigateUri="https://github.com/Zaitonn/Serein/releases/latest" />
         </Grid>
     </StackPanel>
 </ui:UiPage>

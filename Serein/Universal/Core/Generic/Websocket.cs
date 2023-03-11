@@ -50,7 +50,7 @@ namespace Serein.Core.Generic
             Matcher.SelfId = null;
             try
             {
-                WSClient = new WebSocket(
+                WSClient = new(
                     "ws://" + Global.Settings.Bot.Uri,
                     "",
                     null,

@@ -55,14 +55,9 @@ namespace Serein.Core.JSPlugin
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace))
             {
-                throw new ArgumentException("无法找到对应的命名空间");
+                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
-            _WebSocket = new WebSocket(
-                uri,
-                "",
-                null,
-                null
-                );
+            _WebSocket = new(uri);
             _WebSocket.Opened += (_, _) => Trigger(onopen, WSEventType.Opened);
             _WebSocket.Closed += (_, _) => Trigger(onclose, WSEventType.Closed);
             _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, WSEventType.MessageReceived, e);
@@ -129,7 +124,7 @@ namespace Serein.Core.JSPlugin
             }
             catch (Exception e)
             {
-                string message = e.GetFullMsg();
+                string message = e.ToFullMsg();
                 Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
                 Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
@@ -161,7 +156,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="msg"></param>
         public void send(string msg) => _WebSocket.Send(msg);
-        
+
 #pragma warning restore IDE1006
 
         private enum WSEventType

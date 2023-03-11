@@ -149,7 +149,7 @@ namespace Serein.Utils
         /// <summary>
         /// 总内存
         /// </summary>
-        public static ulong TotalRAM => (Info?.Hardware?.RAM?.Free ?? 1) / 1024;
+        public static ulong TotalRAM => (Info?.Hardware?.RAM?.Total ?? 1) / 1024;
 
         /// <summary>
         /// 内存占用百分比

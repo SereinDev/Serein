@@ -14,7 +14,7 @@ namespace Serein.Core.JSPlugin
     {
         public Plugin(string @namespace, PreLoadConfig config)
         {
-            Namespace = @namespace ?? throw new ArgumentOutOfRangeException();
+            Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             PreLoadConfig = config;
             Engine = JSEngine.Init(false, Namespace, TokenSource, PreLoadConfig);
             Name = @namespace;
@@ -247,7 +247,7 @@ namespace Serein.Core.JSPlugin
             }
             catch (Exception e)
             {
-                string message = e.GetFullMsg();
+                string message = e.ToFullMsg();
                 Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
                 Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
             }

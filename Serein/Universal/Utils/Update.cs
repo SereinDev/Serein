@@ -140,7 +140,7 @@ namespace Serein.Utils
             if (name.Contains(Global.TYPE))
             {
                 string netVer = Environment.Version.Major.ToString();
-                return 
+                return
                     !(Environment.OSVersion.Platform == PlatformID.Unix ^ name.Contains("unix")) &&
                     !(netVer == "4" ^ name.Contains("dotnetframework472")) &&
                     !(netVer == "6" ^ name.Contains("dotnet6"));

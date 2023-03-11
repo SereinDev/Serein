@@ -46,15 +46,18 @@ namespace Serein.Core.Generic
         /// <param name="line">控制台的消息</param>
         public static void Process(string line)
         {
-            foreach (Base.Regex regex in Global.RegexList)
+            lock (Global.RegexList)
             {
-                if (string.IsNullOrEmpty(regex.Expression) || regex.Area != 1)
+                foreach (Base.Regex regex in Global.RegexList)
                 {
-                    continue;
-                }
-                if (System.Text.RegularExpressions.Regex.IsMatch(line, regex.Expression))
-                {
-                    Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression));
+                    if (string.IsNullOrEmpty(regex.Expression) || regex.Area != 1)
+                    {
+                        continue;
+                    }
+                    if (System.Text.RegularExpressions.Regex.IsMatch(line, regex.Expression))
+                    {
+                        Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression));
+                    }
                 }
             }
         }
@@ -99,70 +102,73 @@ namespace Serein.Core.Generic
                     {
                         return;
                     }
-                    foreach (Base.Regex regex in Global.RegexList)
+                    lock (Global.RegexList)
                     {
-                        if (
-                            string.IsNullOrEmpty(regex.Expression) || // 表达式为空
-                            regex.Area <= 1 ||  // 禁用或控制台
-                            isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
-                            !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) || // 不匹配
-                            regex.Area == 2 && regex.Ignored.ToList().Contains(groupID) ||
-                            regex.Area == 3 && regex.Ignored.ToList().Contains(userID) // 忽略
-                            )
+                        foreach (Base.Regex regex in Global.RegexList)
                         {
-                            continue;
-                        }
-                        if (
-                            !(
-                            Global.Settings.Bot.PermissionList.Contains(userID) ||
-                            Global.Settings.Bot.GivePermissionToAllAdmin &&
-                            messageType == "group" && (
-                                packet.TryGetString("sender", "role") == "admin" ||
-                                packet.TryGetString("sender", "role") == "owner")
-                            ) &&
-                            regex.IsAdmin &&
-                            !isSelfMessage
-                            )
-                        {
-                            switch (regex.Area)
+                            if (
+                                string.IsNullOrEmpty(regex.Expression) || // 表达式为空
+                                regex.Area <= 1 ||  // 禁用或控制台
+                                isSelfMessage ^ regex.Area == 4 || // 自身消息与定义域矛盾
+                                !System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression) || // 不匹配
+                                regex.Area == 2 && regex.Ignored.ToList().Contains(groupID) ||
+                                regex.Area == 3 && regex.Ignored.ToList().Contains(userID) // 忽略
+                                )
                             {
-                                case 2:
-                                    EventTrigger.Trigger(Base.EventType.PermissionDeniedFromGroupMsg, groupID, userID);
-                                    break;
-                                case 3:
-                                    EventTrigger.Trigger(Base.EventType.PermissionDeniedFromPrivateMsg, -1, userID);
-                                    break;
+                                continue;
                             }
-                            continue;
-                        }
-                        if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression))
-                        {
-                            if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
+                            if (
+                                !(
+                                Global.Settings.Bot.PermissionList.Contains(userID) ||
+                                Global.Settings.Bot.GivePermissionToAllAdmin &&
+                                messageType == "group" && (
+                                    packet.TryGetString("sender", "role") == "admin" ||
+                                    packet.TryGetString("sender", "role") == "owner")
+                                ) &&
+                                regex.IsAdmin &&
+                                !isSelfMessage
+                                )
                             {
-                                Command.Run(
-                                    1,
-                                    regex.Command,
-                                    packet,
-                                    System.Text.RegularExpressions.Regex.Match(
-                                        rawMessage,
-                                        regex.Expression
-                                    ),
-                                    userID,
-                                    groupID
-                                );
+                                switch (regex.Area)
+                                {
+                                    case 2:
+                                        EventTrigger.Trigger(Base.EventType.PermissionDeniedFromGroupMsg, groupID, userID);
+                                        break;
+                                    case 3:
+                                        EventTrigger.Trigger(Base.EventType.PermissionDeniedFromPrivateMsg, -1, userID);
+                                        break;
+                                }
+                                continue;
                             }
-                            else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
+                            if (System.Text.RegularExpressions.Regex.IsMatch(rawMessage, regex.Expression))
                             {
-                                Command.Run(
-                                    1,
-                                    regex.Command,
-                                    packet,
-                                    System.Text.RegularExpressions.Regex.Match(
-                                        rawMessage,
-                                        regex.Expression
+                                if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
+                                {
+                                    Command.Run(
+                                        1,
+                                        regex.Command,
+                                        packet,
+                                        System.Text.RegularExpressions.Regex.Match(
+                                            rawMessage,
+                                            regex.Expression
                                         ),
-                                    userID
-                                );
+                                        userID,
+                                        groupID
+                                    );
+                                }
+                                else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
+                                {
+                                    Command.Run(
+                                        1,
+                                        regex.Command,
+                                        packet,
+                                        System.Text.RegularExpressions.Regex.Match(
+                                            rawMessage,
+                                            regex.Expression
+                                            ),
+                                        userID
+                                    );
+                                }
                             }
                         }
                     }

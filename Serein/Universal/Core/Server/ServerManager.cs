@@ -50,7 +50,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// 服务器状态
         /// </summary>
-        public static bool Status => ServerProcess != null && !ServerProcess.HasExited;
+        public static bool Status => !ServerProcess?.HasExited ?? false;
 
         /// <summary>
         /// CPU使用率
@@ -89,7 +89,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// 编码列表
         /// </summary>
-        public static readonly Encoding[] EncodingList =
+        private static readonly Encoding[] EncodingList =
         {
             new UTF8Encoding(false),
             new UTF8Encoding(true),
@@ -147,6 +147,8 @@ namespace Serein.Core.Server
                 Logger.Output(LogType.Server_Clear);
 #endif
                 Logger.Output(LogType.Server_Notice, "启动中");
+
+                #region 主变量初始化
                 ServerProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
@@ -159,7 +161,7 @@ namespace Serein.Core.Server
                 });
                 ServerProcess.EnableRaisingEvents = true;
                 ServerProcess.Exited += (_, _) => CloseAll();
-                InputWriter = new StreamWriter(
+                InputWriter = new(
                     ServerProcess.StandardInput.BaseStream,
                     EncodingList[Global.Settings.Server.InputEncoding]
                    )
@@ -169,7 +171,9 @@ namespace Serein.Core.Server
                 };
                 ServerProcess.BeginOutputReadLine();
                 ServerProcess.OutputDataReceived += SortOutputHandler;
+                #endregion
 
+                #region 变量初始化
                 Restart = false;
                 IsStoppedByUser = false;
                 LevelName = string.Empty;
@@ -178,16 +182,19 @@ namespace Serein.Core.Server
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
                 PrevProcessCpuTime = TimeSpan.Zero;
+                #endregion
 
+                #region 服务器启动后相关调用
                 Task.Run(() =>
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
                     JSFunc.Trigger(EventType.ServerStart);
-                    UpdateTimer = new Timer(2000) { AutoReset = true };
+                    UpdateTimer = new(2000) { AutoReset = true };
                     UpdateTimer.Elapsed += (_, _) => UpdateInfo();
                     UpdateTimer.Start();
                 });
                 return true;
+                #endregion
             }
             return false;
         }

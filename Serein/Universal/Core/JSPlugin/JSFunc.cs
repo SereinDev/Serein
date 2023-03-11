@@ -162,7 +162,7 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.GetFullMsg()}");
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
                     Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
@@ -229,7 +229,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 获取完整报错信息
         /// </summary>
-        public static string GetFullMsg(this Exception e)
+        public static string ToFullMsg(this Exception e)
         {
             if (e.InnerException is JavaScriptException javaScriptException1)
             {
@@ -264,6 +264,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? Array.Empty<long>()
                     });
                 }
+                IO.SaveRegex();
                 return true;
             }
             return false;
@@ -294,6 +295,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? selected.Ignored
                     };
                 }
+                IO.SaveRegex();
                 return true;
             }
             return false;
@@ -311,6 +313,7 @@ namespace Serein.Core.JSPlugin
                 {
                     Global.RegexList.RemoveAt(index);
                 }
+                IO.SaveRegex();
                 return true;
             }
             return false;

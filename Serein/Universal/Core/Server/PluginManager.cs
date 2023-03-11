@@ -170,7 +170,7 @@ namespace Serein.Core.Server
         /// <returns>相对路径</returns>
         public static string GetRelativeUri(string file)
         {
-            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new Uri(file)).OriginalString);
+            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new(file)).OriginalString);
         }
 
         /// <summary>

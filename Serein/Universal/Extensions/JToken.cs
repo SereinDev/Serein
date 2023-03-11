@@ -43,6 +43,6 @@ namespace Serein.Extensions
         /// <param name="obj">对象</param>
         /// <returns>序列化后的JSON文本</returns>
         public static string ToJson(this object obj)
-            => obj != null ? JsonConvert.SerializeObject(obj) : string.Empty;
+            => obj?.ToJson(Formatting.None) ?? string.Empty;
     }
 }
