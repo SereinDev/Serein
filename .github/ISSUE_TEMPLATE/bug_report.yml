@@ -9,10 +9,9 @@ body:
     attributes:
       label: 当前使用的Serein版本
       description: |
-        查看方法：
-        - 命令行：输入`version`；
-        - winform：点击设置，拉到最底后的版本查看；
-        - wpf：设置-Serein设置
+        命令行：输入`version`
+        winform：点击设置，拉到最底后的版本查看
+        wpf：设置-Serein设置
     validations:
       required: true
 

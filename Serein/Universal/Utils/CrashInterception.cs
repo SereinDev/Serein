@@ -78,7 +78,7 @@ namespace Serein.Utils
                     $"◦ 崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\n" +
                     $"◦ 反馈此问题可以帮助作者更好的改进Serein",
                 MainIcon = TaskDialogIcon.Error,
-                Footer = "你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new?labels=bug\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
+                Footer = $"你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new?labels=%E2%9D%97+%E5%B4%A9%E6%BA%83&template=crush_report.yml&title=崩溃反馈+{e.GetType()}\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
                 FooterIcon = TaskDialogIcon.Information,
                 EnableHyperlinks = true,
                 ExpandedInformation = exceptionMsg
