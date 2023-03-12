@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 文档相关
+    url: https://github.com/Zaitonn/Serein-Docs/issues/new
+    about: 文档的问题请到对应仓库反馈

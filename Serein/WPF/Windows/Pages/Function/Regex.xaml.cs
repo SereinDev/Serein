@@ -125,7 +125,7 @@ namespace Serein.Windows.Pages.Function
             }
             else
             {
-                if (regex.TestRegex())
+                if (!regex.TestRegex())
                 {
                     Catalog.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
                     return false;
