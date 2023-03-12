@@ -18,7 +18,10 @@ namespace Serein.Windows.Pages.Server
             UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
             UpdateInfoTimer.Start();
             PanelRichTextBox.Document.Blocks.Clear();
-            Catalog.Server.Cache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+            lock (Catalog.Server.Cache)
+            {
+                Catalog.Server.Cache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+            }
             Catalog.Server.Panel = this;
         }
 

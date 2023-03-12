@@ -11,7 +11,6 @@ using System.Linq;
 using System.Windows.Forms;
 #elif WPF
 using Serein.Windows;
-using System.Windows.Documents;
 using System.Windows.Controls;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -398,7 +397,7 @@ namespace Serein.Utils
             MessageBox messageBox = new()
             {
                 Title = caption,
-                Content = new TextBlock()
+                Content = new TextBlock
                 {
                     Text = text,
                     TextWrapping = System.Windows.TextWrapping.WrapWithOverflow

@@ -15,7 +15,10 @@ namespace Serein.Windows.Pages.Function
             InitializeComponent();
             Load();
             PluginRichTextBox.Document.Blocks.Clear();
-            Catalog.Function.PluginCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+            lock (Catalog.Function.PluginCache)
+            {
+                Catalog.Function.PluginCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+            }
             Catalog.Function.JSPlugin = this;
         }
 
