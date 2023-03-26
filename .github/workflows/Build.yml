@@ -4,12 +4,11 @@ on:
   push:
     paths:
       - "**.cs"
-      - "**.yml"
   pull_request:
   workflow_dispatch:
 
 jobs:
-  Build: # 编译
+  Build:
     runs-on: windows-latest
     strategy:
       matrix:

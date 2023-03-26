@@ -10,36 +10,32 @@ updates:
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"
+      - "🔨依赖"
 
   - package-ecosystem: "nuget"
     directory: "Serein/Console_For_Unix/"
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"
+      - "🔨依赖"
 
   - package-ecosystem: "nuget"
     directory: "Serein/Winform/"
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"
+      - "🔨依赖"
 
   - package-ecosystem: "nuget"
     directory: "Serein/WPF/"
     schedule:
       interval: "weekly"
     labels:
-      - "dependencies"
-    ignore:
-      - dependency-name: "WPF-UI"
-        versions:
-          - "2.0.*" # 暂时不更新依赖
+      - "🔨依赖"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     labels:
-      - "dependencies"
+      - "🔨依赖"

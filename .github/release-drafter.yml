@@ -2,10 +2,17 @@ name-template: 'v$RESOLVED_VERSION'
 tag-prefix: 'v'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  ## Main Changes in v$RESOLVED_VERSION
+  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/v$RESOLVED_VERSION/total)  ![visitor](https://visitor-badge.glitch.me/badge?page_id=Zaitonn.Serein&left_text=Serein%20Visitor)
 
-  >查看 **[✨完整更新日志](http://serein.cc/#/Versions/v$RESOLVED_VERSION)**
-  
-  ---
-  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Zaitonn/Serein/v$RESOLVED_VERSION/total?style=for-the-badge)
-  > 推荐阅读：[如何选择不同的版本](https://serein.cc/#/Tutorial/DifferentVersions)
+  [**✨完整更新日志**](https://serein.cc/#/Versions/v$RESOLVED_VERSION)
+  新版本的所有更新日志都在这里啦
+
+  [**Serein 问卷调查**](https://docs.qq.com/form/page/DTndVd0dmVWl4VFph)  
+  想耽误您大约两分钟时间来填写这个问卷，这有助于作者更好地了解用户画像，开发更多功能ヾ(•ω•`)o
+
+  [**如何选择不同的版本**](https://serein.cc/#/Tutorial/DifferentVersions) / [**在线统计 - Serein**](https://online-count.serein.cc/)
+  如果你是第一次使用Serein的小白或者不知道选以下哪一个版本，你可以先看看上面的教程或看看别人正在用什么。这会对你非常非常有帮助！！
+
+  [**自建下载加速站**](https://download.serein.cc/)
+  如果出现文件下载速度过慢的情况，可以复制下载地址然后打开上面的网页粘贴
+

@@ -28,8 +28,8 @@ namespace Serein.Core.JSPlugin.Motd
         public bool tryGet() => base.TryGet();
         public string ip => IP.ToString();
         public int port => Port;
-        public int onlinePlayer => onlinePlayer;
-        public int maxPlayer => maxPlayer;
+        public int onlinePlayer => OnlinePlayer;
+        public int maxPlayer => MaxPlayer;
         public string description => Description;
         public string protocol => Protocol;
         public string version => Version;

@@ -161,6 +161,8 @@ namespace Serein.Core.JSPlugin
                 new Func<bool>(() => ServerManager.Kill(true)));
             engine.SetValue("serein_getServerStatus",
                 new Func<bool>(() => ServerManager.Status));
+            engine.SetValue("serein_getServerMotd",
+                new Func<ReadonlyMotd>(() => new(ServerManager.Motd)));
             engine.SetValue("serein_sendCmd",
                 new Action<string, bool>((commnad, usingUnicode) => ServerManager.InputCommand(commnad, usingUnicode, false)));
             engine.SetValue("serein_getServerTime",
@@ -237,6 +239,7 @@ namespace Serein.Core.JSPlugin
                     getServerTime: serein_getServerTime,
                     getServerCPUUsage: serein_getServerCPUUsage,
                     getServerFile: serein_getServerFile,
+                    getServerMotd: serein_getServerMotd,
                     sendGroup: serein_sendGroup,
                     sendPrivate: serein_sendPrivate,
                     sendTemp: serein_sendTemp,
