@@ -307,7 +307,7 @@ namespace Serein.Core.Generic
             {
                 for (int i = match.Groups.Count; i >= 0; i--)
                 {
-                    value = value.Replace($"${i}", match.Groups[i].Value);
+                    value = System.Text.RegularExpressions.Regex.Replace(value, $"\\${i}(?!\\d)", match.Groups[i].Value);
                 }
             }
             Logger.Output(Base.LogType.Debug, value);
@@ -446,12 +446,12 @@ namespace Serein.Core.Generic
             /// <summary>
             /// 游戏ID正则
             /// </summary>
-            public static readonly Regex GameID = new(@"%GameID:(\d+)%", RegexOptions.Compiled);
+            public static readonly Regex GameID = new(@"%GameID:(\d+)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             /// <summary>
             /// ID正则
             /// </summary>
-            public static readonly Regex ID = new(@"%ID:([^%]+?)%", RegexOptions.Compiled);
+            public static readonly Regex ID = new(@"%ID:([^%]+?)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
     }
 }

@@ -28,11 +28,6 @@ namespace Serein.Utils
             CrashInterception.Init();
             Debug.WriteLine(Global.LOGO);
             Directory.SetCurrentDirectory(Global.PATH);
-            if (Args.Contains("debug"))
-            {
-                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
-            }
-
 #if WINFORM
             ResourcesManager.InitConsole();
 #endif
@@ -41,6 +36,10 @@ namespace Serein.Utils
 #if !CONSOLE
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
 #endif
+            if (Args.Contains("debug"))
+            {
+                Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
+            }
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.LazyTimer.Stop();
         }
 

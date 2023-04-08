@@ -20,18 +20,9 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.x
-
-      - name: Setup MSBuild.exe
-        uses: microsoft/setup-msbuild@v1.1.2
-
-      - name: Setup NuGet
-        uses: nuget/setup-nuget@v1
-        with:
-          nuget-api-key: ${{ secrets.NuGetAPIKey }}
-          nuget-version: "5.x"
 
       - name: Write Build info
         shell: cmd
@@ -40,14 +31,14 @@ jobs:
           cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\buildinfo.info
           cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\buildinfo.info
 
-      - name: NuGet restore
-        run: nuget restore "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
+      - name: DotNet restore
+        run: dotnet restore
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
+        run: dotnet build -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
+        run: dotnet build "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
 
       - name: Upload Serein(Release,dotnet6)
         uses: actions/upload-artifact@v3

@@ -5,6 +5,7 @@ using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Serein.Core.Generic
 {
@@ -39,7 +40,6 @@ namespace Serein.Core.Generic
 
         private static string messageReceived, messageSent, selfId;
 
-
         /// <summary>
         /// 处理来自控制台的消息
         /// </summary>
@@ -50,14 +50,11 @@ namespace Serein.Core.Generic
             {
                 foreach (Base.Regex regex in Global.RegexList)
                 {
-                    if (string.IsNullOrEmpty(regex.Expression) || regex.Area != 1)
+                    if (string.IsNullOrEmpty(regex.Expression) || regex.Area != 1 || !System.Text.RegularExpressions.Regex.IsMatch(line, regex.Expression))
                     {
                         continue;
                     }
-                    if (System.Text.RegularExpressions.Regex.IsMatch(line, regex.Expression))
-                    {
-                        Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression));
-                    }
+                    Task.Run(() => Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression)));
                 }
             }
         }
