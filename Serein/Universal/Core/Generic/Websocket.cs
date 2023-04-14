@@ -127,19 +127,32 @@ namespace Serein.Core.Generic
         /// <param name="target">目标对象</param>
         /// <param name="canBeEscaped">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool isPrivate, string message, object target, bool canBeEscaped = true)
+        public static bool Send(bool isPrivate, string message, string target, bool canBeEscaped = true)
+            => Send(isPrivate, message, long.TryParse(target, out long targetID) ? targetID : -1, canBeEscaped);
+
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        /// <param name="isPrivate">是否私聊消息</param>
+        /// <param name="message">消息内容</param>
+        /// <param name="target">目标对象</param>
+        /// <param name="canBeEscaped">纯文本发送</param>
+        /// <returns>发送结果</returns>
+        public static bool Send(bool isPrivate, string message, long target, bool canBeEscaped = true)
         {
             if (Status)
             {
-                long targetNumber = long.TryParse(target.ToString(), out long result) ? result : -1;
                 JObject textJObject = new()
                 {
-                    { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
+                    {
+                        "action",
+                        isPrivate ? "send_private_msg" : "send_group_msg"
+                    },
                     {
                         "params",
                         new JObject
                         {
-                            { isPrivate ? "user_id" : "group_id", targetNumber },
+                            { isPrivate ? "user_id" : "group_id", target },
                             { "message", message },
                             { "auto_escape", canBeEscaped && Global.Settings.Bot.AutoEscape }
                         }

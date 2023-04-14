@@ -37,7 +37,7 @@ Win7或WinServer2012以上
 
 ## 使用的Package包
 
-详见 [](https://github.com/Zaitonn/Serein/network/dependencies)
+详见 <https://github.com/Zaitonn/Serein/network/dependencies>
 
 ## 编译
 
@@ -66,11 +66,11 @@ NET SDK >= 6.0
 
 ## 关于
 
-详见 [关于 - Serein](https://serein.cc/#/More/About)
+详见 [关于 - Serein](https://serein.cc/docs/more/about)
 
 ## 使用协议
 
-[使用协议 - Serein](https://serein.cc/#/More/Agreement)
+[使用协议 - Serein](https://serein.cc/docs/more/agreement)
 
 ---
 

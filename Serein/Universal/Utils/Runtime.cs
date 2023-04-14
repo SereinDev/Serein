@@ -89,7 +89,7 @@ namespace Serein.Utils
                     "◦ 官网文档：<a href=\"https://serein.cc\">https://serein.cc</a>\n" +
                     "◦ GitHub仓库：<a href=\"https://github.com/Zaitonn/Serein\">https://github.com/Zaitonn/Serein</a>\n" +
                     "◦ 交流群：<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">954829203</a>",
-                Footer = "使用此软件即视为你已阅读并同意了<a href=\"https://serein.cc/#/More/Agreement\">用户协议</a>",
+                Footer = "使用此软件即视为你已阅读并同意了<a href=\"https://serein.cc/docs/more/agreement\">用户协议</a>",
                 FooterIcon = TaskDialogIcon.Information,
                 EnableHyperlinks = true,
                 ExpandedInformation = "此软件与Mojang Studio、网易、Microsoft没有从属关系\n" +
@@ -105,8 +105,7 @@ namespace Serein.Utils
                 "◦ 官网文档：https://serein.cc\n" +
                 "◦ GitHub仓库：https://github.com/Zaitonn/Serein\n" +
                 "◦ 交流群：\x1b[4m\x1b[36m954829203\x1b[0m\n" +
-                "◦ 关于&隐私：https://serein.cc/#/More/About\n" +
-                "◦ 使用此软件即视为你已阅读并同意了用户协议（https://serein.cc/#/More/Agreement）" +
+                "◦ 使用此软件即视为你已阅读并同意了用户协议（https://serein.cc/docs/more/agreement）" +
                 "（控制台不支持超链接，你可以复制后到浏览器中打开）");
 #endif
         }

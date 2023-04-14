@@ -15,7 +15,7 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private void LoadSettings()
+        public void LoadSettings()
         {
             SettingServerEnableRestart.Checked = Global.Settings.Server.EnableRestart;
             SettingServerEnableOutputCommand.Checked = Global.Settings.Server.EnableOutputCommand;
@@ -123,15 +123,15 @@ namespace Serein.Ui
         private void SettingSereinAutoUpdate_Click(object sender, EventArgs e)
             => Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
         private void SettingSereinAbout_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/More/About") { UseShellExecute = true });
+            => Process.Start(new ProcessStartInfo("https://serein.cc/docs/more/about") { UseShellExecute = true });
         private void SettingSereinPage_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
         private void SettingSereinExtension_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/Extension") { UseShellExecute = true });
+            => Process.Start(new ProcessStartInfo("https://market.serein.cc") { UseShellExecute = true });
         private void SettingSereinDownload_Click(object sender, EventArgs e)
             => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
         private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Event") { UseShellExecute = true });
+            => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/event") { UseShellExecute = true });
         private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
             => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
 

@@ -24,7 +24,7 @@ namespace Serein.Core.Generic
             };
             foreach (string command in commandGroup)
             {
-                Command.Run(4, command);
+                Command.Run(Base.CommandOrigin.EventTrigger, command);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Serein.Core.Generic
                     foreach (string command in commandGroup)
                     {
                         Command.Run(
-                            4,
+                            Base.CommandOrigin.EventTrigger,
                             Regex.Replace(command, "%ID%", userID.ToString(), RegexOptions.IgnoreCase),
                             groupID: groupID
                             );
@@ -105,7 +105,7 @@ namespace Serein.Core.Generic
                             command_copy = Regex.Replace(command_copy, "%Exception%", motd.Exception, RegexOptions.IgnoreCase);
                         }
                         Command.Run(
-                            4,
+                            Base.CommandOrigin.EventTrigger,
                             command_copy,
                             null,
                             null,

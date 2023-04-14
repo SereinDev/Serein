@@ -6,7 +6,7 @@ namespace Serein.Settings
 {
     internal class Event
     {
-        public static string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/#/Function/Command、https://serein.cc/#/Function/Event";
+        public static string Notice { get; } = "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/docs/guide/command、https://serein.cc/docs/guide/event";
 
         public string[] BindingSucceed { get; set; } = new[]
         {

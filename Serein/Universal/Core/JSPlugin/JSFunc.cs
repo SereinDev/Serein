@@ -409,5 +409,60 @@ namespace Serein.Core.JSPlugin
                 }, Formatting.Indented));
             Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
+
+        /// <summary>
+        /// 热重载文件
+        /// </summary>
+        /// <param name="namespace">命名空间</param>
+        /// <param name="type">类型</param>
+        /// <returns>加载结果</returns>
+        public static bool ReloadFiles(string @namespace, string type)
+        {
+            try
+            {
+                string typeName = null;
+                switch (type?.ToLowerInvariant())
+                {
+                    case null:
+                    case "all":
+                        IO.ReadAll();
+                        typeName = "所有";
+                        break;
+                    case "regex":
+                        IO.ReadRegex();
+                        typeName = "正则";
+                        break;
+                    case "member":
+                        IO.ReadMember();
+                        typeName = "成员";
+                        break;
+                    case "schedule":
+                        IO.ReadSchedule();
+                        typeName = "定时任务";
+                        break;
+                    case "groupcache":
+                        IO.ReadGroupCache();
+                        typeName = "群组缓存";
+                        break;
+                    case "settings":
+                        IO.ReadSettings();
+                        typeName = "设置";
+                        break;
+                    default:
+                        throw new NotSupportedException("重新加载类型未知");
+                }
+                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{typeName ?? "未知"}文件");
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (!string.IsNullOrEmpty(@namespace))
+                {
+                    Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
+                    Logger.Output(LogType.Debug, type, e);
+                }
+                return false;
+            }
+        }
     }
 }

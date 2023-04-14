@@ -98,7 +98,7 @@
                 Grid.Column="2"
                 Content="用户协议"
                 Icon="Link48"
-                NavigateUri="https://serein.cc/#/More/Agreement" />
+                NavigateUri="https://serein.cc/docs/more/agreement" />
             <ui:Hyperlink
                 Grid.Column="3"
                 Content="下载最新版"

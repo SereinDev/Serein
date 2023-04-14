@@ -69,6 +69,6 @@ namespace Serein.Ui
             JSPluginList.SelectedItems[0].ForeColor != Color.Gray;
 
         private void JSPluginListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) => JSPluginWebBrowser_Invoke("#clear");
-        private void JSPluginListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
+        private void JSPluginListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/development/intro") { UseShellExecute = true });
     }
 }

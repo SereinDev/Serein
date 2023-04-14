@@ -25,7 +25,7 @@ namespace Serein.Core.JSPlugin
         /// 初始化JS引擎
         /// </summary>
         /// <returns>JS引擎</returns>
-        public static Engine Init() => Init(true, null, null, null);
+        public static Engine Init() => Create(true, null, null, null);
 
         /// <summary>
         /// 初始化JS引擎
@@ -34,7 +34,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Init(bool isExecuteByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
+        public static Engine Create(bool isExecuteByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
@@ -98,9 +98,9 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_setPreLoadConfig",
                     new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
                 engine.SetValue("setTimeout",
-                    new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, false)));
+                    new Func<JsValue, JsValue, JsValue>((function, interval) => JSFunc.SetTimer(@namespace, function, interval, false)));
                 engine.SetValue("setInterval",
-                    new Func<JsValue, JsValue, JsValue>((Function, Interval) => JSFunc.SetTimer(@namespace, Function, Interval, true)));
+                    new Func<JsValue, JsValue, JsValue>((function, interval) => JSFunc.SetTimer(@namespace, function, interval, true)));
                 engine.SetValue("clearTimeout",
                     new Func<JsValue, bool>(JSFunc.ClearTimer));
                 engine.SetValue("clearInterval",
@@ -144,7 +144,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getNetSpeed",
                 new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
             engine.SetValue("serein_runCommand",
-                new Action<string>((command) => Command.Run(5, command)));
+                new Action<string>((command) => Command.Run(CommandOrigin.Javascript, command)));
             engine.SetValue("serein_getSettings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("serein_getSettingsObject",
@@ -203,6 +203,8 @@ namespace Serein.Core.JSPlugin
                 new Func<int, string, int, bool, string, string, long[], bool>(JSFunc.EditRegex));
             engine.SetValue("serein_removeRegex",
                 new Func<int, bool>(JSFunc.RemoveRegex));
+            engine.SetValue("serein_reloadFiles",
+                new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("getMD5",
@@ -220,15 +222,28 @@ namespace Serein.Core.JSPlugin
                     path: serein_path,
                     namespace: serein_namespace,
                     version: serein_version,
+
                     getSettings: serein_getSettings,
                     getSettingsObject: serein_getSettingsObject,
                     debugLog: serein_debugLog,
                     runCommand: serein_runCommand,
                     registerPlugin: serein_registerPlugin,
                     setListener: serein_setListener,
+                    getPluginList: serein_getPluginList,
+                    getRegexs: serein_getRegexs,
+                    addRegex: serein_addRegex,
+                    editRegex: serein_editRegex,
+                    removeRegex: serein_removeRegex,
+                    setVariable: serein_setVariable,
+                    import: serein_import,
+                    export: serein_export,
+                    setPreLoadConfig: serein_setPreLoadConfig,
+                    reloadFiles: serein_reloadFiles,
+
                     getCPUUsage: serein_getCPUUsage,
                     getNetSpeed: serein_getNetSpeed,
                     getSysInfo: serein_getSysinfo,
+
                     getMotdpe: serein_getMotdpe,
                     getMotdje: serein_getMotdje,
                     startServer: serein_startServer,
@@ -240,27 +255,20 @@ namespace Serein.Core.JSPlugin
                     getServerCPUUsage: serein_getServerCPUUsage,
                     getServerFile: serein_getServerFile,
                     getServerMotd: serein_getServerMotd,
+
                     sendGroup: serein_sendGroup,
                     sendPrivate: serein_sendPrivate,
                     sendTemp: serein_sendTemp,
                     sendPacket: serein_sendPacket,
                     getWsStatus: serein_getWsStatus,
+                    getGroupCache: serein_getGroupCache,
+
                     bindMember: serein_bindMember,
                     unbindMember: serein_unbindMember,
                     getID: serein_getID,
                     getGameID: serein_getGameID,
-                    getGroupCache: serein_getGroupCache,
-                    getPluginList: serein_getPluginList,
                     getUserName: serein_getUserName,
-                    getRegexs: serein_getRegexs,
-                    addRegex: serein_addRegex,
-                    editRegex: serein_editRegex,
-                    removeRegex: serein_removeRegex,
-                    setVariable: serein_setVariable,
-                    import: serein_import,
-                    export: serein_export,
-                    setPreLoadConfig: serein_setPreLoadConfig
-                    };"
+                };"
             );
             return engine;
         }

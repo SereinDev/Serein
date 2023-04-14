@@ -63,8 +63,8 @@ namespace Serein.Windows.Pages.Function
                     Catalog.MainWindow.RegexEditor.Hide();
                     ActionType = 0;
                 }
-                string Tag = menuItem.Tag as string ?? string.Empty;
-                switch (Tag)
+                string tag = menuItem.Tag as string ?? string.Empty;
+                switch (tag)
                 {
                     case "Add":
                         Catalog.MainWindow.OpenRegexEditor();
@@ -108,10 +108,10 @@ namespace Serein.Windows.Pages.Function
                         Load();
                         break;
                     case "LookupCommand":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Command") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/command") { UseShellExecute = true });
                         break;
                     case "LookupVariables":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Variables") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });
                         break;
                 }
             }

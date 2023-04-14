@@ -96,7 +96,7 @@ namespace Serein.Core.JSPlugin
             }
             else
             {
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://serein.cc/Extension/");
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
             }
         }
 

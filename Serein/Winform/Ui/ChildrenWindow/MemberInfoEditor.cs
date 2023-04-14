@@ -43,7 +43,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void MemberInfoEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Member") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/member") { UseShellExecute = true });
         }
     }
 }

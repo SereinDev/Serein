@@ -83,6 +83,11 @@
         /// <summary>
         /// 调试输出
         /// </summary>
-        DebugOutput
+        DebugOutput,
+
+        //// <summary>
+        /// 重新加载所有文件
+        /// </summary>
+        Reload
     }
 }

@@ -54,7 +54,7 @@ namespace Serein.Core.Generic
                     {
                         continue;
                     }
-                    Task.Run(() => Command.Run(2, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression)));
+                    Task.Run(() => Command.Run(Base.CommandOrigin.Console, regex.Command, msgMatch: System.Text.RegularExpressions.Regex.Match(line, regex.Expression)));
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace Serein.Core.Generic
                                 if ((regex.Area == 4 || regex.Area == 2) && messageType == "group")
                                 {
                                     Command.Run(
-                                        1,
+                                        Base.CommandOrigin.Msg,
                                         regex.Command,
                                         packet,
                                         System.Text.RegularExpressions.Regex.Match(
@@ -156,7 +156,7 @@ namespace Serein.Core.Generic
                                 else if ((regex.Area == 4 || regex.Area == 3) && messageType == "private")
                                 {
                                     Command.Run(
-                                        1,
+                                        Base.CommandOrigin.Msg,
                                         regex.Command,
                                         packet,
                                         System.Text.RegularExpressions.Regex.Match(

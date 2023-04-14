@@ -242,7 +242,7 @@
                 HorizontalAlignment="Center"
                 Content="扩展市场"
                 Icon="Link24"
-                NavigateUri="https://serein.cc/Extension" />
+                NavigateUri="https://market.serein.cc" />
             <ui:Anchor
                 Grid.Row="2"
                 Grid.Column="2"

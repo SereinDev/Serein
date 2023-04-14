@@ -67,10 +67,10 @@ namespace Serein.Windows.Pages.Function
                         Catalog.Function.PluginCache.Clear();
                         break;
                     case "LookupDocs":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/JSDocs/README") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/development/intro") { UseShellExecute = true });
                         break;
                     case "GotoMarket":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/Extension/") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo("https://market.serein.cc/") { UseShellExecute = true });
                         break;
                     case "Disable":
                         if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.ContainsKey(listViewItem.Tag.ToString()))

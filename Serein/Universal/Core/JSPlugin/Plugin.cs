@@ -16,7 +16,7 @@ namespace Serein.Core.JSPlugin
         {
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             PreLoadConfig = config;
-            Engine = JSEngine.Init(false, Namespace, TokenSource, PreLoadConfig);
+            Engine = JSEngine.Create(false, Namespace, TokenSource, PreLoadConfig);
             Name = @namespace;
         }
 

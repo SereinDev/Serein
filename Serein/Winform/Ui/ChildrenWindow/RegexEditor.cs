@@ -140,7 +140,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void RegexEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/#/Function/Regex") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/regex") { UseShellExecute = true });
         }
     }
 }

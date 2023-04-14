@@ -15,7 +15,7 @@ namespace Serein
         /// <summary>
         /// 启动时间
         /// </summary>
-        public static DateTime StartTime = DateTime.Now;
+        public static readonly DateTime StartTime = DateTime.Now;
 
         /// <summary>
         /// 版本号

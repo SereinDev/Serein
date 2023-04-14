@@ -71,7 +71,7 @@ namespace Serein.Core.Generic
         /// <param name="groupID">群聊ID</param>
         /// <param name="disableMotd">禁用Motd获取</param>
         public static void Run(
-            int inputType,
+            Base.CommandOrigin inputType,
             string command,
             JObject jObject = null,
             Match msgMatch = null,
@@ -107,7 +107,7 @@ namespace Serein.Core.Generic
             string value = GetValue(command, msgMatch);
             value = ApplyVariables(value, jObject, disableMotd);
             ExecuteCommand(type, inputType, command, value, groupID, userID, jObject);
-            if (inputType == 1 && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
+            if (inputType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
             {
                 Binder.Update(jObject, userID);
             }
@@ -118,7 +118,7 @@ namespace Serein.Core.Generic
         /// </summary>
         private static void ExecuteCommand(
             Base.CommandType type,
-            int inputType,
+            Base.CommandOrigin inputType,
             string command,
             string value,
             long groupID,
@@ -133,7 +133,7 @@ namespace Serein.Core.Generic
                 case Base.CommandType.ServerInput:
                 case Base.CommandType.ServerInputWithUnicode:
                     if (Global.Settings.Bot.EnbaleParseAt
-                        && inputType == 1
+                        && inputType == Base.CommandOrigin.Msg
                         )
                     {
                         value = ParseAt(value, groupID);
@@ -142,40 +142,40 @@ namespace Serein.Core.Generic
                     ServerManager.InputCommand(value, type == Base.CommandType.ServerInputWithUnicode, true);
                     break;
                 case Base.CommandType.SendGivenGroupMsg:
-                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
+                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != Base.CommandOrigin.EventTrigger);
                     break;
                 case Base.CommandType.SendGivenPrivateMsg:
-                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != 4);
+                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != Base.CommandOrigin.EventTrigger);
                     break;
                 case Base.CommandType.SendGroupMsg:
-                    Websocket.Send(false, value, groupID, inputType != 4);
+                    Websocket.Send(false, value, groupID, inputType != Base.CommandOrigin.EventTrigger);
                     break;
                 case Base.CommandType.SendPrivateMsg:
-                    if ((inputType == 1 || inputType == 4))
+                    if (inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger)
                     {
-                        Websocket.Send(true, value, userID, inputType != 4);
+                        Websocket.Send(true, value, userID, inputType != Base.CommandOrigin.EventTrigger);
                     }
                     break;
                 case Base.CommandType.SendTempMsg:
-                    if (inputType == 1 && groupID != -1 && userID != -1)
+                    if (inputType == Base.CommandOrigin.Msg && groupID != -1 && userID != -1)
                     {
                         Websocket.Send(groupID, userID, value);
                     }
                     break;
                 case Base.CommandType.Bind:
-                    if ((inputType == 1 || inputType == 4) && groupID != -1)
+                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && groupID != -1)
                     {
                         Binder.Bind(jObject, value, userID, groupID);
                     }
                     break;
                 case Base.CommandType.Unbind:
-                    if ((inputType == 1 || inputType == 4) && groupID != -1)
+                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && groupID != -1)
                     {
                         Binder.UnBind(long.TryParse(value, out long i) ? i : -1, groupID);
                     }
                     break;
                 case Base.CommandType.RequestMotdpe:
-                    if (inputType == 1 && (groupID != -1 || userID != -1))
+                    if (inputType == Base.CommandOrigin.Msg && (groupID != -1 || userID != -1))
                     {
                         Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
@@ -184,7 +184,7 @@ namespace Serein.Core.Generic
                     }
                     break;
                 case Base.CommandType.RequestMotdje:
-                    if (inputType == 1 && (groupID != -1 || userID != -1))
+                    if (inputType == Base.CommandOrigin.Msg && (groupID != -1 || userID != -1))
                     {
                         Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
@@ -193,13 +193,13 @@ namespace Serein.Core.Generic
                     }
                     break;
                 case Base.CommandType.ExecuteJavascriptCodes:
-                    if (inputType != 5)
+                    if (inputType != Base.CommandOrigin.Javascript)
                     {
                         Task.Run(() => JSEngine.Init().Execute(value));
                     }
                     break;
                 case Base.CommandType.ExecuteJavascriptCodesWithNamespace:
-                    if (inputType != 5)
+                    if (inputType != Base.CommandOrigin.Javascript)
                     {
                         string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
                         Task.Run(() =>
@@ -217,6 +217,52 @@ namespace Serein.Core.Generic
                                 }
                             }
                         });
+                    }
+                    break;
+                case Base.CommandType.Reload:
+                    try
+                    {
+                        switch (value.ToLowerInvariant())
+                        {
+                            case "all":
+                                IO.ReadAll();
+                                break;
+                            case "regex":
+                                IO.ReadRegex();
+                                break;
+                            case "member":
+                                IO.ReadMember();
+                                break;
+                            case "schedule":
+                                IO.ReadSchedule();
+                                break;
+                            case "groupcache":
+                                IO.ReadGroupCache();
+                                break;
+                            case "settings":
+                                IO.ReadSettings();
+                                break;
+                            default:
+                                throw new NotSupportedException("重新加载类型未知");
+                        }
+#if WINFORM
+                        Program.Ui?.Invoke(Program.Ui.LoadSettings);
+#endif
+                        if (inputType == Base.CommandOrigin.Msg)
+                        {
+                            Websocket.Send(groupID == -1, "重新加载成功", groupID == -1 ? userID : groupID, false);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        if (inputType == Base.CommandOrigin.Msg)
+                        {
+                            Websocket.Send(groupID == -1, $"重新加载失败\n{e.Message}", groupID == -1 ? userID : groupID, false);
+                        }
+                        else if (inputType == Base.CommandOrigin.Javascript)
+                        {
+                            throw new Exception("重新加载失败", e);
+                        }
                     }
                     break;
                 case Base.CommandType.DebugOutput:
@@ -275,6 +321,8 @@ namespace Serein.Core.Generic
                 case "js":
                 case "javascript":
                     return Base.CommandType.ExecuteJavascriptCodes;
+                case "reload":
+                    return Base.CommandType.Reload;
                 case "debug":
                     return Base.CommandType.DebugOutput;
                 default:
@@ -289,6 +337,10 @@ namespace Serein.Core.Generic
                     if (Regex.IsMatch(command, @"^(js|javascript):[^\|]+\|", RegexOptions.IgnoreCase))
                     {
                         return Base.CommandType.ExecuteJavascriptCodesWithNamespace;
+                    }
+                    if (Regex.IsMatch(command, @"^(reload)\|(all|regex|schedule|member|groupcache)", RegexOptions.IgnoreCase))
+                    {
+                        return Base.CommandType.Reload;
                     }
                     return Base.CommandType.Invalid;
             }
