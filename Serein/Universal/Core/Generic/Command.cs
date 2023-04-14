@@ -222,32 +222,7 @@ namespace Serein.Core.Generic
                 case Base.CommandType.Reload:
                     try
                     {
-                        switch (value.ToLowerInvariant())
-                        {
-                            case "all":
-                                IO.ReadAll();
-                                break;
-                            case "regex":
-                                IO.ReadRegex();
-                                break;
-                            case "member":
-                                IO.ReadMember();
-                                break;
-                            case "schedule":
-                                IO.ReadSchedule();
-                                break;
-                            case "groupcache":
-                                IO.ReadGroupCache();
-                                break;
-                            case "settings":
-                                IO.ReadSettings();
-                                break;
-                            default:
-                                throw new NotSupportedException("重新加载类型未知");
-                        }
-#if WINFORM
-                        Program.Ui?.Invoke(Program.Ui.LoadSettings);
-#endif
+                        IO.Reload(value);
                         if (inputType == Base.CommandOrigin.Msg)
                         {
                             Websocket.Send(groupID == -1, "重新加载成功", groupID == -1 ? userID : groupID, false);
@@ -261,7 +236,7 @@ namespace Serein.Core.Generic
                         }
                         else if (inputType == Base.CommandOrigin.Javascript)
                         {
-                            throw new Exception("重新加载失败", e);
+                            throw new NotSupportedException("重新加载失败", e);
                         }
                     }
                     break;

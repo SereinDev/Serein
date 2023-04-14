@@ -31,14 +31,14 @@ namespace Serein.Ui.ChildrenWindow
                     MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                try
+                CrontabSchedule crontabSchedule;
+                if ((crontabSchedule = CrontabSchedule.TryParse(Cron.Text)) != null)
                 {
-                    List<DateTime> Occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
-                    CronNextTime.Text = "下一次执行时间:" + Occurrences[0].ToString();
+                    CronNextTime.Text = "下一次执行时间:" + crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString();
                     CancelFlag = false;
                     Close();
                 }
-                catch
+                else
                 {
                     CronNextTime.Text = "Cron表达式无效";
                     MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -68,11 +68,11 @@ namespace Serein.Ui.ChildrenWindow
                 DateTimes = string.Empty;
             }
         }
-        public void Update(string CronText, string RemarkText, string CommandText)
+        public void Update(string cron, string remark, string command)
         {
-            Cron.Text = CronText;
-            Command.Text = CommandText;
-            Remark.Text = RemarkText;
+            Cron.Text = cron;
+            Command.Text = command;
+            Remark.Text = remark;
         }
 
         private void Cron_KeyDown(object sender, KeyEventArgs e)
@@ -89,6 +89,7 @@ namespace Serein.Ui.ChildrenWindow
             {
                 Confirm.Focus();
                 Confirm_Click(this, EventArgs.Empty);
+                e.Handled = true;
             }
         }
 
@@ -99,6 +100,7 @@ namespace Serein.Ui.ChildrenWindow
                 Remark.Focus();
             }
         }
+
         private void Cron_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))
@@ -106,6 +108,7 @@ namespace Serein.Ui.ChildrenWindow
                 e.Handled = true;
             }
         }
+
         private void Command_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))
@@ -113,6 +116,7 @@ namespace Serein.Ui.ChildrenWindow
                 e.Handled = true;
             }
         }
+
         private void Remark_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))

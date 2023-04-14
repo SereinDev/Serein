@@ -16,15 +16,11 @@ namespace Serein.Windows.Pages.Function
         {
             InitializeComponent();
             Catalog.Function.Member = this;
-            Load(false);
+            Load();
         }
 
-        private void Load(bool FromFile = true)
+        public void Load()
         {
-            if (FromFile)
-            {
-                IO.ReadMember();
-            }
             MemberListView.Items.Clear();
             foreach (Base.Member member in Global.MemberDict.Values.ToList())
             {
@@ -84,6 +80,7 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Refresh":
+                        IO.ReadMember();
                         Load();
                         break;
                 }

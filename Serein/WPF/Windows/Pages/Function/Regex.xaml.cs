@@ -13,6 +13,7 @@ namespace Serein.Windows.Pages.Function
     public partial class Regex : UiPage
     {
         private int ActionType;
+
         public Regex()
         {
             InitializeComponent();
@@ -20,11 +21,8 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Regex = this;
         }
 
-        public void Load() => Load(null, false);
-
-        public void Load(string filename, bool append)
+        public void Load()
         {
-            IO.ReadRegex(filename, append);
             RegexListView.Items.Clear();
             foreach (Base.Regex regex in Global.RegexList)
             {
@@ -105,6 +103,7 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Refresh":
+                        IO.ReadRegex();
                         Load();
                         break;
                     case "LookupCommand":

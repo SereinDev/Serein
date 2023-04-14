@@ -300,24 +300,24 @@ namespace Serein.Utils
             }
             if (File.Exists(Path.Combine("settings", "Server.json")))
             {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new Settings.Server();
+                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new();
             }
             if (File.Exists(Path.Combine("settings", "Serein.json")))
             {
-                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new Settings.Serein();
+                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new();
             }
             if (File.Exists(Path.Combine("settings", "Bot.json")))
             {
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)) ?? new Settings.Bot();
+                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)) ?? new();
             }
             if (File.Exists(Path.Combine("settings", "Matches.json")))
             {
-                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)) ?? new Matches();
+                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)) ?? new();
                 File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
             }
             if (File.Exists(Path.Combine("settings", "Event.json")))
             {
-                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new Settings.Event();
+                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new();
                 File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
             }
 
@@ -468,7 +468,65 @@ namespace Serein.Utils
             }
         }
 
-
+        /// <summary>
+        /// 热重载
+        /// </summary>
+        /// <param name="type">类型</param>
+        public static void Reload(string type)
+        {
+            switch (type?.ToLowerInvariant())
+            {
+                case null:
+                case "all":
+                    IO.ReadAll();
+#if WINFORM
+                    Program.Ui?.Invoke(Program.Ui.LoadRegex);
+                    Program.Ui?.Invoke(Program.Ui.LoadMember);
+                    Program.Ui?.Invoke(Program.Ui.LoadSchedule);
+                    Program.Ui?.Invoke(Program.Ui.LoadSettings);
+#elif WPF
+                    Serein.Windows.Catalog.Function.Regex?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Regex.Load);
+                    Serein.Windows.Catalog.Function.Member?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Member.Load);
+                    Serein.Windows.Catalog.Function.Schedule?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Schedule.Load);
+#endif
+                    break;
+                case "regex":
+                    IO.ReadRegex();
+#if WINFORM
+                    Program.Ui?.Invoke(Program.Ui.LoadRegex);
+#elif WPF
+                    Serein.Windows.Catalog.Function.Regex?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Regex.Load);
+#endif
+                    break;
+                case "member":
+                    IO.ReadMember();
+#if WINFORM
+                    Program.Ui?.Invoke(Program.Ui.LoadMember);
+#elif WPF
+                    Serein.Windows.Catalog.Function.Member?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Member.Load);
+#endif
+                    break;
+                case "schedule":
+                    IO.ReadSchedule();
+#if WINFORM
+                    Program.Ui?.Invoke(Program.Ui.LoadSchedule);
+#elif WPF
+                    Serein.Windows.Catalog.Function.Schedule?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Schedule.Load);
+#endif
+                    break;
+                case "groupcache":
+                    IO.ReadGroupCache();
+                    break;
+                case "settings":
+                    IO.ReadSettings();
+#if WINFORM
+                    Program.Ui?.Invoke(Program.Ui.LoadSettings);
+#endif
+                    break;
+                default:
+                    throw new ArgumentException("重新加载类型未知");
+            }
+        }
 
         /// <summary>
         /// 文件读写锁

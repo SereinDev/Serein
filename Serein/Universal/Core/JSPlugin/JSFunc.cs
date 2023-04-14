@@ -420,38 +420,8 @@ namespace Serein.Core.JSPlugin
         {
             try
             {
-                string typeName = null;
-                switch (type?.ToLowerInvariant())
-                {
-                    case null:
-                    case "all":
-                        IO.ReadAll();
-                        typeName = "所有";
-                        break;
-                    case "regex":
-                        IO.ReadRegex();
-                        typeName = "正则";
-                        break;
-                    case "member":
-                        IO.ReadMember();
-                        typeName = "成员";
-                        break;
-                    case "schedule":
-                        IO.ReadSchedule();
-                        typeName = "定时任务";
-                        break;
-                    case "groupcache":
-                        IO.ReadGroupCache();
-                        typeName = "群组缓存";
-                        break;
-                    case "settings":
-                        IO.ReadSettings();
-                        typeName = "设置";
-                        break;
-                    default:
-                        throw new NotSupportedException("重新加载类型未知");
-                }
-                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{typeName ?? "未知"}文件");
+                IO.Reload(type);
+                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
                 return true;
             }
             catch (Exception e)

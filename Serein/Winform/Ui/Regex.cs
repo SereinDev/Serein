@@ -46,7 +46,7 @@ namespace Serein.Ui
 
         private void RegexContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
-            RegexEditor regexEditer = new RegexEditor();
+            RegexEditor regexEditer = new();
             regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
@@ -68,7 +68,7 @@ namespace Serein.Ui
             {
                 return;
             }
-            RegexEditor regexEditer = new RegexEditor();
+            RegexEditor regexEditer = new();
             int index = Array.IndexOf(Regex.AreaArray, RegexList.SelectedItems[0].SubItems[1].Text);
             regexEditer.UpdateInfo(
                 index,
@@ -165,18 +165,15 @@ namespace Serein.Ui
 
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
-            RegexList.BeginUpdate();
+            IO.ReadRegex();
             LoadRegex();
             SaveRegex();
-            RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            RegexList.EndUpdate();
         }
 
-        private void LoadRegex(string filename = null, bool append = false)
+        public void LoadRegex()
         {
             RegexList.BeginUpdate();
             RegexList.Items.Clear();
-            IO.ReadRegex(filename, append);
             foreach (Regex item in Global.RegexList)
             {
                 if (item.Check())

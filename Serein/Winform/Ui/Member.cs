@@ -12,9 +12,8 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private void LoadMember()
+        public void LoadMember()
         {
-            IO.ReadMember();
             MemberList.BeginUpdate();
             MemberList.Items.Clear();
             foreach (Member member in Global.MemberDict.Values.ToList())
@@ -60,11 +59,11 @@ namespace Serein.Ui
         {
             if (MemberList.SelectedItems.Count > 0)
             {
-                MemberInfoEditor Editor = new MemberInfoEditor(MemberList.SelectedItems[0]);
-                Editor.ShowDialog(this);
-                if (!Editor.CancelFlag)
+                MemberInfoEditor editor = new(MemberList.SelectedItems[0]);
+                editor.ShowDialog(this);
+                if (!editor.CancelFlag)
                 {
-                    MemberList.SelectedItems[0].SubItems[4].Text = Editor.GameIDBox.Text;
+                    MemberList.SelectedItems[0].SubItems[4].Text = editor.GameIDBox.Text;
                     SaveMember();
                 }
             }
@@ -101,6 +100,10 @@ namespace Serein.Ui
             }
         }
 
-        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e) => LoadMember();
+        private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
+        {
+            IO.ReadMember();
+            LoadMember();
+        }
     }
 }

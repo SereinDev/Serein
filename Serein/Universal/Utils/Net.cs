@@ -10,7 +10,7 @@ namespace Serein.Utils
         /// <summary>
         /// Http客户端
         /// </summary>
-        private static HttpClient HttpClient = new HttpClient();
+        private static HttpClient HttpClient = new();
 
         /// <summary>
         /// 异步Get

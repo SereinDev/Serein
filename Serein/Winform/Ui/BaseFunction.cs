@@ -133,8 +133,8 @@ namespace Serein.Ui
                         );
                         if (dialogResult != DialogResult.Cancel)
                         {
-                            LoadRegex(filename, dialogResult == DialogResult.Yes);
-                            SaveRegex();
+                            IO.ReadRegex(filename, dialogResult == DialogResult.Yes);
+                            LoadRegex();
                         }
                     }
                     else if ((jsonObject["type"].ToString().ToUpperInvariant() == "SCHEDULE" ||
@@ -148,8 +148,8 @@ namespace Serein.Ui
                             MessageBoxIcon.Warning
                         ) == 1)
                     {
-                        LoadSchedule(filename);
-                        SaveSchedule();
+                        IO.ReadSchedule(filename);
+                        LoadSchedule();
                     }
                 }
                 else if (
@@ -162,8 +162,8 @@ namespace Serein.Ui
                         MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    LoadRegex(filename);
-                    SaveRegex();
+                    IO.ReadRegex(filename);
+                    LoadRegex();
                 }
                 else if (
                     Path.GetFileName(filename).ToLowerInvariant() == "task.tsv" &&
@@ -175,8 +175,8 @@ namespace Serein.Ui
                         MessageBoxIcon.Warning
                         ) == 1)
                 {
-                    LoadSchedule(filename);
-                    SaveSchedule();
+                    IO.ReadSchedule(filename);
+                    LoadSchedule();
                 }
             }
             else if (data.Length > 0 && PluginManager.TryImport(data))

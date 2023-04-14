@@ -43,7 +43,7 @@ namespace Serein.Windows
 
         private void UiWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Catalog.Notification = Catalog.Notification ?? new NotificationManager();
+            Catalog.Notification ??= new();
             if (Global.Settings.Serein.ThemeFollowSystem)
             {
                 Watcher.Watch(this, BackgroundType.Tabbed, true);
@@ -285,12 +285,14 @@ namespace Serein.Windows
                     {
                         if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入正则记录吗？", "Serein", 1, 48))
                         {
-                            Catalog.Function.Regex?.Load(filename, Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
+                            IO.ReadRegex(filename, Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
+                            Catalog.Function.Regex?.Load();
                         }
                     }
                     else if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
                     {
-                        Catalog.Function.Schedule?.Load(filename);
+                        IO.ReadSchedule(filename);
+                        Catalog.Function.Schedule?.Load();
                     }
                 }
             }

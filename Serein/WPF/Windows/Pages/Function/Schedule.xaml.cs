@@ -22,11 +22,8 @@ namespace Serein.Windows.Pages.Function
             Catalog.Function.Schedule = this;
         }
 
-        public void Load() => Load(null);
-
-        public void Load(string filename)
+        public void Load()
         {
-            IO.ReadSchedule(filename);
             ScheduleListView.Items.Clear();
             foreach (Base.Schedule schedule in Global.Schedules)
             {
@@ -53,54 +50,48 @@ namespace Serein.Windows.Pages.Function
             if (Command.GetType(command) == CommandType.Invalid)
             {
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                return false;
             }
-            else
+            else if (CrontabSchedule.TryParse(cronExp) == null)
             {
-                try
+                Catalog.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
+                return false;
+            }
+            if (ActionType == 1)
+            {
+                if (ScheduleListView.SelectedIndex >= 0)
                 {
-                    CrontabSchedule.Parse(cronExp);
-                    if (ActionType == 1)
-                    {
-                        if (ScheduleListView.SelectedIndex >= 0)
+                    ScheduleListView.Items.Insert(
+                        ScheduleListView.SelectedIndex,
+                        new Base.Schedule
                         {
-                            ScheduleListView.Items.Insert(
-                                ScheduleListView.SelectedIndex,
-                                new Base.Schedule
-                                {
-                                    Cron = cronExp,
-                                    Command = command,
-                                    Remark = remark,
-                                });
-                        }
-                        else
-                        {
-                            ScheduleListView.Items.Add(
-                                new Base.Schedule
-                                {
-                                    Cron = cronExp,
-                                    Command = command,
-                                    Remark = remark
-                                });
-                        }
-                    }
-                    else if (ActionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
-                    {
-                        selectedItem.Cron = cronExp;
-                        selectedItem.Command = command;
-                        selectedItem.Remark = remark;
-                        ScheduleListView.SelectedItem = selectedItem;
-                    }
-                    Save();
-                    Load();
-                    ActionType = 0;
-                    return true;
+                            Cron = cronExp,
+                            Command = command,
+                            Remark = remark,
+                        });
                 }
-                catch
+                else
                 {
-                    Catalog.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
+                    ScheduleListView.Items.Add(
+                        new Base.Schedule
+                        {
+                            Cron = cronExp,
+                            Command = command,
+                            Remark = remark
+                        });
                 }
             }
-            return false;
+            else if (ActionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
+            {
+                selectedItem.Cron = cronExp;
+                selectedItem.Command = command;
+                selectedItem.Remark = remark;
+                ScheduleListView.SelectedItem = selectedItem;
+            }
+            Save();
+            Load();
+            ActionType = 0;
+            return true;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -142,6 +133,7 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Refresh":
+                        IO.ReadSchedule();
                         Load();
                         break;
                     case "LookupCommand":
@@ -204,7 +196,6 @@ namespace Serein.Windows.Pages.Function
                 Disable.IsEnabled = false;
             }
         }
-
 
         private void ScheduleListView_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateButton();
 

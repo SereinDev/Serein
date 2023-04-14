@@ -72,7 +72,7 @@ namespace Serein.Ui
         private void ScheduleContextMenuStrip_Add_Click(object sender, EventArgs e)
         {
             ScheduleEditor Editor = new();
-            Editor.ShowDialog();
+            Editor.ShowDialog(this);
             if (Editor.CancelFlag)
             {
                 return;
@@ -101,7 +101,7 @@ namespace Serein.Ui
                     ScheduleList.SelectedItems[0].SubItems[1].Text,
                     ScheduleList.SelectedItems[0].SubItems[2].Text
                     );
-                Editor.ShowDialog();
+                Editor.ShowDialog(this);
                 if (Editor.CancelFlag)
                 {
                     return;
@@ -149,6 +149,7 @@ namespace Serein.Ui
 
         private void ScheduleContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
+            IO.ReadSchedule();
             LoadSchedule();
             SaveSchedule();
         }
@@ -170,9 +171,8 @@ namespace Serein.Ui
             IO.SaveSchedule();
         }
 
-        private void LoadSchedule(string filename = null)
+        public void LoadSchedule()
         {
-            IO.ReadSchedule(filename);
             ScheduleList.BeginUpdate();
             ScheduleList.Items.Clear();
             foreach (Schedule schedule in Global.Schedules)

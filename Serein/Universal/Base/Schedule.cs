@@ -56,7 +56,15 @@ namespace Serein.Base
             Task.Run(() =>
             {
                 Core.Generic.Command.Run(CommandOrigin.Schedule, Command);
-                NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+                CrontabSchedule crontabSchedule;
+                if ((crontabSchedule = CrontabSchedule.TryParse(Cron)) == null)
+                {
+                    NextTime = crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+                }
+                else
+                {
+                    Enable = false;
+                }
                 IsRunning = false;
             });
         }
@@ -67,26 +75,17 @@ namespace Serein.Base
         /// <returns>是否合法</returns>
         public bool Check()
         {
-            if (
-                !(string.IsNullOrWhiteSpace(Cron) || string.IsNullOrEmpty(Cron) ||
-                string.IsNullOrWhiteSpace(Command) || string.IsNullOrEmpty(Command)
-                ))
+            CrontabSchedule crontabSchedule;
+            if (Core.Generic.Command.GetType(Command) != CommandType.Invalid && (crontabSchedule = CrontabSchedule.TryParse(Cron)) != null)
             {
-                if (Core.Generic.Command.GetType(Command) == CommandType.Invalid)
-                {
-                    return false;
-                }
-                try
-                {
-                    NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                NextTime = crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+                return true;
             }
-            return false;
+            else
+            {
+                Enable = false;
+                return false;
+            }
         }
 
         public void FromText(string text)
@@ -100,7 +99,7 @@ namespace Serein.Base
             Enable = args[1] == "True";
             Remark = args[2];
             Command = args[3];
-            NextTime = CrontabSchedule.Parse(Cron).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+            Check();
         }
     }
 }
