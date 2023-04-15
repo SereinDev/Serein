@@ -57,7 +57,7 @@ namespace Serein.Base
             {
                 Core.Generic.Command.Run(CommandOrigin.Schedule, Command);
                 CrontabSchedule crontabSchedule;
-                if ((crontabSchedule = CrontabSchedule.TryParse(Cron)) == null)
+                if ((crontabSchedule = CrontabSchedule.TryParse(Cron)) is not null)
                 {
                     NextTime = crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
                 }

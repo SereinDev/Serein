@@ -1,7 +1,7 @@
 # Serein - 新时代极简服务器面板
 
 <p align="center">
-    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fassets%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board">
+    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fimg%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board">
     <br>
     <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
     <a href="https://github.com/Zaitonn/Serein/releases/latest">

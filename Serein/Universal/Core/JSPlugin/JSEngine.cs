@@ -195,7 +195,7 @@ namespace Serein.Core.JSPlugin
                 new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? member.ShownName : string.Empty));
             engine.SetValue("serein_getPluginList",
                 new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
-            engine.SetValue("serein_getRegexs",
+            engine.SetValue("serein_getRegexes",
                 new Func<List<Regex>>(() => Global.RegexList));
             engine.SetValue("serein_addRegex",
                 new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
@@ -207,15 +207,12 @@ namespace Serein.Core.JSPlugin
                 new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
-            engine.SetValue("getMD5",
-                new Func<string, string>(JSFunc.GetMD5));
             engine.SetValue("Motdpe",
                 TypeReference.CreateTypeReference(engine, typeof(JSMotdpe)));
             engine.SetValue("Motdje",
                 TypeReference.CreateTypeReference(engine, typeof(JSMotdje)));
             engine.Execute(
                 @"const serein = {
-                    log: serein_log,
                     type: serein_type,
                     typeName: serein_typeName,
                     startTime: serein_startTime,
@@ -225,12 +222,13 @@ namespace Serein.Core.JSPlugin
 
                     getSettings: serein_getSettings,
                     getSettingsObject: serein_getSettingsObject,
+                    log: serein_log,
                     debugLog: serein_debugLog,
                     runCommand: serein_runCommand,
                     registerPlugin: serein_registerPlugin,
                     setListener: serein_setListener,
                     getPluginList: serein_getPluginList,
-                    getRegexs: serein_getRegexs,
+                    getRegexes: serein_getRegexes,
                     addRegex: serein_addRegex,
                     editRegex: serein_editRegex,
                     removeRegex: serein_removeRegex,

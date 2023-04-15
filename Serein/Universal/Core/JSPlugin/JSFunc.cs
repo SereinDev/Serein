@@ -10,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using RegExp = System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -136,7 +134,7 @@ namespace Serein.Core.JSPlugin
             long timerID = CurrentID;
             CurrentID++;
             Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
-            System.Timers.Timer timer = new((double)interval.ToObject())
+            System.Timers.Timer timer = new(interval.AsNumber())
             {
                 AutoReset = autoReset,
             };
@@ -196,8 +194,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="ID">定时器ID</param>
         /// <returns>清除结果</returns>
-        public static bool ClearTimer(JsValue ID)
-            => ClearTimer((long)(double)ID.ToObject());
+        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.AsNumber());
 
         /// <summary>
         /// 清除所有定时器
@@ -208,22 +205,6 @@ namespace Serein.Core.JSPlugin
             {
                 ClearTimer(ID);
             }
-        }
-
-        /// <summary>
-        /// 获取MD5
-        /// </summary>
-        /// <param name="text">文本</param>
-        /// <returns>MD5文本</returns>
-        public static string GetMD5(string text)
-        {
-            byte[] datas = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(text));
-            StringBuilder stringBuilder = new();
-            for (int i = 0; i < datas.Length; i++)
-            {
-                stringBuilder.Append(datas[i].ToString("x2"));
-            }
-            return stringBuilder.ToString();
         }
 
         /// <summary>
