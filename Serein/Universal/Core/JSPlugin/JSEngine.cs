@@ -1,5 +1,6 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Jint;
 using Jint.Native;
 using Jint.Runtime;
@@ -8,7 +9,7 @@ using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Base.Motd;
 using Serein.Core.Generic;
-using Serein.Core.JSPlugin.Motd;
+using Serein.Core.JSPlugin.Native;
 using Serein.Core.Server;
 using Serein.Extensions;
 using Serein.Utils;
@@ -148,7 +149,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getSettings",
                 new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
             engine.SetValue("serein_getSettingsObject",
-                new Func<object>(() => Global.Settings));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.Settings)));
             engine.SetValue("serein_getMotdpe",
                 new Func<string, string>((addr) => new Motdpe(addr).Origin));
             engine.SetValue("serein_getMotdje",
@@ -162,7 +163,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getServerStatus",
                 new Func<bool>(() => ServerManager.Status));
             engine.SetValue("serein_getServerMotd",
-                new Func<ReadonlyMotd>(() => new(ServerManager.Motd)));
+                new Func<JsValue>(() => JsValue.FromObject(engine, ServerManager.Motd)));
             engine.SetValue("serein_sendCmd",
                 new Action<string, bool>((commnad, usingUnicode) => ServerManager.InputCommand(commnad, usingUnicode, false)));
             engine.SetValue("serein_getServerTime",
@@ -190,13 +191,13 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getGameID",
                 new Func<long, string>(Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
-                new Func<Dictionary<string, Dictionary<string, string>>>(() => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(Global.GroupCache.ToJson())));
-            engine.SetValue("serein_getUserName",
+                new Func<JsValue>(() => JsValue.FromObject(engine, JSMember.Create(Global.GroupCache))));
+            engine.SetValue("serein_getMember",
                 new Func<long, long, string>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? member.ShownName : string.Empty));
             engine.SetValue("serein_getPluginList",
-                new Func<List<dynamic>>(() => JsonConvert.DeserializeObject<List<dynamic>>(JSPluginManager.PluginDict.Values.ToJson())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, JsonConvert.DeserializeObject<List<object>>(JSPluginManager.PluginDict.Values.ToJson()))));
             engine.SetValue("serein_getRegexes",
-                new Func<List<Regex>>(() => Global.RegexList));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.Select((regex) => new JSRegex(regex)))));
             engine.SetValue("serein_addRegex",
                 new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
             engine.SetValue("serein_editRegex",
@@ -208,9 +209,9 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("Motdpe",
-                TypeReference.CreateTypeReference(engine, typeof(JSMotdpe)));
+                TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje",
-                TypeReference.CreateTypeReference(engine, typeof(JSMotdje)));
+                TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.Execute(
                 @"const serein = {
                     type: serein_type,
@@ -265,7 +266,7 @@ namespace Serein.Core.JSPlugin
                     unbindMember: serein_unbindMember,
                     getID: serein_getID,
                     getGameID: serein_getGameID,
-                    getUserName: serein_getUserName,
+                    getMember: serein_getMember,
                 };"
             );
             return engine;

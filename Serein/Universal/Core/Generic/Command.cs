@@ -375,16 +375,16 @@ namespace Serein.Core.Generic
                     "sereinversion" => Global.VERSION,
 
                     #region motd
-                    "gamemode" => ServerManager.Motd.GameMode,
-                    "description" => ServerManager.Motd.Description,
-                    "protocol" => ServerManager.Motd.Protocol,
-                    "onlineplayer" => ServerManager.Motd.OnlinePlayer.ToString(),
-                    "maxplayer" => ServerManager.Motd.MaxPlayer.ToString(),
-                    "original" => ServerManager.Motd.Origin,
-                    "delay" => ServerManager.Motd.Delay.ToString("N1"),
-                    "version" => ServerManager.Motd.Version,
-                    "favicon" => ServerManager.Motd.Favicon,
-                    "exception" => ServerManager.Motd.Exception,
+                    "gamemode" => ServerManager.Motd?.GameMode,
+                    "description" => ServerManager.Motd?.Description,
+                    "protocol" => ServerManager.Motd?.Protocol,
+                    "onlineplayer" => ServerManager.Motd?.OnlinePlayer.ToString(),
+                    "maxplayer" => ServerManager.Motd?.MaxPlayer.ToString(),
+                    "original" => ServerManager.Motd?.Origin,
+                    "delay" => ServerManager.Motd?.Delay.ToString("N1"),
+                    "version" => ServerManager.Motd?.Version,
+                    "favicon" => ServerManager.Motd?.Favicon,
+                    "exception" => ServerManager.Motd?.Exception,
                     #endregion
 
                     #region 系统信息

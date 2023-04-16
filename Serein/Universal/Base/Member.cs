@@ -41,6 +41,6 @@ namespace Serein.Base
         /// 群角色 - 文本
         /// </summary>
         [JsonIgnore]
-        public string Role_Text => Command.Roles_Chinese[Role];
+        internal string Role_Text => Command.Roles_Chinese[Role];
     }
 }

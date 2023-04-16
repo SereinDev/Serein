@@ -4,77 +4,77 @@ using System.Net;
 
 namespace Serein.Base.Motd
 {
-    internal class Motd
+    internal abstract class Motd
     {
         /// <summary>
         /// IP
         /// </summary>
-        public IPAddress IP { get; private set; } = IPAddress.Parse("127.0.0.1");
+        internal IPAddress IP { get; private set; } = IPAddress.Parse("127.0.0.1");
 
         /// <summary>
         /// 端口
         /// </summary>
-        public int Port = -1;
+        internal int Port = -1;
 
         /// <summary>
         /// 最大玩家数
         /// </summary>
-        public int MaxPlayer;
+        internal int MaxPlayer;
 
         /// <summary>
         /// 在线玩家数
         /// </summary>
-        public int OnlinePlayer;
+        internal int OnlinePlayer;
 
         /// <summary>
         /// 服务器描述
         /// </summary>
-        public string Description = string.Empty;
+        internal string Description = string.Empty;
 
         /// <summary>
         /// 协议
         /// </summary>
-        public string Protocol = string.Empty;
+        internal string Protocol = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version = string.Empty;
+        internal string Version = string.Empty;
 
         /// <summary>
         /// 存档名称
         /// </summary>
-        public string LevelName = string.Empty;
+        internal string LevelName = string.Empty;
 
         /// <summary>
         /// 游戏模式
         /// </summary>
-        public string GameMode = string.Empty;
+        internal string GameMode = string.Empty;
 
         /// <summary>
         /// 延迟
         /// </summary>
-        public double Delay;
+        internal double Delay;
 
         /// <summary>
         /// 图标
         /// </summary>
-        public string Favicon = string.Empty;
+        internal string Favicon = string.Empty;
 
         /// <summary>
         /// 原文
         /// </summary>
-        public string Origin = string.Empty;
+        internal string Origin = string.Empty;
 
         /// <summary>
         /// 错误消息
         /// </summary>
-        public string Exception = string.Empty;
+        internal string Exception = string.Empty;
 
         /// <summary>
         /// 获取成功
         /// </summary>
-        public bool IsSuccessful;
+        internal bool IsSuccessful;
 
         private static readonly System.Text.RegularExpressions.Regex IPv4Patten = new(@"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))", System.Text.RegularExpressions.RegexOptions.Compiled);
 
@@ -85,7 +85,7 @@ namespace Serein.Base.Motd
         /// </summary>
         /// <param name="addr">IP</param>
         /// <returns>结果</returns>
-        public bool TryParse(string addr)
+        internal bool TryParse(string addr)
         {
             try
             {
@@ -117,5 +117,24 @@ namespace Serein.Base.Motd
                 return false;
             }
         }
+
+        internal abstract void Get();
+        internal abstract bool TryGet();
+
+#pragma warning disable IDE1006
+        public string ip => IP.ToString();
+        public int port => Port;
+        public int onlinePlayer => OnlinePlayer;
+        public int maxPlayer => MaxPlayer;
+        public string description => Description;
+        public string protocol => Protocol;
+        public string version => Version;
+        public double delay => Delay;
+        public string exception => Exception;
+        public bool isSuccessful => IsSuccessful;
+        public string favicon => Favicon;
+        public string levelName => LevelName;
+        public string gameMode => GameMode;
+#pragma warning restore IDE1006
     }
 }

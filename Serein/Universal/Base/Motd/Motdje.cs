@@ -43,7 +43,7 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 尝试获取信息
         /// </summary>
-        internal bool TryGet()
+        internal override bool TryGet()
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 获取信息
         /// </summary>
-        internal void Get()
+        internal override void Get()
         {
             byte[] datas = new byte[1024 * 1024];
             int totalLength = 0;

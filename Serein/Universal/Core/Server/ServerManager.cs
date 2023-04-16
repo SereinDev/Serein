@@ -60,7 +60,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// Motd对象
         /// </summary>
-        public static Motd Motd { get; private set; } = new();
+        public static Motd Motd { get; private set; }
 
         /// <summary>
         /// 更新计时器
