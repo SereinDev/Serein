@@ -151,6 +151,7 @@ namespace Serein.Core.JSPlugin
                     {
                         timer.Stop();
                         timer.Dispose();
+                        JSPluginManager.Timers.Remove(timerID);
                         return;
                     }
                     lock (JSPluginManager.PluginDict[@namespace].Engine)
@@ -166,6 +167,7 @@ namespace Serein.Core.JSPlugin
                 if (!autoReset)
                 {
                     timer.Dispose();
+                    JSPluginManager.Timers.Remove(timerID);
                 }
             };
             timer.Start();
@@ -374,7 +376,7 @@ namespace Serein.Core.JSPlugin
                 JsonConvert.SerializeObject(new PreLoadConfig
                 {
                     Assemblies =
-                        assemblies?.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() ?? new string[] { },
+                        assemblies?.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() ?? Array.Empty<string>(),
                     AllowGetType =
                         allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
                     AllowOperatorOverloading =

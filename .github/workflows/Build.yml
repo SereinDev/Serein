@@ -8,11 +8,83 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build:
+  BuildForWindows:
     runs-on: windows-latest
     strategy:
       matrix:
-        project: [Console, Console_For_Unix, WPF, Winform]
+        project: [Console, WPF, Winform]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Write Build info
+        shell: cmd
+        run: |
+          cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Serein\Universal\buildinfo.info
+          cmd /c echo %date% %time% >>${{ github.workspace }}\Serein\Universal\buildinfo.info
+          cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Serein\Universal\buildinfo.info
+
+      - name: DotNet restore
+        run: dotnet restore
+
+      - name: Build the project(Release)
+        run: dotnet build -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
+
+      - name: Build the project(Debug)
+        run: dotnet build "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
+
+      - name: Upload Serein(Release,dotnet6-windows)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_dotnet6
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0-windows
+          if-no-files-found: ignore
+
+      - name: Upload Serein(Release,dotnetframework472)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_dotnetframework472
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net472
+          if-no-files-found: ignore
+
+      - name: Upload Serein(Debug,dotnet6-windows)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_dotnet6_debug
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows
+          if-no-files-found: ignore
+
+      - name: Upload Serein(Debug,dotnetframework472)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_dotnetframework472_debug
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net472
+          if-no-files-found: ignore
+
+      - name: Build the project(Publish)
+        run: |
+          dotnet clean
+          dotnet publish "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj" -f net6.0-windows --no-self-contained -p:PublishSingleFile=true -p:RuntimeIdentifier=win-x64 -p:IncludeContentInSingleFile=true
+
+      - name: Upload Serein(Publish)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Serein_${{ matrix.project }}_dotnet6_publish
+          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows\win-x64\publish
+          if-no-files-found: ignore
+
+  BuildForUnix:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        project: [Console_For_Unix]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -47,13 +119,6 @@ jobs:
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0
           if-no-files-found: ignore
 
-      - name: Upload Serein(Release,dotnet6-windows)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnet6
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0-windows
-          if-no-files-found: ignore
-
       - name: Upload Serein(Release,dotnetframework472)
         uses: actions/upload-artifact@v3
         with:
@@ -66,13 +131,6 @@ jobs:
         with:
           name: Serein_${{ matrix.project }}_dotnet6_debug
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0
-          if-no-files-found: ignore
-
-      - name: Upload Serein(Debug,dotnet6-windows)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnet6_debug
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows
           if-no-files-found: ignore
 
       - name: Upload Serein(Debug,dotnetframework472)
