@@ -68,22 +68,22 @@ namespace Serein.Core.Generic
             value = value.Trim();
             if (Global.MemberDict.ContainsKey(userID))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupID, userID);
+                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupID, userID, jsonObject);
                 return;
             }
             if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID);
+                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID, jsonObject);
                 return;
             }
             if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
-                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
+                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID, jsonObject);
                 return;
             }
             if (GameIDs.Contains(value))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, groupID, userID);
+                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, groupID, userID, jsonObject);
                 return;
             }
             lock (Global.MemberDict)
@@ -104,13 +104,14 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 解绑
         /// </summary>
+        /// <param name="jsonObject">消息JSON对象</param>
         /// <param name="userID">用户ID</param>
         /// <param name="groupID">群聊ID</param>
-        public static void UnBind(long userID, long groupID)
+        public static void UnBind(JObject jsonObject,long userID, long groupID)
         {
             if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
-                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID);
+                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID, jsonObject);
                 return;
             }
             lock (Global.MemberDict)
@@ -118,11 +119,11 @@ namespace Serein.Core.Generic
                 if (Global.MemberDict.Remove(userID))
                 {
                     IO.SaveMember();
-                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID);
+                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID, jsonObject);
                 }
                 else
                 {
-                    EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID);
+                    EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID, jsonObject);
                 }
             }
         }

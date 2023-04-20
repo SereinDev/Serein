@@ -80,13 +80,6 @@ namespace Serein.Core.Generic
             bool disableMotd = false
             )
         {
-            /*
-                1   QQ消息
-                2   控制台输出
-                3   定时任务
-                4   EventTrigger
-                5   Javascript
-            */
             Logger.Output(
                 Base.LogType.Debug,
                     "命令运行",
@@ -100,13 +93,11 @@ namespace Serein.Core.Generic
             }
             Base.CommandType type = GetType(command);
             if (type == Base.CommandType.Invalid ||
-                ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd))
+                ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
             {
                 return;
             }
-            string value = GetValue(command, msgMatch);
-            value = ApplyVariables(value, jObject, disableMotd);
-            ExecuteCommand(type, inputType, command, value, groupID, userID, jObject);
+            ExecuteCommand(type, inputType, command, ApplyVariables(GetValue(command, msgMatch), jObject, disableMotd), groupID, userID, jObject);
             if (inputType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
             {
                 Binder.Update(jObject, userID);
@@ -171,7 +162,7 @@ namespace Serein.Core.Generic
                 case Base.CommandType.Unbind:
                     if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && groupID != -1)
                     {
-                        Binder.UnBind(long.TryParse(value, out long i) ? i : -1, groupID);
+                        Binder.UnBind(jObject, long.TryParse(value, out long i) ? i : -1, groupID);
                     }
                     break;
                 case Base.CommandType.RequestMotdpe:
@@ -180,7 +171,7 @@ namespace Serein.Core.Generic
                         Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
                             motd.IsSuccessful ? Base.EventType.RequestingMotdpeSucceed : Base.EventType.RequestingMotdFail,
-                            groupID, userID, motd);
+                            groupID, userID, jObject, motd);
                     }
                     break;
                 case Base.CommandType.RequestMotdje:
@@ -189,7 +180,7 @@ namespace Serein.Core.Generic
                         Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
                             motd.IsSuccessful ? Base.EventType.RequestingMotdjeSucceed : Base.EventType.RequestingMotdFail,
-                            groupID, userID, motd);
+                            groupID, userID, jObject, motd);
                     }
                     break;
                 case Base.CommandType.ExecuteJavascriptCodes:
@@ -415,6 +406,7 @@ namespace Serein.Core.Generic
                     #endregion
 
                     #region 消息
+                    "msgid" => jsonObject.TryGetString("message_id"),
                     "id" => jsonObject.TryGetString("sender", "user_id"),
                     "gameid" => Binder.GetGameID(long.TryParse(jsonObject.TryGetString("sender", "user_id"), out long result) ? result : -1),
                     "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.TryGetString("sender", "sex").ToLowerInvariant())],

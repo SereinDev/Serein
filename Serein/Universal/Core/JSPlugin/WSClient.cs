@@ -1,5 +1,5 @@
-﻿using Jint;
-using Jint.Native;
+﻿using Jint.Native;
+using Jint.Native.Function;
 using Newtonsoft.Json;
 using Serein.Utils;
 using SuperSocket.ClientEngine;
@@ -43,7 +43,12 @@ namespace Serein.Core.JSPlugin
             }
         }
 
-        private bool Disposed;
+        /// <summary>
+        /// ws地址
+        /// </summary>
+        public string Uri { get; private set; }
+
+        public bool Disposed { get; private set; }
 
         /// <summary>
         /// 入口函数
@@ -52,6 +57,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="namespace">命名空间</param>
         public WSClient(string uri, string @namespace = null)
         {
+            Uri = uri;
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             if (!JSPluginManager.PluginDict.ContainsKey(Namespace))
             {
@@ -76,11 +82,7 @@ namespace Serein.Core.JSPlugin
                 Dispose();
                 return false;
             }
-            if (jsValue == null || jsValue.IsUndefined() || jsValue.IsNull())
-            {
-                return false;
-            }
-            return true;
+            return jsValue is FunctionInstance;
         }
 
         /// <summary>

@@ -245,16 +245,14 @@ namespace Serein.Core.Generic
                 Logger.Output(LogType.Bot_Receive, e.Message);
             }
             IO.MsgLog($"[Received] {e.Message}");
-            if (JSFunc.Trigger(EventType.ReceivePacket, e.Message))
+            string packet = WebUtility.HtmlDecode(new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString()));
+            if (JSFunc.Trigger(EventType.ReceivePacket, packet))
             {
                 return;
             }
             try
             {
-                Matcher.Process((JObject)JsonConvert.DeserializeObject(
-                    WebUtility.HtmlDecode(
-                        new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString())
-                )));
+                Matcher.Process((JObject)JsonConvert.DeserializeObject(packet));
             }
             catch (Exception exception)
             {

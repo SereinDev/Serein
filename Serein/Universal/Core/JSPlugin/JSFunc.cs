@@ -41,10 +41,10 @@ namespace Serein.Core.JSPlugin
             {
                 throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
             }
-            plugin.Name = name;
-            plugin.Version = version;
-            plugin.Author = author;
-            plugin.Description = description;
+            plugin.DisplayedName = name;
+            plugin.DisplayedVersion = version;
+            plugin.DisplayedAuthor = author;
+            plugin.DisplayedDescription = description;
             return @namespace;
         }
 

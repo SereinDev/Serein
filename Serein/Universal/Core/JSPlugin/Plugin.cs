@@ -17,7 +17,7 @@ namespace Serein.Core.JSPlugin
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             PreLoadConfig = config;
             Engine = JSEngine.Create(false, Namespace, TokenSource, PreLoadConfig);
-            Name = @namespace;
+            DisplayedName = @namespace;
         }
 
         public void Dispose()
@@ -53,53 +53,50 @@ namespace Serein.Core.JSPlugin
         /// 名称
         /// </summary>
         [JsonIgnore]
-        public string Name
+        public string DisplayedName
         {
-            get => name == null ? "-" : name;
-            set => name = value;
+            get => Name == null ? "-" : Name;
+            set => Name = value;
         }
 
-        [JsonProperty(PropertyName = "Name")]
-        private string name { get; set; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
         [JsonIgnore]
-        public string Version
+        public string DisplayedVersion
         {
-            get => version == null ? "-" : version;
-            set => version = value;
+            get => Version == null ? "-" : Version;
+            set => Version = value;
         }
 
-        [JsonProperty(PropertyName = "Version")]
-        private string version;
+        public string Version { get; private set; }
 
         /// <summary>
         /// 作者
         /// </summary>
         [JsonIgnore]
-        public string Author
+        public string DisplayedAuthor
         {
-            get => author == null ? "-" : author;
-            set => author = value;
+            get => Author == null ? "-" : Author;
+            set => Author = value;
         }
 
-        [JsonProperty(PropertyName = "Author")]
-        private string author;
+        public string Author { get; private set; }
 
         /// <summary>
         /// 介绍
         /// </summary>
         [JsonIgnore]
-        public string Description
+        public string DisplayedDescription
         {
-            get => description == null ? "-" : description;
-            set => description = value;
+            get => Description == null ? "-" : Description;
+            set => Description = value;
         }
 
         [JsonProperty(PropertyName = "Description")]
-        private string description;
+        public string Description { get; private set; }
 
         /// <summary>
         /// 文件名
@@ -234,12 +231,12 @@ namespace Serein.Core.JSPlugin
                     case EventType.ReceiveGroupMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
+                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3], args[4]));
                         }
                     case EventType.ReceivePrivateMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2]));
+                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
                         }
                     default:
                         throw new NotSupportedException($"触发了一个不支持的事件：{type}");

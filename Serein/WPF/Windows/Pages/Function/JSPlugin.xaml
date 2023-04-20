@@ -51,10 +51,10 @@
             SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="名称" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Version}" Header="版本" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Author}" Header="作者" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="介绍" />
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayedName}" Header="名称" />
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayedVersion}" Header="版本" />
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayedAuthor}" Header="作者" />
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayedDescription}" Header="介绍" />
                 </GridView>
             </ListView.View>
             <ListView.Style>

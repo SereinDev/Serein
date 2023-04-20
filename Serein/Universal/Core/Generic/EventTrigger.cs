@@ -1,4 +1,5 @@
-﻿using Serein.Base.Motd;
+﻿using Newtonsoft.Json.Linq;
+using Serein.Base.Motd;
 using Serein.Utils;
 using System;
 using System.Text.RegularExpressions;
@@ -34,8 +35,9 @@ namespace Serein.Core.Generic
         /// <param name="type">类型</param>
         /// <param name="groupID">群聊ID</param>
         /// <param name="userID">用户ID</param>
+        /// <param name="jobject">数据包对象</param>
         /// <param name="motd">Motd对象</param>
-        public static void Trigger(Base.EventType type, long groupID, long userID, Motd motd = null)
+        public static void Trigger(Base.EventType type, long groupID, long userID, JObject jobject = null, Motd motd = null)
         {
             Logger.Output(Base.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
@@ -74,6 +76,8 @@ namespace Serein.Core.Generic
                         Command.Run(
                             Base.CommandOrigin.EventTrigger,
                             Regex.Replace(command, "%ID%", userID.ToString(), RegexOptions.IgnoreCase),
+                            jobject,
+                            userID: userID,
                             groupID: groupID
                             );
                     }
@@ -107,7 +111,7 @@ namespace Serein.Core.Generic
                         Command.Run(
                             Base.CommandOrigin.EventTrigger,
                             command_copy,
-                            null,
+                            jobject,
                             null,
                             userID,
                             groupID,

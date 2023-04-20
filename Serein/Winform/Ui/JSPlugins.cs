@@ -30,14 +30,14 @@ namespace Serein.Ui
             JSPluginList.Items.Clear();
             foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
-                ListViewItem listViewItem = new(plugin.Name)
+                ListViewItem listViewItem = new(plugin.DisplayedName)
                 {
                     ForeColor = plugin.Available ? ForeColor : Color.Gray,
                     Tag = plugin.Namespace
                 };
-                listViewItem.SubItems.Add(plugin.Version);
-                listViewItem.SubItems.Add(plugin.Author);
-                listViewItem.SubItems.Add(plugin.Description);
+                listViewItem.SubItems.Add(plugin.DisplayedVersion);
+                listViewItem.SubItems.Add(plugin.DisplayedAuthor);
+                listViewItem.SubItems.Add(plugin.DisplayedDescription);
                 JSPluginList.Items.Add(listViewItem);
             }
             JSPluginList.EndUpdate();

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Serein.Core.JSPlugin.Native
 {
-    internal class JSMember
+    internal struct MemberStruct
     {
 #pragma warning disable IDE1006
         [JsonProperty(PropertyName = "ID")]
@@ -20,7 +20,7 @@ namespace Serein.Core.JSPlugin.Native
         public string gameId;
 #pragma warning restore IDE1006
 
-        internal static Dictionary<string, Dictionary<string, JSMember>> Create(Dictionary<long, Dictionary<long, Member>> groupCache)
-            => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, JSMember>>>(groupCache.ToJson());
+        internal static Dictionary<string, Dictionary<string, MemberStruct>> Create(Dictionary<long, Dictionary<long, Member>> groupCache)
+            => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, MemberStruct>>>(groupCache.ToJson());
     }
 }
