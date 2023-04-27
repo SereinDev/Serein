@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Serein.Settings
 {
@@ -11,8 +11,8 @@ namespace Serein.Settings
         public bool EnbaleOutputData;
         public bool EnbaleParseAt = true;
         public bool GivePermissionToAllAdmin;
-        public List<long> GroupList = new();
-        public List<long> PermissionList = new();
+        public long[] GroupList = Array.Empty<long>();
+        public long[] PermissionList = Array.Empty<long>();
         public string Uri = "127.0.0.1:6700";
     }
 }

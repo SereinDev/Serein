@@ -165,7 +165,7 @@ namespace Serein.Ui
         {
             if (string.IsNullOrEmpty(SettingBotGroupList.Text))
             {
-                Global.Settings.Bot.GroupList.Clear();
+                Global.Settings.Bot.GroupList = Array.Empty<long>();
             }
             else if (Regex.IsMatch(SettingBotGroupList.Text, @"^[\d;]+?$"))
             {
@@ -177,7 +177,7 @@ namespace Serein.Ui
                         list.Add(qq_);
                     }
                 }
-                Global.Settings.Bot.GroupList = list;
+                Global.Settings.Bot.GroupList = list.ToArray();
             }
             string text = Regex.Replace(SettingBotGroupList.Text, @"[^\d;]", ";");
             text = Regex.Replace(text, @";+", ";");
@@ -195,7 +195,7 @@ namespace Serein.Ui
         {
             if (string.IsNullOrEmpty(SettingBotPermissionList.Text))
             {
-                Global.Settings.Bot.PermissionList.Clear();
+                Global.Settings.Bot.PermissionList = Array.Empty<long>();
             }
             else if (Regex.IsMatch(SettingBotPermissionList.Text, @"^[\d;]+?$"))
             {
@@ -207,7 +207,7 @@ namespace Serein.Ui
                         list.Add(qq_);
                     }
                 }
-                Global.Settings.Bot.PermissionList = list;
+                Global.Settings.Bot.PermissionList = list.ToArray();
             }
             string text = Regex.Replace(SettingBotPermissionList.Text, @"[^\d,]", ";");
             text = Regex.Replace(text, @";+", ";");

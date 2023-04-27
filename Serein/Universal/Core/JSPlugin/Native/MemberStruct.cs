@@ -20,6 +20,15 @@ namespace Serein.Core.JSPlugin.Native
         public string gameId;
 #pragma warning restore IDE1006
 
+        internal MemberStruct(Member member)
+        {
+            id = member.ID;
+            card = member.Card;
+            nickname = member.Nickname;
+            role = member.Role;
+            gameId = member.GameID;
+        }
+
         internal static Dictionary<string, Dictionary<string, MemberStruct>> Create(Dictionary<long, Dictionary<long, Member>> groupCache)
             => JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, MemberStruct>>>(groupCache.ToJson());
     }

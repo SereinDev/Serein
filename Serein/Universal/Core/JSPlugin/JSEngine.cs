@@ -11,7 +11,6 @@ using Serein.Base.Motd;
 using Serein.Core.Generic;
 using Serein.Core.JSPlugin.Native;
 using Serein.Core.Server;
-using Serein.Extensions;
 using Serein.Utils;
 using System;
 using System.Diagnostics;
@@ -193,11 +192,11 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getGroupCache",
                 new Func<JsValue>(() => JsValue.FromObject(engine, MemberStruct.Create(Global.GroupCache))));
             engine.SetValue("serein_getUserInfo",
-                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? JsValue.FromObject(engine, member) : JsValue.Null));
+                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? JsValue.FromObject(engine, new MemberStruct(member)) : JsValue.Null));
             engine.SetValue("serein_getPluginList",
-                new Func<JsValue>(() => JsValue.FromObject(engine, JSPluginManager.PluginDict.Values.Select(plugin => new PluginStruct(plugin)).ToList())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, JSPluginManager.PluginDict.Values.Select(plugin => new PluginStruct(plugin)).ToArray())));
             engine.SetValue("serein_getRegexes",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.Select((regex) => new RegexStruct(regex)).ToList())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.Select((regex) => new RegexStruct(regex)).ToArray())));
             engine.SetValue("serein_addRegex",
                 new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
             engine.SetValue("serein_editRegex",

@@ -87,7 +87,7 @@ namespace Serein.Core.Generic
                     $"command:{command}",
                     $"userID:{userID}",
                     $"groupID:{groupID}");
-            if (groupID == -1 && Global.Settings.Bot.GroupList.Count >= 1)
+            if (groupID == -1 && Global.Settings.Bot.GroupList.Length >= 1)
             {
                 groupID = Global.Settings.Bot.GroupList[0];
             }

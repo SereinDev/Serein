@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,26 +58,26 @@ namespace Serein.Windows.Pages.Settings
         {
             if (string.IsNullOrEmpty(GroupList.Text))
             {
-                Global.Settings.Bot.GroupList.Clear();
+                Global.Settings.Bot.GroupList = Array.Empty<long>();
             }
             else if (Regex.IsMatch(GroupList.Text, @"^[\d;]+?$"))
             {
-                List<long> Groups = new List<long>();
-                foreach (string Group in GroupList.Text.Split(';'))
+                List<long> groups = new List<long>();
+                foreach (string group in GroupList.Text.Split(';'))
                 {
-                    if (Group.Length >= 6 && Group.Length <= 16 && long.TryParse(Group, out long _Group))
+                    if (group.Length >= 6 && group.Length <= 16 && long.TryParse(group, out long _group))
                     {
-                        Groups.Add(_Group);
+                        groups.Add(_group);
                     }
                 }
-                Global.Settings.Bot.GroupList = Groups;
+                Global.Settings.Bot.GroupList = groups.ToArray();
             }
-            string Text = Regex.Replace(GroupList.Text, @"[^\d;]", ";");
-            Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", string.Empty);
-            if (Text != GroupList.Text)
+            string text = Regex.Replace(GroupList.Text, @"[^\d;]", ";");
+            text = Regex.Replace(text, @";+", ";");
+            text = Regex.Replace(text, "^;", string.Empty);
+            if (text != GroupList.Text)
             {
-                GroupList.Text = Text; // 仅当有差异时更新文本
+                GroupList.Text = text; // 仅当有差异时更新文本
             }
         }
 
@@ -84,7 +85,7 @@ namespace Serein.Windows.Pages.Settings
         {
             if (string.IsNullOrEmpty(PermissionList.Text))
             {
-                Global.Settings.Bot.PermissionList.Clear();
+                Global.Settings.Bot.PermissionList = Array.Empty<long>();
             }
             else if (Regex.IsMatch(PermissionList.Text, @"^[\d;]+?$"))
             {
@@ -96,14 +97,14 @@ namespace Serein.Windows.Pages.Settings
                         IDs.Add(_ID);
                     }
                 }
-                Global.Settings.Bot.PermissionList = IDs;
+                Global.Settings.Bot.PermissionList = IDs.ToArray();
             }
-            string Text = Regex.Replace(PermissionList.Text, @"[^\d,]", ";");
-            Text = Regex.Replace(Text, @";+", ";");
-            Text = Regex.Replace(Text, "^;", string.Empty);
-            if (Text != PermissionList.Text)
+            string text = Regex.Replace(PermissionList.Text, @"[^\d,]", ";");
+            text = Regex.Replace(text, @";+", ";");
+            text = Regex.Replace(text, "^;", string.Empty);
+            if (text != PermissionList.Text)
             {
-                PermissionList.Text = Text; // 仅当有差异时更新文本
+                PermissionList.Text = text; // 仅当有差异时更新文本
             }
         }
     }
