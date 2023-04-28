@@ -99,7 +99,7 @@ namespace Serein.Core.JSPlugin
                     CancellationTokenSource tokenSource = new();
                     foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
                     {
-                        if (!plugin.Available && !plugin.HasListenedOn(type))
+                        if (!plugin.Available || !plugin.HasListenedOn(type))
                         {
                             continue;
                         }

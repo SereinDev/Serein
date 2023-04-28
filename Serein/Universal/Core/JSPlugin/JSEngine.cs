@@ -13,7 +13,6 @@ using Serein.Core.JSPlugin.Native;
 using Serein.Core.Server;
 using Serein.Utils;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -39,11 +38,12 @@ namespace Serein.Core.JSPlugin
             Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
-                    cfg.AllowClr(typeof(Process).Assembly);
-                    if (preLoadConfig != null)
+                    cfg.CatchClrExceptions();
+
+                    if (!isExecuteByCommand)
                     {
                         List<System.Reflection.Assembly> assemblies = new();
-                        foreach (string assemblyString in preLoadConfig.Assemblies)
+                        foreach (string assemblyString in preLoadConfig.Assemblies ?? Array.Empty<string>())
                         {
                             try
                             {
@@ -54,24 +54,23 @@ namespace Serein.Core.JSPlugin
                                 Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
                             }
                         }
+
                         cfg.AllowClr(assemblies.ToArray());
+                        cfg.CancellationToken(cancellationTokenSource.Token);
+                        cfg.EnableModules(Path.Combine(Global.PATH, "plugins"));
+
+                        cfg.Modules.RegisterRequire = true;
                         cfg.Interop.AllowGetType = preLoadConfig.AllowGetType;
                         cfg.Interop.AllowOperatorOverloading = preLoadConfig.AllowOperatorOverloading;
                         cfg.Interop.AllowSystemReflection = preLoadConfig.AllowSystemReflection;
                         cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
-                        cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
+                        // cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
                         cfg.Strict = preLoadConfig.Strict;
+                        cfg.Interop.ExceptionHandler = (_) => true;
                     }
-                    cfg.CatchClrExceptions();
-                    if (isExecuteByCommand)
+                    else
                     {
                         cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
-                    }
-                    else if (cancellationTokenSource != null)
-                    {
-                        cfg.CancellationToken(cancellationTokenSource.Token);
-                        cfg.Modules.RegisterRequire = true;
-                        cfg.EnableModules(Path.Combine(Global.PATH, "plugins"));
                     }
                 }
                 ));

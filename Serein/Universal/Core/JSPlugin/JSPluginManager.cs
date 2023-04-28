@@ -113,7 +113,7 @@ namespace Serein.Core.JSPlugin
                 Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
                 try
                 {
-                    PreLoadConfig config = new();
+                    PreLoadConfig config = null;
                     if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
                     {
                         string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
@@ -121,8 +121,10 @@ namespace Serein.Core.JSPlugin
                         {
                             config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
                         }
+                        config ??= new();
                         File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
                     }
+                    config ??= new();
                     Plugin plugin = new(@namespace, config)
                     {
                         File = file
