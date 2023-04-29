@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Serein.Core.Generic;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut)]
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Member
     {
         /// <summary>

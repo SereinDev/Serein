@@ -1,5 +1,9 @@
-﻿namespace Serein.Settings
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Serein.Settings
 {
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Server
     {
         public bool AutoStop = true;

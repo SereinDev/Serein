@@ -1,15 +1,16 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Serein.Extensions;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut)]
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Regex
     {
         /// <summary>
         /// 正则表达式
         /// </summary>
-        [JsonProperty(PropertyName = "Regex")]
+        [JsonProperty(PropertyName = "regex")]
         public string Expression { get; set; } = string.Empty;
 
         /// <summary>

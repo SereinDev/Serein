@@ -228,6 +228,10 @@ namespace Serein.Core.Generic
                     }
                 }
             }
+            if (messageType != "group")
+            {
+                return;
+            }
             lock (Global.GroupCache)
             {
                 if (!Global.GroupCache.ContainsKey(groupID))

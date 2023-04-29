@@ -1,7 +1,10 @@
-﻿using Serein.Extensions;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Serein.Extensions;
 
 namespace Serein.Settings
 {
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Matches
     {
         private const string _Difficulty = "(PEACEFUL|EASY|NORMAL|HARD|DIFFICULT[^Y])";

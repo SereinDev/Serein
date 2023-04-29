@@ -1,12 +1,13 @@
 ﻿using NCrontab;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut)]
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Schedule
     {
         /// <summary>

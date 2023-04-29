@@ -1,5 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
+using Jint.Native.Function;
 using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Utils;
@@ -136,9 +137,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="eventType">事件类型</param>
         public bool HasListenedOn(EventType eventType)
              => EventDict.ContainsKey(eventType) &&
-                EventDict[eventType] != null &&
-                EventDict[eventType] != JsValue.Null &&
-                EventDict[eventType] != JsValue.Undefined;
+                EventDict[eventType] is FunctionInstance;
 
         /// <summary>
         /// 设置事件

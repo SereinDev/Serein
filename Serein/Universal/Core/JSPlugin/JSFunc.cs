@@ -1,5 +1,6 @@
 ﻿using Jint;
 using Jint.Native;
+using Jint.Native.Function;
 using Jint.Runtime;
 using Newtonsoft.Json;
 using Serein.Base;
@@ -53,9 +54,9 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="namespace">命名空间</param>
         /// <param name="eventName">事件名称</param>
-        /// <param name="delegate">函数</param>
+        /// <param name="callback">函数</param>
         /// <returns>注册结果</returns>
-        public static bool SetListener(string @namespace, string eventName, JsValue @delegate)
+        public static bool SetListener(string @namespace, string eventName, JsValue callback)
         {
             Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
@@ -66,8 +67,9 @@ namespace Serein.Core.JSPlugin
             lock (JSPluginManager.PluginDict)
             {
                 return
+                    callback is FunctionInstance &&
                     JSPluginManager.PluginDict.ContainsKey(@namespace) &&
-                    JSPluginManager.PluginDict[@namespace].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), @delegate);
+                    JSPluginManager.PluginDict[@namespace].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
             }
 
         }
@@ -121,20 +123,24 @@ namespace Serein.Core.JSPlugin
         /// 设置定时器
         /// </summary>
         /// <param name="namespace">命名空间</param>
-        /// <param name="delegate">函数</param>
+        /// <param name="callback">函数</param>
         /// <param name="interval">间隔</param>
         /// <param name="autoReset"自动重置></param>
         /// <returns>定时器哈希值</returns>
-        public static JsValue SetTimer(string @namespace, JsValue @delegate, JsValue interval, bool autoReset)
+        public static JsValue SetTimer(string @namespace, JsValue callback, JsValue interval, bool autoReset)
         {
             if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
             {
                 throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
             }
+            if (callback is not FunctionInstance)
+            {
+                throw new ArgumentException(nameof(callback), "The \"callback\" argument must be of type function.");
+            }
             long timerID = CurrentID;
             CurrentID++;
             Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
-            System.Timers.Timer timer = new(interval.AsNumber())
+            System.Timers.Timer timer = new(interval?.AsNumber() ?? 1)
             {
                 AutoReset = autoReset,
             };
@@ -156,7 +162,7 @@ namespace Serein.Core.JSPlugin
                     }
                     lock (JSPluginManager.PluginDict[@namespace].Engine)
                     {
-                        JSPluginManager.PluginDict[@namespace].Engine.Invoke(@delegate);
+                        JSPluginManager.PluginDict[@namespace].Engine.Invoke(callback);
                     }
                 }
                 catch (Exception e)

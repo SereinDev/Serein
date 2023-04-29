@@ -89,7 +89,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_registerPlugin",
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
-                    new Func<string, JsValue, bool>((eventName, @delegate) => JSFunc.SetListener(@namespace, eventName, @delegate)));
+                    new Func<string, JsValue, bool>((eventName, callback) => JSFunc.SetListener(@namespace, eventName, callback)));
                 engine.SetValue("serein_setVariable",
                     new Func<string, JsValue, bool>(JSFunc.SetVariable));
                 engine.SetValue("serein_export",
@@ -97,9 +97,9 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_setPreLoadConfig",
                     new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
                 engine.SetValue("setTimeout",
-                    new Func<JsValue, JsValue, JsValue>((function, interval) => JSFunc.SetTimer(@namespace, function, interval, false)));
+                    new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, false)));
                 engine.SetValue("setInterval",
-                    new Func<JsValue, JsValue, JsValue>((function, interval) => JSFunc.SetTimer(@namespace, function, interval, true)));
+                    new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, true)));
                 engine.SetValue("clearTimeout",
                     new Func<JsValue, bool>(JSFunc.ClearTimer));
                 engine.SetValue("clearInterval",
