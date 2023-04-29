@@ -19,18 +19,21 @@ namespace Serein.Settings
         public PagesDisplayed PagesDisplayed = new();
     }
 
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class AutoRun
     {
         public bool StartServer, ConnectWS;
         public int Delay;
     }
 
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class DevelopmentTool
     {
         public bool EnableDebug, DetailDebug;
         public string NOTE { get; } = "以上设置内容为开发专用选项，请在指导下修改";
     }
 
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class PagesDisplayed
     {
         public bool
@@ -44,6 +47,7 @@ namespace Serein.Settings
         Settings = true;
     }
 
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Function
     {
         public bool NoHeartbeat;
