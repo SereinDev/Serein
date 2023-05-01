@@ -35,7 +35,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Jint" Version="3.0.0-beta-2048" />
+		<PackageReference Include="Jint" Version="3.0.0-beta-2049" />
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Notification.Wpf" Version="7.0.0" />
