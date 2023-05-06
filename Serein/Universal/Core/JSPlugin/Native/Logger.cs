@@ -1,13 +1,12 @@
 using Jint.Native;
 using Serein.Base;
-using Serein.Utils;
 using System;
 
-namespace Serein.Core.JSPlugin
+namespace Serein.Core.JSPlugin.Native
 {
-    internal class JSLogger
+    internal class Logger
     {
-        public JSLogger(string name)
+        public Logger(string name)
         {
             this.Name = name ?? throw new ArgumentNullException(nameof(name));
         }
@@ -19,25 +18,25 @@ namespace Serein.Core.JSPlugin
             => info(null);
 
         public void info(JsValue jsValue)
-            => Logger.Output(LogType.Plugin_Info, $"[{Name}]", jsValue);
+            => Utils.Logger.Output(LogType.Plugin_Info, $"[{Name}]", jsValue);
 
         public void warn()
             => warn(null);
 
         public void warn(JsValue jsValue)
-            => Logger.Output(LogType.Plugin_Warn, $"[{Name}]", jsValue);
+            => Utils.Logger.Output(LogType.Plugin_Warn, $"[{Name}]", jsValue);
 
         public void error()
             => error(null);
 
         public void error(JsValue jsValue)
-            => Logger.Output(LogType.Plugin_Error, $"[{Name}]", jsValue);
+            => Utils.Logger.Output(LogType.Plugin_Error, $"[{Name}]", jsValue);
 
         public void debug()
             => debug(null);
 
         public void debug(JsValue jsValue)
-            => Logger.Output(LogType.Debug, $"[{Name}]", jsValue);
+            => Utils.Logger.Output(LogType.Debug, $"[{Name}]", jsValue);
 #pragma warning restore IDE1006
     }
 }

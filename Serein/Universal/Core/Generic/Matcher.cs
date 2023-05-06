@@ -153,7 +153,7 @@ namespace Serein.Core.Generic
                 }
                 if (interdicted) { return; }
             }
-            Logger.Output(Base.LogType.Bot_Receive, $"{packet.TryGetString("sender", "nickname")}({packet.TryGetString("sender", "user_id")})" + ":" + rawMessage);
+            Utils.Logger.Output(Base.LogType.Bot_Receive, $"{packet.TryGetString("sender", "nickname")}({packet.TryGetString("sender", "user_id")})" + ":" + rawMessage);
             if (messageType == "group" ^ Global.Settings.Bot.GroupList.Contains(groupID))
             {
                 return;

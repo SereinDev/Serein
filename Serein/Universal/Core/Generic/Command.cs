@@ -80,7 +80,7 @@ namespace Serein.Core.Generic
             bool disableMotd = false
             )
         {
-            Logger.Output(
+            Utils.Logger.Output(
                 Base.LogType.Debug,
                     "命令运行",
                     $"inputType:{inputType} ",
@@ -204,7 +204,7 @@ namespace Serein.Core.Generic
                                 }
                                 if (!string.IsNullOrEmpty(e))
                                 {
-                                    Logger.Output(Base.LogType.Plugin_Error, $"[{key}]", "通过命令执行时错误：\n", e);
+                                    Utils.Logger.Output(Base.LogType.Plugin_Error, $"[{key}]", "通过命令执行时错误：\n", e);
                                 }
                             }
                         });
@@ -232,10 +232,10 @@ namespace Serein.Core.Generic
                     }
                     break;
                 case Base.CommandType.DebugOutput:
-                    Logger.Output(Base.LogType.Debug, "[DebugOutput]", value);
+                    Utils.Logger.Output(Base.LogType.Debug, "[DebugOutput]", value);
                     break;
                 default:
-                    Logger.Output(Base.LogType.Debug, "[Unknown]", value);
+                    Utils.Logger.Output(Base.LogType.Debug, "[Unknown]", value);
                     break;
             }
         }
@@ -328,7 +328,7 @@ namespace Serein.Core.Generic
                     value = System.Text.RegularExpressions.Regex.Replace(value, $"\\${i}(?!\\d)", match.Groups[i].Value);
                 }
             }
-            Logger.Output(Base.LogType.Debug, value);
+            Utils.Logger.Output(Base.LogType.Debug, value);
             return value;
         }
 

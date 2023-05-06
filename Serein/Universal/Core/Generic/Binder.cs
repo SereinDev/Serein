@@ -107,7 +107,7 @@ namespace Serein.Core.Generic
         /// <param name="jsonObject">消息JSON对象</param>
         /// <param name="userID">用户ID</param>
         /// <param name="groupID">群聊ID</param>
-        public static void UnBind(JObject jsonObject,long userID, long groupID)
+        public static void UnBind(JObject jsonObject, long userID, long groupID)
         {
             if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {

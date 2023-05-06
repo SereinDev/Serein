@@ -1,4 +1,5 @@
 using Serein.Base;
+using Serein.Core.JSPlugin.Permission;
 using Serein.Settings;
 using System;
 using System.Collections.Generic;
@@ -108,5 +109,7 @@ namespace Serein
         /// 群组用户信息缓存
         /// </summary>
         public static Dictionary<long, Dictionary<long, Member>> GroupCache = new();
+
+        public static Dictionary<string, PermissionGroup> PermissionGroups = new();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Jint.Native;
 using Jint.Native.Function;
 using Newtonsoft.Json;
-using Serein.Utils;
 using SuperSocket.ClientEngine;
 using System;
 using WebSocket4Net;
@@ -64,10 +63,10 @@ namespace Serein.Core.JSPlugin
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
             _WebSocket = new(uri);
-            _WebSocket.Opened += (_, _) => Trigger(onopen, WSEventType.Opened);
-            _WebSocket.Closed += (_, _) => Trigger(onclose, WSEventType.Closed);
-            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, WSEventType.MessageReceived, e);
-            _WebSocket.Error += (_, e) => Trigger(onerror, WSEventType.Error, e);
+            _WebSocket.Opened += (_, _) => Trigger(onopen, EventType.Opened);
+            _WebSocket.Closed += (_, _) => Trigger(onclose, EventType.Closed);
+            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, EventType.MessageReceived, e);
+            _WebSocket.Error += (_, e) => Trigger(onerror, EventType.Error, e);
             JSPluginManager.PluginDict[@namespace].WSClients.Add(this);
         }
 
@@ -91,7 +90,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="jsValue">事件</param>
         /// <param name="eventType">名称</param>
         /// <param name="args">参数</param>
-        private void Trigger(JsValue jsValue, WSEventType eventType, object args = null)
+        private void Trigger(JsValue jsValue, EventType eventType, object args = null)
         {
             if (!Check(jsValue))
             {
@@ -103,17 +102,17 @@ namespace Serein.Core.JSPlugin
                 {
                     switch (eventType)
                     {
-                        case WSEventType.Opened:
-                        case WSEventType.Closed:
+                        case EventType.Opened:
+                        case EventType.Closed:
                             JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue);
                             break;
-                        case WSEventType.MessageReceived:
+                        case EventType.MessageReceived:
                             if (args is MessageReceivedEventArgs e1 && e1 != null)
                             {
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e1.Message);
                             }
                             break;
-                        case WSEventType.Error:
+                        case EventType.Error:
                             if (args is ErrorEventArgs e2 && e2 != null)
                             {
                                 JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
@@ -127,8 +126,8 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
-                Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
+                Utils.Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
+                Utils.Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
         }
 
@@ -161,12 +160,25 @@ namespace Serein.Core.JSPlugin
 
 #pragma warning restore IDE1006
 
-        private enum WSEventType
+        private enum EventType
         {
             Opened,
             Closed,
             MessageReceived,
             Error
+        }
+
+        internal struct ReadonlyWSClient
+        {
+            public bool disposed;
+
+            public int state;
+
+            public ReadonlyWSClient(WSClient wsclient)
+            {
+                disposed = wsclient.Disposed;
+                state = wsclient.state;
+            }
         }
     }
 }

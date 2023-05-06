@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Base;
 using Serein.Core.Generic;
+using Serein.Core.JSPlugin.Permission;
 using Serein.Extensions;
 using Serein.Settings;
 using System;
@@ -55,6 +56,7 @@ namespace Serein.Utils
 #endif
             LazyTimer.Elapsed += (_, _) => SaveMember();
             LazyTimer.Elapsed += (_, _) => SaveGroupCache();
+            LazyTimer.Elapsed += (_, _) => SavePermissionGroups();
             LazyTimer.Start();
         }
 
@@ -75,6 +77,7 @@ namespace Serein.Utils
                 ReadSchedule();
             }
             ReadGroupCache();
+            ReadPermissionGroups();
             ReadSettings();
             SaveSettings();
         }
@@ -279,7 +282,7 @@ namespace Serein.Utils
                 { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
                 { "data", JArray.FromObject(Global.Schedules) }
             };
-            lock (FileLock.Task)
+            lock (FileLock.Schedule)
             {
                 File.WriteAllText(Path.Combine("data", "schedule.json"), jsonObject.ToString());
             }
@@ -415,6 +418,47 @@ namespace Serein.Utils
         }
 
         /// <summary>
+        /// 保存权限组
+        /// </summary>
+        public static void SavePermissionGroups()
+        {
+            if (Websocket.Status)
+            {
+                CreateDirectory("data");
+                lock (Global.GroupCache)
+                {
+                    File.WriteAllText(Path.Combine("data", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 读取权限组
+        /// </summary>
+        public static void ReadPermissionGroups()
+        {
+            string filename = Path.Combine("data", "permission.json");
+            if (File.Exists(filename))
+            {
+                lock (Global.PermissionGroups)
+                {
+                    lock (FileLock.PermissionGroups)
+                    {
+                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(
+                            File.ReadAllText(Path.Combine("data", "permission.json")));
+                    }
+                }
+            }
+            else
+            {
+                lock (FileLock.PermissionGroups)
+                {
+                    File.WriteAllText(Path.Combine("data", "permission.json"), Global.PermissionGroups.ToJson(Formatting.Indented));
+                }
+            }
+        }
+
+        /// <summary>
         /// 控制台日志
         /// </summary>
         /// <param name="line">行文本</param>
@@ -533,15 +577,17 @@ namespace Serein.Utils
         /// </summary>
         public static class FileLock
         {
-            public static readonly object Console = new();
-            public static readonly object Msg = new();
-            public static readonly object Crash = new();
-            public static readonly object Debug = new();
-            public static readonly object Regex = new();
-            public static readonly object Task = new();
-            public static readonly object GroupCache = new();
-            public static readonly object Member = new();
-            public static readonly object Settings = new();
+            public static readonly object
+                Console = new(),
+                Msg = new(),
+                Crash = new(),
+                Debug = new(),
+                Regex = new(),
+                Schedule = new(),
+                GroupCache = new(),
+                Member = new(),
+                Settings = new(),
+                PermissionGroups = new();
         }
     }
 }

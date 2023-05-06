@@ -61,7 +61,7 @@ namespace Serein.Core.JSPlugin
             Task.Run(() =>
             {
                 5000.ToSleep();
-                Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                Utils.Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
             });
 #if WINFORM
             Program.Ui?.LoadJSPluginPublicly();
@@ -87,16 +87,16 @@ namespace Serein.Core.JSPlugin
             });
             if (PluginDict.Count != 0)
             {
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
+                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
                 if (failedFiles.Count > 0)
                 {
-                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", failedFiles));
+                    Utils.Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
                 }
                 JSFunc.Trigger(EventType.PluginsLoaded);
             }
             else
             {
-                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
+                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Serein.Core.JSPlugin
             {
                 if (file.ToLowerInvariant().EndsWith(".module.js")) { continue; }
                 string @namespace = Path.GetFileNameWithoutExtension(file);
-                Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+                Utils.Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
                 try
                 {
                     PreLoadConfig config = null;
@@ -133,7 +133,7 @@ namespace Serein.Core.JSPlugin
                     plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
                     if (!string.IsNullOrEmpty(exceptionMessage))
                     {
-                        Logger.Output(LogType.Plugin_Error, exceptionMessage);
+                        Utils.Logger.Output(LogType.Plugin_Error, exceptionMessage);
                         plugin.Dispose();
                     }
                     else
@@ -143,8 +143,8 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
-                    Logger.Output(LogType.Debug, e);
+                    Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
+                    Utils.Logger.Output(LogType.Debug, e);
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace Serein.Core.JSPlugin
             Task.Run(() =>
             {
                 IsLoading = true;
-                Logger.Output(LogType.Plugin_Clear);
+                Utils.Logger.Output(LogType.Plugin_Clear);
                 JSFunc.ClearAllTimers();
                 JSFunc.Trigger(EventType.PluginsReload);
                 CommandVariablesDict.Clear();

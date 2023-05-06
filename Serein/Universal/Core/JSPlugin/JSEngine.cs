@@ -11,8 +11,10 @@ using Serein.Base.Motd;
 using Serein.Core.Generic;
 using Serein.Core.JSPlugin.Native;
 using Serein.Core.Server;
+using Serein.Extensions;
 using Serein.Utils;
 using System;
+using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
 
@@ -39,19 +41,19 @@ namespace Serein.Core.JSPlugin
                 new Action<Options>((cfg) =>
                 {
                     cfg.CatchClrExceptions();
-
+                    cfg.Interop.MemberAccessor = MemberAccessor;
                     if (!isExecuteByCommand)
                     {
-                        List<System.Reflection.Assembly> assemblies = new();
+                        List<Assembly> assemblies = new();
                         foreach (string assemblyString in preLoadConfig.Assemblies ?? Array.Empty<string>())
                         {
                             try
                             {
-                                assemblies.Add(System.Reflection.Assembly.Load(assemblyString));
+                                assemblies.Add(Assembly.Load(assemblyString));
                             }
                             catch (Exception e)
                             {
-                                Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
+                                Utils.Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
                             }
                         }
 
@@ -81,11 +83,11 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_namespace",
                 string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
             engine.SetValue("serein_debugLog",
-                new Action<JsValue>((content) => Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
+                new Action<JsValue>((content) => Utils.Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
             if (!string.IsNullOrEmpty(@namespace))
             {
                 engine.SetValue("serein_log",
-                    new Action<JsValue>((content) => Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
+                    new Action<JsValue>((content) => Utils.Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
                 engine.SetValue("serein_registerPlugin",
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
@@ -107,7 +109,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("WSClient",
                     TypeReference.CreateTypeReference(engine, typeof(WSClient)));
                 engine.SetValue("Logger",
-                    TypeReference.CreateTypeReference(engine, typeof(JSLogger)));
+                    TypeReference.CreateTypeReference(engine, typeof(Native.Logger)));
             }
             else
             {
@@ -181,21 +183,21 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getWsStatus",
                 new Func<bool>(() => Websocket.Status));
             engine.SetValue("serein_bindMember",
-                new Func<long, string, bool>(Binder.Bind));
+                new Func<long, string, bool>(Generic.Binder.Bind));
             engine.SetValue("serein_unbindMember",
-                new Func<long, bool>(Binder.UnBind));
+                new Func<long, bool>(Generic.Binder.UnBind));
             engine.SetValue("serein_getID",
-                new Func<string, long>(Binder.GetID));
+                new Func<string, long>(Generic.Binder.GetID));
             engine.SetValue("serein_getGameID",
-                new Func<long, string>(Binder.GetGameID));
+                new Func<long, string>(Generic.Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
-                new Func<JsValue>(() => JsValue.FromObject(engine, MemberStruct.Create(Global.GroupCache))));
+                new Func<JsValue>(() => JsValue.FromObject(engine, JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Member>>>(Global.GroupCache.ToJson()))));
             engine.SetValue("serein_getUserInfo",
-                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? JsValue.FromObject(engine, new MemberStruct(member)) : JsValue.Null));
+                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? JsValue.FromObject(engine, member) : JsValue.Null));
             engine.SetValue("serein_getPluginList",
                 new Func<JsValue>(() => JsValue.FromObject(engine, JSPluginManager.PluginDict.Values.Select(plugin => new PluginStruct(plugin)).ToArray())));
             engine.SetValue("serein_getRegexes",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.Select((regex) => new RegexStruct(regex)).ToArray())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.ToArray())));
             engine.SetValue("serein_addRegex",
                 new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
             engine.SetValue("serein_editRegex",
@@ -206,6 +208,9 @@ namespace Serein.Core.JSPlugin
                 new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
+            engine.SetValue("serein_getPermissionGroups",
+                new Func<JsValue>(
+                    () => JsValue.FromObject(engine, Global.PermissionGroups.ToArray())));
             engine.SetValue("Motdpe",
                 TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje",
@@ -265,6 +270,8 @@ namespace Serein.Core.JSPlugin
                     unbindMember: serein_unbindMember,
                     getID: serein_getID,
                     getGameID: serein_getGameID,
+
+                    getPermissionGroups: serein_getPermissionGroups,
                 };"
             );
             return engine;
@@ -284,14 +291,58 @@ namespace Serein.Core.JSPlugin
             }
             catch (JavaScriptException e)
             {
-                Logger.Output(LogType.Debug, e);
+                Utils.Logger.Output(LogType.Debug, e);
                 exceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
             }
             catch (Exception e)
             {
-                Logger.Output(LogType.Debug, e);
+                Utils.Logger.Output(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
+        }
+
+        public static JsValue MemberAccessor(Engine engine, object target, string member)
+        {
+            if (target is null || string.IsNullOrEmpty(member) || member.Length == 0)
+            {
+                return null;
+            }
+            string pascalCasingName = GetPascalCasingName(member);
+            Type type = target.GetType();
+            MemberInfo[] memberInfos = type.GetMembers(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+            foreach (MemberInfo memberInfo in memberInfos)
+            {
+                if (pascalCasingName != memberInfo.Name && member != memberInfo.Name)
+                {
+                    continue;
+                }
+                switch (memberInfo.MemberType)
+                {
+                    case MemberTypes.Property:
+                        return JsValue.FromObject(engine, (memberInfo as PropertyInfo).GetValue(target));
+                    case MemberTypes.Field:
+                        return JsValue.FromObject(engine, (memberInfo as FieldInfo).GetValue(target));
+                    default:
+                        return null; // 交给Jint（计算最佳匹配方法）
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取帕斯卡命名
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <returns>转换结果</returns>
+        private static string GetPascalCasingName(string name)
+        {
+            if (char.IsUpper(name, 0))
+            {
+                return name;
+            }
+            char[] chars = name.ToCharArray();
+            chars[0] = char.ToUpperInvariant(chars[0]);
+            return new string(chars);
         }
     }
 }

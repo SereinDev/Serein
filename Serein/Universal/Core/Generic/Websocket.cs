@@ -41,10 +41,10 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
+                Utils.Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
                 return;
             }
-            Logger.Output(LogType.Bot_Clear);
+            Utils.Logger.Output(LogType.Bot_Clear);
             Matcher.MessageReceived = null;
             Matcher.MessageSent = null;
             Matcher.SelfId = null;
@@ -61,13 +61,13 @@ namespace Serein.Core.Generic
                 WSClient.MessageReceived += Receive;
                 WSClient.Error += (_, e) =>
                 {
-                    Logger.Output(LogType.Bot_Error, e.Exception.Message);
+                    Utils.Logger.Output(LogType.Bot_Error, e.Exception.Message);
                 };
                 WSClient.Closed += Closed;
                 WSClient.Opened += (_, _) =>
                 {
                     Reconnect = true;
-                    Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
+                    Utils.Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
                 };
                 WSClient.Open();
                 StartTime = DateTime.Now;
@@ -75,20 +75,20 @@ namespace Serein.Core.Generic
             }
             catch (Exception e)
             {
-                Logger.Output(LogType.Bot_Error, e.Message);
+                Utils.Logger.Output(LogType.Bot_Error, e.Message);
             }
         }
 
         private static void Closed(object sender, EventArgs e)
         {
             Status = false;
-            Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
+            Utils.Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
             if (Global.Settings.Bot.AutoReconnect && Reconnect)
             {
                 Task.Run(() =>
                 {
-                    Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
-                    Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
+                    Utils.Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                    Utils.Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                     for (int i = 0; i < 20; i++)
                     {
                         500.ToSleep();
@@ -161,11 +161,11 @@ namespace Serein.Core.Generic
                 WSClient.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Logger.Output(LogType.Bot_Send, textJObject);
+                    Utils.Logger.Output(LogType.Bot_Send, textJObject);
                 }
                 else
                 {
-                    Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
+                    Utils.Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
                 }
                 IO.MsgLog($"[Sent] {textJObject}");
             }
@@ -201,11 +201,11 @@ namespace Serein.Core.Generic
                 WSClient.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
-                    Logger.Output(LogType.Bot_Send, textJObject);
+                    Utils.Logger.Output(LogType.Bot_Send, textJObject);
                 }
                 else
                 {
-                    Logger.Output(LogType.Bot_Send, $"\"临时会话\"({userID}):{message}");
+                    Utils.Logger.Output(LogType.Bot_Send, $"\"临时会话\"({userID}):{message}");
                 }
                 IO.MsgLog($"[Sent] {textJObject}");
             }
@@ -225,11 +225,11 @@ namespace Serein.Core.Generic
             else if (Reconnect)
             {
                 Reconnect = false;
-                Logger.Output(LogType.Bot_Notice, "重连已取消");
+                Utils.Logger.Output(LogType.Bot_Notice, "重连已取消");
             }
             else
             {
-                Logger.MsgBox("Websocket未连接", "Serein", 0, 48);
+                Utils.Logger.MsgBox("Websocket未连接", "Serein", 0, 48);
             }
         }
 
@@ -242,7 +242,7 @@ namespace Serein.Core.Generic
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
-                Logger.Output(LogType.Bot_Receive, e.Message);
+                Utils.Logger.Output(LogType.Bot_Receive, e.Message);
             }
             IO.MsgLog($"[Received] {e.Message}");
             string packet = WebUtility.HtmlDecode(new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString()));
@@ -256,7 +256,7 @@ namespace Serein.Core.Generic
             }
             catch (Exception exception)
             {
-                Logger.Output(LogType.Debug, exception);
+                Utils.Logger.Output(LogType.Debug, exception);
             }
         }
     }

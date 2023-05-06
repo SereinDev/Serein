@@ -130,21 +130,21 @@ namespace Serein.Core.Server
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox("服务器已在运行中", "Serein", 0, 48);
+                    Utils.Logger.MsgBox("服务器已在运行中", "Serein", 0, 48);
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox("启动路径为空", "Serein", 0, 48);
+                    Utils.Logger.MsgBox("启动路径为空", "Serein", 0, 48);
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox($"启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
+                    Utils.Logger.MsgBox($"启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
                 }
             }
             else
@@ -152,9 +152,9 @@ namespace Serein.Core.Server
 #if CONSOLE
                 Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\n");
 #else
-                Logger.Output(LogType.Server_Clear);
+                Utils.Logger.Output(LogType.Server_Clear);
 #endif
-                Logger.Output(LogType.Server_Notice, "启动中");
+                Utils.Logger.Output(LogType.Server_Notice, "启动中");
 
                 #region 主变量初始化
                 ServerProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
@@ -234,7 +234,7 @@ namespace Serein.Core.Server
             }
             else if (!quiet)
             {
-                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
+                Utils.Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
             }
         }
 
@@ -268,13 +268,13 @@ namespace Serein.Core.Server
                     }
                     catch (Exception e)
                     {
-                        Logger.Output(LogType.Debug, e);
+                        Utils.Logger.Output(LogType.Debug, e);
                     }
                 }
             }
             else if (!Status)
             {
-                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
+                Utils.Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
             }
 #if CONSOLE
             else
@@ -307,7 +307,7 @@ namespace Serein.Core.Server
                 }
             }
 #else
-            else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48)
+            else if (Utils.Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48)
 #if !NET6_0
                  && (
                     !StartFileName.ToLowerInvariant().EndsWith(".bat") || (
@@ -329,7 +329,7 @@ namespace Serein.Core.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox("强制结束失败\n" + e.Message, "Serein", 0, 16);
+                    Utils.Logger.MsgBox("强制结束失败\n" + e.Message, "Serein", 0, 16);
                     return false;
                 }
             }
@@ -373,7 +373,7 @@ namespace Serein.Core.Server
 #if !CONSOLE
                 if (Global.Settings.Server.EnableOutputCommand)
                 {
-                    Logger.Output(LogType.Server_Input, $">{command}");
+                    Utils.Logger.Output(LogType.Server_Input, $">{command}");
                 }
 #endif
                 if (usingUnicode || Global.Settings.Server.EnableUnicode)
@@ -427,7 +427,7 @@ namespace Serein.Core.Server
                 interdicted = JSFunc.Trigger(EventType.ServerOriginalOutput, e.Data) || interdicted;
                 if (!excluded && !interdicted)
                 {
-                    Logger.Output(LogType.Server_Output, e.Data);
+                    Utils.Logger.Output(LogType.Server_Output, e.Data);
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {
@@ -463,17 +463,17 @@ namespace Serein.Core.Server
         {
             InputWriter.Close();
             InputWriter.Dispose();
-            Logger.Output(LogType.Server_Output, "");
+            Utils.Logger.Output(LogType.Server_Output, "");
             UpdateTimer?.Stop();
             if (!IsStoppedByUser && ServerProcess.ExitCode != 0)
             {
-                Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
+                Utils.Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
                 Restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger(EventType.ServerExitUnexpectedly);
             }
             else
             {
-                Logger.Output(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
+                Utils.Logger.Output(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
                 EventTrigger.Trigger(EventType.ServerStop);
             }
             if (Restart)
@@ -502,13 +502,13 @@ namespace Serein.Core.Server
         /// </summary>
         private static void RestartTimer()
         {
-            Logger.Output(LogType.Server_Notice,
+            Utils.Logger.Output(LogType.Server_Notice,
                 $"服务器将在5s后（{DateTime.Now.AddSeconds(5):T}）重新启动"
                 );
 #if CONSOLE
             Logger.Output(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
 #else
-            Logger.Output(LogType.Server_Notice, "你可以按下停止按钮来取消这次重启");
+            Utils.Logger.Output(LogType.Server_Notice, "你可以按下停止按钮来取消这次重启");
 #endif
             for (int i = 0; i < 10; i++)
             {
@@ -524,7 +524,7 @@ namespace Serein.Core.Server
             }
             else
             {
-                Logger.Output(LogType.Server_Notice, "重启已取消");
+                Utils.Logger.Output(LogType.Server_Notice, "重启已取消");
             }
         }
 

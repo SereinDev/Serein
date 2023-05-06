@@ -86,6 +86,7 @@ namespace Serein.Windows.Pages.Function
                         {
                             RegexListView.Items.Insert(RegexListView.SelectedIndex, selectedItem2);
                             Save();
+                            Load();
                         }
                         break;
                     case "Delete":

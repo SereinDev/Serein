@@ -14,6 +14,12 @@ namespace Serein.Base
         public string Expression { get; set; } = string.Empty;
 
         /// <summary>
+        /// JS成员
+        /// </summary>
+        [JsonIgnore]
+        public string regex => Expression;
+
+        /// <summary>
         /// 备注
         /// </summary>
         public string Remark { get; set; } = string.Empty;

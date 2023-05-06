@@ -120,21 +120,5 @@ namespace Serein.Base.Motd
 
         internal abstract void Get();
         internal abstract bool TryGet();
-
-#pragma warning disable IDE1006
-        public string ip => IP.ToString();
-        public int port => Port;
-        public int onlinePlayer => OnlinePlayer;
-        public int maxPlayer => MaxPlayer;
-        public string description => Description;
-        public string protocol => Protocol;
-        public string version => Version;
-        public double delay => Delay;
-        public string exception => Exception;
-        public bool isSuccessful => IsSuccessful;
-        public string favicon => Favicon;
-        public string levelName => LevelName;
-        public string gameMode => GameMode;
-#pragma warning restore IDE1006
     }
 }

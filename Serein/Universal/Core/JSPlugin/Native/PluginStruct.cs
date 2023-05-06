@@ -12,7 +12,7 @@ namespace Serein.Core.JSPlugin.Native
         public string file;
         public PreLoadConfig preLoadConfig;
         public string[] eventList;
-        public WSClientStruct[] wsclients;
+        public WSClient.ReadonlyWSClient[] wsclients;
         public bool available;
 
         public PluginStruct(Plugin plugin)
@@ -26,7 +26,7 @@ namespace Serein.Core.JSPlugin.Native
             eventList = plugin.EventList.Select((eventType) => eventType.ToString()).ToArray();
             available = plugin.Available;
             preLoadConfig = plugin.PreLoadConfig;
-            wsclients = plugin.WSClients.Select((wsclient) => new WSClientStruct(wsclient)).ToArray();
+            wsclients = plugin.WSClients.Select((wsclient) => new WSClient.ReadonlyWSClient(wsclient)).ToArray();
         }
     }
 }

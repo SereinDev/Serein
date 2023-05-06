@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"workbench.colorTheme": "Visual Studio 2019 Dark",
+		"workbench.iconTheme": "vscode-icons"
+	}
+}

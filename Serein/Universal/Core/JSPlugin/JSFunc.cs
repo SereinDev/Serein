@@ -58,7 +58,7 @@ namespace Serein.Core.JSPlugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string @namespace, string eventName, JsValue callback)
         {
-            Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
+            Utils.Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
             if (!Enum.IsDefined(typeof(EventType), eventName))
             {
@@ -94,7 +94,7 @@ namespace Serein.Core.JSPlugin
             bool interdicted = false;
             lock (EventLock)
             {
-                Logger.Output(LogType.Debug, type);
+                Utils.Logger.Output(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
                     List<Task<bool>> tasks = new();
@@ -139,7 +139,7 @@ namespace Serein.Core.JSPlugin
             }
             long timerID = CurrentID;
             CurrentID++;
-            Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
+            Utils.Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
             System.Timers.Timer timer = new(interval?.AsNumber() ?? 1)
             {
                 AutoReset = autoReset,
@@ -167,8 +167,8 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
-                    Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
+                    Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
+                    Utils.Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
                 {
@@ -396,7 +396,7 @@ namespace Serein.Core.JSPlugin
                     StringCompilationAllowed =
                         stringCompilationAllowed?.IsBoolean() == true ? stringCompilationAllowed.AsBoolean() : true,
                 }, Formatting.Indented));
-            Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
+            Utils.Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
 
         /// <summary>
@@ -410,15 +410,15 @@ namespace Serein.Core.JSPlugin
             try
             {
                 IO.Reload(type);
-                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
+                Utils.Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
                 return true;
             }
             catch (Exception e)
             {
                 if (!string.IsNullOrEmpty(@namespace))
                 {
-                    Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
-                    Logger.Output(LogType.Debug, type, e);
+                    Utils.Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
+                    Utils.Logger.Output(LogType.Debug, type, e);
                 }
                 return false;
             }
