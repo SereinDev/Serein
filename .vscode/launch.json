@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (default)",
+            "name": ".NET Core",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/Serein/Winform/bin/Debug/net6.0-windows/Serein-Winform.dll",
+            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein-${input:targetApplication}.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -16,10 +16,10 @@
             "requireExactSource": false
         },
         {
-            "name": ".NET Core Launch (optional)",
-            "type": "coreclr",
+            "name": ".NET Framework",
+            "type": "clr",
             "request": "launch",
-            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein-${input:targetApplication}.${input:fileExtension}",
+            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/net472/Serein-${input:targetApplication}.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -45,21 +45,10 @@
             "type": "pickString",
             "description": "目标版本",
             "options": [
-                "net472",
                 "net6.0-windows",
                 "net6.0"
             ],
             "default": "net6.0-windows"
-        },
-        {
-            "id": "fileExtension",
-            "type": "pickString",
-            "description": "扩展名",
-            "options": [
-                "dll",
-                "exe"
-            ],
-            "default": "dll"
         }
     ]
 }

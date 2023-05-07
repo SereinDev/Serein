@@ -71,7 +71,7 @@ namespace Serein.Core.Generic
                 EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupID, userID, jsonObject);
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(value, Global.Settings.Serein.Function.RegexForCheckingGameID))
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID, jsonObject);
                 return;

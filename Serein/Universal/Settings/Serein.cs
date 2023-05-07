@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Serein.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Serein.Settings
 {
@@ -54,5 +57,6 @@ namespace Serein.Settings
         public int JSEventMaxWaitingTime = 500;
         public int JSEventCoolingDownTime = 15;
         public bool DisableBinderWhenServerClosed;
+        public string RegexForCheckingGameID = @"^[a-zA-Z0-9_\s-]{3,16}$";
     }
 }

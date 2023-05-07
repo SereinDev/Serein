@@ -1,6 +1,7 @@
 ﻿using Serein.Utils;
 using Serein.Core.JSPlugin;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -42,6 +43,10 @@ namespace Serein.Windows.Pages.Function
             JSPluginListView.Items.Clear();
             foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
+                if (plugin is null)
+                {
+                    continue;
+                }
                 ListViewItem listViewItem = new ListViewItem
                 {
                     Content = plugin,
@@ -59,8 +64,11 @@ namespace Serein.Windows.Pages.Function
                 switch (menuItem.Tag)
                 {
                     case "Reload":
-                        JSPluginManager.Reload();
-                        Load();
+                        Task.Run(() =>
+                        {
+                            JSPluginManager.Reload();
+                            Load();
+                        });
                         break;
                     case "ClearConsole":
                         PluginRichTextBox.Document.Blocks.Clear();

@@ -209,8 +209,9 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("serein_getPermissionGroups",
-                new Func<JsValue>(
-                    () => JsValue.FromObject(engine, Global.PermissionGroups.ToArray())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups.ToArray())));
+            engine.SetValue("serein_safeCall",
+                new Func<JsValue, JsValue[], JsValue>(JSFunc.SafeCall));
             engine.SetValue("Motdpe",
                 TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje",

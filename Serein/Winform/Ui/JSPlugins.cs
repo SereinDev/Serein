@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -30,6 +31,10 @@ namespace Serein.Ui
             JSPluginList.Items.Clear();
             foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
             {
+                if (plugin is null)
+                {
+                    continue;
+                }
                 ListViewItem listViewItem = new(plugin.DisplayedName)
                 {
                     ForeColor = plugin.Available ? ForeColor : Color.Gray,
@@ -46,8 +51,11 @@ namespace Serein.Ui
 
         private void JSPluginListContextMenuStrip_Reload_Click(object sender, EventArgs e)
         {
-            JSPluginManager.Reload();
-            LoadJSPlugin();
+            Task.Run(() =>
+            {
+                JSPluginManager.Reload();
+                Invoke(LoadJSPlugin);
+            });
         }
 
         private void JSPluginListContextMenuStrip_Disable_Click(object sender, EventArgs e)

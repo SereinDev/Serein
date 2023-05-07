@@ -308,6 +308,10 @@ namespace Serein.Utils
             if (File.Exists(Path.Combine("settings", "Serein.json")))
             {
                 Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new();
+                if (!Global.Settings.Serein.Function.RegexForCheckingGameID.TestRegex())
+                {
+                    throw new NotSupportedException("“Serein.Function.RegexForCheckingGameID”不合法，请修改“settings/Serein.json”后重试");
+                }
             }
             if (File.Exists(Path.Combine("settings", "Bot.json")))
             {
@@ -323,7 +327,6 @@ namespace Serein.Utils
                 Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new();
                 File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
             }
-
         }
 
         /// <summary>

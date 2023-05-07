@@ -61,7 +61,7 @@ namespace Serein.Core.JSPlugin
             Task.Run(() =>
             {
                 5000.ToSleep();
-                Utils.Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
             });
 #if WINFORM
             Program.Ui?.LoadJSPluginPublicly();
@@ -85,18 +85,18 @@ namespace Serein.Core.JSPlugin
                     failedFiles.Add(Path.GetFileName(plugin.File));
                 }
             });
-            if (PluginDict.Count != 0)
+            if (PluginDict.Count > 0)
             {
-                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
                 if (failedFiles.Count > 0)
                 {
-                    Utils.Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
+                    Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
                 }
                 JSFunc.Trigger(EventType.PluginsLoaded);
             }
             else
             {
-                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
+                Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
             }
         }
 
@@ -108,44 +108,56 @@ namespace Serein.Core.JSPlugin
             string[] files = Directory.GetFiles(PluginPath, "*.js", SearchOption.TopDirectoryOnly);
             foreach (string file in files)
             {
-                if (file.ToLowerInvariant().EndsWith(".module.js")) { continue; }
-                string @namespace = Path.GetFileNameWithoutExtension(file);
-                Utils.Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
-                try
+                LoadFile(file);
+            }
+        }
+
+        /// <summary>
+        /// 加载文件
+        /// </summary>
+        /// <param name="file">文件</param>
+        private static void LoadFile(string file)
+        {
+            if (file.ToLowerInvariant().EndsWith(".module.js"))
+            {
+                return;
+            }
+            string @namespace = Path.GetFileNameWithoutExtension(file);
+            Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+            try
+            {
+                PreLoadConfig config = null;
+                if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
                 {
-                    PreLoadConfig config = null;
-                    if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
+                    string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
+                    if (File.Exists(configPath))
                     {
-                        string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
-                        if (File.Exists(configPath))
-                        {
-                            config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
-                        }
-                        config ??= new();
-                        File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
+                        config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
                     }
                     config ??= new();
-                    Plugin plugin = new(@namespace, config)
-                    {
-                        File = file
-                    };
-                    PluginDict.Add(@namespace, plugin);
-                    plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
-                    if (!string.IsNullOrEmpty(exceptionMessage))
-                    {
-                        Utils.Logger.Output(LogType.Plugin_Error, exceptionMessage);
-                        plugin.Dispose();
-                    }
-                    else
-                    {
-                        plugin.Available = true;
-                    }
+                    File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
                 }
-                catch (Exception e)
+                config ??= new();
+                Plugin plugin = new(@namespace, config)
                 {
-                    Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
-                    Utils.Logger.Output(LogType.Debug, e);
+                    File = file
+                };
+                PluginDict.Add(@namespace, plugin);
+                plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
+                if (!string.IsNullOrEmpty(exceptionMessage))
+                {
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", exceptionMessage);
+                    plugin.Dispose();
                 }
+                else
+                {
+                    plugin.Available = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
+                Logger.Output(LogType.Debug, e);
             }
         }
 
@@ -158,19 +170,16 @@ namespace Serein.Core.JSPlugin
             {
                 return;
             }
-            Task.Run(() =>
-            {
-                IsLoading = true;
-                Utils.Logger.Output(LogType.Plugin_Clear);
-                JSFunc.ClearAllTimers();
-                JSFunc.Trigger(EventType.PluginsReload);
-                CommandVariablesDict.Clear();
-                VariablesExportedDict.Clear();
-                PluginDict.Values.ToList().ForEach((plugin) => plugin.Dispose());
-                PluginDict.Clear();
-                JSFunc.CurrentID = 0;
-                Load();
-            });
+            IsLoading = true;
+            Logger.Output(LogType.Plugin_Clear);
+            JSFunc.ClearAllTimers();
+            JSFunc.Trigger(EventType.PluginsReload);
+            CommandVariablesDict.Clear();
+            VariablesExportedDict.Clear();
+            PluginDict.Values.ToList().ForEach((plugin) => plugin.Dispose());
+            PluginDict.Clear();
+            JSFunc.CurrentID = 0;
+            Load();
         }
     }
 }

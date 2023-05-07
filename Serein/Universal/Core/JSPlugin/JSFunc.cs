@@ -40,7 +40,7 @@ namespace Serein.Core.JSPlugin
         {
             if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin plugin))
             {
-                throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
+                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
             plugin.DisplayedName = name;
             plugin.DisplayedVersion = version;
@@ -58,7 +58,7 @@ namespace Serein.Core.JSPlugin
         /// <returns>注册结果</returns>
         public static bool SetListener(string @namespace, string eventName, JsValue callback)
         {
-            Utils.Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
+            Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
             if (!Enum.IsDefined(typeof(EventType), eventName))
             {
@@ -94,7 +94,7 @@ namespace Serein.Core.JSPlugin
             bool interdicted = false;
             lock (EventLock)
             {
-                Utils.Logger.Output(LogType.Debug, type);
+                Logger.Output(LogType.Debug, type);
                 lock (JSPluginManager.PluginDict)
                 {
                     List<Task<bool>> tasks = new();
@@ -139,7 +139,7 @@ namespace Serein.Core.JSPlugin
             }
             long timerID = CurrentID;
             CurrentID++;
-            Utils.Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
+            Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
             System.Timers.Timer timer = new(interval?.AsNumber() ?? 1)
             {
                 AutoReset = autoReset,
@@ -167,8 +167,8 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
-                    Utils.Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
+                    Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
                 {
@@ -396,7 +396,7 @@ namespace Serein.Core.JSPlugin
                     StringCompilationAllowed =
                         stringCompilationAllowed?.IsBoolean() == true ? stringCompilationAllowed.AsBoolean() : true,
                 }, Formatting.Indented));
-            Utils.Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
+            Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
 
         /// <summary>
@@ -410,18 +410,40 @@ namespace Serein.Core.JSPlugin
             try
             {
                 IO.Reload(type);
-                Utils.Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
+                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
                 return true;
             }
             catch (Exception e)
             {
                 if (!string.IsNullOrEmpty(@namespace))
                 {
-                    Utils.Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
-                    Utils.Logger.Output(LogType.Debug, type, e);
+                    Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
+                    Logger.Output(LogType.Debug, type, e);
                 }
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 安全调用
+        /// </summary>
+        /// <param name="jsValue">函数对象</param>
+        /// <param name="arguments">参数</param>
+        /// <returns>调用结果</returns>
+        public static JsValue SafeCall(JsValue jsValue, JsValue[] arguments)
+        {
+            if (jsValue is not FunctionInstance functionInstance)
+            {
+                return JsValue.Undefined;
+            }
+            if (Monitor.TryEnter(functionInstance.Engine, 1000))
+            {
+                lock (functionInstance.Engine)
+                {
+                    return functionInstance.Engine.Invoke(functionInstance, arguments);
+                }
+            }
+            throw new MethodAccessException();
         }
     }
 }

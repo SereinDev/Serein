@@ -267,7 +267,7 @@ namespace Serein.Windows
                     Path.GetExtension(filename).ToLowerInvariant() == ".bat"
                     )
                 {
-                    if (Utils.Logger.MsgBox(
+                    if (Logger.MsgBox(
                         $"确定要以\"{filename}\"为启动文件吗？",
                         "Serein", 1, 48))
                     {
@@ -283,13 +283,13 @@ namespace Serein.Windows
                 {
                     if (File.ReadAllText(filename).ToLowerInvariant().Contains("regex"))
                     {
-                        if (Utils.Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入正则记录吗？", "Serein", 1, 48))
+                        if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入正则记录吗？", "Serein", 1, 48))
                         {
-                            IO.ReadRegex(filename, Utils.Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
+                            IO.ReadRegex(filename, Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
                             Catalog.Function.Regex?.Load();
                         }
                     }
-                    else if (Utils.Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
+                    else if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
                     {
                         IO.ReadSchedule(filename);
                         Catalog.Function.Schedule?.Load();

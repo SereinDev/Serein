@@ -1,17 +1,18 @@
+using System.Threading.Tasks;
 using Serein.Base;
-using Serein.Utils;
 using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using System;
-using System.Text.RegularExpressions;
 
 
 namespace Serein.Utils.Console
 {
     internal static class Input
     {
+        private static bool IsLoading;
+
         private const string HelpMenu =
 @"Serein 帮助菜单：
 
@@ -152,16 +153,25 @@ Tip:
                         break;
                     case "r":
                     case "reload":
-                        try
+                        if (IsLoading)
                         {
-                            IO.ReadAll();
-                            JSPluginManager.Reload();
-                            Logger.Output(LogType.Info, "重新加载成功");
+                            break;
                         }
-                        catch (Exception e)
+                        Task.Run(() =>
                         {
-                            Logger.Output(LogType.Error, "加载失败:" + e.Message);
-                        }
+                            IsLoading = true;
+                            try
+                            {
+                                IO.ReadAll();
+                                JSPluginManager.Reload();
+                                Logger.Output(LogType.Info, "重新加载成功");
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Output(LogType.Error, "加载失败:" + e.Message);
+                            }
+                        });
+                        IsLoading = false;
                         break;
                     case "clear":
                         System.Console.Clear();

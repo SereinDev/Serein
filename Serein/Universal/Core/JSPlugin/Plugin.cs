@@ -147,7 +147,7 @@ namespace Serein.Core.JSPlugin
         /// <returns>设置结果</returns>
         public bool SetListener(EventType type, JsValue jsValue)
         {
-            Utils.Logger.Output(LogType.Debug, type);
+            Logger.Output(LogType.Debug, type);
             jsValue = jsValue ?? throw new ArgumentNullException(nameof(jsValue));
             switch (type)
             {
@@ -175,7 +175,7 @@ namespace Serein.Core.JSPlugin
                     }
                     return true;
                 default:
-                    Utils.Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
+                    Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
                     return false;
             }
         }
@@ -191,7 +191,7 @@ namespace Serein.Core.JSPlugin
             {
                 return false;
             }
-            Utils.Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
+            Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
             try
             {
                 switch (type)
@@ -217,7 +217,7 @@ namespace Serein.Core.JSPlugin
                     case EventType.ReceivePacket:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0]));
                         }
                     case EventType.GroupIncrease:
                     case EventType.GroupDecrease:
@@ -230,12 +230,12 @@ namespace Serein.Core.JSPlugin
                     case EventType.ReceiveGroupMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3], args[4]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3], args[4]));
                         }
                     case EventType.ReceivePrivateMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsInterdicted(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
                         }
                     default:
                         throw new NotSupportedException($"触发了一个不支持的事件：{type}");
@@ -244,16 +244,16 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Utils.Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
-                Utils.Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
+                Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
+                Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
             }
             return false;
         }
 
         /// <summary>
-        /// 获取是否被拦截
+        /// 是否为false
         /// </summary>
-        private static bool IsInterdicted(JsValue jsValue)
+        private static bool IsFalse(JsValue jsValue)
             => jsValue.IsBoolean() && !jsValue.AsBoolean();
     }
 }

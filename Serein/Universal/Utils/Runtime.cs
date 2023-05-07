@@ -52,11 +52,11 @@ namespace Serein.Utils
             Heartbeat.Start();
             Update.Init();
             IO.StartSaving();
-            Task.Run(JSPluginManager.Load);
             if (Global.FirstOpen)
             {
                 ShowWelcomePage();
             }
+            Task.Run(JSPluginManager.Load);
             Task.Run(() =>
             {
                 (Global.Settings.Serein.AutoRun.Delay > 0 ? Global.Settings.Serein.AutoRun.Delay : 0).ToSleep();
