@@ -425,14 +425,21 @@ namespace Serein.Utils
         /// </summary>
         public static void SavePermissionGroups()
         {
-            if (Websocket.Status)
-            {
-                CreateDirectory("data");
-                lock (Global.GroupCache)
+            CreateDirectory("data");
+            lock (Global.PermissionGroups)
+                lock (FileLock.PermissionGroups)
                 {
-                    File.WriteAllText(Path.Combine("data", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
+                    try
+                    {
+                        File.WriteAllText(Path.Combine("data", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
+                    }
+                    catch (Newtonsoft.Json.JsonSerializationException e)
+                    {
+                        throw new NotSupportedException(
+                            "序列化权限组时出现异常。" + e.Message == "Error getting value from 'Params' on 'Esprima.Ast.ArrowFunctionExpression'." ?
+                            "检查一下你是不是把函数塞到权限字典里了！！！" : string.Empty, e);
+                    }
                 }
-            }
         }
 
         /// <summary>
@@ -444,13 +451,11 @@ namespace Serein.Utils
             if (File.Exists(filename))
             {
                 lock (Global.PermissionGroups)
-                {
                     lock (FileLock.PermissionGroups)
                     {
                         Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(
                             File.ReadAllText(Path.Combine("data", "permission.json")));
                     }
-                }
             }
             else
             {

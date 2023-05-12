@@ -110,6 +110,28 @@ namespace Serein
         /// </summary>
         public static Dictionary<long, Dictionary<long, Member>> GroupCache = new();
 
-        public static Dictionary<string, PermissionGroup> PermissionGroups = new();
+        public static Dictionary<string, PermissionGroup> PermissionGroups = new()
+        {
+            {
+                "default",
+                new()
+                {
+                    Description = "Serein的默认权限组",
+                    Priority = 0,
+                    Conditions = new Condition[]
+                    {
+                        new()
+                        {
+                            Type = "group",
+                            OnlyListened = true
+                        },
+                        new()
+                        {
+                            Type = "private"
+                        }
+                    }
+                }
+            }
+        };
     }
 }

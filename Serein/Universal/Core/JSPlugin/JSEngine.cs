@@ -10,6 +10,7 @@ using Serein.Base;
 using Serein.Base.Motd;
 using Serein.Core.Generic;
 using Serein.Core.JSPlugin.Native;
+using Serein.Core.JSPlugin.Permission;
 using Serein.Core.Server;
 using Serein.Extensions;
 using Serein.Utils;
@@ -209,7 +210,17 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_import",
                 new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("serein_getPermissionGroups",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups.ToArray())));
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups)));
+            engine.SetValue("serein_addPermissionGroup",
+                new Func<string, PermissionGroup, bool, bool>(PermissionManager.Add));
+            engine.SetValue("serein_removePermissionGroup",
+                new Func<string, bool>(PermissionManager.Remove));
+            engine.SetValue("serein_calculatePermission",
+                new Func<string, long, long?, JsValue>((type, userId, groupId) => JsValue.FromObject(engine, PermissionManager.Calculate(type, userId, groupId ?? -1))));
+            engine.SetValue("serein_existPermissionGroup",
+                new Func<string, bool>(Global.PermissionGroups.ContainsKey));
+            engine.SetValue("serein_setPermission",
+                new Func<string, string, JsValue, bool>(PermissionManager.SetPermission));
             engine.SetValue("serein_safeCall",
                 new Func<JsValue, JsValue[], JsValue>(JSFunc.SafeCall));
             engine.SetValue("Motdpe",
@@ -218,61 +229,71 @@ namespace Serein.Core.JSPlugin
                 TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.Execute(
                 @"const serein = {
-                    type: serein_type,
-                    typeName: serein_typeName,
-                    startTime: serein_startTime,
-                    path: serein_path,
-                    namespace: serein_namespace,
-                    version: serein_version,
+                    path:               serein_path,
+                    type:               serein_type,
+                    typeName:           serein_typeName,
+                    version:            serein_version,
+                    startTime:          serein_startTime,
+                    namespace:          serein_namespace,
 
-                    getSettings: serein_getSettings,
-                    getSettingsObject: serein_getSettingsObject,
-                    log: serein_log,
-                    debugLog: serein_debugLog,
-                    runCommand: serein_runCommand,
-                    registerPlugin: serein_registerPlugin,
-                    setListener: serein_setListener,
-                    getPluginList: serein_getPluginList,
-                    getRegexes: serein_getRegexes,
-                    addRegex: serein_addRegex,
-                    editRegex: serein_editRegex,
-                    removeRegex: serein_removeRegex,
-                    setVariable: serein_setVariable,
-                    import: serein_import,
-                    export: serein_export,
-                    setPreLoadConfig: serein_setPreLoadConfig,
-                    reloadFiles: serein_reloadFiles,
+                    getSettings:        serein_getSettings,
+                    getSettingsObject:  serein_getSettingsObject,
+                    log:                serein_log,
+                    debugLog:           serein_debugLog,
+                    runCommand:         serein_runCommand,
+                    registerPlugin:     serein_registerPlugin,
+                    setListener:        serein_setListener,
+                    getPluginList:      serein_getPluginList,
+                    setVariable:        serein_setVariable,
+                    setPreLoadConfig:   serein_setPreLoadConfig,
+                    reloadFiles:        serein_reloadFiles,
+                    safeCall:           serein_safeCall,
 
-                    getCPUUsage: serein_getCPUUsage,
-                    getNetSpeed: serein_getNetSpeed,
-                    getSysInfo: serein_getSysinfo,
+                    getRegexes:         serein_getRegexes,
+                    addRegex:           serein_addRegex,
+                    editRegex:          serein_editRegex,
+                    removeRegex:        serein_removeRegex,
 
-                    getMotdpe: serein_getMotdpe,
-                    getMotdje: serein_getMotdje,
-                    startServer: serein_startServer,
-                    stopServer: serein_stopServer,
-                    sendCmd: serein_sendCmd,
-                    killServer: serein_killServer,
-                    getServerStatus: serein_getServerStatus,
-                    getServerTime: serein_getServerTime,
-                    getServerCPUUsage: serein_getServerCPUUsage,
-                    getServerFile: serein_getServerFile,
-                    getServerMotd: serein_getServerMotd,
+                    import:             serein_import,
+                    imports:            serein_import,
+                    export:             serein_export,
+                    exports:            serein_export,
 
-                    sendGroup: serein_sendGroup,
-                    sendPrivate: serein_sendPrivate,
-                    sendTemp: serein_sendTemp,
-                    sendPacket: serein_sendPacket,
-                    getWsStatus: serein_getWsStatus,
-                    getGroupCache: serein_getGroupCache,
-                    getUserInfo: serein_getUserInfo,
+                    getCPUUsage:        serein_getCPUUsage,
+                    getNetSpeed:        serein_getNetSpeed,
+                    getSysInfo:         serein_getSysinfo,
 
-                    bindMember: serein_bindMember,
-                    unbindMember: serein_unbindMember,
-                    getID: serein_getID,
-                    getGameID: serein_getGameID,
+                    startServer:        serein_startServer,
+                    stopServer:         serein_stopServer,
+                    sendCmd:            serein_sendCmd,
+                    killServer:         serein_killServer,
+                    getServerStatus:    serein_getServerStatus,
+                    getServerTime:      serein_getServerTime,
+                    getServerCPUUsage:  serein_getServerCPUUsage,
+                    getServerFile:      serein_getServerFile,
+                    getServerMotd:      serein_getServerMotd,
+                    getMotdpe:          serein_getMotdpe,
+                    getMotdje:          serein_getMotdje,
 
-                    getPermissionGroups: serein_getPermissionGroups,
+                    sendGroup:          serein_sendGroup,
+                    sendPrivate:        serein_sendPrivate,
+                    sendTemp:           serein_sendTemp,
+                    sendPacket:         serein_sendPacket,
+                    getWsStatus:        serein_getWsStatus,
+                    getGroupCache:      serein_getGroupCache,
+                    getUserInfo:        serein_getUserInfo,
+
+                    bindMember:         serein_bindMember,
+                    unbindMember:       serein_unbindMember,
+                    getID:              serein_getID,
+                    getGameID:          serein_getGameID,
+
+                    getPermissionGroups:    serein_getPermissionGroups,
+                    addPermissionGroup:     serein_addPermissionGroup,
+                    removePermissionGroup:  serein_removePermissionGroup,
+                    calculatePermission:    serein_calculatePermission,
+                    existPermissionGroup:   serein_existPermissionGroup,
+                    setPermission:          serein_setPermission,
                 };"
             );
             return engine;
