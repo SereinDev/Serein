@@ -12,27 +12,27 @@ namespace Serein.Core.JSPlugin.Permission
         /// <summary>
         /// 权限组描述
         /// </summary>
-        public string Description;
+        public string Description { get; init; }
 
         /// <summary>
         /// 匹配条件
         /// </summary>
-        public Condition[] Conditions = { };
+        public Condition[] Conditions { get; init; } = { };
 
         /// <summary>
         /// 权限内容
         /// </summary>
-        public IDictionary<string, object> Permissions;
+        public IDictionary<string, object> Permissions { get; init; }
 
         /// <summary>
         /// 优先级
         /// </summary>
-        public int Priority;
+        public int Priority { get; init; }
 
         /// <summary>
         /// 父权限组
         /// </summary>
-        public string[] Parents = { };
+        public string[] Parents { get; init; } = Array.Empty<string>();
 
         public PermissionGroup()
         {

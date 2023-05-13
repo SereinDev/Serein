@@ -430,7 +430,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="jsValue">函数对象</param>
         /// <param name="arguments">参数</param>
         /// <returns>调用结果</returns>
-        public static JsValue SafeCall(JsValue jsValue, JsValue[] arguments)
+        public static JsValue SafeCall(JsValue jsValue, params JsValue[] arguments)
         {
             if (jsValue is not FunctionInstance functionInstance)
             {

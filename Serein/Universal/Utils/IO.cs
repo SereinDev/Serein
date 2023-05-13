@@ -530,7 +530,7 @@ namespace Serein.Utils
             {
                 case null:
                 case "all":
-                    IO.ReadAll();
+                    ReadAll();
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadRegex);
                     Program.Ui?.Invoke(Program.Ui.LoadMember);
@@ -543,7 +543,7 @@ namespace Serein.Utils
 #endif
                     break;
                 case "regex":
-                    IO.ReadRegex();
+                    ReadRegex();
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadRegex);
 #elif WPF
@@ -551,7 +551,7 @@ namespace Serein.Utils
 #endif
                     break;
                 case "member":
-                    IO.ReadMember();
+                    ReadMember();
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadMember);
 #elif WPF
@@ -559,7 +559,7 @@ namespace Serein.Utils
 #endif
                     break;
                 case "schedule":
-                    IO.ReadSchedule();
+                    ReadSchedule();
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadSchedule);
 #elif WPF
@@ -567,13 +567,16 @@ namespace Serein.Utils
 #endif
                     break;
                 case "groupcache":
-                    IO.ReadGroupCache();
+                    ReadGroupCache();
                     break;
                 case "settings":
-                    IO.ReadSettings();
+                    ReadSettings();
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadSettings);
 #endif
+                    break;
+                case "permissiongroup":
+                    ReadPermissionGroups();
                     break;
                 default:
                     throw new ArgumentException("重新加载类型未知");

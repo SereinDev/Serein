@@ -17,7 +17,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 加载插件ing
         /// </summary>
-        private static bool IsLoading;
+        private static bool _loading;
 
         /// <summary>
         /// 插件文件夹路径
@@ -49,11 +49,11 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static void Load()
         {
-            IsLoading = true;
+            _loading = true;
             if (!Directory.Exists(PluginPath))
             {
                 Directory.CreateDirectory(Path.Combine(PluginPath, "modules"));
-                IsLoading = false;
+                _loading = false;
                 return;
             }
             ReadAll();
@@ -69,7 +69,7 @@ namespace Serein.Core.JSPlugin
             Windows.Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
             IO.CreateDirectory(Path.Combine("plugins", "modules"));
-            IsLoading = false;
+            _loading = false;
         }
 
         /// <summary>
@@ -166,18 +166,20 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static void Reload()
         {
-            if (IsLoading)
+            if (_loading)
             {
                 return;
             }
-            IsLoading = true;
+            _loading = true;
             Logger.Output(LogType.Plugin_Clear);
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
+
             CommandVariablesDict.Clear();
             VariablesExportedDict.Clear();
             PluginDict.Values.ToList().ForEach((plugin) => plugin.Dispose());
             PluginDict.Clear();
+
             JSFunc.CurrentID = 0;
             Load();
         }

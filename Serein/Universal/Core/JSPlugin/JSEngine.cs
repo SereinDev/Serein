@@ -221,12 +221,9 @@ namespace Serein.Core.JSPlugin
                 new Func<string, bool>(Global.PermissionGroups.ContainsKey));
             engine.SetValue("serein_setPermission",
                 new Func<string, string, JsValue, bool>(PermissionManager.SetPermission));
-            engine.SetValue("serein_safeCall",
-                new Func<JsValue, JsValue[], JsValue>(JSFunc.SafeCall));
-            engine.SetValue("Motdpe",
-                TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
-            engine.SetValue("Motdje",
-                TypeReference.CreateTypeReference(engine, typeof(Motdje)));
+            engine.SetValue("serein_safeCall", JSFunc.SafeCall);
+            engine.SetValue("Motdpe", TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
+            engine.SetValue("Motdje", TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.Execute(
                 @"const serein = {
                     path:               serein_path,
@@ -329,9 +326,11 @@ namespace Serein.Core.JSPlugin
             {
                 return null;
             }
+
             string pascalCasingName = GetPascalCasingName(member);
             Type type = target.GetType();
             MemberInfo[] memberInfos = type.GetMembers(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+
             foreach (MemberInfo memberInfo in memberInfos)
             {
                 if (pascalCasingName != memberInfo.Name && member != memberInfo.Name)
@@ -345,7 +344,7 @@ namespace Serein.Core.JSPlugin
                     case MemberTypes.Field:
                         return JsValue.FromObject(engine, (memberInfo as FieldInfo).GetValue(target));
                     default:
-                        return null; // 交给Jint（计算最佳匹配方法）
+                        return null; // 交给Jint计算最佳匹配方法
                 }
             }
             return null;

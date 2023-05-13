@@ -11,25 +11,25 @@ namespace Serein.Core.JSPlugin.Permission
         /// <summary>
         /// 类型
         /// </summary>
-        public string Type;
+        public string Type { get; init; }
 
         /// <summary>
         /// 群号
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long[] Groups;
+        public long[] Groups { get; init; }
 
         /// <summary>
         /// 用户
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long[] Users;
+        public long[] Users { get; init; }
 
         /// <summary>
         /// 仅监听群聊
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool? OnlyListened;
+        public bool? OnlyListened { get; init; }
 
         /// <summary>
         /// 仅管理
@@ -37,11 +37,11 @@ namespace Serein.Core.JSPlugin.Permission
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireAdmin;
 
-        private static List<string> Types = new() { "group", "private", "temp", "unknown" };
+        private static List<string> types = new() { "group", "private", "temp", "unknown" };
 
         public Condition()
         {
-            if (string.IsNullOrEmpty(Type) || !Types.Contains(Type))
+            if (string.IsNullOrEmpty(Type) || !types.Contains(Type))
             {
                 Type = "unknown";
                 Groups = null;

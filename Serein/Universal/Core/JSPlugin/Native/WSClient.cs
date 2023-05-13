@@ -12,7 +12,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 命名空间
         /// </summary>
-        private readonly string Namespace;
+        private string Namespace { get; init; }
 
         /// <summary>
         /// 事件函数
@@ -23,21 +23,21 @@ namespace Serein.Core.JSPlugin
         /// WS客户端
         /// </summary>
         [JsonIgnore]
-        private readonly WebSocket _WebSocket;
+        private readonly WebSocket _webSocket;
 
         public void Dispose()
         {
-            if (_WebSocket == null)
+            if (_webSocket == null)
             {
                 return;
             }
-            if (_WebSocket.State == WebSocketState.Open)
+            if (_webSocket.State == WebSocketState.Open)
             {
-                _WebSocket.Close();
+                _webSocket.Close();
             }
             if (!Disposed)
             {
-                _WebSocket?.Dispose();
+                _webSocket?.Dispose();
                 Disposed = true;
             }
         }
@@ -62,11 +62,11 @@ namespace Serein.Core.JSPlugin
             {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
-            _WebSocket = new(uri);
-            _WebSocket.Opened += (_, _) => Trigger(onopen, EventType.Opened);
-            _WebSocket.Closed += (_, _) => Trigger(onclose, EventType.Closed);
-            _WebSocket.MessageReceived += (_, e) => Trigger(onmessage, EventType.MessageReceived, e);
-            _WebSocket.Error += (_, e) => Trigger(onerror, EventType.Error, e);
+            _webSocket = new(uri);
+            _webSocket.Opened += (_, _) => Trigger(onopen, EventType.Opened);
+            _webSocket.Closed += (_, _) => Trigger(onclose, EventType.Closed);
+            _webSocket.MessageReceived += (_, e) => Trigger(onmessage, EventType.MessageReceived, e);
+            _webSocket.Error += (_, e) => Trigger(onerror, EventType.Error, e);
             JSPluginManager.PluginDict[@namespace].WSClients.Add(this);
         }
 
@@ -140,23 +140,23 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 状态
         /// </summary>
-        public int state => _WebSocket == null ? -1 : ((int)_WebSocket.State);
+        public int state => _webSocket == null ? -1 : ((int)_webSocket.State);
 
         /// <summary>
         /// 开启ws
         /// </summary>
-        public void open() => _WebSocket.Open();
+        public void open() => _webSocket.Open();
 
         /// <summary>
         /// 关闭ws
         /// </summary>
-        public void close() => _WebSocket.Close();
+        public void close() => _webSocket.Close();
 
         /// <summary>
         /// 发送消息
         /// </summary>
         /// <param name="msg"></param>
-        public void send(string msg) => _WebSocket.Send(msg);
+        public void send(string msg) => _webSocket.Send(msg);
 
 #pragma warning restore IDE1006
 
@@ -174,10 +174,13 @@ namespace Serein.Core.JSPlugin
 
             public int state;
 
+            public string uri;
+
             public ReadonlyWSClient(WSClient wsclient)
             {
                 disposed = wsclient.Disposed;
                 state = wsclient.state;
+                uri = wsclient.Uri;
             }
         }
     }
