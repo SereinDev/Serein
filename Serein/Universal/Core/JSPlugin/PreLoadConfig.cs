@@ -1,5 +1,9 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 namespace Serein.Core.JSPlugin
 {
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class PreLoadConfig
     {
         public string[] Assemblies = { };

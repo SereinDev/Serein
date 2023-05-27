@@ -46,7 +46,8 @@ namespace Serein.Core.JSPlugin
                     if (!isExecuteByCommand)
                     {
                         List<Assembly> assemblies = new();
-                        foreach (string assemblyString in preLoadConfig.Assemblies ?? Array.Empty<string>())
+                        IEnumerable<string> assemblyNames = (preLoadConfig.Assemblies ?? Array.Empty<string>()).Concat(Global.Settings.Serein.Function.JSGlobalAssemblies);
+                        foreach (string assemblyString in assemblyNames)
                         {
                             try
                             {

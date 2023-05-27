@@ -170,8 +170,8 @@ Tip:
                             {
                                 Logger.Output(LogType.Error, "加载失败:" + e.Message);
                             }
+                            IsLoading = false;
                         });
-                        IsLoading = false;
                         break;
                     case "clear":
                         System.Console.Clear();

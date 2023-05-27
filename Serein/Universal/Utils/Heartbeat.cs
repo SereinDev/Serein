@@ -1,5 +1,6 @@
 using Serein.Base;
 using Serein.Core.Server;
+using Serein.Extensions;
 using System;
 using System.Timers;
 
@@ -44,7 +45,7 @@ namespace Serein.Utils
             {
                 Logger.Output(LogType.Debug,
                     Net.Get($"https://api.online-count.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&start_time={StartTimeStamp}&server_status={ServerManager.Status}")
-                    .GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                        .Await().Content.ReadAsStringAsync().Await());
             }
             catch (Exception e)
             {

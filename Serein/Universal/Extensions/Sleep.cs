@@ -10,7 +10,10 @@ namespace Serein.Extensions
         /// <param name="ms">时长</param>
         public static void ToSleep(this int ms)
         {
-            Task.Delay(ms).GetAwaiter().GetResult();
+            if (ms > 0)
+            {
+                Task.Delay(ms).Wait();
+            }
         }
     }
 }

@@ -109,9 +109,12 @@ namespace Serein.Core.JSPlugin
                     }
                     if (tasks.Count > 0)
                     {
-                        Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
-                        tokenSource.Cancel();
-                        tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
+                        if (Global.Settings.Serein.Function.JSEventMaxWaitingTime > 0)
+                        {
+                            Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
+                            tokenSource.Cancel();
+                            tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
+                        }
                         Global.Settings.Serein.Function.JSEventCoolingDownTime.ToSleep();
                     }
                 }

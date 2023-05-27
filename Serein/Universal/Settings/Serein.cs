@@ -56,6 +56,7 @@ namespace Serein.Settings
         public bool NoHeartbeat;
         public int JSEventMaxWaitingTime = 500;
         public int JSEventCoolingDownTime = 15;
+        public string[] JSGlobalAssemblies = { "System" };
         public bool DisableBinderWhenServerClosed;
         public string RegexForCheckingGameID = @"^[a-zA-Z0-9_\s-]{3,16}$";
     }

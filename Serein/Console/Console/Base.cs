@@ -43,29 +43,28 @@ namespace Serein.Utils.Console
             System.Console.OutputEncoding = Encoding.UTF8;
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                IntPtr Handle = GetStdHandle(STD_OUTPUT_HANDLE);
-                GetConsoleMode(Handle, out uint OutputMode);
-                OutputMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-                SetConsoleMode(Handle, OutputMode);
-                Handle = GetStdHandle(STD_INPUT_HANDLE);
-                GetConsoleMode(Handle, out uint InputMode);
-                InputMode &= ~ENABLE_QUICK_EDIT_MODE;
-                InputMode &= ~ENABLE_INSERT_MODE;
-                SetConsoleMode(Handle, InputMode);
-                IntPtr WindowHandle = FindWindow(null, System.Console.Title);
-                IntPtr CloseMenu = GetSystemMenu(WindowHandle, IntPtr.Zero);
-                RemoveMenu(CloseMenu, 0xF060, 0x0);
+                IntPtr handle = GetStdHandle(STD_OUTPUT_HANDLE);
+                GetConsoleMode(handle, out uint outputMode);
+                outputMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+                SetConsoleMode(handle, outputMode);
+                handle = GetStdHandle(STD_INPUT_HANDLE);
+                GetConsoleMode(handle, out uint inputMode);
+                inputMode &= ~ENABLE_QUICK_EDIT_MODE;
+                inputMode &= ~ENABLE_INSERT_MODE;
+                SetConsoleMode(handle, inputMode);
+                IntPtr closeMenu = GetSystemMenu(FindWindow(null, System.Console.Title), IntPtr.Zero);
+                RemoveMenu(closeMenu, 0xF060, 0x0);
             }
             Logger.Output(LogType.Info, Global.LOGO);
 #if UNIX
             if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
-                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用Console类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用`Console`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
             }
 #else
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
-                Logger.Output(LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用Console For Unix类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用`Console For Unix`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
             }
 #endif
         }
@@ -91,6 +90,7 @@ namespace Serein.Utils.Console
                     Logger.Output(LogType.Info, "正在关闭...");
                     JSFunc.Trigger(EventType.SereinClose);
                     500.ToSleep();
+                    Environment.Exit(0);
                 }
             };
             while (true)

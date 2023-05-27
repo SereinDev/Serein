@@ -33,6 +33,15 @@ namespace Serein.Utils
                 return;
             }
 #endif
+            string typeName = type.ToString();
+            if (!typeName.Contains("Notice") && (
+                typeName.StartsWith("Bot_") && !Global.Settings.Serein.PagesDisplayed.Bot ||
+                typeName.StartsWith("Plugin_") && !Global.Settings.Serein.PagesDisplayed.JSPlugin ||
+                typeName.StartsWith("Server_") && !Global.Settings.Serein.PagesDisplayed.ServerPanel
+            ))
+            {
+                return;
+            }
             StringBuilder bld = new();
             foreach (var o in objects)
             {

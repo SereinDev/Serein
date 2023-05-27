@@ -50,7 +50,7 @@ namespace Serein.Utils
             }
             try
             {
-                JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").GetAwaiter().GetResult().Content.ReadAsStringAsync().GetAwaiter().GetResult()));
+                JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await()));
                 string version = jsonObject.TryGetString("tag_name");
                 if (LastVersion != version && !string.IsNullOrEmpty(version))
                 {
@@ -109,7 +109,7 @@ namespace Serein.Utils
                         IsReadyToUpdate = false;
                         Logger.Output(Base.LogType.Version_Downloading, asset.TryGetString("browser_download_url"));
                         Logger.Output(Base.LogType.Debug, $"正在从[{asset.TryGetString("browser_download_url")}]下载[{asset.TryGetString("name")}]");
-                        using (Stream stream = Net.Get(asset.TryGetString("browser_download_url")).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult())
+                        using (Stream stream = Net.Get(asset.TryGetString("browser_download_url")).Await().Content.ReadAsStreamAsync().Await())
                         using (FileStream fileStream = new($"update/{asset.TryGetString("name")}", FileMode.Create))
                         {
                             byte[] bytes = new byte[stream.Length];
