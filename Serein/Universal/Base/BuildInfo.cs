@@ -48,20 +48,20 @@ namespace Serein.Base
         /// </summary>
         public string Time
         {
-            get => string.IsNullOrEmpty(time) ? "-" : time;
-            set => time = value;
+            get => string.IsNullOrEmpty(_time) ? "-" : _time;
+            set => _time = value;
         }
-        private string time;
+        private string _time;
 
         /// <summary>
         /// 详细信息
         /// </summary>
         public string Detail
         {
-            get => string.IsNullOrEmpty(detail) ? "-" : detail;
-            set => detail = value;
+            get => string.IsNullOrEmpty(_detail) ? "-" : _detail;
+            set => _detail = value;
         }
 
-        private string detail;
+        private string _detail;
     }
 }

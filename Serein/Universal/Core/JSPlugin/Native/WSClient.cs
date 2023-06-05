@@ -12,7 +12,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 命名空间
         /// </summary>
-        private string Namespace { get; init; }
+        private string _namespace { get; init; }
 
         /// <summary>
         /// 事件函数
@@ -57,8 +57,8 @@ namespace Serein.Core.JSPlugin
         public WSClient(string uri, string @namespace = null)
         {
             Uri = uri;
-            Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
-            if (!JSPluginManager.PluginDict.ContainsKey(Namespace))
+            _namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
+            if (!JSPluginManager.PluginDict.ContainsKey(_namespace))
             {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
@@ -76,7 +76,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="jsValue">事件函数</param>
         private bool Check(JsValue jsValue)
         {
-            if (JSPluginManager.PluginDict[Namespace].Engine == null || !JSPluginManager.PluginDict[Namespace].Available)
+            if (JSPluginManager.PluginDict[_namespace].Engine == null || !JSPluginManager.PluginDict[_namespace].Available)
             {
                 Dispose();
                 return false;
@@ -98,24 +98,24 @@ namespace Serein.Core.JSPlugin
             }
             try
             {
-                lock (JSPluginManager.PluginDict[Namespace].Engine)
+                lock (JSPluginManager.PluginDict[_namespace].Engine)
                 {
                     switch (eventType)
                     {
                         case EventType.Opened:
                         case EventType.Closed:
-                            JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue);
+                            JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue);
                             break;
                         case EventType.MessageReceived:
                             if (args is MessageReceivedEventArgs e1 && e1 != null)
                             {
-                                JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e1.Message);
+                                JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, e1.Message);
                             }
                             break;
                         case EventType.Error:
                             if (args is ErrorEventArgs e2 && e2 != null)
                             {
-                                JSPluginManager.PluginDict[Namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
+                                JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
                             }
                             break;
                         default:
@@ -126,7 +126,7 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Utils.Logger.Output(Base.LogType.Plugin_Error, $"[{Namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
+                Utils.Logger.Output(Base.LogType.Plugin_Error, $"[{_namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
                 Utils.Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
         }

@@ -9,72 +9,72 @@ namespace Serein.Base.Motd
         /// <summary>
         /// IP
         /// </summary>
-        internal IPAddress IP { get; private set; } = IPAddress.Parse("127.0.0.1");
+        public IPAddress IP { get; private set; } = IPAddress.Parse("127.0.0.1");
 
         /// <summary>
         /// 端口
         /// </summary>
-        internal int Port = -1;
+        public int Port = -1;
 
         /// <summary>
         /// 最大玩家数
         /// </summary>
-        internal int MaxPlayer;
+        public int MaxPlayer;
 
         /// <summary>
         /// 在线玩家数
         /// </summary>
-        internal int OnlinePlayer;
+        public int OnlinePlayer;
 
         /// <summary>
         /// 服务器描述
         /// </summary>
-        internal string Description = string.Empty;
+        public string Description = string.Empty;
 
         /// <summary>
         /// 协议
         /// </summary>
-        internal string Protocol = string.Empty;
+        public string Protocol = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        internal string Version = string.Empty;
+        public string Version = string.Empty;
 
         /// <summary>
         /// 存档名称
         /// </summary>
-        internal string LevelName = string.Empty;
+        public string LevelName = string.Empty;
 
         /// <summary>
         /// 游戏模式
         /// </summary>
-        internal string GameMode = string.Empty;
+        public string GameMode = string.Empty;
 
         /// <summary>
         /// 延迟
         /// </summary>
-        internal double Delay;
+        public double Delay;
 
         /// <summary>
         /// 图标
         /// </summary>
-        internal string Favicon = string.Empty;
+        public string Favicon = string.Empty;
 
         /// <summary>
         /// 原文
         /// </summary>
-        internal string Origin = string.Empty;
+        public string Origin = string.Empty;
 
         /// <summary>
         /// 错误消息
         /// </summary>
-        internal string Exception = string.Empty;
+        public string Exception = string.Empty;
 
         /// <summary>
         /// 获取成功
         /// </summary>
-        internal bool IsSuccessful;
+        public bool IsSuccessful;
 
         private static readonly System.Text.RegularExpressions.Regex IPv4Patten = new(@"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))", System.Text.RegularExpressions.RegexOptions.Compiled);
 

@@ -9,7 +9,7 @@ namespace Serein.Windows.Pages
 {
     public partial class Home : UiPage
     {
-        private readonly Timer _Timer = new(5000)
+        private readonly Timer _timer = new(5000)
         {
             AutoReset = true
         };
@@ -17,8 +17,8 @@ namespace Serein.Windows.Pages
         public Home()
         {
             InitializeComponent();
-            _Timer.Elapsed += (_, _) => Update();
-            _Timer.Start();
+            _timer.Elapsed += (_, _) => Update();
+            _timer.Start();
         }
 
         private void Update()

@@ -11,7 +11,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Member : UiPage
     {
-        private int ActionType;
+        private int _actionType;
         public Member()
         {
             InitializeComponent();
@@ -49,27 +49,27 @@ namespace Serein.Windows.Pages.Function
         {
             if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                if (ActionType != 0)
+                if (_actionType != 0)
                 {
                     Catalog.MainWindow.MemberEditor.Hide();
-                    ActionType = 0;
+                    _actionType = 0;
                 }
                 string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
-                        ActionType = 1;
+                        _actionType = 1;
                         Catalog.MainWindow.OpenMemberEditor();
                         break;
                     case "Edit":
                         if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
                         {
-                            ActionType = 2;
+                            _actionType = 2;
                             Catalog.MainWindow.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
                         }
                         else
                         {
-                            ActionType = 0;
+                            _actionType = 0;
                         }
                         break;
                     case "Delete":
@@ -95,7 +95,7 @@ namespace Serein.Windows.Pages.Function
 
         public bool Confirm(string ID, string GameID)
         {
-            switch (ActionType)
+            switch (_actionType)
             {
                 case 1:
                     if (!long.TryParse(ID, out long IDNumber))
@@ -109,7 +109,7 @@ namespace Serein.Windows.Pages.Function
                     else
                     {
                         Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
-                        ActionType = 0;
+                        _actionType = 0;
                         Load();
                         return true;
                     }
@@ -133,7 +133,7 @@ namespace Serein.Windows.Pages.Function
                             Save();
                             Load();
                         }
-                        ActionType = 0;
+                        _actionType = 0;
                         return true;
                     }
                     break;

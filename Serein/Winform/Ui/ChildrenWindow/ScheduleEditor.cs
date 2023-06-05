@@ -59,13 +59,13 @@ namespace Serein.Ui.ChildrenWindow
                 {
                     occurrences.RemoveRange(20, occurrences.Count - 20);
                 }
-                DateTimes = string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")));
+                _dateTimes = string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")));
                 CronNextTime.Text = "预计执行时间：" + occurrences[0].ToString("g");
             }
             catch
             {
                 CronNextTime.Text = "Cron表达式无效或超过时间限制";
-                DateTimes = string.Empty;
+                _dateTimes = string.Empty;
             }
         }
         public void Update(string cron, string remark, string command)
@@ -127,12 +127,12 @@ namespace Serein.Ui.ChildrenWindow
 
         private void CronNextTime_MouseHover(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(DateTimes))
+            if (string.IsNullOrEmpty(_dateTimes))
             {
                 return;
             }
             ToolTip toolTip = new();
-            toolTip.SetToolTip((Control)sender, $"最近20次执行执行时间：\n{DateTimes}");
+            toolTip.SetToolTip((Control)sender, $"最近20次执行执行时间：\n{_dateTimes}");
         }
 
 
@@ -141,6 +141,6 @@ namespace Serein.Ui.ChildrenWindow
             Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/schedule") { UseShellExecute = true });
         }
 
-        private string DateTimes = string.Empty;
+        private string _dateTimes = string.Empty;
     }
 }

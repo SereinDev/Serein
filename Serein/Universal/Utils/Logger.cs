@@ -290,7 +290,7 @@ namespace Serein.Utils
         /// <summary>
         /// 控制台输出互斥锁
         /// </summary>
-        private static readonly object Lock = new();
+        private static readonly object _lock = new();
 
         /// <summary>
         /// 处理输出消息
@@ -309,7 +309,7 @@ namespace Serein.Utils
                 return;
             }
             string prefix = $"{DateTime.Now:T} ";
-            lock (Lock)
+            lock (_lock)
             {
                 prefix += level switch
                 {

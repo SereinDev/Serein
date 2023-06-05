@@ -19,7 +19,7 @@ namespace Serein.Utils
         /// <summary>
         /// 旧文本
         /// </summary>
-        private static string OldSettings = string.Empty, OldMembers = string.Empty;
+        private static string _oldSettings = string.Empty, _oldMembers = string.Empty;
 
 #if !CONSOLE
         /// <summary>
@@ -203,9 +203,9 @@ namespace Serein.Utils
             {
                 Global.MemberDict = dictionary;
             }
-            if (JsonConvert.SerializeObject(dictionary) != OldMembers)
+            if (JsonConvert.SerializeObject(dictionary) != _oldMembers)
             {
-                OldMembers = JsonConvert.SerializeObject(dictionary);
+                _oldMembers = JsonConvert.SerializeObject(dictionary);
                 JObject jsonObject = new()
                 {
                     { "type", "MEMBERS" },
@@ -354,10 +354,10 @@ namespace Serein.Utils
         public static void SaveSettings()
         {
             string newSettings = JsonConvert.SerializeObject(Global.Settings);
-            if (newSettings != OldSettings)
+            if (newSettings != _oldSettings)
             {
                 CreateDirectory("settings");
-                OldSettings = newSettings;
+                _oldSettings = newSettings;
                 lock (FileLock.Settings)
                 {
                     File.WriteAllText(Path.Combine("settings", "Server.json"), JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));

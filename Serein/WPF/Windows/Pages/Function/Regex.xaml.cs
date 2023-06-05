@@ -12,7 +12,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Regex : UiPage
     {
-        private int ActionType;
+        private int _actionType;
 
         public Regex()
         {
@@ -56,17 +56,17 @@ namespace Serein.Windows.Pages.Function
         {
             if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                if (ActionType != 0)
+                if (_actionType != 0)
                 {
                     Catalog.MainWindow.RegexEditor.Hide();
-                    ActionType = 0;
+                    _actionType = 0;
                 }
                 string tag = menuItem.Tag as string ?? string.Empty;
                 switch (tag)
                 {
                     case "Add":
                         Catalog.MainWindow.OpenRegexEditor();
-                        ActionType = 1;
+                        _actionType = 1;
                         break;
                     case "Edit":
                         if (RegexListView.SelectedItem is Base.Regex selectedItem1 && selectedItem1 != null)
@@ -78,7 +78,7 @@ namespace Serein.Windows.Pages.Function
                                 selectedItem1.Command,
                                 selectedItem1.Remark
                                 );
-                            ActionType = 2;
+                            _actionType = 2;
                         }
                         break;
                     case "Copy":
@@ -130,7 +130,7 @@ namespace Serein.Windows.Pages.Function
                     Catalog.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
                     return false;
                 }
-                if (ActionType == 1)
+                if (_actionType == 1)
                 {
                     if (RegexListView.SelectedIndex >= 0)
                     {
@@ -158,7 +158,7 @@ namespace Serein.Windows.Pages.Function
                             });
                     }
                 }
-                else if (ActionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
+                else if (_actionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
                 {
                     selectedItem.Area = areaIndex;
                     selectedItem.Expression = regex;
@@ -169,7 +169,7 @@ namespace Serein.Windows.Pages.Function
                 }
                 Save();
                 Load();
-                ActionType = 0;
+                _actionType = 0;
                 return true;
             }
             return false;

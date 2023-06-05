@@ -18,7 +18,7 @@ namespace Serein.Core.Generic
             get
             {
                 List<string> GameIDList = new();
-                foreach (Member Item in Items)
+                foreach (Member Item in _items)
                 {
                     GameIDList.Add(Item.GameID);
                 }
@@ -29,7 +29,7 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 只读的 Global.MemberDict Value副本
         /// </summary>
-        private static List<Member> Items => Global.MemberDict.Values.ToList();
+        private static List<Member> _items => Global.MemberDict.Values.ToList();
 
         /// <summary>
         /// 绑定（无群反馈）
@@ -162,7 +162,7 @@ namespace Serein.Core.Generic
         public static long GetID(string gameId)
         {
             gameId = gameId.Trim();
-            foreach (Member member in Items)
+            foreach (Member member in _items)
             {
                 if (member.GameID == gameId)
                 {

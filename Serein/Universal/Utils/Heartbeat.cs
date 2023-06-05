@@ -11,25 +11,25 @@ namespace Serein.Utils
         /// <summary>
         /// GUID
         /// </summary>
-        private readonly static string GUID = Guid.NewGuid().ToString("N");
+        private readonly static string _guid = Guid.NewGuid().ToString("N");
 
         /// <summary>
         /// 启动时刻时间戳
         /// </summary>
-        private readonly static long StartTimeStamp = (long)(TimeZoneInfo.ConvertTimeToUtc(Global.StartTime) - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
+        private readonly static long _startTimeStamp = (long)(TimeZoneInfo.ConvertTimeToUtc(Global.StartTime) - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
 
         /// <summary>
         /// 在线统计计时器
         /// </summary>
-        private static readonly Timer HeartbeatTimer = new(600_000) { AutoReset = true }; // 十分钟一次心跳事件
+        private static readonly Timer _heartbeatTimer = new(600_000) { AutoReset = true }; // 十分钟一次心跳事件
 
         /// <summary>
         /// 开始心跳事件
         /// </summary>
         public static void Start()
         {
-            HeartbeatTimer.Elapsed += (_, _) => Request();
-            HeartbeatTimer.Start();
+            _heartbeatTimer.Elapsed += (_, _) => Request();
+            _heartbeatTimer.Start();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Serein.Utils
             try
             {
                 Logger.Output(LogType.Debug,
-                    Net.Get($"https://api.online-count.serein.cc/heartbeat?guid={GUID}&type={Global.TYPE}&version={Global.VERSION}&start_time={StartTimeStamp}&server_status={ServerManager.Status}")
+                    Net.Get($"https://api.online-count.serein.cc/heartbeat?guid={_guid}&type={Global.TYPE}&version={Global.VERSION}&start_time={_startTimeStamp}&server_status={ServerManager.Status}")
                         .Await().Content.ReadAsStringAsync().Await());
             }
             catch (Exception e)

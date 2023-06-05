@@ -35,22 +35,22 @@ namespace Serein.Core.Server
         /// <summary>
         /// 临时行储存
         /// </summary>
-        private static string TempLine = string.Empty;
+        private static string _tempLine = string.Empty;
 
         /// <summary>
         /// 重启
         /// </summary>
-        private static bool Restart;
+        private static bool _restart;
 
         /// <summary>
         /// 由用户关闭服务器
         /// </summary>
-        private static bool IsStoppedByUser;
+        private static bool _isStoppedByUser;
 
         /// <summary>
         /// 服务器状态
         /// </summary>
-        public static bool Status => !ServerProcess?.HasExited ?? false;
+        public static bool Status => !_serverProcess?.HasExited ?? false;
 
         /// <summary>
         /// CPU使用率
@@ -65,22 +65,22 @@ namespace Serein.Core.Server
         /// <summary>
         /// 更新计时器
         /// </summary>
-        private static Timer UpdateTimer;
+        private static Timer _updateTimer;
 
         /// <summary>
         /// 当前CPU时间
         /// </summary>
-        private static TimeSpan PrevProcessCpuTime = TimeSpan.Zero;
+        private static TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
 
         /// <summary>
         /// 服务器进程
         /// </summary>
-        private static Process ServerProcess;
+        private static Process _serverProcess;
 
         /// <summary>
         /// 输入流写入
         /// </summary>
-        private static StreamWriter InputWriter;
+        private static StreamWriter _inputWriter;
 
         /// <summary>
         /// 命令历史记录列表下标
@@ -95,7 +95,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// 编码列表
         /// </summary>
-        private static readonly Encoding[] EncodingList =
+        private static readonly Encoding[] _encodings =
         {
             new UTF8Encoding(false),
             new UTF8Encoding(true),
@@ -110,7 +110,7 @@ namespace Serein.Core.Server
         /// <summary>
         /// 上一次执行强制结束时间
         /// </summary>
-        private static DateTime LastKillTime = DateTime.Now;
+        private static DateTime _lastKillTime = DateTime.Now;
 #endif
 
         /// <summary>
@@ -157,39 +157,39 @@ namespace Serein.Core.Server
                 Logger.Output(LogType.Server_Notice, "启动中");
 
                 #region 主变量初始化
-                ServerProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
+                _serverProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
                 {
                     FileName = Global.Settings.Server.Path,
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
                     RedirectStandardInput = true,
-                    StandardOutputEncoding = EncodingList[Global.Settings.Server.OutputEncoding],
+                    StandardOutputEncoding = _encodings[Global.Settings.Server.OutputEncoding],
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 });
-                ServerProcess.EnableRaisingEvents = true;
-                ServerProcess.Exited += (_, _) => CloseAll();
-                InputWriter = new(
-                    ServerProcess.StandardInput.BaseStream,
-                    EncodingList[Global.Settings.Server.InputEncoding]
+                _serverProcess.EnableRaisingEvents = true;
+                _serverProcess.Exited += (_, _) => CloseAll();
+                _inputWriter = new(
+                    _serverProcess.StandardInput.BaseStream,
+                    _encodings[Global.Settings.Server.InputEncoding]
                    )
                 {
                     AutoFlush = true,
                     NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator) ? Environment.NewLine : Global.Settings.Server.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
                 };
-                ServerProcess.BeginOutputReadLine();
-                ServerProcess.OutputDataReceived += SortOutputHandler;
+                _serverProcess.BeginOutputReadLine();
+                _serverProcess.OutputDataReceived += SortOutputHandler;
                 #endregion
 
                 #region 变量初始化
-                Restart = false;
-                IsStoppedByUser = false;
+                _restart = false;
+                _isStoppedByUser = false;
                 LevelName = string.Empty;
                 Difficulty = string.Empty;
-                TempLine = string.Empty;
+                _tempLine = string.Empty;
                 CommandHistory.Clear();
                 StartFileName = Path.GetFileName(Global.Settings.Server.Path);
-                PrevProcessCpuTime = TimeSpan.Zero;
+                _prevProcessCpuTime = TimeSpan.Zero;
                 #endregion
 
                 #region 服务器启动后相关调用
@@ -197,9 +197,9 @@ namespace Serein.Core.Server
                 {
                     EventTrigger.Trigger(EventType.ServerStart);
                     JSFunc.Trigger(EventType.ServerStart);
-                    UpdateTimer = new(2000) { AutoReset = true };
-                    UpdateTimer.Elapsed += (_, _) => UpdateInfo();
-                    UpdateTimer.Start();
+                    _updateTimer = new(2000) { AutoReset = true };
+                    _updateTimer.Elapsed += (_, _) => UpdateInfo();
+                    _updateTimer.Start();
                 });
                 return true;
                 #endregion
@@ -228,9 +228,9 @@ namespace Serein.Core.Server
                     }
                 }
             }
-            else if (Restart)
+            else if (_restart)
             {
-                Restart = false;
+                _restart = false;
             }
             else if (!quiet)
             {
@@ -258,12 +258,12 @@ namespace Serein.Core.Server
                     try
                     {
 #if NET6_0
-                        ServerProcess.Kill(true);
+                        _serverProcess.Kill(true);
 #else
-                        ServerProcess.Kill();
+                        _serverProcess.Kill();
 #endif
-                        IsStoppedByUser = true;
-                        Restart = false;
+                        _isStoppedByUser = true;
+                        _restart = false;
                         return true;
                     }
                     catch (Exception e)
@@ -280,18 +280,18 @@ namespace Serein.Core.Server
             else
             {
                 DateTime nowTime = DateTime.Now;
-                if ((nowTime - LastKillTime).TotalSeconds < 2)
+                if ((nowTime - _lastKillTime).TotalSeconds < 2)
                 {
-                    LastKillTime = nowTime;
+                    _lastKillTime = nowTime;
                     try
                     {
 #if NET6_0
-                        ServerProcess.Kill(true);
+                        _serverProcess.Kill(true);
 #else
-                        ServerProcess.Kill();
+                        _serverProcess.Kill();
 #endif
-                        IsStoppedByUser = true;
-                        Restart = false;
+                        _isStoppedByUser = true;
+                        _restart = false;
                         return true;
                     }
                     catch (Exception e)
@@ -302,7 +302,7 @@ namespace Serein.Core.Server
                 }
                 else
                 {
-                    LastKillTime = nowTime;
+                    _lastKillTime = nowTime;
                     Logger.Output(LogType.Warn, "请在2s内再次执行强制结束服务器（Ctrl+C 或输入“serein s k”）以确认此操作");
                 }
             }
@@ -319,12 +319,12 @@ namespace Serein.Core.Server
                 try
                 {
 #if NET6_0
-                    ServerProcess.Kill(true);
+                    _serverProcess.Kill(true);
 #else
-                    ServerProcess.Kill();
+                    _serverProcess.Kill();
 #endif
-                    IsStoppedByUser = true;
-                    Restart = false;
+                    _isStoppedByUser = true;
+                    _restart = false;
                     return true;
                 }
                 catch (Exception e)
@@ -380,7 +380,7 @@ namespace Serein.Core.Server
                 {
                     line_copy = ConvertToUnicode(line_copy);
                 }
-                InputWriter.WriteLine(line_copy);
+                _inputWriter.WriteLine(line_copy);
                 IO.ConsoleLog(">" + command);
                 Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
             }
@@ -392,7 +392,7 @@ namespace Serein.Core.Server
                 }
                 else if (command.Trim().ToLowerInvariant() == "stop")
                 {
-                    Restart = false;
+                    _restart = false;
                 }
             }
         }
@@ -433,17 +433,17 @@ namespace Serein.Core.Server
                     {
                         if (exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
                         {
-                            TempLine = lineFiltered.Trim('\r', '\n');
+                            _tempLine = lineFiltered.Trim('\r', '\n');
                             isMuiltLinesMode = true;
                             break;
                         }
                     }
                     if (!isMuiltLinesMode)
                     {
-                        if (!string.IsNullOrEmpty(TempLine))
+                        if (!string.IsNullOrEmpty(_tempLine))
                         {
-                            string tempLine = TempLine + "\n" + lineFiltered;
-                            TempLine = string.Empty;
+                            string tempLine = _tempLine + "\n" + lineFiltered;
+                            _tempLine = string.Empty;
                             Matcher.Process(tempLine);
                         }
                         else
@@ -461,28 +461,28 @@ namespace Serein.Core.Server
         /// </summary>
         private static void CloseAll()
         {
-            InputWriter.Close();
-            InputWriter.Dispose();
+            _inputWriter.Close();
+            _inputWriter.Dispose();
             Logger.Output(LogType.Server_Output, "");
-            UpdateTimer?.Stop();
-            if (!IsStoppedByUser && ServerProcess.ExitCode != 0)
+            _updateTimer?.Stop();
+            if (!_isStoppedByUser && _serverProcess.ExitCode != 0)
             {
-                Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{ServerProcess.ExitCode}）");
-                Restart = Global.Settings.Server.EnableRestart;
+                Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{_serverProcess.ExitCode}）");
+                _restart = Global.Settings.Server.EnableRestart;
                 EventTrigger.Trigger(EventType.ServerExitUnexpectedly);
             }
             else
             {
-                Logger.Output(LogType.Server_Notice, $"进程已退出（返回：{ServerProcess.ExitCode}）");
+                Logger.Output(LogType.Server_Notice, $"进程已退出（返回：{_serverProcess.ExitCode}）");
                 EventTrigger.Trigger(EventType.ServerStop);
             }
-            if (Restart)
+            if (_restart)
             {
                 Task.Factory.StartNew(RestartTimer);
             }
             LevelName = string.Empty;
             Difficulty = string.Empty;
-            JSFunc.Trigger(EventType.ServerStop, ServerProcess.ExitCode);
+            JSFunc.Trigger(EventType.ServerStop, _serverProcess.ExitCode);
         }
 
         /// <summary>
@@ -490,9 +490,9 @@ namespace Serein.Core.Server
         /// </summary>
         public static void RestartRequest()
         {
-            if (!Restart)
+            if (!_restart)
             {
-                Restart = false;
+                _restart = false;
                 Stop();
             }
         }
@@ -513,12 +513,12 @@ namespace Serein.Core.Server
             for (int i = 0; i < 10; i++)
             {
                 500.ToSleep();
-                if (!Restart)
+                if (!_restart)
                 {
                     break;
                 }
             }
-            if (Restart)
+            if (_restart)
             {
                 Start(true);
             }
@@ -535,8 +535,8 @@ namespace Serein.Core.Server
         {
             if (Status)
             {
-                CPUUsage = (ServerProcess.TotalProcessorTime - PrevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
-                PrevProcessCpuTime = ServerProcess.TotalProcessorTime;
+                CPUUsage = (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+                _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
                 if (CPUUsage > 100)
                 {
                     CPUUsage = 100;
@@ -556,7 +556,7 @@ namespace Serein.Core.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string Time => Status ? (DateTime.Now - ServerProcess.StartTime).ToCustomString() : string.Empty;
+        public static string Time => Status ? (DateTime.Now - _serverProcess.StartTime).ToCustomString() : string.Empty;
 
         /// <summary>
         /// Unicode转换

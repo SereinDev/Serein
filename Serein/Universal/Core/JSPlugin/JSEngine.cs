@@ -27,7 +27,7 @@ namespace Serein.Core.JSPlugin
         /// 初始化JS引擎
         /// </summary>
         /// <returns>JS引擎</returns>
-        public static Engine Init() => Create(true, null, null, null);
+        public static Engine Create() => Create(true, null, null, null);
 
         /// <summary>
         /// 初始化JS引擎
@@ -61,7 +61,7 @@ namespace Serein.Core.JSPlugin
 
                         cfg.AllowClr(assemblies.ToArray());
                         cfg.CancellationToken(cancellationTokenSource.Token);
-                        cfg.EnableModules(Path.Combine(Global.PATH, "plugins"));
+                        cfg.EnableModules(Path.Combine(Global.PATH, JSPluginManager.PluginPath));
 
                         cfg.Modules.RegisterRequire = true;
                         cfg.Interop.AllowGetType = preLoadConfig.AllowGetType;
@@ -201,11 +201,11 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getRegexes",
                 new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.ToArray())));
             engine.SetValue("serein_addRegex",
-                new Func<string, int, bool, string, string, long[], bool>(JSFunc.AddRegex));
+                new Func<string, int?, bool?, string, string, long[], bool>(JSFunc.AddRegex));
             engine.SetValue("serein_editRegex",
-                new Func<int, string, int, bool, string, string, long[], bool>(JSFunc.EditRegex));
+                new Func<int?, string, int?, bool?, string, string, long[], bool>(JSFunc.EditRegex));
             engine.SetValue("serein_removeRegex",
-                new Func<int, bool>(JSFunc.RemoveRegex));
+                new Func<int?, bool>(JSFunc.RemoveRegex));
             engine.SetValue("serein_reloadFiles",
                 new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
             engine.SetValue("serein_import",
@@ -321,7 +321,7 @@ namespace Serein.Core.JSPlugin
             }
         }
 
-        public static JsValue MemberAccessor(Engine engine, object target, string member)
+        private static JsValue MemberAccessor(Engine engine, object target, string member)
         {
             if (target is null || string.IsNullOrEmpty(member) || member.Length == 0)
             {

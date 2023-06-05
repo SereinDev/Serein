@@ -13,28 +13,28 @@ namespace Serein.Ui
     {
         private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            ItemDraged = (ListViewItem)e.Item;
-            IsDragging = true;
+            _itemDraged = (ListViewItem)e.Item;
+            _isDragging = true;
         }
 
         private void RegexList_MouseUp(object sender, MouseEventArgs e)
         {
-            IsDragging = false;
-            if ((RegexList.SelectedItems.Count != 0) && (ItemDraged != null))
+            _isDragging = false;
+            if ((RegexList.SelectedItems.Count != 0) && (_itemDraged != null))
             {
-                if (ItemDraged.Index != RegexList.SelectedItems[0].Index && ItemDraged.Index >= 0)
+                if (_itemDraged.Index != RegexList.SelectedItems[0].Index && _itemDraged.Index >= 0)
                 {
-                    RegexList.Items.RemoveAt(ItemDraged.Index);
-                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index, ItemDraged);
+                    RegexList.Items.RemoveAt(_itemDraged.Index);
+                    RegexList.Items.Insert(RegexList.SelectedItems[0].Index, _itemDraged);
                     SaveRegex();
-                    ItemDraged = null;
+                    _itemDraged = null;
                 }
             }
         }
 
         private void RegexList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            e.Item.Selected = IsDragging;
+            e.Item.Selected = _isDragging;
         }
 
         private void RegexContextMenuStrip_Opening(object sender, CancelEventArgs e)

@@ -18,7 +18,7 @@ namespace Serein.Utils
         /// <summary>
         /// 命令行参数
         /// </summary>
-        private static IList<string> Args = Environment.GetCommandLineArgs();
+        private static IList<string> _args => Environment.GetCommandLineArgs();
 
         /// <summary>
         /// 初始化
@@ -36,7 +36,7 @@ namespace Serein.Utils
 #if !CONSOLE
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
 #endif
-            if (Args.Contains("debug"))
+            if (_args.Contains("debug"))
             {
                 Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
             }
@@ -60,11 +60,11 @@ namespace Serein.Utils
             Task.Run(() =>
             {
                 (Global.Settings.Serein.AutoRun.Delay > 0 ? Global.Settings.Serein.AutoRun.Delay : 0).ToSleep();
-                if (Global.Settings.Serein.AutoRun.ConnectWS || Args.Contains("auto_connect"))
+                if (Global.Settings.Serein.AutoRun.ConnectWS || _args.Contains("auto_connect"))
                 {
                     Task.Run(Websocket.Open);
                 }
-                if (Global.Settings.Serein.AutoRun.StartServer || Args.Contains("auto_start"))
+                if (Global.Settings.Serein.AutoRun.StartServer || _args.Contains("auto_start"))
                 {
                     Task.Run(ServerManager.Start);
                 }

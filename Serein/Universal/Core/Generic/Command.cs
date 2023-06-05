@@ -186,7 +186,7 @@ namespace Serein.Core.Generic
                 case Base.CommandType.ExecuteJavascriptCodes:
                     if (inputType != Base.CommandOrigin.Javascript)
                     {
-                        Task.Run(() => JSEngine.Init().Execute(value));
+                        Task.Run(() => JSEngine.Create().Execute(value));
                     }
                     break;
                 case Base.CommandType.ExecuteJavascriptCodesWithNamespace:

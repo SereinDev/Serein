@@ -13,8 +13,8 @@ namespace Serein.Ui
 {
     public partial class Ui : Form
     {
-        private bool IsDragging;
-        private ListViewItem ItemDraged;
+        private bool _isDragging;
+        private ListViewItem _itemDraged;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabControl.SelectedIndex)

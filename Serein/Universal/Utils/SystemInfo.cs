@@ -19,11 +19,11 @@ namespace Serein.Utils
 #if !UNIX
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                Counter = new("Processor", "% Processor Time", "_Total")
+                _counter = new("Processor", "% Processor Time", "_Total")
                 {
                     MachineName = "."
                 };
-                Task.Run(() => Counter?.NextValue());
+                Task.Run(() => _counter?.NextValue());
             }
 #endif
             Info = OperatingSystemInfo.GetOperatingSystemInfo();
@@ -39,17 +39,17 @@ namespace Serein.Utils
                 CPUName = "未知";
                 CPUBrand = "未知";
             }
-            RefreshTimer.Elapsed += (_, _) => Info.Update();
-            RefreshTimer.Elapsed += (_, _) => UpdateNetSpeed();
-            RefreshTimer.Start();
+            _refreshTimer.Elapsed += (_, _) => Info.Update();
+            _refreshTimer.Elapsed += (_, _) => UpdateNetSpeed();
+            _refreshTimer.Start();
 #if !UNIX
-            RefreshTimer.Elapsed += (_, _) => CPUUsage = Counter?.NextValue() ?? 0;
+            _refreshTimer.Elapsed += (_, _) => CPUUsage = _counter?.NextValue() ?? 0;
             Logger.Output(Base.LogType.Debug, "Loaded.");
 #endif
         }
 
         public static string UploadSpeed, DownloadSpeed;
-        private static long BytesReceived, BytesSent;
+        private static long _bytesReceived, _bytesSent;
 
         private static void UpdateNetSpeed()
         {
@@ -63,9 +63,9 @@ namespace Serein.Utils
                 bytesReceived += INet.GetIPStatistics().BytesReceived;
                 bytesSent += INet.GetIPStatistics().BytesSent;
             }
-            if (BytesReceived != 0 && BytesSent != 0)
+            if (_bytesReceived != 0 && _bytesSent != 0)
             {
-                double uploadSpeed = (double)(bytesSent - BytesSent) / 1024 / 2.5, downloadSpeed = (double)(bytesReceived - BytesReceived) / 1024 / 2.5;
+                double uploadSpeed = (double)(bytesSent - _bytesSent) / 1024 / 2.5, downloadSpeed = (double)(bytesReceived - _bytesReceived) / 1024 / 2.5;
                 if (uploadSpeed < 1024)
                 {
                     UploadSpeed = uploadSpeed.ToString("N1") + "KB/s";
@@ -92,15 +92,15 @@ namespace Serein.Utils
                 }
                 Logger.Output(Base.LogType.DetailDebug, "Upload:" + UploadSpeed, "Download:" + DownloadSpeed);
             }
-            BytesReceived = bytesReceived;
-            BytesSent = bytesSent;
+            _bytesReceived = bytesReceived;
+            _bytesSent = bytesSent;
         }
 
 #if !UNIX
         /// <summary>
         /// CPU性能计数器
         /// </summary>
-        private static PerformanceCounter Counter;
+        private static PerformanceCounter _counter;
 #endif
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Serein.Utils
         /// <summary>
         /// 刷新计时器
         /// </summary>
-        private static readonly Timer RefreshTimer = new(2500)
+        private static readonly Timer _refreshTimer = new(2500)
         {
             AutoReset = true
         };

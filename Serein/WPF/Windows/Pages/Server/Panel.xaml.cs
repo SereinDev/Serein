@@ -10,13 +10,13 @@ namespace Serein.Windows.Pages.Server
 {
     public partial class Panel : UiPage
     {
-        private readonly Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+        private readonly Timer _updateInfoTimer = new Timer(2000) { AutoReset = true };
 
         public Panel()
         {
             InitializeComponent();
-            UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
-            UpdateInfoTimer.Start();
+            _updateInfoTimer.Elapsed += (_, _) => UpdateInfos();
+            _updateInfoTimer.Start();
             PanelRichTextBox.Document.Blocks.Clear();
             lock (Catalog.Server.Cache)
             {

@@ -22,12 +22,12 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 重连状态
         /// </summary>
-        private static bool Reconnect;
+        private static bool _reconnect;
 
         /// <summary>
         /// WS客户端
         /// </summary>
-        private static WebSocket WSClient;
+        private static WebSocket _websock;
 
         /// <summary>
         /// 启动时刻
@@ -50,7 +50,7 @@ namespace Serein.Core.Generic
             Matcher.SelfId = null;
             try
             {
-                WSClient = new(
+                _websock = new(
                     "ws://" + Global.Settings.Bot.Uri,
                     "",
                     null,
@@ -58,18 +58,18 @@ namespace Serein.Core.Generic
                         new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                         }
                     );
-                WSClient.MessageReceived += Receive;
-                WSClient.Error += (_, e) =>
+                _websock.MessageReceived += Receive;
+                _websock.Error += (_, e) =>
                 {
                     Logger.Output(LogType.Bot_Error, e.Exception.Message);
                 };
-                WSClient.Closed += Closed;
-                WSClient.Opened += (_, _) =>
+                _websock.Closed += Closed;
+                _websock.Opened += (_, _) =>
                 {
-                    Reconnect = true;
+                    _reconnect = true;
                     Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
                 };
-                WSClient.Open();
+                _websock.Open();
                 StartTime = DateTime.Now;
                 Status = true;
             }
@@ -83,7 +83,7 @@ namespace Serein.Core.Generic
         {
             Status = false;
             Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
-            if (Global.Settings.Bot.AutoReconnect && Reconnect)
+            if (Global.Settings.Bot.AutoReconnect && _reconnect)
             {
                 Task.Run(() =>
                 {
@@ -92,12 +92,12 @@ namespace Serein.Core.Generic
                     for (int i = 0; i < 20; i++)
                     {
                         500.ToSleep();
-                        if (!Reconnect || Status)
+                        if (!_reconnect || Status)
                         {
                             break;
                         }
                     }
-                    if (Reconnect && !Status)
+                    if (_reconnect && !Status)
                     {
                         Open();
                     }
@@ -114,7 +114,7 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                WSClient.Send(text);
+                _websock.Send(text);
             }
             return Status;
         }
@@ -158,7 +158,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                WSClient.Send(textJObject.ToString());
+                _websock.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -198,7 +198,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                WSClient.Send(textJObject.ToString());
+                _websock.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -219,12 +219,12 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                Reconnect = false;
-                WSClient.Close();
+                _reconnect = false;
+                _websock.Close();
             }
-            else if (Reconnect)
+            else if (_reconnect)
             {
-                Reconnect = false;
+                _reconnect = false;
                 Logger.Output(LogType.Bot_Notice, "重连已取消");
             }
             else

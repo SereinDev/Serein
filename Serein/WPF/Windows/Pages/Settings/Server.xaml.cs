@@ -8,13 +8,13 @@ namespace Serein.Windows.Pages.Settings
 {
     public partial class Server : UiPage
     {
-        private readonly new bool Loaded;
+        private readonly bool _loaded;
 
         public Server()
         {
             InitializeComponent();
             Load();
-            Loaded = true;
+            _loaded = true;
             Catalog.Settings.Server = this;
         }
 
@@ -48,15 +48,15 @@ namespace Serein.Windows.Pages.Settings
         private void EnableLog_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Server.EnableLog = EnableLog.IsChecked ?? false;
         private void Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.Type = Loaded ? Type.SelectedIndex : Global.Settings.Server.Type;
+            => Global.Settings.Server.Type = _loaded ? Type.SelectedIndex : Global.Settings.Server.Type;
         private void InputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.InputEncoding = Loaded ? InputEncoding.SelectedIndex : Global.Settings.Server.InputEncoding;
+            => Global.Settings.Server.InputEncoding = _loaded ? InputEncoding.SelectedIndex : Global.Settings.Server.InputEncoding;
         private void OutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.OutputEncoding = Loaded ? OutputEncoding.SelectedIndex : Global.Settings.Server.OutputEncoding;
+            => Global.Settings.Server.OutputEncoding = _loaded ? OutputEncoding.SelectedIndex : Global.Settings.Server.OutputEncoding;
         private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.OutputStyle = Loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
+            => Global.Settings.Server.OutputStyle = _loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
         private void Port_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.Port = Loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
+            => Global.Settings.Server.Port = _loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
         private void LineTerminator_TextChanged(object sender, TextChangedEventArgs e)
             => Global.Settings.Server.LineTerminator = LineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
 

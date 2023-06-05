@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace Serein.Utils
 {
@@ -10,7 +9,7 @@ namespace Serein.Utils
         /// <summary>
         /// Http客户端
         /// </summary>
-        private static HttpClient HttpClient = new();
+        private static HttpClient _httpClient = new();
 
         /// <summary>
         /// 异步Get
@@ -23,14 +22,14 @@ namespace Serein.Utils
         {
             if (accept != null)
             {
-                HttpClient.DefaultRequestHeaders.Accept.Clear();
-                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(accept));
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(accept));
             }
-            HttpClient.DefaultRequestHeaders.AcceptCharset.Clear();
-            HttpClient.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
-            HttpClient.DefaultRequestHeaders.Remove("user-agent");
-            HttpClient.DefaultRequestHeaders.Add("user-agent", userAgent);
-            HttpResponseMessage response = await HttpClient.GetAsync(url);
+            _httpClient.DefaultRequestHeaders.AcceptCharset.Clear();
+            _httpClient.DefaultRequestHeaders.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
+            _httpClient.DefaultRequestHeaders.Remove("user-agent");
+            _httpClient.DefaultRequestHeaders.Add("user-agent", userAgent);
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
             Logger.Output(Base.LogType.DetailDebug, "Response Headers\n", response.Headers.ToString());
             Logger.Output(Base.LogType.DetailDebug, "Content\n", await response.Content.ReadAsStringAsync());
             return response;

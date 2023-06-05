@@ -2,6 +2,7 @@
 using Jint.Native;
 using Jint.Native.Function;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Serein.Base;
 using Serein.Utils;
 using System;
@@ -11,23 +12,24 @@ using System.Threading;
 
 namespace Serein.Core.JSPlugin
 {
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Plugin : IDisposable
     {
         public Plugin(string @namespace, PreLoadConfig config)
         {
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
+            Name = @namespace;
             PreLoadConfig = config;
-            Engine = JSEngine.Create(false, Namespace, TokenSource, PreLoadConfig);
-            DisplayedName = @namespace;
+            Engine = JSEngine.Create(false, Namespace, _tokenSource, PreLoadConfig);
         }
 
         public void Dispose()
         {
-            if (!TokenSource.IsCancellationRequested)
+            if (!_tokenSource.IsCancellationRequested)
             {
-                TokenSource.Cancel();
+                _tokenSource.Cancel();
             }
-            EventDict.Clear();
+            _eventDict.Clear();
             Engine?.Dispose();
             Engine = null;
             WSClients.ForEach((ws) => ws.Dispose());
@@ -38,7 +40,7 @@ namespace Serein.Core.JSPlugin
         /// CancellationToken
         /// </summary>
         [JsonIgnore]
-        private readonly CancellationTokenSource TokenSource = new();
+        private readonly CancellationTokenSource _tokenSource = new();
 
         /// <summary>
         /// 命名空间
@@ -51,53 +53,48 @@ namespace Serein.Core.JSPlugin
         public bool Available;
 
         /// <summary>
-        /// 名称
+        /// 显示名称
         /// </summary>
         [JsonIgnore]
-        public string DisplayedName
-        {
-            get => Name == null ? "-" : Name;
-            set => Name = value;
-        }
+        public string DisplayedName => Name == null ? "-" : Name;
 
-        public string Name { get; private set; } = string.Empty;
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 显示版本
+        /// </summary>
+        [JsonIgnore]
+        public string DisplayedVersion => Version == null ? "-" : Version;
 
         /// <summary>
         /// 版本
         /// </summary>
-        [JsonIgnore]
-        public string DisplayedVersion
-        {
-            get => Version == null ? "-" : Version;
-            set => Version = value;
-        }
+        public string Version { get; set; }
 
-        public string Version { get; private set; }
+        /// <summary>
+        /// 显示作者
+        /// </summary>
+        [JsonIgnore]
+        public string DisplayedAuthor => Author == null ? "-" : Author;
 
         /// <summary>
         /// 作者
         /// </summary>
-        [JsonIgnore]
-        public string DisplayedAuthor
-        {
-            get => Author == null ? "-" : Author;
-            set => Author = value;
-        }
+        public string Author { get; set; }
 
-        public string Author { get; private set; }
+        /// <summary>
+        /// 显示介绍
+        /// </summary>
+        [JsonIgnore]
+        public string DisplayedDescription => Description == null ? "-" : Description;
 
         /// <summary>
         /// 介绍
         /// </summary>
-        [JsonIgnore]
-        public string DisplayedDescription
-        {
-            get => Description == null ? "-" : Description;
-            set => Description = value;
-        }
-
-        [JsonProperty(PropertyName = "Description")]
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// 文件名
@@ -119,7 +116,7 @@ namespace Serein.Core.JSPlugin
         /// 监听字典
         /// </summary>
         [JsonIgnore]
-        private readonly Dictionary<EventType, JsValue> EventDict = new();
+        private readonly Dictionary<EventType, JsValue> _eventDict = new();
 
         /// <summary>
         /// 预加载配置
@@ -129,15 +126,14 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 事件列表
         /// </summary>
-        public EventType[] EventList => EventDict.Keys.ToArray();
+        public EventType[] EventList => _eventDict.Keys.ToArray();
 
         /// <summary>
         /// 是否监听了指定的事件类型
         /// </summary>
         /// <param name="eventType">事件类型</param>
         public bool HasListenedOn(EventType eventType)
-             => EventDict.ContainsKey(eventType) &&
-                EventDict[eventType] is FunctionInstance;
+            => _eventDict.TryGetValue(eventType, out JsValue jsValue) && jsValue is FunctionInstance;
 
         /// <summary>
         /// 设置事件
@@ -165,13 +161,13 @@ namespace Serein.Core.JSPlugin
                 case EventType.SereinClose:
                 case EventType.PluginsReload:
                 case EventType.PluginsLoaded:
-                    if (EventDict.ContainsKey(type))
+                    if (_eventDict.ContainsKey(type))
                     {
-                        EventDict[type] = jsValue;
+                        _eventDict[type] = jsValue;
                     }
                     else
                     {
-                        EventDict.Add(type, jsValue);
+                        _eventDict.Add(type, jsValue);
                     }
                     return true;
                 default:
@@ -202,14 +198,14 @@ namespace Serein.Core.JSPlugin
                     case EventType.PluginsReload:
                         lock (Engine)
                         {
-                            Engine.Invoke(EventDict[type]);
+                            Engine.Invoke(_eventDict[type]);
                         }
                         break;
                     case EventType.ServerStop:
                     case EventType.ServerSendCommand:
                         lock (Engine)
                         {
-                            Engine.Invoke(EventDict[type], args[0]);
+                            Engine.Invoke(_eventDict[type], args[0]);
                         }
                         break;
                     case EventType.ServerOutput:
@@ -217,25 +213,25 @@ namespace Serein.Core.JSPlugin
                     case EventType.ReceivePacket:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0]));
                         }
                     case EventType.GroupIncrease:
                     case EventType.GroupDecrease:
                     case EventType.GroupPoke:
                         lock (Engine)
                         {
-                            Engine.Invoke(EventDict[type], args[0], args[1]);
+                            Engine.Invoke(_eventDict[type], args[0], args[1]);
                         }
                         break;
                     case EventType.ReceiveGroupMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3], args[4]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3], args[4]));
                         }
                     case EventType.ReceivePrivateMessage:
                         lock (Engine)
                         {
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(EventDict[type], args[0], args[1], args[2], args[3]));
+                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3]));
                         }
                     default:
                         throw new NotSupportedException($"触发了一个不支持的事件：{type}");

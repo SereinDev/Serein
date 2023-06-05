@@ -11,13 +11,13 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Bot : UiPage
     {
-        private readonly Timer UpdateInfoTimer = new Timer(2000) { AutoReset = true };
+        private readonly Timer _updateInfoTimer = new Timer(2000) { AutoReset = true };
 
         public Bot()
         {
             InitializeComponent();
-            UpdateInfoTimer.Elapsed += (_, _) => UpdateInfos();
-            UpdateInfoTimer.Start();
+            _updateInfoTimer.Elapsed += (_, _) => UpdateInfos();
+            _updateInfoTimer.Start();
             BotRichTextBox.Document.Blocks.Clear();
             lock (Catalog.Function.BotCache)
             {

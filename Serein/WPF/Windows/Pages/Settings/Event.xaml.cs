@@ -19,8 +19,8 @@ namespace Serein.Windows.Pages.Settings
             Catalog.Settings.Event = this;
         }
 
-        private int ActionType;
-        private string SelectedTag = string.Empty;
+        private int _actionType;
+        private string _selectedTag = string.Empty;
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -30,13 +30,13 @@ namespace Serein.Windows.Pages.Settings
                 switch (tag)
                 {
                     case "Add":
-                        ActionType = 1;
+                        _actionType = 1;
                         Catalog.MainWindow.OpenEventEditor(string.Empty);
                         break;
                     case "Edit":
                         if (EventListView.SelectedItem is string selectedItem && selectedItem != null)
                         {
-                            ActionType = 2;
+                            _actionType = 2;
                             Catalog.MainWindow.OpenEventEditor(selectedItem);
                         }
                         break;
@@ -61,7 +61,7 @@ namespace Serein.Windows.Pages.Settings
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
             }
-            else if (ActionType == 1)
+            else if (_actionType == 1)
             {
                 if (EventListView.SelectedIndex >= 0)
                 {
@@ -76,21 +76,21 @@ namespace Serein.Windows.Pages.Settings
                 Save();
                 Load();
             }
-            else if (ActionType == 2 && EventListView.SelectedIndex >= 0)
+            else if (_actionType == 2 && EventListView.SelectedIndex >= 0)
             {
                 EventListView.Items[EventListView.SelectedIndex] = command;
                 Save();
                 Load();
             }
-            ActionType = 0;
+            _actionType = 0;
             return true;
         }
 
         private void Save()
         {
-            if (Enum.IsDefined(typeof(EventType), SelectedTag))
+            if (Enum.IsDefined(typeof(EventType), _selectedTag))
             {
-                Global.Settings.Event.Edit(GetEventCommands(), (EventType)Enum.Parse(typeof(EventType), SelectedTag));
+                Global.Settings.Event.Edit(GetEventCommands(), (EventType)Enum.Parse(typeof(EventType), _selectedTag));
                 IO.SaveEventSetting();
             }
         }
@@ -110,18 +110,18 @@ namespace Serein.Windows.Pages.Settings
             if (Events.SelectedItem is System.Windows.Controls.TreeViewItem treeViewItemItem && treeViewItemItem != null)
             {
                 EventListView.Items.Clear();
-                SelectedTag = treeViewItemItem.Tag as string ?? string.Empty;
-                if (Enum.IsDefined(typeof(EventType), SelectedTag))
+                _selectedTag = treeViewItemItem.Tag as string ?? string.Empty;
+                if (Enum.IsDefined(typeof(EventType), _selectedTag))
                 {
                     Global.Settings.Event.Get(
-                        (EventType)Enum.Parse(typeof(EventType), SelectedTag)).ToList()
+                        (EventType)Enum.Parse(typeof(EventType), _selectedTag)).ToList()
                         .ForEach((Command) => { EventListView.Items.Add(System.Text.RegularExpressions.Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); }
                         );
                 }
             }
             else
             {
-                SelectedTag = string.Empty;
+                _selectedTag = string.Empty;
             }
         }
 
@@ -129,9 +129,9 @@ namespace Serein.Windows.Pages.Settings
 
         private void EventListView_ContextMenuOpening(object sender, System.Windows.Controls.ContextMenuEventArgs e)
         {
-            Add.IsEnabled = !string.IsNullOrEmpty(SelectedTag);
-            Edit.IsEnabled = !string.IsNullOrEmpty(SelectedTag) && EventListView.SelectedIndex >= 0;
-            Delete.IsEnabled = !string.IsNullOrEmpty(SelectedTag) && EventListView.SelectedIndex >= 0;
+            Add.IsEnabled = !string.IsNullOrEmpty(_selectedTag);
+            Edit.IsEnabled = !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
+            Delete.IsEnabled = !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
         }
     }
 }

@@ -14,14 +14,14 @@ namespace Serein.Ui
     {
         private void ScheduleList_MouseUp(object sender, MouseEventArgs e)
         {
-            IsDragging = false;
-            if ((ScheduleList.SelectedItems.Count != 0) && (ItemDraged != null))
+            _isDragging = false;
+            if ((ScheduleList.SelectedItems.Count != 0) && (_itemDraged != null))
             {
-                if (ItemDraged.Index != ScheduleList.SelectedItems[0].Index && ItemDraged.Index >= 0)
+                if (_itemDraged.Index != ScheduleList.SelectedItems[0].Index && _itemDraged.Index >= 0)
                 {
-                    ScheduleList.Items.RemoveAt(ItemDraged.Index);
-                    ScheduleList.Items.Insert(ScheduleList.SelectedItems[0].Index, ItemDraged);
-                    ItemDraged = null;
+                    ScheduleList.Items.RemoveAt(_itemDraged.Index);
+                    ScheduleList.Items.Insert(ScheduleList.SelectedItems[0].Index, _itemDraged);
+                    _itemDraged = null;
                     SaveSchedule();
                 }
             }
@@ -29,13 +29,13 @@ namespace Serein.Ui
 
         private void ScheduleList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            ItemDraged = (ListViewItem)e.Item;
-            IsDragging = true;
+            _itemDraged = (ListViewItem)e.Item;
+            _isDragging = true;
         }
 
         private void ScheduleList_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            e.Item.Selected = IsDragging;
+            e.Item.Selected = _isDragging;
         }
 
         private void ScheduleContextMenuStrip_Opening(object sender, CancelEventArgs e)

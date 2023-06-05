@@ -13,7 +13,7 @@ namespace Serein.Windows.Pages.Function
 {
     public partial class Schedule : UiPage
     {
-        private int ActionType;
+        private int _actionType;
 
         public Schedule()
         {
@@ -57,7 +57,7 @@ namespace Serein.Windows.Pages.Function
                 Catalog.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
                 return false;
             }
-            if (ActionType == 1)
+            if (_actionType == 1)
             {
                 if (ScheduleListView.SelectedIndex >= 0)
                 {
@@ -81,7 +81,7 @@ namespace Serein.Windows.Pages.Function
                         });
                 }
             }
-            else if (ActionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
+            else if (_actionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
             {
                 selectedItem.Cron = cronExp;
                 selectedItem.Command = command;
@@ -90,7 +90,7 @@ namespace Serein.Windows.Pages.Function
             }
             Save();
             Load();
-            ActionType = 0;
+            _actionType = 0;
             return true;
         }
 
@@ -98,10 +98,10 @@ namespace Serein.Windows.Pages.Function
         {
             if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                if (ActionType != 0)
+                if (_actionType != 0)
                 {
                     Catalog.MainWindow.ScheduleEditor.Hide();
-                    ActionType = 0;
+                    _actionType = 0;
                 }
                 Base.Schedule selectedItem = ScheduleListView.SelectedIndex >= 0 ? ScheduleListView.SelectedItem as Base.Schedule : null;
                 string Tag = menuItem.Tag as string ?? string.Empty;
@@ -109,13 +109,13 @@ namespace Serein.Windows.Pages.Function
                 {
                     case "Add":
                         Catalog.MainWindow.OpenScheduleEditor();
-                        ActionType = 1;
+                        _actionType = 1;
                         break;
                     case "Edit":
                         if (selectedItem != null)
                         {
                             Catalog.MainWindow.OpenScheduleEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
-                            ActionType = 2;
+                            _actionType = 2;
                         }
                         break;
                     case "Delete":

@@ -16,7 +16,7 @@ namespace Serein.Utils
         /// <summary>
         /// 检查更新计时器
         /// </summary>
-        private static readonly Timer CheckTimer = new(200000) { AutoReset = true };
+        private static readonly Timer _checkTimer = new(200000) { AutoReset = true };
 
         /// <summary>
         /// 更新初始化
@@ -24,8 +24,8 @@ namespace Serein.Utils
         public static void Init()
         {
             Task.Run(CheckVersion);
-            CheckTimer.Elapsed += (_, _) => CheckVersion();
-            CheckTimer.Start();
+            _checkTimer.Elapsed += (_, _) => CheckVersion();
+            _checkTimer.Start();
             AppDomain.CurrentDomain.ProcessExit += (_, _) => StartUpdater();
         }
 

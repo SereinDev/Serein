@@ -1,4 +1,5 @@
-﻿using Jint;
+﻿using System.Diagnostics;
+using Jint;
 using Jint.Native;
 using Jint.Native.Function;
 using Jint.Runtime;
@@ -42,10 +43,10 @@ namespace Serein.Core.JSPlugin
             {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
-            plugin.DisplayedName = name;
-            plugin.DisplayedVersion = version;
-            plugin.DisplayedAuthor = author;
-            plugin.DisplayedDescription = description;
+            plugin.Name = name;
+            plugin.Version = version;
+            plugin.Author = author;
+            plugin.Description = description;
             return @namespace;
         }
 
@@ -64,20 +65,17 @@ namespace Serein.Core.JSPlugin
             {
                 throw new ArgumentException("未知的事件：" + eventName);
             }
-            lock (JSPluginManager.PluginDict)
-            {
-                return
-                    callback is FunctionInstance &&
-                    JSPluginManager.PluginDict.ContainsKey(@namespace) &&
-                    JSPluginManager.PluginDict[@namespace].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
-            }
+            return
+                callback is FunctionInstance &&
+                JSPluginManager.PluginDict.ContainsKey(@namespace) &&
+                JSPluginManager.PluginDict[@namespace].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
 
         }
 
         /// <summary>
         /// 事件触发异步锁
         /// </summary>
-        private static readonly object EventLock = new();
+        private static readonly object _eventLock = new();
 
         /// <summary>
         /// 触发插件事件
@@ -92,14 +90,13 @@ namespace Serein.Core.JSPlugin
                 return false;
             }
             bool interdicted = false;
-            lock (EventLock)
+            lock (_eventLock)
             {
                 Logger.Output(LogType.Debug, type);
-                lock (JSPluginManager.PluginDict)
                 {
                     List<Task<bool>> tasks = new();
                     CancellationTokenSource tokenSource = new();
-                    foreach (Plugin plugin in JSPluginManager.PluginDict.Values)
+                    foreach (Plugin plugin in JSPluginManager.PluginDict.Values.ToArray())
                     {
                         if (!plugin.Available || !plugin.HasListenedOn(type))
                         {
@@ -113,7 +110,7 @@ namespace Serein.Core.JSPlugin
                         {
                             Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
                             tokenSource.Cancel();
-                            tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((b) => interdicted = interdicted || b);
+                            tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((result) => interdicted = interdicted || result);
                         }
                         Global.Settings.Serein.Function.JSEventCoolingDownTime.ToSleep();
                     }
@@ -132,13 +129,13 @@ namespace Serein.Core.JSPlugin
         /// <returns>定时器哈希值</returns>
         public static JsValue SetTimer(string @namespace, JsValue callback, JsValue interval, bool autoReset)
         {
-            if (@namespace == null && !JSPluginManager.PluginDict.ContainsKey(@namespace))
+            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin plugin))
             {
-                throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
+                throw new ArgumentException("无法找到对应的命名空间");
             }
             if (callback is not FunctionInstance)
             {
-                throw new ArgumentException(nameof(callback), "The \"callback\" argument must be of type function.");
+                throw new ArgumentException("The \"callback\" argument must be of type function.", nameof(callback));
             }
             long timerID = CurrentID;
             CurrentID++;
@@ -151,21 +148,16 @@ namespace Serein.Core.JSPlugin
             {
                 try
                 {
-                    @namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
-                    if (!JSPluginManager.PluginDict.ContainsKey(@namespace))
-                    {
-                        throw new ArgumentException(nameof(@namespace), "无法找到对应的命名空间");
-                    }
-                    if (JSPluginManager.PluginDict[@namespace].Engine == null)
+                    if (plugin.Engine == null)
                     {
                         timer.Stop();
                         timer.Dispose();
                         JSPluginManager.Timers.Remove(timerID);
                         return;
                     }
-                    lock (JSPluginManager.PluginDict[@namespace].Engine)
+                    lock (plugin.Engine)
                     {
-                        JSPluginManager.PluginDict[@namespace].Engine.Invoke(callback);
+                        plugin.Engine.Invoke(callback);
                     }
                 }
                 catch (Exception e)
@@ -187,15 +179,15 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 清除定时器
         /// </summary>
-        /// <param name="ID">哈希值</param>
+        /// <param name="id">哈希值</param>
         /// <returns>清除结果</returns>
-        private static bool ClearTimer(long ID)
+        private static bool ClearTimer(long id)
         {
-            if (JSPluginManager.Timers.ContainsKey(ID))
+            if (JSPluginManager.Timers.TryGetValue(id, out System.Timers.Timer timer))
             {
-                JSPluginManager.Timers[ID].Stop();
-                JSPluginManager.Timers[ID].Dispose();
-                return JSPluginManager.Timers.Remove(ID);
+                timer.Stop();
+                timer.Dispose();
+                return JSPluginManager.Timers.Remove(id);
             }
             return false;
         }
@@ -203,18 +195,18 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 清除定时器
         /// </summary>
-        /// <param name="ID">定时器ID</param>
+        /// <param name="id">定时器ID</param>
         /// <returns>清除结果</returns>
-        public static bool ClearTimer(JsValue ID) => ClearTimer((long)ID.AsNumber());
+        public static bool ClearTimer(JsValue id) => ClearTimer((long)id.AsNumber());
 
         /// <summary>
         /// 清除所有定时器
         /// </summary>
         public static void ClearAllTimers()
         {
-            foreach (long ID in JSPluginManager.Timers.Keys.ToArray())
+            foreach (long id in JSPluginManager.Timers.Keys.ToArray())
             {
-                ClearTimer(ID);
+                ClearTimer(id);
             }
         }
 
@@ -238,7 +230,7 @@ namespace Serein.Core.JSPlugin
         /// 添加正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool AddRegex(string exp, int area, bool needAdmin, string command, string remark, long[] ignored)
+        public static bool AddRegex(string exp, int? area, bool? needAdmin, string command, string remark, long[] ignored)
         {
             if (exp.TestRegex() &&
                 area <= 4 && area >= 0 &&
@@ -249,8 +241,8 @@ namespace Serein.Core.JSPlugin
                     Global.RegexList.Add(new()
                     {
                         Expression = exp,
-                        Area = area,
-                        IsAdmin = needAdmin,
+                        Area = area ?? 0,
+                        IsAdmin = needAdmin ?? false,
                         Command = command,
                         Remark = remark ?? string.Empty,
                         Ignored = ignored ?? Array.Empty<long>()
@@ -266,9 +258,10 @@ namespace Serein.Core.JSPlugin
         /// 修改正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool EditRegex(int index, string exp, int area, bool needAdmin, string command, string remark, long[] ignored)
+        public static bool EditRegex(int? index, string exp, int? area, bool? needAdmin, string command, string remark, long[] ignored)
         {
-            if (index < Global.RegexList.Count &&
+            if (index.HasValue &&
+                index < Global.RegexList.Count &&
                 index >= 0 &&
                 exp.TestRegex() &&
                 area <= 4 && area >= 0 &&
@@ -276,12 +269,12 @@ namespace Serein.Core.JSPlugin
             {
                 lock (Global.RegexList)
                 {
-                    Regex selected = Global.RegexList[index];
-                    Global.RegexList[index] = new()
+                    Regex selected = Global.RegexList[index ?? throw new ArgumentNullException()];
+                    Global.RegexList[index ?? throw new ArgumentNullException()] = new()
                     {
                         Expression = exp ?? selected.Expression,
-                        Area = area,
-                        IsAdmin = needAdmin,
+                        Area = area ?? selected.Area,
+                        IsAdmin = needAdmin ?? selected.IsAdmin,
                         Command = command ?? selected.Command,
                         Remark = remark ?? selected.Remark,
                         Ignored = ignored ?? selected.Ignored
@@ -297,13 +290,13 @@ namespace Serein.Core.JSPlugin
         /// 删除正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool RemoveRegex(int index)
+        public static bool RemoveRegex(int? index)
         {
-            if (index < Global.RegexList.Count && index >= 0)
+            if (index.HasValue && index < Global.RegexList.Count && index >= 0)
             {
                 lock (Global.RegexList)
                 {
-                    Global.RegexList.RemoveAt(index);
+                    Global.RegexList.RemoveAt(index ?? throw new ArgumentNullException());
                 }
                 IO.SaveRegex();
                 return true;
@@ -385,7 +378,7 @@ namespace Serein.Core.JSPlugin
                 JsonConvert.SerializeObject(new PreLoadConfig
                 {
                     Assemblies =
-                        assemblies?.AsArray().ToList().Select((jsValue) => jsValue.ToString()).ToArray() ?? Array.Empty<string>(),
+                        assemblies?.AsArray().Select((jsValue) => jsValue.ToString()).ToArray() ?? Array.Empty<string>(),
                     AllowGetType =
                         allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
                     AllowOperatorOverloading =
@@ -420,7 +413,7 @@ namespace Serein.Core.JSPlugin
             {
                 if (!string.IsNullOrEmpty(@namespace))
                 {
-                    Logger.Output(LogType.Plugin_Error, "重新加载指定的文件失败", e.Message);
+                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", "重新加载指定的文件失败：", e.Message);
                     Logger.Output(LogType.Debug, type, e);
                 }
                 return false;
@@ -430,23 +423,36 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 安全调用
         /// </summary>
-        /// <param name="jsValue">函数对象</param>
+        /// <param name="func">函数对象</param>
         /// <param name="arguments">参数</param>
         /// <returns>调用结果</returns>
-        public static JsValue SafeCall(JsValue jsValue, params JsValue[] arguments)
+        public static JsValue SafeCall(JsValue func, params JsValue[] arguments)
         {
-            if (jsValue is not FunctionInstance functionInstance)
+            if (func is not FunctionInstance functionInstance)
             {
                 return JsValue.Undefined;
             }
-            if (Monitor.TryEnter(functionInstance.Engine, 1000))
+            var engine = functionInstance.Engine;
+            bool lockTaken = false;
+            Monitor.TryEnter(engine, 1000, ref lockTaken);
+            if (!lockTaken)
             {
-                lock (functionInstance.Engine)
-                {
-                    return functionInstance.Engine.Invoke(functionInstance, arguments);
-                }
+                throw new TimeoutException("JS引擎访问等待超时");
             }
-            throw new MethodAccessException();
+            // TODO: FIX!!!!!!!!!!!!!!!
+            JsValue v = null;
+            try
+            {
+                Debug.WriteLine(Thread.CurrentThread.ManagedThreadId);
+                v = engine.Call(functionInstance, arguments);
+                Debug.WriteLine(v);
+            }
+            finally
+            {
+                Monitor.Exit(engine);
+                Thread.Yield();
+            }
+            return v;
         }
     }
 }
