@@ -118,15 +118,18 @@ namespace Serein.Core.JSPlugin
         /// <param name="file">文件</param>
         private static void LoadFile(string file)
         {
-            if (file.ToLowerInvariant().EndsWith(".module.js"))
+            string lowerFile = file.ToLowerInvariant();
+            if (Global.Settings.Serein.Function.JSPatternToSkipLoadingSpecifiedFile.Where((pattern) => lowerFile.EndsWith(pattern.ToLowerInvariant())).Count() != 0)
             {
                 return;
             }
+
             string @namespace = Path.GetFileNameWithoutExtension(file);
             Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+
             try
             {
-                PreLoadConfig config = null;
+                PreLoadConfig config = new();
                 if (Directory.Exists(Path.Combine(PluginPath, @namespace)))
                 {
                     string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
@@ -134,15 +137,15 @@ namespace Serein.Core.JSPlugin
                     {
                         config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
                     }
-                    config ??= new();
                     File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
                 }
-                config ??= new();
+
                 Plugin plugin = new(@namespace, config)
                 {
                     File = file
                 };
                 PluginDict.Add(@namespace, plugin);
+
                 plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
                 if (!string.IsNullOrEmpty(exceptionMessage))
                 {
@@ -153,6 +156,7 @@ namespace Serein.Core.JSPlugin
                 {
                     plugin.Available = true;
                 }
+
             }
             catch (Exception e)
             {
@@ -175,6 +179,7 @@ namespace Serein.Core.JSPlugin
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
 
+            MessageBus.DisposeAll();
             CommandVariablesDict.Clear();
             VariablesExportedDict.Clear();
             PluginDict.Values.ToList().ForEach((plugin) => plugin.Dispose());

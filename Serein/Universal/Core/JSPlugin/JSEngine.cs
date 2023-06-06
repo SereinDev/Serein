@@ -27,7 +27,7 @@ namespace Serein.Core.JSPlugin
         /// 初始化JS引擎
         /// </summary>
         /// <returns>JS引擎</returns>
-        public static Engine Create() => Create(true, null, null, null);
+        public static Engine Create() => Create(true, null, null, new());
 
         /// <summary>
         /// 初始化JS引擎
@@ -110,6 +110,8 @@ namespace Serein.Core.JSPlugin
                     new Func<JsValue, bool>(JSFunc.ClearTimer));
                 engine.SetValue("WSClient",
                     TypeReference.CreateTypeReference(engine, typeof(WSClient)));
+                engine.SetValue("MessageBus",
+                    TypeReference.CreateTypeReference(engine, typeof(MessageBus)));
                 engine.SetValue("Logger",
                     TypeReference.CreateTypeReference(engine, typeof(Native.Logger)));
             }
@@ -126,6 +128,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("clearTimeout", JsValue.Undefined);
                 engine.SetValue("clearInterval", JsValue.Undefined);
                 engine.SetValue("WSClient", JsValue.Undefined);
+                engine.SetValue("MessageBus", JsValue.Undefined);
                 engine.SetValue("Logger", JsValue.Undefined);
                 engine.SetValue("require", JsValue.Undefined);
             }
@@ -222,7 +225,6 @@ namespace Serein.Core.JSPlugin
                 new Func<string, bool>(Global.PermissionGroups.ContainsKey));
             engine.SetValue("serein_setPermission",
                 new Func<string, string, JsValue, bool>(PermissionManager.SetPermission));
-            engine.SetValue("serein_safeCall", JSFunc.SafeCall);
             engine.SetValue("Motdpe", TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje", TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.Execute(
@@ -245,7 +247,6 @@ namespace Serein.Core.JSPlugin
                     setVariable:        serein_setVariable,
                     setPreLoadConfig:   serein_setPreLoadConfig,
                     reloadFiles:        serein_reloadFiles,
-                    safeCall:           serein_safeCall,
 
                     getRegexes:         serein_getRegexes,
                     addRegex:           serein_addRegex,
@@ -321,6 +322,13 @@ namespace Serein.Core.JSPlugin
             }
         }
 
+        /// <summary>
+        /// 成员访问器
+        /// </summary>
+        /// <param name="engine">JS引擎</param>
+        /// <param name="target">目标</param>
+        /// <param name="member">成员名称</param>
+        /// <returns>成员</returns>
         private static JsValue MemberAccessor(Engine engine, object target, string member)
         {
             if (target is null || string.IsNullOrEmpty(member) || member.Length == 0)

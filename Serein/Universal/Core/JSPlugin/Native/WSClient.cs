@@ -7,13 +7,8 @@ using WebSocket4Net;
 
 namespace Serein.Core.JSPlugin
 {
-    internal class WSClient : IDisposable
+    internal class WSClient : PluginBase, IDisposable
     {
-        /// <summary>
-        /// 命名空间
-        /// </summary>
-        private string _namespace { get; init; }
-
         /// <summary>
         /// 事件函数
         /// </summary>
@@ -45,7 +40,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// ws地址
         /// </summary>
-        public string Uri { get; private set; }
+        public string Uri { get; init; }
 
         public bool Disposed { get; private set; }
 
@@ -54,14 +49,9 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="uri">ws地址</param>
         /// <param name="namespace">命名空间</param>
-        public WSClient(string uri, string @namespace = null)
+        public WSClient(string uri, string @namespace = null) : base(@namespace)
         {
             Uri = uri;
-            _namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
-            if (!JSPluginManager.PluginDict.ContainsKey(_namespace))
-            {
-                throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
-            }
             _webSocket = new(uri);
             _webSocket.Opened += (_, _) => Trigger(onopen, EventType.Opened);
             _webSocket.Closed += (_, _) => Trigger(onclose, EventType.Closed);
@@ -76,7 +66,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="jsValue">事件函数</param>
         private bool Check(JsValue jsValue)
         {
-            if (JSPluginManager.PluginDict[_namespace].Engine == null || !JSPluginManager.PluginDict[_namespace].Available)
+            if (JSPluginManager.PluginDict[_namespace].Engine is null || !JSPluginManager.PluginDict[_namespace].Available)
             {
                 Dispose();
                 return false;

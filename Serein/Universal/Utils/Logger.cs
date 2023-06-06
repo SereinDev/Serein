@@ -32,7 +32,7 @@ namespace Serein.Utils
             {
                 return;
             }
-#endif
+#elif CONSOLE
             string typeName = type.ToString();
             if (!typeName.Contains("Notice") && (
                 typeName.StartsWith("Bot_") && !Global.Settings.Serein.PagesDisplayed.Bot ||
@@ -42,6 +42,7 @@ namespace Serein.Utils
             {
                 return;
             }
+#endif
             StringBuilder bld = new();
             foreach (var o in objects)
             {
@@ -297,6 +298,7 @@ namespace Serein.Utils
         /// </summary>
         /// <param name="level">输出等级</param>
         /// <param name="line">输出行</param>
+        /// <param name="usingTitle">使用Serein标题</param>
         private static void WriteLine(int level, string line, bool usingTitle = false)
         {
             if (line == "#clear")
@@ -339,7 +341,7 @@ namespace Serein.Utils
                     System.Console.WriteLine(System.Text.RegularExpressions.Regex.Replace(line, @"\[.*?m", string.Empty));
                     return;
                 }
-                if (usingTitle && line.Contains("https"))
+                if (usingTitle && line.Contains("http"))
                 {
                     line = System.Text.RegularExpressions.Regex.Replace(
                         line,
@@ -379,8 +381,8 @@ namespace Serein.Utils
             {
                 text = ":(\n" + text;
             }
-            DialogResult Result = MessageBox.Show(text, caption, (MessageBoxButtons)buttons, (MessageBoxIcon)icon);
-            return Result == DialogResult.OK || Result == DialogResult.Yes;
+            DialogResult result = MessageBox.Show(text, caption, (MessageBoxButtons)buttons, (MessageBoxIcon)icon);
+            return result == DialogResult.OK || result == DialogResult.Yes;
 #elif WPF
             if (buttons == 0)
             {

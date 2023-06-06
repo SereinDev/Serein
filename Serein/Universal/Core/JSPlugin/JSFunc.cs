@@ -148,7 +148,7 @@ namespace Serein.Core.JSPlugin
             {
                 try
                 {
-                    if (plugin.Engine == null)
+                    if (plugin.Engine is null)
                     {
                         timer.Stop();
                         timer.Dispose();
@@ -418,41 +418,6 @@ namespace Serein.Core.JSPlugin
                 }
                 return false;
             }
-        }
-
-        /// <summary>
-        /// 安全调用
-        /// </summary>
-        /// <param name="func">函数对象</param>
-        /// <param name="arguments">参数</param>
-        /// <returns>调用结果</returns>
-        public static JsValue SafeCall(JsValue func, params JsValue[] arguments)
-        {
-            if (func is not FunctionInstance functionInstance)
-            {
-                return JsValue.Undefined;
-            }
-            var engine = functionInstance.Engine;
-            bool lockTaken = false;
-            Monitor.TryEnter(engine, 1000, ref lockTaken);
-            if (!lockTaken)
-            {
-                throw new TimeoutException("JS引擎访问等待超时");
-            }
-            // TODO: FIX!!!!!!!!!!!!!!!
-            JsValue v = null;
-            try
-            {
-                Debug.WriteLine(Thread.CurrentThread.ManagedThreadId);
-                v = engine.Call(functionInstance, arguments);
-                Debug.WriteLine(v);
-            }
-            finally
-            {
-                Monitor.Exit(engine);
-                Thread.Yield();
-            }
-            return v;
         }
     }
 }

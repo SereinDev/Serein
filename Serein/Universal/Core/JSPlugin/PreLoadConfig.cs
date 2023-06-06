@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 namespace Serein.Core.JSPlugin
 {
     [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    internal class PreLoadConfig
+    internal struct PreLoadConfig
     {
         public string[] Assemblies = { };
 
@@ -12,11 +12,13 @@ namespace Serein.Core.JSPlugin
         /// https://github.com/sebastienros/jint/blob/main/Jint/Options.cs
         /// </remarks>
         public bool
-            AllowGetType,
+            AllowGetType = false,
             AllowOperatorOverloading = true,
-            AllowSystemReflection,
+            AllowSystemReflection = false,
             AllowWrite = true,
-            Strict,
+            Strict = false,
             StringCompilationAllowed = true;
+
+        public PreLoadConfig() { }
     }
 }

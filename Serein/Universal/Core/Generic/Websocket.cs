@@ -17,7 +17,7 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 连接状态
         /// </summary>
-        public static bool Status;
+        public static bool Status { get; private set; }
 
         /// <summary>
         /// 重连状态
@@ -27,12 +27,12 @@ namespace Serein.Core.Generic
         /// <summary>
         /// WS客户端
         /// </summary>
-        private static WebSocket _websock;
+        private static WebSocket _websocket;
 
         /// <summary>
         /// 启动时刻
         /// </summary>
-        public static DateTime StartTime = DateTime.Now;
+        public static DateTime StartTime { get; private set; } = DateTime.Now;
 
         /// <summary>
         /// 连接WS
@@ -50,7 +50,7 @@ namespace Serein.Core.Generic
             Matcher.SelfId = null;
             try
             {
-                _websock = new(
+                _websocket = new(
                     "ws://" + Global.Settings.Bot.Uri,
                     "",
                     null,
@@ -58,18 +58,18 @@ namespace Serein.Core.Generic
                         new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
                         }
                     );
-                _websock.MessageReceived += Receive;
-                _websock.Error += (_, e) =>
+                _websocket.MessageReceived += Receive;
+                _websocket.Error += (_, e) =>
                 {
                     Logger.Output(LogType.Bot_Error, e.Exception.Message);
                 };
-                _websock.Closed += Closed;
-                _websock.Opened += (_, _) =>
+                _websocket.Closed += Closed;
+                _websocket.Opened += (_, _) =>
                 {
                     _reconnect = true;
                     Logger.Output(LogType.Bot_Notice, $"成功连接到{Global.Settings.Bot.Uri}");
                 };
-                _websock.Open();
+                _websocket.Open();
                 StartTime = DateTime.Now;
                 Status = true;
             }
@@ -114,7 +114,7 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                _websock.Send(text);
+                _websocket.Send(text);
             }
             return Status;
         }
@@ -158,7 +158,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                _websock.Send(textJObject.ToString());
+                _websocket.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -198,7 +198,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                _websock.Send(textJObject.ToString());
+                _websocket.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -220,7 +220,7 @@ namespace Serein.Core.Generic
             if (Status)
             {
                 _reconnect = false;
-                _websock.Close();
+                _websocket.Close();
             }
             else if (_reconnect)
             {
@@ -245,7 +245,10 @@ namespace Serein.Core.Generic
                 Logger.Output(LogType.Bot_Receive, e.Message);
             }
             IO.MsgLog($"[Received] {e.Message}");
-            string packet = WebUtility.HtmlDecode(new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString()));
+            string packet = WebUtility.HtmlDecode(
+                new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})")
+                .Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)
+                ).ToString()));
             if (JSFunc.Trigger(EventType.ReceivePacket, packet))
             {
                 return;

@@ -11,25 +11,14 @@ namespace Serein.Core.Generic
     internal static class Binder
     {
         /// <summary>
-        /// 游戏ID集合
-        /// </summary>
-        public static List<string> GameIDs
-        {
-            get
-            {
-                List<string> GameIDList = new();
-                foreach (Member Item in _items)
-                {
-                    GameIDList.Add(Item.GameID);
-                }
-                return GameIDList;
-            }
-        }
-
-        /// <summary>
         /// 只读的 Global.MemberDict Value副本
         /// </summary>
         private static List<Member> _items => Global.MemberDict.Values.ToList();
+
+        /// <summary>
+        /// 游戏ID集合
+        /// </summary>
+        public static List<string> GameIDs => _items.Select((member) => member.GameID).ToList();
 
         /// <summary>
         /// 绑定（无群反馈）

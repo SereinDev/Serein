@@ -36,6 +36,9 @@ namespace Serein.Core.JSPlugin
             Available = false;
         }
 
+        // [JsonIgnore]
+        // public readonly object Engine = new();
+
         /// <summary>
         /// CancellationToken
         /// </summary>
@@ -61,7 +64,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
 
         /// <summary>
         /// 显示版本
@@ -99,7 +102,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 文件名
         /// </summary>
-        public string File = string.Empty;
+        public string File { get; init; } = string.Empty;
 
         /// <summary>
         /// JS引擎
@@ -110,7 +113,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// WebSocket列表
         /// </summary>
-        public List<WSClient> WSClients = new();
+        public readonly List<WSClient> WSClients = new();
 
         /// <summary>
         /// 监听字典
@@ -144,7 +147,6 @@ namespace Serein.Core.JSPlugin
         public bool SetListener(EventType type, JsValue jsValue)
         {
             Logger.Output(LogType.Debug, type);
-            jsValue = jsValue ?? throw new ArgumentNullException(nameof(jsValue));
             switch (type)
             {
                 case EventType.ServerStart:

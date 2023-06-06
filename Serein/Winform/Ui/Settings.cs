@@ -320,7 +320,7 @@ namespace Serein.Ui
 
         private void SettingSereinVersion_Click(object sender, EventArgs _)
         {
-            Ookii.Dialogs.Wpf.TaskDialog taskDialog = new Ookii.Dialogs.Wpf.TaskDialog
+            Ookii.Dialogs.Wpf.TaskDialog taskDialog = new()
             {
                 Buttons = {
                         new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
@@ -334,8 +334,12 @@ namespace Serein.Ui
                     $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}",
                 Footer = "开源地址：<a href=\"https://github.com/Zaitonn/Serein\">GitHub</a>",
                 FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
-                EnableHyperlinks = true
+                EnableHyperlinks = true,
             };
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && DateTime.Now.Second < 10)
+            {
+                taskDialog.ExpandedInformation = "KFC_CRAZY_THURSDAY_VME50!!!!\n没错这是一个彩蛋（";
+            }
             taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
         }
