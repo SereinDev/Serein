@@ -100,6 +100,8 @@ namespace Serein.Core.JSPlugin
                     new Action<string, JsValue>(JSFunc.Export));
                 engine.SetValue("serein_setPreLoadConfig",
                     new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
+                engine.SetValue("serein_safeCall",
+                    JSFunc.SafeCall);
                 engine.SetValue("setTimeout",
                     new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, false)));
                 engine.SetValue("setInterval",
@@ -123,6 +125,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_setVariable", JsValue.Undefined);
                 engine.SetValue("serein_export", JsValue.Undefined);
                 engine.SetValue("serein_setPreLoadConfig", JsValue.Undefined);
+                engine.SetValue("serein_safeCall", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
                 engine.SetValue("clearTimeout", JsValue.Undefined);
@@ -247,6 +250,7 @@ namespace Serein.Core.JSPlugin
                     setVariable:        serein_setVariable,
                     setPreLoadConfig:   serein_setPreLoadConfig,
                     reloadFiles:        serein_reloadFiles,
+                    safeCall:           serein_safeCall,
 
                     getRegexes:         serein_getRegexes,
                     addRegex:           serein_addRegex,
