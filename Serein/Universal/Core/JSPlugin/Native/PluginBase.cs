@@ -9,7 +9,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         protected string _namespace { get; init; }
 
-        public PluginBase(string @namespace)
+        protected PluginBase(string @namespace)
         {
             _namespace = @namespace;
             if (string.IsNullOrEmpty(_namespace) && !JSPluginManager.PluginDict.ContainsKey(_namespace))

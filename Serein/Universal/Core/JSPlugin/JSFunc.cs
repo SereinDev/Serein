@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Jint;
+﻿using Jint;
 using Jint.Native;
 using Jint.Native.Function;
 using Jint.Runtime;
@@ -439,20 +438,15 @@ namespace Serein.Core.JSPlugin
             {
                 throw new TimeoutException("JS引擎访问等待超时");
             }
-            // TODO: FIX!!!!!!!!!!!!!!!
-            JsValue v = null;
             try
             {
-                Debug.WriteLine(Thread.CurrentThread.ManagedThreadId);
-                v = engine.Call(functionInstance, arguments);
-                Debug.WriteLine(v);
+                return engine.Call(functionInstance, arguments);
             }
             finally
             {
                 Monitor.Exit(engine);
                 Thread.Yield();
             }
-            return v;
         }
     }
 }

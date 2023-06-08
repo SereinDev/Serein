@@ -36,9 +36,6 @@ namespace Serein.Core.JSPlugin
             Available = false;
         }
 
-        // [JsonIgnore]
-        // public readonly object Engine = new();
-
         /// <summary>
         /// CancellationToken
         /// </summary>

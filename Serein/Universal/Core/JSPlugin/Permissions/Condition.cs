@@ -35,13 +35,13 @@ namespace Serein.Core.JSPlugin.Permission
         /// 仅管理
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool? RequireAdmin;
+        public bool? RequireAdmin { get; init; }
 
-        private static List<string> types = new() { "group", "private", "temp", "unknown" };
+        private static List<string> _acceptableTypes = new() { "group", "private", "temp", "unknown" };
 
         public Condition()
         {
-            if (string.IsNullOrEmpty(Type) || !types.Contains(Type))
+            if (string.IsNullOrEmpty(Type) || !_acceptableTypes.Contains(Type))
             {
                 Type = "unknown";
                 Groups = null;

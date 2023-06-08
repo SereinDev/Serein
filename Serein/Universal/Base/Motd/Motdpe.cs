@@ -93,8 +93,8 @@ namespace Serein.Base.Motd
                     Description = System.Text.RegularExpressions.Regex.Replace(datas[1], "§.", string.Empty);
                     Protocol = datas[2];
                     Version = datas[3];
-                    OnlinePlayer = int.Parse(datas[4]);
-                    MaxPlayer = int.Parse(datas[5]);
+                    OnlinePlayer = long.Parse(datas[4]);
+                    MaxPlayer = long.Parse(datas[5]);
                     LevelName = datas[7];
                     GameMode = datas[8];
                     IsSuccessful = true;

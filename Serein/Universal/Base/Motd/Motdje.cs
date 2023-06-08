@@ -107,8 +107,8 @@ namespace Serein.Base.Motd
             if (!string.IsNullOrEmpty(Origin))
             {
                 JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Origin);
-                OnlinePlayer = int.Parse(jsonObject["players"]["online"].ToString());
-                MaxPlayer = int.Parse(jsonObject["players"]["max"].ToString());
+                OnlinePlayer = long.Parse(jsonObject["players"]["online"].ToString());
+                MaxPlayer = long.Parse(jsonObject["players"]["max"].ToString());
                 Version = jsonObject["version"]["name"].ToString();
                 Protocol = jsonObject["version"]["protocol"].ToString();
                 if (jsonObject["description"]["text"] != null)

@@ -149,6 +149,10 @@ namespace Serein.Core.Server
             }
             else
             {
+                if (Path.GetFileName(Global.Settings.Server.Path).Contains("Serein"))
+                {
+                    Logger.MsgBox("禁止禁止禁止套娃（）", "Serein", 0, 48);
+                }
 #if CONSOLE
                 Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\n");
 #else
@@ -222,7 +226,7 @@ namespace Serein.Core.Server
             {
                 foreach (string command in Global.Settings.Server.StopCommands)
                 {
-                    if (!(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command)))
+                    if (!string.IsNullOrEmpty(command))
                     {
                         InputCommand(command);
                     }
@@ -365,7 +369,7 @@ namespace Serein.Core.Server
                         CommandHistory[CommandHistory.Count - 1] != command || // 与最后一项重复
                         CommandHistory.Count == 0) &&
                         !isFromCommand && // 通过Serein命令执行的不计入
-                        !(string.IsNullOrEmpty(command) || string.IsNullOrWhiteSpace(command))) // 为空不计入
+                        !string.IsNullOrEmpty(command)) // 为空不计入
                 {
                     CommandHistory.Add(command);
                 }
@@ -549,6 +553,10 @@ namespace Serein.Core.Server
                 {
                     Motd = new Motdje(Global.Settings.Server.Port);
                 }
+            }
+            else
+            {
+                Motd = null;
             }
         }
 
