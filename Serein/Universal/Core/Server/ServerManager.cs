@@ -147,14 +147,14 @@ namespace Serein.Core.Server
                     Logger.MsgBox($"启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
                 }
             }
+            else if (!quiet && Path.GetFileName(Global.Settings.Server.Path).Contains("Serein") && !Logger.MsgBox("禁止禁止禁止套娃（）", "Serein", 1, 48))
+            {
+                return false;
+            }
             else
             {
-                if (Path.GetFileName(Global.Settings.Server.Path).Contains("Serein"))
-                {
-                    Logger.MsgBox("禁止禁止禁止套娃（）", "Serein", 0, 48);
-                }
 #if CONSOLE
-                Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein 你的指令\"代替原输入方式\n");
+                Logger.Output(LogType.Server_Notice, "若要执行Serein指令，请使用\"serein <你的指令>\"代替原输入方式\n");
 #else
                 Logger.Output(LogType.Server_Clear);
 #endif

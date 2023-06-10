@@ -318,14 +318,14 @@ namespace Serein.Core.JSPlugin
             }
             if (JSPluginManager.CommandVariablesDict.ContainsKey(key))
             {
-                lock (JSPluginManager.CommandVariablesDict)
-                {
-                    JSPluginManager.CommandVariablesDict[key] = value;
-                }
+                JSPluginManager.CommandVariablesDict[key] = value;
             }
             else
             {
-                JSPluginManager.CommandVariablesDict.Add(key, value);
+                lock (JSPluginManager.CommandVariablesDict)
+                {
+                    JSPluginManager.CommandVariablesDict.Add(key, value);
+                }
             }
             return true;
         }
@@ -431,10 +431,8 @@ namespace Serein.Core.JSPlugin
             {
                 return JsValue.Undefined;
             }
-            var engine = functionInstance.Engine;
-            bool lockTaken = false;
-            Monitor.TryEnter(engine, 1000, ref lockTaken);
-            if (!lockTaken)
+            Engine engine = functionInstance.Engine;
+            if (!Monitor.TryEnter(engine, 1000))
             {
                 throw new TimeoutException("JS引擎访问等待超时");
             }

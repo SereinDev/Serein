@@ -42,7 +42,6 @@ namespace Serein.Core.JSPlugin
                 new Action<Options>((cfg) =>
                 {
                     cfg.CatchClrExceptions();
-                    cfg.Interop.MemberAccessor = MemberAccessor;
                     if (!isExecuteByCommand)
                     {
                         List<Assembly> assemblies = new();
@@ -324,59 +323,6 @@ namespace Serein.Core.JSPlugin
                 Utils.Logger.Output(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
-        }
-
-        /// <summary>
-        /// 成员访问器
-        /// </summary>
-        /// <param name="engine">JS引擎</param>
-        /// <param name="target">目标</param>
-        /// <param name="member">成员名称</param>
-        /// <returns>成员</returns>
-        private static JsValue MemberAccessor(Engine engine, object target, string member)
-        {
-            if (target is null || string.IsNullOrEmpty(member) || member.Length == 0)
-            {
-                return null;
-            }
-
-            string pascalCasingName = GetPascalCasingName(member);
-            Type type = target.GetType();
-            MemberInfo[] memberInfos = type.GetMembers(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-
-            foreach (MemberInfo memberInfo in memberInfos)
-            {
-                if (pascalCasingName != memberInfo.Name && member != memberInfo.Name)
-                {
-                    continue;
-                }
-                switch (memberInfo.MemberType)
-                {
-                    case MemberTypes.Property:
-                        return JsValue.FromObject(engine, (memberInfo as PropertyInfo).GetValue(target));
-                    case MemberTypes.Field:
-                        return JsValue.FromObject(engine, (memberInfo as FieldInfo).GetValue(target));
-                    default:
-                        return null; // 交给Jint计算最佳匹配方法
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 获取帕斯卡命名
-        /// </summary>
-        /// <param name="name">名称</param>
-        /// <returns>转换结果</returns>
-        private static string GetPascalCasingName(string name)
-        {
-            if (char.IsUpper(name, 0))
-            {
-                return name;
-            }
-            char[] chars = name.ToCharArray();
-            chars[0] = char.ToUpperInvariant(chars[0]);
-            return new string(chars);
         }
     }
 }
