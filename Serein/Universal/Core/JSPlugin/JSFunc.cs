@@ -214,15 +214,12 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         public static string ToFullMsg(this Exception e)
         {
-            if (e.InnerException is JavaScriptException javaScriptException1)
+            Exception _e = e is JavaScriptException ? e : e.InnerException ?? e;
+            if (_e is JavaScriptException javaScriptException)
             {
-                return $"{javaScriptException1.Message}\n{javaScriptException1.JavaScriptStackTrace}";
+                return $"{javaScriptException.Message}\n{javaScriptException.JavaScriptStackTrace}";
             }
-            if (e is JavaScriptException javaScriptException2)
-            {
-                return $"{javaScriptException2.Message}\n{javaScriptException2.JavaScriptStackTrace}";
-            }
-            return (e.InnerException ?? e).Message;
+            return $"{_e.GetType()}: {_e.Message}";
         }
 
         /// <summary>

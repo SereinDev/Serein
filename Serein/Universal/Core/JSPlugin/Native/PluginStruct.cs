@@ -4,29 +4,29 @@ namespace Serein.Core.JSPlugin.Native
 {
     internal struct PluginStruct
     {
-        public string @namespace;
-        public string name;
-        public string version;
-        public string author;
-        public string description;
-        public string file;
-        public PreLoadConfig preLoadConfig;
-        public string[] eventList;
-        public WSClient.ReadonlyWSClient[] wsclients;
-        public bool available;
+        public string Namespace;
+        public string Name;
+        public string Version;
+        public string Author;
+        public string Description;
+        public string File;
+        public PreLoadConfig PreLoadConfig;
+        public string[] EventList;
+        public WSClient.ReadonlyWSClient[] Wsclients;
+        public bool Available;
 
         public PluginStruct(Plugin plugin)
         {
-            @namespace = plugin.Namespace;
-            name = plugin.Name;
-            version = plugin.Version;
-            author = plugin.Author;
-            description = plugin.Description;
-            file = plugin.File;
-            eventList = plugin.EventList.Select((eventType) => eventType.ToString()).ToArray();
-            available = plugin.Available;
-            preLoadConfig = plugin.PreLoadConfig;
-            wsclients = plugin.WSClients.Select((wsclient) => new WSClient.ReadonlyWSClient(wsclient)).ToArray();
+            Namespace = plugin.Namespace;
+            Name = plugin.Name;
+            Version = plugin.Version;
+            Author = plugin.Author;
+            Description = plugin.Description;
+            File = plugin.File;
+            EventList = plugin.EventList.Select((eventType) => eventType.ToString()).ToArray();
+            Available = plugin.Available;
+            PreLoadConfig = plugin.PreLoadConfig;
+            Wsclients = plugin.WSClients.Select((wsclient) => new WSClient.ReadonlyWSClient(wsclient)).ToArray();
         }
     }
 }

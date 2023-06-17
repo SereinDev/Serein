@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Base;
 using Serein.Core.Generic;
+using Serein.Core.JSPlugin;
 using Serein.Core.JSPlugin.Permission;
 using Serein.Extensions;
 using Serein.Settings;
@@ -11,6 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Timers;
+
+#if WPF
+using Serein.Windows;
+#endif
 
 namespace Serein.Utils
 {
@@ -525,22 +530,35 @@ namespace Serein.Utils
         /// 热重载
         /// </summary>
         /// <param name="type">类型</param>
-        public static void Reload(string type)
+        /// <param name="allowToReloadPlugin">允许重新加载插件</param>
+        public static void Reload(string type, bool allowToReloadPlugin = false)
         {
             switch (type?.ToLowerInvariant())
             {
                 case null:
                 case "all":
                     ReadAll();
+                    if (allowToReloadPlugin)
+                    {
+                        JSPluginManager.Reload();
+                    }
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadRegex);
                     Program.Ui?.Invoke(Program.Ui.LoadMember);
                     Program.Ui?.Invoke(Program.Ui.LoadSchedule);
                     Program.Ui?.Invoke(Program.Ui.LoadSettings);
+                    if (allowToReloadPlugin)
+                    {
+                        Program.Ui?.Invoke(Program.Ui.LoadJSPluginPublicly);
+                    }
 #elif WPF
-                    Serein.Windows.Catalog.Function.Regex?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Regex.Load);
-                    Serein.Windows.Catalog.Function.Member?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Member.Load);
-                    Serein.Windows.Catalog.Function.Schedule?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Schedule.Load);
+                    Catalog.Function.Regex?.Dispatcher.Invoke(Catalog.Function.Regex.Load);
+                    Catalog.Function.Member?.Dispatcher.Invoke(Catalog.Function.Member.Load);
+                    Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
+                    if (allowToReloadPlugin)
+                    {
+                        Catalog.Function.JSPlugin.LoadPublicly();
+                    }
 #endif
                     break;
                 case "regex":
@@ -548,7 +566,7 @@ namespace Serein.Utils
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadRegex);
 #elif WPF
-                    Serein.Windows.Catalog.Function.Regex?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Regex.Load);
+                    Catalog.Function.Regex?.Dispatcher.Invoke(Catalog.Function.Regex.Load);
 #endif
                     break;
                 case "member":
@@ -556,7 +574,7 @@ namespace Serein.Utils
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadMember);
 #elif WPF
-                    Serein.Windows.Catalog.Function.Member?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Member.Load);
+                    Catalog.Function.Member?.Dispatcher.Invoke(Catalog.Function.Member.Load);
 #endif
                     break;
                 case "schedule":
@@ -564,7 +582,7 @@ namespace Serein.Utils
 #if WINFORM
                     Program.Ui?.Invoke(Program.Ui.LoadSchedule);
 #elif WPF
-                    Serein.Windows.Catalog.Function.Schedule?.Dispatcher.Invoke(Serein.Windows.Catalog.Function.Schedule.Load);
+                    Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
 #endif
                     break;
                 case "groupcache":
@@ -579,6 +597,19 @@ namespace Serein.Utils
                 case "permissiongroup":
                     ReadPermissionGroups();
                     break;
+                case "plugin":
+                case "plugins":
+                    if (allowToReloadPlugin)
+                    {
+                        JSPluginManager.Reload();
+#if WINFORM
+                        Program.Ui?.Invoke(Program.Ui.LoadJSPluginPublicly);
+#elif WPF
+                        Catalog.Function.JSPlugin.LoadPublicly();
+#endif
+                        break;
+                    }
+                    throw new InvalidOperationException("权限不足");
                 default:
                     throw new ArgumentException("重新加载类型未知");
             }

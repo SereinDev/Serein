@@ -5,14 +5,14 @@ using SuperSocket.ClientEngine;
 using System;
 using WebSocket4Net;
 
-namespace Serein.Core.JSPlugin
+namespace Serein.Core.JSPlugin.Native
 {
     internal class WSClient : PluginBase, IDisposable
     {
         /// <summary>
         /// 事件函数
         /// </summary>
-        public static JsValue onopen, onclose, onerror, onmessage;
+        public static JsValue Onopen, Onclose, Onerror, Onmessage;
 
         /// <summary>
         /// WS客户端
@@ -53,10 +53,11 @@ namespace Serein.Core.JSPlugin
         {
             Uri = uri;
             _webSocket = new(uri);
-            _webSocket.Opened += (_, _) => Trigger(onopen, EventType.Opened);
-            _webSocket.Closed += (_, _) => Trigger(onclose, EventType.Closed);
-            _webSocket.MessageReceived += (_, e) => Trigger(onmessage, EventType.MessageReceived, e);
-            _webSocket.Error += (_, e) => Trigger(onerror, EventType.Error, e);
+            _webSocket.Opened += (_, _) => Trigger(Onopen, EventType.Opened);
+            _webSocket.Closed += (_, _) => Trigger(Onclose, EventType.Closed);
+            _webSocket.MessageReceived += (_, e) => Trigger(Onmessage, EventType.MessageReceived, e);
+            _webSocket.Error += (_, e) => Trigger(Onerror, EventType.Error, e);
+
             JSPluginManager.PluginDict[@namespace].WSClients.Add(this);
         }
 
@@ -71,7 +72,7 @@ namespace Serein.Core.JSPlugin
                 Dispose();
                 return false;
             }
-            return jsValue is FunctionInstance;
+            return jsValue is FunctionInstance && !Disposed;
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Serein.Core.JSPlugin
                         case EventType.Error:
                             if (args is ErrorEventArgs e2 && e2 != null)
                             {
-                                JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, e2.Exception.ToString());
+                                JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, e2.Exception.ToFullMsg());
                             }
                             break;
                         default:
@@ -121,34 +122,26 @@ namespace Serein.Core.JSPlugin
             }
         }
 
-#pragma warning disable IDE1006
-        /// <summary>
-        /// 释放对象
-        /// </summary>
-        public void dispose() => Dispose();
-
         /// <summary>
         /// 状态
         /// </summary>
-        public int state => _webSocket == null ? -1 : ((int)_webSocket.State);
+        public int State => _webSocket == null ? -1 : ((int)_webSocket.State);
 
         /// <summary>
         /// 开启ws
         /// </summary>
-        public void open() => _webSocket.Open();
+        public void Open() => _webSocket.Open();
 
         /// <summary>
         /// 关闭ws
         /// </summary>
-        public void close() => _webSocket.Close();
+        public void Close() => _webSocket.Close();
 
         /// <summary>
         /// 发送消息
         /// </summary>
         /// <param name="msg"></param>
-        public void send(string msg) => _webSocket.Send(msg);
-
-#pragma warning restore IDE1006
+        public void Send(string msg) => _webSocket.Send(msg);
 
         private enum EventType
         {
@@ -169,7 +162,7 @@ namespace Serein.Core.JSPlugin
             public ReadonlyWSClient(WSClient wsclient)
             {
                 disposed = wsclient.Disposed;
-                state = wsclient.state;
+                state = wsclient.State;
                 uri = wsclient.Uri;
             }
         }

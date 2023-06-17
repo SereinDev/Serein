@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Core.JSPlugin
+namespace Serein.Core.JSPlugin.Native
 {
     internal abstract class PluginBase
     {

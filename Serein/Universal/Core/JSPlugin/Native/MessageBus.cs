@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Serein.Core.JSPlugin
+namespace Serein.Core.JSPlugin.Native
 {
     internal class MessageBus : PluginBase, IDisposable
     {
@@ -25,7 +25,7 @@ namespace Serein.Core.JSPlugin
 
         private readonly Dictionary<string, JsValue> _dictionary = new();
 
-        public JsValue onerror;
+        public JsValue Onerror;
 
         public MessageBus(string @namespace) : base(@namespace)
         {
@@ -40,7 +40,7 @@ namespace Serein.Core.JSPlugin
         public void Dispose()
         {
             Alive = false;
-            onerror = null;
+            Onerror = null;
             _dictionary.Clear();
         }
 
@@ -81,11 +81,11 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    if (onerror is FunctionInstance)
+                    if (Onerror is FunctionInstance)
                     {
                         lock (JSPluginManager.PluginDict[_namespace].Engine)
                         {
-                            JSPluginManager.PluginDict[_namespace].Engine.Invoke(onerror, e.ToString());
+                            JSPluginManager.PluginDict[_namespace].Engine.Invoke(Onerror, e.ToString());
                         }
                     }
                 }

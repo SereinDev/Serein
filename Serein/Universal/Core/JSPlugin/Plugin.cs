@@ -4,6 +4,7 @@ using Jint.Native.Function;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serein.Base;
+using Serein.Core.JSPlugin.Native;
 using Serein.Utils;
 using System;
 using System.Collections.Generic;
@@ -143,7 +144,7 @@ namespace Serein.Core.JSPlugin
         /// <returns>设置结果</returns>
         public bool SetListener(EventType type, JsValue jsValue)
         {
-            Logger.Output(LogType.Debug, type);
+            Utils.Logger.Output(LogType.Debug, type);
             switch (type)
             {
                 case EventType.ServerStart:
@@ -170,7 +171,7 @@ namespace Serein.Core.JSPlugin
                     }
                     return true;
                 default:
-                    Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
+                    Utils.Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
                     return false;
             }
         }
@@ -186,7 +187,7 @@ namespace Serein.Core.JSPlugin
             {
                 return false;
             }
-            Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
+            Utils.Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
             try
             {
                 switch (type)
@@ -239,8 +240,8 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
-                Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
+                Utils.Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
+                Utils.Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
             }
             return false;
         }

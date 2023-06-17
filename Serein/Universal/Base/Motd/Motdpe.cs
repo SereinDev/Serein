@@ -84,6 +84,7 @@ namespace Serein.Base.Motd
                     Encoding.UTF8.GetString(buffer, 35, length - 35) :
                     Encoding.UTF8.GetString(buffer, 0, length);
             }
+
             if (length > 35)
             {
                 Origin = data;

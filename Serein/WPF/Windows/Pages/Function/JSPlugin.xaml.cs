@@ -1,5 +1,5 @@
-﻿using Serein.Utils;
-using Serein.Core.JSPlugin;
+﻿using Serein.Core.JSPlugin;
+using Serein.Utils;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,11 +64,7 @@ namespace Serein.Windows.Pages.Function
                 switch (menuItem.Tag)
                 {
                     case "Reload":
-                        Task.Run(() =>
-                        {
-                            JSPluginManager.Reload();
-                            Load();
-                        });
+                        Task.Run(JSPluginManager.Reload);
                         break;
                     case "ClearConsole":
                         PluginRichTextBox.Document.Blocks.Clear();
@@ -81,9 +77,9 @@ namespace Serein.Windows.Pages.Function
                         Process.Start(new ProcessStartInfo("https://market.serein.cc/") { UseShellExecute = true });
                         break;
                     case "Disable":
-                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.ContainsKey(listViewItem.Tag.ToString()))
+                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.TryGetValue(listViewItem.Tag.ToString(), out Plugin plugin))
                         {
-                            JSPluginManager.PluginDict[listViewItem.Tag.ToString()].Dispose();
+                            plugin.Dispose();
                             Load();
                         }
                         break;
@@ -95,7 +91,7 @@ namespace Serein.Windows.Pages.Function
             => Disable.IsEnabled =
             JSPluginListView.SelectedIndex != -1 &&
             JSPluginListView.SelectedItem is ListViewItem item &&
-            JSPluginManager.PluginDict.ContainsKey(item.Tag.ToString()) &&
-            JSPluginManager.PluginDict[item.Tag.ToString()].Available;
+            JSPluginManager.PluginDict.TryGetValue(item.Tag.ToString(), out Plugin plugin) &&
+            plugin.Available;
     }
 }

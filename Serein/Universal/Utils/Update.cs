@@ -114,7 +114,7 @@ namespace Serein.Utils
                         IsReadyToUpdate = false;
                         Logger.Output(Base.LogType.Version_Downloading, url);
                         Logger.Output(Base.LogType.Debug, $"正在从[{url}]下载[{asset["name"]}]");
-                        using (Stream stream = Net.Get(url.ToString()).Await().Content.ReadAsStreamAsync().Await())
+                        using (Stream stream = Net.Get(url).Await().Content.ReadAsStreamAsync().Await())
                         using (FileStream fileStream = new($"update/{filename}", FileMode.Create))
                         {
                             byte[] bytes = new byte[stream.Length];

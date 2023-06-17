@@ -11,20 +11,20 @@ namespace Serein.Core.JSPlugin.Native
             _name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
+        private static string _separator = "\x20";
+
         private readonly string _name;
 
-#pragma warning disable IDE1006
-        public void info(params JsValue[] jsValues)
-            => Utils.Logger.Output(LogType.Plugin_Info, $"[{_name}]", string.Join<JsValue>("\x20", jsValues));
+        public void Info(params JsValue[] jsValues)
+            => Utils.Logger.Output(LogType.Plugin_Info, $"[{_name}]", string.Join<JsValue>(_separator, jsValues));
 
-        public void warn(params JsValue[] jsValues)
-            => Utils.Logger.Output(LogType.Plugin_Warn, $"[{_name}]", string.Join<JsValue>("\x20", jsValues));
+        public void Warn(params JsValue[] jsValues)
+            => Utils.Logger.Output(LogType.Plugin_Warn, $"[{_name}]", string.Join<JsValue>(_separator, jsValues));
 
-        public void error(params JsValue[] jsValues)
-            => Utils.Logger.Output(LogType.Plugin_Error, $"[{_name}]", string.Join<JsValue>("\x20", jsValues));
+        public void Error(params JsValue[] jsValues)
+            => Utils.Logger.Output(LogType.Plugin_Error, $"[{_name}]", string.Join<JsValue>(_separator, jsValues));
 
-        public void debug(params JsValue[] jsValues)
-            => Utils.Logger.Output(LogType.Debug, $"[{_name}]", string.Join<JsValue>("\x20", jsValues));
-#pragma warning restore IDE1006
+        public void Debug(params JsValue[] jsValues)
+            => Utils.Logger.Output(LogType.Debug, $"[{_name}]", string.Join<JsValue>(_separator, jsValues));
     }
 }
