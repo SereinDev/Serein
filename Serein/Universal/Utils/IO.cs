@@ -117,9 +117,9 @@ namespace Serein.Utils
                         return;
                     }
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                    if (jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
+                    if (jsonObject["type"]?.ToString().ToUpperInvariant() == "REGEX")
                     {
-                        if (append)
+                        if (append && jsonObject["data"].HasValues)
                         {
                             lock (Global.RegexList)
                             {
@@ -170,7 +170,7 @@ namespace Serein.Utils
                 if (!string.IsNullOrEmpty(text))
                 {
                     JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                    if (jsonObject["type"].ToString().ToUpperInvariant() == "MEMBERS")
+                    if (jsonObject["type"].ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"].HasValues)
                     {
                         List<Member> list = ((JArray)jsonObject["data"]).ToObject<List<Member>>();
                         list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
@@ -255,8 +255,9 @@ namespace Serein.Utils
                     if (!string.IsNullOrEmpty(text))
                     {
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                        if (jsonObject.TryGetString("type").ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject.TryGetString("type").ToString().ToUpperInvariant() == "TASK")
+                        if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK") &&
+                            jsonObject["data"].HasValues)
                         {
                             Global.Schedules = ((JArray)jsonObject["data"]).ToObject<List<Schedule>>();
                         }

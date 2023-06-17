@@ -406,18 +406,18 @@ namespace Serein.Core.Generic
                     #endregion
 
                     #region 消息
-                    "msgid" => jsonObject.TryGetString("message_id"),
-                    "id" => jsonObject.TryGetString("sender", "user_id"),
-                    "gameid" => Binder.GetGameID(long.TryParse(jsonObject.TryGetString("sender", "user_id"), out long result) ? result : -1),
-                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.TryGetString("sender", "sex").ToLowerInvariant())],
-                    "nickname" => jsonObject.TryGetString("sender", "nickname"),
-                    "age" => jsonObject.TryGetString("sender", "age"),
-                    "area" => jsonObject.TryGetString("sender", "area"),
-                    "card" => jsonObject.TryGetString("sender", "card"),
-                    "level" => jsonObject.TryGetString("sender", "level"),
-                    "title" => jsonObject.TryGetString("sender", "title"),
-                    "role" => Roles_Chinese[Array.IndexOf(Roles, jsonObject.TryGetString("sender", "role"))],
-                    "shownname" => string.IsNullOrEmpty(jsonObject.TryGetString("sender", "card")) ? jsonObject.TryGetString("sender", "nickname") : jsonObject.TryGetString("sender", "card"),
+                    "msgid" => jsonObject.SelectToken("message_id").ToString(),
+                    "id" => jsonObject.SelectToken("sender.user_id").ToString(),
+                    "gameid" => Binder.GetGameID(long.TryParse(jsonObject.SelectToken("sender.user_id").ToString(), out long result) ? result : -1),
+                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.SelectToken("sender.sex").ToString().ToLowerInvariant())],
+                    "nickname" => jsonObject.SelectToken("sender.nickname").ToString(),
+                    "age" => jsonObject.SelectToken("sender.age").ToString(),
+                    "area" => jsonObject.SelectToken("sender.area").ToString(),
+                    "card" => jsonObject.SelectToken("sender.card").ToString(),
+                    "level" => jsonObject.SelectToken("sender.level").ToString(),
+                    "title" => jsonObject.SelectToken("sender.title").ToString(),
+                    "role" => Roles_Chinese[Array.IndexOf(Roles, jsonObject.SelectToken("sender.role").ToString())],
+                    "shownname" => string.IsNullOrEmpty(jsonObject.SelectToken("sender.card").ToString()) ? jsonObject.SelectToken("sender.nickname").ToString() : jsonObject.SelectToken("sender.card").ToString(),
                     #endregion
 
                     _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value

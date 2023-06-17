@@ -21,7 +21,7 @@ namespace Serein
         /// <summary>
         /// 版本号
         /// </summary>
-        public const string VERSION = "v1.3.4";
+        public const string VERSION = "v1.3.5";
 
         /// <summary>
         /// 类型

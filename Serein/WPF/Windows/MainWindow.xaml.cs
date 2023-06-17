@@ -116,7 +116,7 @@ namespace Serein.Windows
         /// <summary>
         /// 打开成员编辑器窗口
         /// </summary>
-        public void OpenMemberEditor() => OpenMemberEditor(false, string.Empty, string.Empty);
+        public void OpenMemberEditor() => OpenMemberEditor(true, string.Empty, string.Empty);
 
         /// <summary>
         /// 打开成员编辑器窗口

@@ -19,10 +19,7 @@ namespace Serein.Extensions
             {
                 return $"{timeSpan.TotalMinutes / 60:N1}h";
             }
-            else
-            {
-                return $"{timeSpan.TotalHours / 24:N1}d";
-            }
+            return $"{timeSpan.TotalHours / 24:N1}d";
         }
     }
 }
