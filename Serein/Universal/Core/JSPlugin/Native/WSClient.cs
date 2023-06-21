@@ -1,17 +1,19 @@
 ﻿using Jint.Native;
 using Jint.Native.Function;
 using Newtonsoft.Json;
-using SuperSocket.ClientEngine;
+using Newtonsoft.Json.Serialization;
 using System;
 using WebSocket4Net;
 
 namespace Serein.Core.JSPlugin.Native
 {
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class WSClient : PluginBase, IDisposable
     {
         /// <summary>
         /// 事件函数
         /// </summary>
+        [JsonIgnore]
         public static JsValue Onopen, Onclose, Onerror, Onmessage;
 
         /// <summary>
@@ -42,6 +44,9 @@ namespace Serein.Core.JSPlugin.Native
         /// </summary>
         public string Uri { get; init; }
 
+        /// <summary>
+        /// 是否已释放
+        /// </summary>
         public bool Disposed { get; private set; }
 
         /// <summary>
@@ -104,7 +109,7 @@ namespace Serein.Core.JSPlugin.Native
                             }
                             break;
                         case EventType.Error:
-                            if (args is ErrorEventArgs e2 && e2 != null)
+                            if (args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
                             {
                                 JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, e2.Exception.ToFullMsg());
                             }
@@ -153,17 +158,17 @@ namespace Serein.Core.JSPlugin.Native
 
         internal struct ReadonlyWSClient
         {
-            public bool disposed;
+            public bool Disposed;
 
-            public int state;
+            public int State;
 
-            public string uri;
+            public string Uri;
 
             public ReadonlyWSClient(WSClient wsclient)
             {
-                disposed = wsclient.Disposed;
-                state = wsclient.State;
-                uri = wsclient.Uri;
+                Disposed = wsclient.Disposed;
+                State = wsclient.State;
+                Uri = wsclient.Uri;
             }
         }
     }

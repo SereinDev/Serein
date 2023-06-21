@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Serein.Core.JSPlugin;
-using Serein.Extensions;
 using Serein.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,8 @@ namespace Serein.Core.Generic
         /// </summary>
         public static string MessageReceived
         {
-            get => !Websocket.Status || string.IsNullOrEmpty(messageReceived) ? "-" : messageReceived;
-            set => messageReceived = value;
+            get => !Websocket.Status || string.IsNullOrEmpty(_messageReceived) ? "-" : _messageReceived;
+            set => _messageReceived = value;
         }
 
         /// <summary>
@@ -25,8 +24,8 @@ namespace Serein.Core.Generic
         /// </summary>
         public static string MessageSent
         {
-            get => !Websocket.Status || string.IsNullOrEmpty(messageSent) ? "-" : messageSent;
-            set => messageSent = value;
+            get => !Websocket.Status || string.IsNullOrEmpty(_messageSent) ? "-" : _messageSent;
+            set => _messageSent = value;
         }
 
         /// <summary>
@@ -34,11 +33,11 @@ namespace Serein.Core.Generic
         /// </summary>
         public static string SelfId
         {
-            get => !Websocket.Status || string.IsNullOrEmpty(selfId) ? "-" : selfId;
-            set => selfId = value;
+            get => !Websocket.Status || string.IsNullOrEmpty(_selfId) ? "-" : _selfId;
+            set => _selfId = value;
         }
 
-        private static string messageReceived, messageSent, selfId;
+        private static string _messageReceived, _messageSent, _selfId;
 
         /// <summary>
         /// 处理来自控制台的消息
@@ -86,6 +85,7 @@ namespace Serein.Core.Generic
                         messageType
                         );
                     break;
+
                 case "meta_event":
                     if (packet.SelectToken("meta_event_type").ToString() == "heartbeat")
                     {
@@ -102,6 +102,7 @@ namespace Serein.Core.Generic
                         }
                     }
                     break;
+
                 case "notice":
                     userID = long.TryParse(packet.SelectToken("user_id").ToString(), out result) ? result : -1;
                     groupID = long.TryParse(packet.SelectToken("group_id").ToString(), out result) ? result : -1;
@@ -114,11 +115,13 @@ namespace Serein.Core.Generic
                                 EventTrigger.Trigger(Base.EventType.GroupDecrease, groupID, userID);
                                 JSFunc.Trigger(Base.EventType.GroupDecrease, groupID, userID);
                                 break;
+
                             case "GroupIncrease":
                             case "group_increase":
                                 EventTrigger.Trigger(Base.EventType.GroupIncrease, groupID, userID);
                                 JSFunc.Trigger(Base.EventType.GroupIncrease, groupID, userID);
                                 break;
+
                             case "notify":
                                 if (packet.SelectToken("sub_type").ToString() == "poke" &&
                                     packet.SelectToken("target_id").ToString() == SelfId)
@@ -160,6 +163,7 @@ namespace Serein.Core.Generic
                 if (interdicted) { return; }
             }
             Logger.Output(Base.LogType.Bot_Receive, $"{packet.SelectToken("sender.nickname")}({packet.SelectToken("sender.user_id")})" + ":" + rawMessage);
+
             if (messageType == "group" ^ Global.Settings.Bot.GroupList.Contains(groupID))
             {
                 return;
@@ -196,6 +200,7 @@ namespace Serein.Core.Generic
                             case 2:
                                 EventTrigger.Trigger(Base.EventType.PermissionDeniedFromGroupMsg, groupID, userID, packet);
                                 break;
+
                             case 3:
                                 EventTrigger.Trigger(Base.EventType.PermissionDeniedFromPrivateMsg, -1, userID, jobject: packet);
                                 break;

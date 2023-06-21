@@ -440,7 +440,6 @@ namespace Serein.Core.JSPlugin
             finally
             {
                 Monitor.Exit(engine);
-                Thread.Yield();
             }
         }
     }

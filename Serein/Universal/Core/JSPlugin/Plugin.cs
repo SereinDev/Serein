@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serein.Base;
 using Serein.Core.JSPlugin.Native;
-using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

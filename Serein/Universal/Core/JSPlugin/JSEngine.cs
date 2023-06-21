@@ -77,6 +77,7 @@ namespace Serein.Core.JSPlugin
                     }
                 }
                 ));
+
             engine.SetValue("serein_path",
                 Global.PATH);
             engine.SetValue("serein_version",

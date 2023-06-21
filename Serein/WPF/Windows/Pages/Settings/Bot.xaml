@@ -94,7 +94,7 @@
             Margin="0,7"
             Click="AutoEscape_Click"
             Content="纯文本发送"
-            ToolTip="消息内容是否作为纯文本发送（即不解析CQ码）" />
+            ToolTip="消息内容作为纯文本发送（即不解析CQ码）" />
         <ui:ToggleSwitch 
             Margin="0,7"
             Content="自动替换消息中的at"

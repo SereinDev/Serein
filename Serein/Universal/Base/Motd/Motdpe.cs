@@ -8,8 +8,6 @@ namespace Serein.Base.Motd
 {
     internal class Motdpe : Motd
     {
-        internal Motdpe() { }
-
         /// <summary>
         /// 基岩版Motd获取入口
         /// </summary>

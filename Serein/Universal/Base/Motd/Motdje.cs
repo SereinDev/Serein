@@ -11,8 +11,6 @@ namespace Serein.Base.Motd
 {
     internal class Motdje : Motd
     {
-        internal Motdje() { }
-
         /// <summary>
         /// Java版Motd获取入口
         /// </summary>
@@ -107,25 +105,25 @@ namespace Serein.Base.Motd
             if (!string.IsNullOrEmpty(Origin))
             {
                 JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Origin);
-                OnlinePlayer = long.Parse(jsonObject["players"]["online"].ToString());
-                MaxPlayer = long.Parse(jsonObject["players"]["max"].ToString());
-                Version = jsonObject["version"]["name"].ToString();
-                Protocol = jsonObject["version"]["protocol"].ToString();
-                if (jsonObject["description"]["text"] != null)
+                OnlinePlayer = long.TryParse(jsonObject.SelectToken("players.online").ToString(), out long number) ? number : -1;
+                MaxPlayer = long.TryParse(jsonObject.SelectToken("players.max").ToString(), out number) ? number : -1;
+                Version = jsonObject.SelectToken("version.name").ToString();
+                Protocol = jsonObject.SelectToken("version.protocol").ToString();
+                if (jsonObject.SelectToken("description.text") != null)
                 {
-                    Description = jsonObject["description"]["text"].ToString();
+                    Description = jsonObject.SelectToken("description.text").ToString();
                 }
-                if (jsonObject["description"]["extra"] != null)
+                if (jsonObject.SelectToken("description.extra") != null)
                 {
                     Description = string.Empty;
-                    foreach (JObject childrenJObject in jsonObject["description"]["extra"])
+                    foreach (JObject childrenJObject in jsonObject.SelectToken("description.extra"))
                     {
                         Description += childrenJObject["text"].ToString();
                     }
                 }
                 if (jsonObject["favicon"] != null)
                 {
-                    Favicon = jsonObject["favicon"].ToString() ?? string.Empty;
+                    Favicon = jsonObject["favicon"].ToString();
                     if (Favicon.Contains(","))
                     {
                         Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
