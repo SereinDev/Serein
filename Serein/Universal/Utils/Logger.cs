@@ -250,7 +250,7 @@ namespace Serein.Utils
 #endif
                 default:
                     if (!Global.Settings.Serein.DevelopmentTool.EnableDebug ||
-                        Global.Settings.Serein.DevelopmentTool.DetailDebug ^ type == LogType.DetailDebug)
+                        !Global.Settings.Serein.DevelopmentTool.DetailDebug && type == LogType.DetailDebug)
                     {
                         return;
                     }

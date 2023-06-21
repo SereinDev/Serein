@@ -23,8 +23,8 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 启动cmd.exe
         /// </summary>
-        /// <param name="Command">执行的命令</param>
-        public static void StartShell(string command)
+        /// <param name="command">执行的命令</param>
+        private static void StartShell(string command)
         {
             Process process = new()
             {
@@ -366,12 +366,12 @@ namespace Serein.Core.Generic
                 (match.Groups[1].Value.ToLowerInvariant() switch
                 {
                     #region 时间
-                    "year" => currentTime.Year.ToString(),
-                    "month" => currentTime.Month.ToString(),
-                    "day" => currentTime.Day.ToString(),
-                    "hour" => currentTime.Hour.ToString(),
-                    "minute" => currentTime.Minute.ToString(),
-                    "second" => currentTime.Second.ToString(),
+                    "year" => currentTime.Year,
+                    "month" => currentTime.Month,
+                    "day" => currentTime.Day,
+                    "hour" => currentTime.Hour,
+                    "minute" => currentTime.Minute,
+                    "second" => currentTime.Second,
                     "time" => currentTime.ToString("T"),
                     "date" => currentTime.Date.ToString("d"),
                     "dayofweek" => currentTime.DayOfWeek.ToString(),
@@ -384,8 +384,8 @@ namespace Serein.Core.Generic
                     "gamemode" => ServerManager.Motd?.GameMode,
                     "description" => ServerManager.Motd?.Description,
                     "protocol" => ServerManager.Motd?.Protocol,
-                    "onlineplayer" => ServerManager.Motd?.OnlinePlayer.ToString(),
-                    "maxplayer" => ServerManager.Motd?.MaxPlayer.ToString(),
+                    "onlineplayer" => ServerManager.Motd?.OnlinePlayer,
+                    "maxplayer" => ServerManager.Motd?.MaxPlayer,
                     "original" => ServerManager.Motd?.Origin,
                     "delay" => ServerManager.Motd?.Delay.ToString("N1"),
                     "version" => ServerManager.Motd?.Version,
@@ -402,13 +402,13 @@ namespace Serein.Core.Generic
                     "cpuname" => SystemInfo.CPUName,
                     "cpubrand" => SystemInfo.CPUBrand,
                     "cpufrequency" => SystemInfo.CPUFrequency.ToString("N1"),
-                    "usedram" => SystemInfo.UsedRAM.ToString(),
-                    "usedramgb" => (SystemInfo.UsedRAM / 1024).ToString("N1"),
-                    "totalram" => SystemInfo.TotalRAM.ToString(),
-                    "totalramgb" => (SystemInfo.TotalRAM / 1024).ToString("N1"),
-                    "freeram" => (SystemInfo.Info.Hardware.RAM.Free / 1024 / 1024).ToString("N1"),
-                    "freeramgb" => (SystemInfo.Info.Hardware.RAM.Free / 1024 / 1024 / 1024).ToString("N1"),
-                    "ramusage" => SystemInfo.RAMUsage.ToString("N1"),
+                    "usedram" => SystemInfo.UsedRAM,
+                    "usedramgb" => SystemInfo.UsedRAM / 1024,
+                    "totalram" => SystemInfo.TotalRAM,
+                    "totalramgb" => SystemInfo.TotalRAM / 1024,
+                    "freeram" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM),
+                    "freeramgb" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM) / 1024,
+                    "ramusage" => SystemInfo.RAMUsage > 100 ? "100" : SystemInfo.RAMUsage.ToString("N1"),
                     #endregion
 
                     #region 服务器
@@ -421,22 +421,22 @@ namespace Serein.Core.Generic
                     #endregion
 
                     #region 消息
-                    "msgid" => jsonObject.SelectToken("message_id").ToString(),
-                    "id" => jsonObject.SelectToken("sender.user_id").ToString(),
+                    "msgid" => jsonObject.SelectToken("message_id"),
+                    "id" => jsonObject.SelectToken("sender.user_id"),
                     "gameid" => Binder.GetGameID(long.TryParse(jsonObject.SelectToken("sender.user_id").ToString(), out long result) ? result : -1),
                     "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.SelectToken("sender.sex").ToString().ToLowerInvariant())],
-                    "nickname" => jsonObject.SelectToken("sender.nickname").ToString(),
-                    "age" => jsonObject.SelectToken("sender.age").ToString(),
-                    "area" => jsonObject.SelectToken("sender.area").ToString(),
-                    "card" => jsonObject.SelectToken("sender.card").ToString(),
-                    "level" => jsonObject.SelectToken("sender.level").ToString(),
-                    "title" => jsonObject.SelectToken("sender.title").ToString(),
+                    "nickname" => jsonObject.SelectToken("sender.nickname"),
+                    "age" => jsonObject.SelectToken("sender.age"),
+                    "area" => jsonObject.SelectToken("sender.area"),
+                    "card" => jsonObject.SelectToken("sender.card"),
+                    "level" => jsonObject.SelectToken("sender.level"),
+                    "title" => jsonObject.SelectToken("sender.title"),
                     "role" => Roles_Chinese[Array.IndexOf(Roles, jsonObject.SelectToken("sender.role").ToString())],
-                    "shownname" => string.IsNullOrEmpty(jsonObject.SelectToken("sender.card").ToString()) ? jsonObject.SelectToken("sender.nickname").ToString() : jsonObject.SelectToken("sender.card").ToString(),
+                    "shownname" => string.IsNullOrEmpty(jsonObject.SelectToken("sender.card").ToString()) ? jsonObject.SelectToken("sender.nickname") : jsonObject.SelectToken("sender.card"),
                     #endregion
 
                     _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
-                }) ?? string.Empty
+                })?.ToString() ?? string.Empty
             );
             text = Patterns.GameID.Replace(text,
                 (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value)));

@@ -133,8 +133,15 @@ namespace Serein.Utils
                         }
                         else
                         {
-                            Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                            lock (Global.RegexList)
+                            {
+                                Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                            }
                         }
+                    }
+                    else if (!string.IsNullOrEmpty(filename))
+                    {
+                        Logger.MsgBox("不支持导入此文件", "Serein", 0, 48);
                     }
                 }
             }
@@ -237,6 +244,7 @@ namespace Serein.Utils
             CreateDirectory("data");
             filename ??= Path.Combine("data", "schedule.json");
             if (!File.Exists(filename)) { return; }
+
             using (StreamReader streamReader = new(filename, Encoding.UTF8))
             {
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
@@ -245,8 +253,7 @@ namespace Serein.Utils
                     List<Schedule> list = new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        Schedule schedule = new();
-                        schedule.FromText(line);
+                        Schedule schedule = Schedule.FromText(line);
                         if (schedule.Check())
                         {
                             list.Add(schedule);
@@ -262,11 +269,11 @@ namespace Serein.Utils
                         JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
                         if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
                             jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK") &&
-                            jsonObject["data"].HasValues)
+                            jsonObject["data"] != null)
                         {
                             Global.Schedules = ((JArray)jsonObject["data"]).ToObject<List<Schedule>>();
                         }
-                        else
+                        else if (!string.IsNullOrEmpty(filename))
                         {
                             Logger.MsgBox("不支持导入此文件", "Serein", 0, 48);
                         }

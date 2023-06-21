@@ -44,16 +44,28 @@ namespace Serein.Utils
             _refreshTimer.Start();
 #if !UNIX
             _refreshTimer.Elapsed += (_, _) => CPUUsage = _counter?.NextValue() ?? 0;
-            Logger.Output(Base.LogType.Debug, "Loaded.");
 #endif
+            Logger.Output(Base.LogType.Debug, "Loaded.");
         }
 
-        public static string UploadSpeed, DownloadSpeed;
-        private static long _bytesReceived, _bytesSent;
+        /// <summary>
+        /// 上传速度
+        /// </summary>
+        public static string UploadSpeed { get; private set; }
 
+        /// <summary>
+        /// 下载速度
+        /// </summary>
+        public static string DownloadSpeed { get; private set; }
+
+        private static decimal _bytesReceived, _bytesSent;
+
+        /// <summary>
+        /// 更新网速
+        /// </summary>
         private static void UpdateNetSpeed()
         {
-            long bytesReceived = 0, bytesSent = 0;
+            decimal bytesReceived = 0, bytesSent = 0;
             foreach (NetworkInterface INet in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (INet == null)
@@ -106,7 +118,7 @@ namespace Serein.Utils
         /// <summary>
         /// CPU使用率
         /// </summary>
-        public static float CPUUsage;
+        public static float CPUUsage { get; private set; }
 
         /// <summary>
         /// 刷新计时器
@@ -119,27 +131,27 @@ namespace Serein.Utils
         /// <summary>
         /// 操作系统信息
         /// </summary>
-        public static OperatingSystemInfo Info;
+        public static OperatingSystemInfo Info { get; private set; }
 
         /// <summary>
         /// CPU频率
         /// </summary>
-        public static double CPUFrequency;
+        public static double CPUFrequency { get; private set; }
 
         /// <summary>
         /// CPU名称
         /// </summary>
-        public static string CPUName = string.Empty;
+        public static string CPUName { get; private set; } = string.Empty;
 
         /// <summary>
         /// CPU品牌
         /// </summary>
-        public static string CPUBrand = string.Empty;
+        public static string CPUBrand { get; private set; } = string.Empty;
 
         /// <summary>
         /// 系统名称
         /// </summary>
-        public static string OS = string.Empty;
+        public static string OS { get; private set; } = string.Empty;
 
         /// <summary>
         /// 已用内存

@@ -89,18 +89,20 @@ namespace Serein.Base
             }
         }
 
-        public void FromText(string text)
+        public static Schedule FromText(string text)
         {
             string[] args = text.Split('\t');
             if (args.Length != 4)
             {
-                return;
+                return null;
             }
-            Cron = args[0];
-            Enable = args[1] == "True";
-            Remark = args[2];
-            Command = args[3];
-            Check();
+            return new()
+            {
+                Cron = args[0],
+                Enable = args[1] == "True",
+                Remark = args[2],
+                Command = args[3]
+            };
         }
     }
 }
