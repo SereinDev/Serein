@@ -29,6 +29,11 @@ namespace Serein.Core.Generic
             }
         }
 
+        /// <summary>
+        /// 触发指定事件
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="notice">通知数据包</param>
         public static void Trigger(Base.EventType type, Notice? notice)
         {
             Logger.Output(Base.LogType.Debug, "Trigger:" + type);
@@ -52,7 +57,7 @@ namespace Serein.Core.Generic
         /// 触发指定事件
         /// </summary>
         /// <param name="type">类型</param>
-        /// <param name="message">数据包</param>
+        /// <param name="message">消息数据包</param>
         /// <param name="motd">Motd对象</param>
         public static void Trigger(Base.EventType type, Message message, Motd? motd = null)
         {
@@ -84,13 +89,10 @@ namespace Serein.Core.Generic
                     };
                     foreach (string command in commandGroup)
                     {
-                        Command.Run(
-                            Base.CommandOrigin.EventTrigger,
-                            command,
-                            message
-                            );
+                        Command.Run(Base.CommandOrigin.EventTrigger, command, message);
                     }
                     break;
+
                 case Base.EventType.RequestingMotdpeSucceed:
                 case Base.EventType.RequestingMotdjeSucceed:
                 case Base.EventType.RequestingMotdFail:
@@ -101,12 +103,12 @@ namespace Serein.Core.Generic
                         Base.EventType.RequestingMotdFail => Global.Settings.Event.RequestingMotdFail,
                         _ => commandGroup
                     };
+
                     foreach (string command in commandGroup)
                     {
-                        string command_copy = command;
-                        if (motd != null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
+                        if (motd is not null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
                         {
-                            Regex.Replace(command_copy, @"%(\w+)%", (match) =>
+                            string command_copy = Regex.Replace(command, @"%(\w+)%", (match) =>
                             (match.Groups[1].Value.ToLowerInvariant() switch
                             {
                                 "gamemode" => motd.GameMode,
@@ -121,15 +123,11 @@ namespace Serein.Core.Generic
                                 "%exception%" => motd.Exception,
                                 _ => match.Groups[1].Value
                             } ?? string.Empty));
+                            Command.Run(Base.CommandOrigin.EventTrigger, command_copy, message, true);
                         }
-                        Command.Run(
-                            Base.CommandOrigin.EventTrigger,
-                            command_copy,
-                            message,
-                            true
-                            );
                     }
                     break;
+
                 default:
                     Logger.Output(Base.LogType.Debug, "未知的事件名", type);
                     break;

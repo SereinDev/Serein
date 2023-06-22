@@ -228,7 +228,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_removePermissionGroup",
                 new Func<string, bool>(PermissionManager.Remove));
             engine.SetValue("serein_calculatePermission",
-                new Func<string, long, long?, JsValue>((type, userId, groupId) => JsValue.FromObject(engine, PermissionManager.Calculate(type, userId, groupId ?? -1))));
+                new Func<string, long, long?, JsValue>((type, userId, groupId) => JsValue.FromObject(engine, PermissionManager.Calculate(type, userId, groupId ?? 0))));
             engine.SetValue("serein_existPermissionGroup",
                 new Func<string, bool>(Global.PermissionGroups.ContainsKey));
             engine.SetValue("serein_setPermission",

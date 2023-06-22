@@ -1,4 +1,5 @@
-﻿using Serein.Properties;
+﻿using System;
+using Serein.Properties;
 using Serein.Utils;
 
 namespace Serein.Base
@@ -9,7 +10,7 @@ namespace Serein.Base
         {
             string[] arg = System.Text.RegularExpressions.Regex.Replace(
                 (Resources.buildinfo ?? string.Empty).Trim(' ', '\n', '\r').Replace("\r", string.Empty),
-                @"[^\u0000-\u007f]+", string.Empty).Split('\n');
+                @"[^\u0000-\u007f]+", string.Empty).Split(new[] { '\n' }, 3, StringSplitOptions.RemoveEmptyEntries);
             switch (arg.Length)
             {
                 case 1:

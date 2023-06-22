@@ -5,9 +5,9 @@ using Serein.Extensions;
 namespace Serein.Base.Packets
 {
     [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    internal class Message : Report
+    internal class Message
     {
-        public string MessageType = string.Empty, SubType = string.Empty, RawMessage = string.Empty;
+        public string MessageType = string.Empty, RawMessage = string.Empty;
 
         /// <summary>
         /// 消息 ID

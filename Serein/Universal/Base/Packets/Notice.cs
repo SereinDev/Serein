@@ -1,11 +1,10 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Serein.Extensions;
 
 namespace Serein.Base.Packets
 {
     [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
-    internal class Notice : Report
+    internal class Notice
     {
         /// <summary>
         /// 用户ID
@@ -20,12 +19,12 @@ namespace Serein.Base.Packets
         /// <summary>
         /// 通知类型
         /// </summary>
-        public string NoticeType = string.Empty;
+        public string? NoticeType;
 
         /// <summary>
         /// 子类型
         /// </summary>
-        public string? SubType = string.Empty;
+        public string? SubType;
 
         /// <summary>
         /// 目标ID

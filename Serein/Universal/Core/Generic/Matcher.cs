@@ -71,7 +71,7 @@ namespace Serein.Core.Generic
                     break;
 
                 case "meta_event":
-
+                    HandleMetaEvent(packet);
                     break;
 
             }
@@ -180,6 +180,26 @@ namespace Serein.Core.Generic
                 return;
             }
 
+            MatchMsg(messagePacket, isSelfMessage);
+        }
+
+        /// <summary>
+        /// 重置统计
+        /// </summary>
+        public static void ResetStatisics()
+        {
+            _messageReceived = null;
+            _messageSent = null;
+            _selfId = null;
+        }
+
+        /// <summary>
+        /// 匹配消息
+        /// </summary>
+        /// <param name="messagePacket">数据包</param>
+        /// <param name="isSelfMessage">是否为自身消息</param>
+        private static void MatchMsg(Message messagePacket, bool isSelfMessage)
+        {
             lock (Global.RegexList)
             {
                 foreach (Base.Regex regex in Global.RegexList)
@@ -196,15 +216,8 @@ namespace Serein.Core.Generic
                     {
                         continue;
                     }
-                    if (
-                        !(
-                        Global.Settings.Bot.PermissionList.Contains(messagePacket.UserId) ||
-                        Global.Settings.Bot.GivePermissionToAllAdmin &&
-                        messagePacket.MessageType == "group" &&
-                        messagePacket?.Sender.RoleIndex < 2 &&
-                        regex.IsAdmin &&
-                        !isSelfMessage
-                        ))
+
+                    if (!IsAdmin(messagePacket) && regex.IsAdmin && !isSelfMessage)
                     {
                         switch (regex.Area)
                         {
@@ -218,30 +231,47 @@ namespace Serein.Core.Generic
                         }
                         continue;
                     }
-                    if (System.Text.RegularExpressions.Regex.IsMatch(messagePacket.RawMessage, regex.Expression))
+
+                    if ((regex.Area == 4 || regex.Area == 2) && messagePacket.MessageType == "group" ||
+                        (regex.Area == 4 || regex.Area == 3) && messagePacket.MessageType == "private")
                     {
-                        if ((regex.Area == 4 || regex.Area == 2) && messagePacket.MessageType == "group" ||
-                            (regex.Area == 4 || regex.Area == 3) && messagePacket.MessageType == "private")
-                        {
-                            Command.Run(
-                                Base.CommandOrigin.Msg,
-                                regex.Command,
-                                System.Text.RegularExpressions.Regex.Match(
-                                    messagePacket.RawMessage,
-                                    regex.Expression
-                                ),
-                                messagePacket,
-                                false
-                            );
-                        }
+                        Command.Run(
+                            Base.CommandOrigin.Msg,
+                            regex.Command,
+                            System.Text.RegularExpressions.Regex.Match(
+                                messagePacket.RawMessage,
+                                regex.Expression
+                            ),
+                            messagePacket,
+                            false
+                        );
                     }
+
                 }
             }
 
-            if (messagePacket.MessageType != "group")
+            if (messagePacket.MessageType == "group")
             {
-                return;
+                UpdateGroupCache(messagePacket);
             }
+        }
+
+        /// <summary>
+        /// 判断是否为管理
+        /// </summary>
+        /// <param name="messagePacket">数据包</param>
+        /// <returns>是否为管理</returns>
+        private static bool IsAdmin(Message messagePacket)
+        {
+            return Global.Settings.Bot.PermissionList.Contains(messagePacket.UserId) || Global.Settings.Bot.GivePermissionToAllAdmin && messagePacket.MessageType == "group" && messagePacket.Sender!.RoleIndex < 2;
+        }
+
+        /// <summary>
+        /// 更新群组缓存
+        /// </summary>
+        /// <param name="messagePacket">数据包</param>
+        private static void UpdateGroupCache(Message messagePacket)
+        {
             lock (Global.GroupCache)
             {
                 if (!Global.GroupCache.ContainsKey(messagePacket.GroupId))
@@ -252,22 +282,15 @@ namespace Serein.Core.Generic
                 {
                     Global.GroupCache[messagePacket.GroupId].Add(messagePacket.UserId, new Base.Member());
                 }
-                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId].ID = messagePacket.UserId;
-                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId].Nickname = messagePacket.Sender.Nickname ?? string.Empty;
-                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId].Card = messagePacket.Sender.Card ?? string.Empty;
-                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId].Role = messagePacket.Sender.RoleIndex;
-                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId].GameID = Binder.GetGameID(messagePacket.UserId);
-            }
-        }
+                Base.Member member = Global.GroupCache[messagePacket.GroupId][messagePacket.UserId];
+                member.ID = messagePacket.UserId;
+                member.Nickname = messagePacket.Sender!.Nickname ?? string.Empty;
+                member.Card = messagePacket.Sender.Card ?? string.Empty;
+                member.Role = messagePacket.Sender.RoleIndex;
+                member.GameID = Binder.GetGameID(messagePacket.UserId);
 
-        /// <summary>
-        /// 重置统计
-        /// </summary>
-        public static void ResetStatisics()
-        {
-            _messageReceived = null;
-            _messageSent = null;
-            _selfId = null;
+                Global.GroupCache[messagePacket.GroupId][messagePacket.UserId] = member;
+            }
         }
     }
 }

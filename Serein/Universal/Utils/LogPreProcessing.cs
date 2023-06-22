@@ -5,8 +5,8 @@ using RegExp = System.Text.RegularExpressions;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows;
-#endif
 using Serein.Base;
+#endif
 
 namespace Serein.Utils
 {

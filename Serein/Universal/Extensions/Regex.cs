@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 
 namespace Serein.Extensions
@@ -37,19 +36,15 @@ namespace Serein.Extensions
         public static bool TryParse(this string pattern, RegexOptions options, out Regex? regex)
         {
             regex = null;
-            if (!string.IsNullOrEmpty(pattern))
+            try
             {
-                try
-                {
-                    regex = new Regex(pattern, options);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                regex = new Regex(pattern, options);
+                return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
     }
 }

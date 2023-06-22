@@ -1,8 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Serein.Extensions;
-using System.Text.RegularExpressions;
 
 namespace Serein.Settings
 {

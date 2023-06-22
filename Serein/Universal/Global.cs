@@ -110,6 +110,9 @@ namespace Serein
         /// </summary>
         public static Dictionary<long, Dictionary<long, Member>> GroupCache = new();
 
+        /// <summary>
+        /// 权限组
+        /// </summary>
         public static Dictionary<string, PermissionGroup> PermissionGroups = new()
         {
             {

@@ -1,4 +1,5 @@
 ﻿using Serein.Base;
+using Serein.Base.Packets;
 using Serein.Core.Generic;
 using Serein.Utils;
 using Serein.Ui.ChildrenWindow;
@@ -20,7 +21,7 @@ namespace Serein.Ui
             {
                 ListViewItem listViewItem = new();
                 listViewItem.Text = member.ID.ToString();
-                listViewItem.SubItems.Add(Command.Roles_Chinese[member.Role]);
+                listViewItem.SubItems.Add(Sender.RoleNames[member.Role]);
                 listViewItem.SubItems.Add(member.Nickname);
                 listViewItem.SubItems.Add(member.Card);
                 listViewItem.SubItems.Add(member.GameID);
@@ -38,7 +39,7 @@ namespace Serein.Ui
                 Member member = new()
                 {
                     ID = long.TryParse(listViewItem.Text, out long i) ? i : -1,
-                    Role = Array.IndexOf(Command.Roles_Chinese, listViewItem.SubItems[1].Text),
+                    Role = Array.IndexOf(Sender.RoleNames, listViewItem.SubItems[1].Text),
                     Nickname = listViewItem.SubItems[2].Text,
                     Card = listViewItem.SubItems[3].Text,
                     GameID = listViewItem.SubItems[4].Text

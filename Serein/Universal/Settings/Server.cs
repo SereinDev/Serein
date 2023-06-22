@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace Serein.Settings
 {
@@ -13,7 +14,7 @@ namespace Serein.Settings
         public bool EnableUnicode;
         public string[] ExcludedOutputs = new string[] { };
         public int InputEncoding;
-        public string LineTerminator = "\r\n";
+        public string LineTerminator = Environment.NewLine;
         public int OutputEncoding;
         public int OutputStyle = 1;
         public string Path = string.Empty;

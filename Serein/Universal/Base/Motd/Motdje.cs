@@ -17,7 +17,7 @@ namespace Serein.Base.Motd
         /// <param name="addr">地址</param>
         public Motdje(string addr)
         {
-            if (!base.TryParse(addr))
+            if (!TryParse(addr))
             {
                 return;
             }

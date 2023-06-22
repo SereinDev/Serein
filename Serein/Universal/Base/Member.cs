@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Serein.Core.Generic;
+using Serein.Base.Packets;
 
 namespace Serein.Base
 {
@@ -42,6 +42,6 @@ namespace Serein.Base
         /// 群角色 - 文本
         /// </summary>
         [JsonIgnore]
-        internal string Role_Text => Command.Roles_Chinese[Role];
+        public string Role_Text => Sender.RoleNames[Role];
     }
 }

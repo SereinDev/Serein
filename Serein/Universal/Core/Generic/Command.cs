@@ -15,11 +15,6 @@ namespace Serein.Core.Generic
 {
     internal static class Command
     {
-        public static readonly string[] Sexs = { "unknown", "male", "female" };
-        public static readonly string[] Sexs_Chinese = { "未知", "男", "女" };
-        public static readonly string[] Roles = { "owner", "admin", "member" };
-        public static readonly string[] Roles_Chinese = { "群主", "管理员", "成员" };
-
         /// <summary>
         /// 启动cmd.exe
         /// </summary>
@@ -62,37 +57,37 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 处理Serein命令
         /// </summary>
-        /// <param name="inputType">输入类型</param>
+        /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
-        public static void Run(Base.CommandOrigin inputType, string command) => Run(inputType, command, null, false);
+        public static void Run(Base.CommandOrigin originType, string command) => Run(originType, command, null, false);
 
         /// <summary>
         /// 处理Serein命令
         /// </summary>
-        /// <param name="inputType">输入类型</param>
+        /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
         /// <param name="message">数据包</param>
         /// <param name="disableMotd">禁用Motd获取</param>
-        public static void Run(Base.CommandOrigin inputType, string command, Message? message, bool disableMotd = false) => Run(inputType, command, null, message, disableMotd);
+        public static void Run(Base.CommandOrigin originType, string command, Message? message, bool disableMotd = false) => Run(originType, command, null, message, disableMotd);
 
         /// <summary>
         /// 处理Serein命令
         /// </summary>
-        /// <param name="inputType">输入类型</param>
+        /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
         /// <param name="msgMatch">消息匹配对象</param>
-        public static void Run(Base.CommandOrigin inputType, string command, Match msgMatch) => Run(inputType, command, msgMatch);
+        public static void Run(Base.CommandOrigin originType, string command, Match msgMatch) => Run(originType, command, msgMatch, null, false);
 
         /// <summary>
         /// 处理Serein命令
         /// </summary>
-        /// <param name="inputType">输入类型</param>
+        /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
         /// <param name="msgMatch">消息匹配对象</param>
         /// <param name="message">数据包</param>
         /// <param name="disableMotd">禁用Motd获取</param>
         public static void Run(
-            Base.CommandOrigin inputType,
+            Base.CommandOrigin originType,
             string command,
             Match? msgMatch,
             Message? message,
@@ -103,12 +98,12 @@ namespace Serein.Core.Generic
             Logger.Output(
                 Base.LogType.Debug,
                     "命令运行",
-                    $"inputType:{inputType} ",
+                    $"originType:{originType} ",
                     $"command:{command}");
 
             if (groupId == 0)
             {
-                if ((message is null || message.GroupId == 0))
+                if (message is null || message.GroupId == 0)
                 {
                     if (Global.Settings.Bot.GroupList.Length >= 1)
                     {
@@ -122,21 +117,20 @@ namespace Serein.Core.Generic
             }
 
             Base.CommandType type = GetType(command);
-            if (type == Base.CommandType.Invalid ||
-                ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
+            if (type == Base.CommandType.Invalid || ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
             {
                 return;
             }
             ExecuteCommand(
                 type,
-                inputType,
+                originType,
                 command,
-                ApplyVariables(GetValue(command, msgMatch), message, disableMotd),
+                ApplyVariables(GetValue(command, msgMatch), message),
                 groupId,
                 message?.UserId ?? 0,
                 message
                 );
-            if (inputType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && message is not null && message.GroupId != 0)
+            if (originType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && message is not null && message.GroupId != 0)
             {
                 Binder.Update(message);
             }
@@ -147,7 +141,7 @@ namespace Serein.Core.Generic
         /// </summary>
         private static void ExecuteCommand(
             Base.CommandType type,
-            Base.CommandOrigin inputType,
+            Base.CommandOrigin originType,
             string command,
             string value,
             long groupId,
@@ -162,9 +156,7 @@ namespace Serein.Core.Generic
 
                 case Base.CommandType.ServerInput:
                 case Base.CommandType.ServerInputWithUnicode:
-                    if (Global.Settings.Bot.EnbaleParseAt
-                        && inputType == Base.CommandOrigin.Msg
-                        )
+                    if (Global.Settings.Bot.EnbaleParseAt && originType == Base.CommandOrigin.Msg)
                     {
                         value = ParseAt(value, groupId);
                     }
@@ -173,47 +165,47 @@ namespace Serein.Core.Generic
                     break;
 
                 case Base.CommandType.SendGivenGroupMsg:
-                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, originType != Base.CommandOrigin.EventTrigger);
                     break;
 
                 case Base.CommandType.SendGivenPrivateMsg:
-                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, inputType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, originType != Base.CommandOrigin.EventTrigger);
                     break;
 
                 case Base.CommandType.SendGroupMsg:
-                    Websocket.Send(false, value, groupId, inputType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(false, value, groupId, originType != Base.CommandOrigin.EventTrigger);
                     break;
 
                 case Base.CommandType.SendPrivateMsg:
-                    if (inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger)
+                    if (originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger)
                     {
-                        Websocket.Send(true, value, userId, inputType != Base.CommandOrigin.EventTrigger);
+                        Websocket.Send(true, value, userId, originType != Base.CommandOrigin.EventTrigger);
                     }
                     break;
 
                 case Base.CommandType.SendTempMsg:
-                    if (inputType == Base.CommandOrigin.Msg && groupId != -1 && userId != -1)
+                    if (originType == Base.CommandOrigin.Msg && groupId > 0 && userId > 0)
                     {
                         Websocket.Send(groupId, userId, value);
                     }
                     break;
 
                 case Base.CommandType.Bind:
-                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
+                    if ((originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
                     {
                         Binder.Bind(message, value);
                     }
                     break;
 
                 case Base.CommandType.Unbind:
-                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
+                    if ((originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
                     {
                         Binder.UnBind(message);
                     }
                     break;
 
                 case Base.CommandType.RequestMotdpe:
-                    if (inputType == Base.CommandOrigin.Msg && message?.MessageType == "group")
+                    if (originType == Base.CommandOrigin.Msg && message?.MessageType == "group")
                     {
                         Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
@@ -223,7 +215,7 @@ namespace Serein.Core.Generic
                     break;
 
                 case Base.CommandType.RequestMotdje:
-                    if (inputType == Base.CommandOrigin.Msg && message?.MessageType == "group")
+                    if (originType == Base.CommandOrigin.Msg && message?.MessageType == "group")
                     {
                         Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
@@ -233,14 +225,14 @@ namespace Serein.Core.Generic
                     break;
 
                 case Base.CommandType.ExecuteJavascriptCodes:
-                    if (inputType != Base.CommandOrigin.Javascript)
+                    if (originType != Base.CommandOrigin.Javascript)
                     {
                         Task.Run(() => JSEngine.Create().Execute(value));
                     }
                     break;
 
                 case Base.CommandType.ExecuteJavascriptCodesWithNamespace:
-                    if (inputType != Base.CommandOrigin.Javascript)
+                    if (originType != Base.CommandOrigin.Javascript)
                     {
                         string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
                         Task.Run(() =>
@@ -264,20 +256,20 @@ namespace Serein.Core.Generic
                 case Base.CommandType.Reload:
                     try
                     {
-                        IO.Reload(value, inputType == Base.CommandOrigin.Msg);
-                        if (inputType == Base.CommandOrigin.Msg)
+                        IO.Reload(value, originType == Base.CommandOrigin.Msg);
+                        if (originType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupId == -1, "重新加载成功", groupId == -1 ? userId : groupId, false);
+                            Websocket.Send(groupId == 0, "重新加载成功", groupId == 0 ? userId : groupId, false);
                         }
                     }
                     catch (Exception e)
                     {
                         Logger.Output(Base.LogType.Debug, e);
-                        if (inputType == Base.CommandOrigin.Msg)
+                        if (originType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupId == -1, $"重新加载失败：{e.Message}", groupId == -1 ? userId : groupId, false);
+                            Websocket.Send(groupId == 0, $"重新加载失败：{e.Message}", groupId == 0 ? userId : groupId, false);
                         }
-                        else if (inputType == Base.CommandOrigin.Javascript)
+                        else if (originType == Base.CommandOrigin.Javascript)
                         {
                             throw new NotSupportedException("重新加载失败", e);
                         }
@@ -391,9 +383,8 @@ namespace Serein.Core.Generic
         /// </summary>
         /// <param name="text">文本</param>
         /// <param name="message">数据包</param>
-        /// <param name="disableMotd">禁用Motd获取</param>
         /// <returns>应用变量后的文本</returns>
-        private static string ApplyVariables(string text, Message? message = null, bool disableMotd = false)
+        private static string ApplyVariables(string text, Message? message = null)
         {
             if (!text.Contains("%"))
             {
