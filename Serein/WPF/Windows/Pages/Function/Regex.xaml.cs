@@ -58,20 +58,20 @@ namespace Serein.Windows.Pages.Function
             {
                 if (_actionType != 0)
                 {
-                    Catalog.MainWindow.RegexEditor.Hide();
+                    Catalog.MainWindow?.RegexEditor.Hide();
                     _actionType = 0;
                 }
                 string tag = menuItem.Tag as string ?? string.Empty;
                 switch (tag)
                 {
                     case "Add":
-                        Catalog.MainWindow.OpenRegexEditor();
+                        Catalog.MainWindow?.OpenRegexEditor();
                         _actionType = 1;
                         break;
                     case "Edit":
                         if (RegexListView.SelectedItem is Base.Regex selectedItem1 && selectedItem1 != null)
                         {
-                            Catalog.MainWindow.OpenRegexEditor(
+                            Catalog.MainWindow?.OpenRegexEditor(
                                 selectedItem1.Area,
                                 selectedItem1.IsAdmin,
                                 selectedItem1.Expression,
@@ -121,13 +121,13 @@ namespace Serein.Windows.Pages.Function
         {
             if (Command.GetType(command) < 0)
             {
-                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow?.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
             }
             else
             {
                 if (!regex.TestRegex())
                 {
-                    Catalog.MainWindow.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
+                    Catalog.MainWindow?.OpenSnackbar("编辑失败", "正则不合法", SymbolRegular.Warning24);
                     return false;
                 }
                 if (_actionType == 1)

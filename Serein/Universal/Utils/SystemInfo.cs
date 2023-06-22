@@ -51,12 +51,12 @@ namespace Serein.Utils
         /// <summary>
         /// 上传速度
         /// </summary>
-        public static string UploadSpeed { get; private set; }
+        public static string? UploadSpeed { get; private set; }
 
         /// <summary>
         /// 下载速度
         /// </summary>
-        public static string DownloadSpeed { get; private set; }
+        public static string? DownloadSpeed { get; private set; }
 
         private static decimal _bytesReceived, _bytesSent;
 
@@ -112,7 +112,7 @@ namespace Serein.Utils
         /// <summary>
         /// CPU性能计数器
         /// </summary>
-        private static PerformanceCounter _counter;
+        private static PerformanceCounter? _counter;
 #endif
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Serein.Utils
         /// <summary>
         /// 操作系统信息
         /// </summary>
-        public static OperatingSystemInfo Info { get; private set; }
+        public static OperatingSystemInfo? Info { get; private set; }
 
         /// <summary>
         /// CPU频率

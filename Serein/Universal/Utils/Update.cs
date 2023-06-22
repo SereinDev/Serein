@@ -37,7 +37,7 @@ namespace Serein.Utils
         /// <summary>
         /// 上一个获取到的版本
         /// </summary>
-        public static string LastVersion { get; private set; }
+        public static string? LastVersion { get; private set; }
 
         /// <summary>
         /// 检查更新
@@ -50,8 +50,8 @@ namespace Serein.Utils
             }
             try
             {
-                JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await()));
-                string version = jsonObject["tag_name"].ToString();
+                JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await())!);
+                string? version = jsonObject["tag_name"]?.ToString();
                 if (LastVersion != version && !string.IsNullOrEmpty(version))
                 {
                     LastVersion = version;
@@ -89,14 +89,17 @@ namespace Serein.Utils
                     File.Delete(file);
                 }
             }
-            foreach (JToken asset in jobject["assets"])
+            foreach (JToken asset in jobject["assets"]!)
             {
-                string filename = asset["name"]?.ToString();
-                string url = asset["browser_download_url"].ToString();
+                string? filename = asset["name"]?.ToString();
+                string? url = asset["browser_download_url"]?.ToString();
 
                 if (string.IsNullOrEmpty(filename) ||
-                    !IdentifyFile(filename.ToLowerInvariant()) ||
-                    string.IsNullOrEmpty(url)) { continue; }
+                    !IdentifyFile(filename?.ToLowerInvariant()) ||
+                    string.IsNullOrEmpty(url))
+                {
+                    continue;
+                }
 
                 try
                 {
@@ -114,7 +117,7 @@ namespace Serein.Utils
                         IsReadyToUpdate = false;
                         Logger.Output(Base.LogType.Version_Downloading, url);
                         Logger.Output(Base.LogType.Debug, $"正在从[{url}]下载[{asset["name"]}]");
-                        using (Stream stream = Net.Get(url).Await().Content.ReadAsStreamAsync().Await())
+                        using (Stream stream = Net.Get(url!).Await().Content.ReadAsStreamAsync().Await())
                         using (FileStream fileStream = new($"update/{filename}", FileMode.Create))
                         {
                             byte[] bytes = new byte[stream.Length];
@@ -141,9 +144,9 @@ namespace Serein.Utils
         /// <summary>
         /// 识别文件
         /// </summary>
-        private static bool IdentifyFile(string name)
+        private static bool IdentifyFile(string? name)
         {
-            if (name.Contains(Global.TYPE))
+            if (name?.Contains(Global.TYPE) ?? false)
             {
                 string netVer = Environment.Version.Major.ToString();
                 return

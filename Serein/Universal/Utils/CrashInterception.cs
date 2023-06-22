@@ -93,13 +93,13 @@ namespace Serein.Utils
         /// </summary>
         /// <param name="e">错误信息</param>
         /// <returns>错误信息</returns>
-        public static string MergeException(Exception e)
+        public static string MergeException(Exception? e)
         {
             string message = string.Empty;
             while (e != null)
             {
                 message = e + Environment.NewLine + message;
-                e = e.InnerException;
+                e = e?.InnerException;
             }
             return message;
         }

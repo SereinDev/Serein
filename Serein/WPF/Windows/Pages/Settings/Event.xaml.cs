@@ -31,13 +31,13 @@ namespace Serein.Windows.Pages.Settings
                 {
                     case "Add":
                         _actionType = 1;
-                        Catalog.MainWindow.OpenEventEditor(string.Empty);
+                        Catalog.MainWindow?.OpenEventEditor(string.Empty);
                         break;
                     case "Edit":
                         if (EventListView.SelectedItem is string selectedItem && selectedItem != null)
                         {
                             _actionType = 2;
-                            Catalog.MainWindow.OpenEventEditor(selectedItem);
+                            Catalog.MainWindow?.OpenEventEditor(selectedItem);
                         }
                         break;
                     case "Delete":
@@ -58,7 +58,7 @@ namespace Serein.Windows.Pages.Settings
         {
             if (Command.GetType(command) < 0)
             {
-                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow?.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
             }
             else if (_actionType == 1)

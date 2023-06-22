@@ -55,8 +55,8 @@ namespace Serein.Windows.Pages.Server
         {
             if (sender is Wpf.Ui.Controls.MenuItem menuItem && menuItem != null)
             {
-                string Tag = menuItem.Tag as string ?? string.Empty;
-                switch (Tag)
+                string tag = menuItem.Tag as string ?? string.Empty;
+                switch (tag)
                 {
                     case "Refresh":
                         Load();
@@ -64,24 +64,24 @@ namespace Serein.Windows.Pages.Server
                     case "Disable":
                     case "Enable":
                     case "Delete":
-                        List<string> Files = new List<string>();
-                        foreach (object File in PluginsListview.SelectedItems)
+                        List<string> files = new List<string>();
+                        foreach (object file in PluginsListview.SelectedItems)
                         {
-                            if (File != null)
+                            if (file != null)
                             {
-                                Files.Add(PluginManager.GetAbsoluteUri((File as ListViewItem).Content.ToString()));
+                                files.Add(PluginManager.GetAbsoluteUri((file as ListViewItem)!.Content.ToString()!));
                             }
                         }
-                        switch (Tag)
+                        switch (tag)
                         {
                             case "Disable":
-                                PluginManager.Disable(Files);
+                                PluginManager.Disable(files);
                                 break;
                             case "Enable":
-                                PluginManager.Enable(Files);
+                                PluginManager.Enable(files);
                                 break;
                             case "Delete":
-                                PluginManager.Remove(Files);
+                                PluginManager.Remove(files);
                                 break;
                         }
                         Load();
@@ -106,7 +106,7 @@ namespace Serein.Windows.Pages.Server
                         }
                         else
                         {
-                            PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem).Content.ToString()));
+                            PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem)!.Content.ToString()!));
                         }
                         break;
                     default:

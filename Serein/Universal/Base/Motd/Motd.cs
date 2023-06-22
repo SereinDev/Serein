@@ -29,27 +29,27 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 服务器描述
         /// </summary>
-        public string Description = string.Empty;
+        public string?Description = string.Empty;
 
         /// <summary>
         /// 协议
         /// </summary>
-        public string Protocol = string.Empty;
+        public string?Protocol = string.Empty;
 
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version = string.Empty;
+        public string?Version = string.Empty;
 
         /// <summary>
         /// 存档名称
         /// </summary>
-        public string LevelName = string.Empty;
+        public string?LevelName = string.Empty;
 
         /// <summary>
         /// 游戏模式
         /// </summary>
-        public string GameMode = string.Empty;
+        public string?GameMode = string.Empty;
 
         /// <summary>
         /// 延迟
@@ -59,17 +59,17 @@ namespace Serein.Base.Motd
         /// <summary>
         /// 图标
         /// </summary>
-        public string Favicon = string.Empty;
+        public string?Favicon = string.Empty;
 
         /// <summary>
         /// 原文
         /// </summary>
-        public string Origin = string.Empty;
+        public string?Origin = string.Empty;
 
         /// <summary>
         /// 错误消息
         /// </summary>
-        public string Exception = string.Empty;
+        public string?Exception = string.Empty;
 
         /// <summary>
         /// 获取成功

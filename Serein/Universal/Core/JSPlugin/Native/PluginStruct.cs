@@ -4,12 +4,12 @@ namespace Serein.Core.JSPlugin.Native
 {
     internal struct PluginStruct
     {
-        public string Namespace;
-        public string Name;
-        public string Version;
-        public string Author;
-        public string Description;
-        public string File;
+        public string? Namespace;
+        public string? Name;
+        public string? Version;
+        public string? Author;
+        public string? Description;
+        public string? File;
         public PreLoadConfig PreLoadConfig;
         public string[] EventList;
         public WSClient.ReadonlyWSClient[] Wsclients;

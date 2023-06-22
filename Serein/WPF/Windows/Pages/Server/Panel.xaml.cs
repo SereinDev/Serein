@@ -120,7 +120,7 @@ namespace Serein.Windows.Pages.Server
                 Difficulity.Content = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
                 Time.Content = ServerManager.Status ? ServerManager.Time : "-";
                 CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
-                Catalog.MainWindow.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
+                Catalog.MainWindow?.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
             });
     }
 }

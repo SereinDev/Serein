@@ -51,7 +51,7 @@ namespace Serein.Windows.Pages.Function
             {
                 if (_actionType != 0)
                 {
-                    Catalog.MainWindow.MemberEditor.Hide();
+                    Catalog.MainWindow?.MemberEditor.Hide();
                     _actionType = 0;
                 }
                 string Tag = menuItem.Tag as string ?? string.Empty;
@@ -59,13 +59,13 @@ namespace Serein.Windows.Pages.Function
                 {
                     case "Add":
                         _actionType = 1;
-                        Catalog.MainWindow.OpenMemberEditor();
+                        Catalog.MainWindow?.OpenMemberEditor();
                         break;
                     case "Edit":
                         if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
                         {
                             _actionType = 2;
-                            Catalog.MainWindow.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
+                            Catalog.MainWindow?.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
                         }
                         else
                         {
@@ -100,15 +100,15 @@ namespace Serein.Windows.Pages.Function
                 case 1:
                     if (!long.TryParse(ID, out long IDNumber))
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定失败", "ID不合法", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "ID不合法", SymbolRegular.Warning24);
                     }
                     else if (!Binder.Bind(IDNumber, GameID))
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定失败", "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定", SymbolRegular.Warning24);
                     }
                     else
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
                         _actionType = 0;
                         Load();
                         return true;
@@ -117,15 +117,15 @@ namespace Serein.Windows.Pages.Function
                 case 2:
                     if (!System.Text.RegularExpressions.Regex.IsMatch(GameID, @"^[a-zA-Z0-9_\s-]{4,16}$"))
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
                     }
                     else if (Binder.GameIDs.Contains(GameID))
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
                     }
                     else
                     {
-                        Catalog.MainWindow.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
+                        Catalog.MainWindow?.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
                         if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
                         {
                             selectedItem.GameID = GameID;

@@ -32,9 +32,9 @@ namespace Serein.Core.Server
             }
         }
 
-        private static string Check(string subPath)
-            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), subPath)) ?
-            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path), subPath) : null;
+        private static string? Check(string subPath)
+            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath)) ?
+            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath) : null;
 
         /// <summary>
         /// 获取插件列表
@@ -51,7 +51,7 @@ namespace Serein.Core.Server
                     return Directory.GetFiles(BasePath, "*", SearchOption.TopDirectoryOnly);
                 }
             }
-            return null;
+            return Array.Empty<string>();
         }
 
         /// <summary>
@@ -180,14 +180,14 @@ namespace Serein.Core.Server
         /// <returns>绝对路径</returns>
         public static string GetAbsoluteUri(string file)
         {
-            return Path.Combine(Directory.GetParent(BasePath).FullName, file).Replace('/', '\\').TrimStart('\u202a');
+            return Path.Combine(Directory.GetParent(BasePath)!.FullName, file).Replace('/', '\\').TrimStart('\u202a');
         }
 
         /// <summary>
         /// 打开文件夹
         /// </summary>
-        /// <param name="Path">路径</param>
-        public static void OpenFolder(string Path = null)
+        /// <param name="path">路径</param>
+        public static void OpenFolder(string? path = null)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
@@ -195,8 +195,8 @@ namespace Serein.Core.Server
             }
             Process.Start(new ProcessStartInfo("Explorer.exe")
             {
-                Arguments = !string.IsNullOrEmpty(Path)
-                ? $"/e,/select,\"{Path}\""
+                Arguments = !string.IsNullOrEmpty(path)
+                ? $"/e,/select,\"{path}\""
                 : $"/e,\"{BasePath}\""
             });
         }
@@ -215,11 +215,11 @@ namespace Serein.Core.Server
         {
             List<string> fileList = new();
             List<string> filenameList = new();
-            string filename;
+            string? filename;
             foreach (object file in files)
             {
-                filename = file.ToString();
-                if (string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename.ToLowerInvariant())))
+                filename = file?.ToString();
+                if (!string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename!.ToLowerInvariant())))
                 {
                     fileList.Add(filename);
                     filenameList.Add(Path.GetFileName(filename));

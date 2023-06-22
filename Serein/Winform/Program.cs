@@ -21,7 +21,7 @@ namespace Serein
 
     static class Program
     {
-        public static Ui.Ui Ui;
+        public static Ui.Ui? Ui;
 
         /// <summary>
         /// 应用程序的主入口点。

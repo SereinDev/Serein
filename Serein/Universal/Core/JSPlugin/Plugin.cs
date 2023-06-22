@@ -61,7 +61,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// 显示版本
@@ -72,7 +72,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 版本
         /// </summary>
-        public string Version { get; set; }
+        public string? Version { get; set; }
 
         /// <summary>
         /// 显示作者
@@ -83,7 +83,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { get; set; }
+        public string? Author { get; set; }
 
         /// <summary>
         /// 显示介绍
@@ -94,7 +94,7 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 介绍
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// 文件名
@@ -105,7 +105,7 @@ namespace Serein.Core.JSPlugin
         /// JS引擎
         /// </summary>
         [JsonIgnore]
-        public Engine Engine { get; private set; }
+        public Engine? Engine { get; private set; }
 
         /// <summary>
         /// WebSocket列表
@@ -133,7 +133,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="eventType">事件类型</param>
         public bool HasListenedOn(EventType eventType)
-            => _eventDict.TryGetValue(eventType, out JsValue jsValue) && jsValue is FunctionInstance;
+            => _eventDict.TryGetValue(eventType, out JsValue? jsValue) && jsValue is FunctionInstance;
 
         /// <summary>
         /// 设置事件
@@ -180,7 +180,7 @@ namespace Serein.Core.JSPlugin
         /// </summary>
         /// <param name="type">事件类型</param>
         /// <param name="args">参数</param>
-        public bool Trigger(EventType type, CancellationToken token, params object[] args)
+        public bool Trigger(EventType type, CancellationToken token, params object?[] args)
         {
             if (!Available || Engine is null || !HasListenedOn(type))
             {

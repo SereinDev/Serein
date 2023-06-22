@@ -47,7 +47,7 @@ Tip:
         /// 处理输入消息
         /// </summary>
         /// <param name="line">输入行</param>
-        public static void Process(string line)
+        public static void Process(string? line)
         {
             if (line is null)
             {

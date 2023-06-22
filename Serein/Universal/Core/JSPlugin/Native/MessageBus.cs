@@ -25,9 +25,9 @@ namespace Serein.Core.JSPlugin.Native
 
         private readonly Dictionary<string, JsValue> _dictionary = new();
 
-        public JsValue Onerror;
+        public JsValue? Onerror;
 
-        public MessageBus(string @namespace) : base(@namespace)
+        public MessageBus(string? @namespace) : base(@namespace)
         {
             MessageBuses.Add(this);
         }
@@ -68,24 +68,24 @@ namespace Serein.Core.JSPlugin.Native
         internal void Receive(string channel, object msg)
         {
             if (Alive &&
-                _dictionary.TryGetValue(channel, out JsValue jsValue) &&
+                _dictionary.TryGetValue(channel, out JsValue? jsValue) &&
                 JSPluginManager.PluginDict[_namespace].Engine is not null &&
                 JSPluginManager.PluginDict[_namespace].Available)
             {
                 try
                 {
-                    lock (JSPluginManager.PluginDict[_namespace].Engine)
+                    lock (JSPluginManager.PluginDict[_namespace].Engine!)
                     {
-                        JSPluginManager.PluginDict[_namespace].Engine.Invoke(jsValue, msg);
+                        JSPluginManager.PluginDict[_namespace].Engine!.Invoke(jsValue, msg);
                     }
                 }
                 catch (Exception e)
                 {
                     if (Onerror is FunctionInstance)
                     {
-                        lock (JSPluginManager.PluginDict[_namespace].Engine)
+                        lock (JSPluginManager.PluginDict[_namespace].Engine!)
                         {
-                            JSPluginManager.PluginDict[_namespace].Engine.Invoke(Onerror, e.ToString());
+                            JSPluginManager.PluginDict[_namespace].Engine!.Invoke(Onerror, e.ToString());
                         }
                     }
                 }

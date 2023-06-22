@@ -89,7 +89,7 @@ namespace Serein.Base
             }
         }
 
-        public static Schedule FromText(string text)
+        public static Schedule? FromText(string text)
         {
             string[] args = text.Split('\t');
             if (args.Length != 4)

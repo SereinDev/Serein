@@ -13,7 +13,7 @@ namespace Serein.Ui
     {
         private void RegexList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            _itemDraged = (ListViewItem)e.Item;
+            _itemDraged = (ListViewItem)e.Item!;
             _isDragging = true;
         }
 
@@ -125,7 +125,7 @@ namespace Serein.Ui
             }
         }
 
-        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command, long[] ignored = null)
+        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command, long[]? ignored = null)
         {
             if (
               string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||

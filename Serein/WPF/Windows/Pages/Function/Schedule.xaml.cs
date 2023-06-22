@@ -49,12 +49,12 @@ namespace Serein.Windows.Pages.Function
         {
             if (Command.GetType(command) == CommandType.Invalid)
             {
-                Catalog.MainWindow.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow?.OpenSnackbar("编辑失败", "命令不合法", SymbolRegular.Warning24);
                 return false;
             }
             else if (CrontabSchedule.TryParse(cronExp) == null)
             {
-                Catalog.MainWindow.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
+                Catalog.MainWindow?.OpenSnackbar("编辑失败", "Cron表达式不合法", SymbolRegular.Warning24);
                 return false;
             }
             if (_actionType == 1)
@@ -100,21 +100,21 @@ namespace Serein.Windows.Pages.Function
             {
                 if (_actionType != 0)
                 {
-                    Catalog.MainWindow.ScheduleEditor.Hide();
+                    Catalog.MainWindow?.ScheduleEditor.Hide();
                     _actionType = 0;
                 }
-                Base.Schedule selectedItem = ScheduleListView.SelectedIndex >= 0 ? ScheduleListView.SelectedItem as Base.Schedule : null;
+                Base.Schedule? selectedItem = ScheduleListView.SelectedIndex >= 0 ? ScheduleListView.SelectedItem as Base.Schedule : null;
                 string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
                     case "Add":
-                        Catalog.MainWindow.OpenScheduleEditor();
+                        Catalog.MainWindow?.OpenScheduleEditor();
                         _actionType = 1;
                         break;
                     case "Edit":
                         if (selectedItem != null)
                         {
-                            Catalog.MainWindow.OpenScheduleEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
+                            Catalog.MainWindow?.OpenScheduleEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
                             _actionType = 2;
                         }
                         break;

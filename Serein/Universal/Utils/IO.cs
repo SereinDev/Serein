@@ -91,7 +91,7 @@ namespace Serein.Utils
         /// 读取正则文件
         /// </summary>
         /// <param name="filename">路径</param>
-        public static void ReadRegex(string filename = null, bool append = false)
+        public static void ReadRegex(string? filename = null, bool append = false)
         {
             CreateDirectory("data");
             filename ??= Path.Combine("data", "regex.json");
@@ -100,7 +100,7 @@ namespace Serein.Utils
             {
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
-                    string line;
+                    string? line;
                     List<Regex> list = append ? Global.RegexList : new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
@@ -121,21 +121,21 @@ namespace Serein.Utils
                     {
                         return;
                     }
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
                     if (jsonObject["type"]?.ToString().ToUpperInvariant() == "REGEX")
                     {
-                        if (append && jsonObject["data"].HasValues)
+                        if (append)
                         {
                             lock (Global.RegexList)
                             {
-                                ((JArray)jsonObject["data"]).ToObject<List<Regex>>().ForEach((i) => Global.RegexList.Add(i));
+                                ((JArray)jsonObject["data"]!).ToObject<List<Regex>>()!.ForEach((i) => Global.RegexList.Add(i));
                             }
                         }
                         else
                         {
                             lock (Global.RegexList)
                             {
-                                Global.RegexList = ((JArray)jsonObject["data"]).ToObject<List<Regex>>();
+                                Global.RegexList = ((JArray)jsonObject["data"]!).ToObject<List<Regex>>()!;
                             }
                         }
                     }
@@ -181,10 +181,10 @@ namespace Serein.Utils
                 }
                 if (!string.IsNullOrEmpty(text))
                 {
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
-                    if (jsonObject["type"].ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"].HasValues)
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
+                    if (jsonObject["type"]?.ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"]?.HasValues == true)
                     {
-                        List<Member> list = ((JArray)jsonObject["data"]).ToObject<List<Member>>();
+                        List<Member> list = ((JArray)jsonObject["data"]!).ToObject<List<Member>>()!;
                         list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
                         Dictionary<long, Member> dictionary = new();
                         list.ForEach((x) => dictionary.Add(x.ID, x));
@@ -239,7 +239,7 @@ namespace Serein.Utils
         /// 读取任务文件
         /// </summary>
         /// <param name="filename">路径</param>
-        public static void ReadSchedule(string filename = null)
+        public static void ReadSchedule(string? filename = null)
         {
             CreateDirectory("data");
             filename ??= Path.Combine("data", "schedule.json");
@@ -249,12 +249,12 @@ namespace Serein.Utils
             {
                 if (filename.ToLowerInvariant().EndsWith(".tsv"))
                 {
-                    string line;
+                    string? line;
                     List<Schedule> list = new();
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        Schedule schedule = Schedule.FromText(line);
-                        if (schedule.Check())
+                        Schedule? schedule = Schedule.FromText(line);
+                        if (schedule is not null && schedule.Check())
                         {
                             list.Add(schedule);
                         }
@@ -266,12 +266,12 @@ namespace Serein.Utils
                     string text = streamReader.ReadToEnd();
                     if (!string.IsNullOrEmpty(text))
                     {
-                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text);
+                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
                         if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
                             jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK") &&
                             jsonObject["data"] != null)
                         {
-                            Global.Schedules = ((JArray)jsonObject["data"]).ToObject<List<Schedule>>();
+                            Global.Schedules = ((JArray)jsonObject["data"]!).ToObject<List<Schedule>>()!;
                         }
                         else if (!string.IsNullOrEmpty(filename))
                         {
@@ -352,7 +352,7 @@ namespace Serein.Utils
             {
                 if (File.Exists(Path.Combine("settings", "Matches.json")))
                 {
-                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8));
+                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8))!;
                 }
             }
             catch (Exception e)
@@ -420,7 +420,7 @@ namespace Serein.Utils
                     lock (FileLock.GroupCache)
                     {
                         Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, Member>>>(
-                            File.ReadAllText(Path.Combine("data", "groupcache.json")));
+                            File.ReadAllText(Path.Combine("data", "groupcache.json")))!;
                     }
                 }
             }
@@ -467,7 +467,7 @@ namespace Serein.Utils
                     lock (FileLock.PermissionGroups)
                     {
                         Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(
-                            File.ReadAllText(Path.Combine("data", "permission.json")));
+                            File.ReadAllText(Path.Combine("data", "permission.json")))!;
                     }
             }
             else
@@ -564,7 +564,7 @@ namespace Serein.Utils
                     Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
                     if (allowToReloadPlugin)
                     {
-                        Catalog.Function.JSPlugin.LoadPublicly();
+                        Catalog.Function.JSPlugin?.LoadPublicly();
                     }
 #endif
                     break;
@@ -612,7 +612,7 @@ namespace Serein.Utils
 #if WINFORM
                         Program.Ui?.Invoke(Program.Ui.LoadJSPluginPublicly);
 #elif WPF
-                        Catalog.Function.JSPlugin.LoadPublicly();
+                        Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
                         break;
                     }

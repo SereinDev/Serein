@@ -104,32 +104,32 @@ namespace Serein.Base.Motd
             Logger.Output(LogType.Debug, $"Origin: {Origin}");
             if (!string.IsNullOrEmpty(Origin))
             {
-                JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Origin);
-                OnlinePlayer = long.TryParse(jsonObject.SelectToken("players.online").ToString(), out long number) ? number : -1;
-                MaxPlayer = long.TryParse(jsonObject.SelectToken("players.max").ToString(), out number) ? number : -1;
-                Version = jsonObject.SelectToken("version.name").ToString();
-                Protocol = jsonObject.SelectToken("version.protocol").ToString();
+                JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Origin)!;
+                OnlinePlayer = long.TryParse(jsonObject.SelectToken("players.online")?.ToString(), out long number) ? number : -1;
+                MaxPlayer = long.TryParse(jsonObject.SelectToken("players.max")?.ToString(), out number) ? number : -1;
+                Version = jsonObject.SelectToken("version.name")?.ToString();
+                Protocol = jsonObject.SelectToken("version.protocol")?.ToString();
                 if (jsonObject.SelectToken("description.text") != null)
                 {
-                    Description = jsonObject.SelectToken("description.text").ToString();
+                    Description = jsonObject.SelectToken("description.text")?.ToString() ?? string.Empty;
+                    Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
                 }
-                if (jsonObject.SelectToken("description.extra") != null)
+                if (jsonObject.SelectToken("description.extra")?.HasValues ?? false)
                 {
                     Description = string.Empty;
-                    foreach (JObject childrenJObject in jsonObject.SelectToken("description.extra"))
+                    foreach (JObject childrenJObject in jsonObject.SelectToken("description.extra")!)
                     {
-                        Description += childrenJObject["text"].ToString();
+                        Description += childrenJObject["text"]?.ToString();
                     }
                 }
                 if (jsonObject["favicon"] != null)
                 {
-                    Favicon = jsonObject["favicon"].ToString();
-                    if (Favicon.Contains(","))
+                    Favicon = jsonObject["favicon"]?.ToString();
+                    if (!string.IsNullOrEmpty(Favicon) && Favicon!.Contains(","))
                     {
                         Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
                     }
                 }
-                Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
                 IsSuccessful = true;
             }
         }

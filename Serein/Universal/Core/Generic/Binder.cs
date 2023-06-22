@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using Serein.Base;
+﻿using Serein.Base;
+using Serein.Base.Packets;
 using Serein.Core.Server;
 using Serein.Utils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,71 +47,71 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 绑定
         /// </summary>
-        /// <param name="jsonObject">消息JSON对象</param>
+        /// <param name="message">数据包</param>
         /// <param name="value">值</param>
-        /// <param name="userID">用户ID</param>
-        /// <param name="groupID">群聊ID</param>
-        public static void Bind(JObject jsonObject, string value, long userID, long groupID)
+        public static void Bind(Message message, string? value)
         {
-            value = value.Trim();
-            if (Global.MemberDict.ContainsKey(userID))
+            if (message is null || message.Sender is null || string.IsNullOrEmpty(value))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, groupID, userID, jsonObject);
+                return;
+            }
+            value = value!.Trim();
+            if (Global.MemberDict.ContainsKey(message.UserId))
+            {
+                EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, message);
                 return;
             }
             if (!System.Text.RegularExpressions.Regex.IsMatch(value, Global.Settings.Serein.Function.RegexForCheckingGameID))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, groupID, userID, jsonObject);
+                EventTrigger.Trigger(EventType.BindingFailDueToInvalid, message);
                 return;
             }
             if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
-                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID, jsonObject);
+                EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;
             }
             if (GameIDs.Contains(value))
             {
-                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, groupID, userID, jsonObject);
+                EventTrigger.Trigger(EventType.BindingFailDueToOccupation, message);
                 return;
             }
             lock (Global.MemberDict)
             {
-                Global.MemberDict.Add(userID, new()
+                Global.MemberDict.Add(message.UserId, new()
                 {
-                    ID = userID,
-                    Card = jsonObject["sender"]["card"].ToString(),
-                    Nickname = jsonObject["sender"]["nickname"].ToString(),
-                    Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString()),
+                    ID = message.UserId,
+                    Card = message.Sender.Card ?? string.Empty,
+                    Nickname = message.Sender.Nickname ?? string.Empty,
+                    Role = message.Sender.RoleIndex,
                     GameID = value
                 });
             }
             IO.SaveMember();
-            EventTrigger.Trigger(EventType.BindingSucceed, groupID, userID);
+            EventTrigger.Trigger(EventType.BindingSucceed, message);
         }
 
         /// <summary>
         /// 解绑
         /// </summary>
-        /// <param name="jsonObject">消息JSON对象</param>
-        /// <param name="userID">用户ID</param>
-        /// <param name="groupID">群聊ID</param>
-        public static void UnBind(JObject jsonObject, long userID, long groupID)
+        /// <param name="message">数据包</param>
+        public static void UnBind(Message message)
         {
             if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
             {
-                EventTrigger.Trigger(EventType.BinderDisable, groupID, userID, jsonObject);
+                EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;
             }
             lock (Global.MemberDict)
             {
-                if (Global.MemberDict.Remove(userID))
+                if (Global.MemberDict.Remove(message.UserId))
                 {
                     IO.SaveMember();
-                    EventTrigger.Trigger(EventType.UnbindingSucceed, groupID, userID, jsonObject);
+                    EventTrigger.Trigger(EventType.UnbindingSucceed, message);
                 }
                 else
                 {
-                    EventTrigger.Trigger(EventType.UnbindingFail, groupID, userID, jsonObject);
+                    EventTrigger.Trigger(EventType.UnbindingFail, message);
                 }
             }
         }
@@ -141,7 +140,7 @@ namespace Serein.Core.Generic
         /// <param name="userID">用户ID</param>
         /// <returns>对应的游戏ID</returns>
         public static string GetGameID(long userID)
-            => Global.MemberDict.TryGetValue(userID, out Member member) ? member.GameID : string.Empty;
+            => Global.MemberDict.TryGetValue(userID, out Member? member) ? member.GameID : string.Empty;
 
         /// <summary>
         /// 获取指定游戏ID对应的用户ID
@@ -164,16 +163,15 @@ namespace Serein.Core.Generic
         /// <summary>
         /// 更新群成员信息
         /// </summary>
-        /// <param name="jsonObject">消息JSON对象</param>
-        /// <param name="userID">用户ID</param>
-        public static void Update(JObject jsonObject, long userID)
+        /// <param name="message">数据包</param>
+        public static void Update(Message message)
         {
-            if (Global.MemberDict.TryGetValue(userID, out Member member))
+            if (message is not null && message.Sender is not null && Global.MemberDict.TryGetValue(message.UserId, out Member? member))
             {
-                Logger.Output(LogType.Debug, jsonObject["sender"]);
-                member.Nickname = jsonObject["sender"]["nickname"].ToString();
-                member.Role = Array.IndexOf(Command.Roles, jsonObject["sender"]["role"].ToString());
-                member.Card = jsonObject["sender"]["card"].ToString();
+                Logger.Output(LogType.Debug, message.Sender);
+                member.Nickname = message.Sender.Nickname ?? string.Empty;
+                member.Role = message.Sender.RoleIndex;
+                member.Card = message.Sender.Card ?? string.Empty;
             }
         }
     }

@@ -17,13 +17,13 @@ namespace Serein.Core.JSPlugin.Permission
         /// 群号
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long[] Groups { get; init; }
+        public long[]? Groups { get; init; }
 
         /// <summary>
         /// 用户
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long[] Users { get; init; }
+        public long[]? Users { get; init; }
 
         /// <summary>
         /// 仅监听群聊
@@ -41,7 +41,7 @@ namespace Serein.Core.JSPlugin.Permission
 
         public Condition()
         {
-            if (string.IsNullOrEmpty(Type) || !_acceptableTypes.Contains(Type))
+            if (Type is null || !_acceptableTypes.Contains(Type!))
             {
                 Type = "unknown";
                 Groups = null;

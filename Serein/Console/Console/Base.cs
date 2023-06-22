@@ -17,7 +17,7 @@ namespace Serein.Utils.Console
         private const uint ENABLE_INSERT_MODE = 0x0020;
 
         [DllImport("user32.dll", EntryPoint = "FindWindow", CharSet = CharSet.Unicode)]
-        private extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+        private extern static IntPtr FindWindow(string? lpClassName, string lpWindowName);
 
         [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
         private extern static IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);

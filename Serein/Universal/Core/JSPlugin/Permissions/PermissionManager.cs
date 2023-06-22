@@ -124,7 +124,7 @@ namespace Serein.Core.JSPlugin.Permission
             {
                 foreach (string parent in permissionGroup.Parents)
                 {
-                    if (Global.PermissionGroups.TryGetValue(parent, out PermissionGroup parentPermissionGroup))
+                    if (Global.PermissionGroups.TryGetValue(parent, out PermissionGroup? parentPermissionGroup))
                     {
                         Inherit(parentPermissionGroup, depth + 1).ToList().ForEach(kv =>
                         {
@@ -148,7 +148,7 @@ namespace Serein.Core.JSPlugin.Permission
         /// <returns>设置结果</returns>
         public static bool SetPermission(string groupName, string permissionKey, JsValue value)
         {
-            if (!Global.PermissionGroups.TryGetValue(groupName, out PermissionGroup permissionGroup) || permissionGroup.Permissions is null || string.IsNullOrEmpty(groupName) || string.IsNullOrEmpty(permissionKey))
+            if (!Global.PermissionGroups.TryGetValue(groupName, out PermissionGroup? permissionGroup) || permissionGroup.Permissions is null || string.IsNullOrEmpty(groupName) || string.IsNullOrEmpty(permissionKey))
             {
                 return false;
             }

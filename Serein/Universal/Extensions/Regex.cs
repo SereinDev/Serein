@@ -34,7 +34,7 @@ namespace Serein.Extensions
         /// <param name="options">正则表达式选项</param>
         /// <param name="regex">转换后的正则对象</param>
         /// <returns>转换结果</returns>
-        public static bool TryParse(this string pattern, RegexOptions options, out Regex regex)
+        public static bool TryParse(this string pattern, RegexOptions options, out Regex? regex)
         {
             regex = null;
             if (!string.IsNullOrEmpty(pattern))

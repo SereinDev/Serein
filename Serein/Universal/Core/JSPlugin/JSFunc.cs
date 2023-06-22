@@ -31,14 +31,14 @@ namespace Serein.Core.JSPlugin
         /// <param name="description">介绍</param>
         /// <returns>注册结果</returns>
         public static string Register(
-            string @namespace,
-            string name,
-            string version,
-            string author,
-            string description
+            string? @namespace,
+            string? name,
+            string? version,
+            string? author,
+            string? description
             )
         {
-            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin plugin))
+            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin))
             {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
@@ -56,7 +56,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="eventName">事件名称</param>
         /// <param name="callback">函数</param>
         /// <returns>注册结果</returns>
-        public static bool SetListener(string @namespace, string eventName, JsValue callback)
+        public static bool SetListener(string? @namespace, string eventName, JsValue callback)
         {
             Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
             eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
@@ -65,9 +65,10 @@ namespace Serein.Core.JSPlugin
                 throw new ArgumentException("未知的事件：" + eventName);
             }
             return
+                !string.IsNullOrEmpty(@namespace) &&
                 callback is FunctionInstance &&
-                JSPluginManager.PluginDict.ContainsKey(@namespace) &&
-                JSPluginManager.PluginDict[@namespace].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
+                JSPluginManager.PluginDict.ContainsKey(@namespace!) &&
+                JSPluginManager.PluginDict[@namespace!].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
 
         }
 
@@ -82,7 +83,7 @@ namespace Serein.Core.JSPlugin
         /// <param name="type">事件名称</param>
         /// <param name="args">参数</param>
         /// <returns>是否拦截</returns>
-        public static bool Trigger(EventType type, params object[] args)
+        public static bool Trigger(EventType type, params object?[] args)
         {
             if (JSPluginManager.PluginDict.Count == 0)
             {
@@ -126,9 +127,9 @@ namespace Serein.Core.JSPlugin
         /// <param name="interval">间隔</param>
         /// <param name="autoReset"自动重置></param>
         /// <returns>定时器哈希值</returns>
-        public static JsValue SetTimer(string @namespace, JsValue callback, JsValue interval, bool autoReset)
+        public static JsValue SetTimer(string? @namespace, JsValue callback, JsValue interval, bool autoReset)
         {
-            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin plugin))
+            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin))
             {
                 throw new ArgumentException("无法找到对应的命名空间");
             }
@@ -182,7 +183,7 @@ namespace Serein.Core.JSPlugin
         /// <returns>清除结果</returns>
         private static bool ClearTimer(long id)
         {
-            if (JSPluginManager.Timers.TryGetValue(id, out System.Timers.Timer timer))
+            if (JSPluginManager.Timers.TryGetValue(id, out System.Timers.Timer? timer))
             {
                 timer.Stop();
                 timer.Dispose();
@@ -306,22 +307,22 @@ namespace Serein.Core.JSPlugin
         /// <param name="key">键</param>
         /// <param name="jsValue">值</param>
         /// <returns>设置结果</returns>
-        public static bool SetVariable(string key, JsValue jsValue)
+        public static bool SetVariable(string? key, JsValue jsValue)
         {
-            string value = jsValue?.ToString();
-            if (string.IsNullOrEmpty(value) || !RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
+            string? value = jsValue?.ToString();
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || !RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
             {
                 return false;
             }
-            if (JSPluginManager.CommandVariablesDict.ContainsKey(key))
+            else if (JSPluginManager.CommandVariablesDict.ContainsKey(key!))
             {
-                JSPluginManager.CommandVariablesDict[key] = value;
+                JSPluginManager.CommandVariablesDict[key!] = value!;
             }
             else
             {
                 lock (JSPluginManager.CommandVariablesDict)
                 {
-                    JSPluginManager.CommandVariablesDict.Add(key, value);
+                    JSPluginManager.CommandVariablesDict.Add(key!, value!);
                 }
             }
             return true;
@@ -355,7 +356,7 @@ namespace Serein.Core.JSPlugin
         /// 设置预加载配置
         /// </summary>
         public static void SetPreLoadConfig(
-            string @namespace,
+            string? @namespace,
             JsValue assemblies,
             JsValue allowGetType,
             JsValue allowOperatorOverloading,
@@ -397,12 +398,15 @@ namespace Serein.Core.JSPlugin
         /// <param name="namespace">命名空间</param>
         /// <param name="type">类型</param>
         /// <returns>加载结果</returns>
-        public static bool ReloadFiles(string @namespace, string type)
+        public static bool ReloadFiles(string? @namespace, string type)
         {
             try
             {
                 IO.Reload(type);
-                Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
+                if (!string.IsNullOrEmpty(@namespace))
+                {
+                    Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
+                }
                 return true;
             }
             catch (Exception e)

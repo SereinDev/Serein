@@ -67,7 +67,7 @@ namespace Serein.Windows
                 e.Cancel = true;
                 ShowInTaskbar = false;
                 Hide();
-                Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+                Catalog.Notification?.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
             }
             else
             {
@@ -89,7 +89,7 @@ namespace Serein.Windows
             }
             else
             {
-                Catalog.Notification.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+                Catalog.Notification?.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Serein.Windows
         private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) => MemberEditor.Hide();
         private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Member.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text))
+            if (Catalog.Function.Member?.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text) ?? false)
             {
                 MemberEditor.Hide();
             }
@@ -171,12 +171,12 @@ namespace Serein.Windows
 
         private void RegexEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Regex.Confirm(
+            if (Catalog.Function.Regex?.Confirm(
                 RegexEditor_Area.SelectedIndex,
                 RegexEditor_IsAdmain.IsChecked ?? false,
                 RegexEditor_Regex.Text,
                 RegexEditor_Command.Text,
-                RegexEditor_Remark.Text))
+                RegexEditor_Remark.Text) ?? false)
             {
                 RegexEditor.Hide();
             }
@@ -197,7 +197,7 @@ namespace Serein.Windows
 
         private void ScheduleEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Schedule.Confirm(ScheduleEditor_Cron.Text, ScheduleEditor_Command.Text, ScheduleEditor_Remark.Text))
+            if (Catalog.Function.Schedule?.Confirm(ScheduleEditor_Cron.Text, ScheduleEditor_Command.Text, ScheduleEditor_Remark.Text) ?? false)
             {
                 ScheduleEditor.Hide();
             }
@@ -234,7 +234,7 @@ namespace Serein.Windows
 
         private void EventEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Settings.Event.Confirm(EventEditor_Command.Text))
+            if (Catalog.Settings.Event?.Confirm(EventEditor_Command.Text) ?? false)
             {
                 EventEditor.Hide();
             }
@@ -255,7 +255,7 @@ namespace Serein.Windows
                 data.Length == 1 &&
                 SingleList.Contains(
                     Path.GetExtension(
-                        data.GetValue(0)?.ToString()
+                        data.GetValue(0)?.ToString()!
                         ).ToLowerInvariant()
                     )
                 )
@@ -302,7 +302,7 @@ namespace Serein.Windows
             }
         }
 
-        public void UpdateTitle(string title)
+        public void UpdateTitle(string? title)
             => Dispatcher.Invoke(() => _TitleBar.Title = string.IsNullOrEmpty(title) ? "Serein" : $"Serein - {title}");
     }
 }

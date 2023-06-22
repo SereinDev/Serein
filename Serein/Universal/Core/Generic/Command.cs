@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Serein.Base.Motd;
+﻿using Serein.Base.Motd;
+using Serein.Base.Packets;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Utils;
@@ -64,42 +64,81 @@ namespace Serein.Core.Generic
         /// </summary>
         /// <param name="inputType">输入类型</param>
         /// <param name="command">命令</param>
-        /// <param name="jObject">消息JSON对象</param>
+        public static void Run(Base.CommandOrigin inputType, string command) => Run(inputType, command, null, false);
+
+        /// <summary>
+        /// 处理Serein命令
+        /// </summary>
+        /// <param name="inputType">输入类型</param>
+        /// <param name="command">命令</param>
+        /// <param name="message">数据包</param>
+        /// <param name="disableMotd">禁用Motd获取</param>
+        public static void Run(Base.CommandOrigin inputType, string command, Message? message, bool disableMotd = false) => Run(inputType, command, null, message, disableMotd);
+
+        /// <summary>
+        /// 处理Serein命令
+        /// </summary>
+        /// <param name="inputType">输入类型</param>
+        /// <param name="command">命令</param>
         /// <param name="msgMatch">消息匹配对象</param>
-        /// <param name="userID">用户ID</param>
-        /// <param name="groupID">群聊ID</param>
+        public static void Run(Base.CommandOrigin inputType, string command, Match msgMatch) => Run(inputType, command, msgMatch);
+
+        /// <summary>
+        /// 处理Serein命令
+        /// </summary>
+        /// <param name="inputType">输入类型</param>
+        /// <param name="command">命令</param>
+        /// <param name="msgMatch">消息匹配对象</param>
+        /// <param name="message">数据包</param>
         /// <param name="disableMotd">禁用Motd获取</param>
         public static void Run(
             Base.CommandOrigin inputType,
             string command,
-            JObject jObject = null,
-            Match msgMatch = null,
-            long userID = -1,
-            long groupID = -1,
-            bool disableMotd = false
+            Match? msgMatch,
+            Message? message,
+            bool disableMotd,
+            long groupId = 0
             )
         {
             Logger.Output(
                 Base.LogType.Debug,
                     "命令运行",
                     $"inputType:{inputType} ",
-                    $"command:{command}",
-                    $"userID:{userID}",
-                    $"groupID:{groupID}");
-            if (groupID == -1 && Global.Settings.Bot.GroupList.Length >= 1)
+                    $"command:{command}");
+
+            if (groupId == 0)
             {
-                groupID = Global.Settings.Bot.GroupList[0];
+                if ((message is null || message.GroupId == 0))
+                {
+                    if (Global.Settings.Bot.GroupList.Length >= 1)
+                    {
+                        groupId = Global.Settings.Bot.GroupList[0];
+                    }
+                }
+                else
+                {
+                    groupId = message.GroupId;
+                }
             }
+
             Base.CommandType type = GetType(command);
             if (type == Base.CommandType.Invalid ||
                 ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
             {
                 return;
             }
-            ExecuteCommand(type, inputType, command, ApplyVariables(GetValue(command, msgMatch), jObject, disableMotd), groupID, userID, jObject);
-            if (inputType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && groupID != -1)
+            ExecuteCommand(
+                type,
+                inputType,
+                command,
+                ApplyVariables(GetValue(command, msgMatch), message, disableMotd),
+                groupId,
+                message?.UserId ?? 0,
+                message
+                );
+            if (inputType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && message is not null && message.GroupId != 0)
             {
-                Binder.Update(jObject, userID);
+                Binder.Update(message);
             }
         }
 
@@ -111,9 +150,9 @@ namespace Serein.Core.Generic
             Base.CommandOrigin inputType,
             string command,
             string value,
-            long groupID,
-            long userID,
-            JObject jObject)
+            long groupId,
+            long userId,
+            Message? message)
         {
             switch (type)
             {
@@ -127,7 +166,7 @@ namespace Serein.Core.Generic
                         && inputType == Base.CommandOrigin.Msg
                         )
                     {
-                        value = ParseAt(value, groupID);
+                        value = ParseAt(value, groupId);
                     }
                     value = Regex.Replace(Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]"), @"\[CQ:([^,]+?),.+?\]", "[$1]");
                     ServerManager.InputCommand(value, type == Base.CommandType.ServerInputWithUnicode, true);
@@ -142,54 +181,54 @@ namespace Serein.Core.Generic
                     break;
 
                 case Base.CommandType.SendGroupMsg:
-                    Websocket.Send(false, value, groupID, inputType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(false, value, groupId, inputType != Base.CommandOrigin.EventTrigger);
                     break;
 
                 case Base.CommandType.SendPrivateMsg:
                     if (inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger)
                     {
-                        Websocket.Send(true, value, userID, inputType != Base.CommandOrigin.EventTrigger);
+                        Websocket.Send(true, value, userId, inputType != Base.CommandOrigin.EventTrigger);
                     }
                     break;
 
                 case Base.CommandType.SendTempMsg:
-                    if (inputType == Base.CommandOrigin.Msg && groupID != -1 && userID != -1)
+                    if (inputType == Base.CommandOrigin.Msg && groupId != -1 && userId != -1)
                     {
-                        Websocket.Send(groupID, userID, value);
+                        Websocket.Send(groupId, userId, value);
                     }
                     break;
 
                 case Base.CommandType.Bind:
-                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && groupID != -1)
+                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
                     {
-                        Binder.Bind(jObject, value, userID, groupID);
+                        Binder.Bind(message, value);
                     }
                     break;
 
                 case Base.CommandType.Unbind:
-                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && groupID != -1)
+                    if ((inputType == Base.CommandOrigin.Msg || inputType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
                     {
-                        Binder.UnBind(jObject, long.TryParse(value, out long i) ? i : -1, groupID);
+                        Binder.UnBind(message);
                     }
                     break;
 
                 case Base.CommandType.RequestMotdpe:
-                    if (inputType == Base.CommandOrigin.Msg && (groupID != -1 || userID != -1))
+                    if (inputType == Base.CommandOrigin.Msg && message?.MessageType == "group")
                     {
                         Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
                             motd.IsSuccessful ? Base.EventType.RequestingMotdpeSucceed : Base.EventType.RequestingMotdFail,
-                            groupID, userID, jObject, motd);
+                            message, motd);
                     }
                     break;
 
                 case Base.CommandType.RequestMotdje:
-                    if (inputType == Base.CommandOrigin.Msg && (groupID != -1 || userID != -1))
+                    if (inputType == Base.CommandOrigin.Msg && message?.MessageType == "group")
                     {
                         Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
                             motd.IsSuccessful ? Base.EventType.RequestingMotdjeSucceed : Base.EventType.RequestingMotdFail,
-                            groupID, userID, jObject, motd);
+                            message, motd);
                     }
                     break;
 
@@ -206,10 +245,10 @@ namespace Serein.Core.Generic
                         string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
                         Task.Run(() =>
                         {
-                            if (JSPluginManager.PluginDict.TryGetValue(key, out Plugin plugin))
+                            if (JSPluginManager.PluginDict.TryGetValue(key, out Plugin? plugin) && plugin.Available)
                             {
                                 string e;
-                                lock (plugin.Engine)
+                                lock (plugin.Engine!)
                                 {
                                     plugin.Engine.Run(value, out e);
                                 }
@@ -228,7 +267,7 @@ namespace Serein.Core.Generic
                         IO.Reload(value, inputType == Base.CommandOrigin.Msg);
                         if (inputType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupID == -1, "重新加载成功", groupID == -1 ? userID : groupID, false);
+                            Websocket.Send(groupId == -1, "重新加载成功", groupId == -1 ? userId : groupId, false);
                         }
                     }
                     catch (Exception e)
@@ -236,7 +275,7 @@ namespace Serein.Core.Generic
                         Logger.Output(Base.LogType.Debug, e);
                         if (inputType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupID == -1, $"重新加载失败：{e.Message}", groupID == -1 ? userID : groupID, false);
+                            Websocket.Send(groupId == -1, $"重新加载失败：{e.Message}", groupId == -1 ? userId : groupId, false);
                         }
                         else if (inputType == Base.CommandOrigin.Javascript)
                         {
@@ -333,7 +372,7 @@ namespace Serein.Core.Generic
         /// <param name="command">命令</param>
         /// <param name="match">消息匹配对象</param>
         /// <returns>值</returns>
-        public static string GetValue(string command, Match match = null)
+        public static string GetValue(string command, Match? match = null)
         {
             string value = command.Substring(command.IndexOf('|') + 1);
             if (match != null)
@@ -351,10 +390,10 @@ namespace Serein.Core.Generic
         /// 应用变量
         /// </summary>
         /// <param name="text">文本</param>
-        /// <param name="jsonObject">消息JSON对象</param>
+        /// <param name="message">数据包</param>
         /// <param name="disableMotd">禁用Motd获取</param>
         /// <returns>应用变量后的文本</returns>
-        public static string ApplyVariables(string text, JObject jsonObject = null, bool disableMotd = false)
+        private static string ApplyVariables(string text, Message? message = null, bool disableMotd = false)
         {
             if (!text.Contains("%"))
             {
@@ -363,80 +402,83 @@ namespace Serein.Core.Generic
             bool serverStatus = ServerManager.Status;
             DateTime currentTime = DateTime.Now;
             text = Patterns.Variable.Replace(text, (match) =>
-                (match.Groups[1].Value.ToLowerInvariant() switch
                 {
-                    #region 时间
-                    "year" => currentTime.Year,
-                    "month" => currentTime.Month,
-                    "day" => currentTime.Day,
-                    "hour" => currentTime.Hour,
-                    "minute" => currentTime.Minute,
-                    "second" => currentTime.Second,
-                    "time" => currentTime.ToString("T"),
-                    "date" => currentTime.Date.ToString("d"),
-                    "dayofweek" => currentTime.DayOfWeek.ToString(),
-                    "datetime" => currentTime.ToString(),
-                    #endregion
+                    object? obj = match.Groups[1].Value.ToLowerInvariant() switch
+                    {
+                        #region 时间
+                        "year" => currentTime.Year,
+                        "month" => currentTime.Month,
+                        "day" => currentTime.Day,
+                        "hour" => currentTime.Hour,
+                        "minute" => currentTime.Minute,
+                        "second" => currentTime.Second,
+                        "time" => currentTime.ToString("T"),
+                        "date" => currentTime.Date.ToString("d"),
+                        "dayofweek" => currentTime.DayOfWeek.ToString(),
+                        "datetime" => currentTime.ToString(),
+                        #endregion
 
-                    "sereinversion" => Global.VERSION,
+                        "sereinversion" => Global.VERSION,
 
-                    #region motd
-                    "gamemode" => ServerManager.Motd?.GameMode,
-                    "description" => ServerManager.Motd?.Description,
-                    "protocol" => ServerManager.Motd?.Protocol,
-                    "onlineplayer" => ServerManager.Motd?.OnlinePlayer,
-                    "maxplayer" => ServerManager.Motd?.MaxPlayer,
-                    "original" => ServerManager.Motd?.Origin,
-                    "delay" => ServerManager.Motd?.Delay.ToString("N1"),
-                    "version" => ServerManager.Motd?.Version,
-                    "favicon" => ServerManager.Motd?.Favicon,
-                    "exception" => ServerManager.Motd?.Exception,
-                    #endregion
+                        #region motd
+                        "gamemode" => ServerManager.Motd?.GameMode,
+                        "description" => ServerManager.Motd?.Description,
+                        "protocol" => ServerManager.Motd?.Protocol,
+                        "onlineplayer" => ServerManager.Motd?.OnlinePlayer,
+                        "maxplayer" => ServerManager.Motd?.MaxPlayer,
+                        "original" => ServerManager.Motd?.Origin,
+                        "delay" => ServerManager.Motd?.Delay.ToString("N1"),
+                        "version" => ServerManager.Motd?.Version,
+                        "favicon" => ServerManager.Motd?.Favicon,
+                        "exception" => ServerManager.Motd?.Exception,
+                        #endregion
 
-                    #region 系统信息
-                    "net" => Environment.Version.ToString(),
-                    "cpuusage" => SystemInfo.CPUUsage.ToString("N1"),
-                    "os" => SystemInfo.OS,
-                    "uploadspeed" => SystemInfo.UploadSpeed,
-                    "downloadspeed" => SystemInfo.DownloadSpeed,
-                    "cpuname" => SystemInfo.CPUName,
-                    "cpubrand" => SystemInfo.CPUBrand,
-                    "cpufrequency" => SystemInfo.CPUFrequency.ToString("N1"),
-                    "usedram" => SystemInfo.UsedRAM,
-                    "usedramgb" => SystemInfo.UsedRAM / 1024,
-                    "totalram" => SystemInfo.TotalRAM,
-                    "totalramgb" => SystemInfo.TotalRAM / 1024,
-                    "freeram" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM),
-                    "freeramgb" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM) / 1024,
-                    "ramusage" => SystemInfo.RAMUsage > 100 ? "100" : SystemInfo.RAMUsage.ToString("N1"),
-                    #endregion
+                        #region 系统信息
+                        "net" => Environment.Version.ToString(),
+                        "cpuusage" => SystemInfo.CPUUsage.ToString("N1"),
+                        "os" => SystemInfo.OS,
+                        "uploadspeed" => SystemInfo.UploadSpeed,
+                        "downloadspeed" => SystemInfo.DownloadSpeed,
+                        "cpuname" => SystemInfo.CPUName,
+                        "cpubrand" => SystemInfo.CPUBrand,
+                        "cpufrequency" => SystemInfo.CPUFrequency.ToString("N1"),
+                        "usedram" => SystemInfo.UsedRAM,
+                        "usedramgb" => SystemInfo.UsedRAM / 1024,
+                        "totalram" => SystemInfo.TotalRAM,
+                        "totalramgb" => SystemInfo.TotalRAM / 1024,
+                        "freeram" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM),
+                        "freeramgb" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM) / 1024,
+                        "ramusage" => SystemInfo.RAMUsage > 100 ? "100" : SystemInfo.RAMUsage.ToString("N1"),
+                        #endregion
 
-                    #region 服务器
-                    "levelname" => serverStatus ? ServerManager.LevelName : "-",
-                    "difficulty" => serverStatus ? ServerManager.Difficulty : "-",
-                    "runtime" => serverStatus ? ServerManager.Time : "-",
-                    "servercpuusage" => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
-                    "filename" => serverStatus ? ServerManager.StartFileName : "-",
-                    "status" => serverStatus ? "已启动" : "未启动",
-                    #endregion
+                        #region 服务器
+                        "levelname" => serverStatus ? ServerManager.LevelName : "-",
+                        "difficulty" => serverStatus ? ServerManager.Difficulty : "-",
+                        "runtime" => serverStatus ? ServerManager.Time : "-",
+                        "servercpuusage" => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
+                        "filename" => serverStatus ? ServerManager.StartFileName : "-",
+                        "status" => serverStatus ? "已启动" : "未启动",
+                        #endregion
 
-                    #region 消息
-                    "msgid" => jsonObject.SelectToken("message_id"),
-                    "id" => jsonObject.SelectToken("sender.user_id"),
-                    "gameid" => Binder.GetGameID(long.TryParse(jsonObject.SelectToken("sender.user_id").ToString(), out long result) ? result : -1),
-                    "sex" => Sexs_Chinese[Array.IndexOf(Sexs, jsonObject.SelectToken("sender.sex").ToString().ToLowerInvariant())],
-                    "nickname" => jsonObject.SelectToken("sender.nickname"),
-                    "age" => jsonObject.SelectToken("sender.age"),
-                    "area" => jsonObject.SelectToken("sender.area"),
-                    "card" => jsonObject.SelectToken("sender.card"),
-                    "level" => jsonObject.SelectToken("sender.level"),
-                    "title" => jsonObject.SelectToken("sender.title"),
-                    "role" => Roles_Chinese[Array.IndexOf(Roles, jsonObject.SelectToken("sender.role").ToString())],
-                    "shownname" => string.IsNullOrEmpty(jsonObject.SelectToken("sender.card").ToString()) ? jsonObject.SelectToken("sender.nickname") : jsonObject.SelectToken("sender.card"),
-                    #endregion
+                        #region 消息
+                        "msgid" => message?.MessageId,
+                        "id" => message?.UserId,
+                        "gameid" => Binder.GetGameID(message?.UserId ?? 0),
+                        "sex" => message?.Sender?.SexName,
+                        "nickname" => message?.Sender?.Nickname,
+                        "age" => message?.Sender?.Age,
+                        "area" => message?.Sender?.Area,
+                        "card" => message?.Sender?.Card,
+                        "level" => message?.Sender?.Level,
+                        "title" => message?.Sender?.Title,
+                        "role" => message?.Sender?.RoleName,
+                        "shownname" => string.IsNullOrEmpty(message?.Sender?.Card) ? message?.Sender?.Nickname : message?.Sender?.Card,
+                        #endregion
 
-                    _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string variable) ? variable : match.Groups[0].Value
-                })?.ToString() ?? string.Empty
+                        _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string? variable) ? variable : match.Groups[0].Value
+                    };
+                    return obj?.ToString() ?? string.Empty;
+                }
             );
             text = Patterns.GameID.Replace(text,
                 (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value)));
@@ -462,8 +504,8 @@ namespace Serein.Core.Generic
             text = Regex.Replace(text, @"(?<=@)(\d+)", (match) =>
             {
                 long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
-                return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Base.Member> groupinfo) &&
-                    groupinfo.TryGetValue(userID, out Base.Member member) ? member.ShownName : match.Groups[1].Value;
+                return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Base.Member>? groupinfo) &&
+                    groupinfo.TryGetValue(userID, out Base.Member? member) ? member.ShownName : match.Groups[1].Value;
             });
             return text;
         }

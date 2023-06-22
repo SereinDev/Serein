@@ -27,7 +27,7 @@ namespace Serein.Core.Generic
         /// <summary>
         /// WS客户端
         /// </summary>
-        private static WebSocket _websocket;
+        private static WebSocket? _websocket;
 
         /// <summary>
         /// 启动时刻
@@ -45,9 +45,8 @@ namespace Serein.Core.Generic
                 return;
             }
             Logger.Output(LogType.Bot_Clear);
-            Matcher.MessageReceived = null;
-            Matcher.MessageSent = null;
-            Matcher.SelfId = null;
+            Matcher.ResetStatisics();
+
             try
             {
                 _websocket = new(
@@ -79,7 +78,7 @@ namespace Serein.Core.Generic
             }
         }
 
-        private static void Closed(object sender, EventArgs e)
+        private static void Closed(object? sender, EventArgs e)
         {
             Status = false;
             Logger.Output(LogType.Bot_Notice, "WebSocket连接已断开");
@@ -114,7 +113,7 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                _websocket.Send(text);
+                _websocket?.Send(text);
             }
             return Status;
         }
@@ -158,7 +157,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                _websocket.Send(textJObject.ToString());
+                _websocket?.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -198,7 +197,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                _websocket.Send(textJObject.ToString());
+                _websocket?.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);
@@ -220,7 +219,7 @@ namespace Serein.Core.Generic
             if (Status)
             {
                 _reconnect = false;
-                _websocket.Close();
+                _websocket?.Close();
             }
             else if (_reconnect)
             {
@@ -238,7 +237,7 @@ namespace Serein.Core.Generic
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">消息接收事件参数</param>
-        public static void Receive(object sender, MessageReceivedEventArgs e)
+        public static void Receive(object? sender, MessageReceivedEventArgs e)
         {
             if (Global.Settings.Bot.EnbaleOutputData)
             {
@@ -255,7 +254,7 @@ namespace Serein.Core.Generic
             }
             try
             {
-                Matcher.Process((JObject)JsonConvert.DeserializeObject(packet));
+                Matcher.Process((JObject)JsonConvert.DeserializeObject(packet)!);
             }
             catch (Exception exception)
             {

@@ -9,9 +9,9 @@ namespace Serein.Core.JSPlugin.Native
         /// </summary>
         protected string _namespace { get; init; }
 
-        protected PluginBase(string @namespace)
+        protected PluginBase(string? @namespace)
         {
-            _namespace = @namespace;
+            _namespace = @namespace ?? throw new ArgumentNullException();
             if (string.IsNullOrEmpty(_namespace) && !JSPluginManager.PluginDict.ContainsKey(_namespace))
             {
                 throw new ArgumentException("无法找到对应的命名空间");

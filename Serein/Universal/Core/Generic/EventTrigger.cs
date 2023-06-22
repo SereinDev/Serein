@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Serein.Base.Motd;
+﻿using Serein.Base.Motd;
+using Serein.Base.Packets;
 using Serein.Utils;
 using System;
 using System.Text.RegularExpressions;
@@ -29,15 +29,32 @@ namespace Serein.Core.Generic
             }
         }
 
+        public static void Trigger(Base.EventType type, Notice? notice)
+        {
+            Logger.Output(Base.LogType.Debug, "Trigger:" + type);
+            string[] commandGroup = type switch
+            {
+                Base.EventType.GroupIncrease => Global.Settings.Event.GroupIncrease,
+                Base.EventType.GroupDecrease => Global.Settings.Event.GroupDecrease,
+                Base.EventType.GroupPoke => Global.Settings.Event.GroupPoke,
+                _ => Array.Empty<string>(),
+            };
+            foreach (string command in commandGroup)
+            {
+                Command.Run(
+                    Base.CommandOrigin.EventTrigger,
+                    command
+                    );
+            }
+        }
+
         /// <summary>
         /// 触发指定事件
         /// </summary>
         /// <param name="type">类型</param>
-        /// <param name="groupID">群聊ID</param>
-        /// <param name="userID">用户ID</param>
-        /// <param name="jobject">数据包对象</param>
+        /// <param name="message">数据包</param>
         /// <param name="motd">Motd对象</param>
-        public static void Trigger(Base.EventType type, long groupID, long userID, JObject jobject = null, Motd motd = null)
+        public static void Trigger(Base.EventType type, Message message, Motd? motd = null)
         {
             Logger.Output(Base.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = Array.Empty<string>();
@@ -50,9 +67,6 @@ namespace Serein.Core.Generic
                 case Base.EventType.BinderDisable:
                 case Base.EventType.UnbindingSucceed:
                 case Base.EventType.UnbindingFail:
-                case Base.EventType.GroupIncrease:
-                case Base.EventType.GroupDecrease:
-                case Base.EventType.GroupPoke:
                 case Base.EventType.PermissionDeniedFromPrivateMsg:
                 case Base.EventType.PermissionDeniedFromGroupMsg:
                     commandGroup = type switch
@@ -64,9 +78,6 @@ namespace Serein.Core.Generic
                         Base.EventType.UnbindingSucceed => Global.Settings.Event.UnbindingSucceed,
                         Base.EventType.UnbindingFail => Global.Settings.Event.UnbindingFail,
                         Base.EventType.BinderDisable => Global.Settings.Event.BinderDisable,
-                        Base.EventType.GroupIncrease => Global.Settings.Event.GroupIncrease,
-                        Base.EventType.GroupDecrease => Global.Settings.Event.GroupDecrease,
-                        Base.EventType.GroupPoke => Global.Settings.Event.GroupPoke,
                         Base.EventType.PermissionDeniedFromPrivateMsg => Global.Settings.Event.PermissionDeniedFromPrivateMsg,
                         Base.EventType.PermissionDeniedFromGroupMsg => Global.Settings.Event.PermissionDeniedFromGroupMsg,
                         _ => commandGroup,
@@ -75,10 +86,8 @@ namespace Serein.Core.Generic
                     {
                         Command.Run(
                             Base.CommandOrigin.EventTrigger,
-                            Regex.Replace(command, "%ID%", userID.ToString(), RegexOptions.IgnoreCase),
-                            jobject,
-                            userID: userID,
-                            groupID: groupID
+                            command,
+                            message
                             );
                     }
                     break;
@@ -97,24 +106,26 @@ namespace Serein.Core.Generic
                         string command_copy = command;
                         if (motd != null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
                         {
-                            command_copy = Regex.Replace(command_copy, "%GameMode%", motd.GameMode, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Description%", motd.Description, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Protocol%", motd.Protocol, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%OnlinePlayer%", motd.OnlinePlayer.ToString(), RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%MaxPlayer%", motd.MaxPlayer.ToString(), RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Original%", motd.Origin, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Delay%", motd.Delay.ToString("N1"), RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Version%", motd.Version, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Favicon%", motd.Favicon, RegexOptions.IgnoreCase);
-                            command_copy = Regex.Replace(command_copy, "%Exception%", motd.Exception, RegexOptions.IgnoreCase);
+                            Regex.Replace(command_copy, @"%(\w+)%", (match) =>
+                            (match.Groups[1].Value.ToLowerInvariant() switch
+                            {
+                                "gamemode" => motd.GameMode,
+                                "%description%" => motd.Description,
+                                "%protocol%" => motd.Protocol,
+                                "%onlineplayer%" => motd.OnlinePlayer.ToString(),
+                                "%maxplayer%" => motd.MaxPlayer.ToString(),
+                                "%original%" => motd.Origin,
+                                "%delay%" => motd.Delay.ToString("N1"),
+                                "%version%" => motd.Version,
+                                "%favicon%" => motd.Favicon,
+                                "%exception%" => motd.Exception,
+                                _ => match.Groups[1].Value
+                            } ?? string.Empty));
                         }
                         Command.Run(
                             Base.CommandOrigin.EventTrigger,
                             command_copy,
-                            jobject,
-                            null,
-                            userID,
-                            groupID,
+                            message,
                             true
                             );
                     }

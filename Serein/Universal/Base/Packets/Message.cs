@@ -1,0 +1,34 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Serein.Extensions;
+
+namespace Serein.Base.Packets
+{
+    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    internal class Message : Report
+    {
+        public string MessageType = string.Empty, SubType = string.Empty, RawMessage = string.Empty;
+
+        /// <summary>
+        /// 消息 ID
+        /// </summary>
+        public long MessageId;
+
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public long UserId;
+
+        /// <summary>
+        /// 群号
+        /// </summary>
+        public long GroupId;
+
+        /// <summary>
+        /// 发送者信息
+        /// </summary>
+        public Sender? Sender;
+
+        public override string ToString() => this.ToJson();
+    }
+}

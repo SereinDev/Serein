@@ -9,6 +9,7 @@
 		<RootNamespace>Serein</RootNamespace>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<LangVersion>10</LangVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">

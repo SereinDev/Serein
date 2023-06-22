@@ -77,7 +77,7 @@ namespace Serein.Windows.Pages.Function
                         Process.Start(new ProcessStartInfo("https://market.serein.cc/") { UseShellExecute = true });
                         break;
                     case "Disable":
-                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.TryGetValue(listViewItem.Tag.ToString(), out Plugin plugin))
+                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.TryGetValue(listViewItem.Tag.ToString() ?? string.Empty, out Plugin? plugin))
                         {
                             plugin.Dispose();
                             Load();
@@ -91,7 +91,7 @@ namespace Serein.Windows.Pages.Function
             => Disable.IsEnabled =
             JSPluginListView.SelectedIndex != -1 &&
             JSPluginListView.SelectedItem is ListViewItem item &&
-            JSPluginManager.PluginDict.TryGetValue(item.Tag.ToString(), out Plugin plugin) &&
+            JSPluginManager.PluginDict.TryGetValue(item.Tag.ToString()!, out Plugin? plugin) &&
             plugin.Available;
     }
 }

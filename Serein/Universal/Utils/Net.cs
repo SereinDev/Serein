@@ -18,9 +18,9 @@ namespace Serein.Utils
         /// <param name="accept">Header - Accept</param>
         /// <param name="userAgent">Header - UserAgent</param>
         /// <returns>正文</returns>
-        public static async Task<HttpResponseMessage> Get(string url, string accept = null, string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
+        public static async Task<HttpResponseMessage> Get(string url, string? accept = null, string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.33")
         {
-            if (accept != null)
+            if (!string.IsNullOrEmpty(accept))
             {
                 _httpClient.DefaultRequestHeaders.Accept.Clear();
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(accept));

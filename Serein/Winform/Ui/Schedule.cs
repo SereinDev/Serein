@@ -29,7 +29,7 @@ namespace Serein.Ui
 
         private void ScheduleList_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            _itemDraged = (ListViewItem)e.Item;
+            _itemDraged = (ListViewItem)e.Item!;
             _isDragging = true;
         }
 

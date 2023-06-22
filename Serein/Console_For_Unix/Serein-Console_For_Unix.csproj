@@ -8,6 +8,7 @@
 		<ApplicationManifest>../Console/app.manifest</ApplicationManifest>
 		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
 		<RootNamespace>Serein</RootNamespace>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

@@ -60,12 +60,12 @@ namespace Serein.Core.Server
         /// <summary>
         /// Motd对象
         /// </summary>
-        public static Motd Motd { get; private set; }
+        public static Motd? Motd { get; private set; }
 
         /// <summary>
         /// 更新计时器
         /// </summary>
-        private static Timer _updateTimer;
+        private static Timer? _updateTimer;
 
         /// <summary>
         /// 当前CPU时间
@@ -75,12 +75,12 @@ namespace Serein.Core.Server
         /// <summary>
         /// 服务器进程
         /// </summary>
-        private static Process _serverProcess;
+        private static Process? _serverProcess;
 
         /// <summary>
         /// 输入流写入
         /// </summary>
-        private static StreamWriter _inputWriter;
+        private static StreamWriter? _inputWriter;
 
         /// <summary>
         /// 命令历史记录列表下标
@@ -171,7 +171,7 @@ namespace Serein.Core.Server
                     StandardOutputEncoding = _encodings[Global.Settings.Server.OutputEncoding],
                     WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
                 });
-                _serverProcess.EnableRaisingEvents = true;
+                _serverProcess!.EnableRaisingEvents = true;
                 _serverProcess.Exited += (_, _) => CloseAll();
                 _inputWriter = new(
                     _serverProcess.StandardInput.BaseStream,
@@ -262,9 +262,9 @@ namespace Serein.Core.Server
                     try
                     {
 #if NET6_0
-                        _serverProcess.Kill(true);
+                        _serverProcess?.Kill(true);
 #else
-                        _serverProcess.Kill();
+                        _serverProcess?.Kill();
 #endif
                         _isStoppedByUser = true;
                         _restart = false;
@@ -290,9 +290,9 @@ namespace Serein.Core.Server
                     try
                     {
 #if NET6_0
-                        _serverProcess.Kill(true);
+                        _serverProcess?.Kill(true);
 #else
-                        _serverProcess.Kill();
+                        _serverProcess?.Kill();
 #endif
                         _isStoppedByUser = true;
                         _restart = false;
@@ -323,9 +323,9 @@ namespace Serein.Core.Server
                 try
                 {
 #if NET6_0
-                    _serverProcess.Kill(true);
+                    _serverProcess?.Kill(true);
 #else
-                    _serverProcess.Kill();
+                    _serverProcess?.Kill();
 #endif
                     _isStoppedByUser = true;
                     _restart = false;
@@ -384,7 +384,7 @@ namespace Serein.Core.Server
                 {
                     line_copy = ConvertToUnicode(line_copy);
                 }
-                _inputWriter.WriteLine(line_copy);
+                _inputWriter?.WriteLine(line_copy);
                 IO.ConsoleLog(">" + command);
                 Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
             }
@@ -420,7 +420,7 @@ namespace Serein.Core.Server
                 bool excluded = false;
                 foreach (string exp1 in Global.Settings.Server.ExcludedOutputs)
                 {
-                    if (exp1.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
+                    if (exp1.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex) && regex!.IsMatch(lineFiltered))
                     {
                         excluded = true;
                         break;
@@ -435,7 +435,7 @@ namespace Serein.Core.Server
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {
-                        if (exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex regex) && regex.IsMatch(lineFiltered))
+                        if (exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex) && regex!.IsMatch(lineFiltered))
                         {
                             _tempLine = lineFiltered.Trim('\r', '\n');
                             isMuiltLinesMode = true;
@@ -465,10 +465,14 @@ namespace Serein.Core.Server
         /// </summary>
         private static void CloseAll()
         {
+            if (_inputWriter is null || _serverProcess is null || _updateTimer is null)
+            {
+                return;
+            }
             _inputWriter.Close();
             _inputWriter.Dispose();
             Logger.Output(LogType.Server_Output, "");
-            _updateTimer?.Stop();
+            _updateTimer.Stop();
             if (!_isStoppedByUser && _serverProcess.ExitCode != 0)
             {
                 Logger.Output(LogType.Server_Notice, $"进程疑似非正常退出（返回：{_serverProcess.ExitCode}）");
@@ -537,7 +541,7 @@ namespace Serein.Core.Server
         /// </summary>
         public static void UpdateInfo()
         {
-            if (Status)
+            if (Status && _serverProcess is not null)
             {
                 CPUUsage = (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
                 _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
@@ -564,7 +568,7 @@ namespace Serein.Core.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string Time => Status ? (DateTime.Now - _serverProcess.StartTime).ToCustomString() : string.Empty;
+        public static string Time => Status && _serverProcess is not null ? (DateTime.Now - _serverProcess.StartTime).ToCustomString() : string.Empty;
 
         /// <summary>
         /// Unicode转换

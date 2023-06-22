@@ -36,12 +36,17 @@ namespace Serein.Core.JSPlugin
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Create(bool isExecuteByCommand, string @namespace, CancellationTokenSource cancellationTokenSource, PreLoadConfig preLoadConfig)
+        public static Engine Create(bool isExecuteByCommand, string? @namespace, CancellationTokenSource? cancellationTokenSource, PreLoadConfig preLoadConfig)
         {
             Engine engine = new(
                 new Action<Options>((cfg) =>
                 {
                     cfg.CatchClrExceptions();
+
+                    if (cancellationTokenSource is not null)
+                    {
+                        cfg.CancellationToken(cancellationTokenSource.Token);
+                    }
                     if (!isExecuteByCommand)
                     {
                         List<Assembly> assemblies = new();
@@ -59,7 +64,6 @@ namespace Serein.Core.JSPlugin
                         }
 
                         cfg.AllowClr(assemblies.ToArray());
-                        cfg.CancellationToken(cancellationTokenSource.Token);
                         cfg.EnableModules(Path.Combine(Global.PATH, JSPluginManager.PluginPath));
 
                         cfg.Modules.RegisterRequire = true;
@@ -102,6 +106,8 @@ namespace Serein.Core.JSPlugin
                     new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
                 engine.SetValue("serein_safeCall",
                     JSFunc.SafeCall);
+                engine.SetValue("serein_reloadFiles",
+                    new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
                 engine.SetValue("setTimeout",
                     new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, false)));
                 engine.SetValue("setInterval",
@@ -126,6 +132,7 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("serein_export", JsValue.Undefined);
                 engine.SetValue("serein_setPreLoadConfig", JsValue.Undefined);
                 engine.SetValue("serein_safeCall", JsValue.Undefined);
+                engine.SetValue("serein_reloadFiles", JsValue.Undefined);
                 engine.SetValue("setTimeout", JsValue.Undefined);
                 engine.SetValue("setInterval", JsValue.Undefined);
                 engine.SetValue("clearTimeout", JsValue.Undefined);
@@ -159,9 +166,9 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getSettingsObject",
                 new Func<JsValue>(() => JsValue.FromObject(engine, Global.Settings)));
             engine.SetValue("serein_getMotdpe",
-                new Func<string, string>((addr) => new Motdpe(addr).Origin));
+                new Func<string, string?>((addr) => new Motdpe(addr).Origin));
             engine.SetValue("serein_getMotdje",
-                new Func<string, string>((addr) => new Motdje(addr).Origin));
+                new Func<string, string?>((addr) => new Motdje(addr).Origin));
             engine.SetValue("serein_startServer",
                 new Func<bool>(() => ServerManager.Start(true)));
             engine.SetValue("serein_stopServer",
@@ -201,7 +208,7 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getGroupCache",
                 new Func<JsValue>(() => JsValue.FromObject(engine, JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Member>>>(Global.GroupCache.ToJson()))));
             engine.SetValue("serein_getUserInfo",
-                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member> groupinfo) && groupinfo.TryGetValue(userID, out Member member) ? JsValue.FromObject(engine, member) : JsValue.Null));
+                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member>? groupinfo) && groupinfo.TryGetValue(userID, out Member? member) ? JsValue.FromObject(engine, member) : JsValue.Null));
             engine.SetValue("serein_getPluginList",
                 new Func<JsValue>(() => JsValue.FromObject(engine, JSPluginManager.PluginDict.Values.Select(plugin => new PluginStruct(plugin)).ToArray())));
             engine.SetValue("serein_getRegexes",
@@ -212,10 +219,8 @@ namespace Serein.Core.JSPlugin
                 new Func<int?, string, int?, bool?, string, string, long[], bool>(JSFunc.EditRegex));
             engine.SetValue("serein_removeRegex",
                 new Func<int?, bool>(JSFunc.RemoveRegex));
-            engine.SetValue("serein_reloadFiles",
-                new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
             engine.SetValue("serein_import",
-                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue jsValue) ? jsValue : JsValue.Undefined));
+                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue? jsValue) ? jsValue : JsValue.Undefined));
             engine.SetValue("serein_getPermissionGroups",
                 new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups)));
             engine.SetValue("serein_addPermissionGroup",

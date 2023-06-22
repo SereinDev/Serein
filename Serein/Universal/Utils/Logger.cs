@@ -25,7 +25,7 @@ namespace Serein.Utils
         /// </summary>
         /// <param name="type">输出类型</param>
         /// <param name="objects">内容</param>
-        public static void Output(LogType type, params object[] objects)
+        public static void Output(LogType type, params object?[] objects)
         {
 #if WINFORM
             if (Program.Ui == null || Program.Ui.Disposing)
@@ -256,8 +256,8 @@ namespace Serein.Utils
                     }
                     StackTrace stackTrace = new(true);
                     line =
-                        $"[{stackTrace.GetFrame(1).GetMethod().DeclaringType}" +
-                        $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + stackTrace.GetFrame(1).GetMethod() : "." + stackTrace.GetFrame(1).GetMethod().Name)}] " +
+                        $"[{stackTrace.GetFrame(1)!.GetMethod()!.DeclaringType}" +
+                        $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + stackTrace.GetFrame(1)!.GetMethod() : "." + stackTrace.GetFrame(1)!.GetMethod()!.Name)}] " +
                         $"{line}";
 #if CONSOLE
                     WriteLine(4, line);
@@ -388,7 +388,7 @@ namespace Serein.Utils
             {
                 if (text.Contains("\n"))
                 {
-                    Catalog.MainWindow.OpenSnackbar(
+                    Catalog.MainWindow?.OpenSnackbar(
                         text.Split('\n')[0],
                         text.Substring(text.IndexOf('\n')).TrimStart('\n'),
                         icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
@@ -396,7 +396,7 @@ namespace Serein.Utils
                 }
                 else
                 {
-                    Catalog.MainWindow.OpenSnackbar(
+                    Catalog.MainWindow?.OpenSnackbar(
                         "执行失败",
                         text,
                         icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24

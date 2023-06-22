@@ -12,7 +12,7 @@ namespace Serein.Core.JSPlugin.Permission
         /// <summary>
         /// 权限组描述
         /// </summary>
-        public string Description { get; init; }
+        public string? Description { get; init; }
 
         /// <summary>
         /// 匹配条件

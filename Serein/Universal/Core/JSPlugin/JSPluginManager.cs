@@ -81,7 +81,7 @@ namespace Serein.Core.JSPlugin
             List<string> failedFiles = new();
             PluginDict.Keys.ToList().ForEach((key) =>
             {
-                if (PluginDict.TryGetValue(key, out Plugin plugin) && !plugin.Available)
+                if (PluginDict.TryGetValue(key, out Plugin? plugin) && !plugin.Available)
                 {
                     failedFiles.Add(Path.GetFileName(plugin.File));
                 }
@@ -147,7 +147,7 @@ namespace Serein.Core.JSPlugin
                 };
                 PluginDict.Add(@namespace, plugin);
 
-                plugin.Engine.Run(File.ReadAllText(file), out string exceptionMessage);
+                plugin.Engine!.Run(File.ReadAllText(file), out string exceptionMessage);
                 if (!string.IsNullOrEmpty(exceptionMessage))
                 {
                     Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", exceptionMessage);

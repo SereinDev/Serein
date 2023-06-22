@@ -14,7 +14,7 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         private bool _isDragging;
-        private ListViewItem _itemDraged;
+        private ListViewItem? _itemDraged;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabControl.SelectedIndex)
@@ -78,20 +78,20 @@ namespace Serein.Ui
 
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
-            Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
+            Array data = (Array)e.Data!.GetData(DataFormats.FileDrop);
             string filename;
             List<string> extensionsList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
             if (
                 data.Length == 1 &&
                 extensionsList.Contains(
                     Path.GetExtension(
-                        data.GetValue(0).ToString()
-                        ).ToLowerInvariant()
+                        data.GetValue(0)!.ToString()
+                        )!.ToLowerInvariant()
                     )
                 )
             {
                 FocusWindow();
-                filename = data.GetValue(0).ToString();
+                filename = data.GetValue(0)!.ToString()!;
                 if (
                     Path.GetExtension(filename).ToLowerInvariant() == ".exe" ||
                     Path.GetExtension(filename).ToLowerInvariant() == ".bat"
@@ -119,10 +119,10 @@ namespace Serein.Ui
                         ),
                         Encoding.UTF8
                         );
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd());
+                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd())!;
                     streamReader.Close();
                     if (
-                        jsonObject["type"].ToString().ToUpperInvariant() == "REGEX")
+                        jsonObject["type"]?.ToString().ToUpperInvariant() == "REGEX")
                     {
                         DialogResult dialogResult = MessageBox.Show(
                             this,
@@ -137,8 +137,8 @@ namespace Serein.Ui
                             LoadRegex();
                         }
                     }
-                    else if ((jsonObject["type"].ToString().ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject["type"].ToString().ToUpperInvariant() == "TASK")
+                    else if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK")
                         &&
                         (int)MessageBox.Show(
                             this,
@@ -204,6 +204,6 @@ namespace Serein.Ui
         private void SereinIcon_BalloonTipClicked(object sender, EventArgs e) => FocusWindow();
         private void SereinIcon_MouseClick(object sender, MouseEventArgs e) => FocusWindow();
         private void UpdateStatusLabel(string text) => StripStatusLabel.Text = text;
-        private void Ui_DragEnter(object sender, DragEventArgs e) => e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+        private void Ui_DragEnter(object sender, DragEventArgs e) => e.Effect = e.Data!.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
     }
 }
