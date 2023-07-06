@@ -103,7 +103,7 @@ namespace Serein.Core.Server
             new UnicodeEncoding(true, false),
             Encoding.UTF32,
             Encoding.ASCII,
-            Encoding.GetEncoding("ISO-8859-1")
+            Encoding.GetEncoding("GBK")
         };
 
 #if CONSOLE

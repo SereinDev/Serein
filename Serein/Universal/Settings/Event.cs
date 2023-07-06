@@ -81,12 +81,12 @@ namespace Serein.Settings
 
         public string[] RequestingMotdpeSucceed { get; set; } = new[]
         {
-            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n游戏模式：%GameMode%\n延迟：%Delay%ms"
+            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n游戏模式：%GameMode%\n延迟：%Latency%ms"
         };
 
         public string[] RequestingMotdjeSucceed { get; set; } = new[]
         {
-            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Delay%ms\n%Favicon%"
+            "g|服务器描述：%Description%\n版本：%Version%(%Protocol%)\n在线玩家：%OnlinePlayer%/%MaxPlayer%\n延迟：%Latency%ms\n%Favicon%"
         };
 
         public string[] RequestingMotdFail { get; set; } = new[]

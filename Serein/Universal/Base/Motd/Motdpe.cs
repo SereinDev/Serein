@@ -77,7 +77,7 @@ namespace Serein.Base.Motd
                 EndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
                 byte[] buffer = new byte[1024 * 8];
                 length = socket.ReceiveFrom(buffer, ref endPoint);
-                Delay = (DateTime.Now - startTime).TotalMilliseconds;
+                Latency = (DateTime.Now - startTime).TotalMilliseconds;
                 data = length > 35 ?
                     Encoding.UTF8.GetString(buffer, 35, length - 35) :
                     Encoding.UTF8.GetString(buffer, 0, length);

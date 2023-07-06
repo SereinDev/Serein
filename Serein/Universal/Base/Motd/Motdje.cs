@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Serein.Utils;
 using System;
 using System.Linq;
@@ -11,6 +10,8 @@ namespace Serein.Base.Motd
 {
     internal class Motdje : Motd
     {
+        public static readonly byte[] SentPacket = new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 };
+
         /// <summary>
         /// Java版Motd获取入口
         /// </summary>
@@ -63,18 +64,23 @@ namespace Serein.Base.Motd
         {
             byte[] datas = new byte[1024 * 1024];
             int totalLength = 0;
-            using (Socket socket = new(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
+
+            using (Socket socket = new(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
             {
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000);
+                SendTimeout = 1000,
+                ReceiveTimeout = 1000
+            })
+            {
                 socket.Connect(new IPEndPoint(IP, Port));
                 DateTime startTime = DateTime.Now;
-                socket.Send(new byte[] { 6, 0, 0, 0, 0x63, 0xdd, 1, 1, 0 });
+
+                socket.Send(SentPacket);
+
                 while (true)
                 {
                     try
                     {
-                        byte[] buffer = new byte[1024 * 8];
+                        byte[] buffer = new byte[1024 * 16];
                         int length = socket.Receive(buffer);
                         if (length == 0)
                         {
@@ -82,10 +88,8 @@ namespace Serein.Base.Motd
                         }
                         Array.Copy(buffer, 0, datas, totalLength, length);
                         totalLength += length;
-                        Origin = totalLength > 5 ?
-                            Encoding.UTF8.GetString(datas, 5, totalLength - 5) :
-                            Encoding.UTF8.GetString(datas, 0, totalLength);
-                        Logger.Output(LogType.Debug, length);
+
+                        Origin = Encoding.UTF8.GetString(datas, 0, totalLength);
                         if (Origin.Length > 0 && Origin.EndsWith("}") && new[] { ']', '}', '"' }.ToList().Contains(Origin[Origin.Length - 2]))
                         {
                             break; // 接收完毕
@@ -96,41 +100,30 @@ namespace Serein.Base.Motd
                         break;
                     }
                 }
-                Delay = (DateTime.Now - startTime).TotalMilliseconds;
+                Latency = (DateTime.Now - startTime).TotalMilliseconds;
             }
-            Origin = totalLength > 5 ?
-                Encoding.UTF8.GetString(datas, 5, totalLength - 5) :
-                Encoding.UTF8.GetString(datas, 0, totalLength);
-            Logger.Output(LogType.Debug, $"Origin: {Origin}");
-            if (!string.IsNullOrEmpty(Origin))
+
+            Origin = Encoding.UTF8.GetString(datas, 0, totalLength);
+
+
+            if (Origin.Contains("{"))
             {
-                JObject jsonObject = (JObject)JsonConvert.DeserializeObject(Origin)!;
-                OnlinePlayer = long.TryParse(jsonObject.SelectToken("players.online")?.ToString(), out long number) ? number : -1;
-                MaxPlayer = long.TryParse(jsonObject.SelectToken("players.max")?.ToString(), out number) ? number : -1;
-                Version = jsonObject.SelectToken("version.name")?.ToString();
-                Protocol = jsonObject.SelectToken("version.protocol")?.ToString();
-                if (jsonObject.SelectToken("description.text") != null)
-                {
-                    Description = jsonObject.SelectToken("description.text")?.ToString() ?? string.Empty;
-                    Description = System.Text.RegularExpressions.Regex.Replace(System.Text.RegularExpressions.Regex.Unescape(Description), "§.", string.Empty);
-                }
-                if (jsonObject.SelectToken("description.extra")?.HasValues ?? false)
-                {
-                    Description = string.Empty;
-                    foreach (JObject childrenJObject in jsonObject.SelectToken("description.extra")!)
-                    {
-                        Description += childrenJObject["text"]?.ToString();
-                    }
-                }
-                if (jsonObject["favicon"] != null)
-                {
-                    Favicon = jsonObject["favicon"]?.ToString();
-                    if (!string.IsNullOrEmpty(Favicon) && Favicon!.Contains(","))
-                    {
-                        Favicon = $"[CQ:image,file=base64://{Favicon.Substring(Favicon.IndexOf(',') + 1)}]";
-                    }
-                }
+                Origin = Origin.Substring(Origin.IndexOf('{'));
+                Logger.Output(LogType.Debug, $"Origin: {Origin}");
+
+                MotdjePacket.Packet packet = JsonConvert.DeserializeObject<MotdjePacket.Packet>(Origin) ?? throw new ArgumentNullException();
+
                 IsSuccessful = true;
+                OnlinePlayer = packet.Players.Online;
+                MaxPlayer = packet.Players.Max;
+                Version = packet.Version.Name;
+                Protocol = packet.Version.Protocol.ToString();
+                Description = packet.Description?.Text;
+                Favicon = packet.Favicon;
+            }
+            else
+            {
+                throw new NotSupportedException("数据包格式貌似不正确");
             }
         }
     }

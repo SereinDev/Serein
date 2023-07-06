@@ -9,6 +9,7 @@ namespace Serein.Base
         Console,
         Schedule,
         EventTrigger,
-        Javascript
+        Javascript,
+        ConsoleExecute
     }
 }

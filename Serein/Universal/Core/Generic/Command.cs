@@ -117,11 +117,9 @@ namespace Serein.Core.Generic
             }
 
             Base.CommandType type = GetType(command);
-            if (type == Base.CommandType.Invalid || ((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
+            if (type != Base.CommandType.Invalid && !((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
             {
-                return;
-            }
-            ExecuteCommand(
+                ExecuteCommand(
                 type,
                 originType,
                 command,
@@ -130,6 +128,7 @@ namespace Serein.Core.Generic
                 message?.UserId ?? 0,
                 message
                 );
+            }
             if (originType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && message is not null && message.GroupId != 0)
             {
                 Binder.Update(message);
@@ -418,9 +417,9 @@ namespace Serein.Core.Generic
                         "onlineplayer" => ServerManager.Motd?.OnlinePlayer,
                         "maxplayer" => ServerManager.Motd?.MaxPlayer,
                         "original" => ServerManager.Motd?.Origin,
-                        "delay" => ServerManager.Motd?.Delay.ToString("N1"),
+                        "latency" => ServerManager.Motd?.Latency.ToString("N1"),
                         "version" => ServerManager.Motd?.Version,
-                        "favicon" => ServerManager.Motd?.Favicon,
+                        "favicon" => ServerManager.Motd?.FaviconCQCode,
                         "exception" => ServerManager.Motd?.Exception,
                         #endregion
 

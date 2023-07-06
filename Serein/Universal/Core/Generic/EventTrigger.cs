@@ -106,21 +106,21 @@ namespace Serein.Core.Generic
 
                     foreach (string command in commandGroup)
                     {
-                        if (motd is not null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Delay|Favicon|Exception)%", RegexOptions.IgnoreCase))
+                        if (motd is not null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Latency|Favicon|Exception)%", RegexOptions.IgnoreCase))
                         {
                             string command_copy = Regex.Replace(command, @"%(\w+)%", (match) =>
                             (match.Groups[1].Value.ToLowerInvariant() switch
                             {
                                 "gamemode" => motd.GameMode,
-                                "%description%" => motd.Description,
-                                "%protocol%" => motd.Protocol,
-                                "%onlineplayer%" => motd.OnlinePlayer.ToString(),
-                                "%maxplayer%" => motd.MaxPlayer.ToString(),
-                                "%original%" => motd.Origin,
-                                "%delay%" => motd.Delay.ToString("N1"),
-                                "%version%" => motd.Version,
-                                "%favicon%" => motd.Favicon,
-                                "%exception%" => motd.Exception,
+                                "description" => motd.Description,
+                                "protocol" => motd.Protocol,
+                                "onlineplayer" => motd.OnlinePlayer.ToString(),
+                                "maxplayer" => motd.MaxPlayer.ToString(),
+                                "original" => motd.Origin,
+                                "latency" => motd.Latency.ToString("N1"),
+                                "version" => motd.Version,
+                                "favicon" => motd.FaviconCQCode,
+                                "exception" => motd.Exception,
                                 _ => match.Groups[1].Value
                             } ?? string.Empty));
                             Command.Run(Base.CommandOrigin.EventTrigger, command_copy, message, true);

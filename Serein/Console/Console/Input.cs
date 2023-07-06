@@ -30,6 +30,9 @@ namespace Serein.Utils.Console
       o|open|connect        - 连接
       c|close|disconnect    - 断开
 
+  e|execute <command> 执行指定Serein命令
+    command: Serein命令
+
   sysinfo       - 系统信息
   clear         - 清屏
   wp|welpage    - 显示欢迎页
@@ -69,6 +72,7 @@ Tip:
                             Environment.Exit(0);
                         }
                         break;
+
                     case "s":
                     case "server":
                         if (args.Length == 2)
@@ -115,6 +119,7 @@ Tip:
                             Logger.Output(LogType.Warn, "错误的参数：<operation>");
                         }
                         break;
+
                     case "ws":
                     case "websocket":
                         if (args.Length == 2)
@@ -151,6 +156,7 @@ Tip:
                             Logger.Output(LogType.Warn, "错误的参数：<operation>");
                         }
                         break;
+
                     case "r":
                     case "reload":
                         if (IsLoading)
@@ -173,15 +179,18 @@ Tip:
                             IsLoading = false;
                         });
                         break;
+
                     case "clear":
                         System.Console.Clear();
                         break;
+
                     case "?":
                     case "？":
                     case "h":
                     case "help":
                         Logger.Output(LogType.Info, HelpMenu);
                         break;
+
                     case "v":
                     case "version":
                         Logger.Output(LogType.Info,
@@ -202,6 +211,7 @@ Tip:
                             Logger.Output(LogType.Info, $"新版本（{Update.LastVersion}）已下载完毕，重启即可更新");
                         }
                         break;
+
                     case "sysinfo":
                         Logger.Output(LogType.Info,
                             $"系统   {SystemInfo.OS}\n" +
@@ -216,10 +226,28 @@ Tip:
                             $"  - 下载   {SystemInfo.DownloadSpeed}"
                             );
                         break;
+
                     case "wp":
                     case "welpage":
                         Runtime.ShowWelcomePage();
                         break;
+
+                    case "e":
+                    case "execute":
+                        string command = System.Text.RegularExpressions.Regex.Replace(line, @"^(e|execute)\s?", string.Empty);
+                        CommandType type = Command.GetType(command);
+
+                        if (type != CommandType.Invalid)
+                        {
+                            Logger.Output(LogType.Info, $"命令类型：{type}");
+                            Command.Run(CommandOrigin.ConsoleExecute, command);
+                        }
+                        else
+                        {
+                            Logger.Output(LogType.Warn, "命令不合法");
+                        }
+                        break;
+
                     default:
                         Logger.Output(LogType.Warn, "未知的命令，请检查后重试或输入“help”获取更多信息");
                         break;

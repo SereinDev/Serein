@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 #if !CONSOLE
@@ -29,19 +30,22 @@ namespace Serein.Utils
             CrashInterception.Init();
             Debug.WriteLine(Global.LOGO);
             Directory.SetCurrentDirectory(Global.PATH);
+            IO.ReadAll();
+            Task.Run(SystemInfo.Init);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #if WINFORM
             ResourcesManager.InitConsole();
 #endif
-            IO.ReadAll();
-            Task.Run(SystemInfo.Init);
+
 #if !CONSOLE
             AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
 #endif
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.LazyTimer.Stop();
+
             if (_args.Contains("debug"))
             {
                 Global.Settings.Serein.DevelopmentTool.EnableDebug = true;
             }
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.LazyTimer.Stop();
         }
 
         /// <summary>
