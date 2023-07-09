@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Serein.Core.JSPlugin
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Plugin : IDisposable
     {
         public Plugin(string @namespace, PreLoadConfig config)
@@ -20,7 +20,7 @@ namespace Serein.Core.JSPlugin
             Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
             Name = @namespace;
             PreLoadConfig = config;
-            Engine = JSEngine.Create(false, Namespace, _tokenSource, PreLoadConfig);
+            Engine = JSEngineFactory.Create(false, Namespace, _tokenSource, PreLoadConfig);
         }
 
         public void Dispose()
@@ -186,54 +186,39 @@ namespace Serein.Core.JSPlugin
             {
                 return false;
             }
-            Utils.Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
             try
             {
-                switch (type)
+                lock (Engine)
                 {
-                    case EventType.ServerStart:
-                    case EventType.SereinClose:
-                    case EventType.PluginsLoaded:
-                    case EventType.PluginsReload:
-                        lock (Engine)
-                        {
+                    Utils.Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
+                    switch (type)
+                    {
+                        case EventType.ServerStart:
+                        case EventType.SereinClose:
+                        case EventType.PluginsLoaded:
+                        case EventType.PluginsReload:
                             Engine.Invoke(_eventDict[type]);
-                        }
-                        break;
-                    case EventType.ServerStop:
-                    case EventType.ServerSendCommand:
-                        lock (Engine)
-                        {
+                            break;
+                        case EventType.ServerStop:
+                        case EventType.ServerSendCommand:
                             Engine.Invoke(_eventDict[type], args[0]);
-                        }
-                        break;
-                    case EventType.ServerOutput:
-                    case EventType.ServerOriginalOutput:
-                    case EventType.ReceivePacket:
-                        lock (Engine)
-                        {
+                            break;
+                        case EventType.ServerOutput:
+                        case EventType.ServerOriginalOutput:
+                        case EventType.ReceivePacket:
                             return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0]));
-                        }
-                    case EventType.GroupIncrease:
-                    case EventType.GroupDecrease:
-                    case EventType.GroupPoke:
-                        lock (Engine)
-                        {
+                        case EventType.GroupIncrease:
+                        case EventType.GroupDecrease:
+                        case EventType.GroupPoke:
                             Engine.Invoke(_eventDict[type], args[0], args[1]);
-                        }
-                        break;
-                    case EventType.ReceiveGroupMessage:
-                        lock (Engine)
-                        {
+                            break;
+                        case EventType.ReceiveGroupMessage:
                             return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3], args[4]));
-                        }
-                    case EventType.ReceivePrivateMessage:
-                        lock (Engine)
-                        {
+                        case EventType.ReceivePrivateMessage:
                             return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3]));
-                        }
-                    default:
-                        throw new NotSupportedException($"触发了一个不支持的事件：{type}");
+                        default:
+                            throw new NotSupportedException($"触发了一个不支持的事件：{type}");
+                    }
                 }
             }
             catch (Exception e)

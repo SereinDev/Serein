@@ -58,7 +58,8 @@ Tip:
             }
             if (!ServerManager.Status || line.StartsWith("serein"))
             {
-                string[] args = System.Text.RegularExpressions.Regex.Replace(line, @"^serein\s?", string.Empty).ToLowerInvariant().Split(' ');
+                line = System.Text.RegularExpressions.Regex.Replace(line, @"^serein\s?", string.Empty);
+                string[] args = line.ToLowerInvariant().Split(' ');
                 switch (args[0])
                 {
                     case "exit":
@@ -140,9 +141,9 @@ Tip:
                                 case "info":
                                     Logger.Output(LogType.Info,
                                         $"状态       {(Websocket.Status ? "已连接" : "未连接")}\n" +
-                                        $"账号       {Matcher.SelfId}\n" +
-                                        $"接收消息   {Matcher.MessageReceived}\n" +
-                                        $"发送消息   {Matcher.MessageSent}\n" +
+                                        $"账号       {PacketHandler.SelfId}\n" +
+                                        $"接收消息   {PacketHandler.MessageReceived}\n" +
+                                        $"发送消息   {PacketHandler.MessageSent}\n" +
                                         $"连接时间   {(Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-")}"
                                         );
                                     break;

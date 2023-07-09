@@ -5,7 +5,7 @@ using System;
 
 namespace Serein.Base.Packets
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     internal class Sender
     {
         /// <summary>

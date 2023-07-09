@@ -7,7 +7,7 @@ using WebSocket4Net;
 
 namespace Serein.Core.JSPlugin.Native
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class WSClient : PluginBase, IDisposable
     {
         /// <summary>

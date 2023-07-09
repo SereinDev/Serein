@@ -42,19 +42,17 @@ namespace Serein.Ui
             if (Websocket.Status)
             {
                 BotInfoStatus2.Text = "已连接";
-                BotInfoQQ2.Text = Matcher.SelfId;
-                BotInfoMessageReceived2.Text = Matcher.MessageReceived;
-                BotInfoMessageSent2.Text = Matcher.MessageSent;
                 BotInfoTime2.Text = (DateTime.Now - Websocket.StartTime).ToCustomString();
             }
             else
             {
                 BotInfoStatus2.Text = "未连接";
-                BotInfoQQ2.Text = "-";
-                BotInfoMessageReceived2.Text = "-";
-                BotInfoMessageSent2.Text = "-";
                 BotInfoTime2.Text = "-";
             }
+
+            BotInfoQQ2.Text = PacketHandler.SelfId;
+            BotInfoMessageReceived2.Text = PacketHandler.MessageReceived;
+            BotInfoMessageSent2.Text = PacketHandler.MessageSent;
         }
 
         public void SettingSereinVersion_Update(string NewText)

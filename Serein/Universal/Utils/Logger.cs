@@ -249,18 +249,24 @@ namespace Serein.Utils
                     break;
 #endif
                 default:
+#if !CONSOLE
                     if (!Global.Settings.Serein.DevelopmentTool.EnableDebug ||
                         !Global.Settings.Serein.DevelopmentTool.DetailDebug && type == LogType.DetailDebug)
                     {
                         return;
                     }
+#endif
                     StackTrace stackTrace = new(true);
                     line =
                         $"[{stackTrace.GetFrame(1)!.GetMethod()!.DeclaringType}" +
                         $"{(Global.Settings.Serein.DevelopmentTool.DetailDebug ? " " + stackTrace.GetFrame(1)!.GetMethod() : "." + stackTrace.GetFrame(1)!.GetMethod()!.Name)}] " +
                         $"{line}";
 #if CONSOLE
-                    WriteLine(4, line);
+                    if (!(!Global.Settings.Serein.DevelopmentTool.EnableDebug ||
+                        !Global.Settings.Serein.DevelopmentTool.DetailDebug && type == LogType.DetailDebug))
+                    {
+                        WriteLine(4, line);
+                    }
 #elif WINFORM
                     Program.Ui.Debug_Append($"{DateTime.Now:T} {line}");
 #elif WPF

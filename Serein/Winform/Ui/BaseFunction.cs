@@ -119,10 +119,9 @@ namespace Serein.Ui
                         ),
                         Encoding.UTF8
                         );
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(streamReader.ReadToEnd())!;
+                    JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(streamReader.ReadToEnd());
                     streamReader.Close();
-                    if (
-                        jsonObject["type"]?.ToString().ToUpperInvariant() == "REGEX")
+                    if (jsonObject?["type"]?.ToString().ToUpperInvariant() == "REGEX")
                     {
                         DialogResult dialogResult = MessageBox.Show(
                             this,
@@ -137,8 +136,8 @@ namespace Serein.Ui
                             LoadRegex();
                         }
                     }
-                    else if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK")
+                    else if ((jsonObject?["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject?["type"]?.ToString().ToUpperInvariant() == "TASK")
                         &&
                         (int)MessageBox.Show(
                             this,
@@ -152,8 +151,7 @@ namespace Serein.Ui
                         LoadSchedule();
                     }
                 }
-                else if (
-                    Path.GetFileName(filename).ToLowerInvariant() == "regex.tsv" &&
+                else if (Path.GetFileName(filename).ToLowerInvariant() == "regex.tsv" &&
                     (int)MessageBox.Show(
                         this,
                         "是否导入正则记录？\n将覆盖原有文件且不可逆",

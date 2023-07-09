@@ -45,7 +45,7 @@ namespace Serein.Core.Generic
                 return;
             }
             Logger.Output(LogType.Bot_Clear);
-            Matcher.ResetStatisics();
+            PacketHandler.ResetStatisics();
 
             try
             {
@@ -239,6 +239,10 @@ namespace Serein.Core.Generic
         /// <param name="e">消息接收事件参数</param>
         public static void Receive(object? sender, MessageReceivedEventArgs e)
         {
+            if (string.IsNullOrEmpty(e.Message))
+            {
+                return;
+            }
             if (Global.Settings.Bot.EnbaleOutputData)
             {
                 Logger.Output(LogType.Bot_Receive, e.Message);
@@ -254,7 +258,7 @@ namespace Serein.Core.Generic
             }
             try
             {
-                Matcher.Process((JObject)JsonConvert.DeserializeObject(packet)!);
+                PacketHandler.Handle(JsonConvert.DeserializeObject<JObject>(packet)!);
             }
             catch (Exception exception)
             {

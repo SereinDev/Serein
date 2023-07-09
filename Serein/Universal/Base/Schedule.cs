@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Schedule
     {
         /// <summary>

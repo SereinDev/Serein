@@ -50,7 +50,12 @@ namespace Serein.Utils
             }
             try
             {
-                JObject jsonObject = ((JObject)JsonConvert.DeserializeObject(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await())!);
+                JObject? jsonObject = (JsonConvert.DeserializeObject<JObject>(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await()));
+                if (jsonObject is null)
+                {
+                    return;
+                }
+
                 string? version = jsonObject["tag_name"]?.ToString();
                 if (LastVersion != version && !string.IsNullOrEmpty(version))
                 {

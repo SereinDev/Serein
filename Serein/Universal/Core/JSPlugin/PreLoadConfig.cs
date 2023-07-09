@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Serein.Core.JSPlugin
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal struct PreLoadConfig
     {
         public string[] Assemblies = { };

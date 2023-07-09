@@ -4,7 +4,7 @@ using Serein.Base.Packets;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Member
     {
         /// <summary>

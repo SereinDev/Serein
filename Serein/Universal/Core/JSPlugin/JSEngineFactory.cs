@@ -21,7 +21,7 @@ using SystemInfoLibrary.OperatingSystem;
 
 namespace Serein.Core.JSPlugin
 {
-    internal static class JSEngine
+    internal static class JSEngineFactory
     {
         /// <summary>
         /// 初始化JS引擎
@@ -197,6 +197,10 @@ namespace Serein.Core.JSPlugin
                 new Func<string, bool>((message) => Websocket.Send(message)));
             engine.SetValue("serein_getWsStatus",
                 new Func<bool>(() => Websocket.Status));
+            engine.SetValue("serein_getSelfId",
+                new Func<long?>(() => PacketHandler.SelfIdInt64));
+            engine.SetValue("serein_getWsStat",
+                new Func<long?[]>(() => new[] { PacketHandler.MessageSentInt64, PacketHandler.MessageReceivedInt64 }));
             engine.SetValue("serein_bindMember",
                 new Func<long, string, bool>(Generic.Binder.Bind));
             engine.SetValue("serein_unbindMember",
@@ -288,6 +292,8 @@ namespace Serein.Core.JSPlugin
                     sendTemp:           serein_sendTemp,
                     sendPacket:         serein_sendPacket,
                     getWsStatus:        serein_getWsStatus,
+                    getWsStat:          serein_getWsStat,
+                    getSelfId:          serein_getSelfId,
                     getGroupCache:      serein_getGroupCache,
                     getUserInfo:        serein_getUserInfo,
 
@@ -304,6 +310,11 @@ namespace Serein.Core.JSPlugin
                     setPermission:          serein_setPermission,
                 };"
             );
+
+            if (!string.IsNullOrEmpty(Global.Settings.Serein.Function.JSScriptToPreExecute))
+            {
+                engine.Execute(Global.Settings.Serein.Function.JSScriptToPreExecute!);
+            }
             return engine;
         }
 

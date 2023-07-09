@@ -121,21 +121,21 @@ namespace Serein.Utils
                     {
                         return;
                     }
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
-                    if (jsonObject["type"]?.ToString().ToUpperInvariant() == "REGEX")
+                    JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(text);
+                    if (jsonObject?["type"]?.ToString().ToUpperInvariant() == "REGEX")
                     {
                         if (append)
                         {
                             lock (Global.RegexList)
                             {
-                                ((JArray)jsonObject["data"]!).ToObject<List<Regex>>()!.ForEach((i) => Global.RegexList.Add(i));
+                                ((JArray)jsonObject["data"]!).ToObject<List<Regex>>()?.Where((i) => i is not null).ToList().ForEach((i) => Global.RegexList.Add(i));
                             }
                         }
                         else
                         {
                             lock (Global.RegexList)
                             {
-                                Global.RegexList = ((JArray)jsonObject["data"]!).ToObject<List<Regex>>()!;
+                                Global.RegexList = ((JArray?)jsonObject["data"])?.ToObject<List<Regex>>() ?? new();
                             }
                         }
                     }
@@ -181,10 +181,10 @@ namespace Serein.Utils
                 }
                 if (!string.IsNullOrEmpty(text))
                 {
-                    JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
-                    if (jsonObject["type"]?.ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"]?.HasValues == true)
+                    JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(text);
+                    if (jsonObject?["type"]?.ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"]?.HasValues == true)
                     {
-                        List<Member> list = ((JArray)jsonObject["data"]!).ToObject<List<Member>>()!;
+                        List<Member> list = ((JArray?)jsonObject["data"])?.ToObject<List<Member>>() ?? new(); ;
                         list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
                         Dictionary<long, Member> dictionary = new();
                         list.ForEach((x) => dictionary.Add(x.ID, x));
@@ -266,9 +266,9 @@ namespace Serein.Utils
                     string text = streamReader.ReadToEnd();
                     if (!string.IsNullOrEmpty(text))
                     {
-                        JObject jsonObject = (JObject)JsonConvert.DeserializeObject(text)!;
-                        if ((jsonObject["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject["type"]?.ToString().ToUpperInvariant() == "TASK") &&
+                        JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(text);
+                        if ((jsonObject?["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
+                            jsonObject?["type"]?.ToString().ToUpperInvariant() == "TASK") &&
                             jsonObject["data"] != null)
                         {
                             Global.Schedules = ((JArray)jsonObject["data"]!).ToObject<List<Schedule>>()!;
@@ -419,8 +419,7 @@ namespace Serein.Utils
                 {
                     lock (FileLock.GroupCache)
                     {
-                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, Member>>>(
-                            File.ReadAllText(Path.Combine("data", "groupcache.json")))!;
+                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, Member>>>(File.ReadAllText(Path.Combine("data", "groupcache.json"))) ?? new();
                     }
                 }
             }
@@ -466,8 +465,7 @@ namespace Serein.Utils
                 lock (Global.PermissionGroups)
                     lock (FileLock.PermissionGroups)
                     {
-                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(
-                            File.ReadAllText(Path.Combine("data", "permission.json")))!;
+                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(File.ReadAllText(Path.Combine("data", "permission.json"))) ?? new();
                     }
             }
             else

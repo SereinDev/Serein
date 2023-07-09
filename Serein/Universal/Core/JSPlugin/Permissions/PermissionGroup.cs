@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Serein.Core.JSPlugin.Permission
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class PermissionGroup
     {
         /// <summary>

@@ -54,11 +54,10 @@ namespace Serein.Windows.Pages.Function
             => Dispatcher.Invoke(() =>
             {
                 Status.Content = Websocket.Status ? "已连接" : "未连接";
-                ID.Content = Websocket.Status ? (Matcher.SelfId ?? "-") : "-";
-                MessageReceived.Content = Websocket.Status ? (Matcher.MessageReceived ?? "-") : "-";
-                MessageSent.Content = Websocket.Status ? (Matcher.MessageSent ?? "-") : "-";
-                TimeSpan t = DateTime.Now - Websocket.StartTime;
-                Time.Content = Websocket.Status ? t.ToCustomString() : "-";
+                ID.Content = PacketHandler.SelfId;
+                MessageReceived.Content = PacketHandler.MessageReceived;
+                MessageSent.Content = PacketHandler.MessageSent;
+                Time.Content = Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-";
             });
     }
 }

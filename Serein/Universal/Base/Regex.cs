@@ -4,20 +4,15 @@ using Serein.Extensions;
 
 namespace Serein.Base
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class Regex
     {
         /// <summary>
         /// 正则表达式
         /// </summary>
-        [JsonProperty(PropertyName = "regex")]
         public string Expression { get; set; } = string.Empty;
 
-        /// <summary>
-        /// JS成员
-        /// </summary>
-        [JsonIgnore]
-        public string regex => Expression;
+        public string regex { set => Expression = value; }
 
         /// <summary>
         /// 备注

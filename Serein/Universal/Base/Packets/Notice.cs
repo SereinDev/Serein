@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Serein.Base.Packets
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     internal class Notice
     {
         /// <summary>

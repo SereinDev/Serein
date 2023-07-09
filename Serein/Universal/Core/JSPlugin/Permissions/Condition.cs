@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Serein.Core.JSPlugin.Permission
 {
-    [JsonObject(MemberSerialization.OptOut, NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class Condition
     {
         /// <summary>
