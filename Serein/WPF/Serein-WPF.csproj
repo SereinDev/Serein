@@ -39,7 +39,7 @@
 		<PackageReference Include="Jint" Version="3.0.0-beta-2048" />
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Notification.Wpf" Version="7.0.0" />
+		<PackageReference Include="Notification.Wpf" Version="7.0.0.1" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
