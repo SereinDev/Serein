@@ -3,9 +3,7 @@ using Serein.Base.Packets;
 using Serein.Core.JSPlugin;
 using Serein.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Serein.Core.Generic
 {
@@ -161,7 +159,7 @@ namespace Serein.Core.Generic
             {
                 return;
             }
-            bool isSelfMessage = messagePacket.MessageType == "message_sent";
+            bool isSelfMessage = messagePacket.PostType == "message_sent";
             if (!isSelfMessage)
             {
                 bool interdicted = false;

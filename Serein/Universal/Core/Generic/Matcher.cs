@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Serein.Base.Packets;
-using Serein.Core.JSPlugin;
-using Serein.Utils;
+﻿using Serein.Base.Packets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,11 +41,11 @@ namespace Serein.Core.Generic
                 foreach (Base.Regex regex in Global.RegexList)
                 {
                     if (
-                        string.IsNullOrEmpty(messagePacket?.RawMessage) ||
+                        string.IsNullOrEmpty(messagePacket.RawMessage) ||
                         string.IsNullOrEmpty(regex.Expression) || // 表达式为空
                         regex.Area <= 1 ||  // 禁用或控制台
-                        !(isSelfMessage ^ regex.Area == 4) || // 自身消息与定义域矛盾
-                        !System.Text.RegularExpressions.Regex.IsMatch(messagePacket!.RawMessage, regex.Expression) || // 不匹配
+                        !(isSelfMessage ^ regex.Area != 4) || // 自身消息与定义域矛盾
+                        !System.Text.RegularExpressions.Regex.IsMatch(messagePacket.RawMessage, regex.Expression) || // 不匹配
                         regex.Area == 2 && regex.Ignored.ToList().Contains(messagePacket.GroupId) ||
                         regex.Area == 3 && regex.Ignored.ToList().Contains(messagePacket.UserId) // 忽略
                         )
