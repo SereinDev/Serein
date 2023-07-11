@@ -13,8 +13,8 @@ namespace Serein.Ui.ChildrenWindow
         public MemberInfoEditor(ListViewItem listViewItem)
         {
             InitializeComponent();
-            ID.Text += listViewItem.Text;
-            NickName.Text += listViewItem.SubItems[2].Text;
+            ID.Text = listViewItem.Text;
+            NickName.Text = listViewItem.SubItems[2].Text;
             GameIDBox.Text = listViewItem.SubItems[4].Text;
         }
 
@@ -25,7 +25,7 @@ namespace Serein.Ui.ChildrenWindow
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if (!Regex.IsMatch(GameIDBox.Text, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+            if (!Regex.IsMatch(GameIDBox.Text, Global.Settings.Serein.Function.RegexForCheckingGameID))
             {
                 MessageBox.Show(
                     "游戏ID不合法",

@@ -28,7 +28,7 @@ namespace Serein.Core.Generic
         public static bool Bind(long userID, string value)
         {
             value = value.Trim();
-            if (Global.MemberDict.ContainsKey(userID) || !System.Text.RegularExpressions.Regex.IsMatch(value, @"^[a-zA-Z0-9_\s-]{4,16}$") || GameIDs.Contains(value))
+            if (Global.MemberDict.ContainsKey(userID) || !System.Text.RegularExpressions.Regex.IsMatch(value, Global.Settings.Serein.Function.RegexForCheckingGameID) || GameIDs.Contains(value))
             {
                 return false;
             }

@@ -115,7 +115,7 @@ namespace Serein.Windows.Pages.Function
                     }
                     break;
                 case 2:
-                    if (!System.Text.RegularExpressions.Regex.IsMatch(GameID, @"^[a-zA-Z0-9_\s-]{4,16}$"))
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(GameID, Global.Settings.Serein.Function.RegexForCheckingGameID))
                     {
                         Catalog.MainWindow?.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
                     }

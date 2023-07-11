@@ -496,13 +496,10 @@ namespace Serein.Core.Server
         /// <summary>
         /// 重启请求
         /// </summary>
-        public static void RestartRequest()
+        public static void RequestRestart()
         {
-            if (!_restart)
-            {
-                _restart = false;
-                Stop();
-            }
+            _restart = true;
+            Stop();
         }
 
         /// <summary>

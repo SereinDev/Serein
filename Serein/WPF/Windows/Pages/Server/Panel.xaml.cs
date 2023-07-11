@@ -35,7 +35,7 @@ namespace Serein.Windows.Pages.Server
             => ServerManager.Stop();
 
         private void Restart_Click(object sender, RoutedEventArgs e)
-            => ServerManager.RestartRequest();
+            => ServerManager.RequestRestart();
 
         private void Kill_Click(object sender, RoutedEventArgs e)
         {
