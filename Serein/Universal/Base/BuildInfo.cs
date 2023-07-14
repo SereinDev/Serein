@@ -1,6 +1,6 @@
 ﻿using System;
 using Serein.Properties;
-using Serein.Utils;
+using Serein.Utils.Output;
 
 namespace Serein.Base
 {

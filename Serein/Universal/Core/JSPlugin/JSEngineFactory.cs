@@ -59,7 +59,7 @@ namespace Serein.Core.JSPlugin
                             }
                             catch (Exception e)
                             {
-                                Utils.Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
+                                Utils.Output.Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
                             }
                         }
 
@@ -89,11 +89,11 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_namespace",
                 string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
             engine.SetValue("serein_debugLog",
-                new Action<JsValue>((content) => Utils.Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
+                new Action<JsValue>((content) => Utils.Output.Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
             if (!string.IsNullOrEmpty(@namespace))
             {
                 engine.SetValue("serein_log",
-                    new Action<JsValue>((content) => Utils.Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
+                    new Action<JsValue>((content) => Utils.Output.Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
                 engine.SetValue("serein_registerPlugin",
                     new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
                 engine.SetValue("serein_setListener",
@@ -332,12 +332,12 @@ namespace Serein.Core.JSPlugin
             }
             catch (JavaScriptException e)
             {
-                Utils.Logger.Output(LogType.Debug, e);
+                Utils.Output.Logger.Output(LogType.Debug, e);
                 exceptionMessage = $"{e.Message}\n{e.JavaScriptStackTrace}";
             }
             catch (Exception e)
             {
-                Utils.Logger.Output(LogType.Debug, e);
+                Utils.Output.Logger.Output(LogType.Debug, e);
                 exceptionMessage = e.Message;
             }
         }

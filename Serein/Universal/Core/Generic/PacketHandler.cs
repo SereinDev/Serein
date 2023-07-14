@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using Serein.Base.Packets;
 using Serein.Core.JSPlugin;
-using Serein.Utils;
+using Serein.Utils.Output;
 using System;
 using System.Linq;
 

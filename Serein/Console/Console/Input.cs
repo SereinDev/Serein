@@ -1,10 +1,12 @@
-using System.Threading.Tasks;
 using Serein.Base;
 using Serein.Core.Generic;
 using Serein.Extensions;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
+using System.Threading.Tasks;
 
 
 namespace Serein.Utils.Console
@@ -169,7 +171,7 @@ Tip:
                             IsLoading = true;
                             try
                             {
-                                IO.ReadAll();
+                                FileSaver.ReadAll();
                                 JSPluginManager.Reload();
                                 Logger.Output(LogType.Info, "重新加载成功");
                             }

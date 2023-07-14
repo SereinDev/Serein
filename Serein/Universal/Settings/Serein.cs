@@ -30,7 +30,7 @@ namespace Serein.Settings
         /// 最大缓存行数（仅Winfom、WPF）
         /// </summary>
         public int MaxCacheLines = 250;
-        
+
         /// <summary>
         /// 主题跟随系统（仅WPF）
         /// </summary>
@@ -42,11 +42,11 @@ namespace Serein.Settings
         public bool UseDarkTheme;
 
         public AutoRun AutoRun = new();
-       
+
         public DevelopmentTool DevelopmentTool = new();
-       
+
         public Function Function = new();
-       
+
         public PagesDisplayed PagesDisplayed = new();
     }
 
@@ -94,11 +94,6 @@ namespace Serein.Settings
         /// JS事件最大等待时间
         /// </summary>
         public int JSEventMaxWaitingTime = 500;
-
-        /// <summary>
-        /// JS事件冷却时间
-        /// </summary>
-        public int JSEventCoolingDownTime = 15;
 
         /// <summary>
         /// JS全局程序集

@@ -6,7 +6,8 @@ using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Core.Generic;
 using Serein.Extensions;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -104,15 +105,11 @@ namespace Serein.Core.JSPlugin
                         }
                         tasks.Add(Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
                     }
-                    if (tasks.Count > 0)
+                    if (tasks.Count > 0 && Global.Settings.Serein.Function.JSEventMaxWaitingTime > 0)
                     {
-                        if (Global.Settings.Serein.Function.JSEventMaxWaitingTime > 0)
-                        {
-                            Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
-                            tokenSource.Cancel();
-                            tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((result) => interdicted = interdicted || result);
-                        }
-                        Global.Settings.Serein.Function.JSEventCoolingDownTime.ToSleep();
+                        Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
+                        tokenSource.Cancel();
+                        tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((result) => interdicted = interdicted || result);
                     }
                 }
             }
@@ -245,7 +242,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? Array.Empty<long>()
                     });
                 }
-                IO.SaveRegex();
+                Data.FileSaveregex();
                 return true;
             }
             return false;
@@ -277,7 +274,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? selected.Ignored
                     };
                 }
-                IO.SaveRegex();
+                Data.FileSaveregex();
                 return true;
             }
             return false;
@@ -295,7 +292,7 @@ namespace Serein.Core.JSPlugin
                 {
                     Global.RegexList.RemoveAt(index ?? throw new ArgumentNullException());
                 }
-                IO.SaveRegex();
+                Data.FileSaveregex();
                 return true;
             }
             return false;
@@ -369,7 +366,7 @@ namespace Serein.Core.JSPlugin
             {
                 throw new ArgumentException(nameof(@namespace));
             }
-            IO.CreateDirectory(Path.Combine("plugins", @namespace));
+            Directory.CreateDirectory(Path.Combine("plugins", @namespace));
             File.WriteAllText(
                 Path.Combine("plugins", @namespace, "PreLoadConfig.json"),
                 JsonConvert.SerializeObject(new PreLoadConfig
@@ -402,7 +399,7 @@ namespace Serein.Core.JSPlugin
         {
             try
             {
-                IO.Reload(type);
+                FileSaver.Reload(type);
                 if (!string.IsNullOrEmpty(@namespace))
                 {
                     Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");

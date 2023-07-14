@@ -61,8 +61,12 @@ namespace Serein.Utils
         /// <returns>处理后的文本</returns>
         public static string Filter(string input)
         {
+            if (!input.Contains("\x1b"))
+            {
+                return input;
+            }
             string result = RegExp.Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
-            result = RegExp.Regex.Replace(result, @"\x1b", string.Empty);
+            result = result.Replace(@"\x1b", string.Empty);
             StringBuilder stringBuilder = new();
             for (int i = 0; i < result.Length; i++)
             {

@@ -1,5 +1,5 @@
 using Serein.Base;
-using Serein.Utils;
+using Serein.Utils.Output;
 using System;
 
 namespace Serein.Settings

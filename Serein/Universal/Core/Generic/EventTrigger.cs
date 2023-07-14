@@ -1,6 +1,6 @@
 ﻿using Serein.Base.Motd;
 using Serein.Base.Packets;
-using Serein.Utils;
+using Serein.Utils.Output;
 using System;
 using System.Text.RegularExpressions;
 

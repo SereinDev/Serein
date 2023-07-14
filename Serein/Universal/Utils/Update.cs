@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Extensions;
 using Serein.Properties;
+using Serein.Utils.Output;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -86,7 +87,7 @@ namespace Serein.Utils
         /// </summary>
         private static void DownloadNewVersion(JObject jobject)
         {
-            IO.CreateDirectory("update");
+            Directory.CreateDirectory("update");
             foreach (string file in Directory.GetFiles("update", "*.*", SearchOption.AllDirectories))
             {
                 if (Path.GetExtension(file.ToLowerInvariant()) != ".zip")

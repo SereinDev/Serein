@@ -1,5 +1,5 @@
 ﻿using Serein.Base;
-using Serein.Utils;
+using Serein.Utils.IO;
 using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace Serein.Ui
                 {
                     RegexList.Items.RemoveAt(_itemDraged.Index);
                     RegexList.Items.Insert(RegexList.SelectedItems[0].Index, _itemDraged);
-                    SaveRegex();
+                    FileSaveregex();
                     _itemDraged = null;
                 }
             }
@@ -59,7 +59,7 @@ namespace Serein.Ui
                 regexEditer.RemarkTextBox.Text,
                 regexEditer.CommandTextBox.Text
                 );
-            SaveRegex();
+            FileSaveregex();
         }
 
         private void RegexContextMenuStrip_Edit_Click(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace Serein.Ui
             RegexList.SelectedItems[0].SubItems[2].Text = isAdminText;
             RegexList.SelectedItems[0].SubItems[3].Text = regexEditer.RemarkTextBox.Text;
             RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.CommandTextBox.Text;
-            SaveRegex();
+            FileSaveregex();
         }
 
         private void RegexContextMenuStrip_Clear_Click(object sender, EventArgs e)
@@ -103,7 +103,7 @@ namespace Serein.Ui
                 if (result == 1)
                 {
                     RegexList.Items.Clear();
-                    SaveRegex();
+                    FileSaveregex();
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace Serein.Ui
                 if (result == 1)
                 {
                     RegexList.Items.RemoveAt(RegexList.SelectedItems[0].Index);
-                    SaveRegex();
+                    FileSaveregex();
                 }
             }
         }
@@ -165,9 +165,9 @@ namespace Serein.Ui
 
         private void RegexContextMenuStripRefresh_Click(object sender, EventArgs e)
         {
-            IO.ReadRegex();
+            Data.ReadRegex();
             LoadRegex();
-            SaveRegex();
+            FileSaveregex();
         }
 
         public void LoadRegex()
@@ -185,7 +185,7 @@ namespace Serein.Ui
             RegexList.EndUpdate();
         }
 
-        private void SaveRegex()
+        private void FileSaveregex()
         {
             List<Regex> regexItems = new();
             foreach (ListViewItem listViewItem in RegexList.Items)
@@ -201,7 +201,7 @@ namespace Serein.Ui
                 });
             }
             Global.RegexList = regexItems;
-            IO.SaveRegex();
+            Data.FileSaveregex();
         }
 
         private void RegexContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });

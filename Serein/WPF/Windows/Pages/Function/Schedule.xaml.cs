@@ -1,7 +1,8 @@
 ﻿using NCrontab;
 using Serein.Base;
 using Serein.Core.Generic;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.Schedules = list;
-            IO.SaveSchedule();
+            Data.SaveSchedule();
         }
 
         public bool Confirm(string cronExp, string command, string remark)
@@ -119,21 +120,21 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Delete":
-                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && ScheduleListView.SelectedIndex >= 0)
+                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && ScheduleListView.SelectedIndex >= 0)
                         {
                             ScheduleListView.Items.RemoveAt(ScheduleListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Clear":
-                        if (Logger.MsgBox("确定删除所有数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && ScheduleListView.Items.Count > 0)
+                        if (MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true) && ScheduleListView.Items.Count > 0)
                         {
                             ScheduleListView.Items.Clear();
                             Save();
                         }
                         break;
                     case "Refresh":
-                        IO.ReadSchedule();
+                        Data.ReadSchedule();
                         Load();
                         break;
                     case "LookupCommand":

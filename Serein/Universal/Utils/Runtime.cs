@@ -2,6 +2,8 @@ using Serein.Core.Generic;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Extensions;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +32,7 @@ namespace Serein.Utils
             CrashInterception.Init();
             Debug.WriteLine(Global.LOGO);
             Directory.SetCurrentDirectory(Global.PATH);
-            IO.ReadAll();
+            FileSaver.ReadAll();
             Task.Run(SystemInfo.Init);
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #if WINFORM
@@ -38,9 +40,9 @@ namespace Serein.Utils
 #endif
 
 #if !CONSOLE
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.Timer.Stop();
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => FileSaver.Timer.Stop();
 #endif
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => IO.LazyTimer.Stop();
+            AppDomain.CurrentDomain.ProcessExit += (_, _) => FileSaver.LazyTimer.Stop();
 
             if (_args.Contains("debug"))
             {
@@ -56,7 +58,7 @@ namespace Serein.Utils
             TaskRunner.Start();
             Heartbeat.Start();
             Update.Init();
-            IO.StartSaving();
+            FileSaver.StartSaving();
             if (Global.FirstOpen)
             {
                 ShowWelcomePage();

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Core.JSPlugin.Native;
 using Serein.Extensions;
-using Serein.Utils;
+using Serein.Utils.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,14 +62,14 @@ namespace Serein.Core.JSPlugin
             Task.Run(() =>
             {
                 5000.ToSleep();
-                Utils.Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                Utils.Output.Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
             });
 #if WINFORM
             Program.Ui?.LoadJSPluginPublicly();
 #elif WPF
             Windows.Catalog.Function.JSPlugin?.LoadPublicly();
 #endif
-            IO.CreateDirectory(Path.Combine("plugins", "modules"));
+            Directory.CreateDirectory(Path.Combine("plugins", "modules"));
             _loading = false;
         }
 
@@ -88,16 +88,16 @@ namespace Serein.Core.JSPlugin
             });
             if (PluginDict.Count > 0)
             {
-                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
+                Utils.Output.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
                 if (failedFiles.Count > 0)
                 {
-                    Utils.Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
+                    Utils.Output.Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
                 }
                 JSFunc.Trigger(EventType.PluginsLoaded);
             }
             else
             {
-                Utils.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
+                Utils.Output.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Serein.Core.JSPlugin
             }
 
             string @namespace = Path.GetFileNameWithoutExtension(file);
-            Utils.Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
+            Utils.Output.Logger.Output(LogType.Plugin_Notice, $"正在加载{Path.GetFileName(file)}");
 
             try
             {
@@ -150,7 +150,7 @@ namespace Serein.Core.JSPlugin
                 plugin.Engine!.Run(File.ReadAllText(file), out string exceptionMessage);
                 if (!string.IsNullOrEmpty(exceptionMessage))
                 {
-                    Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", exceptionMessage);
+                    Utils.Output.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", exceptionMessage);
                     plugin.Dispose();
                 }
                 else
@@ -161,8 +161,8 @@ namespace Serein.Core.JSPlugin
             }
             catch (Exception e)
             {
-                Utils.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
-                Utils.Logger.Output(LogType.Debug, e);
+                Utils.Output.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", e.Message);
+                Utils.Output.Logger.Output(LogType.Debug, e);
             }
         }
 
@@ -176,7 +176,7 @@ namespace Serein.Core.JSPlugin
                 return;
             }
             _loading = true;
-            Utils.Logger.Output(LogType.Plugin_Clear);
+            Utils.Output.Logger.Output(LogType.Plugin_Clear);
             JSFunc.ClearAllTimers();
             JSFunc.Trigger(EventType.PluginsReload);
 

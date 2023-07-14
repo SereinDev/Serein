@@ -1,10 +1,11 @@
 ﻿#if !CONSOLE
 using Serein.Base;
-using Serein.Utils;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Serein.Core.Server
@@ -25,7 +26,7 @@ namespace Serein.Core.Server
             {
                 if (ServerManager.Status)
                 {
-                    Logger.MsgBox("服务器仍在运行中", "Serein", 0, 48);
+                    MsgBox.Show("服务器仍在运行中");
                     return false;
                 }
                 return !(string.IsNullOrEmpty(BasePath) || !Directory.Exists(BasePath));
@@ -68,7 +69,7 @@ namespace Serein.Core.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox($"文件\"{filename}\" 导入失败\n{e.Message}", "Serein", 0, 48);
+                    MsgBox.Show($"文件\"{filename}\" 导入失败\n{e.Message}");
                     Logger.Output(LogType.Debug, e);
                     break;
                 }
@@ -87,7 +88,7 @@ namespace Serein.Core.Server
                 {
                     Logger.Output(LogType.Debug, "数据不合法");
                 }
-                else if (Logger.MsgBox($"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", "Serein", 1, 48))
+                else if (MsgBox.Show($"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", true))
                 {
                     foreach (string file in files)
                     {
@@ -98,10 +99,7 @@ namespace Serein.Core.Server
                         catch (Exception e)
                         {
                             Logger.Output(LogType.Debug, e);
-                            Logger.MsgBox(
-                                $"文件\"{file}\"删除失败\n{e.Message}", "Serein",
-                                0, 48
-                            );
+                            MsgBox.Show($"文件\"{file}\"删除失败\n{e.Message}");
                             break;
                         }
                     }
@@ -128,10 +126,9 @@ namespace Serein.Core.Server
                 catch (Exception e)
                 {
                     Logger.Output(LogType.Debug, e);
-                    Logger.MsgBox(
+                    MsgBox.Show(
                         $"文件\"{file}\"禁用失败\n" +
-                        $"{e.Message}", "Serein",
-                        0, 48
+                        $"{e.Message}"
                         );
                     break;
                 }
@@ -153,11 +150,7 @@ namespace Serein.Core.Server
                 catch (Exception e)
                 {
                     Logger.Output(LogType.Debug, e);
-                    Logger.MsgBox(
-                        $"文件\"{file}\"启用失败\n" +
-                        $"{e.Message}", "Serein",
-                        0, 48
-                        );
+                    MsgBox.Show($"文件\"{file}\"启用失败\n" + $"{e.Message}");
                     break;
                 }
             }
@@ -211,31 +204,25 @@ namespace Serein.Core.Server
         /// </summary>
         /// <param name="files">文件列表</param>
         /// <returns>导入结果</returns>
-        public static bool TryImport(Array files)
+        public static bool TryImport(List<string> files)
         {
             List<string> fileList = new();
-            List<string> filenameList = new();
-            string? filename;
-            foreach (object file in files)
+            foreach (string file in files)
             {
-                filename = file?.ToString();
-                if (!string.IsNullOrEmpty(filename) && AcceptableList.Contains(Path.GetExtension(filename!.ToLowerInvariant())))
+                string filename = file.ToString();
+                if (AcceptableList.Contains(Path.GetExtension(filename.ToLowerInvariant())))
                 {
                     fileList.Add(filename);
-                    filenameList.Add(Path.GetFileName(filename));
                 }
             }
-            if (fileList.Count > 0 && Logger.MsgBox($"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", filenameList)}", "Serein", 1, 48))
+            if (fileList.Count > 0 && MsgBox.Show($"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", fileList.Select(f => Path.GetFileName(f)))}", true))
             {
                 Add(fileList);
                 return true;
-            }
-            else if (fileList.Count == 0 && files.Length > 0)
-            {
-                Logger.MsgBox("无法识别所选文件", "Serein", 0, 48);
             }
             return false;
         }
     }
 }
+
 #endif

@@ -26,7 +26,7 @@ namespace Serein.Utils
         /// <param name="name">文件名</param>
         private static void ExtractConsoleFile(string resource, string name)
         {
-            IO.CreateDirectory("console");
+            Directory.CreateDirectory("console");
             File.WriteAllText(Path.Combine("console", name), resource, Encoding.UTF8);
         }
     }

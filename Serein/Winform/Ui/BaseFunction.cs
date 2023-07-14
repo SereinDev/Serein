@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Serein.Utils;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
+using Serein.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -45,12 +46,10 @@ namespace Serein.Ui
                 Visible = false;
                 ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+                return;
             }
-            else
-            {
-                SereinIcon.Dispose();
-                JSFunc.Trigger(Base.EventType.SereinClose);
-            }
+            SereinIcon.Dispose();
+            Task.Run(() => JSFunc.Trigger(Base.EventType.SereinClose)).Wait(1000);
         }
 
         public void ShowBalloonTip(string text)
@@ -72,115 +71,14 @@ namespace Serein.Ui
                     }
                     DebugTextBox.Text = DebugTextBox.Text + _text + "\r\n";
                 };
-                ServerPanelInfoTime2.Invoke(action, text);
+                Invoke(action, text);
             }
         }
 
         private void Ui_DragDrop(object sender, DragEventArgs e)
         {
-            Array data = (Array)e.Data!.GetData(DataFormats.FileDrop);
-            string filename;
-            List<string> extensionsList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
-            if (
-                data.Length == 1 &&
-                extensionsList.Contains(
-                    Path.GetExtension(
-                        data.GetValue(0)!.ToString()
-                        )!.ToLowerInvariant()
-                    )
-                )
-            {
-                FocusWindow();
-                filename = data.GetValue(0)!.ToString()!;
-                if (
-                    Path.GetExtension(filename).ToLowerInvariant() == ".exe" ||
-                    Path.GetExtension(filename).ToLowerInvariant() == ".bat"
-                    )
-                {
-                    if ((int)MessageBox.Show(
-                        this,
-                        $"是否以\"{filename}\"为启动文件？",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
-                        ) == 1)
-                    {
-                        SettingServerPath.Text = filename;
-                        Global.Settings.Server.Path = filename;
-                    }
-                    LoadPlugins();
-                }
-                else if (Path.GetExtension(filename).ToLowerInvariant() == ".json")
-                {
-                    StreamReader streamReader = new StreamReader(
-                        File.Open(
-                            filename,
-                            FileMode.Open
-                        ),
-                        Encoding.UTF8
-                        );
-                    JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(streamReader.ReadToEnd());
-                    streamReader.Close();
-                    if (jsonObject?["type"]?.ToString().ToUpperInvariant() == "REGEX")
-                    {
-                        DialogResult dialogResult = MessageBox.Show(
-                            this,
-                            $"确定要从{filename}导入正则记录吗？（将覆盖原有文件且不可逆）\n“是” - 将导入并将所有导入项添加至末尾\n“否” - 将覆盖原有文件\n“取消” - 取消导入操作",
-                            "Serein",
-                            MessageBoxButtons.YesNoCancel,
-                            MessageBoxIcon.Warning
-                        );
-                        if (dialogResult != DialogResult.Cancel)
-                        {
-                            IO.ReadRegex(filename, dialogResult == DialogResult.Yes);
-                            LoadRegex();
-                        }
-                    }
-                    else if ((jsonObject?["type"]?.ToString().ToUpperInvariant() == "SCHEDULE" ||
-                            jsonObject?["type"]?.ToString().ToUpperInvariant() == "TASK")
-                        &&
-                        (int)MessageBox.Show(
-                            this,
-                            $"确定从{filename}导入定时任务吗？\n此操作将覆盖原有文件且不可逆",
-                            "Serein",
-                            MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Warning
-                        ) == 1)
-                    {
-                        IO.ReadSchedule(filename);
-                        LoadSchedule();
-                    }
-                }
-                else if (Path.GetFileName(filename).ToLowerInvariant() == "regex.tsv" &&
-                    (int)MessageBox.Show(
-                        this,
-                        "是否导入正则记录？\n将覆盖原有文件且不可逆",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
-                        ) == 1)
-                {
-                    IO.ReadRegex(filename);
-                    LoadRegex();
-                }
-                else if (
-                    Path.GetFileName(filename).ToLowerInvariant() == "task.tsv" &&
-                    (int)MessageBox.Show(
-                        this,
-                        "是否导入定时任务？\n将覆盖原有文件且不可逆",
-                        "Serein",
-                        MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Warning
-                        ) == 1)
-                {
-                    IO.ReadSchedule(filename);
-                    LoadSchedule();
-                }
-            }
-            else if (data.Length > 0 && PluginManager.TryImport(data))
-            {
-                LoadPlugins();
-            }
+            FocusWindow();
+            FileImportHandler.Trigger((Array)e.Data!.GetData(DataFormats.FileDrop));
         }
 
 

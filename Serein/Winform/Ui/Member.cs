@@ -1,7 +1,6 @@
 ﻿using Serein.Base;
 using Serein.Base.Packets;
-using Serein.Core.Generic;
-using Serein.Utils;
+using Serein.Utils.IO;
 using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
@@ -53,7 +52,7 @@ namespace Serein.Ui
             {
                 Global.MemberDict = memberDict;
             }
-            IO.SaveMember();
+            Data.SaveMember();
         }
 
         private void MemberContextMenuStrip_Edit_Click(object sender, EventArgs e)
@@ -103,7 +102,7 @@ namespace Serein.Ui
 
         private void MemberContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
-            IO.ReadMember();
+            Data.ReadMember();
             LoadMember();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using NCrontab;
-using Notification.Wpf;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Utils;
@@ -7,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Appearance;
@@ -68,11 +67,9 @@ namespace Serein.Windows
                 ShowInTaskbar = false;
                 Hide();
                 Catalog.Notification?.Show("Serein", "服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
+                return;
             }
-            else
-            {
-                JSFunc.Trigger(Base.EventType.SereinClose);
-            }
+            Task.Run(() => JSFunc.Trigger(Base.EventType.SereinClose)).Wait(1000);
         }
 
         private void Hide_Click(object sender, RoutedEventArgs e)
@@ -248,58 +245,8 @@ namespace Serein.Windows
 
         private void UiWindow_Drop(object sender, DragEventArgs e)
         {
-            Array data = (Array)e.Data.GetData(DataFormats.FileDrop);
-            string filename = string.Empty;
-            List<string> SingleList = new List<string> { ".exe", ".bat", ".json", ".tsv" };
-            if (
-                data.Length == 1 &&
-                SingleList.Contains(
-                    Path.GetExtension(
-                        data.GetValue(0)?.ToString()!
-                        ).ToLowerInvariant()
-                    )
-                )
-            {
-                Focus();
-                filename = data.GetValue(0)?.ToString() ?? string.Empty;
-                if (
-                    Path.GetExtension(filename).ToLowerInvariant() == ".exe" ||
-                    Path.GetExtension(filename).ToLowerInvariant() == ".bat"
-                    )
-                {
-                    if (Logger.MsgBox(
-                        $"确定要以\"{filename}\"为启动文件吗？",
-                        "Serein", 1, 48))
-                    {
-                        if (Catalog.Settings.Server != null && Catalog.Settings.Server.Path != null)
-                        {
-                            Catalog.Settings.Server.Path.Text = filename;
-                        }
-                        Global.Settings.Server.Path = filename;
-                        Catalog.Server.Plugins?.Load();
-                    }
-                }
-                else if (Path.GetExtension(filename).ToLowerInvariant() == ".json" || Path.GetExtension(filename).ToLowerInvariant() == ".tsv")
-                {
-                    if (File.ReadAllText(filename).ToLowerInvariant().Contains("regex"))
-                    {
-                        if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入正则记录吗？", "Serein", 1, 48))
-                        {
-                            IO.ReadRegex(filename, Logger.MsgBox($"确定要合并正则记录吗？\n二者均将覆盖原有文件且不可逆", "Serein", 1, 48));
-                            Catalog.Function.Regex?.Load();
-                        }
-                    }
-                    else if (Logger.MsgBox($"确定要从{Path.GetFileName(filename)}导入定时任务吗？\n将覆盖原有文件且不可逆", "Serein", 1, 48))
-                    {
-                        IO.ReadSchedule(filename);
-                        Catalog.Function.Schedule?.Load();
-                    }
-                }
-            }
-            else if (data.Length > 0 && PluginManager.TryImport(data))
-            {
-                Catalog.Server.Plugins?.Load();
-            }
+            Activate();
+            FileImportHandler.Trigger((Array)e.Data.GetData(DataFormats.FileDrop));
         }
 
         public void UpdateTitle(string? title)

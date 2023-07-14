@@ -3,6 +3,8 @@ using Serein.Base.Packets;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -255,7 +257,7 @@ namespace Serein.Core.Generic
                 case Base.CommandType.Reload:
                     try
                     {
-                        IO.Reload(value, originType == Base.CommandOrigin.Msg);
+                        FileSaver.Reload(value, originType == Base.CommandOrigin.Msg);
                         if (originType == Base.CommandOrigin.Msg)
                         {
                             Websocket.Send(groupId == 0, "重新加载成功", groupId == 0 ? userId : groupId, false);

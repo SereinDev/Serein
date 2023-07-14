@@ -305,7 +305,7 @@ namespace Serein.Ui
             {
                 Global.Settings.Event.Edit(GetEventCommands(), (Base.EventType)Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name));
             }
-            IO.SaveEventSetting();
+            Utils.IO.Setting.SaveEventSetting();
         }
 
         private string[] GetEventCommands()

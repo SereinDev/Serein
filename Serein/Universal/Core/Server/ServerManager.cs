@@ -4,6 +4,8 @@ using Serein.Core.Generic;
 using Serein.Core.JSPlugin;
 using Serein.Extensions;
 using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -130,24 +132,24 @@ namespace Serein.Core.Server
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox("服务器已在运行中", "Serein", 0, 48);
+                    MsgBox.Show("服务器已在运行中");
                 }
             }
             else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox("启动路径为空", "Serein", 0, 48);
+                    MsgBox.Show("启动路径为空");
                 }
             }
             else if (!File.Exists(Global.Settings.Server.Path))
             {
                 if (!quiet)
                 {
-                    Logger.MsgBox($"启动文件\"{Global.Settings.Server.Path}\"未找到", "Serein", 0, 48);
+                    MsgBox.Show($"启动文件\"{Global.Settings.Server.Path}\"未找到");
                 }
             }
-            else if (!quiet && Path.GetFileName(Global.Settings.Server.Path).Contains("Serein") && !Logger.MsgBox("禁止禁止禁止套娃（）", "Serein", 1, 48))
+            else if (!quiet && Path.GetFileName(Global.Settings.Server.Path).Contains("Serein") && !MsgBox.Show("禁止禁止禁止套娃（）", true))
             {
                 return false;
             }
@@ -160,41 +162,51 @@ namespace Serein.Core.Server
 #endif
                 Logger.Output(LogType.Server_Notice, "启动中");
 
-                #region 主变量初始化
-                _serverProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
+                try
                 {
-                    FileName = Global.Settings.Server.Path,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardInput = true,
-                    StandardOutputEncoding = _encodings[Global.Settings.Server.OutputEncoding],
-                    WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path)
-                });
-                _serverProcess!.EnableRaisingEvents = true;
-                _serverProcess.Exited += (_, _) => CloseAll();
-                _inputWriter = new(
-                    _serverProcess.StandardInput.BaseStream,
-                    _encodings[Global.Settings.Server.InputEncoding]
-                   )
-                {
-                    AutoFlush = true,
-                    NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator) ? Environment.NewLine : Global.Settings.Server.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
-                };
-                _serverProcess.BeginOutputReadLine();
-                _serverProcess.OutputDataReceived += SortOutputHandler;
-                #endregion
+                    #region 主变量初始化
+                    _serverProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
+                    {
+                        FileName = Global.Settings.Server.Path,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardInput = true,
+                        StandardOutputEncoding = _encodings[Global.Settings.Server.OutputEncoding],
+                        WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path),
+                        Arguments = Global.Settings.Server.Argument ?? string.Empty
+                    });
+                    _serverProcess!.EnableRaisingEvents = true;
+                    _serverProcess.Exited += (_, _) => CloseAll();
+                    _inputWriter = new(
+                        _serverProcess.StandardInput.BaseStream,
+                        _encodings[Global.Settings.Server.InputEncoding]
+                       )
+                    {
+                        AutoFlush = true,
+                        NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator) ? Environment.NewLine : Global.Settings.Server.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
+                    };
+                    _serverProcess.BeginOutputReadLine();
+                    _serverProcess.OutputDataReceived += SortOutputHandler;
+                    #endregion
 
-                #region 变量初始化
-                _restart = false;
-                _isStoppedByUser = false;
-                LevelName = string.Empty;
-                Difficulty = string.Empty;
-                _tempLine = string.Empty;
-                CommandHistory.Clear();
-                StartFileName = Path.GetFileName(Global.Settings.Server.Path);
-                _prevProcessCpuTime = TimeSpan.Zero;
-                #endregion
+                    #region 变量初始化
+                    _restart = false;
+                    _isStoppedByUser = false;
+                    LevelName = string.Empty;
+                    Difficulty = string.Empty;
+                    _tempLine = string.Empty;
+                    CommandHistory.Clear();
+                    StartFileName = Path.GetFileName(Global.Settings.Server.Path);
+                    _prevProcessCpuTime = TimeSpan.Zero;
+                    #endregion
+                }
+                catch (Exception e)
+                {
+                    Logger.Output(LogType.Debug, e);
+                    MsgBox.Show("创建进程失败\n" + e.Message, false, true);
+                    return false;
+                }
 
                 #region 服务器启动后相关调用
                 Task.Run(() =>
@@ -238,7 +250,7 @@ namespace Serein.Core.Server
             }
             else if (!quiet)
             {
-                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
+                MsgBox.Show("服务器不在运行中");
             }
         }
 
@@ -278,7 +290,7 @@ namespace Serein.Core.Server
             }
             else if (!Status)
             {
-                Logger.MsgBox("服务器不在运行中", "Serein", 0, 48);
+                MsgBox.Show("服务器不在运行中");
             }
 #if CONSOLE
             else
@@ -311,12 +323,12 @@ namespace Serein.Core.Server
                 }
             }
 #else
-            else if (Logger.MsgBox("确定结束进程吗？\n此操作可能导致存档损坏等问题", "Serein", 1, 48)
+            else if (MsgBox.Show("确定结束进程吗？\n此操作可能导致存档损坏等问题", true)
 #if !NET6_0
                  && (
                     !StartFileName.ToLowerInvariant().EndsWith(".bat") || (
                     StartFileName.ToLowerInvariant().EndsWith(".bat") &&
-                    Logger.MsgBox("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", "Serein", 1, 48)))
+                    MsgBox.Show("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", true)))
 #endif
                 )
             {
@@ -333,7 +345,7 @@ namespace Serein.Core.Server
                 }
                 catch (Exception e)
                 {
-                    Logger.MsgBox("强制结束失败\n" + e.Message, "Serein", 0, 16);
+                    MsgBox.Show("强制结束失败\n" + e.Message, false, true);
                     return false;
                 }
             }
@@ -385,7 +397,7 @@ namespace Serein.Core.Server
                     line_copy = ConvertToUnicode(line_copy);
                 }
                 _inputWriter?.WriteLine(line_copy);
-                IO.ConsoleLog(">" + command);
+                Log.Console(">" + command);
                 Task.Run(() => JSFunc.Trigger(EventType.ServerSendCommand, command));
             }
             else if (isFromCommand)
@@ -456,7 +468,7 @@ namespace Serein.Core.Server
                         }
                     }
                 }
-                IO.ConsoleLog(lineFiltered);
+                Log.Console(lineFiltered);
             }
         }
 
@@ -498,8 +510,8 @@ namespace Serein.Core.Server
         /// </summary>
         public static void RequestRestart()
         {
-            _restart = true;
             Stop();
+            _restart = true;
         }
 
         /// <summary>

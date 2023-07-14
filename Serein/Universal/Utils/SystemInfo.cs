@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 #endif
+using Serein.Utils.Output;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Timers;

@@ -1,5 +1,6 @@
-﻿using Serein.Utils;
-using Serein.Core.Generic;
+﻿using Serein.Core.Generic;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace Serein.Windows.Pages.Function
             {
                 Global.MemberDict = dictionary;
             }
-            IO.SaveMember();
+            Data.SaveMember();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -54,8 +55,8 @@ namespace Serein.Windows.Pages.Function
                     Catalog.MainWindow?.MemberEditor.Hide();
                     _actionType = 0;
                 }
-                string Tag = menuItem.Tag as string ?? string.Empty;
-                switch (Tag)
+                string tag = menuItem.Tag as string ?? string.Empty;
+                switch (tag)
                 {
                     case "Add":
                         _actionType = 1;
@@ -73,14 +74,14 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Delete":
-                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && MemberListView.SelectedIndex >= 0)
+                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && MemberListView.SelectedIndex >= 0)
                         {
                             MemberListView.Items.RemoveAt(MemberListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Refresh":
-                        IO.ReadMember();
+                        Data.ReadMember();
                         Load();
                         break;
                 }

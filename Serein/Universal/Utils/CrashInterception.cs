@@ -3,6 +3,8 @@ using Ookii.Dialogs.Wpf;
 #endif 
 using Serein.Core.Generic;
 using Serein.Core.Server;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -32,11 +34,11 @@ namespace Serein.Utils
             {
                 ServerManager.Stop(true);
             }
-            IO.CreateDirectory(Path.Combine("logs", "crash"));
+            Directory.CreateDirectory(Path.Combine("logs", "crash"));
             string exceptionMsg = MergeException(e);
             try
             {
-                lock (IO.FileLock.Crash)
+                lock (Log.FileLock.Crash)
                 {
                     File.AppendAllText(
                         Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),

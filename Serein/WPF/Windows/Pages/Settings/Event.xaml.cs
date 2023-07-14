@@ -1,6 +1,7 @@
 ﻿using Serein.Base;
 using Serein.Core.Generic;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +42,7 @@ namespace Serein.Windows.Pages.Settings
                         }
                         break;
                     case "Delete":
-                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && EventListView.SelectedIndex >= 0)
+                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && EventListView.SelectedIndex >= 0)
                         {
                             EventListView.Items.RemoveAt(EventListView.SelectedIndex);
                         }
@@ -91,7 +92,7 @@ namespace Serein.Windows.Pages.Settings
             if (Enum.IsDefined(typeof(EventType), _selectedTag))
             {
                 Global.Settings.Event.Edit(GetEventCommands(), (EventType)Enum.Parse(typeof(EventType), _selectedTag));
-                IO.SaveEventSetting();
+                Setting.SaveEventSetting();
             }
         }
 

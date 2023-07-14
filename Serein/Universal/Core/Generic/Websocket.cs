@@ -3,7 +3,8 @@ using Newtonsoft.Json.Linq;
 using Serein.Base;
 using Serein.Core.JSPlugin;
 using Serein.Extensions;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -41,7 +42,7 @@ namespace Serein.Core.Generic
         {
             if (Status)
             {
-                Logger.MsgBox("Websocket已连接", "Serein", 0, 48);
+                MsgBox.Show("Websocket已连接");
                 return;
             }
             Logger.Output(LogType.Bot_Clear);
@@ -166,7 +167,7 @@ namespace Serein.Core.Generic
                 {
                     Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
                 }
-                IO.MsgLog($"[Sent] {textJObject}");
+                Log.Msg($"[Sent] {textJObject}");
             }
             return Status;
         }
@@ -206,7 +207,7 @@ namespace Serein.Core.Generic
                 {
                     Logger.Output(LogType.Bot_Send, $"\"临时会话\"({userID}):{message}");
                 }
-                IO.MsgLog($"[Sent] {textJObject}");
+                Log.Msg($"[Sent] {textJObject}");
             }
             return Status;
         }
@@ -228,7 +229,7 @@ namespace Serein.Core.Generic
             }
             else
             {
-                Logger.MsgBox("Websocket未连接", "Serein", 0, 48);
+                MsgBox.Show("Websocket未连接");
             }
         }
 
@@ -247,7 +248,7 @@ namespace Serein.Core.Generic
             {
                 Logger.Output(LogType.Bot_Receive, e.Message);
             }
-            IO.MsgLog($"[Received] {e.Message}");
+            Log.Msg($"[Received] {e.Message}");
             string packet = WebUtility.HtmlDecode(
                 new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})")
                 .Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)

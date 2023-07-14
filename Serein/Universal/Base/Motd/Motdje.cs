@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Serein.Utils;
+using Serein.Utils.Output;
 using System;
 using System.Linq;
 using System.Net;

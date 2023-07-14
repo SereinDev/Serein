@@ -63,20 +63,22 @@ namespace Serein.Ui
         /// <summary>
         /// 加载插件列表
         /// </summary>
-        private void LoadPlugins()
+        public void LoadPlugins()
         {
             if (PluginManager.Get() != null)
             {
                 PluginList.BeginUpdate();
                 PluginList.Clear();
                 string[] files = PluginManager.Get();
-                ListViewGroup pluginGroupJs = new("Js", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupDll = new("Dll", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupJar = new("Jar", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupPy = new("Py", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupLua = new("Lua", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupTs = new("Ts", HorizontalAlignment.Left);
-                ListViewGroup pluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
+                ListViewGroup
+                    pluginGroupJs = new("Js", HorizontalAlignment.Left),
+                    pluginGroupDll = new("Dll", HorizontalAlignment.Left),
+                    pluginGroupJar = new("Jar", HorizontalAlignment.Left),
+                    pluginGroupPy = new("Py", HorizontalAlignment.Left),
+                    pluginGroupLua = new("Lua", HorizontalAlignment.Left),
+                    pluginGroupTs = new("Ts", HorizontalAlignment.Left),
+                    pluginGroupDisable = new("已禁用", HorizontalAlignment.Left);
+
                 PluginList.Groups.Add(pluginGroupJs);
                 PluginList.Groups.Add(pluginGroupDll);
                 PluginList.Groups.Add(pluginGroupJar);
@@ -86,34 +88,38 @@ namespace Serein.Ui
                 PluginList.Groups.Add(pluginGroupDisable);
                 foreach (string file in files)
                 {
-                    ListViewItem listViewItem = new()
-                    {
-                        Text = Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty)
-                    };
+                    ListViewItem listViewItem = new(Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty));
                     switch (Path.GetExtension(file.ToLowerInvariant()))
                     {
                         case ".js":
                             pluginGroupJs.Items.Add(listViewItem);
                             break;
+
                         case ".dll":
                             pluginGroupDll.Items.Add(listViewItem);
                             break;
+
                         case ".jar":
                             pluginGroupJar.Items.Add(listViewItem);
                             break;
+
                         case ".py":
                             pluginGroupPy.Items.Add(listViewItem);
                             break;
+
                         case ".lua":
                             pluginGroupLua.Items.Add(listViewItem);
                             break;
+
                         case ".ts":
                             pluginGroupTs.Items.Add(listViewItem);
                             break;
+
                         case ".lock":
                             listViewItem.ForeColor = Color.Gray;
                             pluginGroupDisable.Items.Add(listViewItem);
                             break;
+
                         default:
                             continue;
                     }
@@ -129,7 +135,7 @@ namespace Serein.Ui
         /// <returns>插件路径列表</returns>
         private List<string> GetSelectedPlugins()
         {
-            List<string> files = new List<string>();
+            List<string> files = new();
             foreach (ListViewItem listViewItem in PluginList.SelectedItems)
             {
                 files.Add(PluginManager.BasePath + "\\" + listViewItem.Text + (listViewItem.ForeColor == Color.Gray ? ".lock" : string.Empty));

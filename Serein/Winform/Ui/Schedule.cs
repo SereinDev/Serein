@@ -1,5 +1,5 @@
 ﻿using Serein.Base;
-using Serein.Utils;
+using Serein.Utils.IO;
 using Serein.Ui.ChildrenWindow;
 using System;
 using System.Collections.Generic;
@@ -149,7 +149,7 @@ namespace Serein.Ui
 
         private void ScheduleContextMenuStrip_Refresh_Click(object sender, EventArgs e)
         {
-            IO.ReadSchedule();
+            Data.ReadSchedule();
             LoadSchedule();
             SaveSchedule();
         }
@@ -168,7 +168,7 @@ namespace Serein.Ui
                 });
             }
             Global.Schedules = list;
-            IO.SaveSchedule();
+            Data.SaveSchedule();
         }
 
         public void LoadSchedule()

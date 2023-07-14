@@ -1,4 +1,4 @@
-﻿using Serein.Utils;
+﻿using Serein.Utils.Output;
 using System;
 using System.Net;
 

@@ -1,8 +1,7 @@
 ﻿using Serein.Base;
-using Serein.Extensions;
+using Serein.Utils.IO;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 
 #if CONSOLE
@@ -16,7 +15,7 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 #endif
 
-namespace Serein.Utils
+namespace Serein.Utils.Output
 {
     internal static class Logger
     {
@@ -273,22 +272,7 @@ namespace Serein.Utils
                     Catalog.Debug?.AppendText($"{DateTime.Now:T} {line}");
 #endif
                     Debug.WriteLine(line);
-                    IO.CreateDirectory(Path.Combine("logs", "debug"));
-                    try
-                    {
-                        lock (IO.FileLock.Debug)
-                        {
-                            File.AppendAllText(
-                               Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                               $"{DateTime.Now:T} {line}\n",
-                               Encoding.UTF8
-                               );
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine(e);
-                    }
+                    Log.Debug(line);
                     break;
             }
         }
@@ -305,7 +289,7 @@ namespace Serein.Utils
         /// <param name="level">输出等级</param>
         /// <param name="line">输出行</param>
         /// <param name="usingTitle">使用Serein标题</param>
-        private static void WriteLine(int level, string line, bool usingTitle = false)
+        public static void WriteLine(int level, string line, bool usingTitle = false)
         {
             if (line == "#clear")
             {
@@ -358,83 +342,5 @@ namespace Serein.Utils
             }
         }
 #endif
-
-        /// <summary>
-        /// 显示具有指定文本、标题、按钮和图标的消息框。
-        /// </summary>
-        /// <param name="text">要在消息框中显示的文本。</param>
-        /// <param name="caption">要在消息框的标题栏中显示的文本。</param>
-        /// <param name="buttons">MessageBoxButtons 值之一，可指定在消息框中显示哪些按钮。</param>
-        /// <param name="icon">MessageBoxIcon 值之一，它指定在消息框中显示哪个图标。</param>
-        /// <returns>按下的按钮为OK或Yes</returns>
-        public static bool MsgBox(string text, string caption, int buttons, int icon)
-        {
-            Logger.Output(LogType.DetailDebug, new object[] { text, caption, buttons, icon }.ToJson());
-#if CONSOLE
-            text = text.Trim('\r', '\n');
-            switch (icon)
-            {
-                case 48:
-                    WriteLine(2, text, true);
-                    break;
-                case 16:
-                    WriteLine(3, text, true);
-                    break;
-            }
-            return true;
-#elif WINFORM
-            if (buttons == 0 && icon == 48)
-            {
-                text = ":(\n" + text;
-            }
-            DialogResult result = MessageBox.Show(text, caption, (MessageBoxButtons)buttons, (MessageBoxIcon)icon);
-            return result == DialogResult.OK || result == DialogResult.Yes;
-#elif WPF
-            if (buttons == 0)
-            {
-                if (text.Contains("\n"))
-                {
-                    Catalog.MainWindow?.OpenSnackbar(
-                        text.Split('\n')[0],
-                        text.Substring(text.IndexOf('\n')).TrimStart('\n'),
-                        icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
-                        );
-                }
-                else
-                {
-                    Catalog.MainWindow?.OpenSnackbar(
-                        "执行失败",
-                        text,
-                        icon == 48 ? SymbolRegular.Warning24 : SymbolRegular.Dismiss24
-                        );
-                }
-                return true;
-            }
-            bool confirmed = false;
-            MessageBox messageBox = new()
-            {
-                Title = caption,
-                Content = new TextBlock
-                {
-                    Text = text,
-                    TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
-                },
-                ShowInTaskbar = false,
-                ResizeMode = System.Windows.ResizeMode.NoResize,
-                Topmost = true,
-                Width = 350,
-                ButtonLeftName = buttons <= 1 ? "确定" : "是",
-                ButtonRightName = buttons <= 1 ? "取消" : "否"
-            };
-            messageBox.ButtonRightClick += (_, _) => messageBox.Close();
-            messageBox.ButtonLeftClick += (_, _) =>
-            {
-                confirmed = true;
-                messageBox.Close();
-            };
-            messageBox.ShowDialog();
-            return confirmed;
-#endif
-        }
     }
 }

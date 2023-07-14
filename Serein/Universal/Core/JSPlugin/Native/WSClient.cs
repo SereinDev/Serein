@@ -122,8 +122,8 @@ namespace Serein.Core.JSPlugin.Native
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Utils.Logger.Output(Base.LogType.Plugin_Error, $"[{_namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
-                Utils.Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
+                Utils.Output.Logger.Output(Base.LogType.Plugin_Error, $"[{_namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
+                Utils.Output.Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
         }
 

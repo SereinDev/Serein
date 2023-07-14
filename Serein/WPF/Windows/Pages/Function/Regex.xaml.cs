@@ -1,6 +1,7 @@
 ﻿using Serein.Core.Generic;
 using Serein.Extensions;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -41,7 +42,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.RegexList = list;
-            IO.SaveRegex();
+            Data.FileSaveregex();
         }
 
         private void RegexListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -90,21 +91,21 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Delete":
-                        if (Logger.MsgBox("确定删除此行数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && RegexListView.SelectedIndex >= 0)
+                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && RegexListView.SelectedIndex >= 0)
                         {
                             RegexListView.Items.RemoveAt(RegexListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Clear":
-                        if (Logger.MsgBox("确定删除所有数据？\n它将会永远失去！（真的很久！）", "Serein", 1, 48) && RegexListView.Items.Count > 0)
+                        if (MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true) && RegexListView.Items.Count > 0)
                         {
                             RegexListView.Items.Clear();
                             Save();
                         }
                         break;
                     case "Refresh":
-                        IO.ReadRegex();
+                        Data.ReadRegex();
                         Load();
                         break;
                     case "LookupCommand":

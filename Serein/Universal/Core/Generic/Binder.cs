@@ -1,7 +1,8 @@
 ﻿using Serein.Base;
 using Serein.Base.Packets;
 using Serein.Core.Server;
-using Serein.Utils;
+using Serein.Utils.IO;
+using Serein.Utils.Output;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,7 +41,7 @@ namespace Serein.Core.Generic
                     GameID = value
                 });
             }
-            IO.SaveMember();
+            Data.SaveMember();
             return true;
         }
 
@@ -87,7 +88,7 @@ namespace Serein.Core.Generic
                     GameID = value
                 });
             }
-            IO.SaveMember();
+            Data.SaveMember();
             EventTrigger.Trigger(EventType.BindingSucceed, message);
         }
 
@@ -106,7 +107,7 @@ namespace Serein.Core.Generic
             {
                 if (Global.MemberDict.Remove(message.UserId))
                 {
-                    IO.SaveMember();
+                    Data.SaveMember();
                     EventTrigger.Trigger(EventType.UnbindingSucceed, message);
                 }
                 else
@@ -127,7 +128,7 @@ namespace Serein.Core.Generic
             {
                 if (Global.MemberDict.Remove(userID))
                 {
-                    IO.SaveMember();
+                    Data.SaveMember();
                     return true;
                 }
                 return false;

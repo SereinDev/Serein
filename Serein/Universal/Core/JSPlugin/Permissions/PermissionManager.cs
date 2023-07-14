@@ -1,6 +1,6 @@
 using Jint;
 using Jint.Native;
-using Serein.Utils;
+using Serein.Utils.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +38,7 @@ namespace Serein.Core.JSPlugin.Permission
                 {
                     Global.PermissionGroups.Add(groupName, permissionGroup);
                 }
-                IO.SavePermissionGroups();
+                Data.SavePermissionGroups();
             }
             return true;
         }
@@ -58,7 +58,7 @@ namespace Serein.Core.JSPlugin.Permission
             {
                 if (Global.PermissionGroups.Remove(groupName))
                 {
-                    IO.SavePermissionGroups();
+                    Data.SavePermissionGroups();
                     return true;
                 }
             }
@@ -170,7 +170,7 @@ namespace Serein.Core.JSPlugin.Permission
                     result = true;
                 }
             }
-            IO.SavePermissionGroups();
+            Data.SavePermissionGroups();
             return result;
         }
     }
