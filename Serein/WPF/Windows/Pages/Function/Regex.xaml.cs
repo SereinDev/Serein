@@ -42,7 +42,7 @@ namespace Serein.Windows.Pages.Function
                 }
             }
             Global.RegexList = list;
-            Data.FileSaveregex();
+            Data.SaveRegex();
         }
 
         private void RegexListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)

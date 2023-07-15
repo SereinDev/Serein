@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace Serein.Windows.Pages.Settings
             Catalog.Settings.Server = this;
         }
 
-        private void Load()
+        public void Load()
         {
             StopCommands.Text = string.Join("\r\n", Global.Settings.Server.StopCommands);
             AutoStop.IsChecked = Global.Settings.Server.AutoStop;
@@ -36,7 +37,7 @@ namespace Serein.Windows.Pages.Settings
         }
 
         private void StopCommands_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.StopCommands = StopCommands.Text.Replace("\r", string.Empty).Trim('\r', '\n', ' ').Split('\n');
+            => Global.Settings.Server.StopCommands = StopCommands.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
         private void AutoStop_Click(object sender, RoutedEventArgs e)
             => Global.Settings.Server.AutoStop = AutoStop.IsChecked ?? false;
         private void EnableRestart_Click(object sender, RoutedEventArgs e)

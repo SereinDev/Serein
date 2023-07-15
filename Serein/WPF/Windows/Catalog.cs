@@ -7,40 +7,40 @@ using System.Collections.Generic;
 
 namespace Serein.Windows
 {
-    internal static class Catalog
+    internal struct Catalog
     {
-        public static NotificationManager? Notification { get; set; }
-        public static MainWindow? MainWindow { get; set; }
-        public static Home? Home { get; set; }
-        public static Debug? Debug { get; set; }
+        public static NotificationManager? Notification;
+        public static MainWindow? MainWindow;
+        public static Home? Home;
+        public static Debug? Debug;
 
-        public static class Server
+        public struct Server
         {
-            public static Panel? Panel { get; set; }
-            public static Plugins? Plugins { get; set; }
-            public static Pages.Server.Container? Container { get; set; }
+            public static Panel? Panel;
+            public static Plugins? Plugins;
+            public static Pages.Server.Container? Container;
             public static List<(Serein.Base.LogType, string)> Cache = new();
         }
 
-        public static class Function
+        public struct Function
         {
-            public static Regex? Regex { get; set; }
-            public static Schedule? Schedule { get; set; }
-            public static Member? Member { get; set; }
-            public static Pages.Function.JSPlugin? JSPlugin { get; set; }
-            public static Pages.Function.Bot? Bot { get; set; }
-            public static Pages.Function.Container? Container { get; set; }
-            public static List<(Serein.Base.LogType, string)> BotCache = new();
-            public static List<(Serein.Base.LogType, string)> PluginCache = new();
+            public static Regex? Regex;
+            public static Schedule? Schedule;
+            public static Member? Member;
+            public static Pages.Function.JSPlugin? JSPlugin;
+            public static Pages.Function.Bot? Bot;
+            public static Pages.Function.Container? Container;
+            public static List<(Base.LogType, string)> BotCache = new();
+            public static List<(Base.LogType, string)> PluginCache = new();
         }
 
-        public static class Settings
+        public struct Settings
         {
-            public static Event? Event { get; set; }
-            public static Pages.Settings.Bot? Bot { get; set; }
-            public static Pages.Settings.Server? Server { get; set; }
-            public static Pages.Settings.Serein? Serein { get; set; }
-            public static Pages.Settings.Container? Container { get; set; }
+            public static Event? Event;
+            public static Pages.Settings.Bot? Bot;
+            public static Pages.Settings.Server? Server;
+            public static Pages.Settings.Serein? Serein;
+            public static Pages.Settings.Container? Container;
         }
     }
 }

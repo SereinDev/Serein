@@ -1,6 +1,4 @@
-﻿using Serein.Base;
-using Serein.Core.JSPlugin;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -16,7 +14,7 @@ namespace Serein.Ui
 
         private void InitWebBrowser()
         {
-            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=ServerPanel");
+            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=serverPanel");
             BotWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
             JSPluginWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
         }
@@ -29,13 +27,7 @@ namespace Serein.Ui
             LoadRegex();
             LoadSchedule();
             UpdateInfoTimer.Start();
-            UpdateInfoTimer.Elapsed += (_, _) =>
-            {
-                if (!Disposing)
-                {
-                    Invoke(UpdateInfo);
-                }
-            };
+            UpdateInfoTimer.Elapsed += (_, _) => Invoke(UpdateInfo);
             System.Threading.Tasks.Task.Run(UpdateInfo);
             SetWindowTheme(RegexList.Handle, "Explorer", null);
             SetWindowTheme(ScheduleList.Handle, "Explorer", null);
@@ -47,6 +39,8 @@ namespace Serein.Ui
             SendMessage(MemberList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(JSPluginList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
             SendMessage(SettingEventList.Handle, 4158, IntPtr.Zero, Cursors.Arrow.Handle);
+
+            Disposed += (_, _) => UpdateInfoTimer.Stop();
         }
     }
 }

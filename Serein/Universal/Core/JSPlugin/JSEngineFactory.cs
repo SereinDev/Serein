@@ -185,6 +185,8 @@ namespace Serein.Core.JSPlugin
                 new Func<string>(() => ServerManager.Time));
             engine.SetValue("serein_getServerCPUUsage",
                 new Func<double>(() => ServerManager.CPUUsage));
+            engine.SetValue("serein_getServerPID",
+                new Func<int>(() => ServerManager.PID));
             engine.SetValue("serein_getServerFile",
                 new Func<string>(() => ServerManager.StartFileName));
             engine.SetValue("serein_sendGroup",
@@ -282,6 +284,7 @@ namespace Serein.Core.JSPlugin
                     getServerStatus:    serein_getServerStatus,
                     getServerTime:      serein_getServerTime,
                     getServerCPUUsage:  serein_getServerCPUUsage,
+                    getServerPID:       serein_getServerPID
                     getServerFile:      serein_getServerFile,
                     getServerMotd:      serein_getServerMotd,
                     getMotdpe:          serein_getMotdpe,

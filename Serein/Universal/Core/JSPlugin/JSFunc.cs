@@ -242,7 +242,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? Array.Empty<long>()
                     });
                 }
-                Data.FileSaveregex();
+                Data.SaveRegex();
                 return true;
             }
             return false;
@@ -274,7 +274,7 @@ namespace Serein.Core.JSPlugin
                         Ignored = ignored ?? selected.Ignored
                     };
                 }
-                Data.FileSaveregex();
+                Data.SaveRegex();
                 return true;
             }
             return false;
@@ -292,7 +292,7 @@ namespace Serein.Core.JSPlugin
                 {
                     Global.RegexList.RemoveAt(index ?? throw new ArgumentNullException());
                 }
-                Data.FileSaveregex();
+                Data.SaveRegex();
                 return true;
             }
             return false;

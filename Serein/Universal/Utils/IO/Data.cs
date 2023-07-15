@@ -77,6 +77,7 @@ namespace Serein.Utils.IO
                         Global.RegexList = jsonObject["data"]?.ToObject<List<Regex>>() ?? new();
                     }
                 }
+                SaveRegex();
             }
             catch (Exception e)
             {
@@ -104,6 +105,7 @@ namespace Serein.Utils.IO
                 list.Add(regex);
             }
             Global.RegexList = list;
+            SaveRegex();
         }
 
         /// <summary>
@@ -132,13 +134,12 @@ namespace Serein.Utils.IO
                 JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(content);
                 ParseRegex(jsonObject, appendMode, quiet);
             }
-            FileSaveregex();
         }
 
         /// <summary>
         /// 保存正则
         /// </summary>
-        public static void FileSaveregex()
+        public static void SaveRegex()
         {
             Directory.CreateDirectory("data");
             JObject jsonObject = new()
@@ -245,7 +246,7 @@ namespace Serein.Utils.IO
                 return;
             }
 
-            if (jsonObject["type"]?.ToString().ToLowerInvariant() != "regex")
+            if (jsonObject["type"]?.ToString().ToLowerInvariant() != "schedule")
             {
                 ShowMsgBox("任务文件无效", quiet);
                 return;
@@ -258,6 +259,7 @@ namespace Serein.Utils.IO
             }
 
             Global.Schedules = jsonObject["data"]?.ToObject<List<Schedule>>() ?? new();
+            SaveSchedule();
         }
 
         /// <summary>
@@ -277,6 +279,7 @@ namespace Serein.Utils.IO
                 }
             }
             Global.Schedules = list;
+            SaveSchedule();
         }
 
         /// <summary>

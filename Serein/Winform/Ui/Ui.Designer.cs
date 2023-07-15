@@ -1574,7 +1574,6 @@ namespace Serein.Ui
             resources.ApplyResources(this.SettingServerStopCommand, "SettingServerStopCommand");
             this.SettingServerStopCommand.Name = "SettingServerStopCommand";
             this.SettingServerStopCommand.TextChanged += new System.EventHandler(this.SettingServerStopCommand_TextChanged);
-            this.SettingServerStopCommand.Leave += new System.EventHandler(this.SettingServerStopCommand_Leave);
             this.SettingServerStopCommand.MouseHover += new System.EventHandler(this.SettingServerStopCommand_MouseHover);
             // 
             // SettingServerEnableUnicode

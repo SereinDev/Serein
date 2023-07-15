@@ -34,7 +34,7 @@ namespace Serein.Core.Generic
         /// </summary>
         /// <param name="type">类型</param>
         /// <param name="notice">通知数据包</param>
-        public static void Trigger(Base.EventType type, Notice? notice)
+        public static void Trigger(Base.EventType type, Notice notice)
         {
             Logger.Output(Base.LogType.Debug, "Trigger:" + type);
             string[] commandGroup = type switch
@@ -46,10 +46,7 @@ namespace Serein.Core.Generic
             };
             foreach (string command in commandGroup)
             {
-                Command.Run(
-                    Base.CommandOrigin.EventTrigger,
-                    command
-                    );
+                Command.Run(Base.CommandOrigin.EventTrigger, Regex.Replace(command, "%ID%", notice.TargetId?.ToString() ?? string.Empty, RegexOptions.IgnoreCase));
             }
         }
 

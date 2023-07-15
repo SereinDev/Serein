@@ -10,6 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+#if WPF
+using Serein.Windows;
+#endif
+
 namespace Serein.Utils
 {
     internal static class FileImportHandler
@@ -28,7 +32,7 @@ namespace Serein.Utils
                     tempList.Add(obj.ToString() ?? string.Empty);
                 }
             }
-            List<string> list = tempList.Where((i) => string.IsNullOrEmpty(i)).ToList();
+            List<string> list = tempList.Where((i) => !string.IsNullOrEmpty(i)).ToList();
 
             if (list.Count == 1 && (TryAsStartFile(list[0]) || TryReadAsDataFile(list[0])))
             {
@@ -53,12 +57,16 @@ namespace Serein.Utils
                 return false;
             }
 
-            if (MsgBox.Show($"是否以${Path.GetFileName(path)}为启动文件？"))
+            if (MsgBox.Show($"是否以{Path.GetFileName(path)}为启动文件？", true))
             {
                 Global.Settings.Server.Path = path;
+
 #if WINFORM
                 Program.Ui?.Invoke(Program.Ui.LoadSettings);
                 Program.Ui?.Invoke(Program.Ui.LoadPlugins);
+#elif WPF
+                Catalog.Settings.Server?.Dispatcher.Invoke(Catalog.Settings.Server.Load);
+                Catalog.Server.Plugins?.Dispatcher.Invoke(Catalog.Server.Plugins.Load);
 #endif
             }
             return true;
@@ -90,6 +98,12 @@ namespace Serein.Utils
                         if (MsgBox.Show("是否导入此正则文件？", true))
                         {
                             Data.ParseRegex(jobject, MsgBox.Show("是否与原有的正则合并？\n否则将替换原有正则", true));
+
+#if WINFORM
+                            Program.Ui?.Invoke(Program.Ui.LoadRegex);
+#elif WPF
+                            Catalog.Function.Regex?.Dispatcher.Invoke(Catalog.Function.Regex.Load);
+#endif
                         }
                         break;
 
@@ -98,6 +112,12 @@ namespace Serein.Utils
                         if (MsgBox.Show("是否导入此任务文件？", true))
                         {
                             Data.ParseSchedule(jobject);
+
+#if WINFORM
+                            Program.Ui?.Invoke(Program.Ui.LoadSchedule);
+#elif WPF
+                            Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
+#endif
                         }
                         break;
 
@@ -116,6 +136,12 @@ namespace Serein.Utils
                         if (MsgBox.Show("是否导入此正则文件？", true))
                         {
                             Data.ParseRegex(content.Split('\n'));
+
+#if WINFORM
+                            Program.Ui?.Invoke(Program.Ui.LoadRegex);
+#elif WPF
+                            Catalog.Function.Regex?.Dispatcher.Invoke(Catalog.Function.Regex.Load);
+#endif
                         }
                         break;
 
@@ -123,6 +149,12 @@ namespace Serein.Utils
                         if (MsgBox.Show("是否导入此任务文件？", true))
                         {
                             Data.ParseSchedule(content.Split('\n'));
+
+#if WINFORM
+                            Program.Ui?.Invoke(Program.Ui.LoadSchedule);
+#elif WPF
+                            Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
+#endif
                         }
                         break;
 

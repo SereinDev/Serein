@@ -99,19 +99,11 @@ namespace Serein.Ui
 
         private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
         {
-            Global.Settings.Server.StopCommands = SettingServerStopCommand.Text.Split(';');
-        }
-
-        private void SettingServerStopCommand_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(SettingServerStopCommand.Text) || string.IsNullOrWhiteSpace(SettingServerStopCommand.Text))
-            {
-                Global.Settings.Server.StopCommands = new[] { "stop" };
-                SettingServerStopCommand.Text = "stop";
-            }
+            Global.Settings.Server.StopCommands = SettingServerStopCommand.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         #endregion
+
         #region Serein
         private void SettingSereinEnableGetUpdate_Click(object sender, EventArgs e)
         {

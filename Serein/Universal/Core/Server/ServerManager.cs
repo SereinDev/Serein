@@ -15,6 +15,10 @@ using RegExp = System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 
+#if WINFORM||WPF
+using System.Runtime.InteropServices;
+#endif
+
 namespace Serein.Core.Server
 {
     internal static class ServerManager
@@ -88,6 +92,11 @@ namespace Serein.Core.Server
         /// 命令历史记录列表下标
         /// </summary>
         public static int CommandHistoryIndex;
+
+        /// <summary>
+        /// 进程ID
+        /// </summary>
+        public static int PID => _serverProcess?.Id ?? -1;
 
         /// <summary>
         /// 命令历史记录
@@ -236,6 +245,16 @@ namespace Serein.Core.Server
         {
             if (Status)
             {
+#if WINFORM || WPF
+                if (!quiet && Global.Settings.Server.StopCommands.Length == 0 && PID > 0 && Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    Logger.Output(LogType.Server_Notice, "当前未设置关服命令，将发送Ctrl+C作为替代");
+                    AttachConsole((uint)PID);
+                    GenerateConsoleCtrlEvent(CtrlTypes.CTRL_C_EVENT, (uint)PID);
+                    FreeConsole();
+                    return;
+                }
+#endif
                 foreach (string command in Global.Settings.Server.StopCommands)
                 {
                     if (!string.IsNullOrEmpty(command))
@@ -253,6 +272,29 @@ namespace Serein.Core.Server
                 MsgBox.Show("服务器不在运行中");
             }
         }
+
+#if WINFORM || WPF
+
+        [DllImport("kernel32.dll")]
+        private static extern bool AttachConsole(uint dwProcessId);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool FreeConsole();
+
+        private enum CtrlTypes : uint
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT,
+            CTRL_CLOSE_EVENT,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT
+        }
+
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GenerateConsoleCtrlEvent(CtrlTypes dwCtrlEvent, uint dwProcessGroupId);
+
+#endif
 
         /// <summary>
         /// 强制结束服务器

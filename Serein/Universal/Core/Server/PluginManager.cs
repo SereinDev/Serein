@@ -74,6 +74,10 @@ namespace Serein.Core.Server
                     break;
                 }
             }
+
+#if WINFORM
+            Program.Ui?.Invoke(Program.Ui.LoadPlugins);
+#endif
         }
 
         /// <summary>

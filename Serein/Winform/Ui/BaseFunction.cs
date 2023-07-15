@@ -1,12 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serein.Core.JSPlugin;
+﻿using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Utils;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,6 +11,7 @@ namespace Serein.Ui
     {
         private bool _isDragging;
         private ListViewItem? _itemDraged;
+
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (tabControl.SelectedIndex)
@@ -61,17 +57,16 @@ namespace Serein.Ui
 
         public void Debug_Append(string text)
         {
-            if (Global.Settings.Serein.DevelopmentTool.EnableDebug)
+            if (Global.Settings.Serein.DevelopmentTool.EnableDebug && !IsDisposed)
             {
-                Action<string> action = (_text) =>
+                Invoke(() =>
                 {
                     if (DebugTextBox.Text.Length > 50000)
                     {
                         DebugTextBox.Text = "";
                     }
-                    DebugTextBox.Text = DebugTextBox.Text + _text + "\r\n";
-                };
-                Invoke(action, text);
+                    DebugTextBox.Text = DebugTextBox.Text + text + "\r\n";
+                });
             }
         }
 
