@@ -158,7 +158,7 @@ namespace Serein.Core.Generic
                         }
                     }
                 };
-                _websocket?.Send(textJObject.ToString());
+                Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
                     Logger.Output(LogType.Bot_Send, textJObject);

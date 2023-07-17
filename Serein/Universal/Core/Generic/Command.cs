@@ -125,7 +125,7 @@ namespace Serein.Core.Generic
                 type,
                 originType,
                 command,
-                ApplyVariables(GetValue(command, msgMatch), message),
+                ApplyVariables(Format(command, msgMatch), message),
                 groupId,
                 message?.UserId ?? 0,
                 message
@@ -360,23 +360,33 @@ namespace Serein.Core.Generic
         }
 
         /// <summary>
-        /// 获取命令的值
+        /// 格式化命令
         /// </summary>
         /// <param name="command">命令</param>
-        /// <param name="match">消息匹配对象</param>
+        /// <param name="match">正则匹配对象</param>
         /// <returns>值</returns>
-        public static string GetValue(string command, Match? match = null)
+        public static string Format(string command, Match? match = null)
         {
-            string value = command.Substring(command.IndexOf('|') + 1);
+            string str = command.Substring(command.IndexOf('|') + 1);
             if (match != null)
             {
-                for (int i = match.Groups.Count; i >= 0; i--)
+                lock (match)
                 {
-                    value = System.Text.RegularExpressions.Regex.Replace(value, $"\\${i}(?!\\d)", match.Groups[i].Value);
+                    for (int i = match.Groups.Count; i >= 0; i--)
+                    {
+                        str = System.Text.RegularExpressions.Regex.Replace(str, $"\\${i}(?!\\d)", match.Groups[i].Value);
+                    }
+#if NET
+                    // 正则表达式中的分组构造（NET5+)
+                    foreach (string key in match.Groups.Keys)
+                    {
+                        str = str.Replace($"${{{key}}}", match.Groups[key].Value);
+                    }
+#endif
                 }
             }
-            Logger.Output(Base.LogType.Debug, value);
-            return value;
+            Logger.Output(Base.LogType.Debug, str);
+            return str;
         }
 
         /// <summary>

@@ -378,7 +378,7 @@ namespace Serein.Utils.IO
         /// </summary>
         public static void SavePermissionGroups()
         {
-            Directory.CreateDirectory("data");
+            Directory.CreateDirectory("plugins");
 
             lock (Global.PermissionGroups)
             {
@@ -386,13 +386,12 @@ namespace Serein.Utils.IO
                 {
                     try
                     {
-                        File.WriteAllText(Path.Combine("data", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
+                        File.WriteAllText(Path.Combine("plugins", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
                     }
-                    catch (Newtonsoft.Json.JsonSerializationException e)
+                    catch (JsonSerializationException e)
                     {
                         throw new NotSupportedException(
-                            "序列化权限组时出现异常。" + e.Message == "Error getting value from 'Params' on 'Esprima.Ast.ArrowFunctionExpression'." ?
-                            "检查一下你是不是把函数塞到权限字典里了！！！" : string.Empty, e);
+                            "序列化权限组时出现异常：" + e.Message, e);
                     }
                 }
             }
@@ -403,7 +402,7 @@ namespace Serein.Utils.IO
         /// </summary>
         public static void ReadPermissionGroups()
         {
-            string filename = Path.Combine("data", "permission.json");
+            string filename = Path.Combine("plugins", "permission.json");
             if (File.Exists(filename))
             {
                 lock (Global.PermissionGroups)
@@ -416,7 +415,7 @@ namespace Serein.Utils.IO
             {
                 lock (FileLock.PermissionGroups)
                 {
-                    File.WriteAllText(Path.Combine("data", "permission.json"), Global.PermissionGroups.ToJson(Formatting.Indented));
+                    File.WriteAllText(Path.Combine("plugins", "permission.json"), Global.PermissionGroups.ToJson(Formatting.Indented));
                 }
             }
         }

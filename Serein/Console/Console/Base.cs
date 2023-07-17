@@ -1,11 +1,11 @@
 ﻿using Serein.Base;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
-using Serein.Extensions;
 using Serein.Utils.Output;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Serein.Utils.Console
 {
@@ -89,8 +89,7 @@ namespace Serein.Utils.Console
                 else
                 {
                     Logger.Output(LogType.Info, "正在关闭...");
-                    JSFunc.Trigger(EventType.SereinClose);
-                    500.ToSleep();
+                    Task.Run(() => JSFunc.Trigger(EventType.SereinClose)).Wait(1000);
                     Environment.Exit(0);
                 }
             };
