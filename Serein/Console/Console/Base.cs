@@ -89,7 +89,7 @@ namespace Serein.Utils.Console
                 else
                 {
                     Logger.Output(LogType.Info, "正在关闭...");
-                    Task.Run(() => JSFunc.Trigger(EventType.SereinClose)).Wait(1000);
+                    Runtime.Exit();
                     Environment.Exit(0);
                 }
             };

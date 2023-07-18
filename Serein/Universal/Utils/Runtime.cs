@@ -3,7 +3,6 @@ using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Extensions;
 using Serein.Utils.IO;
-using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +10,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-#if !CONSOLE
+#if CONSOLE
+using Serein.Utils.Output;
+#else
 using Ookii.Dialogs.Wpf;
 #endif
 
@@ -31,18 +32,15 @@ namespace Serein.Utils
         {
             CrashInterception.Init();
             Debug.WriteLine(Global.LOGO);
+
             Directory.SetCurrentDirectory(Global.PATH);
             FileSaver.ReadAll();
+
             Task.Run(SystemInfo.Init);
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #if WINFORM
             ResourcesManager.InitConsole();
 #endif
-
-#if !CONSOLE
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => FileSaver.Timer.Stop();
-#endif
-            AppDomain.CurrentDomain.ProcessExit += (_, _) => FileSaver.LazyTimer.Stop();
 
             if (_args.Contains("debug"))
             {
@@ -76,6 +74,18 @@ namespace Serein.Utils
                     Task.Run(ServerManager.Start);
                 }
             });
+        }
+
+        /// <summary>
+        /// 退出主程序
+        /// </summary>
+        public static void Exit()
+        {
+            Task.WaitAll(new[] { Task.Run(() => JSFunc.Trigger(Base.EventType.SereinClose)) }, 500);
+#if !CONSOLE
+            FileSaver.Timer.Stop();
+#endif
+            FileSaver.LazyTimer.Stop();
         }
 
         /// <summary>

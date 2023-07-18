@@ -1,8 +1,6 @@
-﻿using Serein.Core.JSPlugin;
-using Serein.Core.Server;
+﻿using Serein.Core.Server;
 using Serein.Utils;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Serein.Ui
@@ -36,16 +34,16 @@ namespace Serein.Ui
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Visible = false;
+            ShowInTaskbar = false;
             if (ServerManager.Status)
             {
                 e.Cancel = true;
-                Visible = false;
-                ShowInTaskbar = false;
                 ShowBalloonTip("服务器进程仍在运行中\n已自动最小化至托盘，点击托盘图标即可复原窗口");
                 return;
             }
+            Runtime.Exit();
             SereinIcon.Dispose();
-            Task.Run(() => JSFunc.Trigger(Base.EventType.SereinClose)).Wait(1000);
         }
 
         public void ShowBalloonTip(string text)

@@ -43,7 +43,7 @@ namespace Serein.Utils
                     File.AppendAllText(
                         Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),
                         DateTime.Now + "  |  "
-                        + $"{Global.VERSION} - {Global.TYPE}" + "  |  " +
+                        + $"{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}" + "  |  " +
                         "NET" + Environment.Version.ToString() +
                         Environment.NewLine +
                         Global.BuildInfo.ToString() +
@@ -73,7 +73,7 @@ namespace Serein.Utils
                 MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
                 WindowTitle = "Serein",
                 Content = "" +
-                    $"版本： {Global.VERSION} - {Global.TYPE}\n" +
+                    $"版本：{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}\n" +
                     $"时间：{DateTime.Now}\n" +
                     $"NET版本：{Environment.Version}\n" +
                     $"编译时间：{Global.BuildInfo.Time}\n\n" +

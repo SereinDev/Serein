@@ -71,7 +71,7 @@ Tip:
                         }
                         else
                         {
-                            JSFunc.Trigger(EventType.SereinClose);
+                            Runtime.Exit();
                             Environment.Exit(0);
                         }
                         break;
@@ -198,6 +198,7 @@ Tip:
                     case "version":
                         Logger.Output(LogType.Info,
                             $"Serein {Global.VERSION}\n" +
+                            $"内部版本号 {Global.INTERNAL_VERSION}\n" +
                             $"编译类型   {Global.BuildInfo.Type}\n" +
                             $"编译时间   {Global.BuildInfo.Time}\n" +
                             $"详细信息   {Global.BuildInfo.Detail.Replace("\r", string.Empty)}\n" +

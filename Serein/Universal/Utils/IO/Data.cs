@@ -406,16 +406,18 @@ namespace Serein.Utils.IO
             if (File.Exists(filename))
             {
                 lock (Global.PermissionGroups)
+                {
                     lock (FileLock.PermissionGroups)
                     {
-                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(File.ReadAllText(Path.Combine("data", "permission.json"))) ?? new();
+                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(File.ReadAllText(filename)) ?? new();
                     }
+                }
             }
             else
             {
                 lock (FileLock.PermissionGroups)
                 {
-                    File.WriteAllText(Path.Combine("plugins", "permission.json"), Global.PermissionGroups.ToJson(Formatting.Indented));
+                    File.WriteAllText(filename, Global.PermissionGroups.ToJson(Formatting.Indented));
                 }
             }
         }

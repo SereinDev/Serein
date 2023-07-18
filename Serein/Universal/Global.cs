@@ -24,6 +24,11 @@ namespace Serein
         public const string VERSION = "v1.3.5";
 
         /// <summary>
+        /// 内部版本号
+        /// </summary>
+        public const string INTERNAL_VERSION = "pre5";
+
+        /// <summary>
         /// 类型
         /// </summary>
         public const string TYPE =

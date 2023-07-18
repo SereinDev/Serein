@@ -3650,7 +3650,7 @@
     <value>ASCII</value>
   </data>
   <data name="SettingServerEncoding.Items6" xml:space="preserve">
-    <value>ISO-8859-1</value>
+    <value>GBK</value>
   </data>
   <data name="SettingServerEncoding.Location" type="System.Drawing.Point, System.Drawing">
     <value>141, 448</value>
