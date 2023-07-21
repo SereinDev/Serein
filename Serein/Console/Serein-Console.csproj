@@ -12,18 +12,7 @@
 		<ApplicationIcon>..\Universal\Sources\Serein.ico</ApplicationIcon>
 		<RootNamespace>Serein</RootNamespace>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugType>portable</DebugType>
-		<Optimize>False</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<Optimize>True</Optimize>
-		<DebugType>embedded</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;CONSOLE</DefineConstants>
+		<DefineConstants>CONSOLE</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

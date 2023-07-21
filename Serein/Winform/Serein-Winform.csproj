@@ -12,18 +12,7 @@
 		<RootNamespace>Serein</RootNamespace>
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<Optimize>False</Optimize>
-		<DebugType>portable</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>embedded</DebugType>
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;WINFORM</DefineConstants>
+		<DefineConstants>WINFORM</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -10,17 +10,7 @@
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<LangVersion>10</LangVersion>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
-		<DebugType>portable</DebugType>
-		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-		<DebugType>embedded</DebugType>
-		<Optimize>True</Optimize>
-		<DefineConstants>$(DefineConstants)TRACE;WPF</DefineConstants>
+		<DefineConstants>WPF</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

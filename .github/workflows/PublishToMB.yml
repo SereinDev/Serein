@@ -1,0 +1,37 @@
+name: PublishToMB
+
+on:
+  workflow_dispatch:
+
+env:
+  ResourceId: 4169
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Get current git tag
+        id: tag
+        uses: devops-actions/action-get-tag@v1.0.2
+      
+      - name: last-green-sha
+        id: commitID
+        uses: jmoll-hn/last-green-commit-action@v1.0.7
+
+      - name: Get current time
+        uses: srfrnk/current-time@master
+        id: current-time
+        with:
+          format: MMDD
+
+      - name: Update MineBBS infomation
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://api.minebbs.com/api/openapi/v1/resources/${{ env.ResourceId }}/update"
+          method: "POST"
+          customHeaders: '{"Authorization": "Bearer ${{ secrets.MBKey }}"}'
+          contentType: "application/json"
+          data: '{"title": "${{ steps.tag.outputs.tag }}@${{ steps.current-time.outputs.formattedTime }}", "description": "${{ steps.commitID.outputs.commit_hash }}", "new_version": "${{ steps.tag.outputs.tag }}@${{ steps.current-time.outputs.formattedTime }}", "file_url": "https://github.com/Zaitonn/Serein/releases/latest"}'
+          escapeData: "true"
+          preventFailureOnNoResponse: "true"
+          ignoreStatusCodes: "400,404,401,403,500,502,503,504"

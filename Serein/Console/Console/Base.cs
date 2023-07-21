@@ -42,6 +42,13 @@ namespace Serein.Utils.Console
         {
             System.Console.ForegroundColor = ConsoleColor.Gray;
             System.Console.OutputEncoding = Encoding.UTF8;
+            Logger.Output(LogType.Info, Global.LOGO);
+#if UNIX
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
+            {
+                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用`Console`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+            }
+#else
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 IntPtr handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -56,13 +63,6 @@ namespace Serein.Utils.Console
                 IntPtr closeMenu = GetSystemMenu(FindWindow(null, System.Console.Title), IntPtr.Zero);
                 RemoveMenu(closeMenu, 0xF060, 0x0);
             }
-            Logger.Output(LogType.Info, Global.LOGO);
-#if UNIX
-            if (Environment.OSVersion.Platform != PlatformID.Unix)
-            {
-                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用`Console`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
-            }
-#else
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
                 Logger.Output(LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用`Console For Unix`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
@@ -78,7 +78,12 @@ namespace Serein.Utils.Console
             Runtime.Start();
             Logger.Output(LogType.Info, "启动成功");
             Logger.Output(LogType.Info, "你可以输入“help”获取更多信息");
-            System.Console.Title = "Serein " + Global.VERSION;
+#if !UNIX
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                System.Console.Title = "Serein " + Global.VERSION;
+            }
+#endif
             System.Console.CancelKeyPress += (_, e) =>
             {
                 if (ServerManager.Status)

@@ -26,7 +26,7 @@ namespace Serein
         /// <summary>
         /// 内部版本号
         /// </summary>
-        public const string INTERNAL_VERSION = "pre5";
+        public const string INTERNAL_VERSION = "pre5-fix";
 
         /// <summary>
         /// 类型

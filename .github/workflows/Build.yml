@@ -34,37 +34,13 @@ jobs:
       - name: DotNet restore
         run: dotnet restore
 
-      - name: Build the project(Release)
-        run: dotnet build -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
-
       - name: Build the project(Debug)
         run: dotnet build "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
-
-      - name: Upload Serein(Release,dotnet6-windows)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnet6
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0-windows
-          if-no-files-found: ignore
-
-      - name: Upload Serein(Release,dotnetframework472)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnetframework472
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net472
-          if-no-files-found: ignore
-
-      - name: Upload Serein(Debug,dotnet6-windows)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnet6_debug
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows
-          if-no-files-found: ignore
 
       - name: Upload Serein(Debug,dotnetframework472)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ matrix.project }}_dotnetframework472_debug
+          name: Serein_${{ matrix.project }}_dotnetframework472
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net472
           if-no-files-found: ignore
 
@@ -76,7 +52,7 @@ jobs:
       - name: Upload Serein(Publish)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ matrix.project }}_dotnet6_publish
+          name: Serein_${{ matrix.project }}_dotnet6
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0-windows\win-x64\publish
           if-no-files-found: ignore
 
@@ -106,36 +82,12 @@ jobs:
       - name: DotNet restore
         run: dotnet restore
 
-      - name: Build the project(Release)
-        run: dotnet build -p:Configuration=Release "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
-
       - name: Build the project(Debug)
         run: dotnet build "Serein/${{ matrix.project }}/Serein-${{ matrix.project }}.csproj"
-
-      - name: Upload Serein(Release,dotnet6)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnet6
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net6.0
-          if-no-files-found: ignore
-
-      - name: Upload Serein(Release,dotnetframework472)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnetframework472
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Release\net472
-          if-no-files-found: ignore
 
       - name: Upload Serein(Debug,dotnet6)
         uses: actions/upload-artifact@v3
         with:
-          name: Serein_${{ matrix.project }}_dotnet6_debug
+          name: Serein_${{ matrix.project }}_dotnet6
           path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net6.0
-          if-no-files-found: ignore
-
-      - name: Upload Serein(Debug,dotnetframework472)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein_${{ matrix.project }}_dotnetframework472_debug
-          path: ${{ github.workspace }}\Serein\${{ matrix.project }}\bin\Debug\net472
           if-no-files-found: ignore

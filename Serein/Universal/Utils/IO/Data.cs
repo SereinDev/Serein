@@ -364,13 +364,6 @@ namespace Serein.Utils.IO
                     }
                 }
             }
-            else
-            {
-                lock (FileLock.GroupCache)
-                {
-                    File.WriteAllText(Path.Combine("data", "groupcache.json"), Global.GroupCache.ToJson());
-                }
-            }
         }
 
         /// <summary>
@@ -390,8 +383,7 @@ namespace Serein.Utils.IO
                     }
                     catch (JsonSerializationException e)
                     {
-                        throw new NotSupportedException(
-                            "序列化权限组时出现异常：" + e.Message, e);
+                        throw new NotSupportedException("JSON序列化权限组时出现异常：" + e.Message, e);
                     }
                 }
             }
@@ -415,10 +407,7 @@ namespace Serein.Utils.IO
             }
             else
             {
-                lock (FileLock.PermissionGroups)
-                {
-                    File.WriteAllText(filename, Global.PermissionGroups.ToJson(Formatting.Indented));
-                }
+                SavePermissionGroups();
             }
         }
 
