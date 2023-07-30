@@ -10,6 +10,11 @@
             "request": "attach"
         },
         {
+            "name": ".NET Framework Attach",
+            "type": "clr",
+            "request": "attach"
+        },
+        {
             "name": ".NET Core",
             "type": "coreclr",
             "request": "launch",

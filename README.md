@@ -1,7 +1,8 @@
-# Serein - 新时代极简服务器面板
+# Serein
 
 <p align="center">
-    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fimg%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board">
+    <img alt="Serein" src="https://socialify.git.ci/Zaitonn/Serein/image?description=1&descriptionEditable=%E6%9E%81%E7%AE%80%E4%BD%86%E5%A4%9A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9D%A2%E6%9D%BF%E8%BD%AF%E4%BB%B6&font=KoHo&logo=https%3A%2F%2Fserein.cc%2Fimg%2FSerein.png&name=1&owner=1&pattern=Circuit%20Board#light">
+    <br>
     <br>
     <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Zaitonn/Serein?color=blue">
     <a href="https://github.com/Zaitonn/Serein/releases/latest">
@@ -21,8 +22,8 @@
     </a>
 </p>
 
-- 一个基于`.NET 6`和`NET Framework 4.7.2`的新时代我的世界极简服务器面板
-- **官网：<https://serein.cc/>**
+- 一个基于`.NET 6`和`NET Framework 4.7.2`的极简但多功能的服务器面板软件
+- **官网&完整介绍：<https://serein.cc/>**
 - **下载最新版：[Releases](https://github.com/Zaitonn/Serein/releases/latest)**
 - Minebbs：[Serein - Minebbs 我的世界中文论坛](https://www.minebbs.com/resources/serein.4169/)
 

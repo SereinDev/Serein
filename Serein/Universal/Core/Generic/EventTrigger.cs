@@ -46,7 +46,7 @@ namespace Serein.Core.Generic
             };
             foreach (string command in commandGroup)
             {
-                Command.Run(Base.CommandOrigin.EventTrigger, Regex.Replace(command, "%ID%", notice.TargetId?.ToString() ?? string.Empty, RegexOptions.IgnoreCase));
+                Command.Run(Base.CommandOrigin.EventTrigger, Regex.Replace(command, "%ID%", notice.UserId.ToString(), RegexOptions.IgnoreCase));
             }
         }
 
