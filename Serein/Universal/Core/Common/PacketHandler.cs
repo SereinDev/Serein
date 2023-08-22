@@ -5,7 +5,7 @@ using Serein.Utils.Output;
 using System;
 using System.Linq;
 
-namespace Serein.Core.Generic
+namespace Serein.Core.Common
 {
     internal static class PacketHandler
     {

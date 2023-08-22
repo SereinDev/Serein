@@ -3,5 +3,5 @@
         "**/obj/**": true,
         "**/bin/**": true,
         "**/packages/**": true
-    }
+    },
 }

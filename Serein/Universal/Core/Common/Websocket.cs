@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using WebSocket4Net;
 
-namespace Serein.Core.Generic
+namespace Serein.Core.Common
 {
     internal static class Websocket
     {

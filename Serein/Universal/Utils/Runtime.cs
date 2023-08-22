@@ -1,4 +1,4 @@
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;
 using Serein.Extensions;
@@ -23,7 +23,7 @@ namespace Serein.Utils
         /// <summary>
         /// 命令行参数
         /// </summary>
-        private static IList<string> _args => Environment.GetCommandLineArgs();
+        private static readonly IList<string> _args = Environment.GetCommandLineArgs();
 
         /// <summary>
         /// 初始化

@@ -174,10 +174,8 @@ namespace Serein.Utils
             }
             if (!File.Exists("Updater.exe"))
             {
-                using (FileStream fileStream = new("Updater.exe", FileMode.Create))
-                {
-                    fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
-                }
+                using FileStream fileStream = new("Updater.exe", FileMode.Create);
+                fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
             }
             Process.Start(new ProcessStartInfo("Updater.exe")
             {

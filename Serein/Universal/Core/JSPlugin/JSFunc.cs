@@ -4,7 +4,7 @@ using Jint.Native.Function;
 using Jint.Runtime;
 using Newtonsoft.Json;
 using Serein.Base;
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Extensions;
 using Serein.Utils.IO;
 using Serein.Utils.Output;

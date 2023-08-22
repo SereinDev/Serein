@@ -10,9 +10,6 @@ using System.Linq;
 using System.Windows.Forms;
 #elif WPF
 using Serein.Windows;
-using System.Windows.Controls;
-using Wpf.Ui.Common;
-using Wpf.Ui.Controls;
 #endif
 
 namespace Serein.Utils.Output
@@ -195,7 +192,10 @@ namespace Serein.Utils.Output
                 case LogType.Bot_Receive:
                 case LogType.Bot_Send:
                 case LogType.Bot_Error:
-                    Catalog.Function.Bot?.Dispatcher.Invoke(() => Catalog.Function.Bot?.Append(LogPreProcessing.Color(type, line)));
+                    Catalog.Function.Bot?.Dispatcher.Invoke(
+                        () => Catalog.Function.Bot?.Append(
+                            LogPreProcessing.Color(type, line.Length > 100 ? line.Substring(0, 100) + "…" : line)
+                            ));
                     Catalog.Function.BotCache.Add(new(type, line));
                     if (Catalog.Function.BotCache.Count > Global.Settings.Serein.MaxCacheLines)
                     {

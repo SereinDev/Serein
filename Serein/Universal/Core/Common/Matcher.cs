@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Serein.Core.Generic
+namespace Serein.Core.Common
 {
     internal static class Matcher
     {
-
-
         /// <summary>
         /// 处理来自控制台的消息
         /// </summary>

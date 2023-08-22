@@ -1,5 +1,5 @@
 ﻿using Serein.Base;
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Utils.IO;
 using Serein.Utils.Output;
 using System;

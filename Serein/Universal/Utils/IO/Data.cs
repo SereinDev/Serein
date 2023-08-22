@@ -1,9 +1,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serein.Base;
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Core.JSPlugin.Permission;
-using Serein.Extensions;
 using Serein.Utils.Output;
 using System;
 using System.Collections.Generic;

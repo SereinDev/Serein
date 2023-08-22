@@ -4,7 +4,7 @@ using Serein.Utils.Output;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Serein.Core.Generic
+namespace Serein.Core.Common
 {
     internal static class EventTrigger
     {

@@ -79,6 +79,6 @@ namespace Serein.Base
         /// </summary>
         /// <returns>是否合法</returns>
         public bool Check()
-            => Core.Generic.Command.GetType(Command) != CommandType.Invalid && Expression.TestRegex();
+            => Core.Common.Command.GetType(Command) != CommandType.Invalid && Expression.TestRegex();
     }
 }

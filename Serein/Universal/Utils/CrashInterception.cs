@@ -1,10 +1,11 @@
-﻿#if !CONSOLE
+﻿#if CONSOLE
+using Serein.Utils.Output;
+#else
 using Ookii.Dialogs.Wpf;
 #endif 
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Core.Server;
 using Serein.Utils.IO;
-using Serein.Utils.Output;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -35,6 +36,7 @@ namespace Serein.Utils
                 ServerManager.Stop(true);
             }
             Directory.CreateDirectory(Path.Combine("logs", "crash"));
+            
             string exceptionMsg = MergeException(e);
             try
             {

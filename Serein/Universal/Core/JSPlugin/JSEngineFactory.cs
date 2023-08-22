@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Jint;
+﻿using Jint;
 using Jint.Native;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
 using Newtonsoft.Json;
 using Serein.Base;
 using Serein.Base.Motd;
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Core.JSPlugin.Native;
 using Serein.Core.JSPlugin.Permission;
 using Serein.Core.Server;
 using Serein.Extensions;
 using Serein.Utils;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using SystemInfoLibrary.OperatingSystem;
@@ -71,7 +71,7 @@ namespace Serein.Core.JSPlugin
                         cfg.Interop.AllowOperatorOverloading = preLoadConfig.AllowOperatorOverloading;
                         cfg.Interop.AllowSystemReflection = preLoadConfig.AllowSystemReflection;
                         cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
-                        // cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
+                        cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
                         cfg.Strict = preLoadConfig.Strict;
                         cfg.Interop.ExceptionHandler = (_) => true;
                     }
@@ -204,13 +204,13 @@ namespace Serein.Core.JSPlugin
             engine.SetValue("serein_getWsStat",
                 new Func<long?[]>(() => new[] { PacketHandler.MessageSentInt64, PacketHandler.MessageReceivedInt64 }));
             engine.SetValue("serein_bindMember",
-                new Func<long, string, bool>(Generic.Binder.Bind));
+                new Func<long, string, bool>(Common.Binder.Bind));
             engine.SetValue("serein_unbindMember",
-                new Func<long, bool>(Generic.Binder.UnBind));
+                new Func<long, bool>(Common.Binder.UnBind));
             engine.SetValue("serein_getID",
-                new Func<string, long>(Generic.Binder.GetID));
+                new Func<string, long>(Common.Binder.GetID));
             engine.SetValue("serein_getGameID",
-                new Func<long, string>(Generic.Binder.GetGameID));
+                new Func<long, string>(Common.Binder.GetGameID));
             engine.SetValue("serein_getGroupCache",
                 new Func<JsValue>(() => JsValue.FromObject(engine, JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Member>>>(Global.GroupCache.ToJson()))));
             engine.SetValue("serein_getUserInfo",

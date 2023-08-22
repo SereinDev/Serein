@@ -6,7 +6,7 @@ using Serein.Utils.Output;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Serein.Core.Generic
+namespace Serein.Core.Common
 {
     internal static class Binder
     {
@@ -67,7 +67,7 @@ namespace Serein.Core.Generic
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, message);
                 return;
             }
-            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
+            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed && !ServerManager.Status)
             {
                 EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;
@@ -98,7 +98,7 @@ namespace Serein.Core.Generic
         /// <param name="message">数据包</param>
         public static void UnBind(Message message)
         {
-            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed ? !ServerManager.Status : false)
+            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed && !ServerManager.Status)
             {
                 EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;

@@ -1,5 +1,5 @@
 using Serein.Base;
-using Serein.Core.Generic;
+using Serein.Core.Common;
 using Serein.Extensions;
 using Serein.Core.JSPlugin;
 using Serein.Core.Server;

@@ -1,16 +1,6 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serein.Base;
-using Serein.Core.Generic;
 using Serein.Core.JSPlugin;
-using Serein.Core.JSPlugin.Permission;
-using Serein.Extensions;
-using Serein.Settings;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Timers;
 
 #if WPF
