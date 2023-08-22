@@ -54,10 +54,8 @@
                     x:Name="MaxCacheLines"
                     HorizontalAlignment="Left"
                     Icon="TextFirstLine24"
-                    IntegersOnly="True"
-                    Max="300"
-                    Min="0"
-                    Step="1"
+                    Maximum="300"
+                    Minimum="0"
                     TextChanged="MaxCacheLines_TextChanged"
                     ToolTip="控制台的最大缓存行数（建议大于50）"
                     Value="100" />

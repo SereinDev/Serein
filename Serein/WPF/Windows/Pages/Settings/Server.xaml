@@ -153,10 +153,8 @@
                     x:Name="Port"
                     HorizontalAlignment="Left"
                     Icon="Server24"
-                    IntegersOnly="True"
-                    Max="65535"
-                    Min="0"
-                    Step="1"
+                    Maximum="65535"
+                    Minimum="0"
                     TextChanged="Port_TextChanged"
                     ToolTip="指定服务器的本地端口（用于获取服务器的Motd）"
                     Value="19132" />
