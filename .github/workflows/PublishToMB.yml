@@ -10,17 +10,16 @@ jobs:
   publish:
     runs-on: windows-latest
     steps:
-      - name: Get current git tag
-        id: tag
-        uses: devops-actions/action-get-tag@v1.0.2
-      
-      - name: last-green-sha
-        id: commitID
-        uses: jmoll-hn/last-green-commit-action@v1.0.7
+      - name: Get latest release
+        id: latest_release
+        uses: kaliber5/action-get-release@v1
+        with:
+          token: ${{ github.token }}
+          latest: true
 
       - name: Get current time
         uses: srfrnk/current-time@master
-        id: current-time
+        id: current_time
         with:
           format: MMDD
 
@@ -29,9 +28,9 @@ jobs:
         with:
           url: "https://api.minebbs.com/api/openapi/v1/resources/${{ env.ResourceId }}/update"
           method: "POST"
-          customHeaders: '{"Authorization": "Bearer ${{ secrets.MBKey }}"}'
+          customHeaders: '{"Authorization": "Bearer ${{ secrets.MBKEY }}"}'
           contentType: "application/json"
-          data: '{"title": "${{ steps.tag.outputs.tag }}@${{ steps.current-time.outputs.formattedTime }}", "description": "${{ steps.commitID.outputs.commit_hash }}", "new_version": "${{ steps.tag.outputs.tag }}@${{ steps.current-time.outputs.formattedTime }}", "file_url": "https://github.com/Zaitonn/Serein/releases/latest"}'
+          data: '{"title": "${{ steps.latest_release.outputs.tag_name }}@${{ steps.current_time.outputs.formattedTime }}", "description": "完整更新日志: https://serein.cc/docs/version/${{ steps.latest_release.outputs.tag_name }} \n此更新由GitHub Action推送，#${{ github.run_number }}，ID:${{ github.run_id }}", "new_version": "${{ steps.latest_release.outputs.tag_name }}@${{ steps.current_time.outputs.formattedTime }}", "file_url": "${{ steps.latest_release.outputs.html_url }}"}'
           escapeData: "true"
           preventFailureOnNoResponse: "true"
           ignoreStatusCodes: "400,404,401,403,500,502,503,504"
