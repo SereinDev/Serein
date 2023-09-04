@@ -24,7 +24,7 @@
 		<PackageReference Include="Costura.Fody" Version="5.7.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Jint" Version="3.0.0-beta-2050" />
+		<PackageReference Include="Jint" Version="3.0.0-beta-2051" />
 		<PackageReference Include="NCrontab.Signed" Version="3.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="SystemInfoLibrary-devel" Version="1.5.0.25" />
