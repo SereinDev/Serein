@@ -23,22 +23,24 @@ namespace Serein.Core.Common
         /// <param name="command">执行的命令</param>
         private static void StartShell(string command)
         {
-            Process process = new()
-            {
-                StartInfo = new()
+            Process process =
+                new()
                 {
-                    FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd.exe" : "/bin/bash",
-                    UseShellExecute = false,
-                    RedirectStandardInput = true,
-                    CreateNoWindow = true,
-                    WorkingDirectory = Global.PATH
-                }
-            };
+                    StartInfo = new()
+                    {
+                        FileName =
+                            Environment.OSVersion.Platform == PlatformID.Win32NT
+                                ? "cmd.exe"
+                                : "/bin/bash",
+                        UseShellExecute = false,
+                        RedirectStandardInput = true,
+                        CreateNoWindow = true,
+                        WorkingDirectory = Global.PATH
+                    }
+                };
             process.Start();
-            StreamWriter commandWriter = new(process.StandardInput.BaseStream, Encoding.Default)
-            {
-                AutoFlush = true
-            };
+            StreamWriter commandWriter =
+                new(process.StandardInput.BaseStream, Encoding.Default) { AutoFlush = true };
             commandWriter.WriteLine(command.TrimEnd('\r', '\n'));
             commandWriter.Close();
             Task.Run(() =>
@@ -61,7 +63,8 @@ namespace Serein.Core.Common
         /// </summary>
         /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
-        public static void Run(Base.CommandOrigin originType, string command) => Run(originType, command, null, false);
+        public static void Run(Base.CommandOrigin originType, string command) =>
+            Run(originType, command, null, false);
 
         /// <summary>
         /// 处理Serein命令
@@ -70,7 +73,12 @@ namespace Serein.Core.Common
         /// <param name="command">命令</param>
         /// <param name="message">数据包</param>
         /// <param name="disableMotd">禁用Motd获取</param>
-        public static void Run(Base.CommandOrigin originType, string command, Message? message, bool disableMotd = false) => Run(originType, command, null, message, disableMotd);
+        public static void Run(
+            Base.CommandOrigin originType,
+            string command,
+            Message? message,
+            bool disableMotd = false
+        ) => Run(originType, command, null, message, disableMotd);
 
         /// <summary>
         /// 处理Serein命令
@@ -78,7 +86,8 @@ namespace Serein.Core.Common
         /// <param name="originType">输入类型</param>
         /// <param name="command">命令</param>
         /// <param name="msgMatch">消息匹配对象</param>
-        public static void Run(Base.CommandOrigin originType, string command, Match msgMatch) => Run(originType, command, msgMatch, null, false);
+        public static void Run(Base.CommandOrigin originType, string command, Match msgMatch) =>
+            Run(originType, command, msgMatch, null, false);
 
         /// <summary>
         /// 处理Serein命令
@@ -95,13 +104,14 @@ namespace Serein.Core.Common
             Message? message,
             bool disableMotd,
             long groupId = 0
-            )
+        )
         {
             Logger.Output(
                 Base.LogType.Debug,
-                    "命令运行",
-                    $"originType:{originType} ",
-                    $"command:{command}");
+                "命令运行",
+                $"originType:{originType} ",
+                $"command:{command}"
+            );
 
             if (groupId == 0)
             {
@@ -119,19 +129,33 @@ namespace Serein.Core.Common
             }
 
             Base.CommandType type = GetType(command);
-            if (type != Base.CommandType.Invalid && !((type == Base.CommandType.RequestMotdpe || type == Base.CommandType.RequestMotdje) && disableMotd)) // EventTrigger的Motd回执
+            if (
+                type != Base.CommandType.Invalid
+                && !(
+                    (
+                        type == Base.CommandType.RequestMotdpe
+                        || type == Base.CommandType.RequestMotdje
+                    ) && disableMotd
+                )
+            ) // EventTrigger的Motd回执
             {
                 ExecuteCommand(
-                type,
-                originType,
-                command,
-                ApplyVariables(Format(command, msgMatch), message),
-                groupId,
-                message?.UserId ?? 0,
-                message
+                    type,
+                    originType,
+                    command,
+                    ApplyVariables(Format(command, msgMatch), message),
+                    groupId,
+                    message?.UserId ?? 0,
+                    message
                 );
             }
-            if (originType == Base.CommandOrigin.Msg && type != Base.CommandType.Bind && type != Base.CommandType.Unbind && message is not null && message.GroupId != 0)
+            if (
+                originType == Base.CommandOrigin.Msg
+                && type != Base.CommandType.Bind
+                && type != Base.CommandType.Unbind
+                && message is not null
+                && message.GroupId != 0
+            )
             {
                 Binder.Update(message);
             }
@@ -147,7 +171,8 @@ namespace Serein.Core.Common
             string value,
             long groupId,
             long userId,
-            Message? message)
+            Message? message
+        )
         {
             switch (type)
             {
@@ -161,26 +186,57 @@ namespace Serein.Core.Common
                     {
                         value = ParseAt(value, groupId);
                     }
-                    value = Regex.Replace(Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]"), @"\[CQ:([^,]+?),.+?\]", "[$1]");
-                    ServerManager.InputCommand(value, type == Base.CommandType.ServerInputWithUnicode, true);
+                    value = Regex.Replace(
+                        Regex.Replace(value, @"\[CQ:face.+?\]", "[表情]"),
+                        @"\[CQ:([^,]+?),.+?\]",
+                        "[$1]"
+                    );
+                    ServerManager.InputCommand(
+                        value,
+                        type == Base.CommandType.ServerInputWithUnicode,
+                        true
+                    );
                     break;
 
                 case Base.CommandType.SendGivenGroupMsg:
-                    Websocket.Send(false, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, originType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(
+                        false,
+                        value,
+                        Regex.Match(command, @"(\d+)\|").Groups[1].Value,
+                        originType != Base.CommandOrigin.EventTrigger
+                    );
                     break;
 
                 case Base.CommandType.SendGivenPrivateMsg:
-                    Websocket.Send(true, value, Regex.Match(command, @"(\d+)\|").Groups[1].Value, originType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(
+                        true,
+                        value,
+                        Regex.Match(command, @"(\d+)\|").Groups[1].Value,
+                        originType != Base.CommandOrigin.EventTrigger
+                    );
                     break;
 
                 case Base.CommandType.SendGroupMsg:
-                    Websocket.Send(false, value, groupId, originType != Base.CommandOrigin.EventTrigger);
+                    Websocket.Send(
+                        false,
+                        value,
+                        groupId,
+                        originType != Base.CommandOrigin.EventTrigger
+                    );
                     break;
 
                 case Base.CommandType.SendPrivateMsg:
-                    if (originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger)
+                    if (
+                        originType == Base.CommandOrigin.Msg
+                        || originType == Base.CommandOrigin.EventTrigger
+                    )
                     {
-                        Websocket.Send(true, value, userId, originType != Base.CommandOrigin.EventTrigger);
+                        Websocket.Send(
+                            true,
+                            value,
+                            userId,
+                            originType != Base.CommandOrigin.EventTrigger
+                        );
                     }
                     break;
 
@@ -192,14 +248,26 @@ namespace Serein.Core.Common
                     break;
 
                 case Base.CommandType.Bind:
-                    if ((originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
+                    if (
+                        (
+                            originType == Base.CommandOrigin.Msg
+                            || originType == Base.CommandOrigin.EventTrigger
+                        )
+                        && message?.MessageType == "group"
+                    )
                     {
                         Binder.Bind(message, value);
                     }
                     break;
 
                 case Base.CommandType.Unbind:
-                    if ((originType == Base.CommandOrigin.Msg || originType == Base.CommandOrigin.EventTrigger) && message?.MessageType == "group")
+                    if (
+                        (
+                            originType == Base.CommandOrigin.Msg
+                            || originType == Base.CommandOrigin.EventTrigger
+                        )
+                        && message?.MessageType == "group"
+                    )
                     {
                         Binder.UnBind(message);
                     }
@@ -210,8 +278,12 @@ namespace Serein.Core.Common
                     {
                         Motd motd = new Motdpe(value);
                         EventTrigger.Trigger(
-                            motd.IsSuccessful ? Base.EventType.RequestingMotdpeSucceed : Base.EventType.RequestingMotdFail,
-                            message, motd);
+                            motd.IsSuccessful
+                                ? Base.EventType.RequestingMotdpeSucceed
+                                : Base.EventType.RequestingMotdFail,
+                            message,
+                            motd
+                        );
                     }
                     break;
 
@@ -220,8 +292,12 @@ namespace Serein.Core.Common
                     {
                         Motd motd = new Motdje(value);
                         EventTrigger.Trigger(
-                            motd.IsSuccessful ? Base.EventType.RequestingMotdjeSucceed : Base.EventType.RequestingMotdFail,
-                            message, motd);
+                            motd.IsSuccessful
+                                ? Base.EventType.RequestingMotdjeSucceed
+                                : Base.EventType.RequestingMotdFail,
+                            message,
+                            motd
+                        );
                     }
                     break;
 
@@ -235,10 +311,15 @@ namespace Serein.Core.Common
                 case Base.CommandType.ExecuteJavascriptCodesWithNamespace:
                     if (originType != Base.CommandOrigin.Javascript)
                     {
-                        string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[2].Value;
+                        string key = Regex.Match(command, @"^(javascript|js):([^\|]+)\|").Groups[
+                            2
+                        ].Value;
                         Task.Run(() =>
                         {
-                            if (JSPluginManager.PluginDict.TryGetValue(key, out Plugin? plugin) && plugin.Available)
+                            if (
+                                JSPluginManager.PluginDict.TryGetValue(key, out Plugin? plugin)
+                                && plugin.Available
+                            )
                             {
                                 string e;
                                 lock (plugin.Engine!)
@@ -247,7 +328,12 @@ namespace Serein.Core.Common
                                 }
                                 if (!string.IsNullOrEmpty(e))
                                 {
-                                    Logger.Output(Base.LogType.Plugin_Error, $"[{key}]", "通过命令执行时错误：\n", e);
+                                    Logger.Output(
+                                        Base.LogType.Plugin_Error,
+                                        $"[{key}]",
+                                        "通过命令执行时错误：\n",
+                                        e
+                                    );
                                 }
                             }
                         });
@@ -260,7 +346,12 @@ namespace Serein.Core.Common
                         FileSaver.Reload(value, originType == Base.CommandOrigin.Msg);
                         if (originType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupId == 0, "重新加载成功", groupId == 0 ? userId : groupId, false);
+                            Websocket.Send(
+                                groupId == 0,
+                                "重新加载成功",
+                                groupId == 0 ? userId : groupId,
+                                false
+                            );
                         }
                     }
                     catch (Exception e)
@@ -268,7 +359,12 @@ namespace Serein.Core.Common
                         Logger.Output(Base.LogType.Debug, e);
                         if (originType == Base.CommandOrigin.Msg)
                         {
-                            Websocket.Send(groupId == 0, $"重新加载失败：{e.Message}", groupId == 0 ? userId : groupId, false);
+                            Websocket.Send(
+                                groupId == 0,
+                                $"重新加载失败：{e.Message}",
+                                groupId == 0 ? userId : groupId,
+                                false
+                            );
                         }
                         else if (originType == Base.CommandOrigin.Javascript)
                         {
@@ -294,9 +390,11 @@ namespace Serein.Core.Common
         /// <returns>类型</returns>
         public static Base.CommandType GetType(string command)
         {
-            if (string.IsNullOrEmpty(command) ||
-                !command.Contains("|") ||
-                !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase))
+            if (
+                string.IsNullOrEmpty(command)
+                || !command.Contains("|")
+                || !Regex.IsMatch(command, @"^.+?\|[\s\S]+$", RegexOptions.IgnoreCase)
+            )
             {
                 return Base.CommandType.Invalid;
             }
@@ -347,11 +445,23 @@ namespace Serein.Core.Common
                     {
                         return Base.CommandType.SendGivenPrivateMsg;
                     }
-                    if (Regex.IsMatch(command, @"^(js|javascript):[^\|]+\|", RegexOptions.IgnoreCase))
+                    if (
+                        Regex.IsMatch(
+                            command,
+                            @"^(js|javascript):[^\|]+\|",
+                            RegexOptions.IgnoreCase
+                        )
+                    )
                     {
                         return Base.CommandType.ExecuteJavascriptCodesWithNamespace;
                     }
-                    if (Regex.IsMatch(command, @"^(reload)\|(all|regex|schedule|member|groupcache)", RegexOptions.IgnoreCase))
+                    if (
+                        Regex.IsMatch(
+                            command,
+                            @"^(reload)\|(all|regex|schedule|member|groupcache)",
+                            RegexOptions.IgnoreCase
+                        )
+                    )
                     {
                         return Base.CommandType.Reload;
                     }
@@ -374,7 +484,11 @@ namespace Serein.Core.Common
                 {
                     for (int i = match.Groups.Count; i >= 0; i--)
                     {
-                        str = System.Text.RegularExpressions.Regex.Replace(str, $"\\${i}(?!\\d)", match.Groups[i].Value);
+                        str = System.Text.RegularExpressions.Regex.Replace(
+                            str,
+                            $"\\${i}(?!\\d)",
+                            match.Groups[i].Value
+                        );
                     }
 #if NET
                     // 正则表达式中的分组构造（NET5+)
@@ -403,7 +517,9 @@ namespace Serein.Core.Common
             }
             bool serverStatus = ServerManager.Status;
             DateTime currentTime = DateTime.Now;
-            text = Patterns.Variable.Replace(text, (match) =>
+            text = Patterns.Variable.Replace(
+                text,
+                (match) =>
                 {
                     object? obj = match.Groups[1].Value.ToLowerInvariant() switch
                     {
@@ -450,14 +566,18 @@ namespace Serein.Core.Common
                         "totalramgb" => SystemInfo.TotalRAM / 1024,
                         "freeram" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM),
                         "freeramgb" => (SystemInfo.TotalRAM - SystemInfo.UsedRAM) / 1024,
-                        "ramusage" => SystemInfo.RAMUsage > 100 ? "100" : SystemInfo.RAMUsage.ToString("N1"),
+                        "ramusage"
+                            => SystemInfo.RAMUsage > 100
+                                ? "100"
+                                : SystemInfo.RAMUsage.ToString("N1"),
                         #endregion
 
                         #region 服务器
                         "levelname" => serverStatus ? ServerManager.LevelName : "-",
                         "difficulty" => serverStatus ? ServerManager.Difficulty : "-",
                         "runtime" => serverStatus ? ServerManager.Time : "-",
-                        "servercpuusage" => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
+                        "servercpuusage"
+                            => serverStatus ? ServerManager.CPUUsage.ToString("N1") : "-",
                         "filename" => serverStatus ? ServerManager.StartFileName : "-",
                         "status" => serverStatus ? "已启动" : "未启动",
                         #endregion
@@ -474,18 +594,31 @@ namespace Serein.Core.Common
                         "level" => message?.Sender?.Level,
                         "title" => message?.Sender?.Title,
                         "role" => message?.Sender?.RoleName,
-                        "shownname" => string.IsNullOrEmpty(message?.Sender?.Card) ? message?.Sender?.Nickname : message?.Sender?.Card,
+                        "shownname"
+                            => string.IsNullOrEmpty(message?.Sender?.Card)
+                                ? message?.Sender?.Nickname
+                                : message?.Sender?.Card,
                         #endregion
 
-                        _ => JSPluginManager.CommandVariablesDict.TryGetValue(match.Groups[1].Value, out string? variable) ? variable : match.Groups[0].Value
+                        _
+                            => JSPluginManager.CommandVariablesDict.TryGetValue(
+                                match.Groups[1].Value,
+                                out string? variable
+                            )
+                                ? variable
+                                : match.Groups[0].Value
                     };
                     return obj?.ToString() ?? string.Empty;
                 }
             );
-            text = Patterns.GameID.Replace(text,
-                (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value)));
-            text = Patterns.ID.Replace(text,
-                (match) => Binder.GetID(match.Groups[1].Value).ToString());
+            text = Patterns.GameID.Replace(
+                text,
+                (match) => Binder.GetGameID(long.Parse(match.Groups[1].Value))
+            );
+            text = Patterns.ID.Replace(
+                text,
+                (match) => Binder.GetID(match.Groups[1].Value).ToString()
+            );
             return text.Replace("\\n", "\n");
         }
 
@@ -503,12 +636,23 @@ namespace Serein.Core.Common
             {
                 return text;
             }
-            text = Regex.Replace(text, @"(?<=@)(\d+)", (match) =>
-            {
-                long userID = long.TryParse(match.Groups[1].Value, out long result) ? result : 0;
-                return Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Base.Member>? groupinfo) &&
-                    groupinfo.TryGetValue(userID, out Base.Member? member) ? member.ShownName : match.Groups[1].Value;
-            });
+            text = Regex.Replace(
+                text,
+                @"(?<=@)(\d+)",
+                (match) =>
+                {
+                    long userID = long.TryParse(match.Groups[1].Value, out long result)
+                        ? result
+                        : 0;
+                    return
+                        Global.GroupCache.TryGetValue(
+                            groupID,
+                            out Dictionary<long, Base.Member>? groupinfo
+                        ) && groupinfo.TryGetValue(userID, out Base.Member? member)
+                        ? member.ShownName
+                        : match.Groups[1].Value;
+                }
+            );
             return text;
         }
 
@@ -524,12 +668,14 @@ namespace Serein.Core.Common
             /// <summary>
             /// 游戏ID正则
             /// </summary>
-            public static readonly Regex GameID = new(@"%GameID:(\d+)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            public static readonly Regex GameID =
+                new(@"%GameID:(\d+)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             /// <summary>
             /// ID正则
             /// </summary>
-            public static readonly Regex ID = new(@"%ID:([^%]+?)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            public static readonly Regex ID =
+                new(@"%ID:([^%]+?)%", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
     }
 }

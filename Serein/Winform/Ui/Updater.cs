@@ -21,13 +21,23 @@ namespace Serein.Ui
             }
             else if (ServerManager.Status)
             {
-                Text = $"Serein | {(string.IsNullOrEmpty(ServerManager.StartFileName) ? "unknown" : ServerManager.StartFileName)}";
+                Text =
+                    $"Serein | {(string.IsNullOrEmpty(ServerManager.StartFileName) ? "unknown" : ServerManager.StartFileName)}";
                 ServerPanelInfoTime2.Text = ServerManager.Time;
                 ServerPanelInfoCPU2.Text = $"{ServerManager.CPUUsage:N1}%";
                 ServerPanelInfoStatus2.Text = "已启动";
-                ServerPanelInfoVersion2.Text = ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-";
-                ServerPanelInfoPlayerCount2.Text = ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-";
-                ServerPanelInfoDifficulty2.Text = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
+                ServerPanelInfoVersion2.Text =
+                    ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version)
+                        ? ServerManager.Motd.Version
+                        : "-";
+                ServerPanelInfoPlayerCount2.Text =
+                    ServerManager.Motd != null
+                        ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}"
+                        : "-";
+                ServerPanelInfoDifficulty2.Text =
+                    ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty)
+                        ? ServerManager.Difficulty
+                        : "-";
             }
             else
             {
@@ -59,7 +69,10 @@ namespace Serein.Ui
         {
             if (SettingSereinVersion.InvokeRequired)
             {
-                Action<string> actionDelegate = (Text) => { SettingSereinVersion.Text = Text; };
+                Action<string> actionDelegate = (Text) =>
+                {
+                    SettingSereinVersion.Text = Text;
+                };
                 SettingSereinVersion.Invoke(actionDelegate, NewText);
             }
         }

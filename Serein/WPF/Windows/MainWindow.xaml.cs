@@ -22,18 +22,26 @@ namespace Serein.Windows
         {
             InitializeComponent();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug ? Visibility.Visible : Visibility.Hidden;
-            SettingsNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Settings ? Visibility.Visible : Visibility.Hidden;
-            if (!Global.Settings.Serein.PagesDisplayed.ServerPanel && !Global.Settings.Serein.PagesDisplayed.ServerPluginManager)
+            DebugNavigationItem.Visibility = Global.Settings.Serein.DevelopmentTool.EnableDebug
+                ? Visibility.Visible
+                : Visibility.Hidden;
+            SettingsNavigationItem.Visibility = Global.Settings.Serein.PagesDisplayed.Settings
+                ? Visibility.Visible
+                : Visibility.Hidden;
+            if (
+                !Global.Settings.Serein.PagesDisplayed.ServerPanel
+                && !Global.Settings.Serein.PagesDisplayed.ServerPluginManager
+            )
             {
                 ServerNavigationItem.Visibility = Visibility.Hidden;
             }
             if (
-                !Global.Settings.Serein.PagesDisplayed.Bot &&
-                !Global.Settings.Serein.PagesDisplayed.Member &&
-                !Global.Settings.Serein.PagesDisplayed.RegexList &&
-                !Global.Settings.Serein.PagesDisplayed.Schedule &&
-                !Global.Settings.Serein.PagesDisplayed.JSPlugin)
+                !Global.Settings.Serein.PagesDisplayed.Bot
+                && !Global.Settings.Serein.PagesDisplayed.Member
+                && !Global.Settings.Serein.PagesDisplayed.RegexList
+                && !Global.Settings.Serein.PagesDisplayed.Schedule
+                && !Global.Settings.Serein.PagesDisplayed.JSPlugin
+            )
             {
                 FunctionNavigationItem.Visibility = Visibility.Hidden;
             }
@@ -50,8 +58,7 @@ namespace Serein.Windows
             Theme.Apply(Global.Settings.Serein.UseDarkTheme ? ThemeType.Dark : ThemeType.Light);
         }
 
-        private void UiWindow_ContentRendered(object sender, EventArgs e)
-            => Runtime.Start();
+        private void UiWindow_ContentRendered(object sender, EventArgs e) => Runtime.Start();
 
         private void UiWindow_StateChanged(object sender, EventArgs e)
         {
@@ -96,17 +103,19 @@ namespace Serein.Windows
         /// <param name="title">标题</param>
         /// <param name="message">信息</param>
         /// <param name="icon">图标</param>
-        public void OpenSnackbar(string title, string message, SymbolRegular icon)
-            => Dispatcher.Invoke(() =>
+        public void OpenSnackbar(string title, string message, SymbolRegular icon) =>
+            Dispatcher.Invoke(() =>
             {
                 Snackbar.Show(title, message, icon);
             });
 
-        private void Help_Click(object sender, RoutedEventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
+        private void Help_Click(object sender, RoutedEventArgs e) =>
+            Process.Start(new ProcessStartInfo("https://serein.cc/") { UseShellExecute = true });
 
-        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-            => ShowInTaskbar = IsVisible;
+        private void UiWindow_IsVisibleChanged(
+            object sender,
+            DependencyPropertyChangedEventArgs e
+        ) => ShowInTaskbar = IsVisible;
 
         #region 成员编辑器代码
 
@@ -126,10 +135,15 @@ namespace Serein.Windows
             MemberEditor.Show();
         }
 
-        private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) => MemberEditor.Hide();
+        private void MemberEditor_ButtonRightClick(object sender, RoutedEventArgs e) =>
+            MemberEditor.Hide();
+
         private void MemberEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Member?.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text) ?? false)
+            if (
+                Catalog.Function.Member?.Confirm(MemberEditor_ID.Text, MemberEditor_GameID.Text)
+                ?? false
+            )
             {
                 MemberEditor.Hide();
             }
@@ -141,12 +155,19 @@ namespace Serein.Windows
         /// <summary>
         /// 打开正则编辑器窗口
         /// </summary>
-        public void OpenRegexEditor() => OpenRegexEditor(0, false, string.Empty, string.Empty, string.Empty);
+        public void OpenRegexEditor() =>
+            OpenRegexEditor(0, false, string.Empty, string.Empty, string.Empty);
 
         /// <summary>
         /// 打开正则编辑器窗口
         /// </summary>
-        public void OpenRegexEditor(int areaIndex, bool needAdmin, string regex, string command, string remark)
+        public void OpenRegexEditor(
+            int areaIndex,
+            bool needAdmin,
+            string regex,
+            string command,
+            string remark
+        )
         {
             RegexEditor_Area.SelectedIndex = areaIndex;
             RegexEditor_IsAdmain.IsChecked = needAdmin;
@@ -158,32 +179,45 @@ namespace Serein.Windows
 
         private void RegexEditor_Area_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RegexEditor_IsAdmain.IsEnabled = RegexEditor_Area.SelectedIndex >= 2 && RegexEditor_Area.SelectedIndex <= 3;
-            RegexEditor_IsAdmain.IsChecked = RegexEditor_IsAdmain.IsEnabled ? RegexEditor_IsAdmain.IsChecked : false;
+            RegexEditor_IsAdmain.IsEnabled =
+                RegexEditor_Area.SelectedIndex >= 2 && RegexEditor_Area.SelectedIndex <= 3;
+            RegexEditor_IsAdmain.IsChecked = RegexEditor_IsAdmain.IsEnabled
+                ? RegexEditor_IsAdmain.IsChecked
+                : false;
             if (RegexEditor_Area.SelectedIndex == 4)
             {
-                OpenSnackbar("警告", "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，\n配置错误可能导致机器人刷屏甚至被封号", SymbolRegular.Warning24);
+                OpenSnackbar(
+                    "警告",
+                    "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，\n配置错误可能导致机器人刷屏甚至被封号",
+                    SymbolRegular.Warning24
+                );
             }
         }
 
         private void RegexEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Regex?.Confirm(
-                RegexEditor_Area.SelectedIndex,
-                RegexEditor_IsAdmain.IsChecked ?? false,
-                RegexEditor_Regex.Text,
-                RegexEditor_Command.Text,
-                RegexEditor_Remark.Text) ?? false)
+            if (
+                Catalog.Function.Regex?.Confirm(
+                    RegexEditor_Area.SelectedIndex,
+                    RegexEditor_IsAdmain.IsChecked ?? false,
+                    RegexEditor_Regex.Text,
+                    RegexEditor_Command.Text,
+                    RegexEditor_Remark.Text
+                ) ?? false
+            )
             {
                 RegexEditor.Hide();
             }
         }
 
-        private void RegexEditor_ButtonRightClick(object sender, RoutedEventArgs e) => RegexEditor.Hide();
+        private void RegexEditor_ButtonRightClick(object sender, RoutedEventArgs e) =>
+            RegexEditor.Hide();
         #endregion
 
         #region 任务编辑器代码
-        public void OpenScheduleEditor() => OpenScheduleEditor(string.Empty, string.Empty, string.Empty);
+        public void OpenScheduleEditor() =>
+            OpenScheduleEditor(string.Empty, string.Empty, string.Empty);
+
         public void OpenScheduleEditor(string cronExp, string command, string remark)
         {
             ScheduleEditor_Cron.Text = cronExp;
@@ -194,7 +228,13 @@ namespace Serein.Windows
 
         private void ScheduleEditor_ButtonLeftClick(object sender, RoutedEventArgs e)
         {
-            if (Catalog.Function.Schedule?.Confirm(ScheduleEditor_Cron.Text, ScheduleEditor_Command.Text, ScheduleEditor_Remark.Text) ?? false)
+            if (
+                Catalog.Function.Schedule?.Confirm(
+                    ScheduleEditor_Cron.Text,
+                    ScheduleEditor_Command.Text,
+                    ScheduleEditor_Remark.Text
+                ) ?? false
+            )
             {
                 ScheduleEditor.Hide();
             }
@@ -204,13 +244,17 @@ namespace Serein.Windows
         {
             try
             {
-                List<DateTime> occurrences = CrontabSchedule.Parse(ScheduleEditor_Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
+                List<DateTime> occurrences = CrontabSchedule
+                    .Parse(ScheduleEditor_Cron.Text)
+                    .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                    .ToList();
                 if (occurrences.Count > 20)
                 {
                     occurrences.RemoveRange(20, occurrences.Count - 20);
                 }
                 ScheduleEditor_NextTime.Text = $"预计执行时间： {occurrences[0]:g}";
-                ScheduleEditor_NextTime.ToolTip = $"最近20次执行执行时间：\n{string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")))}";
+                ScheduleEditor_NextTime.ToolTip =
+                    $"最近20次执行执行时间：\n{string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")))}";
             }
             catch
             {
@@ -219,7 +263,8 @@ namespace Serein.Windows
             }
         }
 
-        private void ScheduleEditor_ButtonRightClick(object sender, RoutedEventArgs e) => ScheduleEditor.Hide();
+        private void ScheduleEditor_ButtonRightClick(object sender, RoutedEventArgs e) =>
+            ScheduleEditor.Hide();
         #endregion
 
         #region 事件编辑器代码
@@ -249,7 +294,9 @@ namespace Serein.Windows
             FileImportHandler.Trigger((Array)e.Data.GetData(DataFormats.FileDrop));
         }
 
-        public void UpdateTitle(string? title)
-            => Dispatcher.Invoke(() => _TitleBar.Title = string.IsNullOrEmpty(title) ? "Serein" : $"Serein - {title}");
+        public void UpdateTitle(string? title) =>
+            Dispatcher.Invoke(
+                () => _TitleBar.Title = string.IsNullOrEmpty(title) ? "Serein" : $"Serein - {title}"
+            );
     }
 }

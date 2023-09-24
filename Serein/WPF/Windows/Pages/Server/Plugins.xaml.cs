@@ -32,13 +32,19 @@ namespace Serein.Windows.Pages.Server
             }
             foreach (string plugin in plugins)
             {
-                if (PluginManager.AcceptableList.Contains(Path.GetExtension(plugin).ToLowerInvariant()))
+                if (
+                    PluginManager.AcceptableList.Contains(
+                        Path.GetExtension(plugin).ToLowerInvariant()
+                    )
+                )
                 {
-                    ListViewItem listViewItem = new()
-                    {
-                        Content = PluginManager.GetRelativeUri(plugin),
-                        Opacity = Path.GetExtension(plugin).ToLowerInvariant() != ".lock" ? 1 : 0.5
-                    };
+                    ListViewItem listViewItem =
+                        new()
+                        {
+                            Content = PluginManager.GetRelativeUri(plugin),
+                            Opacity =
+                                Path.GetExtension(plugin).ToLowerInvariant() != ".lock" ? 1 : 0.5
+                        };
                     PluginsListview.Items.Add(listViewItem);
                 }
             }
@@ -69,7 +75,11 @@ namespace Serein.Windows.Pages.Server
                         {
                             if (file != null)
                             {
-                                files.Add(PluginManager.GetAbsoluteUri((file as ListViewItem)!.Content.ToString()!));
+                                files.Add(
+                                    PluginManager.GetAbsoluteUri(
+                                        (file as ListViewItem)!.Content.ToString()!
+                                    )
+                                );
                             }
                         }
                         switch (tag)
@@ -87,12 +97,17 @@ namespace Serein.Windows.Pages.Server
                         Load();
                         break;
                     case "Import":
-                        OpenFileDialog Dialog = new()
-                        {
-                            Filter = "所有文件|*.*",
-                            InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
-                            Multiselect = true
-                        };
+                        OpenFileDialog Dialog =
+                            new()
+                            {
+                                Filter = "所有文件|*.*",
+                                InitialDirectory =
+                                    !string.IsNullOrEmpty(Global.Settings.Server.Path)
+                                    && File.Exists(Global.Settings.Server.Path)
+                                        ? Global.Settings.Server.Path
+                                        : Global.PATH,
+                                Multiselect = true
+                            };
                         if (Dialog.ShowDialog() ?? false)
                         {
                             PluginManager.Add(Dialog.FileNames);
@@ -106,7 +121,13 @@ namespace Serein.Windows.Pages.Server
                         }
                         else
                         {
-                            PluginManager.OpenFolder(PluginManager.GetAbsoluteUri((PluginsListview.SelectedItems[0] as ListViewItem)!.Content.ToString()!));
+                            PluginManager.OpenFolder(
+                                PluginManager.GetAbsoluteUri(
+                                    (
+                                        PluginsListview.SelectedItems[0] as ListViewItem
+                                    )!.Content.ToString()!
+                                )
+                            );
                         }
                         break;
                     default:

@@ -74,10 +74,10 @@ namespace Serein.Utils.IO
                 lock (IO.Log.FileLock.Debug)
                 {
                     File.AppendAllText(
-                       Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                       $"{DateTime.Now:T} {line}\n",
-                       Encoding.UTF8
-                       );
+                        Path.Combine("logs", "debug", $"{DateTime.Now:yyyy-MM-dd}.log"),
+                        $"{DateTime.Now:T} {line}\n",
+                        Encoding.UTF8
+                    );
                 }
             }
             catch (Exception e)
@@ -91,8 +91,7 @@ namespace Serein.Utils.IO
         /// </summary>
         public struct FileLock
         {
-            public static readonly object
-                Console = new(),
+            public static readonly object Console = new(),
                 Msg = new(),
                 Crash = new(),
                 Debug = new();

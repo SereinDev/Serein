@@ -13,12 +13,17 @@ namespace Serein.Ui
     {
         private void PluginContextMenuStripAdd_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new()
-            {
-                Filter = "所有文件|*.*",
-                InitialDirectory = !string.IsNullOrEmpty(PluginManager.BasePath) && Directory.Exists(PluginManager.BasePath) ? PluginManager.BasePath : Global.PATH,
-                Multiselect = true
-            };
+            OpenFileDialog dialog =
+                new()
+                {
+                    Filter = "所有文件|*.*",
+                    InitialDirectory =
+                        !string.IsNullOrEmpty(PluginManager.BasePath)
+                        && Directory.Exists(PluginManager.BasePath)
+                            ? PluginManager.BasePath
+                            : Global.PATH,
+                    Multiselect = true
+                };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 PluginManager.Add(dialog.FileNames);
@@ -32,8 +37,8 @@ namespace Serein.Ui
             LoadPlugins();
         }
 
-        private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e)
-            => LoadPlugins();
+        private void PluginContextMenuStripRefresh_Click(object sender, EventArgs e) =>
+            LoadPlugins();
 
         private void PluginContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
@@ -57,8 +62,10 @@ namespace Serein.Ui
             LoadPlugins();
         }
 
-        private void PluginContextMenuStripShow_Click(object sender, EventArgs e)
-            => PluginManager.OpenFolder(PluginList.SelectedItems.Count > 0 ? GetSelectedPlugins()[0] : null);
+        private void PluginContextMenuStripShow_Click(object sender, EventArgs e) =>
+            PluginManager.OpenFolder(
+                PluginList.SelectedItems.Count > 0 ? GetSelectedPlugins()[0] : null
+            );
 
         /// <summary>
         /// 加载插件列表
@@ -70,8 +77,7 @@ namespace Serein.Ui
                 PluginList.BeginUpdate();
                 PluginList.Clear();
                 string[] files = PluginManager.Get();
-                ListViewGroup
-                    pluginGroupJs = new("Js", HorizontalAlignment.Left),
+                ListViewGroup pluginGroupJs = new("Js", HorizontalAlignment.Left),
                     pluginGroupDll = new("Dll", HorizontalAlignment.Left),
                     pluginGroupJar = new("Jar", HorizontalAlignment.Left),
                     pluginGroupPy = new("Py", HorizontalAlignment.Left),
@@ -88,7 +94,8 @@ namespace Serein.Ui
                 PluginList.Groups.Add(pluginGroupDisable);
                 foreach (string file in files)
                 {
-                    ListViewItem listViewItem = new(Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty));
+                    ListViewItem listViewItem =
+                        new(Regex.Replace(Path.GetFileName(file), @"\.lock$", string.Empty));
                     switch (Path.GetExtension(file.ToLowerInvariant()))
                     {
                         case ".js":
@@ -138,7 +145,12 @@ namespace Serein.Ui
             List<string> files = new();
             foreach (ListViewItem listViewItem in PluginList.SelectedItems)
             {
-                files.Add(PluginManager.BasePath + "\\" + listViewItem.Text + (listViewItem.ForeColor == Color.Gray ? ".lock" : string.Empty));
+                files.Add(
+                    PluginManager.BasePath
+                        + "\\"
+                        + listViewItem.Text
+                        + (listViewItem.ForeColor == Color.Gray ? ".lock" : string.Empty)
+                );
             }
             return files;
         }

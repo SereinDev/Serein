@@ -70,7 +70,10 @@ namespace Serein.Windows.Pages.Function
                         _actionType = 1;
                         break;
                     case "Edit":
-                        if (RegexListView.SelectedItem is Base.Regex selectedItem1 && selectedItem1 != null)
+                        if (
+                            RegexListView.SelectedItem is Base.Regex selectedItem1
+                            && selectedItem1 != null
+                        )
                         {
                             Catalog.MainWindow?.OpenRegexEditor(
                                 selectedItem1.Area,
@@ -78,12 +81,15 @@ namespace Serein.Windows.Pages.Function
                                 selectedItem1.Expression,
                                 selectedItem1.Command,
                                 selectedItem1.Remark
-                                );
+                            );
                             _actionType = 2;
                         }
                         break;
                     case "Copy":
-                        if (RegexListView.SelectedItem is Base.Regex selectedItem2 && selectedItem2 != null)
+                        if (
+                            RegexListView.SelectedItem is Base.Regex selectedItem2
+                            && selectedItem2 != null
+                        )
                         {
                             RegexListView.Items.Insert(RegexListView.SelectedIndex, selectedItem2);
                             Save();
@@ -91,14 +97,20 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Delete":
-                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && RegexListView.SelectedIndex >= 0)
+                        if (
+                            MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true)
+                            && RegexListView.SelectedIndex >= 0
+                        )
                         {
                             RegexListView.Items.RemoveAt(RegexListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Clear":
-                        if (MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true) && RegexListView.Items.Count > 0)
+                        if (
+                            MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true)
+                            && RegexListView.Items.Count > 0
+                        )
                         {
                             RegexListView.Items.Clear();
                             Save();
@@ -109,16 +121,32 @@ namespace Serein.Windows.Pages.Function
                         Load();
                         break;
                     case "LookupCommand":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/command") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/guide/command")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                     case "LookupVariables":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/guide/variables")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                 }
             }
         }
 
-        public bool Confirm(int areaIndex, bool needAdmin, string regex, string command, string remark)
+        public bool Confirm(
+            int areaIndex,
+            bool needAdmin,
+            string regex,
+            string command,
+            string remark
+        )
         {
             if (Command.GetType(command) < 0)
             {
@@ -144,7 +172,8 @@ namespace Serein.Windows.Pages.Function
                                 Command = command,
                                 Remark = remark,
                                 IsAdmin = needAdmin
-                            });
+                            }
+                        );
                     }
                     else
                     {
@@ -156,10 +185,15 @@ namespace Serein.Windows.Pages.Function
                                 Command = command,
                                 Remark = remark,
                                 IsAdmin = needAdmin
-                            });
+                            }
+                        );
                     }
                 }
-                else if (_actionType == 2 && RegexListView.SelectedItem is Base.Regex selectedItem && selectedItem != null)
+                else if (
+                    _actionType == 2
+                    && RegexListView.SelectedItem is Base.Regex selectedItem
+                    && selectedItem != null
+                )
                 {
                     selectedItem.Area = areaIndex;
                     selectedItem.Expression = regex;
@@ -178,7 +212,11 @@ namespace Serein.Windows.Pages.Function
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (RegexListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
+            if (
+                RegexListView.SelectedIndex != -1
+                && sender is Wpf.Ui.Controls.Button button
+                && button != null
+            )
             {
                 int Index = RegexListView.SelectedIndex;
                 string Tag = button.Tag as string ?? string.Empty;
@@ -200,12 +238,15 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        private void RegexListView_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateButton();
+        private void RegexListView_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+            UpdateButton();
 
         private void UpdateButton()
         {
             Up.IsEnabled = RegexListView.SelectedIndex > 0;
-            Down.IsEnabled = RegexListView.SelectedIndex >= 0 && RegexListView.SelectedIndex < RegexListView.Items.Count - 1;
+            Down.IsEnabled =
+                RegexListView.SelectedIndex >= 0
+                && RegexListView.SelectedIndex < RegexListView.Items.Count - 1;
         }
     }
 }

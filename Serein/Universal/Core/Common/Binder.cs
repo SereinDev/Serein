@@ -29,17 +29,20 @@ namespace Serein.Core.Common
         public static bool Bind(long userID, string value)
         {
             value = value.Trim();
-            if (Global.MemberDict.ContainsKey(userID) || !System.Text.RegularExpressions.Regex.IsMatch(value, Global.Settings.Serein.Function.RegexForCheckingGameID) || GameIDs.Contains(value))
+            if (
+                Global.MemberDict.ContainsKey(userID)
+                || !System.Text.RegularExpressions.Regex.IsMatch(
+                    value,
+                    Global.Settings.Serein.Function.RegexForCheckingGameID
+                )
+                || GameIDs.Contains(value)
+            )
             {
                 return false;
             }
             lock (Global.MemberDict)
             {
-                Global.MemberDict.Add(userID, new Member
-                {
-                    ID = userID,
-                    GameID = value
-                });
+                Global.MemberDict.Add(userID, new Member { ID = userID, GameID = value });
             }
             Data.SaveMember();
             return true;
@@ -62,12 +65,20 @@ namespace Serein.Core.Common
                 EventTrigger.Trigger(EventType.BindingFailDueToAlreadyBinded, message);
                 return;
             }
-            if (!System.Text.RegularExpressions.Regex.IsMatch(value, Global.Settings.Serein.Function.RegexForCheckingGameID))
+            if (
+                !System.Text.RegularExpressions.Regex.IsMatch(
+                    value,
+                    Global.Settings.Serein.Function.RegexForCheckingGameID
+                )
+            )
             {
                 EventTrigger.Trigger(EventType.BindingFailDueToInvalid, message);
                 return;
             }
-            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed && !ServerManager.Status)
+            if (
+                Global.Settings.Serein.Function.DisableBinderWhenServerClosed
+                && !ServerManager.Status
+            )
             {
                 EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;
@@ -79,14 +90,17 @@ namespace Serein.Core.Common
             }
             lock (Global.MemberDict)
             {
-                Global.MemberDict.Add(message.UserId, new()
-                {
-                    ID = message.UserId,
-                    Card = message.Sender.Card ?? string.Empty,
-                    Nickname = message.Sender.Nickname ?? string.Empty,
-                    Role = message.Sender.RoleIndex,
-                    GameID = value
-                });
+                Global.MemberDict.Add(
+                    message.UserId,
+                    new()
+                    {
+                        ID = message.UserId,
+                        Card = message.Sender.Card ?? string.Empty,
+                        Nickname = message.Sender.Nickname ?? string.Empty,
+                        Role = message.Sender.RoleIndex,
+                        GameID = value
+                    }
+                );
             }
             Data.SaveMember();
             EventTrigger.Trigger(EventType.BindingSucceed, message);
@@ -98,7 +112,10 @@ namespace Serein.Core.Common
         /// <param name="message">数据包</param>
         public static void UnBind(Message message)
         {
-            if (Global.Settings.Serein.Function.DisableBinderWhenServerClosed && !ServerManager.Status)
+            if (
+                Global.Settings.Serein.Function.DisableBinderWhenServerClosed
+                && !ServerManager.Status
+            )
             {
                 EventTrigger.Trigger(EventType.BinderDisable, message);
                 return;
@@ -140,8 +157,10 @@ namespace Serein.Core.Common
         /// </summary>
         /// <param name="userID">用户ID</param>
         /// <returns>对应的游戏ID</returns>
-        public static string GetGameID(long userID)
-            => Global.MemberDict.TryGetValue(userID, out Member? member) ? member.GameID : string.Empty;
+        public static string GetGameID(long userID) =>
+            Global.MemberDict.TryGetValue(userID, out Member? member)
+                ? member.GameID
+                : string.Empty;
 
         /// <summary>
         /// 获取指定游戏ID对应的用户ID
@@ -167,7 +186,11 @@ namespace Serein.Core.Common
         /// <param name="message">数据包</param>
         public static void Update(Message message)
         {
-            if (message is not null && message.Sender is not null && Global.MemberDict.TryGetValue(message.UserId, out Member? member))
+            if (
+                message is not null
+                && message.Sender is not null
+                && Global.MemberDict.TryGetValue(message.UserId, out Member? member)
+            )
             {
                 Logger.Output(LogType.Debug, message.Sender);
                 member.Nickname = message.Sender.Nickname ?? string.Empty;

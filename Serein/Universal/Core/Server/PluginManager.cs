@@ -33,9 +33,12 @@ namespace Serein.Core.Server
             }
         }
 
-        private static string? Check(string subPath)
-            => Directory.Exists(Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath)) ?
-            Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath) : null;
+        private static string? Check(string subPath) =>
+            Directory.Exists(
+                Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath)
+            )
+                ? Path.Combine(Path.GetDirectoryName(Global.Settings.Server.Path)!, subPath)
+                : null;
 
         /// <summary>
         /// 获取插件列表
@@ -45,7 +48,12 @@ namespace Serein.Core.Server
         {
             if (File.Exists(Global.Settings.Server.Path))
             {
-                BasePath = Check("plugin") ?? Check("plugins") ?? Check("mod") ?? Check("mods") ?? string.Empty;
+                BasePath =
+                    Check("plugin")
+                    ?? Check("plugins")
+                    ?? Check("mod")
+                    ?? Check("mods")
+                    ?? string.Empty;
                 Logger.Output(LogType.Debug, BasePath);
                 if (!string.IsNullOrWhiteSpace(BasePath))
                 {
@@ -92,7 +100,12 @@ namespace Serein.Core.Server
                 {
                     Logger.Output(LogType.Debug, "数据不合法");
                 }
-                else if (MsgBox.Show($"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）", true))
+                else if (
+                    MsgBox.Show(
+                        $"确定删除\"{files[0]}\"{(files.Count > 1 ? $"等{files.Count}个文件" : string.Empty)}？\n它将会永远失去！（真的很久！）",
+                        true
+                    )
+                )
                 {
                     foreach (string file in files)
                     {
@@ -130,10 +143,7 @@ namespace Serein.Core.Server
                 catch (Exception e)
                 {
                     Logger.Output(LogType.Debug, e);
-                    MsgBox.Show(
-                        $"文件\"{file}\"禁用失败\n" +
-                        $"{e.Message}"
-                        );
+                    MsgBox.Show($"文件\"{file}\"禁用失败\n" + $"{e.Message}");
                     break;
                 }
             }
@@ -149,7 +159,15 @@ namespace Serein.Core.Server
             {
                 try
                 {
-                    File.Move(file, System.Text.RegularExpressions.Regex.Replace(file, @"\.lock$", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase));
+                    File.Move(
+                        file,
+                        System.Text.RegularExpressions.Regex.Replace(
+                            file,
+                            @"\.lock$",
+                            string.Empty,
+                            System.Text.RegularExpressions.RegexOptions.IgnoreCase
+                        )
+                    );
                 }
                 catch (Exception e)
                 {
@@ -167,7 +185,9 @@ namespace Serein.Core.Server
         /// <returns>相对路径</returns>
         public static string GetRelativeUri(string file)
         {
-            return WebUtility.UrlDecode(new Uri(BasePath).MakeRelativeUri(new(file)).OriginalString);
+            return WebUtility.UrlDecode(
+                new Uri(BasePath).MakeRelativeUri(new(file)).OriginalString
+            );
         }
 
         /// <summary>
@@ -177,7 +197,9 @@ namespace Serein.Core.Server
         /// <returns>绝对路径</returns>
         public static string GetAbsoluteUri(string file)
         {
-            return Path.Combine(Directory.GetParent(BasePath)!.FullName, file).Replace('/', '\\').TrimStart('\u202a');
+            return Path.Combine(Directory.GetParent(BasePath)!.FullName, file)
+                .Replace('/', '\\')
+                .TrimStart('\u202a');
         }
 
         /// <summary>
@@ -190,18 +212,21 @@ namespace Serein.Core.Server
             {
                 return;
             }
-            Process.Start(new ProcessStartInfo("Explorer.exe")
-            {
-                Arguments = !string.IsNullOrEmpty(path)
-                ? $"/e,/select,\"{path}\""
-                : $"/e,\"{BasePath}\""
-            });
+            Process.Start(
+                new ProcessStartInfo("Explorer.exe")
+                {
+                    Arguments = !string.IsNullOrEmpty(path)
+                        ? $"/e,/select,\"{path}\""
+                        : $"/e,\"{BasePath}\""
+                }
+            );
         }
 
         /// <summary>
         /// 可接受的插件扩展名列表
         /// </summary>
-        public static readonly List<string> AcceptableList = new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts", ".lock" };
+        public static readonly List<string> AcceptableList =
+            new() { ".py", ".dll", ".js", ".jar", ".lua", ".ts", ".lock" };
 
         /// <summary>
         /// 尝试导入
@@ -219,7 +244,13 @@ namespace Serein.Core.Server
                     fileList.Add(filename);
                 }
             }
-            if (fileList.Count > 0 && MsgBox.Show($"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", fileList.Select(f => Path.GetFileName(f)))}", true))
+            if (
+                fileList.Count > 0
+                && MsgBox.Show(
+                    $"是否将以下文件复制到插件文件夹内？\n{string.Join("\n", fileList.Select(f => Path.GetFileName(f)))}",
+                    true
+                )
+            )
             {
                 Add(fileList);
                 return true;

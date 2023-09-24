@@ -132,8 +132,8 @@ namespace Serein.Core.JSPlugin
         /// 是否监听了指定的事件类型
         /// </summary>
         /// <param name="eventType">事件类型</param>
-        public bool HasListenedOn(EventType eventType)
-            => _eventDict.TryGetValue(eventType, out JsValue? jsValue) && jsValue is FunctionInstance;
+        public bool HasListenedOn(EventType eventType) =>
+            _eventDict.TryGetValue(eventType, out JsValue? jsValue) && jsValue is FunctionInstance;
 
         /// <summary>
         /// 设置事件
@@ -170,7 +170,11 @@ namespace Serein.Core.JSPlugin
                     }
                     return true;
                 default:
-                    Utils.Output.Logger.Output(LogType.Plugin_Warn, $"{Namespace}添加了了一个不支持的事件：", type);
+                    Utils.Output.Logger.Output(
+                        LogType.Plugin_Warn,
+                        $"{Namespace}添加了了一个不支持的事件：",
+                        type
+                    );
                     return false;
             }
         }
@@ -190,7 +194,15 @@ namespace Serein.Core.JSPlugin
             {
                 lock (Engine)
                 {
-                    Utils.Output.Logger.Output(LogType.Debug, $"{nameof(Namespace)}:", Namespace, $"{nameof(type)}:", type, $"{nameof(args)} Count:", args.Length);
+                    Utils.Output.Logger.Output(
+                        LogType.Debug,
+                        $"{nameof(Namespace)}:",
+                        Namespace,
+                        $"{nameof(type)}:",
+                        type,
+                        $"{nameof(args)} Count:",
+                        args.Length
+                    );
                     switch (type)
                     {
                         case EventType.ServerStart:
@@ -206,16 +218,36 @@ namespace Serein.Core.JSPlugin
                         case EventType.ServerOutput:
                         case EventType.ServerOriginalOutput:
                         case EventType.ReceivePacket:
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0]));
+                            return !token.IsCancellationRequested
+                                && IsFalse(Engine.Invoke(_eventDict[type], args[0]));
                         case EventType.GroupIncrease:
                         case EventType.GroupDecrease:
                         case EventType.GroupPoke:
                             Engine.Invoke(_eventDict[type], args[0], args[1]);
                             break;
                         case EventType.ReceiveGroupMessage:
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3], args[4]));
+                            return !token.IsCancellationRequested
+                                && IsFalse(
+                                    Engine.Invoke(
+                                        _eventDict[type],
+                                        args[0],
+                                        args[1],
+                                        args[2],
+                                        args[3],
+                                        args[4]
+                                    )
+                                );
                         case EventType.ReceivePrivateMessage:
-                            return !token.IsCancellationRequested && IsFalse(Engine.Invoke(_eventDict[type], args[0], args[1], args[2], args[3]));
+                            return !token.IsCancellationRequested
+                                && IsFalse(
+                                    Engine.Invoke(
+                                        _eventDict[type],
+                                        args[0],
+                                        args[1],
+                                        args[2],
+                                        args[3]
+                                    )
+                                );
                         default:
                             throw new NotSupportedException($"触发了一个不支持的事件：{type}");
                     }
@@ -224,8 +256,17 @@ namespace Serein.Core.JSPlugin
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Utils.Output.Logger.Output(LogType.Plugin_Error, $"[{Namespace}]", $"触发事件{type}时出现异常：", message);
-                Utils.Output.Logger.Output(LogType.Debug, $"{Namespace}触发事件{type}时出现异常：\n", message);
+                Utils.Output.Logger.Output(
+                    LogType.Plugin_Error,
+                    $"[{Namespace}]",
+                    $"触发事件{type}时出现异常：",
+                    message
+                );
+                Utils.Output.Logger.Output(
+                    LogType.Debug,
+                    $"{Namespace}触发事件{type}时出现异常：\n",
+                    message
+                );
             }
             return false;
         }
@@ -233,7 +274,6 @@ namespace Serein.Core.JSPlugin
         /// <summary>
         /// 是否为false
         /// </summary>
-        private static bool IsFalse(JsValue jsValue)
-            => jsValue.IsBoolean() && !jsValue.AsBoolean();
+        private static bool IsFalse(JsValue jsValue) => jsValue.IsBoolean() && !jsValue.AsBoolean();
     }
 }

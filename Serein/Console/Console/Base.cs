@@ -18,13 +18,13 @@ namespace Serein.Utils.Console
         private const uint ENABLE_INSERT_MODE = 0x0020;
 
         [DllImport("user32.dll", EntryPoint = "FindWindow", CharSet = CharSet.Unicode)]
-        private extern static IntPtr FindWindow(string? lpClassName, string lpWindowName);
+        private static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
 
         [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
-        private extern static IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);
+        private static extern IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);
 
         [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
-        private extern static IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+        private static extern IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -53,19 +53,28 @@ namespace Serein.Utils.Console
                 inputMode &= ~ENABLE_QUICK_EDIT_MODE;
                 inputMode &= ~ENABLE_INSERT_MODE;
                 SetConsoleMode(handle, inputMode);
-                IntPtr closeMenu = GetSystemMenu(FindWindow(null, System.Console.Title), IntPtr.Zero);
+                IntPtr closeMenu = GetSystemMenu(
+                    FindWindow(null, System.Console.Title),
+                    IntPtr.Zero
+                );
                 RemoveMenu(closeMenu, 0xF060, 0x0);
             }
             Logger.Output(LogType.Info, Global.LOGO);
 #if !UNIX
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
-                Logger.Output(LogType.Warn, "此版本为Windows专供。为获得更好的使用体验，请尝试使用`Console For Unix`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(
+                    LogType.Warn,
+                    "此版本为Windows专供。为获得更好的使用体验，请尝试使用`Console For Unix`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest"
+                );
             }
 #else
             if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
-                Logger.Output(LogType.Warn, "此版本为Unix专供。为获得更好的使用体验，请尝试使用`Console`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest");
+                Logger.Output(
+                    LogType.Warn,
+                    "此版本为Unix专供。为获得更好的使用体验，请尝试使用`Console`类型的Serein，下载链接：https://github.com/Zaitonn/Serein/releases/latest"
+                );
             }
 #endif
         }

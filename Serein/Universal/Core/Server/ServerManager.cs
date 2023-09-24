@@ -144,7 +144,10 @@ namespace Serein.Core.Server
                     MsgBox.Show("服务器已在运行中");
                 }
             }
-            else if (string.IsNullOrEmpty(Global.Settings.Server.Path) || string.IsNullOrWhiteSpace(Global.Settings.Server.Path))
+            else if (
+                string.IsNullOrEmpty(Global.Settings.Server.Path)
+                || string.IsNullOrWhiteSpace(Global.Settings.Server.Path)
+            )
             {
                 if (!quiet)
                 {
@@ -158,7 +161,11 @@ namespace Serein.Core.Server
                     MsgBox.Show($"启动文件\"{Global.Settings.Server.Path}\"未找到");
                 }
             }
-            else if (!quiet && Path.GetFileName(Global.Settings.Server.Path).Contains("Serein") && !MsgBox.Show("禁止禁止禁止套娃（）", true))
+            else if (
+                !quiet
+                && Path.GetFileName(Global.Settings.Server.Path).Contains("Serein")
+                && !MsgBox.Show("禁止禁止禁止套娃（）", true)
+            )
             {
                 return false;
             }
@@ -174,26 +181,34 @@ namespace Serein.Core.Server
                 try
                 {
                     #region 主变量初始化
-                    _serverProcess = Process.Start(new ProcessStartInfo(Global.Settings.Server.Path)
-                    {
-                        FileName = Global.Settings.Server.Path,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardInput = true,
-                        StandardOutputEncoding = _encodings[Global.Settings.Server.OutputEncoding],
-                        WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path),
-                        Arguments = Global.Settings.Server.Argument ?? string.Empty
-                    });
+                    _serverProcess = Process.Start(
+                        new ProcessStartInfo(Global.Settings.Server.Path)
+                        {
+                            FileName = Global.Settings.Server.Path,
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                            RedirectStandardOutput = true,
+                            RedirectStandardInput = true,
+                            StandardOutputEncoding = _encodings[
+                                Global.Settings.Server.OutputEncoding
+                            ],
+                            WorkingDirectory = Path.GetDirectoryName(Global.Settings.Server.Path),
+                            Arguments = Global.Settings.Server.Argument ?? string.Empty
+                        }
+                    );
                     _serverProcess!.EnableRaisingEvents = true;
                     _serverProcess.Exited += (_, _) => CloseAll();
                     _inputWriter = new(
                         _serverProcess.StandardInput.BaseStream,
                         _encodings[Global.Settings.Server.InputEncoding]
-                       )
+                    )
                     {
                         AutoFlush = true,
-                        NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator) ? Environment.NewLine : Global.Settings.Server.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
+                        NewLine = string.IsNullOrEmpty(Global.Settings.Server.LineTerminator)
+                            ? Environment.NewLine
+                            : Global.Settings.Server.LineTerminator
+                                .Replace("\\n", "\n")
+                                .Replace("\\r", "\r")
                     };
                     _serverProcess.BeginOutputReadLine();
                     _serverProcess.OutputDataReceived += SortOutputHandler;
@@ -246,7 +261,12 @@ namespace Serein.Core.Server
             if (Status)
             {
 #if WINFORM || WPF
-                if (!quiet && Global.Settings.Server.StopCommands.Length == 0 && PID > 0 && Environment.OSVersion.Platform == PlatformID.Win32NT)
+                if (
+                    !quiet
+                    && Global.Settings.Server.StopCommands.Length == 0
+                    && PID > 0
+                    && Environment.OSVersion.Platform == PlatformID.Win32NT
+                )
                 {
                     Logger.Output(LogType.Server_Notice, "当前未设置关服命令，将发送Ctrl+C作为替代");
                     AttachConsole((uint)PID);
@@ -292,8 +312,10 @@ namespace Serein.Core.Server
 
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GenerateConsoleCtrlEvent(CtrlTypes dwCtrlEvent, uint dwProcessGroupId);
-
+        private static extern bool GenerateConsoleCtrlEvent(
+            CtrlTypes dwCtrlEvent,
+            uint dwProcessGroupId
+        );
 #endif
 
         /// <summary>
@@ -367,12 +389,15 @@ namespace Serein.Core.Server
 #else
             else if (MsgBox.Show("确定结束进程吗？\n此操作可能导致存档损坏等问题", true)
 #if !NET6_0
-                 && (
-                    !StartFileName.ToLowerInvariant().EndsWith(".bat") || (
-                    StartFileName.ToLowerInvariant().EndsWith(".bat") &&
-                    MsgBox.Show("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", true)))
-#endif
+                && (
+                    !StartFileName.ToLowerInvariant().EndsWith(".bat")
+                    || (
+                        StartFileName.ToLowerInvariant().EndsWith(".bat")
+                        && MsgBox.Show("由于启动文件为批处理文件（*.bat），\n强制结束进程功能可能不一定有效\n是否继续？", true)
+                    )
                 )
+#endif
+            )
             {
                 try
                 {
@@ -419,11 +444,15 @@ namespace Serein.Core.Server
                 }
                 if (
                     (
-                        CommandHistory.Count > 0 &&
-                        CommandHistory[CommandHistory.Count - 1] != command || // 与最后一项重复
-                        CommandHistory.Count == 0) &&
-                        !isFromCommand && // 通过Serein命令执行的不计入
-                        !string.IsNullOrEmpty(command)) // 为空不计入
+                        CommandHistory.Count > 0
+                            && CommandHistory[CommandHistory.Count - 1] != command
+                        || // 与最后一项重复
+                        CommandHistory.Count == 0
+                    )
+                    && !isFromCommand
+                    && // 通过Serein命令执行的不计入
+                    !string.IsNullOrEmpty(command)
+                ) // 为空不计入
                 {
                     CommandHistory.Add(command);
                 }
@@ -463,18 +492,47 @@ namespace Serein.Core.Server
             if (!string.IsNullOrEmpty(e.Data))
             {
                 string lineFiltered = LogPreProcessing.Filter(e.Data);
-                if (string.IsNullOrEmpty(LevelName) && RegExp.Regex.IsMatch(lineFiltered, Global.Settings.Matches.LevelName, RegExp.RegexOptions.IgnoreCase))
+                if (
+                    string.IsNullOrEmpty(LevelName)
+                    && RegExp.Regex.IsMatch(
+                        lineFiltered,
+                        Global.Settings.Matches.LevelName,
+                        RegExp.RegexOptions.IgnoreCase
+                    )
+                )
                 {
-                    LevelName = RegExp.Regex.Match(lineFiltered, Global.Settings.Matches.LevelName, RegExp.RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    LevelName = RegExp.Regex
+                        .Match(
+                            lineFiltered,
+                            Global.Settings.Matches.LevelName,
+                            RegExp.RegexOptions.IgnoreCase
+                        )
+                        .Groups[1].Value.Trim();
                 }
-                else if (string.IsNullOrEmpty(Difficulty) && RegExp.Regex.IsMatch(lineFiltered, Global.Settings.Matches.Difficulty, RegExp.RegexOptions.IgnoreCase))
+                else if (
+                    string.IsNullOrEmpty(Difficulty)
+                    && RegExp.Regex.IsMatch(
+                        lineFiltered,
+                        Global.Settings.Matches.Difficulty,
+                        RegExp.RegexOptions.IgnoreCase
+                    )
+                )
                 {
-                    Difficulty = RegExp.Regex.Match(lineFiltered, Global.Settings.Matches.Difficulty, RegExp.RegexOptions.IgnoreCase).Groups[1].Value.Trim();
+                    Difficulty = RegExp.Regex
+                        .Match(
+                            lineFiltered,
+                            Global.Settings.Matches.Difficulty,
+                            RegExp.RegexOptions.IgnoreCase
+                        )
+                        .Groups[1].Value.Trim();
                 }
                 bool excluded = false;
                 foreach (string exp1 in Global.Settings.Server.ExcludedOutputs)
                 {
-                    if (exp1.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex) && regex!.IsMatch(lineFiltered))
+                    if (
+                        exp1.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex)
+                        && regex!.IsMatch(lineFiltered)
+                    )
                     {
                         excluded = true;
                         break;
@@ -489,7 +547,10 @@ namespace Serein.Core.Server
                     bool isMuiltLinesMode = false;
                     foreach (string exp2 in Global.Settings.Matches.MuiltLines)
                     {
-                        if (exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex) && regex!.IsMatch(lineFiltered))
+                        if (
+                            exp2.TryParse(RegExp.RegexOptions.IgnoreCase, out RegExp.Regex? regex)
+                            && regex!.IsMatch(lineFiltered)
+                        )
                         {
                             _tempLine = lineFiltered.Trim('\r', '\n');
                             isMuiltLinesMode = true;
@@ -561,9 +622,7 @@ namespace Serein.Core.Server
         /// </summary>
         private static void RestartTimer()
         {
-            Logger.Output(LogType.Server_Notice,
-                $"服务器将在5s后（{DateTime.Now.AddSeconds(5):T}）重新启动"
-                );
+            Logger.Output(LogType.Server_Notice, $"服务器将在5s后（{DateTime.Now.AddSeconds(5):T}）重新启动");
 #if CONSOLE
             Logger.Output(LogType.Server_Notice, "你可以输入\"stop\"来取消这次重启");
 #else
@@ -594,7 +653,11 @@ namespace Serein.Core.Server
         {
             if (Status && _serverProcess is not null)
             {
-                CPUUsage = (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds / 2000 / Environment.ProcessorCount * 100;
+                CPUUsage =
+                    (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
+                    / 2000
+                    / Environment.ProcessorCount
+                    * 100;
                 _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
                 if (CPUUsage > 100)
                 {
@@ -619,7 +682,10 @@ namespace Serein.Core.Server
         /// 获取运行时间
         /// </summary>
         /// <returns>运行时间</returns>
-        public static string Time => Status && _serverProcess is not null ? (DateTime.Now - _serverProcess.StartTime).ToCustomString() : string.Empty;
+        public static string Time =>
+            Status && _serverProcess is not null
+                ? (DateTime.Now - _serverProcess.StartTime).ToCustomString()
+                : string.Empty;
 
         /// <summary>
         /// Unicode转换

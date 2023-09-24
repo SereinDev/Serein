@@ -54,10 +54,14 @@ namespace Serein.Core.Common
                     "ws://" + Global.Settings.Bot.Uri,
                     "",
                     null,
-                    new List<KeyValuePair<string, string>> {
-                        new KeyValuePair<string, string>("Authorization", Global.Settings.Bot.Authorization)
-                        }
-                    );
+                    new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string, string>(
+                            "Authorization",
+                            Global.Settings.Bot.Authorization
+                        )
+                    }
+                );
                 _websocket.MessageReceived += Receive;
                 _websocket.Error += (_, e) =>
                 {
@@ -87,7 +91,10 @@ namespace Serein.Core.Common
             {
                 Task.Run(() =>
                 {
-                    Logger.Output(LogType.Bot_Notice, $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接");
+                    Logger.Output(
+                        LogType.Bot_Notice,
+                        $"将于10秒后（{DateTime.Now.AddSeconds(10):T}）尝试重新连接"
+                    );
                     Logger.Output(LogType.Bot_Notice, "你可以按下断开按钮来取消重连");
                     for (int i = 0; i < 20; i++)
                     {
@@ -127,8 +134,18 @@ namespace Serein.Core.Common
         /// <param name="target">目标对象</param>
         /// <param name="canBeEscaped">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool isPrivate, string message, string target, bool canBeEscaped = true)
-            => Send(isPrivate, message, long.TryParse(target, out long targetID) ? targetID : -1, canBeEscaped);
+        public static bool Send(
+            bool isPrivate,
+            string message,
+            string target,
+            bool canBeEscaped = true
+        ) =>
+            Send(
+                isPrivate,
+                message,
+                long.TryParse(target, out long targetID) ? targetID : -1,
+                canBeEscaped
+            );
 
         /// <summary>
         /// 发送数据包
@@ -138,26 +155,29 @@ namespace Serein.Core.Common
         /// <param name="target">目标对象</param>
         /// <param name="canBeEscaped">纯文本发送</param>
         /// <returns>发送结果</returns>
-        public static bool Send(bool isPrivate, string message, long target, bool canBeEscaped = true)
+        public static bool Send(
+            bool isPrivate,
+            string message,
+            long target,
+            bool canBeEscaped = true
+        )
         {
             if (Status)
             {
-                JObject textJObject = new()
-                {
+                JObject textJObject =
+                    new()
                     {
-                        "action",
-                        isPrivate ? "send_private_msg" : "send_group_msg"
-                    },
-                    {
-                        "params",
-                        new JObject
+                        { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
                         {
-                            { isPrivate ? "user_id" : "group_id", target },
-                            { "message", message },
-                            { "auto_escape", canBeEscaped && Global.Settings.Bot.AutoEscape }
+                            "params",
+                            new JObject
+                            {
+                                { isPrivate ? "user_id" : "group_id", target },
+                                { "message", message },
+                                { "auto_escape", canBeEscaped && Global.Settings.Bot.AutoEscape }
+                            }
                         }
-                    }
-                };
+                    };
                 Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
@@ -165,13 +185,15 @@ namespace Serein.Core.Common
                 }
                 else
                 {
-                    Logger.Output(LogType.Bot_Send, $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}");
+                    Logger.Output(
+                        LogType.Bot_Send,
+                        $"{(isPrivate ? "私聊" : "群聊")}({target}):{message}"
+                    );
                 }
                 Log.Msg($"[Sent] {textJObject}");
             }
             return Status;
         }
-
 
         /// <summary>
         /// 发送数据包
@@ -184,20 +206,21 @@ namespace Serein.Core.Common
         {
             if (Status)
             {
-                JObject textJObject = new()
-                {
-                    { "action", "send_private_msg" },
+                JObject textJObject =
+                    new()
                     {
-                        "params",
-                        new JObject
+                        { "action", "send_private_msg" },
                         {
-                            { "user_id" , userID },
-                            { "group_id" , groupID },
-                            { "message", message },
-                            { "auto_escape", Global.Settings.Bot.AutoEscape }
+                            "params",
+                            new JObject
+                            {
+                                { "user_id", userID },
+                                { "group_id", groupID },
+                                { "message", message },
+                                { "auto_escape", Global.Settings.Bot.AutoEscape }
+                            }
                         }
-                    }
-                };
+                    };
                 _websocket?.Send(textJObject.ToString());
                 if (Global.Settings.Bot.EnbaleOutputData)
                 {
@@ -250,9 +273,11 @@ namespace Serein.Core.Common
             }
             Log.Msg($"[Received] {e.Message}");
             string packet = WebUtility.HtmlDecode(
-                new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})")
-                .Replace(e.Message, match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)
-                ).ToString()));
+                new System.Text.RegularExpressions.Regex(@"(?i)\\[uU]([0-9a-f]{4})").Replace(
+                    e.Message,
+                    match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString()
+                )
+            );
             if (JSFunc.Trigger(EventType.ReceivePacket, packet))
             {
                 return;

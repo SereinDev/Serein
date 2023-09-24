@@ -60,7 +60,9 @@ namespace Serein.Base
                 CrontabSchedule crontabSchedule;
                 if ((crontabSchedule = CrontabSchedule.TryParse(Cron)) is not null)
                 {
-                    NextTime = crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+                    NextTime = crontabSchedule
+                        .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                        .ToList()[0];
                 }
                 else
                 {
@@ -77,9 +79,14 @@ namespace Serein.Base
         public bool Check()
         {
             CrontabSchedule crontabSchedule;
-            if (Core.Common.Command.GetType(Command) != CommandType.Invalid && (crontabSchedule = CrontabSchedule.TryParse(Cron)) != null)
+            if (
+                Core.Common.Command.GetType(Command) != CommandType.Invalid
+                && (crontabSchedule = CrontabSchedule.TryParse(Cron)) != null
+            )
             {
-                NextTime = crontabSchedule!.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0];
+                NextTime = crontabSchedule!
+                    .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                    .ToList()[0];
                 return true;
             }
             else

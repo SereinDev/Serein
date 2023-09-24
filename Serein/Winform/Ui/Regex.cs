@@ -58,7 +58,7 @@ namespace Serein.Ui
                 regexEditer.IsAdmin.Checked,
                 regexEditer.RemarkTextBox.Text,
                 regexEditer.CommandTextBox.Text
-                );
+            );
             SaveRegex();
         }
 
@@ -76,15 +76,22 @@ namespace Serein.Ui
                 RegexList.SelectedItems[0].SubItems[2].Text == "是",
                 RegexList.SelectedItems[0].SubItems[3].Text,
                 RegexList.SelectedItems[0].SubItems[4].Text
-                );
+            );
             regexEditer.ShowDialog(this);
             if (regexEditer.CancelFlag)
             {
                 return;
             }
-            string isAdminText = regexEditer.Area.SelectedIndex <= 1 || regexEditer.Area.SelectedIndex == 4 ? "-" : regexEditer.IsAdmin.Checked ? "是" : "否";
+            string isAdminText =
+                regexEditer.Area.SelectedIndex <= 1 || regexEditer.Area.SelectedIndex == 4
+                    ? "-"
+                    : regexEditer.IsAdmin.Checked
+                        ? "是"
+                        : "否";
             RegexList.SelectedItems[0].Text = regexEditer.RegexTextBox.Text;
-            RegexList.SelectedItems[0].SubItems[1].Text = Regex.AreaArray[regexEditer.Area.SelectedIndex];
+            RegexList.SelectedItems[0].SubItems[1].Text = Regex.AreaArray[
+                regexEditer.Area.SelectedIndex
+            ];
             RegexList.SelectedItems[0].SubItems[2].Text = isAdminText;
             RegexList.SelectedItems[0].SubItems[3].Text = regexEditer.RemarkTextBox.Text;
             RegexList.SelectedItems[0].SubItems[4].Text = regexEditer.CommandTextBox.Text;
@@ -95,10 +102,12 @@ namespace Serein.Ui
         {
             if (RegexList.Items.Count > 0)
             {
-                int result = (int)MessageBox.Show(
-                    "确定删除所有记录？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                int result = (int)
+                    MessageBox.Show(
+                        "确定删除所有记录？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
                     );
                 if (result == 1)
                 {
@@ -112,10 +121,12 @@ namespace Serein.Ui
         {
             if (RegexList.SelectedItems.Count > 0)
             {
-                int result = (int)MessageBox.Show(
-                    "确定删除此行记录？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                int result = (int)
+                    MessageBox.Show(
+                        "确定删除此行记录？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
                     );
                 if (result == 1)
                 {
@@ -125,19 +136,33 @@ namespace Serein.Ui
             }
         }
 
-        private void AddRegex(int areaIndex, string regex, bool isAdmin, string remark, string command, long[]? ignored = null)
+        private void AddRegex(
+            int areaIndex,
+            string regex,
+            bool isAdmin,
+            string remark,
+            string command,
+            long[]? ignored = null
+        )
         {
             if (
-              string.IsNullOrWhiteSpace(regex) || string.IsNullOrEmpty(regex) ||
-              string.IsNullOrWhiteSpace(command) || string.IsNullOrEmpty(command)
-              )
+                string.IsNullOrWhiteSpace(regex)
+                || string.IsNullOrEmpty(regex)
+                || string.IsNullOrWhiteSpace(command)
+                || string.IsNullOrEmpty(command)
+            )
             {
                 return;
             }
             string isAdminText = string.Empty;
             ListViewItem item = new(regex);
             item.Tag = ignored;
-            isAdminText = areaIndex == 4 || areaIndex <= 1 ? "-" : isAdmin ? "是" : "否";
+            isAdminText =
+                areaIndex == 4 || areaIndex <= 1
+                    ? "-"
+                    : isAdmin
+                        ? "是"
+                        : "否";
             item.SubItems.Add(Regex.AreaArray[areaIndex]);
             item.SubItems.Add(isAdminText);
             item.SubItems.Add(remark);
@@ -179,7 +204,14 @@ namespace Serein.Ui
             {
                 if (item.Check())
                 {
-                    AddRegex(item.Area, item.Expression, item.IsAdmin, item.Remark, item.Command, item.Ignored);
+                    AddRegex(
+                        item.Area,
+                        item.Expression,
+                        item.IsAdmin,
+                        item.Remark,
+                        item.Command,
+                        item.Ignored
+                    );
                 }
             }
             RegexList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -191,21 +223,36 @@ namespace Serein.Ui
             List<Regex> regexItems = new();
             foreach (ListViewItem listViewItem in RegexList.Items)
             {
-                regexItems.Add(new Regex
-                {
-                    Expression = listViewItem.Text,
-                    Area = Array.IndexOf(Regex.AreaArray, listViewItem.SubItems[1].Text),
-                    IsAdmin = listViewItem.SubItems[2].Text == "是",
-                    Remark = listViewItem.SubItems[3].Text,
-                    Ignored = (listViewItem.Tag as long[]) ?? new long[] { },
-                    Command = listViewItem.SubItems[4].Text
-                });
+                regexItems.Add(
+                    new Regex
+                    {
+                        Expression = listViewItem.Text,
+                        Area = Array.IndexOf(Regex.AreaArray, listViewItem.SubItems[1].Text),
+                        IsAdmin = listViewItem.SubItems[2].Text == "是",
+                        Remark = listViewItem.SubItems[3].Text,
+                        Ignored = (listViewItem.Tag as long[]) ?? new long[] { },
+                        Command = listViewItem.SubItems[4].Text
+                    }
+                );
             }
             Global.RegexList = regexItems;
             Data.SaveRegex();
         }
 
-        private void RegexContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });
-        private void RegexContextMenuStrip_Command_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/command") { UseShellExecute = true });
+        private void RegexContextMenuStrip_Variables_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/variables")
+                {
+                    UseShellExecute = true
+                }
+            );
+
+        private void RegexContextMenuStrip_Command_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/command")
+                {
+                    UseShellExecute = true
+                }
+            );
     }
 }

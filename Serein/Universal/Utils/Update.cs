@@ -51,7 +51,18 @@ namespace Serein.Utils
             }
             try
             {
-                JObject? jsonObject = (JsonConvert.DeserializeObject<JObject>(Net.Get("https://api.github.com/repos/Zaitonn/Serein/releases/latest", "application/vnd.github.v3+json", "Serein").Await().Content.ReadAsStringAsync().Await()));
+                JObject? jsonObject = (
+                    JsonConvert.DeserializeObject<JObject>(
+                        Net.Get(
+                                "https://api.github.com/repos/Zaitonn/Serein/releases/latest",
+                                "application/vnd.github.v3+json",
+                                "Serein"
+                            )
+                            .Await()
+                            .Content.ReadAsStringAsync()
+                            .Await()
+                    )
+                );
                 if (jsonObject is null)
                 {
                     return;
@@ -88,7 +99,9 @@ namespace Serein.Utils
         private static void DownloadNewVersion(JObject jobject)
         {
             Directory.CreateDirectory("update");
-            foreach (string file in Directory.GetFiles("update", "*.*", SearchOption.AllDirectories))
+            foreach (
+                string file in Directory.GetFiles("update", "*.*", SearchOption.AllDirectories)
+            )
             {
                 if (Path.GetExtension(file.ToLowerInvariant()) != ".zip")
                 {
@@ -100,9 +113,11 @@ namespace Serein.Utils
                 string? filename = asset["name"]?.ToString();
                 string? url = asset["browser_download_url"]?.ToString();
 
-                if (string.IsNullOrEmpty(filename) ||
-                    !IdentifyFile(filename?.ToLowerInvariant()) ||
-                    string.IsNullOrEmpty(url))
+                if (
+                    string.IsNullOrEmpty(filename)
+                    || !IdentifyFile(filename?.ToLowerInvariant())
+                    || string.IsNullOrEmpty(url)
+                )
                 {
                     continue;
                 }
@@ -123,7 +138,12 @@ namespace Serein.Utils
                         IsReadyToUpdate = false;
                         Logger.Output(Base.LogType.Version_Downloading, url);
                         Logger.Output(Base.LogType.Debug, $"正在从[{url}]下载[{asset["name"]}]");
-                        using (Stream stream = Net.Get(url!).Await().Content.ReadAsStreamAsync().Await())
+                        using (
+                            Stream stream = Net.Get(url!)
+                                .Await()
+                                .Content.ReadAsStreamAsync()
+                                .Await()
+                        )
                         using (FileStream fileStream = new($"update/{filename}", FileMode.Create))
                         {
                             byte[] bytes = new byte[stream.Length];
@@ -136,7 +156,15 @@ namespace Serein.Utils
                     ZipFile.ExtractToDirectory($"update/{filename}", "update");
                     Logger.Output(Base.LogType.Debug, "解压成功");
                     IsReadyToUpdate = true;
-                    Logger.Output(Base.LogType.Version_Ready, "新版本已下载完毕\n" + (Environment.OSVersion.Platform == PlatformID.Win32NT ? "重启即可自动更新" : "你可以自行打开“update”文件夹复制替换"));
+                    Logger.Output(
+                        Base.LogType.Version_Ready,
+                        "新版本已下载完毕\n"
+                            + (
+                                Environment.OSVersion.Platform == PlatformID.Win32NT
+                                    ? "重启即可自动更新"
+                                    : "你可以自行打开“update”文件夹复制替换"
+                            )
+                    );
                 }
                 catch (Exception e)
                 {
@@ -155,10 +183,9 @@ namespace Serein.Utils
             if (name?.Contains(Global.TYPE) ?? false)
             {
                 string netVer = Environment.Version.Major.ToString();
-                return
-                    !(Environment.OSVersion.Platform == PlatformID.Unix ^ name.Contains("unix")) &&
-                    !(netVer == "4" ^ name.Contains("dotnetframework472")) &&
-                    !(netVer == "6" ^ name.Contains("dotnet6"));
+                return !(Environment.OSVersion.Platform == PlatformID.Unix ^ name.Contains("unix"))
+                    && !(netVer == "4" ^ name.Contains("dotnetframework472"))
+                    && !(netVer == "6" ^ name.Contains("dotnet6"));
             }
             return false;
         }
@@ -168,7 +195,11 @@ namespace Serein.Utils
         /// </summary>
         public static void StartUpdater()
         {
-            if (!Global.Settings.Serein.AutoUpdate || !IsReadyToUpdate || Environment.OSVersion.Platform != PlatformID.Win32NT)
+            if (
+                !Global.Settings.Serein.AutoUpdate
+                || !IsReadyToUpdate
+                || Environment.OSVersion.Platform != PlatformID.Win32NT
+            )
             {
                 return;
             }
@@ -177,11 +208,13 @@ namespace Serein.Utils
                 using FileStream fileStream = new("Updater.exe", FileMode.Create);
                 fileStream.Write(Resources.Updater, 0, Resources.Updater.Length);
             }
-            Process.Start(new ProcessStartInfo("Updater.exe")
-            {
-                WorkingDirectory = Global.PATH,
-                UseShellExecute = false,
-            });
+            Process.Start(
+                new ProcessStartInfo("Updater.exe")
+                {
+                    WorkingDirectory = Global.PATH,
+                    UseShellExecute = false,
+                }
+            );
         }
     }
 }

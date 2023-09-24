@@ -10,8 +10,8 @@ namespace Serein.Windows.Pages
             Catalog.Debug = this;
         }
 
-        public void AppendText(string Line)
-            => Dispatcher.Invoke(() =>
+        public void AppendText(string Line) =>
+            Dispatcher.Invoke(() =>
             {
                 if (DebugTextBox.Text.Split('\n').Length > 50000)
                 {

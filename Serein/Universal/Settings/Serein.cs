@@ -53,7 +53,8 @@ namespace Serein.Settings
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class AutoRun
     {
-        public bool StartServer, ConnectWS;
+        public bool StartServer,
+            ConnectWS;
 
         /// <summary>
         /// 延迟
@@ -64,22 +65,22 @@ namespace Serein.Settings
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class DevelopmentTool
     {
-        public bool EnableDebug, DetailDebug;
+        public bool EnableDebug,
+            DetailDebug;
         public string NOTE { get; } = "以上设置内容为开发专用选项，请在指导下修改";
     }
 
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class PagesDisplayed
     {
-        public bool
-        ServerPanel = true,
-        ServerPluginManager = true,
-        RegexList = true,
-        Schedule = true,
-        Bot = true,
-        Member = true,
-        JSPlugin = true,
-        Settings = true;
+        public bool ServerPanel = true,
+            ServerPluginManager = true,
+            RegexList = true,
+            Schedule = true,
+            Bot = true,
+            Member = true,
+            JSPlugin = true,
+            Settings = true;
     }
 
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]

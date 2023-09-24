@@ -18,25 +18,28 @@ namespace Serein.Windows.Pages.Function
             PluginRichTextBox.Document.Blocks.Clear();
             lock (Catalog.Function.PluginCache)
             {
-                Catalog.Function.PluginCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+                Catalog.Function.PluginCache.ForEach(
+                    (line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line)))
+                );
             }
             Catalog.Function.JSPlugin = this;
         }
 
-        public void Append(Paragraph paragraph)
-            => Dispatcher.Invoke(() =>
+        public void Append(Paragraph paragraph) =>
+            Dispatcher.Invoke(() =>
             {
                 PluginRichTextBox.Document = PluginRichTextBox.Document ?? new();
                 PluginRichTextBox.Document.Blocks.Add(paragraph);
                 while (PluginRichTextBox.Document.Blocks.Count > 250)
                 {
-                    PluginRichTextBox.Document.Blocks.Remove(PluginRichTextBox.Document.Blocks.FirstBlock);
+                    PluginRichTextBox.Document.Blocks.Remove(
+                        PluginRichTextBox.Document.Blocks.FirstBlock
+                    );
                 }
                 PluginRichTextBox.ScrollToEnd();
             });
 
-        public void LoadPublicly()
-            => Dispatcher.Invoke(Load);
+        public void LoadPublicly() => Dispatcher.Invoke(Load);
 
         private void Load()
         {
@@ -71,13 +74,29 @@ namespace Serein.Windows.Pages.Function
                         Catalog.Function.PluginCache.Clear();
                         break;
                     case "LookupDocs":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/development/intro") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/development/intro")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                     case "GotoMarket":
-                        Process.Start(new ProcessStartInfo("https://market.serein.cc/") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://market.serein.cc/")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                     case "Disable":
-                        if (JSPluginListView.SelectedItem is ListViewItem listViewItem && JSPluginManager.PluginDict.TryGetValue(listViewItem.Tag.ToString() ?? string.Empty, out Plugin? plugin))
+                        if (
+                            JSPluginListView.SelectedItem is ListViewItem listViewItem
+                            && JSPluginManager.PluginDict.TryGetValue(
+                                listViewItem.Tag.ToString() ?? string.Empty,
+                                out Plugin? plugin
+                            )
+                        )
                         {
                             plugin.Dispose();
                             Load();
@@ -87,11 +106,11 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-            => Disable.IsEnabled =
-            JSPluginListView.SelectedIndex != -1 &&
-            JSPluginListView.SelectedItem is ListViewItem item &&
-            JSPluginManager.PluginDict.TryGetValue(item.Tag.ToString()!, out Plugin? plugin) &&
-            plugin.Available;
+        private void JSPluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e) =>
+            Disable.IsEnabled =
+                JSPluginListView.SelectedIndex != -1
+                && JSPluginListView.SelectedItem is ListViewItem item
+                && JSPluginManager.PluginDict.TryGetValue(item.Tag.ToString()!, out Plugin? plugin)
+                && plugin.Available;
     }
 }

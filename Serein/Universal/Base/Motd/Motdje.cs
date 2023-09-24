@@ -65,11 +65,14 @@ namespace Serein.Base.Motd
             byte[] datas = new byte[1024 * 1024];
             int totalLength = 0;
 
-            using (Socket socket = new(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
-            {
-                SendTimeout = 1000,
-                ReceiveTimeout = 1000
-            })
+            using (
+                Socket socket =
+                    new(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+                    {
+                        SendTimeout = 1000,
+                        ReceiveTimeout = 1000
+                    }
+            )
             {
                 socket.Connect(new IPEndPoint(IP, Port));
                 DateTime startTime = DateTime.Now;
@@ -90,7 +93,11 @@ namespace Serein.Base.Motd
                         totalLength += length;
 
                         Origin = Encoding.UTF8.GetString(datas, 0, totalLength);
-                        if (Origin.Length > 0 && Origin.EndsWith("}") && new[] { ']', '}', '"' }.ToList().Contains(Origin[Origin.Length - 2]))
+                        if (
+                            Origin.Length > 0
+                            && Origin.EndsWith("}")
+                            && new[] { ']', '}', '"' }.ToList().Contains(Origin[Origin.Length - 2])
+                        )
                         {
                             break; // 接收完毕
                         }
@@ -105,13 +112,14 @@ namespace Serein.Base.Motd
 
             Origin = Encoding.UTF8.GetString(datas, 0, totalLength);
 
-
             if (Origin.Contains("{"))
             {
                 Origin = Origin.Substring(Origin.IndexOf('{'));
                 Logger.Output(LogType.Debug, $"Origin: {Origin}");
 
-                MotdjePacket.Packet packet = JsonConvert.DeserializeObject<MotdjePacket.Packet>(Origin) ?? throw new ArgumentNullException();
+                MotdjePacket.Packet packet =
+                    JsonConvert.DeserializeObject<MotdjePacket.Packet>(Origin)
+                    ?? throw new ArgumentNullException();
 
                 IsSuccessful = true;
                 OnlinePlayer = packet.Players.Online;

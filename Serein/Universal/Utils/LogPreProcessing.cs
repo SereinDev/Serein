@@ -17,41 +17,42 @@ namespace Serein.Utils
         /// <summary>
         /// 颜色代码列表
         /// </summary>
-        private static readonly List<string> ColorList = new()
-        {
-            "30",
-            "31",
-            "32",
-            "33",
-            "34",
-            "35",
-            "36",
-            "37",
-            "40",
-            "41",
-            "42",
-            "43",
-            "44",
-            "45",
-            "46",
-            "47",
-            "90",
-            "91",
-            "92",
-            "93",
-            "94",
-            "95",
-            "96",
-            "97",
-            "100",
-            "101",
-            "102",
-            "103",
-            "104",
-            "105",
-            "106",
-            "107"
-        };
+        private static readonly List<string> ColorList =
+            new()
+            {
+                "30",
+                "31",
+                "32",
+                "33",
+                "34",
+                "35",
+                "36",
+                "37",
+                "40",
+                "41",
+                "42",
+                "43",
+                "44",
+                "45",
+                "46",
+                "47",
+                "90",
+                "91",
+                "92",
+                "93",
+                "94",
+                "95",
+                "96",
+                "97",
+                "100",
+                "101",
+                "102",
+                "103",
+                "104",
+                "105",
+                "106",
+                "107"
+            };
 #endif
 
         /// <summary>
@@ -86,8 +87,12 @@ namespace Serein.Utils
         /// <param name="input">输入文本</param>
         /// 将字符串转为HTML编码的字符串
         /// <returns>转义后的HTML</returns>
-        public static string EscapeLog(string input)
-            => RegExp.Regex.Replace(System.Net.WebUtility.HtmlEncode(input).Replace("\n", "<br>"), @"\s", "&nbsp;");
+        public static string EscapeLog(string input) =>
+            RegExp.Regex.Replace(
+                System.Net.WebUtility.HtmlEncode(input).Replace("\n", "<br>"),
+                @"\s",
+                "&nbsp;"
+            );
 
         /// <summary>
         /// 彩色文本转义
@@ -133,16 +138,26 @@ namespace Serein.Utils
                                     styleStringBuilder.Append("text-decoration: underline;");
                                     break;
                                 case 38:
-                                    if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
+                                    if (
+                                        argList[childArgIndex + 1] == "2"
+                                        && childArgIndex + 4 <= argList.Length
+                                    )
                                     {
-                                        styleStringBuilder.Append($"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});");
+                                        styleStringBuilder.Append(
+                                            $"color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});"
+                                        );
                                         isColored = true;
                                     }
                                     break;
                                 case 48:
-                                    if (argList[childArgIndex + 1] == "2" && childArgIndex + 4 <= argList.Length)
+                                    if (
+                                        argList[childArgIndex + 1] == "2"
+                                        && childArgIndex + 4 <= argList.Length
+                                    )
                                     {
-                                        styleStringBuilder.Append($"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});");
+                                        styleStringBuilder.Append(
+                                            $"background-color:rgb({argList[childArgIndex + 2]},{argList[childArgIndex + 3]},{argList[childArgIndex + 4]});"
+                                        );
                                         isColored = true;
                                     }
                                     break;
@@ -150,7 +165,12 @@ namespace Serein.Utils
                                     if (ColorList.Contains(childArg))
                                     {
                                         @class = $"vanillaColor{childArg}";
-                                        isColored = !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107");
+                                        isColored = !(
+                                            childArg == "37"
+                                            || childArg == "47"
+                                            || childArg == "97"
+                                            || childArg == "107"
+                                        );
                                     }
                                     break;
                             }
@@ -161,11 +181,15 @@ namespace Serein.Utils
                         }
                         if (string.IsNullOrEmpty(styleStringBuilder.ToString()))
                         {
-                            mainStringBuild.Append($"<span class=\"{@class}\">{match.Groups[2].Value}</span>");
+                            mainStringBuild.Append(
+                                $"<span class=\"{@class}\">{match.Groups[2].Value}</span>"
+                            );
                         }
                         else
                         {
-                            mainStringBuild.Append($"<span style=\"{styleStringBuilder}\" class=\"{@class}\">{match.Groups[2].Value}</span>");
+                            mainStringBuild.Append(
+                                $"<span style=\"{styleStringBuilder}\" class=\"{@class}\">{match.Groups[2].Value}</span>"
+                            );
                         }
                     }
                     output = mainStringBuild.ToString();
@@ -176,23 +200,77 @@ namespace Serein.Utils
                 }
                 if (type == 3)
                 {
-                    output = RegExp.Regex.Replace(output, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegExp.RegexOptions.IgnoreCase);
-                    output = RegExp.Regex.Replace(output, @"(INFO)", "<span class='info'>$1</span>", RegExp.RegexOptions.IgnoreCase);
-                    output = RegExp.Regex.Replace(output, @"(WARN(ING)?)", "<span class='warn'>$1</span>", RegExp.RegexOptions.IgnoreCase);
-                    output = RegExp.Regex.Replace(output, @"(ERROR)", "<span class='error'>$1</span>", RegExp.RegexOptions.IgnoreCase);
-                    output = RegExp.Regex.Replace(output, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegExp.RegexOptions.IgnoreCase);
-                    output = RegExp.Regex.Replace(output, @"(\d{5,})", "<span class='int'>$1</span>");
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"\[(SERVER)\]",
+                        "[<span class='server'>$1</span>]",
+                        RegExp.RegexOptions.IgnoreCase
+                    );
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"(INFO)",
+                        "<span class='info'>$1</span>",
+                        RegExp.RegexOptions.IgnoreCase
+                    );
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"(WARN(ING)?)",
+                        "<span class='warn'>$1</span>",
+                        RegExp.RegexOptions.IgnoreCase
+                    );
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"(ERROR)",
+                        "<span class='error'>$1</span>",
+                        RegExp.RegexOptions.IgnoreCase
+                    );
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"\[([A-Za-z0-9\s-]+?)\]",
+                        "[<span class='plugins $1'>$1</span>]",
+                        RegExp.RegexOptions.IgnoreCase
+                    );
+                    output = RegExp.Regex.Replace(
+                        output,
+                        @"(\d{5,})",
+                        "<span class='int'>$1</span>"
+                    );
                 }
                 return output;
             }
             else if (type == 2)
             {
                 input = RegExp.Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
-                input = RegExp.Regex.Replace(input, @"(INFO)", "<span class='info'>$1</span>", RegExp.RegexOptions.IgnoreCase);
-                input = RegExp.Regex.Replace(input, @"(WARN(ING)?)", "<span class='warn'><b>$1</b></span>", RegExp.RegexOptions.IgnoreCase);
-                input = RegExp.Regex.Replace(input, @"(ERROR)", "<span class='error'><b>$1</b></span>", RegExp.RegexOptions.IgnoreCase);
-                input = RegExp.Regex.Replace(input, @"\[(SERVER)\]", "[<span class='server'>$1</span>]", RegExp.RegexOptions.IgnoreCase);
-                input = RegExp.Regex.Replace(input, @"\[([A-Za-z0-9\s-]+?)\]", "[<span class='plugins $1'>$1</span>]", RegExp.RegexOptions.IgnoreCase);
+                input = RegExp.Regex.Replace(
+                    input,
+                    @"(INFO)",
+                    "<span class='info'>$1</span>",
+                    RegExp.RegexOptions.IgnoreCase
+                );
+                input = RegExp.Regex.Replace(
+                    input,
+                    @"(WARN(ING)?)",
+                    "<span class='warn'><b>$1</b></span>",
+                    RegExp.RegexOptions.IgnoreCase
+                );
+                input = RegExp.Regex.Replace(
+                    input,
+                    @"(ERROR)",
+                    "<span class='error'><b>$1</b></span>",
+                    RegExp.RegexOptions.IgnoreCase
+                );
+                input = RegExp.Regex.Replace(
+                    input,
+                    @"\[(SERVER)\]",
+                    "[<span class='server'>$1</span>]",
+                    RegExp.RegexOptions.IgnoreCase
+                );
+                input = RegExp.Regex.Replace(
+                    input,
+                    @"\[([A-Za-z0-9\s-]+?)\]",
+                    "[<span class='plugins $1'>$1</span>]",
+                    RegExp.RegexOptions.IgnoreCase
+                );
                 input = RegExp.Regex.Replace(input, @"(\d{5,})", "<span class='int'>$1</span>");
                 input = $"<span class=\"noColored\">{input}</span>";
                 return input;
@@ -220,11 +298,8 @@ namespace Serein.Utils
         /// <returns>段落</returns>
         public static Paragraph Color(LogType type, string text)
         {
-            Paragraph paragraph = new()
-            {
-                Margin = new(0, 0, 0, 0),
-                FontFamily = new("Consolas,微软雅黑")
-            };
+            Paragraph paragraph =
+                new() { Margin = new(0, 0, 0, 0), FontFamily = new("Consolas,微软雅黑") };
             switch (type)
             {
                 case LogType.Server_Output:
@@ -240,41 +315,34 @@ namespace Serein.Utils
                 case LogType.Plugin_Notice:
                 case LogType.Bot_Notice:
                 case LogType.Server_Notice:
-                    paragraph.Inlines.Add(new Bold(new Run("[Serein]"))
-                    {
-                        Foreground = Brushes.SteelBlue
-                    });
+                    paragraph.Inlines.Add(
+                        new Bold(new Run("[Serein]")) { Foreground = Brushes.SteelBlue }
+                    );
                     paragraph.Inlines.Add(" ");
                     break;
                 case LogType.Warn:
                 case LogType.Plugin_Warn:
-                    paragraph.Inlines.Add(new Bold(new Run("[!]"))
-                    {
-                        Foreground = Brushes.Peru
-                    });
+                    paragraph.Inlines.Add(new Bold(new Run("[!]")) { Foreground = Brushes.Peru });
                     paragraph.Inlines.Add(" ");
                     break;
                 case LogType.Error:
                 case LogType.Bot_Error:
                 case LogType.Plugin_Error:
-                    paragraph.Inlines.Add(new Bold(new Run("[×]"))
-                    {
-                        Foreground = Brushes.Crimson
-                    });
+                    paragraph.Inlines.Add(
+                        new Bold(new Run("[×]")) { Foreground = Brushes.Crimson }
+                    );
                     paragraph.Inlines.Add(" ");
                     break;
                 case LogType.Bot_Receive:
-                    paragraph.Inlines.Add(new Bold(new Run("[↓]"))
-                    {
-                        Foreground = Brushes.LimeGreen
-                    });
+                    paragraph.Inlines.Add(
+                        new Bold(new Run("[↓]")) { Foreground = Brushes.LimeGreen }
+                    );
                     paragraph.Inlines.Add(" ");
                     break;
                 case LogType.Bot_Send:
-                    paragraph.Inlines.Add(new Bold(new Run("[↑]"))
-                    {
-                        Foreground = Brushes.DodgerBlue
-                    });
+                    paragraph.Inlines.Add(
+                        new Bold(new Run("[↑]")) { Foreground = Brushes.DodgerBlue }
+                    );
                     paragraph.Inlines.Add(" ");
                     break;
             }
@@ -284,7 +352,13 @@ namespace Serein.Utils
 
         private static Paragraph Highlight(this Paragraph paragraph, string line)
         {
-            foreach (string words in RegExp.Regex.Split(Filter(line), @"(?<=\b)(info|warn(ing)?|error|debug|\d{5,}|true|false)(?=\b)", RegExp.RegexOptions.IgnoreCase))
+            foreach (
+                string words in RegExp.Regex.Split(
+                    Filter(line),
+                    @"(?<=\b)(info|warn(ing)?|error|debug|\d{5,}|true|false)(?=\b)",
+                    RegExp.RegexOptions.IgnoreCase
+                )
+            )
             {
                 Run run = new(words);
                 run.Foreground = words.ToLowerInvariant() switch
@@ -313,7 +387,11 @@ namespace Serein.Utils
             string[] texts = line.TrimStart('\x1b').Split('\x1b');
             for (int i = 0; i < texts.Length; i++)
             {
-                RegExp.Match match = RegExp.Regex.Match(texts[i], @"\[(.+?)m(.*)", RegExp.RegexOptions.Compiled);
+                RegExp.Match match = RegExp.Regex.Match(
+                    texts[i],
+                    @"\[(.+?)m(.*)",
+                    RegExp.RegexOptions.Compiled
+                );
                 if (match.Groups.Count <= 1)
                 {
                     continue;
@@ -344,7 +422,7 @@ namespace Serein.Utils
                                 (byte)(int.TryParse(args[j + 2], out int r) ? r : 0),
                                 (byte)(int.TryParse(args[j + 3], out int g) ? g : 0),
                                 (byte)(int.TryParse(args[j + 4], out int b) ? b : 0)
-                                )
+                            )
                         };
                         hasColor = true;
                     }
@@ -356,11 +434,19 @@ namespace Serein.Utils
                                 (byte)(int.TryParse(args[j + 2], out int r) ? r : 0),
                                 (byte)(int.TryParse(args[j + 3], out int g) ? g : 0),
                                 (byte)(int.TryParse(args[j + 4], out int b) ? b : 0)
-                                )
+                            )
                         };
                         hasColor = true;
                     }
-                    else if (ColorList.Contains(childArg) && !(childArg == "37" || childArg == "47" || childArg == "97" || childArg == "107"))
+                    else if (
+                        ColorList.Contains(childArg)
+                        && !(
+                            childArg == "37"
+                            || childArg == "47"
+                            || childArg == "97"
+                            || childArg == "107"
+                        )
+                    )
                     {
                         inline.Foreground = childArg switch
                         {

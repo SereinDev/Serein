@@ -15,11 +15,7 @@ namespace Serein.Settings
 
         public string LevelName = @"Level\sName:\s(.+?)$";
 
-        public string[] MuiltLines =
-        {
-            @"players\sonline:",
-            "个玩家在线"
-        };
+        public string[] MuiltLines = { @"players\sonline:", "个玩家在线" };
 
         public Matches()
         {

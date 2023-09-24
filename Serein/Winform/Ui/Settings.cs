@@ -29,16 +29,25 @@ namespace Serein.Ui
             SettingServerStopCommand.Text = string.Join(";", Global.Settings.Server.StopCommands);
             SettingServerPort.Value = Global.Settings.Server.Port;
             SettingServerType.SelectedIndex = Global.Settings.Server.Type;
-            SettingServerLineTerminator.Text = Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
+            SettingServerLineTerminator.Text = Global.Settings.Server.LineTerminator
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n");
             SettingBotPermissionList.Text = string.Join(";", Global.Settings.Bot.PermissionList);
             SettingBotGroupList.Text = string.Join(";", Global.Settings.Bot.GroupList);
             SettingBotUri.Text = Global.Settings.Bot.Uri;
-            SettingBotAuthorization.Text = Regex.Replace(Global.Settings.Bot.Authorization, ".", "*");
+            SettingBotAuthorization.Text = Regex.Replace(
+                Global.Settings.Bot.Authorization,
+                ".",
+                "*"
+            );
             SettingBotEnbaleOutputData.Checked = Global.Settings.Bot.EnbaleOutputData;
             SettingBotEnableLog.Checked = Global.Settings.Bot.EnableLog;
             SettingBotAutoEscape.Checked = Global.Settings.Bot.AutoEscape;
             SettingBotRestart.Checked = Global.Settings.Bot.AutoReconnect;
-            SettingBotGivePermissionToAllAdmin.Checked = Global.Settings.Bot.GivePermissionToAllAdmin;
+            SettingBotGivePermissionToAllAdmin.Checked = Global
+                .Settings
+                .Bot
+                .GivePermissionToAllAdmin;
             SettingBotEnbaleParseAt.Checked = Global.Settings.Bot.EnbaleParseAt;
             SettingSereinEnableGetUpdate.Checked = Global.Settings.Serein.EnableGetUpdate;
             SettingSereinAutoUpdate.Checked = Global.Settings.Serein.AutoUpdate;
@@ -48,47 +57,74 @@ namespace Serein.Ui
             {
                 Debug.Parent = null;
             }
-            ServerPanel.Parent = Global.Settings.Serein.PagesDisplayed.ServerPanel ? ServerPanel.Parent : null;
-            ServerPluginManager.Parent = Global.Settings.Serein.PagesDisplayed.ServerPluginManager ? ServerPluginManager.Parent : null;
-            Regular.Parent = Global.Settings.Serein.PagesDisplayed.RegexList ? Regular.Parent : null;
-            Schedule.Parent = Global.Settings.Serein.PagesDisplayed.Schedule ? Schedule.Parent : null;
+            ServerPanel.Parent = Global.Settings.Serein.PagesDisplayed.ServerPanel
+                ? ServerPanel.Parent
+                : null;
+            ServerPluginManager.Parent = Global.Settings.Serein.PagesDisplayed.ServerPluginManager
+                ? ServerPluginManager.Parent
+                : null;
+            Regular.Parent = Global.Settings.Serein.PagesDisplayed.RegexList
+                ? Regular.Parent
+                : null;
+            Schedule.Parent = Global.Settings.Serein.PagesDisplayed.Schedule
+                ? Schedule.Parent
+                : null;
             Bot.Parent = Global.Settings.Serein.PagesDisplayed.Bot ? Bot.Parent : null;
-            JSPlugin.Parent = Global.Settings.Serein.PagesDisplayed.JSPlugin ? JSPlugin.Parent : null;
+            JSPlugin.Parent = Global.Settings.Serein.PagesDisplayed.JSPlugin
+                ? JSPlugin.Parent
+                : null;
             Member.Parent = Global.Settings.Serein.PagesDisplayed.Member ? Member.Parent : null;
             Setting.Parent = Global.Settings.Serein.PagesDisplayed.Settings ? Setting.Parent : null;
         }
 
         #region 服务器
-        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e)
-           => Global.Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
-        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
-        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Server.EnableLog = SettingServerEnableLog.Checked;
-        private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Server.EnableUnicode = SettingServerEnableUnicode.Checked;
-        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e)
-            => Global.Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
-        private void SettingServerOutputEncoding_SelectedIndexChanged(object sender, EventArgs e)
-            => Global.Settings.Server.OutputEncoding = SettingServerOutputEncoding.SelectedIndex;
-        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e)
-            => Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
-        private void SettingServerPort_ValueChanged(object sender, EventArgs e)
-            => Global.Settings.Server.Port = (int)SettingServerPort.Value;
-        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
-        private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e)
-            => Global.Settings.Server.Type = SettingServerType.SelectedIndex;
-        private void SettingServerLineTerminator_TextChanged(object sender, EventArgs e)
-            => Global.Settings.Server.LineTerminator = SettingServerLineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
+        private void SettingServerEnableRestart_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.EnableRestart = SettingServerEnableRestart.Checked;
+
+        private void SettingServerEnableOutputCommand_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.EnableOutputCommand = SettingServerEnableOutputCommand.Checked;
+
+        private void SettingServerEnableLog_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.EnableLog = SettingServerEnableLog.Checked;
+
+        private void SettingServerEnableUnicode_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.EnableUnicode = SettingServerEnableUnicode.Checked;
+
+        private void SettingServerOutputStyle_SelectedIndexChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.OutputStyle = SettingServerOutputStyle.SelectedIndex;
+
+        private void SettingServerOutputEncoding_SelectedIndexChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.OutputEncoding = SettingServerOutputEncoding.SelectedIndex;
+
+        private void SettingServerEncoding_SelectedValueChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.InputEncoding = SettingServerEncoding.SelectedIndex;
+
+        private void SettingServerPort_ValueChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.Port = (int)SettingServerPort.Value;
+
+        private void SettingServerAutoStop_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.AutoStop = SettingServerAutoStop.Checked;
+
+        private void SettingServerType_SelectedIndexChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.Type = SettingServerType.SelectedIndex;
+
+        private void SettingServerLineTerminator_TextChanged(object sender, EventArgs e) =>
+            Global.Settings.Server.LineTerminator = SettingServerLineTerminator.Text
+                .Replace("\\r", "\r")
+                .Replace("\\n", "\n");
 
         private void SettingServerPathSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new()
-            {
-                InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
-                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
-            };
+            OpenFileDialog dialog =
+                new()
+                {
+                    InitialDirectory =
+                        !string.IsNullOrEmpty(Global.Settings.Server.Path)
+                        && File.Exists(Global.Settings.Server.Path)
+                            ? Global.Settings.Server.Path
+                            : Global.PATH,
+                    Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
+                };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 SettingServerPath.Text = dialog.FileName;
@@ -99,7 +135,10 @@ namespace Serein.Ui
 
         private void SettingServerStopCommand_TextChanged(object sender, EventArgs e)
         {
-            Global.Settings.Server.StopCommands = SettingServerStopCommand.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            Global.Settings.Server.StopCommands = SettingServerStopCommand.Text.Split(
+                new[] { ';' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
         }
 
         #endregion
@@ -108,44 +147,78 @@ namespace Serein.Ui
         private void SettingSereinEnableGetUpdate_Click(object sender, EventArgs e)
         {
             Global.Settings.Serein.EnableGetUpdate = SettingSereinEnableGetUpdate.Checked;
-            SettingSereinAutoUpdate.Checked = SettingSereinEnableGetUpdate.Checked ? SettingSereinAutoUpdate.Checked : false;
+            SettingSereinAutoUpdate.Checked = SettingSereinEnableGetUpdate.Checked
+                ? SettingSereinAutoUpdate.Checked
+                : false;
             SettingSereinAutoUpdate.Enabled = SettingSereinEnableGetUpdate.Checked;
             Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
         }
-        private void SettingSereinAutoUpdate_Click(object sender, EventArgs e)
-            => Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
-        private void SettingSereinAbout_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/docs/more/about") { UseShellExecute = true });
-        private void SettingSereinPage_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
-        private void SettingSereinExtension_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://market.serein.cc") { UseShellExecute = true });
-        private void SettingSereinDownload_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest") { UseShellExecute = true });
-        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e)
-            => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/event") { UseShellExecute = true });
-        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
+
+        private void SettingSereinAutoUpdate_Click(object sender, EventArgs e) =>
+            Global.Settings.Serein.AutoUpdate = SettingSereinAutoUpdate.Checked;
+
+        private void SettingSereinAbout_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/more/about") { UseShellExecute = true }
+            );
+
+        private void SettingSereinPage_Click(object sender, EventArgs e) =>
+            Process.Start(new ProcessStartInfo("https://serein.cc") { UseShellExecute = true });
+
+        private void SettingSereinExtension_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://market.serein.cc") { UseShellExecute = true }
+            );
+
+        private void SettingSereinDownload_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://github.com/Zaitonn/Serein/releases/latest")
+                {
+                    UseShellExecute = true
+                }
+            );
+
+        private void SettingEventListContextMenuStrip_Docs_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/event")
+                {
+                    UseShellExecute = true
+                }
+            );
+
+        private void SettingSereinEnableDPIAware_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Serein.DPIAware = SettingSereinEnableDPIAware.Checked;
 
         #endregion
 
         #region 机器人
-        private void SettingBotUri_TextChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.Uri = SettingBotUri.Text;
-        private void SettingBotAuthorization_Enter(object sender, EventArgs e)
-            => SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
-        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
-        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.GivePermissionToAllAdmin = SettingBotGivePermissionToAllAdmin.Checked;
-        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
-        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
-        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
-        private void SettingBotEnbaleParseAt_CheckedChanged(object sender, EventArgs e)
-            => Global.Settings.Bot.EnbaleParseAt = SettingBotEnbaleParseAt.Checked;
+        private void SettingBotUri_TextChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.Uri = SettingBotUri.Text;
+
+        private void SettingBotAuthorization_Enter(object sender, EventArgs e) =>
+            SettingBotAuthorization.Text = Global.Settings.Bot.Authorization;
+
+        private void SettingBotEnableLog_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.EnableLog = SettingBotEnableLog.Checked;
+
+        private void SettingBotGivePermissionToAllAdmin_CheckedChanged(
+            object sender,
+            EventArgs e
+        ) =>
+            Global.Settings.Bot.GivePermissionToAllAdmin =
+                SettingBotGivePermissionToAllAdmin.Checked;
+
+        private void SettingBotEnbaleOutputData_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.EnbaleOutputData = SettingBotEnbaleOutputData.Checked;
+
+        private void SettingBotRestart_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.AutoReconnect = SettingBotRestart.Checked;
+
+        private void SettingBotAutoEscape_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.AutoEscape = SettingBotAutoEscape.Checked;
+
+        private void SettingBotEnbaleParseAt_CheckedChanged(object sender, EventArgs e) =>
+            Global.Settings.Bot.EnbaleParseAt = SettingBotEnbaleParseAt.Checked;
 
         private void SettingBotAuthorization_Leave(object sender, EventArgs e)
         {
@@ -217,16 +290,27 @@ namespace Serein.Ui
 
         private void SettingEventTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node == null || !Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
+            if (
+                e.Node == null
+                || !Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name)
+            )
             {
                 SettingEventList.Items.Clear();
                 return;
             }
             SettingEventList.BeginUpdate();
             SettingEventList.Items.Clear();
-            Global.Settings.Event.Get(
-                (Base.EventType)Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
-                .ToList().ForEach((Command) => SettingEventList.Items.Add(Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n"))
+            Global.Settings.Event
+                .Get(
+                    (Base.EventType)
+                        Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name)
+                )
+                .ToList()
+                .ForEach(
+                    (Command) =>
+                        SettingEventList.Items.Add(
+                            Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")
+                        )
                 );
             SettingEventList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SettingEventList.EndUpdate();
@@ -234,18 +318,28 @@ namespace Serein.Ui
 
         private void SettingEventListContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
-            SettingEventListContextMenuStrip_Edit.Enabled = SettingEventList.SelectedItems.Count > 0;
-            SettingEventListContextMenuStrip_Remove.Enabled = SettingEventList.SelectedItems.Count > 0;
+            SettingEventListContextMenuStrip_Edit.Enabled =
+                SettingEventList.SelectedItems.Count > 0;
+            SettingEventListContextMenuStrip_Remove.Enabled =
+                SettingEventList.SelectedItems.Count > 0;
             SettingEventListContextMenuStrip_Add.Enabled = false;
             if (SettingEventTreeView.SelectedNode != null)
             {
-                typeof(Event).GetProperties().ToList().ForEach((x) =>
-                {
-                    if (!SettingEventListContextMenuStrip_Add.Enabled && x.Name.Replace("_", "") == SettingEventTreeView.SelectedNode.Name)
-                    {
-                        SettingEventListContextMenuStrip_Add.Enabled = true;
-                    }
-                });
+                typeof(Event)
+                    .GetProperties()
+                    .ToList()
+                    .ForEach(
+                        (x) =>
+                        {
+                            if (
+                                !SettingEventListContextMenuStrip_Add.Enabled
+                                && x.Name.Replace("_", "") == SettingEventTreeView.SelectedNode.Name
+                            )
+                            {
+                                SettingEventListContextMenuStrip_Add.Enabled = true;
+                            }
+                        }
+                    );
             }
         }
 
@@ -257,11 +351,16 @@ namespace Serein.Ui
             {
                 if (SettingEventList.SelectedItems.Count > 0)
                 {
-                    SettingEventList.Items.Insert(SettingEventList.SelectedItems[0].Index + 1, Regex.Replace(Editor.CommandTextBox.Text, @"(\n|\r|\\n|\\r)+", "\\n"));
+                    SettingEventList.Items.Insert(
+                        SettingEventList.SelectedItems[0].Index + 1,
+                        Regex.Replace(Editor.CommandTextBox.Text, @"(\n|\r|\\n|\\r)+", "\\n")
+                    );
                 }
                 else
                 {
-                    SettingEventList.Items.Add(Regex.Replace(Editor.CommandTextBox.Text, @"(\n|\r|\\n|\\r)+", "\\n"));
+                    SettingEventList.Items.Add(
+                        Regex.Replace(Editor.CommandTextBox.Text, @"(\n|\r|\\n|\\r)+", "\\n")
+                    );
                 }
             }
             SaveEventCommand();
@@ -269,22 +368,32 @@ namespace Serein.Ui
 
         private void SettingEventListContextMenuStrip_Edit_Click(object sender, EventArgs e)
         {
-            EventEditor Editor = new EventEditor(Regex.Replace(SettingEventList.SelectedItems[0].Text, "\\n", "\r\n"));
+            EventEditor Editor = new EventEditor(
+                Regex.Replace(SettingEventList.SelectedItems[0].Text, "\\n", "\r\n")
+            );
             Editor.ShowDialog();
             if (!Editor.CancelFlag)
             {
-                SettingEventList.SelectedItems[0].Text = Regex.Replace(Editor.CommandTextBox.Text, @"(\n|\r|\\n|\\r)+", "\\n");
+                SettingEventList.SelectedItems[0].Text = Regex.Replace(
+                    Editor.CommandTextBox.Text,
+                    @"(\n|\r|\\n|\\r)+",
+                    "\\n"
+                );
             }
             SaveEventCommand();
         }
 
         private void SettingEventListContextMenuStrip_Remove_Click(object sender, EventArgs e)
         {
-            if ((int)MessageBox.Show(
-                    "确定删除此行命令？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
-                    ) == 1)
+            if (
+                (int)
+                    MessageBox.Show(
+                        "确定删除此行命令？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
+                    ) == 1
+            )
             {
                 SettingEventList.SelectedItems[0].Remove();
                 SaveEventCommand();
@@ -293,9 +402,16 @@ namespace Serein.Ui
 
         private void SaveEventCommand()
         {
-            if (SettingEventTreeView.SelectedNode != null && Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name))
+            if (
+                SettingEventTreeView.SelectedNode != null
+                && Enum.IsDefined(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name)
+            )
             {
-                Global.Settings.Event.Edit(GetEventCommands(), (Base.EventType)Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name));
+                Global.Settings.Event.Edit(
+                    GetEventCommands(),
+                    (Base.EventType)
+                        Enum.Parse(typeof(Base.EventType), SettingEventTreeView.SelectedNode.Name)
+                );
             }
             Utils.IO.Setting.SaveEventSetting();
         }
@@ -312,27 +428,28 @@ namespace Serein.Ui
 
         private void SettingSereinVersion_Click(object sender, EventArgs _)
         {
-            Ookii.Dialogs.Wpf.TaskDialog taskDialog = new()
-            {
-                Buttons = {
-                        new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok)
-                    },
-                MainInstruction = "当前版本详细信息",
-                WindowTitle = "Serein",
-                Content = "" +
-                    $"当前版本：{Global.VERSION}\n" +
-                    $"编译类型：{Global.BuildInfo.Type}\n" +
-                    $"编译时间：{Global.BuildInfo.Time}\n" +
-                    $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}",
-                Footer = "开源地址：<a href=\"https://github.com/Zaitonn/Serein\">GitHub</a>",
-                FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
-                EnableHyperlinks = true,
-            };
+            Ookii.Dialogs.Wpf.TaskDialog taskDialog =
+                new()
+                {
+                    Buttons = { new Ookii.Dialogs.Wpf.TaskDialogButton(ButtonType.Ok) },
+                    MainInstruction = "当前版本详细信息",
+                    WindowTitle = "Serein",
+                    Content =
+                        ""
+                        + $"当前版本：{Global.VERSION}\n"
+                        + $"编译类型：{Global.BuildInfo.Type}\n"
+                        + $"编译时间：{Global.BuildInfo.Time}\n"
+                        + $"详细信息：{Global.BuildInfo.Detail.Replace("\r", string.Empty)}",
+                    Footer = "开源地址：<a href=\"https://github.com/Zaitonn/Serein\">GitHub</a>",
+                    FooterIcon = Ookii.Dialogs.Wpf.TaskDialogIcon.Information,
+                    EnableHyperlinks = true,
+                };
             if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && DateTime.Now.Second < 10)
             {
                 taskDialog.ExpandedInformation = "KFC_CRAZY_THURSDAY_VME50!!!!\n没错这是一个彩蛋（";
             }
-            taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+            taskDialog.HyperlinkClicked += (_, e) =>
+                Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
         }
         #endregion

@@ -11,7 +11,8 @@ namespace Serein.Ui
     {
         private delegate void JSPluginWebBrowser_Delegate(object[] objects);
 
-        private void JSPluginWebBrowser_AppendText(object[] objects) => JSPluginWebBrowser.Document.InvokeScript("AppendText", objects);
+        private void JSPluginWebBrowser_AppendText(object[] objects) =>
+            JSPluginWebBrowser.Document.InvokeScript("AppendText", objects);
 
         public void JSPluginWebBrowser_Invoke(string str)
         {
@@ -35,11 +36,12 @@ namespace Serein.Ui
                 {
                     continue;
                 }
-                ListViewItem listViewItem = new(plugin.DisplayedName)
-                {
-                    ForeColor = plugin.Available ? ForeColor : Color.Gray,
-                    Tag = plugin.Namespace
-                };
+                ListViewItem listViewItem =
+                    new(plugin.DisplayedName)
+                    {
+                        ForeColor = plugin.Available ? ForeColor : Color.Gray,
+                        Tag = plugin.Namespace
+                    };
                 listViewItem.SubItems.Add(plugin.DisplayedVersion);
                 listViewItem.SubItems.Add(plugin.DisplayedAuthor);
                 listViewItem.SubItems.Add(plugin.DisplayedDescription);
@@ -71,12 +73,23 @@ namespace Serein.Ui
             }
         }
 
-        private void JSPluginListContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-         => JSPluginListContextMenuStrip_Disable.Enabled =
-            JSPluginList.SelectedItems.Count > 0 &&
-            JSPluginList.SelectedItems[0].ForeColor != Color.Gray;
+        private void JSPluginListContextMenuStrip_Opening(
+            object sender,
+            System.ComponentModel.CancelEventArgs e
+        ) =>
+            JSPluginListContextMenuStrip_Disable.Enabled =
+                JSPluginList.SelectedItems.Count > 0
+                && JSPluginList.SelectedItems[0].ForeColor != Color.Gray;
 
-        private void JSPluginListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) => JSPluginWebBrowser_Invoke("#clear");
-        private void JSPluginListContextMenuStrip_Docs_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/development/intro") { UseShellExecute = true });
+        private void JSPluginListContextMenuStrip_ClearConsole_Click(object sender, EventArgs e) =>
+            JSPluginWebBrowser_Invoke("#clear");
+
+        private void JSPluginListContextMenuStrip_Docs_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/development/intro")
+                {
+                    UseShellExecute = true
+                }
+            );
     }
 }

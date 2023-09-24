@@ -19,7 +19,8 @@ namespace Serein.Core.Common
             {
                 Base.EventType.ServerStart => Global.Settings.Event.ServerStart,
                 Base.EventType.ServerStop => Global.Settings.Event.ServerStop,
-                Base.EventType.ServerExitUnexpectedly => Global.Settings.Event.ServerExitUnexpectedly,
+                Base.EventType.ServerExitUnexpectedly
+                    => Global.Settings.Event.ServerExitUnexpectedly,
                 Base.EventType.SereinCrash => Global.Settings.Event.SereinCrash,
                 _ => Array.Empty<string>()
             };
@@ -46,7 +47,15 @@ namespace Serein.Core.Common
             };
             foreach (string command in commandGroup)
             {
-                Command.Run(Base.CommandOrigin.EventTrigger, Regex.Replace(command, "%ID%", notice.UserId.ToString(), RegexOptions.IgnoreCase));
+                Command.Run(
+                    Base.CommandOrigin.EventTrigger,
+                    Regex.Replace(
+                        command,
+                        "%ID%",
+                        notice.UserId.ToString(),
+                        RegexOptions.IgnoreCase
+                    )
+                );
             }
         }
 
@@ -74,14 +83,19 @@ namespace Serein.Core.Common
                     commandGroup = type switch
                     {
                         Base.EventType.BindingSucceed => Global.Settings.Event.BindingSucceed,
-                        Base.EventType.BindingFailDueToOccupation => Global.Settings.Event.BindingFailDueToOccupation,
-                        Base.EventType.BindingFailDueToInvalid => Global.Settings.Event.BindingFailDueToInvalid,
-                        Base.EventType.BindingFailDueToAlreadyBinded => Global.Settings.Event.BindingFailDueToAlreadyBinded,
+                        Base.EventType.BindingFailDueToOccupation
+                            => Global.Settings.Event.BindingFailDueToOccupation,
+                        Base.EventType.BindingFailDueToInvalid
+                            => Global.Settings.Event.BindingFailDueToInvalid,
+                        Base.EventType.BindingFailDueToAlreadyBinded
+                            => Global.Settings.Event.BindingFailDueToAlreadyBinded,
                         Base.EventType.UnbindingSucceed => Global.Settings.Event.UnbindingSucceed,
                         Base.EventType.UnbindingFail => Global.Settings.Event.UnbindingFail,
                         Base.EventType.BinderDisable => Global.Settings.Event.BinderDisable,
-                        Base.EventType.PermissionDeniedFromPrivateMsg => Global.Settings.Event.PermissionDeniedFromPrivateMsg,
-                        Base.EventType.PermissionDeniedFromGroupMsg => Global.Settings.Event.PermissionDeniedFromGroupMsg,
+                        Base.EventType.PermissionDeniedFromPrivateMsg
+                            => Global.Settings.Event.PermissionDeniedFromPrivateMsg,
+                        Base.EventType.PermissionDeniedFromGroupMsg
+                            => Global.Settings.Event.PermissionDeniedFromGroupMsg,
                         _ => commandGroup,
                     };
                     foreach (string command in commandGroup)
@@ -95,32 +109,51 @@ namespace Serein.Core.Common
                 case Base.EventType.RequestingMotdFail:
                     commandGroup = type switch
                     {
-                        Base.EventType.RequestingMotdpeSucceed => Global.Settings.Event.RequestingMotdpeSucceed,
-                        Base.EventType.RequestingMotdjeSucceed => Global.Settings.Event.RequestingMotdjeSucceed,
-                        Base.EventType.RequestingMotdFail => Global.Settings.Event.RequestingMotdFail,
+                        Base.EventType.RequestingMotdpeSucceed
+                            => Global.Settings.Event.RequestingMotdpeSucceed,
+                        Base.EventType.RequestingMotdjeSucceed
+                            => Global.Settings.Event.RequestingMotdjeSucceed,
+                        Base.EventType.RequestingMotdFail
+                            => Global.Settings.Event.RequestingMotdFail,
                         _ => commandGroup
                     };
 
                     foreach (string command in commandGroup)
                     {
-                        if (motd is not null && Regex.IsMatch(command, @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Latency|Favicon|Exception)%", RegexOptions.IgnoreCase))
+                        if (
+                            motd is not null
+                            && Regex.IsMatch(
+                                command,
+                                @"%(Version|GameMode|OnlinePlayer|MaxPlayer|Description|Protocol|Original|Latency|Favicon|Exception)%",
+                                RegexOptions.IgnoreCase
+                            )
+                        )
                         {
-                            string command_copy = Regex.Replace(command, @"%(\w+)%", (match) =>
-                            (match.Groups[1].Value.ToLowerInvariant() switch
-                            {
-                                "gamemode" => motd.GameMode,
-                                "description" => motd.Description,
-                                "protocol" => motd.Protocol,
-                                "onlineplayer" => motd.OnlinePlayer.ToString(),
-                                "maxplayer" => motd.MaxPlayer.ToString(),
-                                "original" => motd.Origin,
-                                "latency" => motd.Latency.ToString("N1"),
-                                "version" => motd.Version,
-                                "favicon" => motd.FaviconCQCode,
-                                "exception" => motd.Exception,
-                                _ => match.Groups[1].Value
-                            } ?? string.Empty));
-                            Command.Run(Base.CommandOrigin.EventTrigger, command_copy, message, true);
+                            string command_copy = Regex.Replace(
+                                command,
+                                @"%(\w+)%",
+                                (match) =>
+                                    match.Groups[1].Value.ToLowerInvariant() switch
+                                    {
+                                        "gamemode" => motd.GameMode,
+                                        "description" => motd.Description,
+                                        "protocol" => motd.Protocol,
+                                        "onlineplayer" => motd.OnlinePlayer.ToString(),
+                                        "maxplayer" => motd.MaxPlayer.ToString(),
+                                        "original" => motd.Origin,
+                                        "latency" => motd.Latency.ToString("N1"),
+                                        "version" => motd.Version,
+                                        "favicon" => motd.FaviconCQCode,
+                                        "exception" => motd.Exception,
+                                        _ => match.Groups[1].Value
+                                    } ?? string.Empty
+                            );
+                            Command.Run(
+                                Base.CommandOrigin.EventTrigger,
+                                command_copy,
+                                message,
+                                true
+                            );
                         }
                     }
                     break;

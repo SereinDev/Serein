@@ -17,7 +17,11 @@ namespace Serein.Utils
         /// <summary>
         /// 启动时刻时间戳
         /// </summary>
-        private readonly static long _startTimeStamp = (long)(TimeZoneInfo.ConvertTimeToUtc(Global.StartTime) - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
+        private readonly static long _startTimeStamp = (long)
+            (
+                TimeZoneInfo.ConvertTimeToUtc(Global.StartTime)
+                - new DateTime(1970, 1, 1, 0, 0, 0, 0)
+            ).TotalMilliseconds;
 
         /// <summary>
         /// 在线统计计时器
@@ -44,9 +48,15 @@ namespace Serein.Utils
             }
             try
             {
-                Logger.Output(LogType.Debug,
-                    Net.Get($"https://api.online-count.serein.cc/heartbeat?guid={_guid}&type={Global.TYPE}&version={Global.VERSION}&start_time={_startTimeStamp}&server_status={ServerManager.Status}")
-                        .Await().Content.ReadAsStringAsync().Await());
+                Logger.Output(
+                    LogType.Debug,
+                    Net.Get(
+                            $"https://api.online-count.serein.cc/heartbeat?guid={_guid}&type={Global.TYPE}&version={Global.VERSION}&start_time={_startTimeStamp}&server_status={ServerManager.Status}"
+                        )
+                        .Await()
+                        .Content.ReadAsStringAsync()
+                        .Await()
+                );
             }
             catch (Exception e)
             {

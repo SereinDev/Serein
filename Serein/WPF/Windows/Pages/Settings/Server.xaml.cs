@@ -33,46 +33,81 @@ namespace Serein.Windows.Pages.Settings
             OutputStyle.SelectedIndex = Global.Settings.Server.OutputStyle;
             Path.Text = Global.Settings.Server.Path;
             Port.Value = Global.Settings.Server.Port;
-            LineTerminator.Text = Global.Settings.Server.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
+            LineTerminator.Text = Global.Settings.Server.LineTerminator
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n");
         }
 
-        private void StopCommands_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.StopCommands = StopCommands.Text.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        private void AutoStop_Click(object sender, RoutedEventArgs e)
-            => Global.Settings.Server.AutoStop = AutoStop.IsChecked ?? false;
-        private void EnableRestart_Click(object sender, RoutedEventArgs e)
-            => Global.Settings.Server.EnableRestart = EnableRestart.IsChecked ?? false;
-        private void EnableOutputCommand_Click(object sender, RoutedEventArgs e)
-            => Global.Settings.Server.EnableOutputCommand = EnableOutputCommand.IsChecked ?? false;
-        private void EnableUnicode_Click(object sender, RoutedEventArgs e)
-            => Global.Settings.Server.EnableUnicode = EnableUnicode.IsChecked ?? false;
-        private void EnableLog_Click(object sender, RoutedEventArgs e)
-            => Global.Settings.Server.EnableLog = EnableLog.IsChecked ?? false;
-        private void Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.Type = _loaded ? Type.SelectedIndex : Global.Settings.Server.Type;
-        private void InputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.InputEncoding = _loaded ? InputEncoding.SelectedIndex : Global.Settings.Server.InputEncoding;
-        private void OutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.OutputEncoding = _loaded ? OutputEncoding.SelectedIndex : Global.Settings.Server.OutputEncoding;
-        private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            => Global.Settings.Server.OutputStyle = _loaded ? OutputStyle.SelectedIndex : Global.Settings.Server.OutputStyle;
-        private void Port_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.Port = _loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
-        private void LineTerminator_TextChanged(object sender, TextChangedEventArgs e)
-            => Global.Settings.Server.LineTerminator = LineTerminator.Text.Replace("\\r", "\r").Replace("\\n", "\n");
+        private void StopCommands_TextChanged(object sender, TextChangedEventArgs e) =>
+            Global.Settings.Server.StopCommands = StopCommands.Text.Split(
+                new[] { ';' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+        private void AutoStop_Click(object sender, RoutedEventArgs e) =>
+            Global.Settings.Server.AutoStop = AutoStop.IsChecked ?? false;
+
+        private void EnableRestart_Click(object sender, RoutedEventArgs e) =>
+            Global.Settings.Server.EnableRestart = EnableRestart.IsChecked ?? false;
+
+        private void EnableOutputCommand_Click(object sender, RoutedEventArgs e) =>
+            Global.Settings.Server.EnableOutputCommand = EnableOutputCommand.IsChecked ?? false;
+
+        private void EnableUnicode_Click(object sender, RoutedEventArgs e) =>
+            Global.Settings.Server.EnableUnicode = EnableUnicode.IsChecked ?? false;
+
+        private void EnableLog_Click(object sender, RoutedEventArgs e) =>
+            Global.Settings.Server.EnableLog = EnableLog.IsChecked ?? false;
+
+        private void Type_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+            Global.Settings.Server.Type = _loaded
+                ? Type.SelectedIndex
+                : Global.Settings.Server.Type;
+
+        private void InputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+            Global.Settings.Server.InputEncoding = _loaded
+                ? InputEncoding.SelectedIndex
+                : Global.Settings.Server.InputEncoding;
+
+        private void OutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+            Global.Settings.Server.OutputEncoding = _loaded
+                ? OutputEncoding.SelectedIndex
+                : Global.Settings.Server.OutputEncoding;
+
+        private void OutputStyle_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+            Global.Settings.Server.OutputStyle = _loaded
+                ? OutputStyle.SelectedIndex
+                : Global.Settings.Server.OutputStyle;
+
+        private void Port_TextChanged(object sender, TextChangedEventArgs e) =>
+            Global.Settings.Server.Port =
+                _loaded && int.TryParse(Port.Text, out int i) ? i : Global.Settings.Server.Port;
+
+        private void LineTerminator_TextChanged(object sender, TextChangedEventArgs e) =>
+            Global.Settings.Server.LineTerminator = LineTerminator.Text
+                .Replace("\\r", "\r")
+                .Replace("\\n", "\n");
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new()
-            {
-                InitialDirectory = !string.IsNullOrEmpty(Global.Settings.Server.Path) && File.Exists(Global.Settings.Server.Path) ? Global.Settings.Server.Path : Global.PATH,
-                Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
-            };
+            OpenFileDialog dialog =
+                new()
+                {
+                    InitialDirectory =
+                        !string.IsNullOrEmpty(Global.Settings.Server.Path)
+                        && File.Exists(Global.Settings.Server.Path)
+                            ? Global.Settings.Server.Path
+                            : Global.PATH,
+                    Filter = "支持的文件(*.exe *.bat)|*.exe;*.bat"
+                };
             if (dialog.ShowDialog() ?? false)
             {
                 Path.Text = dialog.FileName;
                 Global.Settings.Server.Path = dialog.FileName;
-                if (Catalog.Server.Plugins != null) { Catalog.Server.Plugins.Load(); }
+                if (Catalog.Server.Plugins != null)
+                {
+                    Catalog.Server.Plugins.Load();
+                }
             }
         }
     }

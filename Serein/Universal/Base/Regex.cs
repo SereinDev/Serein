@@ -12,7 +12,10 @@ namespace Serein.Base
         /// </summary>
         public string Expression { get; set; } = string.Empty;
 
-        public string regex { set => Expression = value; }
+        public string regex
+        {
+            set => Expression = value;
+        }
 
         /// <summary>
         /// 备注
@@ -54,7 +57,12 @@ namespace Serein.Base
         /// 需要管理权限 - 文本
         /// </summary>
         [JsonIgnore]
-        public string IsAdmin_Text => Area == 2 || Area == 3 ? IsAdmin ? "是" : "否" : "-";
+        public string IsAdmin_Text =>
+            Area == 2 || Area == 3
+                ? IsAdmin
+                    ? "是"
+                    : "否"
+                : "-";
 
         /// <summary>
         /// 转为对象
@@ -78,7 +86,7 @@ namespace Serein.Base
         /// 检查是否合法
         /// </summary>
         /// <returns>是否合法</returns>
-        public bool Check()
-            => Core.Common.Command.GetType(Command) != CommandType.Invalid && Expression.TestRegex();
+        public bool Check() =>
+            Core.Common.Command.GetType(Command) != CommandType.Invalid && Expression.TestRegex();
     }
 }

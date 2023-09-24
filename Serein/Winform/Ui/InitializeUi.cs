@@ -7,16 +7,29 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
-        private static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string? pszSubIdList);
+        private static extern int SetWindowTheme(
+            IntPtr hwnd,
+            string pszSubAppName,
+            string? pszSubIdList
+        );
 
         [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(
+            IntPtr hWnd,
+            uint Msg,
+            IntPtr wParam,
+            IntPtr lParam
+        );
 
         private void InitWebBrowser()
         {
-            ServerPanelConsoleWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=serverPanel");
+            ServerPanelConsoleWebBrowser.Navigate(
+                @"file:\\\" + Global.PATH + "console\\console.html?type=serverPanel"
+            );
             BotWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
-            JSPluginWebBrowser.Navigate(@"file:\\\" + Global.PATH + "console\\console.html?type=bot");
+            JSPluginWebBrowser.Navigate(
+                @"file:\\\" + Global.PATH + "console\\console.html?type=bot"
+            );
         }
 
         private void Initialize()

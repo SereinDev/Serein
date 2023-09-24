@@ -17,7 +17,11 @@ namespace Serein.Core.JSPlugin.Permission
         /// <returns>添加结果</returns>
         public static bool Add(string groupName, PermissionGroup permissionGroup, bool overwrite)
         {
-            if (string.IsNullOrEmpty(groupName) || string.IsNullOrWhiteSpace(groupName) || permissionGroup is null)
+            if (
+                string.IsNullOrEmpty(groupName)
+                || string.IsNullOrWhiteSpace(groupName)
+                || permissionGroup is null
+            )
             {
                 return false;
             }
@@ -72,7 +76,11 @@ namespace Serein.Core.JSPlugin.Permission
         /// <param name="userId">用户ID</param>
         /// <param name="groupId">群号</param>
         /// <returns>权限内容</returns>
-        public static IDictionary<string, object> Calculate(string type, long userId, long groupId = -1)
+        public static IDictionary<string, object> Calculate(
+            string type,
+            long userId,
+            long groupId = -1
+        )
         {
             Dictionary<string, (int, object)> tempPermissions = new();
             lock (Global.PermissionGroups)
@@ -83,28 +91,38 @@ namespace Serein.Core.JSPlugin.Permission
                     {
                         continue;
                     }
-                    Inherit(permissionGroup, 0).ToList().ForEach(kv =>
-                    {
-                        if (!tempPermissions.ContainsKey(kv.Key))
+                    Inherit(permissionGroup, 0)
+                        .ToList()
+                        .ForEach(kv =>
                         {
-                            tempPermissions.Add(kv.Key, (permissionGroup.Priority, kv.Value));
-                        }
-                    });
+                            if (!tempPermissions.ContainsKey(kv.Key))
+                            {
+                                tempPermissions.Add(kv.Key, (permissionGroup.Priority, kv.Value));
+                            }
+                        });
                     foreach (string key in permissionGroup.Permissions.Keys)
                     {
                         if (!tempPermissions.TryGetValue(key, out (int, object) conflict))
                         {
-                            tempPermissions.Add(key, (permissionGroup.Priority, permissionGroup.Permissions[key]));
+                            tempPermissions.Add(
+                                key,
+                                (permissionGroup.Priority, permissionGroup.Permissions[key])
+                            );
                             continue;
                         }
                         if (conflict.Item1 < permissionGroup.Priority)
                         {
-                            tempPermissions[key] = (permissionGroup.Priority, permissionGroup.Permissions[key]);
+                            tempPermissions[key] = (
+                                permissionGroup.Priority,
+                                permissionGroup.Permissions[key]
+                            );
                         }
                     }
                 }
             }
-            return tempPermissions.Select((kv) => new KeyValuePair<string, object>(kv.Key, kv.Value.Item2)).ToDictionary(kv => kv.Key, kv => kv.Value);
+            return tempPermissions
+                .Select((kv) => new KeyValuePair<string, object>(kv.Key, kv.Value.Item2))
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
         /// <summary>
@@ -113,7 +131,10 @@ namespace Serein.Core.JSPlugin.Permission
         /// <param name="permissionGroup">根权限组</param>
         /// <param name="depth">深度</param>
         /// <returns>权限内容</returns>
-        private static IDictionary<string, object> Inherit(PermissionGroup permissionGroup, int depth)
+        private static IDictionary<string, object> Inherit(
+            PermissionGroup permissionGroup,
+            int depth
+        )
         {
             if (depth > 3)
             {
@@ -124,15 +145,22 @@ namespace Serein.Core.JSPlugin.Permission
             {
                 foreach (string parent in permissionGroup.Parents)
                 {
-                    if (Global.PermissionGroups.TryGetValue(parent, out PermissionGroup? parentPermissionGroup))
+                    if (
+                        Global.PermissionGroups.TryGetValue(
+                            parent,
+                            out PermissionGroup? parentPermissionGroup
+                        )
+                    )
                     {
-                        Inherit(parentPermissionGroup, depth + 1).ToList().ForEach(kv =>
-                        {
-                            if (!tempPermissions.ContainsKey(kv.Key))
+                        Inherit(parentPermissionGroup, depth + 1)
+                            .ToList()
+                            .ForEach(kv =>
                             {
-                                tempPermissions.Add(kv.Key, kv.Value);
-                            }
-                        });
+                                if (!tempPermissions.ContainsKey(kv.Key))
+                                {
+                                    tempPermissions.Add(kv.Key, kv.Value);
+                                }
+                            });
                     }
                 }
             }
@@ -148,7 +176,15 @@ namespace Serein.Core.JSPlugin.Permission
         /// <returns>设置结果</returns>
         public static bool SetPermission(string groupName, string permissionKey, JsValue value)
         {
-            if (!Global.PermissionGroups.TryGetValue(groupName, out PermissionGroup? permissionGroup) || permissionGroup.Permissions is null || string.IsNullOrEmpty(groupName) || string.IsNullOrEmpty(permissionKey))
+            if (
+                !Global.PermissionGroups.TryGetValue(
+                    groupName,
+                    out PermissionGroup? permissionGroup
+                )
+                || permissionGroup.Permissions is null
+                || string.IsNullOrEmpty(groupName)
+                || string.IsNullOrEmpty(permissionKey)
+            )
             {
                 return false;
             }
@@ -157,7 +193,10 @@ namespace Serein.Core.JSPlugin.Permission
             {
                 if (!permissionGroup.Permissions.ContainsKey(permissionKey))
                 {
-                    Global.PermissionGroups[groupName].Permissions.Add(permissionKey, value.ToObject());
+                    Global.PermissionGroups[groupName].Permissions.Add(
+                        permissionKey,
+                        value.ToObject()
+                    );
                     result = true;
                 }
                 else if (value is null || value.IsNull() || value.IsUndefined())
@@ -166,7 +205,8 @@ namespace Serein.Core.JSPlugin.Permission
                 }
                 else
                 {
-                    Global.PermissionGroups[groupName].Permissions[permissionKey] = value.ToObject();
+                    Global.PermissionGroups[groupName].Permissions[permissionKey] =
+                        value.ToObject();
                     result = true;
                 }
             }

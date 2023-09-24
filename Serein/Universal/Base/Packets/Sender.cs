@@ -18,7 +18,13 @@ namespace Serein.Base.Packets
         /// </summary>
         public long Age;
 
-        public string? Nickname, Area, Level, Role, Sex, Title, Card;
+        public string? Nickname,
+            Area,
+            Level,
+            Role,
+            Sex,
+            Title,
+            Card;
 
         /// <summary>
         /// 性别下标

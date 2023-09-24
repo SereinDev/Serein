@@ -12,7 +12,10 @@ namespace Serein.Utils
         /// </summary>
         public static void InitConsole()
         {
-            if (!Directory.Exists("console") || !File.Exists(Path.Combine("console", "console.html")))
+            if (
+                !Directory.Exists("console")
+                || !File.Exists(Path.Combine("console", "console.html"))
+            )
             {
                 ExtractConsoleFile(Resources.console_html, "console.html");
                 ExtractConsoleFile(Resources.preset_css, "preset.css");

@@ -10,15 +10,15 @@ namespace Serein.Extensions
         /// <param name="obj">对象</param>
         /// <param name="formatting">格式化参数</param>
         /// <returns>序列化后的JSON文本</returns>
-        public static string ToJson(this object obj, Formatting formatting)
-            => obj != null ? JsonConvert.SerializeObject(obj, formatting) : string.Empty;
+        public static string ToJson(this object obj, Formatting formatting) =>
+            obj != null ? JsonConvert.SerializeObject(obj, formatting) : string.Empty;
 
         /// <summary>
         /// 序列化为JSON文本
         /// </summary>
         /// <param name="obj">对象</param>
         /// <returns>序列化后的JSON文本</returns>
-        public static string ToJson(this object obj)
-            => obj?.ToJson(Formatting.None) ?? string.Empty;
+        public static string ToJson(this object obj) =>
+            obj?.ToJson(Formatting.None) ?? string.Empty;
     }
 }

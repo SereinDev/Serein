@@ -9,10 +9,7 @@ namespace Serein.Core.Common
         /// <summary>
         /// 检查定时器
         /// </summary>
-        private static readonly Timer _timer = new(2000)
-        {
-            AutoReset = true,
-        };
+        private static readonly Timer _timer = new(2000) { AutoReset = true, };
 
         /// <summary>
         /// 启动计时器
@@ -32,7 +29,11 @@ namespace Serein.Core.Common
             {
                 foreach (Schedule schedule in Global.Schedules)
                 {
-                    if (!schedule.IsRunning && schedule.Enable && DateTime.Compare(schedule.NextTime, DateTime.Now) <= 0)
+                    if (
+                        !schedule.IsRunning
+                        && schedule.Enable
+                        && DateTime.Compare(schedule.NextTime, DateTime.Now) <= 0
+                    )
                     {
                         schedule.Run();
                     }

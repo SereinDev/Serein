@@ -36,92 +36,176 @@ namespace Serein.Core.JSPlugin
         /// <param name="namespace">命名空间</param>
         /// <param name="cancellationTokenSource">取消Token</param>
         /// <returns>JS引擎</returns>
-        public static Engine Create(bool isExecuteByCommand, string? @namespace, CancellationTokenSource? cancellationTokenSource, PreLoadConfig preLoadConfig)
+        public static Engine Create(
+            bool isExecuteByCommand,
+            string? @namespace,
+            CancellationTokenSource? cancellationTokenSource,
+            PreLoadConfig preLoadConfig
+        )
         {
-            Engine engine = new(
-                new Action<Options>((cfg) =>
-                {
-                    cfg.CatchClrExceptions();
-
-                    if (cancellationTokenSource is not null)
-                    {
-                        cfg.CancellationToken(cancellationTokenSource.Token);
-                    }
-                    if (!isExecuteByCommand)
-                    {
-                        List<Assembly> assemblies = new();
-                        IEnumerable<string> assemblyNames = (preLoadConfig.Assemblies ?? Array.Empty<string>()).Concat(Global.Settings.Serein.Function.JSGlobalAssemblies);
-                        foreach (string assemblyString in assemblyNames)
+            Engine engine =
+                new(
+                    new Action<Options>(
+                        (cfg) =>
                         {
-                            try
+                            cfg.CatchClrExceptions();
+
+                            if (cancellationTokenSource is not null)
                             {
-                                assemblies.Add(Assembly.Load(assemblyString));
+                                cfg.CancellationToken(cancellationTokenSource.Token);
                             }
-                            catch (Exception e)
+                            if (!isExecuteByCommand)
                             {
-                                Utils.Output.Logger.Output(LogType.Plugin_Warn, $"加载程序集“{assemblyString}”时出现异常：", e.Message);
+                                List<Assembly> assemblies = new();
+                                IEnumerable<string> assemblyNames = (
+                                    preLoadConfig.Assemblies ?? Array.Empty<string>()
+                                ).Concat(Global.Settings.Serein.Function.JSGlobalAssemblies);
+                                foreach (string assemblyString in assemblyNames)
+                                {
+                                    try
+                                    {
+                                        assemblies.Add(Assembly.Load(assemblyString));
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Utils.Output.Logger.Output(
+                                            LogType.Plugin_Warn,
+                                            $"加载程序集“{assemblyString}”时出现异常：",
+                                            e.Message
+                                        );
+                                    }
+                                }
+
+                                cfg.AllowClr(assemblies.ToArray());
+                                cfg.EnableModules(
+                                    Path.Combine(Global.PATH, JSPluginManager.PluginPath)
+                                );
+
+                                cfg.Modules.RegisterRequire = true;
+                                cfg.Interop.AllowGetType = preLoadConfig.AllowGetType;
+                                cfg.Interop.AllowOperatorOverloading =
+                                    preLoadConfig.AllowOperatorOverloading;
+                                cfg.Interop.AllowSystemReflection =
+                                    preLoadConfig.AllowSystemReflection;
+                                cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
+                                cfg.StringCompilationAllowed =
+                                    preLoadConfig.StringCompilationAllowed;
+                                cfg.Strict = preLoadConfig.Strict;
+                                cfg.Interop.ExceptionHandler = (_) => true;
+                            }
+                            else
+                            {
+                                cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
                             }
                         }
+                    )
+                );
 
-                        cfg.AllowClr(assemblies.ToArray());
-                        cfg.EnableModules(Path.Combine(Global.PATH, JSPluginManager.PluginPath));
-
-                        cfg.Modules.RegisterRequire = true;
-                        cfg.Interop.AllowGetType = preLoadConfig.AllowGetType;
-                        cfg.Interop.AllowOperatorOverloading = preLoadConfig.AllowOperatorOverloading;
-                        cfg.Interop.AllowSystemReflection = preLoadConfig.AllowSystemReflection;
-                        cfg.Interop.AllowWrite = preLoadConfig.AllowWrite;
-                        cfg.StringCompilationAllowed = preLoadConfig.StringCompilationAllowed;
-                        cfg.Strict = preLoadConfig.Strict;
-                        cfg.Interop.ExceptionHandler = (_) => true;
-                    }
-                    else
-                    {
-                        cfg.TimeoutInterval(TimeSpan.FromMinutes(1));
-                    }
-                }
-                ));
-
-            engine.SetValue("serein_path",
-                Global.PATH);
-            engine.SetValue("serein_version",
-                Global.VERSION);
-            engine.SetValue("serein_namespace",
-                string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace);
-            engine.SetValue("serein_debugLog",
-                new Action<JsValue>((content) => Utils.Output.Logger.Output(LogType.Debug, $"[{@namespace ?? "unknown"}]", content)));
+            engine.SetValue("serein_path", Global.PATH);
+            engine.SetValue("serein_version", Global.VERSION);
+            engine.SetValue(
+                "serein_namespace",
+                string.IsNullOrEmpty(@namespace) ? JsValue.Null : @namespace
+            );
+            engine.SetValue(
+                "serein_debugLog",
+                new Action<JsValue>(
+                    (content) =>
+                        Utils.Output.Logger.Output(
+                            LogType.Debug,
+                            $"[{@namespace ?? "unknown"}]",
+                            content
+                        )
+                )
+            );
             if (!string.IsNullOrEmpty(@namespace))
             {
-                engine.SetValue("serein_log",
-                    new Action<JsValue>((content) => Utils.Output.Logger.Output(LogType.Plugin_Info, $"[{@namespace}]", content)));
-                engine.SetValue("serein_registerPlugin",
-                    new Func<string, string, string, string, string>((name, version, author, description) => JSFunc.Register(@namespace, name, version, author, description)));
-                engine.SetValue("serein_setListener",
-                    new Func<string, JsValue, bool>((eventName, callback) => JSFunc.SetListener(@namespace, eventName, callback)));
-                engine.SetValue("serein_setVariable",
-                    new Func<string, JsValue, bool>(JSFunc.SetVariable));
-                engine.SetValue("serein_export",
-                    new Action<string, JsValue>(JSFunc.Export));
-                engine.SetValue("serein_setPreLoadConfig",
-                    new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>((assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed) => JSFunc.SetPreLoadConfig(@namespace, assemblies, allowGetType, allowOperatorOverloading, allowSystemReflection, allowWrite, strict, stringCompilationAllowed)));
-                engine.SetValue("serein_safeCall",
-                    JSFunc.SafeCall);
-                engine.SetValue("serein_reloadFiles",
-                    new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type)));
-                engine.SetValue("setTimeout",
-                    new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, false)));
-                engine.SetValue("setInterval",
-                    new Func<JsValue, JsValue, JsValue>((callback, interval) => JSFunc.SetTimer(@namespace, callback, interval, true)));
-                engine.SetValue("clearTimeout",
-                    new Func<JsValue, bool>(JSFunc.ClearTimer));
-                engine.SetValue("clearInterval",
-                    new Func<JsValue, bool>(JSFunc.ClearTimer));
-                engine.SetValue("WSClient",
-                    TypeReference.CreateTypeReference(engine, typeof(WSClient)));
-                engine.SetValue("MessageBus",
-                    TypeReference.CreateTypeReference(engine, typeof(MessageBus)));
-                engine.SetValue("Logger",
-                    TypeReference.CreateTypeReference(engine, typeof(Native.Logger)));
+                engine.SetValue(
+                    "serein_log",
+                    new Action<JsValue>(
+                        (content) =>
+                            Utils.Output.Logger.Output(
+                                LogType.Plugin_Info,
+                                $"[{@namespace}]",
+                                content
+                            )
+                    )
+                );
+                engine.SetValue(
+                    "serein_registerPlugin",
+                    new Func<string, string, string, string, string>(
+                        (name, version, author, description) =>
+                            JSFunc.Register(@namespace, name, version, author, description)
+                    )
+                );
+                engine.SetValue(
+                    "serein_setListener",
+                    new Func<string, JsValue, bool>(
+                        (eventName, callback) => JSFunc.SetListener(@namespace, eventName, callback)
+                    )
+                );
+                engine.SetValue(
+                    "serein_setVariable",
+                    new Func<string, JsValue, bool>(JSFunc.SetVariable)
+                );
+                engine.SetValue("serein_export", new Action<string, JsValue>(JSFunc.Export));
+                engine.SetValue(
+                    "serein_setPreLoadConfig",
+                    new Action<JsValue, JsValue, JsValue, JsValue, JsValue, JsValue, JsValue>(
+                        (
+                            assemblies,
+                            allowGetType,
+                            allowOperatorOverloading,
+                            allowSystemReflection,
+                            allowWrite,
+                            strict,
+                            stringCompilationAllowed
+                        ) =>
+                            JSFunc.SetPreLoadConfig(
+                                @namespace,
+                                assemblies,
+                                allowGetType,
+                                allowOperatorOverloading,
+                                allowSystemReflection,
+                                allowWrite,
+                                strict,
+                                stringCompilationAllowed
+                            )
+                    )
+                );
+                engine.SetValue("serein_safeCall", JSFunc.SafeCall);
+                engine.SetValue(
+                    "serein_reloadFiles",
+                    new Func<string, bool>((type) => JSFunc.ReloadFiles(@namespace, type))
+                );
+                engine.SetValue(
+                    "setTimeout",
+                    new Func<JsValue, JsValue, JsValue>(
+                        (callback, interval) =>
+                            JSFunc.SetTimer(@namespace, callback, interval, false)
+                    )
+                );
+                engine.SetValue(
+                    "setInterval",
+                    new Func<JsValue, JsValue, JsValue>(
+                        (callback, interval) =>
+                            JSFunc.SetTimer(@namespace, callback, interval, true)
+                    )
+                );
+                engine.SetValue("clearTimeout", new Func<JsValue, bool>(JSFunc.ClearTimer));
+                engine.SetValue("clearInterval", new Func<JsValue, bool>(JSFunc.ClearTimer));
+                engine.SetValue(
+                    "WSClient",
+                    TypeReference.CreateTypeReference(engine, typeof(WSClient))
+                );
+                engine.SetValue(
+                    "MessageBus",
+                    TypeReference.CreateTypeReference(engine, typeof(MessageBus))
+                );
+                engine.SetValue(
+                    "Logger",
+                    TypeReference.CreateTypeReference(engine, typeof(Native.Logger))
+                );
             }
             else
             {
@@ -142,10 +226,13 @@ namespace Serein.Core.JSPlugin
                 engine.SetValue("Logger", JsValue.Undefined);
                 engine.SetValue("require", JsValue.Undefined);
             }
-            engine.SetValue("serein_getSysinfo",
-                new Func<object>(() => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()));
-            engine.SetValue("serein_getCPUUsage",
-                new Func<float>(() => SystemInfo.CPUUsage));
+            engine.SetValue(
+                "serein_getSysinfo",
+                new Func<object>(
+                    () => SystemInfo.Info ?? OperatingSystemInfo.GetOperatingSystemInfo()
+                )
+            );
+            engine.SetValue("serein_getCPUUsage", new Func<float>(() => SystemInfo.CPUUsage));
 #if CONSOLE
             engine.SetValue("serein_type", 0);
 #elif WINFORM
@@ -157,88 +244,179 @@ namespace Serein.Core.JSPlugin
 #endif
             engine.SetValue("serein_typeName", Global.TYPE);
             engine.SetValue("serein_startTime", Global.StartTime);
-            engine.SetValue("serein_getNetSpeed",
-                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed }));
-            engine.SetValue("serein_runCommand",
-                new Action<string>((command) => Command.Run(CommandOrigin.Javascript, command)));
-            engine.SetValue("serein_getSettings",
-                new Func<string>(() => JsonConvert.SerializeObject(Global.Settings)));
-            engine.SetValue("serein_getSettingsObject",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.Settings)));
-            engine.SetValue("serein_getMotdpe",
-                new Func<string, string?>((addr) => new Motdpe(addr).Origin));
-            engine.SetValue("serein_getMotdje",
-                new Func<string, string?>((addr) => new Motdje(addr).Origin));
-            engine.SetValue("serein_startServer",
-                new Func<bool>(() => ServerManager.Start(true)));
-            engine.SetValue("serein_stopServer",
-                new Action(() => ServerManager.Stop(true)));
-            engine.SetValue("serein_killServer",
-                new Func<bool>(() => ServerManager.Kill(true)));
-            engine.SetValue("serein_getServerStatus",
-                new Func<bool>(() => ServerManager.Status));
-            engine.SetValue("serein_getServerMotd",
-                new Func<JsValue>(() => JsValue.FromObject(engine, ServerManager.Motd)));
-            engine.SetValue("serein_sendCmd",
-                new Action<string, bool>((commnad, usingUnicode) => ServerManager.InputCommand(commnad, usingUnicode, false)));
-            engine.SetValue("serein_getServerTime",
-                new Func<string>(() => ServerManager.Time));
-            engine.SetValue("serein_getServerCPUUsage",
-                new Func<double>(() => ServerManager.CPUUsage));
-            engine.SetValue("serein_getServerPID",
-                new Func<int>(() => ServerManager.PID));
-            engine.SetValue("serein_getServerFile",
-                new Func<string>(() => ServerManager.StartFileName));
-            engine.SetValue("serein_sendGroup",
-                new Func<long, string, bool>((target, message) => Websocket.Send(false, message, target)));
-            engine.SetValue("serein_sendPrivate",
-                new Func<long, string, bool>((target, message) => Websocket.Send(true, message, target)));
-            engine.SetValue("serein_sendTemp",
-                new Func<long, long, string, bool>((groupID, userID, message) => Websocket.Send(groupID, userID, message)));
-            engine.SetValue("serein_sendPacket",
-                new Func<string, bool>((message) => Websocket.Send(message)));
-            engine.SetValue("serein_getWsStatus",
-                new Func<bool>(() => Websocket.Status));
-            engine.SetValue("serein_getSelfId",
-                new Func<long?>(() => PacketHandler.SelfIdInt64));
-            engine.SetValue("serein_getWsStat",
-                new Func<long?[]>(() => new[] { PacketHandler.MessageSentInt64, PacketHandler.MessageReceivedInt64 }));
-            engine.SetValue("serein_bindMember",
-                new Func<long, string, bool>(Common.Binder.Bind));
-            engine.SetValue("serein_unbindMember",
-                new Func<long, bool>(Common.Binder.UnBind));
-            engine.SetValue("serein_getID",
-                new Func<string, long>(Common.Binder.GetID));
-            engine.SetValue("serein_getGameID",
-                new Func<long, string>(Common.Binder.GetGameID));
-            engine.SetValue("serein_getGroupCache",
-                new Func<JsValue>(() => JsValue.FromObject(engine, JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Member>>>(Global.GroupCache.ToJson()))));
-            engine.SetValue("serein_getUserInfo",
-                new Func<long, long, JsValue>((groupID, userID) => Global.GroupCache.TryGetValue(groupID, out Dictionary<long, Member>? groupinfo) && groupinfo.TryGetValue(userID, out Member? member) ? JsValue.FromObject(engine, member) : JsValue.Null));
-            engine.SetValue("serein_getPluginList",
-                new Func<JsValue>(() => JsValue.FromObject(engine, JSPluginManager.PluginDict.Values.Select(plugin => new PluginStruct(plugin)).ToArray())));
-            engine.SetValue("serein_getRegexes",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.ToArray())));
-            engine.SetValue("serein_addRegex",
-                new Func<string, int?, bool?, string, string, long[], bool>(JSFunc.AddRegex));
-            engine.SetValue("serein_editRegex",
-                new Func<int?, string, int?, bool?, string, string, long[], bool>(JSFunc.EditRegex));
-            engine.SetValue("serein_removeRegex",
-                new Func<int?, bool>(JSFunc.RemoveRegex));
-            engine.SetValue("serein_import",
-                new Func<string, JsValue>((key) => JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue? jsValue) ? jsValue : JsValue.Undefined));
-            engine.SetValue("serein_getPermissionGroups",
-                new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups)));
-            engine.SetValue("serein_addPermissionGroup",
-                new Func<string, PermissionGroup, bool, bool>(PermissionManager.Add));
-            engine.SetValue("serein_removePermissionGroup",
-                new Func<string, bool>(PermissionManager.Remove));
-            engine.SetValue("serein_calculatePermission",
-                new Func<string, long, long?, JsValue>((type, userId, groupId) => JsValue.FromObject(engine, PermissionManager.Calculate(type, userId, groupId ?? 0))));
-            engine.SetValue("serein_existPermissionGroup",
-                new Func<string, bool>(Global.PermissionGroups.ContainsKey));
-            engine.SetValue("serein_setPermission",
-                new Func<string, string, JsValue, bool>(PermissionManager.SetPermission));
+            engine.SetValue(
+                "serein_getNetSpeed",
+                new Func<Array>(() => new[] { SystemInfo.UploadSpeed, SystemInfo.DownloadSpeed })
+            );
+            engine.SetValue(
+                "serein_runCommand",
+                new Action<string>((command) => Command.Run(CommandOrigin.Javascript, command))
+            );
+            engine.SetValue(
+                "serein_getSettings",
+                new Func<string>(() => JsonConvert.SerializeObject(Global.Settings))
+            );
+            engine.SetValue(
+                "serein_getSettingsObject",
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.Settings))
+            );
+            engine.SetValue(
+                "serein_getMotdpe",
+                new Func<string, string?>((addr) => new Motdpe(addr).Origin)
+            );
+            engine.SetValue(
+                "serein_getMotdje",
+                new Func<string, string?>((addr) => new Motdje(addr).Origin)
+            );
+            engine.SetValue("serein_startServer", new Func<bool>(() => ServerManager.Start(true)));
+            engine.SetValue("serein_stopServer", new Action(() => ServerManager.Stop(true)));
+            engine.SetValue("serein_killServer", new Func<bool>(() => ServerManager.Kill(true)));
+            engine.SetValue("serein_getServerStatus", new Func<bool>(() => ServerManager.Status));
+            engine.SetValue(
+                "serein_getServerMotd",
+                new Func<JsValue>(() => JsValue.FromObject(engine, ServerManager.Motd))
+            );
+            engine.SetValue(
+                "serein_sendCmd",
+                new Action<string, bool>(
+                    (commnad, usingUnicode) =>
+                        ServerManager.InputCommand(commnad, usingUnicode, false)
+                )
+            );
+            engine.SetValue("serein_getServerTime", new Func<string>(() => ServerManager.Time));
+            engine.SetValue(
+                "serein_getServerCPUUsage",
+                new Func<double>(() => ServerManager.CPUUsage)
+            );
+            engine.SetValue("serein_getServerPID", new Func<int>(() => ServerManager.PID));
+            engine.SetValue(
+                "serein_getServerFile",
+                new Func<string>(() => ServerManager.StartFileName)
+            );
+            engine.SetValue(
+                "serein_sendGroup",
+                new Func<long, string, bool>(
+                    (target, message) => Websocket.Send(false, message, target)
+                )
+            );
+            engine.SetValue(
+                "serein_sendPrivate",
+                new Func<long, string, bool>(
+                    (target, message) => Websocket.Send(true, message, target)
+                )
+            );
+            engine.SetValue(
+                "serein_sendTemp",
+                new Func<long, long, string, bool>(
+                    (groupID, userID, message) => Websocket.Send(groupID, userID, message)
+                )
+            );
+            engine.SetValue(
+                "serein_sendPacket",
+                new Func<string, bool>((message) => Websocket.Send(message))
+            );
+            engine.SetValue("serein_getWsStatus", new Func<bool>(() => Websocket.Status));
+            engine.SetValue("serein_getSelfId", new Func<long?>(() => PacketHandler.SelfIdInt64));
+            engine.SetValue(
+                "serein_getWsStat",
+                new Func<long?[]>(
+                    () =>
+                        new[] { PacketHandler.MessageSentInt64, PacketHandler.MessageReceivedInt64 }
+                )
+            );
+            engine.SetValue("serein_bindMember", new Func<long, string, bool>(Common.Binder.Bind));
+            engine.SetValue("serein_unbindMember", new Func<long, bool>(Common.Binder.UnBind));
+            engine.SetValue("serein_getID", new Func<string, long>(Common.Binder.GetID));
+            engine.SetValue("serein_getGameID", new Func<long, string>(Common.Binder.GetGameID));
+            engine.SetValue(
+                "serein_getGroupCache",
+                new Func<JsValue>(
+                    () =>
+                        JsValue.FromObject(
+                            engine,
+                            JsonConvert.DeserializeObject<
+                                Dictionary<string, Dictionary<string, Member>>
+                            >(Global.GroupCache.ToJson())
+                        )
+                )
+            );
+            engine.SetValue(
+                "serein_getUserInfo",
+                new Func<long, long, JsValue>(
+                    (groupID, userID) =>
+                        Global.GroupCache.TryGetValue(
+                            groupID,
+                            out Dictionary<long, Member>? groupinfo
+                        ) && groupinfo.TryGetValue(userID, out Member? member)
+                            ? JsValue.FromObject(engine, member)
+                            : JsValue.Null
+                )
+            );
+            engine.SetValue(
+                "serein_getPluginList",
+                new Func<JsValue>(
+                    () =>
+                        JsValue.FromObject(
+                            engine,
+                            JSPluginManager.PluginDict.Values
+                                .Select(plugin => new PluginStruct(plugin))
+                                .ToArray()
+                        )
+                )
+            );
+            engine.SetValue(
+                "serein_getRegexes",
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.RegexList.ToArray()))
+            );
+            engine.SetValue(
+                "serein_addRegex",
+                new Func<string, int?, bool?, string, string, long[], bool>(JSFunc.AddRegex)
+            );
+            engine.SetValue(
+                "serein_editRegex",
+                new Func<int?, string, int?, bool?, string, string, long[], bool>(JSFunc.EditRegex)
+            );
+            engine.SetValue("serein_removeRegex", new Func<int?, bool>(JSFunc.RemoveRegex));
+            engine.SetValue(
+                "serein_import",
+                new Func<string, JsValue>(
+                    (key) =>
+                        JSPluginManager.VariablesExportedDict.TryGetValue(key, out JsValue? jsValue)
+                            ? jsValue
+                            : JsValue.Undefined
+                )
+            );
+            engine.SetValue(
+                "serein_getPermissionGroups",
+                new Func<JsValue>(() => JsValue.FromObject(engine, Global.PermissionGroups))
+            );
+            engine.SetValue(
+                "serein_addPermissionGroup",
+                new Func<string, PermissionGroup, bool, bool>(PermissionManager.Add)
+            );
+            engine.SetValue(
+                "serein_removePermissionGroup",
+                new Func<string, bool>(PermissionManager.Remove)
+            );
+            engine.SetValue(
+                "serein_calculatePermission",
+                new Func<string, long, long?, JsValue>(
+                    (type, userId, groupId) =>
+                        JsValue.FromObject(
+                            engine,
+                            PermissionManager.Calculate(type, userId, groupId ?? 0)
+                        )
+                )
+            );
+            engine.SetValue(
+                "serein_existPermissionGroup",
+                new Func<string, bool>(Global.PermissionGroups.ContainsKey)
+            );
+            engine.SetValue(
+                "serein_setPermission",
+                new Func<string, string, JsValue, bool>(PermissionManager.SetPermission)
+            );
+
             engine.SetValue("Motdpe", TypeReference.CreateTypeReference(engine, typeof(Motdpe)));
             engine.SetValue("Motdje", TypeReference.CreateTypeReference(engine, typeof(Motdje)));
             engine.Execute(

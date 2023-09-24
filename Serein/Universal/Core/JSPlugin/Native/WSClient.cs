@@ -14,7 +14,10 @@ namespace Serein.Core.JSPlugin.Native
         /// 事件函数
         /// </summary>
         [JsonIgnore]
-        public static JsValue? Onopen, Onclose, Onerror, Onmessage;
+        public static JsValue? Onopen,
+            Onclose,
+            Onerror,
+            Onmessage;
 
         /// <summary>
         /// WS客户端
@@ -54,13 +57,15 @@ namespace Serein.Core.JSPlugin.Native
         /// </summary>
         /// <param name="uri">ws地址</param>
         /// <param name="namespace">命名空间</param>
-        public WSClient(string uri, string? @namespace = null) : base(@namespace)
+        public WSClient(string uri, string? @namespace = null)
+            : base(@namespace)
         {
             Uri = uri;
             _webSocket = new(uri);
             _webSocket.Opened += (_, _) => Trigger(Onopen, EventType.Opened);
             _webSocket.Closed += (_, _) => Trigger(Onclose, EventType.Closed);
-            _webSocket.MessageReceived += (_, e) => Trigger(Onmessage, EventType.MessageReceived, e);
+            _webSocket.MessageReceived += (_, e) =>
+                Trigger(Onmessage, EventType.MessageReceived, e);
             _webSocket.Error += (_, e) => Trigger(Onerror, EventType.Error, e);
 
             JSPluginManager.PluginDict[@namespace!].WSClients.Add(this);
@@ -72,7 +77,10 @@ namespace Serein.Core.JSPlugin.Native
         /// <param name="jsValue">事件函数</param>
         private bool Check(JsValue? jsValue)
         {
-            if (JSPluginManager.PluginDict[_namespace].Engine is null || !JSPluginManager.PluginDict[_namespace].Available)
+            if (
+                JSPluginManager.PluginDict[_namespace].Engine is null
+                || !JSPluginManager.PluginDict[_namespace].Available
+            )
             {
                 Dispose();
                 return false;
@@ -105,13 +113,19 @@ namespace Serein.Core.JSPlugin.Native
                         case EventType.MessageReceived:
                             if (args is MessageReceivedEventArgs e1 && e1 != null)
                             {
-                                JSPluginManager.PluginDict[_namespace].Engine!.Invoke(jsValue, e1.Message);
+                                JSPluginManager.PluginDict[_namespace].Engine!.Invoke(
+                                    jsValue,
+                                    e1.Message
+                                );
                             }
                             break;
                         case EventType.Error:
                             if (args is SuperSocket.ClientEngine.ErrorEventArgs e2 && e2 != null)
                             {
-                                JSPluginManager.PluginDict[_namespace].Engine!.Invoke(jsValue, e2.Exception.ToFullMsg());
+                                JSPluginManager.PluginDict[_namespace].Engine!.Invoke(
+                                    jsValue,
+                                    e2.Exception.ToFullMsg()
+                                );
                             }
                             break;
                         default:
@@ -122,7 +136,12 @@ namespace Serein.Core.JSPlugin.Native
             catch (Exception e)
             {
                 string message = e.ToFullMsg();
-                Utils.Output.Logger.Output(Base.LogType.Plugin_Error, $"[{_namespace}]", $"WSClientt的{eventType}事件调用失败：", message);
+                Utils.Output.Logger.Output(
+                    Base.LogType.Plugin_Error,
+                    $"[{_namespace}]",
+                    $"WSClientt的{eventType}事件调用失败：",
+                    message
+                );
                 Utils.Output.Logger.Output(Base.LogType.Debug, $"{eventType}事件调用失败\r\n", e);
             }
         }

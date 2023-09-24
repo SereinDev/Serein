@@ -20,10 +20,7 @@ namespace Serein.Utils
 #if !UNIX
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                _counter = new("Processor", "% Processor Time", "_Total")
-                {
-                    MachineName = "."
-                };
+                _counter = new("Processor", "% Processor Time", "_Total") { MachineName = "." };
                 Task.Run(() => _counter?.NextValue());
             }
 #endif
@@ -59,14 +56,16 @@ namespace Serein.Utils
         /// </summary>
         public static string? DownloadSpeed { get; private set; }
 
-        private static decimal _bytesReceived, _bytesSent;
+        private static decimal _bytesReceived,
+            _bytesSent;
 
         /// <summary>
         /// 更新网速
         /// </summary>
         private static void UpdateNetSpeed()
         {
-            decimal bytesReceived = 0, bytesSent = 0;
+            decimal bytesReceived = 0,
+                bytesSent = 0;
             foreach (NetworkInterface INet in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (INet == null)
@@ -78,7 +77,8 @@ namespace Serein.Utils
             }
             if (_bytesReceived != 0 && _bytesSent != 0)
             {
-                double uploadSpeed = (double)(bytesSent - _bytesSent) / 1024 / 2.5, downloadSpeed = (double)(bytesReceived - _bytesReceived) / 1024 / 2.5;
+                double uploadSpeed = (double)(bytesSent - _bytesSent) / 1024 / 2.5,
+                    downloadSpeed = (double)(bytesReceived - _bytesReceived) / 1024 / 2.5;
                 if (uploadSpeed < 1024)
                 {
                     UploadSpeed = uploadSpeed.ToString("N1") + "KB/s";
@@ -103,7 +103,11 @@ namespace Serein.Utils
                 {
                     DownloadSpeed = (downloadSpeed / 1024 / 1024).ToString("N1") + "GB/s";
                 }
-                Logger.Output(Base.LogType.DetailDebug, "Upload:" + UploadSpeed, "Download:" + DownloadSpeed);
+                Logger.Output(
+                    Base.LogType.DetailDebug,
+                    "Upload:" + UploadSpeed,
+                    "Download:" + DownloadSpeed
+                );
             }
             _bytesReceived = bytesReceived;
             _bytesSent = bytesSent;
@@ -124,10 +128,7 @@ namespace Serein.Utils
         /// <summary>
         /// 刷新计时器
         /// </summary>
-        private static readonly Timer _refreshTimer = new(2500)
-        {
-            AutoReset = true
-        };
+        private static readonly Timer _refreshTimer = new(2500) { AutoReset = true };
 
         /// <summary>
         /// 操作系统信息

@@ -16,12 +16,14 @@ if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
             File.Delete("Updater.exe.config");
         }
-        Process.Start(new ProcessStartInfo("cmd.exe")
-        {
-            Arguments = "/k del /q Updater.exe & pause & exit",
-            WorkingDirectory = Directory.GetCurrentDirectory(),
-            UseShellExecute = false
-        });
+        Process.Start(
+            new ProcessStartInfo("cmd.exe")
+            {
+                Arguments = "/k del /q Updater.exe & pause & exit",
+                WorkingDirectory = Directory.GetCurrentDirectory(),
+                UseShellExecute = false
+            }
+        );
     };
 }
 
@@ -29,7 +31,6 @@ Replace();
 stopWatch.Stop();
 Console.WriteLine($"\r\n替换更新完毕，用时{stopWatch.ElapsedMilliseconds}ms");
 Console.ForegroundColor = @default;
-
 
 void Replace()
 {

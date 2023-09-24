@@ -40,7 +40,11 @@ namespace Serein.Utils.IO
         /// <param name="jsonObject">JSON对象</param>
         /// <param name="appendMode">追加模式</param>
         /// <param name="quiet">静处理</param>
-        public static void ParseRegex(JObject? jsonObject, bool appendMode = false, bool quiet = false)
+        public static void ParseRegex(
+            JObject? jsonObject,
+            bool appendMode = false,
+            bool quiet = false
+        )
         {
             if (jsonObject is null)
             {
@@ -66,7 +70,11 @@ namespace Serein.Utils.IO
                 {
                     lock (Global.RegexList)
                     {
-                        jsonObject["data"]!.ToObject<List<Regex>>()?.Where((i) => i is not null).ToList().ForEach((i) => Global.RegexList.Add(i));
+                        jsonObject["data"]!
+                            .ToObject<List<Regex>>()
+                            ?.Where((i) => i is not null)
+                            .ToList()
+                            .ForEach((i) => Global.RegexList.Add(i));
                     }
                 }
                 else
@@ -113,7 +121,11 @@ namespace Serein.Utils.IO
         /// <param name="filename">路径</param>
         /// <param name="appendMode">追加模式</param>
         /// <param name="quiet">静处理</param>
-        public static void ReadRegex(string? filename = null, bool appendMode = false, bool quiet = false)
+        public static void ReadRegex(
+            string? filename = null,
+            bool appendMode = false,
+            bool quiet = false
+        )
         {
             Directory.CreateDirectory("data");
             filename ??= Path.Combine("data", "regex.json");
@@ -141,12 +153,13 @@ namespace Serein.Utils.IO
         public static void SaveRegex()
         {
             Directory.CreateDirectory("data");
-            JObject jsonObject = new()
-            {
-                { "type", "REGEX" },
-                { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Global.RegexList) }
-            };
+            JObject jsonObject =
+                new()
+                {
+                    { "type", "REGEX" },
+                    { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
+                    { "data", JArray.FromObject(Global.RegexList) }
+                };
             lock (FileLock.Regex)
             {
                 File.WriteAllText(Path.Combine("data", "regex.json"), jsonObject.ToString());
@@ -174,9 +187,13 @@ namespace Serein.Utils.IO
                 if (!string.IsNullOrEmpty(text))
                 {
                     JObject? jsonObject = JsonConvert.DeserializeObject<JObject>(text);
-                    if (jsonObject?["type"]?.ToString().ToUpperInvariant() == "MEMBERS" && jsonObject["data"] is not null)
+                    if (
+                        jsonObject?["type"]?.ToString().ToUpperInvariant() == "MEMBERS"
+                        && jsonObject["data"] is not null
+                    )
                     {
-                        List<Member> list = jsonObject["data"]?.ToObject<List<Member>>() ?? new(); ;
+                        List<Member> list = jsonObject["data"]?.ToObject<List<Member>>() ?? new();
+                        ;
                         list.Sort((item1, item2) => item1.ID > item2.ID ? 1 : -1);
                         Dictionary<long, Member> dictionary = new();
                         list.ForEach((x) => dictionary.Add(x.ID, x));
@@ -210,19 +227,20 @@ namespace Serein.Utils.IO
             if (JsonConvert.SerializeObject(dictionary) != _oldMembers)
             {
                 _oldMembers = JsonConvert.SerializeObject(dictionary);
-                JObject jsonObject = new()
-                {
-                    { "type", "MEMBERS" },
-                    { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                    { "data", JArray.FromObject(list) }
-                };
+                JObject jsonObject =
+                    new()
+                    {
+                        { "type", "MEMBERS" },
+                        { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
+                        { "data", JArray.FromObject(list) }
+                    };
                 lock (FileLock.Member)
                 {
                     File.WriteAllText(
                         Path.Combine("data", "members.json"),
                         jsonObject.ToString(),
                         Encoding.UTF8
-                        );
+                    );
                 }
             }
         }
@@ -314,12 +332,13 @@ namespace Serein.Utils.IO
         public static void SaveSchedule()
         {
             Directory.CreateDirectory("data");
-            JObject jsonObject = new()
-            {
-                { "type", "SCHEDULE" },
-                { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
-                { "data", JArray.FromObject(Global.Schedules) }
-            };
+            JObject jsonObject =
+                new()
+                {
+                    { "type", "SCHEDULE" },
+                    { "comment", "非必要请不要直接修改文件，语法错误可能导致数据丢失" },
+                    { "data", JArray.FromObject(Global.Schedules) }
+                };
             lock (FileLock.Schedule)
             {
                 File.WriteAllText(Path.Combine("data", "schedule.json"), jsonObject.ToString());
@@ -340,7 +359,10 @@ namespace Serein.Utils.IO
                 {
                     lock (FileLock.GroupCache)
                     {
-                        File.WriteAllText(Path.Combine("data", "groupcache.json"), JsonConvert.SerializeObject(Global.GroupCache, Formatting.Indented));
+                        File.WriteAllText(
+                            Path.Combine("data", "groupcache.json"),
+                            JsonConvert.SerializeObject(Global.GroupCache, Formatting.Indented)
+                        );
                     }
                 }
             }
@@ -359,7 +381,10 @@ namespace Serein.Utils.IO
                 {
                     lock (FileLock.GroupCache)
                     {
-                        Global.GroupCache = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<long, Member>>>(File.ReadAllText(Path.Combine("data", "groupcache.json"))) ?? new();
+                        Global.GroupCache =
+                            JsonConvert.DeserializeObject<
+                                Dictionary<long, Dictionary<long, Member>>
+                            >(File.ReadAllText(Path.Combine("data", "groupcache.json"))) ?? new();
                     }
                 }
             }
@@ -378,7 +403,13 @@ namespace Serein.Utils.IO
                 {
                     try
                     {
-                        File.WriteAllText(Path.Combine("plugins", "permission.json"), JsonConvert.SerializeObject(Global.PermissionGroups, Formatting.Indented));
+                        File.WriteAllText(
+                            Path.Combine("plugins", "permission.json"),
+                            JsonConvert.SerializeObject(
+                                Global.PermissionGroups,
+                                Formatting.Indented
+                            )
+                        );
                     }
                     catch (JsonSerializationException e)
                     {
@@ -400,7 +431,10 @@ namespace Serein.Utils.IO
                 {
                     lock (FileLock.PermissionGroups)
                     {
-                        Global.PermissionGroups = JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(File.ReadAllText(filename)) ?? new();
+                        Global.PermissionGroups =
+                            JsonConvert.DeserializeObject<Dictionary<string, PermissionGroup>>(
+                                File.ReadAllText(filename)
+                            ) ?? new();
                     }
                 }
             }
@@ -415,8 +449,7 @@ namespace Serein.Utils.IO
         /// </summary>
         public struct FileLock
         {
-            public static readonly object
-                Regex = new(),
+            public static readonly object Regex = new(),
                 Schedule = new(),
                 Member = new(),
                 PermissionGroups = new(),

@@ -7,7 +7,9 @@ namespace Serein.Base.Packets
     [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     internal class Message
     {
-        public string MessageType = string.Empty, PostType = string.Empty, RawMessage = string.Empty;
+        public string MessageType = string.Empty,
+            PostType = string.Empty,
+            RawMessage = string.Empty;
 
         /// <summary>
         /// 消息 ID

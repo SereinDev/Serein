@@ -37,7 +37,8 @@ namespace Serein.Core.JSPlugin.Permission
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireAdmin { get; init; }
 
-        private static List<string> _acceptableTypes = new() { "group", "private", "temp", "unknown" };
+        private static List<string> _acceptableTypes =
+            new() { "group", "private", "temp", "unknown" };
 
         public Condition()
         {

@@ -11,8 +11,7 @@ namespace Serein.Core.JSPlugin
         /// <remarks>
         /// https://github.com/sebastienros/jint/blob/main/Jint/Options.cs
         /// </remarks>
-        public bool
-            AllowGetType = false,
+        public bool AllowGetType = false,
             AllowOperatorOverloading = true,
             AllowSystemReflection = false,
             AllowWrite = true,

@@ -11,6 +11,7 @@ namespace Serein.Ui.ChildrenWindow
     public partial class ScheduleEditor : Form
     {
         public bool CancelFlag { get; private set; } = true;
+
         public ScheduleEditor()
         {
             InitializeComponent();
@@ -23,25 +24,45 @@ namespace Serein.Ui.ChildrenWindow
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if (!(string.IsNullOrEmpty(Cron.Text) || string.IsNullOrWhiteSpace(Cron.Text) ||
-                string.IsNullOrEmpty(Command.Text) || string.IsNullOrWhiteSpace(Command.Text)))
+            if (
+                !(
+                    string.IsNullOrEmpty(Cron.Text)
+                    || string.IsNullOrWhiteSpace(Cron.Text)
+                    || string.IsNullOrEmpty(Command.Text)
+                    || string.IsNullOrWhiteSpace(Command.Text)
+                )
+            )
             {
                 if (Core.Common.Command.GetType(Command.Text) == Base.CommandType.Invalid)
                 {
-                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        "执行命令无效",
+                        "Serein",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
                     return;
                 }
                 CrontabSchedule crontabSchedule;
                 if ((crontabSchedule = CrontabSchedule.TryParse(Cron.Text)) != null)
                 {
-                    CronNextTime.Text = "下一次执行时间:" + crontabSchedule.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList()[0].ToString();
+                    CronNextTime.Text =
+                        "下一次执行时间:"
+                        + crontabSchedule
+                            .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                            .ToList()[0].ToString();
                     CancelFlag = false;
                     Close();
                 }
                 else
                 {
                     CronNextTime.Text = "Cron表达式无效";
-                    MessageBox.Show("Cron表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        "Cron表达式无效",
+                        "Serein",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
                 }
             }
             else
@@ -54,12 +75,18 @@ namespace Serein.Ui.ChildrenWindow
         {
             try
             {
-                List<DateTime> occurrences = CrontabSchedule.Parse(Cron.Text).GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1)).ToList();
+                List<DateTime> occurrences = CrontabSchedule
+                    .Parse(Cron.Text)
+                    .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                    .ToList();
                 if (occurrences.Count > 20)
                 {
                     occurrences.RemoveRange(20, occurrences.Count - 20);
                 }
-                _dateTimes = string.Join("\n", occurrences.Select((dateTime) => dateTime.ToString("g")));
+                _dateTimes = string.Join(
+                    "\n",
+                    occurrences.Select((dateTime) => dateTime.ToString("g"))
+                );
                 CronNextTime.Text = "预计执行时间：" + occurrences[0].ToString("g");
             }
             catch
@@ -68,6 +95,7 @@ namespace Serein.Ui.ChildrenWindow
                 _dateTimes = string.Empty;
             }
         }
+
         public void Update(string cron, string remark, string command)
         {
             Cron.Text = cron;
@@ -135,10 +163,14 @@ namespace Serein.Ui.ChildrenWindow
             toolTip.SetToolTip((Control)sender, $"最近20次执行执行时间：\n{_dateTimes}");
         }
 
-
         private void ScheduleEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/schedule") { UseShellExecute = true });
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/schedule")
+                {
+                    UseShellExecute = true
+                }
+            );
         }
 
         private string _dateTimes = string.Empty;

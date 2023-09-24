@@ -45,7 +45,10 @@ namespace Serein.Utils.IO
         {
             Data.ReadRegex();
             Data.ReadMember();
-            if (File.Exists(Path.Combine("data", "task.json")) && !File.Exists(Path.Combine("data", "schedule.json")))
+            if (
+                File.Exists(Path.Combine("data", "task.json"))
+                && !File.Exists(Path.Combine("data", "schedule.json"))
+            )
             {
                 Data.ReadSchedule(Path.Combine("data", "task.json"));
                 File.Delete(Path.Combine("data", "task.json"));
@@ -59,7 +62,6 @@ namespace Serein.Utils.IO
             Setting.ReadSettings();
             Setting.SaveSettings();
         }
-
 
         /// <summary>
         /// 热重载
@@ -149,6 +151,5 @@ namespace Serein.Utils.IO
                     throw new ArgumentException("重新加载类型未知");
             }
         }
-
     }
 }

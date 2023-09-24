@@ -25,35 +25,64 @@ namespace Serein.Utils.IO
             {
                 Global.FirstOpen = true;
                 Directory.CreateDirectory("settings");
-                File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(new Matches(), Formatting.Indented));
-                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(new Event(), Formatting.Indented));
+                File.WriteAllText(
+                    Path.Combine("settings", "Matches.json"),
+                    JsonConvert.SerializeObject(new Matches(), Formatting.Indented)
+                );
+                File.WriteAllText(
+                    Path.Combine("settings", "Event.json"),
+                    JsonConvert.SerializeObject(new Event(), Formatting.Indented)
+                );
                 return;
             }
             if (File.Exists(Path.Combine("settings", "Server.json")))
             {
-                Global.Settings.Server = JsonConvert.DeserializeObject<Settings.Server>(File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)) ?? new();
+                Global.Settings.Server =
+                    JsonConvert.DeserializeObject<Settings.Server>(
+                        File.ReadAllText(Path.Combine("settings", "Server.json"), Encoding.UTF8)
+                    ) ?? new();
             }
             if (File.Exists(Path.Combine("settings", "Serein.json")))
             {
-                Global.Settings.Serein = JsonConvert.DeserializeObject<Settings.Serein>(File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)) ?? new();
+                Global.Settings.Serein =
+                    JsonConvert.DeserializeObject<Settings.Serein>(
+                        File.ReadAllText(Path.Combine("settings", "Serein.json"), Encoding.UTF8)
+                    ) ?? new();
                 if (!Global.Settings.Serein.Function.RegexForCheckingGameID.TestRegex())
                 {
-                    throw new NotSupportedException("“Serein.Function.RegexForCheckingGameID”不合法，请修改“settings/Serein.json”后重试");
+                    throw new NotSupportedException(
+                        "“Serein.Function.RegexForCheckingGameID”不合法，请修改“settings/Serein.json”后重试"
+                    );
                 }
             }
             if (File.Exists(Path.Combine("settings", "Bot.json")))
             {
-                Global.Settings.Bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)) ?? new();
+                Global.Settings.Bot =
+                    JsonConvert.DeserializeObject<Bot>(
+                        File.ReadAllText(Path.Combine("settings", "Bot.json"), Encoding.UTF8)
+                    ) ?? new();
             }
             if (File.Exists(Path.Combine("settings", "Matches.json")))
             {
-                Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)) ?? new();
-                File.WriteAllText(Path.Combine("settings", "Matches.json"), JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented));
+                Global.Settings.Matches =
+                    JsonConvert.DeserializeObject<Matches>(
+                        File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)
+                    ) ?? new();
+                File.WriteAllText(
+                    Path.Combine("settings", "Matches.json"),
+                    JsonConvert.SerializeObject(Global.Settings.Matches, Formatting.Indented)
+                );
             }
             if (File.Exists(Path.Combine("settings", "Event.json")))
             {
-                Global.Settings.Event = JsonConvert.DeserializeObject<Settings.Event>(File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)) ?? new();
-                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+                Global.Settings.Event =
+                    JsonConvert.DeserializeObject<Settings.Event>(
+                        File.ReadAllText(Path.Combine("settings", "Event.json"), Encoding.UTF8)
+                    ) ?? new();
+                File.WriteAllText(
+                    Path.Combine("settings", "Event.json"),
+                    JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented)
+                );
             }
         }
 
@@ -67,7 +96,9 @@ namespace Serein.Utils.IO
             {
                 if (File.Exists(Path.Combine("settings", "Matches.json")))
                 {
-                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8))!;
+                    Global.Settings.Matches = JsonConvert.DeserializeObject<Matches>(
+                        File.ReadAllText(Path.Combine("settings", "Matches.json"), Encoding.UTF8)
+                    )!;
                 }
             }
             catch (Exception e)
@@ -88,9 +119,18 @@ namespace Serein.Utils.IO
                 _oldSettings = newSettings;
                 lock (FileLock.Settings)
                 {
-                    File.WriteAllText(Path.Combine("settings", "Server.json"), JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented));
-                    File.WriteAllText(Path.Combine("settings", "Bot.json"), JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented));
-                    File.WriteAllText(Path.Combine("settings", "Serein.json"), JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented));
+                    File.WriteAllText(
+                        Path.Combine("settings", "Server.json"),
+                        JsonConvert.SerializeObject(Global.Settings.Server, Formatting.Indented)
+                    );
+                    File.WriteAllText(
+                        Path.Combine("settings", "Bot.json"),
+                        JsonConvert.SerializeObject(Global.Settings.Bot, Formatting.Indented)
+                    );
+                    File.WriteAllText(
+                        Path.Combine("settings", "Serein.json"),
+                        JsonConvert.SerializeObject(Global.Settings.Serein, Formatting.Indented)
+                    );
                 }
             }
         }
@@ -103,18 +143,19 @@ namespace Serein.Utils.IO
             Directory.CreateDirectory("settings");
             lock (Global.Settings.Event)
             {
-                File.WriteAllText(Path.Combine("settings", "Event.json"), JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented));
+                File.WriteAllText(
+                    Path.Combine("settings", "Event.json"),
+                    JsonConvert.SerializeObject(Global.Settings.Event, Formatting.Indented)
+                );
             }
         }
-
 
         /// <summary>
         /// 文件读写锁
         /// </summary>
         public struct FileLock
         {
-            public static readonly object
-                Settings = new();
+            public static readonly object Settings = new();
         }
     }
 }

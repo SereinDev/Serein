@@ -35,14 +35,15 @@ namespace Serein.Ui
             Dictionary<long, Member> memberDict = new();
             foreach (ListViewItem listViewItem in MemberList.Items)
             {
-                Member member = new()
-                {
-                    ID = long.TryParse(listViewItem.Text, out long i) ? i : -1,
-                    Role = Array.IndexOf(Sender.RoleNames, listViewItem.SubItems[1].Text),
-                    Nickname = listViewItem.SubItems[2].Text,
-                    Card = listViewItem.SubItems[3].Text,
-                    GameID = listViewItem.SubItems[4].Text
-                };
+                Member member =
+                    new()
+                    {
+                        ID = long.TryParse(listViewItem.Text, out long i) ? i : -1,
+                        Role = Array.IndexOf(Sender.RoleNames, listViewItem.SubItems[1].Text),
+                        Nickname = listViewItem.SubItems[2].Text,
+                        Card = listViewItem.SubItems[3].Text,
+                        GameID = listViewItem.SubItems[4].Text
+                    };
                 if (member.ID != -1)
                 {
                     memberDict.Add(member.ID, member);
@@ -73,10 +74,12 @@ namespace Serein.Ui
         {
             if (MemberList.SelectedItems.Count > 0)
             {
-                int result = (int)MessageBox.Show(
-                    "确定删除此行数据？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                int result = (int)
+                    MessageBox.Show(
+                        "确定删除此行数据？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
                     );
                 if (result == 1)
                 {

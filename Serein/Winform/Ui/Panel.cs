@@ -7,13 +7,18 @@ namespace Serein.Ui
     public partial class Ui : Form
     {
         private delegate void ServerPanelConsoleWebBrowser_Delegate(object[] objects);
-        private void ServerPanelConsoleWebBrowser_AppendText(object[] objects) => ServerPanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
+
+        private void ServerPanelConsoleWebBrowser_AppendText(object[] objects) =>
+            ServerPanelConsoleWebBrowser.Document.InvokeScript("AppendText", objects);
 
         public void ServerPanelConsoleWebBrowser_Invoke(string str)
         {
             object[] objects1 = { str };
             object[] objects2 = { objects1 };
-            Invoke((ServerPanelConsoleWebBrowser_Delegate)ServerPanelConsoleWebBrowser_AppendText, objects2);
+            Invoke(
+                (ServerPanelConsoleWebBrowser_Delegate)ServerPanelConsoleWebBrowser_AppendText,
+                objects2
+            );
         }
 
         private void ServerPanelControlStart_Click(object sender, EventArgs e)
@@ -22,9 +27,11 @@ namespace Serein.Ui
             UpdateInfo();
         }
 
-        private void ServerPanelControlStop_Click(object sender, EventArgs e) => ServerManager.Stop();
+        private void ServerPanelControlStop_Click(object sender, EventArgs e) =>
+            ServerManager.Stop();
 
-        private void ServerPanelControlRestart_Click(object sender, EventArgs e) => ServerManager.RequestRestart();
+        private void ServerPanelControlRestart_Click(object sender, EventArgs e) =>
+            ServerManager.RequestRestart();
 
         private void ServerPanelControlKill_Click(object sender, EventArgs e)
         {
@@ -53,9 +60,14 @@ namespace Serein.Ui
                 {
                     ServerManager.CommandHistoryIndex--;
                 }
-                if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                if (
+                    ServerManager.CommandHistoryIndex >= 0
+                    && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count
+                )
                 {
-                    ServerPanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
+                    ServerPanelConsoleInput_Update(
+                        ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]
+                    );
                 }
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.PageDown)
@@ -64,11 +76,19 @@ namespace Serein.Ui
                 {
                     ServerManager.CommandHistoryIndex++;
                 }
-                if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                if (
+                    ServerManager.CommandHistoryIndex >= 0
+                    && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count
+                )
                 {
-                    ServerPanelConsoleInput_Update(ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]);
+                    ServerPanelConsoleInput_Update(
+                        ServerManager.CommandHistory[ServerManager.CommandHistoryIndex]
+                    );
                 }
-                else if (ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
+                else if (
+                    ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count
+                    && ServerManager.CommandHistory.Count != 0
+                )
                 {
                     ServerPanelConsoleInput_Update();
                 }

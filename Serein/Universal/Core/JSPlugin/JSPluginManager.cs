@@ -62,7 +62,11 @@ namespace Serein.Core.JSPlugin
             Task.Run(() =>
             {
                 5000.ToSleep();
-                Utils.Output.Logger.Output(LogType.Debug, "插件列表\n", JsonConvert.SerializeObject(PluginDict, Formatting.Indented));
+                Utils.Output.Logger.Output(
+                    LogType.Debug,
+                    "插件列表\n",
+                    JsonConvert.SerializeObject(PluginDict, Formatting.Indented)
+                );
             });
 #if WINFORM
             Program.Ui?.LoadJSPluginPublicly();
@@ -79,25 +83,39 @@ namespace Serein.Core.JSPlugin
         private static void SummaryAll()
         {
             List<string> failedFiles = new();
-            PluginDict.Keys.ToList().ForEach((key) =>
-            {
-                if (PluginDict.TryGetValue(key, out Plugin? plugin) && !plugin.Available)
-                {
-                    failedFiles.Add(Path.GetFileName(plugin.File));
-                }
-            });
+            PluginDict.Keys
+                .ToList()
+                .ForEach(
+                    (key) =>
+                    {
+                        if (PluginDict.TryGetValue(key, out Plugin? plugin) && !plugin.Available)
+                        {
+                            failedFiles.Add(Path.GetFileName(plugin.File));
+                        }
+                    }
+                );
             if (PluginDict.Count > 0)
             {
-                Utils.Output.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败");
+                Utils.Output.Logger.Output(
+                    LogType.Plugin_Notice,
+                    $"插件加载完毕，共加载{PluginDict.Count}个插件，其中{failedFiles.Count}个加载失败"
+                );
                 if (failedFiles.Count > 0)
                 {
-                    Utils.Output.Logger.Output(LogType.Plugin_Notice, "以下插件加载出现问题，请咨询原作者获取更多信息：" + string.Join("，", (IEnumerable<string>)failedFiles));
+                    Utils.Output.Logger.Output(
+                        LogType.Plugin_Notice,
+                        "以下插件加载出现问题，请咨询原作者获取更多信息："
+                            + string.Join("，", (IEnumerable<string>)failedFiles)
+                    );
                 }
                 JSFunc.Trigger(EventType.PluginsLoaded);
             }
             else
             {
-                Utils.Output.Logger.Output(LogType.Plugin_Notice, $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/");
+                Utils.Output.Logger.Output(
+                    LogType.Plugin_Notice,
+                    $"插件加载完毕，但是并没有插件被加载。扩展市场：https://market.serein.cc/"
+                );
             }
         }
 
@@ -120,7 +138,11 @@ namespace Serein.Core.JSPlugin
         private static void LoadFile(string file)
         {
             string lowerFile = file.ToLowerInvariant();
-            if (Global.Settings.Serein.Function.JSPatternToSkipLoadingSpecifiedFile.Where((pattern) => lowerFile.EndsWith(pattern.ToLowerInvariant())).Count() != 0)
+            if (
+                Global.Settings.Serein.Function.JSPatternToSkipLoadingSpecifiedFile
+                    .Where((pattern) => lowerFile.EndsWith(pattern.ToLowerInvariant()))
+                    .Count() != 0
+            )
             {
                 return;
             }
@@ -136,28 +158,30 @@ namespace Serein.Core.JSPlugin
                     string configPath = Path.Combine(PluginPath, @namespace, "PreLoadConfig.json");
                     if (File.Exists(configPath))
                     {
-                        config = JsonConvert.DeserializeObject<PreLoadConfig>(File.ReadAllText(configPath));
+                        config = JsonConvert.DeserializeObject<PreLoadConfig>(
+                            File.ReadAllText(configPath)
+                        );
                     }
                     File.WriteAllText(configPath, config.ToJson(Formatting.Indented));
                 }
 
-                Plugin plugin = new(@namespace, config)
-                {
-                    File = file
-                };
+                Plugin plugin = new(@namespace, config) { File = file };
                 PluginDict.Add(@namespace, plugin);
 
                 plugin.Engine!.Run(File.ReadAllText(file), out string exceptionMessage);
                 if (!string.IsNullOrEmpty(exceptionMessage))
                 {
-                    Utils.Output.Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", exceptionMessage);
+                    Utils.Output.Logger.Output(
+                        LogType.Plugin_Error,
+                        $"[{@namespace}]",
+                        exceptionMessage
+                    );
                     plugin.Dispose();
                 }
                 else
                 {
                     plugin.Available = true;
                 }
-
             }
             catch (Exception e)
             {

@@ -17,7 +17,10 @@ namespace Serein.Ui
             _isDragging = false;
             if ((ScheduleList.SelectedItems.Count != 0) && (_itemDraged != null))
             {
-                if (_itemDraged.Index != ScheduleList.SelectedItems[0].Index && _itemDraged.Index >= 0)
+                if (
+                    _itemDraged.Index != ScheduleList.SelectedItems[0].Index
+                    && _itemDraged.Index >= 0
+                )
                 {
                     ScheduleList.Items.RemoveAt(_itemDraged.Index);
                     ScheduleList.Items.Insert(ScheduleList.SelectedItems[0].Index, _itemDraged);
@@ -42,8 +45,12 @@ namespace Serein.Ui
         {
             ScheduleContextMenuStrip_Edit.Enabled = ScheduleList.SelectedItems.Count > 0;
             ScheduleContextMenuStrip_Delete.Enabled = ScheduleList.SelectedItems.Count > 0;
-            ScheduleContextMenuStrip_Enable.Enabled = ScheduleList.SelectedItems.Count > 0 && ScheduleList.SelectedItems[0].ForeColor == Color.Gray;
-            ScheduleContextMenuStrip_Disable.Enabled = ScheduleList.SelectedItems.Count > 0 && ScheduleList.SelectedItems[0].ForeColor != Color.Gray;
+            ScheduleContextMenuStrip_Enable.Enabled =
+                ScheduleList.SelectedItems.Count > 0
+                && ScheduleList.SelectedItems[0].ForeColor == Color.Gray;
+            ScheduleContextMenuStrip_Disable.Enabled =
+                ScheduleList.SelectedItems.Count > 0
+                && ScheduleList.SelectedItems[0].ForeColor != Color.Gray;
             ScheduleContextMenuStrip_Clear.Enabled = ScheduleList.Items.Count > 0;
         }
 
@@ -52,8 +59,10 @@ namespace Serein.Ui
             if (ScheduleList.SelectedItems.Count >= 1)
             {
                 ScheduleList.Items[ScheduleList.SelectedIndices[0]].ForeColor = Color.Black;
-                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[1].ForeColor = Color.Black;
-                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[2].ForeColor = Color.Black;
+                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[1].ForeColor =
+                    Color.Black;
+                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[2].ForeColor =
+                    Color.Black;
                 SaveSchedule();
             }
         }
@@ -63,8 +72,10 @@ namespace Serein.Ui
             if (ScheduleList.SelectedItems.Count >= 1)
             {
                 ScheduleList.Items[ScheduleList.SelectedIndices[0]].ForeColor = Color.Gray;
-                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[1].ForeColor = Color.Gray;
-                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[2].ForeColor = Color.Gray;
+                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[1].ForeColor =
+                    Color.Gray;
+                ScheduleList.Items[ScheduleList.SelectedIndices[0]].SubItems[2].ForeColor =
+                    Color.Gray;
                 SaveSchedule();
             }
         }
@@ -100,7 +111,7 @@ namespace Serein.Ui
                     ScheduleList.SelectedItems[0].Text,
                     ScheduleList.SelectedItems[0].SubItems[1].Text,
                     ScheduleList.SelectedItems[0].SubItems[2].Text
-                    );
+                );
                 Editor.ShowDialog(this);
                 if (Editor.CancelFlag)
                 {
@@ -117,10 +128,12 @@ namespace Serein.Ui
         {
             if (ScheduleList.SelectedItems.Count > 0)
             {
-                int result = (int)MessageBox.Show(
-                    "确定删除该任务？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                int result = (int)
+                    MessageBox.Show(
+                        "确定删除该任务？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
                     );
                 if (result == 1)
                 {
@@ -134,10 +147,12 @@ namespace Serein.Ui
         {
             if (ScheduleList.Items.Count > 0)
             {
-                int result = (int)MessageBox.Show(
-                    "确定删除所有任务？\n" +
-                    "它将会永远失去！（真的很久！）", "Serein",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                int result = (int)
+                    MessageBox.Show(
+                        "确定删除所有任务？\n" + "它将会永远失去！（真的很久！）",
+                        "Serein",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Information
                     );
                 if (result == 1)
                 {
@@ -159,13 +174,15 @@ namespace Serein.Ui
             List<Schedule> list = new();
             foreach (ListViewItem listViewItem in ScheduleList.Items)
             {
-                list.Add(new()
-                {
-                    Cron = listViewItem.Text,
-                    Remark = listViewItem.SubItems[1].Text,
-                    Command = listViewItem.SubItems[2].Text,
-                    Enable = listViewItem.ForeColor != Color.Gray
-                });
+                list.Add(
+                    new()
+                    {
+                        Cron = listViewItem.Text,
+                        Remark = listViewItem.SubItems[1].Text,
+                        Command = listViewItem.SubItems[2].Text,
+                        Enable = listViewItem.ForeColor != Color.Gray
+                    }
+                );
             }
             Global.Schedules = list;
             Data.SaveSchedule();
@@ -192,7 +209,20 @@ namespace Serein.Ui
             ScheduleList.EndUpdate();
         }
 
-        private void ScheduleContextMenuStrip_Command_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/command") { UseShellExecute = true });
-        private void ScheduleContextMenuStrip_Variables_Click(object sender, EventArgs e) => Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });
+        private void ScheduleContextMenuStrip_Command_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/command")
+                {
+                    UseShellExecute = true
+                }
+            );
+
+        private void ScheduleContextMenuStrip_Variables_Click(object sender, EventArgs e) =>
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/variables")
+                {
+                    UseShellExecute = true
+                }
+            );
     }
 }

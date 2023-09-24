@@ -25,14 +25,19 @@ namespace Serein.Ui.ChildrenWindow
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if (!Regex.IsMatch(GameIDBox.Text, Global.Settings.Serein.Function.RegexForCheckingGameID))
+            if (
+                !Regex.IsMatch(
+                    GameIDBox.Text,
+                    Global.Settings.Serein.Function.RegexForCheckingGameID
+                )
+            )
             {
                 MessageBox.Show(
                     "游戏ID不合法",
                     "Serein",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
-                    );
+                );
             }
             else
             {
@@ -43,7 +48,12 @@ namespace Serein.Ui.ChildrenWindow
 
         private void MemberInfoEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/member") { UseShellExecute = true });
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/member")
+                {
+                    UseShellExecute = true
+                }
+            );
         }
     }
 }

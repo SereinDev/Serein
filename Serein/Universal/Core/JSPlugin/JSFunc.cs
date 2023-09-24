@@ -37,9 +37,12 @@ namespace Serein.Core.JSPlugin
             string? version,
             string? author,
             string? description
-            )
+        )
         {
-            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin))
+            if (
+                @namespace == null
+                || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin)
+            )
             {
                 throw new ArgumentException("无法找到对应的命名空间", nameof(@namespace));
             }
@@ -60,17 +63,22 @@ namespace Serein.Core.JSPlugin
         public static bool SetListener(string? @namespace, string eventName, JsValue callback)
         {
             Logger.Output(LogType.Debug, "Namespace:", @namespace, "EventName:", eventName);
-            eventName = System.Text.RegularExpressions.Regex.Replace(eventName ?? string.Empty, "^on", string.Empty);
+            eventName = System.Text.RegularExpressions.Regex.Replace(
+                eventName ?? string.Empty,
+                "^on",
+                string.Empty
+            );
             if (!Enum.IsDefined(typeof(EventType), eventName))
             {
                 throw new ArgumentException("未知的事件：" + eventName);
             }
-            return
-                !string.IsNullOrEmpty(@namespace) &&
-                callback is FunctionInstance &&
-                JSPluginManager.PluginDict.ContainsKey(@namespace!) &&
-                JSPluginManager.PluginDict[@namespace!].SetListener((EventType)Enum.Parse(typeof(EventType), eventName), callback);
-
+            return !string.IsNullOrEmpty(@namespace)
+                && callback is FunctionInstance
+                && JSPluginManager.PluginDict.ContainsKey(@namespace!)
+                && JSPluginManager.PluginDict[@namespace!].SetListener(
+                    (EventType)Enum.Parse(typeof(EventType), eventName),
+                    callback
+                );
         }
 
         /// <summary>
@@ -105,11 +113,19 @@ namespace Serein.Core.JSPlugin
                         }
                         tasks.Add(Task.Run(() => plugin.Trigger(type, tokenSource.Token, args)));
                     }
-                    if (tasks.Count > 0 && Global.Settings.Serein.Function.JSEventMaxWaitingTime > 0)
+                    if (
+                        tasks.Count > 0 && Global.Settings.Serein.Function.JSEventMaxWaitingTime > 0
+                    )
                     {
-                        Task.WaitAll(tasks.ToArray(), Global.Settings.Serein.Function.JSEventMaxWaitingTime);
+                        Task.WaitAll(
+                            tasks.ToArray(),
+                            Global.Settings.Serein.Function.JSEventMaxWaitingTime
+                        );
                         tokenSource.Cancel();
-                        tasks.Select((task) => task.IsCompleted && task.Result).ToList().ForEach((result) => interdicted = interdicted || result);
+                        tasks
+                            .Select((task) => task.IsCompleted && task.Result)
+                            .ToList()
+                            .ForEach((result) => interdicted = interdicted || result);
                     }
                 }
             }
@@ -124,23 +140,39 @@ namespace Serein.Core.JSPlugin
         /// <param name="interval">间隔</param>
         /// <param name="autoReset"自动重置></param>
         /// <returns>定时器哈希值</returns>
-        public static JsValue SetTimer(string? @namespace, JsValue callback, JsValue interval, bool autoReset)
+        public static JsValue SetTimer(
+            string? @namespace,
+            JsValue callback,
+            JsValue interval,
+            bool autoReset
+        )
         {
-            if (@namespace == null || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin))
+            if (
+                @namespace == null
+                || !JSPluginManager.PluginDict.TryGetValue(@namespace, out Plugin? plugin)
+            )
             {
                 throw new ArgumentException("无法找到对应的命名空间");
             }
             if (callback is not FunctionInstance)
             {
-                throw new ArgumentException("The \"callback\" argument must be of type function.", nameof(callback));
+                throw new ArgumentException(
+                    "The \"callback\" argument must be of type function.",
+                    nameof(callback)
+                );
             }
             long timerID = CurrentID;
             CurrentID++;
-            Logger.Output(LogType.Debug, "Interval:", interval, "AutoReset:", autoReset, "ID:", timerID);
-            System.Timers.Timer timer = new(interval?.AsNumber() ?? 1)
-            {
-                AutoReset = autoReset,
-            };
+            Logger.Output(
+                LogType.Debug,
+                "Interval:",
+                interval,
+                "AutoReset:",
+                autoReset,
+                "ID:",
+                timerID
+            );
+            System.Timers.Timer timer = new(interval?.AsNumber() ?? 1) { AutoReset = autoReset, };
             timer.Elapsed += (_, _) =>
             {
                 try
@@ -159,7 +191,11 @@ namespace Serein.Core.JSPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}");
+                    Logger.Output(
+                        LogType.Plugin_Error,
+                        $"[{@namespace}]",
+                        $"触发定时器[ID:{timerID}]时出现异常：\n{e.ToFullMsg()}"
+                    );
                     Logger.Output(LogType.Debug, $"触发定时器[ID:{timerID}]时出现异常：", e);
                 }
                 if (!autoReset)
@@ -224,23 +260,35 @@ namespace Serein.Core.JSPlugin
         /// 添加正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool AddRegex(string exp, int? area, bool? needAdmin, string command, string remark, long[] ignored)
+        public static bool AddRegex(
+            string exp,
+            int? area,
+            bool? needAdmin,
+            string command,
+            string remark,
+            long[] ignored
+        )
         {
-            if (exp.TestRegex() &&
-                area <= 4 && area >= 0 &&
-                Command.GetType(command) != CommandType.Invalid)
+            if (
+                exp.TestRegex()
+                && area <= 4
+                && area >= 0
+                && Command.GetType(command) != CommandType.Invalid
+            )
             {
                 lock (Global.RegexList)
                 {
-                    Global.RegexList.Add(new()
-                    {
-                        Expression = exp,
-                        Area = area ?? 0,
-                        IsAdmin = needAdmin ?? false,
-                        Command = command,
-                        Remark = remark ?? string.Empty,
-                        Ignored = ignored ?? Array.Empty<long>()
-                    });
+                    Global.RegexList.Add(
+                        new()
+                        {
+                            Expression = exp,
+                            Area = area ?? 0,
+                            IsAdmin = needAdmin ?? false,
+                            Command = command,
+                            Remark = remark ?? string.Empty,
+                            Ignored = ignored ?? Array.Empty<long>()
+                        }
+                    );
                 }
                 Data.SaveRegex();
                 return true;
@@ -252,14 +300,25 @@ namespace Serein.Core.JSPlugin
         /// 修改正则
         /// </summary>
         /// <returns>结果</returns>
-        public static bool EditRegex(int? index, string exp, int? area, bool? needAdmin, string command, string remark, long[] ignored)
+        public static bool EditRegex(
+            int? index,
+            string exp,
+            int? area,
+            bool? needAdmin,
+            string command,
+            string remark,
+            long[] ignored
+        )
         {
-            if (index.HasValue &&
-                index < Global.RegexList.Count &&
-                index >= 0 &&
-                exp.TestRegex() &&
-                area <= 4 && area >= 0 &&
-                Command.GetType(command) != CommandType.Invalid)
+            if (
+                index.HasValue
+                && index < Global.RegexList.Count
+                && index >= 0
+                && exp.TestRegex()
+                && area <= 4
+                && area >= 0
+                && Command.GetType(command) != CommandType.Invalid
+            )
             {
                 lock (Global.RegexList)
                 {
@@ -307,7 +366,11 @@ namespace Serein.Core.JSPlugin
         public static bool SetVariable(string? key, JsValue jsValue)
         {
             string? value = jsValue?.ToString();
-            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value) || !RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+"))
+            if (
+                string.IsNullOrEmpty(key)
+                || string.IsNullOrEmpty(value)
+                || !RegExp.Regex.IsMatch(key ?? string.Empty, @"\w+")
+            )
             {
                 return false;
             }
@@ -360,7 +423,8 @@ namespace Serein.Core.JSPlugin
             JsValue allowSystemReflection,
             JsValue allowWrite,
             JsValue strict,
-            JsValue stringCompilationAllowed)
+            JsValue stringCompilationAllowed
+        )
         {
             if (string.IsNullOrEmpty(@namespace))
             {
@@ -369,23 +433,33 @@ namespace Serein.Core.JSPlugin
             Directory.CreateDirectory(Path.Combine("plugins", @namespace));
             File.WriteAllText(
                 Path.Combine("plugins", @namespace, "PreLoadConfig.json"),
-                JsonConvert.SerializeObject(new PreLoadConfig
-                {
-                    Assemblies =
-                        assemblies?.AsArray().Select((jsValue) => jsValue.ToString()).ToArray() ?? Array.Empty<string>(),
-                    AllowGetType =
-                        allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
-                    AllowOperatorOverloading =
-                        allowOperatorOverloading?.IsBoolean() == true ? allowOperatorOverloading.AsBoolean() : true,
-                    AllowSystemReflection =
-                        allowSystemReflection?.IsBoolean() == true ? allowSystemReflection.AsBoolean() : false,
-                    AllowWrite =
-                        allowWrite?.IsBoolean() == true ? allowWrite.AsBoolean() : true,
-                    Strict =
-                        strict?.IsBoolean() == true ? strict.AsBoolean() : false,
-                    StringCompilationAllowed =
-                        stringCompilationAllowed?.IsBoolean() == true ? stringCompilationAllowed.AsBoolean() : true,
-                }, Formatting.Indented));
+                JsonConvert.SerializeObject(
+                    new PreLoadConfig
+                    {
+                        Assemblies =
+                            assemblies?.AsArray().Select((jsValue) => jsValue.ToString()).ToArray()
+                            ?? Array.Empty<string>(),
+                        AllowGetType =
+                            allowGetType?.IsBoolean() == true ? allowGetType.AsBoolean() : false,
+                        AllowOperatorOverloading =
+                            allowOperatorOverloading?.IsBoolean() == true
+                                ? allowOperatorOverloading.AsBoolean()
+                                : true,
+                        AllowSystemReflection =
+                            allowSystemReflection?.IsBoolean() == true
+                                ? allowSystemReflection.AsBoolean()
+                                : false,
+                        AllowWrite =
+                            allowWrite?.IsBoolean() == true ? allowWrite.AsBoolean() : true,
+                        Strict = strict?.IsBoolean() == true ? strict.AsBoolean() : false,
+                        StringCompilationAllowed =
+                            stringCompilationAllowed?.IsBoolean() == true
+                                ? stringCompilationAllowed.AsBoolean()
+                                : true,
+                    },
+                    Formatting.Indented
+                )
+            );
             Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", "预加载配置已修改，需要重新加载以应用新配置");
         }
 
@@ -402,7 +476,11 @@ namespace Serein.Core.JSPlugin
                 FileSaver.Reload(type);
                 if (!string.IsNullOrEmpty(@namespace))
                 {
-                    Logger.Output(LogType.Plugin_Warn, $"[{@namespace}]", $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件");
+                    Logger.Output(
+                        LogType.Plugin_Warn,
+                        $"[{@namespace}]",
+                        $"重新加载了Serein的{(type ?? string.Empty).ToLowerInvariant()}文件"
+                    );
                 }
                 return true;
             }
@@ -410,7 +488,12 @@ namespace Serein.Core.JSPlugin
             {
                 if (!string.IsNullOrEmpty(@namespace))
                 {
-                    Logger.Output(LogType.Plugin_Error, $"[{@namespace}]", "重新加载指定的文件失败：", e.Message);
+                    Logger.Output(
+                        LogType.Plugin_Error,
+                        $"[{@namespace}]",
+                        "重新加载指定的文件失败：",
+                        e.Message
+                    );
                     Logger.Output(LogType.Debug, type, e);
                 }
                 return false;

@@ -69,7 +69,8 @@ namespace Serein.Windows.Pages.Function
                             Cron = cronExp,
                             Command = command,
                             Remark = remark,
-                        });
+                        }
+                    );
                 }
                 else
                 {
@@ -79,10 +80,15 @@ namespace Serein.Windows.Pages.Function
                             Cron = cronExp,
                             Command = command,
                             Remark = remark
-                        });
+                        }
+                    );
                 }
             }
-            else if (_actionType == 2 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
+            else if (
+                _actionType == 2
+                && ScheduleListView.SelectedItem is Base.Schedule selectedItem
+                && selectedItem != null
+            )
             {
                 selectedItem.Cron = cronExp;
                 selectedItem.Command = command;
@@ -104,7 +110,10 @@ namespace Serein.Windows.Pages.Function
                     Catalog.MainWindow?.ScheduleEditor.Hide();
                     _actionType = 0;
                 }
-                Base.Schedule? selectedItem = ScheduleListView.SelectedIndex >= 0 ? ScheduleListView.SelectedItem as Base.Schedule : null;
+                Base.Schedule? selectedItem =
+                    ScheduleListView.SelectedIndex >= 0
+                        ? ScheduleListView.SelectedItem as Base.Schedule
+                        : null;
                 string Tag = menuItem.Tag as string ?? string.Empty;
                 switch (Tag)
                 {
@@ -115,19 +124,29 @@ namespace Serein.Windows.Pages.Function
                     case "Edit":
                         if (selectedItem != null)
                         {
-                            Catalog.MainWindow?.OpenScheduleEditor(selectedItem.Cron, selectedItem.Command, selectedItem.Remark);
+                            Catalog.MainWindow?.OpenScheduleEditor(
+                                selectedItem.Cron,
+                                selectedItem.Command,
+                                selectedItem.Remark
+                            );
                             _actionType = 2;
                         }
                         break;
                     case "Delete":
-                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && ScheduleListView.SelectedIndex >= 0)
+                        if (
+                            MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true)
+                            && ScheduleListView.SelectedIndex >= 0
+                        )
                         {
                             ScheduleListView.Items.RemoveAt(ScheduleListView.SelectedIndex);
                             Save();
                         }
                         break;
                     case "Clear":
-                        if (MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true) && ScheduleListView.Items.Count > 0)
+                        if (
+                            MsgBox.Show("确定删除所有数据？\n它将会永远失去！（真的很久！）", true)
+                            && ScheduleListView.Items.Count > 0
+                        )
                         {
                             ScheduleListView.Items.Clear();
                             Save();
@@ -138,10 +157,20 @@ namespace Serein.Windows.Pages.Function
                         Load();
                         break;
                     case "LookupCommand":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/command") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/guide/command")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                     case "LookupVariables":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/variables") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/guide/variables")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                     case "Enable":
                     case "Disable":
@@ -159,7 +188,11 @@ namespace Serein.Windows.Pages.Function
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ScheduleListView.SelectedIndex != -1 && sender is Wpf.Ui.Controls.Button button && button != null)
+            if (
+                ScheduleListView.SelectedIndex != -1
+                && sender is Wpf.Ui.Controls.Button button
+                && button != null
+            )
             {
                 int index = ScheduleListView.SelectedIndex;
                 string tag = button.Tag as string ?? string.Empty;
@@ -186,7 +219,11 @@ namespace Serein.Windows.Pages.Function
             Edit.IsEnabled = ScheduleListView.SelectedIndex != -1;
             Delete.IsEnabled = ScheduleListView.SelectedIndex != -1;
             Clear.IsEnabled = ScheduleListView.Items.Count > 0;
-            if (ScheduleListView.Items.Count > 0 && ScheduleListView.SelectedItem is Base.Schedule selectedItem && selectedItem != null)
+            if (
+                ScheduleListView.Items.Count > 0
+                && ScheduleListView.SelectedItem is Base.Schedule selectedItem
+                && selectedItem != null
+            )
             {
                 Enable.IsEnabled = !selectedItem.Enable;
                 Disable.IsEnabled = selectedItem.Enable;
@@ -198,12 +235,17 @@ namespace Serein.Windows.Pages.Function
             }
         }
 
-        private void ScheduleListView_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateButton();
+        private void ScheduleListView_SelectionChanged(
+            object sender,
+            SelectionChangedEventArgs e
+        ) => UpdateButton();
 
         private void UpdateButton()
         {
             Up.IsEnabled = ScheduleListView.SelectedIndex > 0;
-            Down.IsEnabled = ScheduleListView.SelectedIndex >= 0 && ScheduleListView.SelectedIndex < ScheduleListView.Items.Count - 1;
+            Down.IsEnabled =
+                ScheduleListView.SelectedIndex >= 0
+                && ScheduleListView.SelectedIndex < ScheduleListView.Items.Count - 1;
         }
     }
 }

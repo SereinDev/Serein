@@ -21,7 +21,9 @@ namespace Serein.Windows.Pages.Function
             BotRichTextBox.Document.Blocks.Clear();
             lock (Catalog.Function.BotCache)
             {
-                Catalog.Function.BotCache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+                Catalog.Function.BotCache.ForEach(
+                    (line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line)))
+                );
             }
             Catalog.Function.Bot = this;
         }
@@ -38,26 +40,30 @@ namespace Serein.Windows.Pages.Function
             UpdateInfos();
         }
 
-        public void Append(Paragraph paragraph)
-            => Dispatcher.Invoke(() =>
+        public void Append(Paragraph paragraph) =>
+            Dispatcher.Invoke(() =>
             {
                 BotRichTextBox.Document = BotRichTextBox.Document ?? new();
                 BotRichTextBox.Document.Blocks.Add(paragraph);
                 while (BotRichTextBox.Document.Blocks.Count > 250)
                 {
-                    BotRichTextBox.Document.Blocks.Remove(BotRichTextBox.Document.Blocks.FirstBlock);
+                    BotRichTextBox.Document.Blocks.Remove(
+                        BotRichTextBox.Document.Blocks.FirstBlock
+                    );
                 }
                 BotRichTextBox.ScrollToEnd();
             });
 
-        private void UpdateInfos()
-            => Dispatcher.Invoke(() =>
+        private void UpdateInfos() =>
+            Dispatcher.Invoke(() =>
             {
                 Status.Content = Websocket.Status ? "已连接" : "未连接";
                 ID.Content = PacketHandler.SelfId;
                 MessageReceived.Content = PacketHandler.MessageReceived;
                 MessageSent.Content = PacketHandler.MessageSent;
-                Time.Content = Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-";
+                Time.Content = Websocket.Status
+                    ? (DateTime.Now - Websocket.StartTime).ToCustomString()
+                    : "-";
             });
     }
 }

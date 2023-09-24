@@ -8,7 +8,6 @@ using Serein.Utils.Output;
 using System;
 using System.Threading.Tasks;
 
-
 namespace Serein.Utils.Console
 {
     internal static class Input
@@ -16,7 +15,7 @@ namespace Serein.Utils.Console
         private static bool IsLoading;
 
         private const string HelpMenu =
-@"Serein 帮助菜单：
+            @"Serein 帮助菜单：
 
   s|server <operation> 服务器
     operation:
@@ -60,7 +59,11 @@ Tip:
             }
             if (!ServerManager.Status || line.StartsWith("serein"))
             {
-                line = System.Text.RegularExpressions.Regex.Replace(line, @"^serein\s?", string.Empty);
+                line = System.Text.RegularExpressions.Regex.Replace(
+                    line,
+                    @"^serein\s?",
+                    string.Empty
+                );
                 string[] args = line.ToLowerInvariant().Split(' ');
                 switch (args[0])
                 {
@@ -104,13 +107,14 @@ Tip:
                                     break;
                                 case "i":
                                 case "info":
-                                    Logger.Output(LogType.Info,
-                                        $"服务器状态      {(ServerManager.Status ? "已启动" : "未启动")}\n" +
-                                        $"版本            {(ServerManager.Status && ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-")}\n" +
-                                        $"在线人数        {(ServerManager.Status && ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-")}\n" +
-                                        $"运行时长        {(ServerManager.Status ? ServerManager.Time : "-")}\n" +
-                                        $"服务器CPU占用   {(ServerManager.Status ? ServerManager.CPUUsage.ToString("N1") + "%" : "-")}"
-                                        );
+                                    Logger.Output(
+                                        LogType.Info,
+                                        $"服务器状态      {(ServerManager.Status ? "已启动" : "未启动")}\n"
+                                            + $"版本            {(ServerManager.Status && ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-")}\n"
+                                            + $"在线人数        {(ServerManager.Status && ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-")}\n"
+                                            + $"运行时长        {(ServerManager.Status ? ServerManager.Time : "-")}\n"
+                                            + $"服务器CPU占用   {(ServerManager.Status ? ServerManager.CPUUsage.ToString("N1") + "%" : "-")}"
+                                    );
                                     break;
                                 default:
                                     Logger.Output(LogType.Warn, "错误的参数：<operation>");
@@ -141,13 +145,14 @@ Tip:
                                     break;
                                 case "i":
                                 case "info":
-                                    Logger.Output(LogType.Info,
-                                        $"状态       {(Websocket.Status ? "已连接" : "未连接")}\n" +
-                                        $"账号       {PacketHandler.SelfId}\n" +
-                                        $"接收消息   {PacketHandler.MessageReceived}\n" +
-                                        $"发送消息   {PacketHandler.MessageSent}\n" +
-                                        $"连接时间   {(Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-")}"
-                                        );
+                                    Logger.Output(
+                                        LogType.Info,
+                                        $"状态       {(Websocket.Status ? "已连接" : "未连接")}\n"
+                                            + $"账号       {PacketHandler.SelfId}\n"
+                                            + $"接收消息   {PacketHandler.MessageReceived}\n"
+                                            + $"发送消息   {PacketHandler.MessageSent}\n"
+                                            + $"连接时间   {(Websocket.Status ? (DateTime.Now - Websocket.StartTime).ToCustomString() : "-")}"
+                                    );
                                     break;
                                 default:
                                     Logger.Output(LogType.Warn, "错误的参数：<operation>");
@@ -196,39 +201,47 @@ Tip:
 
                     case "v":
                     case "version":
-                        Logger.Output(LogType.Info,
-                            $"Serein {Global.VERSION}\n" +
-                            $"内部版本号 {Global.INTERNAL_VERSION}\n" +
-                            $"编译类型   {Global.BuildInfo.Type}\n" +
-                            $"编译时间   {Global.BuildInfo.Time}\n" +
-                            $"详细信息   {Global.BuildInfo.Detail.Replace("\r", string.Empty)}\n" +
-                            "\n" +
-                            "交流群: https://jq.qq.com/?_wv=1027&k=XNZqPSPv\n" +
-                            "官网: https://serein.cc\n" +
-                            "GitHub Repo: https://github.com/Zaitonn/Serein\n" +
-                            "Copyright © 2022 Zaitonn. All Rights Reserved.");
-                        if (Global.Settings.Serein.AutoUpdate &&
-                            Update.LastVersion != null &&
-                            Update.IsReadyToUpdate &&
-                            Environment.OSVersion.Platform == PlatformID.Win32NT)
+                        Logger.Output(
+                            LogType.Info,
+                            $"Serein {Global.VERSION}\n"
+                                + $"内部版本号 {Global.INTERNAL_VERSION}\n"
+                                + $"编译类型   {Global.BuildInfo.Type}\n"
+                                + $"编译时间   {Global.BuildInfo.Time}\n"
+                                + $"详细信息   {Global.BuildInfo.Detail.Replace("\r", string.Empty)}\n"
+                                + "\n"
+                                + "交流群: https://jq.qq.com/?_wv=1027&k=XNZqPSPv\n"
+                                + "官网: https://serein.cc\n"
+                                + "GitHub Repo: https://github.com/Zaitonn/Serein\n"
+                                + "Copyright © 2022 Zaitonn. All Rights Reserved."
+                        );
+                        if (
+                            Global.Settings.Serein.AutoUpdate
+                            && Update.LastVersion != null
+                            && Update.IsReadyToUpdate
+                            && Environment.OSVersion.Platform == PlatformID.Win32NT
+                        )
                         {
                             Logger.Output(LogType.Info, $"新版本（{Update.LastVersion}）已下载完毕，重启即可更新");
                         }
                         break;
 
                     case "sysinfo":
-                        Logger.Output(LogType.Info,
-                            $"系统   {SystemInfo.OS}\n" +
-                            $"内存   {SystemInfo.UsedRAM}/{SystemInfo.TotalRAM}MB （{SystemInfo.RAMUsage:N1}%）\n" +
+                        Logger.Output(
+                            LogType.Info,
+                            $"系统   {SystemInfo.OS}\n"
+                                + $"内存   {SystemInfo.UsedRAM}/{SystemInfo.TotalRAM}MB （{SystemInfo.RAMUsage:N1}%）\n"
+                                +
 #if UNIX
-                            $"CPU    {SystemInfo.CPUName}\n" +
+                                $"CPU    {SystemInfo.CPUName}\n"
+                                +
 #else
-                            $"CPU    {SystemInfo.CPUName} （{SystemInfo.CPUUsage:N1}%）\n" +
+                                $"CPU    {SystemInfo.CPUName} （{SystemInfo.CPUUsage:N1}%）\n"
+                                +
 #endif
-                            $"网速\n" +
-                            $"  - 上传   {SystemInfo.UploadSpeed}\n" +
-                            $"  - 下载   {SystemInfo.DownloadSpeed}"
-                            );
+                                $"网速\n"
+                                + $"  - 上传   {SystemInfo.UploadSpeed}\n"
+                                + $"  - 下载   {SystemInfo.DownloadSpeed}"
+                        );
                         break;
 
                     case "wp":
@@ -238,7 +251,11 @@ Tip:
 
                     case "e":
                     case "execute":
-                        string command = System.Text.RegularExpressions.Regex.Replace(line, @"^(e|execute)\s?", string.Empty);
+                        string command = System.Text.RegularExpressions.Regex.Replace(
+                            line,
+                            @"^(e|execute)\s?",
+                            string.Empty
+                        );
                         CommandType type = Command.GetType(command);
 
                         if (type != CommandType.Invalid)

@@ -52,8 +52,8 @@ namespace Serein.Core.JSPlugin.Permission
         /// <param name="userId">用户ID</param>
         /// <param name="groupId">群号</param>
         /// <returns>匹配结果</returns>
-        public bool isMatchedWith(string type, long userId, long groupId = -1)
-            => IsMatchedWith(type, userId, groupId);
+        public bool isMatchedWith(string type, long userId, long groupId = -1) =>
+            IsMatchedWith(type, userId, groupId);
 
         /// <summary>
         /// 是否匹配
@@ -62,11 +62,21 @@ namespace Serein.Core.JSPlugin.Permission
         /// <param name="userId">用户ID</param>
         /// <param name="groupId">群号</param>
         /// <returns>匹配结果</returns>
-        public bool IsMatchedWith(string type, long userId, long groupId = -1)
-            => Conditions.Where((condition) =>
-                condition.Type.ToLowerInvariant() == type && // 类型相同
-                (condition.Users?.Contains(userId) ?? true) && // 用户判断，数组为空则为全体
-                (groupId > 0 && (condition.Groups?.Contains(groupId) ?? true) && type == "group" || type != "group") // 群聊判断（前提为type是group且groupId>0），数组为空则为全体
-                ).Count() > 0;
+        public bool IsMatchedWith(string type, long userId, long groupId = -1) =>
+            Conditions
+                .Where(
+                    (condition) =>
+                        condition.Type.ToLowerInvariant() == type
+                        && // 类型相同
+                        (condition.Users?.Contains(userId) ?? true)
+                        && // 用户判断，数组为空则为全体
+                        (
+                            groupId > 0
+                                && (condition.Groups?.Contains(groupId) ?? true)
+                                && type == "group"
+                            || type != "group"
+                        ) // 群聊判断（前提为type是group且groupId>0），数组为空则为全体
+                )
+                .Count() > 0;
     }
 }

@@ -13,6 +13,7 @@ namespace Serein.Windows.Pages.Function
     public partial class Member : UiPage
     {
         private int _actionType;
+
         public Member()
         {
             InitializeComponent();
@@ -63,10 +64,17 @@ namespace Serein.Windows.Pages.Function
                         Catalog.MainWindow?.OpenMemberEditor();
                         break;
                     case "Edit":
-                        if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
+                        if (
+                            MemberListView.SelectedItem is Base.Member selectedItem
+                            && selectedItem != null
+                        )
                         {
                             _actionType = 2;
-                            Catalog.MainWindow?.OpenMemberEditor(false, selectedItem.ID.ToString(), selectedItem.GameID);
+                            Catalog.MainWindow?.OpenMemberEditor(
+                                false,
+                                selectedItem.ID.ToString(),
+                                selectedItem.GameID
+                            );
                         }
                         else
                         {
@@ -74,7 +82,10 @@ namespace Serein.Windows.Pages.Function
                         }
                         break;
                     case "Delete":
-                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && MemberListView.SelectedIndex >= 0)
+                        if (
+                            MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true)
+                            && MemberListView.SelectedIndex >= 0
+                        )
                         {
                             MemberListView.Items.RemoveAt(MemberListView.SelectedIndex);
                             Save();
@@ -105,29 +116,57 @@ namespace Serein.Windows.Pages.Function
                     }
                     else if (!Binder.Bind(IDNumber, GameID))
                     {
-                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar(
+                            "绑定失败",
+                            "该ID已绑定 / 游戏名称不合法 / 游戏名称已被绑定",
+                            SymbolRegular.Warning24
+                        );
                     }
                     else
                     {
-                        Catalog.MainWindow?.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
+                        Catalog.MainWindow?.OpenSnackbar(
+                            "绑定成功",
+                            $"{ID} -> {GameID}",
+                            SymbolRegular.Checkmark24
+                        );
                         _actionType = 0;
                         Load();
                         return true;
                     }
                     break;
                 case 2:
-                    if (!System.Text.RegularExpressions.Regex.IsMatch(GameID, Global.Settings.Serein.Function.RegexForCheckingGameID))
+                    if (
+                        !System.Text.RegularExpressions.Regex.IsMatch(
+                            GameID,
+                            Global.Settings.Serein.Function.RegexForCheckingGameID
+                        )
+                    )
                     {
-                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "游戏名称不合法", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar(
+                            "绑定失败",
+                            "游戏名称不合法",
+                            SymbolRegular.Warning24
+                        );
                     }
                     else if (Binder.GameIDs.Contains(GameID))
                     {
-                        Catalog.MainWindow?.OpenSnackbar("绑定失败", "游戏名称已被绑定", SymbolRegular.Warning24);
+                        Catalog.MainWindow?.OpenSnackbar(
+                            "绑定失败",
+                            "游戏名称已被绑定",
+                            SymbolRegular.Warning24
+                        );
                     }
                     else
                     {
-                        Catalog.MainWindow?.OpenSnackbar("绑定成功", $"{ID} -> {GameID}", SymbolRegular.Checkmark24);
-                        if (MemberListView.SelectedItem is Base.Member selectedItem && selectedItem != null)
+                        Catalog.MainWindow?.OpenSnackbar(
+                            "绑定成功",
+                            $"{ID} -> {GameID}",
+                            SymbolRegular.Checkmark24
+                        );
+                        if (
+                            MemberListView.SelectedItem is Base.Member selectedItem
+                            && selectedItem != null
+                        )
                         {
                             selectedItem.GameID = GameID;
                             MemberListView.SelectedItem = selectedItem;

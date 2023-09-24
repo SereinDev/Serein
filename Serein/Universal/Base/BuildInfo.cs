@@ -8,9 +8,15 @@ namespace Serein.Base
     {
         public BuildInfo()
         {
-            string[] arg = System.Text.RegularExpressions.Regex.Replace(
-                (Resources.buildinfo ?? string.Empty).Trim(' ', '\n', '\r').Replace("\r", string.Empty),
-                @"[^\u0000-\u007f]+", string.Empty).Split(new[] { '\n' }, 3, StringSplitOptions.RemoveEmptyEntries);
+            string[] arg = System.Text.RegularExpressions.Regex
+                .Replace(
+                    (Resources.buildinfo ?? string.Empty)
+                        .Trim(' ', '\n', '\r')
+                        .Replace("\r", string.Empty),
+                    @"[^\u0000-\u007f]+",
+                    string.Empty
+                )
+                .Split(new[] { '\n' }, 3, StringSplitOptions.RemoveEmptyEntries);
             switch (arg.Length)
             {
                 case 1:
@@ -33,10 +39,7 @@ namespace Serein.Base
 
         public override string ToString()
         {
-            return "" +
-                $"编译类型：{Type}\r\n" +
-                $"编译时间：{Time}\r\n" +
-                $"详细信息：{Detail}";
+            return "" + $"编译类型：{Type}\r\n" + $"编译时间：{Time}\r\n" + $"详细信息：{Detail}";
         }
 
         /// <summary>

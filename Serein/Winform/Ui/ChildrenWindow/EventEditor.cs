@@ -11,8 +11,7 @@ namespace Serein.Ui.ChildrenWindow
     {
         public bool CancelFlag { get; private set; }
 
-        public EventEditor()
-           => InitializeComponent();
+        public EventEditor() => InitializeComponent();
 
         public EventEditor(string Command)
         {
@@ -22,7 +21,12 @@ namespace Serein.Ui.ChildrenWindow
 
         private void EventEditor_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/event") { UseShellExecute = true });
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/event")
+                {
+                    UseShellExecute = true
+                }
+            );
         }
 
         private void Confirm_Click(object sender, EventArgs e)

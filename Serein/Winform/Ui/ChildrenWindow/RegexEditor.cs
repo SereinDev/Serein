@@ -20,13 +20,22 @@ namespace Serein.Ui.ChildrenWindow
         private void Confirm_Click(object sender, EventArgs e)
         {
             if (
-                !(string.IsNullOrWhiteSpace(RegexTextBox.Text) || string.IsNullOrEmpty(RegexTextBox.Text) ||
-                string.IsNullOrWhiteSpace(CommandTextBox.Text) || string.IsNullOrEmpty(CommandTextBox.Text)
-                ))
+                !(
+                    string.IsNullOrWhiteSpace(RegexTextBox.Text)
+                    || string.IsNullOrEmpty(RegexTextBox.Text)
+                    || string.IsNullOrWhiteSpace(CommandTextBox.Text)
+                    || string.IsNullOrEmpty(CommandTextBox.Text)
+                )
+            )
             {
                 if (Command.GetType(CommandTextBox.Text) == Base.CommandType.Invalid)
                 {
-                    MessageBox.Show("执行命令无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        "执行命令无效",
+                        "Serein",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
                     return;
                 }
                 try
@@ -37,7 +46,12 @@ namespace Serein.Ui.ChildrenWindow
                 }
                 catch
                 {
-                    MessageBox.Show("正则表达式无效", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+                        "正则表达式无效",
+                        "Serein",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
                 }
             }
             else
@@ -45,10 +59,12 @@ namespace Serein.Ui.ChildrenWindow
                 MessageBox.Show("内容为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
         private void Cancel_Click(object sender, EventArgs e)
         {
             Close();
         }
+
         private void Area_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Area.SelectedIndex <= 1 || Area.SelectedIndex == 4)
@@ -63,15 +79,21 @@ namespace Serein.Ui.ChildrenWindow
             if (Area.SelectedIndex == 4)
             {
                 MessageBox.Show(
-                    "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，" +
-                    "配置错误可能导致机器人刷屏甚至被封号",
+                    "保存前请务必检查这条正则触发的命令是否会导致再次被所触发内容触发，" + "配置错误可能导致机器人刷屏甚至被封号",
                     "Serein",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
-                    );
+                );
             }
         }
-        public void UpdateInfo(int areaIndex, string regex, bool isAdmin, string remark, string command)
+
+        public void UpdateInfo(
+            int areaIndex,
+            string regex,
+            bool isAdmin,
+            string remark,
+            string command
+        )
         {
             Area.SelectedIndex = areaIndex;
             RegexTextBox.Text = regex;
@@ -104,6 +126,7 @@ namespace Serein.Ui.ChildrenWindow
                 RemarkTextBox.Focus();
             }
         }
+
         private void RemarkTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -129,7 +152,6 @@ namespace Serein.Ui.ChildrenWindow
             }
         }
 
-
         private void RemarkTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))
@@ -140,7 +162,12 @@ namespace Serein.Ui.ChildrenWindow
 
         private void RegexEditer_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/regex") { UseShellExecute = true });
+            Process.Start(
+                new ProcessStartInfo("https://serein.cc/docs/guide/regex")
+                {
+                    UseShellExecute = true
+                }
+            );
         }
     }
 }

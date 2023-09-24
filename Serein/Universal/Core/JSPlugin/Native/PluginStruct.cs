@@ -26,7 +26,9 @@ namespace Serein.Core.JSPlugin.Native
             EventList = plugin.EventList.Select((eventType) => eventType.ToString()).ToArray();
             Available = plugin.Available;
             PreLoadConfig = plugin.PreLoadConfig;
-            Wsclients = plugin.WSClients.Select((wsclient) => new WSClient.ReadonlyWSClient(wsclient)).ToArray();
+            Wsclients = plugin.WSClients
+                .Select((wsclient) => new WSClient.ReadonlyWSClient(wsclient))
+                .ToArray();
         }
     }
 }

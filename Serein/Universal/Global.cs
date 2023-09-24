@@ -41,10 +41,12 @@ namespace Serein
 #else
             "unknown";
 #endif
+
         /// <summary>
         /// LOGO
         /// </summary>
-        public const string LOGO = @"
+        public const string LOGO =
+            @"
   ██████ ▓█████  ██▀███  ▓█████  ██▓ ███▄    █ 
 ▒██    ▒ ▓█   ▀ ▓██ ▒ ██▒▓█   ▀ ▓██▒ ██ ▀█   █ 
 ░ ▓██▄   ▒███   ▓██ ░▄█ ▒▒███   ▒██▒▒██  ▀█ ██▒
@@ -118,28 +120,22 @@ namespace Serein
         /// <summary>
         /// 权限组
         /// </summary>
-        public static Dictionary<string, PermissionGroup> PermissionGroups = new()
-        {
+        public static Dictionary<string, PermissionGroup> PermissionGroups =
+            new()
             {
-                "default",
-                new()
                 {
-                    Description = "Serein的默认权限组",
-                    Priority = 0,
-                    Conditions = new Condition[]
+                    "default",
+                    new()
                     {
-                        new()
+                        Description = "Serein的默认权限组",
+                        Priority = 0,
+                        Conditions = new Condition[]
                         {
-                            Type = "group",
-                            OnlyListened = true
-                        },
-                        new()
-                        {
-                            Type = "private"
+                            new() { Type = "group", OnlyListened = true },
+                            new() { Type = "private" }
                         }
                     }
                 }
-            }
-        };
+            };
     }
 }

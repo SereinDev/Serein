@@ -62,11 +62,20 @@ namespace Serein.Base.Motd
             string data;
             using (Socket socket = new(IP.AddressFamily, SocketType.Dgram, ProtocolType.Udp))
             {
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 1000);
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 1000);
+                socket.SetSocketOption(
+                    SocketOptionLevel.Socket,
+                    SocketOptionName.ReceiveTimeout,
+                    1000
+                );
+                socket.SetSocketOption(
+                    SocketOptionLevel.Socket,
+                    SocketOptionName.SendTimeout,
+                    1000
+                );
                 socket.Bind(new IPEndPoint(IPAddress.Any, 0));
                 string[] guid = Guid.NewGuid().ToString().ToUpperInvariant().Split('-');
-                string text = $"01{Environment.TickCount.ToString("X").PadLeft(16, '0')}00FFFF00FEFEFEFEFDFDFDFD12345678{guid[2]}{guid[4]}";
+                string text =
+                    $"01{Environment.TickCount.ToString("X").PadLeft(16, '0')}00FFFF00FEFEFEFEFDFDFDFD12345678{guid[2]}{guid[4]}";
                 byte[] sendBytes = new byte[text.Length / 2];
                 for (int i = 0; i < text.Length / 2; i++)
                 {
@@ -78,9 +87,10 @@ namespace Serein.Base.Motd
                 byte[] buffer = new byte[1024 * 8];
                 length = socket.ReceiveFrom(buffer, ref endPoint);
                 Latency = (DateTime.Now - startTime).TotalMilliseconds;
-                data = length > 35 ?
-                    Encoding.UTF8.GetString(buffer, 35, length - 35) :
-                    Encoding.UTF8.GetString(buffer, 0, length);
+                data =
+                    length > 35
+                        ? Encoding.UTF8.GetString(buffer, 35, length - 35)
+                        : Encoding.UTF8.GetString(buffer, 0, length);
             }
 
             if (length > 35)
@@ -89,7 +99,11 @@ namespace Serein.Base.Motd
                 string[] datas = data.Split(';');
                 if (datas.Length >= 12)
                 {
-                    Description = System.Text.RegularExpressions.Regex.Replace(datas[1], "§.", string.Empty);
+                    Description = System.Text.RegularExpressions.Regex.Replace(
+                        datas[1],
+                        "§.",
+                        string.Empty
+                    );
                     Protocol = datas[2];
                     Version = datas[3];
                     OnlinePlayer = long.Parse(datas[4]);

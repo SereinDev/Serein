@@ -20,7 +20,9 @@ namespace Serein.Windows.Pages.Server
             PanelRichTextBox.Document.Blocks.Clear();
             lock (Catalog.Server.Cache)
             {
-                Catalog.Server.Cache.ForEach((line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line))));
+                Catalog.Server.Cache.ForEach(
+                    (line) => Dispatcher.Invoke(() => Append(LogPreProcessing.Color(line)))
+                );
             }
             Catalog.Server.Panel = this;
         }
@@ -31,11 +33,10 @@ namespace Serein.Windows.Pages.Server
             UpdateInfos();
         }
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-            => ServerManager.Stop();
+        private void Stop_Click(object sender, RoutedEventArgs e) => ServerManager.Stop();
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
-            => ServerManager.RequestRestart();
+        private void Restart_Click(object sender, RoutedEventArgs e) =>
+            ServerManager.RequestRestart();
 
         private void Kill_Click(object sender, RoutedEventArgs e)
         {
@@ -64,9 +65,14 @@ namespace Serein.Windows.Pages.Server
                     {
                         ServerManager.CommandHistoryIndex--;
                     }
-                    if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                    if (
+                        ServerManager.CommandHistoryIndex >= 0
+                        && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count
+                    )
                     {
-                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandHistoryIndex];
+                        InputBox.Text = ServerManager.CommandHistory[
+                            ServerManager.CommandHistoryIndex
+                        ];
                     }
                     InputBox.SelectionStart = InputBox.Text.Length;
                     e.Handled = true;
@@ -77,11 +83,19 @@ namespace Serein.Windows.Pages.Server
                     {
                         ServerManager.CommandHistoryIndex++;
                     }
-                    if (ServerManager.CommandHistoryIndex >= 0 && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count)
+                    if (
+                        ServerManager.CommandHistoryIndex >= 0
+                        && ServerManager.CommandHistoryIndex < ServerManager.CommandHistory.Count
+                    )
                     {
-                        InputBox.Text = ServerManager.CommandHistory[ServerManager.CommandHistoryIndex];
+                        InputBox.Text = ServerManager.CommandHistory[
+                            ServerManager.CommandHistoryIndex
+                        ];
                     }
-                    else if (ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count && ServerManager.CommandHistory.Count != 0)
+                    else if (
+                        ServerManager.CommandHistoryIndex == ServerManager.CommandHistory.Count
+                        && ServerManager.CommandHistory.Count != 0
+                    )
                     {
                         InputBox.Text = string.Empty;
                     }
@@ -91,36 +105,52 @@ namespace Serein.Windows.Pages.Server
             }
         }
 
-        public void Append(Paragraph paragraph)
-            => Dispatcher.Invoke(() =>
+        public void Append(Paragraph paragraph) =>
+            Dispatcher.Invoke(() =>
             {
                 PanelRichTextBox.Document = PanelRichTextBox.Document ?? new();
                 PanelRichTextBox.Document.Blocks.Add(paragraph);
                 while (PanelRichTextBox.Document.Blocks.Count > 250)
                 {
-                    PanelRichTextBox.Document.Blocks.Remove(PanelRichTextBox.Document.Blocks.FirstBlock);
+                    PanelRichTextBox.Document.Blocks.Remove(
+                        PanelRichTextBox.Document.Blocks.FirstBlock
+                    );
                 }
                 PanelRichTextBox.ScrollToEnd();
             });
 
-        private void UpdateInfos()
-            => Dispatcher.Invoke(() =>
+        private void UpdateInfos() =>
+            Dispatcher.Invoke(() =>
             {
                 Status.Content = ServerManager.Status ? "已启动" : "未启动";
                 if (ServerManager.Status)
                 {
-                    Version.Content = ServerManager.Motd != null && !string.IsNullOrEmpty(ServerManager.Motd.Version) ? ServerManager.Motd.Version : "-";
-                    PlayCount.Content = ServerManager.Motd != null ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}" : "-";
+                    Version.Content =
+                        ServerManager.Motd != null
+                        && !string.IsNullOrEmpty(ServerManager.Motd.Version)
+                            ? ServerManager.Motd.Version
+                            : "-";
+                    PlayCount.Content =
+                        ServerManager.Motd != null
+                            ? $"{ServerManager.Motd.OnlinePlayer}/{ServerManager.Motd.MaxPlayer}"
+                            : "-";
                 }
                 else
                 {
                     PlayCount.Content = "-";
                     Version.Content = "-";
                 }
-                Difficulity.Content = ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty) ? ServerManager.Difficulty : "-";
+                Difficulity.Content =
+                    ServerManager.Status && !string.IsNullOrEmpty(ServerManager.Difficulty)
+                        ? ServerManager.Difficulty
+                        : "-";
                 Time.Content = ServerManager.Status ? ServerManager.Time : "-";
-                CPUPerc.Content = ServerManager.Status ? "%" + ServerManager.CPUUsage.ToString("N1") : "-";
-                Catalog.MainWindow?.UpdateTitle(ServerManager.Status ? ServerManager.StartFileName : null);
+                CPUPerc.Content = ServerManager.Status
+                    ? "%" + ServerManager.CPUUsage.ToString("N1")
+                    : "-";
+                Catalog.MainWindow?.UpdateTitle(
+                    ServerManager.Status ? ServerManager.StartFileName : null
+                );
             });
     }
 }

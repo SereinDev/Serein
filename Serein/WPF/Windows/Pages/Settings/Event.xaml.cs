@@ -35,21 +35,32 @@ namespace Serein.Windows.Pages.Settings
                         Catalog.MainWindow?.OpenEventEditor(string.Empty);
                         break;
                     case "Edit":
-                        if (EventListView.SelectedItem is string selectedItem && selectedItem != null)
+                        if (
+                            EventListView.SelectedItem is string selectedItem
+                            && selectedItem != null
+                        )
                         {
                             _actionType = 2;
                             Catalog.MainWindow?.OpenEventEditor(selectedItem);
                         }
                         break;
                     case "Delete":
-                        if (MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true) && EventListView.SelectedIndex >= 0)
+                        if (
+                            MsgBox.Show("确定删除此行数据？\n它将会永远失去！（真的很久！）", true)
+                            && EventListView.SelectedIndex >= 0
+                        )
                         {
                             EventListView.Items.RemoveAt(EventListView.SelectedIndex);
                         }
                         Save();
                         break;
                     case "LookupEvent":
-                        Process.Start(new ProcessStartInfo("https://serein.cc/docs/guide/event") { UseShellExecute = true });
+                        Process.Start(
+                            new ProcessStartInfo("https://serein.cc/docs/guide/event")
+                            {
+                                UseShellExecute = true
+                            }
+                        );
                         break;
                 }
             }
@@ -66,9 +77,7 @@ namespace Serein.Windows.Pages.Settings
             {
                 if (EventListView.SelectedIndex >= 0)
                 {
-                    EventListView.Items.Insert(
-                        EventListView.SelectedIndex,
-                        command);
+                    EventListView.Items.Insert(EventListView.SelectedIndex, command);
                 }
                 else
                 {
@@ -91,7 +100,10 @@ namespace Serein.Windows.Pages.Settings
         {
             if (Enum.IsDefined(typeof(EventType), _selectedTag))
             {
-                Global.Settings.Event.Edit(GetEventCommands(), (EventType)Enum.Parse(typeof(EventType), _selectedTag));
+                Global.Settings.Event.Edit(
+                    GetEventCommands(),
+                    (EventType)Enum.Parse(typeof(EventType), _selectedTag)
+                );
                 Setting.SaveEventSetting();
             }
         }
@@ -108,15 +120,29 @@ namespace Serein.Windows.Pages.Settings
 
         private void Load()
         {
-            if (Events.SelectedItem is System.Windows.Controls.TreeViewItem treeViewItemItem && treeViewItemItem != null)
+            if (
+                Events.SelectedItem is System.Windows.Controls.TreeViewItem treeViewItemItem
+                && treeViewItemItem != null
+            )
             {
                 EventListView.Items.Clear();
                 _selectedTag = treeViewItemItem.Tag as string ?? string.Empty;
                 if (Enum.IsDefined(typeof(EventType), _selectedTag))
                 {
-                    Global.Settings.Event.Get(
-                        (EventType)Enum.Parse(typeof(EventType), _selectedTag)).ToList()
-                        .ForEach((Command) => { EventListView.Items.Add(System.Text.RegularExpressions.Regex.Replace(Command, @"(\n|\r|\\n|\\r)+", "\\n")); }
+                    Global.Settings.Event
+                        .Get((EventType)Enum.Parse(typeof(EventType), _selectedTag))
+                        .ToList()
+                        .ForEach(
+                            (Command) =>
+                            {
+                                EventListView.Items.Add(
+                                    System.Text.RegularExpressions.Regex.Replace(
+                                        Command,
+                                        @"(\n|\r|\\n|\\r)+",
+                                        "\\n"
+                                    )
+                                );
+                            }
                         );
                 }
             }
@@ -126,13 +152,21 @@ namespace Serein.Windows.Pages.Settings
             }
         }
 
-        private void Events_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) => Load();
+        private void Events_SelectedItemChanged(
+            object sender,
+            RoutedPropertyChangedEventArgs<object> e
+        ) => Load();
 
-        private void EventListView_ContextMenuOpening(object sender, System.Windows.Controls.ContextMenuEventArgs e)
+        private void EventListView_ContextMenuOpening(
+            object sender,
+            System.Windows.Controls.ContextMenuEventArgs e
+        )
         {
             Add.IsEnabled = !string.IsNullOrEmpty(_selectedTag);
-            Edit.IsEnabled = !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
-            Delete.IsEnabled = !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
+            Edit.IsEnabled =
+                !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
+            Delete.IsEnabled =
+                !string.IsNullOrEmpty(_selectedTag) && EventListView.SelectedIndex >= 0;
         }
     }
 }

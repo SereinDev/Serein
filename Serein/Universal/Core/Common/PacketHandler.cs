@@ -62,15 +62,17 @@ namespace Serein.Core.Common
         /// <summary>
         /// 当前ID
         /// </summary>
-        public static string SelfId => Websocket.Status ? _selfId.ToString() ?? _emptyString : _emptyString;
+        public static string SelfId =>
+            Websocket.Status ? _selfId.ToString() ?? _emptyString : _emptyString;
 
         /// <summary>
         /// 当前ID（Int64）
         /// </summary>
         public static long? SelfIdInt64 => Websocket.Status ? _selfId : null;
 
-        private static long? _messageReceived, _messageSent, _selfId;
-
+        private static long? _messageReceived,
+            _messageSent,
+            _selfId;
 
         /// <summary>
         /// 处理来自机器人的消息
@@ -87,17 +89,16 @@ namespace Serein.Core.Common
             {
                 case "message":
                 case "message_sent":
-                    PacketHandler.HandleMsg(packet.ToObject<Message>());
+                    HandleMsg(packet.ToObject<Message>());
                     break;
 
                 case "notice":
-                    PacketHandler.HandleNotice(packet.ToObject<Notice>());
+                    HandleNotice(packet.ToObject<Notice>());
                     break;
 
                 case "meta_event":
-                    PacketHandler.HandleMetaEvent(packet);
+                    HandleMetaEvent(packet);
                     break;
-
             }
         }
 
@@ -111,7 +112,7 @@ namespace Serein.Core.Common
             {
                 _selfId = (long?)packet.SelectToken("self_id");
                 _messageReceived = (long?)packet.SelectToken("status.stat.message_received");
-                _messageSent = ((long?)packet.SelectToken("status.stat.message_sent"));
+                _messageSent = (long?)packet.SelectToken("status.stat.message_sent");
             }
         }
 
@@ -138,8 +139,7 @@ namespace Serein.Core.Common
                         break;
 
                     case "notify":
-                        if (notice.SubType == "poke" &&
-                            notice.TargetId?.ToString() == SelfId)
+                        if (notice.SubType == "poke" && notice.TargetId?.ToString() == SelfId)
                         {
                             EventTrigger.Trigger(Base.EventType.GroupPoke, notice);
                             JSFunc.Trigger(Base.EventType.GroupPoke, notice.GroupId, notice.UserId);
@@ -171,7 +171,7 @@ namespace Serein.Core.Common
                         messagePacket.RawMessage,
                         messagePacket.Sender.Nickname ?? string.Empty,
                         messagePacket.MessageId
-                        );
+                    );
                 }
                 else if (messagePacket.MessageType == "group")
                 {
@@ -182,16 +182,24 @@ namespace Serein.Core.Common
                         messagePacket.RawMessage,
                         messagePacket.Sender.Card ?? messagePacket.Sender.Nickname ?? string.Empty,
                         messagePacket.MessageId
-                        );
+                    );
                 }
                 if (interdicted)
                 {
                     return;
                 }
             }
-            Logger.Output(Base.LogType.Bot_Receive, $"{messagePacket.Sender.Nickname ?? string.Empty}({messagePacket.UserId})" + ":" + messagePacket.RawMessage);
+            Logger.Output(
+                Base.LogType.Bot_Receive,
+                $"{messagePacket.Sender.Nickname ?? string.Empty}({messagePacket.UserId})"
+                    + ":"
+                    + messagePacket.RawMessage
+            );
 
-            if (messagePacket.MessageType == "group" ^ Global.Settings.Bot.GroupList.Contains(messagePacket.GroupId))
+            if (
+                messagePacket.MessageType == "group"
+                ^ Global.Settings.Bot.GroupList.Contains(messagePacket.GroupId)
+            )
             {
                 return;
             }

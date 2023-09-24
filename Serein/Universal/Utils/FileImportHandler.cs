@@ -116,7 +116,9 @@ namespace Serein.Utils
 #if WINFORM
                             Program.Ui?.Invoke(Program.Ui.LoadSchedule);
 #elif WPF
-                            Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
+                            Catalog.Function.Schedule?.Dispatcher.Invoke(
+                                Catalog.Function.Schedule.Load
+                            );
 #endif
                         }
                         break;
@@ -153,7 +155,9 @@ namespace Serein.Utils
 #if WINFORM
                             Program.Ui?.Invoke(Program.Ui.LoadSchedule);
 #elif WPF
-                            Catalog.Function.Schedule?.Dispatcher.Invoke(Catalog.Function.Schedule.Load);
+                            Catalog.Function.Schedule?.Dispatcher.Invoke(
+                                Catalog.Function.Schedule.Load
+                            );
 #endif
                         }
                         break;

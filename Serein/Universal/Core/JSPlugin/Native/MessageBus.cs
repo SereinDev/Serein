@@ -27,7 +27,8 @@ namespace Serein.Core.JSPlugin.Native
 
         public JsValue? Onerror;
 
-        public MessageBus(string? @namespace) : base(@namespace)
+        public MessageBus(string? @namespace)
+            : base(@namespace)
         {
             MessageBuses.Add(this);
         }
@@ -67,10 +68,12 @@ namespace Serein.Core.JSPlugin.Native
         /// <param name="msg">消息主体</param>
         internal void Receive(string channel, object msg)
         {
-            if (Alive &&
-                _dictionary.TryGetValue(channel, out JsValue? jsValue) &&
-                JSPluginManager.PluginDict[_namespace].Engine is not null &&
-                JSPluginManager.PluginDict[_namespace].Available)
+            if (
+                Alive
+                && _dictionary.TryGetValue(channel, out JsValue? jsValue)
+                && JSPluginManager.PluginDict[_namespace].Engine is not null
+                && JSPluginManager.PluginDict[_namespace].Available
+            )
             {
                 try
                 {
@@ -85,7 +88,10 @@ namespace Serein.Core.JSPlugin.Native
                     {
                         lock (JSPluginManager.PluginDict[_namespace].Engine!)
                         {
-                            JSPluginManager.PluginDict[_namespace].Engine!.Invoke(Onerror, e.ToString());
+                            JSPluginManager.PluginDict[_namespace].Engine!.Invoke(
+                                Onerror,
+                                e.ToString()
+                            );
                         }
                     }
                 }

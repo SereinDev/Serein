@@ -2,7 +2,7 @@
 using Serein.Utils.Output;
 #else
 using Ookii.Dialogs.Wpf;
-#endif 
+#endif
 using Serein.Core.Common;
 using Serein.Core.Server;
 using Serein.Utils.IO;
@@ -21,7 +21,8 @@ namespace Serein.Utils
         /// </summary>
         public static void Init()
         {
-            AppDomain.CurrentDomain.UnhandledException += (_, e) => ShowException((Exception)e.ExceptionObject);
+            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+                ShowException((Exception)e.ExceptionObject);
             TaskScheduler.UnobservedTaskException += (_, e) => ShowException(e.Exception);
         }
 
@@ -36,7 +37,7 @@ namespace Serein.Utils
                 ServerManager.Stop(true);
             }
             Directory.CreateDirectory(Path.Combine("logs", "crash"));
-            
+
             string exceptionMsg = MergeException(e);
             try
             {
@@ -44,14 +45,18 @@ namespace Serein.Utils
                 {
                     File.AppendAllText(
                         Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log"),
-                        DateTime.Now + "  |  "
-                        + $"{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}" + "  |  " +
-                        "NET" + Environment.Version.ToString() +
-                        Environment.NewLine +
-                        Global.BuildInfo.ToString() +
-                        Environment.NewLine +
-                        exceptionMsg +
-                        Environment.NewLine + Environment.NewLine,
+                        DateTime.Now
+                            + "  |  "
+                            + $"{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}"
+                            + "  |  "
+                            + "NET"
+                            + Environment.Version.ToString()
+                            + Environment.NewLine
+                            + Global.BuildInfo.ToString()
+                            + Environment.NewLine
+                            + exceptionMsg
+                            + Environment.NewLine
+                            + Environment.NewLine,
                         Encoding.UTF8
                     );
                 }
@@ -62,32 +67,38 @@ namespace Serein.Utils
             }
             EventTrigger.Trigger(Base.EventType.SereinCrash);
 #if CONSOLE
-            Logger.Output(Base.LogType.Error,
-                $"唔……发生了一点小问题(っ °Д °;)っ\r\n" +
-                $"{exceptionMsg}\r\n\r\n" +
-                $"崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\r\n" +
-                "反馈此问题可以帮助作者更好的改进Serein");
+            Logger.Output(
+                Base.LogType.Error,
+                $"唔……发生了一点小问题(っ °Д °;)っ\r\n"
+                    + $"{exceptionMsg}\r\n\r\n"
+                    + $"崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\r\n"
+                    + "反馈此问题可以帮助作者更好的改进Serein"
+            );
 #else
 
-            TaskDialog taskDialog = new()
-            {
-                Buttons = { new(ButtonType.Ok) },
-                MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
-                WindowTitle = "Serein",
-                Content = "" +
-                    $"版本：{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}\n" +
-                    $"时间：{DateTime.Now}\n" +
-                    $"NET版本：{Environment.Version}\n" +
-                    $"编译时间：{Global.BuildInfo.Time}\n\n" +
-                    $"◦ 崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\n" +
-                    $"◦ 反馈此问题可以帮助作者更好的改进Serein",
-                MainIcon = TaskDialogIcon.Error,
-                Footer = $"你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new?labels=%E2%9D%97+%E5%B4%A9%E6%BA%83&template=crush_report.yml&title=崩溃反馈+{e.GetType()}\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
-                FooterIcon = TaskDialogIcon.Information,
-                EnableHyperlinks = true,
-                ExpandedInformation = exceptionMsg
-            };
-            taskDialog.HyperlinkClicked += (_, e) => Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+            TaskDialog taskDialog =
+                new()
+                {
+                    Buttons = { new(ButtonType.Ok) },
+                    MainInstruction = "唔……发生了一点小问题(っ °Д °;)っ",
+                    WindowTitle = "Serein",
+                    Content =
+                        ""
+                        + $"版本：{Global.VERSION}-{Global.INTERNAL_VERSION} - {Global.TYPE}\n"
+                        + $"时间：{DateTime.Now}\n"
+                        + $"NET版本：{Environment.Version}\n"
+                        + $"编译时间：{Global.BuildInfo.Time}\n\n"
+                        + $"◦ 崩溃日志已保存在 {Path.Combine("logs", "crash", $"{DateTime.Now:yyyy-MM-dd}.log")}\n"
+                        + $"◦ 反馈此问题可以帮助作者更好的改进Serein",
+                    MainIcon = TaskDialogIcon.Error,
+                    Footer =
+                        $"你可以<a href=\"https://github.com/Zaitonn/Serein/issues/new?labels=%E2%9D%97+%E5%B4%A9%E6%BA%83&template=crush_report.yml&title=崩溃反馈+{e.GetType()}\">提交Issue</a>或<a href=\"https://jq.qq.com/?_wv=1027&k=XNZqPSPv\">加群</a>反馈此问题",
+                    FooterIcon = TaskDialogIcon.Information,
+                    EnableHyperlinks = true,
+                    ExpandedInformation = exceptionMsg
+                };
+            taskDialog.HyperlinkClicked += (_, e) =>
+                Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
             taskDialog.ShowDialog();
 #endif
         }

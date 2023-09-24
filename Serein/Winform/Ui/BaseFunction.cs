@@ -26,11 +26,10 @@ namespace Serein.Ui
             }
         }
 
-        private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e)
-            => Runtime.ShowWelcomePage();
+        private void SettingSereinShowWelcomePage_Click(object sender, EventArgs e) =>
+            Runtime.ShowWelcomePage();
 
-        private void Ui_Shown(object sender, EventArgs e)
-            => Runtime.Start();
+        private void Ui_Shown(object sender, EventArgs e) => Runtime.Start();
 
         private void Ui_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -74,7 +73,6 @@ namespace Serein.Ui
             FileImportHandler.Trigger((Array)e.Data!.GetData(DataFormats.FileDrop));
         }
 
-
         private void UpdateVersion()
         {
             SettingSereinVersion.Text = $"当前版本：{Global.VERSION}";
@@ -91,8 +89,14 @@ namespace Serein.Ui
         }
 
         private void SereinIcon_BalloonTipClicked(object sender, EventArgs e) => FocusWindow();
+
         private void SereinIcon_MouseClick(object sender, MouseEventArgs e) => FocusWindow();
+
         private void UpdateStatusLabel(string text) => StripStatusLabel.Text = text;
-        private void Ui_DragEnter(object sender, DragEventArgs e) => e.Effect = e.Data!.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+
+        private void Ui_DragEnter(object sender, DragEventArgs e) =>
+            e.Effect = e.Data!.GetDataPresent(DataFormats.FileDrop)
+                ? DragDropEffects.All
+                : DragDropEffects.None;
     }
 }

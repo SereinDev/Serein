@@ -14,7 +14,6 @@ namespace Serein.Utils.Output
 {
     internal static class MsgBox
     {
-
         /// <summary>
         /// 显示具有指定文本、标题、按钮和图标的消息框。
         /// </summary>
@@ -24,7 +23,10 @@ namespace Serein.Utils.Output
         /// <returns>按下的按钮为OK或Yes</returns>
         public static bool Show(string text, bool canBeCanceled = false, bool isError = false)
         {
-            Logger.Output(LogType.DetailDebug, new object[] { text, canBeCanceled, isError }.ToJson());
+            Logger.Output(
+                LogType.DetailDebug,
+                new object[] { text, canBeCanceled, isError }.ToJson()
+            );
             text = text.Trim('\r', '\n');
 #if CONSOLE
             Logger.WriteLine(isError ? 3 : 2, text, true);
@@ -34,7 +36,12 @@ namespace Serein.Utils.Output
             {
                 text = ":(\n" + text;
             }
-            DialogResult result = MessageBox.Show(text, "Serein", canBeCanceled ? MessageBoxButtons.OKCancel : MessageBoxButtons.OK, isError ? MessageBoxIcon.Error : MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(
+                text,
+                "Serein",
+                canBeCanceled ? MessageBoxButtons.OKCancel : MessageBoxButtons.OK,
+                isError ? MessageBoxIcon.Error : MessageBoxIcon.Warning
+            );
             return result == DialogResult.OK;
 #elif WPF
             if (!canBeCanceled)
@@ -45,7 +52,7 @@ namespace Serein.Utils.Output
                         text.Substring(0, text.IndexOf('\n')),
                         text.Substring(text.IndexOf('\n')).Trim('\n'),
                         isError ? SymbolRegular.Dismiss24 : SymbolRegular.Warning24
-                        );
+                    );
                 }
                 else
                 {
@@ -53,26 +60,27 @@ namespace Serein.Utils.Output
                         "执行失败",
                         text,
                         isError ? SymbolRegular.Dismiss24 : SymbolRegular.Warning24
-                        );
+                    );
                 }
                 return true;
             }
             bool confirmed = false;
-            MessageBox messageBox = new()
-            {
-                Title = "Serein",
-                Content = new TextBlock
+            MessageBox messageBox =
+                new()
                 {
-                    Text = text,
-                    TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
-                },
-                ShowInTaskbar = false,
-                ResizeMode = System.Windows.ResizeMode.NoResize,
-                Topmost = true,
-                Width = 350,
-                ButtonLeftName = "确定",
-                ButtonRightName = "取消"
-            };
+                    Title = "Serein",
+                    Content = new TextBlock
+                    {
+                        Text = text,
+                        TextWrapping = System.Windows.TextWrapping.WrapWithOverflow
+                    },
+                    ShowInTaskbar = false,
+                    ResizeMode = System.Windows.ResizeMode.NoResize,
+                    Topmost = true,
+                    Width = 350,
+                    ButtonLeftName = "确定",
+                    ButtonRightName = "取消"
+                };
             messageBox.ButtonRightClick += (_, _) => messageBox.Close();
             messageBox.ButtonLeftClick += (_, _) =>
             {
