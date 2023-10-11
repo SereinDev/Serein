@@ -76,7 +76,7 @@ namespace Serein.Base.Motd
             /// </summary>
             public string? Text;
 
-            public override string ToString() => Text ?? string.Empty;
+            public override readonly string ToString() => Text ?? string.Empty;
         }
 
         [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]

@@ -167,11 +167,12 @@ namespace Serein.Core.Common
                 JObject textJObject =
                     new()
                     {
-                        { "action", isPrivate ? "send_private_msg" : "send_group_msg" },
+                        { "action", "send_msg" },
                         {
                             "params",
                             new JObject
                             {
+                                { "message_type", isPrivate ? "private" : "group" },
                                 { isPrivate ? "user_id" : "group_id", target },
                                 { "message", message },
                                 { "auto_escape", canBeEscaped && Global.Settings.Bot.AutoEscape }
