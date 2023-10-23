@@ -27,7 +27,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Jint" Version="3.0.0-beta-2052" />
+		<PackageReference Include="Jint" Version="3.0.0-beta-2053" />
 		<PackageReference Include="NCrontab.Signed" Version="3.3.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
