@@ -237,7 +237,7 @@ namespace Serein.Ui
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotGroupList.Text.Split(';'))
                 {
-                    if (qq.Length >= 6 && qq.Length <= 16 && long.TryParse(qq, out long qq_))
+                    if (long.TryParse(qq, out long qq_))
                     {
                         list.Add(qq_);
                     }
@@ -267,7 +267,7 @@ namespace Serein.Ui
                 List<long> list = new List<long>();
                 foreach (string qq in SettingBotPermissionList.Text.Split(';'))
                 {
-                    if (qq.Length >= 5 && qq.Length <= 13 && long.TryParse(qq, out long qq_))
+                    if (long.TryParse(qq, out long qq_))
                     {
                         list.Add(qq_);
                     }

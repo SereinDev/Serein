@@ -66,11 +66,7 @@ namespace Serein.Windows.Pages.Settings
                 List<long> groups = new List<long>();
                 foreach (string group in GroupList.Text.Split(';'))
                 {
-                    if (
-                        group.Length >= 6
-                        && group.Length <= 16
-                        && long.TryParse(group, out long _group)
-                    )
+                    if (long.TryParse(group, out long _group))
                     {
                         groups.Add(_group);
                     }
@@ -97,7 +93,7 @@ namespace Serein.Windows.Pages.Settings
                 List<long> IDs = new List<long>();
                 foreach (string ID in PermissionList.Text.Split(';'))
                 {
-                    if (ID.Length >= 5 && ID.Length <= 13 && long.TryParse(ID, out long _ID))
+                    if (long.TryParse(ID, out long _ID))
                     {
                         IDs.Add(_ID);
                     }

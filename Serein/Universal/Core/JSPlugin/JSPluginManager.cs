@@ -141,7 +141,7 @@ namespace Serein.Core.JSPlugin
             if (
                 Global.Settings.Serein.Function.JSPatternToSkipLoadingSpecifiedFile
                     .Where((pattern) => lowerFile.EndsWith(pattern.ToLowerInvariant()))
-                    .Count() != 0
+                    .Any()
             )
             {
                 return;
