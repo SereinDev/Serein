@@ -1,0 +1,35 @@
+name: "BUG反馈"
+description: Serein的部分行为不符合预期
+title: "BUG反馈 <在此处简单描述>"
+labels: ["🐛Bug"]
+
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 当前使用的Serein版本
+      description: |
+        命令行：输入`version`
+        winform：点击设置，拉到最底后的版本查看
+        wpf：设置-Serein设置
+    validations:
+      required: true
+
+  - type: textarea
+    id: expectation
+    attributes:
+      label: 你的预期
+      description: 预期Serein应该的反应
+      placeholder: |
+        1. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: in_fact
+    attributes:
+      label: 实际上的反应
+      placeholder: |
+        1. ...
+    validations:
+      required: true

@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
+            "name": ".NET Core",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein-${input:targetApplication}.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "integratedTerminal",
+            "requireExactSource": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "targetApplication",
+            "type": "pickString",
+            "description": "目标调试对象",
+            "options": [
+                "Console",
+                "Console_For_Unix",
+                "Winform",
+                "WPF"
+            ],
+            "default": "Winform"
+        },
+        {
+            "id": "targetFramework",
+            "type": "pickString",
+            "description": "目标版本",
+            "options": [
+                "net6.0-windows",
+                "net6.0"
+            ],
+            "default": "net6.0-windows"
+        }
+    ]
+}

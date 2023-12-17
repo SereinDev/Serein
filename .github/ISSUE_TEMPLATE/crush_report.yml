@@ -1,0 +1,38 @@
+name: "崩溃反馈"
+description: Serein发生了莫名其妙的崩溃
+title: "崩溃反馈 <在此处简单描述报错信息>"
+labels: ["❗ 崩溃"]
+
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 当前使用的Serein版本
+      description: |
+        命令行：输入`version`
+        winform：点击设置，拉到最底后的版本查看
+        wpf：设置-Serein设置
+    validations:
+      required: true
+
+  - type: textarea
+    id: exception
+    attributes:
+      label: 崩溃日志
+      description: |
+        如何查看崩溃日志
+        - 打开`./logs/crash/{日期}.log`后复制全文粘贴在此处
+        - 若崩溃时未产生崩溃日志，则按下win+r键，输入`eventvwr`回车，打开`事件查看器-Windows日志-应用程序`，按`时间与日期`降序，找到最近的来源为`.NET Runtime`的项，复制下方`常规窗口`内的异常信息到此处
+    validations:
+      required: true
+
+  - type: textarea
+    id: operation
+    attributes:
+      label: 复现操作
+      description: 简单描述一下如何触发此崩溃
+      placeholder: |
+        1. 先这样
+        2. 再这样
+    validations:
+      required: true

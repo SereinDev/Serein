@@ -1,0 +1,36 @@
+name: PublishToMB
+
+on:
+  workflow_dispatch:
+
+env:
+  ResourceId: 4169
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Get latest release
+        id: latest_release
+        uses: kaliber5/action-get-release@v1
+        with:
+          token: ${{ github.token }}
+          latest: true
+
+      - name: Get current time
+        uses: srfrnk/current-time@master
+        id: current_time
+        with:
+          format: MMDD
+
+      - name: Update MineBBS infomation
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://api.minebbs.com/api/openapi/v1/resources/${{ env.ResourceId }}/update"
+          method: "POST"
+          customHeaders: '{"Authorization": "Bearer ${{ secrets.MBKEY }}"}'
+          contentType: "application/json"
+          data: '{"title": "${{ steps.latest_release.outputs.tag_name }}@${{ steps.current_time.outputs.formattedTime }}", "description": "完整更新日志: https://serein.cc/docs/version/${{ steps.latest_release.outputs.tag_name }} \n From https://github.com/Zaitonn/Serein/actions/runs/${{ github.run_id }}", "new_version": "${{ steps.latest_release.outputs.tag_name }}@${{ steps.current_time.outputs.formattedTime }}", "file_url": "${{ steps.latest_release.outputs.html_url }}"}'
+          escapeData: "true"
+          preventFailureOnNoResponse: "true"
+          ignoreStatusCodes: "400,404,401,403,500,502,503,504"

@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "**/bin/**": true,
+        "**/packages/**": true
+    },
+    "[csharp]": {
+        "editor.bracketPairColorization.enabled": false,
+    },
+}

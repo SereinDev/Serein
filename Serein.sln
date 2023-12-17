@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Core", "Serein.Core\Serein.Core.csproj", "{07F5D4A9-4CC6-4C60-98BD-B9BFF5EF5B72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Cli", "Serein.Cli\Serein.Cli.csproj", "{51E73279-27FB-4102-BAEE-C7E9247C45C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07F5D4A9-4CC6-4C60-98BD-B9BFF5EF5B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F5D4A9-4CC6-4C60-98BD-B9BFF5EF5B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F5D4A9-4CC6-4C60-98BD-B9BFF5EF5B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F5D4A9-4CC6-4C60-98BD-B9BFF5EF5B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E73279-27FB-4102-BAEE-C7E9247C45C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E73279-27FB-4102-BAEE-C7E9247C45C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E73279-27FB-4102-BAEE-C7E9247C45C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E73279-27FB-4102-BAEE-C7E9247C45C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
