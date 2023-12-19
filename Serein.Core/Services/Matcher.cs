@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +11,6 @@ using Serein.Core.Models.OneBot.Messages;
 using Serein.Core.Models.OneBot.Packets;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services;
 
@@ -20,8 +20,8 @@ public class Matcher
     private readonly MatchesProvider _matchesProvider;
     private readonly CommandRunner _commandRunner;
 
-    private IServiceProvider Service => _host.Services;
-    private BotSetting BotSetting => Service.GetRequiredService<SettingProvider>().Value.Bot;
+    private IServiceProvider Services => _host.Services;
+    private BotSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Bot;
 
     public Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
     {
@@ -30,8 +30,10 @@ public class Matcher
         _commandRunner = commandRunner;
     }
 
-    public void MatchServerOutput(string line)
+    public async Task MatchServerOutputAsync(string line)
     {
+        var tasks = new List<Task>();
+
         lock (_matchesProvider.Value)
         {
             foreach (var match in _matchesProvider.Value)
@@ -39,21 +41,27 @@ public class Matcher
                 if (
                     string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
-                    || match.FieldType != FieldType.ServerOutput
-                    || !match.RegExp.TryParse(RegexOptions.None, out Regex? regex)
+                    || match.FieldType != MatchFieldType.ServerOutput
+                    || match.RegexObj is null
+                    || match.CommandObj is null
+                    || match.CommandObj.Type == CommandType.Invalid
                 )
                     continue;
 
-                var matches = regex.Match(line);
+                var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
-                    _commandRunner.Run(CommandOrigin.ServerOutput, match.Command, matches);
+                    tasks.Add(_commandRunner.Run(match.CommandObj, new(matches)));
             }
         }
+
+        await Task.WhenAll(tasks);
     }
 
-    public void MatchServerInput(string line)
+    public async Task MatchServerInputAsync(string line)
     {
+        var tasks = new List<Task>();
+
         lock (_matchesProvider.Value)
         {
             foreach (var match in _matchesProvider.Value)
@@ -61,21 +69,27 @@ public class Matcher
                 if (
                     string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
-                    || match.FieldType != FieldType.ServerInput
-                    || !match.RegExp.TryParse(RegexOptions.None, out Regex? regex)
+                    || match.FieldType != MatchFieldType.ServerInput
+                    || match.RegexObj is null
+                    || match.CommandObj is null
+                    || match.CommandObj.Type == CommandType.Invalid
                 )
                     continue;
 
-                var matches = regex.Match(line);
+                var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
-                    _commandRunner.Run(CommandOrigin.ServerInput, match.Command, matches);
+                    tasks.Add(_commandRunner.Run(match.CommandObj, new(matches)));
             }
         }
+
+        await Task.WhenAll(tasks);
     }
 
-    public void MatchMsg(MessagePacket messagePacket)
+    public async Task MatchMsgAsync(MessagePacket messagePacket)
     {
+        var tasks = new List<Task>();
+
         lock (_matchesProvider.Value)
         {
             foreach (var match in _matchesProvider.Value)
@@ -84,30 +98,34 @@ public class Matcher
                     string.IsNullOrEmpty(messagePacket.RawMessage)
                     || string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
-                    || match.FieldType == FieldType.Disabled
-                    || match.FieldType == FieldType.ServerInput
-                    || match.FieldType == FieldType.ServerOutput
-                    || !match.RegExp.TryParse(RegexOptions.None, out Regex? regex)
+                    || match.FieldType == MatchFieldType.Disabled
+                    || match.FieldType == MatchFieldType.ServerInput
+                    || match.FieldType == MatchFieldType.ServerOutput
+                    || match.RegexObj is null
+                    || match.CommandObj is null
+                    || match.CommandObj.Type == CommandType.Invalid
+                    || match.RequireAdmin && !IsFromAdmin(messagePacket)
                 )
                     continue;
 
-                if (match.RequireAdmin && !IsFromAdmin(messagePacket))
-                    continue;
-
-                var matches = regex.Match(messagePacket.RawMessage);
+                var matches = match.RegexObj.Match(messagePacket.RawMessage);
 
                 if (matches.Success)
                     if (
-                        match.FieldType == FieldType.SelfMsg
+                        match.FieldType == MatchFieldType.SelfMsg
                             && messagePacket.SelfId == messagePacket.UserId
-                        || match.FieldType == FieldType.GroupMsg
+                        || match.FieldType == MatchFieldType.GroupMsg
                             && messagePacket.MessageType == MessageType.Group
-                        || match.FieldType == FieldType.PrivateMsg
+                        || match.FieldType == MatchFieldType.PrivateMsg
                             && messagePacket.MessageType == MessageType.Private
                     )
-                        _commandRunner.Run(CommandOrigin.Msg, match.Command, matches);
+                        tasks.Add(
+                            _commandRunner.Run(match.CommandObj, new(matches, messagePacket))
+                        );
             }
         }
+
+        await Task.WhenAll(tasks);
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>

@@ -2,6 +2,8 @@ namespace Serein.Core.Models.Commands;
 
 public enum CommandOrigin
 {
+    Null,
+
     Msg,
 
     ServerOutput,
@@ -12,7 +14,7 @@ public enum CommandOrigin
 
     EventTrigger,
 
-    Javascript,
+    Plugin,
 
     ConsoleExecute
 }

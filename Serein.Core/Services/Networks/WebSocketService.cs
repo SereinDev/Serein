@@ -1,16 +1,11 @@
 using System;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Events;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Utils;
-using Serein.Core.Utils.Json;
 
 using WatsonWebsocket;
 
@@ -26,7 +21,7 @@ public class WebSocketService : INetworkService
 
     public event EventHandler? Opened;
     public event EventHandler? Closed;
-    public event EventHandler<WsMessageReceivedEventArgs>? WsMessageReceived;
+    public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
 
     public bool Active => _client?.Connected ?? false;
     public Statistics? Stats => _client?.Stats;
@@ -55,26 +50,9 @@ public class WebSocketService : INetworkService
         client.ServerConnected += Opened;
         client.ServerDisconnected += Closed;
 
-        client.MessageReceived += OnMessageReceived;
+        client.MessageReceived += MessageReceived;
 
         return client;
-    }
-
-    private void OnMessageReceived(object? sender, MessageReceivedEventArgs e)
-    {
-        var text = EncodingMap.UTF8.GetString(e.Data);
-        JsonNode? jsonNode = null;
-
-        try
-        {
-            jsonNode = JsonSerializer.Deserialize<JsonNode>(
-                text,
-                JsonSerializerOptionsFactory.SnakeCase
-            );
-        }
-        catch { }
-
-        WsMessageReceived?.Invoke(null, new() { JsonData = jsonNode, RawString = text });
     }
 
     public void Dispose()
@@ -87,14 +65,6 @@ public class WebSocketService : INetworkService
     {
         if (_client is not null && _client.Connected)
             await _client.SendAsync(text);
-    }
-
-    public async Task SendAsync<T>(T data)
-    {
-        if (_client is not null && _client.Connected)
-            await _client.SendAsync(
-                JsonSerializer.Serialize(data, JsonSerializerOptionsFactory.SnakeCase)
-            );
     }
 
     public async Task StartAsync()

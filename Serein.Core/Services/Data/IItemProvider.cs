@@ -1,6 +1,6 @@
 namespace Serein.Core.Services.Data;
 
-public interface IDataProvider<T>
+public interface IItemProvider<T>
     where T : notnull
 {
     T Read();

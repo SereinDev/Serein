@@ -1,6 +1,6 @@
 namespace Serein.Core.Models.Commands;
 
-public enum FieldType
+public enum MatchFieldType
 {
     Disabled,
 

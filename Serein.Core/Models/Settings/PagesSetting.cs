@@ -6,7 +6,7 @@ public class PagesSetting
 
     public bool ServerPluginManager { get; set; } = true;
 
-    public bool RegexList { get; set; } = true;
+    public bool Match { get; set; } = true;
 
     public bool Schedule { get; set; } = true;
 

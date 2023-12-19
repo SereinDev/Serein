@@ -1,14 +1,14 @@
+using System.IO;
+using System.Text.Json;
+
 using Serein.Core.Models;
 using Serein.Core.Models.Settings;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
-using System.IO;
-using System.Text.Json;
-
 namespace Serein.Core.Services.Data;
 
-public class SettingProvider : IDataProvider<AppSetting>
+public class SettingProvider : IItemProvider<AppSetting>
 {
     private AppSetting? _appSetting;
 
@@ -16,10 +16,10 @@ public class SettingProvider : IDataProvider<AppSetting>
 
     public AppSetting Read()
     {
-        if (File.Exists(PathConstants.Matches))
+        if (File.Exists(PathConstants.MatchesFile))
         {
             var wrapper = JsonSerializer.Deserialize<DataItemWrapper<AppSetting>>(
-                File.ReadAllText(PathConstants.Matches),
+                File.ReadAllText(PathConstants.MatchesFile),
                 JsonSerializerOptionsFactory.CamelCase
             );
 
@@ -37,7 +37,7 @@ public class SettingProvider : IDataProvider<AppSetting>
     {
         _appSetting ??= new();
         File.WriteAllText(
-            PathConstants.Setting,
+            PathConstants.SettingFile,
             JsonSerializer.Serialize(
                 DataItemWrapper.Wrap(nameof(AppSetting), _appSetting),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }

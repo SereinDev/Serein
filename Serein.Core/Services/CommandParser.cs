@@ -1,19 +1,22 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using RegexMatch = System.Text.RegularExpressions.Match;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Services.Server;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Server;
 
 namespace Serein.Core.Services;
 
 public class CommandParser
 {
-    private readonly Regex _generalCommand = new(@"^.+?\|[\s\S]+$", RegexOptions.Compiled);
-    private readonly Regex _commandHeader = new(@"^.+?\|[\s\S]+$", RegexOptions.Compiled);
-    private readonly Regex _variable = new(@"%(\w+)%", RegexOptions.Compiled);
+    private static readonly Regex GeneralCommand =
+        new(
+            @"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$",
+            RegexOptions.Compiled
+        );
+    private static readonly Regex Variable = new(@"\{(\w+)\}", RegexOptions.Compiled);
+
     private readonly SystemInfoFactory _systemInfoFactory;
     private readonly ServerManager _serverManager;
 
@@ -23,53 +26,42 @@ public class CommandParser
         _serverManager = serverManager;
     }
 
-    public static string Format(string command, RegexMatch? match = null)
+    public static bool Validate(string? command)
     {
-        var str = command[(command.IndexOf('|') + 1)..];
-        if (match != null)
-        {
-            lock (match)
-            {
-                for (int i = match.Groups.Count; i >= 0; i--)
-                {
-                    str = Regex.Replace(str, $"\\${i}(?!\\d)", match.Groups[i].Value);
-                }
-
-                foreach (var key in match.Groups.Keys)
-                {
-                    str = str.Replace($"${{{key}}}", match.Groups[key].Value);
-                }
-            }
-        }
-        return str;
+        return !string.IsNullOrEmpty(command) && GeneralCommand.IsMatch(command);
     }
 
-    public CommandType GetCommandType(string command)
+    public static Command Parse(CommandOrigin origin, string? command)
     {
         if (
             string.IsNullOrEmpty(command)
-            || !command.Contains('|')
-            || !_generalCommand.IsMatch(command)
+            || command.Length < 3
+            || !command.StartsWith('[')
+            || !command.Contains(']')
+            || !GeneralCommand.IsMatch(command)
         )
-            return CommandType.Invalid;
+            return new() { Origin = origin, Type = CommandType.Invalid };
 
-        return _commandHeader.Match(command).Groups[1].Value.ToLowerInvariant() switch
+        var matchResult = GeneralCommand.Match(command);
+
+        if (!matchResult.Success || matchResult.Groups.Count != 5)
+            return new() { Origin = origin, Type = CommandType.Invalid };
+
+        var name = matchResult.Groups["name"].Value;
+        var body = matchResult.Groups["body"].Value;
+        var argument = matchResult.Groups["argument"].Value;
+
+        var type = name switch
         {
-            "cmd" => CommandType.ExecuteShellCmd,
+            "cmd" => CommandType.ExecuteShellCommand,
 
             "s" => CommandType.ServerInput,
             "server" => CommandType.ServerInput,
-            "s:unicode" => CommandType.ServerInputWithUnicode,
-            "server:unicode" => CommandType.ServerInputWithUnicode,
-            "s:u" => CommandType.ServerInputWithUnicode,
-            "server:u" => CommandType.ServerInputWithUnicode,
 
             "g" => CommandType.SendGroupMsg,
             "group" => CommandType.SendGroupMsg,
             "p" => CommandType.SendPrivateMsg,
             "private" => CommandType.SendPrivateMsg,
-            "t" => CommandType.SendTempMsg,
-            "temp" => CommandType.SendTempMsg,
 
             "b" => CommandType.Bind,
             "bind" => CommandType.Bind,
@@ -83,42 +75,47 @@ public class CommandParser
             "javascript" => CommandType.ExecuteJavascriptCodes,
 
             "reload" => CommandType.Reload,
+
             "debug" => CommandType.Debug,
-            _ => HandleOtherSituations()
+            _ => CommandType.Invalid
         };
 
-        CommandType HandleOtherSituations()
+        return new()
         {
-            if (Regex.IsMatch(command, @"^(g|group):\d+\|", RegexOptions.IgnoreCase))
-                return CommandType.SendGivenGroupMsg;
-            if (Regex.IsMatch(command, @"^(p|private):\d+\|", RegexOptions.IgnoreCase))
-                return CommandType.SendGivenPrivateMsg;
-            if (Regex.IsMatch(command, @"^(js|javascript):[^\|]+\|", RegexOptions.IgnoreCase))
-                return CommandType.ExecuteJavascriptCodesWithNamespace;
-            if (
-                Regex.IsMatch(
-                    command,
-                    @"^(reload)\|(all|regex|schedule|member|groupcache)",
-                    RegexOptions.IgnoreCase
-                )
-            )
-                return CommandType.Reload;
-
-            return CommandType.Invalid;
-        }
+            Origin = origin,
+            Type = type,
+            Body = body,
+            Argument = argument
+        };
     }
 
-    public string ApplyVariables(string input)
+    public string Format(string? commandBody, CommandContext commandContext)
     {
-        if (!input.Contains('%'))
-            return input.Replace("\\n", "\n");
+        if (string.IsNullOrEmpty(commandBody))
+            return string.Empty;
+
+        var argument = ApplyVariables(commandBody, commandContext);
+
+        if (commandContext.Match != null)
+            foreach (var key in commandContext.Match.Groups.Keys)
+            {
+                argument = argument.Replace($"{{{key}}}", commandContext.Match.Groups[key].Value);
+            }
+
+        return argument;
+    }
+
+    private string ApplyVariables(string commandBody, CommandContext commandContext)
+    {
+        if (!commandBody.Contains('%'))
+            return commandBody.Replace("\\n", "\n");
 
         var serverStatus = _serverManager.Status;
         var serverInfo = _serverManager.ServerInfo;
         var currentTime = DateTime.Now;
 
-        var text = _variable.Replace(
-            input,
+        var text = Variable.Replace(
+            commandBody,
             (match) =>
             {
                 object? obj = match.Groups[1].Value.ToLowerInvariant() switch
@@ -199,22 +196,17 @@ public class CommandParser
                             ).ToString("N1"),
                     #endregion
 
-                    // #region 消息
-                    // "msgid" => message?.MessageId,
-                    // "id" => message?.UserId,
-                    // "sex" => message?.Sender?.SexName,
-                    // "nickname" => message?.Sender?.Nickname,
-                    // "age" => message?.Sender?.Age,
-                    // "area" => message?.Sender?.Area,
-                    // "card" => message?.Sender?.Card,
-                    // "level" => message?.Sender?.Level,
-                    // "title" => message?.Sender?.Title,
-                    // "role" => message?.Sender?.RoleName,
-                    // "shownname"
-                    //     => string.IsNullOrEmpty(message?.Sender?.Card)
-                    //         ? message?.Sender?.Nickname
-                    //         : message?.Sender?.Card,
-                    // #endregion
+                    #region 消息
+                    "msgid" => commandContext.MessagePacket?.MessageId,
+                    "id" => commandContext.MessagePacket?.UserId,
+                    "nickname" => commandContext.MessagePacket?.Sender?.Nickname,
+                    "title" => commandContext.MessagePacket?.Sender?.Title,
+                    "role" => commandContext.MessagePacket?.Sender?.RoleName,
+                    "shownname"
+                        => string.IsNullOrEmpty(commandContext.MessagePacket?.Sender?.Card)
+                            ? commandContext.MessagePacket?.Sender?.Nickname
+                            : commandContext.MessagePacket?.Sender?.Card,
+                    #endregion
 
                     _ => null
                 };

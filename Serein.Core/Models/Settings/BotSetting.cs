@@ -26,4 +26,6 @@ public class BotSetting
     public Dictionary<string, string?> Headers { get; set; } = new();
 
     public string Uri { get; set; } = "ws://127.0.0.1:8080";
+
+    public bool UseReverseWebSocket { get; set; }
 }

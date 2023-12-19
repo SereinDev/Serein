@@ -7,8 +7,6 @@
         <Authors>Zaitonn</Authors>
         <Version>2.0.0.0-alpha</Version>
         <Company>https://github.com/Zaitonn/Serein</Company>
-        <Description>极简但多功能的服务器面板软件</Description>
-        <Product>服务器面板软件</Product>
         <Copyright>Copyright (C) 2023 Zaitonn</Copyright>
     </PropertyGroup>
 
@@ -18,6 +16,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageReference Include="NCrontab" Version="3.3.3" />
         <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
         <PackageReference Include="SystemInfoLibrary-devel" Version="1.5.0.25" />
         <PackageReference Include="WatsonWebsocket" Version="4.0.11" />

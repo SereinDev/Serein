@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Hosting;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
+
+using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models;
 using Serein.Core.Models.Server;
@@ -119,12 +119,12 @@ public class ServerManager
         {
             if (!string.IsNullOrEmpty(command))
             {
-                InputCommand(command, callerType);
+                Input(command, callerType);
             }
         }
     }
 
-    private void InputCommand(string command, CallerType callerType)
+    public void Input(string command, CallerType callerType)
     {
         if (_inputWriter is null || Status != ServerStatus.Running)
         {
@@ -149,7 +149,7 @@ public class ServerManager
             _commandHistory.Add(command);
         CommandHistoryIndex = CommandHistory.Count;
 
-        _matcher.MatchServerInput(command);
+        _matcher.MatchServerInputAsync(command);
     }
 
     public bool TryStart()
@@ -199,7 +199,7 @@ public class ServerManager
             return;
 
         _output.LogServerOriginalOutput(e.Data);
-        _matcher.MatchServerOutput(OutputFilter.Clear(e.Data));
+        _matcher.MatchServerOutputAsync(OutputFilter.Clear(e.Data));
     }
 
     private async Task WaitAndRestartAsync()

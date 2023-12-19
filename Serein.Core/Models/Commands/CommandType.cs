@@ -4,21 +4,15 @@ public enum CommandType
 {
     Invalid,
 
-    ExecuteShellCmd,
+    ExecuteShellCommand,
 
     ServerInput,
 
-    ServerInputWithUnicode,
-
     SendGroupMsg,
-
-    SendGivenGroupMsg,
 
     SendPrivateMsg,
 
-    SendGivenPrivateMsg,
-
-    SendTempMsg,
+    SendText,
 
     Bind,
 
@@ -29,8 +23,6 @@ public enum CommandType
     RequestMotdje,
 
     ExecuteJavascriptCodes,
-
-    ExecuteJavascriptCodesWithNamespace,
 
     Debug,
 

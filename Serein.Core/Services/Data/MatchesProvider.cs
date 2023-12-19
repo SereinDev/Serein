@@ -1,15 +1,15 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
 using Serein.Core.Models;
 using Serein.Core.Models.Commands;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-
 namespace Serein.Core.Services.Data;
 
-public class MatchesProvider : IDataProvider<IReadOnlyList<Match>>
+public class MatchesProvider : IItemProvider<IReadOnlyList<Match>>
 {
     private List<Match>? _matches;
 
@@ -17,10 +17,10 @@ public class MatchesProvider : IDataProvider<IReadOnlyList<Match>>
 
     public IReadOnlyList<Match> Read()
     {
-        if (File.Exists(PathConstants.Matches))
+        if (File.Exists(PathConstants.MatchesFile))
         {
             var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Match>>>(
-                File.ReadAllText(PathConstants.Matches),
+                File.ReadAllText(PathConstants.MatchesFile),
                 JsonSerializerOptionsFactory.CamelCase
             );
 
@@ -39,7 +39,7 @@ public class MatchesProvider : IDataProvider<IReadOnlyList<Match>>
         _matches ??= new();
         Directory.CreateDirectory(PathConstants.DataDirectory);
         File.WriteAllText(
-            PathConstants.Matches,
+            PathConstants.MatchesFile,
             JsonSerializer.Serialize(
                 DataItemWrapper.Wrap(nameof(Match), _matches),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }

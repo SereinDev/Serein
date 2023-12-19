@@ -17,9 +17,11 @@ public class OutputFilter
         return stringBuilder.ToString();
     }
 
+    private static readonly Regex ColorCharsPatten = new(@"\x1b\[.*?m", RegexOptions.Compiled);
+
     public static string RemoveColorChars(string input)
     {
-        return Regex.Replace(input, @"\x1b\[.*?m", string.Empty);
+        return ColorCharsPatten.Replace(input, string.Empty);
     }
 
     public static string Clear(string input)

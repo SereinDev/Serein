@@ -25,12 +25,14 @@ public class AppBuilder
     {
         Services.AddSingleton<SettingProvider>();
         Services.AddSingleton<MatchesProvider>();
+        Services.AddSingleton<ScheduleRunner>();
 
         Services.AddSingleton<SystemInfoFactory>();
         Services.AddSingleton<Matcher>();
         Services.AddSingleton<ServerManager>();
         Services.AddSingleton<CommandParser>();
         Services.AddSingleton<CommandRunner>();
+        Services.AddSingleton<ScheduleRunner>();
 
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();

@@ -1,10 +1,12 @@
 using System.Text.Json.Nodes;
 
+using Microsoft.Extensions.Logging;
+
 using Serein.Core.Models.OneBot.Packets;
 
 namespace Serein.Core.Models;
 
-public interface IOutputHandler
+public interface IOutputHandler : ILogger
 {
     void LogServerOriginalOutput(string line);
     void LogServerNotice(string line);

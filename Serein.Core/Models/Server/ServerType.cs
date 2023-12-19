@@ -5,6 +5,6 @@ public enum ServerType
     Unknown,
 
     BedrockEdition,
-    
+
     JavaEdition,
 }
