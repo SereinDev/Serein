@@ -8,12 +8,17 @@ public static class EncodingMap
     static EncodingMap()
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+        UTF8 = new UTF8Encoding(false);
+        LittleEndianUnicode = new UnicodeEncoding(false, false);
+        BigEndianUnicode = new UnicodeEncoding(true, false);
+        GBK = Encoding.GetEncoding("gbk");
     }
 
-    public static readonly Encoding UTF8 = new UTF8Encoding(false);
-    public static readonly Encoding LittleEndianUnicode = new UnicodeEncoding(false, false);
-    public static readonly Encoding BigEndianUnicode = new UnicodeEncoding(true, false);
-    public static readonly Encoding GBK = Encoding.GetEncoding("gbk");
+    public static readonly Encoding UTF8;
+    public static readonly Encoding LittleEndianUnicode;
+    public static readonly Encoding BigEndianUnicode;
+    public static readonly Encoding GBK ;
 
     public static Encoding GetEncoding(EncodingType encodingType)
     {

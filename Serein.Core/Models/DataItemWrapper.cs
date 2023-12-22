@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace Serein.Core.Models;
 
 public abstract class DataItemWrapper
 {
+    [JsonPropertyOrder(0)]
     public string Type { get; set; } = string.Empty;
 
     public static DataItemWrapper<TItem> Wrap<TItem>(string type, TItem data)

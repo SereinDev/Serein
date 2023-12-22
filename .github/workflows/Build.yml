@@ -4,11 +4,15 @@ on:
   push:
     paths:
       - "**.cs"
+      - "**.csproj"
   pull_request:
+    paths:
+      - "**.cs"
+      - "**.csproj"
   workflow_dispatch:
 
 jobs:
-  BuildForWindows:
+  Build:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -24,5 +28,5 @@ jobs:
       - name: DotNet restore
         run: dotnet restore
 
-      - name: Build the project(Debug)
+      - name: Build the project
         run: dotnet build

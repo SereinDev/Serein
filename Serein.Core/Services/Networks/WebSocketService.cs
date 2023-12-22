@@ -17,7 +17,7 @@ public class WebSocketService : INetworkService
     private WatsonWsClient? _client;
 
     private SettingProvider SettingProvider => _host.Services.GetRequiredService<SettingProvider>();
-    private AppSetting AppSetting => SettingProvider.Value;
+    private Setting Setting => SettingProvider.Value;
 
     public event EventHandler? Opened;
     public event EventHandler? Closed;
@@ -33,16 +33,16 @@ public class WebSocketService : INetworkService
 
     private WatsonWsClient CreateNew()
     {
-        var client = new WatsonWsClient(new(AppSetting.Bot.Uri)).ConfigureOptions(
+        var client = new WatsonWsClient(new(Setting.Bot.Uri)).ConfigureOptions(
             (options) =>
             {
-                if (!string.IsNullOrEmpty(AppSetting.Bot.AccessToken))
+                if (!string.IsNullOrEmpty(Setting.Bot.AccessToken))
                     options.SetRequestHeader(
                         "Authorization",
-                        $"Bearer {AppSetting.Bot.AccessToken}"
+                        $"Bearer {Setting.Bot.AccessToken}"
                     );
 
-                foreach (var kv in AppSetting.Bot.Headers)
+                foreach (var kv in Setting.Bot.Headers)
                     options.SetRequestHeader(kv.Key, kv.Value);
             }
         );

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Timers;
 
 using SystemInfoLibrary.OperatingSystem;
@@ -11,8 +12,7 @@ public class SystemInfoFactory
     private readonly Timer _timer;
 
 #if WINDOWS
-    private readonly PerformanceCounter? _counter =
-        new("Processor", "% Processor Time", "_Total") { MachineName = "." };
+    private PerformanceCounter? _counter;
 #endif
 
     public OperatingSystemInfo Info { get; private set; }
@@ -23,6 +23,13 @@ public class SystemInfoFactory
         _timer = new(2500);
         _timer.Elapsed += UpdateInfo;
         _timer.Start();
+
+#if WINDOWS
+        // Initialize `_counter` asynchronously
+        Task.Run(
+            () => _counter = new("Processor", "% Processor Time", "_Total") { MachineName = "." }
+        );
+#endif
     }
 
     private void UpdateInfo(object? sender, ElapsedEventArgs e)
@@ -30,7 +37,7 @@ public class SystemInfoFactory
         Info.Update();
         UpdateNetSpeed();
 #if WINDOWS
-        CPUUsage = _counter?.NextValue() ?? 0;
+        Task.Run(() => CPUUsage = _counter?.NextValue() ?? 0);
 #endif
     }
 

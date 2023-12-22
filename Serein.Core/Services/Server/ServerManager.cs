@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 using System.Timers;
 
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
+using Serein.Core.Models.Commands;
+using Serein.Core.Models.Exceptions;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
@@ -32,28 +33,20 @@ public class ServerManager
     private readonly List<string> _commandHistory = new();
 
     private readonly Timer _updateTimer;
-    private StreamWriter? _inputWriter;
+    private BinaryWriter? _inputWriter;
     private Process? _serverProcess;
     private RestartStatus _restartStatus;
     private ServerInfo? _serverInfo;
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
 
-    private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
-    private readonly IOutputHandler _output;
+    private readonly IOutputHandler _logger;
     private readonly Matcher _matcher;
     private readonly SettingProvider _settingProvider;
 
-    public ServerManager(
-        IHost host,
-        IOutputHandler output,
-        SettingProvider settingManager,
-        Matcher matcher
-    )
+    public ServerManager(IOutputHandler output, SettingProvider settingManager, Matcher matcher)
     {
-        _host = host;
         _settingProvider = settingManager;
-        _output = output;
+        _logger = output;
         _matcher = matcher;
         _updateTimer = new(2000) { AutoReset = true };
         _updateTimer.Elapsed += (_, _) => UpdateInfo();
@@ -63,15 +56,19 @@ public class ServerManager
     public void Start()
     {
         if (Status == ServerStatus.Running)
-            throw new InvalidOperationException("服务器已在运行");
+            throw new ServerException("服务器已在运行");
+
+        if (string.IsNullOrEmpty(_settingProvider.Value.Server.FileName))
+            throw new ServerException("启动文件为空");
 
         _serverProcess = Process.Start(
             new ProcessStartInfo
             {
-                FileName = _settingProvider.Value.Server.Path,
+                FileName = _settingProvider.Value.Server.FileName,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 RedirectStandardInput = true,
                 StandardOutputEncoding = EncodingMap.GetEncoding(
                     _settingProvider.Value.Server.OutputEncoding
@@ -79,27 +76,18 @@ public class ServerManager
                 StandardErrorEncoding = EncodingMap.GetEncoding(
                     _settingProvider.Value.Server.OutputEncoding
                 ),
-                WorkingDirectory = Path.GetDirectoryName(_settingProvider.Value.Server.Path),
+                WorkingDirectory = Path.GetDirectoryName(_settingProvider.Value.Server.FileName),
                 Arguments = _settingProvider.Value.Server.Argument ?? string.Empty
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
 
         _restartStatus = RestartStatus.None;
-        _serverInfo = new();
+        _serverInfo = new() { StartTime = _serverProcess.StartTime };
         _commandHistory.Clear();
         _prevProcessCpuTime = TimeSpan.Zero;
 
-        _inputWriter = new(
-            _serverProcess.StandardInput.BaseStream,
-            EncodingMap.GetEncoding(_settingProvider.Value.Server.InputEncoding)
-        )
-        {
-            AutoFlush = true,
-            NewLine = _settingProvider.Value.Server.LineTerminator
-                .Replace("\\n", "\n")
-                .Replace("\\r", "\r")
-        };
+        _inputWriter = new(_serverProcess.StandardInput.BaseStream);
 
         _serverProcess.BeginOutputReadLine();
         _serverProcess.BeginErrorReadLine();
@@ -107,13 +95,13 @@ public class ServerManager
         _serverProcess.ErrorDataReceived += OnOutputDataReceived;
         _serverProcess.Exited += OnExit;
 
-        _output.LogServerNotice($"“{_settingProvider.Value.Server.Path}”启动中");
+        _logger.LogServerNotice($"“{_settingProvider.Value.Server.FileName}”启动中");
     }
 
     public void Stop(CallerType callerType)
     {
         if (Status != ServerStatus.Running)
-            throw new InvalidOperationException("服务器未运行");
+            throw new ServerException("服务器未运行");
 
         foreach (string command in _settingProvider.Value.Server.StopCommands)
         {
@@ -124,7 +112,11 @@ public class ServerManager
         }
     }
 
-    public void Input(string command, CallerType callerType)
+    public void Input(
+        string command,
+        CallerType callerType,
+        EncodingMap.EncodingType? encodingType = null
+    )
     {
         if (_inputWriter is null || Status != ServerStatus.Running)
         {
@@ -136,7 +128,20 @@ public class ServerManager
             return;
         }
 
-        _inputWriter.WriteLine(command);
+        _inputWriter.Write(
+            EncodingMap
+                .GetEncoding(encodingType ?? _settingProvider.Value.Server.InputEncoding)
+                .GetBytes(
+                    command
+                        + _settingProvider.Value.Server.LineTerminator
+                            .Replace("\\n", "\n")
+                            .Replace("\\r", "\r")
+                )
+        );
+        _inputWriter.Flush();
+
+        _serverInfo ??= new();
+        _serverInfo.InputLines++;
 
         if (
             (
@@ -147,50 +152,32 @@ public class ServerManager
             && !string.IsNullOrEmpty(command)
         )
             _commandHistory.Add(command);
+
         CommandHistoryIndex = CommandHistory.Count;
 
         _matcher.MatchServerInputAsync(command);
     }
 
-    public bool TryStart()
+    public void Terminate()
     {
-        try
-        {
-            Start();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+        if (Status != ServerStatus.Running)
+            throw new ServerException("服务器未运行");
 
-    public bool TryStart([NotNullWhen(false)] out Exception? e)
-    {
-        e = null;
-        try
-        {
-            Start();
-            return true;
-        }
-        catch (Exception ee)
-        {
-            e = ee;
-            return false;
-        }
+        _serverProcess?.Kill(true);
     }
 
     private void OnExit(object? sender, EventArgs e)
     {
         var exitCode = _serverProcess?.ExitCode;
         _serverProcess = null;
-        _output.LogServerNotice($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
+        _logger.LogServerNotice($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
 
-        if (
-            _restartStatus == RestartStatus.Waiting
-            || _restartStatus == RestartStatus.None && exitCode != 0
-        )
-            _ = WaitAndRestartAsync();
+        if (_settingProvider.Value.Server.AutoRestart)
+            if (
+                _restartStatus == RestartStatus.Waiting
+                || _restartStatus == RestartStatus.None && exitCode != 0
+            )
+                _ = WaitAndRestartAsync();
     }
 
     private void OnOutputDataReceived(object? sender, DataReceivedEventArgs e)
@@ -198,7 +185,10 @@ public class ServerManager
         if (e.Data is null)
             return;
 
-        _output.LogServerOriginalOutput(e.Data);
+        _serverInfo ??= new();
+        _serverInfo.OutputLines++;
+
+        _logger.LogServerOriginalOutput(e.Data);
         _matcher.MatchServerOutputAsync(OutputFilter.Clear(e.Data));
     }
 
@@ -207,14 +197,21 @@ public class ServerManager
         var i = 0;
 
         _restartStatus = RestartStatus.Preparing;
-        _output.LogServerNotice($"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器");
+        _logger.LogServerNotice($"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器");
         while (i < 50 && _restartStatus == RestartStatus.Preparing)
         {
             await Task.Delay(100);
             i++;
         }
 
-        TryStart();
+        try
+        {
+            Start();
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning("重启失败：{}", e.Message);
+        }
     }
 
     private void UpdateInfo()

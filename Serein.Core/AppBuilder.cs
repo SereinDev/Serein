@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,7 +14,14 @@ namespace Serein.Core;
 
 public class AppBuilder
 {
-    private IServiceCollection Services => _hostAppBuilder.Services;
+    static AppBuilder()
+    {
+        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+    }
+
+    public IServiceCollection Services => _hostAppBuilder.Services;
+
+    public ILoggingBuilder LoggingBuilder => _hostAppBuilder.Logging;
 
     private readonly HostApplicationBuilder _hostAppBuilder;
 

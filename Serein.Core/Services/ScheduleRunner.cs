@@ -8,7 +8,6 @@ using NCrontab;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Server;
 
 namespace Serein.Core.Services;
 

@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Server;
@@ -16,14 +19,14 @@ public class CommandParser
             RegexOptions.Compiled
         );
     private static readonly Regex Variable = new(@"\{(\w+)\}", RegexOptions.Compiled);
-
+    private readonly IHost _host;
     private readonly SystemInfoFactory _systemInfoFactory;
-    private readonly ServerManager _serverManager;
+    private ServerManager ServerManager => _host.Services.GetRequiredService<ServerManager>();
 
-    public CommandParser(SystemInfoFactory systemInfoFactory, ServerManager serverManager)
+    public CommandParser(IHost host, SystemInfoFactory systemInfoFactory)
     {
+        _host = host;
         _systemInfoFactory = systemInfoFactory;
-        _serverManager = serverManager;
     }
 
     public static bool Validate(string? command)
@@ -110,8 +113,8 @@ public class CommandParser
         if (!commandBody.Contains('%'))
             return commandBody.Replace("\\n", "\n");
 
-        var serverStatus = _serverManager.Status;
-        var serverInfo = _serverManager.ServerInfo;
+        var serverStatus = ServerManager.Status;
+        var serverInfo = ServerManager.ServerInfo;
         var currentTime = DateTime.Now;
 
         var text = Variable.Replace(
@@ -136,16 +139,16 @@ public class CommandParser
                     "sereinversion" => App.Version,
 
                     #region 服务器
-                    "gamemode" => _serverManager.ServerInfo?.Motd?.GameMode,
-                    "description" => _serverManager.ServerInfo?.Motd?.Description,
-                    "protocol" => _serverManager.ServerInfo?.Motd?.Protocol,
-                    "onlineplayer" => _serverManager.ServerInfo?.Motd?.OnlinePlayers,
-                    "maxplayer" => _serverManager.ServerInfo?.Motd?.PlayerCapacity,
-                    "original" => _serverManager.ServerInfo?.Motd?.OriginText,
-                    "latency" => _serverManager.ServerInfo?.Motd?.Latency.ToString("N1"),
-                    "version" => _serverManager.ServerInfo?.Motd?.Version,
-                    "favicon" => _serverManager.ServerInfo?.Motd?.FaviconCQCode,
-                    "exception" => _serverManager.ServerInfo?.Motd?.Exception,
+                    "gamemode" => ServerManager.ServerInfo?.Motd?.GameMode,
+                    "description" => ServerManager.ServerInfo?.Motd?.Description,
+                    "protocol" => ServerManager.ServerInfo?.Motd?.Protocol,
+                    "onlineplayer" => ServerManager.ServerInfo?.Motd?.OnlinePlayers,
+                    "maxplayer" => ServerManager.ServerInfo?.Motd?.PlayerCapacity,
+                    "original" => ServerManager.ServerInfo?.Motd?.OriginText,
+                    "latency" => ServerManager.ServerInfo?.Motd?.Latency.ToString("N1"),
+                    "version" => ServerManager.ServerInfo?.Motd?.Version,
+                    "favicon" => ServerManager.ServerInfo?.Motd?.FaviconCQCode,
+                    "exception" => ServerManager.ServerInfo?.Motd?.Exception,
                     "status" => serverStatus == ServerStatus.Running ? "已启动" : "未启动",
                     #endregion
 

@@ -18,7 +18,7 @@ public class ReverseWebSocketService : INetworkService
     private WatsonWsServer? _server;
 
     private SettingProvider SettingProvider => _host.Services.GetRequiredService<SettingProvider>();
-    private AppSetting AppSetting => SettingProvider.Value;
+    private Setting Setting => SettingProvider.Value;
 
     public event EventHandler? Opened;
     public event EventHandler? Closed;
@@ -34,7 +34,7 @@ public class ReverseWebSocketService : INetworkService
 
     private WatsonWsServer CreateNew()
     {
-        var server = new WatsonWsServer(new(AppSetting.Bot.Uri)) { EnableStatistics = true };
+        var server = new WatsonWsServer(new(Setting.Bot.Uri)) { EnableStatistics = true };
 
         server.ServerStopped += Closed;
         server.MessageReceived += MessageReceived;

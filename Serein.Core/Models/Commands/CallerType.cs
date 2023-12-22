@@ -1,4 +1,4 @@
-namespace Serein.Core.Models;
+namespace Serein.Core.Models.Commands;
 
 public enum CallerType
 {

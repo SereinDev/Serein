@@ -11,7 +11,7 @@ public class BotSetting
 
     public bool AutoReconnect { get; set; }
 
-    public bool EnableLog { get; set; }
+    public bool SaveLog { get; set; }
 
     public bool EnbaleOutputData { get; set; }
 

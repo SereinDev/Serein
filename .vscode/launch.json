@@ -10,11 +10,11 @@
             "name": ".NET Core",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/Serein/${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein-${input:targetApplication}.dll",
+            "program": "${workspaceFolder}/Serein.${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein.${input:targetApplication}.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "requireExactSource": false
         }
     ],
@@ -24,12 +24,9 @@
             "type": "pickString",
             "description": "目标调试对象",
             "options": [
-                "Console",
-                "Console_For_Unix",
-                "Winform",
-                "WPF"
+                "Cli"
             ],
-            "default": "Winform"
+            "default": "Cli"
         },
         {
             "id": "targetFramework",

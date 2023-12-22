@@ -25,7 +25,7 @@ public class WsNetwork
     private readonly Matcher _matcher;
 
     private IServiceProvider Services => _host.Services;
-    private AppSetting AppSetting => Services.GetRequiredService<SettingProvider>().Value;
+    private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
     private WebSocketService WebSocketService => Services.GetRequiredService<WebSocketService>();
     private ReverseWebSocketService ReverseWebSocketService =>
         Services.GetRequiredService<ReverseWebSocketService>();
@@ -62,8 +62,8 @@ public class WsNetwork
 
                 if (packet is not null)
                 {
-                    _matcher.MatchMsg(packet);
                     Output.LogBotMessage(packet);
+                    _matcher.MatchMsgAsync(packet);
                 }
                 break;
         }
@@ -76,7 +76,7 @@ public class WsNetwork
         if (Active)
             return;
 
-        _useReverseWebSocket = AppSetting.Bot.UseReverseWebSocket;
+        _useReverseWebSocket = Setting.Bot.UseReverseWebSocket;
 
         if (_useReverseWebSocket)
             await ReverseWebSocketService.StartAsync();
@@ -114,7 +114,7 @@ public class WsNetwork
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = AppSetting.Bot.AutoEscape
+                AutoEscape = Setting.Bot.AutoEscape
             }
         );
     }
@@ -127,7 +127,7 @@ public class WsNetwork
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = AppSetting.Bot.AutoEscape
+                AutoEscape = Setting.Bot.AutoEscape
             }
         );
     }

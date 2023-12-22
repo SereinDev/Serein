@@ -5,35 +5,35 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Models.Settings;
 
-public class ServerSetting
+public partial class ServerSetting
 {
-    public string? Argument;
+    public string FileName { get; set; } = string.Empty;
 
-    public bool AutoStop = true;
+    public string Argument { get; set; } = string.Empty;
 
-    public bool EnableRestart;
+    public bool AutoStopWhenCrashing { get; set; } = true;
 
-    public bool EnableOutputCommand = true;
+    public bool AutoRestart { get; set; }
 
-    public bool EnableLog;
+    public bool EnableOutputCommand { get; set; } = true;
 
-    public bool EnableUnicode;
+    public bool SaveLog { get; set; }
 
-    public string[] ExcludedOutputs = Array.Empty<string>();
+    public bool UseUnicodeChars { get; set; }
 
-    public EncodingMap.EncodingType InputEncoding;
+    public string[] ExcludedOutputs { get; set; } = Array.Empty<string>();
 
-    public string LineTerminator = Environment.NewLine;
+    public EncodingMap.EncodingType InputEncoding { get; set; }
 
-    public EncodingMap.EncodingType OutputEncoding;
+    public string LineTerminator { get; set; } = Environment.NewLine;
 
-    public int OutputStyle = 1;
+    public EncodingMap.EncodingType OutputEncoding { get; set; }
 
-    public string Path = string.Empty;
+    public OutputStyle OutputStyle { get; set; }
 
-    public int Port = 19132;
+    public int Port { get; set; } = 19132;
 
-    public string[] StopCommands = { "stop" };
+    public string[] StopCommands { get; set; } = { "stop" };
 
-    public ServerType Type;
+    public ServerType Type { get; set; }
 }

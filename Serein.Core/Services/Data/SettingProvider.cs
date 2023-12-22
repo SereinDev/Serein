@@ -8,38 +8,38 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class SettingProvider : IItemProvider<AppSetting>
+public class SettingProvider : IItemProvider<Setting>
 {
-    private AppSetting? _appSetting;
+    private Setting? _setting;
 
-    public AppSetting Value => _appSetting ?? Read();
+    public Setting Value => _setting ?? Read();
 
-    public AppSetting Read()
+    public Setting Read()
     {
-        if (File.Exists(PathConstants.MatchesFile))
+        if (File.Exists(PathConstants.SettingFile))
         {
-            var wrapper = JsonSerializer.Deserialize<DataItemWrapper<AppSetting>>(
-                File.ReadAllText(PathConstants.MatchesFile),
+            var wrapper = JsonSerializer.Deserialize<DataItemWrapper<Setting>>(
+                File.ReadAllText(PathConstants.SettingFile),
                 JsonSerializerOptionsFactory.CamelCase
             );
 
-            if (wrapper?.Type == nameof(AppSetting))
-                _appSetting = wrapper.Data;
+            if (wrapper?.Type == nameof(Setting))
+                _setting = wrapper.Data;
         }
         else
             Save();
 
-        _appSetting ??= new();
-        return _appSetting!;
+        _setting ??= new();
+        return _setting!;
     }
 
     public void Save()
     {
-        _appSetting ??= new();
+        _setting ??= new();
         File.WriteAllText(
             PathConstants.SettingFile,
             JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(AppSetting), _appSetting),
+                DataItemWrapper.Wrap(nameof(Setting), _setting),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
             )
         );
