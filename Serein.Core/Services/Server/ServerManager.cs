@@ -24,8 +24,7 @@ public class ServerManager
             : _serverProcess.HasExited
                 ? ServerStatus.Stopped
                 : ServerStatus.Running;
-    public int? PID => _serverProcess?.Id;
-    public DateTime? StartTime => _serverProcess?.StartTime;
+    public int? Pid => _serverProcess?.Id;
     public IServerInfo? ServerInfo => _serverInfo;
 
     public IReadOnlyList<string> CommandHistory => _commandHistory;
@@ -38,7 +37,7 @@ public class ServerManager
     private RestartStatus _restartStatus;
     private ServerInfo? _serverInfo;
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
-
+    private bool _isTerminated;
     private readonly IOutputHandler _logger;
     private readonly Matcher _matcher;
     private readonly SettingProvider _settingProvider;
@@ -81,7 +80,7 @@ public class ServerManager
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
-
+        _isTerminated = true;
         _restartStatus = RestartStatus.None;
         _serverInfo = new() { StartTime = _serverProcess.StartTime };
         _commandHistory.Clear();
@@ -98,7 +97,7 @@ public class ServerManager
         _logger.LogServerNotice($"“{_settingProvider.Value.Server.FileName}”启动中");
     }
 
-    public void Stop(CallerType callerType)
+    public void Stop()
     {
         if (Status != ServerStatus.Running)
             throw new ServerException("服务器未运行");
@@ -107,26 +106,29 @@ public class ServerManager
         {
             if (!string.IsNullOrEmpty(command))
             {
-                Input(command, callerType);
+                Input(command);
             }
         }
     }
 
+    public void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
+    {
+        if (command == "start")
+            Start();
+        else if (command == "stop")
+            _restartStatus = RestartStatus.None;
+        else
+            Input(command, encodingType);
+    }
+
     public void Input(
         string command,
-        CallerType callerType,
-        EncodingMap.EncodingType? encodingType = null
+        EncodingMap.EncodingType? encodingType = null,
+        bool fromUser = false
     )
     {
         if (_inputWriter is null || Status != ServerStatus.Running)
-        {
-            if (callerType == CallerType.Command)
-                if (command == "start")
-                    Start();
-                else if (command == "stop")
-                    _restartStatus = RestartStatus.None;
             return;
-        }
 
         _inputWriter.Write(
             EncodingMap
@@ -148,7 +150,7 @@ public class ServerManager
                 _commandHistory.Count > 0 && _commandHistory[^1] != command
                 || _commandHistory.Count == 0
             )
-            && callerType == CallerType.User
+            && fromUser
             && !string.IsNullOrEmpty(command)
         )
             _commandHistory.Add(command);
@@ -164,6 +166,7 @@ public class ServerManager
             throw new ServerException("服务器未运行");
 
         _serverProcess?.Kill(true);
+        _isTerminated = true;
     }
 
     private void OnExit(object? sender, EventArgs e)
@@ -172,7 +175,7 @@ public class ServerManager
         _serverProcess = null;
         _logger.LogServerNotice($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
 
-        if (_settingProvider.Value.Server.AutoRestart)
+        if (_settingProvider.Value.Server.AutoRestart && !_isTerminated)
             if (
                 _restartStatus == RestartStatus.Waiting
                 || _restartStatus == RestartStatus.None && exitCode != 0

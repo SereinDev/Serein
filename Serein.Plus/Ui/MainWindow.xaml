@@ -1,0 +1,47 @@
+﻿<Window
+    x:Class="Serein.Plus.Ui.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:utils="clr-namespace:Serein.Plus.Utils"
+    xmlns:local="clr-namespace:Serein.Plus.Ui"
+    mc:Ignorable="d"
+    Title="Serein.Plus"
+    Height="450"
+    Width="800"
+    Icon="../logo.ico"
+    ui:TitleBar.Height="36"
+    ui:TitleBar.ExtendViewIntoTitleBar="True"
+    ui:WindowHelper.SystemBackdropType="Mica"
+    ui:WindowHelper.UseModernWindowStyle="True">
+  <Window.Resources>
+    <utils:PixelsToGridLengthConverter x:Key="PixelsToGridLength" />
+  </Window.Resources>
+
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+    <TextBlock
+        x:Name="TitleBar"
+        Margin="15"
+        FontSize="14" />
+
+    <ui:NavigationView
+        x:Name="NavigationView"
+        Grid.Row="1"
+        SelectionChanged="OnNavigationViewSelectionChanged"
+        Loaded="OnNavigationViewLoaded">
+      <ui:Frame
+          x:Name="RootFrame"
+          NavigationFailed="OnNavigationFailed"
+          Navigating="OnNavigating" />
+    </ui:NavigationView>
+
+  </Grid>
+</Window>

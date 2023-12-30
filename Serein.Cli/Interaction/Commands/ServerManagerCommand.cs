@@ -85,7 +85,7 @@ public class ServerManagerCommand : Command
             case "stop":
                 try
                 {
-                    ServerManager.Stop(CallerType.User);
+                    ServerManager.Stop();
                 }
                 catch (Exception e)
                 {

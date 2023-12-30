@@ -4,19 +4,19 @@ namespace Serein.Core.Models.Server;
 
 public class ServerInfo : IServerInfo
 {
-    public string? FileName { get; set; }
+    public string? FileName { get; internal set; }
 
-    public string? Argument { get; set; }
+    public string? Argument { get; internal set; }
 
-    public DateTime? StartTime { get; set; }
+    public DateTime? StartTime { get; internal set; }
 
-    public DateTime? ExitTime { get; set; }
+    public DateTime? ExitTime { get; internal set; }
 
-    public ulong OutputLines { get; set; }
+    public ulong OutputLines { get; internal set; }
 
-    public ulong InputLines { get; set; }
+    public ulong InputLines { get; internal set; }
 
-    public double CPUUsage { get; set; }
+    public double CPUUsage { get; internal set; }
 
-    public Motd.Motd? Motd { get; set; }
+    public Motd.Motd? Motd { get; internal set; }
 }

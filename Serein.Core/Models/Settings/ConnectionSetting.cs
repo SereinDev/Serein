@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Serein.Core.Models.Settings;
 
-public class BotSetting
+public class ConnectionSetting
 {
     public string? AccessToken { get; set; }
 

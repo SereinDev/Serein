@@ -23,8 +23,11 @@ public class ScheduleRunner
     public ScheduleRunner(IHost host)
     {
         _host = host;
-
         _timer = new(2000) { Enabled = true };
+    }
+
+    public void Start()
+    {
         _timer.Elapsed += OnElapsed;
     }
 
@@ -58,7 +61,7 @@ public class ScheduleRunner
                 {
                     schedule.IsRunning = true;
                     CommandRunner
-                        .Run(schedule.CommandObj, new())
+                        .RunAsync(schedule.CommandObj)
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }
 

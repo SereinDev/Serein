@@ -100,7 +100,7 @@ public class CliLogger : IOutputHandler
 
     public void LogPluginError(string title, string line) { }
 
-    public void LogPluginInfo(string title, string line) { }
+    public void LogPluginInfomation(string title, string line) { }
 
     public void LogPluginWarn(string title, string line) { }
 

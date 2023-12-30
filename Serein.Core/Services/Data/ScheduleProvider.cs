@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -9,13 +10,16 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class ScheduleProvider : IItemProvider<IReadOnlyList<Schedule>>
+public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
 {
-    private List<Schedule>? _schedules;
+    public ObservableCollection<Schedule> Value { get; }
 
-    public IReadOnlyList<Schedule> Value => _schedules ?? Read();
+    public ScheduleProvider()
+    {
+        Value = new();
+    }
 
-    public IReadOnlyList<Schedule> Read()
+    public ObservableCollection<Schedule> Read()
     {
         if (File.Exists(PathConstants.SchedulesFile))
         {
@@ -25,23 +29,30 @@ public class ScheduleProvider : IItemProvider<IReadOnlyList<Schedule>>
             );
 
             if (wrapper?.Type == nameof(Schedule))
-                _schedules = wrapper.Data;
+                lock (Value)
+                {
+                    Value.Clear();
+
+                    if (wrapper.Data is not null)
+                        foreach (var match in wrapper.Data)
+                        {
+                            Value.Add(match);
+                        }
+                }
         }
         else
             Save();
 
-        _schedules ??= new();
-        return _schedules;
+        return Value;
     }
 
     public void Save()
     {
-        _schedules ??= new();
         Directory.CreateDirectory(PathConstants.DataDirectory);
         File.WriteAllText(
             PathConstants.SchedulesFile,
             JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(Schedule), _schedules),
+                DataItemWrapper.Wrap(nameof(Schedule), Value),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
             )
         );

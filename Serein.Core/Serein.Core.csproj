@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Jint" Version="3.0.0-beta-2057" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="NCrontab" Version="3.3.3" />
         <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />

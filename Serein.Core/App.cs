@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
+using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Json;
 
@@ -20,7 +21,8 @@ public class App : IHost
         Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? string.Empty;
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
-    private SettingProvider SettingProvider => _host.Services.GetRequiredService<SettingProvider>();
+    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
+    private ScheduleRunner ScheduleRunner => Services.GetRequiredService<ScheduleRunner>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
 
     public Action? OnStarted { get; set; }
@@ -56,6 +58,7 @@ public class App : IHost
     public Task StartAsync(CancellationToken cancellationToken = default)
     {
         OnStarted?.Invoke();
+        ScheduleRunner.Start();
         Logger.LogInformation("Serein.Cli 启动成功");
         return Task.CompletedTask;
     }

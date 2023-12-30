@@ -31,11 +31,11 @@ public class AppBuilder
         _hostAppBuilder.Logging.ClearProviders();
     }
 
-    public void ConfigueService()
+    public void ConfigureService()
     {
         Services.AddSingleton<SettingProvider>();
         Services.AddSingleton<MatchesProvider>();
-        Services.AddSingleton<ScheduleRunner>();
+        Services.AddSingleton<ScheduleProvider>();
 
         Services.AddSingleton<SystemInfoFactory>();
         Services.AddSingleton<Matcher>();

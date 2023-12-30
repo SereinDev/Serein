@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 
@@ -9,13 +10,17 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class MatchesProvider : IItemProvider<IReadOnlyList<Match>>
+public class MatchesProvider : IItemProvider<ObservableCollection<Match>>
 {
-    private List<Match>? _matches;
+    public MatchesProvider()
+    {
+        Value = new();
+        Read();
+    }
 
-    public IReadOnlyList<Match> Value => _matches ?? Read();
+    public ObservableCollection<Match> Value { get; }
 
-    public IReadOnlyList<Match> Read()
+    public ObservableCollection<Match> Read()
     {
         if (File.Exists(PathConstants.MatchesFile))
         {
@@ -25,23 +30,30 @@ public class MatchesProvider : IItemProvider<IReadOnlyList<Match>>
             );
 
             if (wrapper?.Type == nameof(Match))
-                _matches = wrapper.Data;
+                lock (Value)
+                {
+                    Value.Clear();
+
+                    if (wrapper.Data is not null)
+                        foreach (var match in wrapper.Data)
+                        {
+                            Value.Add(match);
+                        }
+                }
         }
         else
             Save();
 
-        _matches ??= new();
-        return _matches;
+        return Value;
     }
 
     public void Save()
     {
-        _matches ??= new();
         Directory.CreateDirectory(PathConstants.DataDirectory);
         File.WriteAllText(
             PathConstants.MatchesFile,
             JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(Match), _matches),
+                DataItemWrapper.Wrap(nameof(Match), Value),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
             )
         );

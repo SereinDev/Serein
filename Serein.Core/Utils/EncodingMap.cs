@@ -18,7 +18,7 @@ public static class EncodingMap
     public static readonly Encoding UTF8;
     public static readonly Encoding LittleEndianUnicode;
     public static readonly Encoding BigEndianUnicode;
-    public static readonly Encoding GBK ;
+    public static readonly Encoding GBK;
 
     public static Encoding GetEncoding(EncodingType encodingType)
     {

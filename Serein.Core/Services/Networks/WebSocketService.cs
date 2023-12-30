@@ -33,16 +33,16 @@ public class WebSocketService : INetworkService
 
     private WatsonWsClient CreateNew()
     {
-        var client = new WatsonWsClient(new(Setting.Bot.Uri)).ConfigureOptions(
+        var client = new WatsonWsClient(new(Setting.Connection.Uri)).ConfigureOptions(
             (options) =>
             {
-                if (!string.IsNullOrEmpty(Setting.Bot.AccessToken))
+                if (!string.IsNullOrEmpty(Setting.Connection.AccessToken))
                     options.SetRequestHeader(
                         "Authorization",
-                        $"Bearer {Setting.Bot.AccessToken}"
+                        $"Bearer {Setting.Connection.AccessToken}"
                     );
 
-                foreach (var kv in Setting.Bot.Headers)
+                foreach (var kv in Setting.Connection.Headers)
                     options.SetRequestHeader(kv.Key, kv.Value);
             }
         );

@@ -34,7 +34,7 @@ public class ReverseWebSocketService : INetworkService
 
     private WatsonWsServer CreateNew()
     {
-        var server = new WatsonWsServer(new(Setting.Bot.Uri)) { EnableStatistics = true };
+        var server = new WatsonWsServer(new(Setting.Connection.Uri)) { EnableStatistics = true };
 
         server.ServerStopped += Closed;
         server.MessageReceived += MessageReceived;

@@ -38,7 +38,7 @@ public static class Program
     private static void BuildApp()
     {
         var builder = new AppBuilder();
-        builder.ConfigueService();
+        builder.ConfigureService();
 
         builder.Services.AddSingleton<InputReader>();
         builder.Services.AddSingleton<IOutputHandler, CliLogger>(

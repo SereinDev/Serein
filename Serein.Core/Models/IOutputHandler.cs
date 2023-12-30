@@ -14,7 +14,7 @@ public interface IOutputHandler : ILogger
     void LogBotMessage(MessagePacket packet);
     void LogBotJsonPacket(JsonNode jsonNode);
     void LogPluginNotice(string line);
-    void LogPluginInfo(string title, string line);
+    void LogPluginInfomation(string title, string line);
     void LogPluginWarn(string title, string line);
     void LogPluginError(string title, string line);
 }

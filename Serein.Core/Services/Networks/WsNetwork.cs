@@ -76,7 +76,7 @@ public class WsNetwork
         if (Active)
             return;
 
-        _useReverseWebSocket = Setting.Bot.UseReverseWebSocket;
+        _useReverseWebSocket = Setting.Connection.UseReverseWebSocket;
 
         if (_useReverseWebSocket)
             await ReverseWebSocketService.StartAsync();
@@ -114,7 +114,7 @@ public class WsNetwork
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = Setting.Bot.AutoEscape
+                AutoEscape = Setting.Connection.AutoEscape
             }
         );
     }
@@ -127,7 +127,7 @@ public class WsNetwork
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = Setting.Bot.AutoEscape
+                AutoEscape = Setting.Connection.AutoEscape
             }
         );
     }

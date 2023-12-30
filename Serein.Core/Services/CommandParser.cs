@@ -92,14 +92,14 @@ public class CommandParser
         };
     }
 
-    public string Format(string? commandBody, CommandContext commandContext)
+    public string Format(string? commandBody, CommandContext? commandContext)
     {
         if (string.IsNullOrEmpty(commandBody))
             return string.Empty;
 
         var argument = ApplyVariables(commandBody, commandContext);
 
-        if (commandContext.Match != null)
+        if (commandContext?.Match != null)
             foreach (var key in commandContext.Match.Groups.Keys)
             {
                 argument = argument.Replace($"{{{key}}}", commandContext.Match.Groups[key].Value);
@@ -108,7 +108,7 @@ public class CommandParser
         return argument;
     }
 
-    private string ApplyVariables(string commandBody, CommandContext commandContext)
+    private string ApplyVariables(string commandBody, CommandContext? commandContext)
     {
         if (!commandBody.Contains('%'))
             return commandBody.Replace("\\n", "\n");
@@ -200,14 +200,14 @@ public class CommandParser
                     #endregion
 
                     #region 消息
-                    "msgid" => commandContext.MessagePacket?.MessageId,
-                    "id" => commandContext.MessagePacket?.UserId,
-                    "nickname" => commandContext.MessagePacket?.Sender?.Nickname,
-                    "title" => commandContext.MessagePacket?.Sender?.Title,
-                    "role" => commandContext.MessagePacket?.Sender?.RoleName,
+                    "msgid" => commandContext?.MessagePacket?.MessageId,
+                    "id" => commandContext?.MessagePacket?.UserId,
+                    "nickname" => commandContext?.MessagePacket?.Sender?.Nickname,
+                    "title" => commandContext?.MessagePacket?.Sender?.Title,
+                    "role" => commandContext?.MessagePacket?.Sender?.RoleName,
                     "shownname"
-                        => string.IsNullOrEmpty(commandContext.MessagePacket?.Sender?.Card)
-                            ? commandContext.MessagePacket?.Sender?.Nickname
+                        => string.IsNullOrEmpty(commandContext?.MessagePacket?.Sender?.Card)
+                            ? commandContext?.MessagePacket?.Sender?.Nickname
                             : commandContext.MessagePacket?.Sender?.Card,
                     #endregion
 

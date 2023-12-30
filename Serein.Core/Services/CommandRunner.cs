@@ -30,23 +30,12 @@ public class CommandRunner
         _commandParser = commandParser;
     }
 
-    public async Task Run(Command command, CommandContext commandContext)
+    public async Task RunAsync(Command command, CommandContext? commandContext = null)
     {
         if (command.Type == CommandType.Invalid)
             return;
 
         var body = _commandParser.Format(command.Body, commandContext);
-
-        var callerType = command.Origin switch
-        {
-            CommandOrigin.Msg => CallerType.Command,
-            CommandOrigin.ServerInput => CallerType.Command,
-            CommandOrigin.ServerOutput => CallerType.Command,
-            CommandOrigin.Schedule => CallerType.Command,
-            CommandOrigin.Plugin => CallerType.Plugin,
-            CommandOrigin.ConsoleExecute => CallerType.User,
-            _ => CallerType.Unknown
-        };
 
         switch (command.Type)
         {
@@ -55,7 +44,7 @@ public class CommandRunner
                 break;
 
             case CommandType.ServerInput:
-                ServerManager.Input(body, callerType);
+                ServerManager.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
                 break;
 
             case CommandType.SendGroupMsg:
@@ -107,7 +96,7 @@ public class CommandRunner
 
     private static async Task ExecuteShellCommand(string line)
     {
-        var process = new Process()
+        var process = new Process
         {
             StartInfo = new()
             {

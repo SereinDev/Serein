@@ -15,7 +15,7 @@ public partial class ServerSetting
 
     public bool AutoRestart { get; set; }
 
-    public bool EnableOutputCommand { get; set; } = true;
+    public bool OutputCommandUserInput { get; set; } = true;
 
     public bool SaveLog { get; set; }
 

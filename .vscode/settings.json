@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/bin/**": true,
+        "**/obj/**": true,
         "**/packages/**": true
     },
     "[csharp]": {

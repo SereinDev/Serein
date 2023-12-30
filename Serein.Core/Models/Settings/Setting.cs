@@ -4,7 +4,7 @@ public class Setting
 {
     public ServerSetting Server { get; set; } = new();
 
-    public BotSetting Bot { get; set; } = new();
+    public ConnectionSetting Connection { get; set; } = new();
 
     public ReactionSetting Reaction { get; set; } = new();
 

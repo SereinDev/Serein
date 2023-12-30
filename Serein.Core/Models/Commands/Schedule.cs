@@ -10,8 +10,20 @@ namespace Serein.Core.Models.Commands;
 public class Schedule
 {
     private string? _command;
+    private string? _cronExp;
 
-    public string? CronExp { get; set; }
+    public string? CronExp
+    {
+        get => _cronExp;
+        set
+        {
+            _cronExp = value;
+
+            if (!string.IsNullOrEmpty(_cronExp))
+                CrontabSchedule = CrontabSchedule.TryParse(_cronExp);
+            NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
+        }
+    }
 
     public string? Command
     {
@@ -30,7 +42,7 @@ public class Schedule
     [JsonIgnore]
     public Command? CommandObj { get; set; }
 
-    internal DateTime? NextTime { get; set; }
+    public DateTime? NextTime { get; internal set; }
 
     internal bool IsRunning { get; set; }
 

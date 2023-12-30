@@ -21,7 +21,7 @@ public class Matcher
     private readonly CommandRunner _commandRunner;
 
     private IServiceProvider Services => _host.Services;
-    private BotSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Bot;
+    private ConnectionSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Connection;
 
     public Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
     {
@@ -51,7 +51,7 @@ public class Matcher
                 var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
-                    tasks.Add(_commandRunner.Run(match.CommandObj, new(matches)));
+                    tasks.Add(_commandRunner.RunAsync(match.CommandObj, new(matches)));
             }
         }
 
@@ -79,7 +79,7 @@ public class Matcher
                 var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
-                    tasks.Add(_commandRunner.Run(match.CommandObj, new(matches)));
+                    tasks.Add(_commandRunner.RunAsync(match.CommandObj, new(matches)));
             }
         }
 
@@ -120,7 +120,7 @@ public class Matcher
                             && messagePacket.MessageType == MessageType.Private
                     )
                         tasks.Add(
-                            _commandRunner.Run(match.CommandObj, new(matches, messagePacket))
+                            _commandRunner.RunAsync(match.CommandObj, new(matches, messagePacket))
                         );
             }
         }

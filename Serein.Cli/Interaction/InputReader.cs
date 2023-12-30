@@ -94,7 +94,7 @@ public class InputReader
                 && !input.StartsWith(Setting.Application.CliCommandHeader)
             )
             {
-                ServerManager.Input(input, CallerType.User);
+                ServerManager.Input(input, null, true);
                 continue;
             }
 
