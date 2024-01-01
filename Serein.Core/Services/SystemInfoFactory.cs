@@ -7,6 +7,9 @@ using SystemInfoLibrary.OperatingSystem;
 
 namespace Serein.Core.Services;
 
+// warning CA1416: 可在所有平台上访问此调用站点。"PerformanceCounter" 仅在 'windows' 上受支持。
+#pragma warning disable CA1416
+
 public class SystemInfoFactory
 {
     private readonly Timer _timer;

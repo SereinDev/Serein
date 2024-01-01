@@ -14,9 +14,11 @@
     <Grid>
         <TabControl
                 MinHeight="400"
-                ui:TabControlHelper.IsAddTabButtonVisible="False"
-                Style="{StaticResource TabControlPivotStyle}">
+                ui:TabControlHelper.IsAddTabButtonVisible="False">
             <TabItem Header="输出">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.OEM}" />
+                </ui:TabItemHelper.Icon>
                 <RichTextBox
                         Name="ConsoleRichTextBox"
                         Margin="5"
@@ -28,6 +30,9 @@
             </TabItem>
 
             <TabItem Header="管理">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.AllApps}" />
+                </ui:TabItemHelper.Icon>
                 <DataGrid
                         x:Name="PluginDataGrid"
                         AutoGenerateColumns="False"
@@ -59,7 +64,9 @@
             </TabItem>
 
             <TabItem Header="市场">
-
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Package}" />
+                </ui:TabItemHelper.Icon>
             </TabItem>
         </TabControl>
     </Grid>

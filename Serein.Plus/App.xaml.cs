@@ -30,7 +30,7 @@ public partial class App : Application
 
     private static IHost Build()
     {
-        var builder = new AppBuilder();
+        var builder = new SereinAppBuilder();
         builder.ConfigureService();
 
         builder.Services.AddSingleton<PanelPage>();

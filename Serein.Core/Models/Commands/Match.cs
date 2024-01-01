@@ -30,6 +30,8 @@ public class Match
 
     public string? Restrictions { get; set; }
 
+    public string? Description { get; set; }
+
     public string? Command
     {
         get => _command;
@@ -53,6 +55,4 @@ public class Match
 
     [JsonIgnore]
     public Command? CommandObj { get; set; }
-
-    public string? Description { get; set; }
 }

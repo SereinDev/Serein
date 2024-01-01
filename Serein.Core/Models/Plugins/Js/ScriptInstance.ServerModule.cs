@@ -1,4 +1,5 @@
-using Serein.Core.Models.Commands;
+using System.Threading;
+
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Server;
 using Serein.Core.Utils;
@@ -9,10 +10,12 @@ public partial class ScriptInstance
 {
     public class ServerModule
     {
+        private readonly CancellationToken _token;
         private readonly ServerManager _serverManager;
 
-        public ServerModule(ServerManager serverManager)
+        public ServerModule(ServerManager serverManager, CancellationToken token)
         {
+            _token = token;
             _serverManager = serverManager;
         }
 
@@ -20,19 +23,35 @@ public partial class ScriptInstance
         public ServerStatus ServerStatus => _serverManager.Status;
         public int? Pid => _serverManager.Pid;
 
-        public void Start() => _serverManager.Start();
+        public void Start()
+        {
+            _token.ThrowIfCancellationRequested();
+            _serverManager.Start();
+        }
 
-        public void Stop() => _serverManager.Stop();
+        public void Stop()
+        {
+            _token.ThrowIfCancellationRequested();
+            _serverManager.Stop();
+        }
 
-        public void Terminate() => _serverManager.Terminate();
+        public void Terminate()
+        {
+            _token.ThrowIfCancellationRequested();
+            _serverManager.Terminate();
+        }
 
-        public void Input(string command, EncodingMap.EncodingType? encodingType = null) =>
+        public void Input(string command, EncodingMap.EncodingType? encodingType = null)
+        {
+            _token.ThrowIfCancellationRequested();
             _serverManager.Input(command, encodingType);
+        }
 
         public bool TryStart()
         {
             try
             {
+                _token.ThrowIfCancellationRequested();
                 _serverManager.Start();
                 return true;
             }
@@ -46,6 +65,7 @@ public partial class ScriptInstance
         {
             try
             {
+                _token.ThrowIfCancellationRequested();
                 _serverManager.Stop();
                 return true;
             }
@@ -59,6 +79,7 @@ public partial class ScriptInstance
         {
             try
             {
+                _token.ThrowIfCancellationRequested();
                 _serverManager.Terminate();
                 return true;
             }

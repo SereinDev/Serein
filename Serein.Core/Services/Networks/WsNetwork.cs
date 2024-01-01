@@ -33,7 +33,7 @@ public class WsNetwork
 
     private bool _useReverseWebSocket;
 
-    private bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
+    public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
 
     public WsNetwork(IHost host, Matcher matcher)
     {
@@ -74,7 +74,7 @@ public class WsNetwork
     public async Task StartAsync()
     {
         if (Active)
-            return;
+            throw new InvalidOperationException();
 
         _useReverseWebSocket = Setting.Connection.UseReverseWebSocket;
 
@@ -82,6 +82,17 @@ public class WsNetwork
             await ReverseWebSocketService.StartAsync();
         else
             await WebSocketService.StartAsync();
+    }
+
+    public async Task StopAsync()
+    {
+        _useReverseWebSocket = Setting.Connection.UseReverseWebSocket;
+
+        if (ReverseWebSocketService.Active)
+            await ReverseWebSocketService.StopAsync();
+
+        if (WebSocketService.Active)
+            await WebSocketService.StopAsync();
     }
 
     public async Task SendAsync<T>(T body)

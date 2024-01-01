@@ -34,7 +34,8 @@ public class AppOutputHandler : IOutputHandler
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter
-    ) { }
+    )
+    { }
 
     public void LogBotJsonPacket(JsonNode jsonNode) { }
 

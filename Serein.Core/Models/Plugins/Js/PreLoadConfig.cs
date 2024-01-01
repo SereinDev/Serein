@@ -5,7 +5,7 @@ namespace Serein.Core.Models.Plugins.Js;
 /// <remarks>
 /// https://github.com/sebastienros/jint/blob/main/Jint/Options.cs
 /// </remarks>
-public class PreLoadConfig
+public class PreloadConfig
 {
     public string[] NetAssemblies { get; init; } = Array.Empty<string>();
 

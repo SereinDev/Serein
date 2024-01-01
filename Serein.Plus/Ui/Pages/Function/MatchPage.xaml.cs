@@ -1,13 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
 
-using Page = iNKORE.UI.WPF.Modern.Controls.Page;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
+
+using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Ui.Pages.Function;
 

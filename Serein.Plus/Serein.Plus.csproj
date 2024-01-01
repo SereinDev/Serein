@@ -7,17 +7,17 @@
         <UseWPF>true</UseWPF>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
 
-        <Authors>Zaitonn</Authors>
-        <Version>2.0.0.0-alpha</Version>
-        <Company>https://github.com/Zaitonn/Serein</Company>
-        <Description>极简但多功能的服务器面板软件</Description>
-        <Product>服务器面板软件</Product>
-        <Copyright>Copyright (C) 2023 Zaitonn</Copyright>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>false</SelfContained>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
 		<Resource Include="../Sources/logo.ico" />
+        <Compile Include="../Shared/*.cs" />
     </ItemGroup>
 
     <ItemGroup>

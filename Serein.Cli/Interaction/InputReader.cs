@@ -42,7 +42,7 @@ public class InputReader
         var attributes = new List<(CommandDescriptionAttribute, CommandUsageAttribute[])>();
         var commands = new Dictionary<string, Command>();
 
-        stringBuilder.AppendLine($"Serein Cli {App.Version}");
+        stringBuilder.AppendLine($"Serein Cli {SereinApp.Version}");
         foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
         {
             var attribute = type.GetCustomAttribute<CommandDescriptionAttribute>();

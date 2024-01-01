@@ -15,7 +15,7 @@ public static class Encryption
 
     public static string GetHexString(byte[] targetData)
     {
-        StringBuilder stringBuilder = new();
+        var stringBuilder = new StringBuilder();
         for (int i = 0; i < targetData.Length; i++)
         {
             stringBuilder.Append(targetData[i].ToString("x2"));

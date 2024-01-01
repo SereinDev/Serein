@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:control="clr-namespace:Serein.Plus.Ui.Controls"
     Title="控制面板"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-  <Grid Margin="10">
+  <Grid Margin="15">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="160" />
       <ColumnDefinition Width="10" />
@@ -26,7 +27,7 @@
     <Border
         x:Name="ContextMenuBorder"
         BorderBrush="{DynamicResource SystemControlBackgroundBaseLowRevealBorderBrush}"
-        BorderThickness="2"
+        BorderThickness="1"
         CornerRadius="5"
         Padding="5">
       <Grid>
@@ -116,10 +117,20 @@
 
     <Grid
         Grid.Row="1"
-        Margin="10,5">
+        Margin="5">
+      <Grid.Resources>
+        <Style
+            TargetType="Button"
+            BasedOn="{StaticResource DefaultButtonStyle}">
+          <Setter
+              Property="Margin"
+              Value="3" />
+        </Style>
+      </Grid.Resources>
+
       <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition />
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
       </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
         <RowDefinition />
@@ -127,24 +138,23 @@
       </Grid.RowDefinitions>
 
       <Button
-          Margin="3"
+          Tag="start"
           Click="ControlButton_Click"
           Content="启动" />
       <Button
           Grid.Column="1"
-          Margin="3"
+          Tag="stop"
           Click="ControlButton_Click"
           HorizontalAlignment="Stretch"
           Content="停止" />
       <Button
           Grid.Row="1"
-          Margin="3"
+          Tag="restrat"
           Click="ControlButton_Click"
           Content="重启" />
       <Button
           Grid.Row="1"
           Grid.Column="1"
-          Margin="3"
           Content="结束进程">
 
         <ui:FlyoutService.Flyout>
@@ -155,41 +165,38 @@
                   Margin="0,0,0,12" />
               <Button
                   Content="继续"
+                  Tag="terminate"
                   Click="ControlButton_Click" />
             </StackPanel>
           </ui:Flyout>
         </ui:FlyoutService.Flyout>
-
       </Button>
     </Grid>
 
 
     <DockPanel
+        Margin="15,0"
         Grid.RowSpan="3"
         Grid.Column="1"
         Grid.ColumnSpan="2">
-      <DockPanel DockPanel.Dock="Bottom">
+      <DockPanel
+          DockPanel.Dock="Bottom"
+          Margin="0,5">
         <Button
-            Margin="5"
-            Padding="0,3"
+            Margin="10,0,0,0"
+            Padding="5"
             Click="Enter_Click"
             DockPanel.Dock="Right">
           <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Up}" />
         </Button>
         <TextBox
             Name="InputBox"
-            Margin="5"
             PreviewKeyDown="InputBox_PreviewKeyDown" />
       </DockPanel>
-      <RichTextBox
-          Name="PanelRichTextBox"
+      <control:Console
+          x:Name="ConsoleControl"
           ui:ControlHelper.Header="控制台输出"
-          Margin="5"
-          DockPanel.Dock="Top"
-          IsReadOnly="True"
-          Focusable="False"
-          IsUndoEnabled="False"
-          UndoLimit="0" />
+          DockPanel.Dock="Top" />
     </DockPanel>
   </Grid>
 </ui:Page>

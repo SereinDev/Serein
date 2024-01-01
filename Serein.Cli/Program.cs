@@ -22,7 +22,7 @@ public static class Program
         Console.ResetColor();
 
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            Console.Title = $"Serein.Cli {App.Version}";
+            Console.Title = $"Serein.Cli {SereinApp.Version}";
 
         return CreateCommand().Invoke(args);
     }
@@ -37,7 +37,7 @@ public static class Program
 
     private static void BuildApp()
     {
-        var builder = new AppBuilder();
+        var builder = new SereinAppBuilder();
         builder.ConfigureService();
 
         builder.Services.AddSingleton<InputReader>();

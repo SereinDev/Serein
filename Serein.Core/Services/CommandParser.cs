@@ -136,7 +136,7 @@ public class CommandParser
                     "datetime" => currentTime.ToString(),
                     #endregion
 
-                    "sereinversion" => App.Version,
+                    "sereinversion" => SereinApp.Version,
 
                     #region 服务器
                     "gamemode" => ServerManager.ServerInfo?.Motd?.GameMode,

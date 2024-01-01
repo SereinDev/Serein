@@ -15,10 +15,10 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core;
 
-public class App : IHost
+public class SereinApp : IHost
 {
     public static readonly string Version =
-        Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? string.Empty;
+        Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? "?";
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
@@ -30,7 +30,7 @@ public class App : IHost
 
     private readonly IHost _host;
 
-    public App(IHost host)
+    public SereinApp(IHost host)
     {
         _host = host;
 
@@ -59,7 +59,8 @@ public class App : IHost
     {
         OnStarted?.Invoke();
         ScheduleRunner.Start();
-        Logger.LogInformation("Serein.Cli 启动成功");
+        Logger.LogInformation("Serein启动成功");
+        
         return Task.CompletedTask;
     }
 

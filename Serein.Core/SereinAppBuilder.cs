@@ -8,13 +8,15 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks;
+using Serein.Core.Services.Plugins;
+using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Server;
 
 namespace Serein.Core;
 
-public class AppBuilder
+public class SereinAppBuilder
 {
-    static AppBuilder()
+    static SereinAppBuilder()
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
     }
@@ -25,7 +27,7 @@ public class AppBuilder
 
     private readonly HostApplicationBuilder _hostAppBuilder;
 
-    public AppBuilder()
+    public SereinAppBuilder()
     {
         _hostAppBuilder = new HostApplicationBuilder();
         _hostAppBuilder.Logging.ClearProviders();
@@ -47,7 +49,10 @@ public class AppBuilder
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsNetwork>();
+
+        Services.AddSingleton<EngineFactory>();
+        Services.AddSingleton<PluginHost>();
     }
 
-    public App Build() => new(_hostAppBuilder.Build());
+    public SereinApp Build() => new(_hostAppBuilder.Build());
 }

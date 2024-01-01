@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    xmlns:utils="clr-namespace:Serein.Plus.Utils"
     xmlns:local="clr-namespace:Serein.Plus.Ui"
     mc:Ignorable="d"
     Title="Serein.Plus"
@@ -16,9 +15,6 @@
     ui:TitleBar.ExtendViewIntoTitleBar="True"
     ui:WindowHelper.SystemBackdropType="Mica"
     ui:WindowHelper.UseModernWindowStyle="True">
-  <Window.Resources>
-    <utils:PixelsToGridLengthConverter x:Key="PixelsToGridLength" />
-  </Window.Resources>
 
 
   <Grid>

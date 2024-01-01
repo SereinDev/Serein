@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,12 +29,18 @@ public class VersionCommand : Command
             .RoundedBorder()
             .AddColumns(
                 new TableColumn("名称") { Alignment = Justify.Center },
-                new("Serein.Cli")
+                new(Assembly.GetExecutingAssembly().FullName ?? string.Empty)
                 {
                     Alignment = Justify.Center
                 }
             )
-            .AddRow("版本", App.Version);
+            .AddRow(
+                "详细版本",
+                Assembly
+                    .GetExecutingAssembly()
+                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                    ?.InformationalVersion ?? string.Empty
+            );
         var commandlineArgs = Environment.GetCommandLineArgs();
         if (commandlineArgs.Length > 0 && File.Exists(commandlineArgs[0]))
             table
