@@ -34,13 +34,10 @@ public partial class App : Application
         builder.ConfigureService();
 
         builder.Services.AddSingleton<PanelPage>();
-
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
         builder.Services.AddSingleton<PluginPage>();
-
         builder.Services.AddSingleton<NotImplPage>();
-
         builder.Services.AddSingleton<SettingPage>();
 
         builder.Services.AddSingleton<IOutputHandler, AppOutputHandler>(

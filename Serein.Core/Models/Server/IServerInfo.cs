@@ -1,5 +1,7 @@
 using System;
 
+using MineStatLib;
+
 namespace Serein.Core.Models.Server;
 
 public interface IServerInfo
@@ -18,5 +20,5 @@ public interface IServerInfo
 
     public double CPUUsage { get; }
 
-    public Motd.Motd? Motd { get; }
+    public MineStat? Motd { get; }
 }

@@ -6,6 +6,8 @@ using System.Reflection;
 using Jint;
 using Jint.Runtime.Interop;
 
+using MineStatLib;
+
 using Serein.Core.Models;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Plugins.Js;
@@ -14,12 +16,12 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class EngineFactory
+public class JsEngineFactory
 {
     private readonly SettingProvider _settingProvider;
     private readonly IOutputHandler _logger;
 
-    public EngineFactory(SettingProvider settingProvider, IOutputHandler logger)
+    public JsEngineFactory(SettingProvider settingProvider, IOutputHandler logger)
     {
         _settingProvider = settingProvider;
         _logger = logger;
@@ -41,7 +43,7 @@ public class EngineFactory
             catch (Exception e)
             {
                 _logger.LogPluginWarn(
-                    jsPlugin.Namespace,
+                    jsPlugin.FileName,
                     $"加载程序集“{assemblyName}”时出现异常：" + e.Message
                 );
             }
@@ -81,6 +83,10 @@ public class EngineFactory
         AddTypeReference<MatchFieldType>(engine);
         AddTypeReference<Match>(engine);
         AddTypeReference<Schedule>(engine);
+
+        AddTypeReference<MineStat>(engine);
+        AddTypeReference<ConnStatus>(engine);
+        AddTypeReference<SlpProtocol>(engine);
 
         return engine;
     }

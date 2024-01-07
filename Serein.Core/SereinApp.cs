@@ -15,7 +15,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core;
 
-public class SereinApp : IHost
+public sealed class SereinApp : IHost
 {
     public static readonly string Version =
         Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? "?";
@@ -34,8 +34,7 @@ public class SereinApp : IHost
     {
         _host = host;
 
-        Logger.LogInformation("Serein.Cli");
-        Logger.LogInformation("版本: {}", Version);
+        Logger.LogInformation("Serein {}", Version);
         Logger.LogInformation("仓库: https://github.com/Zaitonn/Serein");
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
 
@@ -52,6 +51,7 @@ public class SereinApp : IHost
 
     public void Dispose()
     {
+        _cancellationTokenSource.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -60,7 +60,7 @@ public class SereinApp : IHost
         OnStarted?.Invoke();
         ScheduleRunner.Start();
         Logger.LogInformation("Serein启动成功");
-        
+
         return Task.CompletedTask;
     }
 

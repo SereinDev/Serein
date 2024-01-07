@@ -1,4 +1,8 @@
-﻿namespace Serein.Core.Models.Settings;
+﻿using System.ComponentModel;
+
+using PropertyChanged;
+
+namespace Serein.Core.Models.Settings;
 
 public class Setting
 {

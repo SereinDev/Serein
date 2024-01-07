@@ -139,16 +139,17 @@ public class CommandParser
                     "sereinversion" => SereinApp.Version,
 
                     #region 服务器
-                    "gamemode" => ServerManager.ServerInfo?.Motd?.GameMode,
-                    "description" => ServerManager.ServerInfo?.Motd?.Description,
+                    "gamemode" => ServerManager.ServerInfo?.Motd?.Gamemode,
+                    "description" => ServerManager.ServerInfo?.Motd?.Stripped_Motd,
                     "protocol" => ServerManager.ServerInfo?.Motd?.Protocol,
-                    "onlineplayer" => ServerManager.ServerInfo?.Motd?.OnlinePlayers,
-                    "maxplayer" => ServerManager.ServerInfo?.Motd?.PlayerCapacity,
-                    "original" => ServerManager.ServerInfo?.Motd?.OriginText,
-                    "latency" => ServerManager.ServerInfo?.Motd?.Latency.ToString("N1"),
+                    "onlineplayer" => ServerManager.ServerInfo?.Motd?.CurrentPlayers,
+                    "maxplayer" => ServerManager.ServerInfo?.Motd?.MaximumPlayers,
+                    "latency"
+                        => ServerManager.ServerInfo?.Motd is not null
+                            ? (ServerManager.ServerInfo.Motd.Latency / 1000).ToString("N1")
+                            : "?",
                     "version" => ServerManager.ServerInfo?.Motd?.Version,
-                    "favicon" => ServerManager.ServerInfo?.Motd?.FaviconCQCode,
-                    "exception" => ServerManager.ServerInfo?.Motd?.Exception,
+                    "favicon" => ServerManager.ServerInfo?.Motd?.Favicon,
                     "status" => serverStatus == ServerStatus.Running ? "已启动" : "未启动",
                     #endregion
 

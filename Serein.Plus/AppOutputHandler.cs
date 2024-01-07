@@ -53,5 +53,5 @@ public class AppOutputHandler : IOutputHandler
 
     public void LogServerNotice(string line) { }
 
-    public void LogServerOriginalOutput(string line) { }
+    public void LogServerRawOutput(string line) { }
 }

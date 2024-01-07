@@ -8,7 +8,7 @@ namespace Serein.Core.Models;
 
 public interface IOutputHandler : ILogger
 {
-    void LogServerOriginalOutput(string line);
+    void LogServerRawOutput(string line);
     void LogServerNotice(string line);
     void LogBotNotice(string line);
     void LogBotMessage(MessagePacket packet);

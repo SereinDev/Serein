@@ -31,7 +31,7 @@ public partial class ServerSetting
 
     public OutputStyle OutputStyle { get; set; }
 
-    public int Port { get; set; } = 19132;
+    public ushort Port { get; set; } = 19132;
 
     public string[] StopCommands { get; set; } = { "stop" };
 

@@ -14,7 +14,7 @@ using Serein.Core.Services.Server;
 
 namespace Serein.Core;
 
-public class SereinAppBuilder
+public sealed class SereinAppBuilder
 {
     static SereinAppBuilder()
     {
@@ -50,8 +50,10 @@ public class SereinAppBuilder
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsNetwork>();
 
-        Services.AddSingleton<EngineFactory>();
         Services.AddSingleton<PluginHost>();
+        Services.AddSingleton<EventDispatcher>();
+        Services.AddSingleton<JsEngineFactory>();
+        Services.AddSingleton<JsManager>();
     }
 
     public SereinApp Build() => new(_hostAppBuilder.Build());

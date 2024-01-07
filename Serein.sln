@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Lite", "Serein.Lite\Serein.Lite.csproj", "{61FA7143-3293-4942-A386-C52E9C194D21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Plus", "Serein.Plus\Serein.Plus.csproj", "{B827D8B9-A42D-4B07-8184-91E7A035E76A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Tests", "Serein.Tests\Serein.Tests.csproj", "{980012F6-7E13-4611-AE59-0E8912D980EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +38,9 @@ Global
 		{B827D8B9-A42D-4B07-8184-91E7A035E76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B827D8B9-A42D-4B07-8184-91E7A035E76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B827D8B9-A42D-4B07-8184-91E7A035E76A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{980012F6-7E13-4611-AE59-0E8912D980EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{980012F6-7E13-4611-AE59-0E8912D980EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{980012F6-7E13-4611-AE59-0E8912D980EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{980012F6-7E13-4611-AE59-0E8912D980EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

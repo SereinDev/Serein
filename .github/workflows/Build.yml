@@ -35,7 +35,7 @@ jobs:
           echo.[assembly: System.Reflection.AssemblyInformationalVersion("${{env.version}}+${{github.sha}}#${{github.run_number}}")]>Shared/AssemblyInformationalVersionAttribute.cs
 
       - name: Publish the solution
-        run: publish.bat
+        run: ./publish.bat
 
       # Serein.Lite
       - name: Upload binary files(Serein.Lite_win-x64)

@@ -41,7 +41,7 @@ public partial class ScriptInstance
     }
 
     public static string Version => SereinApp.Version;
-    public string Namespace => _jsPlugin.Namespace;
+    public string Namespace => _jsPlugin.FileName;
     public Setting Setting => SettingProvider.Value;
 
     public void RunCommand(string? command)
@@ -61,6 +61,6 @@ public partial class ScriptInstance
         _token.ThrowIfCancellationRequested();
 
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.LogPluginInfomation(_jsPlugin.Namespace, str);
+        Logger.LogPluginInfomation(_jsPlugin.FileName, str);
     }
 }

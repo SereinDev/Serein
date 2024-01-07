@@ -8,10 +8,11 @@ using System.Timers;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
-using Serein.Core.Models.Commands;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Exceptions;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Server;
@@ -40,13 +41,20 @@ public class ServerManager
     private bool _isTerminated;
     private readonly IOutputHandler _logger;
     private readonly Matcher _matcher;
+    private readonly EventDispatcher _eventDispatcher;
     private readonly SettingProvider _settingProvider;
 
-    public ServerManager(IOutputHandler output, SettingProvider settingManager, Matcher matcher)
+    public ServerManager(
+        IOutputHandler output,
+        SettingProvider settingManager,
+        Matcher matcher,
+        EventDispatcher eventDispatcher
+    )
     {
         _settingProvider = settingManager;
         _logger = output;
         _matcher = matcher;
+        _eventDispatcher = eventDispatcher;
         _updateTimer = new(2000) { AutoReset = true };
         _updateTimer.Elapsed += (_, _) => UpdateInfo();
         _updateTimer.Start();
@@ -59,6 +67,9 @@ public class ServerManager
 
         if (string.IsNullOrEmpty(_settingProvider.Value.Server.FileName))
             throw new ServerException("启动文件为空");
+
+        if (!_eventDispatcher.Dispatch(Event.ServerStarting))
+            return;
 
         _serverProcess = Process.Start(
             new ProcessStartInfo
@@ -95,12 +106,17 @@ public class ServerManager
         _serverProcess.Exited += OnExit;
 
         _logger.LogServerNotice($"“{_settingProvider.Value.Server.FileName}”启动中");
+
+        _eventDispatcher.Dispatch(Event.ServerStarted);
     }
 
     public void Stop()
     {
         if (Status != ServerStatus.Running)
             throw new ServerException("服务器未运行");
+
+        if (!_eventDispatcher.Dispatch(Event.ServerStopping))
+            return;
 
         foreach (string command in _settingProvider.Value.Server.StopCommands)
         {
@@ -128,6 +144,9 @@ public class ServerManager
     )
     {
         if (_inputWriter is null || Status != ServerStatus.Running)
+            return;
+
+        if (!_eventDispatcher.Dispatch(Event.ServerInput, command))
             return;
 
         _inputWriter.Write(
@@ -171,8 +190,7 @@ public class ServerManager
 
     private void OnExit(object? sender, EventArgs e)
     {
-        var exitCode = _serverProcess?.ExitCode;
-        _serverProcess = null;
+        var exitCode = _serverProcess?.ExitCode ?? 0;
         _logger.LogServerNotice($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
 
         if (_settingProvider.Value.Server.AutoRestart && !_isTerminated)
@@ -181,6 +199,11 @@ public class ServerManager
                 || _restartStatus == RestartStatus.None && exitCode != 0
             )
                 _ = WaitAndRestartAsync();
+
+        if (!_eventDispatcher.Dispatch(Event.ServerExited, exitCode, DateTime.Now))
+            return;
+
+        _serverProcess = null;
     }
 
     private void OnOutputDataReceived(object? sender, DataReceivedEventArgs e)
@@ -191,8 +214,17 @@ public class ServerManager
         _serverInfo ??= new();
         _serverInfo.OutputLines++;
 
-        _logger.LogServerOriginalOutput(e.Data);
-        _matcher.MatchServerOutputAsync(OutputFilter.Clear(e.Data));
+        _logger.LogServerRawOutput(e.Data);
+
+        if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, e.Data))
+            return;
+
+        var filtered = OutputFilter.Clear(e.Data);
+
+        if (!_eventDispatcher.Dispatch(Event.ServerOutput, filtered))
+            return;
+
+        _matcher.MatchServerOutputAsync(filtered);
     }
 
     private async Task WaitAndRestartAsync()
@@ -217,7 +249,7 @@ public class ServerManager
         }
     }
 
-    private void UpdateInfo()
+    private async Task UpdateInfo()
     {
         _serverInfo ??= new();
 
@@ -240,5 +272,9 @@ public class ServerManager
             / Environment.ProcessorCount
             * 100;
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
+
+        await Task.Run(
+            () => _serverInfo.Motd = new("localhost", _settingProvider.Value.Server.Port)
+        );
     }
 }

@@ -114,7 +114,7 @@ public class CliLogger : IOutputHandler
         this.LogInformation("{}", line);
     }
 
-    public void LogServerOriginalOutput(string line)
+    public void LogServerRawOutput(string line)
     {
         Console.WriteLine(line);
     }

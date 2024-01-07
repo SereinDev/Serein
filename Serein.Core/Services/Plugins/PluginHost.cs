@@ -1,18 +1,11 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-
-using Jint.Runtime;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models;
-using Serein.Core.Models.Plugins.Js;
-using Serein.Core.Utils;
-using Serein.Core.Utils.Json;
+using Serein.Core.Models.Plugins;
+using Serein.Core.Services.Plugins.Js;
 
 namespace Serein.Core.Services.Plugins;
 
@@ -20,15 +13,15 @@ public class PluginHost
 {
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private JsManager JsManager => Services.GetRequiredService<JsManager>();
+    private EventDispatcher EventDispatcher => Services.GetRequiredService<EventDispatcher>();
     public ConcurrentDictionary<string, string> Variables { get; }
-    public List<JsPlugin> JsPlugins { get; private set; }
+    public event EventHandler? PluginsReloading;
 
     public PluginHost(IHost host)
     {
         _host = host;
         Variables = new();
-        JsPlugins = new();
     }
 
     public void SetVariable(string key, object? value)
@@ -37,58 +30,18 @@ public class PluginHost
         Variables.AddOrUpdate(key, str, (_, _) => str);
     }
 
-    public void LoadAll()
+    public void Load()
     {
-        Unload();
-        Directory.CreateDirectory(PathConstants.PluginDirectory);
-        LoadJs();
+        JsManager.Load();
     }
 
-    private void Unload()
+    public void Reload()
     {
-        JsPlugins.ForEach((jsPlugin) => jsPlugin.Dispose());
-        Variables.Clear();
-    }
+        EventDispatcher.Dispatch(Event.PluginsUnloading);
 
-    private void LoadJs()
-    {
-        var files = Directory.GetFiles(PathConstants.PluginDirectory, "*.js");
-        var plugins = new List<JsPlugin>();
+        JsManager.Unload();
 
-        foreach (var file in files)
-        {
-            var @namespace = Path.GetFileNameWithoutExtension(file);
-            PreloadConfig? preLoadConfig = null;
-            var configPath = Path.Combine(
-                PathConstants.PluginDirectory,
-                @namespace,
-                PathConstants.PluginConfigFileName
-            );
-
-            if (File.Exists(configPath))
-                preLoadConfig = JsonSerializer.Deserialize<PreloadConfig>(
-                    File.ReadAllText(configPath),
-                    JsonSerializerOptionsFactory.CamelCase
-                );
-
-            var plugin = new JsPlugin(_host, @namespace, preLoadConfig ?? new());
-            var text = File.ReadAllText(file);
-
-            try
-            {
-                plugin.Execute(text);
-                plugin.Loaded = true;
-            }
-            catch (JavaScriptException e)
-            {
-                Logger.LogPluginError(@namespace, $"{e.Message}\n{e.JavaScriptStackTrace}");
-            }
-            catch (Exception e)
-            {
-                Logger.LogPluginError(@namespace, e.Message);
-            }
-        }
-
-        JsPlugins = plugins;
+        PluginsReloading?.Invoke(null, new());
+        Load();
     }
 }
