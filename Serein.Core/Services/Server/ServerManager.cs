@@ -273,8 +273,10 @@ public class ServerManager
             * 100;
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
-        await Task.Run(
-            () => _serverInfo.Motd = new("localhost", _settingProvider.Value.Server.Port)
-        );
+        if (_settingProvider.Value.Server.Port >= 0)
+            await Task.Run(
+                () =>
+                    _serverInfo.Motd = new("localhost", (ushort)_settingProvider.Value.Server.Port)
+            );
     }
 }

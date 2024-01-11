@@ -4,7 +4,7 @@ namespace Serein.Core.Models;
 
 public abstract class DataItemWrapper
 {
-    [JsonPropertyOrder(0)]
+    [JsonPropertyOrder(-114514)]
     public string Type { get; set; } = string.Empty;
 
     public static DataItemWrapper<TItem> Wrap<TItem>(string type, TItem data)

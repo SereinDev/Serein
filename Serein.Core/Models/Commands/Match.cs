@@ -1,12 +1,15 @@
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+
+using PropertyChanged;
 
 using Serein.Core.Services;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Commands;
 
-public class Match
+public class Match : INotifyPropertyChanged
 {
     private string? _regExp;
     private string? _command;
@@ -21,6 +24,7 @@ public class Match
         }
     }
 
+    [DoNotNotify]
     [JsonIgnore]
     public Regex? RegexObj { get; set; }
 
@@ -50,9 +54,20 @@ public class Match
                 },
                 value
             );
+
+            if (CommandObj.Type == CommandType.Invalid)
+                ErrorMsg = "命令格式不正确";
         }
     }
 
+    [DoNotNotify]
     [JsonIgnore]
-    public Command? CommandObj { get; set; }
+    public Command? CommandObj { get; private set; }
+
+    [DoNotNotify]
+    [JsonIgnore]
+    public string? ErrorMsg { get; private set; }
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

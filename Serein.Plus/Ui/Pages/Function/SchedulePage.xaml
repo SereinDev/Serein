@@ -12,7 +12,7 @@
         mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="RowDetailsTemplate">
-            <Grid Margin="5">
+            <Grid Margin="5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -20,19 +20,15 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock
-                        FontSize="13"
-                        FontWeight="SemiBold"
-                        Text="预计执行时刻" />
-                <TextBlock
+                <ui:InfoBar
                         Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        FontSize="13"
-                        Text="{Binding NextTime}" />
+                        IsOpen="True"
+                        Severity="Success"
+                        Title="预览"
+                        Message="{Binding ErrorMsg}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
-
 
     <Grid>
         <Grid.RowDefinitions>
@@ -52,13 +48,13 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                        Binding="{Binding CronExp}"
+                        Binding="{Binding CronExp, UpdateSourceTrigger=PropertyChanged}"
                         Header="Cron表达式" />
                 <DataGridCheckBoxColumn
                         Binding="{Binding Enable}"
                         Header="启用" />
                 <DataGridTextColumn
-                        Binding="{Binding Command}"
+                        Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}"
                         Header="命令" />
                 <DataGridTextColumn
                         Binding="{Binding Description}"

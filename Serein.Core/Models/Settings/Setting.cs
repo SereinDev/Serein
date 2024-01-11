@@ -1,22 +1,23 @@
 ﻿using System.ComponentModel;
 
-using PropertyChanged;
-
 namespace Serein.Core.Models.Settings;
 
-public class Setting
+public class Setting : INotifyPropertyChanged
 {
-    public ServerSetting Server { get; set; } = new();
+    public ServerSetting Server { get; init; } = new();
 
-    public ConnectionSetting Connection { get; set; } = new();
+    public ConnectionSetting Connection { get; init; } = new();
 
-    public ReactionSetting Reaction { get; set; } = new();
+    public ReactionSetting Reaction { get; init; } = new();
 
-    public AutoRunSetting AutoRun { get; set; } = new();
+    public AutoRunSetting AutoRun { get; init; } = new();
 
-    public FunctionSetting Function { get; set; } = new();
+    public FunctionSetting Function { get; init; } = new();
 
     public PagesSetting Pages { get; set; } = new();
 
     public ApplicationSetting Application { get; set; } = new();
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

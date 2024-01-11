@@ -12,62 +12,16 @@
         d:DesignWidth="800"
         mc:Ignorable="d">
     <Grid>
-        <TabControl
-                MinHeight="400"
-                ui:TabControlHelper.IsAddTabButtonVisible="False">
-            <TabItem Header="输出">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.OEM}" />
-                </ui:TabItemHelper.Icon>
-                <RichTextBox
-                        Name="ConsoleRichTextBox"
-                        Margin="5"
-                        DockPanel.Dock="Top"
-                        IsReadOnly="True"
-                        Focusable="False"
-                        IsUndoEnabled="False"
-                        UndoLimit="0" />
-            </TabItem>
-
-            <TabItem Header="管理">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.AllApps}" />
-                </ui:TabItemHelper.Icon>
-                <DataGrid
-                        x:Name="PluginDataGrid"
-                        AutoGenerateColumns="False"
-                        GridLinesVisibility="Horizontal"
-                        HeadersVisibility="Column"
-                        IsReadOnly="True"
-                        RowDetailsVisibilityMode="Collapsed"
-                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                        VirtualizingPanel.VirtualizationMode="Recycling">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                                Width="150"
-                                Binding="{Binding Name}"
-                                Header="名称" />
-                        <DataGridTextColumn
-                                Width="100"
-                                Binding="{Binding Version}"
-                                Header="版本" />
-                        <DataGridComboBoxColumn
-                                Width="100"
-                                SelectedItemBinding="{Binding Author}"
-                                Header="作者" />
-                        <DataGridTextColumn
-                                Width="260"
-                                Binding="{Binding Decription}"
-                                Header="描述" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-
-            <TabItem Header="市场">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Package}" />
-                </ui:TabItemHelper.Icon>
-            </TabItem>
-        </TabControl>
+        <ui:NavigationView
+                x:Name="NavigationView"
+                Grid.Row="1"
+                IsBackButtonVisible="Collapsed"
+                PaneDisplayMode="Top"
+                SelectionChanged="OnNavigationViewSelectionChanged">
+            <ui:Frame
+                    x:Name="RootFrame"
+                    NavigationFailed="OnNavigationFailed"
+                    Navigating="OnNavigating" />
+        </ui:NavigationView>
     </Grid>
 </ui:Page>

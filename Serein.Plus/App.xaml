@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:local="clr-namespace:Serein.Plus"
-    StartupUri="Ui/MainWindow.xaml">
+    StartupUri="Ui/Window/MainWindow.xaml">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>

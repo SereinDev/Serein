@@ -10,30 +10,39 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Serein.Core.Models.Settings;
+using Serein.Core.Services.Data;
 using Serein.Plus.Ui.Pages;
 using Serein.Plus.Ui.Pages.Function;
 using Serein.Plus.Ui.Pages.Server;
+using Serein.Plus.Ui.Pages.Settings;
 
-namespace Serein.Plus.Ui;
+namespace Serein.Plus.Ui.Window;
 
-public partial class MainWindow : Window
+public partial class MainWindow : System.Windows.Window
 {
     private readonly IHost _host = App.Host;
     private IServiceProvider Services => _host.Services;
+    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
 
     public MainWindow()
     {
         InitializeComponent();
         ConfigureNavigation();
 
-        TitleBar.Text = Title;
+        ThemeManager.SetRequestedTheme(
+            this,
+            SettingProvider.Value.Application.Theme switch
+            {
+                Theme.Light => ElementTheme.Light,
+                Theme.Dark => ElementTheme.Dark,
+                _ => ElementTheme.Default
+            }
+        );
     }
 
     private void ConfigureNavigation()
     {
-        NavigationView.IsSettingsVisible = true;
-        NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-
         NavigationView.MenuItems = new List<NavigationViewItem>()
         {
             new()

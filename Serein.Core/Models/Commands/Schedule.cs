@@ -1,13 +1,16 @@
 using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 using NCrontab;
+
+using PropertyChanged;
 
 using Serein.Core.Services;
 
 namespace Serein.Core.Models.Commands;
 
-public class Schedule
+public class Schedule : INotifyPropertyChanged
 {
     private string? _command;
     private string? _cronExp;
@@ -19,9 +22,18 @@ public class Schedule
         {
             _cronExp = value;
 
-            if (!string.IsNullOrEmpty(_cronExp))
-                CrontabSchedule = CrontabSchedule.TryParse(_cronExp);
-            NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
+            try
+            {
+                if (string.IsNullOrEmpty(_cronExp))
+                    throw new ArgumentException("Cron表达式不得为空", nameof(CronExp));
+
+                CrontabSchedule = CrontabSchedule.Parse(_cronExp);
+                NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
+            }
+            catch (Exception e)
+            {
+                ErrorMsg = e.Message;
+            }
         }
     }
 
@@ -32,6 +44,9 @@ public class Schedule
         {
             _command = value;
             CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
+
+            if (CommandObj.Type == CommandType.Invalid)
+                ErrorMsg = "命令格式不正确";
         }
     }
 
@@ -39,12 +54,22 @@ public class Schedule
 
     public bool Enable { get; set; }
 
+    [DoNotNotify]
     [JsonIgnore]
-    public Command? CommandObj { get; set; }
+    public Command? CommandObj { get; private set; }
 
     public DateTime? NextTime { get; internal set; }
 
     internal bool IsRunning { get; set; }
 
+    [DoNotNotify]
+    [JsonIgnore]
     internal CrontabSchedule? CrontabSchedule { get; set; }
+
+    [DoNotNotify]
+    [JsonIgnore]
+    public string? ErrorMsg { get; private set; }
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

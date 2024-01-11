@@ -16,6 +16,17 @@
             "stopAtEntry": false,
             "console": "externalTerminal",
             "requireExactSource": false
+        },
+        {
+            "name": "Serein.Plus",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/Serein.Plus.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "requireExactSource": false
         }
     ],
     "inputs": [

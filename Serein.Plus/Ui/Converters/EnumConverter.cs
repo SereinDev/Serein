@@ -2,11 +2,9 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-using Serein.Core.Models.Commands;
-
 namespace Serein.Plus.Ui.Converters;
 
-public class MatchFieldTypeToIntConverter : IValueConverter
+public class EnumConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -15,6 +13,9 @@ public class MatchFieldTypeToIntConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is int i && i < 6 && i >= 0 ? (MatchFieldType)i : MatchFieldType.Disabled;
+        if (!targetType.IsEnum)
+            throw new InvalidOperationException();
+
+        return Enum.Parse(targetType, value?.ToString() ?? throw new InvalidOperationException());
     }
 }

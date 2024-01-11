@@ -25,8 +25,8 @@ public static class EncodingMap
         return encodingType switch
         {
             EncodingType.UTF8 => UTF8,
-            EncodingType.UTF16BE => BigEndianUnicode,
             EncodingType.UTF16LE => LittleEndianUnicode,
+            EncodingType.UTF16BE => BigEndianUnicode,
             EncodingType.GBK => GBK,
             _ => throw new ArgumentOutOfRangeException(nameof(encodingType))
         };

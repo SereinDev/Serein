@@ -7,4 +7,8 @@
     "[csharp]": {
         "editor.bracketPairColorization.enabled": false,
     },
+    "[xml]": {
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4
+    }
 }

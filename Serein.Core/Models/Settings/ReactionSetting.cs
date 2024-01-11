@@ -1,8 +1,9 @@
 using System;
+using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
 
-public class ReactionSetting
+public class ReactionSetting : INotifyPropertyChanged
 {
     public static string Notice { get; } =
         "在这里你可以自定义每个事件触发时执行的命令。参考：https://serein.cc/docs/guide/command、https://serein.cc/docs/guide/event";
@@ -51,4 +52,7 @@ public class ReactionSetting
 
     public string[] PermissionDeniedFromGroupMsg { get; set; } =
         { "g|[CQ:at,qq=%ID%] 你没有执行这个命令的权限" };
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }
