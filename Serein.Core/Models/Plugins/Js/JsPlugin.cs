@@ -8,7 +8,7 @@ using Jint.Native.Function;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Plugins;
+using Serein.Core.Models.Output;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
 

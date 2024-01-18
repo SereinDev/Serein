@@ -6,7 +6,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;

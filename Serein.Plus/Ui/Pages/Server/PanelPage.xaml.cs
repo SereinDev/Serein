@@ -1,28 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-using iNKORE.UI.WPF.Modern.Controls;
-using iNKORE.UI.WPF.Modern.Helpers;
-
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models;
-using Serein.Core.Models.Exceptions;
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Server;
+using Serein.Plus.Utils.Extensions;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -30,15 +17,22 @@ namespace Serein.Plus.Ui.Pages.Server;
 
 public partial class PanelPage : Page
 {
-    private readonly ServerManager _serverManager;
-    private readonly IOutputHandler _logger;
+    private readonly IHost _host;
+    private ServerManager ServerManager => _host.Services.GetRequiredService<ServerManager>();
+    private readonly Timer _timer;
 
-    public PanelPage(ServerManager serverManager, IOutputHandler logger)
+    public PanelPage(IHost host)
     {
+        _host = host;
         InitializeComponent();
 
-        _serverManager = serverManager;
-        _logger = logger;
+        _timer = new(2500) { Enabled = true };
+        _timer.Elapsed += (_, _) => UpdateInfo();
+
+        ServerManager.PropertyChanged += (_, _) => UpdateInfo();
+        DataContext = ServerManager;
+        TextEditor.EnableAnsiColor();
+        UpdateInfo();
     }
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)
@@ -50,25 +44,25 @@ public partial class PanelPage : Page
             switch (tag)
             {
                 case "start":
-                    _serverManager.Start();
+                    ServerManager.Start();
                     break;
 
                 case "stop":
-                    _serverManager.Stop();
+                    ServerManager.Stop();
                     break;
 
                 case "restart":
                     break;
 
                 case "terminate":
-                    _serverManager.Terminate();
+                    TerminateFlyout.Hide();
+                    ServerManager.Terminate();
                     break;
             }
         }
-        catch (ServerException ex)
+        catch (Exception ex)
         {
-            var document = ConsoleControl.ConsoleRichTextBox.Document ?? new();
-            document.Blocks.Add(new Paragraph(new Run(ex.ToString())));
+            TextEditor.AppendErrorLine(ex.Message);
         }
     }
 
@@ -86,7 +80,55 @@ public partial class PanelPage : Page
 
     private void Input()
     {
-        _serverManager.Input(InputBox.Text);
+        ServerManager.Input(InputBox.Text);
         InputBox.Text = string.Empty;
+    }
+
+    private const string EmptyHolder = "-";
+
+    private void UpdateInfo()
+    {
+        Dispatcher.Invoke(() =>
+        {
+            if (!IsLoaded)
+                return;
+
+            Status.Text = ServerManager.Status switch
+            {
+                ServerStatus.Unknown => "未启动",
+                ServerStatus.Stopped => "已关闭",
+                ServerStatus.Running => "运行中",
+                _ => throw new NotSupportedException()
+            };
+
+            Players.Text =
+                ServerManager.Status == ServerStatus.Running
+                    ? $"{ServerManager.ServerInfo?.Motd?.CurrentPlayersInt}/{ServerManager.ServerInfo?.Motd?.MaximumPlayersInt}"
+                    : EmptyHolder;
+
+            CPUUsage.Text =
+                ServerManager.Status == ServerStatus.Running && ServerManager.ServerInfo is not null
+                    ? ServerManager.ServerInfo.CPUUsage.ToString("N1") + "%"
+                    : EmptyHolder;
+
+            Version.Text =
+                ServerManager.Status == ServerStatus.Running
+                && ServerManager.ServerInfo?.Motd is not null
+                    ? ServerManager.ServerInfo?.Motd.Version
+                    : EmptyHolder;
+
+            if (
+                ServerManager.Status == ServerStatus.Running
+                && ServerManager.ServerInfo?.StartTime is not null
+            )
+            {
+                var span =
+                    DateTime.Now - ServerManager.ServerInfo.StartTime
+                    ?? throw new NullReferenceException();
+                RunTime.Text = $"{span.Days}d{span.Hours}h{span.Minutes}m";
+            }
+            else
+                RunTime.Text = EmptyHolder;
+        });
     }
 }

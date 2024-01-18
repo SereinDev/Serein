@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.OneBot.Packets;
 using Serein.Core.Models.Plugins.CSharp;
 using Serein.Core.Services.Plugins.CSharp;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
+using Serein.Core.Services.Data;
+using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Plugins;
 
@@ -24,6 +25,7 @@ public class EventDispatcher
     private IServiceProvider Services => _host.Services;
     private Loader Loader => Services.GetRequiredService<Loader>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
+    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
 
     public EventDispatcher(IHost host)
@@ -43,9 +45,18 @@ public class EventDispatcher
             if (t is Task<bool> tb)
                 tasks.Add(tb);
 
-        Task.WaitAll(tasks.ToArray(), 1000);
+        if (tasks.Count == 0)
+        {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
+            return true;
+        }
 
-        return tasks.Select((t) => t.IsCompleted && !t.Result).Any((b) => b);
+        if (SettingProvider.Value.Function.PluginEventMaxWaitingTime > 0)
+            Task.WaitAll(tasks.ToArray(), SettingProvider.Value.Function.PluginEventMaxWaitingTime);
+
+        cancellationTokenSource.Cancel();
+        return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
     }
 
     public List<Task> DispatchToDll(

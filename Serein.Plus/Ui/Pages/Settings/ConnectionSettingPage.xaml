@@ -32,7 +32,7 @@
                     ui:ControlHelper.PlaceholderText="ws://..." />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.UseReverseWebSocket}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="开启WebSocket服务器供机器人连接"
                     Content="使用反向WebSocket" />
             <PasswordBox
@@ -41,7 +41,7 @@
                     ui:ControlHelper.Header="鉴权凭证（Token）" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.AutoReconnect}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="WebSocket连接异常断开时自动重连"
                     Content="断线自动重连" />
 
@@ -51,17 +51,17 @@
                     Text="数据" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.OutputData}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="在连接控制台中输出接收和发送的数据"
                     Content="输出收发的数据" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.AutoEscape}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="消息内容作为纯文本发送（即不解析CQ码）"
                     Content="纯文本发送" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.SaveLog}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="将收到的数据包以文本格式保存到日志文件（./log/msg）"
                     Content="保存数据包到日志" />
 
@@ -71,7 +71,7 @@
                     Text="权限" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Connection.GivePermissionToAllAdmins}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     ToolTip="使监听群的群主和管理员与下面的管理权限列表中的用户拥有相同权限"
                     Content="赋予所有群主和管理员管理权限" />
             <TextBox

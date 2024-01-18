@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 using MineStatLib;
 
@@ -21,4 +22,7 @@ public class ServerInfo : IServerInfo
     public double CPUUsage { get; internal set; }
 
     public MineStat? Motd { get; internal set; }
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.OneBot;
 using Serein.Core.Models.OneBot.ActionParams;
@@ -19,6 +18,7 @@ using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 using WatsonWebsocket;
+using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Networks;
 

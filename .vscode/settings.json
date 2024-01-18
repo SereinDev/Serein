@@ -10,5 +10,5 @@
     "[xml]": {
         "editor.detectIndentation": false,
         "editor.tabSize": 4
-    }
+    },
 }

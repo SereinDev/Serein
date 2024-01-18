@@ -8,7 +8,7 @@ using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.CSharp;
 using Serein.Core.Utils;
 

@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.OneBot.Packets;
 
 using Spectre.Console;
@@ -109,7 +110,7 @@ public class CliLogger : IOutputHandler
         this.LogInformation("{}", line);
     }
 
-    public void LogServerNotice(string line)
+    public void LogServerInfo(string line)
     {
         this.LogInformation("{}", line);
     }

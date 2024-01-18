@@ -23,6 +23,28 @@
             <TextBlock
                     Margin="0,15,0,0"
                     Style="{DynamicResource SubtitleTextBlockStyle}"
+                    Text="版本" />
+
+            <FlowDocumentScrollViewer Margin="0,5">
+                <FlowDocument
+                        FontFamily="{DynamicResource ContentControlThemeFontFamily}"
+                        FontSize="{DynamicResource ContentControlFontSize}">
+                    <Paragraph>
+                        <Run>版本号: </Run>
+                        <Run Text="{Binding Version, Mode=OneTime}" />
+                        <LineBreak />
+                        <Run>详细版本: </Run>
+                        <Run Text="{Binding AssemblyInformationalVersion, Mode=OneTime}" />
+                        <LineBreak />
+                        <Run>程序集: </Run>
+                        <Run Text="{Binding AssemblyVersion, Mode=OneTime}" />
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+
+            <TextBlock
+                    Margin="0,15,0,0"
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="版权信息" />
             <FlowDocumentScrollViewer Margin="0,5">
                 <FlowDocument

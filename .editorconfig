@@ -29,6 +29,10 @@ insert_final_newline = true
 ##  Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the `await` operator to the result of the call.
 dotnet_diagnostic.CS4014.severity = none
 
+## Validate platform compatibility
+dotnet_code_quality.enable_platform_analyzer_on_pre_net5_target = false
+dotnet_diagnostic.CS1416.severity = none
+
 # Organize usings
 dotnet_separate_import_directive_groups = true
 dotnet_sort_system_directives_first = true

@@ -3,11 +3,10 @@ using System.CommandLine;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Interaction;
 using Serein.Core;
-using Serein.Core.Models;
+using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 

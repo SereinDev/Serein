@@ -5,8 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
-using Serein.Core.Models;
-using Serein.Core.Models.Commands;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Server;
 

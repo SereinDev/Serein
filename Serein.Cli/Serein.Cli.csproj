@@ -5,7 +5,7 @@
         <TargetFrameworks>net6.0-windows;net6.0;</TargetFrameworks>
         <Nullable>enable</Nullable>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-		<Compile Include="../Shared/*.cs" />
+        <Compile Include="../Shared/*.cs" />
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
     </ItemGroup>
 

@@ -30,15 +30,15 @@
                     x:Name="ThemePanel"
                     Margin="0,5,0,10">
                 <RadioButton
-                        Checked="OnThemeRadioButtonChecked"
+                        Click="OnThemeRadioButtonChecked"
                         Content="跟随系统"
                         Tag="Default" />
                 <RadioButton
-                        Checked="OnThemeRadioButtonChecked"
+                        Click="OnThemeRadioButtonChecked"
                         Content="浅色"
                         Tag="Light" />
                 <RadioButton
-                        Checked="OnThemeRadioButtonChecked"
+                        Click="OnThemeRadioButtonChecked"
                         Content="深色"
                         Tag="Dark" />
             </StackPanel>
@@ -49,13 +49,13 @@
                     Text="更新" />
             <CheckBox
                     IsChecked="{Binding SettingProvider, Path=Value.Application.CheckUpdate}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     Content="获取更新提示"
                     ToolTip="启动后自动获取更新提示（建议开启）" />
             <CheckBox
                     IsEnabled="{Binding SettingProvider, Path=Value.Application.CheckUpdate}"
                     IsChecked="{Binding SettingProvider, Path=Value.Application.AutoUpdate}"
-                    Checked="OnPropertyChanged"
+                    Click="OnPropertyChanged"
                     Content="自动更新"
                     ToolTip="应用关闭后自动替换新版本" />
         </StackPanel>

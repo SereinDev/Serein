@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
         <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
@@ -15,9 +15,9 @@
 
     
     <ItemGroup>
-		<Compile Include="../Shared/*.cs" />
+        <Compile Include="../Shared/*.cs" />
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
-		<Resource Include="../Sources/logo.ico" />
+        <Resource Include="../Sources/logo.ico" />
     </ItemGroup>
 
 </Project>

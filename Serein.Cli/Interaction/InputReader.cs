@@ -13,8 +13,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
 using Serein.Core;
-using Serein.Core.Models;
-using Serein.Core.Models.Commands;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;

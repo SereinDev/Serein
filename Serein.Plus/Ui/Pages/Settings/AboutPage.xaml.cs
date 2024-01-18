@@ -1,8 +1,9 @@
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Navigation;
 
-using Microsoft.Extensions.Hosting;
+using Serein.Core;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -10,19 +11,23 @@ namespace Serein.Plus.Ui.Pages.Settings;
 
 public partial class AboutPage : Page
 {
-    private readonly IHost _host;
-
-    private IServiceProvider Services => _host.Services;
-
-    public AboutPage(IHost host)
+    public AboutPage()
     {
-        _host = host;
         InitializeComponent();
+        DataContext = this;
     }
+
+    public string Version { get; } = SereinApp.Version;
+    public string AssemblyVersion { get; } = Assembly.GetExecutingAssembly().ToString();
+    public string? AssemblyInformationalVersion { get; } =
+        Assembly
+            .GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion;
 
     private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
     {
-        Uri uri = e.Uri;
+        var uri = e.Uri;
         if (uri.IsAbsoluteUri && uri.Scheme.Contains("http", StringComparison.OrdinalIgnoreCase))
         {
             Process.Start(new ProcessStartInfo(uri.ToString()) { UseShellExecute = true });

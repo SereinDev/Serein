@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models;
+using Serein.Core.Models.Output;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Json;

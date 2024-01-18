@@ -7,17 +7,18 @@ using System.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Exceptions;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
+using System.ComponentModel;
+using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Server;
 
-public class ServerManager
+public class ServerManager : INotifyPropertyChanged
 {
     public ServerStatus Status =>
         _serverProcess is null
@@ -43,6 +44,9 @@ public class ServerManager
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly SettingProvider _settingProvider;
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     public ServerManager(
         IOutputHandler output,
@@ -105,7 +109,7 @@ public class ServerManager
         _serverProcess.ErrorDataReceived += OnOutputDataReceived;
         _serverProcess.Exited += OnExit;
 
-        _logger.LogServerNotice($"“{_settingProvider.Value.Server.FileName}”启动中");
+        _logger.LogServerInfo($"“{_settingProvider.Value.Server.FileName}”启动中");
 
         _eventDispatcher.Dispatch(Event.ServerStarted);
     }
@@ -191,7 +195,7 @@ public class ServerManager
     private void OnExit(object? sender, EventArgs e)
     {
         var exitCode = _serverProcess?.ExitCode ?? 0;
-        _logger.LogServerNotice($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
+        _logger.LogServerInfo($"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})");
 
         if (_settingProvider.Value.Server.AutoRestart && !_isTerminated)
             if (
@@ -232,7 +236,7 @@ public class ServerManager
         var i = 0;
 
         _restartStatus = RestartStatus.Preparing;
-        _logger.LogServerNotice($"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器");
+        _logger.LogServerInfo($"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器");
         while (i < 50 && _restartStatus == RestartStatus.Preparing)
         {
             await Task.Delay(100);

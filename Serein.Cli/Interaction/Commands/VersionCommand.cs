@@ -6,9 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core;
-using Serein.Core.Models;
-using Serein.Core.Utils;
+using Serein.Core.Models.Output;
+using Serein.Core.Utils.Extensions;
 
 using Spectre.Console;
 
@@ -45,7 +44,7 @@ public class VersionCommand : Command
         if (commandlineArgs.Length > 0 && File.Exists(commandlineArgs[0]))
             table
                 .AddRow("文件名", Path.GetFileName(commandlineArgs[0]))
-                .AddRow("MD5", Encryption.GetMD5(File.ReadAllBytes(commandlineArgs[0])))
+                .AddRow("MD5", File.ReadAllBytes(commandlineArgs[0]).CalculateMD5())
                 .AddRow("创建时间", File.GetCreationTime(commandlineArgs[0]).ToString("o"))
                 .AddRow("修改时间", File.GetLastWriteTime(commandlineArgs[0]).ToString("o"));
 

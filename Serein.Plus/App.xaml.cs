@@ -5,8 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
-using Serein.Core.Models;
-using Serein.Core.Services.Data;
+using Serein.Core.Models.Output;
 using Serein.Plus.Ui.Pages;
 using Serein.Plus.Ui.Pages.Function;
 using Serein.Plus.Ui.Pages.Server;
@@ -53,9 +52,8 @@ public partial class App : Application
         builder.Services.AddSingleton<ServerSettingPage>();
         builder.Services.AddSingleton<SettingPage>();
 
-        builder.Services.AddSingleton<IOutputHandler, AppOutputHandler>(
-            (services) =>
-                new(services.GetRequiredService<SettingProvider>().Value.Application.LogLevel)
+        builder.Services.AddSingleton<IOutputHandler, WpfOutputHandler>(
+            (services) => new(services)
         );
 
         return builder.Build();

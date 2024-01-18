@@ -8,8 +8,8 @@ using Jint.Runtime.Interop;
 
 using MineStatLib;
 
-using Serein.Core.Models;
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;

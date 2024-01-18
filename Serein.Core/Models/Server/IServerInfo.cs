@@ -1,10 +1,11 @@
 using System;
+using System.ComponentModel;
 
 using MineStatLib;
 
 namespace Serein.Core.Models.Server;
 
-public interface IServerInfo
+public interface IServerInfo : INotifyPropertyChanged
 {
     public string? FileName { get; }
 

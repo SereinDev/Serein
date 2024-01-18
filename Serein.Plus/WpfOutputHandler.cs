@@ -1,20 +1,28 @@
 using System;
 using System.Text.Json.Nodes;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models;
 using Serein.Core.Models.OneBot.Packets;
+using Serein.Core.Models.Output;
+using Serein.Core.Services.Data;
+using Serein.Plus.Ui.Pages.Server;
 
 namespace Serein.Plus;
 
-public class AppOutputHandler : IOutputHandler
+public class WpfOutputHandler : IOutputHandler
 {
     private readonly LogLevel _logLevel;
+    public IServiceProvider Services { get; }
+    private readonly Lazy<PanelPage> _panelPage;
 
-    public AppOutputHandler(LogLevel logLevel)
+    public WpfOutputHandler(IServiceProvider services)
     {
-        _logLevel = logLevel;
+        Services = services;
+
+        _logLevel = Services.GetRequiredService<SettingProvider>().Value.Application.LogLevel;
+        _panelPage = new(() => Services.GetRequiredService<PanelPage>());
     }
 
     public IDisposable? BeginScope<TState>(TState state)
@@ -34,8 +42,7 @@ public class AppOutputHandler : IOutputHandler
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter
-    )
-    { }
+    ) { }
 
     public void LogBotJsonPacket(JsonNode jsonNode) { }
 
@@ -51,7 +58,13 @@ public class AppOutputHandler : IOutputHandler
 
     public void LogPluginWarn(string title, string line) { }
 
-    public void LogServerNotice(string line) { }
+    public void LogServerInfo(string line)
+    {
+        _panelPage.Value.Dispatcher.Invoke(() => _panelPage.Value.TextEditor.AppendInfoLine(line));
+    }
 
-    public void LogServerRawOutput(string line) { }
+    public void LogServerRawOutput(string line)
+    {
+        _panelPage.Value.Dispatcher.Invoke(() => _panelPage.Value.TextEditor.AppendLine(line));
+    }
 }

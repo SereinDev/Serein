@@ -11,16 +11,18 @@
         <SelfContained>false</SelfContained>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <NoWarn>CS1416</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
-		<Resource Include="../Sources/logo.ico" />
+        <Resource Include="../Sources/logo.ico" />
         <Compile Include="../Shared/*.cs" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
         <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.24.2" />
     </ItemGroup>
 
