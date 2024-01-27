@@ -1,5 +1,5 @@
 <ui:Page
-        x:Class="Serein.Plus.Ui.Pages.Settings.ConnectionSettingPage"
+        x:Class="Serein.Plus.Ui.Pages.Settings.NetworkSettingPage"
         xmlns:local="clr-namespace:Serein.Plus.Ui.Pages.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -26,21 +26,27 @@
             <TextBox
                     AcceptsReturn="False"
                     ToolTip="Websocket服务器的地址"
-                    TextInput="OnPropertyChanged"
-                    Text="{Binding SettingProvider, Path=Value.Connection.Url}"
+                    TextChanged="OnPropertyChanged"
+                    Text="{Binding SettingProvider, Path=Value.Network.Uri}"
                     ui:ControlHelper.Header="地址"
                     ui:ControlHelper.PlaceholderText="ws://..." />
-            <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.UseReverseWebSocket}"
-                    Click="OnPropertyChanged"
-                    ToolTip="开启WebSocket服务器供机器人连接"
-                    Content="使用反向WebSocket" />
+
             <PasswordBox
                     ToolTip="用于鉴权的Access-Token（可为空）"
-                    TextInput="OnPropertyChanged"
                     ui:ControlHelper.Header="鉴权凭证（Token）" />
+            <TextBox
+                    AcceptsReturn="True"
+                    Text="{Binding SettingProvider, Path=Value.Network.SubProtocols, Converter={StaticResource multiLinesConverter}}"
+                    ToolTip="连接WebSocket时的子协议（仅正向WebSocket有效；一行一个）"
+                    TextChanged="OnPropertyChanged"
+                    ui:ControlHelper.Header="WebSocket子协议" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.AutoReconnect}"
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.UseReverseWebSocket}"
+                    Click="UseReverseWebSocket_Click"
+                    ToolTip="开启WebSocket服务器供机器人连接"
+                    Content="使用反向WebSocket" />
+            <CheckBox
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.AutoReconnect}"
                     Click="OnPropertyChanged"
                     ToolTip="WebSocket连接异常断开时自动重连"
                     Content="断线自动重连" />
@@ -50,17 +56,17 @@
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="数据" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.OutputData}"
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.OutputData}"
                     Click="OnPropertyChanged"
                     ToolTip="在连接控制台中输出接收和发送的数据"
                     Content="输出收发的数据" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.AutoEscape}"
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.AutoEscape}"
                     Click="OnPropertyChanged"
                     ToolTip="消息内容作为纯文本发送（即不解析CQ码）"
                     Content="纯文本发送" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.SaveLog}"
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.SaveLog}"
                     Click="OnPropertyChanged"
                     ToolTip="将收到的数据包以文本格式保存到日志文件（./log/msg）"
                     Content="保存数据包到日志" />
@@ -70,7 +76,7 @@
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="权限" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Connection.GivePermissionToAllAdmins}"
+                    IsChecked="{Binding SettingProvider, Path=Value.Network.GivePermissionToAllAdmins}"
                     Click="OnPropertyChanged"
                     ToolTip="使监听群的群主和管理员与下面的管理权限列表中的用户拥有相同权限"
                     Content="赋予所有群主和管理员管理权限" />

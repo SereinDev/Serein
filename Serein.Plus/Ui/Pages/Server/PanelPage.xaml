@@ -170,7 +170,7 @@
 
 
         <DockPanel
-                Margin="15,0"
+                Margin="15,0,0,0"
                 Grid.RowSpan="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="2">
@@ -195,13 +195,11 @@
                     DockPanel.Dock="Top"
                     CornerRadius="5">
                 <control:ConsoleTextEditor
-                        x:Name="TextEditor"
-                        Padding="5"
+                        x:Name="Console"
                         Margin="1"
-                        FontFamily="Consolas"
+                        FontSize="10pt"
                         Foreground="{DynamicResource TextControlForegroundPointerOver}"
-                        Background="{DynamicResource TextControlBackgroundPointerOver}"
-                        FontSize="10pt" />
+                        Background="{DynamicResource TextControlBackgroundPointerOver}" />
             </Border>
 
         </DockPanel>

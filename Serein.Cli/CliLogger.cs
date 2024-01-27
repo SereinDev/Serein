@@ -3,9 +3,8 @@ using System.Text.Json.Nodes;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models;
+using Serein.Core.Models.Network.OneBot.Packets;
 using Serein.Core.Models.Output;
-using Serein.Core.Models.OneBot.Packets;
 
 using Spectre.Console;
 
@@ -92,22 +91,36 @@ public class CliLogger : IOutputHandler
 
     public void LogBotJsonPacket(JsonNode jsonNode) { }
 
-    public void LogBotMessage(MessagePacket packet) { }
+    public void LogBotReceivedMessage(MessagePacket packet) { }
 
-    public void LogBotNotice(string line)
+    public void LogBotConsole(LogLevel logLevel, string line)
     {
         this.LogInformation("{}", line);
     }
 
-    public void LogPluginError(string title, string line) { }
-
-    public void LogPluginInfomation(string title, string line) { }
-
-    public void LogPluginWarn(string title, string line) { }
-
-    public void LogPluginNotice(string line)
+    public void LogPlugin(LogLevel logLevel, string title, string line)
     {
-        this.LogInformation("{}", line);
+        switch (logLevel)
+        {
+            case LogLevel.Trace:
+                this.LogInformation("{}", line);
+                break;
+
+            case LogLevel.Information:
+                this.LogInformation("[{}] {}", title, line);
+                break;
+
+            case LogLevel.Warning:
+                this.LogWarning("[{}] {}", title, line);
+                break;
+
+            case LogLevel.Error:
+                this.LogError("[{}] {}", title, line);
+                break;
+
+            default:
+                throw new NotSupportedException();
+        }
     }
 
     public void LogServerInfo(string line)

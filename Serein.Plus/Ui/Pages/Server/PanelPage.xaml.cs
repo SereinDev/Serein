@@ -31,7 +31,7 @@ public partial class PanelPage : Page
 
         ServerManager.PropertyChanged += (_, _) => UpdateInfo();
         DataContext = ServerManager;
-        TextEditor.EnableAnsiColor();
+        Console.EnableAnsiColor();
         UpdateInfo();
     }
 
@@ -62,7 +62,7 @@ public partial class PanelPage : Page
         }
         catch (Exception ex)
         {
-            TextEditor.AppendErrorLine(ex.Message);
+            Console.AppendErrorLine(ex.Message);
         }
     }
 

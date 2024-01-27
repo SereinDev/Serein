@@ -5,6 +5,7 @@ using System.Text.Json;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
@@ -42,11 +43,11 @@ public class JsManager
 
         foreach (var file in files)
         {
-            var fileName = Path.GetFileNameWithoutExtension(file);
+            var name = Path.GetFileNameWithoutExtension(file);
             PreloadConfig? preLoadConfig = null;
             var configPath = Path.Combine(
                 PathConstants.PluginDirectory,
-                fileName,
+                name,
                 PathConstants.PluginConfigFileName
             );
 
@@ -56,10 +57,10 @@ public class JsManager
                     JsonSerializerOptionsFactory.CamelCase
                 );
 
-            var plugin = new JsPlugin(_host, fileName, preLoadConfig ?? new());
+            var plugin = new JsPlugin(_host, name, preLoadConfig ?? new());
             var text = File.ReadAllText(file);
 
-            JsPlugins.AddOrUpdate(fileName, plugin, (_, _) => plugin);
+            JsPlugins.AddOrUpdate(name, plugin, (_, _) => plugin);
             try
             {
                 plugin.Execute(text);
@@ -67,7 +68,7 @@ public class JsManager
             }
             catch (Exception e)
             {
-                Logger.LogPluginError(fileName, e.GetDetailString());
+                Logger.LogPlugin(LogLevel.Error, name, e.GetDetailString());
             }
         }
     }

@@ -1,4 +1,4 @@
-using Serein.Core.Models.OneBot.Packets;
+using Serein.Core.Models.Network.OneBot.Packets;
 
 using RegexMatch = System.Text.RegularExpressions.Match;
 

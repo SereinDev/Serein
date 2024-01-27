@@ -6,13 +6,11 @@ public class Setting : INotifyPropertyChanged
 {
     public ServerSetting Server { get; init; } = new();
 
-    public ConnectionSetting Connection { get; init; } = new();
+    public NetworkSetting Network { get; init; } = new();
 
     public ReactionSetting Reaction { get; init; } = new();
 
     public AutoRunSetting AutoRun { get; init; } = new();
-
-    public FunctionSetting Function { get; init; } = new();
 
     public PagesSetting Pages { get; set; } = new();
 

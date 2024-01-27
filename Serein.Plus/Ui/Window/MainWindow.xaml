@@ -17,7 +17,8 @@
         ui:TitleBar.Height="36"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
         ui:WindowHelper.SystemBackdropType="Mica"
-        ui:WindowHelper.UseModernWindowStyle="True">
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Loaded="OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />

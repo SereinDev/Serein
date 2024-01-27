@@ -142,6 +142,7 @@
                     Width="150"
                     Value="{Binding SettingProvider, Path=Value.Server.Port}"
                     HorizontalAlignment="Left"
+                    SpinButtonPlacementMode="Compact"
                     ToolTip="指定服务器的本地端口（用于获取服务器的Motd）"
                     ui:ControlHelper.PlaceholderText="19132"
                     ui:ControlHelper.Header="端口" />

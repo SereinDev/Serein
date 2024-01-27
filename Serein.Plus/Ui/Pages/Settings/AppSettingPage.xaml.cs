@@ -54,6 +54,12 @@ public partial class AppSettingPage : Page
             }
         );
 
+        SettingProvider.Value.Application.Theme = tag switch
+        {
+            "Light" => Theme.Light,
+            "Dark" => Theme.Dark,
+            _ => Theme.Default
+        };
         OnPropertyChanged(sender, e);
     }
 }

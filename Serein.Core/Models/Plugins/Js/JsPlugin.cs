@@ -7,6 +7,7 @@ using Jint.Native.Function;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Plugins.Js;
@@ -16,11 +17,12 @@ namespace Serein.Core.Models.Plugins.Js;
 
 public class JsPlugin : IPlugin
 {
-    public string FileName { get; }
+    public string Name { get; }
     public PreloadConfig PreloadConfig { get; }
     public Engine Engine { get; }
     public ScriptInstance ScriptInstance { get; }
     public PluginInfo Info { get; private set; }
+    public Console Console { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public bool Loaded { get; internal set; }
@@ -32,15 +34,16 @@ public class JsPlugin : IPlugin
     private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
 
-    public JsPlugin(IHost host, string fileName, PreloadConfig preLoadConfig)
+    public JsPlugin(IHost host, string name, PreloadConfig preLoadConfig)
     {
         _cancellationTokenSource = new();
         _host = host;
 
-        FileName = fileName;
         PreloadConfig = preLoadConfig;
         Info = new();
         EventHandlers = new();
+        Name = PreloadConfig.Name ?? name;
+        Console = new(Logger, Name);
 
         ScriptInstance = new(_host, this);
         Engine = EngineFactory.Create(this);
@@ -83,7 +86,7 @@ public class JsPlugin : IPlugin
         }
         catch (Exception e)
         {
-            Logger.LogPluginError(FileName, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
+            Logger.LogPlugin(LogLevel.Error, Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
             return false;
         }
         finally

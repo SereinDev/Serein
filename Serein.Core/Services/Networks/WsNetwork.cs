@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Serein.Core.Models.Network.OneBot;
+using Serein.Core.Models.Network.OneBot.ActionParams;
+using Serein.Core.Models.Network.OneBot.Messages;
+using Serein.Core.Models.Network.OneBot.Packets;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.OneBot;
-using Serein.Core.Models.OneBot.ActionParams;
-using Serein.Core.Models.OneBot.Messages;
-using Serein.Core.Models.OneBot.Packets;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
@@ -18,7 +19,6 @@ using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 using WatsonWebsocket;
-using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Networks;
 
@@ -33,9 +33,7 @@ public class WsNetwork
     private WebSocketService WebSocketService => Services.GetRequiredService<WebSocketService>();
     private ReverseWebSocketService ReverseWebSocketService =>
         Services.GetRequiredService<ReverseWebSocketService>();
-    private IOutputHandler Output => Services.GetRequiredService<IOutputHandler>();
-
-    private bool _useReverseWebSocket;
+    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
 
     public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
 
@@ -44,6 +42,7 @@ public class WsNetwork
         _host = host;
         _matcher = matcher;
         _eventDispatcher = eventDispatcher;
+
         WebSocketService.MessageReceived += OnMessageReceived;
         ReverseWebSocketService.MessageReceived += OnMessageReceived;
     }
@@ -55,13 +54,13 @@ public class WsNetwork
 
         var text = EncodingMap.UTF8.GetString(e.Data);
 
-        var node = JsonSerializer.Deserialize<JsonNode>(
-            text,
-            JsonSerializerOptionsFactory.SnakeCase
-        );
+        var node = JsonSerializer.Deserialize<JsonNode>(text);
 
-        if (node is null || node.GetValueKind() != JsonValueKind.Object)
+        if (node is null)
             return;
+
+        if (Setting.Network.OutputData)
+            Logger.LogBotJsonPacket(node);
 
         if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
             return;
@@ -74,7 +73,7 @@ public class WsNetwork
 
                 if (packet is not null)
                 {
-                    Output.LogBotMessage(packet);
+                    Logger.LogBotReceivedMessage(packet);
 
                     if (
                         packet.MessageType == MessageType.Group
@@ -88,32 +87,32 @@ public class WsNetwork
                 }
                 break;
         }
-
-        Output.LogBotJsonPacket(node);
     }
 
-    public async Task StartAsync()
+    public void Start()
     {
-        if (Active)
-            throw new InvalidOperationException();
-
-        _useReverseWebSocket = Setting.Connection.UseReverseWebSocket;
-
-        if (_useReverseWebSocket)
-            await ReverseWebSocketService.StartAsync();
-        else
-            await WebSocketService.StartAsync();
-    }
-
-    public async Task StopAsync()
-    {
-        _useReverseWebSocket = Setting.Connection.UseReverseWebSocket;
-
         if (ReverseWebSocketService.Active)
-            await ReverseWebSocketService.StopAsync();
+            throw new InvalidOperationException("反向WebSocket服务器未关闭");
 
         if (WebSocketService.Active)
-            await WebSocketService.StopAsync();
+            throw new InvalidOperationException("WebSocket连接未断开");
+
+        if (Setting.Network.UseReverseWebSocket)
+            ReverseWebSocketService.Start();
+        else
+            WebSocketService.Start();
+    }
+
+    public void Stop()
+    {
+        if (!Active)
+            throw new InvalidOperationException("WebSocket未连接");
+
+        if (ReverseWebSocketService.Active)
+            ReverseWebSocketService.Stop();
+
+        if (WebSocketService.Active)
+            WebSocketService.Stop();
     }
 
     public async Task SendAsync<T>(T body)
@@ -126,14 +125,14 @@ public class WsNetwork
 
     public async Task SendTextAsync(string text)
     {
-        if (_useReverseWebSocket)
+        if (ReverseWebSocketService.Active)
             await ReverseWebSocketService.SendAsync(text);
-        else
+        else if (WebSocketService.Active)
             await WebSocketService.SendAsync(text);
     }
 
     private async Task SendActionRequestAsync<T>(string endpoint, T @params)
-        where T : notnull
+        where T : notnull, IActionParams
     {
         await SendAsync(new ActionRequest<T> { Action = endpoint, Params = @params });
     }
@@ -146,7 +145,7 @@ public class WsNetwork
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = Setting.Connection.AutoEscape
+                AutoEscape = Setting.Network.AutoEscape
             }
         );
     }
@@ -159,7 +158,7 @@ public class WsNetwork
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = Setting.Connection.AutoEscape
+                AutoEscape = Setting.Network.AutoEscape
             }
         );
     }

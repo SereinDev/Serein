@@ -29,16 +29,6 @@ public partial class MainWindow : System.Windows.Window
     {
         InitializeComponent();
         ConfigureNavigation();
-
-        ThemeManager.SetRequestedTheme(
-            this,
-            SettingProvider.Value.Application.Theme switch
-            {
-                Theme.Light => ElementTheme.Light,
-                Theme.Dark => ElementTheme.Dark,
-                _ => ElementTheme.Default
-            }
-        );
     }
 
     private void ConfigureNavigation()
@@ -69,6 +59,7 @@ public partial class MainWindow : System.Windows.Window
             new()
             {
                 Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
+                Tag = nameof(NetworkPage),
                 Content = "连接",
                 ToolTip = "通过WebSocket连接获取消息"
             },
@@ -118,7 +109,7 @@ public partial class MainWindow : System.Windows.Window
 
         if (e.IsSettingsSelected)
         {
-            RootFrame.Navigate(Services.GetRequiredService<SettingPage>());
+            RootFrame.Navigate(Services.GetRequiredService<CategoriesPage>());
             return;
         }
 
@@ -127,11 +118,25 @@ public partial class MainWindow : System.Windows.Window
             nameof(PanelPage) => Services.GetRequiredService<PanelPage>(),
             nameof(MatchPage) => Services.GetRequiredService<MatchPage>(),
             nameof(PluginPage) => Services.GetRequiredService<PluginPage>(),
+            nameof(NetworkPage) => Services.GetRequiredService<NetworkPage>(),
             nameof(SchedulePage) => Services.GetRequiredService<SchedulePage>(),
             _ => Services.GetRequiredService<NotImplPage>(),
         };
 
         if (page is not null)
             RootFrame.Navigate(page);
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ThemeManager.SetRequestedTheme(
+            this,
+            SettingProvider.Value.Application.Theme switch
+            {
+                Theme.Light => ElementTheme.Light,
+                Theme.Dark => ElementTheme.Dark,
+                _ => ElementTheme.Default
+            }
+        );
     }
 }

@@ -1,13 +1,15 @@
 using System;
-using System.Threading;
+using System.Reflection;
 
 using Jint.Native;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
+using Serein.Core.Models.Plugins.Js.Modules;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
@@ -26,42 +28,39 @@ public partial class ScriptInstance
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
-    private readonly CancellationToken _token;
 
     public ServerModule Server { get; }
     public WsModule Ws { get; }
+    public Console Console => _jsPlugin.Console;
+    public Setting Setting => SettingProvider.Value;
+    public static string Version => SereinApp.Version;
+    public static string? FullVersion => SereinApp.FullVersion;
+    public static string Type =>
+        Assembly.GetEntryAssembly()?.GetName().Name ?? throw new NotSupportedException();
+    public string Namespace => _jsPlugin.PreloadConfig.Name ?? _jsPlugin.Name;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {
         _host = host;
         _jsPlugin = jsPlugin;
-        _token = jsPlugin.CancellationToken;
 
-        Server = new(Services.GetRequiredService<ServerManager>(), _token);
-        Ws = new(Services.GetRequiredService<WsNetwork>(), _token);
+        Server = new(Services.GetRequiredService<ServerManager>());
+        Ws = new(Services.GetRequiredService<WsNetwork>());
     }
-
-    public static string Version => SereinApp.Version;
-    public string Namespace => _jsPlugin.FileName;
-    public Setting Setting => SettingProvider.Value;
 
     public void RunCommand(string? command)
     {
-        _token.ThrowIfCancellationRequested();
         CommandRunner.RunAsync(CommandParser.Parse(CommandOrigin.Plugin, command)).Await();
     }
 
-    public Command ParseCommand(string? command)
+    public static Command ParseCommand(string? command)
     {
-        _token.ThrowIfCancellationRequested();
         return CommandParser.Parse(CommandOrigin.Plugin, command);
     }
 
     public void Log(params JsValue[] jsValues)
     {
-        _token.ThrowIfCancellationRequested();
-
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.LogPluginInfomation(_jsPlugin.FileName, str);
+        Logger.LogPlugin(LogLevel.Information, _jsPlugin.Name, str);
     }
 }

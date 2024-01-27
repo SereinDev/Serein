@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.OneBot.Messages;
-using Serein.Core.Models.OneBot.Packets;
+using Serein.Core.Models.Network.OneBot.Messages;
+using Serein.Core.Models.Network.OneBot.Packets;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
@@ -21,7 +21,7 @@ public class Matcher
     private readonly CommandRunner _commandRunner;
 
     private IServiceProvider Services => _host.Services;
-    private ConnectionSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Connection;
+    private NetworkSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Network;
 
     public Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
     {

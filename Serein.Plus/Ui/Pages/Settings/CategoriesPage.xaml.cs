@@ -14,13 +14,13 @@ using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Ui.Pages.Settings;
 
-public partial class SettingPage : Page
+public partial class CategoriesPage : Page
 {
     private readonly IHost _host;
     private SlideNavigationTransitionInfo TransitionInfo { get; }
     private IServiceProvider Services => _host.Services;
 
-    public SettingPage(IHost host)
+    public CategoriesPage(IHost host)
     {
         _host = host;
         TransitionInfo = new SlideNavigationTransitionInfo
@@ -46,13 +46,7 @@ public partial class SettingPage : Page
             {
                 Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
                 Content = "连接",
-                Tag = nameof(ConnectionSettingPage)
-            },
-            new()
-            {
-                Icon = new FontIcon { Glyph = SegoeIcons.DeveloperTools },
-                Content = "功能",
-                Tag = nameof(FunctionSettingPage)
+                Tag = nameof(NetworkSettingPage)
             },
             new()
             {
@@ -109,11 +103,10 @@ public partial class SettingPage : Page
         Page? page = item.Tag?.ToString() switch
         {
             nameof(ServerSettingPage) => Services.GetRequiredService<ServerSettingPage>(),
-            nameof(FunctionSettingPage) => Services.GetRequiredService<FunctionSettingPage>(),
             nameof(AboutPage) => Services.GetRequiredService<AboutPage>(),
             nameof(AutoRunSettingPage) => Services.GetRequiredService<AutoRunSettingPage>(),
             nameof(AppSettingPage) => Services.GetRequiredService<AppSettingPage>(),
-            nameof(ConnectionSettingPage) => Services.GetRequiredService<ConnectionSettingPage>(),
+            nameof(NetworkSettingPage) => Services.GetRequiredService<NetworkSettingPage>(),
             nameof(PageSettingPage) => Services.GetRequiredService<PageSettingPage>(),
             nameof(ReactionSettingPage) => Services.GetRequiredService<ReactionSettingPage>(),
             _ => Services.GetRequiredService<NotImplPage>(),

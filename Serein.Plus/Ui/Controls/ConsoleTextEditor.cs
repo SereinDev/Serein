@@ -13,10 +13,12 @@ public class ConsoleTextEditor : TextEditor
 
     public ConsoleTextEditor()
     {
+        FontFamily = new("Consolas,微软雅黑");
         Padding = new(5);
         WordWrap = true;
         IsReadOnly = true;
         Document.UndoStack.SizeLimit = 0;
+        TextArea.TextView.Options.EnableHyperlinks = false;
         TextArea.TextView.Options.EnableEmailHyperlinks = false;
         TextArea.TextView.LineTransformers.Add(new RichTextColorizer(_richTextModel));
     }

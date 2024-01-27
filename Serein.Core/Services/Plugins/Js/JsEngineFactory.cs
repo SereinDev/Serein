@@ -6,6 +6,8 @@ using System.Reflection;
 using Jint;
 using Jint.Runtime.Interop;
 
+using Microsoft.Extensions.Logging;
+
 using MineStatLib;
 
 using Serein.Core.Models.Commands;
@@ -31,8 +33,8 @@ public class JsEngineFactory
     {
         var assemblies = new List<Assembly>();
         foreach (
-            var assemblyName in jsPlugin.PreloadConfig.NetAssemblies.Concat(
-                _settingProvider.Value.Function.JSGlobalAssemblies
+            var assemblyName in jsPlugin.PreloadConfig.CSharpAssemblies.Concat(
+                _settingProvider.Value.Application.JSGlobalAssemblies
             )
         )
         {
@@ -42,8 +44,9 @@ public class JsEngineFactory
             }
             catch (Exception e)
             {
-                _logger.LogPluginWarn(
-                    jsPlugin.FileName,
+                _logger.LogPlugin(
+                    LogLevel.Warning,
+                    jsPlugin.Name,
                     $"加载程序集“{assemblyName}”时出现异常：" + e.Message
                 );
             }
@@ -77,6 +80,7 @@ public class JsEngineFactory
         var engine = new Engine(CreateOptions(jsPlugin));
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
+        engine.SetValue("console", jsPlugin.Console);
 
         AddTypeReference<Command>(engine);
         AddTypeReference<CommandOrigin>(engine);

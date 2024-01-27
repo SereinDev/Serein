@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
@@ -17,11 +19,11 @@ public class ReverseWebSocketService : INetworkService
     private readonly IHost _host;
     private WatsonWsServer? _server;
 
-    private SettingProvider SettingProvider => _host.Services.GetRequiredService<SettingProvider>();
+    private IServiceProvider Services => _host.Services;
+    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private Setting Setting => SettingProvider.Value;
 
-    public event EventHandler? Opened;
-    public event EventHandler? Closed;
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
 
     public bool Active => _server?.IsListening ?? false;
@@ -34,9 +36,17 @@ public class ReverseWebSocketService : INetworkService
 
     private WatsonWsServer CreateNew()
     {
-        var server = new WatsonWsServer(new(Setting.Connection.Uri)) { EnableStatistics = true };
+        var server = new WatsonWsServer(new(Setting.Network.Uri)) { EnableStatistics = true };
 
-        server.ServerStopped += Closed;
+        server.ClientConnected += (_, e) =>
+            Logger.LogBotConsole(LogLevel.Information, $"{e.Client.IpPort}连接到反向WebSocket服务器");
+
+        server.ClientDisconnected += (_, e) =>
+            Logger.LogBotConsole(LogLevel.Information, $"{e.Client.IpPort}从反向WebSocket服务器断开");
+
+        server.ServerStopped += (_, _) =>
+            Logger.LogBotConsole(LogLevel.Information, "反向WebSocket服务器已停止");
+
         server.MessageReceived += MessageReceived;
 
         return server;
@@ -57,17 +67,18 @@ public class ReverseWebSocketService : INetworkService
         }
     }
 
-    public async Task StartAsync()
+    public void Start()
     {
+        if (Active)
+            throw new InvalidOperationException();
+
         _server = CreateNew();
-        await _server.StartAsync();
-        Opened?.Invoke(null, new());
+        _server.StartAsync();
+        Logger.LogBotConsole(LogLevel.Information, $"反向WebSocket服务器已在{Setting.Network.Uri}开启");
     }
 
-    public Task StopAsync()
+    public void Stop()
     {
         _server?.Stop();
-
-        return Task.CompletedTask;
     }
 }

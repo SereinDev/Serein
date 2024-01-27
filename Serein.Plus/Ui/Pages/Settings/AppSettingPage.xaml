@@ -23,6 +23,65 @@
             <TextBlock
                     Margin="0,15,0,5"
                     Style="{DynamicResource SubtitleTextBlockStyle}"
+                    Text="插件" />
+            <ui:NumberBox
+                    Value="{Binding SettingProvider, Path=Value.Application.PluginEventMaxWaitingTime}"
+                    Minimum="-1"
+                    Width="150"
+                    HorizontalAlignment="Left"
+                    SpinButtonPlacementMode="Compact"
+                    ToolTip="超出此时间返回的结果将被忽略；设置成-1可禁用等待"
+                    ui:ControlHelper.PlaceholderText="500"
+                    ui:ControlHelper.Header="事件最大等待时间 (ms)" />
+            <TextBox
+                    Text="{Binding SettingProvider, Path=Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    ToolTip="此处的程序集将会被所有JS插件加载（一行一个）"
+                    TextInput="OnPropertyChanged"
+                    ui:ControlHelper.Header="JS插件全局加载的程序集"
+                    ui:ControlHelper.PlaceholderText="System" />
+            <TextBox
+                    Text="{Binding SettingProvider, Path=Value.Application.JSPatternToSkipLoadingSpecifiedFile, Converter={StaticResource multiLinesConverter}}"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    ToolTip="凡是以所选内容结尾的文件都不会被加载（一行一个）"
+                    TextInput="OnPropertyChanged"
+                    ui:ControlHelper.Header="JS插件加载时忽略的文件后缀"
+                    ui:ControlHelper.PlaceholderText=".module.js" />
+
+            <TextBlock
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
+                    Margin="0,15,0,5"
+                    Text="绑定" />
+            <TextBox
+                    Text="{Binding SettingProvider, Path=Value.Application.RegexForCheckingGameID}"
+                    TextWrapping="Wrap"
+                    ToolTip="绑定时游戏名称需要符合此正则"
+                    TextInput="OnPropertyChanged"
+                    ui:ControlHelper.Header="游戏名称检验正则"
+                    ui:ControlHelper.PlaceholderText="^[a-zA-Z0-9_\s-]{3,16}$" />
+            <CheckBox
+                    IsChecked="{Binding SettingProvider, Path=Value.Application.DisableBinderWhenServerClosed}"
+                    ToolTip="只影响通过Serein命令执行的绑定"
+                    Content="当服务器关闭时禁用绑定功能"
+                    Click="OnPropertyChanged" />
+
+            <TextBlock
+                    Margin="0,15,0,5"
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
+                    Text="其他" />
+            <TextBox
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    Text="{Binding SettingProvider, Path=Value.Application.PattenForEnableMatchMuiltLines, Converter={StaticResource multiLinesConverter}}"
+                    ToolTip="当输入的内容若含有以下内容将触发多行匹配（一行一个）"
+                    TextInput="OnPropertyChanged"
+                    ui:ControlHelper.Header="用于触发多行匹配的文本"
+                    ui:ControlHelper.PlaceholderText="players online:" />
+            <TextBlock
+                    Margin="0,15,0,5"
+                    Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="外观" />
             <TextBlock Text="主题" />
             <StackPanel

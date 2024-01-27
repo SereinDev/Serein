@@ -6,18 +6,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        xmlns:control="clr-namespace:Serein.Plus.Ui.Controls"
         Title="插件"
         d:DesignHeight="450"
         d:DesignWidth="800"
         mc:Ignorable="d">
     <Grid>
-        <RichTextBox
-                Name="ConsoleRichTextBox"
-                Margin="5"
-                DockPanel.Dock="Top"
-                IsReadOnly="True"
-                Focusable="False"
-                IsUndoEnabled="False"
-                UndoLimit="0" />
+        <control:ConsoleTextEditor
+                x:Name="Console"
+                FontSize="10pt"
+                Foreground="{DynamicResource TextControlForegroundPointerOver}"
+                Background="{DynamicResource TextControlBackgroundPointerOver}" />
     </Grid>
 </ui:Page>

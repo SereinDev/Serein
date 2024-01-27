@@ -1,9 +1,9 @@
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Rendering;
-
 using System;
 using System.Windows;
 using System.Windows.Media;
+
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Rendering;
 
 namespace Serein.Plus.Ui.Utils;
 
@@ -225,9 +225,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "106":
                         background = ColorMap.BrightCyan;
                         break;
-                    // case "107":
-                    //     break;
-                    #endregion
+                        // case "107":
+                        //     break;
+                        #endregion
                 }
             }
 

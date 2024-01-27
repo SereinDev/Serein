@@ -7,6 +7,7 @@ using System.Runtime.Loader;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.CSharp;
@@ -34,6 +35,7 @@ public class Loader
     private Assembly? ResolvingHandler(AssemblyLoadContext context, AssemblyName name)
     {
         var fileName = name.Name;
+        context.LoadFromAssemblyPath("");
         return null;
     }
 
@@ -45,19 +47,19 @@ public class Loader
 
         foreach (var file in Directory.GetFiles(PathConstants.PluginDirectory, "*.dll"))
         {
-            var fileName = Path.GetFileName(file);
+            var name = Path.GetFileNameWithoutExtension(file);
             try
             {
                 var assembly = _assemblyLoadContext.LoadFromAssemblyPath(file);
                 var types = assembly.GetExportedTypes();
                 var plugin = CreatePluginInstance(types);
 
-                if (Plugins.TryAdd(fileName, plugin))
+                if (Plugins.TryAdd(name, plugin))
                     throw new InvalidOperationException("插件名称重复");
             }
             catch (Exception e)
             {
-                Logger.LogPluginError(fileName, $"插件初始化失败：{e.Message}");
+                Logger.LogPlugin(LogLevel.Error, name, $"插件初始化失败：{e.Message}");
             }
         }
     }

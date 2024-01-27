@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace Serein.Core.Models.OneBot.ActionParams;
+namespace Serein.Core.Models.Network.OneBot.ActionParams;
 
-public class MessageParams
+public class MessageParams : IActionParams
 {
     public string Type => UserId is not null ? "private" : "group";
 

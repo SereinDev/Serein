@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
@@ -15,12 +17,14 @@ public class WebSocketService : INetworkService
 {
     private readonly IHost _host;
     private WatsonWsClient? _client;
+    private string _uri;
+    private bool _connecting;
 
-    private SettingProvider SettingProvider => _host.Services.GetRequiredService<SettingProvider>();
+    private IServiceProvider Services => _host.Services;
+    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private Setting Setting => SettingProvider.Value;
 
-    public event EventHandler? Opened;
-    public event EventHandler? Closed;
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
 
     public bool Active => _client?.Connected ?? false;
@@ -29,28 +33,37 @@ public class WebSocketService : INetworkService
     public WebSocketService(IHost host)
     {
         _host = host;
+        _uri = string.Empty;
     }
 
     private WatsonWsClient CreateNew()
     {
-        var client = new WatsonWsClient(new(Setting.Connection.Uri)).ConfigureOptions(
+        _uri = Setting.Network.Uri;
+        var client = new WatsonWsClient(new(Setting.Network.Uri))
+        {
+            EnableStatistics = true,
+            AcceptInvalidCertificates = true
+        }.ConfigureOptions(
             (options) =>
             {
-                if (!string.IsNullOrEmpty(Setting.Connection.AccessToken))
+                if (!string.IsNullOrEmpty(Setting.Network.AccessToken))
                     options.SetRequestHeader(
                         "Authorization",
-                        $"Bearer {Setting.Connection.AccessToken}"
+                        $"Bearer {Setting.Network.AccessToken}"
                     );
 
-                foreach (var kv in Setting.Connection.Headers)
+                foreach (var kv in Setting.Network.Headers)
                     options.SetRequestHeader(kv.Key, kv.Value);
+
+                foreach (var subProtocol in Setting.Network.SubProtocols)
+                    options.AddSubProtocol(subProtocol);
             }
         );
 
-        client.ServerConnected += Opened;
-        client.ServerDisconnected += Closed;
-
         client.MessageReceived += MessageReceived;
+        client.ServerConnected += (_, _) =>
+            Logger.LogBotConsole(LogLevel.Information, $"成功连接到{_uri}");
+        client.ServerDisconnected += (_, _) => Logger.LogBotConsole(LogLevel.Warning, "连接已断开");
 
         return client;
     }
@@ -67,15 +80,29 @@ public class WebSocketService : INetworkService
             await _client.SendAsync(text);
     }
 
-    public async Task StartAsync()
+    public void Start()
     {
+        if (_connecting)
+            throw new InvalidOperationException("正在连接中");
+
         _client = CreateNew();
-        await _client.StartWithTimeoutAsync();
+        _connecting = true;
+        _client
+            .StartWithTimeoutAsync(10)
+            .ContinueWith(
+                (task) =>
+                {
+                    _connecting = false;
+                    if (!task.Result)
+                    {
+                        Logger.LogBotConsole(LogLevel.Error, "连接超时");
+                    }
+                }
+            );
     }
 
-    public async Task StopAsync()
+    public void Stop()
     {
-        if (_client is not null)
-            await _client.StopAsync();
+        _client?.Stop();
     }
 }

@@ -7,10 +7,6 @@ namespace Serein.Core.Services.Networks;
 
 public interface INetworkService : IDisposable
 {
-    event EventHandler? Opened;
-
-    event EventHandler? Closed;
-
     event EventHandler<MessageReceivedEventArgs>? MessageReceived;
 
     bool Active { get; }
@@ -19,7 +15,7 @@ public interface INetworkService : IDisposable
 
     Task SendAsync(string text);
 
-    Task StartAsync();
+    void Start();
 
-    Task StopAsync();
+    void Stop();
 }

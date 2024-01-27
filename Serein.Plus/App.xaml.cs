@@ -38,6 +38,7 @@ public partial class App : Application
         builder.Services.AddSingleton<PanelPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
+        builder.Services.AddSingleton<NetworkPage>();
         builder.Services.AddSingleton<PluginConsolePage>();
         builder.Services.AddSingleton<PluginListPage>();
         builder.Services.AddSingleton<PluginPage>();
@@ -45,12 +46,11 @@ public partial class App : Application
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
         builder.Services.AddSingleton<AutoRunSettingPage>();
-        builder.Services.AddSingleton<ConnectionSettingPage>();
-        builder.Services.AddSingleton<FunctionSettingPage>();
+        builder.Services.AddSingleton<NetworkSettingPage>();
         builder.Services.AddSingleton<PageSettingPage>();
         builder.Services.AddSingleton<ReactionSettingPage>();
         builder.Services.AddSingleton<ServerSettingPage>();
-        builder.Services.AddSingleton<SettingPage>();
+        builder.Services.AddSingleton<CategoriesPage>();
 
         builder.Services.AddSingleton<IOutputHandler, WpfOutputHandler>(
             (services) => new(services)

@@ -26,7 +26,7 @@
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "externalTerminal",
-            "requireExactSource": false
+            "requireExactSource": false,
         }
     ],
     "inputs": [

@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
 
-public class ConnectionSetting : INotifyPropertyChanged
+public class NetworkSetting : INotifyPropertyChanged
 {
     public string? AccessToken { get; set; }
 
@@ -27,6 +27,8 @@ public class ConnectionSetting : INotifyPropertyChanged
     public string Uri { get; set; } = "ws://127.0.0.1:8080";
 
     public bool UseReverseWebSocket { get; set; }
+
+    public string[] SubProtocols { get; set; } = Array.Empty<string>();
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;

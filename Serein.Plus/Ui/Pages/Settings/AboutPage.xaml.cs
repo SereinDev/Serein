@@ -19,11 +19,7 @@ public partial class AboutPage : Page
 
     public string Version { get; } = SereinApp.Version;
     public string AssemblyVersion { get; } = Assembly.GetExecutingAssembly().ToString();
-    public string? AssemblyInformationalVersion { get; } =
-        Assembly
-            .GetExecutingAssembly()
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion;
+    public string? AssemblyInformationalVersion { get; } = SereinApp.FullVersion;
 
     private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
     {

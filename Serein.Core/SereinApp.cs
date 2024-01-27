@@ -19,6 +19,10 @@ public sealed class SereinApp : IHost
 {
     public static readonly string Version =
         Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? "?";
+    public static readonly string? FullVersion = Assembly
+        .GetCallingAssembly()
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+        ?.InformationalVersion;
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();

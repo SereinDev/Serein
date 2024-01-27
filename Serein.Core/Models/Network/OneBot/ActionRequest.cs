@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
-namespace Serein.Core.Models.OneBot;
+using Serein.Core.Models.Network.OneBot.ActionParams;
+
+namespace Serein.Core.Models.Network.OneBot;
 
 public class ActionRequest<T>
-    where T : notnull
+    where T : notnull, IActionParams
 {
     public string Action { get; set; } = string.Empty;
 

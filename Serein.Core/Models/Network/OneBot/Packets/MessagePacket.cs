@@ -1,6 +1,6 @@
-using Serein.Core.Models.OneBot.Messages;
+using Serein.Core.Models.Network.OneBot.Messages;
 
-namespace Serein.Core.Models.OneBot.Packets;
+namespace Serein.Core.Models.Network.OneBot.Packets;
 
 public class MessagePacket : Packet
 {

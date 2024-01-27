@@ -2,7 +2,7 @@ using System.Text.Json.Nodes;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.OneBot.Packets;
+using Serein.Core.Models.Network.OneBot.Packets;
 
 namespace Serein.Core.Models.Output;
 
@@ -12,17 +12,11 @@ public interface IOutputHandler : ILogger
 
     void LogServerInfo(string line);
 
-    void LogBotNotice(string line);
+    void LogBotConsole(LogLevel logLevel, string line);
 
-    void LogBotMessage(MessagePacket packet);
+    void LogBotReceivedMessage(MessagePacket packet);
 
     void LogBotJsonPacket(JsonNode jsonNode);
 
-    void LogPluginNotice(string line);
-
-    void LogPluginInfomation(string title, string line);
-
-    void LogPluginWarn(string title, string line);
-
-    void LogPluginError(string title, string line);
+    void LogPlugin(LogLevel logLevel, string title, string line);
 }

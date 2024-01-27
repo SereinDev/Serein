@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Network.OneBot.Packets;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.OneBot.Packets;
 using Serein.Core.Models.Plugins.CSharp;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.CSharp;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
-using Serein.Core.Services.Data;
-using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Plugins;
 
@@ -52,8 +53,8 @@ public class EventDispatcher
             return true;
         }
 
-        if (SettingProvider.Value.Function.PluginEventMaxWaitingTime > 0)
-            Task.WaitAll(tasks.ToArray(), SettingProvider.Value.Function.PluginEventMaxWaitingTime);
+        if (SettingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
+            Task.WaitAll(tasks.ToArray(), SettingProvider.Value.Application.PluginEventMaxWaitingTime);
 
         cancellationTokenSource.Cancel();
         return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
@@ -151,7 +152,7 @@ public class EventDispatcher
             }
             catch (Exception e)
             {
-                Logger.LogPluginError(name, e.GetDetailString());
+                Logger.LogPlugin(LogLevel.Error, name, $"触发事件{name}时出现异常：\n{e.GetDetailString()}");
             }
         }
 
