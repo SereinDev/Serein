@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core;
@@ -18,11 +20,24 @@ namespace Serein.Core;
 public sealed class SereinApp : IHost
 {
     public static readonly string Version =
-        Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? "?";
+        Assembly.GetCallingAssembly().GetName().Version?.ToString() ?? "¿¿¿";
     public static readonly string? FullVersion = Assembly
         .GetCallingAssembly()
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
         ?.InformationalVersion;
+    public static readonly AppType Type;
+    public static readonly bool FirstTimeOpening = !File.Exists(PathConstants.SettingFile);
+
+    static SereinApp()
+    {
+        Type = Assembly.GetEntryAssembly()?.GetName().Name switch
+        {
+            "Serein.Cli" => AppType.Cli,
+            "Serein.Lite" => AppType.Lite,
+            "Serein.Plus" => AppType.Plus,
+            _ => AppType.Unknown,
+        };
+    }
 
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();

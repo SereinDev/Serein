@@ -29,10 +29,12 @@ public class Schedule : INotifyPropertyChanged
 
                 CrontabSchedule = CrontabSchedule.Parse(_cronExp);
                 NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
+                CommandTip = null;
             }
             catch (Exception e)
             {
-                ErrorMsg = e.Message;
+                CommandTip = e.Message;
+                NextTime = null;
             }
         }
     }
@@ -45,8 +47,7 @@ public class Schedule : INotifyPropertyChanged
             _command = value;
             CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
 
-            if (CommandObj.Type == CommandType.Invalid)
-                ErrorMsg = "命令格式不正确";
+            CommandTip = CommandObj.Type == CommandType.Invalid ? "命令格式不正确" : null;
         }
     }
 
@@ -58,17 +59,24 @@ public class Schedule : INotifyPropertyChanged
     [JsonIgnore]
     public Command? CommandObj { get; private set; }
 
+    [JsonIgnore]
     public DateTime? NextTime { get; internal set; }
 
+    [DoNotNotify]
     internal bool IsRunning { get; set; }
 
     [DoNotNotify]
     [JsonIgnore]
     internal CrontabSchedule? CrontabSchedule { get; set; }
 
-    [DoNotNotify]
+    [AlsoNotifyFor(nameof(Tip))]
+    private string? CommandTip { get; set; }
+
+    [AlsoNotifyFor(nameof(Tip))]
+    private string? CronExpTip { get; set; }
+
     [JsonIgnore]
-    public string? ErrorMsg { get; private set; }
+    public string? Tip => CronExpTip ?? CommandTip;
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;

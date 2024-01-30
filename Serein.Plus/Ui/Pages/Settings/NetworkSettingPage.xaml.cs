@@ -23,6 +23,13 @@ public partial class NetworkSettingPage : Page
         _host = host;
         InitializeComponent();
         DataContext = SettingProvider;
+        AccessToken.Password = SettingProvider.Value.Network.AccessToken;
+    }
+
+    private void OnPasswordChanged(object? sender, EventArgs e)
+    {
+        SettingProvider.Value.Network.AccessToken = AccessToken.Password;
+        OnPropertyChanged(sender, e);
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)

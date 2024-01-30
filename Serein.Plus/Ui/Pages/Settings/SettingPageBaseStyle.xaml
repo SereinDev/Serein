@@ -33,6 +33,7 @@
                 Value="0,5,0,10" />
     </Style>
 
+    <converter:EscapingConverter x:Key="escapingConverter" />
     <converter:EnumConverter x:Key="enumConverter" />
     <converter:MultiLinesConverter x:Key="multiLinesConverter" />
 </ResourceDictionary>

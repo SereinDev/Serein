@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using iNKORE.UI.WPF.Modern.Controls;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -30,6 +32,7 @@ public partial class PanelPage : Page
         _timer.Elapsed += (_, _) => UpdateInfo();
 
         ServerManager.PropertyChanged += (_, _) => UpdateInfo();
+        ServerManager.ServerStatusChanged += OnServerStatusChanged;
         DataContext = ServerManager;
         Console.EnableAnsiColor();
         UpdateInfo();
@@ -62,7 +65,12 @@ public partial class PanelPage : Page
         }
         catch (Exception ex)
         {
-            Console.AppendErrorLine(ex.Message);
+            new ContentDialog
+            {
+                Content = ex.Message,
+                PrimaryButtonText = "确定",
+                Title = "操作失败"
+            }.ShowAsync();
         }
     }
 
@@ -82,6 +90,15 @@ public partial class PanelPage : Page
     {
         ServerManager.Input(InputBox.Text);
         InputBox.Text = string.Empty;
+    }
+
+    private void OnServerStatusChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            if (ServerManager.Status == ServerStatus.Running)
+                Console.Clear();
+        });
     }
 
     private const string EmptyHolder = "-";

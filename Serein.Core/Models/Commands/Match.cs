@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -5,7 +6,6 @@ using System.Text.RegularExpressions;
 using PropertyChanged;
 
 using Serein.Core.Services;
-using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Commands;
 
@@ -20,7 +20,18 @@ public class Match : INotifyPropertyChanged
         set
         {
             _regExp = value;
-            RegexObj = _regExp.TryParse(RegexOptions.None, out var regex) ? regex : null;
+            try
+            {
+                if (string.IsNullOrEmpty(_regExp))
+                    throw new ArgumentException("正则表达式不得为空", nameof(RegExp));
+
+                RegexObj = new Regex(_regExp);
+                RegExpTip = null;
+            }
+            catch (Exception e)
+            {
+                RegExpTip = e.Message;
+            }
         }
     }
 
@@ -55,8 +66,10 @@ public class Match : INotifyPropertyChanged
                 value
             );
 
-            if (CommandObj.Type == CommandType.Invalid)
-                ErrorMsg = "命令格式不正确";
+            CommandTip =
+                CommandObj.Type == CommandType.Invalid
+                    ? new ArgumentException("命令格式不正确", nameof(Command)).Message
+                    : null;
         }
     }
 
@@ -64,9 +77,14 @@ public class Match : INotifyPropertyChanged
     [JsonIgnore]
     public Command? CommandObj { get; private set; }
 
-    [DoNotNotify]
+    [AlsoNotifyFor(nameof(Tip))]
+    private string? CommandTip { get; set; }
+
+    [AlsoNotifyFor(nameof(Tip))]
+    private string? RegExpTip { get; set; }
+
     [JsonIgnore]
-    public string? ErrorMsg { get; private set; }
+    public string? Tip => RegExpTip ?? CommandTip;
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -67,13 +68,13 @@ public class ReverseWebSocketService : INetworkService
         }
     }
 
-    public void Start()
+    public void Start(CancellationToken token)
     {
         if (Active)
             throw new InvalidOperationException();
 
         _server = CreateNew();
-        _server.StartAsync();
+        _server.StartAsync(token);
         Logger.LogBotConsole(LogLevel.Information, $"反向WebSocket服务器已在{Setting.Network.Uri}开启");
     }
 

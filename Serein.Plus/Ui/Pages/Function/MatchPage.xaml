@@ -14,6 +14,15 @@
     <Page.Resources>
         <converter:EnumConverter x:Key="enumConverter" />
         <converter:MatchFieldTypeToStringConverter x:Key="matchFieldTypeToStringConverter" />
+
+        <DataTemplate x:Key="RowDetailsTemplate">
+            <Grid>
+                <TextBlock
+                        Text="{Binding Tip, Mode=OneWay, TargetNullValue='-'}"
+                        TextWrapping="WrapWithOverflow"
+                        Margin="5,2" />
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -25,7 +34,8 @@
                 x:Name="MatchesDataGrid"
                 AutoGenerateColumns="False"
                 GridLinesVisibility="All"
-                RowDetailsVisibilityMode="Collapsed"
+                RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
+                RowDetailsVisibilityMode="VisibleWhenSelected"
                 HeadersVisibility="Column"
                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
@@ -34,7 +44,7 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                        Binding="{Binding RegExp}"
+                        Binding="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}"
                         Header="正则表达式" />
                 <DataGridTemplateColumn
                         Header="匹配域"
@@ -65,7 +75,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn
-                        Binding="{Binding Command}"
+                        Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}"
                         Header="命令" />
                 <DataGridTextColumn
                         Binding="{Binding Description}"

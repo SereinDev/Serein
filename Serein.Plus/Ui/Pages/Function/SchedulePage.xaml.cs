@@ -16,7 +16,7 @@ public partial class SchedulePage : Page
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private ScheduleProvider ScheduleProvider => Services.GetRequiredService<ScheduleProvider>();
-    public ObservableCollection<Schedule> Schedules = new();
+    public ObservableCollection<Schedule> Schedules => ScheduleProvider.Value;
 
     public SchedulePage(IHost host)
     {
@@ -28,7 +28,7 @@ public partial class SchedulePage : Page
 
     private void OnLayoutUpdated(object sender, EventArgs e)
     {
-        ScheduleProvider.Save();
+        ScheduleProvider.SaveAsyncWithDebounce();
         UpdateDetails(sender, e);
     }
 

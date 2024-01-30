@@ -12,7 +12,7 @@
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <NoWarn>CS1416</NoWarn>
+        <NoWarn>$(NoWarn);CS1416</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,6 +23,7 @@
 
     <ItemGroup>
         <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+        <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
         <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.24.2" />
     </ItemGroup>
 

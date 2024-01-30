@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
+
+using Hardcodet.Wpf.TaskbarNotification;
 
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
@@ -10,12 +15,19 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Serein.Core;
+using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Server;
+using Serein.Plus.Ui.Commands;
+using Serein.Plus.Ui.Dialogs;
 using Serein.Plus.Ui.Pages;
 using Serein.Plus.Ui.Pages.Function;
 using Serein.Plus.Ui.Pages.Server;
 using Serein.Plus.Ui.Pages.Settings;
+
+using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Ui.Window;
 
@@ -23,12 +35,66 @@ public partial class MainWindow : System.Windows.Window
 {
     private readonly IHost _host = App.Host;
     private IServiceProvider Services => _host.Services;
+    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
+    private bool _isTopMost;
 
     public MainWindow()
     {
         InitializeComponent();
         ConfigureNavigation();
+        ChangeTitlePostfix();
+        TaskbarIcon.ContextMenu.DataContext = this;
+        TaskbarIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
+        ServerManager.ServerStatusChanged += OnServerStatusChanged;
+        TaskbarIcon.TrayBalloonTipClicked += (_, _) => ShowWindow();
+    }
+
+    private void OnDeactivated(object sender, EventArgs e)
+    {
+        Topmost = _isTopMost;
+    }
+
+    private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        ShowInTaskbar = IsVisible;
+        HideMenuItem.IsChecked = !IsVisible;
+
+        if (Topmost && !IsVisible)
+            Topmost = false;
+    }
+
+    private void MenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem item)
+            return;
+
+        var tag = item.Tag?.ToString();
+
+        switch (tag)
+        {
+            case "TopMost":
+                _isTopMost = item.IsChecked;
+                break;
+
+            case "Exit":
+                Close();
+                break;
+
+            case "Hide":
+                if (HideMenuItem.IsChecked)
+                    Hide();
+                else
+                    ShowWindow();
+                break;
+        }
+    }
+
+    public void ShowWindow()
+    {
+        Show();
+        Activate();
+        WindowState = WindowState.Normal;
     }
 
     private void ConfigureNavigation()
@@ -137,6 +203,60 @@ public partial class MainWindow : System.Windows.Window
                 Theme.Dark => ElementTheme.Dark,
                 _ => ElementTheme.Default
             }
+        );
+    }
+
+    public void OnClosing(object sender, CancelEventArgs e)
+    {
+        if (ServerManager.Status != ServerStatus.Running)
+        {
+            TaskbarIcon.Visibility = Visibility.Hidden;
+            return;
+        }
+
+        Hide();
+        e.Cancel = true;
+        TaskbarIcon.ShowBalloonTip("服务器进程仍在运行中", "已自动最小化至托盘，点击托盘图标即可复原窗口", BalloonIcon.None);
+    }
+
+    private void OnContentRendered(object sender, EventArgs e)
+    {
+        if (SereinApp.FirstTimeOpening)
+            new WelcomeDialog().ShowAsync();
+    }
+
+    private void OnServerStatusChanged(object? sender, EventArgs e)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            if (ServerManager.Status == ServerStatus.Running)
+                ChangeTitlePostfix(
+                    File.Exists(ServerManager.ServerInfo?.FileName)
+                        ? Path.GetFileName(ServerManager.ServerInfo?.FileName)
+                        : ServerManager.ServerInfo?.FileName
+                );
+            else
+                ChangeTitlePostfix();
+
+            if (IsVisible)
+                return;
+
+            TaskbarIcon.ShowBalloonTip(
+                "服务器状态变更",
+                ServerManager.Status == ServerStatus.Running
+                    ? "服务器已启动"
+                    : $"服务器进程已于{ServerManager.ServerInfo?.ExitTime:T}已退出",
+                BalloonIcon.None
+            );
+        });
+    }
+
+    public void ChangeTitlePostfix(string? postfix = null)
+    {
+        Dispatcher.Invoke(
+            () =>
+                Title = TaskbarIcon.ToolTipText =
+                    postfix is null ? "Serein.Plus" : $"Serein.Plus - {postfix}"
         );
     }
 }

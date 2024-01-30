@@ -1,13 +1,34 @@
-using System.Windows.Media;
+using System.ComponentModel;
+using System.Windows;
 
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Highlighting;
+
+using Microsoft.Extensions.DependencyInjection;
+
+using Serein.Core.Services.Data;
+using Serein.Plus.Ui.Utils;
 
 namespace Serein.Plus.Ui.Controls;
 
 public class ConsoleTextEditor : TextEditor
 {
-    protected readonly RichTextModel _richTextModel = new();
+    private static readonly SettingProvider SettingProvider;
+    private static uint s_maxLines;
+
+    static ConsoleTextEditor()
+    {
+        SettingProvider = App.Host.Services.GetRequiredService<SettingProvider>();
+        SettingProvider.PropertyChanged += UpdateLines;
+        SettingProvider.PropertyChanged += (_, _) =>
+            SettingProvider.Value.Application.PropertyChanged += UpdateLines;
+
+        s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
+    }
+
+    private static void UpdateLines(object? sender, PropertyChangedEventArgs e)
+    {
+        s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
+    }
 
     protected readonly object _lock = new();
 
@@ -20,7 +41,9 @@ public class ConsoleTextEditor : TextEditor
         Document.UndoStack.SizeLimit = 0;
         TextArea.TextView.Options.EnableHyperlinks = false;
         TextArea.TextView.Options.EnableEmailHyperlinks = false;
-        TextArea.TextView.LineTransformers.Add(new RichTextColorizer(_richTextModel));
+
+        TextArea.TextView.ElementGenerators.Insert(0, new HideLogLevelPrefixElementGenerator());
+        TextArea.TextView.LineTransformers.Add(new LogLevelColorizer());
     }
 
     public void AppendLine(string line)
@@ -28,50 +51,45 @@ public class ConsoleTextEditor : TextEditor
         lock (_lock)
         {
             AppendText(line + "\n");
+
+            var i = (int)(LineCount - (s_maxLines == 0 ? 250 : s_maxLines));
+
+            if (i > 0)
+            {
+                Document.Remove(0, Document.GetLineByNumber(i).EndOffset + 1);
+            }
+
             ScrollToEnd();
         }
     }
 
     public void AppendInfoLine(string line)
     {
-        lock (_lock)
-        {
-            var text = $"[Info] {line}\n";
-            BeginChange();
-            AppendText(text);
-            _richTextModel.SetForeground(Text.Length - text.Length, 6, Info);
-            EndChange();
-            ScrollToEnd();
-        }
+        var text = $"{LogLevelColorizer.Prefix}[Info] {line}";
+        AppendLine(text);
     }
 
     public void AppendWarnLine(string line)
     {
-        lock (_lock)
-        {
-            var text = $"[Warn] {line}\n";
-            BeginChange();
-            AppendText(text);
-            _richTextModel.SetForeground(Text.Length - text.Length, 6, Warn);
-            EndChange();
-            ScrollToEnd();
-        }
+        var text = $"{LogLevelColorizer.Prefix}[Warn] {line}";
+        AppendLine(text);
     }
 
     public void AppendErrorLine(string line)
     {
-        lock (_lock)
-        {
-            var text = $"[Error] {line}\n";
-            BeginChange();
-            AppendText(text);
-            _richTextModel.SetForeground(Text.Length - text.Length, 7, Error);
-            EndChange();
-            ScrollToEnd();
-        }
+        var text = $"{LogLevelColorizer.Prefix}[Error] {line}";
+        AppendLine(text);
     }
 
-    private static readonly SimpleHighlightingBrush Info = new(Color.FromRgb(0x00, 0xaf, 0xff));
-    private static readonly SimpleHighlightingBrush Warn = new(Color.FromRgb(0xaf, 0x5f, 0x00));
-    private static readonly SimpleHighlightingBrush Error = new(Color.FromRgb(0xd7, 0x00, 0x00));
+    public void AppendReceivedMsgLine(string line)
+    {
+        var text = $"{LogLevelColorizer.Prefix}[Recv] {line}";
+        AppendLine(text);
+    }
+
+    public void AppendSentMsgLine(string line)
+    {
+        var text = $"{LogLevelColorizer.Prefix}[Sent] {line}";
+        AppendLine(text);
+    }
 }

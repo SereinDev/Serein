@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Serein.Lite.Ui;
 
-partial class Window
+partial class MainForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -35,7 +35,7 @@ partial class Window
         this.components = new Container();
         this.AutoScaleMode = AutoScaleMode.Font;
         this.ClientSize = new Size(800, 450);
-        this.Text = "Serein.LiteGui";
+        this.Text = "Serein.Lite";
     }
 
     #endregion

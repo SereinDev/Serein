@@ -25,7 +25,7 @@
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="插件" />
             <ui:NumberBox
-                    Value="{Binding SettingProvider, Path=Value.Application.PluginEventMaxWaitingTime}"
+                    Value="{Binding Value.Application.PluginEventMaxWaitingTime}"
                     Minimum="-1"
                     Width="150"
                     HorizontalAlignment="Left"
@@ -34,7 +34,7 @@
                     ui:ControlHelper.PlaceholderText="500"
                     ui:ControlHelper.Header="事件最大等待时间 (ms)" />
             <TextBox
-                    Text="{Binding SettingProvider, Path=Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     ToolTip="此处的程序集将会被所有JS插件加载（一行一个）"
@@ -42,7 +42,7 @@
                     ui:ControlHelper.Header="JS插件全局加载的程序集"
                     ui:ControlHelper.PlaceholderText="System" />
             <TextBox
-                    Text="{Binding SettingProvider, Path=Value.Application.JSPatternToSkipLoadingSpecifiedFile, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Application.JSPatternToSkipLoadingSpecifiedFile, Converter={StaticResource multiLinesConverter}}"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     ToolTip="凡是以所选内容结尾的文件都不会被加载（一行一个）"
@@ -55,14 +55,14 @@
                     Margin="0,15,0,5"
                     Text="绑定" />
             <TextBox
-                    Text="{Binding SettingProvider, Path=Value.Application.RegexForCheckingGameID}"
+                    Text="{Binding Value.Application.RegexForCheckingGameID}"
                     TextWrapping="Wrap"
                     ToolTip="绑定时游戏名称需要符合此正则"
                     TextInput="OnPropertyChanged"
                     ui:ControlHelper.Header="游戏名称检验正则"
                     ui:ControlHelper.PlaceholderText="^[a-zA-Z0-9_\s-]{3,16}$" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Application.DisableBinderWhenServerClosed}"
+                    IsChecked="{Binding Value.Application.DisableBinderWhenServerClosed}"
                     ToolTip="只影响通过Serein命令执行的绑定"
                     Content="当服务器关闭时禁用绑定功能"
                     Click="OnPropertyChanged" />
@@ -74,11 +74,22 @@
             <TextBox
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
-                    Text="{Binding SettingProvider, Path=Value.Application.PattenForEnableMatchMuiltLines, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Application.PattenForEnableMatchMuiltLines, Converter={StaticResource multiLinesConverter}}"
                     ToolTip="当输入的内容若含有以下内容将触发多行匹配（一行一个）"
                     TextInput="OnPropertyChanged"
                     ui:ControlHelper.Header="用于触发多行匹配的文本"
                     ui:ControlHelper.PlaceholderText="players online:" />
+            <ui:NumberBox
+                    Minimum="0"
+                    Width="150"
+                    Value="{Binding Value.Application.MaxDisplayedLines}"
+                    HorizontalAlignment="Left"
+                    SpinButtonPlacementMode="Compact"
+                    LostFocus="OnPropertyChanged"
+                    ToolTip="最大显示的行数；数值过大可能导致内存占用过高"
+                    ui:ControlHelper.PlaceholderText="250"
+                    ui:ControlHelper.Header="控制台最大行数" />
+
             <TextBlock
                     Margin="0,15,0,5"
                     Style="{DynamicResource SubtitleTextBlockStyle}"
@@ -107,13 +118,13 @@
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="更新" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Application.CheckUpdate}"
+                    IsChecked="{Binding Value.Application.CheckUpdate}"
                     Click="OnPropertyChanged"
                     Content="获取更新提示"
                     ToolTip="启动后自动获取更新提示（建议开启）" />
             <CheckBox
-                    IsEnabled="{Binding SettingProvider, Path=Value.Application.CheckUpdate}"
-                    IsChecked="{Binding SettingProvider, Path=Value.Application.AutoUpdate}"
+                    IsEnabled="{Binding Value.Application.CheckUpdate}"
+                    IsChecked="{Binding Value.Application.AutoUpdate}"
                     Click="OnPropertyChanged"
                     Content="自动更新"
                     ToolTip="应用关闭后自动替换新版本" />

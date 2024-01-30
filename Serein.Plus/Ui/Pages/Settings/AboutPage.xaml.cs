@@ -24,7 +24,7 @@ public partial class AboutPage : Page
     private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
     {
         var uri = e.Uri;
-        if (uri.IsAbsoluteUri && uri.Scheme.Contains("http", StringComparison.OrdinalIgnoreCase))
+        if (uri.IsAbsoluteUri && uri.Scheme.Contains("http"))
         {
             Process.Start(new ProcessStartInfo(uri.ToString()) { UseShellExecute = true });
             e.Handled = true;

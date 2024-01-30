@@ -11,6 +11,7 @@
         <SelfContained>false</SelfContained>
         <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
+        <NoWarn>$(NoWarn);CS1416</NoWarn>
     </PropertyGroup>
 
     
@@ -18,6 +19,8 @@
         <Compile Include="../Shared/*.cs" />
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
+
+        <PackageReference Include="Ookii.Dialogs.WinForms" Version="4.0.0" />
     </ItemGroup>
 
 </Project>

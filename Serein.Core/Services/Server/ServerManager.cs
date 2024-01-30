@@ -47,6 +47,8 @@ public class ServerManager : INotifyPropertyChanged
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning restore CS0067
+    public event EventHandler? ServerStatusChanged;
 
     public ServerManager(
         IOutputHandler output,
@@ -97,7 +99,11 @@ public class ServerManager : INotifyPropertyChanged
         _serverProcess!.EnableRaisingEvents = true;
         _isTerminated = true;
         _restartStatus = RestartStatus.None;
-        _serverInfo = new() { StartTime = _serverProcess.StartTime };
+        _serverInfo = new()
+        {
+            StartTime = _serverProcess.StartTime,
+            FileName = _settingProvider.Value.Server.FileName
+        };
         _commandHistory.Clear();
         _prevProcessCpuTime = TimeSpan.Zero;
 
@@ -109,8 +115,8 @@ public class ServerManager : INotifyPropertyChanged
         _serverProcess.ErrorDataReceived += OnOutputDataReceived;
         _serverProcess.Exited += OnExit;
 
+        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
         _logger.LogServerInfo($"“{_settingProvider.Value.Server.FileName}”启动中");
-
         _eventDispatcher.Dispatch(Event.ServerStarted);
     }
 
@@ -207,7 +213,11 @@ public class ServerManager : INotifyPropertyChanged
         if (!_eventDispatcher.Dispatch(Event.ServerExited, exitCode, DateTime.Now))
             return;
 
+        _serverInfo ??= new();
+        _serverInfo.ExitTime = _serverProcess?.ExitTime;
         _serverProcess = null;
+
+        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
     }
 
     private void OnOutputDataReceived(object? sender, DataReceivedEventArgs e)
@@ -261,7 +271,6 @@ public class ServerManager : INotifyPropertyChanged
         {
             _serverInfo.Argument = null;
             _serverInfo.FileName = null;
-            _serverInfo.ExitTime = null;
             _serverInfo.StartTime = null;
             _serverInfo.Motd = null;
             _serverInfo.OutputLines = 0;

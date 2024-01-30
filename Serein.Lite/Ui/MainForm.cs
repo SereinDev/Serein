@@ -2,10 +2,11 @@ using System.Windows.Forms;
 
 namespace Serein.Lite.Ui;
 
-public partial class Window : Form
+public partial class MainForm : Form
 {
-    public Window()
+    public MainForm()
     {
         InitializeComponent();
+        DialogFactory.ShowWelcomeDialog();
     }
 }

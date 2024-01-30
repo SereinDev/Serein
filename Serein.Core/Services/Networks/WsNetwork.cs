@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ public class WsNetwork
     private ReverseWebSocketService ReverseWebSocketService =>
         Services.GetRequiredService<ReverseWebSocketService>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private CancellationTokenSource? _cancellationTokenSource;
 
     public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
 
@@ -97,16 +99,22 @@ public class WsNetwork
         if (WebSocketService.Active)
             throw new InvalidOperationException("WebSocket连接未断开");
 
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new();
+
         if (Setting.Network.UseReverseWebSocket)
-            ReverseWebSocketService.Start();
+            ReverseWebSocketService.Start(_cancellationTokenSource.Token);
         else
-            WebSocketService.Start();
+            WebSocketService.Start(_cancellationTokenSource.Token);
     }
 
     public void Stop()
     {
-        if (!Active)
+        if (!Active && !WebSocketService.Connecting)
             throw new InvalidOperationException("WebSocket未连接");
+
+        _cancellationTokenSource?.Cancel();
 
         if (ReverseWebSocketService.Active)
             ReverseWebSocketService.Stop();

@@ -20,21 +20,22 @@
     <ScrollViewer>
         <StackPanel Margin="20">
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.AutoRun.Server}"
+                    IsChecked="{Binding Value.AutoRun.Server}"
                     Click="OnPropertyChanged"
                     Content="服务器"
                     ToolTip="Serein启动完毕后启动服务器" />
 
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.AutoRun.WebSocket}"
+                    IsChecked="{Binding Value.AutoRun.WebSocket}"
                     Click="OnPropertyChanged"
                     Content="WebSocket连接"
-                    ToolTip="Serein启动完毕后连接WebSocket" />
+                    ToolTip="Serein启动完毕后连接WebSocket"
+                    Margin="0,0,0,10" />
 
             <ui:NumberBox
                     Minimum="0"
                     Width="150"
-                    Value="{Binding SettingProvider, Path=Value.AutoRun.Delay}"
+                    Value="{Binding Value.AutoRun.Delay}"
                     HorizontalAlignment="Left"
                     ToolTip="延迟运行的时间"
                     ui:ControlHelper.PlaceholderText="5000"

@@ -225,9 +225,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "106":
                         background = ColorMap.BrightCyan;
                         break;
-                        // case "107":
-                        //     break;
-                        #endregion
+                    // case "107":
+                    //     break;
+
+                    #endregion
                 }
             }
 

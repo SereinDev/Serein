@@ -11,6 +11,6 @@ public static class Program
     public static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new Window());
+        Application.Run(new MainForm());
     }
 }

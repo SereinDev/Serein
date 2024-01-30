@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 
 using Jint.Native;
 
@@ -35,9 +34,8 @@ public partial class ScriptInstance
     public Setting Setting => SettingProvider.Value;
     public static string Version => SereinApp.Version;
     public static string? FullVersion => SereinApp.FullVersion;
-    public static string Type =>
-        Assembly.GetEntryAssembly()?.GetName().Name ?? throw new NotSupportedException();
-    public string Namespace => _jsPlugin.PreloadConfig.Name ?? _jsPlugin.Name;
+    public static AppType Type => SereinApp.Type;
+    public string Namespace => _jsPlugin.Name;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {

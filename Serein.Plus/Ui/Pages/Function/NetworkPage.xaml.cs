@@ -2,6 +2,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
+using iNKORE.UI.WPF.Modern.Controls;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -39,7 +41,12 @@ public partial class NetworkPage : Page
         }
         catch (Exception ex)
         {
-            Console.AppendErrorLine(ex.Message);
+            new ContentDialog
+            {
+                Content = ex.Message,
+                PrimaryButtonText = "确定",
+                Title = "操作失败"
+            }.ShowAsync();
         }
     }
 }

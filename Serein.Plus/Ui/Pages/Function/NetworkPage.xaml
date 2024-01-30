@@ -112,7 +112,7 @@
                 BorderBrush="{DynamicResource SystemControlBackgroundBaseLowRevealBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="5">
-            <control:NetworkConsoleTextEditor
+            <control:ConsoleTextEditor
                     x:Name="Console"
                     Margin="1"
                     FontSize="10pt"

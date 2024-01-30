@@ -36,7 +36,7 @@
 
                 <TextBox
                         Margin="0"
-                        Text="{Binding SettingProvider, Path=Value.Server.FileName, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Value.Server.FileName, UpdateSourceTrigger=PropertyChanged}"
                         TextChanged="FileName_TextChanged"
                         DockPanel.Dock="Left"
                         ui:ControlHelper.PlaceholderText="文件路径..."
@@ -52,7 +52,7 @@
             <TextBox
                     TextWrapping="Wrap"
                     Height="auto"
-                    Text="{Binding SettingProvider, Path=Value.Server.Argument, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Value.Server.Argument, UpdateSourceTrigger=PropertyChanged}"
                     TextChanged="OnPropertyChanged"
                     ui:ControlHelper.Header="启动参数"
                     ui:ControlHelper.PlaceholderText="参数..." />
@@ -65,18 +65,18 @@
                     Margin="0,0,0,10"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
-                    Text="{Binding SettingProvider, Path=Value.Server.StopCommands, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Server.StopCommands, Converter={StaticResource multiLinesConverter}}"
                     ToolTip="使用关服功能时执行的命令（一行一条）"
                     LostFocus="OnPropertyChanged"
                     ui:ControlHelper.Header="关服指令"
                     ui:ControlHelper.PlaceholderText="命令..." />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Server.AutoStopWhenCrashing}"
+                    IsChecked="{Binding Value.Server.AutoStopWhenCrashing}"
                     Click="OnPropertyChanged"
                     Content="Serein崩溃时自动关服"
                     ToolTip="Serein发生崩溃时，若服务器正在运行则自动关闭服务器（建议开启）" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Server.AutoRestart}"
+                    IsChecked="{Binding Value.Server.AutoRestart}"
                     Click="OnPropertyChanged"
                     Content="非正常退出时自动重启"
                     ToolTip="若服务器进程退出时返回代码不为0则自动重启" />
@@ -85,32 +85,29 @@
                     Margin="0,15,0,5"
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="输出和输入" />
-            <ComboBox
+            <TextBox
                     ToolTip="当前使用的行结束符字符串"
-                    SelectionChanged="OnPropertyChanged"
-                    ui:ControlHelper.Header="行终止符">
-                <ComboBoxItem Content="跟随系统" />
-                <ComboBoxItem Content="CRLF（\r\n）" />
-                <ComboBoxItem Content="LF（\n）" />
-            </ComboBox>
+                    Text="{Binding Value.Server.LineTerminator, Converter={StaticResource escapingConverter}}"
+                    TextChanged="OnPropertyChanged"
+                    ui:ControlHelper.Header="行终止符" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Server.OutputCommandUserInput}"
+                    IsChecked="{Binding Value.Server.OutputCommandUserInput}"
                     Click="OnPropertyChanged"
                     Content="在控制台显示输入的命令"
                     ToolTip="将输入的指令在控制台中显示" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Server.UseUnicodeChars}"
+                    IsChecked="{Binding Value.Server.UseUnicodeChars}"
                     Click="OnPropertyChanged"
                     Content="使用Unicode字符"
                     ToolTip="将所有指令中的非ASCII字符转为Unicode后输出" />
             <CheckBox
-                    IsChecked="{Binding SettingProvider, Path=Value.Server.SaveLog}"
+                    IsChecked="{Binding Value.Server.SaveLog}"
                     Click="OnPropertyChanged"
                     Content="保存日志"
                     ToolTip="将控制台输出和输入的指令一并保存到日志文件（./log/console）" />
 
             <ComboBox
-                    SelectedIndex="{Binding SettingProvider, Path=Value.Server.OutputEncoding, Converter={StaticResource enumConverter}}"
+                    SelectedIndex="{Binding Value.Server.OutputEncoding, Converter={StaticResource enumConverter}}"
                     SelectionChanged="OnPropertyChanged"
                     ToolTip="指定输出到控制台的编码格式（重启服务器生效）"
                     ui:ControlHelper.Header="输出编码">
@@ -121,7 +118,7 @@
             </ComboBox>
 
             <ComboBox
-                    SelectedIndex="{Binding SettingProvider, Path=Value.Server.InputEncoding, Converter={StaticResource enumConverter}}"
+                    SelectedIndex="{Binding Value.Server.InputEncoding, Converter={StaticResource enumConverter}}"
                     ToolTip="指定输入到服务器的编码格式（重启服务器生效）"
                     SelectionChanged="OnPropertyChanged"
                     ui:ControlHelper.Header="输入编码">
@@ -136,12 +133,12 @@
                     Style="{DynamicResource SubtitleTextBlockStyle}"
                     Text="服务器" />
             <ui:NumberBox
-                    x:Name="Port"
                     Maximum="65535"
                     Minimum="-1"
                     Width="150"
-                    Value="{Binding SettingProvider, Path=Value.Server.Port}"
+                    Value="{Binding Value.Server.Port}"
                     HorizontalAlignment="Left"
+                    LostFocus="OnPropertyChanged"
                     SpinButtonPlacementMode="Compact"
                     ToolTip="指定服务器的本地端口（用于获取服务器的Motd）"
                     ui:ControlHelper.PlaceholderText="19132"

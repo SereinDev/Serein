@@ -28,7 +28,7 @@ public partial class MatchPage : Page
 
     private void OnLayoutUpdated(object sender, EventArgs e)
     {
-        MatchesProvider.Save();
+        MatchesProvider.SaveAsyncWithDebounce();
         UpdateDetails(sender, e);
     }
 

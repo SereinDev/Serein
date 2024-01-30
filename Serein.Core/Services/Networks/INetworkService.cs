@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 using WatsonWebsocket;
@@ -15,7 +16,7 @@ public interface INetworkService : IDisposable
 
     Task SendAsync(string text);
 
-    void Start();
+    void Start(CancellationToken token);
 
     void Stop();
 }

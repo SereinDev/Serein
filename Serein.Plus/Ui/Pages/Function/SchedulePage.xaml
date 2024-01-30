@@ -12,20 +12,21 @@
         mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="RowDetailsTemplate">
-            <Grid Margin="5,0">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <ui:InfoBar
-                        Grid.Column="1"
-                        IsOpen="True"
-                        Severity="Success"
-                        Title="预览"
-                        Message="{Binding ErrorMsg}" />
+
+                <TextBlock
+                        Text="{Binding NextTime, Mode=OneWay, StringFormat=预计执行时间: {0:g}}"
+                        TextWrapping="WrapWithOverflow"
+                        Margin="5,2" />
+                <TextBlock
+                        Grid.Row="1"
+                        TextWrapping="WrapWithOverflow"
+                        Text="{Binding Tip, Mode=OneWay, TargetNullValue='-'}"
+                        Margin="5,2" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

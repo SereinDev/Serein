@@ -21,7 +21,7 @@ public class ApplicationSetting : INotifyPropertyChanged
     [AlsoNotifyFor(nameof(AutoUpdate))]
     public bool CheckUpdate { get; set; } = true;
 
-    public uint MaxCacheLines { get; set; } = 250;
+    public uint MaxDisplayedLines { get; set; } = 250;
 
     public Theme Theme { get; set; }
 

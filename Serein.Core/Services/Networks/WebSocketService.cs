@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,6 @@ public class WebSocketService : INetworkService
     private readonly IHost _host;
     private WatsonWsClient? _client;
     private string _uri;
-    private bool _connecting;
 
     private IServiceProvider Services => _host.Services;
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
@@ -29,6 +29,7 @@ public class WebSocketService : INetworkService
 
     public bool Active => _client?.Connected ?? false;
     public Statistics? Stats => _client?.Stats;
+    public bool Connecting { get; private set; }
 
     public WebSocketService(IHost host)
     {
@@ -80,24 +81,25 @@ public class WebSocketService : INetworkService
             await _client.SendAsync(text);
     }
 
-    public void Start()
+    public void Start(CancellationToken token)
     {
-        if (_connecting)
+        if (Connecting)
             throw new InvalidOperationException("正在连接中");
 
         _client = CreateNew();
-        _connecting = true;
+        Connecting = true;
         _client
-            .StartWithTimeoutAsync(10)
+            .StartWithTimeoutAsync(10, token)
             .ContinueWith(
                 (task) =>
                 {
-                    _connecting = false;
+                    Connecting = false;
                     if (!task.Result)
                     {
                         Logger.LogBotConsole(LogLevel.Error, "连接超时");
                     }
-                }
+                },
+                CancellationToken.None
             );
     }
 
