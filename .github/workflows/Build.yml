@@ -32,70 +32,70 @@ jobs:
         shell: cmd
         run: |
           chcp 65001
-          echo.[assembly: System.Reflection.AssemblyInformationalVersion("${{env.version}}+${{github.sha}}#${{github.run_number}}")]>Shared/AssemblyInformationalVersionAttribute.cs
+          echo.[assembly: System.Reflection.AssemblyInformationalVersion("${{env.version}}+${{github.sha}}#${{github.run_number}}")]>src/Shared/AssemblyInformationalVersionAttribute.cs
 
       - name: Publish the solution
-        run: ./publish.bat
+        run: .src/Scripts/publish.bat
 
       # Serein.Lite
       - name: Upload binary files(Serein.Lite_win-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Lite_win-x64
-          path: ./Serein.Lite/bin/Debug/net6.0-windows/win-x64/publish
+          path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x64/publish
 
       - name: Upload binary files(Serein.Lite_win-x86)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Lite_win-x86
-          path: ./Serein.Lite/bin/Debug/net6.0-windows/win-x86/publish
+          path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x86/publish
 
       # Serein.Plus
       - name: Upload binary files(Serein.Plus_win-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Plus_win-x64
-          path: ./Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/publish
+          path: ./src/Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/publish
 
       # Serein.Cli
       - name: Upload binary files(Serein.Cli_win-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_win-x64
-          path: ./Serein.Cli/bin/Debug/net6.0-windows/win-x64/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x64/publish
 
       - name: Upload binary files(Serein.Cli_win-x86)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_win-x86
-          path: ./Serein.Cli/bin/Debug/net6.0-windows/win-x86/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x86/publish
 
       - name: Upload binary files(Serein.Cli_linux-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-x64
-          path: ./Serein.Cli/bin/Debug/net6.0/linux-x64/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0/linux-x64/publish
 
       - name: Upload binary files(Serein.Cli_linux-arm)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-arm
-          path: ./Serein.Cli/bin/Debug/net6.0/linux-arm/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm/publish
 
       - name: Upload binary files(Serein.Cli_linux-arm64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-arm64
-          path: ./Serein.Cli/bin/Debug/net6.0/linux-arm64/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm64/publish
 
       - name: Upload binary files(Serein.Cli_osx-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_osx-x64
-          path: ./Serein.Cli/bin/Debug/net6.0/osx-x64/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0/osx-x64/publish
 
       - name: Upload binary files(Serein.Cli_osx-arm64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_osx-arm64
-          path: ./Serein.Cli/bin/Debug/net6.0/osx-arm64/publish
+          path: ./src/Serein.Cli/bin/Debug/net6.0/osx-arm64/publish

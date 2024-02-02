@@ -11,4 +11,7 @@
         "editor.detectIndentation": false,
         "editor.tabSize": 4
     },
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-issue-config.json": ".github/ISSUE_TEMPLATE/config.yml"
+    },
 }
