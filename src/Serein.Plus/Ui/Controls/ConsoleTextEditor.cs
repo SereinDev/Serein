@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Windows;
 
 using ICSharpCode.AvalonEdit;
 
@@ -23,6 +22,12 @@ public class ConsoleTextEditor : TextEditor
             SettingProvider.Value.Application.PropertyChanged += UpdateLines;
 
         s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
+    }
+
+    public void EnableAnsiColor()
+    {
+        TextArea.TextView.ElementGenerators.Insert(0, new HideAnsiElementGenerator());
+        TextArea.TextView.LineTransformers.Add(new AnsiColorizer());
     }
 
     private static void UpdateLines(object? sender, PropertyChangedEventArgs e)

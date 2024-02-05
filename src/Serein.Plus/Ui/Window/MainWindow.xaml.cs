@@ -266,7 +266,11 @@ public partial class MainWindow : System.Windows.Window
     {
         Dispatcher.Invoke(() =>
         {
-            var text = CommandParser.ApplyVariables(SettingProvider.Value.Application.Title, null);
+            var text = CommandParser.ApplyVariables(
+                SettingProvider.Value.Application.Title,
+                null,
+                true
+            );
 
             TaskbarIcon.ToolTipText = Title = !string.IsNullOrEmpty(text.Trim())
                 ? $"Serein.Plus - {text}"

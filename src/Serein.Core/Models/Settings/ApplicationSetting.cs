@@ -16,12 +16,12 @@ public class ApplicationSetting : INotifyPropertyChanged
         set => _autoUpdate = value && CheckUpdate;
     }
 
+    [AlsoNotifyFor(nameof(AutoUpdate))]
+    public bool CheckUpdate { get; set; } = true;
+
     public bool ColorfulLog { get; set; } = true;
 
     public string Title { get; set; } = "{filename}";
-
-    [AlsoNotifyFor(nameof(AutoUpdate))]
-    public bool CheckUpdate { get; set; } = true;
 
     public uint MaxDisplayedLines { get; set; } = 250;
 

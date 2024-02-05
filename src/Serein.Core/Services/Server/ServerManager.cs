@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
+using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
@@ -29,8 +31,8 @@ public class ServerManager
 
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; private set; }
-    private readonly List<string> _commandHistory = new();
-
+    private readonly List<string> _commandHistory;
+    private readonly List<string> _cache;
     private readonly Timer _updateTimer;
     private BinaryWriter? _inputWriter;
     private Process? _serverProcess;
@@ -41,6 +43,7 @@ public class ServerManager
     private readonly IOutputHandler _logger;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
+    private readonly ReactionManager _reactionManager;
     private readonly SettingProvider _settingProvider;
 
     public event EventHandler? ServerStatusChanged;
@@ -49,13 +52,17 @@ public class ServerManager
         IOutputHandler output,
         SettingProvider settingManager,
         Matcher matcher,
-        EventDispatcher eventDispatcher
+        EventDispatcher eventDispatcher,
+        ReactionManager reactionManager
     )
     {
         _settingProvider = settingManager;
         _logger = output;
         _matcher = matcher;
         _eventDispatcher = eventDispatcher;
+        _reactionManager = reactionManager;
+        _commandHistory = new();
+        _cache = new();
         _updateTimer = new(2000) { AutoReset = true };
         _updateTimer.Elapsed += (_, _) => UpdateInfo();
         _updateTimer.Start();
@@ -113,6 +120,7 @@ public class ServerManager
         _serverProcess.Exited += OnExit;
 
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
+        _reactionManager.TriggerAsync(ReactionType.ServerStart);
         _logger.LogServerInfo($"“{_settingProvider.Value.Server.FileName}”启动中");
         _eventDispatcher.Dispatch(Event.ServerStarted);
     }
@@ -218,6 +226,11 @@ public class ServerManager
         _serverInfo.ExitTime = _serverProcess?.ExitTime;
         _serverProcess = null;
 
+        _reactionManager.TriggerAsync(
+            exitCode == 0
+                ? ReactionType.ServerExitedNormally
+                : ReactionType.ServerExitedUnexpectedly
+        );
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
     }
 
@@ -238,6 +251,18 @@ public class ServerManager
 
         if (!_eventDispatcher.Dispatch(Event.ServerOutput, filtered))
             return;
+
+        if (
+            _settingProvider.Value.Application.PattenForEnableMatchMuiltLines.Any(
+                (p) => filtered.Contains(p)
+            )
+        )
+        {
+            _cache.Add(filtered);
+            _matcher.MatchServerOutputAsync(string.Join('\n', _cache));
+        }
+        else
+            _cache.Clear();
 
         _matcher.MatchServerOutputAsync(filtered);
     }
@@ -290,7 +315,10 @@ public class ServerManager
         if (_settingProvider.Value.Server.IPv4Port >= 0)
             await Task.Run(
                 () =>
-                    _serverInfo.Stat = new("127.0.0.1", (ushort)_settingProvider.Value.Server.IPv4Port)
+                    _serverInfo.Stat = new(
+                        "127.0.0.1",
+                        (ushort)_settingProvider.Value.Server.IPv4Port
+                    )
             );
     }
 }

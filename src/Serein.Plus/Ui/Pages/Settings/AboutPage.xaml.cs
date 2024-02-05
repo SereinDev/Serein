@@ -1,9 +1,8 @@
-using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Navigation;
 
 using Serein.Core;
+using Serein.Core.Utils.Extensions;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -26,7 +25,7 @@ public partial class AboutPage : Page
         var uri = e.Uri;
         if (uri.IsAbsoluteUri && uri.Scheme.Contains("http"))
         {
-            Process.Start(new ProcessStartInfo(uri.ToString()) { UseShellExecute = true });
+            uri.OpenInBrowser();
             e.Handled = true;
         }
     }

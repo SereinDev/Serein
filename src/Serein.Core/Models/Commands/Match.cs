@@ -9,7 +9,7 @@ using Serein.Core.Services;
 
 namespace Serein.Core.Models.Commands;
 
-public class Match : INotifyPropertyChanged
+public class Match : INotifyPropertyChanged, ICloneable
 {
     private string? _regExp;
     private string? _command;
@@ -53,23 +53,28 @@ public class Match : INotifyPropertyChanged
         set
         {
             _command = value;
-            CommandObj = CommandParser.Parse(
-                FieldType switch
-                {
-                    MatchFieldType.ServerOutput => CommandOrigin.ServerOutput,
-                    MatchFieldType.ServerInput => CommandOrigin.ServerInput,
-                    MatchFieldType.PrivateMsg => CommandOrigin.Msg,
-                    MatchFieldType.GroupMsg => CommandOrigin.Msg,
-                    MatchFieldType.SelfMsg => CommandOrigin.Msg,
-                    _ => CommandOrigin.Null
-                },
-                value
-            );
 
-            CommandTip =
-                CommandObj.Type == CommandType.Invalid
-                    ? new ArgumentException("命令格式不正确", nameof(Command)).Message
-                    : null;
+            try
+            {
+                CommandObj = CommandParser.Parse(
+                    FieldType switch
+                    {
+                        MatchFieldType.ServerOutput => CommandOrigin.ServerOutput,
+                        MatchFieldType.ServerInput => CommandOrigin.ServerInput,
+                        MatchFieldType.PrivateMsg => CommandOrigin.Msg,
+                        MatchFieldType.GroupMsg => CommandOrigin.Msg,
+                        MatchFieldType.SelfMsg => CommandOrigin.Msg,
+                        _ => CommandOrigin.Null
+                    },
+                    value,
+                    true
+                );
+                CommandTip = null;
+            }
+            catch (Exception e)
+            {
+                CommandTip = e.Message;
+            }
         }
     }
 
@@ -88,4 +93,9 @@ public class Match : INotifyPropertyChanged
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

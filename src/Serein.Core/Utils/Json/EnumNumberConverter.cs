@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Serein.Core.Utils.Json;
 
-public class EnumConverter<T> : JsonConverter<T>
+public class EnumNumberConverter<T> : JsonConverter<T>
     where T : struct, Enum
 {
     public override T Read(
@@ -26,7 +26,7 @@ public class EnumConverter<T> : JsonConverter<T>
                         ? e
                         : default,
             JsonTokenType.Number => Enum.Parse<T>(reader.GetInt64().ToString()),
-            _ => throw new InvalidOperationException(),
+            _ => default,
         };
     }
 

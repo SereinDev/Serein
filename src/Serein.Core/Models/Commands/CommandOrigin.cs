@@ -12,7 +12,7 @@ public enum CommandOrigin
 
     Schedule,
 
-    EventTrigger,
+    Reaction,
 
     Plugin,
 

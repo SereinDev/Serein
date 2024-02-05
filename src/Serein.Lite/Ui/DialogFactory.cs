@@ -1,7 +1,6 @@
-
-using System.Diagnostics;
-
 using Ookii.Dialogs.WinForms;
+
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Lite.Ui;
 
@@ -29,10 +28,8 @@ public static class DialogFactory
             WindowTitle = "Serein",
         };
 
-        dialog.HyperlinkClicked += (_, e) =>
-            Process.Start(new ProcessStartInfo(e.Href) { UseShellExecute = true });
+        dialog.HyperlinkClicked += (_, e) => e.Href.OpenInBrowser();
 
         dialog.ShowDialog();
     }
 }
-

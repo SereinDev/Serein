@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 
+using Jint;
 using Jint.Native;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ using Serein.Core.Models.Settings;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks;
+using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Server;
 using Serein.Core.Utils.Extensions;
 
@@ -27,6 +30,7 @@ public partial class ScriptInstance
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
+    private JsManager JsManager => Services.GetRequiredService<JsManager>();
 
     public ServerModule Server { get; }
     public WsModule Ws { get; }
@@ -51,14 +55,44 @@ public partial class ScriptInstance
         CommandRunner.RunAsync(CommandParser.Parse(CommandOrigin.Plugin, command)).Await();
     }
 
-    public static Command ParseCommand(string? command)
+#pragma warning disable CA1822
+    public Command ParseCommand(string? command)
     {
         return CommandParser.Parse(CommandOrigin.Plugin, command);
     }
+#pragma warning restore CA1822
 
     public void Log(params JsValue[] jsValues)
     {
         var str = string.Join<JsValue>('\x20', jsValues);
         Logger.LogPlugin(LogLevel.Information, _jsPlugin.Name, str);
+    }
+
+    public bool Exports(string? name, JsValue jsValue)
+    {
+        if (string.IsNullOrEmpty(name))
+            return false;
+
+        try
+        {
+            if (jsValue.IsNull() || jsValue.IsUndefined())
+                return JsManager.ExportedVariables.Remove(name, out _);
+
+            JsManager.ExportedVariables[name] = jsValue.ToObject();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public JsValue Imports(string? name)
+    {
+        return
+            string.IsNullOrEmpty(name)
+            || !JsManager.ExportedVariables.TryGetValue(name, out object? o)
+            ? JsValue.Undefined
+            : JsValue.FromObject(_jsPlugin.Engine, o);
     }
 }

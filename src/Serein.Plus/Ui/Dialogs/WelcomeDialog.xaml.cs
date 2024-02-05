@@ -1,7 +1,8 @@
-using System.Diagnostics;
 using System.Windows.Navigation;
 
 using iNKORE.UI.WPF.Modern.Controls;
+
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Plus.Ui.Dialogs;
 
@@ -17,7 +18,7 @@ public partial class WelcomeDialog : ContentDialog
         var uri = e.Uri;
         if (uri.IsAbsoluteUri && uri.Scheme.Contains("http"))
         {
-            Process.Start(new ProcessStartInfo(uri.ToString()) { UseShellExecute = true });
+            uri.OpenInBrowser();
             e.Handled = true;
         }
     }

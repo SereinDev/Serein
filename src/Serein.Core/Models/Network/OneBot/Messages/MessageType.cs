@@ -4,7 +4,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Models.Network.OneBot.Messages;
 
-[JsonConverter(typeof(EnumConverter<MessageType>))]
+[JsonConverter(typeof(EnumNumberConverter<MessageType>))]
 public enum MessageType
 {
     Unknown,

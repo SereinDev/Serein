@@ -39,9 +39,56 @@
                 HeadersVisibility="Column"
                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
-                LayoutUpdated="OnLayoutUpdated"
+                LayoutUpdated="MatchesDataGrid_LayoutUpdated"
+                ContextMenuOpening="MatchesDataGrid_ContextMenuOpening"
                 SelectedCellsChanged="UpdateDetails">
-
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                            Header="添加..."
+                            Click="MenuItem_Click"
+                            Tag="Add">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Add}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                            Header="编辑..."
+                            x:Name="Edit"
+                            Click="MenuItem_Click"
+                            Tag="Edit">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Edit}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                            Header="删除"
+                            x:Name="Remove"
+                            Click="MenuItem_Click"
+                            Tag="Remove">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Cancel}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                            Header="刷新"
+                            Click="MenuItem_Click"
+                            Tag="Refresh">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Refresh}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                            Header="打开介绍文档"
+                            Click="MenuItem_Click"
+                            Tag="OpenDoc">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn
                         Binding="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}"

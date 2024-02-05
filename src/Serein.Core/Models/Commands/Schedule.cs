@@ -45,9 +45,16 @@ public class Schedule : INotifyPropertyChanged
         set
         {
             _command = value;
-            CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
 
-            CommandTip = CommandObj.Type == CommandType.Invalid ? "命令格式不正确" : null;
+            try
+            {
+                CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value, true);
+                CommandTip = null;
+            }
+            catch (Exception e)
+            {
+                CommandTip = e.Message;
+            }
         }
     }
 
@@ -62,6 +69,7 @@ public class Schedule : INotifyPropertyChanged
     [JsonIgnore]
     public DateTime? NextTime { get; internal set; }
 
+    [JsonIgnore]
     [DoNotNotify]
     internal bool IsRunning { get; set; }
 

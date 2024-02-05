@@ -26,7 +26,7 @@ public class JsPlugin : IPlugin
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public bool Loaded { get; internal set; }
-    public ConcurrentDictionary<Event, FunctionInstance> EventHandlers;
+    public ConcurrentDictionary<Event, Function> EventHandlers;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly IHost _host;
@@ -70,7 +70,7 @@ public class JsPlugin : IPlugin
         {
             if (
                 CancellationToken.IsCancellationRequested
-                || !EventHandlers.TryGetValue(@event, out FunctionInstance? func)
+                || !EventHandlers.TryGetValue(@event, out Function? func)
                 || func is null
             )
                 return false;

@@ -17,17 +17,17 @@ namespace Serein.Core.Services;
 
 public class CommandRunner
 {
-    private readonly CommandParser _commandParser;
+    private readonly Lazy<CommandParser> _commandParser;
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private WsNetwork WsNetwork => Services.GetRequiredService<WsNetwork>();
     private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
 
-    public CommandRunner(IHost host, CommandParser commandParser)
+    public CommandRunner(IHost host)
     {
         _host = host;
-        _commandParser = commandParser;
+        _commandParser = new(() => Services.GetRequiredService<CommandParser>());
     }
 
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
@@ -35,7 +35,7 @@ public class CommandRunner
         if (command.Type == CommandType.Invalid)
             return;
 
-        var body = _commandParser.Format(command.Body, commandContext);
+        var body = _commandParser.Value.Format(command.Body, commandContext);
 
         switch (command.Type)
         {

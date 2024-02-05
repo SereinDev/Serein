@@ -4,7 +4,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Models.Network.OneBot.Messages;
 
-[JsonConverter(typeof(EnumConverter<Role>))]
+[JsonConverter(typeof(EnumNumberConverter<Role>))]
 public enum Role
 {
     Member,

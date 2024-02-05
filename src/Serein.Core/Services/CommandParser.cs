@@ -2,11 +2,11 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Server;
 
 namespace Serein.Core.Services;
@@ -18,33 +18,34 @@ public class CommandParser
             @"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$",
             RegexOptions.Compiled
         );
-    private static readonly Regex Variable = new(@"\{(\w+)\}", RegexOptions.Compiled);
-    private readonly IHost _host;
+    private static readonly Regex Variable = new(@"\{([a-zA-Z]\w+)\}", RegexOptions.Compiled);
+    private readonly PluginHost _pluginHost;
     private readonly SystemInfoFactory _systemInfoFactory;
-    private ServerManager ServerManager => _host.Services.GetRequiredService<ServerManager>();
+    private readonly ServerManager _serverManager;
 
-    public CommandParser(IHost host, SystemInfoFactory systemInfoFactory)
+    public CommandParser(
+        PluginHost pluginHost,
+        SystemInfoFactory systemInfoFactory,
+        ServerManager serverManager
+    )
     {
-        _host = host;
+        _pluginHost = pluginHost;
         _systemInfoFactory = systemInfoFactory;
-    }
-
-    public static bool Validate(string? command)
-    {
-        return !string.IsNullOrEmpty(command) && GeneralCommand.IsMatch(command);
+        _serverManager = serverManager;
     }
 
     public static Command Parse(CommandOrigin origin, string? command, bool throws = false)
     {
+        var cmd = command?.TrimStart();
         try
         {
-            if (string.IsNullOrEmpty(command?.Trim()))
+            if (string.IsNullOrEmpty(cmd) || string.IsNullOrWhiteSpace(cmd))
                 throw new ArgumentException("命令为空", nameof(command));
 
-            if (command.Length < 3 || !command.StartsWith('[') || !command.Contains(']'))
-                throw new ArgumentException("缺少命令表示：'['和']'", nameof(command));
+            if (cmd.Length < 2 || !cmd.StartsWith('[') || !cmd.Contains(']'))
+                throw new ArgumentException("缺少命令标识：'['和']'", nameof(command));
 
-            var matchResult = GeneralCommand.Match(command);
+            var matchResult = GeneralCommand.Match(cmd);
 
             if (!matchResult.Success || matchResult.Groups.Count != 5)
                 throw new NotSupportedException("命令语法不正确");
@@ -53,7 +54,7 @@ public class CommandParser
             var body = matchResult.Groups["body"].Value;
             var argument = matchResult.Groups["argument"].Value;
 
-            var type = name switch
+            var type = name.ToLowerInvariant() switch
             {
                 "cmd" => CommandType.ExecuteShellCommand,
 
@@ -112,20 +113,37 @@ public class CommandParser
         return argument;
     }
 
-    public string ApplyVariables(string line, CommandContext? commandContext)
+#pragma warning disable IDE0046
+    public string ApplyVariables(
+        string line,
+        CommandContext? commandContext,
+        bool removeInvalidVariablePatten = false
+    )
     {
         if (!line.Contains('{') || !line.Contains('}'))
             return line.Replace("\\n", "\n");
 
-        var serverStatus = ServerManager.Status;
-        var serverInfo = ServerManager.ServerInfo;
+        var serverStatus = _serverManager.Status;
+        var serverInfo = _serverManager.ServerInfo;
         var currentTime = DateTime.Now;
 
         var text = Variable.Replace(
             line,
             (match) =>
             {
-                object? obj = match.Groups[1].Value.ToLowerInvariant() switch
+                var name = match.Groups[1].Value.ToLowerInvariant();
+
+                if (
+                    commandContext?.Variables is not null
+                    && commandContext.Variables.TryGetValue(name, out string? value)
+                    && value is not null
+                )
+                    return value;
+
+                if (_pluginHost.Variables.TryGetValue(name, out value) && value is not null)
+                    return value;
+
+                object? obj = name switch
                 {
                     #region 时间
                     "year" => currentTime.Year,
@@ -144,25 +162,25 @@ public class CommandParser
                     "sereintype" => SereinApp.Type,
 
                     #region 服务器
-                    "filename" => ServerManager.ServerInfo?.FileName,
-                    "outputlines" => ServerManager.ServerInfo?.OutputLines,
-                    "inputlines" => ServerManager.ServerInfo?.InputLines,
-                    "gamemode" => ServerManager.ServerInfo?.Stat?.Gamemode,
-                    "description" => ServerManager.ServerInfo?.Stat?.Stripped_Motd,
-                    "protocol" => ServerManager.ServerInfo?.Stat?.Protocol,
-                    "currentplayers" => ServerManager.ServerInfo?.Stat?.CurrentPlayers,
-                    "maximumplayers" => ServerManager.ServerInfo?.Stat?.MaximumPlayers,
+                    "filename" => serverInfo?.FileName,
+                    "outputlines" => serverInfo?.OutputLines,
+                    "inputlines" => serverInfo?.InputLines,
+                    "gamemode" => serverInfo?.Stat?.Gamemode,
+                    "description" => serverInfo?.Stat?.Stripped_Motd,
+                    "protocol" => serverInfo?.Stat?.Protocol,
+                    "currentplayers" => serverInfo?.Stat?.CurrentPlayers,
+                    "maximumplayers" => serverInfo?.Stat?.MaximumPlayers,
                     "latency"
-                        => ServerManager.ServerInfo?.Stat is not null
-                            ? (ServerManager.ServerInfo.Stat.Latency / 1000).ToString("N1")
+                        => serverInfo?.Stat is not null
+                            ? (serverInfo.Stat.Latency / 1000).ToString("N1")
                             : "?",
-                    "version" => ServerManager.ServerInfo?.Stat?.Version,
-                    "favicon" => ServerManager.ServerInfo?.Stat?.Favicon,
+                    "version" => serverInfo?.Stat?.Version,
+                    "favicon" => serverInfo?.Stat?.Favicon,
                     "status" => serverStatus == ServerStatus.Running ? "已启动" : "未启动",
                     #endregion
 
                     #region 系统信息
-                    "net" => Environment.Version.ToString(),
+                    "netversion" => Environment.Version.ToString(),
                     "cpuusage" => (_systemInfoFactory.CPUUsage * 100).ToString("N1"),
                     "os" => _systemInfoFactory.Info.Name,
                     "uploadspeed" => _systemInfoFactory.UploadSpeed,
@@ -222,10 +240,18 @@ public class CommandParser
 
                     _ => null
                 };
-                return obj?.ToString() ?? string.Empty;
+
+                var r = obj?.ToString();
+
+                if (r is not null)
+                    return r;
+
+                return removeInvalidVariablePatten ? string.Empty : match.Value;
             }
         );
 
         return text.Replace("\\n", "\n");
     }
+
+#pragma warning restore IDE0046
 }

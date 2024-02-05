@@ -2,7 +2,6 @@
 using System.Windows;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Output;

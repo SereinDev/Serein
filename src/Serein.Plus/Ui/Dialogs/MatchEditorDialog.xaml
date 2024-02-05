@@ -1,0 +1,74 @@
+<ui:ContentDialog
+        x:Class="Serein.Plus.Ui.Dialogs.MatchEditorDialog"
+        xmlns:local="clr-namespace:Serein.Plus.Ui.Dialogs"
+        xmlns:converter="clr-namespace:Serein.Plus.Ui.Converters"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        Title="匹配编辑器"
+        MinWidth="300"
+        CloseButtonText="取消"
+        PrimaryButtonText="确定"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        mc:Ignorable="d">
+    <ui:ContentDialog.Resources>
+        <converter:EnumConverter x:Key="enumConverter" />
+
+        <Style
+                TargetType="TextBox"
+                BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter
+                    Property="Margin"
+                    Value="0,6" />
+        </Style>
+
+        <Style
+                TargetType="ComboBox"
+                BasedOn="{StaticResource DefaultComboBoxStyle}">
+            <Setter
+                    Property="Margin"
+                    Value="0,6" />
+        </Style>
+    </ui:ContentDialog.Resources>
+
+    <ScrollViewer>
+        <StackPanel>
+            <ui:InfoBar
+                    x:Name="InfoBar"
+                    IsClosable="False"
+                    Severity="Warning"
+                    Title="输入不正确"
+                    Message="{Binding Tip, Mode=OneWay}"
+                    Margin="3" />
+            <TextBox
+                    ui:ControlHelper.Header="正则表达式"
+                    Text="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}" />
+            <ComboBox
+                    ui:ControlHelper.Header="匹配域"
+                    SelectedIndex="{Binding FieldType, Converter={StaticResource enumConverter}}">
+                <ComboBoxItem Content="禁用" />
+                <ComboBoxItem Content="服务器输出" />
+                <ComboBoxItem Content="服务器输入" />
+                <ComboBoxItem Content="群聊消息" />
+                <ComboBoxItem Content="私聊消息" />
+                <ComboBoxItem Content="自身消息" />
+            </ComboBox>
+            <TextBox
+                    ui:ControlHelper.Header="命令"
+                    Text="{Binding Command, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+                    ui:ControlHelper.Header="描述"
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+                    ui:ControlHelper.Header="限制参数"
+                    Text="{Binding Restrictions, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox
+                    Content="需要管理权限"
+                    IsChecked="{Binding RequireAdmin}" />
+        </StackPanel>
+    </ScrollViewer>
+
+</ui:ContentDialog>

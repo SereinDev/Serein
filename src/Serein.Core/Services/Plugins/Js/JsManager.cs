@@ -21,10 +21,12 @@ public class JsManager
     private IServiceProvider Services => _host.Services;
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
     public ConcurrentDictionary<string, JsPlugin> JsPlugins { get; private set; }
+    public ConcurrentDictionary<string, object?> ExportedVariables { get; private set; }
 
     public JsManager(IHost host)
     {
         _host = host;
+        ExportedVariables = new();
         JsPlugins = new();
     }
 

@@ -5,19 +5,18 @@ namespace Serein.Core.Models;
 
 public abstract class DataItemWrapper
 {
+    public static DataItemWrapper<TItem> Wrap<TItem>(string type, TItem data)
+        where TItem : notnull => new(type, data);
+
     [JsonRequired]
     [JsonPropertyOrder(-114514)]
     public string Type { get; set; } = string.Empty;
 
-    [JsonRequired]
+#pragma warning disable CA1822
+    [JsonPropertyName("_time")]
     [JsonPropertyOrder(-1919810)]
-    public static DateTime Time => DateTime.Now;
-
-    public static DataItemWrapper<TItem> Wrap<TItem>(string type, TItem data)
-        where TItem : notnull
-    {
-        return new(type, data);
-    }
+    public DateTime Time => DateTime.Now;
+#pragma warning restore CA1822
 }
 
 public class DataItemWrapper<T> : DataItemWrapper
