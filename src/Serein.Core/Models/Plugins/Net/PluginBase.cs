@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Core.Models.Plugins.CSharp;
+namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase : IPlugin
 {

@@ -10,14 +10,14 @@ using Serein.Core.Models.Output;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
-using WatsonWebsocket;
+using WebSocket4Net;
 
 namespace Serein.Core.Services.Networks;
 
 public class WebSocketService : INetworkService
 {
     private readonly IHost _host;
-    private WatsonWsClient? _client;
+    private WebSocket? _client;
     private string _uri;
 
     private IServiceProvider Services => _host.Services;
@@ -28,8 +28,7 @@ public class WebSocketService : INetworkService
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     public event EventHandler? StatusChanged;
 
-    public bool Active => _client?.Connected ?? false;
-    public Statistics? Stats => _client?.Stats;
+    public bool Active => _client?.State == WebSocketState.Open;
     public bool Connecting { get; private set; }
 
     public WebSocketService(IHost host)
@@ -38,36 +37,22 @@ public class WebSocketService : INetworkService
         _uri = string.Empty;
     }
 
-    private WatsonWsClient CreateNew()
+    private WebSocket CreateNew()
     {
         _uri = Setting.Network.Uri;
-        var client = new WatsonWsClient(new(Setting.Network.Uri))
-        {
-            EnableStatistics = true,
-            AcceptInvalidCertificates = true
-        }.ConfigureOptions(
-            (options) =>
-            {
-                if (!string.IsNullOrEmpty(Setting.Network.AccessToken))
-                    options.SetRequestHeader(
-                        "Authorization",
-                        $"Bearer {Setting.Network.AccessToken}"
-                    );
-
-                foreach (var kv in Setting.Network.Headers)
-                    options.SetRequestHeader(kv.Key, kv.Value);
-
-                foreach (var subProtocol in Setting.Network.SubProtocols)
-                    options.AddSubProtocol(subProtocol);
-            }
+        var client = new WebSocket(
+            Setting.Network.Uri,
+            string.Join('\x20', Setting.Network.SubProtocols),
+            customHeaderItems: string.IsNullOrEmpty(Setting.Network.AccessToken)
+                ? null
+                : new() { new("Authorization", $"Bearer {Setting.Network.AccessToken}") }
         );
 
         client.MessageReceived += MessageReceived;
-        client.ServerConnected += (_, _) =>
-            Logger.LogBotConsole(LogLevel.Information, $"成功连接到{_uri}");
-        client.ServerConnected += StatusChanged;
-        client.ServerDisconnected += StatusChanged;
-        client.ServerDisconnected += (_, _) => Logger.LogBotConsole(LogLevel.Warning, "连接已断开");
+        client.Opened += (_, _) => Logger.LogBotConsole(LogLevel.Information, $"成功连接到{_uri}");
+        client.Opened += StatusChanged;
+        client.Closed += StatusChanged;
+        client.Closed += (_, _) => Logger.LogBotConsole(LogLevel.Warning, "连接已断开");
 
         return client;
     }
@@ -78,10 +63,12 @@ public class WebSocketService : INetworkService
         GC.SuppressFinalize(this);
     }
 
-    public async Task SendAsync(string text)
+    public Task SendAsync(string text)
     {
-        if (_client is not null && _client.Connected)
-            await _client.SendAsync(text);
+        if (_client is not null && _client.State == WebSocketState.Open)
+            _client.Send(text);
+
+        return Task.CompletedTask;
     }
 
     public void Start(CancellationToken token)
@@ -91,23 +78,25 @@ public class WebSocketService : INetworkService
 
         _client = CreateNew();
         Connecting = true;
-        _client
-            .StartWithTimeoutAsync(10, token)
-            .ContinueWith(
-                (task) =>
+
+        Task.Run(
+            () =>
+            {
+                try
                 {
-                    Connecting = false;
-                    if (!task.Result)
-                    {
-                        Logger.LogBotConsole(LogLevel.Error, "连接超时");
-                    }
-                },
-                CancellationToken.None
-            );
+                    _client.Open();
+                }
+                catch (Exception e)
+                {
+                    Logger.LogBotConsole(LogLevel.Information, e.Message);
+                }
+            },
+            token
+        );
     }
 
     public void Stop()
     {
-        _client?.Stop();
+        _client?.Close();
     }
 }

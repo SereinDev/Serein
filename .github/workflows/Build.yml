@@ -44,12 +44,6 @@ jobs:
           name: Serein.Lite_win-x64
           path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x64/publish
 
-      - name: Upload binary files(Serein.Lite_win-x86)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein.Lite_win-x86
-          path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x86/publish
-
       # Serein.Plus
       - name: Upload binary files(Serein.Plus_win-x64)
         uses: actions/upload-artifact@v3

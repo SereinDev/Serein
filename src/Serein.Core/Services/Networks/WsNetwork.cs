@@ -16,10 +16,9 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
-using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
-using WatsonWebsocket;
+using WebSocket4Net;
 
 namespace Serein.Core.Services.Networks;
 
@@ -39,7 +38,6 @@ public class WsNetwork
     public event EventHandler? StatusChanged;
 
     public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
-    public Statistics? Statistics => WebSocketService.Stats ?? ReverseWebSocketService.Stats;
 
     public WsNetwork(IHost host, Matcher matcher, EventDispatcher eventDispatcher)
     {
@@ -56,10 +54,10 @@ public class WsNetwork
 
     private void OnMessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        if (!_eventDispatcher.Dispatch(Event.WsDataReceived, e.Data))
+        if (!_eventDispatcher.Dispatch(Event.WsDataReceived, e.Message))
             return;
 
-        var text = EncodingMap.UTF8.GetString(e.Data);
+        var text = e.Message;
 
         var node = JsonSerializer.Deserialize<JsonNode>(text);
 

@@ -32,7 +32,7 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
             );
 
             if (wrapper?.Type == nameof(Setting))
-                return wrapper.Data;
+                return wrapper.Data ?? new();
         }
         else
             Save();

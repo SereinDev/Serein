@@ -9,7 +9,7 @@ using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks;
 using Serein.Core.Services.Plugins;
-using Serein.Core.Services.Plugins.CSharp;
+using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Server;
 
@@ -41,6 +41,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<ScheduleProvider>();
 
         Services.AddSingleton<SystemInfoFactory>();
+        Services.AddSingleton<ReactionManager>();
         Services.AddSingleton<Matcher>();
         Services.AddSingleton<ServerManager>();
         Services.AddSingleton<CommandParser>();
@@ -55,7 +56,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<EventDispatcher>();
         Services.AddSingleton<JsEngineFactory>();
         Services.AddSingleton<JsManager>();
-        Services.AddSingleton<Loader>();
+        Services.AddSingleton<NetManager>();
     }
 
     public SereinApp Build() => new(_hostAppBuilder.Build());

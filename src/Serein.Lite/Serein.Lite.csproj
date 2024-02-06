@@ -9,7 +9,7 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
-        <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
         <NoWarn>$(NoWarn);CS1416</NoWarn>
     </PropertyGroup>

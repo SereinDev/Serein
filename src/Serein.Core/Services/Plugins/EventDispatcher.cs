@@ -12,9 +12,9 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Network.OneBot.Packets;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Plugins.CSharp;
+using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Plugins.CSharp;
+using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
 
@@ -24,7 +24,7 @@ public class EventDispatcher
 {
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private Loader Loader => Services.GetRequiredService<Loader>();
+    private NetManager Loader => Services.GetRequiredService<NetManager>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
@@ -88,7 +88,7 @@ public class EventDispatcher
                 break;
 
             case Event.WsDataReceived:
-                func = (p) => p.OnWsDataReceived(args.First().As<byte[]>());
+                func = (p) => p.OnWsDataReceived(args.First().As<string>());
                 break;
 
             case Event.PacketReceived:

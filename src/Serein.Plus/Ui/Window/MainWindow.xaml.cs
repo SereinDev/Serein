@@ -243,6 +243,8 @@ public partial class MainWindow : System.Windows.Window
     {
         if (SereinApp.FirstTimeOpening)
             new WelcomeDialog().ShowAsync();
+
+        App.Host.StartAsync();
     }
 
     private void OnServerStatusChanged(object? sender, EventArgs e)

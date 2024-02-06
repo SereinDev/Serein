@@ -28,6 +28,8 @@ public sealed class SereinApp : IHost
     public static readonly AppType Type;
     public static readonly bool FirstTimeOpening = !File.Exists(PathConstants.SettingFile);
 
+    public static SereinApp? Current { get; private set; }
+
     static SereinApp()
     {
         Type = Assembly.GetEntryAssembly()?.GetName().Name switch
@@ -51,9 +53,10 @@ public sealed class SereinApp : IHost
 
     public SereinApp(IHost host)
     {
+        Current = this;
         _host = host;
 
-        Logger.LogInformation("Serein {}", Version);
+        Logger.LogInformation("Serein.{} {}", Type, Version);
         Logger.LogInformation("仓库: https://github.com/Zaitonn/Serein");
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
 

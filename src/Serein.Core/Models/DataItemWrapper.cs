@@ -23,7 +23,7 @@ public class DataItemWrapper<T> : DataItemWrapper
     where T : notnull
 {
     [JsonRequired]
-    public T Data { get; set; }
+    public T? Data { get; set; }
 
     public DataItemWrapper(string type, T data)
     {

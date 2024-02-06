@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using WatsonWebsocket;
+using WebSocket4Net;
 
 namespace Serein.Core.Services.Networks;
 
@@ -12,8 +12,6 @@ public interface INetworkService : IDisposable
     event EventHandler? StatusChanged;
 
     bool Active { get; }
-
-    Statistics? Stats { get; }
 
     Task SendAsync(string text);
 

@@ -10,12 +10,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
-using Serein.Core.Models.Plugins.CSharp;
+using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Utils;
 
-namespace Serein.Core.Services.Plugins.CSharp;
+namespace Serein.Core.Services.Plugins.Net;
 
-public class Loader
+public class NetManager : IManager
 {
     private const string Name = "";
 
@@ -24,9 +24,9 @@ public class Loader
     private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
     private AssemblyLoadContext? _assemblyLoadContext;
 
-    public readonly ConcurrentDictionary<string, PluginBase> Plugins;
+    public ConcurrentDictionary<string, PluginBase> Plugins { get; }
 
-    public Loader(IHost host)
+    public NetManager(IHost host)
     {
         _host = host;
         Plugins = new();

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using Serein.Core.Models.Network.OneBot.Packets;
 
-namespace Serein.Core.Models.Plugins.CSharp;
+namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
@@ -33,7 +33,7 @@ public abstract partial class PluginBase
     public virtual Task<bool> OnPrivateMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);
 
-    public virtual Task<bool> OnWsDataReceived(byte[] data) => Task.FromResult(true);
+    public virtual Task<bool> OnWsDataReceived(string data) => Task.FromResult(true);
 
     public virtual Task<bool> OnPacketReceived(JsonNode packet) => Task.FromResult(true);
 
