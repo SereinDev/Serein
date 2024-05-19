@@ -87,12 +87,13 @@ jobs:
           path: ./src/Serein.Cli/bin/Debug/net6.0/osx-arm64/publish
 
   attest-build-provenance:
-    needs: [ build ]
+    needs: build
     runs-on: windows-latest
    
     steps:
       - uses: actions/download-artifact@v4
         with:
+          patten: Serein*
           path: downloads
       
       - shell: powershell
