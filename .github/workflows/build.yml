@@ -41,6 +41,10 @@ jobs:
         with:
           name: Serein.Lite_win-x64
           path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x64/publish
+      - name: Attest Build Provenance(Serein.Lite_win-x64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Lite/bin/Debug/net6.0-windows/win-x64/publish/Serein.Lite.exe
 
       # Serein.Plus
       - name: Upload binary files(Serein.Plus_win-x64)
@@ -48,6 +52,10 @@ jobs:
         with:
           name: Serein.Plus_win-x64
           path: ./src/Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/publish
+      - name: Attest Build Provenance(Serein.Plus_win-x64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/publish/Serein.Plus.exe
 
       # Serein.Cli
       - name: Upload binary files(Serein.Cli_win-x64)
@@ -55,53 +63,57 @@ jobs:
         with:
           name: Serein.Cli_win-x64
           path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x64/publish
+      - name: Attest Build Provenance(Serein.Cli_win-x64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x64/publish/Serein.Cli.exe
 
       - name: Upload binary files(Serein.Cli_linux-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-x64
           path: ./src/Serein.Cli/bin/Debug/net6.0/linux-x64/publish
+      - name: Attest Build Provenance(Serein.Cli_linux-x64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0/linux-x64/publish/Serein.Cli
 
       - name: Upload binary files(Serein.Cli_linux-arm)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-arm
           path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm/publish
+      - name: Attest Build Provenance(Serein.Cli_linux-arm)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm/publish/Serein.Cli
 
       - name: Upload binary files(Serein.Cli_linux-arm64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_linux-arm64
           path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm64/publish
+      - name: Attest Build Provenance(Serein.Cli_linux-arm64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0/linux-arm64/publish/Serein.Cli
 
       - name: Upload binary files(Serein.Cli_osx-x64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_osx-x64
           path: ./src/Serein.Cli/bin/Debug/net6.0/osx-x64/publish
+      - name: Attest Build Provenance(Serein.Cli_osx-x64)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0/osx-x64/publish/Serein.Cli
 
       - name: Upload binary files(Serein.Cli_osx-arm64)
         uses: actions/upload-artifact@v3
         with:
           name: Serein.Cli_osx-arm64
           path: ./src/Serein.Cli/bin/Debug/net6.0/osx-arm64/publish
-
-  attest-build-provenance:
-    needs: build
-    runs-on: windows-latest
-   
-    steps:
-      - uses: actions/download-artifact@v4
+      - name: Attest Build Provenance(Serein.Cli_osx-arm64)
+        uses: actions/attest-build-provenance@v1
         with:
-          patten: Serein*
-          path: downloads
-      
-      - shell: powershell
-        run: | 
-          del ./**/*.pdb
-          tree /f
-        
-      # - uses: actions/attest-build-provenance@v1
-      #   with:
-      #     subject-path:
-  
+          subject-path: ./src/Serein.Cli/bin/Debug/net6.0/osx-arm64/publish/Serein.Cli
