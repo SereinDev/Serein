@@ -19,8 +19,10 @@
     <a href="https://github.com/Zaitonn/Serein/releases">
         <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Zaitonn/Serein/total?color=blue">
     </a>
-<a href="https://app.fossa.com/projects/git%2Bgithub.com%2FSereinDev%2FSerein?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FSereinDev%2FSerein.svg?type=shield"/></a>
-    <a href="https://github.com/Zaitonn/Serein/actions/workflows/Build.yml">
+    <a href="https://app.fossa.com/projects/git%2Bgithub.com%2FSereinDev%2FSerein?ref=badge_shield" alt="FOSSA Status">
+        <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FSereinDev%2FSerein.svg?type=shield"/>
+    </a>
+    <a href="https://github.com/Zaitonn/Serein/actions/workflows/build.yml">
         <img alt="GitHub bulid"
             src="https://img.shields.io/github/actions/workflow/status/Zaitonn/Serein/Build.yml?branch=main&color=blue">
     </a>

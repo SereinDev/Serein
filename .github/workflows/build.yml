@@ -1,6 +1,4 @@
-﻿name: Build
-
-on:
+﻿on:
   push:
     paths:
       - "**.cs"
@@ -11,11 +9,15 @@ on:
       - "**.csproj"
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  attestations: write
+
 env:
   version: "2.0.0.0"
 
 jobs:
-  Build:
+  build:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -26,7 +28,7 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Write environment to files
         shell: cmd
@@ -58,12 +60,6 @@ jobs:
           name: Serein.Cli_win-x64
           path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x64/publish
 
-      - name: Upload binary files(Serein.Cli_win-x86)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Serein.Cli_win-x86
-          path: ./src/Serein.Cli/bin/Debug/net6.0-windows/win-x86/publish
-
       - name: Upload binary files(Serein.Cli_linux-x64)
         uses: actions/upload-artifact@v3
         with:
@@ -93,3 +89,27 @@ jobs:
         with:
           name: Serein.Cli_osx-arm64
           path: ./src/Serein.Cli/bin/Debug/net6.0/osx-arm64/publish
+
+  attest-build-provenance:
+    needs: [ build ]
+    runs-on: windows-latest
+    if: github.event_name == 'push'
+    strategy:
+      matrix:
+        names: [ Serein.Lite_win-x64, Serein.Plus_win-x64, Serein.Cli_win-x64, Serein.Cli_linux-x64, Serein.Cli_linux-arm, Serein.Cli_osx-x64, Serein.Cli_osx-arm64 ]
+        
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloads
+          name: ${{matrix.names}}
+          check_artifacts: true
+      
+      - run: tree /f
+        shell: cmd
+        
+      - uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: downloads/**
+    
+  

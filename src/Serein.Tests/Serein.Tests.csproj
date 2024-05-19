@@ -19,15 +19,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="GitHubActionsTestLogger" Version="2.3.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
-    <VSTestResultsDirectory>$(MSBuildThisFileDirectory)/TestResults/</VSTestResultsDirectory>
-  </PropertyGroup>
-
 </Project>

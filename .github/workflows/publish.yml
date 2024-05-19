@@ -1,5 +1,3 @@
-name: PublishToMB
-
 on:
   workflow_dispatch:
 
