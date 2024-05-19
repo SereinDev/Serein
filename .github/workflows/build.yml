@@ -89,7 +89,6 @@ jobs:
   attest-build-provenance:
     needs: [ build ]
     runs-on: windows-latest
-    if: github.event_name == 'push'
    
     steps:
       - uses: actions/download-artifact@v4
