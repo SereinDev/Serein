@@ -3,10 +3,6 @@
     paths:
       - "**.cs"
       - "**.csproj"
-  pull_request:
-    paths:
-      - "**.cs"
-      - "**.csproj"
   workflow_dispatch:
 
 permissions:
@@ -94,22 +90,18 @@ jobs:
     needs: [ build ]
     runs-on: windows-latest
     if: github.event_name == 'push'
-    strategy:
-      matrix:
-        names: [ Serein.Lite_win-x64, Serein.Plus_win-x64, Serein.Cli_win-x64, Serein.Cli_linux-x64, Serein.Cli_linux-arm, Serein.Cli_osx-x64, Serein.Cli_osx-arm64 ]
-        
+   
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: downloads
-          name: ${{matrix.names}}
-          check_artifacts: true
       
-      - run: tree /f
-        shell: cmd
+      - shell: powershell
+        run: | 
+          del ./**/*.pdb
+          tree /f
         
-      - uses: actions/attest-build-provenance@v1
-        with:
-          subject-path: downloads/**
-    
+      # - uses: actions/attest-build-provenance@v1
+      #   with:
+      #     subject-path:
   
