@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "**.cs"
+  workflow_dispatch:
 
 jobs:
   test:

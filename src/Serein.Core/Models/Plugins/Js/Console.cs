@@ -19,7 +19,7 @@ public class Console
         _title = title ?? throw new ArgumentNullException(nameof(title));
     }
 
-    public void Log(params JsValue[] jsValues) => Log(jsValues);
+    public void Log(params JsValue[] jsValues) => Info(jsValues);
 
     public void Info(params JsValue[] jsValues)
     {
