@@ -121,41 +121,41 @@ public partial class MainWindow : System.Windows.Window
         {
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
+                // Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
                 Tag = nameof(PanelPage),
                 Content = "服务器",
                 ToolTip = "查看输出、管理服务器状态"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.List },
+                // Icon = new FontIcon { Glyph = SegoeIcons.List },
                 Tag = nameof(MatchPage),
                 Content = "匹配",
                 ToolTip = "管理匹配列表"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.EmojiTabFavorites },
+                // Icon = new FontIcon { Glyph = SegoeIcons.EmojiTabFavorites },
                 Tag = nameof(SchedulePage),
                 Content = "定时任务",
                 ToolTip = "管理定时执行的命令"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
+                // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
                 Tag = nameof(NetworkPage),
                 Content = "连接",
                 ToolTip = "通过WebSocket连接获取消息"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.People },
+                // Icon = new FontIcon { Glyph = SegoeIcons.People },
                 Content = "成员管理",
                 ToolTip = "绑定用户的昵称和游戏名称"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.Puzzle },
+                // Icon = new FontIcon { Glyph = SegoeIcons.Puzzle },
                 Tag = nameof(PluginPage),
                 Content = "插件",
                 ToolTip = "扩展Serein玩法和功能"

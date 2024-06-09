@@ -182,7 +182,7 @@
                         Padding="5"
                         Click="Enter_Click"
                         DockPanel.Dock="Right">
-                    <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Up}" />
+                    <!-- <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Up}" /> -->
                 </Button>
                 <TextBox
                         Name="InputBox"

@@ -27,7 +27,7 @@ public class CommandRunner
     public CommandRunner(IHost host)
     {
         _host = host;
-        _commandParser = new(() => Services.GetRequiredService<CommandParser>());
+        _commandParser = new(Services.GetRequiredService<CommandParser>);
     }
 
     public async Task RunAsync(Command command, CommandContext? commandContext = null)

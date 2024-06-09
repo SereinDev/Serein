@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Core.Utils;
 
-public class OutputFilter
+public partial class OutputFilter
 {
     public static string RemoveControlChars(string input)
     {
@@ -17,7 +17,7 @@ public class OutputFilter
         return stringBuilder.ToString();
     }
 
-    private static readonly Regex ColorCharsPatten = new(@"\x1b\[.*?m", RegexOptions.Compiled);
+    private static readonly Regex ColorCharsPatten = GetColorCharsPatten();
 
     public static string RemoveColorChars(string input)
     {
@@ -28,4 +28,7 @@ public class OutputFilter
     {
         return RemoveColorChars(RemoveControlChars(input));
     }
+
+    [GeneratedRegex(@"\x1b\[.*?m", RegexOptions.Compiled)]
+    private static partial Regex GetColorCharsPatten();
 }

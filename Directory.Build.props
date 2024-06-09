@@ -1,0 +1,21 @@
+<Project>
+    <PropertyGroup>
+        <Version>2.0.0.0-beta-1</Version>
+        <Author>Zaitonn</Author>
+        <Copyright>Copyright (C) 2024 Zaitonn</Copyright>
+        <Product>服务器面板软件</Product>
+        <Description>极简但多功能的服务器面板软件</Description>
+        <Trademark>Zaitonn/Serein</Trademark>
+        <Company>https://github.com/SereinDev/Serein</Company>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>false</SelfContained>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
+        <NoWarn>$(NoWarn);CS1416</NoWarn>
+    </PropertyGroup>
+
+</Project>

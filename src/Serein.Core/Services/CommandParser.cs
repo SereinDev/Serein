@@ -2,35 +2,35 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Server;
 
 namespace Serein.Core.Services;
 
-public class CommandParser
+public partial class CommandParser
 {
-    private static readonly Regex GeneralCommand =
-        new(
-            @"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$",
-            RegexOptions.Compiled
-        );
-    private static readonly Regex Variable = new(@"\{([a-zA-Z]\w+)\}", RegexOptions.Compiled);
+    [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
+    private static partial Regex GetGeneralCommand();
+
+    [GeneratedRegex(@"\{([a-zA-Z][\w@\.]+)\}")]
+    private static partial Regex GetVariable();
+
+    private static readonly Regex Variable = GetVariable();
+    private static readonly Regex GeneralCommand = GetGeneralCommand();
+
     private readonly PluginHost _pluginHost;
-    private readonly SystemInfoFactory _systemInfoFactory;
+    private readonly HardwareInfoProvider _hardwareInfoProvider;
     private readonly ServerManager _serverManager;
 
     public CommandParser(
         PluginHost pluginHost,
-        SystemInfoFactory systemInfoFactory,
+        HardwareInfoProvider hardwareInfoProvider,
         ServerManager serverManager
     )
     {
         _pluginHost = pluginHost;
-        _systemInfoFactory = systemInfoFactory;
+        _hardwareInfoProvider = hardwareInfoProvider;
         _serverManager = serverManager;
     }
 
@@ -145,94 +145,90 @@ public class CommandParser
 
                 object? obj = name switch
                 {
+                    #region Serein
+                    "serein.type" => SereinApp.Type,
+                    "serein.version" => SereinApp.Version,
+                    "serein.fullversion" => SereinApp.FullVersion,
+                    #endregion
+
                     #region 时间
-                    "year" => currentTime.Year,
-                    "month" => currentTime.Month,
-                    "day" => currentTime.Day,
-                    "hour" => currentTime.Hour,
-                    "minute" => currentTime.Minute,
-                    "second" => currentTime.Second,
-                    "time" => currentTime.ToString("T"),
-                    "date" => currentTime.Date.ToString("d"),
-                    "dayofweek" => currentTime.DayOfWeek.ToString(),
                     "datetime" => currentTime.ToString(),
+                    "datetime.date" => currentTime.Date.ToString("d"),
+                    "datetime.time" => currentTime.ToString("T"),
+                    "datetime.year" => currentTime.Year,
+                    "datetime.month" => currentTime.Month,
+                    "datetime.day" => currentTime.Day,
+                    "datetime.hour" => currentTime.Hour,
+                    "datetime.minute" => currentTime.Minute,
+                    "datetime.second" => currentTime.Second,
+                    "datetime.millisecond" => currentTime.Millisecond,
+                    "datetime.microsecond" => currentTime.Microsecond,
+                    "datetime.nanosecond" => currentTime.Nanosecond,
+                    "datetime.iso" => currentTime.ToString("O"),
+                    "datetime.dayofweek" => currentTime.DayOfWeek.ToString(),
                     #endregion
 
-                    "sereinversion" => SereinApp.Version,
-                    "sereintype" => SereinApp.Type,
-
-                    #region 服务器
-                    "filename" => serverInfo?.FileName,
-                    "outputlines" => serverInfo?.OutputLines,
-                    "inputlines" => serverInfo?.InputLines,
-                    "gamemode" => serverInfo?.Stat?.Gamemode,
-                    "description" => serverInfo?.Stat?.Stripped_Motd,
-                    "protocol" => serverInfo?.Stat?.Protocol,
-                    "currentplayers" => serverInfo?.Stat?.CurrentPlayers,
-                    "maximumplayers" => serverInfo?.Stat?.MaximumPlayers,
-                    "latency"
-                        => serverInfo?.Stat is not null
-                            ? (serverInfo.Stat.Latency / 1000).ToString("N1")
-                            : "?",
-                    "version" => serverInfo?.Stat?.Version,
-                    "favicon" => serverInfo?.Stat?.Favicon,
-                    "status" => serverStatus == ServerStatus.Running ? "已启动" : "未启动",
+                    #region 操作系统
+                    "os.name" => _hardwareInfoProvider.Info?.OperatingSystem.Name,
+                    "os.version" => _hardwareInfoProvider.Info?.OperatingSystem.VersionString,
                     #endregion
 
-                    #region 系统信息
-                    "netversion" => Environment.Version.ToString(),
-                    "cpuusage" => (_systemInfoFactory.CPUUsage * 100).ToString("N1"),
-                    "os" => _systemInfoFactory.Info.Name,
-                    "uploadspeed" => _systemInfoFactory.UploadSpeed,
-                    "downloadspeed" => _systemInfoFactory.DownloadSpeed,
-                    "cpuname" => _systemInfoFactory.Info.Hardware.CPUs.FirstOrDefault()?.Name,
-                    "cpubrand" => _systemInfoFactory.Info.Hardware.CPUs.FirstOrDefault()?.Brand,
-                    "cpufrequency"
-                        => _systemInfoFactory.Info.Hardware.CPUs.FirstOrDefault()?.Frequency,
-                    "usedram"
+                    #region CPU
+                    "cpu.name" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Name,
+                    "cpu.description"
+                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Description,
+                    "cpu.caption" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Caption,
+                    "cpu.manufacturer"
+                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Manufacturer,
+                    "cpu.cores"
+                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.NumberOfCores,
+                    "cpu.logicalprocessors"
+                        => _hardwareInfoProvider.Info?.CpuList
+                            .FirstOrDefault()
+                            ?.NumberOfLogicalProcessors,
+                    "cpu.percent"
+                        => _hardwareInfoProvider.Info?.CpuList
+                            .FirstOrDefault()
+                            ?.PercentProcessorTime,
+                    #endregion
+
+                    #region RAM
+                    "ram.total" => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024,
+                    "ram.totalgb"
+                        => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024 / 1024,
+                    "ram.available"
+                        => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical / 1024,
+                    "ram.availablegb"
+                        => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical / 1024 / 1024,
+                    "ram.used"
                         => (
-                            _systemInfoFactory.Info.Hardware.RAM.Total
-                            - _systemInfoFactory.Info.Hardware.RAM.Free
+                            _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                            - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                         ) / 1024,
-                    "usedramgb"
+                    "ram.usedgb"
                         => (
-                            (
-                                (double)_systemInfoFactory.Info.Hardware.RAM.Total
-                                - _systemInfoFactory.Info.Hardware.RAM.Free
+                            _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                            - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                        )
+                            / 1024
+                            / 1024,
+
+                    "ram.percent"
+                        => 100
+                            * (
+                                _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                                - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                             )
-                            / 1024
-                            / 1024
-                        ).ToString("N1"),
-                    "totalram" => _systemInfoFactory.Info.Hardware.RAM.Total / 1024,
-                    "totalramgb"
-                        => (
-                            (double)_systemInfoFactory.Info.Hardware.RAM.Total / 1024 / 1024
-                        ).ToString("N1"),
-                    "freeram" => _systemInfoFactory.Info.Hardware.RAM.Free / 1024,
-                    "freeramgb"
-                        => (
-                            (double)_systemInfoFactory.Info.Hardware.RAM.Free / 1024 / 1024
-                        ).ToString("N1"),
-                    "ramusage"
-                        => _systemInfoFactory.Info.Hardware.RAM.Total == 0
-                            ? null
-                            : (
-                                100
-                                * (
-                                    (double)_systemInfoFactory.Info.Hardware.RAM.Total
-                                    - _systemInfoFactory.Info.Hardware.RAM.Free
-                                )
-                                / _systemInfoFactory.Info.Hardware.RAM.Total
-                            ).ToString("N1"),
+                            / _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical,
                     #endregion
 
                     #region 消息
-                    "msgid" => commandContext?.MessagePacket?.MessageId,
-                    "id" => commandContext?.MessagePacket?.UserId,
-                    "nickname" => commandContext?.MessagePacket?.Sender?.Nickname,
-                    "title" => commandContext?.MessagePacket?.Sender?.Title,
-                    "role" => commandContext?.MessagePacket?.Sender?.RoleName,
-                    "shownname"
+                    "msg.id" => commandContext?.MessagePacket?.MessageId,
+                    "sender.id" => commandContext?.MessagePacket?.UserId,
+                    "sender.nickname" => commandContext?.MessagePacket?.Sender?.Nickname,
+                    "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
+                    "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
+                    "sender.shownname"
                         => string.IsNullOrEmpty(commandContext?.MessagePacket?.Sender?.Card)
                             ? commandContext?.MessagePacket?.Sender?.Nickname
                             : commandContext.MessagePacket?.Sender?.Card,

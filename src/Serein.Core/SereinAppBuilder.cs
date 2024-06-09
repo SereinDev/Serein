@@ -40,7 +40,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<MatchesProvider>();
         Services.AddSingleton<ScheduleProvider>();
 
-        Services.AddSingleton<SystemInfoFactory>();
+        Services.AddSingleton<HardwareInfoProvider>();
         Services.AddSingleton<ReactionManager>();
         Services.AddSingleton<Matcher>();
         Services.AddSingleton<ServerManager>();

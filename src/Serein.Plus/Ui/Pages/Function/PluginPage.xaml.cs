@@ -36,21 +36,21 @@ public partial class PluginPage : Page
         {
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.OEM },
+                // Icon = new FontIcon { Glyph = SegoeIcons.OEM },
                 Tag = nameof(PluginConsolePage),
                 Content = "输出",
                 ToolTip = "查看插件输出信息"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.AllApps },
+                // Icon = new FontIcon { Glyph = SegoeIcons.AllApps },
                 Tag = nameof(PluginListPage),
                 Content = "管理",
                 ToolTip = "管理已经加载的插件列表"
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.Package },
+                // Icon = new FontIcon { Glyph = SegoeIcons.Package },
                 Content = "市场",
                 ToolTip = "从社区下载插件"
             }

@@ -38,43 +38,43 @@ public partial class CategoriesPage : Page
         {
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
+                // Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
                 Content = "服务器",
                 Tag = nameof(ServerSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
+                // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
                 Content = "连接",
                 Tag = nameof(NetworkSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.EmojiTabSmilesAnimals },
+                // Icon = new FontIcon { Glyph = SegoeIcons.EmojiTabSmilesAnimals },
                 Content = "反应",
                 Tag = nameof(ReactionSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.AppIconDefault },
+                // Icon = new FontIcon { Glyph = SegoeIcons.AppIconDefault },
                 Content = "应用",
                 Tag = nameof(AppSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.Page },
+                // Icon = new FontIcon { Glyph = SegoeIcons.Page },
                 Content = "页面",
                 Tag = nameof(PageSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.Play },
+                // Icon = new FontIcon { Glyph = SegoeIcons.Play },
                 Content = "自动运行",
                 Tag = nameof(AutoRunSettingPage)
             },
             new()
             {
-                Icon = new FontIcon { Glyph = SegoeIcons.Info },
+                // Icon = new FontIcon { Glyph = SegoeIcons.Info },
                 Content = "关于",
                 Tag = nameof(AboutPage)
             },

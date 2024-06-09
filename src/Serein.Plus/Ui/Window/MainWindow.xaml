@@ -49,9 +49,9 @@
                             Tag="Hide"
                             Click="MenuItem_Click"
                             IsCheckable="True">
-                        <MenuItem.Icon>
+                        <!-- <MenuItem.Icon>
                             <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.StopPresenting}" />
-                        </MenuItem.Icon>
+                        </MenuItem.Icon> -->
                     </MenuItem>
                     <MenuItem
                             x:Name="TopMostMenuItem"
@@ -61,18 +61,18 @@
                             IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=Topmost}"
                             IsEnabled="{Binding IsVisible, Mode=OneWay}"
                             IsCheckable="True">
-                        <MenuItem.Icon>
+                        <!-- <MenuItem.Icon>
                             <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Pinned}" />
-                        </MenuItem.Icon>
+                        </MenuItem.Icon> -->
                     </MenuItem>
                     <Separator />
                     <MenuItem
                             Header="退出"
                             Tag="Exit"
                             Click="MenuItem_Click">
-                        <MenuItem.Icon>
+                        <!-- <MenuItem.Icon>
                             <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.SignOut}" />
-                        </MenuItem.Icon>
+                        </MenuItem.Icon> -->
                     </MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>

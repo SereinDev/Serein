@@ -10,16 +10,10 @@ using Spectre.Console;
 
 namespace Serein.Cli;
 
-public class CliLogger : IOutputHandler
+public class CliLogger(string categoryName, LogLevel logLevel = LogLevel.Information) : IOutputHandler
 {
-    private readonly string _categoryName;
-    private readonly LogLevel _logLevel;
-
-    public CliLogger(string categoryName, LogLevel logLevel = LogLevel.Information)
-    {
-        _categoryName = categoryName;
-        _logLevel = logLevel;
-    }
+    private readonly string _categoryName = categoryName;
+    private readonly LogLevel _logLevel = logLevel;
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull

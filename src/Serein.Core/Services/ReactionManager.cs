@@ -13,17 +13,12 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-public class ReactionManager
+public class ReactionManager(IHost host)
 {
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
-
-    public ReactionManager(IHost host)
-    {
-        _host = host;
-    }
 
     public Task TriggerAsync(
         ReactionType type,

@@ -2,19 +2,13 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net6.0-windows;net6.0;</TargetFrameworks>
-        <Nullable>enable</Nullable>
+        <TargetFrameworks>net8.0</TargetFrameworks>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 
-        <PublishSingleFile>true</PublishSingleFile>
-        <SelfContained>false</SelfContained>
         <RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm;linux-arm64;osx-x64;osx-arm64</RuntimeIdentifiers>
-        <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="../Shared/*.cs" />
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
     </ItemGroup>
 

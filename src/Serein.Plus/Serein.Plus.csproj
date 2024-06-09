@@ -2,29 +2,20 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows10.0.18362</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-
-        <PublishSingleFile>true</PublishSingleFile>
-        <SelfContained>false</SelfContained>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <NoWarn>$(NoWarn);CS1416</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
-        <Compile Include="../Shared/*.cs" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
         <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-        <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.24.2" />
+        <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.29" />
     </ItemGroup>
 
 </Project>

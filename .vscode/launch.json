@@ -21,7 +21,7 @@
             "name": "Serein.Plus",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/src/Serein.Plus/bin/Debug/net6.0-windows10.0.18362/win-x64/Serein.Plus.dll",
+            "program": "${workspaceFolder}/src/Serein.Plus/bin/Debug/net8.0-windows10.0.18362/win-x64/Serein.Plus.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -46,11 +46,11 @@
             "type": "pickString",
             "description": "目标版本",
             "options": [
-                "net6.0-windows",
-                "net6.0",
-                "net6.0-windows10.0.18362"
+                "net8.0-windows",
+                "net8.0",
+                "net8.0-windows10.0.18362"
             ],
-            "default": "net6.0-windows"
+            "default": "net8.0-windows"
         }
     ]
 }

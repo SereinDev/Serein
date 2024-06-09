@@ -2,21 +2,13 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <PublishSingleFile>true</PublishSingleFile>
-        <SelfContained>false</SelfContained>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
-        <NoWarn>$(NoWarn);CS1416</NoWarn>
     </PropertyGroup>
 
     
     <ItemGroup>
-        <Compile Include="../Shared/*.cs" />
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
 
