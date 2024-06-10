@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Server;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -19,7 +19,7 @@ namespace Serein.Plus.Ui.Pages.Server;
 public partial class PanelPage : Page
 {
     private readonly IHost _host;
-    private ServerManager ServerManager => _host.Services.GetRequiredService<ServerManager>();
+    private Core.Services.Servers.Server ServerManager => _host.Services.GetRequiredService<Core.Services.Servers.Server>();
     private readonly Timer _timer;
 
     public PanelPage(IHost host)

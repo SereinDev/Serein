@@ -33,7 +33,7 @@ public class WsNetwork
     private WebSocketService WebSocketService => Services.GetRequiredService<WebSocketService>();
     private ReverseWebSocketService ReverseWebSocketService =>
         Services.GetRequiredService<ReverseWebSocketService>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private CancellationTokenSource? _cancellationTokenSource;
     public event EventHandler? StatusChanged;
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Navigation;
 
-using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
 using iNKORE.UI.WPF.Modern.Media.Animation;
 
@@ -36,12 +35,7 @@ public partial class CategoriesPage : Page
     {
         NavigationView.MenuItems = new List<NavigationViewItem>()
         {
-            new()
-            {
-                // Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
-                Content = "服务器",
-                Tag = nameof(ServerSettingPage)
-            },
+          
             new()
             {
                 // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
@@ -102,7 +96,6 @@ public partial class CategoriesPage : Page
 
         Page? page = item.Tag?.ToString() switch
         {
-            nameof(ServerSettingPage) => Services.GetRequiredService<ServerSettingPage>(),
             nameof(AboutPage) => Services.GetRequiredService<AboutPage>(),
             nameof(AutoRunSettingPage) => Services.GetRequiredService<AutoRunSettingPage>(),
             nameof(AppSettingPage) => Services.GetRequiredService<AppSettingPage>(),

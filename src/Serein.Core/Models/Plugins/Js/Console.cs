@@ -10,10 +10,10 @@ namespace Serein.Core.Models.Plugins.Js;
 
 public class Console
 {
-    private readonly IOutputHandler _logger;
+    private readonly ISereinLogger _logger;
     private readonly string _title;
 
-    public Console(IOutputHandler logger, string title)
+    public Console(ISereinLogger logger, string title)
     {
         _logger = logger;
         _title = title ?? throw new ArgumentNullException(nameof(title));

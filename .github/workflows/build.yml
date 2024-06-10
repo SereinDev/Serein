@@ -38,14 +38,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Serein.Plus_win-x64
-          path: ./src/Serein.Plus/bin/Debug/net8.0-windows10.0.18362/win-x64/publish
+          path: ./src/Serein.Plus/bin/Debug/net8.0-windows/win-x64/publish
 
       # Serein.Cli
       - name: Upload binary files(Serein.Cli_win-x64)
         uses: actions/upload-artifact@v4
         with:
           name: Serein.Cli_win-x64
-          path: ./src/Serein.Cli/bin/Debug/net8.0-windows/win-x64/publish
+          path: ./src/Serein.Cli/bin/Debug/net8.0/win-x64/publish
 
       - name: Upload binary files(Serein.Cli_linux-x64)
         uses: actions/upload-artifact@v4
@@ -95,6 +95,7 @@ jobs:
           del ./downloads/*.pdb
         
       - uses: actions/attest-build-provenance@v1
+        continue-on-error: true
         with:
           subject-path: downloads/*
           subject-name: ${{ matrix.names }}

@@ -3,12 +3,17 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Plugins;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services;
 
-public partial class CommandParser
+public partial class CommandParser(
+    PluginHost pluginHost,
+    ServerDictionary servers,
+    HardwareInfoProvider hardwareInfoProvider
+)
 {
     [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommand();
@@ -19,20 +24,9 @@ public partial class CommandParser
     private static readonly Regex Variable = GetVariable();
     private static readonly Regex GeneralCommand = GetGeneralCommand();
 
-    private readonly PluginHost _pluginHost;
-    private readonly HardwareInfoProvider _hardwareInfoProvider;
-    private readonly ServerManager _serverManager;
-
-    public CommandParser(
-        PluginHost pluginHost,
-        HardwareInfoProvider hardwareInfoProvider,
-        ServerManager serverManager
-    )
-    {
-        _pluginHost = pluginHost;
-        _hardwareInfoProvider = hardwareInfoProvider;
-        _serverManager = serverManager;
-    }
+    private readonly PluginHost _pluginHost = pluginHost;
+    private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
+    private readonly ServerDictionary _servers = servers;
 
     public static Command Parse(CommandOrigin origin, string? command, bool throws = false)
     {
@@ -123,8 +117,6 @@ public partial class CommandParser
         if (!line.Contains('{') || !line.Contains('}'))
             return line.Replace("\\n", "\n");
 
-        var serverStatus = _serverManager.Status;
-        var serverInfo = _serverManager.ServerInfo;
         var currentTime = DateTime.Now;
 
         var text = Variable.Replace(
@@ -234,7 +226,7 @@ public partial class CommandParser
                             : commandContext.MessagePacket?.Sender?.Card,
                     #endregion
 
-                    _ => null
+                    _ => GetServerVariables(name)
                 };
 
                 var r = obj?.ToString();
@@ -248,6 +240,38 @@ public partial class CommandParser
 
         return text.Replace("\\n", "\n");
     }
-
 #pragma warning restore IDE0046
+
+    private object? GetServerVariables(string input)
+    {
+        var i = input.IndexOf('@');
+        if (i < 0)
+            return null;
+
+        var name = input[..(i + 1)];
+        var id = input[(i + 1)..];
+
+        return !_servers.TryGetValue(id, out Server? server)
+            ? null
+            : name.ToLowerInvariant() switch
+            {
+                "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
+                "server.usage" => server.ServerInfo.CPUUsage,
+                "server.output" => server.ServerInfo.OutputLines,
+                "server.input" => server.ServerInfo.InputLines,
+                "server.time" => DateTime.Now - server.ServerInfo.StartTime,
+                "server.version" => server.ServerInfo.Stat?.Version,
+                "server.motd" => server.ServerInfo.Stat?.Stripped_Motd,
+                "server.players.max" => server.ServerInfo.Stat?.MaximumPlayers,
+                "server.players.current" => server.ServerInfo.Stat?.CurrentPlayers,
+                "server.players.percent"
+                    => server.ServerInfo.Stat is not null
+                        ? 100
+                            * server.ServerInfo.Stat.CurrentPlayersInt
+                            / server.ServerInfo.Stat.MaximumPlayersInt
+                        : null,
+
+                _ => null
+            };
+    }
 }

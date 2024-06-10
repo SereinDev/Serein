@@ -17,7 +17,7 @@ using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Interaction;
 
@@ -29,8 +29,8 @@ public class InputReader
     private static readonly char[] Separator = new char[] { '\x20' };
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
     private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
 
     public InputReader(IHost host)
@@ -88,14 +88,14 @@ public class InputReader
             if (input is null)
                 continue;
 
-            if (
-                ServerManager.Status == ServerStatus.Running
-                && !input.StartsWith(Setting.Application.CliCommandHeader)
-            )
-            {
-                ServerManager.Input(input, null, true);
-                continue;
-            }
+            // if (
+            //     ServerManager.Status == ServerStatus.Running
+            //     && !input.StartsWith(Setting.Application.CliCommandHeader)
+            // )
+            // {
+            //     ServerManager.Input(input, null, true);
+            //     continue;
+            // }
 
             if (
                 input.StartsWith(Setting.Application.CliCommandHeader)

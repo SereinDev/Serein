@@ -41,7 +41,7 @@ public static class Program
 
         builder.Services.AddSingleton<TitleUpdater>();
         builder.Services.AddSingleton<InputReader>();
-        builder.Services.AddSingleton<IOutputHandler, CliLogger>(
+        builder.Services.AddSingleton<ISereinLogger, CliLogger>(
             (services) =>
                 new(
                     "Serein",

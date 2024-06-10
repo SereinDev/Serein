@@ -19,7 +19,7 @@ public class VersionCommand : Command
     public VersionCommand(IHost host)
         : base(host) { }
 
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public override void Parse(string[] args)
     {

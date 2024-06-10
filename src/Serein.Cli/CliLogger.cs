@@ -10,7 +10,7 @@ using Spectre.Console;
 
 namespace Serein.Cli;
 
-public class CliLogger(string categoryName, LogLevel logLevel = LogLevel.Information) : IOutputHandler
+public class CliLogger(string categoryName, LogLevel logLevel = LogLevel.Information) : ISereinLogger
 {
     private readonly string _categoryName = categoryName;
     private readonly LogLevel _logLevel = logLevel;

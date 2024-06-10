@@ -2,26 +2,13 @@ using System;
 
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Server;
 
 namespace Serein.Cli;
 
-public class TitleUpdater
+public class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
 {
-    private readonly ServerManager _serverManager;
-    private readonly SettingProvider _settingProvider;
-    private readonly CommandParser _commandParser;
-
-    public TitleUpdater(
-        ServerManager serverManager,
-        SettingProvider settingProvider,
-        CommandParser commandParser
-    )
-    {
-        _serverManager = serverManager;
-        _settingProvider = settingProvider;
-        _commandParser = commandParser;
-    }
+    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly CommandParser _commandParser = commandParser;
 
     public void Init()
     {
@@ -29,7 +16,6 @@ public class TitleUpdater
             return;
 
         _settingProvider.Value.Application.PropertyChanged += (_, _) => Update();
-        _serverManager.ServerStatusChanged += (_, _) => Update();
         Update();
     }
 

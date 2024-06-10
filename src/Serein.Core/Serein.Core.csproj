@@ -4,10 +4,6 @@
         <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)'=='net8.0-windows'">
-        <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
-    </ItemGroup>
-
     <ItemGroup>
         <PackageReference Include="EmbedIO" Version="3.5.2" />
         <PackageReference Include="Fleck" Version="1.2.0" />
@@ -22,7 +18,6 @@
         <PackageReference Include="NCrontab" Version="3.3.3" />
         <PackageReference Include="Octokit" Version="11.0.1" />
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="all" />
-        <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
         <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
         <PackageReference Include="WebSocket4Net" Version="0.15.2" />
     </ItemGroup>

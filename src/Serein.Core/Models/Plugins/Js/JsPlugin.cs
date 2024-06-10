@@ -32,7 +32,7 @@ public class JsPlugin : IPlugin
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public JsPlugin(IHost host, string name, Config preLoadConfig)
     {

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Networks;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services;
 
@@ -21,8 +21,8 @@ public class CommandRunner
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private WsNetwork WsNetwork => Services.GetRequiredService<WsNetwork>();
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ServerDictionary ServerDictionary => Services.GetRequiredService<ServerDictionary>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public CommandRunner(IHost host)
     {
@@ -44,7 +44,8 @@ public class CommandRunner
                 break;
 
             case CommandType.ServerInput:
-                ServerManager.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
+                if (ServerDictionary.TryGetValue(command.Argument, out Server? server))
+                    server.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
                 break;
 
             case CommandType.SendGroupMsg:

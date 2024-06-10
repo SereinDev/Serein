@@ -48,10 +48,9 @@ public partial class App : Application
         builder.Services.AddSingleton<NetworkSettingPage>();
         builder.Services.AddSingleton<PageSettingPage>();
         builder.Services.AddSingleton<ReactionSettingPage>();
-        builder.Services.AddSingleton<ServerSettingPage>();
         builder.Services.AddSingleton<CategoriesPage>();
 
-        builder.Services.AddSingleton<IOutputHandler, WpfOutputHandler>(
+        builder.Services.AddSingleton<ISereinLogger, WpfOutputHandler>(
             (services) => new(services)
         );
 

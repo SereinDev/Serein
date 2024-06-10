@@ -8,7 +8,7 @@ using Serein.Cli.Models;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Networks;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 using Spectre.Console;
 
@@ -24,7 +24,7 @@ public class NetworkCommand : Command
         : base(host) { }
 
     private WsNetwork WsNetwork => Services.GetRequiredService<WsNetwork>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public override void Parse(string[] args)
     {

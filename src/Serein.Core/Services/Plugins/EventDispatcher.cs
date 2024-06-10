@@ -27,7 +27,7 @@ public class EventDispatcher
     private NetManager Loader => Services.GetRequiredService<NetManager>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public EventDispatcher(IHost host)
     {

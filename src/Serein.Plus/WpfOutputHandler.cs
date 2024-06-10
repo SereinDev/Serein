@@ -12,7 +12,7 @@ using Serein.Plus.Ui.Pages.Server;
 
 namespace Serein.Plus;
 
-public class WpfOutputHandler : IOutputHandler
+public class WpfOutputHandler : ISereinLogger
 {
     private readonly LogLevel _logLevel;
     public IServiceProvider Services { get; }

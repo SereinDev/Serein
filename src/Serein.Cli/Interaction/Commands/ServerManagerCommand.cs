@@ -7,24 +7,21 @@ using Microsoft.Extensions.Logging;
 using Serein.Cli.Models;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 using Spectre.Console;
 
 namespace Serein.Cli.Interaction.Commands;
 
 [CommandDescription("server", "管理服务器", Priority = 999)]
-[CommandUsage("server info", "显示服务器信息")]
-[CommandUsage("server start", "启动服务器")]
-[CommandUsage("server stop", "关闭服务器")]
-[CommandUsage("server terminate", "强制结束服务器")]
-public class ServerManagerCommand : Command
+[CommandUsage("server <id> info", "显示服务器信息")]
+[CommandUsage("server <id> start", "启动服务器")]
+[CommandUsage("server <id> stop", "关闭服务器")]
+[CommandUsage("server <id> terminate", "强制结束服务器")]
+public class serverCommand(IHost host) : Command(host)
 {
-    public ServerManagerCommand(IHost host)
-        : base(host) { }
-
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public override void Parse(string[] args)
     {
@@ -33,10 +30,16 @@ public class ServerManagerCommand : Command
                 "缺少参数。可用值：\"info\"、\"start\"、\"stop\"和\"terminate\""
             );
 
-        switch (args[1].ToLowerInvariant())
+        if (args.Length == 2)
+            throw new InvalidArgumentException("缺少服务器ID。");
+
+        if (!Servers.TryGetValue(args[1], out Server? server))
+            throw new InvalidArgumentException("指定的服务器不存在。");
+
+        switch (args[2].ToLowerInvariant())
         {
             case "info":
-                var info = ServerManager.ServerInfo;
+                var info = server.ServerInfo;
 
                 var table = new Table();
 
@@ -45,7 +48,7 @@ public class ServerManagerCommand : Command
                     .AddColumns(
                         new TableColumn("服务器状态") { Alignment = Justify.Center },
                         new(
-                            ServerManager.Status switch
+                            server.Status switch
                             {
                                 ServerStatus.Running => "[green3]●[/] 运行中",
                                 ServerStatus.Stopped => "[gray]●[/] 已关闭",
@@ -73,7 +76,7 @@ public class ServerManagerCommand : Command
             case "start":
                 try
                 {
-                    ServerManager.Start();
+                    server.Start();
                 }
                 catch (Exception e)
                 {
@@ -84,7 +87,7 @@ public class ServerManagerCommand : Command
             case "stop":
                 try
                 {
-                    ServerManager.Stop();
+                    server.Stop();
                 }
                 catch (Exception e)
                 {
@@ -95,7 +98,7 @@ public class ServerManagerCommand : Command
             case "terminate":
                 try
                 {
-                    ServerManager.Terminate();
+                    server.Terminate();
                 }
                 catch (Exception e)
                 {

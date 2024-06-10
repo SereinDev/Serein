@@ -21,9 +21,9 @@ namespace Serein.Core.Services.Plugins.Js;
 public class JsEngineFactory
 {
     private readonly SettingProvider _settingProvider;
-    private readonly IOutputHandler _logger;
+    private readonly ISereinLogger _logger;
 
-    public JsEngineFactory(SettingProvider settingProvider, IOutputHandler logger)
+    public JsEngineFactory(SettingProvider settingProvider, ISereinLogger logger)
     {
         _settingProvider = settingProvider;
         _logger = logger;

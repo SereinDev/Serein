@@ -23,7 +23,7 @@ using Serein.Core.Models.Settings;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 using Serein.Plus.Ui.Commands;
 using Serein.Plus.Ui.Dialogs;
 using Serein.Plus.Ui.Pages;
@@ -39,8 +39,8 @@ public partial class MainWindow : System.Windows.Window
 {
     private readonly IHost _host = App.Host;
     private IServiceProvider Services => _host.Services;
+    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
     private CommandParser CommandParser => Services.GetRequiredService<CommandParser>();
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private EventDispatcher EventDispatcher => Services.GetRequiredService<EventDispatcher>();
     private bool _isTopMost;
@@ -58,8 +58,6 @@ public partial class MainWindow : System.Windows.Window
         _timer.Elapsed += (_, _) => UpdateTitle();
 
         TaskbarIcon.TrayBalloonTipClicked += (_, _) => ShowWindow();
-        ServerManager.ServerStatusChanged += OnServerStatusChanged;
-        ServerManager.ServerStatusChanged += (_, _) => UpdateTitle();
         SettingProvider.Value.Application.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(SettingProvider.Value.Application.Title))
@@ -228,7 +226,7 @@ public partial class MainWindow : System.Windows.Window
     {
         Hide();
 
-        if (ServerManager.Status != ServerStatus.Running)
+        if (!Servers.AnyRunning)
         {
             TaskbarIcon.Visibility = Visibility.Hidden;
             EventDispatcher.Dispatch(Event.SereinClosed);
@@ -247,22 +245,22 @@ public partial class MainWindow : System.Windows.Window
         App.Host.StartAsync();
     }
 
-    private void OnServerStatusChanged(object? sender, EventArgs e)
-    {
-        Dispatcher.Invoke(() =>
-        {
-            if (IsVisible)
-                return;
+    // private void OnServerStatusChanged(object? sender, EventArgs e)
+    // {
+    //     Dispatcher.Invoke(() =>
+    //     {
+    //         if (IsVisible)
+    //             return;
 
-            TaskbarIcon.ShowBalloonTip(
-                "服务器状态变更",
-                ServerManager.Status == ServerStatus.Running
-                    ? "服务器已启动"
-                    : $"服务器进程已于{ServerManager.ServerInfo?.ExitTime:T}已退出",
-                BalloonIcon.None
-            );
-        });
-    }
+    //         TaskbarIcon.ShowBalloonTip(
+    //             "服务器状态变更",
+    //             ServerManager.Status == ServerStatus.Running
+    //                 ? "服务器已启动"
+    //                 : $"服务器进程已于{ServerManager.ServerInfo?.ExitTime:T}已退出",
+    //             BalloonIcon.None
+    //         );
+    //     });
+    // }
 
     private void UpdateTitle()
     {

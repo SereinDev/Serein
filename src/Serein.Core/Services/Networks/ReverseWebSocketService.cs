@@ -26,7 +26,7 @@ public class ReverseWebSocketService : INetworkService
     private readonly Dictionary<string, IWebSocketConnection> _webSockets;
 
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private Setting Setting => SettingProvider.Value;
 

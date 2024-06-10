@@ -21,7 +21,7 @@ public class NetManager : IManager
 
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private AssemblyLoadContext? _assemblyLoadContext;
 
     public ConcurrentDictionary<string, PluginBase> Plugins { get; }

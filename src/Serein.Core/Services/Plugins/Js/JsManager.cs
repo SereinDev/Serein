@@ -19,7 +19,7 @@ public class JsManager : IManager
 {
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     public ConcurrentDictionary<string, JsPlugin> JsPlugins { get; }
     public ConcurrentDictionary<string, object?> ExportedVariables { get; }
 

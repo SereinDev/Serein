@@ -1,78 +1,12 @@
-using Serein.Core.Models.Server;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Models.Plugins.Js.Modules;
 
-public class ServerModule
+public class ServerModule(ServerDictionary servers)
 {
-    private readonly ServerManager _serverManager;
+    private readonly ServerDictionary _servers = servers;
 
-    public ServerModule(ServerManager serverManager)
-    {
-        _serverManager = serverManager;
-    }
-
-    public IServerInfo? ServerInfo => _serverManager.ServerInfo;
-    public ServerStatus ServerStatus => _serverManager.Status;
-    public int? Pid => _serverManager.Pid;
-
-    public void Start()
-    {
-        _serverManager.Start();
-    }
-
-    public void Stop()
-    {
-        _serverManager.Stop();
-    }
-
-    public void Terminate()
-    {
-        _serverManager.Terminate();
-    }
-
-    public void Input(string command, EncodingMap.EncodingType? encodingType = null)
-    {
-        _serverManager.Input(command, encodingType);
-    }
-
-    public bool TryStart()
-    {
-        try
-        {
-            _serverManager.Start();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public bool TryStop()
-    {
-        try
-        {
-            _serverManager.Stop();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public bool TryTerminate()
-    {
-        try
-        {
-            _serverManager.Terminate();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    public Services.Servers.Server? this[string id] =>
+        _servers.TryGetValue(id, out var server) ? server : null;
 }

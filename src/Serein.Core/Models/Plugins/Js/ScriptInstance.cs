@@ -16,7 +16,7 @@ using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks;
 using Serein.Core.Services.Plugins.Js;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Plugins.Js;
@@ -27,7 +27,7 @@ public partial class ScriptInstance
     private readonly JsPlugin _jsPlugin;
 
     private IServiceProvider Services => _host.Services;
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
@@ -46,7 +46,7 @@ public partial class ScriptInstance
         _host = host;
         _jsPlugin = jsPlugin;
 
-        Server = new(Services.GetRequiredService<ServerManager>());
+        Server = new(Services.GetRequiredService<ServerDictionary>());
         Ws = new(Services.GetRequiredService<WsNetwork>());
     }
 

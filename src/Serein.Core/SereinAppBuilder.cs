@@ -11,7 +11,7 @@ using Serein.Core.Services.Networks;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
-using Serein.Core.Services.Server;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Core;
 
@@ -43,7 +43,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<HardwareInfoProvider>();
         Services.AddSingleton<ReactionManager>();
         Services.AddSingleton<Matcher>();
-        Services.AddSingleton<ServerManager>();
+        Services.AddSingleton<ServerDictionary>();
         Services.AddSingleton<CommandParser>();
         Services.AddSingleton<CommandRunner>();
         Services.AddSingleton<ScheduleRunner>();

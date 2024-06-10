@@ -44,7 +44,7 @@ public sealed class SereinApp : IHost
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private ScheduleRunner ScheduleRunner => Services.GetRequiredService<ScheduleRunner>();
-    private IOutputHandler Logger => Services.GetRequiredService<IOutputHandler>();
+    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public Action? OnStarted { get; set; }
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;

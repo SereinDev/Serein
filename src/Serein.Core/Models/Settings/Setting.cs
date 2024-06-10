@@ -32,15 +32,13 @@ public partial class Setting
             [ReactionType.PermissionDeniedFromPrivateMsg] = new() { "[p]你没有执行这个命令的权限" },
         };
 
-    public ServerSetting Server { get; init; } = new();
-
     public NetworkSetting Network { get; init; } = new();
 
     public AutoRunSetting AutoRun { get; init; } = new();
 
-    public PagesSetting Pages { get; set; } = new();
+    public PagesSetting Pages { get; init; } = new();
 
-    public ApplicationSetting Application { get; set; } = new();
+    public ApplicationSetting Application { get; init; } = new();
 
     public Dictionary<ReactionType, ObservableCollection<string>> Reactions { get; init; } =
         DefaultReactions;

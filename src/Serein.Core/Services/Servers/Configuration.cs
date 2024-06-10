@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 using Serein.Core.Models.Server;
 using Serein.Core.Utils;
 
-namespace Serein.Core.Models.Settings;
+namespace Serein.Core.Services.Servers;
 
-public class ServerSetting : INotifyPropertyChanged
+public class Configuration : INotifyPropertyChanged
 {
     public string FileName { get; set; } = string.Empty;
 
@@ -33,6 +33,8 @@ public class ServerSetting : INotifyPropertyChanged
     public short IPv4Port { get; set; } = 19132;
 
     public string[] StopCommands { get; set; } = { "stop" };
+
+    public bool StartWhenSettingUp { get; set; }
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;
