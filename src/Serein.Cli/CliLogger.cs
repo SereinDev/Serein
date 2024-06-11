@@ -10,9 +10,8 @@ using Spectre.Console;
 
 namespace Serein.Cli;
 
-public class CliLogger(string categoryName, LogLevel logLevel = LogLevel.Information) : ISereinLogger
+public class CliLogger(LogLevel logLevel = LogLevel.Information) : ISereinLogger
 {
-    private readonly string _categoryName = categoryName;
     private readonly LogLevel _logLevel = logLevel;
 
     public IDisposable? BeginScope<TState>(TState state)
@@ -42,36 +41,36 @@ public class CliLogger(string categoryName, LogLevel logLevel = LogLevel.Informa
         switch (logLevel)
         {
             case LogLevel.Trace:
-                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} [[{_categoryName}]] {text}");
+                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} [[Serein]] {text}");
                 break;
 
             case LogLevel.Debug:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[{_categoryName}]] {text}"
+                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[Serein]] {text}"
                 );
                 break;
 
             case LogLevel.Information:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [cadetblue_1]Info [/] [[{_categoryName}]] {text}"
+                    $"{DateTime.Now:T} [cadetblue_1]Info [/] [[Serein]] {text}"
                 );
                 break;
 
             case LogLevel.Warning:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [yellow bold]Warn  [[{_categoryName}]] {text}[/]"
+                    $"{DateTime.Now:T} [yellow bold]Warn  [[Serein]] {text}[/]"
                 );
                 break;
 
             case LogLevel.Error:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [red bold]Error [[{_categoryName}]] {text}[/]"
+                    $"{DateTime.Now:T} [red bold]Error [[Serein]] {text}[/]"
                 );
                 break;
 
             case LogLevel.Critical:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [maroon blod]Fatal [[{_categoryName}]]  {text}[/]"
+                    $"{DateTime.Now:T} [maroon blod]Fatal [[Serein]]  {text}[/]"
                 );
                 break;
 

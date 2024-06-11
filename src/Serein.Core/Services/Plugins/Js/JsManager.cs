@@ -15,20 +15,13 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsManager : IManager
+public class JsManager(IHost host) : IManager
 {
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
-    public ConcurrentDictionary<string, JsPlugin> JsPlugins { get; }
-    public ConcurrentDictionary<string, object?> ExportedVariables { get; }
-
-    public JsManager(IHost host)
-    {
-        _host = host;
-        ExportedVariables = new();
-        JsPlugins = new();
-    }
+    public ConcurrentDictionary<string, JsPlugin> JsPlugins { get; } = new();
+    public ConcurrentDictionary<string, object?> ExportedVariables { get; } = new();
 
     public void Unload()
     {

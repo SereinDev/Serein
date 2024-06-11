@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
 
-public class NetworkSetting : INotifyPropertyChanged
+public class ConnectionSetting : INotifyPropertyChanged
 {
     public string? AccessToken { get; set; }
 

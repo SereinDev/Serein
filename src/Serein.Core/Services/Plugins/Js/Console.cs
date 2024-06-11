@@ -6,18 +6,12 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 
-namespace Serein.Core.Models.Plugins.Js;
+namespace Serein.Core.Services.Plugins.Js;
 
-public class Console
+public class Console(ISereinLogger logger, string title)
 {
-    private readonly ISereinLogger _logger;
-    private readonly string _title;
-
-    public Console(ISereinLogger logger, string title)
-    {
-        _logger = logger;
-        _title = title ?? throw new ArgumentNullException(nameof(title));
-    }
+    private readonly ISereinLogger _logger = logger;
+    private readonly string _title = title ?? throw new ArgumentNullException(nameof(title));
 
     public void Log(params JsValue[] jsValues) => Info(jsValues);
 
@@ -33,14 +27,6 @@ public class Console
 
     public void Error(params JsValue[] jsValues)
     {
-        _logger.LogPlugin(LogLevel.Error, _title, string.Join<JsValue>('\x20', jsValues));
-    }
-
-    public void Assert(bool assertion, params JsValue[] jsValues)
-    {
-        if (!assertion)
-            return;
-
         _logger.LogPlugin(LogLevel.Error, _title, string.Join<JsValue>('\x20', jsValues));
     }
 }

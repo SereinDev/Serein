@@ -8,7 +8,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Services.Networks;
+using Serein.Core.Services.Networks.Connection;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -18,7 +18,7 @@ public partial class NetworkPage : Page
 {
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private WsNetwork WsNetwork => Services.GetRequiredService<WsNetwork>();
+    private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
     private readonly Timer _timer;
 
     public NetworkPage(IHost host)

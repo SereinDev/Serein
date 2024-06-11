@@ -20,9 +20,9 @@ using Serein.Core.Utils.Json;
 
 using WebSocket4Net;
 
-namespace Serein.Core.Services.Networks;
+namespace Serein.Core.Services.Networks.Connection;
 
-public class WsNetwork
+public class WsConnectionManager
 {
     private readonly IHost _host;
     private readonly Matcher _matcher;
@@ -39,7 +39,7 @@ public class WsNetwork
 
     public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
 
-    public WsNetwork(IHost host, Matcher matcher, EventDispatcher eventDispatcher)
+    public WsConnectionManager(IHost host, Matcher matcher, EventDispatcher eventDispatcher)
     {
         _host = host;
         _matcher = matcher;
@@ -64,7 +64,7 @@ public class WsNetwork
         if (node is null)
             return;
 
-        if (Setting.Network.OutputData)
+        if (Setting.Connection.OutputData)
             Logger.LogBotJsonPacket(node);
 
         if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
@@ -106,7 +106,7 @@ public class WsNetwork
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new();
 
-        if (Setting.Network.UseReverseWebSocket)
+        if (Setting.Connection.UseReverseWebSocket)
             ReverseWebSocketService.Start(_cancellationTokenSource.Token);
         else
             WebSocketService.Start(_cancellationTokenSource.Token);
@@ -156,7 +156,7 @@ public class WsNetwork
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = Setting.Network.AutoEscape
+                AutoEscape = Setting.Connection.AutoEscape
             }
         );
     }
@@ -169,7 +169,7 @@ public class WsNetwork
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = Setting.Network.AutoEscape
+                AutoEscape = Setting.Connection.AutoEscape
             }
         );
     }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Plugins.Js;
+using JsConsole = Serein.Core.Services.Plugins.Js.Console;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Plugins.Js;
@@ -22,7 +23,7 @@ public class JsPlugin : IPlugin
     public Engine Engine { get; }
     public ScriptInstance ScriptInstance { get; }
     public PluginInfo Info { get; private set; }
-    public Console Console { get; }
+    public JsConsole Console { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public bool Loaded { get; internal set; }

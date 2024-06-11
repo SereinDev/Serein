@@ -11,7 +11,7 @@ namespace Serein.Core.Services;
 
 public partial class CommandParser(
     PluginHost pluginHost,
-    ServerDictionary servers,
+    ServerManager servers,
     HardwareInfoProvider hardwareInfoProvider
 )
 {
@@ -26,7 +26,7 @@ public partial class CommandParser(
 
     private readonly PluginHost _pluginHost = pluginHost;
     private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
-    private readonly ServerDictionary _servers = servers;
+    private readonly ServerManager _serverManager = servers;
 
     public static Command Parse(CommandOrigin origin, string? command, bool throws = false)
     {
@@ -251,7 +251,7 @@ public partial class CommandParser(
         var name = input[..(i + 1)];
         var id = input[(i + 1)..];
 
-        return !_servers.TryGetValue(id, out Server? server)
+        return !_serverManager.Servers.TryGetValue(id, out Server? server)
             ? null
             : name.ToLowerInvariant() switch
             {

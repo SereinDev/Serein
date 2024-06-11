@@ -23,12 +23,12 @@ public partial class NetworkSettingPage : Page
         _host = host;
         InitializeComponent();
         DataContext = SettingProvider;
-        AccessToken.Password = SettingProvider.Value.Network.AccessToken;
+        AccessToken.Password = SettingProvider.Value.Connection.AccessToken;
     }
 
     private void OnPasswordChanged(object? sender, EventArgs e)
     {
-        SettingProvider.Value.Network.AccessToken = AccessToken.Password;
+        SettingProvider.Value.Connection.AccessToken = AccessToken.Password;
         OnPropertyChanged(sender, e);
     }
 
@@ -40,9 +40,9 @@ public partial class NetworkSettingPage : Page
 
     private void UseReverseWebSocket_Click(object sender, RoutedEventArgs e)
     {
-        SettingProvider.Value.Network.Uri = SettingProvider.Value.Network.UseReverseWebSocket
-            ? Regex.Replace(SettingProvider.Value.Network.Uri, @"^ws://", "http://")
-            : Regex.Replace(SettingProvider.Value.Network.Uri, @"^http://", "ws://");
+        SettingProvider.Value.Connection.Uri = SettingProvider.Value.Connection.UseReverseWebSocket
+            ? Regex.Replace(SettingProvider.Value.Connection.Uri, @"^ws://", "http://")
+            : Regex.Replace(SettingProvider.Value.Connection.Uri, @"^http://", "ws://");
 
         OnPropertyChanged(sender, e);
     }

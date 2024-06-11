@@ -12,9 +12,9 @@ using Serein.Core.Services.Data;
 
 using WebSocket4Net;
 
-namespace Serein.Core.Services.Networks;
+namespace Serein.Core.Services.Networks.Connection;
 
-public class WebSocketService : INetworkService
+public class WebSocketService : IConnectionService
 {
     private readonly IHost _host;
     private WebSocket? _client;
@@ -39,13 +39,13 @@ public class WebSocketService : INetworkService
 
     private WebSocket CreateNew()
     {
-        _uri = Setting.Network.Uri;
+        _uri = Setting.Connection.Uri;
         var client = new WebSocket(
-            Setting.Network.Uri,
-            string.Join('\x20', Setting.Network.SubProtocols),
-            customHeaderItems: string.IsNullOrEmpty(Setting.Network.AccessToken)
+            Setting.Connection.Uri,
+            string.Join('\x20', Setting.Connection.SubProtocols),
+            customHeaderItems: string.IsNullOrEmpty(Setting.Connection.AccessToken)
                 ? null
-                : new() { new("Authorization", $"Bearer {Setting.Network.AccessToken}") }
+                : new() { new("Authorization", $"Bearer {Setting.Connection.AccessToken}") }
         );
 
         client.MessageReceived += MessageReceived;

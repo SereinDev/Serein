@@ -43,10 +43,7 @@ public static class Program
         builder.Services.AddSingleton<InputReader>();
         builder.Services.AddSingleton<ISereinLogger, CliLogger>(
             (services) =>
-                new(
-                    "Serein",
-                    services.GetRequiredService<SettingProvider>().Value.Application.LogLevel
-                )
+                new(services.GetRequiredService<SettingProvider>().Value.Application.LogLevel)
         );
 
         var app = builder.Build();

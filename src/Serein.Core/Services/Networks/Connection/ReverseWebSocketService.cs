@@ -17,9 +17,9 @@ using WebSocket4Net;
 
 using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-namespace Serein.Core.Services.Networks;
+namespace Serein.Core.Services.Networks.Connection;
 
-public class ReverseWebSocketService : INetworkService
+public class ReverseWebSocketService : IConnectionService
 {
     private readonly IHost _host;
     private WebSocketServer? _server;
@@ -43,10 +43,10 @@ public class ReverseWebSocketService : INetworkService
 
     private WebSocketServer CreateNew()
     {
-        var server = new WebSocketServer(Setting.Network.Uri)
+        var server = new WebSocketServer(Setting.Connection.Uri)
         {
             RestartAfterListenError = true,
-            SupportedSubProtocols = Setting.Network.SubProtocols
+            SupportedSubProtocols = Setting.Connection.SubProtocols
         };
 
         return server;
@@ -101,7 +101,7 @@ public class ReverseWebSocketService : INetworkService
 
         _server = CreateNew();
         _server.Start(ConfigServer);
-        Logger.LogBotConsole(MsLogLevel.Information, $"反向WebSocket服务器已在{Setting.Network.Uri}开启");
+        Logger.LogBotConsole(MsLogLevel.Information, $"反向WebSocket服务器已在{Setting.Connection.Uri}开启");
         StatusChanged?.Invoke(null, EventArgs.Empty);
     }
 

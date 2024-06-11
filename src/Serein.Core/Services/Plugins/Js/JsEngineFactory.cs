@@ -18,16 +18,10 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsEngineFactory
+public class JsEngineFactory(SettingProvider settingProvider, ISereinLogger logger)
 {
-    private readonly SettingProvider _settingProvider;
-    private readonly ISereinLogger _logger;
-
-    public JsEngineFactory(SettingProvider settingProvider, ISereinLogger logger)
-    {
-        _settingProvider = settingProvider;
-        _logger = logger;
-    }
+    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly ISereinLogger _logger = logger;
 
     public Options CreateOptions(JsPlugin jsPlugin)
     {

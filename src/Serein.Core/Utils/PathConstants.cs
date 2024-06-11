@@ -7,5 +7,6 @@ public static class PathConstants
     public const string SchedulesFile = "data/schedules.json";
     public const string SettingFile = "setting.json";
     public const string PluginDirectory = "plugin";
-    public const string PluginConfigFileName = "plugin/{}/.config.json";
+    public const string PluginConfigFileName = ".config.json";
+    public const string ServerConfigFileName = "data/server/{0}.json";
 }

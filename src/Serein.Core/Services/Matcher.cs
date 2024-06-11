@@ -21,7 +21,7 @@ public class Matcher
     private readonly CommandRunner _commandRunner;
 
     private IServiceProvider Services => _host.Services;
-    private NetworkSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Network;
+    private ConnectionSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Connection;
 
     public Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
     {

@@ -7,11 +7,12 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks;
+using Serein.Core.Services.Networks.Connection;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Servers;
+using Serein.Core.Services.Networks.WebApi;
 
 namespace Serein.Core;
 
@@ -43,14 +44,15 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<HardwareInfoProvider>();
         Services.AddSingleton<ReactionManager>();
         Services.AddSingleton<Matcher>();
-        Services.AddSingleton<ServerDictionary>();
+        Services.AddSingleton<ServerManager>();
         Services.AddSingleton<CommandParser>();
         Services.AddSingleton<CommandRunner>();
         Services.AddSingleton<ScheduleRunner>();
 
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();
-        Services.AddSingleton<WsNetwork>();
+        Services.AddSingleton<WsConnectionManager>();
+        Services.AddSingleton<HttpServer>();
 
         Services.AddSingleton<PluginHost>();
         Services.AddSingleton<EventDispatcher>();

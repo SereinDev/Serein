@@ -10,16 +10,15 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
-using Serein.Core.Models.Plugins.Js.Modules;
+using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
-using Serein.Core.Services;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks;
-using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Plugins.Js.Modules;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 
-namespace Serein.Core.Models.Plugins.Js;
+namespace Serein.Core.Services.Plugins.Js;
 
 public partial class ScriptInstance
 {
@@ -46,8 +45,8 @@ public partial class ScriptInstance
         _host = host;
         _jsPlugin = jsPlugin;
 
-        Server = new(Services.GetRequiredService<ServerDictionary>());
-        Ws = new(Services.GetRequiredService<WsNetwork>());
+        Server = new(Services.GetRequiredService<ServerManager>());
+        Ws = new(Services.GetRequiredService<WsConnectionManager>());
     }
 
     public void RunCommand(string? command)

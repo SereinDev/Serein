@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 using WebSocket4Net;
 
-namespace Serein.Core.Services.Networks;
+namespace Serein.Core.Services.Networks.Connection;
 
-public interface INetworkService : IDisposable
+public interface IConnectionService : IDisposable
 {
     event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     event EventHandler? StatusChanged;

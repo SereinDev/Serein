@@ -39,7 +39,7 @@ public partial class MainWindow : System.Windows.Window
 {
     private readonly IHost _host = App.Host;
     private IServiceProvider Services => _host.Services;
-    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
+    private ServerManager Servers => Services.GetRequiredService<ServerManager>();
     private CommandParser CommandParser => Services.GetRequiredService<CommandParser>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private EventDispatcher EventDispatcher => Services.GetRequiredService<EventDispatcher>();

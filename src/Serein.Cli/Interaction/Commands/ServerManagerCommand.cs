@@ -18,9 +18,9 @@ namespace Serein.Cli.Interaction.Commands;
 [CommandUsage("server <id> start", "启动服务器")]
 [CommandUsage("server <id> stop", "关闭服务器")]
 [CommandUsage("server <id> terminate", "强制结束服务器")]
-public class serverCommand(IHost host) : Command(host)
+public class ServerCommand(IHost host) : Command(host)
 {
-    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
+    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public override void Parse(string[] args)
@@ -33,7 +33,7 @@ public class serverCommand(IHost host) : Command(host)
         if (args.Length == 2)
             throw new InvalidArgumentException("缺少服务器ID。");
 
-        if (!Servers.TryGetValue(args[1], out Server? server))
+        if (!ServerManager.Servers.TryGetValue(args[1], out Server? server))
             throw new InvalidArgumentException("指定的服务器不存在。");
 
         switch (args[2].ToLowerInvariant())

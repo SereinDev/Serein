@@ -30,7 +30,7 @@ public class InputReader
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
-    private ServerDictionary Servers => Services.GetRequiredService<ServerDictionary>();
+    private ServerManager Servers => Services.GetRequiredService<ServerManager>();
     private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
 
     public InputReader(IHost host)

@@ -30,6 +30,7 @@ public class Server
     public IServerInfo ServerInfo => _serverInfo;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; private set; }
+    public Configuration Configuration { get; }
 
     private readonly List<string> _commandHistory;
     private readonly List<string> _cache;
@@ -45,9 +46,7 @@ public class Server
     private readonly ReactionManager _reactionManager;
     private readonly string _id;
     private readonly ISereinLogger _logger;
-    private readonly Configuration _configuration;
     private readonly SettingProvider _settingProvider;
-
     public event EventHandler? ServerStatusChanged;
     public event EventHandler<ServerOutputEventArgs>? ServerOutput;
 
@@ -63,7 +62,7 @@ public class Server
     {
         _id = id;
         _logger = logger;
-        _configuration = configuration;
+        Configuration = configuration;
         _settingProvider = settingManager;
         _matcher = matcher;
         _eventDispatcher = eventDispatcher;
@@ -81,7 +80,7 @@ public class Server
         if (Status == ServerStatus.Running)
             throw new InvalidOperationException("服务器已在运行");
 
-        if (string.IsNullOrEmpty(_configuration.FileName))
+        if (string.IsNullOrEmpty(Configuration.FileName))
             throw new InvalidOperationException("启动文件为空");
 
         if (!_eventDispatcher.Dispatch(Event.ServerStarting, _id))
@@ -90,16 +89,16 @@ public class Server
         _serverProcess = Process.Start(
             new ProcessStartInfo
             {
-                FileName = _configuration.FileName,
+                FileName = Configuration.FileName,
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
-                StandardOutputEncoding = EncodingMap.GetEncoding(_configuration.OutputEncoding),
-                StandardErrorEncoding = EncodingMap.GetEncoding(_configuration.OutputEncoding),
-                WorkingDirectory = Path.GetDirectoryName(_configuration.FileName),
-                Arguments = _configuration.Argument ?? string.Empty
+                StandardOutputEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
+                StandardErrorEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
+                WorkingDirectory = Path.GetDirectoryName(Configuration.FileName),
+                Arguments = Configuration.Argument ?? string.Empty
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
@@ -108,9 +107,9 @@ public class Server
         _serverInfo.OutputLines = 0;
         _serverInfo.InputLines = 0;
         _serverInfo.StartTime = _serverProcess.StartTime;
-        _serverInfo.FileName = File.Exists(_configuration.FileName)
-            ? Path.GetFileName(_configuration.FileName)
-            : _configuration.FileName;
+        _serverInfo.FileName = File.Exists(Configuration.FileName)
+            ? Path.GetFileName(Configuration.FileName)
+            : Configuration.FileName;
         _commandHistory.Clear();
         _prevProcessCpuTime = TimeSpan.Zero;
 
@@ -126,7 +125,7 @@ public class Server
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
         ServerOutput?.Invoke(
             this,
-            new(ServerOutputType.Information, $"“{_configuration.FileName}”启动中")
+            new(ServerOutputType.Information, $"“{Configuration.FileName}”启动中")
         );
         _reactionManager.TriggerAsync(ReactionType.ServerStart);
         _eventDispatcher.Dispatch(Event.ServerStarted, _id);
@@ -140,7 +139,7 @@ public class Server
         if (!_eventDispatcher.Dispatch(Event.ServerStopping, _id))
             return;
 
-        foreach (string command in _configuration.StopCommands)
+        foreach (string command in Configuration.StopCommands)
         {
             if (!string.IsNullOrEmpty(command))
             {
@@ -173,10 +172,9 @@ public class Server
 
         _inputWriter.Write(
             EncodingMap
-                .GetEncoding(encodingType ?? _configuration.InputEncoding)
+                .GetEncoding(encodingType ?? Configuration.InputEncoding)
                 .GetBytes(
-                    command
-                        + _configuration.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
+                    command + Configuration.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
                 )
         );
         _inputWriter.Flush();
@@ -220,7 +218,7 @@ public class Server
             new(ServerOutputType.Information, $"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})")
         );
 
-        if (_configuration.AutoRestart && !_isTerminated)
+        if (Configuration.AutoRestart && !_isTerminated)
             if (
                 _restartStatus == RestartStatus.Waiting
                 || _restartStatus == RestartStatus.None && exitCode != 0
@@ -317,9 +315,9 @@ public class Server
             * 100;
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
-        if (_configuration.IPv4Port >= 0)
+        if (Configuration.IPv4Port >= 0)
             await Task.Run(
-                () => _serverInfo.Stat = new("127.0.0.1", (ushort)_configuration.IPv4Port)
+                () => _serverInfo.Stat = new("127.0.0.1", (ushort)Configuration.IPv4Port)
             );
     }
 }
