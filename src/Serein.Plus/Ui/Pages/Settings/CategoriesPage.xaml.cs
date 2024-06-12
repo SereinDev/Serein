@@ -62,12 +62,6 @@ public partial class CategoriesPage : Page
             },
             new()
             {
-                // Icon = new FontIcon { Glyph = SegoeIcons.Play },
-                Content = "自动运行",
-                Tag = nameof(AutoRunSettingPage)
-            },
-            new()
-            {
                 // Icon = new FontIcon { Glyph = SegoeIcons.Info },
                 Content = "关于",
                 Tag = nameof(AboutPage)
@@ -97,7 +91,6 @@ public partial class CategoriesPage : Page
         Page? page = item.Tag?.ToString() switch
         {
             nameof(AboutPage) => Services.GetRequiredService<AboutPage>(),
-            nameof(AutoRunSettingPage) => Services.GetRequiredService<AutoRunSettingPage>(),
             nameof(AppSettingPage) => Services.GetRequiredService<AppSettingPage>(),
             nameof(NetworkSettingPage) => Services.GetRequiredService<NetworkSettingPage>(),
             nameof(PageSettingPage) => Services.GetRequiredService<PageSettingPage>(),

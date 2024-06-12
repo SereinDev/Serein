@@ -3,15 +3,9 @@ using System;
 namespace Serein.Cli.Interaction;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class CommandUsageAttribute : Attribute
+public class CommandUsageAttribute(string example, string description) : Attribute
 {
-    public CommandUsageAttribute(string example, string description)
-    {
-        Example = example;
-        Description = description;
-    }
+    public string Example { get; } = example;
 
-    public string Example { get; }
-
-    public string Description { get; }
+    public string Description { get; } = description;
 }

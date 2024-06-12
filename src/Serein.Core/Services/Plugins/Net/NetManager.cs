@@ -15,22 +15,16 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-public class NetManager : IManager
+public class NetManager(IHost host) : IManager
 {
     private const string Name = "";
 
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private AssemblyLoadContext? _assemblyLoadContext;
 
-    public ConcurrentDictionary<string, PluginBase> Plugins { get; }
-
-    public NetManager(IHost host)
-    {
-        _host = host;
-        Plugins = new();
-    }
+    public ConcurrentDictionary<string, PluginBase> Plugins { get; } = new();
 
     private Assembly? ResolvingHandler(AssemblyLoadContext context, AssemblyName name)
     {

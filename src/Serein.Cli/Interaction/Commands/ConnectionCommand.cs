@@ -14,15 +14,12 @@ using Spectre.Console;
 
 namespace Serein.Cli.Interaction.Commands;
 
-[CommandDescription("net", "管理连接", Priority = 998)]
-[CommandUsage("net info", "显示连接信息")]
-[CommandUsage("net open", "连接WebSocket")]
-[CommandUsage("net close", "断开WebSocket")]
-public class NetworkCommand : Command
+[CommandDescription("cn", "管理连接", Priority = 998)]
+[CommandUsage("cn info", "显示连接信息")]
+[CommandUsage("cn open", "连接WebSocket")]
+[CommandUsage("cn close", "断开WebSocket")]
+public class ConnectionCommand(IHost host) : Command(host)
 {
-    public NetworkCommand(IHost host)
-        : base(host) { }
-
     private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 

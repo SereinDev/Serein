@@ -14,11 +14,11 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Networks.Connection;
 
-public class WebSocketService : IConnectionService
+public class WebSocketService(IHost host) : IConnectionService
 {
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private WebSocket? _client;
-    private string _uri;
+    private string _uri = string.Empty;
 
     private IServiceProvider Services => _host.Services;
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
@@ -30,12 +30,6 @@ public class WebSocketService : IConnectionService
 
     public bool Active => _client?.State == WebSocketState.Open;
     public bool Connecting { get; private set; }
-
-    public WebSocketService(IHost host)
-    {
-        _host = host;
-        _uri = string.Empty;
-    }
 
     private WebSocket CreateNew()
     {

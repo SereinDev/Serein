@@ -26,7 +26,7 @@ public class ScheduleRunner
         _timer = new(2000) { Enabled = true };
     }
 
-    public void Start()
+    internal void Start()
     {
         _timer.Elapsed += OnElapsed;
     }

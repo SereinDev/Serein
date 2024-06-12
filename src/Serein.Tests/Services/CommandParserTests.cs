@@ -1,15 +1,57 @@
 using System;
+using System.Collections.Generic;
 
+using Microsoft.Extensions.DependencyInjection;
+
+using Serein.Core;
 using Serein.Core.Models.Commands;
 
 using Xunit;
 
 using Parser = Serein.Core.Services.CommandParser;
 
-namespace Serein.Tests.Static;
+namespace Serein.Tests.Services;
 
-public class CommandParserTests
+public class CommandParserTests : IDisposable
 {
+    private readonly SereinApp _app;
+    private readonly Parser _commandParser;
+
+    public CommandParserTests()
+    {
+        _app = AppFactory.BuildNew();
+        _app.StartAsync();
+        _commandParser = _app.Services.GetRequiredService<Parser>();
+    }
+
+    public void Dispose()
+    {
+        _app.StopAsync();
+        _app.Dispose();
+    }
+
+    [Theory]
+    [InlineData("{aaa.bb@ccc}")]
+    [InlineData("{aasafjefeiooivniv}")]
+    [InlineData("{aaa.bbbb}")]
+    public void ShouldPreserveOrRemoveInvalidVariable(string input)
+    {
+        Assert.Equal(input, _commandParser.ApplyVariables(input, null));
+        Assert.Equal(string.Empty, _commandParser.ApplyVariables(input, null, true));
+    }
+
+    [Fact]
+    public void ShouldApplyCustomVariables()
+    {
+        Assert.Equal(
+            "[114514]",
+            _commandParser.ApplyVariables(
+                "[{shit}]",
+                new(Variables: new Dictionary<string, string?> { ["shit"] = "114514" })
+            )
+        );
+    }
+
     [Theory]
     [InlineData("[cmd]114", CommandType.ExecuteShellCommand, "114")]
     [InlineData("[CmD]514", CommandType.ExecuteShellCommand, "514")]
@@ -89,5 +131,23 @@ public class CommandParserTests
     public static void ShouldBeAbleToThrowExceptionWhenThrowsIsFalse(string? input)
     {
         Parser.Parse(CommandOrigin.ConsoleExecute, input);
+    }
+
+    [Theory]
+    [InlineData("{}", false)]
+    [InlineData("{1}", false)]
+    [InlineData("{_}", false)]
+    [InlineData("{\\}", false)]
+    [InlineData("{a}", true)]
+    [InlineData("{a.}", false)]
+    [InlineData("{a.b}", true)]
+    [InlineData("{a.111}", false)]
+    [InlineData("{a.b.}", false)]
+    [InlineData("{a.b.c}", false)]
+    [InlineData("{a.b@}", false)]
+    [InlineData("{a.b@c}", true)]
+    public static void ShouldAnalyzeWhetherToBeVariablePattern(string input, bool result)
+    {
+        Assert.Equal(result, Parser.Variable.IsMatch(input));
     }
 }

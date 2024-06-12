@@ -120,7 +120,7 @@ public partial class MainWindow : System.Windows.Window
             new()
             {
                 // Icon = new FontIcon { Glyph = SegoeIcons.DirectAccess },
-                Tag = nameof(PanelPage),
+                Tag = nameof(ServerPage),
                 Content = "服务器",
                 ToolTip = "查看输出、管理服务器状态"
             },
@@ -197,7 +197,7 @@ public partial class MainWindow : System.Windows.Window
 
         Page? page = item.Tag?.ToString() switch
         {
-            nameof(PanelPage) => Services.GetRequiredService<PanelPage>(),
+            nameof(ServerPage) => Services.GetRequiredService<ServerPage>(),
             nameof(MatchPage) => Services.GetRequiredService<MatchPage>(),
             nameof(PluginPage) => Services.GetRequiredService<PluginPage>(),
             nameof(NetworkPage) => Services.GetRequiredService<NetworkPage>(),

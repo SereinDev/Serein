@@ -34,8 +34,6 @@ public partial class Setting
 
     public ConnectionSetting Connection { get; init; } = new();
 
-    public AutoRunSetting AutoRun { get; init; } = new();
-
     public PagesSetting Pages { get; init; } = new();
 
     public WebApiSetting WebApi { get; init; } = new();

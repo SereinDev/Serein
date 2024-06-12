@@ -16,7 +16,7 @@ public class WpfOutputHandler : ISereinLogger
 {
     private readonly LogLevel _logLevel;
     public IServiceProvider Services { get; }
-    private readonly Lazy<PanelPage> _panelPage;
+    private readonly Lazy<ServerPage> _panelPage;
     private readonly Lazy<NetworkPage> _networkPage;
     private readonly Lazy<PluginConsolePage> _pluginConsolePage;
 
@@ -25,7 +25,7 @@ public class WpfOutputHandler : ISereinLogger
         Services = services;
 
         _logLevel = Services.GetRequiredService<SettingProvider>().Value.Application.LogLevel;
-        _panelPage = new(() => Services.GetRequiredService<PanelPage>());
+        _panelPage = new(() => Services.GetRequiredService<ServerPage>());
         _networkPage = new(() => Services.GetRequiredService<NetworkPage>());
         _pluginConsolePage = new(() => Services.GetRequiredService<PluginConsolePage>());
     }
@@ -47,8 +47,7 @@ public class WpfOutputHandler : ISereinLogger
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter
-    )
-    { }
+    ) { }
 
     public void LogBotJsonPacket(JsonNode jsonNode)
     {
@@ -112,15 +111,5 @@ public class WpfOutputHandler : ISereinLogger
                     throw new NotSupportedException();
             }
         });
-    }
-
-    public void LogServerInfo(string line)
-    {
-        _panelPage.Value.Dispatcher.Invoke(() => _panelPage.Value.Console.AppendInfoLine(line));
-    }
-
-    public void LogServerRawOutput(string line)
-    {
-        _panelPage.Value.Dispatcher.Invoke(() => _panelPage.Value.Console.AppendLine(line));
     }
 }

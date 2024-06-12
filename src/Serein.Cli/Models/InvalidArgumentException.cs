@@ -2,8 +2,6 @@ using System;
 
 namespace Serein.Cli.Models;
 
-public class InvalidArgumentException : Exception
+public class InvalidArgumentException(string? message) : Exception(message)
 {
-    public InvalidArgumentException(string? message)
-        : base(message) { }
 }

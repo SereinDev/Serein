@@ -18,6 +18,7 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
     public SettingProvider()
     {
         Value = Read();
+        Save();
     }
 
     public Setting Value { get; }
@@ -34,8 +35,6 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
             if (wrapper?.Type == nameof(Setting))
                 return wrapper.Data ?? new();
         }
-        else
-            Save();
 
         return new();
     }

@@ -5,14 +5,9 @@ using Serein.Plus.Ui.Window;
 
 namespace Serein.Plus.Ui.Commands;
 
-public class TaskbarIconDoubleClickCommand : ICommand
+public class TaskbarIconDoubleClickCommand(MainWindow parent) : ICommand
 {
-    private readonly MainWindow _parent;
-
-    public TaskbarIconDoubleClickCommand(MainWindow parent)
-    {
-        _parent = parent;
-    }
+    private readonly MainWindow _parent = parent;
 
     public event EventHandler? CanExecuteChanged;
 

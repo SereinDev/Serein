@@ -14,11 +14,8 @@ using Spectre.Console;
 namespace Serein.Cli.Interaction.Commands;
 
 [CommandDescription("version", "显示详细的版本和版权信息", Priority = -1)]
-public class VersionCommand : Command
+public class VersionCommand(IHost host) : Command(host)
 {
-    public VersionCommand(IHost host)
-        : base(host) { }
-
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
 
     public override void Parse(string[] args)

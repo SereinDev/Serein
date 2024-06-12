@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.0.0.0-beta-1</Version>
+        <Version>2.0.0.0-alpha</Version>
         <Author>Zaitonn</Author>
         <Copyright>Copyright (C) 2024 Zaitonn</Copyright>
         <Product>服务器面板软件</Product>

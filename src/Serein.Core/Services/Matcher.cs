@@ -14,21 +14,15 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-public class Matcher
+public class Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
 {
-    private readonly IHost _host;
-    private readonly MatchesProvider _matchesProvider;
-    private readonly CommandRunner _commandRunner;
+    private readonly IHost _host = host;
+    private readonly MatchesProvider _matchesProvider = matchesProvider;
+    private readonly CommandRunner _commandRunner = commandRunner;
 
     private IServiceProvider Services => _host.Services;
-    private ConnectionSetting BotSetting => Services.GetRequiredService<SettingProvider>().Value.Connection;
-
-    public Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
-    {
-        _host = host;
-        _matchesProvider = matchesProvider;
-        _commandRunner = commandRunner;
-    }
+    private ConnectionSetting BotSetting =>
+        Services.GetRequiredService<SettingProvider>().Value.Connection;
 
     public async Task MatchServerOutputAsync(string line)
     {

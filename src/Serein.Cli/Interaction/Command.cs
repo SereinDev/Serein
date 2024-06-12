@@ -4,15 +4,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace Serein.Cli.Interaction;
 
-public abstract class Command
+public abstract class Command(IHost host)
 {
-    protected readonly IHost _host;
+    protected readonly IHost _host = host;
     protected IServiceProvider Services => _host.Services;
-
-    protected Command(IHost host)
-    {
-        _host = host;
-    }
 
     public abstract void Parse(string[] args);
 }

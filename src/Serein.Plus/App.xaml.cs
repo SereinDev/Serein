@@ -34,7 +34,7 @@ public partial class App : Application
 
         builder.Services.AddSingleton<NotImplPage>();
 
-        builder.Services.AddSingleton<PanelPage>();
+        builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
         builder.Services.AddSingleton<NetworkPage>();
@@ -44,7 +44,6 @@ public partial class App : Application
 
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
-        builder.Services.AddSingleton<AutoRunSettingPage>();
         builder.Services.AddSingleton<NetworkSettingPage>();
         builder.Services.AddSingleton<PageSettingPage>();
         builder.Services.AddSingleton<ReactionSettingPage>();

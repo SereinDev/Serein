@@ -18,11 +18,11 @@ public partial class CommandParser(
     [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommand();
 
-    [GeneratedRegex(@"\{([a-zA-Z][\w@\.]+)\}")]
+    [GeneratedRegex(@"\{([a-zA-Z]+(\.[a-zA-Z]+)?(@\w+)?)\}")]
     private static partial Regex GetVariable();
 
-    private static readonly Regex Variable = GetVariable();
-    private static readonly Regex GeneralCommand = GetGeneralCommand();
+    public static readonly Regex Variable = GetVariable();
+    public static readonly Regex GeneralCommand = GetGeneralCommand();
 
     private readonly PluginHost _pluginHost = pluginHost;
     private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
@@ -108,7 +108,7 @@ public partial class CommandParser(
     }
 
 #pragma warning disable IDE0046
-    public string ApplyVariables(
+    internal string ApplyVariables(
         string line,
         CommandContext? commandContext,
         bool removeInvalidVariablePatten = false

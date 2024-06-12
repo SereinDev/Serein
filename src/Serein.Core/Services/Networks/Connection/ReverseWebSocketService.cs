@@ -19,11 +19,11 @@ using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Serein.Core.Services.Networks.Connection;
 
-public class ReverseWebSocketService : IConnectionService
+public class ReverseWebSocketService(IHost host) : IConnectionService
 {
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private WebSocketServer? _server;
-    private readonly Dictionary<string, IWebSocketConnection> _webSockets;
+    private readonly Dictionary<string, IWebSocketConnection> _webSockets = new();
 
     private IServiceProvider Services => _host.Services;
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
@@ -34,12 +34,6 @@ public class ReverseWebSocketService : IConnectionService
     public event EventHandler? StatusChanged;
 
     public bool Active => _server is not null;
-
-    public ReverseWebSocketService(IHost host)
-    {
-        _host = host;
-        _webSockets = new();
-    }
 
     private WebSocketServer CreateNew()
     {
