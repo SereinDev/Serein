@@ -36,26 +36,27 @@
             // 
             // MainTabControl
             // 
-            MainTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             MainTabControl.Location = new System.Drawing.Point(0, 0);
             MainTabControl.Name = "MainTabControl";
             MainTabControl.SelectedIndex = 0;
-            MainTabControl.Size = new System.Drawing.Size(1280, 720);
+            MainTabControl.Size = new System.Drawing.Size(1000, 750);
             MainTabControl.TabIndex = 0;
             // 
             // StatusStrip
             // 
             StatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ToolStripStatusLabel });
-            StatusStrip.Location = new System.Drawing.Point(0, 698);
+            StatusStrip.Location = new System.Drawing.Point(0, 709);
             StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new System.Drawing.Size(1280, 22);
+            StatusStrip.Size = new System.Drawing.Size(1000, 41);
             StatusStrip.TabIndex = 1;
             // 
             // ToolStripStatusLabel
             // 
             ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            ToolStripStatusLabel.Size = new System.Drawing.Size(0, 12);
+            ToolStripStatusLabel.Size = new System.Drawing.Size(710, 31);
+            ToolStripStatusLabel.Text = "当前没有服务器配置。你可以在左上角的服务器菜单栏添加或导入";
             // 
             // ServerPage
             // 
@@ -64,7 +65,7 @@
             Controls.Add(StatusStrip);
             Controls.Add(MainTabControl);
             Name = "ServerPage";
-            Size = new System.Drawing.Size(1280, 720);
+            Size = new System.Drawing.Size(1000, 750);
             StatusStrip.ResumeLayout(false);
             StatusStrip.PerformLayout();
             ResumeLayout(false);

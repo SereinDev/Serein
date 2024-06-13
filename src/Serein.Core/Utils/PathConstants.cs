@@ -9,4 +9,5 @@ public static class PathConstants
     public const string PluginDirectory = "plugin";
     public const string PluginConfigFileName = ".config.json";
     public const string ServerConfigFileName = "data/servers/{0}.json";
+    public const string ServerConfigDirectory = "data/servers";
 }

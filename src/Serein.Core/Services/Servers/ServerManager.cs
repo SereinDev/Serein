@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 
 using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
@@ -16,13 +17,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Servers;
 
-public partial class ServerManager(
-    ISereinLogger logger,
-    Matcher matcher,
-    SettingProvider settingProvider,
-    EventDispatcher eventDispatcher,
-    ReactionManager reactionManager
-)
+public partial class ServerManager
 {
     [GeneratedRegex(@"^\w{3,}$")]
     private static partial Regex GetServerIdRegex();
@@ -36,34 +31,49 @@ public partial class ServerManager(
     }
 
     public IReadOnlyDictionary<string, Server> Servers => _server;
+    public event EventHandler<ServersUpdatedEventArgs>? ServersUpdated;
 
     private readonly Dictionary<string, Server> _server = new();
-    private readonly Matcher _matcher = matcher;
-    private readonly ISereinLogger _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly EventDispatcher _eventDispatcher = eventDispatcher;
-    private readonly ReactionManager _reactionManager = reactionManager;
+    private readonly Matcher _matcher;
+    private readonly ISereinLogger _logger;
+    private readonly SettingProvider _settingProvider;
+    private readonly EventDispatcher _eventDispatcher;
+    private readonly ReactionManager _reactionManager;
 
-    public bool AnyRunning =>
-        _server.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
+    public ServerManager(
+        ISereinLogger logger,
+        Matcher matcher,
+        SettingProvider settingProvider,
+        EventDispatcher eventDispatcher,
+        ReactionManager reactionManager
+    )
+    {
+        _matcher = matcher;
+        _logger = logger;
+        _settingProvider = settingProvider;
+        _eventDispatcher = eventDispatcher;
+        _reactionManager = reactionManager;
+
+        LoadAll();
+    }
+
+    public bool AnyRunning => _server.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
 
     public Server Add(string id, Configuration configuration)
     {
         CheckId(id);
 
         var server = new Server(
-                id,
-                _logger,
-                configuration,
-                _settingProvider,
-                _matcher,
-                _eventDispatcher,
-                _reactionManager
-            );
-        _server.Add(
             id,
-           server
+            _logger,
+            configuration,
+            _settingProvider,
+            _matcher,
+            _eventDispatcher,
+            _reactionManager
         );
+        _server.Add(id, server);
+        ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Added));
 
         Save(id, configuration);
         return server;
@@ -79,6 +89,8 @@ public partial class ServerManager(
         if (File.Exists(path))
             File.Delete(path);
 
+        ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Removed));
+
         return true;
     }
 
@@ -92,7 +104,7 @@ public partial class ServerManager(
             }
             catch (Exception e)
             {
-                _logger.LogDebug(e, "保存文件时出现异常");
+                _logger.LogError(e, "保存文件时出现异常");
             }
         }
     }
@@ -113,9 +125,43 @@ public partial class ServerManager(
         File.WriteAllText(
             path,
             JsonSerializer.Serialize(
-                configuration,
+                new DataItemWrapper<Configuration>(nameof(Configuration), configuration),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true, }
-                )
+            )
         );
+    }
+
+    public void LoadAll()
+    {
+        if (!Directory.Exists(PathConstants.ServerConfigDirectory))
+            return;
+
+        var files = Directory.EnumerateFiles(PathConstants.ServerConfigDirectory, "*.json");
+
+        foreach (var file in files)
+        {
+            try
+            {
+                var config = LoadFrom(file);
+
+                Add(Path.GetFileNameWithoutExtension(file), config);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "尝试读取“{}”时异常", file);
+            }
+        }
+    }
+
+    public static Configuration LoadFrom(string path)
+    {
+        var data = JsonSerializer.Deserialize<DataItemWrapper<Configuration>>(
+            File.ReadAllText(path),
+            JsonSerializerOptionsFactory.CamelCase
+        );
+
+        return data?.Type != nameof(Configuration)
+            ? throw new InvalidOperationException("类型不正确")
+            : data.Data ?? throw new InvalidOperationException("数据为空");
     }
 }

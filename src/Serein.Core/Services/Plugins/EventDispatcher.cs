@@ -14,8 +14,8 @@ using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins;
@@ -67,11 +67,11 @@ public class EventDispatcher(IHost host)
         switch (@event)
         {
             case Event.ServerStarting:
-                func = (p) => p.OnServerStarting();
+                func = (p) => p.OnServerStarting(args.First().As<string>());
                 break;
 
             case Event.ServerStopping:
-                func = (p) => p.OnServerStopping();
+                func = (p) => p.OnServerStopping(args.First().As<string>());
                 break;
 
             case Event.GroupMessageReceived:
@@ -91,22 +91,31 @@ public class EventDispatcher(IHost host)
                 break;
 
             case Event.ServerOutput:
-                func = (p) => p.OnServerOutput(args.First().As<string>());
+                if (args.Length != 2)
+                    throw new ArgumentException("缺少参数或类型不正确", nameof(args));
+
+                func = (p) => p.OnServerOutput(args.First().As<string>(), args.Last().As<string>());
                 break;
 
             case Event.ServerRawOutput:
-                func = (p) => p.OnServerRawOutput(args.First().As<string>());
+                if (args.Length != 2)
+                    throw new ArgumentException("缺少参数或类型不正确", nameof(args));
+
+                func = (p) => p.OnServerRawOutput(args.First().As<string>(), args.Last().As<string>());
                 break;
 
             case Event.ServerInput:
-                func = (p) => p.OnServerInput(args.First().As<string>());
+                if (args.Length != 2)
+                    throw new ArgumentException("缺少参数或类型不正确", nameof(args));
+
+                func = (p) => p.OnServerInput(args.First().As<string>(), args.Last().As<string>());
                 break;
 
             case Event.ServerExited:
-                if (args.Length != 2 || args[0] is not int code || args[1] is not DateTime time)
+                if (args.Length != 3 || args[0] is not string id || args[1] is not int code || args[0] is not DateTime time)
                     throw new ArgumentException("缺少参数或类型不正确", nameof(args));
 
-                func = (p) => p.OnServerExited(code, time);
+                func = (p) => p.OnServerExited(id, code, time);
                 break;
 
             case Event.SereinClosed:
@@ -126,7 +135,7 @@ public class EventDispatcher(IHost host)
                 break;
 
             case Event.ServerStarted:
-                func = (p) => p.OnServerStarted();
+                func = (p) => p.OnServerStarted(args.First().As<string>());
                 break;
 
             default:

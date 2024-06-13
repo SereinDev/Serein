@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
-using Serein.Core.Utils.Json;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
 
@@ -30,48 +27,15 @@ public partial class MainForm : Form
         SwitchPage<ServerPage>();
     }
 
-
-    private void SwitchPage<T>() where T : Control
+    private void SwitchPage<T>()
+        where T : Control
     {
         var page = Services.GetRequiredService<T>();
         page.Dock = DockStyle.Fill;
 
-        if (Controls.Count == 2)
-            Controls.RemoveAt(1);
-
-        Controls.Add(page);
+        ChildrenPanel.Controls.Clear();
+        ChildrenPanel.Controls.Add(page);
     }
-
-    private void ServerImportToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        var openFileDialog = new OpenFileDialog
-        {
-            Title = "—°‘Ò∑˛ŒÒ∆˜≈‰÷√",
-            Filter = "∑˛ŒÒ∆˜≈‰÷√Œƒº˛|*.json"
-        };
-        var result = openFileDialog.ShowDialog();
-
-        if (result != DialogResult.OK || string.IsNullOrEmpty(openFileDialog.FileName))
-            return;
-
-        var configuration = JsonSerializer.Deserialize<Configuration>(
-               File.ReadAllText(openFileDialog.FileName),
-               JsonSerializerOptionsFactory.CamelCase
-           );
-
-        if (configuration == null)
-        {
-            MessageBox.Show("≈‰÷√Œƒº˛Œ™ø’", "Serein.Lite");
-            return;
-        }
-
-        var editor = new ConfigurationEditor(configuration);
-        result = editor.ShowDialog();
-
-        if (result == DialogResult.OK)
-            _serverManager.Add(editor.Id, configuration);
-    }
-
 
     private void ServerConsoleToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -83,18 +47,107 @@ public partial class MainForm : Form
         SwitchPage<MatchPage>();
     }
 
-    private void ServerAddToolStripMenuItem_Click(object sender, EventArgs e)
+    private void ConnectionToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var configuration = new Configuration();
-
-        var editor = new ConfigurationEditor(configuration);
-        if (editor.ShowDialog() == DialogResult.OK)
-            _serverManager.Add(editor.Id, configuration);
+        SwitchPage<ConnectionPage>();
     }
 
     private void ServerToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
     {
         ServerEditToolStripMenuItem.Enabled = _serverManager.Servers.Count > 0;
         ServerRemoveToolStripMenuItem.Enabled = _serverManager.Servers.Count > 0;
+    }
+
+    private void ServerAddToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var configuration = new Configuration();
+
+        var editor = new ConfigurationEditor(_serverManager, configuration);
+        if (editor.ShowDialog() == DialogResult.OK)
+            _serverManager.Add(editor.Id, configuration);
+    }
+
+    private void ServerImportToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var openFileDialog = new OpenFileDialog { Title = "ÈÄâÊã©ÊúçÂä°Âô®ÈÖçÁΩÆ", Filter = "ÊúçÂä°Âô®ÈÖçÁΩÆÊñá‰ª∂|*.json" };
+
+        if (
+            openFileDialog.ShowDialog() != DialogResult.OK
+            || string.IsNullOrEmpty(openFileDialog.FileName)
+        )
+            return;
+
+        Configuration configuration;
+
+        try
+        {
+            configuration = ServerManager.LoadFrom(openFileDialog.FileName);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Serein.Lite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var editor = new ConfigurationEditor(_serverManager, configuration);
+
+        if (editor.ShowDialog() == DialogResult.OK)
+            _serverManager.Add(editor.Id, configuration);
+    }
+
+    private void ServerEditToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var serverPage = Services.GetRequiredService<ServerPage>();
+
+        if (serverPage.MainTabControl.Controls.Count == 0)
+            return;
+
+        var panel = serverPage.MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex];
+        var id = panel.Tag?.ToString();
+
+        if (string.IsNullOrEmpty(id) || !_serverManager.Servers.TryGetValue(id, out var server))
+            return;
+
+        var editor = new ConfigurationEditor(_serverManager, server.Configuration, id);
+        editor.ShowDialog();
+
+        panel.Text = string.IsNullOrEmpty(server.Configuration.Name) ? $"Êú™ÂëΩÂêç-{id}" : server.Configuration.Name;
+        _serverManager.SaveAll();
+    }
+
+    private void ServerRemoveToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var serverPage = Services.GetRequiredService<ServerPage>();
+
+        if (serverPage.MainTabControl.Controls.Count == 0)
+            return;
+
+        var id = serverPage.MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex].Tag?.ToString();
+
+        if (!string.IsNullOrEmpty(id)
+            && MessageBox.Show($"ÊòØÂê¶Âà†Èô§ÊúçÂä°Âô®ÈÖçÁΩÆÔºàId={id}Ôºâ", "Serein.Lite", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            _serverManager.Remove(id);
+    }
+
+    private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        ShowInTaskbar = true;
+        Visible = true;
+        Close();
+    }
+
+    private void HideToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        HideToolStripMenuItem.Checked = !HideToolStripMenuItem.Checked;
+        TopMostToolStripMenuItem.Enabled = !HideToolStripMenuItem.Checked;
+        ShowInTaskbar = !HideToolStripMenuItem.Checked;
+        Visible = !HideToolStripMenuItem.Checked;
+    }
+
+    private void TopMostToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        TopMostToolStripMenuItem.Checked = !TopMostToolStripMenuItem.Checked;
+        HideToolStripMenuItem.Enabled = !TopMostToolStripMenuItem.Checked;
+        TopMost=TopMostToolStripMenuItem.Checked;
     }
 }

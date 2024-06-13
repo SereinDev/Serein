@@ -1,21 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+
+using Serein.Core.Models.Server;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Lite.Ui.Servers;
 
 public partial class ServerPage : UserControl
 {
-    public ServerPage()
+    private readonly ServerManager _serverManager;
+
+    public Dictionary<string, TabPage> Panels { get; }
+
+    public ServerPage(ServerManager serverManager)
     {
         InitializeComponent();
-        ToolStripStatusLabel.Text = "当前没有服务器配置。你可以在左上角的服务器菜单栏添加或导入";
+
+        Panels = new();
+        _serverManager = serverManager;
+        _serverManager.ServersUpdated += Update;
+
+        foreach (var (id, server) in _serverManager.Servers)
+        {
+            Add(id, server);
+        }
+
+        StatusStrip.Visible = Panels.Count == 0;
     }
+
+
+    private void Add(string id, Server server)
+    {
+        var tabPage = new TabPage
+        {
+            Text = string.IsNullOrEmpty(server.Configuration.Name) ? $"未命名-{id}" : server.Configuration.Name,
+            Tag = id
+        };
+        tabPage.Controls.Add(new Panel(server));
+        Panels[id] = tabPage;
+        MainTabControl.Controls.Add(tabPage);
+    }
+
+    private void Update(object? sender, ServersUpdatedEventArgs e)
+    {
+        Invoke(() =>
+        {
+            if (e.Type == ServersUpdatedType.Added && _serverManager.Servers.TryGetValue(e.Id, out var server))
+                Add(e.Id, server);
+            else if (Panels.TryGetValue(e.Id, out var page))
+                MainTabControl.Controls.Remove(page);
+
+            StatusStrip.Visible = Panels.Count == 0;
+        });
+    }
+
 }
 

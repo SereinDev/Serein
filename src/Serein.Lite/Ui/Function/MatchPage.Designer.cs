@@ -29,24 +29,32 @@
         private void InitializeComponent()
         {
             StatusStrip = new System.Windows.Forms.StatusStrip();
+            ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             MatchListView = new System.Windows.Forms.ListView();
+            StatusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // StatusStrip
             // 
             StatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            StatusStrip.Location = new System.Drawing.Point(0, 698);
+            StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ToolStripStatusLabel });
+            StatusStrip.Location = new System.Drawing.Point(0, 682);
             StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new System.Drawing.Size(1280, 22);
+            StatusStrip.Size = new System.Drawing.Size(1280, 38);
             StatusStrip.TabIndex = 0;
             StatusStrip.Text = "statusStrip1";
+            // 
+            // ToolStripStatusLabel
+            // 
+            ToolStripStatusLabel.Name = "ToolStripStatusLabel";
+            ToolStripStatusLabel.Size = new System.Drawing.Size(0, 28);
             // 
             // MatchListView
             // 
             MatchListView.Dock = System.Windows.Forms.DockStyle.Fill;
             MatchListView.Location = new System.Drawing.Point(0, 0);
             MatchListView.Name = "MatchListView";
-            MatchListView.Size = new System.Drawing.Size(1280, 698);
+            MatchListView.Size = new System.Drawing.Size(1280, 682);
             MatchListView.TabIndex = 1;
             MatchListView.UseCompatibleStateImageBehavior = false;
             MatchListView.SelectedIndexChanged += MatchListView_SelectedIndexChanged;
@@ -59,6 +67,8 @@
             Controls.Add(StatusStrip);
             Name = "MatchPage";
             Size = new System.Drawing.Size(1280, 720);
+            StatusStrip.ResumeLayout(false);
+            StatusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -67,5 +77,6 @@
 
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ListView MatchListView;
+        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
     }
 }

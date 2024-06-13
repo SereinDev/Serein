@@ -7,7 +7,7 @@ namespace Serein.Core.Models.Server;
 
 public class Configuration : INotifyPropertyChanged
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = "Î´ÃüÃû";
 
     public string FileName { get; set; } = string.Empty;
 

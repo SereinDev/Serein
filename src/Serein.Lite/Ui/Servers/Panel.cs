@@ -14,6 +14,7 @@ public partial class Panel : UserControl
     {
         InitializeComponent();
         _server = server;
+        Dock = DockStyle.Fill;
     }
 
     private void StartButton_Click(object sender, EventArgs e)

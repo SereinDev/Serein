@@ -75,7 +75,7 @@
             IdLabel.Location = new System.Drawing.Point(17, 15);
             IdLabel.Name = "IdLabel";
             IdLabel.Size = new System.Drawing.Size(36, 31);
-            IdLabel.TabIndex = 1;
+            IdLabel.TabIndex = 0;
             IdLabel.Text = "Id";
             // 
             // NameLabel
@@ -84,7 +84,7 @@
             NameLabel.Location = new System.Drawing.Point(17, 111);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new System.Drawing.Size(62, 31);
-            NameLabel.TabIndex = 6;
+            NameLabel.TabIndex = 2;
             NameLabel.Text = "名称";
             // 
             // FileNameLabel
@@ -93,7 +93,7 @@
             FileNameLabel.Location = new System.Drawing.Point(17, 207);
             FileNameLabel.Name = "FileNameLabel";
             FileNameLabel.Size = new System.Drawing.Size(110, 31);
-            FileNameLabel.TabIndex = 0;
+            FileNameLabel.TabIndex = 4;
             FileNameLabel.Text = "启动文件";
             // 
             // FileNameTextBox
@@ -103,7 +103,7 @@
             FileNameTextBox.Name = "FileNameTextBox";
             FileNameTextBox.PlaceholderText = "启动时运行的文件（双击选择文件）";
             FileNameTextBox.Size = new System.Drawing.Size(722, 38);
-            FileNameTextBox.TabIndex = 3;
+            FileNameTextBox.TabIndex = 5;
             FileNameTextBox.DoubleClick += FileName_DoubleClick;
             // 
             // IdTextBox
@@ -113,7 +113,7 @@
             IdTextBox.Name = "IdTextBox";
             IdTextBox.PlaceholderText = "用于区分服务器；只能由字母、数字和下划线组成";
             IdTextBox.Size = new System.Drawing.Size(722, 38);
-            IdTextBox.TabIndex = 2;
+            IdTextBox.TabIndex = 1;
             // 
             // MainTabControl
             // 
@@ -152,7 +152,7 @@
             NameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new System.Drawing.Size(722, 38);
-            NameTextBox.TabIndex = 7;
+            NameTextBox.TabIndex = 3;
             // 
             // ArgumentTextBox
             // 
@@ -161,7 +161,7 @@
             ArgumentTextBox.Name = "ArgumentTextBox";
             ArgumentTextBox.PlaceholderText = "启动时附加的参数";
             ArgumentTextBox.Size = new System.Drawing.Size(722, 38);
-            ArgumentTextBox.TabIndex = 5;
+            ArgumentTextBox.TabIndex = 7;
             // 
             // ArgumentLabel
             // 
@@ -169,7 +169,7 @@
             ArgumentLabel.Location = new System.Drawing.Point(17, 303);
             ArgumentLabel.Name = "ArgumentLabel";
             ArgumentLabel.Size = new System.Drawing.Size(110, 31);
-            ArgumentLabel.TabIndex = 4;
+            ArgumentLabel.TabIndex = 6;
             ArgumentLabel.Text = "启动参数";
             // 
             // InputAndOutputTabPage
@@ -199,7 +199,7 @@
             LineTerminatorTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             LineTerminatorTextBox.Name = "LineTerminatorTextBox";
             LineTerminatorTextBox.Size = new System.Drawing.Size(722, 38);
-            LineTerminatorTextBox.TabIndex = 10;
+            LineTerminatorTextBox.TabIndex = 7;
             // 
             // LineTerminatorLabel
             // 
@@ -207,7 +207,7 @@
             LineTerminatorLabel.Location = new System.Drawing.Point(23, 291);
             LineTerminatorLabel.Name = "LineTerminatorLabel";
             LineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
-            LineTerminatorLabel.TabIndex = 9;
+            LineTerminatorLabel.TabIndex = 6;
             LineTerminatorLabel.Text = "行终止符";
             // 
             // UseUnicodeCharsCheckBox
@@ -216,7 +216,7 @@
             UseUnicodeCharsCheckBox.Location = new System.Drawing.Point(365, 128);
             UseUnicodeCharsCheckBox.Name = "UseUnicodeCharsCheckBox";
             UseUnicodeCharsCheckBox.Size = new System.Drawing.Size(237, 35);
-            UseUnicodeCharsCheckBox.TabIndex = 8;
+            UseUnicodeCharsCheckBox.TabIndex = 10;
             UseUnicodeCharsCheckBox.Text = "使用Unicode字符";
             UseUnicodeCharsCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -226,7 +226,7 @@
             OutputCommandUserInputCheckBox.Location = new System.Drawing.Point(365, 87);
             OutputCommandUserInputCheckBox.Name = "OutputCommandUserInputCheckBox";
             OutputCommandUserInputCheckBox.Size = new System.Drawing.Size(214, 35);
-            OutputCommandUserInputCheckBox.TabIndex = 7;
+            OutputCommandUserInputCheckBox.TabIndex = 9;
             OutputCommandUserInputCheckBox.Text = "显示输出的命令";
             OutputCommandUserInputCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -236,7 +236,7 @@
             SaveLogCheckBox.Location = new System.Drawing.Point(365, 46);
             SaveLogCheckBox.Name = "SaveLogCheckBox";
             SaveLogCheckBox.Size = new System.Drawing.Size(142, 35);
-            SaveLogCheckBox.TabIndex = 6;
+            SaveLogCheckBox.TabIndex = 8;
             SaveLogCheckBox.Text = "保存日志";
             SaveLogCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -246,7 +246,7 @@
             OutputStyleLabel.Location = new System.Drawing.Point(23, 198);
             OutputStyleLabel.Name = "OutputStyleLabel";
             OutputStyleLabel.Size = new System.Drawing.Size(110, 31);
-            OutputStyleLabel.TabIndex = 5;
+            OutputStyleLabel.TabIndex = 4;
             OutputStyleLabel.Text = "输出样式";
             // 
             // OutputStyleComboBox
@@ -258,7 +258,7 @@
             OutputStyleComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             OutputStyleComboBox.Name = "OutputStyleComboBox";
             OutputStyleComboBox.Size = new System.Drawing.Size(197, 39);
-            OutputStyleComboBox.TabIndex = 4;
+            OutputStyleComboBox.TabIndex = 5;
             // 
             // OutputEncondingLabel
             // 
@@ -266,7 +266,7 @@
             OutputEncondingLabel.Location = new System.Drawing.Point(23, 105);
             OutputEncondingLabel.Name = "OutputEncondingLabel";
             OutputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            OutputEncondingLabel.TabIndex = 3;
+            OutputEncondingLabel.TabIndex = 2;
             OutputEncondingLabel.Text = "输出编码";
             // 
             // InputEncondingLabel
@@ -275,7 +275,7 @@
             InputEncondingLabel.Location = new System.Drawing.Point(23, 12);
             InputEncondingLabel.Name = "InputEncondingLabel";
             InputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            InputEncondingLabel.TabIndex = 2;
+            InputEncondingLabel.TabIndex = 0;
             InputEncondingLabel.Text = "输入编码";
             // 
             // OutputEncondingComboBox
@@ -287,7 +287,7 @@
             OutputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             OutputEncondingComboBox.Name = "OutputEncondingComboBox";
             OutputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
-            OutputEncondingComboBox.TabIndex = 1;
+            OutputEncondingComboBox.TabIndex = 3;
             // 
             // InputEncondingComboBox
             // 
@@ -298,7 +298,7 @@
             InputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             InputEncondingComboBox.Name = "InputEncondingComboBox";
             InputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
-            InputEncondingComboBox.TabIndex = 0;
+            InputEncondingComboBox.TabIndex = 1;
             // 
             // MoreTabPage
             // 
@@ -325,7 +325,7 @@
             StopCommandsTextBox.Name = "StopCommandsTextBox";
             StopCommandsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             StopCommandsTextBox.Size = new System.Drawing.Size(682, 119);
-            StopCommandsTextBox.TabIndex = 14;
+            StopCommandsTextBox.TabIndex = 6;
             StopCommandsTextBox.Text = "stop";
             // 
             // StopLabel
@@ -334,7 +334,7 @@
             StopLabel.Location = new System.Drawing.Point(26, 217);
             StopLabel.Name = "StopLabel";
             StopLabel.Size = new System.Drawing.Size(110, 31);
-            StopLabel.TabIndex = 13;
+            StopLabel.TabIndex = 5;
             StopLabel.Text = "关服命令";
             // 
             // PortLabel
@@ -343,7 +343,7 @@
             PortLabel.Location = new System.Drawing.Point(25, 136);
             PortLabel.Name = "PortLabel";
             PortLabel.Size = new System.Drawing.Size(111, 31);
-            PortLabel.TabIndex = 12;
+            PortLabel.TabIndex = 3;
             PortLabel.Text = "IPv4端口";
             // 
             // PortNumericUpDown
@@ -352,7 +352,7 @@
             PortNumericUpDown.Maximum = new decimal(new int[] { 65536, 0, 0, 0 });
             PortNumericUpDown.Name = "PortNumericUpDown";
             PortNumericUpDown.Size = new System.Drawing.Size(240, 38);
-            PortNumericUpDown.TabIndex = 11;
+            PortNumericUpDown.TabIndex = 4;
             // 
             // StartWhenSettingUpCheckBox
             // 
@@ -360,7 +360,7 @@
             StartWhenSettingUpCheckBox.Location = new System.Drawing.Point(26, 88);
             StartWhenSettingUpCheckBox.Name = "StartWhenSettingUpCheckBox";
             StartWhenSettingUpCheckBox.Size = new System.Drawing.Size(382, 35);
-            StartWhenSettingUpCheckBox.TabIndex = 10;
+            StartWhenSettingUpCheckBox.TabIndex = 2;
             StartWhenSettingUpCheckBox.Text = "应用程序启动后自动运行服务器";
             StartWhenSettingUpCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -370,7 +370,7 @@
             AutoStopWhenCrashingCheckBox.Location = new System.Drawing.Point(26, 47);
             AutoStopWhenCrashingCheckBox.Name = "AutoStopWhenCrashingCheckBox";
             AutoStopWhenCrashingCheckBox.Size = new System.Drawing.Size(382, 35);
-            AutoStopWhenCrashingCheckBox.TabIndex = 9;
+            AutoStopWhenCrashingCheckBox.TabIndex = 1;
             AutoStopWhenCrashingCheckBox.Text = "应用程序崩溃时自动停止服务器";
             AutoStopWhenCrashingCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -380,7 +380,7 @@
             AutoRestartCheckBox.Location = new System.Drawing.Point(26, 6);
             AutoRestartCheckBox.Name = "AutoRestartCheckBox";
             AutoRestartCheckBox.Size = new System.Drawing.Size(142, 35);
-            AutoRestartCheckBox.TabIndex = 8;
+            AutoRestartCheckBox.TabIndex = 0;
             AutoRestartCheckBox.Text = "自动重启";
             AutoRestartCheckBox.UseVisualStyleBackColor = true;
             // 

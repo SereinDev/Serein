@@ -9,12 +9,12 @@ namespace Serein.Lite.Ui.Servers;
 
 public partial class ConfigurationEditor : Form
 {
+    private readonly ServerManager _serverManager;
     private readonly Configuration _configuration;
 
     public string Id => IdTextBox.Text;
 
-
-    public ConfigurationEditor(Configuration configuration, string? id = null)
+    public ConfigurationEditor(ServerManager serverManager, Configuration configuration, string? id = null)
     {
         InitializeComponent();
 
@@ -23,8 +23,24 @@ public partial class ConfigurationEditor : Form
             IdTextBox.ReadOnly = true;
             IdTextBox.Text = id;
         }
-
+        _serverManager = serverManager;
         _configuration = configuration;
+
+        NameTextBox.Text = _configuration.Name;
+        FileNameTextBox.Text = _configuration.FileName;
+        ArgumentTextBox.Text = _configuration.Argument;
+        AutoRestartCheckBox.Checked = _configuration.AutoRestart;
+        SaveLogCheckBox.Checked = _configuration.SaveLog;
+        AutoStopWhenCrashingCheckBox.Checked = _configuration.AutoStopWhenCrashing;
+        PortNumericUpDown.Value = _configuration.IPv4Port;
+        LineTerminatorTextBox.Text = _configuration.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
+        StartWhenSettingUpCheckBox.Checked = _configuration.StartWhenSettingUp;
+        OutputCommandUserInputCheckBox.Checked = _configuration.OutputCommandUserInput;
+        StopCommandsTextBox.Text = string.Join("\r\n", _configuration.StopCommands);
+        OutputStyleComboBox.SelectedIndex = (int)_configuration.OutputStyle;
+        InputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
+        OutputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
+
     }
 
     private void FileName_DoubleClick(object sender, EventArgs e)
@@ -69,13 +85,16 @@ public partial class ConfigurationEditor : Form
             _configuration.SaveLog = SaveLogCheckBox.Checked;
             _configuration.AutoStopWhenCrashing = AutoStopWhenCrashingCheckBox.Checked;
             _configuration.IPv4Port = (short)PortNumericUpDown.Value;
-            _configuration.LineTerminator = LineTerminatorTextBox.Text;
+            _configuration.LineTerminator = LineTerminatorTextBox.Text.Replace("\\r", "\r").Replace("\n", "\\n");
             _configuration.StartWhenSettingUp = StartWhenSettingUpCheckBox.Checked;
             _configuration.OutputCommandUserInput = OutputCommandUserInputCheckBox.Checked;
             _configuration.OutputStyle = outputStyle;
             _configuration.StopCommands = StopCommandsTextBox.Text.Replace("\r", null).Split('\n');
             _configuration.InputEncoding = input;
             _configuration.OutputEncoding = output;
+
+            if (!IdTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
+                throw new InvalidOperationException("此Id已被占用");
 
             DialogResult = DialogResult.OK;
             Close();
