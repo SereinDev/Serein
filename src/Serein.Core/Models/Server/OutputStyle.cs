@@ -2,7 +2,7 @@ namespace Serein.Core.Models.Server;
 
 public enum OutputStyle
 {
-    NoColor,
+    Plain,
 
     RawText,
 

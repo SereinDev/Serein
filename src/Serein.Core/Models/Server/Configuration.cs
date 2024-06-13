@@ -1,13 +1,14 @@
 using System;
 using System.ComponentModel;
 
-using Serein.Core.Models.Server;
 using Serein.Core.Utils;
 
-namespace Serein.Core.Services.Servers;
+namespace Serein.Core.Models.Server;
 
 public class Configuration : INotifyPropertyChanged
 {
+    public string Name { get; set; } = string.Empty;
+
     public string FileName { get; set; } = string.Empty;
 
     public string Argument { get; set; } = string.Empty;

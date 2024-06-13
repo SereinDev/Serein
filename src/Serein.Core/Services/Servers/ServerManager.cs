@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
@@ -28,12 +29,10 @@ public partial class ServerManager(
 
     private static readonly Regex ServerId = GetServerIdRegex();
 
-    private static void CheckId(string? id)
+    internal static void CheckId(string? id)
     {
-        ArgumentException.ThrowIfNullOrEmpty(id, nameof(id));
-
-        if (!ServerId.IsMatch(id))
-            throw new InvalidOperationException("服务器ID不正确");
+        if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
+            throw new InvalidOperationException("服务器Id格式不正确");
     }
 
     public IReadOnlyDictionary<string, Server> Servers => _server;
@@ -46,14 +45,13 @@ public partial class ServerManager(
     private readonly ReactionManager _reactionManager = reactionManager;
 
     public bool AnyRunning =>
-        _server.Any(static (kv) => kv.Value.Status == Models.Server.ServerStatus.Running);
+        _server.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
 
-    public void Add(string id, Configuration configuration)
+    public Server Add(string id, Configuration configuration)
     {
         CheckId(id);
-        _server.Add(
-            id,
-            new(
+
+        var server = new Server(
                 id,
                 _logger,
                 configuration,
@@ -61,10 +59,14 @@ public partial class ServerManager(
                 _matcher,
                 _eventDispatcher,
                 _reactionManager
-            )
+            );
+        _server.Add(
+            id,
+           server
         );
 
         Save(id, configuration);
+        return server;
     }
 
     public bool Remove(string id)
@@ -110,18 +112,10 @@ public partial class ServerManager(
 
         File.WriteAllText(
             path,
-            JsonSerializer.Serialize(configuration, JsonSerializerOptionsFactory.CamelCase)
+            JsonSerializer.Serialize(
+                configuration,
+                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true, }
+                )
         );
-    }
-
-    public void AddFrom(string path, string id)
-    {
-        var configuration =
-            JsonSerializer.Deserialize<Configuration>(
-                File.ReadAllText(path),
-                JsonSerializerOptionsFactory.CamelCase
-            ) ?? throw new NullReferenceException();
-
-        Add(id, configuration);
     }
 }

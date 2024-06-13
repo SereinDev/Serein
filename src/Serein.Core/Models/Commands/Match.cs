@@ -37,7 +37,7 @@ public class Match : INotifyPropertyChanged, ICloneable
 
     [DoNotNotify]
     [JsonIgnore]
-    public Regex? RegexObj { get; set; }
+    internal Regex? RegexObj { get; set; }
 
     public MatchFieldType FieldType { get; set; }
 
@@ -80,7 +80,7 @@ public class Match : INotifyPropertyChanged, ICloneable
 
     [DoNotNotify]
     [JsonIgnore]
-    public Command? CommandObj { get; private set; }
+    internal Command? CommandObj { get; private set; }
 
     [AlsoNotifyFor(nameof(Tip))]
     private string? CommandTip { get; set; }

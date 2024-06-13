@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Networks;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
@@ -45,6 +46,7 @@ public sealed class SereinApp : IHost
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private ScheduleRunner ScheduleRunner => Services.GetRequiredService<ScheduleRunner>();
     private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private UpdateChecker UpdateChecker => Services.GetRequiredService<UpdateChecker>();
 
     public Action? OnStarted { get; set; }
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
@@ -57,7 +59,7 @@ public sealed class SereinApp : IHost
         _host = host;
 
         Logger.LogInformation("Serein.{} {}", Type, Version);
-        Logger.LogInformation("仓库: https://github.com/Zaitonn/Serein");
+        Logger.LogInformation("仓库: https://github.com/SereinDev/Serein");
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
 
         Logger.LogDebug(
@@ -81,6 +83,7 @@ public sealed class SereinApp : IHost
     {
         OnStarted?.Invoke();
         ScheduleRunner.Start();
+        UpdateChecker.Start();
         Logger.LogInformation("Serein启动成功");
 
         return Task.CompletedTask;

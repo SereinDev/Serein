@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Plugins.Js.Modules;

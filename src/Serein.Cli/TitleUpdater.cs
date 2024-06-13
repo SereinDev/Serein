@@ -24,7 +24,7 @@ public class TitleUpdater(SettingProvider settingProvider, CommandParser command
         if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             return;
 
-        var text = _commandParser.ApplyVariables(_settingProvider.Value.Application.Title, null);
+        var text = _commandParser.ApplyVariables(_settingProvider.Value.Application.AdditionalTitle, null);
 
         Console.Title = !string.IsNullOrEmpty(text.Trim())
             ? $"Serein.Plus - {text}"

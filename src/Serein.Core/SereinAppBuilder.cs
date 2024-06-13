@@ -13,6 +13,7 @@ using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Servers;
 using Serein.Core.Services.Networks.WebApi;
+using Serein.Core.Services.Networks;
 
 namespace Serein.Core;
 
@@ -49,6 +50,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<CommandRunner>();
         Services.AddSingleton<ScheduleRunner>();
 
+        Services.AddSingleton<UpdateChecker>();
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsConnectionManager>();

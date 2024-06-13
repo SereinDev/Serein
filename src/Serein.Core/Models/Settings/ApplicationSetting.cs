@@ -21,7 +21,7 @@ public class ApplicationSetting : INotifyPropertyChanged
 
     public bool ColorfulLog { get; set; } = true;
 
-    public string Title { get; set; } = "{filename}";
+    public string AdditionalTitle { get; set; } = "{filename}";
 
     public uint MaxDisplayedLines { get; set; } = 250;
 

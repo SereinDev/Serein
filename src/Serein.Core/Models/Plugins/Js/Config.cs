@@ -8,7 +8,7 @@ namespace Serein.Core.Models.Plugins.Js;
 public class Config
 {
     public string? Name { get; init; }
-    public string[] CSharpAssemblies { get; init; } = Array.Empty<string>();
+    public string[] NetAssemblies { get; init; } = Array.Empty<string>();
 
     public bool AllowGetType { get; init; }
     public bool AllowOperatorOverloading { get; init; } = true;

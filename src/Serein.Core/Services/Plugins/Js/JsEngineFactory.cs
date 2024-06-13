@@ -27,7 +27,7 @@ public class JsEngineFactory(SettingProvider settingProvider, ISereinLogger logg
     {
         var assemblies = new List<Assembly>();
         foreach (
-            var assemblyName in jsPlugin.Config.CSharpAssemblies.Concat(
+            var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
                 _settingProvider.Value.Application.JSGlobalAssemblies
             )
         )

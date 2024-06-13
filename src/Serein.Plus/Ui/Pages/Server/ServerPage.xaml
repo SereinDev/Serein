@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TabControl>
+        <TabControl x:Name="TabControl">
             <TabItem Header="Test">
 
             </TabItem>
