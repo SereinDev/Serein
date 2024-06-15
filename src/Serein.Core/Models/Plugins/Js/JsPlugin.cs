@@ -11,8 +11,9 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Plugins.Js;
-using JsConsole = Serein.Core.Services.Plugins.Js.Console;
 using Serein.Core.Utils.Extensions;
+
+using JsConsole = Serein.Core.Services.Plugins.Js.Console;
 
 namespace Serein.Core.Models.Plugins.Js;
 

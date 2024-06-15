@@ -44,7 +44,7 @@ public class UpdateChecker
     public async Task Check()
     {
         var release = await _gitHubClient.Repository.Release.GetLatest("SereinDev", "Serein");
-        var version = new Version(release.TagName);
+        var version = new Version(release.TagName.TrimStart('v'));
 
         if (version <= Version)
             return;

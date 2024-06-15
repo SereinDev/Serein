@@ -19,22 +19,55 @@ public partial class Panel : UserControl
 
     private void StartButton_Click(object sender, EventArgs e)
     {
-        _server.Start();
+        try
+        {
+            _server.Start();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"启动服务器失败：{ex.Message}",
+                "Serein",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
     }
 
     private void StopButton_Click(object sender, EventArgs e)
     {
-        _server.Stop();
+        try
+        {
+            _server.Stop();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"停止服务器失败：{ex.Message}",
+                "Serein",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
     }
 
-    private void RestartButton_Click(object sender, EventArgs e)
-    {
-
-    }
+    private void RestartButton_Click(object sender, EventArgs e) { }
 
     private void TerminateButton_Click(object sender, EventArgs e)
     {
-        _server.Terminate();
+        try
+        {
+            _server.Terminate();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"强制结束服务器失败：{ex.Message}",
+                "Serein",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
+        }
     }
 
     private void EnterButton_Click(object sender, EventArgs e)

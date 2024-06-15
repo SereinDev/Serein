@@ -14,14 +14,14 @@ using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Ui.Pages.Function;
 
-public partial class NetworkPage : Page
+public partial class ConnectionPage : Page
 {
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
     private readonly Timer _timer;
 
-    public NetworkPage(IHost host)
+    public ConnectionPage(IHost host)
     {
         _host = host;
         InitializeComponent();

@@ -25,7 +25,10 @@ public static class Program
         builder.Services.AddSingleton<MainForm>();
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
+        builder.Services.AddSingleton<SchedulePage>();
         builder.Services.AddSingleton<ConnectionPage>();
+        builder.Services.AddSingleton<PluginPage>();
+        builder.Services.AddSingleton<SettingPage>();
 
         App = builder.Build();
     }

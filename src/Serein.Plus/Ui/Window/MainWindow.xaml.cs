@@ -141,7 +141,7 @@ public partial class MainWindow : System.Windows.Window
             new()
             {
                 // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
-                Tag = nameof(NetworkPage),
+                Tag = nameof(ConnectionPage),
                 Content = "连接",
                 ToolTip = "通过WebSocket连接获取消息"
             },
@@ -200,7 +200,7 @@ public partial class MainWindow : System.Windows.Window
             nameof(ServerPage) => Services.GetRequiredService<ServerPage>(),
             nameof(MatchPage) => Services.GetRequiredService<MatchPage>(),
             nameof(PluginPage) => Services.GetRequiredService<PluginPage>(),
-            nameof(NetworkPage) => Services.GetRequiredService<NetworkPage>(),
+            nameof(ConnectionPage) => Services.GetRequiredService<ConnectionPage>(),
             nameof(SchedulePage) => Services.GetRequiredService<SchedulePage>(),
             _ => Services.GetRequiredService<NotImplPage>(),
         };

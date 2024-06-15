@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Serein.Lite.Ui.Function;
 
-public partial class SchedulePage : UserControl
+public partial class PluginPage : UserControl
 {
-    public SchedulePage()
+    public PluginPage()
     {
         InitializeComponent();
     }

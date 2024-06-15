@@ -17,7 +17,7 @@ public class WpfOutputHandler : ISereinLogger
     private readonly LogLevel _logLevel;
     public IServiceProvider Services { get; }
     private readonly Lazy<ServerPage> _panelPage;
-    private readonly Lazy<NetworkPage> _networkPage;
+    private readonly Lazy<ConnectionPage> _ConnectionPage;
     private readonly Lazy<PluginConsolePage> _pluginConsolePage;
 
     public WpfOutputHandler(IServiceProvider services)
@@ -26,7 +26,7 @@ public class WpfOutputHandler : ISereinLogger
 
         _logLevel = Services.GetRequiredService<SettingProvider>().Value.Application.LogLevel;
         _panelPage = new(() => Services.GetRequiredService<ServerPage>());
-        _networkPage = new(() => Services.GetRequiredService<NetworkPage>());
+        _ConnectionPage = new(() => Services.GetRequiredService<ConnectionPage>());
         _pluginConsolePage = new(() => Services.GetRequiredService<PluginConsolePage>());
     }
 
@@ -47,20 +47,21 @@ public class WpfOutputHandler : ISereinLogger
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter
-    ) { }
+    )
+    { }
 
     public void LogBotJsonPacket(JsonNode jsonNode)
     {
-        _networkPage.Value.Dispatcher.Invoke(
-            () => _networkPage.Value.Console.AppendReceivedMsgLine(jsonNode.ToJsonString())
+        _ConnectionPage.Value.Dispatcher.Invoke(
+            () => _ConnectionPage.Value.Console.AppendReceivedMsgLine(jsonNode.ToJsonString())
         );
     }
 
     public void LogBotReceivedMessage(MessagePacket packet)
     {
-        _networkPage.Value.Dispatcher.Invoke(
+        _ConnectionPage.Value.Dispatcher.Invoke(
             () =>
-                _networkPage.Value.Console.AppendReceivedMsgLine(
+                _ConnectionPage.Value.Console.AppendReceivedMsgLine(
                     $"{packet.Sender.Card ?? packet.Sender.Nickname}({packet.UserId}): {packet.Message}"
                 )
         );
@@ -68,19 +69,19 @@ public class WpfOutputHandler : ISereinLogger
 
     public void LogBotConsole(LogLevel logLevel, string line)
     {
-        _networkPage.Value.Dispatcher.Invoke(() =>
+        _ConnectionPage.Value.Dispatcher.Invoke(() =>
         {
             switch (logLevel)
             {
                 case LogLevel.Information:
-                    _networkPage.Value.Console.AppendInfoLine(line);
+                    _ConnectionPage.Value.Console.AppendInfoLine(line);
                     break;
                 case LogLevel.Warning:
-                    _networkPage.Value.Console.AppendWarnLine(line);
+                    _ConnectionPage.Value.Console.AppendWarnLine(line);
                     break;
                 case LogLevel.Error:
                 case LogLevel.Critical:
-                    _networkPage.Value.Console.AppendErrorLine(line);
+                    _ConnectionPage.Value.Console.AppendErrorLine(line);
                     break;
                 default:
                     throw new NotSupportedException();

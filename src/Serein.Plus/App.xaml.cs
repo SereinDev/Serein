@@ -37,7 +37,7 @@ public partial class App : Application
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
-        builder.Services.AddSingleton<NetworkPage>();
+        builder.Services.AddSingleton<ConnectionPage>();
         builder.Services.AddSingleton<PluginConsolePage>();
         builder.Services.AddSingleton<PluginListPage>();
         builder.Services.AddSingleton<PluginPage>();

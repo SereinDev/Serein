@@ -29,8 +29,7 @@ public class NetManager(IHost host) : IManager
     private Assembly? ResolvingHandler(AssemblyLoadContext context, AssemblyName name)
     {
         var fileName = name.Name;
-        context.LoadFromAssemblyPath("");
-        return null;
+        return !string.IsNullOrEmpty(fileName) ? context.LoadFromAssemblyPath(fileName) : null;
     }
 
     public void Load()
@@ -45,8 +44,7 @@ public class NetManager(IHost host) : IManager
             try
             {
                 var assembly = _assemblyLoadContext.LoadFromAssemblyPath(file);
-                var types = assembly.GetExportedTypes();
-                var plugin = CreatePluginInstance(types);
+                var plugin = CreatePluginInstance(assembly.GetExportedTypes());
 
                 if (Plugins.TryAdd(name, plugin))
                     throw new InvalidOperationException("插件名称重复");
@@ -58,12 +56,15 @@ public class NetManager(IHost host) : IManager
         }
     }
 
-    private static PluginBase CreatePluginInstance(Type[] types)
+    private static PluginBase CreatePluginInstance(Type[] allTypes)
     {
-        var t = types.Where(type => type.BaseType != typeof(PluginBase));
+        var t = allTypes.Where(type => type.BaseType != typeof(PluginBase));
+        var count = t.Count();
 
-        if (t.Count() != 1)
+        if (count == 0)
             throw new InvalidOperationException("未找到有效的插件入口点");
+        if (count > 1)
+            throw new InvalidOperationException("存在多个插件入口点");
 
         foreach (var type in t)
         {

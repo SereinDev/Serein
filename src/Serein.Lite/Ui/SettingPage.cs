@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui;
 
-public partial class SchedulePage : UserControl
+public partial class SettingPage : UserControl
 {
-    public SchedulePage()
+    public SettingPage()
     {
         InitializeComponent();
     }

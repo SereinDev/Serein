@@ -53,7 +53,7 @@
             TableLayoutPanel.Name = "TableLayoutPanel";
             TableLayoutPanel.RowCount = 3;
             TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 191F));
             TableLayoutPanel.Size = new System.Drawing.Size(1280, 720);
             TableLayoutPanel.TabIndex = 0;
@@ -63,7 +63,7 @@
             InfoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             InfoGroupBox.Location = new System.Drawing.Point(3, 3);
             InfoGroupBox.Name = "InfoGroupBox";
-            InfoGroupBox.Size = new System.Drawing.Size(294, 423);
+            InfoGroupBox.Size = new System.Drawing.Size(294, 413);
             InfoGroupBox.TabIndex = 0;
             InfoGroupBox.TabStop = false;
             InfoGroupBox.Text = "信息";
@@ -73,9 +73,9 @@
             ControlGroupBox.Controls.Add(CloseButton);
             ControlGroupBox.Controls.Add(OpenButton);
             ControlGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ControlGroupBox.Location = new System.Drawing.Point(3, 432);
+            ControlGroupBox.Location = new System.Drawing.Point(3, 422);
             ControlGroupBox.Name = "ControlGroupBox";
-            ControlGroupBox.Size = new System.Drawing.Size(294, 94);
+            ControlGroupBox.Size = new System.Drawing.Size(294, 104);
             ControlGroupBox.TabIndex = 1;
             ControlGroupBox.TabStop = false;
             ControlGroupBox.Text = "控制";
@@ -85,20 +85,22 @@
             CloseButton.Location = new System.Drawing.Point(161, 37);
             CloseButton.Margin = new System.Windows.Forms.Padding(10);
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new System.Drawing.Size(120, 46);
+            CloseButton.Size = new System.Drawing.Size(120, 48);
             CloseButton.TabIndex = 1;
             CloseButton.Text = "断开";
             CloseButton.UseVisualStyleBackColor = true;
+            CloseButton.Click += CloseButton_Click;
             // 
             // OpenButton
             // 
             OpenButton.Location = new System.Drawing.Point(13, 37);
             OpenButton.Margin = new System.Windows.Forms.Padding(10);
             OpenButton.Name = "OpenButton";
-            OpenButton.Size = new System.Drawing.Size(120, 46);
+            OpenButton.Size = new System.Drawing.Size(120, 48);
             OpenButton.TabIndex = 0;
             OpenButton.Text = "连接";
             OpenButton.UseVisualStyleBackColor = true;
+            OpenButton.Click += OpenButton_Click;
             // 
             // ConsoleRichTextBox
             // 

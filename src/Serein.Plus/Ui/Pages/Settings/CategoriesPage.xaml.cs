@@ -35,7 +35,6 @@ public partial class CategoriesPage : Page
     {
         NavigationView.MenuItems = new List<NavigationViewItem>()
         {
-          
             new()
             {
                 // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },

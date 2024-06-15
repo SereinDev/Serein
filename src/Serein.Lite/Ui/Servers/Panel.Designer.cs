@@ -67,7 +67,7 @@
             MainTableLayoutPanel.Name = "MainTableLayoutPanel";
             MainTableLayoutPanel.RowCount = 3;
             MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66667F));
             MainTableLayoutPanel.Size = new System.Drawing.Size(1280, 720);
             MainTableLayoutPanel.TabIndex = 0;
@@ -77,7 +77,7 @@
             InfoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             InfoGroupBox.Location = new System.Drawing.Point(3, 3);
             InfoGroupBox.Name = "InfoGroupBox";
-            InfoGroupBox.Size = new System.Drawing.Size(294, 177);
+            InfoGroupBox.Size = new System.Drawing.Size(294, 183);
             InfoGroupBox.TabIndex = 0;
             InfoGroupBox.TabStop = false;
             InfoGroupBox.Text = "信息";
@@ -86,9 +86,9 @@
             // 
             ControlGroupBox.Controls.Add(ControlTableLayoutPanel);
             ControlGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ControlGroupBox.Location = new System.Drawing.Point(3, 186);
+            ControlGroupBox.Location = new System.Drawing.Point(3, 192);
             ControlGroupBox.Name = "ControlGroupBox";
-            ControlGroupBox.Size = new System.Drawing.Size(294, 164);
+            ControlGroupBox.Size = new System.Drawing.Size(294, 144);
             ControlGroupBox.TabIndex = 1;
             ControlGroupBox.TabStop = false;
             ControlGroupBox.Text = "控制";
@@ -108,7 +108,7 @@
             ControlTableLayoutPanel.RowCount = 2;
             ControlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             ControlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ControlTableLayoutPanel.Size = new System.Drawing.Size(288, 127);
+            ControlTableLayoutPanel.Size = new System.Drawing.Size(288, 107);
             ControlTableLayoutPanel.TabIndex = 0;
             // 
             // StartButton
@@ -116,7 +116,7 @@
             StartButton.Dock = System.Windows.Forms.DockStyle.Fill;
             StartButton.Location = new System.Drawing.Point(3, 3);
             StartButton.Name = "StartButton";
-            StartButton.Size = new System.Drawing.Size(138, 57);
+            StartButton.Size = new System.Drawing.Size(138, 47);
             StartButton.TabIndex = 0;
             StartButton.Text = "启动";
             StartButton.UseVisualStyleBackColor = true;
@@ -127,7 +127,7 @@
             StopButton.Dock = System.Windows.Forms.DockStyle.Fill;
             StopButton.Location = new System.Drawing.Point(147, 3);
             StopButton.Name = "StopButton";
-            StopButton.Size = new System.Drawing.Size(138, 57);
+            StopButton.Size = new System.Drawing.Size(138, 47);
             StopButton.TabIndex = 1;
             StopButton.Text = "停止";
             StopButton.UseVisualStyleBackColor = true;
@@ -136,9 +136,9 @@
             // RestartButton
             // 
             RestartButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            RestartButton.Location = new System.Drawing.Point(3, 66);
+            RestartButton.Location = new System.Drawing.Point(3, 56);
             RestartButton.Name = "RestartButton";
-            RestartButton.Size = new System.Drawing.Size(138, 58);
+            RestartButton.Size = new System.Drawing.Size(138, 48);
             RestartButton.TabIndex = 2;
             RestartButton.Text = "重启";
             RestartButton.UseVisualStyleBackColor = true;
@@ -147,9 +147,9 @@
             // TerminateButton
             // 
             TerminateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            TerminateButton.Location = new System.Drawing.Point(147, 66);
+            TerminateButton.Location = new System.Drawing.Point(147, 56);
             TerminateButton.Name = "TerminateButton";
-            TerminateButton.Size = new System.Drawing.Size(138, 58);
+            TerminateButton.Size = new System.Drawing.Size(138, 48);
             TerminateButton.TabIndex = 3;
             TerminateButton.Text = "强制结束";
             TerminateButton.UseVisualStyleBackColor = true;

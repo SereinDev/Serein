@@ -14,7 +14,11 @@ public partial class ConfigurationEditor : Form
 
     public string Id => IdTextBox.Text;
 
-    public ConfigurationEditor(ServerManager serverManager, Configuration configuration, string? id = null)
+    public ConfigurationEditor(
+        ServerManager serverManager,
+        Configuration configuration,
+        string? id = null
+    )
     {
         InitializeComponent();
 
@@ -33,22 +37,20 @@ public partial class ConfigurationEditor : Form
         SaveLogCheckBox.Checked = _configuration.SaveLog;
         AutoStopWhenCrashingCheckBox.Checked = _configuration.AutoStopWhenCrashing;
         PortNumericUpDown.Value = _configuration.IPv4Port;
-        LineTerminatorTextBox.Text = _configuration.LineTerminator.Replace("\r", "\\r").Replace("\n", "\\n");
+        LineTerminatorTextBox.Text = _configuration.LineTerminator
+            .Replace("\r", "\\r")
+            .Replace("\n", "\\n");
         StartWhenSettingUpCheckBox.Checked = _configuration.StartWhenSettingUp;
         OutputCommandUserInputCheckBox.Checked = _configuration.OutputCommandUserInput;
         StopCommandsTextBox.Text = string.Join("\r\n", _configuration.StopCommands);
         OutputStyleComboBox.SelectedIndex = (int)_configuration.OutputStyle;
         InputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
         OutputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
-
     }
 
     private void FileName_DoubleClick(object sender, EventArgs e)
     {
-        var openFileDialog = new OpenFileDialog
-        {
-            Title = "选择启动文件"
-        };
+        var openFileDialog = new OpenFileDialog { Title = "选择启动文件" };
         openFileDialog.ShowDialog();
 
         if (!string.IsNullOrEmpty(openFileDialog.FileName))
@@ -59,11 +61,11 @@ public partial class ConfigurationEditor : Form
     {
         try
         {
-            EncodingMap.EncodingType input, output;
+            EncodingMap.EncodingType input;
+            EncodingMap.EncodingType output;
             OutputStyle outputStyle;
 
             ServerManager.CheckId(IdTextBox.Text);
-
 
             if (InputEncondingComboBox.SelectedIndex < 0)
                 InputEncondingComboBox.SelectedIndex = 0;
@@ -85,7 +87,9 @@ public partial class ConfigurationEditor : Form
             _configuration.SaveLog = SaveLogCheckBox.Checked;
             _configuration.AutoStopWhenCrashing = AutoStopWhenCrashingCheckBox.Checked;
             _configuration.IPv4Port = (short)PortNumericUpDown.Value;
-            _configuration.LineTerminator = LineTerminatorTextBox.Text.Replace("\\r", "\r").Replace("\n", "\\n");
+            _configuration.LineTerminator = LineTerminatorTextBox.Text
+                .Replace("\\r", "\r")
+                .Replace("\n", "\\n");
             _configuration.StartWhenSettingUp = StartWhenSettingUpCheckBox.Checked;
             _configuration.OutputCommandUserInput = OutputCommandUserInputCheckBox.Checked;
             _configuration.OutputStyle = outputStyle;
@@ -101,7 +105,12 @@ public partial class ConfigurationEditor : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Serein.Lite", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(
+                ex.Message,
+                "Serein.Lite",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
         }
     }
 }
