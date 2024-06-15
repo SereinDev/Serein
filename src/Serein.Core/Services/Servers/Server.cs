@@ -8,7 +8,6 @@ using System.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
@@ -45,14 +44,14 @@ public class Server
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionManager _reactionManager;
     private readonly string _id;
-    private readonly ISereinLogger _logger;
+    private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     public event EventHandler? ServerStatusChanged;
     public event EventHandler<ServerOutputEventArgs>? ServerOutput;
 
     public Server(
         string id,
-        ISereinLogger logger,
+        ILogger logger,
         Configuration configuration,
         SettingProvider settingManager,
         Matcher matcher,
@@ -290,7 +289,7 @@ public class Server
         }
         catch (Exception e)
         {
-            _logger.LogWarning("[{}] 重启失败：{}", _id, e.Message);
+            _logger.LogError("服务器[{}] 重启失败：{}", _id, e.Message);
         }
     }
 

@@ -91,11 +91,11 @@ public class Match : INotifyPropertyChanged, ICloneable
     [JsonIgnore]
     public string? Tip => RegExpTip ?? CommandTip;
 
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     public object Clone()
     {
         return MemberwiseClone();
     }
+
+#pragma warning disable CS0067
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Output;
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks;
@@ -45,7 +44,7 @@ public sealed class SereinApp : IHost
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private ScheduleRunner ScheduleRunner => Services.GetRequiredService<ScheduleRunner>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
     private UpdateChecker UpdateChecker => Services.GetRequiredService<UpdateChecker>();
 
     public Action? OnStarted { get; set; }

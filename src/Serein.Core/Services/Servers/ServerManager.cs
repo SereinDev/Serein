@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
-using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
@@ -35,13 +34,13 @@ public partial class ServerManager
 
     private readonly Dictionary<string, Server> _server = new();
     private readonly Matcher _matcher;
-    private readonly ISereinLogger _logger;
+    private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionManager _reactionManager;
 
     public ServerManager(
-        ISereinLogger logger,
+        ILogger logger,
         Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,

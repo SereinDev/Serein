@@ -1,16 +1,12 @@
 using System;
-using System.Text.Json.Nodes;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Network.OneBot.Packets;
-using Serein.Core.Models.Output;
-
 using Spectre.Console;
 
-namespace Serein.Cli;
+namespace Serein.Cli.Loggers;
 
-public class CliLogger(LogLevel logLevel = LogLevel.Information) : ISereinLogger
+public class CliLogger(LogLevel logLevel = LogLevel.Information) : ILogger
 {
     private readonly LogLevel _logLevel = logLevel;
 
@@ -80,49 +76,5 @@ public class CliLogger(LogLevel logLevel = LogLevel.Information) : ISereinLogger
             default:
                 throw new NotSupportedException();
         }
-    }
-
-    public void LogBotJsonPacket(JsonNode jsonNode) { }
-
-    public void LogBotReceivedMessage(MessagePacket packet) { }
-
-    public void LogBotConsole(LogLevel logLevel, string line)
-    {
-        this.Log(logLevel, "{}", line);
-    }
-
-    public void LogPlugin(LogLevel logLevel, string title, string line)
-    {
-        switch (logLevel)
-        {
-            case LogLevel.Trace:
-                this.LogInformation("{}", line);
-                break;
-
-            case LogLevel.Information:
-                this.LogInformation("[{}] {}", title, line);
-                break;
-
-            case LogLevel.Warning:
-                this.LogWarning("[{}] {}", title, line);
-                break;
-
-            case LogLevel.Error:
-                this.LogError("[{}] {}", title, line);
-                break;
-
-            default:
-                throw new NotSupportedException();
-        }
-    }
-
-    public void LogServerInfo(string line)
-    {
-        this.LogInformation("{}", line);
-    }
-
-    public void LogServerRawOutput(string line)
-    {
-        Console.WriteLine(line);
     }
 }

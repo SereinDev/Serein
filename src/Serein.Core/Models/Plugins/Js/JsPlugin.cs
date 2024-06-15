@@ -34,7 +34,7 @@ public class JsPlugin : IPlugin
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
 
     public JsPlugin(IHost host, string name, Config preLoadConfig)
     {
@@ -88,7 +88,7 @@ public class JsPlugin : IPlugin
         }
         catch (Exception e)
         {
-            Logger.LogPlugin(LogLevel.Error, Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
+            Logger.Log(LogLevel.Error, Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
             return false;
         }
         finally

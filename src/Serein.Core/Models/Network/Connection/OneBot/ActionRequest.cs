@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-using Serein.Core.Models.Network.OneBot.ActionParams;
+using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
 
-namespace Serein.Core.Models.Network.OneBot;
+namespace Serein.Core.Models.Network.Connection.OneBot;
 
 public class ActionRequest<T>
     where T : notnull, IActionParams

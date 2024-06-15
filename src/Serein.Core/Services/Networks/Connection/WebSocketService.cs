@@ -21,7 +21,7 @@ public class WebSocketService(IHost host) : IConnectionService
     private string _uri = string.Empty;
 
     private IServiceProvider Services => _host.Services;
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IConnectionLogger Logger => Services.GetRequiredService<IConnectionLogger>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private Setting Setting => SettingProvider.Value;
 
@@ -43,10 +43,10 @@ public class WebSocketService(IHost host) : IConnectionService
         );
 
         client.MessageReceived += MessageReceived;
-        client.Opened += (_, _) => Logger.LogBotConsole(LogLevel.Information, $"成功连接到{_uri}");
+        client.Opened += (_, _) => Logger.Log(LogLevel.Information, $"成功连接到{_uri}");
         client.Opened += StatusChanged;
         client.Closed += StatusChanged;
-        client.Closed += (_, _) => Logger.LogBotConsole(LogLevel.Warning, "连接已断开");
+        client.Closed += (_, _) => Logger.Log(LogLevel.Warning, "连接已断开");
 
         return client;
     }
@@ -82,7 +82,7 @@ public class WebSocketService(IHost host) : IConnectionService
                 }
                 catch (Exception e)
                 {
-                    Logger.LogBotConsole(LogLevel.Information, e.Message);
+                    Logger.Log(LogLevel.Information, e.Message);
                 }
             },
             token

@@ -8,7 +8,6 @@ using EmbedIO.WebApi;
 
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Networks.WebApi.Apis;
 
@@ -16,7 +15,7 @@ using Swan.Logging;
 
 namespace Serein.Core.Services.Networks.WebApi;
 
-public class HttpServer(IHost host, ISereinLogger logger, SettingProvider settingProvider)
+public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvider)
 {
     static HttpServer()
     {
@@ -24,7 +23,7 @@ public class HttpServer(IHost host, ISereinLogger logger, SettingProvider settin
     }
 
     private readonly IHost _host = host;
-    private readonly ISereinLogger _logger = logger;
+    private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private WebServer? _webServer;
     private WebServerState State => _webServer?.State ?? WebServerState.Stopped;

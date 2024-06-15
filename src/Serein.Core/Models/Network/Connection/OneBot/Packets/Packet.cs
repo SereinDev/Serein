@@ -1,4 +1,4 @@
-namespace Serein.Core.Models.Network.OneBot.Packets;
+namespace Serein.Core.Models.Network.Connection.OneBot.Packets;
 
 public abstract class Packet
 {

@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.OneBot.Messages;
-using Serein.Core.Models.Network.OneBot.Packets;
+using Serein.Core.Models.Network.Connection.OneBot.Messages;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 

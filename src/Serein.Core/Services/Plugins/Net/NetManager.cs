@@ -21,7 +21,7 @@ public class NetManager(IHost host) : IManager
 
     private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
     private AssemblyLoadContext? _assemblyLoadContext;
 
     public ConcurrentDictionary<string, PluginBase> Plugins { get; } = new();
@@ -51,7 +51,7 @@ public class NetManager(IHost host) : IManager
             }
             catch (Exception e)
             {
-                Logger.LogPlugin(LogLevel.Error, name, $"插件初始化失败：{e.Message}");
+                Logger.Log(LogLevel.Error, name, $"插件初始化失败：{e.Message}");
             }
         }
     }

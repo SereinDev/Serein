@@ -13,8 +13,6 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
 using Serein.Core;
-using Serein.Core.Models.Output;
-using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
@@ -29,8 +27,7 @@ public class InputReader
     private static readonly char[] Separator = new char[] { '\x20' };
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
-    private ServerManager Servers => Services.GetRequiredService<ServerManager>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
     private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
 
     public InputReader(IHost host)

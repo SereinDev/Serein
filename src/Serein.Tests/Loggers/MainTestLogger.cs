@@ -1,14 +1,10 @@
 using System;
-using System.Text.Json.Nodes;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Network.OneBot.Packets;
-using Serein.Core.Models.Output;
+namespace Serein.Tests.Loggers;
 
-namespace Serein.Tests;
-
-public class TestLogger : ISereinLogger
+public class MainTestLogger : ILogger
 {
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull
@@ -31,12 +27,4 @@ public class TestLogger : ISereinLogger
     {
         Console.WriteLine($"[{logLevel}] {eventId} {state} {exception}");
     }
-
-    public void LogBotConsole(LogLevel logLevel, string line) { }
-
-    public void LogBotJsonPacket(JsonNode jsonNode) { }
-
-    public void LogBotReceivedMessage(MessagePacket packet) { }
-
-    public void LogPlugin(LogLevel logLevel, string title, string line) { }
 }

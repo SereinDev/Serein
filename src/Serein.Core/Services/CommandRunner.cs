@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Output;
 using Serein.Core.Services.Networks.Connection;
 using Serein.Core.Services.Servers;
 
@@ -22,7 +21,7 @@ public class CommandRunner
     private IServiceProvider Services => _host.Services;
     private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
     private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
 
     public CommandRunner(IHost host)
     {

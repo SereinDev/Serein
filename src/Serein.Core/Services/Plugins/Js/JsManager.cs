@@ -19,7 +19,7 @@ public class JsManager(IHost host) : IManager
 {
     private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
     public ConcurrentDictionary<string, JsPlugin> JsPlugins { get; } = new();
     public ConcurrentDictionary<string, object?> ExportedVariables { get; } = new();
 
@@ -64,7 +64,7 @@ public class JsManager(IHost host) : IManager
             }
             catch (Exception e)
             {
-                Logger.LogPlugin(LogLevel.Error, name, e.GetDetailString());
+                Logger.Log(LogLevel.Error, name, e.GetDetailString());
             }
         }
     }

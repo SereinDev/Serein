@@ -2,7 +2,7 @@ using System;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
-using Serein.Core.Models.Network.OneBot.Packets;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
 
 namespace Serein.Core.Models.Plugins.Net;
 

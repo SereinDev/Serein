@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Network.OneBot.Packets;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Net;
@@ -27,7 +27,7 @@ public class EventDispatcher(IHost host)
     private NetManager Loader => Services.GetRequiredService<NetManager>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
 
     public bool Dispatch(Event @event, params object[] args)
     {
@@ -49,7 +49,10 @@ public class EventDispatcher(IHost host)
         }
 
         if (SettingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
-            Task.WaitAll(tasks.ToArray(), SettingProvider.Value.Application.PluginEventMaxWaitingTime);
+            Task.WaitAll(
+                tasks.ToArray(),
+                SettingProvider.Value.Application.PluginEventMaxWaitingTime
+            );
 
         cancellationTokenSource.Cancel();
         return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
@@ -101,7 +104,8 @@ public class EventDispatcher(IHost host)
                 if (args.Length != 2)
                     throw new ArgumentException("缺少参数或类型不正确", nameof(args));
 
-                func = (p) => p.OnServerRawOutput(args.First().As<string>(), args.Last().As<string>());
+                func = (p) =>
+                    p.OnServerRawOutput(args.First().As<string>(), args.Last().As<string>());
                 break;
 
             case Event.ServerInput:
@@ -112,7 +116,12 @@ public class EventDispatcher(IHost host)
                 break;
 
             case Event.ServerExited:
-                if (args.Length != 3 || args[0] is not string id || args[1] is not int code || args[0] is not DateTime time)
+                if (
+                    args.Length != 3
+                    || args[0] is not string id
+                    || args[1] is not int code
+                    || args[0] is not DateTime time
+                )
                     throw new ArgumentException("缺少参数或类型不正确", nameof(args));
 
                 func = (p) => p.OnServerExited(id, code, time);
@@ -156,7 +165,7 @@ public class EventDispatcher(IHost host)
             }
             catch (Exception e)
             {
-                Logger.LogPlugin(LogLevel.Error, name, $"触发事件{name}时出现异常：\n{e.GetDetailString()}");
+                Logger.Log(LogLevel.Error, name, $"触发事件{name}时出现异常：\n{e.GetDetailString()}");
             }
         }
 

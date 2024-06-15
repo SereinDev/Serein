@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Serein.Core.Models.Network.OneBot.Messages;
+namespace Serein.Core.Models.Network.Connection.OneBot.Messages;
 
 public class Sender
 {

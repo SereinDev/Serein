@@ -21,7 +21,7 @@ namespace Serein.Cli.Interaction.Commands;
 public class ServerCommand(IHost host) : Command(host)
 {
     private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
 
     public override void Parse(string[] args)
     {

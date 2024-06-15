@@ -2,9 +2,11 @@
 using System.Windows;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
+using Serein.Plus.Loggers;
 using Serein.Plus.Ui.Pages;
 using Serein.Plus.Ui.Pages.Function;
 using Serein.Plus.Ui.Pages.Server;
@@ -49,10 +51,9 @@ public partial class App : Application
         builder.Services.AddSingleton<ReactionSettingPage>();
         builder.Services.AddSingleton<CategoriesPage>();
 
-        builder.Services.AddSingleton<ISereinLogger, WpfOutputHandler>(
-            (services) => new(services)
-        );
-
+        builder.Services.AddSingleton<ILogger, NotificationLogger>();
+        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
+        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         return builder.Build();
     }
 }

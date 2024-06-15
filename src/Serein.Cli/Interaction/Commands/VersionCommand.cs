@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Output;
 using Serein.Core.Utils.Extensions;
 
 using Spectre.Console;
@@ -16,7 +15,7 @@ namespace Serein.Cli.Interaction.Commands;
 [CommandDescription("version", "显示详细的版本和版权信息", Priority = -1)]
 public class VersionCommand(IHost host) : Command(host)
 {
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
 
     public override void Parse(string[] args)
     {

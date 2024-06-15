@@ -109,6 +109,6 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox ConsoleRichTextBox;
+        public System.Windows.Forms.RichTextBox ConsoleRichTextBox;
     }
 }

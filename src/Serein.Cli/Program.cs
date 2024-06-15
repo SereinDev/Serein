@@ -3,8 +3,10 @@ using System.CommandLine;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Interaction;
+using Serein.Cli.Loggers;
 using Serein.Core;
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
@@ -41,7 +43,9 @@ public static class Program
 
         builder.Services.AddSingleton<TitleUpdater>();
         builder.Services.AddSingleton<InputReader>();
-        builder.Services.AddSingleton<ISereinLogger, CliLogger>(
+        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
+        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
+        builder.Services.AddSingleton<ILogger, CliLogger>(
             (services) =>
                 new(services.GetRequiredService<SettingProvider>().Value.Application.LogLevel)
         );

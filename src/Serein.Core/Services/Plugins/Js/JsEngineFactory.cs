@@ -18,10 +18,10 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsEngineFactory(SettingProvider settingProvider, ISereinLogger logger)
+public class JsEngineFactory(SettingProvider settingProvider, IPluginLogger logger)
 {
     private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly ISereinLogger _logger = logger;
+    private readonly IPluginLogger _logger = logger;
 
     public Options CreateOptions(JsPlugin jsPlugin)
     {
@@ -38,7 +38,7 @@ public class JsEngineFactory(SettingProvider settingProvider, ISereinLogger logg
             }
             catch (Exception e)
             {
-                _logger.LogPlugin(
+                _logger.Log(
                     LogLevel.Warning,
                     jsPlugin.Name,
                     $"加载程序集“{assemblyName}”时出现异常：" + e.Message

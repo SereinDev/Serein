@@ -26,7 +26,7 @@ public partial class ScriptInstance
     private readonly JsPlugin _jsPlugin;
 
     private IServiceProvider Services => _host.Services;
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
     private JsManager JsManager => Services.GetRequiredService<JsManager>();
@@ -64,7 +64,7 @@ public partial class ScriptInstance
     public void Log(params JsValue[] jsValues)
     {
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.LogPlugin(LogLevel.Information, _jsPlugin.Name, str);
+        Logger.Log(LogLevel.Information, _jsPlugin.Name, str);
     }
 
     public bool Exports(string? name, JsValue jsValue)

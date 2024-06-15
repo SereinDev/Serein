@@ -5,10 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
-using Serein.Core.Models.Output;
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Networks.Connection;
-using Serein.Core.Services.Servers;
 
 using Spectre.Console;
 
@@ -21,7 +18,7 @@ namespace Serein.Cli.Interaction.Commands;
 public class ConnectionCommand(IHost host) : Command(host)
 {
     private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
+    private ILogger Logger => Services.GetRequiredService<ILogger>();
 
     public override void Parse(string[] args)
     {

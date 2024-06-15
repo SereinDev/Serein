@@ -14,14 +14,14 @@ namespace Serein.Core.Services.Networks;
 
 public class UpdateChecker
 {
-    private readonly ISereinLogger _logger;
+    private readonly ILogger _logger;
     private readonly Timer _timer;
     private readonly SettingProvider _settingProvider;
     private readonly GitHubClient _gitHubClient;
     private static readonly Version Version =
         typeof(UpdateChecker).Assembly.GetName().Version ?? new Version();
 
-    public UpdateChecker(ISereinLogger logger, SettingProvider settingProvider)
+    public UpdateChecker(ILogger logger, SettingProvider settingProvider)
     {
         _logger = logger;
         _settingProvider = settingProvider;
@@ -39,7 +39,7 @@ public class UpdateChecker
         _timer.Start();
     }
 
-    public event EventHandler<UpdateEventArgs>? Updated;
+    public event EventHandler<UpdateFoundEventArgs>? Updated;
 
     public async Task Check()
     {

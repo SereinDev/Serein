@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Serein.Core.Models.Network;
 
-public class UpdateEventArgs(Release release) : EventArgs
+public class UpdateFoundEventArgs(Release release) : EventArgs
 {
     public Release Release { get; set; } = release;
 

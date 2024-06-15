@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Network.OneBot;
-using Serein.Core.Models.Network.OneBot.ActionParams;
-using Serein.Core.Models.Network.OneBot.Messages;
-using Serein.Core.Models.Network.OneBot.Packets;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Network;
+using Serein.Core.Models.Network.Connection.OneBot;
+using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
+using Serein.Core.Models.Network.Connection.OneBot.Messages;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
@@ -33,9 +33,11 @@ public class WsConnectionManager
     private WebSocketService WebSocketService => Services.GetRequiredService<WebSocketService>();
     private ReverseWebSocketService ReverseWebSocketService =>
         Services.GetRequiredService<ReverseWebSocketService>();
-    private ISereinLogger Logger => Services.GetRequiredService<ISereinLogger>();
     private CancellationTokenSource? _cancellationTokenSource;
+
     public event EventHandler? StatusChanged;
+    public event EventHandler<JsonPacketReceivedEventArgs>? JsonPacketReceived;
+    public event EventHandler<MessagePacketReceivedEventArgs>? MessagePacketReceived;
 
     public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
 
@@ -65,7 +67,7 @@ public class WsConnectionManager
             return;
 
         if (Setting.Connection.OutputData)
-            Logger.LogBotJsonPacket(node);
+            JsonPacketReceived?.Invoke(this, new(node));
 
         if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
             return;
@@ -78,7 +80,7 @@ public class WsConnectionManager
 
                 if (packet is not null)
                 {
-                    Logger.LogBotReceivedMessage(packet);
+                    MessagePacketReceived?.Invoke(this, new(packet));
 
                     if (
                         packet.MessageType == MessageType.Group
