@@ -9,7 +9,6 @@ using Serein.Cli.Interaction;
 using Serein.Cli.Loggers;
 using Serein.Core;
 using Serein.Core.Models.Output;
-using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 
 namespace Serein.Cli;
@@ -45,14 +44,11 @@ public static class Program
         builder.Services.AddSingleton<InputReader>();
         builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
-        builder.Services.AddSingleton<ILogger, CliLogger>(
-            (services) =>
-                new(services.GetRequiredService<SettingProvider>().Value.Application.LogLevel)
-        );
+        builder.Services.AddSingleton<ILogger, CliLogger>();
 
         var app = builder.Build();
-        app.OnStarted += () => app.Services.GetRequiredService<TitleUpdater>().Init();
-        app.OnStarted += () =>
+        app.AppStarted += (_, _) => app.Services.GetRequiredService<TitleUpdater>().Init();
+        app.AppStarted += (_, _) =>
             app.Services.GetRequiredService<InputReader>().Start(app.CancellationToken);
 
         app.Run();

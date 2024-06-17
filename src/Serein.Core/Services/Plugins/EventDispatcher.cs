@@ -120,7 +120,7 @@ public class EventDispatcher(IHost host)
                     args.Length != 3
                     || args[0] is not string id
                     || args[1] is not int code
-                    || args[0] is not DateTime time
+                    || args[2] is not DateTime time
                 )
                     throw new ArgumentException("缺少参数或类型不正确", nameof(args));
 

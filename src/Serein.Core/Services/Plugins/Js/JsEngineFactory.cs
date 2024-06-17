@@ -41,7 +41,7 @@ public class JsEngineFactory(SettingProvider settingProvider, IPluginLogger logg
                 _logger.Log(
                     LogLevel.Warning,
                     jsPlugin.Name,
-                    $"加载程序集“{assemblyName}”时出现异常：" + e.Message
+                    $"加载所需程序集“{assemblyName}”时出现异常：" + e.Message
                 );
             }
         }
@@ -76,21 +76,21 @@ public class JsEngineFactory(SettingProvider settingProvider, IPluginLogger logg
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);
 
-        AddTypeReference<Command>(engine);
-        AddTypeReference<CommandOrigin>(engine);
-        AddTypeReference<MatchFieldType>(engine);
-        AddTypeReference<Match>(engine);
-        AddTypeReference<Schedule>(engine);
+        AddTypeReference<Command>();
+        AddTypeReference<CommandOrigin>();
+        AddTypeReference<MatchFieldType>();
+        AddTypeReference<Match>();
+        AddTypeReference<Schedule>();
 
-        AddTypeReference<MineStat>(engine);
-        AddTypeReference<ConnStatus>(engine);
-        AddTypeReference<SlpProtocol>(engine);
+        AddTypeReference<MineStat>();
+        AddTypeReference<ConnStatus>();
+        AddTypeReference<SlpProtocol>();
 
         return engine;
-    }
 
-    private static void AddTypeReference<T>(Engine engine)
-    {
-        engine.SetValue(typeof(T).ToString(), TypeReference.CreateTypeReference<T>(engine));
+        void AddTypeReference<T>()
+        {
+            engine.SetValue(typeof(T).ToString(), TypeReference.CreateTypeReference<T>(engine));
+        }
     }
 }

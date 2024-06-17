@@ -47,7 +47,7 @@ public sealed class SereinApp : IHost
     private ILogger Logger => Services.GetRequiredService<ILogger>();
     private UpdateChecker UpdateChecker => Services.GetRequiredService<UpdateChecker>();
 
-    public Action? OnStarted { get; set; }
+    public event EventHandler? AppStarted;
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
     private readonly IHost _host;
@@ -57,7 +57,7 @@ public sealed class SereinApp : IHost
         Current = this;
         _host = host;
 
-        Logger.LogInformation("Serein.{} {}", Type, Version);
+        Logger.LogInformation("Serein.{} {}", Type, FullVersion);
         Logger.LogInformation("仓库: https://github.com/SereinDev/Serein");
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
 
@@ -80,7 +80,7 @@ public sealed class SereinApp : IHost
 
     public Task StartAsync(CancellationToken cancellationToken = default)
     {
-        OnStarted?.Invoke();
+        AppStarted?.Invoke(this, EventArgs.Empty);
         ScheduleRunner.Start();
         UpdateChecker.Start();
         Logger.LogInformation("Serein启动成功");

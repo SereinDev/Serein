@@ -60,7 +60,7 @@ public partial class MainWindow : System.Windows.Window
         TaskbarIcon.TrayBalloonTipClicked += (_, _) => ShowWindow();
         SettingProvider.Value.Application.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(SettingProvider.Value.Application.AdditionalTitle))
+            if (e.PropertyName == nameof(SettingProvider.Value.Application.CustomTitle))
                 UpdateTitle();
         };
     }
@@ -267,7 +267,7 @@ public partial class MainWindow : System.Windows.Window
         Dispatcher.Invoke(() =>
         {
             var text = CommandParser.ApplyVariables(
-                SettingProvider.Value.Application.AdditionalTitle,
+                SettingProvider.Value.Application.CustomTitle,
                 null,
                 true
             );

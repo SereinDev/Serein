@@ -5,6 +5,8 @@ namespace Serein.Core.Models.Settings;
 
 public class WebApiSetting : INotifyPropertyChanged
 {
+    public bool Enable { get; set; }
+
     public string[] UrlPrefixes { get; set; } = Array.Empty<string>();
 
     public bool AllowCrossOrigin { get; init; }

@@ -40,7 +40,7 @@
             TerminateButton = new System.Windows.Forms.Button();
             InputTextBox = new System.Windows.Forms.TextBox();
             EnterButton = new System.Windows.Forms.Button();
-            richTextBox1 = new System.Windows.Forms.RichTextBox();
+            ConsoleRichTextBox = new System.Windows.Forms.RichTextBox();
             MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             InfoGroupBox = new System.Windows.Forms.GroupBox();
             ControlGroupBox = new System.Windows.Forms.GroupBox();
@@ -174,7 +174,7 @@
             ConsoleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             ConsoleTableLayoutPanel.Controls.Add(InputTextBox, 0, 1);
             ConsoleTableLayoutPanel.Controls.Add(EnterButton, 1, 1);
-            ConsoleTableLayoutPanel.Controls.Add(richTextBox1, 0, 0);
+            ConsoleTableLayoutPanel.Controls.Add(ConsoleRichTextBox, 0, 0);
             ConsoleTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             ConsoleTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
             ConsoleTableLayoutPanel.Name = "ConsoleTableLayoutPanel";
@@ -206,16 +206,21 @@
             EnterButton.UseVisualStyleBackColor = true;
             EnterButton.Click += EnterButton_Click;
             // 
-            // richTextBox1
+            // ConsoleRichTextBox
             // 
-            richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            ConsoleTableLayoutPanel.SetColumnSpan(richTextBox1, 2);
-            richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            richTextBox1.Location = new System.Drawing.Point(3, 3);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new System.Drawing.Size(962, 623);
-            richTextBox1.TabIndex = 2;
-            richTextBox1.Text = "";
+            ConsoleRichTextBox.BackColor = System.Drawing.Color.White;
+            ConsoleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            ConsoleTableLayoutPanel.SetColumnSpan(ConsoleRichTextBox, 2);
+            ConsoleRichTextBox.DetectUrls = false;
+            ConsoleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            ConsoleRichTextBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            ConsoleRichTextBox.Location = new System.Drawing.Point(3, 3);
+            ConsoleRichTextBox.Name = "ConsoleRichTextBox";
+            ConsoleRichTextBox.ReadOnly = true;
+            ConsoleRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            ConsoleRichTextBox.Size = new System.Drawing.Size(962, 623);
+            ConsoleRichTextBox.TabIndex = 2;
+            ConsoleRichTextBox.Text = "";
             // 
             // Panel
             // 
@@ -236,7 +241,7 @@
 
         private System.Windows.Forms.TextBox InputTextBox;
         private System.Windows.Forms.Button EnterButton;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox ConsoleRichTextBox;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button RestartButton;

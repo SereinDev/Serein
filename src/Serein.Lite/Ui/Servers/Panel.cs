@@ -3,18 +3,56 @@ using System.Windows.Forms;
 
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
+using Serein.Lite.Extensions;
 
 namespace Serein.Lite.Ui.Servers;
 
 public partial class Panel : UserControl
 {
     private readonly Server _server;
+    private readonly object _lock = new();
 
     public Panel(Server server)
     {
         InitializeComponent();
         _server = server;
         Dock = DockStyle.Fill;
+
+        _server.ServerOutput += OnServerOutput;
+    }
+
+    private void OnServerOutput(object? sender, ServerOutputEventArgs e)
+    {
+        Invoke(() =>
+        {
+            switch (e.OutputType)
+            {
+                case ServerOutputType.Raw:
+                    lock (_lock)
+                        ConsoleRichTextBox.AppendText(e.Data + "\r\n");
+                    break;
+
+                case ServerOutputType.InputCommand:
+                    if (_server.Configuration.OutputCommandUserInput)
+                        lock (_lock)
+                            ConsoleRichTextBox.AppendText($">{e.Data}" + "\r\n");
+                    break;
+
+                case ServerOutputType.Information:
+                    lock (_lock)
+                    {
+                        ConsoleRichTextBox.AppendTextWithColor("[Serein]", MainForm.PrimaryColor);
+                        ConsoleRichTextBox.AppendText(e.Data + "\r\n");
+                    }
+                    break;
+
+                case ServerOutputType.Clear:
+                    Invoke(ConsoleRichTextBox.Clear);
+                    break;
+            }
+            ConsoleRichTextBox.ScrollToEnd();
+        });
+
     }
 
     private void StartButton_Click(object sender, EventArgs e)
@@ -26,7 +64,7 @@ public partial class Panel : UserControl
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"启动服务器失败：{ex.Message}",
+                $"启动服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
@@ -43,7 +81,7 @@ public partial class Panel : UserControl
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"停止服务器失败：{ex.Message}",
+                $"停止服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
@@ -62,7 +100,7 @@ public partial class Panel : UserControl
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"强制结束服务器失败：{ex.Message}",
+                $"强制结束服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
@@ -77,7 +115,11 @@ public partial class Panel : UserControl
 
     private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
     {
-        EnterCommand();
+        if (e.KeyCode == Keys.Enter)
+        {
+            EnterCommand();
+            e.Handled = true;
+        }
     }
 
     private void EnterCommand()

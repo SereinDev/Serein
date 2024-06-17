@@ -35,7 +35,7 @@ public class PluginHost(IHost host)
 
         JsManager.Unload();
 
-        PluginsReloading?.Invoke(null, new());
+        PluginsReloading?.Invoke(null, EventArgs.Empty);
         Load();
     }
 }

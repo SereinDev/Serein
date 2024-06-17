@@ -2,13 +2,15 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
+using Serein.Core.Services.Data;
+
 using Spectre.Console;
 
 namespace Serein.Cli.Loggers;
 
-public class CliLogger(LogLevel logLevel = LogLevel.Information) : ILogger
+public class CliLogger(SettingProvider settingProvider) : ILogger
 {
-    private readonly LogLevel _logLevel = logLevel;
+    private readonly LogLevel _logLevel = settingProvider.Value.Application.LogLevel;
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull

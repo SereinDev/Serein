@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-using NCrontab;
+using Cronos;
 
 using PropertyChanged;
 
@@ -13,22 +13,22 @@ namespace Serein.Core.Models.Commands;
 public class Schedule : INotifyPropertyChanged
 {
     private string? _command;
-    private string? _cronExp;
+    private string? _expression;
 
-    public string? CronExp
+    public string? Expression
     {
-        get => _cronExp;
+        get => _expression;
         set
         {
-            _cronExp = value;
+            _expression = value;
 
             try
             {
-                if (string.IsNullOrEmpty(_cronExp))
-                    throw new ArgumentException("Cron表达式不得为空", nameof(CronExp));
+                if (string.IsNullOrEmpty(_expression))
+                    throw new ArgumentException("Cron表达式不得为空", nameof(Expression));
 
-                CrontabSchedule = CrontabSchedule.Parse(_cronExp);
-                NextTime = CrontabSchedule?.GetNextOccurrence(DateTime.Now);
+                Cron = CronExpression.Parse(_expression);
+                NextTime = Cron?.GetNextOccurrence(DateTime.Now);
                 CommandTip = null;
             }
             catch (Exception e)
@@ -75,7 +75,7 @@ public class Schedule : INotifyPropertyChanged
 
     [DoNotNotify]
     [JsonIgnore]
-    internal CrontabSchedule? CrontabSchedule { get; set; }
+    internal CronExpression? Cron { get; set; }
 
     [AlsoNotifyFor(nameof(Tip))]
     private string? CommandTip { get; set; }

@@ -14,6 +14,7 @@ using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
+using Serein.Core.Services.Ssh;
 
 namespace Serein.Core;
 
@@ -55,6 +56,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsConnectionManager>();
         Services.AddSingleton<HttpServer>();
+        Services.AddSingleton<SshServiceProvider>();
 
         Services.AddSingleton<PluginHost>();
         Services.AddSingleton<EventDispatcher>();

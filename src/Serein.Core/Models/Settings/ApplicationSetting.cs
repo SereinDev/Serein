@@ -19,9 +19,7 @@ public class ApplicationSetting : INotifyPropertyChanged
     [AlsoNotifyFor(nameof(AutoUpdate))]
     public bool CheckUpdate { get; set; } = true;
 
-    public bool ColorfulLog { get; set; } = true;
-
-    public string AdditionalTitle { get; set; } = "{filename}";
+    public string CustomTitle { get; set; } = "{filename}";
 
     public uint MaxDisplayedLines { get; set; } = 250;
 

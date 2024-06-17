@@ -168,6 +168,7 @@ partial class MainForm
         NotifyIcon.Icon = (Icon)resources.GetObject("NotifyIcon.Icon");
         NotifyIcon.Text = "Serein.Lite";
         NotifyIcon.Visible = true;
+        NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;
         // 
         // NotifyIconContextMenuStrip
         // 

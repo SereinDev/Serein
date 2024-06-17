@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,8 @@ namespace Serein.Lite.Ui;
 
 public partial class MainForm : Form
 {
+    public static readonly Color PrimaryColor = Color.FromArgb(0x4B, 0x73, 0x8D);
+
     private readonly IHost _host;
     private readonly ServerManager _serverManager;
 
@@ -185,5 +189,39 @@ public partial class MainForm : Form
         TopMostToolStripMenuItem.Checked = !TopMostToolStripMenuItem.Checked;
         HideToolStripMenuItem.Enabled = !TopMostToolStripMenuItem.Checked;
         TopMost = TopMostToolStripMenuItem.Checked;
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        if (_serverManager.AnyRunning)
+        {
+            e.Cancel = true;
+
+            TopMost = false;
+            Visible = false;
+            ShowInTaskbar = false;
+
+            TopMostToolStripMenuItem.Checked = false;
+            TopMostToolStripMenuItem.Enabled = false;
+            HideToolStripMenuItem.Checked = true;
+            HideToolStripMenuItem.Enabled = true;
+
+            NotifyIcon.ShowBalloonTip(
+                5000,
+                "还有服务器尚未停止运行",
+                "Serein.Lite 已隐藏窗口并在后台运行。你可以右键托盘图标取消隐藏或直接双击托盘图标以取消隐藏。",
+                ToolTipIcon.None
+            );
+        }
+        base.OnClosing(e);
+    }
+
+    private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+    {
+        Visible = true;
+        ShowInTaskbar = true;
+
+        TopMostToolStripMenuItem.Enabled = true;
+        HideToolStripMenuItem.Checked = false;
     }
 }

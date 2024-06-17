@@ -59,8 +59,8 @@ public class JsManager(IHost host) : IManager
             JsPlugins.AddOrUpdate(name, plugin, (_, _) => plugin);
             try
             {
-                plugin.Execute(text);
                 plugin.Loaded = true;
+                plugin.Execute(text);
             }
             catch (Exception e)
             {

@@ -36,6 +36,8 @@ public partial class Setting
 
     public PagesSetting Pages { get; init; } = new();
 
+    public SshSetting Ssh { get; init; } = new();
+
     public WebApiSetting WebApi { get; init; } = new();
 
     public ApplicationSetting Application { get; init; } = new();

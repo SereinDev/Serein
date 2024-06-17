@@ -4,7 +4,7 @@ using System.Timers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using NCrontab;
+using Cronos;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
@@ -41,17 +41,17 @@ public class ScheduleRunner
                     !schedule.Enable
                     || schedule.IsRunning
                     || string.IsNullOrEmpty(schedule.Command)
-                    || string.IsNullOrEmpty(schedule.CronExp)
+                    || string.IsNullOrEmpty(schedule.Expression)
                     || schedule.CommandObj is null
                     || schedule.CommandObj.Type == CommandType.Invalid
                 )
                     continue;
 
-                if (schedule.CrontabSchedule is null)
+                if (schedule.Cron is null)
                 {
-                    var cron = CrontabSchedule.TryParse(schedule.CronExp);
-                    if (cron is not null)
-                        schedule.CrontabSchedule = cron;
+                    ;
+                    if (CronExpression.TryParse(schedule.Expression, out var cron))
+                        schedule.Cron = cron;
 
                     schedule.Enable = false;
                     continue;
@@ -65,7 +65,7 @@ public class ScheduleRunner
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }
 
-                schedule.NextTime = schedule.CrontabSchedule.GetNextOccurrence(DateTime.Now);
+                schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
             }
         }
     }

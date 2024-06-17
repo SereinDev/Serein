@@ -130,6 +130,6 @@
         private System.Windows.Forms.GroupBox ControlGroupBox;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Button OpenButton;
-        private System.Windows.Forms.RichTextBox ConsoleRichTextBox;
+        public System.Windows.Forms.RichTextBox ConsoleRichTextBox;
     }
 }

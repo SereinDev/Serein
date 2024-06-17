@@ -49,7 +49,7 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                        Binding="{Binding CronExp, UpdateSourceTrigger=PropertyChanged}"
+                        Binding="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
                         Header="Cron表达式" />
                 <DataGridCheckBoxColumn
                         Binding="{Binding Enable}"
