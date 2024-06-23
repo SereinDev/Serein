@@ -7,10 +7,10 @@
             "request": "attach"
         },
         {
-            "name": ".NET Core",
+            "name": "Serein.Lite",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/src/Serein.${input:targetApplication}/bin/Debug/${input:targetFramework}/Serein.${input:targetApplication}.dll",
+            "program": "${workspaceFolder}/src/Serein.Lite/bin/Debug/net8.0-windows/win-x64/Serein.Lite.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -21,7 +21,7 @@
             "name": "Serein.Plus",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/src/Serein.Plus/bin/Debug/net8.0-windows10.0.18362/win-x64/Serein.Plus.dll",
+            "program": "${workspaceFolder}/src/Serein.Plus/bin/Debug/net8.0-windows/win-x64/Serein.Plus.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -29,28 +29,4 @@
             "requireExactSource": false,
         }
     ],
-    "inputs": [
-        {
-            "id": "targetApplication",
-            "type": "pickString",
-            "description": "目标调试对象",
-            "options": [
-                "Cli",
-                "Plus",
-                "Lite"
-            ],
-            "default": "Cli"
-        },
-        {
-            "id": "targetFramework",
-            "type": "pickString",
-            "description": "目标版本",
-            "options": [
-                "net8.0-windows",
-                "net8.0",
-                "net8.0-windows10.0.18362"
-            ],
-            "default": "net8.0-windows"
-        }
-    ]
 }

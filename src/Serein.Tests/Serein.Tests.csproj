@@ -25,6 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
+    <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
   </ItemGroup>
 </Project>

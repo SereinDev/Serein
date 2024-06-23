@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Serein.Core\Serein.Core.csproj" />
+        <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
     </ItemGroup>
 

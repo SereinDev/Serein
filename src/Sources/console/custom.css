@@ -1,0 +1,166 @@
+/*
+  用于自定义特殊高亮样式
+  - 需以 ".custom> " 开头
+  - 用".[NAME]"指定高亮对象
+*/
+.custom > .file {
+  color: #688292;
+}
+
+.custom > .server {
+  color: #8bd645;
+}
+
+.custom > .debug {
+  color: #865fc5;
+}
+
+.custom > .error {
+  color: #d16969;
+}
+
+.custom > .warn {
+  color: #aa5612;
+}
+
+.custom > .info {
+  color: #20b2aa;
+}
+
+.custom > .LiteLoader,
+.custom > .LiteXLoader,
+.custom > .LLMoney {
+  color: #5a93c2;
+}
+
+/* 
+  颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code
+*/
+.asni30 {
+  color: #0c0c0c;
+}
+
+.asni31 {
+  color: #c50f1f;
+}
+
+.asni32 {
+  color: #13a10e;
+}
+
+.asni33 {
+  color: #c19c00;
+}
+
+.asni34 {
+  color: #0037da;
+}
+
+.asni35 {
+  color: #881798;
+}
+
+.asni36 {
+  color: #3a96dd;
+}
+
+.asni37 {
+  color: #dddddd;
+}
+
+.asni40 {
+  background: #0c0c0c;
+  color: white;
+}
+
+.asni41 {
+  background: #c50f1f;
+}
+
+.asni42 {
+  background: #13a10e;
+}
+
+.asni43 {
+  background: #c19c00;
+}
+
+.asni44 {
+  background: #0037da;
+}
+
+.asni45 {
+  background: #881798;
+}
+
+.asni46 {
+  background: #3a96dd;
+}
+
+.asni47 {
+  background: #dddddd;
+}
+
+.asni90 {
+  color: #767676;
+}
+
+.asni91 {
+  color: #fc391f;
+}
+
+.asni92 {
+  color: #16c60c;
+}
+
+.asni93 {
+  color: #f9f1a5;
+}
+
+.asni94 {
+  color: #3b78ff;
+}
+
+.asni95 {
+  color: #b4009e;
+}
+
+.asni96 {
+  color: #61d6d6;
+}
+
+.asni97 {
+  color: #f2f2f2;
+}
+
+.asni100 {
+  background: #767676;
+}
+
+.asni101 {
+  background: #fc391f;
+}
+
+.asni102 {
+  background: #16c60c;
+}
+
+.asni103 {
+  background: #f9f1a5;
+}
+
+.asni104 {
+  background: #3b78ff;
+}
+
+.asni105 {
+  background: #b4009e;
+}
+
+.asni106 {
+  background: #61d6d6;
+}
+
+.asni107 {
+  background: #f2f2f2;
+}

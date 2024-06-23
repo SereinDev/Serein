@@ -33,7 +33,7 @@
             ControlGroupBox = new System.Windows.Forms.GroupBox();
             CloseButton = new System.Windows.Forms.Button();
             OpenButton = new System.Windows.Forms.Button();
-            ConsoleRichTextBox = new System.Windows.Forms.RichTextBox();
+            ConsoleWebBrowser = new Controls.ConsoleWebBrowser();
             TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             InfoGroupBox = new System.Windows.Forms.GroupBox();
             TableLayoutPanel.SuspendLayout();
@@ -47,7 +47,7 @@
             TableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             TableLayoutPanel.Controls.Add(InfoGroupBox, 0, 0);
             TableLayoutPanel.Controls.Add(ControlGroupBox, 0, 1);
-            TableLayoutPanel.Controls.Add(ConsoleRichTextBox, 1, 0);
+            TableLayoutPanel.Controls.Add(ConsoleWebBrowser, 1, 0);
             TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             TableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             TableLayoutPanel.Name = "TableLayoutPanel";
@@ -102,15 +102,16 @@
             OpenButton.UseVisualStyleBackColor = true;
             OpenButton.Click += OpenButton_Click;
             // 
-            // ConsoleRichTextBox
+            // ConsoleWebBrowser
             // 
-            ConsoleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ConsoleRichTextBox.Location = new System.Drawing.Point(303, 3);
-            ConsoleRichTextBox.Name = "ConsoleRichTextBox";
-            TableLayoutPanel.SetRowSpan(ConsoleRichTextBox, 3);
-            ConsoleRichTextBox.Size = new System.Drawing.Size(974, 714);
-            ConsoleRichTextBox.TabIndex = 2;
-            ConsoleRichTextBox.Text = "";
+            ConsoleWebBrowser.AllowNavigation = false;
+            ConsoleWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            ConsoleWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            ConsoleWebBrowser.Location = new System.Drawing.Point(303, 3);
+            ConsoleWebBrowser.Name = "ConsoleWebBrowser";
+            TableLayoutPanel.SetRowSpan(ConsoleWebBrowser, 3);
+            ConsoleWebBrowser.Size = new System.Drawing.Size(974, 714);
+            ConsoleWebBrowser.TabIndex = 2;
             // 
             // ConnectionPage
             // 
@@ -130,6 +131,6 @@
         private System.Windows.Forms.GroupBox ControlGroupBox;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Button OpenButton;
-        public System.Windows.Forms.RichTextBox ConsoleRichTextBox;
+        public Controls.ConsoleWebBrowser ConsoleWebBrowser;
     }
 }

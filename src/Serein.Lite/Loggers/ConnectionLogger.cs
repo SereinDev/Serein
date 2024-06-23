@@ -1,46 +1,35 @@
-using System.Drawing;
-
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
-using Serein.Lite.Extensions;
 using Serein.Lite.Ui.Function;
 
 namespace Serein.Lite.Loggers;
 
 public class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
 {
-    public readonly object Lock = new();
+    private readonly object _lock = new();
     private readonly ConnectionPage _connectionPage = connectionPage;
 
     public void Log(LogLevel level, string message)
     {
         _connectionPage.Invoke(() =>
         {
-            lock (Lock)
+            lock (_lock)
             {
                 switch (level)
                 {
                     case LogLevel.Information:
-                        _connectionPage.ConsoleRichTextBox.AppendText($"[Info] ");
+                        _connectionPage.ConsoleWebBrowser.AppendLine($"[Info] {message}");
                         break;
                     case LogLevel.Warning:
-                        _connectionPage.ConsoleRichTextBox.AppendTextWithColor(
-                            "[Warn] ",
-                            Color.Red
-                        );
+                        _connectionPage.ConsoleWebBrowser.AppendWarn(message);
                         break;
                     case LogLevel.Error:
-                        _connectionPage.ConsoleRichTextBox.AppendTextWithColor(
-                            "[Error]",
-                            Color.Red
-                        );
+                        _connectionPage.ConsoleWebBrowser.AppendError(message);
                         break;
                     default:
                         return;
                 }
-                _connectionPage.ConsoleRichTextBox.AppendText(message);
-                _connectionPage.ConsoleRichTextBox.ScrollToEnd();
             }
         });
     }

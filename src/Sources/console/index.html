@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Serein - Console</title>
+    <meta name="description" itemprop="description" content="Serein https://github.com/SereinDev/Serein" />
+    <script defer>
+        document.onmouseup = document.onkeyup = function () { document.execCommand("Copy") };
+
+        var line = 0;
+
+        function appendText(str) {
+            var consoleDiv = document.querySelector("#console");
+            line = line + 1;
+            if (str == "\u1145clear") {
+                consoleDiv.innerHTML = "";
+                line = 0;
+            } else {
+                var div = document.createElement("div");
+                div.innerHTML = str;
+                consoleDiv.appendChild(div);
+            }
+            if (line > 250) {
+                consoleDiv.removeChild(consoleDiv.children[0]);
+                line = line - 1;
+            }
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Consolas, 'Courier New', Courier, 微软雅黑;
+            font-size: 0.8rem;
+        }
+
+        #console {
+            line-height: 150%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-all;
+            padding: 3px 5px;
+            overflow: auto;
+            border: solid 1px black;
+        }
+    </style>
+    <link rel="stylesheet" href="custom.css" />
+</head>
+
+<body>
+    <div id="console"></div>
+</body>
+
+</html>

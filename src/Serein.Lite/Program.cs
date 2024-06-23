@@ -26,6 +26,7 @@ public static class Program
         builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
 
+        builder.Services.AddSingleton<ResourcesManager>();
         builder.Services.AddSingleton<MainForm>();
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();

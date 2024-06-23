@@ -223,5 +223,7 @@ public partial class MainForm : Form
 
         TopMostToolStripMenuItem.Enabled = true;
         HideToolStripMenuItem.Checked = false;
+
+        Activate();
     }
 }
