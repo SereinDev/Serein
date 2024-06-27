@@ -19,7 +19,6 @@ public partial class Panel : UserControl
     {
         InitializeComponent();
         Dock = DockStyle.Fill;
-        ConsoleBrowser.Navigate(@"file:\\\" + Path.GetFullPath(@".console\index.html"));
 
         _timer = new(1000);
         _timer.Elapsed += (_, _) => Invoke(UpdateInfoLabels);
@@ -88,7 +87,7 @@ public partial class Panel : UserControl
                 $"启动服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error
+                MessageBoxIcon.Warning
             );
         }
     }
@@ -105,7 +104,7 @@ public partial class Panel : UserControl
                 $"停止服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error
+                MessageBoxIcon.Warning
             );
         }
     }
@@ -124,7 +123,7 @@ public partial class Panel : UserControl
                 $"强制结束服务器失败\r\n原因：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error
+                MessageBoxIcon.Warning
             );
         }
     }

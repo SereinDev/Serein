@@ -36,9 +36,18 @@
             System.Windows.Forms.ColumnHeader ColumnHeader5;
             System.Windows.Forms.ColumnHeader ColumnHeader6;
             System.Windows.Forms.StatusStrip StatusStrip;
+            System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem ImportToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem LookUpIntroDocsToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem LookUpVariablesDocsToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator;
             ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             MatchListView = new System.Windows.Forms.ListView();
             ListViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ColumnHeader1 = new System.Windows.Forms.ColumnHeader();
             ColumnHeader2 = new System.Windows.Forms.ColumnHeader();
             ColumnHeader3 = new System.Windows.Forms.ColumnHeader();
@@ -46,7 +55,14 @@
             ColumnHeader5 = new System.Windows.Forms.ColumnHeader();
             ColumnHeader6 = new System.Windows.Forms.ColumnHeader();
             StatusStrip = new System.Windows.Forms.StatusStrip();
+            AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            LookUpIntroDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            LookUpVariablesDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             StatusStrip.SuspendLayout();
+            ListViewContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // ColumnHeader1
@@ -94,6 +110,46 @@
             ToolStripStatusLabel.Name = "ToolStripStatusLabel";
             ToolStripStatusLabel.Size = new System.Drawing.Size(0, 12);
             // 
+            // AddToolStripMenuItem
+            // 
+            AddToolStripMenuItem.Name = "AddToolStripMenuItem";
+            AddToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            AddToolStripMenuItem.Text = "添加";
+            AddToolStripMenuItem.Click += AddToolStripMenuItem_Click;
+            // 
+            // ImportToolStripMenuItem
+            // 
+            ImportToolStripMenuItem.Name = "ImportToolStripMenuItem";
+            ImportToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            ImportToolStripMenuItem.Text = "导入...";
+            ImportToolStripMenuItem.Click += ImportToolStripMenuItem_Click;
+            // 
+            // LookUpIntroDocsToolStripMenuItem
+            // 
+            LookUpIntroDocsToolStripMenuItem.Name = "LookUpIntroDocsToolStripMenuItem";
+            LookUpIntroDocsToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            LookUpIntroDocsToolStripMenuItem.Text = "查看介绍文档";
+            LookUpIntroDocsToolStripMenuItem.Click += LookUpIntroDocsToolStripMenuItem_Click;
+            // 
+            // LookUpVariablesDocsToolStripMenuItem
+            // 
+            LookUpVariablesDocsToolStripMenuItem.Name = "LookUpVariablesDocsToolStripMenuItem";
+            LookUpVariablesDocsToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            LookUpVariablesDocsToolStripMenuItem.Text = "查看变量文档";
+            LookUpVariablesDocsToolStripMenuItem.Click += LookUpVariablesDocsToolStripMenuItem_Click;
+            // 
+            // RefreshToolStripMenuItem
+            // 
+            RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
+            RefreshToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            RefreshToolStripMenuItem.Text = "刷新";
+            RefreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator
+            // 
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new System.Drawing.Size(229, 6);
+            // 
             // MatchListView
             // 
             MatchListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4, ColumnHeader5, ColumnHeader6 });
@@ -113,9 +169,31 @@
             // ListViewContextMenuStrip
             // 
             ListViewContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            ListViewContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, EditToolStripMenuItem, DeleteToolStripMenuItem, ClearToolStripMenuItem, ImportToolStripMenuItem, RefreshToolStripMenuItem, toolStripSeparator, LookUpIntroDocsToolStripMenuItem, LookUpVariablesDocsToolStripMenuItem });
             ListViewContextMenuStrip.Name = "ContextMenuStrip";
-            ListViewContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            ListViewContextMenuStrip.Size = new System.Drawing.Size(233, 314);
             ListViewContextMenuStrip.Opening += ContextMenuStrip_Opening;
+            // 
+            // EditToolStripMenuItem
+            // 
+            EditToolStripMenuItem.Name = "EditToolStripMenuItem";
+            EditToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            EditToolStripMenuItem.Text = "编辑";
+            EditToolStripMenuItem.Click += EditToolStripMenuItem_Click;
+            // 
+            // DeleteToolStripMenuItem
+            // 
+            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            DeleteToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            DeleteToolStripMenuItem.Text = "删除";
+            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            // 
+            // ClearToolStripMenuItem
+            // 
+            ClearToolStripMenuItem.Name = "ClearToolStripMenuItem";
+            ClearToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            ClearToolStripMenuItem.Text = "清空";
+            ClearToolStripMenuItem.Click += ClearToolStripMenuItem_Click;
             // 
             // MatchPage
             // 
@@ -127,15 +205,18 @@
             Size = new System.Drawing.Size(1280, 720);
             StatusStrip.ResumeLayout(false);
             StatusStrip.PerformLayout();
+            ListViewContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ListView MatchListView;
         private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
         private System.Windows.Forms.ContextMenuStrip ListViewContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem EditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
     }
 }

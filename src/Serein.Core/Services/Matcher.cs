@@ -123,7 +123,7 @@ public class Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner 
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>
-        BotSetting.PermissionList.Contains(messagePacket.UserId.ToString())
+        BotSetting.Administrators.Contains(messagePacket.UserId.ToString())
         || BotSetting.GivePermissionToAllAdmins
             && messagePacket.MessageType == MessageType.Group
             && messagePacket.Sender.Role != Role.Member;

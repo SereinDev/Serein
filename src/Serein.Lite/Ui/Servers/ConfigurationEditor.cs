@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using Serein.Core.Models.Server;
@@ -113,4 +115,22 @@ public partial class ConfigurationEditor : Form
             );
         }
     }
+
+    private void IdTextBox_Enter(object sender, EventArgs e)
+    {
+        ErrorProvider.Clear();
+    }
+
+    private void IdTextBox_Validating(object sender, CancelEventArgs e)
+    {
+        if (string.IsNullOrEmpty(IdTextBox.Text))
+            ErrorProvider.SetError(IdTextBox, "Id不能为空");
+        else if (!IdRegex().IsMatch(IdTextBox.Text))
+            ErrorProvider.SetError(IdTextBox, "Id只能由字母、数字和下划线组成");
+        else if (IdTextBox.Text.Length <= 2)
+            ErrorProvider.SetError(IdTextBox, "Id长度太短");
+    }
+
+    [GeneratedRegex(@"^\w+$")]
+    private static partial Regex IdRegex();
 }

@@ -12,11 +12,9 @@ public abstract class DataItemWrapper
     [JsonPropertyOrder(-114514)]
     public string Type { get; set; } = string.Empty;
 
-#pragma warning disable CA1822
     [JsonPropertyName("_time")]
     [JsonPropertyOrder(-1919810)]
-    public DateTime Time => DateTime.Now;
-#pragma warning restore CA1822
+    public DateTime Time { get; } = DateTime.Now;
 }
 
 public class DataItemWrapper<T> : DataItemWrapper

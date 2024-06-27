@@ -18,9 +18,9 @@ public class ConnectionSetting : INotifyPropertyChanged
 
     public bool GivePermissionToAllAdmins { get; set; }
 
-    public string[] GroupList { get; set; } = Array.Empty<string>();
+    public string[] Groups { get; set; } = Array.Empty<string>();
 
-    public string[] PermissionList { get; set; } = Array.Empty<string>();
+    public string[] Administrators { get; set; } = Array.Empty<string>();
 
     public Dictionary<string, string?> Headers { get; set; } = new();
 

@@ -27,7 +27,7 @@ public partial class ConnectionPage : UserControl
                 $"连接失败：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error
+                MessageBoxIcon.Warning
             );
         }
     }
@@ -44,7 +44,7 @@ public partial class ConnectionPage : UserControl
                 $"断开失败：{ex.Message}",
                 "Serein",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Error
+                MessageBoxIcon.Warning
             );
         }
     }

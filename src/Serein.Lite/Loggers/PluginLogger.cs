@@ -21,24 +21,24 @@ public class PluginLogger(PluginPage pluginPage) : IPluginLogger
         {
             lock (_lock)
             {
-                switch (level)
-                {
-                    case LogLevel.Information:
-                        _pluginPage.ConsoleRichTextBox.AppendText($"[Info] ");
-                        break;
-                    case LogLevel.Warning:
-                        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Warn] ", Color.Red);
-                        break;
-                    case LogLevel.Error:
-                        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Error]", Color.Red);
-                        break;
-                    default:
-                        return;
-                }
-                _pluginPage.ConsoleRichTextBox.AppendText(
-                    $"[{name}] {message}{Environment.NewLine}"
-                );
-                _pluginPage.ConsoleRichTextBox.ScrollToEnd();
+                //switch (level)
+                //{
+                //    case LogLevel.Information:
+                //        _pluginPage.ConsoleRichTextBox.AppendText($"[Info] ");
+                //        break;
+                //    case LogLevel.Warning:
+                //        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Warn] ", Color.Red);
+                //        break;
+                //    case LogLevel.Error:
+                //        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Error]", Color.Red);
+                //        break;
+                //    default:
+                //        return;
+                //}
+                //_pluginPage.ConsoleRichTextBox.AppendText(
+                //    $"[{name}] {message}{Environment.NewLine}"
+                //);
+                //_pluginPage.ConsoleRichTextBox.ScrollToEnd();
             }
         });
     }

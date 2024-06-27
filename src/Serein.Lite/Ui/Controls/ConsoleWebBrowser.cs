@@ -1,11 +1,23 @@
+using System.IO;
 using System.Windows.Forms;
 
+using Microsoft.Extensions.DependencyInjection;
+
+using Serein.Core;
 using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui.Controls;
 
 public class ConsoleWebBrowser : WebBrowser
 {
+    public ConsoleWebBrowser()
+    {
+        if (!File.Exists(".console/index.html"))
+            SereinApp.Current?.Services.GetRequiredService<ResourcesManager>().WriteConsoleHtml();
+
+        Navigate(@"file:\\\" + Path.GetFullPath(@".console\index.html"));
+    }
+
     public void AppendHtmlLine(string html)
     {
         Document?.InvokeScript("appendText", new[] { html });

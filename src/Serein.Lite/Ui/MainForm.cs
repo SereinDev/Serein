@@ -32,7 +32,7 @@ public partial class MainForm : Form
     }
 
     private void SwitchPage<T>()
-        where T : Control
+        where T : UserControl
     {
         var page = Services.GetRequiredService<T>();
         page.Dock = DockStyle.Fill;
@@ -111,7 +111,12 @@ public partial class MainForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Serein.Lite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                ex.Message,
+                "Serein.Lite",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
             return;
         }
 
@@ -213,6 +218,8 @@ public partial class MainForm : Form
                 ToolTipIcon.None
             );
         }
+        else
+            NotifyIcon.Visible = false;
         base.OnClosing(e);
     }
 

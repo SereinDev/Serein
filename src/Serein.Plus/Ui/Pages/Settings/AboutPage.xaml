@@ -122,7 +122,7 @@
             </FlowDocumentScrollViewer>
             <ui:HyperlinkButton
                     Content="Github仓库"
-                    NavigateUri="https://github.com/Zaitonn/Serein" />
+                    NavigateUri="https://github.com/SereinDev/Serein" />
             <ui:HyperlinkButton
                     Content="官网/文档"
                     NavigateUri="https://serein.cc" />

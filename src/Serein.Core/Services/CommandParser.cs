@@ -6,6 +6,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services;
 
@@ -204,7 +205,6 @@ public partial class CommandParser(
                         )
                             / 1024
                             / 1024,
-
                     "ram.percent"
                         => 100
                             * (
@@ -259,7 +259,7 @@ public partial class CommandParser(
                 "server.usage" => server.ServerInfo.CPUUsage,
                 "server.output" => server.ServerInfo.OutputLines,
                 "server.input" => server.ServerInfo.InputLines,
-                "server.time" => DateTime.Now - server.ServerInfo.StartTime,
+                "server.time" => (DateTime.Now - server.ServerInfo.StartTime).ToCommonString(),
                 "server.version" => server.ServerInfo.Stat?.Version,
                 "server.motd" => server.ServerInfo.Stat?.Stripped_Motd,
                 "server.players.max" => server.ServerInfo.Stat?.MaximumPlayers,

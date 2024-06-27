@@ -32,7 +32,7 @@
             System.Windows.Forms.TabPage ConsoleTabPage;
             System.Windows.Forms.TabPage ManageTabPage;
             System.Windows.Forms.TabPage MarketTabPage;
-            ConsoleRichTextBox = new System.Windows.Forms.RichTextBox();
+            ConsoleWebBrowser = new Controls.ConsoleWebBrowser();
             TabControl = new System.Windows.Forms.TabControl();
             ConsoleTabPage = new System.Windows.Forms.TabPage();
             ManageTabPage = new System.Windows.Forms.TabPage();
@@ -55,7 +55,7 @@
             // 
             // ConsoleTabPage
             // 
-            ConsoleTabPage.Controls.Add(ConsoleRichTextBox);
+            ConsoleTabPage.Controls.Add(ConsoleWebBrowser);
             ConsoleTabPage.Location = new System.Drawing.Point(8, 45);
             ConsoleTabPage.Name = "ConsoleTabPage";
             ConsoleTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -63,17 +63,6 @@
             ConsoleTabPage.TabIndex = 0;
             ConsoleTabPage.Text = "控制台";
             ConsoleTabPage.UseVisualStyleBackColor = true;
-            // 
-            // ConsoleRichTextBox
-            // 
-            ConsoleRichTextBox.BackColor = System.Drawing.Color.White;
-            ConsoleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ConsoleRichTextBox.Location = new System.Drawing.Point(3, 3);
-            ConsoleRichTextBox.Name = "ConsoleRichTextBox";
-            ConsoleRichTextBox.ReadOnly = true;
-            ConsoleRichTextBox.Size = new System.Drawing.Size(1258, 661);
-            ConsoleRichTextBox.TabIndex = 0;
-            ConsoleRichTextBox.Text = "";
             // 
             // ManageTabPage
             // 
@@ -95,6 +84,15 @@
             MarketTabPage.Text = "市场";
             MarketTabPage.UseVisualStyleBackColor = true;
             // 
+            // ConsoleWebBrowser
+            // 
+            ConsoleWebBrowser.AllowNavigation = false;
+            ConsoleWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            ConsoleWebBrowser.Location = new System.Drawing.Point(3, 3);
+            ConsoleWebBrowser.Name = "ConsoleWebBrowser";
+            ConsoleWebBrowser.Size = new System.Drawing.Size(1258, 661);
+            ConsoleWebBrowser.TabIndex = 0;
+            // 
             // PluginPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
@@ -109,6 +107,6 @@
 
         #endregion
 
-        public System.Windows.Forms.RichTextBox ConsoleRichTextBox;
+        internal Controls.ConsoleWebBrowser ConsoleWebBrowser;
     }
 }

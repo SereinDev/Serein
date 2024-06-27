@@ -11,14 +11,14 @@ using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Ui.Pages.Settings;
 
-public partial class NetworkSettingPage : Page
+public partial class ConnectionSettingPage : Page
 {
     private readonly IHost _host;
 
     private IServiceProvider Services => _host.Services;
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
 
-    public NetworkSettingPage(IHost host)
+    public ConnectionSettingPage(IHost host)
     {
         _host = host;
         InitializeComponent();

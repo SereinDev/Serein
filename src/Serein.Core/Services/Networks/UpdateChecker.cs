@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Octokit;
 
 using Serein.Core.Models.Network;
-using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Networks;

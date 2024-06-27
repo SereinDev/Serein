@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-using Cronos;
+using NCrontab;
 
 using PropertyChanged;
 
@@ -15,6 +15,7 @@ public class Schedule : INotifyPropertyChanged
     private string? _command;
     private string? _expression;
 
+    [AlsoNotifyFor(nameof(NextTime))]
     public string? Expression
     {
         get => _expression;
@@ -27,13 +28,13 @@ public class Schedule : INotifyPropertyChanged
                 if (string.IsNullOrEmpty(_expression))
                     throw new ArgumentException("Cron表达式不得为空", nameof(Expression));
 
-                Cron = CronExpression.Parse(_expression);
+                Cron = CrontabSchedule.Parse(_expression);
                 NextTime = Cron?.GetNextOccurrence(DateTime.Now);
-                CommandTip = null;
+                CronExpTip = null;
             }
             catch (Exception e)
             {
-                CommandTip = e.Message;
+                CronExpTip = e.Message;
                 NextTime = null;
             }
         }
@@ -60,11 +61,11 @@ public class Schedule : INotifyPropertyChanged
 
     public string? Description { get; set; }
 
-    public bool Enable { get; set; }
+    public bool Enable { get; set; } = true;
 
     [DoNotNotify]
     [JsonIgnore]
-    public Command? CommandObj { get; private set; }
+    internal Command? CommandObj { get; private set; }
 
     [JsonIgnore]
     public DateTime? NextTime { get; internal set; }
@@ -75,7 +76,7 @@ public class Schedule : INotifyPropertyChanged
 
     [DoNotNotify]
     [JsonIgnore]
-    internal CronExpression? Cron { get; set; }
+    internal CrontabSchedule? Cron { get; set; }
 
     [AlsoNotifyFor(nameof(Tip))]
     private string? CommandTip { get; set; }

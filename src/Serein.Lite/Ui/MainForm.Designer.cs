@@ -34,39 +34,50 @@ partial class MainForm
     {
         components = new Container();
         ToolStripMenuItem ServerToolStripMenuItem;
+        ToolStripMenuItem ServerConsoleToolStripMenuItem;
         ToolStripSeparator ServerToolStripSeparator;
+        ToolStripMenuItem ServerAddToolStripMenuItem;
+        ToolStripMenuItem ServerImportToolStripMenuItem;
         ToolStripMenuItem FunctionsToolStripMenuItem;
+        ToolStripMenuItem ConnectionToolStripMenuItem;
+        ToolStripMenuItem MatchToolStripMenuItem;
+        ToolStripMenuItem ScheduleToolStripMenuItem;
+        ToolStripMenuItem PluginToolStripMenuItem;
+        ToolStripMenuItem SettingToolStripMenuItem;
+        ContextMenuStrip NotifyIconContextMenuStrip;
+        ToolStripSeparator ToolStripSeparator1;
+        ToolStripMenuItem ExitToolStripMenuItem;
         ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
-        ServerConsoleToolStripMenuItem = new ToolStripMenuItem();
-        ServerAddToolStripMenuItem = new ToolStripMenuItem();
         ServerEditToolStripMenuItem = new ToolStripMenuItem();
         ServerRemoveToolStripMenuItem = new ToolStripMenuItem();
+        HideToolStripMenuItem = new ToolStripMenuItem();
+        TopMostToolStripMenuItem = new ToolStripMenuItem();
+        MenuStrip = new MenuStrip();
+        NotifyIcon = new NotifyIcon(components);
+        ChildrenPanel = new Panel();
+        ServerToolStripMenuItem = new ToolStripMenuItem();
+        ServerConsoleToolStripMenuItem = new ToolStripMenuItem();
+        ServerToolStripSeparator = new ToolStripSeparator();
+        ServerAddToolStripMenuItem = new ToolStripMenuItem();
         ServerImportToolStripMenuItem = new ToolStripMenuItem();
+        FunctionsToolStripMenuItem = new ToolStripMenuItem();
         ConnectionToolStripMenuItem = new ToolStripMenuItem();
         MatchToolStripMenuItem = new ToolStripMenuItem();
         ScheduleToolStripMenuItem = new ToolStripMenuItem();
         PluginToolStripMenuItem = new ToolStripMenuItem();
-        MenuStrip = new MenuStrip();
         SettingToolStripMenuItem = new ToolStripMenuItem();
-        NotifyIcon = new NotifyIcon(components);
         NotifyIconContextMenuStrip = new ContextMenuStrip(components);
-        HideToolStripMenuItem = new ToolStripMenuItem();
-        TopMostToolStripMenuItem = new ToolStripMenuItem();
-        toolStripSeparator1 = new ToolStripSeparator();
+        ToolStripSeparator1 = new ToolStripSeparator();
         ExitToolStripMenuItem = new ToolStripMenuItem();
-        ChildrenPanel = new Panel();
-        ServerToolStripMenuItem = new ToolStripMenuItem();
-        ServerToolStripSeparator = new ToolStripSeparator();
-        FunctionsToolStripMenuItem = new ToolStripMenuItem();
-        MenuStrip.SuspendLayout();
         NotifyIconContextMenuStrip.SuspendLayout();
+        MenuStrip.SuspendLayout();
         SuspendLayout();
         // 
         // ServerToolStripMenuItem
         // 
         ServerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ServerConsoleToolStripMenuItem, ServerToolStripSeparator, ServerAddToolStripMenuItem, ServerEditToolStripMenuItem, ServerRemoveToolStripMenuItem, ServerImportToolStripMenuItem });
         ServerToolStripMenuItem.Name = "ServerToolStripMenuItem";
-        ServerToolStripMenuItem.Size = new Size(106, 38);
+        ServerToolStripMenuItem.Size = new Size(106, 35);
         ServerToolStripMenuItem.Text = "服务器";
         ServerToolStripMenuItem.DropDownOpening += ServerToolStripMenuItem_DropDownOpening;
         // 
@@ -93,7 +104,7 @@ partial class MainForm
         // 
         ServerEditToolStripMenuItem.Name = "ServerEditToolStripMenuItem";
         ServerEditToolStripMenuItem.Size = new Size(219, 44);
-        ServerEditToolStripMenuItem.Text = "修改";
+        ServerEditToolStripMenuItem.Text = "编辑";
         ServerEditToolStripMenuItem.Click += ServerEditToolStripMenuItem_Click;
         // 
         // ServerRemoveToolStripMenuItem
@@ -114,66 +125,48 @@ partial class MainForm
         // 
         FunctionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ConnectionToolStripMenuItem, MatchToolStripMenuItem, ScheduleToolStripMenuItem, PluginToolStripMenuItem });
         FunctionsToolStripMenuItem.Name = "FunctionsToolStripMenuItem";
-        FunctionsToolStripMenuItem.Size = new Size(82, 38);
+        FunctionsToolStripMenuItem.Size = new Size(82, 35);
         FunctionsToolStripMenuItem.Text = "功能";
         // 
         // ConnectionToolStripMenuItem
         // 
         ConnectionToolStripMenuItem.Name = "ConnectionToolStripMenuItem";
-        ConnectionToolStripMenuItem.Size = new Size(359, 44);
+        ConnectionToolStripMenuItem.Size = new Size(243, 44);
         ConnectionToolStripMenuItem.Text = "连接";
         ConnectionToolStripMenuItem.Click += ConnectionToolStripMenuItem_Click;
         // 
         // MatchToolStripMenuItem
         // 
         MatchToolStripMenuItem.Name = "MatchToolStripMenuItem";
-        MatchToolStripMenuItem.Size = new Size(359, 44);
+        MatchToolStripMenuItem.Size = new Size(243, 44);
         MatchToolStripMenuItem.Text = "匹配";
         MatchToolStripMenuItem.Click += MatchToolStripMenuItem_Click;
         // 
         // ScheduleToolStripMenuItem
         // 
         ScheduleToolStripMenuItem.Name = "ScheduleToolStripMenuItem";
-        ScheduleToolStripMenuItem.Size = new Size(359, 44);
+        ScheduleToolStripMenuItem.Size = new Size(243, 44);
         ScheduleToolStripMenuItem.Text = "定时任务";
         ScheduleToolStripMenuItem.Click += ScheduleToolStripMenuItem_Click;
         // 
         // PluginToolStripMenuItem
         // 
         PluginToolStripMenuItem.Name = "PluginToolStripMenuItem";
-        PluginToolStripMenuItem.Size = new Size(359, 44);
+        PluginToolStripMenuItem.Size = new Size(243, 44);
         PluginToolStripMenuItem.Text = "插件";
         PluginToolStripMenuItem.Click += PluginToolStripMenuItem_Click;
-        // 
-        // MenuStrip
-        // 
-        MenuStrip.ImageScalingSize = new Size(32, 32);
-        MenuStrip.Items.AddRange(new ToolStripItem[] { ServerToolStripMenuItem, FunctionsToolStripMenuItem, SettingToolStripMenuItem });
-        MenuStrip.Location = new Point(0, 0);
-        MenuStrip.Name = "MenuStrip";
-        MenuStrip.Size = new Size(1280, 42);
-        MenuStrip.TabIndex = 0;
-        MenuStrip.Text = "menuStrip1";
         // 
         // SettingToolStripMenuItem
         // 
         SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-        SettingToolStripMenuItem.Size = new Size(82, 38);
+        SettingToolStripMenuItem.Size = new Size(82, 35);
         SettingToolStripMenuItem.Text = "设置";
         SettingToolStripMenuItem.Click += SettingToolStripMenuItem_Click;
-        // 
-        // NotifyIcon
-        // 
-        NotifyIcon.ContextMenuStrip = NotifyIconContextMenuStrip;
-        NotifyIcon.Icon = (Icon)resources.GetObject("NotifyIcon.Icon");
-        NotifyIcon.Text = "Serein.Lite";
-        NotifyIcon.Visible = true;
-        NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;
         // 
         // NotifyIconContextMenuStrip
         // 
         NotifyIconContextMenuStrip.ImageScalingSize = new Size(32, 32);
-        NotifyIconContextMenuStrip.Items.AddRange(new ToolStripItem[] { HideToolStripMenuItem, TopMostToolStripMenuItem, toolStripSeparator1, ExitToolStripMenuItem });
+        NotifyIconContextMenuStrip.Items.AddRange(new ToolStripItem[] { HideToolStripMenuItem, TopMostToolStripMenuItem, ToolStripSeparator1, ExitToolStripMenuItem });
         NotifyIconContextMenuStrip.Name = "NotifyIconContextMenuStrip";
         NotifyIconContextMenuStrip.Size = new Size(137, 124);
         // 
@@ -191,10 +184,10 @@ partial class MainForm
         TopMostToolStripMenuItem.Text = "置顶";
         TopMostToolStripMenuItem.Click += TopMostToolStripMenuItem_Click;
         // 
-        // toolStripSeparator1
+        // ToolStripSeparator1
         // 
-        toolStripSeparator1.Name = "toolStripSeparator1";
-        toolStripSeparator1.Size = new Size(133, 6);
+        ToolStripSeparator1.Name = "ToolStripSeparator1";
+        ToolStripSeparator1.Size = new Size(133, 6);
         // 
         // ExitToolStripMenuItem
         // 
@@ -203,12 +196,30 @@ partial class MainForm
         ExitToolStripMenuItem.Text = "退出";
         ExitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
         // 
+        // MenuStrip
+        // 
+        MenuStrip.ImageScalingSize = new Size(32, 32);
+        MenuStrip.Items.AddRange(new ToolStripItem[] { ServerToolStripMenuItem, FunctionsToolStripMenuItem, SettingToolStripMenuItem });
+        MenuStrip.Location = new Point(0, 0);
+        MenuStrip.Name = "MenuStrip";
+        MenuStrip.Size = new Size(1280, 39);
+        MenuStrip.TabIndex = 0;
+        MenuStrip.Text = "menuStrip1";
+        // 
+        // NotifyIcon
+        // 
+        NotifyIcon.ContextMenuStrip = NotifyIconContextMenuStrip;
+        NotifyIcon.Icon = (Icon)resources.GetObject("NotifyIcon.Icon");
+        NotifyIcon.Text = "Serein.Lite";
+        NotifyIcon.Visible = true;
+        NotifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+        // 
         // ChildrenPanel
         // 
         ChildrenPanel.Dock = DockStyle.Fill;
-        ChildrenPanel.Location = new Point(0, 42);
+        ChildrenPanel.Location = new Point(0, 39);
         ChildrenPanel.Name = "ChildrenPanel";
-        ChildrenPanel.Size = new Size(1280, 719);
+        ChildrenPanel.Size = new Size(1280, 722);
         ChildrenPanel.TabIndex = 1;
         // 
         // MainForm
@@ -223,9 +234,9 @@ partial class MainForm
         MinimumSize = new Size(1280, 800);
         Name = "MainForm";
         Text = "Serein.Lite";
+        NotifyIconContextMenuStrip.ResumeLayout(false);
         MenuStrip.ResumeLayout(false);
         MenuStrip.PerformLayout();
-        NotifyIconContextMenuStrip.ResumeLayout(false);
         ResumeLayout(false);
         PerformLayout();
     }
@@ -234,20 +245,9 @@ partial class MainForm
 
     private MenuStrip MenuStrip;
     private NotifyIcon NotifyIcon;
-    private ToolStripMenuItem MatchToolStripMenuItem;
-    private ToolStripMenuItem ScheduleToolStripMenuItem;
-    private ToolStripMenuItem ConnectionToolStripMenuItem;
-    private ToolStripMenuItem PluginToolStripMenuItem;
-    private ToolStripMenuItem SettingToolStripMenuItem;
-    private ToolStripMenuItem ServerAddToolStripMenuItem;
     private ToolStripMenuItem ServerEditToolStripMenuItem;
     private ToolStripMenuItem ServerRemoveToolStripMenuItem;
-    private ToolStripMenuItem ServerImportToolStripMenuItem;
-    private ToolStripMenuItem ServerConsoleToolStripMenuItem;
     private Panel ChildrenPanel;
-    private ContextMenuStrip NotifyIconContextMenuStrip;
     private ToolStripMenuItem HideToolStripMenuItem;
     private ToolStripMenuItem TopMostToolStripMenuItem;
-    private ToolStripSeparator toolStripSeparator1;
-    private ToolStripMenuItem ExitToolStripMenuItem;
 }

@@ -39,7 +39,7 @@ public partial class CategoriesPage : Page
             {
                 // Icon = new FontIcon { Glyph = SegoeIcons.NetworkTower },
                 Content = "连接",
-                Tag = nameof(NetworkSettingPage)
+                Tag = nameof(ConnectionSettingPage)
             },
             new()
             {
@@ -91,7 +91,7 @@ public partial class CategoriesPage : Page
         {
             nameof(AboutPage) => Services.GetRequiredService<AboutPage>(),
             nameof(AppSettingPage) => Services.GetRequiredService<AppSettingPage>(),
-            nameof(NetworkSettingPage) => Services.GetRequiredService<NetworkSettingPage>(),
+            nameof(ConnectionSettingPage) => Services.GetRequiredService<ConnectionSettingPage>(),
             nameof(PageSettingPage) => Services.GetRequiredService<PageSettingPage>(),
             nameof(ReactionSettingPage) => Services.GetRequiredService<ReactionSettingPage>(),
             _ => Services.GetRequiredService<NotImplPage>(),

@@ -46,7 +46,7 @@ public partial class App : Application
 
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
-        builder.Services.AddSingleton<NetworkSettingPage>();
+        builder.Services.AddSingleton<ConnectionSettingPage>();
         builder.Services.AddSingleton<PageSettingPage>();
         builder.Services.AddSingleton<ReactionSettingPage>();
         builder.Services.AddSingleton<CategoriesPage>();

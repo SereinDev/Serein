@@ -4,31 +4,24 @@ using System.Timers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Cronos;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-public class ScheduleRunner
+public class ScheduleRunner(IHost host)
 {
-    private readonly IHost _host;
+    private readonly IHost _host = host;
     private IServiceProvider Services => _host.Services;
     private ScheduleProvider ScheduleProvider => Services.GetRequiredService<ScheduleProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
 
-    private readonly Timer _timer;
-
-    public ScheduleRunner(IHost host)
-    {
-        _host = host;
-        _timer = new(2000) { Enabled = true };
-    }
+    private readonly Timer _timer = new(2000);
 
     internal void Start()
     {
         _timer.Elapsed += OnElapsed;
+        _timer.Start();
     }
 
     private void OnElapsed(object? sender, EventArgs e)
@@ -40,22 +33,11 @@ public class ScheduleRunner
                 if (
                     !schedule.Enable
                     || schedule.IsRunning
-                    || string.IsNullOrEmpty(schedule.Command)
-                    || string.IsNullOrEmpty(schedule.Expression)
                     || schedule.CommandObj is null
                     || schedule.CommandObj.Type == CommandType.Invalid
+                    || schedule.Cron is null
                 )
                     continue;
-
-                if (schedule.Cron is null)
-                {
-                    ;
-                    if (CronExpression.TryParse(schedule.Expression, out var cron))
-                        schedule.Cron = cron;
-
-                    schedule.Enable = false;
-                    continue;
-                }
 
                 if (schedule.NextTime > DateTime.Now)
                 {

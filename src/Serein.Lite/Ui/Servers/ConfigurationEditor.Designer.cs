@@ -28,51 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.Label IdLabel;
             System.Windows.Forms.Label NameLabel;
+            System.Windows.Forms.Label FileNameLabel;
+            System.Windows.Forms.Label ArgumentLabel;
+            System.Windows.Forms.Label LineTerminatorLabel;
+            System.Windows.Forms.Label OutputStyleLabel;
+            System.Windows.Forms.Label OutputEncondingLabel;
+            System.Windows.Forms.Label InputEncondingLabel;
+            System.Windows.Forms.Label StopLabel;
+            System.Windows.Forms.Label PortLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationEditor));
-            FileNameLabel = new System.Windows.Forms.Label();
             FileNameTextBox = new System.Windows.Forms.TextBox();
             IdTextBox = new System.Windows.Forms.TextBox();
             MainTabControl = new System.Windows.Forms.TabControl();
             CommonTabPage = new System.Windows.Forms.TabPage();
             NameTextBox = new System.Windows.Forms.TextBox();
             ArgumentTextBox = new System.Windows.Forms.TextBox();
-            ArgumentLabel = new System.Windows.Forms.Label();
             InputAndOutputTabPage = new System.Windows.Forms.TabPage();
             LineTerminatorTextBox = new System.Windows.Forms.TextBox();
-            LineTerminatorLabel = new System.Windows.Forms.Label();
             UseUnicodeCharsCheckBox = new System.Windows.Forms.CheckBox();
             OutputCommandUserInputCheckBox = new System.Windows.Forms.CheckBox();
             SaveLogCheckBox = new System.Windows.Forms.CheckBox();
-            OutputStyleLabel = new System.Windows.Forms.Label();
             OutputStyleComboBox = new System.Windows.Forms.ComboBox();
-            OutputEncondingLabel = new System.Windows.Forms.Label();
-            InputEncondingLabel = new System.Windows.Forms.Label();
             OutputEncondingComboBox = new System.Windows.Forms.ComboBox();
             InputEncondingComboBox = new System.Windows.Forms.ComboBox();
             MoreTabPage = new System.Windows.Forms.TabPage();
             StopCommandsTextBox = new System.Windows.Forms.TextBox();
-            StopLabel = new System.Windows.Forms.Label();
-            PortLabel = new System.Windows.Forms.Label();
             PortNumericUpDown = new System.Windows.Forms.NumericUpDown();
             StartWhenSettingUpCheckBox = new System.Windows.Forms.CheckBox();
             AutoStopWhenCrashingCheckBox = new System.Windows.Forms.CheckBox();
             AutoRestartCheckBox = new System.Windows.Forms.CheckBox();
             ConfirmButton = new System.Windows.Forms.Button();
+            ErrorProvider = new System.Windows.Forms.ErrorProvider(components);
             IdLabel = new System.Windows.Forms.Label();
             NameLabel = new System.Windows.Forms.Label();
+            FileNameLabel = new System.Windows.Forms.Label();
+            ArgumentLabel = new System.Windows.Forms.Label();
+            LineTerminatorLabel = new System.Windows.Forms.Label();
+            OutputStyleLabel = new System.Windows.Forms.Label();
+            OutputEncondingLabel = new System.Windows.Forms.Label();
+            InputEncondingLabel = new System.Windows.Forms.Label();
+            StopLabel = new System.Windows.Forms.Label();
+            PortLabel = new System.Windows.Forms.Label();
             MainTabControl.SuspendLayout();
             CommonTabPage.SuspendLayout();
             InputAndOutputTabPage.SuspendLayout();
             MoreTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PortNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ErrorProvider).BeginInit();
             SuspendLayout();
             // 
             // IdLabel
             // 
             IdLabel.AutoSize = true;
-            IdLabel.Location = new System.Drawing.Point(17, 15);
+            IdLabel.Location = new System.Drawing.Point(23, 12);
             IdLabel.Name = "IdLabel";
             IdLabel.Size = new System.Drawing.Size(36, 31);
             IdLabel.TabIndex = 0;
@@ -81,7 +92,7 @@
             // NameLabel
             // 
             NameLabel.AutoSize = true;
-            NameLabel.Location = new System.Drawing.Point(17, 111);
+            NameLabel.Location = new System.Drawing.Point(23, 108);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new System.Drawing.Size(62, 31);
             NameLabel.TabIndex = 2;
@@ -90,30 +101,95 @@
             // FileNameLabel
             // 
             FileNameLabel.AutoSize = true;
-            FileNameLabel.Location = new System.Drawing.Point(17, 207);
+            FileNameLabel.Location = new System.Drawing.Point(23, 204);
             FileNameLabel.Name = "FileNameLabel";
             FileNameLabel.Size = new System.Drawing.Size(110, 31);
             FileNameLabel.TabIndex = 4;
             FileNameLabel.Text = "启动文件";
             // 
+            // ArgumentLabel
+            // 
+            ArgumentLabel.AutoSize = true;
+            ArgumentLabel.Location = new System.Drawing.Point(23, 300);
+            ArgumentLabel.Name = "ArgumentLabel";
+            ArgumentLabel.Size = new System.Drawing.Size(110, 31);
+            ArgumentLabel.TabIndex = 6;
+            ArgumentLabel.Text = "启动参数";
+            // 
+            // LineTerminatorLabel
+            // 
+            LineTerminatorLabel.AutoSize = true;
+            LineTerminatorLabel.Location = new System.Drawing.Point(23, 291);
+            LineTerminatorLabel.Name = "LineTerminatorLabel";
+            LineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
+            LineTerminatorLabel.TabIndex = 6;
+            LineTerminatorLabel.Text = "行终止符";
+            // 
+            // OutputStyleLabel
+            // 
+            OutputStyleLabel.AutoSize = true;
+            OutputStyleLabel.Location = new System.Drawing.Point(23, 198);
+            OutputStyleLabel.Name = "OutputStyleLabel";
+            OutputStyleLabel.Size = new System.Drawing.Size(110, 31);
+            OutputStyleLabel.TabIndex = 4;
+            OutputStyleLabel.Text = "输出样式";
+            // 
+            // OutputEncondingLabel
+            // 
+            OutputEncondingLabel.AutoSize = true;
+            OutputEncondingLabel.Location = new System.Drawing.Point(23, 105);
+            OutputEncondingLabel.Name = "OutputEncondingLabel";
+            OutputEncondingLabel.Size = new System.Drawing.Size(110, 31);
+            OutputEncondingLabel.TabIndex = 2;
+            OutputEncondingLabel.Text = "输出编码";
+            // 
+            // InputEncondingLabel
+            // 
+            InputEncondingLabel.AutoSize = true;
+            InputEncondingLabel.Location = new System.Drawing.Point(23, 12);
+            InputEncondingLabel.Name = "InputEncondingLabel";
+            InputEncondingLabel.Size = new System.Drawing.Size(110, 31);
+            InputEncondingLabel.TabIndex = 0;
+            InputEncondingLabel.Text = "输入编码";
+            // 
+            // StopLabel
+            // 
+            StopLabel.AutoSize = true;
+            StopLabel.Location = new System.Drawing.Point(26, 217);
+            StopLabel.Name = "StopLabel";
+            StopLabel.Size = new System.Drawing.Size(110, 31);
+            StopLabel.TabIndex = 5;
+            StopLabel.Text = "关服命令";
+            // 
+            // PortLabel
+            // 
+            PortLabel.AutoSize = true;
+            PortLabel.Location = new System.Drawing.Point(25, 136);
+            PortLabel.Name = "PortLabel";
+            PortLabel.Size = new System.Drawing.Size(111, 31);
+            PortLabel.TabIndex = 3;
+            PortLabel.Text = "IPv4端口";
+            // 
             // FileNameTextBox
             // 
-            FileNameTextBox.Location = new System.Drawing.Point(17, 245);
+            FileNameTextBox.Location = new System.Drawing.Point(23, 242);
             FileNameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             FileNameTextBox.Name = "FileNameTextBox";
             FileNameTextBox.PlaceholderText = "启动时运行的文件（双击选择文件）";
-            FileNameTextBox.Size = new System.Drawing.Size(722, 38);
+            FileNameTextBox.Size = new System.Drawing.Size(700, 38);
             FileNameTextBox.TabIndex = 5;
             FileNameTextBox.DoubleClick += FileName_DoubleClick;
             // 
             // IdTextBox
             // 
-            IdTextBox.Location = new System.Drawing.Point(17, 53);
+            IdTextBox.Location = new System.Drawing.Point(23, 50);
             IdTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             IdTextBox.Name = "IdTextBox";
-            IdTextBox.PlaceholderText = "用于区分服务器；只能由字母、数字和下划线组成";
-            IdTextBox.Size = new System.Drawing.Size(722, 38);
+            IdTextBox.PlaceholderText = "用于区分服务器；一经填写不可修改";
+            IdTextBox.Size = new System.Drawing.Size(700, 38);
             IdTextBox.TabIndex = 1;
+            IdTextBox.Enter += IdTextBox_Enter;
+            IdTextBox.Validating += IdTextBox_Validating;
             // 
             // MainTabControl
             // 
@@ -148,29 +224,21 @@
             // 
             // NameTextBox
             // 
-            NameTextBox.Location = new System.Drawing.Point(17, 149);
+            NameTextBox.Location = new System.Drawing.Point(23, 146);
             NameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             NameTextBox.Name = "NameTextBox";
-            NameTextBox.Size = new System.Drawing.Size(722, 38);
+            NameTextBox.PlaceholderText = "用于标识服务器";
+            NameTextBox.Size = new System.Drawing.Size(700, 38);
             NameTextBox.TabIndex = 3;
             // 
             // ArgumentTextBox
             // 
-            ArgumentTextBox.Location = new System.Drawing.Point(17, 341);
+            ArgumentTextBox.Location = new System.Drawing.Point(23, 338);
             ArgumentTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             ArgumentTextBox.Name = "ArgumentTextBox";
             ArgumentTextBox.PlaceholderText = "启动时附加的参数";
-            ArgumentTextBox.Size = new System.Drawing.Size(722, 38);
+            ArgumentTextBox.Size = new System.Drawing.Size(700, 38);
             ArgumentTextBox.TabIndex = 7;
-            // 
-            // ArgumentLabel
-            // 
-            ArgumentLabel.AutoSize = true;
-            ArgumentLabel.Location = new System.Drawing.Point(17, 303);
-            ArgumentLabel.Name = "ArgumentLabel";
-            ArgumentLabel.Size = new System.Drawing.Size(110, 31);
-            ArgumentLabel.TabIndex = 6;
-            ArgumentLabel.Text = "启动参数";
             // 
             // InputAndOutputTabPage
             // 
@@ -200,15 +268,6 @@
             LineTerminatorTextBox.Name = "LineTerminatorTextBox";
             LineTerminatorTextBox.Size = new System.Drawing.Size(722, 38);
             LineTerminatorTextBox.TabIndex = 7;
-            // 
-            // LineTerminatorLabel
-            // 
-            LineTerminatorLabel.AutoSize = true;
-            LineTerminatorLabel.Location = new System.Drawing.Point(23, 291);
-            LineTerminatorLabel.Name = "LineTerminatorLabel";
-            LineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
-            LineTerminatorLabel.TabIndex = 6;
-            LineTerminatorLabel.Text = "行终止符";
             // 
             // UseUnicodeCharsCheckBox
             // 
@@ -240,15 +299,6 @@
             SaveLogCheckBox.Text = "保存日志";
             SaveLogCheckBox.UseVisualStyleBackColor = true;
             // 
-            // OutputStyleLabel
-            // 
-            OutputStyleLabel.AutoSize = true;
-            OutputStyleLabel.Location = new System.Drawing.Point(23, 198);
-            OutputStyleLabel.Name = "OutputStyleLabel";
-            OutputStyleLabel.Size = new System.Drawing.Size(110, 31);
-            OutputStyleLabel.TabIndex = 4;
-            OutputStyleLabel.Text = "输出样式";
-            // 
             // OutputStyleComboBox
             // 
             OutputStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -259,24 +309,6 @@
             OutputStyleComboBox.Name = "OutputStyleComboBox";
             OutputStyleComboBox.Size = new System.Drawing.Size(197, 39);
             OutputStyleComboBox.TabIndex = 5;
-            // 
-            // OutputEncondingLabel
-            // 
-            OutputEncondingLabel.AutoSize = true;
-            OutputEncondingLabel.Location = new System.Drawing.Point(23, 105);
-            OutputEncondingLabel.Name = "OutputEncondingLabel";
-            OutputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            OutputEncondingLabel.TabIndex = 2;
-            OutputEncondingLabel.Text = "输出编码";
-            // 
-            // InputEncondingLabel
-            // 
-            InputEncondingLabel.AutoSize = true;
-            InputEncondingLabel.Location = new System.Drawing.Point(23, 12);
-            InputEncondingLabel.Name = "InputEncondingLabel";
-            InputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            InputEncondingLabel.TabIndex = 0;
-            InputEncondingLabel.Text = "输入编码";
             // 
             // OutputEncondingComboBox
             // 
@@ -328,24 +360,6 @@
             StopCommandsTextBox.TabIndex = 6;
             StopCommandsTextBox.Text = "stop";
             // 
-            // StopLabel
-            // 
-            StopLabel.AutoSize = true;
-            StopLabel.Location = new System.Drawing.Point(26, 217);
-            StopLabel.Name = "StopLabel";
-            StopLabel.Size = new System.Drawing.Size(110, 31);
-            StopLabel.TabIndex = 5;
-            StopLabel.Text = "关服命令";
-            // 
-            // PortLabel
-            // 
-            PortLabel.AutoSize = true;
-            PortLabel.Location = new System.Drawing.Point(25, 136);
-            PortLabel.Name = "PortLabel";
-            PortLabel.Size = new System.Drawing.Size(111, 31);
-            PortLabel.TabIndex = 3;
-            PortLabel.Text = "IPv4端口";
-            // 
             // PortNumericUpDown
             // 
             PortNumericUpDown.Location = new System.Drawing.Point(26, 170);
@@ -359,9 +373,9 @@
             StartWhenSettingUpCheckBox.AutoSize = true;
             StartWhenSettingUpCheckBox.Location = new System.Drawing.Point(26, 88);
             StartWhenSettingUpCheckBox.Name = "StartWhenSettingUpCheckBox";
-            StartWhenSettingUpCheckBox.Size = new System.Drawing.Size(382, 35);
+            StartWhenSettingUpCheckBox.Size = new System.Drawing.Size(310, 35);
             StartWhenSettingUpCheckBox.TabIndex = 2;
-            StartWhenSettingUpCheckBox.Text = "应用程序启动后自动运行服务器";
+            StartWhenSettingUpCheckBox.Text = "应用程序启动后自动运行";
             StartWhenSettingUpCheckBox.UseVisualStyleBackColor = true;
             // 
             // AutoStopWhenCrashingCheckBox
@@ -379,9 +393,9 @@
             AutoRestartCheckBox.AutoSize = true;
             AutoRestartCheckBox.Location = new System.Drawing.Point(26, 6);
             AutoRestartCheckBox.Name = "AutoRestartCheckBox";
-            AutoRestartCheckBox.Size = new System.Drawing.Size(142, 35);
+            AutoRestartCheckBox.Size = new System.Drawing.Size(358, 35);
             AutoRestartCheckBox.TabIndex = 0;
-            AutoRestartCheckBox.Text = "自动重启";
+            AutoRestartCheckBox.Text = "当退出代码不为零时自动重启";
             AutoRestartCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfirmButton
@@ -394,6 +408,10 @@
             ConfirmButton.UseVisualStyleBackColor = true;
             ConfirmButton.Click += ConfirmButton_Click;
             // 
+            // ErrorProvider
+            // 
+            ErrorProvider.ContainerControl = this;
+            // 
             // ConfigurationEditor
             // 
             AcceptButton = ConfirmButton;
@@ -402,6 +420,7 @@
             ClientSize = new System.Drawing.Size(774, 529);
             Controls.Add(ConfirmButton);
             Controls.Add(MainTabControl);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new System.Drawing.Size(800, 600);
@@ -419,39 +438,33 @@
             MoreTabPage.ResumeLayout(false);
             MoreTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PortNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ErrorProvider).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Label FileNameLabel;
         private System.Windows.Forms.TextBox IdTextBox;
         private System.Windows.Forms.TextBox FileNameTextBox;
         private System.Windows.Forms.TabControl MainTabControl;
         private System.Windows.Forms.TabPage CommonTabPage;
         private System.Windows.Forms.TabPage InputAndOutputTabPage;
         private System.Windows.Forms.TextBox ArgumentTextBox;
-        private System.Windows.Forms.Label ArgumentLabel;
         private System.Windows.Forms.TabPage MoreTabPage;
         private System.Windows.Forms.CheckBox AutoStopWhenCrashingCheckBox;
         private System.Windows.Forms.CheckBox AutoRestartCheckBox;
         private System.Windows.Forms.CheckBox StartWhenSettingUpCheckBox;
-        private System.Windows.Forms.Label PortLabel;
         private System.Windows.Forms.NumericUpDown PortNumericUpDown;
         private System.Windows.Forms.Button ConfirmButton;
         private System.Windows.Forms.TextBox StopCommandsTextBox;
-        private System.Windows.Forms.Label StopLabel;
         private System.Windows.Forms.ComboBox InputEncondingComboBox;
-        private System.Windows.Forms.Label OutputEncondingLabel;
-        private System.Windows.Forms.Label InputEncondingLabel;
         private System.Windows.Forms.ComboBox OutputEncondingComboBox;
         private System.Windows.Forms.ComboBox OutputStyleComboBox;
-        private System.Windows.Forms.Label OutputStyleLabel;
         private System.Windows.Forms.CheckBox SaveLogCheckBox;
         private System.Windows.Forms.CheckBox OutputCommandUserInputCheckBox;
         private System.Windows.Forms.CheckBox UseUnicodeCharsCheckBox;
         private System.Windows.Forms.TextBox LineTerminatorTextBox;
-        private System.Windows.Forms.Label LineTerminatorLabel;
         private System.Windows.Forms.TextBox NameTextBox;
+        private System.Windows.Forms.ErrorProvider ErrorProvider;
     }
 }
