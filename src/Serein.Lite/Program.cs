@@ -10,6 +10,7 @@ using Serein.Lite.Loggers;
 using Serein.Lite.Ui;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
+using Serein.Lite.Ui.Settings;
 
 namespace Serein.Lite;
 
@@ -34,6 +35,8 @@ public static class Program
         builder.Services.AddSingleton<ConnectionPage>();
         builder.Services.AddSingleton<PluginPage>();
         builder.Services.AddSingleton<SettingPage>();
+        builder.Services.AddSingleton<AppSettingPage>();
+        builder.Services.AddSingleton<ConnectionSettingPage>();
 
         App = builder.Build();
     }

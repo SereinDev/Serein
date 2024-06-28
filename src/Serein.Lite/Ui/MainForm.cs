@@ -10,6 +10,7 @@ using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
+using Serein.Lite.Ui.Settings;
 
 namespace Serein.Lite.Ui;
 

@@ -196,7 +196,7 @@ public partial class SchedulePage : UserControl
 
     private void ListViewContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-  DeleteToolStripMenuItem.Enabled = ScheduleListView.SelectedItems.Count > 0;
+        DeleteToolStripMenuItem.Enabled = ScheduleListView.SelectedItems.Count > 0;
         EditToolStripMenuItem.Enabled = ScheduleListView.SelectedItems.Count == 1;
         ClearToolStripMenuItem.Enabled = ScheduleListView.Items.Count > 0;
     }

@@ -113,7 +113,7 @@
                         Tag="Dark" />
             </StackPanel>
             <TextBox
-                    Text="{Binding Value.Application.Title, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Value.Application.CustomTitle, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     ToolTip="显示在标题栏的内容（可使用命令的变量）"
                     TextChanged="OnPropertyChanged"
