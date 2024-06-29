@@ -12,7 +12,7 @@ using Serein.Core.Services.Data;
 
 using WebSocket4Net;
 
-namespace Serein.Core.Services.Networks.Connection;
+namespace Serein.Core.Services.Network.Connection;
 
 public class WebSocketService(IHost host) : IConnectionService
 {

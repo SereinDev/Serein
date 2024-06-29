@@ -6,11 +6,13 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Serein.Core;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
+using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui;
 
@@ -222,6 +224,14 @@ public partial class MainForm : Form
         else
             NotifyIcon.Visible = false;
         base.OnClosing(e);
+    }
+
+    protected override void OnShown(EventArgs e)
+    {
+        if (SereinApp.StartForTheFirstTime)
+            DialogFactory.ShowWelcomeDialog();
+
+        base.OnShown(e);
     }
 
     private void NotifyIcon_DoubleClick(object sender, EventArgs e)

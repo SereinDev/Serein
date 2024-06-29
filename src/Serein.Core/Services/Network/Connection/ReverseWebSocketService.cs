@@ -17,7 +17,7 @@ using WebSocket4Net;
 
 using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-namespace Serein.Core.Services.Networks.Connection;
+namespace Serein.Core.Services.Network.Connection;
 
 public class ReverseWebSocketService(IHost host) : IConnectionService
 {

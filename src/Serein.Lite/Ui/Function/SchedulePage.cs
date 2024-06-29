@@ -90,6 +90,7 @@ public partial class SchedulePage : UserControl
             ScheduleListView.Items.Remove(item);
             ScheduleListView.Items.Insert(i, item);
             ScheduleListView.EndUpdate();
+            SaveData();
         }
         else if (e.KeyCode == Keys.Down && i >= 0 && i < ScheduleListView.Items.Count - 1)
         {
@@ -99,6 +100,7 @@ public partial class SchedulePage : UserControl
             ScheduleListView.Items.Remove(item);
             ScheduleListView.Items.Insert(i, item);
             ScheduleListView.EndUpdate();
+            SaveData();
         }
     }
 
@@ -146,9 +148,9 @@ public partial class SchedulePage : UserControl
             MessageBox.Show(
                 "你确定要删除所选项吗？",
                 "Serein.Lite",
-                MessageBoxButtons.YesNo,
+                MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question
-            ) != DialogResult.Yes
+            ) != DialogResult.OK
         )
             return;
 
@@ -166,9 +168,9 @@ public partial class SchedulePage : UserControl
             MessageBox.Show(
                 "你确定要删除所有项吗？",
                 "Serein.Lite",
-                MessageBoxButtons.YesNo,
+                MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question
-            ) != DialogResult.Yes
+            ) != DialogResult.OK
         )
             return;
 
@@ -181,8 +183,6 @@ public partial class SchedulePage : UserControl
     {
         LoadData();
     }
-
-    private void ImportToolStripMenuItem_Click(object sender, EventArgs e) { }
 
     private void LookUpIntroDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {

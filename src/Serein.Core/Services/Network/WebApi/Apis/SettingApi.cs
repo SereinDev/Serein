@@ -1,6 +1,6 @@
 using EmbedIO.Routing;
 
-namespace Serein.Core.Services.Networks.WebApi.Apis;
+namespace Serein.Core.Services.Network.WebApi.Apis;
 
 public partial class ApiMap
 {

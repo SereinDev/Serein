@@ -35,6 +35,7 @@ public static class Program
         builder.Services.AddSingleton<ConnectionPage>();
         builder.Services.AddSingleton<PluginPage>();
         builder.Services.AddSingleton<SettingPage>();
+        builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
         builder.Services.AddSingleton<ConnectionSettingPage>();
 

@@ -136,12 +136,6 @@ public partial class MatchPage : UserControl
         "https://sereindev.github.io/docs/guidance/variables".OpenInBrowser();
     }
 
-    private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        var dialog = new OpenFileDialog();
-        dialog.ShowDialog();
-    }
-
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         var match = new Match();
@@ -171,9 +165,9 @@ public partial class MatchPage : UserControl
             MessageBox.Show(
                 "你确定要删除所选项吗？",
                 "Serein.Lite",
-                MessageBoxButtons.YesNo,
+                MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question
-            ) != DialogResult.Yes
+            ) != DialogResult.OK
         )
             return;
 
@@ -191,9 +185,9 @@ public partial class MatchPage : UserControl
             MessageBox.Show(
                 "你确定要删除所有项吗？",
                 "Serein.Lite",
-                MessageBoxButtons.YesNo,
+                MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question
-            ) != DialogResult.Yes
+            ) != DialogResult.OK
         )
             return;
 

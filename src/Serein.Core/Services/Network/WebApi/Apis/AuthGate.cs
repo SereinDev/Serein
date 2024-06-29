@@ -5,7 +5,7 @@ using EmbedIO;
 
 using Serein.Core.Services.Data;
 
-namespace Serein.Core.Services.Networks.WebApi.Apis;
+namespace Serein.Core.Services.Network.WebApi.Apis;
 
 public class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
 {

@@ -13,7 +13,7 @@ using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Plugins.Js.Modules;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;

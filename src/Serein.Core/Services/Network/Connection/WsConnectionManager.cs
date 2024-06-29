@@ -20,7 +20,7 @@ using Serein.Core.Utils.Json;
 
 using WebSocket4Net;
 
-namespace Serein.Core.Services.Networks.Connection;
+namespace Serein.Core.Services.Network.Connection;
 
 public class WsConnectionManager
 {

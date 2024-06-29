@@ -8,7 +8,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Network.Connection;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 

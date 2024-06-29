@@ -7,10 +7,9 @@ using Microsoft.Extensions.Logging;
 
 using Octokit;
 
-using Serein.Core.Models.Network;
 using Serein.Core.Services.Data;
 
-namespace Serein.Core.Services.Networks;
+namespace Serein.Core.Services.Network;
 
 public class UpdateChecker : INotifyPropertyChanged
 {

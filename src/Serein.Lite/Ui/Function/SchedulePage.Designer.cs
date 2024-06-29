@@ -35,7 +35,6 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ContextMenuStrip ListViewContextMenuStrip;
             System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
-            System.Windows.Forms.ToolStripMenuItem ImportToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
             System.Windows.Forms.ToolStripSeparator ToolStripSeparator1;
             System.Windows.Forms.ToolStripMenuItem LookUpIntroDocsToolStripMenuItem;
@@ -51,7 +50,6 @@
             columnHeader3 = new System.Windows.Forms.ColumnHeader();
             ListViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
             AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             LookUpIntroDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +91,7 @@
             // ListViewContextMenuStrip
             // 
             ListViewContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            ListViewContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, EditToolStripMenuItem, DeleteToolStripMenuItem, ClearToolStripMenuItem, ImportToolStripMenuItem, RefreshToolStripMenuItem, ToolStripSeparator1, LookUpIntroDocsToolStripMenuItem, LookUpVariablesDocsToolStripMenuItem });
+            ListViewContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, EditToolStripMenuItem, DeleteToolStripMenuItem, ClearToolStripMenuItem, RefreshToolStripMenuItem, ToolStripSeparator1, LookUpIntroDocsToolStripMenuItem, LookUpVariablesDocsToolStripMenuItem });
             ListViewContextMenuStrip.Name = "ContextMenuStrip";
             ListViewContextMenuStrip.Size = new System.Drawing.Size(301, 358);
             ListViewContextMenuStrip.Opening += ListViewContextMenuStrip_Opening;
@@ -125,13 +123,6 @@
             ClearToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
             ClearToolStripMenuItem.Text = "清空";
             ClearToolStripMenuItem.Click += ClearToolStripMenuItem_Click;
-            // 
-            // ImportToolStripMenuItem
-            // 
-            ImportToolStripMenuItem.Name = "ImportToolStripMenuItem";
-            ImportToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            ImportToolStripMenuItem.Text = "导入...";
-            ImportToolStripMenuItem.Click += ImportToolStripMenuItem_Click;
             // 
             // RefreshToolStripMenuItem
             // 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Network.Connection;
 
 namespace Serein.Lite.Ui.Function;
 

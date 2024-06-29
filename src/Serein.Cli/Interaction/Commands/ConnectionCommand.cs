@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
-using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Network.Connection;
 
 using Spectre.Console;
 

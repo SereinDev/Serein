@@ -239,7 +239,7 @@ public partial class MainWindow : System.Windows.Window
 
     private void OnContentRendered(object sender, EventArgs e)
     {
-        if (SereinApp.FirstTimeOpening)
+        if (SereinApp.StartForTheFirstTime)
             new WelcomeDialog().ShowAsync();
 
         App.Host.StartAsync();

@@ -77,7 +77,7 @@ partial class MainForm
         // 
         ServerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ServerConsoleToolStripMenuItem, ServerToolStripSeparator, ServerAddToolStripMenuItem, ServerEditToolStripMenuItem, ServerRemoveToolStripMenuItem, ServerImportToolStripMenuItem });
         ServerToolStripMenuItem.Name = "ServerToolStripMenuItem";
-        ServerToolStripMenuItem.Size = new Size(106, 38);
+        ServerToolStripMenuItem.Size = new Size(106, 35);
         ServerToolStripMenuItem.Text = "服务器";
         ServerToolStripMenuItem.DropDownOpening += ServerToolStripMenuItem_DropDownOpening;
         // 
@@ -125,7 +125,7 @@ partial class MainForm
         // 
         FunctionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ConnectionToolStripMenuItem, MatchToolStripMenuItem, ScheduleToolStripMenuItem, PluginToolStripMenuItem });
         FunctionsToolStripMenuItem.Name = "FunctionsToolStripMenuItem";
-        FunctionsToolStripMenuItem.Size = new Size(82, 38);
+        FunctionsToolStripMenuItem.Size = new Size(82, 35);
         FunctionsToolStripMenuItem.Text = "功能";
         // 
         // ConnectionToolStripMenuItem
@@ -159,7 +159,7 @@ partial class MainForm
         // SettingToolStripMenuItem
         // 
         SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-        SettingToolStripMenuItem.Size = new Size(82, 38);
+        SettingToolStripMenuItem.Size = new Size(82, 35);
         SettingToolStripMenuItem.Text = "设置";
         SettingToolStripMenuItem.Click += SettingToolStripMenuItem_Click;
         // 
@@ -202,7 +202,7 @@ partial class MainForm
         MenuStrip.Items.AddRange(new ToolStripItem[] { ServerToolStripMenuItem, FunctionsToolStripMenuItem, SettingToolStripMenuItem });
         MenuStrip.Location = new Point(0, 0);
         MenuStrip.Name = "MenuStrip";
-        MenuStrip.Size = new Size(1280, 42);
+        MenuStrip.Size = new Size(1254, 39);
         MenuStrip.TabIndex = 0;
         MenuStrip.Text = "menuStrip1";
         // 
@@ -217,21 +217,21 @@ partial class MainForm
         // ChildrenPanel
         // 
         ChildrenPanel.Dock = DockStyle.Fill;
-        ChildrenPanel.Location = new Point(0, 42);
+        ChildrenPanel.Location = new Point(0, 39);
         ChildrenPanel.Name = "ChildrenPanel";
-        ChildrenPanel.Size = new Size(1280, 719);
+        ChildrenPanel.Size = new Size(1254, 690);
         ChildrenPanel.TabIndex = 1;
         // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(14F, 31F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1280, 761);
+        ClientSize = new Size(1254, 729);
         Controls.Add(ChildrenPanel);
         Controls.Add(MenuStrip);
         Icon = (Icon)resources.GetObject("$this.Icon");
         MainMenuStrip = MenuStrip;
-        MinimumSize = new Size(1280, 800);
+        MinimumSize = new Size(800, 600);
         Name = "MainForm";
         Text = "Serein.Lite";
         NotifyIconContextMenuStrip.ResumeLayout(false);

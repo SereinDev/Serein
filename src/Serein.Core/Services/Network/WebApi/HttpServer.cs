@@ -9,11 +9,11 @@ using EmbedIO.WebApi;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks.WebApi.Apis;
+using Serein.Core.Services.Network.WebApi.Apis;
 
 using Swan.Logging;
 
-namespace Serein.Core.Services.Networks.WebApi;
+namespace Serein.Core.Services.Network.WebApi;
 
 public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvider)
 {

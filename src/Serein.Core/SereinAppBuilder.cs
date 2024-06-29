@@ -7,14 +7,14 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks;
-using Serein.Core.Services.Networks.Connection;
-using Serein.Core.Services.Networks.WebApi;
+using Serein.Core.Services.Network;
+using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
-using Serein.Core.Services.Ssh;
+using Serein.Core.Services.Network.Ssh;
 
 namespace Serein.Core;
 

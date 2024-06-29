@@ -59,7 +59,7 @@
                         </Run>
                         <Hyperlink
                                 RequestNavigate="OnRequestNavigate"
-                                NavigateUri="https://github.com/Zaitonn/Serein?tab=GPL-3.0-1-ov-file#">
+                                NavigateUri="https://github.com/SereinDev/Serein?tab=GPL-3.0-1-ov-file#">
                             GPL-3.0 license
                         </Hyperlink>
                         <Run>
@@ -125,7 +125,7 @@
                     NavigateUri="https://github.com/SereinDev/Serein" />
             <ui:HyperlinkButton
                     Content="官网/文档"
-                    NavigateUri="https://serein.cc" />
+                    NavigateUri="https://sereindev.github.io/" />
             <ui:HyperlinkButton
                     Content="交流群"
                     NavigateUri="https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv" />

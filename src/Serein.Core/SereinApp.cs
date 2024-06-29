@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks;
+using Serein.Core.Services.Network;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
@@ -26,7 +26,7 @@ public sealed class SereinApp : IHost
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
         ?.InformationalVersion;
     public static readonly AppType Type;
-    public static readonly bool FirstTimeOpening = !File.Exists(PathConstants.SettingFile);
+    public static readonly bool StartForTheFirstTime = !File.Exists(PathConstants.SettingFile);
 
     public static SereinApp? Current { get; private set; }
 

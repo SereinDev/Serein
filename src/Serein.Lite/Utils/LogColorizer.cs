@@ -119,8 +119,7 @@ public static partial class LogColorizer
         return outputStyle switch
         {
             OutputStyle.RawText => string.Join(string.Empty, ParseAnsiCode(EscapeLog(line))),
-            OutputStyle.Plain => EscapeLog(OutputFilter.Clear(line)),
-            _ => throw new NotSupportedException(),
+            _ => EscapeLog(OutputFilter.Clear(line)),
         };
     }
 }

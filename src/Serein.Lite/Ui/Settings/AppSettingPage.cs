@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Networks;
+using Serein.Core.Services.Network;
 
 namespace Serein.Lite.Ui.Settings;
 

@@ -1,6 +1,6 @@
 using System;
 
-using Serein.Core.Services.Networks.Connection;
+using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Modules;

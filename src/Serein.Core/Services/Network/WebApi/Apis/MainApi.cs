@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 
-namespace Serein.Core.Services.Networks.WebApi.Apis;
+namespace Serein.Core.Services.Network.WebApi.Apis;
 
 public partial class ApiMap : WebApiController
 {

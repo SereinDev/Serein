@@ -4,12 +4,17 @@ namespace Serein.Lite.Ui.Settings;
 
 public partial class SettingPage : UserControl
 {
-    public SettingPage(ConnectionSettingPage connectionSettingPage, AppSettingPage appSettingPage)
+    public SettingPage(
+        ConnectionSettingPage connectionSettingPage,
+        AppSettingPage appSettingPage,
+        AboutPage aboutPage
+    )
     {
         InitializeComponent();
 
         ConnectionTabPage.Controls.Add(WrapPage(connectionSettingPage));
         ApplicationTabPage.Controls.Add(WrapPage(appSettingPage));
+        AboutTabPage.Controls.Add(WrapPage(aboutPage));
     }
 
     private static Panel WrapPage(UserControl userControl)
