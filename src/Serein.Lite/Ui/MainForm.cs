@@ -2,12 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
@@ -22,13 +21,15 @@ public partial class MainForm : Form
 
     private readonly IHost _host;
     private readonly ServerManager _serverManager;
+    private readonly PluginManager _pluginManager;
 
     private IServiceProvider Services => _host.Services;
 
-    public MainForm(IHost host, ServerManager serverManager)
+    public MainForm(IHost host, ServerManager serverManager, PluginManager pluginManager)
     {
         _host = host;
         _serverManager = serverManager;
+        _pluginManager = pluginManager;
 
         InitializeComponent();
         SwitchPage<ServerPage>();
@@ -161,9 +162,9 @@ public partial class MainForm : Form
         )
             return;
 
-        var id = serverPage.MainTabControl.Controls[
-            serverPage.MainTabControl.SelectedIndex
-        ].Tag?.ToString();
+        var id = serverPage
+            .MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex]
+            .Tag?.ToString();
 
         if (
             !string.IsNullOrEmpty(id)
@@ -230,6 +231,8 @@ public partial class MainForm : Form
     {
         if (SereinApp.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
+
+        _pluginManager.Load();
 
         base.OnShown(e);
     }

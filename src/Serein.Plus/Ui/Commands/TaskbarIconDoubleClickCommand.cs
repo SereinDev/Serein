@@ -5,11 +5,11 @@ using Serein.Plus.Ui.Window;
 
 namespace Serein.Plus.Ui.Commands;
 
+#pragma warning disable CS0067
+
 public class TaskbarIconDoubleClickCommand(MainWindow parent) : ICommand
 {
     private readonly MainWindow _parent = parent;
-
-    public event EventHandler? CanExecuteChanged;
 
     public bool CanExecute(object? parameter)
     {
@@ -20,4 +20,6 @@ public class TaskbarIconDoubleClickCommand(MainWindow parent) : ICommand
     {
         _parent.ShowWindow();
     }
+
+    public event EventHandler? CanExecuteChanged;
 }

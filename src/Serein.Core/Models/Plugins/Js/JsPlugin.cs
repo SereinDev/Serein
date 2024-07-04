@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
+using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
 
@@ -19,11 +20,11 @@ namespace Serein.Core.Models.Plugins.Js;
 
 public class JsPlugin : IPlugin
 {
-    public string Name { get; }
-    public Config Config { get; }
+    public PluginInfo PluginInfo { get; }
+    public string FileName { get; }
+    public JsPluginConfig Config { get; }
     public Engine Engine { get; }
     public ScriptInstance ScriptInstance { get; }
-    public PluginInfo Info { get; private set; }
     public JsConsole Console { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
@@ -36,27 +37,20 @@ public class JsPlugin : IPlugin
     private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
     private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
 
-    public JsPlugin(IHost host, string name, Config preLoadConfig)
+    public JsPlugin(IHost host, PluginInfo pluginInfo, string fileName, JsPluginConfig config)
     {
         _cancellationTokenSource = new();
         _host = host;
-
-        Config = preLoadConfig;
-        Info = new();
+        PluginInfo = pluginInfo;
+        FileName = fileName;
+        Config = config;
         EventHandlers = new();
-        Name = Config.Name ?? name;
-        Console = new(Logger, Name);
-
+        Console = new(Logger, PluginInfo.Name);
         ScriptInstance = new(_host, this);
         Engine = EngineFactory.Create(this);
     }
 
     public void Execute(string text) => Engine.Execute(text);
-
-    public void SetPluginInfo(PluginInfo? pluginInfo)
-    {
-        Info = pluginInfo ?? throw new ArgumentNullException(nameof(pluginInfo));
-    }
 
     public void Dispose()
     {
@@ -88,7 +82,7 @@ public class JsPlugin : IPlugin
         }
         catch (Exception e)
         {
-            Logger.Log(LogLevel.Error, Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
+            Logger.Log(LogLevel.Error,PluginInfo. Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
             return false;
         }
         finally

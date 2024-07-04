@@ -37,7 +37,7 @@ namespace Serein.Plus.Ui.Window;
 
 public partial class MainWindow : System.Windows.Window
 {
-    private readonly IHost _host = App.Host;
+    private readonly IHost _host = SereinApp.Current!;
     private IServiceProvider Services => _host.Services;
     private ServerManager Servers => Services.GetRequiredService<ServerManager>();
     private CommandParser CommandParser => Services.GetRequiredService<CommandParser>();
@@ -242,7 +242,7 @@ public partial class MainWindow : System.Windows.Window
         if (SereinApp.StartForTheFirstTime)
             new WelcomeDialog().ShowAsync();
 
-        App.Host.StartAsync();
+        _host.StartAsync();
     }
 
     // private void OnServerStatusChanged(object? sender, EventArgs e)

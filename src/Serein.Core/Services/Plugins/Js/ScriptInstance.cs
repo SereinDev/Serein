@@ -29,7 +29,7 @@ public partial class ScriptInstance
     private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
     private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
     private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
-    private JsManager JsManager => Services.GetRequiredService<JsManager>();
+    private PluginManager PluginManager => Services.GetRequiredService<PluginManager>();
 
     public ServerModule Server { get; }
     public WsModule Ws { get; }
@@ -38,7 +38,7 @@ public partial class ScriptInstance
     public static string Version => SereinApp.Version;
     public static string? FullVersion => SereinApp.FullVersion;
     public static AppType Type => SereinApp.Type;
-    public string Namespace => _jsPlugin.Name;
+    public string Namespace => _jsPlugin.PluginInfo.Id;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {
@@ -64,7 +64,7 @@ public partial class ScriptInstance
     public void Log(params JsValue[] jsValues)
     {
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.Log(LogLevel.Information, _jsPlugin.Name, str);
+        Logger.Log(LogLevel.Information, _jsPlugin.PluginInfo.Name, str);
     }
 
     public bool Exports(string? name, JsValue jsValue)
@@ -75,9 +75,9 @@ public partial class ScriptInstance
         try
         {
             if (jsValue.IsNull() || jsValue.IsUndefined())
-                return JsManager.ExportedVariables.Remove(name, out _);
+                return PluginManager.ExportedVariables.Remove(name, out _);
 
-            JsManager.ExportedVariables[name] = jsValue.ToObject();
+            PluginManager.ExportedVariables[name] = jsValue.ToObject();
             return true;
         }
         catch
@@ -90,7 +90,7 @@ public partial class ScriptInstance
     {
         return
             string.IsNullOrEmpty(name)
-            || !JsManager.ExportedVariables.TryGetValue(name, out object? o)
+            || !PluginManager.ExportedVariables.TryGetValue(name, out object? o)
             ? JsValue.Undefined
             : JsValue.FromObject(_jsPlugin.Engine, o);
     }

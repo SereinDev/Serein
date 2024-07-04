@@ -18,10 +18,15 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsEngineFactory(SettingProvider settingProvider, IPluginLogger logger)
+public class JsEngineFactory(
+    SettingProvider settingProvider,
+    IPluginLogger pluginLogger,
+    ILogger logger
+)
 {
     private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly IPluginLogger _logger = logger;
+    private readonly IPluginLogger _pluginLogger = pluginLogger;
+    private readonly ILogger _logger = logger;
 
     public Options CreateOptions(JsPlugin jsPlugin)
     {
@@ -38,11 +43,12 @@ public class JsEngineFactory(SettingProvider settingProvider, IPluginLogger logg
             }
             catch (Exception e)
             {
-                _logger.Log(
+                _pluginLogger.Log(
                     LogLevel.Warning,
-                    jsPlugin.Name,
-                    $"加载所需程序集“{assemblyName}”时出现异常：" + e.Message
+                    jsPlugin.PluginInfo.Name,
+                    $"加载所需程序集“{assemblyName}”时出现异常：\n" + e.Message
                 );
+                _logger.LogDebug(e, "[{}] 加载所需程序集“{}”时出现异常", jsPlugin.PluginInfo.Name, assemblyName);
             }
         }
 

@@ -16,8 +16,6 @@ namespace Serein.Plus;
 
 public partial class App : Application
 {
-    public static SereinApp Host { get; } = Build();
-
     public App()
     {
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
@@ -26,6 +24,7 @@ public partial class App : Application
             Shutdown();
         };
 
+        Build();
         ShutdownMode = ShutdownMode.OnMainWindowClose;
     }
 

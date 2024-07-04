@@ -58,11 +58,11 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<HttpServer>();
         Services.AddSingleton<SshServiceProvider>();
 
-        Services.AddSingleton<PluginHost>();
+        Services.AddSingleton<PluginManager>();
         Services.AddSingleton<EventDispatcher>();
         Services.AddSingleton<JsEngineFactory>();
-        Services.AddSingleton<JsManager>();
-        Services.AddSingleton<NetManager>();
+        Services.AddSingleton<JsPluginLoader>();
+        Services.AddSingleton<NetPluginLoader>();
     }
 
     public SereinApp Build() => new(_hostAppBuilder.Build());

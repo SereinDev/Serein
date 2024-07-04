@@ -11,7 +11,7 @@ using Serein.Core.Utils.Extensions;
 namespace Serein.Core.Services;
 
 public partial class CommandParser(
-    PluginHost pluginHost,
+    PluginManager pluginManager,
     ServerManager servers,
     HardwareInfoProvider hardwareInfoProvider
 )
@@ -25,7 +25,7 @@ public partial class CommandParser(
     public static readonly Regex Variable = GetVariable();
     public static readonly Regex GeneralCommand = GetGeneralCommand();
 
-    private readonly PluginHost _pluginHost = pluginHost;
+    private readonly PluginManager _pluginManager = pluginManager;
     private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
     private readonly ServerManager _serverManager = servers;
 
@@ -133,7 +133,7 @@ public partial class CommandParser(
                 )
                     return value;
 
-                if (_pluginHost.Variables.TryGetValue(name, out value) && value is not null)
+                if (_pluginManager.CommandVariables.TryGetValue(name, out value) && value is not null)
                     return value;
 
                 object? obj = name switch

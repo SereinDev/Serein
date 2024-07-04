@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Serein.Core;
 using Serein.Core.Services.Data;
 using Serein.Plus.Ui.Utils;
 
@@ -16,7 +17,7 @@ public class ConsoleTextEditor : TextEditor
 
     static ConsoleTextEditor()
     {
-        SettingProvider = App.Host.Services.GetRequiredService<SettingProvider>();
+        SettingProvider = SereinApp.Current!.Services.GetRequiredService<SettingProvider>();
         SettingProvider.PropertyChanged += UpdateLines;
         SettingProvider.PropertyChanged += (_, _) =>
             SettingProvider.Value.Application.PropertyChanged += UpdateLines;
