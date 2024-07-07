@@ -1,22 +1,35 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-using Serein.Core.Services;
+using Microsoft.Extensions.Hosting;
+
+using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 
 namespace Serein.Cli;
 
-public class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
+public class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser) : IHostedService
 {
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly CommandParser _commandParser = commandParser;
 
-    public void Init()
-    {
-        if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-            return;
 
-        _settingProvider.Value.Application.PropertyChanged += (_, _) => Update();
-        Update();
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+
+            _settingProvider.Value.Application.PropertyChanged += (_, _) => Update();
+            Update();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
     }
 
     private void Update()

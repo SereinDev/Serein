@@ -9,14 +9,13 @@ using System.Runtime.Loader;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Output;
-using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-public class NetPluginLoader : IPluginLoader
+public class NetPluginLoader : IPluginLoader<PluginBase>
 {
     private static readonly string Name = typeof(NetPluginLoader).FullName!;
     private readonly IHost _host;
@@ -24,8 +23,7 @@ public class NetPluginLoader : IPluginLoader
     private AssemblyLoadContext _assemblyLoadContext;
 
     public ConcurrentDictionary<string, PluginBase> NetPlugins { get; } = new();
-    public IReadOnlyDictionary<string, IPlugin> Plugins =>
-        (IReadOnlyDictionary<string, IPlugin>)NetPlugins;
+    public IReadOnlyDictionary<string, PluginBase> Plugins => NetPlugins;
 
     public NetPluginLoader(IHost host, IPluginLogger logger)
     {
@@ -53,13 +51,25 @@ public class NetPluginLoader : IPluginLoader
         var entry = pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll");
         var assembly = _assemblyLoadContext.LoadFromAssemblyPath(Path.Combine(dir, entry));
 
-        var plugin = CreatePluginInstance(assembly.GetExportedTypes());
-        plugin.FileName = Path.Combine(dir, entry);
-        plugin.PluginInfo = pluginInfo;
-        plugin.Services = _host.Services;
+        PluginBase? plugin = null;
 
-        if (!NetPlugins.TryAdd(pluginInfo.Id, plugin))
-            throw new InvalidOperationException("插件名称重复");
+        try
+        {
+            plugin = CreatePluginInstance(assembly.GetExportedTypes());
+            plugin.FileName = Path.Combine(dir, entry);
+            plugin.Info = pluginInfo;
+            plugin.Services = _host.Services;
+        }
+        catch
+        {
+            plugin?.Disable();
+            throw;
+        }
+        finally
+        {
+            if (plugin is not null)
+                NetPlugins.TryAdd(pluginInfo.Id, plugin);
+        }
     }
 
     private static PluginBase CreatePluginInstance(Type[] allTypes)
@@ -67,27 +77,23 @@ public class NetPluginLoader : IPluginLoader
         var t = allTypes.Where(type => type.BaseType != typeof(PluginBase));
         var count = t.Count();
 
-        if (count == 0)
-            throw new InvalidOperationException("未找到有效的插件入口点");
-        if (count > 1)
-            throw new InvalidOperationException("存在多个插件入口点");
 
-        foreach (var type in t)
-        {
-            if (Activator.CreateInstance(type) is not PluginBase plugin)
-                continue;
-
-            return plugin;
-        }
-
-        throw new InvalidOperationException("未找到有效的插件入口点");
+        return count > 1
+            ? throw new InvalidOperationException("存在多个插件入口点")
+            : count == 0 || Activator.CreateInstance(t.First()) is not PluginBase plugin
+            ? throw new InvalidOperationException("未找到有效的插件入口点")
+            : plugin;
     }
 
     public void Unload()
     {
         foreach ((_, PluginBase plugin) in NetPlugins)
         {
-            plugin.Dispose();
+            try
+            {
+                plugin.Dispose();
+            }
+            catch (Exception) { }
             GC.ReRegisterForFinalize(plugin);
         }
         _assemblyLoadContext.Unload();

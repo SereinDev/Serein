@@ -33,7 +33,7 @@ public class Configuration : INotifyPropertyChanged
 
     public short IPv4Port { get; set; } = 19132;
 
-    public string[] StopCommands { get; set; } = { "stop" };
+    public string[] StopCommands { get; set; } = ["stop"];
 
     public bool StartWhenSettingUp { get; set; }
 

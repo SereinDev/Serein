@@ -8,7 +8,7 @@ using Serein.Core.Models.Commands;
 
 using Xunit;
 
-using Parser = Serein.Core.Services.CommandParser;
+using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services;
 

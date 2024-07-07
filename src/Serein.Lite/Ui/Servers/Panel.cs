@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 
 using Serein.Core.Models.Server;
@@ -22,7 +21,6 @@ public partial class Panel : UserControl
 
         _timer = new(1000);
         _timer.Elapsed += (_, _) => Invoke(UpdateInfoLabels);
-        _timer.Start();
 
         _server = server;
         _server.ServerOutput += OnServerOutput;
@@ -169,5 +167,10 @@ public partial class Panel : UserControl
             _server.Status == ServerStatus.Running
                 ? _server.ServerInfo.CPUUsage.ToString("N2") + "%"
                 : "-";
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        _timer.Start();
     }
 }

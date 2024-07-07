@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 using Microsoft.Extensions.Hosting;
@@ -19,15 +20,14 @@ using Serein.Core.Utils.Json;
 namespace Serein.Core.Services.Plugins.Js;
 
 public class JsPluginLoader(IHost host, IPluginLogger pluginLogger, NetPluginLoader netPluginLoader)
-    : IPluginLoader
+    : IPluginLoader<JsPlugin>
 {
     private readonly IHost _host = host;
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
 
     internal ConcurrentDictionary<string, JsPlugin> JsPlugins { get; } = new();
-    public IReadOnlyDictionary<string, IPlugin> Plugins =>
-        (IReadOnlyDictionary<string, IPlugin>)JsPlugins;
+    public IReadOnlyDictionary<string, JsPlugin> Plugins => JsPlugins;
 
     public void Unload()
     {
@@ -54,12 +54,17 @@ public class JsPluginLoader(IHost host, IPluginLogger pluginLogger, NetPluginLoa
                 JsonSerializerOptionsFactory.CamelCase
             );
 
-        var plugin = new JsPlugin(_host, pluginInfo, entry, jsConfig ?? JsPluginConfig.Default);
-        var text = File.ReadAllText(entry);
-
-        JsPlugins.TryAdd(pluginInfo.Id, plugin);
-        plugin.Loaded = true;
-        plugin.Execute(text);
+        JsPlugin? jsPlugin = null;
+        try
+        {
+            jsPlugin = new JsPlugin(_host, pluginInfo, entry, jsConfig ?? JsPluginConfig.Default);
+            jsPlugin.Execute(File.ReadAllText(entry));
+        }
+        finally
+        {
+            if (jsPlugin is not null)
+                JsPlugins.TryAdd(pluginInfo.Id, jsPlugin);
+        }
     }
 
     public void LoadSingle()
@@ -67,30 +72,31 @@ public class JsPluginLoader(IHost host, IPluginLogger pluginLogger, NetPluginLoa
         foreach (var file in Directory.GetFiles(PathConstants.PluginDirectory, "*.js"))
         {
             var name = Path.GetFileNameWithoutExtension(file);
+
+            JsPlugin? jsPlugin = null;
             try
             {
-                var plugin = new JsPlugin(
-                    _host,
-                    new() { Id = name, Name = name },
-                    file,
-                    JsPluginConfig.Default
-                );
-                var text = File.ReadAllText(file);
+                jsPlugin = new JsPlugin(
+                   _host,
+                   new() { Id = name, Name = name },
+                   file,
+                   JsPluginConfig.Default
+               );
 
                 if (_netPluginLoader.NetPlugins.ContainsKey(name))
                     throw new NotSupportedException($"尝试加载“{file}”插件时发现Id重复");
 
-                JsPlugins.AddOrUpdate(
-                    name,
-                    plugin,
-                    (_, _) => throw new NotSupportedException($"尝试加载“{file}”插件时发现Id重复")
-                );
-                plugin.Loaded = true;
-                plugin.Execute(text);
+                jsPlugin.Execute(File.ReadAllText(file));
             }
             catch (Exception e)
             {
                 _pluginLogger.Log(LogLevel.Error, name, e.GetDetailString());
+                jsPlugin?.Disable();
+            }
+            finally
+            {
+                if (jsPlugin is not null)
+                    JsPlugins.TryAdd(name, jsPlugin);
             }
         }
     }

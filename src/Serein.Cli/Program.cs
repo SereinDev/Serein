@@ -40,16 +40,14 @@ public static class Program
         var builder = new SereinAppBuilder();
         builder.ConfigureService();
 
-        builder.Services.AddSingleton<TitleUpdater>();
-        builder.Services.AddSingleton<InputReader>();
+        builder.Services.AddHostedService<TitleUpdater>();
+        builder.Services.AddHostedService<InputReader>();
+
         builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
         builder.Services.AddSingleton<ILogger, CliLogger>();
 
         var app = builder.Build();
-        app.AppStarted += (_, _) => app.Services.GetRequiredService<TitleUpdater>().Init();
-        app.AppStarted += (_, _) =>
-            app.Services.GetRequiredService<InputReader>().Start(app.CancellationToken);
 
         app.Run();
     }

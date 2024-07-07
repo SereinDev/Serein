@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
@@ -18,9 +17,9 @@ public class ConnectionSetting : INotifyPropertyChanged
 
     public bool GivePermissionToAllAdmins { get; set; }
 
-    public string[] Groups { get; set; } = Array.Empty<string>();
+    public string[] Groups { get; set; } = [];
 
-    public string[] Administrators { get; set; } = Array.Empty<string>();
+    public string[] Administrators { get; set; } = [];
 
     public Dictionary<string, string?> Headers { get; set; } = new();
 
@@ -28,7 +27,7 @@ public class ConnectionSetting : INotifyPropertyChanged
 
     public bool UseReverseWebSocket { get; set; }
 
-    public string[] SubProtocols { get; set; } = Array.Empty<string>();
+    public string[] SubProtocols { get; set; } = [];
 
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;

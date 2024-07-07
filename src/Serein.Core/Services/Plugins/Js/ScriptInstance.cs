@@ -12,6 +12,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
+using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Plugins.Js.Modules;
@@ -38,7 +39,7 @@ public partial class ScriptInstance
     public static string Version => SereinApp.Version;
     public static string? FullVersion => SereinApp.FullVersion;
     public static AppType Type => SereinApp.Type;
-    public string Namespace => _jsPlugin.PluginInfo.Id;
+    public string Namespace => _jsPlugin.Info.Id;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {
@@ -64,7 +65,7 @@ public partial class ScriptInstance
     public void Log(params JsValue[] jsValues)
     {
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.Log(LogLevel.Information, _jsPlugin.PluginInfo.Name, str);
+        Logger.Log(LogLevel.Information, _jsPlugin.Info.Name, str);
     }
 
     public bool Exports(string? name, JsValue jsValue)

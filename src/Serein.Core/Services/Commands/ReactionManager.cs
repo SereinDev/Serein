@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +10,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
-namespace Serein.Core.Services;
+namespace Serein.Core.Services.Commands;
 
 public class ReactionManager(IHost host)
 {

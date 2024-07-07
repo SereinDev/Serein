@@ -6,15 +6,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services;
+using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Network.Ssh;
 using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
-using Serein.Core.Services.Network.Ssh;
 
 namespace Serein.Core;
 
@@ -26,8 +27,6 @@ public sealed class SereinAppBuilder
     }
 
     public IServiceCollection Services => _hostAppBuilder.Services;
-
-    public ILoggingBuilder LoggingBuilder => _hostAppBuilder.Logging;
 
     private readonly HostApplicationBuilder _hostAppBuilder;
 
@@ -49,7 +48,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<ServerManager>();
         Services.AddSingleton<CommandParser>();
         Services.AddSingleton<CommandRunner>();
-        Services.AddSingleton<ScheduleRunner>();
+        Services.AddHostedService<ScheduleRunner>();
 
         Services.AddSingleton<UpdateChecker>();
         Services.AddSingleton<WebSocketService>();
@@ -63,6 +62,9 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<JsEngineFactory>();
         Services.AddSingleton<JsPluginLoader>();
         Services.AddSingleton<NetPluginLoader>();
+        Services.AddHostedService<PluginService>();
+
+        Services.AddHostedService<StartUpService>();
     }
 
     public SereinApp Build() => new(_hostAppBuilder.Build());

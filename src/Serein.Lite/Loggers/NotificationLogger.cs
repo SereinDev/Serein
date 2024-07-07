@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +10,7 @@ public class NotificationLogger : ILogger
 {
     public NotificationLogger()
     {
-        Messages = new();
+        Messages = [];
     }
 
     public ObservableCollection<(LogLevel LogLevel, string Message)> Messages { get; }
@@ -36,5 +37,7 @@ public class NotificationLogger : ILogger
         Messages.Add((logLevel, formatter(state, exception)));
         if (Messages.Count > 50)
             Messages.RemoveAt(0);
+
+        Debug.WriteLine($"[{logLevel}] {formatter(state, exception)}");
     }
 }

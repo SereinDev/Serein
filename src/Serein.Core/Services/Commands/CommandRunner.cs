@@ -12,7 +12,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Servers;
 
-namespace Serein.Core.Services;
+namespace Serein.Core.Services.Commands;
 
 public class CommandRunner
 {

@@ -45,8 +45,7 @@ public static class Program
     [STAThread]
     public static void Main()
     {
-        App.StartAsync();
-
+        AppDomain.CurrentDomain.UnhandledException += (_, e) => MessageBox.Show(e.ExceptionObject.ToString());
         ApplicationConfiguration.Initialize();
         Application.Run(App.Services.GetRequiredService<MainForm>());
     }

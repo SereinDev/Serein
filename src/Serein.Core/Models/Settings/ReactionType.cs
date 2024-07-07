@@ -1,7 +1,3 @@
-using System.Text.Json.Serialization;
-
-using Serein.Core.Utils.Json;
-
 namespace Serein.Core.Models.Settings;
 
 public enum ReactionType

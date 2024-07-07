@@ -7,6 +7,7 @@ using NCrontab;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services;
+using Serein.Core.Services.Commands;
 
 namespace Serein.Lite.Ui.Function;
 
@@ -18,7 +19,7 @@ public partial class ScheduleEditor : Form
     public ScheduleEditor(Schedule schedule)
     {
         _schedule = schedule;
-        _nextOccurrences = Array.Empty<DateTime>();
+        _nextOccurrences = [];
 
         InitializeComponent();
 

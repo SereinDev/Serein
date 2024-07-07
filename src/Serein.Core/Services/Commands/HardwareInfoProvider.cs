@@ -4,12 +4,12 @@ using System.Timers;
 
 using Hardware.Info;
 
-namespace Serein.Core.Services;
+namespace Serein.Core.Services.Commands;
 
 public class HardwareInfoProvider
 {
     public HardwareInfo? Info { get; private set; }
-    public readonly Timer _timer;
+    private readonly Timer _timer;
 
     public HardwareInfoProvider()
     {

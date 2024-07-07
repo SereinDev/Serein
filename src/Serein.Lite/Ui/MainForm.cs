@@ -2,8 +2,10 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Serein.Core;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Plugins;
@@ -17,21 +19,21 @@ namespace Serein.Lite.Ui;
 
 public partial class MainForm : Form
 {
-    public static readonly Color PrimaryColor = Color.FromArgb(0x4B, 0x73, 0x8D);
+    public static readonly Color PrimaryColor = Color.FromArgb(0x4B, 0x73, 0x8D); // #4B738D
 
     private readonly IHost _host;
     private readonly ServerManager _serverManager;
-    private readonly PluginManager _pluginManager;
 
     private IServiceProvider Services => _host.Services;
 
-    public MainForm(IHost host, ServerManager serverManager, PluginManager pluginManager)
+    public MainForm(IHost host, ServerManager serverManager)
     {
         _host = host;
         _serverManager = serverManager;
-        _pluginManager = pluginManager;
 
         InitializeComponent();
+
+        SwitchPage<PluginPage>();
         SwitchPage<ServerPage>();
     }
 
@@ -223,7 +225,10 @@ public partial class MainForm : Form
             );
         }
         else
+        {
             NotifyIcon.Visible = false;
+            _host.StopAsync();
+        }
         base.OnClosing(e);
     }
 
@@ -232,8 +237,7 @@ public partial class MainForm : Form
         if (SereinApp.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
 
-        _pluginManager.Load();
-
+        _host.StartAsync();
         base.OnShown(e);
     }
 

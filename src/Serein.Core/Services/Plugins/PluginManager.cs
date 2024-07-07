@@ -2,7 +2,12 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
@@ -18,13 +23,15 @@ public class PluginManager(
     IPluginLogger pluginLogger,
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
-    EventDispatcher eventDispatcher
-)
+    EventDispatcher eventDispatcher,
+    ILogger logger
+) : IHostedService
 {
-    private readonly IPluginLogger _logger = pluginLogger;
+    private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly EventDispatcher _eventDispatcher = eventDispatcher;
+    private readonly ILogger _logger = logger;
 
     public ConcurrentDictionary<string, string> CommandVariables { get; } = new();
     public ConcurrentDictionary<string, object?> ExportedVariables { get; } = new();
@@ -44,7 +51,12 @@ public class PluginManager(
     public void Load()
     {
         if (!Directory.Exists(PathConstants.PluginDirectory))
+        {
+            Directory.CreateDirectory(PathConstants.PluginDirectory);
             return;
+        }
+
+        _logger.LogDebug("开始加载插件");
 
         foreach (var dir in Directory.GetDirectories(PathConstants.PluginDirectory))
         {
@@ -65,7 +77,7 @@ public class PluginManager(
             }
             catch (Exception e)
             {
-                _logger.Log(LogLevel.Error, Path.GetFileName(dir), e.Message);
+                _pluginLogger.Log(LogLevel.Error, Path.GetFileName(dir), e.Message);
                 continue;
             }
 
@@ -77,26 +89,33 @@ public class PluginManager(
                 )
                     throw new InvalidOperationException("插件Id重复");
 
-                _logger.Log(LogLevel.Information, pluginInfo.Name, "正在加载");
+                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载，路径：" + dir);
 
-                if (pluginInfo.PluginType == PluginType.Js)
+                if (pluginInfo.Type == PluginType.Js)
                     _jsPluginLoader.Load(pluginInfo, dir);
-                else if (pluginInfo.PluginType == PluginType.Net)
+                else if (pluginInfo.Type == PluginType.Net)
                     _netPluginLoader.Load(pluginInfo, dir);
                 else
                     throw new NotSupportedException("未指定插件类型");
             }
             catch (Exception e)
             {
-                _logger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
+                _pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
             }
         }
 
+        _logger.LogDebug("开始加载Js单文件插件");
         _jsPluginLoader.LoadSingle();
+
         _eventDispatcher.Dispatch(Event.PluginsLoaded);
+        _pluginLogger.Log(
+            LogLevel.Trace,
+            string.Empty,
+            $"所有插件加载完毕。已加载{_jsPluginLoader.Plugins.Count + _netPluginLoader.Plugins.Count}个插件"
+            );
     }
 
-    public void Reload()
+    public void Unload()
     {
         _eventDispatcher.Dispatch(Event.PluginsUnloading);
 
@@ -105,7 +124,25 @@ public class PluginManager(
         CommandVariables.Clear();
         ExportedVariables.Clear();
 
+    }
+    public void Reload()
+    {
+        Unload();
         PluginsReloading?.Invoke(null, EventArgs.Empty);
         Load();
+    }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        Load();
+
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        Unload();
+
+        return Task.CompletedTask;
     }
 }

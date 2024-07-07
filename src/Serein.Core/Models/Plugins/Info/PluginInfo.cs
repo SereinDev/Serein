@@ -13,18 +13,18 @@ public class PluginInfo
 
     public Version Version { get; init; } = new(0, 0, 0);
 
-    public Author[] Authors { get; init; } = Array.Empty<Author>();
+    public Author[] Authors { get; init; } = [];
 
     public string? Description { get; init; }
 
-    public PluginTag[] Tags { get; init; } = Array.Empty<PluginTag>();
+    public PluginTag[] Tags { get; init; } = [];
 
-    public Version[] TargetingSerein { get; init; } = Array.Empty<Version>();
+    public Version[] TargetingSerein { get; init; } = [];
 
-    public Dependency[] Dependencies { get; init; } = Array.Empty<Dependency>();
+    public Dependency[] Dependencies { get; init; } = [];
 
     public string? EntryFile { get; init; }
 
     [JsonRequired]
-    public PluginType PluginType { get; init; }
+    public PluginType Type { get; init; }
 }

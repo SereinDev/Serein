@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -45,10 +46,10 @@ public class JsEngineFactory(
             {
                 _pluginLogger.Log(
                     LogLevel.Warning,
-                    jsPlugin.PluginInfo.Name,
+                    jsPlugin.Info.Name,
                     $"加载所需程序集“{assemblyName}”时出现异常：\n" + e.Message
                 );
-                _logger.LogDebug(e, "[{}] 加载所需程序集“{}”时出现异常", jsPlugin.PluginInfo.Name, assemblyName);
+                _logger.LogDebug(e, "[{}] 加载所需程序集“{}”时出现异常", jsPlugin.Info.Name, assemblyName);
             }
         }
 
@@ -70,7 +71,7 @@ public class JsEngineFactory(
 
         cfg.CatchClrExceptions();
         cfg.CancellationToken(jsPlugin.CancellationToken);
-        cfg.EnableModules(PathConstants.PluginDirectory);
+        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginDirectory));
 
         return cfg;
     }

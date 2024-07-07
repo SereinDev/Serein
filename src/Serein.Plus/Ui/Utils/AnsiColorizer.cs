@@ -97,8 +97,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
 
                     #region foreground
 
-                    // case "30":
-                    //     break;
+                    case "30":
+                        foreground = null;
+                        break;
                     case "31":
                         foreground = ColorMap.Red;
                         break;
@@ -117,8 +118,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "36":
                         foreground = ColorMap.Cyan;
                         break;
-                    // case "37":
-                    //     break;
+                    case "37":
+                        foreground = null;
+                        break;
 
                     case "38":
                         var type1 = ColorMap.TryGetColor(args, j + 1, out Color color1);
@@ -138,8 +140,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         foreground = null;
                         break;
 
-                    // case "90":
-                    //     break;
+                    case "90":
+                        foreground = null;
+                        break;
                     case "91":
                         foreground = ColorMap.BrightRed;
                         break;
@@ -158,14 +161,16 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "96":
                         foreground = ColorMap.BrightCyan;
                         break;
-                    // case "97":
-                    //     break;
+                    case "97":
+                        foreground = null;
+                        break;
                     #endregion
 
                     #region background
 
-                    // case "40":
-                    //     break;
+                    case "40":
+                        background = null;
+                        break;
                     case "41":
                         background = ColorMap.Red;
                         break;
@@ -184,8 +189,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "46":
                         background = ColorMap.Cyan;
                         break;
-                    // case "47":
-                    //     break;
+                    case "47":
+                        background = null;
+                        break;
 
                     case "48":
                         var type2 = ColorMap.TryGetColor(args, j + 1, out Color color2);
@@ -205,8 +211,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         background = null;
                         break;
 
-                    // case "100":
-                    //     break;
+                    case "100":
+                        background = null;
+                        break;
                     case "101":
                         background = ColorMap.BrightRed;
                         break;
@@ -225,10 +232,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "106":
                         background = ColorMap.BrightCyan;
                         break;
-                    // case "107":
-                    //     break;
-
-                    #endregion
+                    case "107":
+                        background = null;
+                        break;
+                        #endregion
                 }
             }
 

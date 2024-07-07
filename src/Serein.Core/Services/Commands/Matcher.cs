@@ -12,7 +12,7 @@ using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
-namespace Serein.Core.Services;
+namespace Serein.Core.Services.Commands;
 
 public class Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
 {

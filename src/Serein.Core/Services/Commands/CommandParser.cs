@@ -8,7 +8,7 @@ using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 
-namespace Serein.Core.Services;
+namespace Serein.Core.Services.Commands;
 
 public partial class CommandParser(
     PluginManager pluginManager,

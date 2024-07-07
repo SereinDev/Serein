@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 using Serein.Core.Models.Server;
@@ -15,7 +13,7 @@ namespace Serein.Lite.Utils;
 public static partial class LogColorizer
 {
     private static readonly string[] ColorList =
-    {
+    [
         "30",
         "31",
         "32",
@@ -48,7 +46,7 @@ public static partial class LogColorizer
         "105",
         "106",
         "107"
-    };
+    ];
 
     [GeneratedRegex(@"\s")]
     private static partial Regex SpaceRegex();

@@ -1,45 +1,52 @@
 using System;
-using System.Drawing;
+using System.Diagnostics;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
-using Serein.Lite.Extensions;
 using Serein.Lite.Ui.Function;
 
 namespace Serein.Lite.Loggers;
 
-public class PluginLogger(PluginPage pluginPage) : IPluginLogger
+public class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
 {
-    private readonly PluginPage _pluginPage = pluginPage;
+    private readonly Lazy<PluginPage> _pluginPage =
+        new(serviceProvider.GetRequiredService<PluginPage>);
 
     private readonly object _lock = new();
 
     public void Log(LogLevel level, string name, string message)
     {
-        _pluginPage.Invoke(() =>
-        {
-            lock (_lock)
+        Debug.WriteLine($"[Plugin::{(string.IsNullOrEmpty(name) ? "Serein" : name)}] [{level}] {message}");
+
+        if (_pluginPage.Value.IsHandleCreated)
+            _pluginPage.Value.Invoke(() =>
             {
-                //switch (level)
-                //{
-                //    case LogLevel.Information:
-                //        _pluginPage.ConsoleRichTextBox.AppendText($"[Info] ");
-                //        break;
-                //    case LogLevel.Warning:
-                //        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Warn] ", Color.Red);
-                //        break;
-                //    case LogLevel.Error:
-                //        _pluginPage.ConsoleRichTextBox.AppendTextWithColor("[Error]", Color.Red);
-                //        break;
-                //    default:
-                //        return;
-                //}
-                //_pluginPage.ConsoleRichTextBox.AppendText(
-                //    $"[{name}] {message}{Environment.NewLine}"
-                //);
-                //_pluginPage.ConsoleRichTextBox.ScrollToEnd();
-            }
-        });
+                lock (_lock)
+                {
+                    switch (level)
+                    {
+                        case LogLevel.Debug:
+                            break;
+                        case LogLevel.Information:
+                            _pluginPage.Value.ConsoleWebBrowser.AppendInfo($"[{name}] {message}");
+
+                            break;
+                        case LogLevel.Warning:
+                            _pluginPage.Value.ConsoleWebBrowser.AppendWarn($"[{name}] {message}");
+                            break;
+                        case LogLevel.Error:
+                            _pluginPage.Value.ConsoleWebBrowser.AppendError($"[{name}] {message}");
+                            break;
+                        case LogLevel.Trace:
+                            _pluginPage.Value.ConsoleWebBrowser.AppendNotice(message);
+                            break;
+                        case LogLevel.Critical:
+                        case LogLevel.None:
+                            break;
+                    }
+                }
+            });
     }
 }

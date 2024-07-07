@@ -14,6 +14,7 @@ using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
+using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils.Json;

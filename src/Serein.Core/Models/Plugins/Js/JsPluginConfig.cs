@@ -1,12 +1,10 @@
-using System;
-
 namespace Serein.Core.Models.Plugins.Js;
 
 public class JsPluginConfig
 {
-    public static readonly JsPluginConfig Default = new ();
+    public static readonly JsPluginConfig Default = new();
 
-    public string[] NetAssemblies { get; init; } = Array.Empty<string>();
+    public string[] NetAssemblies { get; init; } = [];
 
     public bool AllowGetType { get; init; }
 

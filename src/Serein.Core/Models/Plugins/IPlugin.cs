@@ -8,5 +8,9 @@ public interface IPlugin : IDisposable
 {
     public string FileName { get; }
 
-    public PluginInfo PluginInfo { get; }
+    public PluginInfo Info { get; }
+
+    public bool IsEnabled { get; }
+
+    public void Disable();
 }

@@ -15,13 +15,13 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
     /// <summary>
     /// A basic list of ANSI control sequences.
     /// </summary>
-    private static readonly char[] EndMarkers = { 'm', 'A', 'B', 'C', 'D', 'J' };
+    private static readonly char[] EndMarkers = ['m', 'A', 'B', 'C', 'D', 'J'];
 
     /// <summary>
     /// A more extensive list of the ANSI control sequences.
     /// </summary>
     private static readonly char[] EndMarkersExtended =
-    {
+    [
         'm',
         'A',
         'B',
@@ -35,7 +35,7 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
         'K',
         'S',
         'T'
-    };
+    ];
 
     /// <summary>
     /// A match of a control sequence containing only the match's offset and the length

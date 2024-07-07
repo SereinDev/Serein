@@ -15,16 +15,15 @@ using Serein.Cli.Models;
 using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Interaction;
 
-public class InputReader
+public class InputReader : IHostedService
 {
     private readonly IReadOnlyDictionary<string, Command> _commandParser;
 
     private readonly string _allCommands;
-    private static readonly char[] Separator = new char[] { '\x20' };
+    private static readonly char[] Separator = ['\x20'];
     private readonly IHost _host;
     private IServiceProvider Services => _host.Services;
     private ILogger Logger => Services.GetRequiredService<ILogger>();
@@ -71,12 +70,18 @@ public class InputReader
         _commandParser = commands;
     }
 
-    public void Start(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken cancellationToken)
     {
-        Task.Run(() => ReadLine(cancellationToken), cancellationToken);
+        throw new NotImplementedException();
     }
 
-    private void ReadLine(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        Task.Run(() => Loop(cancellationToken), cancellationToken);
+        return Task.CompletedTask;
+    }
+
+    private void Loop(CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

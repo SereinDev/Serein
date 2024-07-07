@@ -7,6 +7,7 @@ using NCrontab;
 using PropertyChanged;
 
 using Serein.Core.Services;
+using Serein.Core.Services.Commands;
 
 namespace Serein.Core.Models.Commands;
 

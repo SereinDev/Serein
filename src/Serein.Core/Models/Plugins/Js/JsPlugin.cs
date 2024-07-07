@@ -20,7 +20,7 @@ namespace Serein.Core.Models.Plugins.Js;
 
 public class JsPlugin : IPlugin
 {
-    public PluginInfo PluginInfo { get; }
+    public PluginInfo Info { get; }
     public string FileName { get; }
     public JsPluginConfig Config { get; }
     public Engine Engine { get; }
@@ -28,8 +28,8 @@ public class JsPlugin : IPlugin
     public JsConsole Console { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
-    public bool Loaded { get; internal set; }
     public ConcurrentDictionary<Event, Function> EventHandlers;
+    public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly IHost _host;
@@ -41,11 +41,11 @@ public class JsPlugin : IPlugin
     {
         _cancellationTokenSource = new();
         _host = host;
-        PluginInfo = pluginInfo;
+        Info = pluginInfo;
         FileName = fileName;
         Config = config;
         EventHandlers = new();
-        Console = new(Logger, PluginInfo.Name);
+        Console = new(Logger, Info.Name);
         ScriptInstance = new(_host, this);
         Engine = EngineFactory.Create(this);
     }
@@ -54,7 +54,7 @@ public class JsPlugin : IPlugin
 
     public void Dispose()
     {
-        _cancellationTokenSource.Cancel();
+        Disable();
         EventHandlers.Clear();
         Engine.Dispose();
         GC.SuppressFinalize(this);
@@ -62,6 +62,7 @@ public class JsPlugin : IPlugin
 
     public bool Invoke(Event @event, CancellationToken cancellationToken, params object[] args)
     {
+        bool entered = false;
         try
         {
             if (
@@ -74,6 +75,8 @@ public class JsPlugin : IPlugin
             if (!Monitor.TryEnter(Engine, 1000))
                 throw new TimeoutException("等待引擎超时");
 
+            entered = true;
+
             if (cancellationToken.IsCancellationRequested)
                 return false;
 
@@ -82,12 +85,19 @@ public class JsPlugin : IPlugin
         }
         catch (Exception e)
         {
-            Logger.Log(LogLevel.Error,PluginInfo. Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
+            Logger.Log(LogLevel.Error, Info.Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
             return false;
         }
         finally
         {
-            Monitor.Exit(Engine);
+            if (entered)
+                Monitor.Exit(Engine);
         }
+    }
+
+    public void Disable()
+    {
+        if (!_cancellationTokenSource.IsCancellationRequested)
+            _cancellationTokenSource.Cancel();
     }
 }
