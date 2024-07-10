@@ -38,14 +38,14 @@ public partial class ServerManager
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly ReactionManager _reactionManager;
+    private readonly ReactionTrigger _reactionManager;
 
     public ServerManager(
         ILogger logger,
         Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        ReactionManager reactionManager
+        ReactionTrigger reactionManager
     )
     {
         _matcher = matcher;
@@ -85,7 +85,7 @@ public partial class ServerManager
         if (!_server.Remove(id))
             return false;
 
-        var path = string.Format(PathConstants.ServerConfigFileName, id);
+        var path = string.Format(PathConstants.ServerConfigFile, id);
         if (File.Exists(path))
             File.Delete(path);
 
@@ -113,7 +113,7 @@ public partial class ServerManager
     {
         CheckId(id);
 
-        var path = string.Format(PathConstants.ServerConfigFileName, id);
+        var path = string.Format(PathConstants.ServerConfigFile, id);
         var dir = Path.GetDirectoryName(path);
 
         if (string.IsNullOrEmpty(dir))

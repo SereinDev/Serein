@@ -55,7 +55,10 @@ public static partial class LogColorizer
     private static partial Regex AnsiRegex();
 
     public static string EscapeLog(string text) =>
-        SpaceRegex().Replace(WebUtility.HtmlEncode(text).Replace("\n", "<br>"), "&nbsp;");
+        SpaceRegex().Replace(
+            WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
+            "&nbsp;"
+            );
 
     public static List<LineFragment> ParseAnsiCode(string line)
     {

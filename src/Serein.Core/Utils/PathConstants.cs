@@ -2,13 +2,13 @@ namespace Serein.Core.Utils;
 
 public static class PathConstants
 {
-    public const string DataDirectory = "data";
-    public const string MatchesFile = "data/matches.json";
-    public const string SchedulesFile = "data/schedules.json";
-    public const string SettingFile = "setting.json";
-    public const string PluginDirectory = "plugin";
+    public const string Root = "Serein";
+    public const string MatchesFile = "Serein/matches.json";
+    public const string SchedulesFile = "Serein/schedules.json";
+    public const string SettingFile = "Serein/setting.json";
+    public const string PluginsDirectory = "Serein/plugins";
     public const string PluginInfoFileName = "plugin-info.json";
     public const string JsPluginConfigFileName = "js-plugin-config.json";
-    public const string ServerConfigFileName = "data/servers/{0}.json";
-    public const string ServerConfigDirectory = "data/servers";
+    public const string ServerConfigFile = "Serein/servers/{0}.json";
+    public const string ServerConfigDirectory = "Serein/servers";
 }

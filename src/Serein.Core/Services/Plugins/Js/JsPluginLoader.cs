@@ -69,7 +69,7 @@ public class JsPluginLoader(IHost host, IPluginLogger pluginLogger, NetPluginLoa
 
     public void LoadSingle()
     {
-        foreach (var file in Directory.GetFiles(PathConstants.PluginDirectory, "*.js"))
+        foreach (var file in Directory.GetFiles(PathConstants.PluginsDirectory, "*.js"))
         {
             var name = Path.GetFileNameWithoutExtension(file);
 

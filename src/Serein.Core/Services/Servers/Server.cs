@@ -43,7 +43,7 @@ public class Server
     private bool _isTerminated;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly ReactionManager _reactionManager;
+    private readonly ReactionTrigger _reactionManager;
     private readonly string _id;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
@@ -57,7 +57,7 @@ public class Server
         SettingProvider settingManager,
         Matcher matcher,
         EventDispatcher eventDispatcher,
-        ReactionManager reactionManager
+        ReactionTrigger reactionManager
     )
     {
         _id = id;

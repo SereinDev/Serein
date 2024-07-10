@@ -7,10 +7,10 @@ public class MessageParams : IActionParams
     public string Type => UserId is not null ? "private" : "group";
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? UserId { get; init; }
+    public long? UserId { get; init; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? GroupId { get; init; }
+    public long? GroupId { get; init; }
 
     public string Message { get; init; } = string.Empty;
 

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Network;
 using Serein.Core.Models.Network.Connection.OneBot;
 using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
@@ -23,52 +24,73 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class WsConnectionManager
+public class WsConnectionManager : INotifyPropertyChanged
 {
-    private readonly IHost _host;
+    private readonly PropertyChangedEventArgs _sentArg,
+        _receivedArg,
+        _activeArg;
+    private readonly SettingProvider _settingProvider;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
+    private readonly ReverseWebSocketService _reverseWebSocketService;
+    private readonly WebSocketService _webSocketService;
+    private readonly Lazy<IConnectionLogger> _connectionLogger;
 
-    private IServiceProvider Services => _host.Services;
-    private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
-    private WebSocketService WebSocketService => Services.GetRequiredService<WebSocketService>();
-    private ReverseWebSocketService ReverseWebSocketService =>
-        Services.GetRequiredService<ReverseWebSocketService>();
+    private Setting Setting => _settingProvider.Value;
     private CancellationTokenSource? _cancellationTokenSource;
+    private ulong _sent;
+    private ulong _received;
 
-    public event EventHandler? StatusChanged;
-    public event EventHandler<JsonPacketReceivedEventArgs>? JsonPacketReceived;
-    public event EventHandler<MessagePacketReceivedEventArgs>? MessagePacketReceived;
+    public bool Active => _webSocketService.Active || _reverseWebSocketService.Active;
+    public ulong Sent => _sent;
+    public ulong Received => _received;
+    public DateTime? ConnectedTime { get; private set; }
 
-    public bool Active => WebSocketService.Active || ReverseWebSocketService.Active;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public WsConnectionManager(IHost host, Matcher matcher, EventDispatcher eventDispatcher)
+
+    public WsConnectionManager(
+        IHost host,
+        SettingProvider settingProvider,
+        Matcher matcher,
+        EventDispatcher eventDispatcher,
+        ReverseWebSocketService reverseWebSocketService,
+        WebSocketService webSocketService
+    )
     {
-        _host = host;
+        _settingProvider = settingProvider;
         _matcher = matcher;
         _eventDispatcher = eventDispatcher;
+        _reverseWebSocketService = reverseWebSocketService;
+        _webSocketService = webSocketService;
+        _connectionLogger = new(host.Services.GetRequiredService<IConnectionLogger>);
 
-        WebSocketService.MessageReceived += OnMessageReceived;
-        ReverseWebSocketService.MessageReceived += OnMessageReceived;
+        _activeArg = new(nameof(Active));
+        _sentArg = new(nameof(Sent));
+        _receivedArg = new(nameof(Received));
 
-        WebSocketService.StatusChanged += StatusChanged;
-        ReverseWebSocketService.StatusChanged += StatusChanged;
+        _webSocketService.MessageReceived += OnMessageReceived;
+        _reverseWebSocketService.MessageReceived += OnMessageReceived;
+
+        _webSocketService.StatusChanged += (s, _) => PropertyChanged?.Invoke(s, _activeArg);
+        _reverseWebSocketService.StatusChanged += (s, _) => PropertyChanged?.Invoke(s, _activeArg);
     }
 
     private void OnMessageReceived(object? sender, MessageReceivedEventArgs e)
     {
+        Interlocked.Increment(ref _received);
+        PropertyChanged?.Invoke(this, _receivedArg);
+
         if (!_eventDispatcher.Dispatch(Event.WsDataReceived, e.Message))
             return;
 
-        var text = e.Message;
+        if (Setting.Connection.OutputData)
+            _connectionLogger.Value.LogReceivedData(e.Message);
 
-        var node = JsonSerializer.Deserialize<JsonNode>(text);
+        var node = JsonSerializer.Deserialize<JsonNode>(e.Message);
 
         if (node is null)
             return;
-
-        if (Setting.Connection.OutputData)
-            JsonPacketReceived?.Invoke(this, new(node));
 
         if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
             return;
@@ -81,7 +103,9 @@ public class WsConnectionManager
 
                 if (packet is not null)
                 {
-                    MessagePacketReceived?.Invoke(this, new(packet));
+                    _connectionLogger.Value.LogReceivedMessage(
+                        $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.Message} (id={packet.MessageId})"
+                        );
 
                     if (
                         packet.MessageType == MessageType.Group
@@ -99,34 +123,39 @@ public class WsConnectionManager
 
     public void Start()
     {
-        if (ReverseWebSocketService.Active)
+        if (_reverseWebSocketService.Active)
             throw new InvalidOperationException("反向WebSocket服务器未关闭");
 
-        if (WebSocketService.Active)
+        if (_webSocketService.Active)
             throw new InvalidOperationException("WebSocket连接未断开");
+
+        _sent = _received = 0;
+        ConnectedTime = DateTime.Now;
 
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new();
 
         if (Setting.Connection.UseReverseWebSocket)
-            ReverseWebSocketService.Start(_cancellationTokenSource.Token);
+            _reverseWebSocketService.Start(_cancellationTokenSource.Token);
         else
-            WebSocketService.Start(_cancellationTokenSource.Token);
+            _webSocketService.Start(_cancellationTokenSource.Token);
     }
 
     public void Stop()
     {
-        if (!Active && !WebSocketService.Connecting)
+        if (!Active && !_webSocketService.Connecting)
             throw new InvalidOperationException("WebSocket未连接");
 
+        ConnectedTime = null;
+        _sent = _received = 0;
         _cancellationTokenSource?.Cancel();
 
-        if (ReverseWebSocketService.Active)
-            ReverseWebSocketService.Stop();
+        if (_reverseWebSocketService.Active)
+            _reverseWebSocketService.Stop();
 
-        if (WebSocketService.Active)
-            WebSocketService.Stop();
+        if (_webSocketService.Active)
+            _webSocketService.Stop();
     }
 
     public async Task SendAsync<T>(T body)
@@ -139,10 +168,16 @@ public class WsConnectionManager
 
     public async Task SendTextAsync(string text)
     {
-        if (ReverseWebSocketService.Active)
-            await ReverseWebSocketService.SendAsync(text);
-        else if (WebSocketService.Active)
-            await WebSocketService.SendAsync(text);
+        Interlocked.Increment(ref _sent);
+        PropertyChanged?.Invoke(this, _sentArg);
+
+        if (Setting.Connection.OutputData)
+            _connectionLogger.Value.LogSentData(text);
+
+        if (_reverseWebSocketService.Active)
+            await _reverseWebSocketService.SendAsync(text);
+        else if (_webSocketService.Active)
+            await _webSocketService.SendAsync(text);
     }
 
     private async Task SendActionRequestAsync<T>(string endpoint, T @params)
@@ -157,11 +192,12 @@ public class WsConnectionManager
             "send_msg",
             new MessageParams
             {
-                GroupId = target,
+                GroupId = long.Parse(target),
                 Message = message,
                 AutoEscape = Setting.Connection.AutoEscape
             }
         );
+        _connectionLogger.Value.LogReceivedMessage($"[群聊({target})] {message}");
     }
 
     public async Task SendPrivateMsgAsync(string target, string message)
@@ -170,10 +206,11 @@ public class WsConnectionManager
             "send_msg",
             new MessageParams
             {
-                UserId = target,
+                UserId = long.Parse(target),
                 Message = message,
                 AutoEscape = Setting.Connection.AutoEscape
             }
         );
+        _connectionLogger.Value.LogReceivedMessage($"[私聊({target})] {message}");
     }
 }

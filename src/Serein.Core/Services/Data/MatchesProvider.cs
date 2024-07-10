@@ -53,7 +53,7 @@ public class MatchesProvider : IItemProvider<ObservableCollection<Match>>
 
     public void Save()
     {
-        Directory.CreateDirectory(PathConstants.DataDirectory);
+        Directory.CreateDirectory(PathConstants.Root);
         File.WriteAllText(
             PathConstants.MatchesFile,
             JsonSerializer.Serialize(

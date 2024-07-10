@@ -7,15 +7,18 @@ using EmbedIO;
 using EmbedIO.WebApi;
 
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi.Apis;
 
 using Swan.Logging;
 
+using MS = Microsoft.Extensions.Logging;
+
 namespace Serein.Core.Services.Network.WebApi;
 
-public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvider)
+public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingProvider)
 {
     static HttpServer()
     {
@@ -23,7 +26,7 @@ public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvi
     }
 
     private readonly IHost _host = host;
-    private readonly ILogger _logger = logger;
+    private readonly MS.ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private WebServer? _webServer;
     private WebServerState State => _webServer?.State ?? WebServerState.Stopped;
@@ -46,6 +49,7 @@ public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvi
         _webServer.WithWebApi("/api", (module) => module.WithController(() => new ApiMap(_host)));
 
         _webServer.Start(_cancellationTokenSource.Token);
+        _logger.LogInformation("Http服务器已启动");
     }
 
     public void Stop()
@@ -55,6 +59,7 @@ public class HttpServer(IHost host, ILogger logger, SettingProvider settingProvi
 
         _cancellationTokenSource.Cancel();
         _webServer.Dispose();
+        _logger.LogInformation("Http服务器已停止");
     }
 
     private WebServerOptions CreateOptions()

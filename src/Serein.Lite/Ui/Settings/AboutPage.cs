@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 using Serein.Core;
 using Serein.Core.Utils.Extensions;
@@ -39,5 +40,14 @@ public partial class AboutPage : UserControl
     private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
         "https://jq.qq.com/?_wv=1027&k=XNZqPSPv".OpenInBrowser();
+    }
+
+    private void CopiableLabel_Click(object sender, EventArgs e)
+    {
+        if (sender is Label label)
+        {
+            Clipboard.SetText(label.Text);
+            MessageBox.Show("复制成功", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

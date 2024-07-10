@@ -11,9 +11,7 @@ public class PluginService(PluginManager pluginManager) : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        Task
-            .Delay(1000, cancellationToken)
-            .ContinueWith((_) => _pluginManager.Load(), cancellationToken);
+        Task.Run(_pluginManager.Load, cancellationToken);
 
         return Task.CompletedTask;
     }

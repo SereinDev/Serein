@@ -48,7 +48,7 @@ public class UpdateChecker : INotifyPropertyChanged
 
             Latest = release;
 
-            if (version <= Version)
+            if (version > Version)
             {
                 _logger.LogDebug("获取到新版本：{}", Latest?.TagName);
                 Updated?.Invoke(this, EventArgs.Empty);

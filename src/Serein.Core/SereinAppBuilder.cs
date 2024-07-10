@@ -16,6 +16,7 @@ using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
+using Serein.Core.Utils;
 
 namespace Serein.Core;
 
@@ -24,6 +25,7 @@ public sealed class SereinAppBuilder
     static SereinAppBuilder()
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+        Directory.CreateDirectory(PathConstants.Root);
     }
 
     public IServiceCollection Services => _hostAppBuilder.Services;
@@ -43,7 +45,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<ScheduleProvider>();
 
         Services.AddSingleton<HardwareInfoProvider>();
-        Services.AddSingleton<ReactionManager>();
+        Services.AddSingleton<ReactionTrigger>();
         Services.AddSingleton<Matcher>();
         Services.AddSingleton<ServerManager>();
         Services.AddSingleton<CommandParser>();

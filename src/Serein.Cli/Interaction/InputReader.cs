@@ -7,31 +7,30 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
 using Serein.Core;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
 namespace Serein.Cli.Interaction;
 
 public class InputReader : IHostedService
 {
-    private readonly IReadOnlyDictionary<string, Command> _commandParser;
-
+    private readonly Dictionary<string, Command> _commandParser;
     private readonly string _allCommands;
     private static readonly char[] Separator = ['\x20'];
     private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
-    private ILogger Logger => Services.GetRequiredService<ILogger>();
-    private Setting Setting => Services.GetRequiredService<SettingProvider>().Value;
+    private readonly ILogger _logger;
+    private readonly SettingProvider _settingProvider;
 
-    public InputReader(IHost host)
+
+    public InputReader(IHost host, ILogger logger, SettingProvider settingProvider)
     {
         _host = host;
+        _logger = logger;
+        _settingProvider = settingProvider;
 
         var stringBuilder = new StringBuilder();
         var attributes = new List<(CommandDescriptionAttribute, CommandUsageAttribute[])>();
@@ -100,15 +99,15 @@ public class InputReader : IHostedService
             // }
 
             if (
-                input.StartsWith(Setting.Application.CliCommandHeader)
-                && !string.IsNullOrEmpty(Setting.Application.CliCommandHeader)
+                input.StartsWith(_settingProvider.Value.Application.CliCommandHeader)
+                && !string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader)
             )
-                input = input[Setting.Application.CliCommandHeader.Length..];
+                input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
 
             if (Parse(input.Trim(), out var args))
                 Handle(args);
             else
-                Logger.LogError("语法错误：含有未闭合的冒号（\"）。若要作为参数的一部分传输，请使用\\\"进行转义");
+                _logger.LogError("语法错误：含有未闭合的冒号（\"）。若要作为参数的一部分传输，请使用\\\"进行转义");
         }
     }
 
@@ -179,26 +178,26 @@ public class InputReader : IHostedService
     {
         if (args.Count == 0)
         {
-            Logger.LogError("未知命令。请使用\"help\"查看所有命令");
+            _logger.LogError("未知命令。请使用\"help\"查看所有命令");
             return;
         }
 
         if (args[0] == "help" || args[0] == "?")
-            Logger.LogInformation("{}", _allCommands);
+            _logger.LogInformation("{}", _allCommands);
         else if (!_commandParser.TryGetValue(args[0], out var parser))
-            Logger.LogError("未知命令。请使用\"help\"查看所有命令");
+            _logger.LogError("未知命令。请使用\"help\"查看所有命令");
         else
             try
             {
-                parser.Parse(args.ToArray());
+                parser.Parse([.. args]);
             }
             catch (InvalidArgumentException e)
             {
-                Logger.LogError("参数错误：{}", e.Message);
+                _logger.LogError("参数错误：{}", e.Message);
             }
             catch (Exception e)
             {
-                Logger.LogError(e, "运行命令时出现异常");
+                _logger.LogError(e, "运行命令时出现异常");
             }
     }
 }

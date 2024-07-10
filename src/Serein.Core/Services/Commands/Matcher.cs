@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner commandRunner)
+public class Matcher(
+    MatchesProvider matchesProvider,
+    CommandRunner commandRunner,
+    SettingProvider settingProvider
+    )
 {
-    private readonly IHost _host = host;
     private readonly MatchesProvider _matchesProvider = matchesProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
-
-    private IServiceProvider Services => _host.Services;
-    private ConnectionSetting BotSetting =>
-        Services.GetRequiredService<SettingProvider>().Value.Connection;
+    private readonly SettingProvider _settingProvider = settingProvider;
 
     public async Task MatchServerOutputAsync(string line)
     {
@@ -123,8 +119,8 @@ public class Matcher(IHost host, MatchesProvider matchesProvider, CommandRunner 
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>
-        BotSetting.Administrators.Contains(messagePacket.UserId.ToString())
-        || BotSetting.GivePermissionToAllAdmins
+        _settingProvider.Value.Connection.Administrators.Contains(messagePacket.UserId.ToString())
+        || _settingProvider.Value.Connection.GivePermissionToAllAdmins
             && messagePacket.MessageType == MessageType.Group
             && messagePacket.Sender.Role != Role.Member;
 }

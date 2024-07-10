@@ -32,9 +32,6 @@ public partial class MainForm : Form
         _serverManager = serverManager;
 
         InitializeComponent();
-
-        SwitchPage<PluginPage>();
-        SwitchPage<ServerPage>();
     }
 
     private void SwitchPage<T>()
@@ -234,6 +231,12 @@ public partial class MainForm : Form
 
     protected override void OnShown(EventArgs e)
     {
+        SwitchPage<PluginPage>();
+        SwitchPage<ConnectionPage>();
+        // 初始化并创建控件
+
+        SwitchPage<ServerPage>();
+
         if (SereinApp.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
 

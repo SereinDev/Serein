@@ -10,12 +10,11 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ScheduleRunner(IHost host) : IHostedService
+public class ScheduleRunner(IHost host, CommandRunner commandRunner) : IHostedService
 {
-    private readonly IHost _host = host;
-    private IServiceProvider Services => _host.Services;
-    private ScheduleProvider ScheduleProvider => Services.GetRequiredService<ScheduleProvider>();
-    private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
+    private readonly CommandRunner _commandRunner = commandRunner;
+
+    private ScheduleProvider ScheduleProvider { get; } = host.Services.GetRequiredService<ScheduleProvider>();
 
     private readonly Timer _timer = new(2000);
 
@@ -37,7 +36,7 @@ public class ScheduleRunner(IHost host) : IHostedService
                 if (schedule.NextTime > DateTime.Now)
                 {
                     schedule.IsRunning = true;
-                    CommandRunner
+                    _commandRunner
                         .RunAsync(schedule.CommandObj)
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }

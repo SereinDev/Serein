@@ -4,16 +4,21 @@ using System.Timers;
 
 using Hardware.Info;
 
+using Microsoft.Extensions.Logging;
+
 namespace Serein.Core.Services.Commands;
 
 public class HardwareInfoProvider
 {
     public HardwareInfo? Info { get; private set; }
     private readonly Timer _timer;
+    private readonly ILogger _logger;
 
-    public HardwareInfoProvider()
+    public HardwareInfoProvider(ILogger logger)
     {
         Task.Run(() => Info = new());
+
+        _logger = logger;
         _timer = new(2000);
         _timer.Elapsed += (_, _) => Update();
         _timer.Start();
@@ -28,6 +33,9 @@ public class HardwareInfoProvider
         {
             Info.RefreshAll();
         }
-        catch (Exception) { }
+        catch (Exception e)
+        {
+            _logger.LogDebug(e, "");
+        }
     }
 }

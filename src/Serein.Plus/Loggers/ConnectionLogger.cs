@@ -32,4 +32,12 @@ public class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
             }
         });
     }
+
+    public void LogReceivedData(string data) { }
+
+    public void LogReceivedMessage(string line) { }
+
+    public void LogSentData(string data) { }
+
+    public void LogSentPacket(string line) { }
 }

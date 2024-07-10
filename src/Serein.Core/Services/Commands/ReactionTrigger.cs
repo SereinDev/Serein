@@ -12,12 +12,10 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ReactionManager(IHost host)
+public class ReactionTrigger(SettingProvider settingProvider, CommandRunner commandRunner)
 {
-    private readonly IHost _host = host;
-    private IServiceProvider Services => _host.Services;
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
+    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly CommandRunner _commandRunner = commandRunner;
 
     public Task TriggerAsync(
         ReactionType type,
@@ -31,7 +29,7 @@ public class ReactionManager(IHost host)
         IReadOnlyDictionary<string, string?>? variables = null
     )
     {
-        if (!SettingProvider.Value.Reactions.TryGetValue(type, out var values))
+        if (!_settingProvider.Value.Reactions.TryGetValue(type, out var values))
             return;
 
         IEnumerable<Command> commands;
@@ -58,9 +56,9 @@ public class ReactionManager(IHost host)
             )
                 command.Argument = target;
 
-            tasks.Add(CommandRunner.RunAsync(command, context));
+            tasks.Add(_commandRunner.RunAsync(command, context));
         }
 
-        Task.WaitAll(tasks.ToArray(), 1000);
+        Task.WaitAll([.. tasks], 1000);
     }
 }

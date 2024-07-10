@@ -52,7 +52,7 @@ public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
 
     public void Save()
     {
-        Directory.CreateDirectory(PathConstants.DataDirectory);
+        Directory.CreateDirectory(PathConstants.Root);
         File.WriteAllText(
             PathConstants.SchedulesFile,
             JsonSerializer.Serialize(

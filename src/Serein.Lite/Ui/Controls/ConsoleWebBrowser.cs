@@ -12,15 +12,15 @@ public class ConsoleWebBrowser : WebBrowser
 {
     public ConsoleWebBrowser()
     {
-        if (!File.Exists(".console/index.html"))
+        if (!File.Exists("Serein/console/index.html"))
             SereinApp.Current?.Services.GetRequiredService<ResourcesManager>().WriteConsoleHtml();
 
-        Navigate(@"file:\\\" + Path.GetFullPath(@".console\index.html"));
+        Navigate(@"file:\\\" + Path.GetFullPath(@"Serein\console\index.html"));
     }
 
     public void AppendHtmlLine(string html)
     {
-        Document?.InvokeScript("appendText", new[] { html });
+        Document?.InvokeScript("appendText", [html]);
     }
 
     public void AppendLine(string text)
@@ -56,6 +56,6 @@ public class ConsoleWebBrowser : WebBrowser
 
     public void ClearLines()
     {
-        AppendHtmlLine("\u1145clear");
+        AppendHtmlLine("\u0006clear");
     }
 }

@@ -1,3 +1,5 @@
+using System.Text.Json.Nodes;
+
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
@@ -11,5 +13,25 @@ public class ConnectionLogger(ILogger logger) : IConnectionLogger
     public void Log(LogLevel level, string message)
     {
         _logger.Log(level, message);
+    }
+
+    public void LogReceivedMessage(string line)
+    {
+        _logger.LogInformation("[Recv] {}", line);
+    }
+
+    public void LogReceivedData(string data)
+    {
+        _logger.LogInformation("[Recv] {}", data);
+    }
+
+    public void LogSentPacket(string line)
+    {
+        _logger.LogInformation("[Sent] {}", line);
+    }
+
+    public void LogSentData(string data)
+    {
+        _logger.LogInformation("[Sent] {}", data);
     }
 }

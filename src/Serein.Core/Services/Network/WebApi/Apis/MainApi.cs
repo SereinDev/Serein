@@ -21,7 +21,7 @@ public partial class ApiMap : WebApiController
     public ApiMap(IHost host)
     {
         _host = host;
-        var services = host.Services;
+        var services = _host.Services;
         _settingProvider = services.GetRequiredService<SettingProvider>();
         _serverManager = services.GetRequiredService<ServerManager>();
     }

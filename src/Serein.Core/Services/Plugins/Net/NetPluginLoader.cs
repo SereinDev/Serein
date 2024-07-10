@@ -34,9 +34,9 @@ public class NetPluginLoader : IPluginLoader<PluginBase>
 
     private AssemblyLoadContext CreateNew()
     {
-        var context = new AssemblyLoadContext(Name);
+        var context = new AssemblyLoadContext(Name, true);
         context.Resolving += ResolvingHandler;
-        context.SetProfileOptimizationRoot(Path.GetFullPath(PathConstants.PluginDirectory));
+        context.SetProfileOptimizationRoot(Path.GetFullPath(PathConstants.PluginsDirectory));
 
         return context;
     }
@@ -76,7 +76,6 @@ public class NetPluginLoader : IPluginLoader<PluginBase>
     {
         var t = allTypes.Where(type => type.BaseType != typeof(PluginBase));
         var count = t.Count();
-
 
         return count > 1
             ? throw new InvalidOperationException("存在多个插件入口点")

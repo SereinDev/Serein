@@ -14,16 +14,14 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class WebSocketService(IHost host) : IConnectionService
+public class WebSocketService(IHost host, SettingProvider settingProvider) : IConnectionService
 {
-    private readonly IHost _host = host;
+    private IConnectionLogger ConnectionLogger => host.Services.GetRequiredService<IConnectionLogger>();
+    private readonly SettingProvider _settingProvider = settingProvider;
     private WebSocket? _client;
     private string _uri = string.Empty;
 
-    private IServiceProvider Services => _host.Services;
-    private IConnectionLogger Logger => Services.GetRequiredService<IConnectionLogger>();
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private Setting Setting => SettingProvider.Value;
+    private Setting Setting => _settingProvider.Value;
 
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     public event EventHandler? StatusChanged;
@@ -43,10 +41,12 @@ public class WebSocketService(IHost host) : IConnectionService
         );
 
         client.MessageReceived += MessageReceived;
-        client.Opened += (_, _) => Logger.Log(LogLevel.Information, $"成功连接到{_uri}");
+        client.Opened += (_, _) => ConnectionLogger.Log(LogLevel.Information, $"成功连接到{_uri}");
         client.Opened += StatusChanged;
         client.Closed += StatusChanged;
-        client.Closed += (_, _) => Logger.Log(LogLevel.Warning, "连接已断开");
+        client.Closed += (_, _) => ConnectionLogger.Log(LogLevel.Warning, "连接已断开");
+        client.Error += (_, e) =>
+            ConnectionLogger.Log(LogLevel.Error, $"{e.Exception.GetType().FullName}: {e.Exception.Message}");
 
         return client;
     }
@@ -82,7 +82,11 @@ public class WebSocketService(IHost host) : IConnectionService
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Information, e.Message);
+                    ConnectionLogger.Log(LogLevel.Error, e.Message);
+                }
+                finally
+                {
+                    Connecting = false;
                 }
             },
             token

@@ -36,8 +36,8 @@ public class ResourcesManager(ILogger logger)
         if (_consoleHtml is null)
             throw new InvalidDataException($"{IndexHtml} 未找到");
 
-        Directory.CreateDirectory(".console");
-        using var stream = new FileStream($".console/{IndexHtml}", FileMode.Create);
+        Directory.CreateDirectory("Serein/console");
+        using var stream = new FileStream($"Serein/console/{IndexHtml}", FileMode.Create);
         _consoleHtml.CopyTo(stream);
         stream.Flush();
     }
@@ -45,10 +45,10 @@ public class ResourcesManager(ILogger logger)
     private void WriteCss()
     {
         if (_consoleCss is null)
-            throw new InvalidDataException($"{CustomCss}未找到");
+            throw new InvalidDataException($"{CustomCss} 未找到");
 
-        Directory.CreateDirectory(".console");
-        using var stream = new FileStream($".console/{CustomCss}", FileMode.Create);
+        Directory.CreateDirectory("Serein/console");
+        using var stream = new FileStream($"Serein/console/{CustomCss}", FileMode.Create);
         _consoleCss.CopyTo(stream);
         stream.Flush();
     }

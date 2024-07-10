@@ -50,14 +50,14 @@ public class ReverseWebSocketService(IHost host) : IConnectionService
     {
         webSocket.OnOpen += () => _webSockets.Add(GetEndPoint(), webSocket);
         webSocket.OnOpen += () =>
-            Logger.Log(MsLogLevel.Information, $"{GetEndPoint()}连接到反向WebSocket服务器");
+            Logger.Log(MsLogLevel.Information, $"[{GetEndPoint()}] 连接到反向WebSocket服务器");
 
         webSocket.OnClose += () => _webSockets.Remove(GetEndPoint());
         webSocket.OnClose += () =>
-            Logger.Log(MsLogLevel.Information, $"{GetEndPoint()}从反向WebSocket服务器断开");
+            Logger.Log(MsLogLevel.Information, $"[{GetEndPoint()}] 从反向WebSocket服务器断开");
 
         webSocket.OnError += (e) =>
-            Logger.Log(MsLogLevel.Error, $"{GetEndPoint()}发生错误：{e}");
+            Logger.Log(MsLogLevel.Error, $"[{GetEndPoint()}] 发生错误：\n{e.GetType().FullName}: {e.Message}");
 
         webSocket.OnMessage += (msg) => MessageReceived?.Invoke(webSocket, new(msg));
 

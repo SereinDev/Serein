@@ -71,7 +71,7 @@ public class JsEngineFactory(
 
         cfg.CatchClrExceptions();
         cfg.CancellationToken(jsPlugin.CancellationToken);
-        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginDirectory));
+        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginsDirectory));
 
         return cfg;
     }

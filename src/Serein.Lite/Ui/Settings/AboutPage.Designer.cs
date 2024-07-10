@@ -225,32 +225,38 @@
             // VersionLabel
             // 
             VersionLabel.AutoSize = true;
+            VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             VersionLabel.Location = new System.Drawing.Point(26, 25);
             VersionLabel.Margin = new System.Windows.Forms.Padding(5);
             VersionLabel.Name = "VersionLabel";
             VersionLabel.Size = new System.Drawing.Size(110, 31);
             VersionLabel.TabIndex = 0;
             VersionLabel.Text = "版本号：";
+            VersionLabel.Click += CopiableLabel_Click;
             // 
             // DetailedVersionLabel
             // 
             DetailedVersionLabel.AutoSize = true;
+            DetailedVersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             DetailedVersionLabel.Location = new System.Drawing.Point(26, 66);
             DetailedVersionLabel.Margin = new System.Windows.Forms.Padding(5);
             DetailedVersionLabel.Name = "DetailedVersionLabel";
             DetailedVersionLabel.Size = new System.Drawing.Size(158, 31);
             DetailedVersionLabel.TabIndex = 1;
             DetailedVersionLabel.Text = "详细版本号：";
+            DetailedVersionLabel.Click += CopiableLabel_Click;
             // 
             // AssemblyLabel
             // 
             AssemblyLabel.AutoSize = true;
+            AssemblyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             AssemblyLabel.Location = new System.Drawing.Point(26, 107);
             AssemblyLabel.Margin = new System.Windows.Forms.Padding(5);
             AssemblyLabel.Name = "AssemblyLabel";
             AssemblyLabel.Size = new System.Drawing.Size(110, 31);
             AssemblyLabel.TabIndex = 2;
             AssemblyLabel.Text = "程序集：";
+            AssemblyLabel.Click += CopiableLabel_Click;
             // 
             // AboutPage
             // 
