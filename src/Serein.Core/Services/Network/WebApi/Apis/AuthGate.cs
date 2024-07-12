@@ -17,14 +17,17 @@ public class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
     {
         var auth = context.Request.Headers.Get("Authorization");
 
+        if (_settingProvider.Value.WebApi.AccessTokens.Length == 0)
+            return Task.CompletedTask;
+
         if (string.IsNullOrEmpty(auth))
-            HttpException.Unauthorized();
+            throw HttpException.Unauthorized();
 
         if (auth!.StartsWith("Bearer "))
             auth = auth[7..];
 
         if (!_settingProvider.Value.WebApi.AccessTokens.Contains(auth))
-            HttpException.Unauthorized();
+            throw HttpException.Unauthorized();
 
         return Task.CompletedTask;
     }

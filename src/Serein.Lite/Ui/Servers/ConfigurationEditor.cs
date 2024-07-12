@@ -32,15 +32,31 @@ public partial class ConfigurationEditor : Form
         _serverManager = serverManager;
         _configuration = configuration;
 
+        SyncData();
+        SetToolTips();
+    }
+
+    private void SetToolTips()
+    {
+        ToolTip.SetToolTip(
+            IdTextBox,
+            "用于区分服务器（一经填写无法修改）\r\n" + "· 长度大于或等于3\r\n" + "· 只由数字、字母和下划线组成"
+        );
+        ToolTip.SetToolTip(NameTextBox, "用于标识服务器，便于管理");
+        ToolTip.SetToolTip(FileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n你可以双击");
+    }
+
+    private void SyncData()
+    {
         NameTextBox.Text = _configuration.Name;
         FileNameTextBox.Text = _configuration.FileName;
         ArgumentTextBox.Text = _configuration.Argument;
         AutoRestartCheckBox.Checked = _configuration.AutoRestart;
         SaveLogCheckBox.Checked = _configuration.SaveLog;
         AutoStopWhenCrashingCheckBox.Checked = _configuration.AutoStopWhenCrashing;
-        PortNumericUpDown.Value = _configuration.IPv4Port;
-        LineTerminatorTextBox.Text = _configuration.LineTerminator
-            .Replace("\r", "\\r")
+        PortNumericUpDown.Value = _configuration.PortIPv4;
+        LineTerminatorTextBox.Text = _configuration
+            .LineTerminator.Replace("\r", "\\r")
             .Replace("\n", "\\n");
         StartWhenSettingUpCheckBox.Checked = _configuration.StartWhenSettingUp;
         OutputCommandUserInputCheckBox.Checked = _configuration.OutputCommandUserInput;
@@ -82,15 +98,15 @@ public partial class ConfigurationEditor : Form
             output = (EncodingMap.EncodingType)OutputEncondingComboBox.SelectedIndex;
             outputStyle = (OutputStyle)OutputStyleComboBox.SelectedIndex;
 
-            _configuration.Name = NameTextBox.Text;
+            _configuration.Name = string.IsNullOrEmpty(NameTextBox.Text) || string.IsNullOrWhiteSpace(NameTextBox.Text) ? "未命名" : NameTextBox.Text;
             _configuration.FileName = FileNameTextBox.Text;
             _configuration.Argument = ArgumentTextBox.Text;
             _configuration.AutoRestart = AutoRestartCheckBox.Checked;
             _configuration.SaveLog = SaveLogCheckBox.Checked;
             _configuration.AutoStopWhenCrashing = AutoStopWhenCrashingCheckBox.Checked;
-            _configuration.IPv4Port = (short)PortNumericUpDown.Value;
-            _configuration.LineTerminator = LineTerminatorTextBox.Text
-                .Replace("\\r", "\r")
+            _configuration.PortIPv4 = (short)PortNumericUpDown.Value;
+            _configuration.LineTerminator = LineTerminatorTextBox
+                .Text.Replace("\\r", "\r")
                 .Replace("\n", "\\n");
             _configuration.StartWhenSettingUp = StartWhenSettingUpCheckBox.Checked;
             _configuration.OutputCommandUserInput = OutputCommandUserInputCheckBox.Checked;

@@ -6,6 +6,7 @@ using System.Threading;
 using EmbedIO;
 using EmbedIO.WebApi;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +23,7 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
 {
     static HttpServer()
     {
-        Logger.UnregisterLogger<ConsoleLogger>();
+        Logger.NoLogging();
     }
 
     private readonly IHost _host = host;
@@ -46,7 +47,15 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
             _webServer.WithCors();
 
         _webServer.WithModule(new AuthGate(_settingProvider));
-        _webServer.WithWebApi("/api", (module) => module.WithController(() => new ApiMap(_host)));
+        _webServer.WithModule(_host.Services.GetRequiredService<IPBannerModule>());
+        _webServer.WithWebApi(
+            "/api",
+            (module) =>
+                module
+                    .HandleHttpException(ApiHelper.HandleHttpException)
+                    .HandleUnhandledException(ApiHelper.HandleException)
+                    .WithController(() => _host.Services.GetRequiredService<ApiMap>())
+        );
 
         _webServer.Start(_cancellationTokenSource.Token);
         _logger.LogInformation("Http服务器已启动");
@@ -84,14 +93,10 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
                 return options;
 
             if (File.Exists(_settingProvider.Value.WebApi.Certificate.Path))
-                options.Certificate = string.IsNullOrEmpty(
+                options.Certificate = new(
+                    _settingProvider.Value.WebApi.Certificate.Path!,
                     _settingProvider.Value.WebApi.Certificate.Password
-                )
-                    ? new(_settingProvider.Value.WebApi.Certificate.Path!)
-                    : new(
-                        _settingProvider.Value.WebApi.Certificate.Path!,
-                        _settingProvider.Value.WebApi.Certificate.Password
-                    );
+                );
             else
                 throw new InvalidOperationException(
                     $"证书文件“{_settingProvider.Value.WebApi.Certificate.Path}”不存在"

@@ -12,6 +12,7 @@ using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Ssh;
 using Serein.Core.Services.Network.WebApi;
+using Serein.Core.Services.Network.WebApi.Apis;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
@@ -57,6 +58,8 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsConnectionManager>();
         Services.AddSingleton<HttpServer>();
+        Services.AddTransient<ApiMap>();
+        Services.AddTransient<IPBannerModule>();
         Services.AddSingleton<SshServiceProvider>();
 
         Services.AddSingleton<PluginManager>();

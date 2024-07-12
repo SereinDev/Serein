@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.Label AdministratorsLabel;
             System.Windows.Forms.Label GroupsLabel;
             System.Windows.Forms.Label SubProtocolsLabel;
             System.Windows.Forms.Label AccessTokenLabel;
             System.Windows.Forms.Label UriLabel;
+            System.Windows.Forms.ToolTip ToolTip;
             AdministratorsTextBox = new System.Windows.Forms.TextBox();
             GroupsTextBox = new System.Windows.Forms.TextBox();
             GivePermissionToAllAdminsCheckBox = new System.Windows.Forms.CheckBox();
@@ -49,6 +51,7 @@
             SubProtocolsLabel = new System.Windows.Forms.Label();
             AccessTokenLabel = new System.Windows.Forms.Label();
             UriLabel = new System.Windows.Forms.Label();
+            ToolTip = new System.Windows.Forms.ToolTip(components);
             SuspendLayout();
             // 
             // AdministratorsLabel
@@ -59,6 +62,7 @@
             AdministratorsLabel.Size = new System.Drawing.Size(158, 31);
             AdministratorsLabel.TabIndex = 30;
             AdministratorsLabel.Text = "管理权限列表";
+            ToolTip.SetToolTip(AdministratorsLabel, "拥有管理权限的用户Id（使用;分隔）");
             // 
             // GroupsLabel
             // 
@@ -68,6 +72,7 @@
             GroupsLabel.Size = new System.Drawing.Size(134, 31);
             GroupsLabel.TabIndex = 28;
             GroupsLabel.Text = "监听群列表";
+            ToolTip.SetToolTip(GroupsLabel, "要监听的群聊Id（使用;分隔）");
             // 
             // SubProtocolsLabel
             // 
@@ -77,6 +82,7 @@
             SubProtocolsLabel.Size = new System.Drawing.Size(216, 31);
             SubProtocolsLabel.TabIndex = 20;
             SubProtocolsLabel.Text = "WebSocket子协议";
+            ToolTip.SetToolTip(SubProtocolsLabel, "连接时声明的子协议");
             // 
             // AccessTokenLabel
             // 
@@ -86,6 +92,7 @@
             AccessTokenLabel.Size = new System.Drawing.Size(229, 31);
             AccessTokenLabel.TabIndex = 18;
             AccessTokenLabel.Text = "鉴权凭证（Token）";
+            ToolTip.SetToolTip(AccessTokenLabel, "· 正向WebSocket：在Header携带Authentication字段\r\n· 反向WebSocket：校验连接的客户端Header中的Authentication字段\r\n");
             // 
             // UriLabel
             // 
@@ -95,6 +102,7 @@
             UriLabel.Size = new System.Drawing.Size(62, 31);
             UriLabel.TabIndex = 16;
             UriLabel.Text = "地址";
+            ToolTip.SetToolTip(UriLabel, "· 正向WebSocket：连接的WebSocket地址\r\n· 反向WebSocket：WS服务器的开启地址\r\n");
             // 
             // AdministratorsTextBox
             // 
@@ -102,9 +110,9 @@
             AdministratorsTextBox.Location = new System.Drawing.Point(21, 749);
             AdministratorsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             AdministratorsTextBox.Name = "AdministratorsTextBox";
-            AdministratorsTextBox.PlaceholderText = "使用;分隔";
             AdministratorsTextBox.Size = new System.Drawing.Size(1211, 38);
             AdministratorsTextBox.TabIndex = 31;
+            ToolTip.SetToolTip(AdministratorsTextBox, "拥有管理权限的用户Id（使用;分隔）");
             AdministratorsTextBox.TextChanged += AdministratorsTextBox_TextChanged;
             // 
             // GroupsTextBox
@@ -113,9 +121,9 @@
             GroupsTextBox.Location = new System.Drawing.Point(21, 667);
             GroupsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             GroupsTextBox.Name = "GroupsTextBox";
-            GroupsTextBox.PlaceholderText = "使用;分隔";
             GroupsTextBox.Size = new System.Drawing.Size(1211, 38);
             GroupsTextBox.TabIndex = 29;
+            ToolTip.SetToolTip(GroupsTextBox, "要监听的群聊Id（使用;分隔）");
             GroupsTextBox.TextChanged += GroupsTextBox_TextChanged;
             // 
             // GivePermissionToAllAdminsCheckBox
@@ -126,6 +134,7 @@
             GivePermissionToAllAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
             GivePermissionToAllAdminsCheckBox.TabIndex = 27;
             GivePermissionToAllAdminsCheckBox.Text = "赋予所有群主和管理员管理权限";
+            ToolTip.SetToolTip(GivePermissionToAllAdminsCheckBox, "开启后监听群的群主和管理员有着和下方设置一样的管理权限");
             GivePermissionToAllAdminsCheckBox.UseVisualStyleBackColor = true;
             GivePermissionToAllAdminsCheckBox.Click += OnPropertyChanged;
             // 
@@ -137,6 +146,7 @@
             SaveLogCheckBox.Size = new System.Drawing.Size(238, 35);
             SaveLogCheckBox.TabIndex = 26;
             SaveLogCheckBox.Text = "保存数据包到日志";
+            ToolTip.SetToolTip(SaveLogCheckBox, "将接收和发送的数据保存到文件“Serein/logs/connection/{datetime}.log”");
             SaveLogCheckBox.UseVisualStyleBackColor = true;
             SaveLogCheckBox.Click += OnPropertyChanged;
             // 
@@ -148,6 +158,7 @@
             AutoEscapeCheckBox.Size = new System.Drawing.Size(166, 35);
             AutoEscapeCheckBox.TabIndex = 25;
             AutoEscapeCheckBox.Text = "纯文本发送";
+            ToolTip.SetToolTip(AutoEscapeCheckBox, "发送信息时转义CQ码");
             AutoEscapeCheckBox.UseVisualStyleBackColor = true;
             AutoEscapeCheckBox.Click += OnPropertyChanged;
             // 
@@ -159,6 +170,7 @@
             OutputDataCheckBox.Size = new System.Drawing.Size(214, 35);
             OutputDataCheckBox.TabIndex = 24;
             OutputDataCheckBox.Text = "输出收发的数据";
+            ToolTip.SetToolTip(OutputDataCheckBox, "在控制台输出接收和发送的数据");
             OutputDataCheckBox.UseVisualStyleBackColor = true;
             OutputDataCheckBox.Click += OnPropertyChanged;
             // 
@@ -170,6 +182,7 @@
             AutoReconnectCheckBox.Size = new System.Drawing.Size(190, 35);
             AutoReconnectCheckBox.TabIndex = 23;
             AutoReconnectCheckBox.Text = "断线自动重连";
+            ToolTip.SetToolTip(AutoReconnectCheckBox, "非用户操作导致连接断开时自动重连（仅适用于正向连接）");
             AutoReconnectCheckBox.UseVisualStyleBackColor = true;
             AutoReconnectCheckBox.Click += OnPropertyChanged;
             // 
@@ -181,6 +194,7 @@
             UseReverseWebSocketCheckBox.Size = new System.Drawing.Size(272, 35);
             UseReverseWebSocketCheckBox.TabIndex = 22;
             UseReverseWebSocketCheckBox.Text = "使用反向WebSocket";
+            ToolTip.SetToolTip(UseReverseWebSocketCheckBox, "开启WebSocket服务器供机器人连接");
             UseReverseWebSocketCheckBox.UseVisualStyleBackColor = true;
             UseReverseWebSocketCheckBox.Click += OnPropertyChanged;
             // 
@@ -192,6 +206,7 @@
             AccessTokenMaskedTextBox.PasswordChar = '*';
             AccessTokenMaskedTextBox.Size = new System.Drawing.Size(1211, 38);
             AccessTokenMaskedTextBox.TabIndex = 19;
+            ToolTip.SetToolTip(AccessTokenMaskedTextBox, "· 正向WebSocket：在Header携带Authentication字段\r\n· 反向WebSocket：校验连接的客户端Header中的Authentication字段\r\n");
             AccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
             // 
             // SubProtocolsTextBox
@@ -202,8 +217,10 @@
             SubProtocolsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             SubProtocolsTextBox.Multiline = true;
             SubProtocolsTextBox.Name = "SubProtocolsTextBox";
+            SubProtocolsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             SubProtocolsTextBox.Size = new System.Drawing.Size(1211, 104);
             SubProtocolsTextBox.TabIndex = 21;
+            ToolTip.SetToolTip(SubProtocolsTextBox, "连接时声明的子协议");
             SubProtocolsTextBox.TextChanged += SubProtocolsTextBox_TextChanged;
             // 
             // UriTextBox
@@ -214,6 +231,7 @@
             UriTextBox.Name = "UriTextBox";
             UriTextBox.Size = new System.Drawing.Size(1211, 38);
             UriTextBox.TabIndex = 17;
+            ToolTip.SetToolTip(UriTextBox, "· 正向WebSocket：连接的WebSocket地址\r\n· 反向WebSocket：WS服务器的开启地址\r\n");
             UriTextBox.TextChanged += OnPropertyChanged;
             // 
             // ConnectionSettingPage

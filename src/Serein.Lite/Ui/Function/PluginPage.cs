@@ -73,7 +73,7 @@ public partial class PluginPage : UserControl
 
     private void PluginListView_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ToolStripStatusLabel.Text =
+        PluginInfoLabel.Text =
             PluginListView.SelectedItems.Count == 1
             && PluginListView.SelectedItems[0].Tag is IPlugin plugin
                 ? $"Id: {plugin.Info.Id} ({plugin.FileName.Replace(@"\", "/")})"

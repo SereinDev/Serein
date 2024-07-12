@@ -7,19 +7,25 @@ public partial class SettingPage : UserControl
     public SettingPage(
         ConnectionSettingPage connectionSettingPage,
         AppSettingPage appSettingPage,
-        AboutPage aboutPage
+        ReactionSettingPage reactionSettingPage,
+        WebApiSettingPage webApiSettingPage,
+        AboutPage aboutPage,
+        SshSettingPage sshSettingPage
     )
     {
         InitializeComponent();
 
         ConnectionTabPage.Controls.Add(WrapPage(connectionSettingPage));
         ApplicationTabPage.Controls.Add(WrapPage(appSettingPage));
+        ReactionTabPage.Controls.Add(WrapPage(reactionSettingPage, DockStyle.Fill));
+        WebApiTabPage.Controls.Add(WrapPage(webApiSettingPage));
+        SshTabPage.Controls.Add(WrapPage(sshSettingPage, DockStyle.Fill));
         AboutTabPage.Controls.Add(WrapPage(aboutPage));
     }
 
-    private static Panel WrapPage(UserControl userControl)
+    private static Panel WrapPage(UserControl userControl, DockStyle dockStyle = DockStyle.Top)
     {
-        userControl.Dock = DockStyle.Top;
+        userControl.Dock = dockStyle;
         var panel = new Panel
         {
             Dock = DockStyle.Fill,

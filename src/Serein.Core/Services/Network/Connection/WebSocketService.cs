@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,12 +34,15 @@ public class WebSocketService(IHost host, SettingProvider settingProvider) : ICo
     private WebSocket CreateNew()
     {
         _uri = Setting.Connection.Uri;
+
+        var headers = new Dictionary<string, string>(Setting.Connection.Headers);
+        if (!string.IsNullOrEmpty(Setting.Connection.AccessToken))
+            headers["Authorization"] = $"Bearer {Setting.Connection.AccessToken}";
+
         var client = new WebSocket(
             Setting.Connection.Uri,
             string.Join('\x20', Setting.Connection.SubProtocols),
-            customHeaderItems: string.IsNullOrEmpty(Setting.Connection.AccessToken)
-                ? null
-                : new() { new("Authorization", $"Bearer {Setting.Connection.AccessToken}") }
+            customHeaderItems: [.. headers]
         );
 
         client.MessageReceived += MessageReceived;

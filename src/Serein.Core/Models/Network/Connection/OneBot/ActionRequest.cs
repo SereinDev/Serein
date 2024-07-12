@@ -11,6 +11,6 @@ public class ActionRequest<T>
 
     public T? Params { get; set; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Echo { get; set; }
 }

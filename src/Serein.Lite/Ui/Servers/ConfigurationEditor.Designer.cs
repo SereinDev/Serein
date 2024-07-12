@@ -62,6 +62,7 @@
             AutoRestartCheckBox = new System.Windows.Forms.CheckBox();
             ConfirmButton = new System.Windows.Forms.Button();
             ErrorProvider = new System.Windows.Forms.ErrorProvider(components);
+            ToolTip = new System.Windows.Forms.ToolTip(components);
             IdLabel = new System.Windows.Forms.Label();
             NameLabel = new System.Windows.Forms.Label();
             FileNameLabel = new System.Windows.Forms.Label();
@@ -88,6 +89,7 @@
             IdLabel.Size = new System.Drawing.Size(36, 31);
             IdLabel.TabIndex = 0;
             IdLabel.Text = "Id";
+            ToolTip.SetToolTip(IdLabel, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
             // 
             // NameLabel
             // 
@@ -97,6 +99,7 @@
             NameLabel.Size = new System.Drawing.Size(62, 31);
             NameLabel.TabIndex = 2;
             NameLabel.Text = "名称";
+            ToolTip.SetToolTip(NameLabel, "用于标识服务器，便于管理");
             // 
             // FileNameLabel
             // 
@@ -106,6 +109,7 @@
             FileNameLabel.Size = new System.Drawing.Size(110, 31);
             FileNameLabel.TabIndex = 4;
             FileNameLabel.Text = "启动文件";
+            ToolTip.SetToolTip(FileNameLabel, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
             // 
             // ArgumentLabel
             // 
@@ -115,6 +119,7 @@
             ArgumentLabel.Size = new System.Drawing.Size(110, 31);
             ArgumentLabel.TabIndex = 6;
             ArgumentLabel.Text = "启动参数";
+            ToolTip.SetToolTip(ArgumentLabel, "附加在启动文件后的参数");
             // 
             // LineTerminatorLabel
             // 
@@ -124,6 +129,7 @@
             LineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
             LineTerminatorLabel.TabIndex = 6;
             LineTerminatorLabel.Text = "行终止符";
+            ToolTip.SetToolTip(LineTerminatorLabel, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
             // 
             // OutputStyleLabel
             // 
@@ -133,6 +139,7 @@
             OutputStyleLabel.Size = new System.Drawing.Size(110, 31);
             OutputStyleLabel.TabIndex = 4;
             OutputStyleLabel.Text = "输出样式";
+            ToolTip.SetToolTip(OutputStyleLabel, "控制台中渲染输出内容的样式");
             // 
             // OutputEncondingLabel
             // 
@@ -142,6 +149,7 @@
             OutputEncondingLabel.Size = new System.Drawing.Size(110, 31);
             OutputEncondingLabel.TabIndex = 2;
             OutputEncondingLabel.Text = "输出编码";
+            ToolTip.SetToolTip(OutputEncondingLabel, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
             // 
             // InputEncondingLabel
             // 
@@ -151,6 +159,7 @@
             InputEncondingLabel.Size = new System.Drawing.Size(110, 31);
             InputEncondingLabel.TabIndex = 0;
             InputEncondingLabel.Text = "输入编码";
+            ToolTip.SetToolTip(InputEncondingLabel, "输入到服务器的编码");
             // 
             // StopLabel
             // 
@@ -160,6 +169,7 @@
             StopLabel.Size = new System.Drawing.Size(110, 31);
             StopLabel.TabIndex = 5;
             StopLabel.Text = "关服命令";
+            ToolTip.SetToolTip(StopLabel, "关闭服务器时输入的命令（一行一个）");
             // 
             // PortLabel
             // 
@@ -169,15 +179,16 @@
             PortLabel.Size = new System.Drawing.Size(111, 31);
             PortLabel.TabIndex = 3;
             PortLabel.Text = "IPv4端口";
+            ToolTip.SetToolTip(PortLabel, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
             // 
             // FileNameTextBox
             // 
             FileNameTextBox.Location = new System.Drawing.Point(23, 242);
             FileNameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             FileNameTextBox.Name = "FileNameTextBox";
-            FileNameTextBox.PlaceholderText = "启动时运行的文件（双击选择文件）";
             FileNameTextBox.Size = new System.Drawing.Size(700, 38);
             FileNameTextBox.TabIndex = 5;
+            ToolTip.SetToolTip(FileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
             FileNameTextBox.DoubleClick += FileName_DoubleClick;
             // 
             // IdTextBox
@@ -185,9 +196,9 @@
             IdTextBox.Location = new System.Drawing.Point(23, 50);
             IdTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             IdTextBox.Name = "IdTextBox";
-            IdTextBox.PlaceholderText = "用于区分服务器；一经填写不可修改";
             IdTextBox.Size = new System.Drawing.Size(700, 38);
             IdTextBox.TabIndex = 1;
+            ToolTip.SetToolTip(IdTextBox, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
             IdTextBox.Enter += IdTextBox_Enter;
             IdTextBox.Validating += IdTextBox_Validating;
             // 
@@ -227,18 +238,18 @@
             NameTextBox.Location = new System.Drawing.Point(23, 146);
             NameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             NameTextBox.Name = "NameTextBox";
-            NameTextBox.PlaceholderText = "用于标识服务器";
             NameTextBox.Size = new System.Drawing.Size(700, 38);
             NameTextBox.TabIndex = 3;
+            ToolTip.SetToolTip(NameTextBox, "用于标识服务器，便于管理");
             // 
             // ArgumentTextBox
             // 
             ArgumentTextBox.Location = new System.Drawing.Point(23, 338);
             ArgumentTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             ArgumentTextBox.Name = "ArgumentTextBox";
-            ArgumentTextBox.PlaceholderText = "启动时附加的参数";
             ArgumentTextBox.Size = new System.Drawing.Size(700, 38);
             ArgumentTextBox.TabIndex = 7;
+            ToolTip.SetToolTip(ArgumentTextBox, "附加在启动文件后的参数");
             // 
             // InputAndOutputTabPage
             // 
@@ -268,6 +279,7 @@
             LineTerminatorTextBox.Name = "LineTerminatorTextBox";
             LineTerminatorTextBox.Size = new System.Drawing.Size(722, 38);
             LineTerminatorTextBox.TabIndex = 7;
+            ToolTip.SetToolTip(LineTerminatorTextBox, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
             // 
             // UseUnicodeCharsCheckBox
             // 
@@ -277,6 +289,7 @@
             UseUnicodeCharsCheckBox.Size = new System.Drawing.Size(237, 35);
             UseUnicodeCharsCheckBox.TabIndex = 10;
             UseUnicodeCharsCheckBox.Text = "使用Unicode字符";
+            ToolTip.SetToolTip(UseUnicodeCharsCheckBox, "使用Unicode字符输入（如\"§\"→\"\\u00a7\"），通常用于解决基岩版服务器输入Tellraw的编码问题");
             UseUnicodeCharsCheckBox.UseVisualStyleBackColor = true;
             // 
             // OutputCommandUserInputCheckBox
@@ -287,6 +300,7 @@
             OutputCommandUserInputCheckBox.Size = new System.Drawing.Size(214, 35);
             OutputCommandUserInputCheckBox.TabIndex = 9;
             OutputCommandUserInputCheckBox.Text = "显示输出的命令";
+            ToolTip.SetToolTip(OutputCommandUserInputCheckBox, "在控制台显示由用户输入的命令");
             OutputCommandUserInputCheckBox.UseVisualStyleBackColor = true;
             // 
             // SaveLogCheckBox
@@ -297,6 +311,7 @@
             SaveLogCheckBox.Size = new System.Drawing.Size(142, 35);
             SaveLogCheckBox.TabIndex = 8;
             SaveLogCheckBox.Text = "保存日志";
+            ToolTip.SetToolTip(SaveLogCheckBox, "将控制台内容保存到文件“Serein/logs/servers/{id}-{datetime}.log”");
             SaveLogCheckBox.UseVisualStyleBackColor = true;
             // 
             // OutputStyleComboBox
@@ -309,6 +324,7 @@
             OutputStyleComboBox.Name = "OutputStyleComboBox";
             OutputStyleComboBox.Size = new System.Drawing.Size(197, 39);
             OutputStyleComboBox.TabIndex = 5;
+            ToolTip.SetToolTip(OutputStyleComboBox, "控制台中渲染输出内容的样式");
             // 
             // OutputEncondingComboBox
             // 
@@ -320,6 +336,7 @@
             OutputEncondingComboBox.Name = "OutputEncondingComboBox";
             OutputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
             OutputEncondingComboBox.TabIndex = 3;
+            ToolTip.SetToolTip(OutputEncondingComboBox, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
             // 
             // InputEncondingComboBox
             // 
@@ -331,6 +348,7 @@
             InputEncondingComboBox.Name = "InputEncondingComboBox";
             InputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
             InputEncondingComboBox.TabIndex = 1;
+            ToolTip.SetToolTip(InputEncondingComboBox, "输入到服务器的编码");
             // 
             // MoreTabPage
             // 
@@ -359,6 +377,7 @@
             StopCommandsTextBox.Size = new System.Drawing.Size(682, 119);
             StopCommandsTextBox.TabIndex = 6;
             StopCommandsTextBox.Text = "stop";
+            ToolTip.SetToolTip(StopCommandsTextBox, "关闭服务器时输入的命令（一行一个）");
             // 
             // PortNumericUpDown
             // 
@@ -367,6 +386,7 @@
             PortNumericUpDown.Name = "PortNumericUpDown";
             PortNumericUpDown.Size = new System.Drawing.Size(240, 38);
             PortNumericUpDown.TabIndex = 4;
+            ToolTip.SetToolTip(PortNumericUpDown, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
             // 
             // StartWhenSettingUpCheckBox
             // 
@@ -466,5 +486,6 @@
         private System.Windows.Forms.TextBox LineTerminatorTextBox;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.ErrorProvider ErrorProvider;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }

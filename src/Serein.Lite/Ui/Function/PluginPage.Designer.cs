@@ -49,8 +49,6 @@
             System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
             System.Windows.Forms.ToolStripSeparator ToolStripSeparator1;
             System.Windows.Forms.ToolStripMenuItem LookUpDocsToolStripMenuItem;
-            System.Windows.Forms.StatusStrip ManageStatusStrip;
-            System.Windows.Forms.TabPage MarketTabPage;
             ConsoleWebBrowser = new Controls.ConsoleWebBrowser();
             InfoGroupBox = new System.Windows.Forms.GroupBox();
             NetCountDynamicLabel = new System.Windows.Forms.Label();
@@ -59,7 +57,7 @@
             ControlGroupBox = new System.Windows.Forms.GroupBox();
             PluginListView = new System.Windows.Forms.ListView();
             DisableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            PluginInfoLabel = new System.Windows.Forms.Label();
             TabControl = new System.Windows.Forms.TabControl();
             ConsoleTabPage = new System.Windows.Forms.TabPage();
             TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -80,8 +78,6 @@
             ClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             LookUpDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ManageStatusStrip = new System.Windows.Forms.StatusStrip();
-            MarketTabPage = new System.Windows.Forms.TabPage();
             TabControl.SuspendLayout();
             ConsoleTabPage.SuspendLayout();
             TableLayoutPanel1.SuspendLayout();
@@ -90,14 +86,12 @@
             ControlGroupBox.SuspendLayout();
             ManageTabPage.SuspendLayout();
             ListViewContextMenuStrip.SuspendLayout();
-            ManageStatusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // TabControl
             // 
             TabControl.Controls.Add(ConsoleTabPage);
             TabControl.Controls.Add(ManageTabPage);
-            TabControl.Controls.Add(MarketTabPage);
             TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             TabControl.Location = new System.Drawing.Point(0, 0);
             TabControl.Name = "TabControl";
@@ -280,7 +274,7 @@
             // ManageTabPage
             // 
             ManageTabPage.Controls.Add(PluginListView);
-            ManageTabPage.Controls.Add(ManageStatusStrip);
+            ManageTabPage.Controls.Add(PluginInfoLabel);
             ManageTabPage.Location = new System.Drawing.Point(8, 45);
             ManageTabPage.Name = "ManageTabPage";
             ManageTabPage.Size = new System.Drawing.Size(1264, 667);
@@ -299,7 +293,7 @@
             PluginListView.Margin = new System.Windows.Forms.Padding(0);
             PluginListView.MultiSelect = false;
             PluginListView.Name = "PluginListView";
-            PluginListView.Size = new System.Drawing.Size(1264, 626);
+            PluginListView.Size = new System.Drawing.Size(1264, 636);
             PluginListView.TabIndex = 0;
             PluginListView.UseCompatibleStateImageBehavior = false;
             PluginListView.View = System.Windows.Forms.View.Details;
@@ -371,31 +365,14 @@
             LookUpDocsToolStripMenuItem.Text = "查看文档";
             LookUpDocsToolStripMenuItem.Click += LookUpDocsToolStripMenuItem_Click;
             // 
-            // ManageStatusStrip
+            // PluginInfoLabel
             // 
-            ManageStatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            ManageStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ToolStripStatusLabel });
-            ManageStatusStrip.Location = new System.Drawing.Point(0, 626);
-            ManageStatusStrip.Name = "ManageStatusStrip";
-            ManageStatusStrip.Size = new System.Drawing.Size(1264, 41);
-            ManageStatusStrip.TabIndex = 1;
-            ManageStatusStrip.Text = "statusStrip1";
-            // 
-            // ToolStripStatusLabel
-            // 
-            ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            ToolStripStatusLabel.Size = new System.Drawing.Size(24, 31);
-            ToolStripStatusLabel.Text = "-";
-            // 
-            // MarketTabPage
-            // 
-            MarketTabPage.Location = new System.Drawing.Point(8, 45);
-            MarketTabPage.Name = "MarketTabPage";
-            MarketTabPage.Padding = new System.Windows.Forms.Padding(3);
-            MarketTabPage.Size = new System.Drawing.Size(1264, 667);
-            MarketTabPage.TabIndex = 2;
-            MarketTabPage.Text = "市场";
-            MarketTabPage.UseVisualStyleBackColor = true;
+            PluginInfoLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            PluginInfoLabel.Location = new System.Drawing.Point(0, 636);
+            PluginInfoLabel.Name = "PluginInfoLabel";
+            PluginInfoLabel.Size = new System.Drawing.Size(1264, 31);
+            PluginInfoLabel.TabIndex = 1;
+            PluginInfoLabel.Text = "\r\n";
             // 
             // PluginPage
             // 
@@ -412,16 +389,12 @@
             TableLayoutPanel2.PerformLayout();
             ControlGroupBox.ResumeLayout(false);
             ManageTabPage.ResumeLayout(false);
-            ManageTabPage.PerformLayout();
             ListViewContextMenuStrip.ResumeLayout(false);
-            ManageStatusStrip.ResumeLayout(false);
-            ManageStatusStrip.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
         private System.Windows.Forms.ListView PluginListView;
-        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem DisableToolStripMenuItem;
         internal Controls.ConsoleWebBrowser ConsoleWebBrowser;
         private System.Windows.Forms.GroupBox InfoGroupBox;
@@ -429,5 +402,6 @@
         private System.Windows.Forms.Label NetCountDynamicLabel;
         private System.Windows.Forms.Label JsCountDynamicLabel;
         private System.Windows.Forms.GroupBox ControlGroupBox;
+        private System.Windows.Forms.Label PluginInfoLabel;
     }
 }

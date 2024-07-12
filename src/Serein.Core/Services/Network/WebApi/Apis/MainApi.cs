@@ -12,25 +12,10 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public partial class ApiMap : WebApiController
+public partial class ApiMap(ServerManager serverManager, SettingProvider settingProvider) : WebApiController
 {
-    private readonly IHost _host;
-    private readonly ServerManager _serverManager;
-    private readonly SettingProvider _settingProvider;
-
-    public ApiMap(IHost host)
-    {
-        _host = host;
-        var services = _host.Services;
-        _settingProvider = services.GetRequiredService<SettingProvider>();
-        _serverManager = services.GetRequiredService<ServerManager>();
-    }
-
-    [Route(HttpVerbs.Get, "/docs")]
-    public void RedirectToDocs()
-    {
-        HttpContext.Redirect("https://sereindev.github.io/");
-    }
+    private readonly ServerManager _serverManager = serverManager;
+    private readonly SettingProvider _settingProvider = settingProvider;
 
     [Route(HttpVerbs.Get, "/")]
     public async Task Root()

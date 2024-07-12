@@ -2,10 +2,8 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
@@ -63,6 +61,7 @@ public class PluginManager(
         if (!Directory.Exists(PathConstants.PluginsDirectory))
         {
             Directory.CreateDirectory(PathConstants.PluginsDirectory);
+            Loading = false;
             return;
         }
 

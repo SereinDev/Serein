@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using Microsoft.Extensions.DependencyInjection;
-
-using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 

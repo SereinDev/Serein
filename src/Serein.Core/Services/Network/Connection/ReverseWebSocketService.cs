@@ -19,11 +19,21 @@ using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class ReverseWebSocketService(IHost host) : IConnectionService
+public class ReverseWebSocketService : IConnectionService
 {
-    private readonly IHost _host = host;
+    private readonly IHost _host;
     private WebSocketServer? _server;
     private readonly Dictionary<string, IWebSocketConnection> _webSockets = new();
+
+    public ReverseWebSocketService(IHost host)
+    {
+        _host = host;
+        FleckLog.LogAction = (level, msg, _) =>
+        {
+            if (level == LogLevel.Error)
+                Logger.Log(MsLogLevel.Error, msg);
+        };
+    }
 
     private IServiceProvider Services => _host.Services;
     private IConnectionLogger Logger => Services.GetRequiredService<IConnectionLogger>();
@@ -34,6 +44,7 @@ public class ReverseWebSocketService(IHost host) : IConnectionService
     public event EventHandler? StatusChanged;
 
     public bool Active => _server is not null;
+
 
     private WebSocketServer CreateNew()
     {

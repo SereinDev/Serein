@@ -9,7 +9,7 @@ public class Sender
 
     public string Card { get; set; } = string.Empty;
 
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     public Role Role { get; set; }
 

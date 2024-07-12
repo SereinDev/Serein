@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -18,7 +17,7 @@ public class UpdateChecker : INotifyPropertyChanged
     private readonly SettingProvider _settingProvider;
     private readonly GitHubClient _gitHubClient;
     private static readonly Version Version =
-        typeof(UpdateChecker).Assembly.GetName().Version ?? new Version();
+        typeof(UpdateChecker).Assembly.GetName().Version ?? new();
 
     public Release? Latest { get; private set; }
     public event EventHandler? Updated;
@@ -60,7 +59,7 @@ public class UpdateChecker : INotifyPropertyChanged
         }
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         _timer.Start();
 

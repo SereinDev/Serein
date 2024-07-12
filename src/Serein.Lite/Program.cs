@@ -37,7 +37,10 @@ public static class Program
         builder.Services.AddSingleton<SettingPage>();
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
+        builder.Services.AddSingleton<ReactionSettingPage>();
         builder.Services.AddSingleton<ConnectionSettingPage>();
+        builder.Services.AddSingleton<WebApiSettingPage>();
+        builder.Services.AddSingleton<SshSettingPage>();
 
         App = builder.Build();
     }

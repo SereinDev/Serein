@@ -21,7 +21,7 @@ public class ConnectionSetting : INotifyPropertyChanged
 
     public string[] Administrators { get; set; } = [];
 
-    public Dictionary<string, string?> Headers { get; set; } = new();
+    public Dictionary<string, string> Headers { get; set; } = [];
 
     public string Uri { get; set; } = "ws://127.0.0.1:8080";
 

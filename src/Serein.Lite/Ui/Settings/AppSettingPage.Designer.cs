@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox PluginGroupBox;
             System.Windows.Forms.Label JSPatternToSkipLoadingSpecifiedFileLabel;
             System.Windows.Forms.Label JSGlobalAssembliesLabel;
@@ -38,6 +39,7 @@
             System.Windows.Forms.Label CustomTitleLabel;
             System.Windows.Forms.Label PattenForEnableMatchMuiltLinesLabel;
             System.Windows.Forms.GroupBox UpdateGroupBox;
+            System.Windows.Forms.ToolTip ToolTip;
             JSPatternToSkipLoadingSpecifiedFileTextBox = new System.Windows.Forms.TextBox();
             JSGlobalAssembliesTextBox = new System.Windows.Forms.TextBox();
             PluginEventMaxWaitingTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -60,6 +62,7 @@
             CustomTitleLabel = new System.Windows.Forms.Label();
             PattenForEnableMatchMuiltLinesLabel = new System.Windows.Forms.Label();
             UpdateGroupBox = new System.Windows.Forms.GroupBox();
+            ToolTip = new System.Windows.Forms.ToolTip(components);
             PluginGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PluginEventMaxWaitingTimeNumericUpDown).BeginInit();
             BindingGroupBox.SuspendLayout();
@@ -93,6 +96,7 @@
             JSPatternToSkipLoadingSpecifiedFileTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             JSPatternToSkipLoadingSpecifiedFileTextBox.Size = new System.Drawing.Size(1206, 132);
             JSPatternToSkipLoadingSpecifiedFileTextBox.TabIndex = 3;
+            ToolTip.SetToolTip(JSPatternToSkipLoadingSpecifiedFileTextBox, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
             JSPatternToSkipLoadingSpecifiedFileTextBox.TextChanged += JSPatternToSkipLoadingSpecifiedFileTextBox_TextChanged;
             // 
             // JSPatternToSkipLoadingSpecifiedFileLabel
@@ -103,6 +107,7 @@
             JSPatternToSkipLoadingSpecifiedFileLabel.Size = new System.Drawing.Size(326, 31);
             JSPatternToSkipLoadingSpecifiedFileLabel.TabIndex = 4;
             JSPatternToSkipLoadingSpecifiedFileLabel.Text = "JS插件加载时忽略的文件后缀";
+            ToolTip.SetToolTip(JSPatternToSkipLoadingSpecifiedFileLabel, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
             // 
             // JSGlobalAssembliesTextBox
             // 
@@ -115,6 +120,7 @@
             JSGlobalAssembliesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             JSGlobalAssembliesTextBox.Size = new System.Drawing.Size(1206, 132);
             JSGlobalAssembliesTextBox.TabIndex = 1;
+            ToolTip.SetToolTip(JSGlobalAssembliesTextBox, "此处填写的程序集将被所有JavaScript插件加载（一行一个）");
             JSGlobalAssembliesTextBox.TextChanged += JSGlobalAssembliesTextBox_TextChanged;
             // 
             // JSGlobalAssembliesLabel
@@ -125,6 +131,7 @@
             JSGlobalAssembliesLabel.Size = new System.Drawing.Size(278, 31);
             JSGlobalAssembliesLabel.TabIndex = 2;
             JSGlobalAssembliesLabel.Text = "JS插件全局加载的程序集";
+            ToolTip.SetToolTip(JSGlobalAssembliesLabel, "此处填写的程序集将被所有JavaScript插件加载（一行一个）");
             // 
             // PluginEventMaxWaitingTimeNumericUpDown
             // 
@@ -134,6 +141,8 @@
             PluginEventMaxWaitingTimeNumericUpDown.Name = "PluginEventMaxWaitingTimeNumericUpDown";
             PluginEventMaxWaitingTimeNumericUpDown.Size = new System.Drawing.Size(223, 38);
             PluginEventMaxWaitingTimeNumericUpDown.TabIndex = 1;
+            ToolTip.SetToolTip(PluginEventMaxWaitingTimeNumericUpDown, "超过此时间返回的监听结果将被忽略");
+            PluginEventMaxWaitingTimeNumericUpDown.ValueChanged += OnPropertyChanged;
             // 
             // PluginEventMaxWaitingTimeLabel
             // 
@@ -143,6 +152,7 @@
             PluginEventMaxWaitingTimeLabel.Size = new System.Drawing.Size(262, 31);
             PluginEventMaxWaitingTimeLabel.TabIndex = 0;
             PluginEventMaxWaitingTimeLabel.Text = "事件最大等待时间 (ms)";
+            ToolTip.SetToolTip(PluginEventMaxWaitingTimeLabel, "超过此时间返回的监听结果将被忽略");
             // 
             // BindingGroupBox
             // 
@@ -176,6 +186,7 @@
             RegexForCheckingGameIDTextBox.Name = "RegexForCheckingGameIDTextBox";
             RegexForCheckingGameIDTextBox.Size = new System.Drawing.Size(1206, 38);
             RegexForCheckingGameIDTextBox.TabIndex = 6;
+            ToolTip.SetToolTip(RegexForCheckingGameIDTextBox, "用于绑定功能中校验游戏名称的正确与否");
             // 
             // RegexForCheckingGameIDLabel
             // 
@@ -185,6 +196,7 @@
             RegexForCheckingGameIDLabel.Size = new System.Drawing.Size(206, 31);
             RegexForCheckingGameIDLabel.TabIndex = 5;
             RegexForCheckingGameIDLabel.Text = "游戏名称检验正则";
+            ToolTip.SetToolTip(RegexForCheckingGameIDLabel, "用于绑定功能中校验游戏名称的正确与否");
             // 
             // OtherGroupBox
             // 
@@ -208,6 +220,7 @@
             CustomTitleTextBox.Name = "CustomTitleTextBox";
             CustomTitleTextBox.Size = new System.Drawing.Size(1206, 38);
             CustomTitleTextBox.TabIndex = 11;
+            ToolTip.SetToolTip(CustomTitleTextBox, "标题栏后缀，可以使用命令变量");
             // 
             // CustomTitleLabel
             // 
@@ -217,6 +230,7 @@
             CustomTitleLabel.Size = new System.Drawing.Size(110, 31);
             CustomTitleLabel.TabIndex = 10;
             CustomTitleLabel.Text = "标题后缀";
+            ToolTip.SetToolTip(CustomTitleLabel, "标题栏后缀，可以使用命令变量");
             // 
             // PattenForEnableMatchMuiltLinesTextBox
             // 
@@ -229,6 +243,7 @@
             PattenForEnableMatchMuiltLinesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             PattenForEnableMatchMuiltLinesTextBox.Size = new System.Drawing.Size(1206, 132);
             PattenForEnableMatchMuiltLinesTextBox.TabIndex = 9;
+            ToolTip.SetToolTip(PattenForEnableMatchMuiltLinesTextBox, "一行一个；不支持正则表达式");
             PattenForEnableMatchMuiltLinesTextBox.TextChanged += PattenForEnableMatchMuiltLinesTextBox_TextChanged;
             // 
             // PattenForEnableMatchMuiltLinesLabel
@@ -239,6 +254,7 @@
             PattenForEnableMatchMuiltLinesLabel.Size = new System.Drawing.Size(278, 31);
             PattenForEnableMatchMuiltLinesLabel.TabIndex = 8;
             PattenForEnableMatchMuiltLinesLabel.Text = "用于触发多行匹配的文本";
+            ToolTip.SetToolTip(PattenForEnableMatchMuiltLinesLabel, "一行一个；不支持正则表达式");
             // 
             // UpdateGroupBox
             // 
@@ -291,6 +307,7 @@
             AutoUpdateCheckBox.Size = new System.Drawing.Size(142, 35);
             AutoUpdateCheckBox.TabIndex = 1;
             AutoUpdateCheckBox.Text = "自动更新";
+            ToolTip.SetToolTip(AutoUpdateCheckBox, "当获取到新版本时在自动后台下载，并于程序退出后自动替换");
             AutoUpdateCheckBox.UseVisualStyleBackColor = true;
             AutoUpdateCheckBox.Click += OnPropertyChanged;
             // 
@@ -302,6 +319,7 @@
             CheckUpdateCheckBox.Size = new System.Drawing.Size(190, 35);
             CheckUpdateCheckBox.TabIndex = 0;
             CheckUpdateCheckBox.Text = "获取更新提示";
+            ToolTip.SetToolTip(CheckUpdateCheckBox, "启动后每隔一段时间获取一次更新");
             CheckUpdateCheckBox.UseVisualStyleBackColor = true;
             CheckUpdateCheckBox.Click += OnPropertyChanged;
             // 

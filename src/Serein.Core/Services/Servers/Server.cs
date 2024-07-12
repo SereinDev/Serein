@@ -98,7 +98,7 @@ public class Server
                 StandardOutputEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
                 StandardErrorEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
                 WorkingDirectory = Path.GetDirectoryName(Configuration.FileName),
-                Arguments = Configuration.Argument ?? string.Empty
+                Arguments = Configuration.Argument
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
@@ -315,9 +315,9 @@ public class Server
             * 100;
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
-        if (Configuration.IPv4Port >= 0)
+        if (Configuration.PortIPv4 >= 0)
             await Task.Run(
-                () => _serverInfo.Stat = new("127.0.0.1", (ushort)Configuration.IPv4Port)
+                () => _serverInfo.Stat = new("127.0.0.1", (ushort)Configuration.PortIPv4)
             );
     }
 }

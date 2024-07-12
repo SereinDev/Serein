@@ -71,14 +71,20 @@ public static class ApiHelper
     public static async Task HandleHttpException(IHttpContext context, IHttpException exception)
     {
         await context.SendPacketAsync(
-            new ApiPacket { ErrorMsg = exception.Message, Code = exception.StatusCode }
+            new ApiPacket
+            {
+                ErrorMsg = exception.Message
+                        ?? HttpStatusDescription.Get(exception.StatusCode)
+                        ?? "Unknown",
+                Code = exception.StatusCode
+            }
         );
     }
 
     public static async Task HandleException(IHttpContext context, Exception e)
     {
         await context.SendPacketAsync(
-            new ApiPacket { ErrorMsg = $"{e.GetType()}:{e.Message}", Code = 500 }
+            new ApiPacket { ErrorMsg = $"{e.GetType()}: {e.Message}", Code = 500 }
         );
     }
 }

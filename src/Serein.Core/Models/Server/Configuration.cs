@@ -21,8 +21,6 @@ public class Configuration : INotifyPropertyChanged
 
     public bool SaveLog { get; set; }
 
-    public bool UseUnicodeChars { get; set; }
-
     public string LineTerminator { get; set; } = Environment.NewLine;
 
     public EncodingMap.EncodingType InputEncoding { get; set; }
@@ -31,7 +29,7 @@ public class Configuration : INotifyPropertyChanged
 
     public OutputStyle OutputStyle { get; set; }
 
-    public short IPv4Port { get; set; } = 19132;
+    public short PortIPv4 { get; set; } = 19132;
 
     public string[] StopCommands { get; set; } = ["stop"];
 

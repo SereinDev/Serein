@@ -2,8 +2,6 @@ namespace Serein.Core.Models.Settings;
 
 public enum ReactionType
 {
-    Unknown,
-
     BindingSucceed,
 
     BindingFailedDueToOccupation,
@@ -30,9 +28,10 @@ public enum ReactionType
 
     GroupPoke,
 
-    SereinCrash,
-
     PermissionDeniedFromPrivateMsg,
 
-    PermissionDeniedFromGroupMsg
+    PermissionDeniedFromGroupMsg,
+
+    SereinCrash,
+
 }

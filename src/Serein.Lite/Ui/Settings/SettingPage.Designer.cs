@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TabControl TabControl;
-            System.Windows.Forms.TabPage ReactionTabPage;
             ConnectionTabPage = new System.Windows.Forms.TabPage();
+            ReactionTabPage = new System.Windows.Forms.TabPage();
+            WebApiTabPage = new System.Windows.Forms.TabPage();
+            SshTabPage = new System.Windows.Forms.TabPage();
             ApplicationTabPage = new System.Windows.Forms.TabPage();
             AboutTabPage = new System.Windows.Forms.TabPage();
             TabControl = new System.Windows.Forms.TabControl();
-            ReactionTabPage = new System.Windows.Forms.TabPage();
             TabControl.SuspendLayout();
             SuspendLayout();
             // 
@@ -42,6 +43,8 @@
             // 
             TabControl.Controls.Add(ConnectionTabPage);
             TabControl.Controls.Add(ReactionTabPage);
+            TabControl.Controls.Add(WebApiTabPage);
+            TabControl.Controls.Add(SshTabPage);
             TabControl.Controls.Add(ApplicationTabPage);
             TabControl.Controls.Add(AboutTabPage);
             TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -69,6 +72,25 @@
             ReactionTabPage.TabIndex = 1;
             ReactionTabPage.Text = "反应";
             ReactionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // WebApiTabPage
+            // 
+            WebApiTabPage.Location = new System.Drawing.Point(8, 45);
+            WebApiTabPage.Name = "WebApiTabPage";
+            WebApiTabPage.Size = new System.Drawing.Size(1264, 667);
+            WebApiTabPage.TabIndex = 4;
+            WebApiTabPage.Text = "Web Api";
+            WebApiTabPage.UseVisualStyleBackColor = true;
+            // 
+            // SshTabPage
+            // 
+            SshTabPage.Location = new System.Drawing.Point(8, 45);
+            SshTabPage.Margin = new System.Windows.Forms.Padding(0);
+            SshTabPage.Name = "SshTabPage";
+            SshTabPage.Size = new System.Drawing.Size(1264, 667);
+            SshTabPage.TabIndex = 5;
+            SshTabPage.Text = "SSH";
+            SshTabPage.UseVisualStyleBackColor = true;
             // 
             // ApplicationTabPage
             // 
@@ -105,5 +127,8 @@
         private System.Windows.Forms.TabPage AboutTabPage;
         private System.Windows.Forms.TabPage ConnectionTabPage;
         private System.Windows.Forms.TabPage ApplicationTabPage;
+        private System.Windows.Forms.TabPage ReactionTabPage;
+        private System.Windows.Forms.TabPage WebApiTabPage;
+        private System.Windows.Forms.TabPage SshTabPage;
     }
 }

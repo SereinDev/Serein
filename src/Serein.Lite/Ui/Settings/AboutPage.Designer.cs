@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.Label CopyrightTitleLabel;
             System.Windows.Forms.Label CopyrightLabel;
             System.Windows.Forms.Label LicenseLabel;
@@ -42,6 +43,7 @@
             System.Windows.Forms.LinkLabel linkLabel3;
             System.Windows.Forms.LinkLabel DeclarationLinkLabel1;
             System.Windows.Forms.LinkLabel DeclarationLinkLabel2;
+            System.Windows.Forms.ToolTip ToolTip;
             VersionLabel = new System.Windows.Forms.Label();
             DetailedVersionLabel = new System.Windows.Forms.Label();
             AssemblyLabel = new System.Windows.Forms.Label();
@@ -59,6 +61,7 @@
             linkLabel3 = new System.Windows.Forms.LinkLabel();
             DeclarationLinkLabel1 = new System.Windows.Forms.LinkLabel();
             DeclarationLinkLabel2 = new System.Windows.Forms.LinkLabel();
+            ToolTip = new System.Windows.Forms.ToolTip(components);
             SuspendLayout();
             // 
             // CopyrightTitleLabel
@@ -155,6 +158,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
+            linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             linkLabel1.LinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel1.Location = new System.Drawing.Point(26, 607);
             linkLabel1.Margin = new System.Windows.Forms.Padding(5);
@@ -163,12 +167,14 @@
             linkLabel1.TabIndex = 14;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Github仓库";
+            ToolTip.SetToolTip(linkLabel1, "https://github.com/SereinDev/Serein");
             linkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel1.LinkClicked += LinkLabel1_LinkClicked;
             // 
             // linkLabel2
             // 
             linkLabel2.AutoSize = true;
+            linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             linkLabel2.LinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel2.Location = new System.Drawing.Point(176, 607);
             linkLabel2.Margin = new System.Windows.Forms.Padding(5);
@@ -177,12 +183,14 @@
             linkLabel2.TabIndex = 15;
             linkLabel2.TabStop = true;
             linkLabel2.Text = "官网/文档";
+            ToolTip.SetToolTip(linkLabel2, "https://sereindev.github.io/");
             linkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel2.LinkClicked += LinkLabel2_LinkClicked;
             // 
             // linkLabel3
             // 
             linkLabel3.AutoSize = true;
+            linkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             linkLabel3.LinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel3.Location = new System.Drawing.Point(306, 607);
             linkLabel3.Margin = new System.Windows.Forms.Padding(5);
@@ -191,12 +199,14 @@
             linkLabel3.TabIndex = 16;
             linkLabel3.TabStop = true;
             linkLabel3.Text = "交流群";
+            ToolTip.SetToolTip(linkLabel3, "https://jq.qq.com/?_wv=1027&k=XNZqPSPv");
             linkLabel3.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel3.LinkClicked += LinkLabel3_LinkClicked;
             // 
             // DeclarationLinkLabel1
             // 
             DeclarationLinkLabel1.AutoSize = true;
+            DeclarationLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             DeclarationLinkLabel1.LinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel1.Location = new System.Drawing.Point(56, 544);
             DeclarationLinkLabel1.Margin = new System.Windows.Forms.Padding(5);
@@ -205,12 +215,14 @@
             DeclarationLinkLabel1.TabIndex = 11;
             DeclarationLinkLabel1.TabStop = true;
             DeclarationLinkLabel1.Text = "MINECRAFT 最终用户许可协议";
+            ToolTip.SetToolTip(DeclarationLinkLabel1, "https://www.minecraft.net/zh-hans/eula");
             DeclarationLinkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel1.LinkClicked += DeclarationLinkLabel1_LinkClicked;
             // 
             // DeclarationLinkLabel2
             // 
             DeclarationLinkLabel2.AutoSize = true;
+            DeclarationLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             DeclarationLinkLabel2.LinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel2.Location = new System.Drawing.Point(466, 544);
             DeclarationLinkLabel2.Margin = new System.Windows.Forms.Padding(5);
@@ -219,6 +231,7 @@
             DeclarationLinkLabel2.TabIndex = 13;
             DeclarationLinkLabel2.TabStop = true;
             DeclarationLinkLabel2.Text = "MINECRAFT 商业使用准则";
+            ToolTip.SetToolTip(DeclarationLinkLabel2, "https://account.mojang.com/documents/commercial_guidelines");
             DeclarationLinkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel2.LinkClicked += DeclarationLinkLabel2_LinkClicked;
             // 
@@ -232,6 +245,7 @@
             VersionLabel.Size = new System.Drawing.Size(110, 31);
             VersionLabel.TabIndex = 0;
             VersionLabel.Text = "版本号：";
+            ToolTip.SetToolTip(VersionLabel, "点击可复制到剪贴板");
             VersionLabel.Click += CopiableLabel_Click;
             // 
             // DetailedVersionLabel
@@ -244,6 +258,7 @@
             DetailedVersionLabel.Size = new System.Drawing.Size(158, 31);
             DetailedVersionLabel.TabIndex = 1;
             DetailedVersionLabel.Text = "详细版本号：";
+            ToolTip.SetToolTip(DetailedVersionLabel, "点击可复制到剪贴板");
             DetailedVersionLabel.Click += CopiableLabel_Click;
             // 
             // AssemblyLabel
@@ -256,6 +271,7 @@
             AssemblyLabel.Size = new System.Drawing.Size(110, 31);
             AssemblyLabel.TabIndex = 2;
             AssemblyLabel.Text = "程序集：";
+            ToolTip.SetToolTip(AssemblyLabel, "点击可复制到剪贴板");
             AssemblyLabel.Click += CopiableLabel_Click;
             // 
             // AboutPage

@@ -5,6 +5,8 @@ using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
+using Serein.Core.Services.Network.Ssh;
+using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services;
@@ -12,26 +14,46 @@ namespace Serein.Core.Services;
 public class StartUpService(
     SettingProvider settingProvider,
     ServerManager serverManager,
-    UpdateChecker updateChecker
+    UpdateChecker updateChecker,
+    HttpServer httpServer,
+    SshServiceProvider sshServiceProvider
     ) : IHostedService
 {
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly ServerManager _serverManager = serverManager;
     private readonly UpdateChecker _updateChecker = updateChecker;
+    private readonly HttpServer _httpServer = httpServer;
+    private readonly SshServiceProvider _sshServiceProvider = sshServiceProvider;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _updateChecker.Start();
+        _updateChecker.StartAsync();
 
         foreach (var (_, server) in _serverManager.Servers)
         {
+            if (server.Configuration.AutoRestart)
+                try
+                {
+                    server.Start();
+                }
+                catch { }
+        }
+
+        if (_settingProvider.Value.WebApi.Enable)
             try
             {
-                if (server.Configuration.AutoRestart)
-                    server.Start();
+                _httpServer.Start();
             }
-            catch { }
-        }
+            catch
+            { }
+
+        if (_settingProvider.Value.Ssh.Enable)
+            try
+            {
+                _sshServiceProvider.Start();
+            }
+            catch
+            { }
 
         return Task.CompletedTask;
     }

@@ -7,7 +7,7 @@ public class SshSetting : INotifyPropertyChanged
 {
     public bool Enable { get; set; }
 
-    public string IpAddress { get; set; } = string.Empty;
+    public string IpAddress { get; set; } = "127.0.0.1";
 
     public ushort Port { get; set; } = 22;
 
