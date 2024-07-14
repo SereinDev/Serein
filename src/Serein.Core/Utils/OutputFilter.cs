@@ -29,6 +29,6 @@ public partial class OutputFilter
         return RemoveColorChars(RemoveControlChars(input));
     }
 
-    [GeneratedRegex(@"\x1b\[.*?m", RegexOptions.Compiled)]
+    [GeneratedRegex(@"\x1B\[[0-9;]*[ABCDEFGHJKSTfmnsulh]", RegexOptions.Compiled)]
     private static partial Regex GetColorCharsPatten();
 }

@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
@@ -30,7 +26,11 @@ public class ReactionTrigger(SettingProvider settingProvider, CommandRunner comm
     )
     {
         if (!_settingProvider.Value.Reactions.TryGetValue(type, out var values))
+        {
+            _settingProvider.Value.Reactions[type] = [];
+            _settingProvider.SaveAsyncWithDebounce();
             return;
+        }
 
         IEnumerable<Command> commands;
         lock (values)

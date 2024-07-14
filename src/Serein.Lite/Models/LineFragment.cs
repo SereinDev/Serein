@@ -6,9 +6,21 @@ namespace Serein.Lite.Models;
 
 public record LineFragment(string Text)
 {
-    public List<string> Classes { get; } = new();
+    public LineFragment(string text, LineFragment from) : this(text)
+    {
+        Styles = new(from.Styles);
+        Classes = new(from.Classes);
+    }
 
-    public Dictionary<string, string> Styles { get; } = new();
+    public List<string> Classes { get; } = [];
+
+    public Dictionary<string, string> Styles { get; } = [];
+
+    public void Reset()
+    {
+        Classes.Clear();
+        Styles.Clear();
+    }
 
     public void SetBold() => Styles["font-weight"] = "bold";
 
@@ -19,19 +31,19 @@ public record LineFragment(string Text)
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine("<span ");
+        sb.Append("<span");
 
         if (Classes.Count > 0)
-            sb.Append($"class=\"{string.Join('\x20', Classes)}\" ");
+            sb.Append($" class=\"{string.Join('\x20', Classes)}\"");
 
         if (Styles.Count > 0)
             sb.Append(
-                $"style=\"{string.Join('\x20', Styles.Select((s) => $"{s.Key}: {s.Key};"))}\" "
+                $" style=\"{string.Join('\x20', Styles.Select((s) => $"{s.Key}: {s.Value};"))}\""
             );
 
-        sb.AppendLine(">");
-        sb.AppendLine(Text);
-        sb.AppendLine("</span>");
+        sb.Append('>');
+        sb.Append(Text);
+        sb.Append("</span>");
 
         return sb.ToString();
     }

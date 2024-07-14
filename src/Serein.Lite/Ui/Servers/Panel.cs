@@ -133,10 +133,10 @@ public partial class Panel : UserControl
 
     private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
     {
+        e.Handled = true;
         if (e.KeyCode == Keys.Enter)
         {
             EnterCommand();
-            e.Handled = true;
         }
     }
 

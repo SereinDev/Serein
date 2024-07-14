@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -11,10 +12,16 @@ namespace Serein.Core.Models.Commands;
 
 public class Match : INotifyPropertyChanged, ICloneable
 {
-    private string? _regExp;
-    private string? _command;
+    private string _regExp = string.Empty;
+    private string _command = string.Empty;
+    private string _restrictions = string.Empty;
 
-    public string? RegExp
+    public Match()
+    {
+        RestrictionsValue ??= new Dictionary<RestrictionType, List<string>>();
+    }
+
+    public string RegExp
     {
         get => _regExp;
         set
@@ -43,11 +50,34 @@ public class Match : INotifyPropertyChanged, ICloneable
 
     public bool RequireAdmin { get; set; }
 
-    public string? Restrictions { get; set; }
+    [AlsoNotifyFor(nameof(RestrictionsValue))]
+    public string Restrictions
+    {
+        get => _restrictions;
+        set
+        {
+            _restrictions = value;
+            RestrictionsValue = new Dictionary<RestrictionType, List<string>>();
 
-    public string? Description { get; set; }
+            foreach (var item in _restrictions.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                var args = item.Split('=');
 
-    public string? Command
+                if (args.Length == 2 && Enum.TryParse<RestrictionType>(args[0].Trim(), true, out var type))
+                    if (!RestrictionsValue.TryGetValue(type, out var list))
+                        RestrictionsValue.Add(type, [args[1].Trim()]);
+                    else
+                        list.Add(args[1].Trim());
+            }
+        }
+    }
+
+    [JsonIgnore]
+    internal IDictionary<RestrictionType, List<string>> RestrictionsValue { get; private set; }
+
+    public string Description { get; set; } = string.Empty;
+
+    public string Command
     {
         get => _command;
         set

@@ -71,12 +71,12 @@ public class InputReader : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Task.Run(() => Loop(cancellationToken), cancellationToken);
+        return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        Task.Run(() => Loop(cancellationToken), cancellationToken);
         return Task.CompletedTask;
     }
 

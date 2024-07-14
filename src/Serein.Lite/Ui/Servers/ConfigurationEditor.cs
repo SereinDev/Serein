@@ -33,17 +33,6 @@ public partial class ConfigurationEditor : Form
         _configuration = configuration;
 
         SyncData();
-        SetToolTips();
-    }
-
-    private void SetToolTips()
-    {
-        ToolTip.SetToolTip(
-            IdTextBox,
-            "用于区分服务器（一经填写无法修改）\r\n" + "· 长度大于或等于3\r\n" + "· 只由数字、字母和下划线组成"
-        );
-        ToolTip.SetToolTip(NameTextBox, "用于标识服务器，便于管理");
-        ToolTip.SetToolTip(FileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n你可以双击");
     }
 
     private void SyncData()

@@ -57,9 +57,9 @@ public class CommandParserTests : IDisposable
     [InlineData("[CmD]514", CommandType.ExecuteShellCommand, "514")]
     [InlineData("[cmD]abc", CommandType.ExecuteShellCommand, "abc")]
     // ---------
-    [InlineData("[s]0000", CommandType.ServerInput, "0000")]
-    [InlineData("[server]0000", CommandType.ServerInput, "0000")]
-    [InlineData("[sErVer]0000", CommandType.ServerInput, "0000")]
+    [InlineData("[s]0000", CommandType.InputServer, "0000")]
+    [InlineData("[server]0000", CommandType.InputServer, "0000")]
+    [InlineData("[sErVer]0000", CommandType.InputServer, "0000")]
     // ---------
     [InlineData("[g]1", CommandType.SendGroupMsg, "1")]
     [InlineData("[gRoup]2", CommandType.SendGroupMsg, "2")]

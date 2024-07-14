@@ -49,7 +49,7 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
         _webServer.WithModule(new AuthGate(_settingProvider));
         _webServer.WithModule(_host.Services.GetRequiredService<IPBannerModule>());
         _webServer.WithWebApi(
-            "/api",
+            "/built-in",
             (module) =>
                 module
                     .HandleHttpException(ApiHelper.HandleHttpException)

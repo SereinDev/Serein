@@ -182,15 +182,15 @@ public class Server
         _serverInfo.InputLines++;
 
         if (
-            (
-                _commandHistory.Count > 0 && _commandHistory[^1] != command
-                || _commandHistory.Count == 0
-            )
-            && fromUser
+            fromUser
             && !string.IsNullOrEmpty(command)
         )
         {
-            _commandHistory.Add(command);
+            if (
+                _commandHistory.Count > 0 && _commandHistory[^1] != command
+                || _commandHistory.Count == 0
+            )
+                _commandHistory.Add(command);
 
             if (SereinApp.Type != AppType.Cli)
                 ServerOutput?.Invoke(this, new(ServerOutputType.InputCommand, command));
@@ -198,7 +198,7 @@ public class Server
 
         CommandHistoryIndex = CommandHistory.Count;
 
-        _matcher.MatchServerInputAsync(command);
+        _matcher.MatchServerInputAsync(_id, command);
     }
 
     public void Terminate()
@@ -261,12 +261,12 @@ public class Server
         )
         {
             _cache.Add(filtered);
-            _matcher.MatchServerOutputAsync(string.Join('\n', _cache));
+            _matcher.MatchServerOutputAsync(_id, string.Join('\n', _cache));
         }
         else
             _cache.Clear();
 
-        _matcher.MatchServerOutputAsync(filtered);
+        _matcher.MatchServerOutputAsync(_id, filtered);
     }
 
     private async Task WaitAndRestartAsync()

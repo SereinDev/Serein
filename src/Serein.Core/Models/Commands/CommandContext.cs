@@ -9,5 +9,6 @@ namespace Serein.Core.Models.Commands;
 public record CommandContext(
     RegexMatch? Match = null,
     MessagePacket? MessagePacket = null,
+    string? ServerId = null,
     IReadOnlyDictionary<string, string?>? Variables = null
 );

@@ -6,7 +6,7 @@ public enum CommandType
 
     ExecuteShellCommand,
 
-    ServerInput,
+    InputServer,
 
     SendGroupMsg,
 

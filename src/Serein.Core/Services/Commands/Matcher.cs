@@ -20,7 +20,7 @@ public class Matcher(
     private readonly CommandRunner _commandRunner = commandRunner;
     private readonly SettingProvider _settingProvider = settingProvider;
 
-    public async Task MatchServerOutputAsync(string line)
+    public async Task MatchServerOutputAsync(string id, string line)
     {
         var tasks = new List<Task>();
 
@@ -35,6 +35,7 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
+                    || CheckRestrictions(match, id)
                 )
                     continue;
 
@@ -48,7 +49,7 @@ public class Matcher(
         await Task.WhenAll(tasks);
     }
 
-    public async Task MatchServerInputAsync(string line)
+    public async Task MatchServerInputAsync(string id, string line)
     {
         var tasks = new List<Task>();
 
@@ -63,6 +64,7 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
+                    || CheckRestrictions(match, id)
                 )
                     continue;
 
@@ -85,6 +87,7 @@ public class Matcher(
             foreach (var match in _matchesProvider.Value)
             {
                 if (
+                    // 基础
                     string.IsNullOrEmpty(messagePacket.RawMessage)
                     || string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
@@ -94,28 +97,45 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
+                    // 权限
                     || match.RequireAdmin && !IsFromAdmin(messagePacket)
+                    // 类型
+                    || !(
+                        match.FieldType == MatchFieldType.SelfMsg
+                            && messagePacket.SelfId == messagePacket.UserId
+                        || match.FieldType == MatchFieldType.GroupMsg
+                            && messagePacket.MessageType == MessageType.Group
+                        || match.FieldType == MatchFieldType.PrivateMsg
+                            && messagePacket.MessageType == MessageType.Private)
+                    || !CheckRestrictions(match, messagePacket)
                 )
                     continue;
 
                 var matches = match.RegexObj.Match(messagePacket.RawMessage);
 
                 if (matches.Success)
-                    if (
-                        match.FieldType == MatchFieldType.SelfMsg
-                            && messagePacket.SelfId == messagePacket.UserId
-                        || match.FieldType == MatchFieldType.GroupMsg
-                            && messagePacket.MessageType == MessageType.Group
-                        || match.FieldType == MatchFieldType.PrivateMsg
-                            && messagePacket.MessageType == MessageType.Private
-                    )
-                        tasks.Add(
-                            _commandRunner.RunAsync(match.CommandObj, new(matches, messagePacket))
-                        );
+                    tasks.Add(
+                        _commandRunner.RunAsync(match.CommandObj, new(matches, messagePacket))
+                    );
             }
         }
 
         await Task.WhenAll(tasks);
+    }
+
+    private static bool CheckRestrictions(Match match, string id)
+    {
+        return match.RestrictionsValue.TryGetValue(RestrictionType.ServerId, out var list) && list.Contains(id);
+    }
+
+
+    private static bool CheckRestrictions(Match match, MessagePacket messagePacket)
+    {
+        return match.FieldType == MatchFieldType.GroupMsg
+            && match.RestrictionsValue.TryGetValue(RestrictionType.GroupId, out var list)
+            && !list.Contains(messagePacket.GroupId.ToString())
+            || !match.RestrictionsValue.TryGetValue(RestrictionType.UserId, out list)
+            || list.Contains(messagePacket.UserId.ToString());
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>

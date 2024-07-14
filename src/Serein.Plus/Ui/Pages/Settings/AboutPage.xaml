@@ -51,7 +51,7 @@
                         FontFamily="{DynamicResource ContentControlThemeFontFamily}"
                         FontSize="{DynamicResource ContentControlFontSize}">
                     <Paragraph>
-                        <Run>Copyright © 2024 Zaitonn. All Rights Reserved.</Run>
+                        <Run>Copyright © 2022 Zaitonn. All Rights Reserved.</Run>
                         <LineBreak />
                         <LineBreak />
                         <Run>

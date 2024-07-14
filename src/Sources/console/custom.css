@@ -36,131 +36,131 @@
 /* 
   颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code
 */
-.asni30 {
+.ansi30 {
   color: #0c0c0c;
 }
 
-.asni31 {
+.ansi31 {
   color: #c50f1f;
 }
 
-.asni32 {
+.ansi32 {
   color: #13a10e;
 }
 
-.asni33 {
+.ansi33 {
   color: #c19c00;
 }
 
-.asni34 {
+.ansi34 {
   color: #0037da;
 }
 
-.asni35 {
+.ansi35 {
   color: #881798;
 }
 
-.asni36 {
+.ansi36 {
   color: #3a96dd;
 }
 
-.asni37 {
+.ansi37 {
   color: #dddddd;
 }
 
-.asni40 {
+.ansi40 {
   background: #0c0c0c;
   color: white;
 }
 
-.asni41 {
+.ansi41 {
   background: #c50f1f;
 }
 
-.asni42 {
+.ansi42 {
   background: #13a10e;
 }
 
-.asni43 {
+.ansi43 {
   background: #c19c00;
 }
 
-.asni44 {
+.ansi44 {
   background: #0037da;
 }
 
-.asni45 {
+.ansi45 {
   background: #881798;
 }
 
-.asni46 {
+.ansi46 {
   background: #3a96dd;
 }
 
-.asni47 {
+.ansi47 {
   background: #dddddd;
 }
 
-.asni90 {
+.ansi90 {
   color: #767676;
 }
 
-.asni91 {
+.ansi91 {
   color: #fc391f;
 }
 
-.asni92 {
+.ansi92 {
   color: #16c60c;
 }
 
-.asni93 {
+.ansi93 {
   color: #f9f1a5;
 }
 
-.asni94 {
+.ansi94 {
   color: #3b78ff;
 }
 
-.asni95 {
+.ansi95 {
   color: #b4009e;
 }
 
-.asni96 {
+.ansi96 {
   color: #61d6d6;
 }
 
-.asni97 {
+/* .ansi97 {
   color: #f2f2f2;
-}
+} */
 
-.asni100 {
+.ansi100 {
   background: #767676;
 }
 
-.asni101 {
+.ansi101 {
   background: #fc391f;
 }
 
-.asni102 {
+.ansi102 {
   background: #16c60c;
 }
 
-.asni103 {
+.ansi103 {
   background: #f9f1a5;
 }
 
-.asni104 {
+.ansi104 {
   background: #3b78ff;
 }
 
-.asni105 {
+.ansi105 {
   background: #b4009e;
 }
 
-.asni106 {
+.ansi106 {
   background: #61d6d6;
 }
 
-.asni107 {
+/* .ansi107 {
   background: #f2f2f2;
-}
+} */

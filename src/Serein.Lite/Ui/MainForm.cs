@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Server;
-using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
@@ -26,10 +25,11 @@ public partial class MainForm : Form
 
     private IServiceProvider Services => _host.Services;
 
-    public MainForm(IHost host, ServerManager serverManager)
+    public MainForm(IHost host, ServerManager serverManager, ResourcesManager resourcesManager)
     {
         _host = host;
         _serverManager = serverManager;
+        // resourcesManager.WriteConsoleHtml();
 
         InitializeComponent();
     }

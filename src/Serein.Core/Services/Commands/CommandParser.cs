@@ -53,8 +53,8 @@ public partial class CommandParser(
             {
                 "cmd" => CommandType.ExecuteShellCommand,
 
-                "s" => CommandType.ServerInput,
-                "server" => CommandType.ServerInput,
+                "s" => CommandType.InputServer,
+                "server" => CommandType.InputServer,
 
                 "g" => CommandType.SendGroupMsg,
                 "group" => CommandType.SendGroupMsg,

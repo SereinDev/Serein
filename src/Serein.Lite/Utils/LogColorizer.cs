@@ -12,7 +12,7 @@ namespace Serein.Lite.Utils;
 
 public static partial class LogColorizer
 {
-    private static readonly string[] ColorList =
+    private static readonly string[] ColorCodes =
     [
         "30",
         "31",
@@ -51,9 +51,6 @@ public static partial class LogColorizer
     [GeneratedRegex(@"\s")]
     private static partial Regex SpaceRegex();
 
-    [GeneratedRegex(@"\x1b\[([^\x1b]+?)m([^\x1b]*)")]
-    private static partial Regex AnsiRegex();
-
     public static string EscapeLog(string text) =>
         SpaceRegex().Replace(
             WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
@@ -63,21 +60,29 @@ public static partial class LogColorizer
     public static List<LineFragment> ParseAnsiCode(string line)
     {
         if (!line.Contains('\x1b'))
-            return new() { new(line) };
+            return [new(line)];
 
         var list = new List<LineFragment>();
-        foreach (Match match in AnsiRegex().Matches(line.Replace("\x1b[m", "\x1b[0m")))
-        {
-            if (string.IsNullOrEmpty(match.Groups[2].Value))
-                continue;
 
-            var fragment = new LineFragment(match.Groups[2].Value);
-            var args = match.Groups[1].Value.Split(';');
+        foreach (var part in line.Split('\x1b', StringSplitOptions.RemoveEmptyEntries))
+        {
+            if (!part.StartsWith('[') || !part.Contains('m'))
+            {
+                list.Add(Create(part));
+                continue;
+            }
+
+            var fragment = Create(part[(part.IndexOf('m') + 1)..]);
+            var args = part[1..part.IndexOf('m')].Split(';');
 
             for (int i = 0; i < args.Length; i++)
             {
                 switch (args[i])
                 {
+                    case "0":
+                        fragment.Reset();
+                        break;
+
                     case "1":
                         fragment.SetBold();
                         break;
@@ -103,7 +108,7 @@ public static partial class LogColorizer
                         break;
 
                     default:
-                        if (ColorList.Contains(args[i]))
+                        if (ColorCodes.Contains(args[i]))
                             fragment.Classes.Add($"ansi{args[i]}");
                         break;
                 }
@@ -113,6 +118,11 @@ public static partial class LogColorizer
         }
 
         return list;
+
+        LineFragment Create(string text)
+        {
+            return list.Count == 0 ? new LineFragment(text) : new(text, list[^1]);
+        }
     }
 
     public static string ColorLine(string line, OutputStyle outputStyle)

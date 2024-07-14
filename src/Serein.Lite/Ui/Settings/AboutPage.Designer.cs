@@ -83,7 +83,7 @@
             CopyrightLabel.Name = "CopyrightLabel";
             CopyrightLabel.Size = new System.Drawing.Size(555, 31);
             CopyrightLabel.TabIndex = 4;
-            CopyrightLabel.Text = "Copyright © 2024 Zaitonn. All Rights Reserved.";
+            CopyrightLabel.Text = "Copyright © 2022 Zaitonn. All Rights Reserved.";
             // 
             // LicenseLabel
             // 

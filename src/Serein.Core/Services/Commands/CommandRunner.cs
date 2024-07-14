@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Commands;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Servers;
 
@@ -17,16 +19,19 @@ namespace Serein.Core.Services.Commands;
 public class CommandRunner
 {
     private readonly Lazy<CommandParser> _commandParser;
-    private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
-    private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private ILogger Logger => Services.GetRequiredService<ILogger>();
+    private readonly Lazy<WsConnectionManager> _wsConnectionManager;
+    private readonly Lazy<ServerManager> _serverManager;
+    private readonly ILogger _logger;
+    private readonly SettingProvider _settingProvider;
 
-    public CommandRunner(IHost host)
+    public CommandRunner(IHost host, ILogger logger, SettingProvider settingProvider)
     {
-        _host = host;
-        _commandParser = new(Services.GetRequiredService<CommandParser>);
+        var services = host.Services;
+        _wsConnectionManager = new(services.GetRequiredService<WsConnectionManager>);
+        _serverManager = new(services.GetRequiredService<ServerManager>);
+        _commandParser = new(services.GetRequiredService<CommandParser>);
+        _logger = logger;
+        _settingProvider = settingProvider;
     }
 
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
@@ -42,23 +47,45 @@ public class CommandRunner
                 await ExecuteShellCommand(body);
                 break;
 
-            case CommandType.ServerInput:
-                if (ServerManager.Servers.TryGetValue(command.Argument, out Server? server))
-                    server.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
+            case CommandType.InputServer:
+                Server? server = null;
+                if (!string.IsNullOrEmpty(command.Argument))
+                    _serverManager.Value.Servers.TryGetValue(command.Argument, out server);
+                else if (
+                    !string.IsNullOrEmpty(commandContext?.ServerId)
+                    && command.Origin == CommandOrigin.ServerOutput
+                )
+                    _serverManager.Value.Servers.TryGetValue(commandContext?.ServerId!, out server);
+                else if (_serverManager.Value.Servers.Count == 1)
+                    server = _serverManager.Value.Servers.Values.First();
+
+                server?.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
                 break;
 
             case CommandType.SendGroupMsg:
                 if (!string.IsNullOrEmpty(command.Argument))
-                    await WsNetwork.SendGroupMsgAsync(command.Argument, body);
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(command.Argument, body);
+                else if (commandContext?.MessagePacket?.GroupId is long groupId)
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, body);
+                else if (
+                    command.Origin != CommandOrigin.Msg
+                    && _settingProvider.Value.Connection.Groups.Length > 0
+                )
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(
+                        _settingProvider.Value.Connection.Groups[0],
+                        body
+                    );
                 break;
 
             case CommandType.SendPrivateMsg:
                 if (!string.IsNullOrEmpty(command.Argument))
-                    await WsNetwork.SendPrivateMsgAsync(command.Argument, body);
+                    await _wsConnectionManager.Value.SendPrivateMsgAsync(command.Argument, body);
+                else if (commandContext?.MessagePacket?.UserId is long userId)
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(userId, body);
                 break;
 
             case CommandType.SendText:
-                await WsNetwork.SendTextAsync(body);
+                await _wsConnectionManager.Value.SendTextAsync(body);
                 break;
 
             case CommandType.Bind:
@@ -74,7 +101,7 @@ public class CommandRunner
                 break;
 
             case CommandType.Debug:
-                Logger.LogDebug("{}", body);
+                _logger.LogDebug("{}", body);
                 break;
 
             case CommandType.Reload:
@@ -90,23 +117,25 @@ public class CommandRunner
     {
         var process = new Process
         {
-            StartInfo = new()
+            StartInfo = Environment.OSVersion.Platform == PlatformID.Win32NT ? new()
             {
-                FileName =
-                    Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd.exe" : "/bin/bash",
                 UseShellExecute = false,
                 RedirectStandardInput = true,
                 CreateNoWindow = true,
-                WorkingDirectory = Directory.GetCurrentDirectory()
+                WorkingDirectory = Directory.GetCurrentDirectory(),
+                FileName = "cmd.exe",
+                Arguments = "/c " + line
+            } : new()
+            {
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                CreateNoWindow = true,
+                WorkingDirectory = Directory.GetCurrentDirectory(),
+                FileName = "sh",
+                Arguments = "--noprofile --norc " + line
             }
         };
         process.Start();
-        var commandWriter = new StreamWriter(process.StandardInput.BaseStream, Encoding.Default)
-        {
-            AutoFlush = true
-        };
-        commandWriter.WriteLine(line.TrimEnd('\r', '\n'));
-        commandWriter.Close();
 
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));
 

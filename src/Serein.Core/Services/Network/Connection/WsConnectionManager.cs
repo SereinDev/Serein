@@ -186,27 +186,32 @@ public class WsConnectionManager : INotifyPropertyChanged
         await SendAsync(new ActionRequest<T> { Action = endpoint, Params = @params });
     }
 
-    public async Task SendGroupMsgAsync(string target, string message)
+    public Task SendGroupMsgAsync(string target, string message)
+        => SendGroupMsgAsync(long.Parse(target), message);
+
+    public async Task SendGroupMsgAsync(long target, string message)
     {
         await SendActionRequestAsync(
             "send_msg",
             new MessageParams
             {
-                GroupId = long.Parse(target),
+                GroupId = target,
                 Message = message,
                 AutoEscape = Setting.Connection.AutoEscape
             }
         );
         _connectionLogger.Value.LogReceivedMessage($"[群聊({target})] {message}");
     }
+    public Task SendPrivateMsgAsync(string target, string message)
+        => SendPrivateMsgAsync(long.Parse(target), message);
 
-    public async Task SendPrivateMsgAsync(string target, string message)
+    public async Task SendPrivateMsgAsync(long target, string message)
     {
         await SendActionRequestAsync(
             "send_msg",
             new MessageParams
             {
-                UserId = long.Parse(target),
+                UserId = target,
                 Message = message,
                 AutoEscape = Setting.Connection.AutoEscape
             }
