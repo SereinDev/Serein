@@ -19,47 +19,61 @@ public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
 
     public ScheduleProvider()
     {
-        Value = new();
+        Value = [];
         Read();
     }
 
     public ObservableCollection<Schedule> Read()
     {
-        if (File.Exists(PathConstants.SchedulesFile))
+        try
         {
-            var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Schedule>>>(
-                File.ReadAllText(PathConstants.SchedulesFile),
-                JsonSerializerOptionsFactory.CamelCase
-            );
+            if (File.Exists(PathConstants.SchedulesFile))
+            {
+                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Schedule>>>(
+                    File.ReadAllText(PathConstants.SchedulesFile),
+                    JsonSerializerOptionsFactory.CamelCase
+                );
 
-            if (wrapper?.Type == nameof(Schedule))
-                lock (Value)
-                {
-                    Value.Clear();
+                if (wrapper?.Type == nameof(Schedule))
+                    lock (Value)
+                    {
+                        Value.Clear();
 
-                    if (wrapper.Data is not null)
-                        foreach (var match in wrapper.Data)
-                        {
-                            Value.Add(match);
-                        }
-                }
+                        if (wrapper.Data is not null)
+                            foreach (var match in wrapper.Data)
+                            {
+                                Value.Add(match);
+                            }
+                    }
+            }
+            else
+                Save();
+
+            return Value;
         }
-        else
-            Save();
-
-        return Value;
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"加载定时任务文件（{PathConstants.SchedulesFile}）时出现异常", e);
+        }
     }
 
     public void Save()
     {
-        Directory.CreateDirectory(PathConstants.Root);
-        File.WriteAllText(
-            PathConstants.SchedulesFile,
-            JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(Schedule), Value),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
-            )
-        );
+        try
+        {
+            Directory.CreateDirectory(PathConstants.Root);
+            File.WriteAllText(
+                PathConstants.SchedulesFile,
+                JsonSerializer.Serialize(
+                    DataItemWrapper.Wrap(nameof(Schedule), Value),
+                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                )
+            );
+        }
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"保存定时任务文件（{PathConstants.SchedulesFile}）时出现异常", e);
+        }
     }
 
     public async Task SaveAsyncWithDebounce()

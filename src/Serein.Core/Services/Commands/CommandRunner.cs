@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +38,7 @@ public class CommandRunner
         if (command.Type == CommandType.Invalid)
             return;
 
-        var body = _commandParser.Value.Format(command.Body, commandContext);
+        var body = _commandParser.Value.Format(command, commandContext);
 
         switch (command.Type)
         {

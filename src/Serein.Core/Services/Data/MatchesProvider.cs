@@ -18,7 +18,7 @@ public class MatchesProvider : IItemProvider<ObservableCollection<Match>>
 
     public MatchesProvider()
     {
-        Value = new();
+        Value = [];
         Read();
     }
 
@@ -26,41 +26,55 @@ public class MatchesProvider : IItemProvider<ObservableCollection<Match>>
 
     public ObservableCollection<Match> Read()
     {
-        if (File.Exists(PathConstants.MatchesFile))
+        try
         {
-            var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Match>>>(
-                File.ReadAllText(PathConstants.MatchesFile),
-                JsonSerializerOptionsFactory.CamelCase
-            );
+            if (File.Exists(PathConstants.MatchesFile))
+            {
+                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Match>>>(
+                    File.ReadAllText(PathConstants.MatchesFile),
+                    JsonSerializerOptionsFactory.CamelCase
+                );
 
-            if (wrapper?.Type == nameof(Match))
-                lock (Value)
-                {
-                    Value.Clear();
+                if (wrapper?.Type == nameof(Match))
+                    lock (Value)
+                    {
+                        Value.Clear();
 
-                    if (wrapper.Data is not null)
-                        foreach (var match in wrapper.Data)
-                        {
-                            Value.Add(match);
-                        }
-                }
+                        if (wrapper.Data is not null)
+                            foreach (var match in wrapper.Data)
+                            {
+                                Value.Add(match);
+                            }
+                    }
+            }
+            else
+                Save();
+
+            return Value;
         }
-        else
-            Save();
-
-        return Value;
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"加载匹配文件（{PathConstants.MatchesFile}）时出现异常", e);
+        }
     }
 
     public void Save()
     {
-        Directory.CreateDirectory(PathConstants.Root);
-        File.WriteAllText(
-            PathConstants.MatchesFile,
-            JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(Match), Value),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
-            )
-        );
+        try
+        {
+            Directory.CreateDirectory(PathConstants.Root);
+            File.WriteAllText(
+                PathConstants.MatchesFile,
+                JsonSerializer.Serialize(
+                    DataItemWrapper.Wrap(nameof(Match), Value),
+                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                )
+            );
+        }
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"保存匹配文件（{PathConstants.MatchesFile}）时出现异常", e);
+        }
     }
 
     public async Task SaveAsyncWithDebounce()

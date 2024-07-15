@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Server;
+using Serein.Core.Models.Settings;
+using Serein.Core.Services.Commands;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
@@ -22,16 +25,45 @@ public partial class MainForm : Form
 
     private readonly IHost _host;
     private readonly ServerManager _serverManager;
+    private readonly CommandParser _commandParser;
+    private readonly SettingProvider _settingProvider;
+    private readonly System.Timers.Timer _timer;
 
     private IServiceProvider Services => _host.Services;
 
-    public MainForm(IHost host, ServerManager serverManager, ResourcesManager resourcesManager)
+    public MainForm(
+        IHost host,
+        ServerManager serverManager,
+        CommandParser commandParser,
+        SettingProvider settingProvider
+    )
     {
         _host = host;
         _serverManager = serverManager;
-        // resourcesManager.WriteConsoleHtml();
+        _commandParser = commandParser;
+        _settingProvider = settingProvider;
+        _timer = new(2000);
+        _timer.Elapsed += (_, _) => Invoke(UpdateTitle);
+        _settingProvider.Value.Application.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(ApplicationSetting.CustomTitle))
+                if (InvokeRequired)
+                    Invoke(UpdateTitle);
+                else
+                    UpdateTitle();
+        };
 
         InitializeComponent();
+        UpdateTitle();
+    }
+
+    private void UpdateTitle()
+    {
+        var text = _commandParser.ApplyVariables(_settingProvider.Value.Application.CustomTitle, null);
+
+        Text = !string.IsNullOrEmpty(text.Trim())
+            ? $"Serein.Lite - {text}"
+            : "Serein.Lite";
     }
 
     private void SwitchPage<T>()
@@ -225,6 +257,7 @@ public partial class MainForm : Form
         {
             NotifyIcon.Visible = false;
             _host.StopAsync();
+            _timer.Stop();
         }
         base.OnClosing(e);
     }
@@ -241,6 +274,7 @@ public partial class MainForm : Form
             DialogFactory.ShowWelcomeDialog();
 
         _host.StartAsync();
+        _timer.Start();
         base.OnShown(e);
     }
 

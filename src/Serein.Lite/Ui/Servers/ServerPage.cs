@@ -18,7 +18,7 @@ public partial class ServerPage : UserControl
     {
         InitializeComponent();
 
-        Panels = new();
+        Panels = [];
         _serverManager = serverManager;
         _resourcesManager = resourcesManager;
         _serverManager.ServersUpdated += Update;
@@ -33,7 +33,7 @@ public partial class ServerPage : UserControl
 
     private void Add(string id, Server server)
     {
-        if (!File.Exists(".console/index.html"))
+        if (!File.Exists(ResourcesManager.IndexPath))
             _resourcesManager.WriteConsoleHtml();
 
         var tabPage = new TabPage
@@ -59,7 +59,10 @@ public partial class ServerPage : UserControl
             )
                 Add(e.Id, server);
             else if (Panels.TryGetValue(e.Id, out var page))
+            {
                 MainTabControl.Controls.Remove(page);
+                Panels.Remove(e.Id);
+            }
 
             StatusStrip.Visible = Panels.Count == 0;
         });

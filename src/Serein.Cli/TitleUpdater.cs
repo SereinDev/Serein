@@ -40,7 +40,7 @@ public class TitleUpdater(SettingProvider settingProvider, CommandParser command
         var text = _commandParser.ApplyVariables(_settingProvider.Value.Application.CustomTitle, null);
 
         Console.Title = !string.IsNullOrEmpty(text.Trim())
-            ? $"Serein.Plus - {text}"
-            : "Serein.Plus";
+            ? $"Serein.Cli - {text}"
+            : "Serein.Cli";
     }
 }

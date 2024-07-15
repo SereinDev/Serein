@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Ookii.Dialogs.WinForms;
@@ -27,13 +21,13 @@ public partial class SshSettingPage : UserControl
 
         UsersListView.SetExploreTheme();
         IpAddressTextBox.DataBindings.Add(
-            nameof(IpAddressTextBox.Text), 
-            _settingProvider.Value.Ssh, 
+            nameof(IpAddressTextBox.Text),
+            _settingProvider.Value.Ssh,
             nameof(SshSetting.IpAddress)
             );
         PortNumericUpDown.DataBindings.Add(
-            nameof(PortNumericUpDown.Value), 
-            _settingProvider.Value.Ssh, 
+            nameof(PortNumericUpDown.Value),
+            _settingProvider.Value.Ssh,
             nameof(SshSetting.Port)
             );
         LoadData();
@@ -127,7 +121,7 @@ public partial class SshSettingPage : UserControl
     {
         LoadData();
     }
-    
+
     private void OnPropertyChanged(object sender, EventArgs e)
     {
         _settingProvider.SaveAsyncWithDebounce();

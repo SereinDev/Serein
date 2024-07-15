@@ -35,6 +35,8 @@ public class Configuration : INotifyPropertyChanged
 
     public bool StartWhenSettingUp { get; set; }
 
+    public bool UseUnicodeChars { get; set; }
+
 #pragma warning disable CS0067
     public event PropertyChangedEventHandler? PropertyChanged;
 }

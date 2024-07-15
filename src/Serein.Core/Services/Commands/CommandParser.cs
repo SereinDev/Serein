@@ -92,31 +92,31 @@ public partial class CommandParser(
         }
     }
 
-    public string Format(string? commandBody, CommandContext? commandContext)
+    public string Format(Command command, CommandContext? commandContext)
     {
-        if (string.IsNullOrEmpty(commandBody))
+        if (string.IsNullOrEmpty(command.Body))
             return string.Empty;
 
-        var argument = ApplyVariables(commandBody, commandContext);
+        var body = ApplyVariables(command.Body, commandContext);
 
         if (commandContext?.Match != null)
             foreach (var key in commandContext.Match.Groups.Keys)
             {
-                argument = argument.Replace($"{{{key}}}", commandContext.Match.Groups[key].Value);
+                body = body.Replace($"{{{key}}}", commandContext.Match.Groups[key].Value);
             }
 
-        return argument;
+        return command.Type == CommandType.InputServer ? body : body.Replace("\\n", "\n");
     }
 
 #pragma warning disable IDE0046
-    internal string ApplyVariables(
+    public string ApplyVariables(
         string line,
         CommandContext? commandContext,
         bool removeInvalidVariablePatten = false
     )
     {
         if (!line.Contains('{') || !line.Contains('}'))
-            return line.Replace("\\n", "\n");
+            return line;
 
         var currentTime = DateTime.Now;
 
@@ -226,7 +226,7 @@ public partial class CommandParser(
                             : commandContext.MessagePacket?.Sender?.Card,
                     #endregion
 
-                    _ => GetServerVariables(name)
+                    _ => GetServerVariables(name, commandContext?.ServerId)
                 };
 
                 var r = obj?.ToString();
@@ -238,22 +238,36 @@ public partial class CommandParser(
             }
         );
 
-        return text.Replace("\\n", "\n");
+        return text;
     }
 #pragma warning restore IDE0046
 
-    private object? GetServerVariables(string input)
+    private object? GetServerVariables(string input, string? id = null)
     {
         var i = input.IndexOf('@');
+        Server? server;
+
         if (i < 0)
+            return Switch(
+                input,
+                !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
+                    ? server
+                    : _serverManager.Servers.Values.FirstOrDefault()
+            );
+
+        if (i == 0 || i >= input.Length)
             return null;
 
-        var name = input[..(i + 1)];
-        var id = input[(i + 1)..];
+        var key = input[..(i + 1)];
+        id = input[(i + 1)..];
 
-        return !_serverManager.Servers.TryGetValue(id, out Server? server)
+        return !_serverManager.Servers.TryGetValue(id, out server)
             ? null
-            : name.ToLowerInvariant() switch
+            : Switch(key, server);
+
+        static object? Switch(string key, Server? server)
+        {
+            return server is null ? null : key.ToLowerInvariant() switch
             {
                 "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
                 "server.usage" => server.ServerInfo.CPUUsage,
@@ -273,5 +287,6 @@ public partial class CommandParser(
 
                 _ => null
             };
+        }
     }
 }

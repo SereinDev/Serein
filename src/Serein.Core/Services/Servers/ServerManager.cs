@@ -33,7 +33,7 @@ public partial class ServerManager
     public IReadOnlyDictionary<string, Server> Servers => _server;
     public event EventHandler<ServersUpdatedEventArgs>? ServersUpdated;
 
-    private readonly Dictionary<string, Server> _server = new();
+    private readonly Dictionary<string, Server> _server = [];
     private readonly Matcher _matcher;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;

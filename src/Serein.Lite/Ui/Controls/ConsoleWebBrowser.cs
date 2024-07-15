@@ -12,14 +12,17 @@ public class ConsoleWebBrowser : WebBrowser
 {
     public ConsoleWebBrowser()
     {
-        if (!File.Exists("Serein/console/index.html"))
+        if (!File.Exists(ResourcesManager.IndexPath))
             SereinApp.Current?.Services.GetRequiredService<ResourcesManager>().WriteConsoleHtml();
 
-        Navigate(@"file:\\\" + Path.GetFullPath(@"Serein\console\index.html"));
+        Navigate(@"file:\\\" + Path.GetFullPath(ResourcesManager.IndexPath));
     }
 
     public void AppendHtmlLine(string html)
     {
+        if (Document?.Body?.InnerHtml is null)
+            Refresh();
+
         Document?.InvokeScript("appendText", [html]);
     }
 

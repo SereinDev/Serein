@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services.Data;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core;
@@ -20,7 +21,7 @@ public sealed partial class SereinApp : IHost
         _host = host;
 
         Logger.LogInformation("Serein.{} {}", Type, FullVersion);
-        Logger.LogInformation("仓库: https://github.com/SereinDev/Serein");
+        Logger.LogInformation("仓库: {}", UrlConstants.Repository);
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
 
         Logger.LogDebug(

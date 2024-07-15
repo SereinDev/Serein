@@ -11,6 +11,7 @@ using Serein.Lite.Ui;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
+using Serein.Lite.Utils;
 
 namespace Serein.Lite;
 
@@ -48,7 +49,11 @@ public static class Program
     [STAThread]
     public static void Main()
     {
-        AppDomain.CurrentDomain.UnhandledException += (_, e) => MessageBox.Show(e.ExceptionObject.ToString());
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            DialogFactory.ShowErrorDialog((Exception)e.ExceptionObject);
+        Application.ThreadException += (_, e) => DialogFactory.ShowErrorDialog(e.Exception);
+        
+        Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
         ApplicationConfiguration.Initialize();
         Application.Run(App.Services.GetRequiredService<MainForm>());
     }

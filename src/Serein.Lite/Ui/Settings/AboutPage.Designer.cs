@@ -167,7 +167,6 @@
             linkLabel1.TabIndex = 14;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Github仓库";
-            ToolTip.SetToolTip(linkLabel1, "https://github.com/SereinDev/Serein");
             linkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel1.LinkClicked += LinkLabel1_LinkClicked;
             // 
@@ -183,7 +182,6 @@
             linkLabel2.TabIndex = 15;
             linkLabel2.TabStop = true;
             linkLabel2.Text = "官网/文档";
-            ToolTip.SetToolTip(linkLabel2, "https://sereindev.github.io/");
             linkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel2.LinkClicked += LinkLabel2_LinkClicked;
             // 
@@ -199,7 +197,6 @@
             linkLabel3.TabIndex = 16;
             linkLabel3.TabStop = true;
             linkLabel3.Text = "交流群";
-            ToolTip.SetToolTip(linkLabel3, "https://jq.qq.com/?_wv=1027&k=XNZqPSPv");
             linkLabel3.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel3.LinkClicked += LinkLabel3_LinkClicked;
             // 

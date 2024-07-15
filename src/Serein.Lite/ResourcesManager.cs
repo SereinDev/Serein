@@ -11,6 +11,9 @@ public class ResourcesManager(ILogger logger)
 
     private const string IndexHtml = "index.html";
     private const string CustomCss = "custom.css";
+    public const string IndexPath = "Serein/console/index.html";
+
+    private readonly object _lock = new();
 
     private readonly Stream? _consoleHtml =
         typeof(ResourcesManager).Assembly.GetManifestResourceStream($"Serein.Lite.{IndexHtml}");
@@ -36,10 +39,14 @@ public class ResourcesManager(ILogger logger)
         if (_consoleHtml is null)
             throw new InvalidDataException($"{IndexHtml} 未找到");
 
-        Directory.CreateDirectory("Serein/console");
-        using var stream = new FileStream($"Serein/console/{IndexHtml}", FileMode.Create);
-        _consoleHtml.CopyTo(stream);
-        stream.Flush();
+        lock (_lock)
+        {
+            Directory.CreateDirectory("Serein/console");
+            using var stream = new FileStream(IndexPath, FileMode.Create);
+            _consoleHtml.CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+        }
     }
 
     private void WriteCss()
@@ -47,9 +54,13 @@ public class ResourcesManager(ILogger logger)
         if (_consoleCss is null)
             throw new InvalidDataException($"{CustomCss} 未找到");
 
-        Directory.CreateDirectory("Serein/console");
-        using var stream = new FileStream($"Serein/console/{CustomCss}", FileMode.Create);
-        _consoleCss.CopyTo(stream);
-        stream.Flush();
+        lock (_lock)
+        {
+            Directory.CreateDirectory("Serein/console");
+            using var stream = new FileStream($"Serein/console/{CustomCss}", FileMode.Create);
+            _consoleCss.CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+        }
     }
 }

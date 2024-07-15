@@ -30,6 +30,9 @@ public record LineFragment(string Text)
 
     public override string ToString()
     {
+        if (string.IsNullOrEmpty(Text))
+            return string.Empty;
+
         var sb = new StringBuilder();
         sb.Append("<span");
 

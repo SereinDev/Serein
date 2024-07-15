@@ -1,5 +1,8 @@
+using System;
+
 using Ookii.Dialogs.WinForms;
 
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Lite.Utils;
@@ -8,8 +11,14 @@ public static class DialogFactory
 {
     public static void ShowWelcomeDialog()
     {
-        var button1 = new TaskDialogButton("官网文档") { CommandLinkNote = "https://sereindev.github.io" };
-        var button2 = new TaskDialogButton("GitHub仓库") { CommandLinkNote = "https://github.com/SereinDev/Serein" };
+        var button1 = new TaskDialogButton("官网文档")
+        {
+            CommandLinkNote = "这里有详细完整的功能介绍和教程，推荐新手仔细阅读"
+        };
+        var button2 = new TaskDialogButton("GitHub仓库")
+        {
+            CommandLinkNote = "这是储存 Serein 源代码的地方。欢迎每一个人为 Serein 的发展贡献力量"
+        };
 
         var dialog = new TaskDialog
         {
@@ -27,8 +36,8 @@ public static class DialogFactory
                 "使用此软件即视为你已阅读并同意了<a href=\"https://sereindev.github.io/docs/more/agreement\">用户协议</a>",
             ExpandedInformation =
                 "此软件与Mojang Studio、网易、Microsoft没有从属关系\n"
-                + "Serein is licensed under <a href=\"https://github.com/SereinDev/Serein/blob/main/LICENSE\">GPL-v3.0</a>\n"
-                + "Copyright © 2022 <a href=\"https://github.com/Zaitonn\">Zaitonn</a>. All Rights Reserved.",
+                + $"Serein is licensed under <a href=\"{UrlConstants.License}\">GPL-v3.0</a>\n"
+                + $"Copyright © 2022 <a href=\"{UrlConstants.Author}\">Zaitonn</a>. All Rights Reserved.",
             FooterIcon = TaskDialogIcon.Information,
             MainInstruction = "欢迎使用Serein！！",
             WindowTitle = "Serein.Lite",
@@ -40,8 +49,56 @@ public static class DialogFactory
         var btn = dialog.ShowDialog();
 
         if (btn == button1)
-            button1.CommandLinkNote.OpenInBrowser();
+            UrlConstants.Docs.OpenInBrowser();
         else if (btn == button2)
-            button2.CommandLinkNote.OpenInBrowser();
+            UrlConstants.Repository.OpenInBrowser();
+    }
+
+    public static void ShowErrorDialog(Exception e)
+    {
+        try
+        {
+            var fileName = CrashHelper.CreateLog(e);
+            var button1 = new TaskDialogButton("GitHub Issue")
+            {
+                CommandLinkNote = "【推荐】在GitHub上反馈，方便作者定位和跟踪问题"
+            };
+            var button2 = new TaskDialogButton("交流群")
+            {
+                CommandLinkNote = "通过共同讨论分析和确定问题"
+            };
+
+            var dialog = new TaskDialog
+            {
+                Buttons =
+                {
+                    new(ButtonType.Ok),
+                    button1,
+                    button2,
+                },
+                CenterParent = true,
+                Content = $"{e.GetType().FullName}: {e.Message} \r\n\r\n" +
+                    $"完整崩溃日志已保存在 {fileName}，请先善用搜索引擎寻找解决方案。\r\n" +
+                    "在确定不是自身问题（如文件语法不正确、文件缺失等）后，你可以通过以下方式反馈此问题，帮助我们更好的改进 Serein！",
+                EnableHyperlinks = true,
+                Footer = "反馈问题时你应该上传崩溃日志文件，而不是此窗口的截图",
+                FooterIcon = TaskDialogIcon.Warning,
+                ExpandedInformation = e.StackTrace,
+                MainIcon = TaskDialogIcon.Error,
+                MainInstruction = "唔……崩溃了(っ °Д °;)っ",
+                WindowTitle = "Serein.Lite",
+                ButtonStyle = TaskDialogButtonStyle.CommandLinks
+            };
+
+            dialog.HyperlinkClicked += (_, e) => e.Href.OpenInBrowser();
+
+            var btn = dialog.ShowDialog();
+
+            if (btn == button1)
+                UrlConstants.Issues.OpenInBrowser();
+            else if (btn == button2)
+                UrlConstants.Group.OpenInBrowser();
+        }
+        catch { }
     }
 }

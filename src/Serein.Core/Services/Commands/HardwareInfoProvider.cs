@@ -19,7 +19,7 @@ public class HardwareInfoProvider
         Task.Run(() => Info = new());
 
         _logger = logger;
-        _timer = new(2000);
+        _timer = new(5000);
         _timer.Elapsed += (_, _) => Update();
         _timer.Start();
     }

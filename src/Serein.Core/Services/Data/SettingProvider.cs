@@ -25,29 +25,43 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
 
     public Setting Read()
     {
-        if (File.Exists(PathConstants.SettingFile))
+        try
         {
-            var wrapper = JsonSerializer.Deserialize<DataItemWrapper<Setting>>(
-                File.ReadAllText(PathConstants.SettingFile),
-                JsonSerializerOptionsFactory.CamelCase
-            );
+            if (File.Exists(PathConstants.SettingFile))
+            {
+                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<Setting>>(
+                    File.ReadAllText(PathConstants.SettingFile),
+                    JsonSerializerOptionsFactory.CamelCase
+                );
 
-            if (wrapper?.Type == nameof(Setting))
-                return wrapper.Data ?? new();
+                if (wrapper?.Type == nameof(Setting))
+                    return wrapper.Data ?? new();
+            }
+
+            return new();
         }
-
-        return new();
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"加载设置文件（{PathConstants.SettingFile}）时出现异常", e);
+        }
     }
 
     public void Save()
     {
-        File.WriteAllText(
+        try
+        {
+            File.WriteAllText(
             PathConstants.SettingFile,
             JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(nameof(Setting), Value),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
-            )
-        );
+               DataItemWrapper.Wrap(nameof(Setting), Value),
+               options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                )
+            );
+        }
+        catch (Exception e)
+        {
+            throw new InvalidOperationException($"保存设置文件（{PathConstants.SettingFile}）时出现异常", e);
+        }
     }
 
     public async Task SaveAsyncWithDebounce()

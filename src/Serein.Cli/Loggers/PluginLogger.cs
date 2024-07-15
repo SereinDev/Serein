@@ -8,8 +8,10 @@ using Spectre.Console;
 
 namespace Serein.Cli.Loggers;
 
-public class PluginLogger : IPluginLogger
+public class PluginLogger(ILogger logger) : IPluginLogger
 {
+    private readonly ILogger _logger = logger;
+
     public void Log(LogLevel level, string name, string message)
     {
         switch (level)
@@ -39,7 +41,8 @@ public class PluginLogger : IPluginLogger
                 );
                 break;
 
-            case LogLevel.None:
+            case LogLevel.Trace:
+                _logger.LogInformation(message);
                 break;
 
             default:

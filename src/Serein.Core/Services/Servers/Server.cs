@@ -15,6 +15,7 @@ using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers;
 
@@ -71,8 +72,8 @@ public class Server
         _cache = new();
         _updateTimer = new(2000) { AutoReset = true };
         _updateTimer.Elapsed += (_, _) => UpdateInfo();
-        _updateTimer.Start();
         _serverInfo = new();
+        ServerStatusChanged += (_, _) => UpdateInfo();
     }
 
     public void Start()
@@ -129,15 +130,31 @@ public class Server
         );
         _reactionManager.TriggerAsync(ReactionType.ServerStart);
         _eventDispatcher.Dispatch(Event.ServerStarted, _id);
+        _updateTimer.Start();
     }
 
     public void Stop()
     {
-        if (Status != ServerStatus.Running)
+        if (Status != ServerStatus.Running || _serverProcess is null)
             throw new InvalidOperationException("服务器未运行");
 
         if (!_eventDispatcher.Dispatch(Event.ServerStopping, _id))
             return;
+
+        if (Configuration.StopCommands.Length == 0)
+            if (SereinApp.Type is AppType.Lite or AppType.Plus
+                && Environment.OSVersion.Platform == PlatformID.Win32NT
+                )
+            {
+                ServerOutput?.Invoke(
+                    this,
+                    new(ServerOutputType.Information, "当前未设置关服命令，将发送Ctrl+C事件作为替代")
+                    );
+                NativeMethod.AttachConsole((uint)_serverProcess.Id);
+                NativeMethod.GenerateConsoleCtrlEvent(NativeMethod.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
+                NativeMethod.FreeConsole();
+            }
+            else return;
 
         foreach (string command in Configuration.StopCommands)
         {
@@ -174,7 +191,8 @@ public class Server
             EncodingMap
                 .GetEncoding(encodingType ?? Configuration.InputEncoding)
                 .GetBytes(
-                    command + Configuration.LineTerminator.Replace("\\n", "\n").Replace("\\r", "\r")
+                    (Configuration.UseUnicodeChars ? command.ToUnicode() : command) 
+                    + Configuration.LineTerminator
                 )
         );
         _inputWriter.Flush();
@@ -212,6 +230,7 @@ public class Server
 
     private void OnExit(object? sender, EventArgs e)
     {
+        _updateTimer.Stop();
         var exitCode = _serverProcess?.ExitCode ?? 0;
         ServerOutput?.Invoke(
             this,

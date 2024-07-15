@@ -39,7 +39,7 @@ public class CliLogger(SettingProvider settingProvider) : ILogger
         switch (logLevel)
         {
             case LogLevel.Trace:
-                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} [[Serein]] {text}");
+                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} Trace [[Serein]] {text}");
                 break;
 
             case LogLevel.Debug:
@@ -50,7 +50,7 @@ public class CliLogger(SettingProvider settingProvider) : ILogger
 
             case LogLevel.Information:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [cadetblue_1]Info [/] [[Serein]] {text}"
+                    $"{DateTime.Now:T} [cadetblue_1]Info[/]  [[Serein]] {text}"
                 );
                 break;
 
@@ -68,7 +68,7 @@ public class CliLogger(SettingProvider settingProvider) : ILogger
 
             case LogLevel.Critical:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [maroon blod]Fatal [[Serein]]  {text}[/]"
+                    $"{DateTime.Now:T} [maroon blod]Critical[[Serein]]  {text}[/]"
                 );
                 break;
 

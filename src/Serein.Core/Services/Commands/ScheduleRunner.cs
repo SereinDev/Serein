@@ -16,7 +16,7 @@ public class ScheduleRunner(IHost host, CommandRunner commandRunner) : IHostedSe
 
     private ScheduleProvider ScheduleProvider { get; } = host.Services.GetRequiredService<ScheduleProvider>();
 
-    private readonly Timer _timer = new(2000);
+    private readonly Timer _timer = new(5000);
 
     private void OnElapsed(object? sender, EventArgs e)
     {

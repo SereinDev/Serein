@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using Serein.Core;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Lite.Ui.Settings;
@@ -29,17 +30,17 @@ public partial class AboutPage : UserControl
 
     private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        "https://github.com/SereinDev/Serein".OpenInBrowser();
+        UrlConstants.Repository.OpenInBrowser();
     }
 
     private void LinkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        "https://sereindev.github.io/".OpenInBrowser();
+        UrlConstants.Docs.OpenInBrowser();
     }
 
     private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        "https://jq.qq.com/?_wv=1027&k=XNZqPSPv".OpenInBrowser();
+        UrlConstants.Group.OpenInBrowser();
     }
 
     private void CopiableLabel_Click(object sender, EventArgs e)

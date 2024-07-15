@@ -3,6 +3,7 @@ namespace Serein.Core.Utils;
 public static class PathConstants
 {
     public const string Root = "Serein";
+    public const string LogDirectory = "Serein/logs";
     public const string MatchesFile = "Serein/matches.json";
     public const string SchedulesFile = "Serein/schedules.json";
     public const string SettingFile = "Serein/setting.json";

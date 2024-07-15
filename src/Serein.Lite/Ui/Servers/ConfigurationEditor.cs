@@ -53,6 +53,7 @@ public partial class ConfigurationEditor : Form
         OutputStyleComboBox.SelectedIndex = (int)_configuration.OutputStyle;
         InputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
         OutputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
+        UseUnicodeCharsCheckBox.Checked = _configuration.UseUnicodeChars;
     }
 
     private void FileName_DoubleClick(object sender, EventArgs e)
@@ -96,9 +97,10 @@ public partial class ConfigurationEditor : Form
             _configuration.PortIPv4 = (short)PortNumericUpDown.Value;
             _configuration.LineTerminator = LineTerminatorTextBox
                 .Text.Replace("\\r", "\r")
-                .Replace("\n", "\\n");
+                .Replace("\\n", "\n");
             _configuration.StartWhenSettingUp = StartWhenSettingUpCheckBox.Checked;
             _configuration.OutputCommandUserInput = OutputCommandUserInputCheckBox.Checked;
+            _configuration.UseUnicodeChars = UseUnicodeCharsCheckBox.Checked;
             _configuration.OutputStyle = outputStyle;
             _configuration.StopCommands = StopCommandsTextBox.Text.Replace("\r", null).Split('\n');
             _configuration.InputEncoding = input;

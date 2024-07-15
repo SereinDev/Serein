@@ -187,6 +187,7 @@
             RegexForCheckingGameIDTextBox.Size = new System.Drawing.Size(1206, 38);
             RegexForCheckingGameIDTextBox.TabIndex = 6;
             ToolTip.SetToolTip(RegexForCheckingGameIDTextBox, "用于绑定功能中校验游戏名称的正确与否");
+            RegexForCheckingGameIDTextBox.TextChanged += OnPropertyChanged;
             // 
             // RegexForCheckingGameIDLabel
             // 
@@ -221,6 +222,7 @@
             CustomTitleTextBox.Size = new System.Drawing.Size(1206, 38);
             CustomTitleTextBox.TabIndex = 11;
             ToolTip.SetToolTip(CustomTitleTextBox, "标题栏后缀，可以使用命令变量");
+            CustomTitleTextBox.TextChanged += OnPropertyChanged;
             // 
             // CustomTitleLabel
             // 
