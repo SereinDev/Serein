@@ -2,18 +2,6 @@ namespace Serein.Core.Models.Settings;
 
 public enum ReactionType
 {
-    BindingSucceed,
-
-    BindingFailedDueToOccupation,
-
-    BindingFailedDueToInvalidArgument,
-
-    BindingFailedDueToAlreadyBinded,
-
-    UnbindingSucceed,
-
-    UnbindingFailed,
-
     BinderDisable,
 
     ServerStart,

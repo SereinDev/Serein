@@ -14,11 +14,11 @@ public class Match : INotifyPropertyChanged, ICloneable
 {
     private string _regExp = string.Empty;
     private string _command = string.Empty;
-    private string _restrictions = string.Empty;
+    private string _exclusions = string.Empty;
 
     public Match()
     {
-        RestrictionsValue ??= new Dictionary<RestrictionType, List<string>>();
+        ExclusionDict ??= new Dictionary<ExclusionType, List<string>>();
     }
 
     public string RegExp
@@ -50,22 +50,22 @@ public class Match : INotifyPropertyChanged, ICloneable
 
     public bool RequireAdmin { get; set; }
 
-    [AlsoNotifyFor(nameof(RestrictionsValue))]
-    public string Restrictions
+    [AlsoNotifyFor(nameof(ExclusionDict))]
+    public string Exclusions
     {
-        get => _restrictions;
+        get => _exclusions;
         set
         {
-            _restrictions = value;
-            RestrictionsValue = new Dictionary<RestrictionType, List<string>>();
+            _exclusions = value;
+            ExclusionDict = new Dictionary<ExclusionType, List<string>>();
 
-            foreach (var item in _restrictions.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            foreach (var item in _exclusions.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
                 var args = item.Split('=');
 
-                if (args.Length == 2 && Enum.TryParse<RestrictionType>(args[0].Trim(), true, out var type))
-                    if (!RestrictionsValue.TryGetValue(type, out var list))
-                        RestrictionsValue.Add(type, [args[1].Trim()]);
+                if (args.Length == 2 && Enum.TryParse<ExclusionType>(args[0].Trim(), true, out var type))
+                    if (!ExclusionDict.TryGetValue(type, out var list))
+                        ExclusionDict.Add(type, [args[1].Trim()]);
                     else
                         list.Add(args[1].Trim());
             }
@@ -73,7 +73,7 @@ public class Match : INotifyPropertyChanged, ICloneable
     }
 
     [JsonIgnore]
-    internal IDictionary<RestrictionType, List<string>> RestrictionsValue { get; private set; }
+    internal IDictionary<ExclusionType, List<string>> ExclusionDict { get; private set; }
 
     public string Description { get; set; } = string.Empty;
 

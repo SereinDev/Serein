@@ -13,6 +13,7 @@ using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
 using Serein.Lite.Utils;
@@ -104,6 +105,11 @@ public partial class MainForm : Form
     private void PluginToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SwitchPage<PluginPage>();
+    }
+
+    private void BindingToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SwitchPage<BindingPage>();
     }
 
     private void ServerToolStripMenuItem_DropDownOpening(object sender, EventArgs e)

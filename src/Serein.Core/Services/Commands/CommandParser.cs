@@ -60,6 +60,8 @@ public partial class CommandParser(
                 "group" => CommandType.SendGroupMsg,
                 "p" => CommandType.SendPrivateMsg,
                 "private" => CommandType.SendPrivateMsg,
+                "d" => CommandType.SendData,
+                "data" => CommandType.SendData,
 
                 "b" => CommandType.Bind,
                 "bind" => CommandType.Bind,
@@ -68,8 +70,6 @@ public partial class CommandParser(
 
                 "js" => CommandType.ExecuteJavascriptCodes,
                 "javascript" => CommandType.ExecuteJavascriptCodes,
-
-                "reload" => CommandType.Reload,
 
                 "debug" => CommandType.Debug,
                 _ => throw new NotSupportedException("命令类型无效")

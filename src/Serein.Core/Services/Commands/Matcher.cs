@@ -35,7 +35,7 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
-                    || CheckRestrictions(match, id)
+                    || CheckExclusions(match, id)
                 )
                     continue;
 
@@ -64,7 +64,7 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
-                    || CheckRestrictions(match, id)
+                    || CheckExclusions(match, id)
                 )
                     continue;
 
@@ -107,7 +107,7 @@ public class Matcher(
                             && messagePacket.MessageType == MessageType.Group
                         || match.FieldType == MatchFieldType.PrivateMsg
                             && messagePacket.MessageType == MessageType.Private)
-                    || !CheckRestrictions(match, messagePacket)
+                    || !CheckExclusions(match, messagePacket)
                 )
                     continue;
 
@@ -123,18 +123,18 @@ public class Matcher(
         await Task.WhenAll(tasks);
     }
 
-    private static bool CheckRestrictions(Match match, string id)
+    private static bool CheckExclusions(Match match, string id)
     {
-        return match.RestrictionsValue.TryGetValue(RestrictionType.ServerId, out var list) && list.Contains(id);
+        return match.ExclusionDict.TryGetValue(ExclusionType.ServerId, out var list) && list.Contains(id);
     }
 
 
-    private static bool CheckRestrictions(Match match, MessagePacket messagePacket)
+    private static bool CheckExclusions(Match match, MessagePacket messagePacket)
     {
         return match.FieldType == MatchFieldType.GroupMsg
-            && match.RestrictionsValue.TryGetValue(RestrictionType.GroupId, out var list)
+            && match.ExclusionDict.TryGetValue(ExclusionType.GroupId, out var list)
             && !list.Contains(messagePacket.GroupId.ToString())
-            || !match.RestrictionsValue.TryGetValue(RestrictionType.UserId, out list)
+            || !match.ExclusionDict.TryGetValue(ExclusionType.UserId, out list)
             || list.Contains(messagePacket.UserId.ToString());
     }
 

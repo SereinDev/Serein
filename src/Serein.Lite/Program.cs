@@ -9,6 +9,7 @@ using Serein.Core.Models.Output;
 using Serein.Lite.Loggers;
 using Serein.Lite.Ui;
 using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
 using Serein.Lite.Utils;
@@ -30,11 +31,14 @@ public static class Program
 
         builder.Services.AddSingleton<ResourcesManager>();
         builder.Services.AddSingleton<MainForm>();
+
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
         builder.Services.AddSingleton<ConnectionPage>();
         builder.Services.AddSingleton<PluginPage>();
+        builder.Services.AddSingleton<BindingPage>();
+
         builder.Services.AddSingleton<SettingPage>();
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();

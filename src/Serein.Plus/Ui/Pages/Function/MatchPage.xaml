@@ -131,7 +131,7 @@
                         Binding="{Binding RequireAdmin}"
                         Header="需要管理权限" />
                 <DataGridTextColumn
-                        Binding="{Binding Restrictions}"
+                        Binding="{Binding Exclusions}"
                         Header="限制参数" />
             </DataGrid.Columns>
         </DataGrid>

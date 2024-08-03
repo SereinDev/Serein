@@ -55,7 +55,7 @@ public static class Program
         Console.WriteLine($"· GitHub Issue（{UrlConstants.Issues}）");
         Console.WriteLine("  【推荐】在GitHub上反馈，方便作者定位和跟踪问题");
         Console.WriteLine($"· 交流群（{UrlConstants.Group}）");
-        Console.WriteLine("  通过共同讨论分析和确定问题");
+        Console.WriteLine("  通过共同讨论分析和确定问题，但效率可能较低");
         Console.WriteLine();
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("【注】反馈问题时你应该上传崩溃日志文件，而不是此窗口的截图");

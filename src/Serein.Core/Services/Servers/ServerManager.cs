@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
@@ -55,6 +56,7 @@ public partial class ServerManager
         _reactionManager = reactionManager;
 
         LoadAll();
+        AppDomain.CurrentDomain.UnhandledException += (_, _) => Task.Run(OnCrash);
     }
 
     public bool AnyRunning => _server.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
@@ -150,6 +152,21 @@ public partial class ServerManager
             {
                 _logger.LogError(e, "尝试读取“{}”时异常", file);
             }
+        }
+    }
+
+    private void OnCrash()
+    {
+        foreach (var (_, server) in Servers)
+        {
+            try
+            {
+                if (server.Configuration.AutoStopWhenCrashing
+                    && server.Status == ServerStatus.Running
+                    )
+                    server.Stop();
+            }
+            catch { }
         }
     }
 

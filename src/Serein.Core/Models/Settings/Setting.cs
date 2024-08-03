@@ -7,15 +7,6 @@ public class Setting
     private static readonly Dictionary<ReactionType, string[]> DefaultReactions =
         new()
         {
-            [ReactionType.BindingSucceed] = ["[g][CQ:at,qq={ID}] 绑定成功"],
-            [ReactionType.BindingFailedDueToOccupation] = ["[g][CQ:at,qq={ID}] 该游戏名称被占用"],
-            [ReactionType.BindingFailedDueToInvalidArgument] =
-            [
-                "[g][CQ:at,qq={ID}] 该游戏名称无效"
-            ],
-            [ReactionType.BindingFailedDueToAlreadyBinded] = ["[g][CQ:at,qq={ID}] 你已经绑定过了"],
-            [ReactionType.UnbindingSucceed] = ["[g][CQ:at,qq={ID}] 解绑成功"],
-            [ReactionType.UnbindingFailed] = ["[g][CQ:at,qq={ID}] 该账号未绑定"],
             [ReactionType.BinderDisable] = ["[g][CQ:at,qq={ID}] 绑定功能已被禁用"],
             [ReactionType.ServerStart] = ["[g]服务器正在启动"],
             [ReactionType.ServerExitedNormally] = ["[g]服务器已关闭"],

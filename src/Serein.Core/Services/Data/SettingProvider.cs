@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using Serein.Core.Models;
 using Serein.Core.Models.Settings;
@@ -11,19 +10,17 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
+public class SettingProvider : DataProviderBase<Setting>, INotifyPropertyChanged
 {
-    private DateTime _last;
-
     public SettingProvider()
     {
         Value = Read();
         Save();
     }
 
-    public Setting Value { get; }
+    public override Setting Value { get; }
 
-    public Setting Read()
+    public override Setting Read()
     {
         try
         {
@@ -46,7 +43,7 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
         }
     }
 
-    public void Save()
+    public override void Save()
     {
         try
         {
@@ -62,15 +59,6 @@ public class SettingProvider : IItemProvider<Setting>, INotifyPropertyChanged
         {
             throw new InvalidOperationException($"保存设置文件（{PathConstants.SettingFile}）时出现异常", e);
         }
-    }
-
-    public async Task SaveAsyncWithDebounce()
-    {
-        _last = DateTime.Now;
-        await Task.Delay(500);
-
-        if ((DateTime.Now - _last).TotalMilliseconds > 400)
-            Save();
     }
 
 #pragma warning disable CS0067

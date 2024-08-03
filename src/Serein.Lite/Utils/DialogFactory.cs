@@ -65,7 +65,7 @@ public static class DialogFactory
             };
             var button2 = new TaskDialogButton("交流群")
             {
-                CommandLinkNote = "通过共同讨论分析和确定问题"
+                CommandLinkNote = "通过共同讨论分析和确定问题，但效率可能较低"
             };
 
             var dialog = new TaskDialog

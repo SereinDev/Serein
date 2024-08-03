@@ -32,13 +32,13 @@
             System.Windows.Forms.Label RegexLabel;
             System.Windows.Forms.Label CommandLabel;
             System.Windows.Forms.Label DescriptionLabel;
-            System.Windows.Forms.Label RestrictionsLabel;
+            System.Windows.Forms.Label ExclusionsLabel;
             System.Windows.Forms.Label FieldTypeLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchEditor));
             RegexTextBox = new System.Windows.Forms.TextBox();
             CommandTextBox = new System.Windows.Forms.TextBox();
             DescriptionTextBox = new System.Windows.Forms.TextBox();
-            RestrictionsTextBox = new System.Windows.Forms.TextBox();
+            ExclusionsTextBox = new System.Windows.Forms.TextBox();
             FieldTypeComboBox = new System.Windows.Forms.ComboBox();
             RequireAdminCheckBox = new System.Windows.Forms.CheckBox();
             ConfirmButton = new System.Windows.Forms.Button();
@@ -47,7 +47,7 @@
             RegexLabel = new System.Windows.Forms.Label();
             CommandLabel = new System.Windows.Forms.Label();
             DescriptionLabel = new System.Windows.Forms.Label();
-            RestrictionsLabel = new System.Windows.Forms.Label();
+            ExclusionsLabel = new System.Windows.Forms.Label();
             FieldTypeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)RegexErrorProvider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CommandErrorProvider).BeginInit();
@@ -80,14 +80,14 @@
             DescriptionLabel.TabIndex = 7;
             DescriptionLabel.Text = "描述";
             // 
-            // RestrictionsLabel
+            // ExclusionsLabel
             // 
-            RestrictionsLabel.AutoSize = true;
-            RestrictionsLabel.Location = new System.Drawing.Point(35, 338);
-            RestrictionsLabel.Name = "RestrictionsLabel";
-            RestrictionsLabel.Size = new System.Drawing.Size(110, 31);
-            RestrictionsLabel.TabIndex = 9;
-            RestrictionsLabel.Text = "限制参数";
+            ExclusionsLabel.AutoSize = true;
+            ExclusionsLabel.Location = new System.Drawing.Point(35, 338);
+            ExclusionsLabel.Name = "ExclusionsLabel";
+            ExclusionsLabel.Size = new System.Drawing.Size(110, 31);
+            ExclusionsLabel.TabIndex = 9;
+            ExclusionsLabel.Text = "限制参数";
             // 
             // FieldTypeLabel
             // 
@@ -125,12 +125,12 @@
             DescriptionTextBox.Size = new System.Drawing.Size(693, 38);
             DescriptionTextBox.TabIndex = 8;
             // 
-            // RestrictionsTextBox
+            // ExclusionsTextBox
             // 
-            RestrictionsTextBox.Location = new System.Drawing.Point(35, 372);
-            RestrictionsTextBox.Name = "RestrictionsTextBox";
-            RestrictionsTextBox.Size = new System.Drawing.Size(693, 38);
-            RestrictionsTextBox.TabIndex = 10;
+            ExclusionsTextBox.Location = new System.Drawing.Point(35, 372);
+            ExclusionsTextBox.Name = "ExclusionsTextBox";
+            ExclusionsTextBox.Size = new System.Drawing.Size(693, 38);
+            ExclusionsTextBox.TabIndex = 10;
             // 
             // FieldTypeComboBox
             // 
@@ -180,8 +180,8 @@
             Controls.Add(FieldTypeLabel);
             Controls.Add(RequireAdminCheckBox);
             Controls.Add(FieldTypeComboBox);
-            Controls.Add(RestrictionsTextBox);
-            Controls.Add(RestrictionsLabel);
+            Controls.Add(ExclusionsTextBox);
+            Controls.Add(ExclusionsLabel);
             Controls.Add(DescriptionTextBox);
             Controls.Add(DescriptionLabel);
             Controls.Add(CommandTextBox);
@@ -209,7 +209,7 @@
         private System.Windows.Forms.TextBox RegexTextBox;
         private System.Windows.Forms.TextBox CommandTextBox;
         private System.Windows.Forms.TextBox DescriptionTextBox;
-        private System.Windows.Forms.TextBox RestrictionsTextBox;
+        private System.Windows.Forms.TextBox ExclusionsTextBox;
         private System.Windows.Forms.ComboBox FieldTypeComboBox;
         private System.Windows.Forms.CheckBox RequireAdminCheckBox;
         private System.Windows.Forms.Button ConfirmButton;

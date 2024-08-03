@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using Serein.Core.Models;
 using Serein.Core.Models.Commands;
@@ -12,10 +11,9 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
+public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
 {
-    private DateTime _last;
-    public ObservableCollection<Schedule> Value { get; }
+    public override ObservableCollection<Schedule> Value { get; }
 
     public ScheduleProvider()
     {
@@ -23,7 +21,7 @@ public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
         Read();
     }
 
-    public ObservableCollection<Schedule> Read()
+    public override ObservableCollection<Schedule> Read()
     {
         try
         {
@@ -57,7 +55,7 @@ public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
         }
     }
 
-    public void Save()
+    public override void Save()
     {
         try
         {
@@ -74,14 +72,5 @@ public class ScheduleProvider : IItemProvider<ObservableCollection<Schedule>>
         {
             throw new InvalidOperationException($"保存定时任务文件（{PathConstants.SchedulesFile}）时出现异常", e);
         }
-    }
-
-    public async Task SaveAsyncWithDebounce()
-    {
-        _last = DateTime.Now;
-        await Task.Delay(1000);
-
-        if ((DateTime.Now - _last).TotalMilliseconds > 900)
-            Save();
     }
 }

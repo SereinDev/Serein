@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services;
+using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
@@ -13,9 +14,11 @@ using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Ssh;
 using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
+using Serein.Core.Services.Plugins.Storages;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 
@@ -44,6 +47,12 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<SettingProvider>();
         Services.AddSingleton<MatchesProvider>();
         Services.AddSingleton<ScheduleProvider>();
+        Services.AddSingleton<PermissionGroupProvider>();
+
+        Services.AddDbContext<BindingRecordDbContext>(ServiceLifetime.Singleton);
+        Services.AddSingleton<BindingManager>();
+
+        Services.AddSingleton<PermissionManager>();
 
         Services.AddSingleton<HardwareInfoProvider>();
         Services.AddSingleton<ReactionTrigger>();
@@ -67,6 +76,8 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<JsEngineFactory>();
         Services.AddSingleton<JsPluginLoader>();
         Services.AddSingleton<NetPluginLoader>();
+        Services.AddSingleton<LocalStorage>();
+        Services.AddSingleton<SessionStorage>();
         Services.AddHostedService<PluginService>();
 
         Services.AddHostedService<StartUpService>();

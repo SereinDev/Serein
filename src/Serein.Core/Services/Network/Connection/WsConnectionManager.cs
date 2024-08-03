@@ -163,21 +163,21 @@ public class WsConnectionManager : INotifyPropertyChanged
     {
         var text = JsonSerializer.Serialize(body, JsonSerializerOptionsFactory.SnakeCase);
 
-        await SendTextAsync(text);
+        await SendDataAsync(text);
     }
 
-    public async Task SendTextAsync(string text)
+    public async Task SendDataAsync(string data)
     {
         Interlocked.Increment(ref _sent);
         PropertyChanged?.Invoke(this, _sentArg);
 
         if (Setting.Connection.OutputData)
-            _connectionLogger.Value.LogSentData(text);
+            _connectionLogger.Value.LogSentData(data);
 
         if (_reverseWebSocketService.Active)
-            await _reverseWebSocketService.SendAsync(text);
+            await _reverseWebSocketService.SendAsync(data);
         else if (_webSocketService.Active)
-            await _webSocketService.SendAsync(text);
+            await _webSocketService.SendAsync(data);
     }
 
     private async Task SendActionRequestAsync<T>(string endpoint, T @params)

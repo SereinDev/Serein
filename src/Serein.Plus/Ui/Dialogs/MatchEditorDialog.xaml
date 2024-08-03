@@ -64,7 +64,7 @@
                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox
                     ui:ControlHelper.Header="限制参数"
-                    Text="{Binding Restrictions, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Exclusions, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox
                     Content="需要管理权限"
                     IsChecked="{Binding RequireAdmin}" />

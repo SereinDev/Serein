@@ -15,6 +15,7 @@ using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Modules;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -27,32 +28,39 @@ public partial class ScriptInstance
     private readonly JsPlugin _jsPlugin;
 
     private IServiceProvider Services => _host.Services;
-    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private CommandRunner CommandRunner => Services.GetRequiredService<CommandRunner>();
-    private PluginManager PluginManager => Services.GetRequiredService<PluginManager>();
+    private readonly SettingProvider _settingProvider;
+    private readonly CommandRunner _commandRunner;
+    private readonly PluginManager _pluginManager;
+    private readonly IPluginLogger _pluginLogger;
 
-    public ServerModule Server { get; }
+    public PermissionManager Permissions { get; }
+    public ServerModule Servers { get; }
     public WsModule Ws { get; }
     public Console Console => _jsPlugin.Console;
-    public Setting Setting => SettingProvider.Value;
+    public Setting Setting => _settingProvider.Value;
     public static string Version => SereinApp.Version;
     public static string? FullVersion => SereinApp.FullVersion;
     public static AppType Type => SereinApp.Type;
-    public string Namespace => _jsPlugin.Info.Id;
+    public string Id => _jsPlugin.Info.Id;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {
         _host = host;
         _jsPlugin = jsPlugin;
 
-        Server = new(Services.GetRequiredService<ServerManager>());
+        _settingProvider = Services.GetRequiredService<SettingProvider>();
+        _commandRunner = Services.GetRequiredService<CommandRunner>();
+        _pluginManager = Services.GetRequiredService<PluginManager>();
+        _pluginLogger = Services.GetRequiredService<IPluginLogger>();
+
+        Permissions = Services.GetRequiredService<PermissionManager>();
+        Servers = new(Services.GetRequiredService<ServerManager>());
         Ws = new(Services.GetRequiredService<WsConnectionManager>());
     }
 
     public void RunCommand(string? command)
     {
-        CommandRunner.RunAsync(CommandParser.Parse(CommandOrigin.Plugin, command)).Await();
+        _commandRunner.RunAsync(CommandParser.Parse(CommandOrigin.Plugin, command)).Await();
     }
 
 #pragma warning disable CA1822
@@ -65,7 +73,7 @@ public partial class ScriptInstance
     public void Log(params JsValue[] jsValues)
     {
         var str = string.Join<JsValue>('\x20', jsValues);
-        Logger.Log(LogLevel.Information, _jsPlugin.Info.Name, str);
+        _pluginLogger.Log(LogLevel.Information, _jsPlugin.Info.Name, str);
     }
 
     public bool Exports(string? name, JsValue jsValue)
@@ -76,9 +84,9 @@ public partial class ScriptInstance
         try
         {
             if (jsValue.IsNull() || jsValue.IsUndefined())
-                return PluginManager.ExportedVariables.Remove(name, out _);
+                return _pluginManager.ExportedVariables.Remove(name, out _);
 
-            PluginManager.ExportedVariables[name] = jsValue.ToObject();
+            _pluginManager.ExportedVariables[name] = jsValue.ToObject();
             return true;
         }
         catch
@@ -91,7 +99,7 @@ public partial class ScriptInstance
     {
         return
             string.IsNullOrEmpty(name)
-            || !PluginManager.ExportedVariables.TryGetValue(name, out object? o)
+            || !_pluginManager.ExportedVariables.TryGetValue(name, out object? o)
             ? JsValue.Undefined
             : JsValue.FromObject(_jsPlugin.Engine, o);
     }

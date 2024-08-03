@@ -8,7 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Bindings;
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Network.Connection.OneBot.Messages;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Servers;
@@ -22,8 +26,14 @@ public class CommandRunner
     private readonly Lazy<ServerManager> _serverManager;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly BindingManager _bindingManager;
 
-    public CommandRunner(IHost host, ILogger logger, SettingProvider settingProvider)
+    public CommandRunner(
+        IHost host,
+        ILogger logger,
+        SettingProvider settingProvider,
+        BindingManager bindingManager
+    )
     {
         var services = host.Services;
         _wsConnectionManager = new(services.GetRequiredService<WsConnectionManager>);
@@ -31,6 +41,7 @@ public class CommandRunner
         _commandParser = new(services.GetRequiredService<CommandParser>);
         _logger = logger;
         _settingProvider = settingProvider;
+        _bindingManager = bindingManager;
     }
 
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
@@ -79,20 +90,38 @@ public class CommandRunner
             case CommandType.SendPrivateMsg:
                 if (!string.IsNullOrEmpty(command.Argument))
                     await _wsConnectionManager.Value.SendPrivateMsgAsync(command.Argument, body);
-                else if (commandContext?.MessagePacket?.UserId is long userId)
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(userId, body);
+                else if (commandContext?.MessagePacket?.UserId is long userId1)
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(userId1, body);
                 break;
 
-            case CommandType.SendText:
-                await _wsConnectionManager.Value.SendTextAsync(body);
+            case CommandType.SendData:
+                await _wsConnectionManager.Value.SendDataAsync(body);
                 break;
 
             case CommandType.Bind:
-
-                break;
-
             case CommandType.Unbind:
+                if (commandContext?.MessagePacket?.UserId is not long userId2)
+                    break;
 
+                try
+                {
+                    if (command.Type == CommandType.Bind)
+                        _bindingManager.Add(
+                            userId2,
+                            body,
+                            string.IsNullOrEmpty(commandContext.MessagePacket.Sender.Card)
+                                ? commandContext.MessagePacket.Sender.Nickname
+                                : commandContext.MessagePacket.Sender.Card
+                        );
+                    else
+                        _bindingManager.Remove(userId2, body);
+
+                }
+                catch (BindingFailureException e)
+                {
+                    _logger.LogWarning(e, "通过命令绑定失败");
+                    await FastReply(commandContext.MessagePacket, e.Message);
+                }
                 break;
 
             case CommandType.ExecuteJavascriptCodes:
@@ -103,37 +132,46 @@ public class CommandRunner
                 _logger.LogDebug("{}", body);
                 break;
 
-            case CommandType.Reload:
-                break;
-
             case CommandType.Invalid:
             default:
                 throw new NotSupportedException();
         }
     }
 
+    private async Task FastReply(MessagePacket messagePacket, string msg)
+    {
+        if (messagePacket.MessageType == MessageType.Group && messagePacket.GroupId is long groupId)
+            await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, msg);
+        else if (messagePacket.MessageType == MessageType.Private && messagePacket.UserId is long userId)
+            await _wsConnectionManager.Value.SendPrivateMsgAsync(userId, msg);
+    }
+
     private static async Task ExecuteShellCommand(string line)
     {
         var process = new Process
         {
-            StartInfo = Environment.OSVersion.Platform == PlatformID.Win32NT ? new()
-            {
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                CreateNoWindow = true,
-                WorkingDirectory = Directory.GetCurrentDirectory(),
-                FileName = "cmd.exe",
-                Arguments = "/c " + line
-            } : new()
-            {
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                CreateNoWindow = true,
-                WorkingDirectory = Directory.GetCurrentDirectory(),
-                FileName = "sh",
-                Arguments = "--noprofile --norc " + line
-            }
+            StartInfo =
+                Environment.OSVersion.Platform == PlatformID.Win32NT
+                    ? new()
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardInput = true,
+                        CreateNoWindow = true,
+                        WorkingDirectory = Directory.GetCurrentDirectory(),
+                        FileName = "cmd.exe",
+                        Arguments = "/c " + line
+                    }
+                    : new()
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardInput = true,
+                        CreateNoWindow = true,
+                        WorkingDirectory = Directory.GetCurrentDirectory(),
+                        FileName = "sh",
+                        Arguments = "--noprofile --norc " + line
+                    }
         };
+
         process.Start();
 
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));

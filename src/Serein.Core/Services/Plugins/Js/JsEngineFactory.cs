@@ -15,17 +15,22 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Plugins.Storages;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
 public class JsEngineFactory(
     SettingProvider settingProvider,
+    LocalStorage localStorage,
+    SessionStorage sessionStorage,
     IPluginLogger pluginLogger,
     ILogger logger
 )
 {
     private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly LocalStorage _localStorage = localStorage;
+    private readonly SessionStorage _sessionStorage = sessionStorage;
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly ILogger _logger = logger;
 
@@ -82,6 +87,8 @@ public class JsEngineFactory(
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);
+        engine.SetValue("localStorage", _localStorage);
+        engine.SetValue("sessionStorage", _sessionStorage);
 
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();

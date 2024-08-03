@@ -97,12 +97,6 @@ public partial class ReactionSettingPage : UserControl
             Type = reactionType;
             Name = Type switch
             {
-                ReactionType.BindingSucceed => "绑定成功",
-                ReactionType.BindingFailedDueToOccupation => "绑定失败：游戏名称占用",
-                ReactionType.BindingFailedDueToInvalidArgument => "绑定失败：游戏名称无效",
-                ReactionType.BindingFailedDueToAlreadyBinded => "绑定失败：已经绑定",
-                ReactionType.UnbindingSucceed => "解绑成功",
-                ReactionType.UnbindingFailed => "解绑失败",
                 ReactionType.BinderDisable => "绑定功能被禁用",
                 ReactionType.ServerStart => "服务器启动",
                 ReactionType.ServerExitedNormally => "服务器关闭：正常退出",

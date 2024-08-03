@@ -181,6 +181,7 @@ public partial class SchedulePage : UserControl
 
     private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        _scheduleProvider.Read();
         LoadData();
     }
 

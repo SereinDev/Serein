@@ -25,20 +25,18 @@ public class WsModule(WsConnectionManager wsNetwork)
     {
         ArgumentNullException.ThrowIfNull(text, nameof(text));
 
-        _wsNetwork.SendTextAsync(text).Await();
+        _wsNetwork.SendDataAsync(text).Await();
     }
 
-    public void SendGroupMsg(string target, string message)
+    public void SendGroupMsg(long target, string message)
     {
-        ArgumentNullException.ThrowIfNull(target, nameof(target));
         ArgumentNullException.ThrowIfNull(message, nameof(message));
 
         _wsNetwork.SendGroupMsgAsync(target, message).Await();
     }
 
-    public void SendPrivateMsg(string target, string message)
+    public void SendPrivateMsg(long target, string message)
     {
-        ArgumentNullException.ThrowIfNull(target, nameof(target));
         ArgumentNullException.ThrowIfNull(message, nameof(message));
 
         _wsNetwork.SendPrivateMsgAsync(target, message).Await();

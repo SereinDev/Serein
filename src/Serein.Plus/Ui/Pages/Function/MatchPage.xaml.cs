@@ -101,7 +101,7 @@ public partial class MatchPage : Page
                                     m3.Description = m4.Description;
                                     m3.FieldType = m4.FieldType;
                                     m3.RequireAdmin = m4.RequireAdmin;
-                                    m3.Restrictions = m4.Restrictions;
+                                    m3.Exclusions = m4.Exclusions;
                                 });
                         }
                     );

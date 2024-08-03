@@ -1,6 +1,6 @@
 namespace Serein.Core.Models.Commands;
 
-public enum RestrictionType
+public enum ExclusionType
 {
     GroupId,
     UserId,

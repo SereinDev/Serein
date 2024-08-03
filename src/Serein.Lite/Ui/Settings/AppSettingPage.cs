@@ -60,7 +60,7 @@ public partial class AppSettingPage : UserControl
         RegexForCheckingGameIDTextBox.DataBindings.Add(
             nameof(RegexForCheckingGameIDTextBox.Text),
             _settingProvider.Value.Application,
-            nameof(ApplicationSetting.RegexForCheckingGameID),
+            nameof(ApplicationSetting.RegexForCheckingGameId),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );

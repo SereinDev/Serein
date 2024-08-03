@@ -11,6 +11,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
+using Serein.Core.Services.Plugins.Storages;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
@@ -22,6 +23,7 @@ public class PluginManager(
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     EventDispatcher eventDispatcher,
+    SessionStorage sessionStorage,
     ILogger logger
 )
 {
@@ -29,6 +31,7 @@ public class PluginManager(
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly EventDispatcher _eventDispatcher = eventDispatcher;
+    private readonly SessionStorage _sessionStorage = sessionStorage;
     private readonly ILogger _logger = logger;
 
     public ConcurrentDictionary<string, string> CommandVariables { get; } = new();
@@ -134,9 +137,9 @@ public class PluginManager(
 
         _netPluginLoader.Unload();
         _jsPluginLoader.Unload();
+        _sessionStorage.Clear();
         CommandVariables.Clear();
         ExportedVariables.Clear();
-
     }
     public void Reload()
     {

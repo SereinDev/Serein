@@ -25,7 +25,7 @@ public partial class MatchEditor : Form
         RequireAdminCheckBox.Checked = match.RequireAdmin && RequireAdminCheckBox.Enabled;
         CommandTextBox.Text = match.Command;
         DescriptionTextBox.Text = match.Description;
-        RestrictionsTextBox.Text = match.Restrictions;
+        ExclusionsTextBox.Text = match.Exclusions;
     }
 
     private void FieldType_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,7 +42,7 @@ public partial class MatchEditor : Form
         _match.RequireAdmin = RequireAdminCheckBox.Checked;
         _match.Command = CommandTextBox.Text;
         _match.Description = DescriptionTextBox.Text;
-        _match.Restrictions = RestrictionsTextBox.Text;
+        _match.Exclusions = ExclusionsTextBox.Text;
 
         DialogResult = DialogResult.OK;
     }

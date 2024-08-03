@@ -62,7 +62,7 @@ public partial class MatchPage : UserControl
                             : "否"
                         : "-"
                 );
-                item.SubItems.Add(match.Restrictions);
+                item.SubItems.Add(match.Exclusions);
 
                 MatchListView.Items.Add(item);
             }
@@ -198,6 +198,7 @@ public partial class MatchPage : UserControl
 
     private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        _matchesProvider.Read();
         LoadData();
     }
 }

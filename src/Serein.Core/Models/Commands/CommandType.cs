@@ -12,7 +12,7 @@ public enum CommandType
 
     SendPrivateMsg,
 
-    SendText,
+    SendData,
 
     Bind,
 
@@ -20,7 +20,5 @@ public enum CommandType
 
     ExecuteJavascriptCodes,
 
-    Debug,
-
-    Reload
+    Debug
 }

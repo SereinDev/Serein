@@ -37,7 +37,7 @@ public class ApplicationSetting : INotifyPropertyChanged
 
     public bool DisableBinderWhenServerClosed { get; set; }
 
-    public string RegexForCheckingGameID { get; set; } = @"^[a-zA-Z0-9_\s-]{3,16}$";
+    public string RegexForCheckingGameId { get; set; } = @"^[a-zA-Z0-9_\s-]{3,16}$";
 
     public string[] PattenForEnableMatchMuiltLines { get; set; } = [@"players online:", "个玩家在线"];
 
