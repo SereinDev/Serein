@@ -40,6 +40,9 @@ public sealed partial class SereinApp : IHost
 
     public void Dispose()
     {
+        if (Current == this)
+            Current = default;
+
         GC.SuppressFinalize(this);
     }
 

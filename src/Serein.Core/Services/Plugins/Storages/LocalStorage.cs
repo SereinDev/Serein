@@ -1,40 +1,42 @@
 using System.IO;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
+using Serein.Core.Models;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins.Storages;
 
 public class LocalStorage : StorageBase
 {
-    private static readonly JsonSerializerOptions Options = new()
-    {
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        WriteIndented = true,
-        AllowTrailingCommas = true,
-    };
-
     public LocalStorage()
     {
-        Directory.CreateDirectory(PathConstants.PluginsDirectory);
-
         if (File.Exists(Path))
         {
-            var obj = JsonSerializer.Deserialize<JsonObject>(File.ReadAllText(Path));
+            var data = JsonSerializer.Deserialize<DataItemWrapper<JsonObject>>(
+                File.ReadAllText(Path),
+                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+            );
 
-            if (obj is not null)
-                foreach ((string key, JsonNode? value) in obj)
+            if (data?.Type == typeof(JsonObject).ToString() && data.Data is not null)
+                foreach ((string key, JsonNode? value) in data.Data)
                     _data.TryAdd(key, value?.ToString() ?? "null");
         }
         else
-            File.WriteAllText(Path, "{}");
+            OnUpdated();
     }
 
     protected override void OnUpdated()
     {
+        Directory.CreateDirectory(PathConstants.PluginsDirectory);
         lock (_data)
-            File.WriteAllText(Path, JsonSerializer.Serialize(_data, Options));
+            File.WriteAllText(
+                Path,
+                JsonSerializer.Serialize(
+                    DataItemWrapper.Wrap(_data),
+                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                )
+            );
     }
 }

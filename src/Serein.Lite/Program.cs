@@ -37,7 +37,9 @@ public static class Program
         builder.Services.AddSingleton<SchedulePage>();
         builder.Services.AddSingleton<ConnectionPage>();
         builder.Services.AddSingleton<PluginPage>();
+
         builder.Services.AddSingleton<BindingPage>();
+        builder.Services.AddSingleton<PermissionGroupPage>();
 
         builder.Services.AddSingleton<SettingPage>();
         builder.Services.AddSingleton<AboutPage>();

@@ -42,7 +42,7 @@ public abstract class StorageBase
     public void SetItem(string key, string value)
     {
         lock (_data)
-            _data.Add(key, value ?? "null");
+            _data[key] = value ?? "null";
 
         OnUpdated();
     }

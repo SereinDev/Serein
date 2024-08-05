@@ -75,6 +75,9 @@ public partial class MainForm : Form
 
         ChildrenPanel.Controls.Clear();
         ChildrenPanel.Controls.Add(page);
+
+        if (page is IUpdateablePage updateablePage)
+            updateablePage.UpdatePage();
     }
 
     private void ServerConsoleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -110,6 +113,11 @@ public partial class MainForm : Form
     private void BindingToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SwitchPage<BindingPage>();
+    }
+
+    private void PermissionGroupToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SwitchPage<PermissionGroupPage>();
     }
 
     private void ServerToolStripMenuItem_DropDownOpening(object sender, EventArgs e)

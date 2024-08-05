@@ -33,7 +33,7 @@ public partial class ScriptInstance
     private readonly PluginManager _pluginManager;
     private readonly IPluginLogger _pluginLogger;
 
-    public PermissionManager Permissions { get; }
+    public PermissionModule Permissions { get; }
     public ServerModule Servers { get; }
     public WsModule Ws { get; }
     public Console Console => _jsPlugin.Console;
@@ -53,9 +53,14 @@ public partial class ScriptInstance
         _pluginManager = Services.GetRequiredService<PluginManager>();
         _pluginLogger = Services.GetRequiredService<IPluginLogger>();
 
-        Permissions = Services.GetRequiredService<PermissionManager>();
         Servers = new(Services.GetRequiredService<ServerManager>());
         Ws = new(Services.GetRequiredService<WsConnectionManager>());
+        Permissions = new(
+            Id,
+            Services.GetRequiredService<PermissionManager>(),
+            Services.GetRequiredService<GroupManager>()
+        );
+
     }
 
     public void RunCommand(string? command)

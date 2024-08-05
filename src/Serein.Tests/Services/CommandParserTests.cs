@@ -102,7 +102,7 @@ public class CommandParserTests : IDisposable
     [InlineData("[]a", "命令语法不正确")]
     [InlineData("[]123", "命令语法不正确")]
     [InlineData("[:]123", "命令语法不正确")]
-    public static void ShouldBeAbleToThrowException(string? input, string exceptedMsg)
+    public static void ShouldThrowException(string? input, string exceptedMsg)
     {
         try
         {
@@ -128,7 +128,7 @@ public class CommandParserTests : IDisposable
     [InlineData("[]a")]
     [InlineData("[]123")]
     [InlineData("[:]123")]
-    public static void ShouldBeAbleToThrowExceptionWhenThrowsIsFalse(string? input)
+    public static void ShouldNotThrowExceptionWhenThrowsIsFalse(string? input)
     {
         Parser.Parse(CommandOrigin.ConsoleExecute, input);
     }

@@ -73,7 +73,9 @@ public partial class ConfigurationEditor : Form
             EncodingMap.EncodingType output;
             OutputStyle outputStyle;
 
-            ServerManager.CheckId(IdTextBox.Text);
+            ServerManager.ValidateId(IdTextBox.Text);
+            if (!IdTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
+                throw new InvalidOperationException("此Id已被占用");
 
             if (InputEncondingComboBox.SelectedIndex < 0)
                 InputEncondingComboBox.SelectedIndex = 0;
@@ -105,9 +107,6 @@ public partial class ConfigurationEditor : Form
             _configuration.StopCommands = StopCommandsTextBox.Text.Replace("\r", null).Split('\n');
             _configuration.InputEncoding = input;
             _configuration.OutputEncoding = output;
-
-            if (!IdTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
-                throw new InvalidOperationException("此Id已被占用");
 
             DialogResult = DialogResult.OK;
             Close();

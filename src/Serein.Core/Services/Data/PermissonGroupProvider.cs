@@ -39,7 +39,7 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
                     JsonSerializerOptionsFactory.CamelCase
                 );
 
-                if (wrapper?.Type == nameof(Dictionary<string, Group>))
+                if (wrapper?.Type == typeof(Dictionary<string, Group>).ToString())
                     lock (Value)
                     {
                         Value.Clear();
@@ -70,7 +70,7 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
             File.WriteAllText(
                 PathConstants.PermissionGroupsFile,
                 JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(nameof(Dictionary<string, Group>), Value),
+                    DataItemWrapper.Wrap(Value),
                     options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
                 )
             );

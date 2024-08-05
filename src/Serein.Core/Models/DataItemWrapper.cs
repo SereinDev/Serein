@@ -5,8 +5,8 @@ namespace Serein.Core.Models;
 
 public abstract class DataItemWrapper
 {
-    public static DataItemWrapper<TItem> Wrap<TItem>(string type, TItem data)
-        where TItem : notnull => new(type, data);
+    public static DataItemWrapper<TItem> Wrap<TItem>(TItem data)
+        where TItem : notnull => new(typeof(TItem).ToString(), data);
 
     [JsonRequired]
     [JsonPropertyOrder(-114514)]

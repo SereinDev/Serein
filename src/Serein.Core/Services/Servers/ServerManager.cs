@@ -25,7 +25,7 @@ public partial class ServerManager
 
     private static readonly Regex ServerId = GetServerIdRegex();
 
-    internal static void CheckId(string? id)
+    public static void ValidateId(string? id)
     {
         if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
             throw new InvalidOperationException("服务器Id格式不正确");
@@ -63,7 +63,7 @@ public partial class ServerManager
 
     public Server Add(string id, Configuration configuration)
     {
-        CheckId(id);
+        ValidateId(id);
 
         var server = new Server(
             id,
@@ -83,7 +83,7 @@ public partial class ServerManager
 
     public bool Remove(string id)
     {
-        CheckId(id);
+        ValidateId(id);
         if (!_server.Remove(id))
             return false;
 
@@ -113,7 +113,7 @@ public partial class ServerManager
 
     private static void Save(string id, Configuration configuration)
     {
-        CheckId(id);
+        ValidateId(id);
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
         var dir = Path.GetDirectoryName(path);

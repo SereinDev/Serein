@@ -48,8 +48,6 @@ partial class MainForm
         ToolStripSeparator ToolStripSeparator1;
         ToolStripMenuItem ExitToolStripMenuItem;
         ToolStripMenuItem MembersToolStripMenuItem;
-        ToolStripMenuItem PermissionGroupToolStripMenuItem;
-        ToolStripMenuItem BindingToolStripMenuItem;
         ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
         ServerEditToolStripMenuItem = new ToolStripMenuItem();
         ServerRemoveToolStripMenuItem = new ToolStripMenuItem();
@@ -221,7 +219,7 @@ partial class MainForm
         PermissionGroupToolStripMenuItem.Name = "PermissionGroupToolStripMenuItem";
         PermissionGroupToolStripMenuItem.Size = new Size(359, 44);
         PermissionGroupToolStripMenuItem.Text = "权限组";
-        PermissionGroupToolStripMenuItem.Enabled = false;
+        PermissionGroupToolStripMenuItem.Click += PermissionGroupToolStripMenuItem_Click;
         // 
         // MenuStrip
         // 
@@ -277,4 +275,6 @@ partial class MainForm
     private Panel ChildrenPanel;
     private ToolStripMenuItem HideToolStripMenuItem;
     private ToolStripMenuItem TopMostToolStripMenuItem;
+    private ToolStripMenuItem BindingToolStripMenuItem;
+    private ToolStripMenuItem PermissionGroupToolStripMenuItem;
 }

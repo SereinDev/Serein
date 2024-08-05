@@ -7,11 +7,12 @@ using System.Windows.Forms;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Extensions;
+using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Function;
 
-public partial class MatchPage : UserControl
+public partial class MatchPage : UserControl, IUpdateablePage
 {
     private static readonly Dictionary<MatchFieldType, string> MatchFieldTypeTexts =
         new()
@@ -161,14 +162,7 @@ public partial class MatchPage : UserControl
 
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (
-            MessageBox.Show(
-                "你确定要删除所选项吗？",
-                "Serein.Lite",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question
-            ) != DialogResult.OK
-        )
+        if (!MessageBoxFactory.ShowDeleteConfirmation("你确定要删除所选项吗？"))
             return;
 
         foreach (var item in MatchListView.SelectedItems.Cast<ListViewItem>())
@@ -181,14 +175,7 @@ public partial class MatchPage : UserControl
 
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (
-            MessageBox.Show(
-                "你确定要删除所有项吗？",
-                "Serein.Lite",
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question
-            ) != DialogResult.OK
-        )
+        if (!MessageBoxFactory.ShowDeleteConfirmation("你确定要删除所有项吗？"))
             return;
 
         _matchesProvider.Value.Clear();
@@ -201,4 +188,6 @@ public partial class MatchPage : UserControl
         _matchesProvider.Read();
         LoadData();
     }
+
+    public void UpdatePage() => LoadData();
 }

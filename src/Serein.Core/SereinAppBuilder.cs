@@ -52,6 +52,7 @@ public sealed class SereinAppBuilder
         Services.AddDbContext<BindingRecordDbContext>(ServiceLifetime.Singleton);
         Services.AddSingleton<BindingManager>();
 
+        Services.AddSingleton<GroupManager>();
         Services.AddSingleton<PermissionManager>();
 
         Services.AddSingleton<HardwareInfoProvider>();

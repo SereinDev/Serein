@@ -33,7 +33,7 @@ public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
                     JsonSerializerOptionsFactory.CamelCase
                 );
 
-                if (wrapper?.Type == nameof(Match))
+                if (wrapper?.Type == typeof(ObservableCollection<Match>).ToString())
                     lock (Value)
                     {
                         Value.Clear();
@@ -64,7 +64,7 @@ public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
             File.WriteAllText(
                 PathConstants.MatchesFile,
                 JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(nameof(Match), Value),
+                    DataItemWrapper.Wrap(Value),
                     options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
                 )
             );

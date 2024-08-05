@@ -6,13 +6,13 @@ public class Group
 {
     public string Name { get; set; } = string.Empty;
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     public int Priority { get; set; }
 
-    public Dictionary<string, bool?> Permissions { get; init; } = [];
+    public Dictionary<string, bool?> Permissions { get; set; } = [];
 
-    public List<string> Parents { get; init; } = [];
+    public string[] Parents { get; set; } = [];
 
-    public List<long> Members { get; init; } = [];
+    public long[] Members { get; set; } = [];
 }

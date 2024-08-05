@@ -32,7 +32,7 @@ public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
                     JsonSerializerOptionsFactory.CamelCase
                 );
 
-                if (wrapper?.Type == nameof(Schedule))
+                if (wrapper?.Type == typeof(ObservableCollection<Schedule>).ToString())
                     lock (Value)
                     {
                         Value.Clear();
@@ -63,7 +63,7 @@ public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
             File.WriteAllText(
                 PathConstants.SchedulesFile,
                 JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(nameof(Schedule), Value),
+                    DataItemWrapper.Wrap(Value),
                     options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
                 )
             );

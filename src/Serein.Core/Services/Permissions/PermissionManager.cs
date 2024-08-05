@@ -1,71 +1,31 @@
 using System;
 using System.Collections.Generic;
-
-using Serein.Core.Models.Permissions;
-using Serein.Core.Services.Data;
+using System.Text.RegularExpressions;
 
 namespace Serein.Core.Services.Permissions;
 
-public class PermissionManager(PermissionGroupProvider permissionGroupProvider)
+public partial class PermissionManager
 {
-    private readonly PermissionGroupProvider _permissionGroupProvider = permissionGroupProvider;
+    [GeneratedRegex(@"^([a-zA-Z][a-zA-Z0-9\-]*\.)*[a-zA-Z][a-zA-Z0-9\-]*$")]
+    private static partial Regex GetKeyRegex();
 
-    public void Add(string id, Group group)
+    private readonly Dictionary<string, string?> _permissions = [];
+
+    public IReadOnlyDictionary<string, string?> Permissions => _permissions;
+
+    public void Register(string id, string key, string? description = null)
     {
-        if (!_permissionGroupProvider.Value.TryAdd(id, group))
-            throw new InvalidOperationException("已经存在了相同Id的权限组");
+        if (!GetKeyRegex().IsMatch(key))
+            throw new ArgumentException("权限值存在不允许的字符或不合法", nameof(key));
 
-        _permissionGroupProvider.SaveAsyncWithDebounce();
+        _permissions.Add($"{id}.{key}", description);
     }
 
-    public bool Remove(string id)
+    public void Unregister(string id, string key)
     {
-        _permissionGroupProvider.SaveAsyncWithDebounce();
-        return _permissionGroupProvider.Value.Remove(id);
+        if (!_permissions.Remove($"{id}.{key}"))
+            throw new KeyNotFoundException();
     }
 
-    public Group this[string id]
-    {
-        get => _permissionGroupProvider.Value[id];
-        set
-        {
-            _permissionGroupProvider.Value[id] = value;
-            _permissionGroupProvider.SaveAsyncWithDebounce();
-        }
-    }
-
-    public Dictionary<string, bool?> GetAllPermissions(long userId)
-    {
-        var result = new Dictionary<string, bool?>();
-
-        var list = new List<string>();
-
-        lock (_permissionGroupProvider.Value)
-        {
-            foreach (var kv in _permissionGroupProvider.Value)
-            {
-                if (list.Contains(kv.Key))
-                    continue;
-
-                list.Add(kv.Key);
-
-                if (!kv.Value.Members.Contains(userId) && kv.Key != "everyone")
-                    foreach (var parent in kv.Value.Parents)
-                    {
-                        if (list.Contains(kv.Key))
-                            continue;
-
-                        list.Add(kv.Key);
-
-                        if (_permissionGroupProvider.Value.TryGetValue(parent, out var group))
-                            foreach (var permission in group.Permissions)
-                                result[permission.Key] = permission.Value;
-                    }
-                else
-                    foreach (var permission in kv.Value.Permissions)
-                        result[permission.Key] = permission.Value;
-            }
-        }
-        return result;
-    }
+    internal void Clear() => _permissions.Clear();
 }

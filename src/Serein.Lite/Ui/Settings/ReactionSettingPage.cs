@@ -68,9 +68,7 @@ public partial class ReactionSettingPage : UserControl
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (CommandListView.SelectedItems.Count == 1)
-        {
             CommandListView.Items.Insert(CommandListView.SelectedItems[0].Index, string.Empty);
-        }
         else
             CommandListView.Items.Add(string.Empty);
 

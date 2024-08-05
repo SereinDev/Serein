@@ -3,10 +3,11 @@ using System.Windows.Forms;
 
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Bindings;
+using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Members;
 
-public partial class BindingPage : UserControl
+public partial class BindingPage : UserControl, IUpdateablePage
 {
     private readonly BindingManager _bindingManager;
 
@@ -16,6 +17,7 @@ public partial class BindingPage : UserControl
         InitializeComponent();
 
         LoadData();
+        BindingListView.SetExploreTheme();
     }
 
     private void LoadData()
@@ -44,4 +46,6 @@ public partial class BindingPage : UserControl
                 ? "-"
                 : "更新时间：" + record.Time.ToString("G");
     }
+
+    public void UpdatePage() => LoadData();
 }

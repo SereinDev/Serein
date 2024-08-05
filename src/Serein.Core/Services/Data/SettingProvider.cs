@@ -31,7 +31,7 @@ public class SettingProvider : DataProviderBase<Setting>, INotifyPropertyChanged
                     JsonSerializerOptionsFactory.CamelCase
                 );
 
-                if (wrapper?.Type == nameof(Setting))
+                if (wrapper?.Type == typeof(Setting).ToString())
                     return wrapper.Data ?? new();
             }
 
@@ -50,8 +50,8 @@ public class SettingProvider : DataProviderBase<Setting>, INotifyPropertyChanged
             File.WriteAllText(
             PathConstants.SettingFile,
             JsonSerializer.Serialize(
-               DataItemWrapper.Wrap(nameof(Setting), Value),
-               options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                DataItemWrapper.Wrap(Value),
+                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
                 )
             );
         }
