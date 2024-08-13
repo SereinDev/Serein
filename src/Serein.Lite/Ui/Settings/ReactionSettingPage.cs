@@ -95,7 +95,6 @@ public partial class ReactionSettingPage : UserControl
             Type = reactionType;
             Name = Type switch
             {
-                ReactionType.BinderDisable => "绑定功能被禁用",
                 ReactionType.ServerStart => "服务器启动",
                 ReactionType.ServerExitedNormally => "服务器关闭：正常退出",
                 ReactionType.ServerExitedUnexpectedly => "服务器关闭：不正常退出",

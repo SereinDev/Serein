@@ -62,7 +62,7 @@ public class JsPlugin : IPlugin
 
     public bool Invoke(Event @event, CancellationToken cancellationToken, params object[] args)
     {
-        bool entered = false;
+        var entered = false;
         try
         {
             if (

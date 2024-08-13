@@ -12,6 +12,7 @@ using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services;
 
+[Collection(nameof(SereinApp))]
 public class CommandParserTests : IDisposable
 {
     private readonly SereinApp _app;

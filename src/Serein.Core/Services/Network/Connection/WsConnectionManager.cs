@@ -104,7 +104,7 @@ public class WsConnectionManager : INotifyPropertyChanged
                 if (packet is not null)
                 {
                     _connectionLogger.Value.LogReceivedMessage(
-                        $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.Message} (id={packet.MessageId})"
+                        $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
                         );
 
                     if (

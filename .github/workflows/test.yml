@@ -20,6 +20,5 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Run tests
-        continue-on-error: true
         run: |
           dotnet test ./src/Serein.Tests --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"

@@ -11,6 +11,7 @@ public class PluginInfo
     [JsonRequired]
     public string Id { get; init; } = string.Empty;
 
+    [JsonRequired]
     public Version Version { get; init; } = new(0, 0, 0);
 
     public Author[] Authors { get; init; } = [];

@@ -138,6 +138,7 @@
             EnableCheckBox.TabIndex = 1;
             EnableCheckBox.Text = "启用";
             EnableCheckBox.UseVisualStyleBackColor = true;
+            EnableCheckBox.CheckedChanged += EnableCheckBox_CheckedChanged;
             // 
             // PortNumericUpDown
             // 

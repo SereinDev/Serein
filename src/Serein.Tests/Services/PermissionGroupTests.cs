@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Serein.Tests.Services;
 
+[Collection(nameof(SereinApp))]
 public class PermissionGroupTests : IDisposable
 {
     private readonly SereinApp _app;

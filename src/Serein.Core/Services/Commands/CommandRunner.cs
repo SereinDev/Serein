@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Commands;
@@ -26,12 +28,14 @@ public class CommandRunner
     private readonly Lazy<ServerManager> _serverManager;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly JsPluginLoader _jsPluginLoader;
     private readonly BindingManager _bindingManager;
 
     public CommandRunner(
         IHost host,
         ILogger logger,
         SettingProvider settingProvider,
+        JsPluginLoader jsPluginLoader,
         BindingManager bindingManager
     )
     {
@@ -41,6 +45,7 @@ public class CommandRunner
         _commandParser = new(services.GetRequiredService<CommandParser>);
         _logger = logger;
         _settingProvider = settingProvider;
+        _jsPluginLoader = jsPluginLoader;
         _bindingManager = bindingManager;
     }
 
@@ -125,7 +130,23 @@ public class CommandRunner
                 break;
 
             case CommandType.ExecuteJavascriptCodes:
+                if (!_jsPluginLoader.JsPlugins.TryGetValue(command.Argument, out var jsPlugin))
+                    return;
 
+                var entered = false;
+                try
+                {
+                    if (!Monitor.TryEnter(jsPlugin.Engine, 1000))
+                        throw new TimeoutException("等待引擎超时");
+
+                    entered = true;
+                    jsPlugin.Engine.Execute(body);
+                }
+                finally
+                {
+                    if (entered)
+                        Monitor.Exit(jsPlugin.Engine);
+                }
                 break;
 
             case CommandType.Debug:

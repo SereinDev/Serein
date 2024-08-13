@@ -108,4 +108,6 @@ public partial class ScriptInstance
             ? JsValue.Undefined
             : JsValue.FromObject(_jsPlugin.Engine, o);
     }
+
+    public string Resolve(params string[] paths) => PluginManager.Resolve(_jsPlugin, paths);
 }

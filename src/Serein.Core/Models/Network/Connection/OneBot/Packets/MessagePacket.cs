@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 
 namespace Serein.Core.Models.Network.Connection.OneBot.Packets;
@@ -5,6 +7,8 @@ namespace Serein.Core.Models.Network.Connection.OneBot.Packets;
 public class MessagePacket : Packet
 {
     public MessageType MessageType { get; init; }
+
+    public MessageFormat MessageFormat { get; init; }
 
     public SubType SubType { get; init; }
 
@@ -24,5 +28,5 @@ public class MessagePacket : Packet
 
     public string RawMessage { get; init; } = string.Empty;
 
-    public string Message { get; init; } = string.Empty;
+    public JsonElement Message { get; init; }
 }

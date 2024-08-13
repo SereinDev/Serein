@@ -7,7 +7,6 @@ public class Setting
     private static readonly Dictionary<ReactionType, string[]> DefaultReactions =
         new()
         {
-            [ReactionType.BinderDisable] = ["[g][CQ:at,qq={ID}] 绑定功能已被禁用"],
             [ReactionType.ServerStart] = ["[g]服务器正在启动"],
             [ReactionType.ServerExitedNormally] = ["[g]服务器已关闭"],
             [ReactionType.ServerExitedUnexpectedly] = ["[g]服务器异常关闭"],

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 using FxSsh;
@@ -10,11 +11,18 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network.Ssh;
 
-public class SshServiceProvider(ILogger logger, SettingProvider settingProvider)
+public class SshHost(
+    ILogger logger,
+    SettingProvider settingProvider,
+    SshServerKeysProvider sshServerKeysProvider
+)
 {
     private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly SshServerKeysProvider _sshServerKeysProvider = sshServerKeysProvider;
     private SshServer? _sshServer;
+
+    private readonly List<SshPty> _ptys = [];
 
     public void Start()
     {
@@ -25,9 +33,13 @@ public class SshServiceProvider(ILogger logger, SettingProvider settingProvider)
             new(
                 IPAddress.Parse(_settingProvider.Value.Ssh.IpAddress),
                 _settingProvider.Value.Ssh.Port,
-                "SSH-2.0-FxSsh" // default
+                "SSH-2.0-FxSsh"
             )
         );
+
+        _sshServer.AddHostKey("ssh-rsa", _sshServerKeysProvider.Value.Rsa);
+        _sshServer.AddHostKey("ssh-dss", _sshServerKeysProvider.Value.Dss);
+
         _sshServer.ConnectionAccepted += OnConnectionAccepted;
         _sshServer.ExceptionRasied += OnExceptionRasied;
         _sshServer.Start();
@@ -75,9 +87,36 @@ public class SshServiceProvider(ILogger logger, SettingProvider settingProvider)
 
     private void OnCommandOpened(object? sender, CommandRequestedArgs e) { }
 
-    private void OnWindowChange(object? sender, WindowChangeArgs e) { }
+    private void OnWindowChange(object? sender, WindowChangeArgs e)
+    {
+        var pty = _ptys.Find((p) => p.Channel == e.Channel);
 
-    private void OnPtyReceived(object? sender, PtyArgs e) { }
+        if (pty is null)
+            return;
+
+        pty.WidthPx = e.WidthPixels;
+        pty.HeightPx = e.HeightPixels;
+        pty.WidthChars = e.WidthColumns;
+        pty.HeightChars = e.HeightRows;
+    }
+
+    private void OnPtyReceived(object? sender, PtyArgs e)
+    {
+        var pty = new SshPty(e.Channel, e.Terminal)
+        {
+            WidthPx = e.WidthPx,
+            HeightPx = e.HeightPx,
+            WidthChars = e.WidthChars,
+            HeightChars = e.HeightRows,
+        };
+
+        _ptys.Add(pty);
+
+        e.Channel.CloseReceived += (_, _) => _ptys.Remove(pty);
+    }
+
+    private void OnEnvReceived(object? sender, EnvironmentArgs e) { }
+
 
     private void OnUserauth(object? sender, UserauthArgs e)
     {
@@ -89,8 +128,6 @@ public class SshServiceProvider(ILogger logger, SettingProvider settingProvider)
     }
 
     private void OnSucceed(object? sender, string e) { }
-
-    private void OnEnvReceived(object? sender, EnvironmentArgs e) { }
 
     private void OnDisconnected(object? sender, EventArgs e) { }
 

@@ -30,37 +30,37 @@
         {
             components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox PluginGroupBox;
-            System.Windows.Forms.Label JSPatternToSkipLoadingSpecifiedFileLabel;
+            System.Windows.Forms.Label JSPatternToSkipLoadingSingleFileLabel;
             System.Windows.Forms.Label JSGlobalAssembliesLabel;
             System.Windows.Forms.Label PluginEventMaxWaitingTimeLabel;
             System.Windows.Forms.GroupBox BindingGroupBox;
             System.Windows.Forms.Label RegexForCheckingGameIDLabel;
             System.Windows.Forms.GroupBox OtherGroupBox;
             System.Windows.Forms.Label CustomTitleLabel;
-            System.Windows.Forms.Label PattenForEnableMatchMuiltLinesLabel;
+            System.Windows.Forms.Label PattenForEnableMatchingMuiltLinesLabel;
             System.Windows.Forms.GroupBox UpdateGroupBox;
             System.Windows.Forms.ToolTip ToolTip;
-            JSPatternToSkipLoadingSpecifiedFileTextBox = new System.Windows.Forms.TextBox();
+            JSPatternToSkipLoadingSingleFileTextBox = new System.Windows.Forms.TextBox();
             JSGlobalAssembliesTextBox = new System.Windows.Forms.TextBox();
             PluginEventMaxWaitingTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             DisableBinderWhenServerClosedCheckBox = new System.Windows.Forms.CheckBox();
             RegexForCheckingGameIDTextBox = new System.Windows.Forms.TextBox();
             CustomTitleTextBox = new System.Windows.Forms.TextBox();
-            PattenForEnableMatchMuiltLinesTextBox = new System.Windows.Forms.TextBox();
+            PattenForEnableMatchingMuiltLinesTextBox = new System.Windows.Forms.TextBox();
             CheckUpdateButton = new System.Windows.Forms.Button();
             LatestVersionLabel = new System.Windows.Forms.Label();
             VersionLabel = new System.Windows.Forms.Label();
             AutoUpdateCheckBox = new System.Windows.Forms.CheckBox();
             CheckUpdateCheckBox = new System.Windows.Forms.CheckBox();
             PluginGroupBox = new System.Windows.Forms.GroupBox();
-            JSPatternToSkipLoadingSpecifiedFileLabel = new System.Windows.Forms.Label();
+            JSPatternToSkipLoadingSingleFileLabel = new System.Windows.Forms.Label();
             JSGlobalAssembliesLabel = new System.Windows.Forms.Label();
             PluginEventMaxWaitingTimeLabel = new System.Windows.Forms.Label();
             BindingGroupBox = new System.Windows.Forms.GroupBox();
             RegexForCheckingGameIDLabel = new System.Windows.Forms.Label();
             OtherGroupBox = new System.Windows.Forms.GroupBox();
             CustomTitleLabel = new System.Windows.Forms.Label();
-            PattenForEnableMatchMuiltLinesLabel = new System.Windows.Forms.Label();
+            PattenForEnableMatchingMuiltLinesLabel = new System.Windows.Forms.Label();
             UpdateGroupBox = new System.Windows.Forms.GroupBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
             PluginGroupBox.SuspendLayout();
@@ -72,8 +72,8 @@
             // 
             // PluginGroupBox
             // 
-            PluginGroupBox.Controls.Add(JSPatternToSkipLoadingSpecifiedFileTextBox);
-            PluginGroupBox.Controls.Add(JSPatternToSkipLoadingSpecifiedFileLabel);
+            PluginGroupBox.Controls.Add(JSPatternToSkipLoadingSingleFileTextBox);
+            PluginGroupBox.Controls.Add(JSPatternToSkipLoadingSingleFileLabel);
             PluginGroupBox.Controls.Add(JSGlobalAssembliesTextBox);
             PluginGroupBox.Controls.Add(JSGlobalAssembliesLabel);
             PluginGroupBox.Controls.Add(PluginEventMaxWaitingTimeNumericUpDown);
@@ -86,28 +86,28 @@
             PluginGroupBox.TabStop = false;
             PluginGroupBox.Text = "插件";
             // 
-            // JSPatternToSkipLoadingSpecifiedFileTextBox
+            // JSPatternToSkipLoadingSingleFileTextBox
             // 
-            JSPatternToSkipLoadingSpecifiedFileTextBox.AcceptsReturn = true;
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Location = new System.Drawing.Point(27, 339);
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Multiline = true;
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Name = "JSPatternToSkipLoadingSpecifiedFileTextBox";
-            JSPatternToSkipLoadingSpecifiedFileTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Size = new System.Drawing.Size(1206, 132);
-            JSPatternToSkipLoadingSpecifiedFileTextBox.TabIndex = 3;
-            ToolTip.SetToolTip(JSPatternToSkipLoadingSpecifiedFileTextBox, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
-            JSPatternToSkipLoadingSpecifiedFileTextBox.TextChanged += JSPatternToSkipLoadingSpecifiedFileTextBox_TextChanged;
+            JSPatternToSkipLoadingSingleFileTextBox.AcceptsReturn = true;
+            JSPatternToSkipLoadingSingleFileTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            JSPatternToSkipLoadingSingleFileTextBox.Location = new System.Drawing.Point(27, 339);
+            JSPatternToSkipLoadingSingleFileTextBox.Multiline = true;
+            JSPatternToSkipLoadingSingleFileTextBox.Name = "JSPatternToSkipLoadingSingleFileTextBox";
+            JSPatternToSkipLoadingSingleFileTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            JSPatternToSkipLoadingSingleFileTextBox.Size = new System.Drawing.Size(1206, 132);
+            JSPatternToSkipLoadingSingleFileTextBox.TabIndex = 3;
+            ToolTip.SetToolTip(JSPatternToSkipLoadingSingleFileTextBox, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
+            JSPatternToSkipLoadingSingleFileTextBox.TextChanged += JSPatternToSkipLoadingSingleFileTextBox_TextChanged;
             // 
-            // JSPatternToSkipLoadingSpecifiedFileLabel
+            // JSPatternToSkipLoadingSingleFileLabel
             // 
-            JSPatternToSkipLoadingSpecifiedFileLabel.AutoSize = true;
-            JSPatternToSkipLoadingSpecifiedFileLabel.Location = new System.Drawing.Point(27, 305);
-            JSPatternToSkipLoadingSpecifiedFileLabel.Name = "JSPatternToSkipLoadingSpecifiedFileLabel";
-            JSPatternToSkipLoadingSpecifiedFileLabel.Size = new System.Drawing.Size(326, 31);
-            JSPatternToSkipLoadingSpecifiedFileLabel.TabIndex = 4;
-            JSPatternToSkipLoadingSpecifiedFileLabel.Text = "JS插件加载时忽略的文件后缀";
-            ToolTip.SetToolTip(JSPatternToSkipLoadingSpecifiedFileLabel, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
+            JSPatternToSkipLoadingSingleFileLabel.AutoSize = true;
+            JSPatternToSkipLoadingSingleFileLabel.Location = new System.Drawing.Point(27, 305);
+            JSPatternToSkipLoadingSingleFileLabel.Name = "JSPatternToSkipLoadingSingleFileLabel";
+            JSPatternToSkipLoadingSingleFileLabel.Size = new System.Drawing.Size(326, 31);
+            JSPatternToSkipLoadingSingleFileLabel.TabIndex = 4;
+            JSPatternToSkipLoadingSingleFileLabel.Text = "JS插件加载时忽略的文件后缀";
+            ToolTip.SetToolTip(JSPatternToSkipLoadingSingleFileLabel, "以此处设定的文件后缀结尾的文件不会被当作JavaScript插件加载（一行一个）");
             // 
             // JSGlobalAssembliesTextBox
             // 
@@ -203,8 +203,8 @@
             // 
             OtherGroupBox.Controls.Add(CustomTitleTextBox);
             OtherGroupBox.Controls.Add(CustomTitleLabel);
-            OtherGroupBox.Controls.Add(PattenForEnableMatchMuiltLinesTextBox);
-            OtherGroupBox.Controls.Add(PattenForEnableMatchMuiltLinesLabel);
+            OtherGroupBox.Controls.Add(PattenForEnableMatchingMuiltLinesTextBox);
+            OtherGroupBox.Controls.Add(PattenForEnableMatchingMuiltLinesLabel);
             OtherGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             OtherGroupBox.Location = new System.Drawing.Point(10, 695);
             OtherGroupBox.Name = "OtherGroupBox";
@@ -234,29 +234,29 @@
             CustomTitleLabel.Text = "标题后缀";
             ToolTip.SetToolTip(CustomTitleLabel, "标题栏后缀，可以使用命令变量");
             // 
-            // PattenForEnableMatchMuiltLinesTextBox
+            // PattenForEnableMatchingMuiltLinesTextBox
             // 
-            PattenForEnableMatchMuiltLinesTextBox.AcceptsReturn = true;
-            PattenForEnableMatchMuiltLinesTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            PattenForEnableMatchMuiltLinesTextBox.Location = new System.Drawing.Point(27, 78);
-            PattenForEnableMatchMuiltLinesTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            PattenForEnableMatchMuiltLinesTextBox.Multiline = true;
-            PattenForEnableMatchMuiltLinesTextBox.Name = "PattenForEnableMatchMuiltLinesTextBox";
-            PattenForEnableMatchMuiltLinesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            PattenForEnableMatchMuiltLinesTextBox.Size = new System.Drawing.Size(1206, 132);
-            PattenForEnableMatchMuiltLinesTextBox.TabIndex = 9;
-            ToolTip.SetToolTip(PattenForEnableMatchMuiltLinesTextBox, "一行一个；不支持正则表达式");
-            PattenForEnableMatchMuiltLinesTextBox.TextChanged += PattenForEnableMatchMuiltLinesTextBox_TextChanged;
+            PattenForEnableMatchingMuiltLinesTextBox.AcceptsReturn = true;
+            PattenForEnableMatchingMuiltLinesTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            PattenForEnableMatchingMuiltLinesTextBox.Location = new System.Drawing.Point(27, 78);
+            PattenForEnableMatchingMuiltLinesTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            PattenForEnableMatchingMuiltLinesTextBox.Multiline = true;
+            PattenForEnableMatchingMuiltLinesTextBox.Name = "PattenForEnableMatchingMuiltLinesTextBox";
+            PattenForEnableMatchingMuiltLinesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            PattenForEnableMatchingMuiltLinesTextBox.Size = new System.Drawing.Size(1206, 132);
+            PattenForEnableMatchingMuiltLinesTextBox.TabIndex = 9;
+            ToolTip.SetToolTip(PattenForEnableMatchingMuiltLinesTextBox, "一行一个；不支持正则表达式");
+            PattenForEnableMatchingMuiltLinesTextBox.TextChanged += PattenForEnableMatchingMuiltLinesTextBox_TextChanged;
             // 
-            // PattenForEnableMatchMuiltLinesLabel
+            // PattenForEnableMatchingMuiltLinesLabel
             // 
-            PattenForEnableMatchMuiltLinesLabel.AutoSize = true;
-            PattenForEnableMatchMuiltLinesLabel.Location = new System.Drawing.Point(27, 44);
-            PattenForEnableMatchMuiltLinesLabel.Name = "PattenForEnableMatchMuiltLinesLabel";
-            PattenForEnableMatchMuiltLinesLabel.Size = new System.Drawing.Size(278, 31);
-            PattenForEnableMatchMuiltLinesLabel.TabIndex = 8;
-            PattenForEnableMatchMuiltLinesLabel.Text = "用于触发多行匹配的文本";
-            ToolTip.SetToolTip(PattenForEnableMatchMuiltLinesLabel, "一行一个；不支持正则表达式");
+            PattenForEnableMatchingMuiltLinesLabel.AutoSize = true;
+            PattenForEnableMatchingMuiltLinesLabel.Location = new System.Drawing.Point(27, 44);
+            PattenForEnableMatchingMuiltLinesLabel.Name = "PattenForEnableMatchingMuiltLinesLabel";
+            PattenForEnableMatchingMuiltLinesLabel.Size = new System.Drawing.Size(278, 31);
+            PattenForEnableMatchingMuiltLinesLabel.TabIndex = 8;
+            PattenForEnableMatchingMuiltLinesLabel.Text = "用于触发多行匹配的文本";
+            ToolTip.SetToolTip(PattenForEnableMatchingMuiltLinesLabel, "一行一个；不支持正则表达式");
             // 
             // UpdateGroupBox
             // 
@@ -353,10 +353,10 @@
 
         private System.Windows.Forms.TextBox JSGlobalAssembliesTextBox;
         private System.Windows.Forms.NumericUpDown PluginEventMaxWaitingTimeNumericUpDown;
-        private System.Windows.Forms.TextBox JSPatternToSkipLoadingSpecifiedFileTextBox;
+        private System.Windows.Forms.TextBox JSPatternToSkipLoadingSingleFileTextBox;
         private System.Windows.Forms.CheckBox DisableBinderWhenServerClosedCheckBox;
         private System.Windows.Forms.TextBox RegexForCheckingGameIDTextBox;
-        private System.Windows.Forms.TextBox PattenForEnableMatchMuiltLinesTextBox;
+        private System.Windows.Forms.TextBox PattenForEnableMatchingMuiltLinesTextBox;
         private System.Windows.Forms.TextBox CustomTitleTextBox;
         private System.Windows.Forms.Button CheckUpdateButton;
         private System.Windows.Forms.Label LatestVersionLabel;

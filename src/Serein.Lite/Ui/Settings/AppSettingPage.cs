@@ -28,13 +28,13 @@ public partial class AppSettingPage : UserControl
             "\r\n",
             _settingProvider.Value.Application.JSGlobalAssemblies
         );
-        JSPatternToSkipLoadingSpecifiedFileTextBox.Text = string.Join(
+        JSPatternToSkipLoadingSingleFileTextBox.Text = string.Join(
             "\r\n",
-            _settingProvider.Value.Application.JSPatternToSkipLoadingSpecifiedFile
+            _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile
         );
-        PattenForEnableMatchMuiltLinesTextBox.Text = string.Join(
+        PattenForEnableMatchingMuiltLinesTextBox.Text = string.Join(
             "\r\n",
-            _settingProvider.Value.Application.PattenForEnableMatchMuiltLines
+            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines
         );
     }
 
@@ -116,19 +116,19 @@ public partial class AppSettingPage : UserControl
             );
     }
 
-    private void JSPatternToSkipLoadingSpecifiedFileTextBox_TextChanged(object sender, EventArgs e)
+    private void JSPatternToSkipLoadingSingleFileTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Application.JSPatternToSkipLoadingSpecifiedFile =
-            JSPatternToSkipLoadingSpecifiedFileTextBox.Text.Split(
+        _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile =
+            JSPatternToSkipLoadingSingleFileTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );
     }
 
-    private void PattenForEnableMatchMuiltLinesTextBox_TextChanged(object sender, EventArgs e)
+    private void PattenForEnableMatchingMuiltLinesTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Application.PattenForEnableMatchMuiltLines =
-            PattenForEnableMatchMuiltLinesTextBox.Text.Split(
+        _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines =
+            PattenForEnableMatchingMuiltLinesTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );

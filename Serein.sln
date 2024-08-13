@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Plus", "src\Serein.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Tests", "src\Serein.Tests\Serein.Tests.csproj", "{980012F6-7E13-4611-AE59-0E8912D980EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serein.Tests.Plugin", "src\Serein.Tests.Plugin\Serein.Tests.Plugin.csproj", "{0FAC7634-73E2-4082-8F27-396640510154}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{980012F6-7E13-4611-AE59-0E8912D980EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980012F6-7E13-4611-AE59-0E8912D980EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{980012F6-7E13-4611-AE59-0E8912D980EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAC7634-73E2-4082-8F27-396640510154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAC7634-73E2-4082-8F27-396640510154}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAC7634-73E2-4082-8F27-396640510154}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAC7634-73E2-4082-8F27-396640510154}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

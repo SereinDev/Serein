@@ -76,7 +76,7 @@ public class PluginManager(
 
         foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
         {
-            if (!File.Exists(Path.Combine(dir, PathConstants.PluginInfoFileName)))
+            if (!File.Exists(Path.Join(dir, PathConstants.PluginInfoFileName)))
                 continue;
 
             PluginInfo pluginInfo;
@@ -84,7 +84,7 @@ public class PluginManager(
             {
                 pluginInfo =
                     JsonSerializer.Deserialize<PluginInfo>(
-                        File.ReadAllText(Path.Combine(dir, PathConstants.PluginInfoFileName)),
+                        File.ReadAllText(Path.Join(dir, PathConstants.PluginInfoFileName)),
                         JsonSerializerOptionsFactory.SnakeCase
                     ) ?? throw new InvalidDataException("插件信息为空");
 
@@ -105,7 +105,7 @@ public class PluginManager(
                 )
                     throw new InvalidOperationException("插件Id重复");
 
-                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载，路径：" + dir);
+                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载");
 
                 if (pluginInfo.Type == PluginType.Js)
                     _jsPluginLoader.Load(pluginInfo, dir);
@@ -118,6 +118,8 @@ public class PluginManager(
             {
                 _pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
             }
+
+            _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
         }
 
         _logger.LogDebug("开始加载Js单文件插件");
@@ -129,7 +131,7 @@ public class PluginManager(
             LogLevel.Trace,
             string.Empty,
             $"所有插件加载完毕。已加载{_jsPluginLoader.Plugins.Count + _netPluginLoader.Plugins.Count}个插件"
-            );
+        );
 
         PluginsLoaded?.Invoke(this, EventArgs.Empty);
     }
@@ -145,6 +147,7 @@ public class PluginManager(
         CommandVariables.Clear();
         ExportedVariables.Clear();
     }
+
     public void Reload()
     {
         if (Reloading || Loading)
@@ -163,5 +166,13 @@ public class PluginManager(
         {
             Reloading = false;
         }
+    }
+
+    public static string Resolve(IPlugin plugin, params string[] paths)
+    {
+        var path = Path.Join(paths);
+        return Path.IsPathRooted(path)
+            ? path
+            : Path.GetFullPath(Path.Join(Path.GetDirectoryName(plugin.FileName), path));
     }
 }

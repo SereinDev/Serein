@@ -9,6 +9,7 @@ public static class PathConstants
     public const string PermissionGroupsFile = "Serein/groups.json";
     public const string SchedulesFile = "Serein/schedules.json";
     public const string SettingFile = "Serein/setting.json";
+    public const string SshKeysFile = "Serein/ssh-keys.json";
     public const string PluginsDirectory = "Serein/plugins";
     public const string PluginInfoFileName = "plugin-info.json";
     public const string LocalStorageFileName = "local-storage.json";

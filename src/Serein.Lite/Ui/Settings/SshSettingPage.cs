@@ -6,6 +6,7 @@ using Ookii.Dialogs.WinForms;
 
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Ssh;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Settings;
@@ -13,10 +14,12 @@ namespace Serein.Lite.Ui.Settings;
 public partial class SshSettingPage : UserControl
 {
     private readonly SettingProvider _settingProvider;
+    private readonly SshHost _sshHost;
 
-    public SshSettingPage(SettingProvider settingProvider)
+    public SshSettingPage(SettingProvider settingProvider,SshHost sshHost)
     {
         _settingProvider = settingProvider;
+        _sshHost = sshHost;
         InitializeComponent();
 
         UsersListView.SetExploreTheme();
@@ -125,5 +128,22 @@ public partial class SshSettingPage : UserControl
     private void OnPropertyChanged(object sender, EventArgs e)
     {
         _settingProvider.SaveAsyncWithDebounce();
+    }
+
+    private void EnableCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        OnPropertyChanged(sender, e);
+
+        try
+        {
+            if (EnableCheckBox.Checked)
+                _sshHost.Start();
+            else
+                _sshHost.Stop();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("切换状态失败：\r\n" + ex.Message, "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

@@ -42,7 +42,7 @@
                     ui:ControlHelper.Header="JS插件全局加载的程序集"
                     ui:ControlHelper.PlaceholderText="System" />
             <TextBox
-                    Text="{Binding Value.Application.JSPatternToSkipLoadingSpecifiedFile, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Application.JSPatternToSkipLoadingSingleFile, Converter={StaticResource multiLinesConverter}}"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     ToolTip="凡是以所选内容结尾的文件都不会被加载（一行一个）"
@@ -74,7 +74,7 @@
             <TextBox
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
-                    Text="{Binding Value.Application.PattenForEnableMatchMuiltLines, Converter={StaticResource multiLinesConverter}}"
+                    Text="{Binding Value.Application.PattenForEnableMatchingMuiltLines, Converter={StaticResource multiLinesConverter}}"
                     ToolTip="当输入的内容若含有以下内容将触发多行匹配（一行一个）"
                     TextChanged="OnPropertyChanged"
                     ui:ControlHelper.Header="用于触发多行匹配的文本"

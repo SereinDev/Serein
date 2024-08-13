@@ -16,14 +16,14 @@ public class StartUpService(
     ServerManager serverManager,
     UpdateChecker updateChecker,
     HttpServer httpServer,
-    SshServiceProvider sshServiceProvider
+    SshHost sshServiceProvider
     ) : IHostedService
 {
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly ServerManager _serverManager = serverManager;
     private readonly UpdateChecker _updateChecker = updateChecker;
     private readonly HttpServer _httpServer = httpServer;
-    private readonly SshServiceProvider _sshServiceProvider = sshServiceProvider;
+    private readonly SshHost _sshServiceProvider = sshServiceProvider;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {

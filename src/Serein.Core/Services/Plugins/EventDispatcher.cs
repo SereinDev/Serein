@@ -46,7 +46,7 @@ public class EventDispatcher(IHost host)
 
         if (SettingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
             Task.WaitAll(
-                tasks.ToArray(),
+                [.. tasks],
                 SettingProvider.Value.Application.PluginEventMaxWaitingTime
             );
 

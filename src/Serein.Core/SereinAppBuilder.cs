@@ -48,6 +48,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<MatchesProvider>();
         Services.AddSingleton<ScheduleProvider>();
         Services.AddSingleton<PermissionGroupProvider>();
+        Services.AddSingleton<SshServerKeysProvider>();
 
         Services.AddDbContext<BindingRecordDbContext>(ServiceLifetime.Singleton);
         Services.AddSingleton<BindingManager>();
@@ -70,7 +71,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<HttpServer>();
         Services.AddTransient<ApiMap>();
         Services.AddTransient<IPBannerModule>();
-        Services.AddSingleton<SshServiceProvider>();
+        Services.AddSingleton<SshHost>();
 
         Services.AddSingleton<PluginManager>();
         Services.AddSingleton<EventDispatcher>();

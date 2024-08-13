@@ -276,7 +276,7 @@ public class Server
             return;
 
         if (
-            _settingProvider.Value.Application.PattenForEnableMatchMuiltLines.Any(filtered.Contains)
+            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(filtered.Contains)
         )
         {
             _cache.Add(filtered);

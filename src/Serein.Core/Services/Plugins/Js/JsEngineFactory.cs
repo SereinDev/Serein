@@ -34,7 +34,7 @@ public class JsEngineFactory(
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly ILogger _logger = logger;
 
-    public Options CreateOptions(JsPlugin jsPlugin)
+    private Options CreateOptions(JsPlugin jsPlugin)
     {
         var assemblies = new List<Assembly>();
         foreach (
@@ -76,7 +76,9 @@ public class JsEngineFactory(
 
         cfg.CatchClrExceptions();
         cfg.CancellationToken(jsPlugin.CancellationToken);
-        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginsDirectory));
+        cfg.EnableModules(
+            Path.GetFullPath(Path.GetDirectoryName(jsPlugin.FileName) ?? PathConstants.PluginsDirectory)
+        );
 
         return cfg;
     }
@@ -90,15 +92,17 @@ public class JsEngineFactory(
         engine.SetValue("localStorage", _localStorage);
         engine.SetValue("sessionStorage", _sessionStorage);
 
+        engine.Modules.Add(
+            "minestat",
+            (builder) 
+                => builder.ExportType<MineStat>().ExportType<ConnStatus>().ExportType<SlpProtocol>()
+        );
+
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<MatchFieldType>();
         AddTypeReference<Match>();
         AddTypeReference<Schedule>();
-
-        AddTypeReference<MineStat>();
-        AddTypeReference<ConnStatus>();
-        AddTypeReference<SlpProtocol>();
 
         return engine;
 
