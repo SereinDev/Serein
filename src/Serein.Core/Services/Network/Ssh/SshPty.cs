@@ -1,10 +1,11 @@
 using System;
-using System.Threading;
 
 using FxSsh.Services;
 
-// using Serein.Core.Services.Network.Ssh.Console;
+using Serein.Core.Services.Network.Ssh.Console;
 using Serein.Core.Utils;
+
+using Spectre.Console;
 
 namespace Serein.Core.Services.Network.Ssh;
 
@@ -24,16 +25,15 @@ public class SshPty
     private const string CursorForwardCode = "[{0}C";
     private const string CursorBackwardCode = "[{0}D";
 
-    private bool _readingKey;
-
-    public byte[]? LastKeys { get; private set; }
-
     public SshPty(SessionChannel sessionChannel, string terminal)
     {
         Terminal = terminal;
         Channel = sessionChannel;
 
+        Channel.DataReceived += OnDataReceived;
     }
+
+    public event EventHandler<ConsoleKeyInfo?>? KeyRead;
 
     public string Terminal { get; set; }
 
@@ -79,21 +79,21 @@ public class SshPty
         SendCommand(string.Format(CursorPosCode, y, x));
     }
 
-    // public void MoveCursor(CursorDirection direction, int steps)
-    // {
-    //     SendCommand(string.Format(direction switch
-    //     {
-    //         CursorDirection.Left => CursorBackwardCode,
-    //         CursorDirection.Right => CursorForwardCode,
-    //         CursorDirection.Up => CursorUpCode,
-    //         CursorDirection.Down => CursorDownCode,
-    //         _ => throw new NotSupportedException()
-    //     }, steps));
-    // }
+    public void MoveCursor(CursorDirection direction, int steps)
+    {
+        SendCommand(string.Format(direction switch
+        {
+            CursorDirection.Left => CursorBackwardCode,
+            CursorDirection.Right => CursorForwardCode,
+            CursorDirection.Up => CursorUpCode,
+            CursorDirection.Down => CursorDownCode,
+            _ => throw new NotSupportedException()
+        }, steps));
+    }
 
     public void Send(string text)
     {
-        Channel.SendData(B(text));
+        Channel.SendData(GetBytes(text));
     }
 
     public void Reset()
@@ -103,41 +103,32 @@ public class SshPty
 
     public void Clear()
     {
-        Channel.SendData(B($"{EscapeCode + CursorHomeCode + EscapeCode + ClearCode}"));
+        Channel.SendData(GetBytes($"{EscapeCode + CursorHomeCode + EscapeCode + ClearCode}"));
     }
 
     private void SendCommand(string command)
     {
-        Channel.SendData(C(command));
+        Channel.SendData(GetControlCodeBytes(command));
     }
 
-    public void BeginReadKey(EventWaitHandle eventWaitHandle)
+    private void OnDataReceived(object? sender, byte[] bytes)
     {
-        if (_readingKey)
-            throw new InvalidOperationException();
+        if (KeyRead is null)
+            return;
 
-        LastKeys = null;
-        _readingKey = true;
-
-        Channel.DataReceived += Wait;
-
-        void Wait(object? sender, byte[] bytes)
-        {
-            Channel.DataReceived -= Wait;
-            eventWaitHandle.Set();
-            _readingKey = false;
-            LastKeys = bytes;
-        }
+        var keyInfos = SshConsoleAnsiHandler.Handle(bytes);
+        foreach (var keyInfo in keyInfos)
+            KeyRead.Invoke(this, keyInfo);
     }
 
-    private static byte[] C(string code)
+
+    private static byte[] GetControlCodeBytes(string code)
     {
-        return B(EscapeCode + code);
+        return GetBytes(EscapeCode + code);
     }
 
-    private static byte[] B(string text)
+    private static byte[] GetBytes(string text)
     {
         return EncodingMap.UTF8.GetBytes(text);
     }
-
 }
