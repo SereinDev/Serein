@@ -51,12 +51,7 @@ public partial class ConnectionPage : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"开启失败：\n{ex.Message}",
-                "Serein",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox($"开启失败：\r\n{ex.Message}");
         }
     }
 
@@ -68,12 +63,7 @@ public partial class ConnectionPage : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"关闭失败：\n{ex.Message}",
-                "Serein",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox($"关闭失败：\r\n{ex.Message}");
         }
     }
 

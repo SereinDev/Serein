@@ -1,6 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
+using Microsoft.Extensions.DependencyInjection;
+
+using Serein.Core;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -13,6 +18,7 @@ public partial class Panel : UserControl
     private readonly Server _server;
     private readonly System.Timers.Timer _timer;
     private readonly object _lock = new();
+    private readonly Lazy<PluginManagerForm> _pluginManagerForm;
 
     public Panel(Server server)
     {
@@ -36,6 +42,8 @@ public partial class Panel : UserControl
             else
                 _timer.Stop();
         };
+
+        _pluginManagerForm = new(() => new(_server));
     }
 
     private void OnServerOutput(object? sender, ServerOutputEventArgs e)
@@ -81,12 +89,7 @@ public partial class Panel : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"启动服务器失败\r\n原因：{ex.Message}",
-                "Serein",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox($"启动服务器失败\r\n原因：{ex.Message}");
         }
     }
 
@@ -98,12 +101,7 @@ public partial class Panel : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"停止服务器失败\r\n原因：{ex.Message}",
-                "Serein",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox($"停止服务器失败\r\n原因：{ex.Message}");
         }
     }
 
@@ -117,12 +115,7 @@ public partial class Panel : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                $"强制结束服务器失败\r\n原因：{ex.Message}",
-                "Serein",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox($"强制结束服务器失败\r\n原因：{ex.Message}");
         }
     }
 
@@ -172,5 +165,53 @@ public partial class Panel : UserControl
     protected override void OnLoad(EventArgs e)
     {
         _timer.Start();
+    }
+
+    private void StartPluginManagerButton_Click(object sender, EventArgs e)
+    {
+        _server.PluginManager.Update();
+        _pluginManagerForm.Value.ShowDialog();
+    }
+
+    private void OpenDirectoryButton_Click(object sender, EventArgs e)
+    {
+        if (File.Exists(_server.Configuration.FileName))
+            _server.Configuration.FileName.OpenInExplorer();
+        else
+            MessageBoxHelper.ShowWarningMsgBox("启动文件不存在，无法打开其所在文件夹");
+    }
+
+    private void Panel_DragEnter(object sender, DragEventArgs e)
+    {
+        e.Effect =
+            e.Data?.GetDataPresent(DataFormats.FileDrop) == true
+                ? DragDropEffects.Copy
+                : DragDropEffects.None;
+    }
+
+    private void Panel_DragDrop(object sender, DragEventArgs e)
+    {
+        SereinApp.Current?.Services.GetRequiredService<MainForm>().FocusWindow();
+
+        var files = e.Data?.GetData(DataFormats.FileDrop) as string[];
+
+        if (files?.Length > 0)
+        {
+            var acceptable = files.Where(
+                (f) => ServerPluginManager.AcceptableExtensions.Contains(Path.GetExtension(f))
+            );
+            if (acceptable.Any() && MessageBoxHelper.ShowQuestionMsgBox(
+                "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
+                    + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
+            ))
+                try
+                {
+                    _server.PluginManager.Add(acceptable.ToArray());
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxHelper.ShowWarningMsgBox("导入失败：\r\n" + ex.Message);
+                }
+        }
     }
 }

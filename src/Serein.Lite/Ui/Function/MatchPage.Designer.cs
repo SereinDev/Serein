@@ -90,7 +90,7 @@
             // 
             // ColumnHeader6
             // 
-            ColumnHeader6.Text = "限制参数";
+            ColumnHeader6.Text = "排除参数";
             ColumnHeader6.Width = 150;
             // 
             // StatusStrip

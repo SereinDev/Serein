@@ -145,7 +145,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (!MessageBoxFactory.ShowDeleteConfirmation("你确定要删除所选项吗？"))
+        if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所选项吗？"))
             return;
 
         foreach (var item in ScheduleListView.SelectedItems.Cast<ListViewItem>())
@@ -158,7 +158,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (!MessageBoxFactory.ShowDeleteConfirmation("你确定要删除所有项吗？"))
+        if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所有项吗？"))
             return;
 
         _scheduleProvider.Value.Clear();

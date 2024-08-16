@@ -90,7 +90,7 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
 
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (GroupListView.SelectedItems.Count != 1 || !MessageBoxFactory.ShowDeleteConfirmation("你确定要删除所选项吗？"))
+        if (GroupListView.SelectedItems.Count != 1 || !MessageBoxHelper.ShowDeleteConfirmation("你确定要删除所选项吗？"))
             return;
 
         _permissionGroupProvider.Value.Remove(GroupListView.SelectedItems[0].Text);

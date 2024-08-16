@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
+using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui.Servers;
 
@@ -113,12 +114,7 @@ public partial class ConfigurationEditor : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                ex.Message,
-                "Serein.Lite",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox(ex.Message);
         }
     }
 

@@ -11,6 +11,7 @@ using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Utils.Extensions;
+using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Function;
@@ -104,7 +105,7 @@ public partial class PluginPage : UserControl
         if (!_pluginManager.Loading && !_pluginManager.Reloading)
             Task.Run(_pluginManager.Reload);
         else
-            MessageBox.Show("正在加载插件", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBoxHelper.ShowWarningMsgBox("正在加载插件中");
     }
 
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -122,7 +123,7 @@ public partial class PluginPage : UserControl
         if (!_pluginManager.Loading && !_pluginManager.Reloading)
             Task.Run(_pluginManager.Reload);
         else
-            MessageBox.Show("正在加载插件", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBoxHelper.ShowWarningMsgBox("正在加载插件中");
     }
 
     private void ClearConsoleButton_Click(object sender, EventArgs e)

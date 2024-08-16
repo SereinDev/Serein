@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi;
+using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui.Settings;
 
@@ -139,7 +140,7 @@ public partial class WebApiSettingPage : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show("切换状态失败：\r\n" + ex.Message, "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxHelper.ShowWarningMsgBox("切换状态失败：\r\n" + ex.Message);
         }
     }
 

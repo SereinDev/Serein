@@ -40,6 +40,10 @@
             System.Windows.Forms.TableLayoutPanel ControlTableLayoutPanel;
             System.Windows.Forms.GroupBox ConsoleGroupBox;
             System.Windows.Forms.TableLayoutPanel ConsoleTableLayoutPanel;
+            System.Windows.Forms.GroupBox ShortcutGroupBox;
+            System.Windows.Forms.TableLayoutPanel ShortcutTableLayoutPanel;
+            System.Windows.Forms.Button OpenDirectoryButton;
+            System.Windows.Forms.Button StartPluginManagerButton;
             CPUPercentDynamicLabel = new System.Windows.Forms.Label();
             RunTimeDynamicLabel = new System.Windows.Forms.Label();
             StatusDynamicLabel = new System.Windows.Forms.Label();
@@ -49,7 +53,7 @@
             StopButton = new System.Windows.Forms.Button();
             RestartButton = new System.Windows.Forms.Button();
             TerminateButton = new System.Windows.Forms.Button();
-            ConsoleBrowser = new Serein.Lite.Ui.Controls.ConsoleWebBrowser();
+            ConsoleBrowser = new Controls.ConsoleWebBrowser();
             InputTextBox = new System.Windows.Forms.TextBox();
             EnterButton = new System.Windows.Forms.Button();
             MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -64,6 +68,10 @@
             ControlTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             ConsoleGroupBox = new System.Windows.Forms.GroupBox();
             ConsoleTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            ShortcutGroupBox = new System.Windows.Forms.GroupBox();
+            ShortcutTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            OpenDirectoryButton = new System.Windows.Forms.Button();
+            StartPluginManagerButton = new System.Windows.Forms.Button();
             MainTableLayoutPanel.SuspendLayout();
             InfoGroupBox.SuspendLayout();
             InformationTableLayoutPanel.SuspendLayout();
@@ -71,6 +79,8 @@
             ControlTableLayoutPanel.SuspendLayout();
             ConsoleGroupBox.SuspendLayout();
             ConsoleTableLayoutPanel.SuspendLayout();
+            ShortcutGroupBox.SuspendLayout();
+            ShortcutTableLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
             // MainTableLayoutPanel
@@ -81,6 +91,7 @@
             MainTableLayoutPanel.Controls.Add(InfoGroupBox, 0, 0);
             MainTableLayoutPanel.Controls.Add(ControlGroupBox, 0, 1);
             MainTableLayoutPanel.Controls.Add(ConsoleGroupBox, 1, 0);
+            MainTableLayoutPanel.Controls.Add(ShortcutGroupBox, 0, 2);
             MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             MainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             MainTableLayoutPanel.Name = "MainTableLayoutPanel";
@@ -380,12 +391,62 @@
             EnterButton.UseVisualStyleBackColor = true;
             EnterButton.Click += EnterButton_Click;
             // 
+            // ShortcutGroupBox
+            // 
+            ShortcutGroupBox.Controls.Add(ShortcutTableLayoutPanel);
+            ShortcutGroupBox.Location = new System.Drawing.Point(3, 413);
+            ShortcutGroupBox.Name = "ShortcutGroupBox";
+            ShortcutGroupBox.Size = new System.Drawing.Size(294, 161);
+            ShortcutGroupBox.TabIndex = 3;
+            ShortcutGroupBox.TabStop = false;
+            ShortcutGroupBox.Text = "快捷操作";
+            // 
+            // ShortcutTableLayoutPanel
+            // 
+            ShortcutTableLayoutPanel.ColumnCount = 1;
+            ShortcutTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            ShortcutTableLayoutPanel.Controls.Add(OpenDirectoryButton, 0, 0);
+            ShortcutTableLayoutPanel.Controls.Add(StartPluginManagerButton, 0, 1);
+            ShortcutTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            ShortcutTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
+            ShortcutTableLayoutPanel.Name = "ShortcutTableLayoutPanel";
+            ShortcutTableLayoutPanel.RowCount = 2;
+            ShortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            ShortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            ShortcutTableLayoutPanel.Size = new System.Drawing.Size(288, 124);
+            ShortcutTableLayoutPanel.TabIndex = 0;
+            // 
+            // OpenDirectoryButton
+            // 
+            OpenDirectoryButton.Dock = System.Windows.Forms.DockStyle.Top;
+            OpenDirectoryButton.Location = new System.Drawing.Point(3, 3);
+            OpenDirectoryButton.Name = "OpenDirectoryButton";
+            OpenDirectoryButton.Size = new System.Drawing.Size(282, 46);
+            OpenDirectoryButton.TabIndex = 0;
+            OpenDirectoryButton.Text = "打开启动文件所在位置";
+            OpenDirectoryButton.UseVisualStyleBackColor = true;
+            OpenDirectoryButton.Click += OpenDirectoryButton_Click;
+            // 
+            // StartPluginManagerButton
+            // 
+            StartPluginManagerButton.Dock = System.Windows.Forms.DockStyle.Top;
+            StartPluginManagerButton.Location = new System.Drawing.Point(3, 65);
+            StartPluginManagerButton.Name = "StartPluginManagerButton";
+            StartPluginManagerButton.Size = new System.Drawing.Size(282, 46);
+            StartPluginManagerButton.TabIndex = 1;
+            StartPluginManagerButton.Text = "插件管理";
+            StartPluginManagerButton.UseVisualStyleBackColor = true;
+            StartPluginManagerButton.Click += StartPluginManagerButton_Click;
+            // 
             // Panel
             // 
+            AllowDrop = true;
             BackColor = System.Drawing.Color.White;
             Controls.Add(MainTableLayoutPanel);
             Name = "Panel";
             Size = new System.Drawing.Size(1280, 720);
+            DragDrop += Panel_DragDrop;
+            DragEnter += Panel_DragEnter;
             MainTableLayoutPanel.ResumeLayout(false);
             InfoGroupBox.ResumeLayout(false);
             InformationTableLayoutPanel.ResumeLayout(false);
@@ -395,6 +456,8 @@
             ConsoleGroupBox.ResumeLayout(false);
             ConsoleTableLayoutPanel.ResumeLayout(false);
             ConsoleTableLayoutPanel.PerformLayout();
+            ShortcutGroupBox.ResumeLayout(false);
+            ShortcutTableLayoutPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 

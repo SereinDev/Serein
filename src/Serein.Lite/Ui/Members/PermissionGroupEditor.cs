@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using Serein.Core.Services.Permissions;
+using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Members;
@@ -179,12 +180,7 @@ public partial class PermissionGroupEditor : Form
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "Serein.Lite",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBoxHelper.ShowWarningMsgBox(ex.Message);
             }
     }
 

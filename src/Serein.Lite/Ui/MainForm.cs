@@ -160,12 +160,7 @@ public partial class MainForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(
-                ex.Message,
-                "Serein.Lite",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
+            MessageBoxHelper.ShowWarningMsgBox(ex.Message);
             return;
         }
 
@@ -213,12 +208,7 @@ public partial class MainForm : Form
 
         if (
             !string.IsNullOrEmpty(id)
-            && MessageBox.Show(
-                $"是否删除服务器配置（{id}）",
-                "Serein.Lite",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            ) == DialogResult.Yes
+            && MessageBoxHelper.ShowDeleteConfirmation($"确定要删除此服务器配置（{id}）吗？")
         )
             _serverManager.Remove(id);
     }
@@ -294,12 +284,17 @@ public partial class MainForm : Form
 
     private void NotifyIcon_DoubleClick(object sender, EventArgs e)
     {
-        Visible = true;
-        ShowInTaskbar = true;
+        FocusWindow();
 
         TopMostToolStripMenuItem.Enabled = true;
         HideToolStripMenuItem.Checked = false;
+    }
 
+    public void FocusWindow()
+    {
+        Visible = true;
+        ShowInTaskbar = true;
+        WindowState = FormWindowState.Normal;
         Activate();
     }
 }

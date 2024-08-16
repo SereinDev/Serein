@@ -7,6 +7,7 @@ using Ookii.Dialogs.WinForms;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Ssh;
+using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Settings;
@@ -16,7 +17,7 @@ public partial class SshSettingPage : UserControl
     private readonly SettingProvider _settingProvider;
     private readonly SshHost _sshHost;
 
-    public SshSettingPage(SettingProvider settingProvider,SshHost sshHost)
+    public SshSettingPage(SettingProvider settingProvider, SshHost sshHost)
     {
         _settingProvider = settingProvider;
         _sshHost = sshHost;
@@ -81,9 +82,9 @@ public partial class SshSettingPage : UserControl
 
         if (dialog.ShowDialog() == DialogResult.OK)
             if (string.IsNullOrWhiteSpace(dialog.Input))
-                MessageBox.Show("用户名为空", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBoxHelper.ShowWarningMsgBox("用户名为空");
             else if (_settingProvider.Value.Ssh.Users.ContainsKey(dialog.Input))
-                MessageBox.Show("用户名重复", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBoxHelper.ShowWarningMsgBox("用户名重复");
             else
             {
                 var (result, password) = InputPassword();
@@ -143,7 +144,7 @@ public partial class SshSettingPage : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show("切换状态失败：\r\n" + ex.Message, "Serein", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBoxHelper.ShowWarningMsgBox("切换状态失败：\r\n" + ex.Message);
         }
     }
 }

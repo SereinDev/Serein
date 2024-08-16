@@ -32,6 +32,7 @@ public class Server
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; private set; }
     public Configuration Configuration { get; }
+    public ServerPluginManager PluginManager { get; }
 
     private readonly List<string> _commandHistory;
     private readonly List<string> _cache;
@@ -68,11 +69,13 @@ public class Server
         _matcher = matcher;
         _eventDispatcher = eventDispatcher;
         _reactionManager = reactionManager;
-        _commandHistory = new();
-        _cache = new();
+        _commandHistory = [];
+        _cache = [];
         _updateTimer = new(2000) { AutoReset = true };
         _updateTimer.Elapsed += (_, _) => UpdateInfo();
         _serverInfo = new();
+        PluginManager = new(this);
+
         ServerStatusChanged += (_, _) => UpdateInfo();
     }
 
@@ -191,7 +194,7 @@ public class Server
             EncodingMap
                 .GetEncoding(encodingType ?? Configuration.InputEncoding)
                 .GetBytes(
-                    (Configuration.UseUnicodeChars ? command.ToUnicode() : command) 
+                    (Configuration.UseUnicodeChars ? command.ToUnicode() : command)
                     + Configuration.LineTerminator
                 )
         );
