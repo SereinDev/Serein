@@ -131,7 +131,7 @@ public class Server
             this,
             new(ServerOutputType.Information, $"“{Configuration.FileName}”启动中")
         );
-        _reactionManager.TriggerAsync(ReactionType.ServerStart);
+        _reactionManager.TriggerAsync(ReactionType.ServerStart, new(_id));
         _eventDispatcher.Dispatch(Event.ServerStarted, _id);
         _updateTimer.Start();
     }
@@ -153,9 +153,9 @@ public class Server
                     this,
                     new(ServerOutputType.Information, "当前未设置关服命令，将发送Ctrl+C事件作为替代")
                     );
-                NativeMethod.AttachConsole((uint)_serverProcess.Id);
-                NativeMethod.GenerateConsoleCtrlEvent(NativeMethod.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
-                NativeMethod.FreeConsole();
+                NativeMethods.AttachConsole((uint)_serverProcess.Id);
+                NativeMethods.GenerateConsoleCtrlEvent(NativeMethods.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
+                NativeMethods.FreeConsole();
             }
             else return;
 
@@ -256,7 +256,8 @@ public class Server
         _reactionManager.TriggerAsync(
             exitCode == 0
                 ? ReactionType.ServerExitedNormally
-                : ReactionType.ServerExitedUnexpectedly
+                : ReactionType.ServerExitedUnexpectedly,
+            new(_id)
         );
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
     }

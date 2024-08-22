@@ -15,13 +15,13 @@ public class ReactionTrigger(SettingProvider settingProvider, CommandRunner comm
 
     public Task TriggerAsync(
         ReactionType type,
-        string? target = null,
+        ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
     ) => Task.Run(() => Trigger(type, target, variables));
 
     public void Trigger(
         ReactionType type,
-        string? target = null,
+        ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
     )
     {
@@ -34,27 +34,26 @@ public class ReactionTrigger(SettingProvider settingProvider, CommandRunner comm
 
         IEnumerable<Command> commands;
         lock (values)
-            commands = values.Select(
-                (cmd) => (CommandParser.Parse(CommandOrigin.Reaction, cmd).Clone() as Command)!
-            );
+            commands = values.Select((cmd) => CommandParser.Parse(CommandOrigin.Reaction, cmd));
 
         if (!commands.Any())
             return;
 
-        var context = new CommandContext { Variables = variables };
+        var context = new CommandContext
+        {
+            Variables = variables,
+            ServerId = target?.ServerId
+        };
 
         var tasks = new List<Task>();
         foreach (var command in commands)
         {
-            if (
-                string.IsNullOrEmpty(command.Argument)
-                && !string.IsNullOrEmpty(target)
-                && (
-                    command.Type == CommandType.SendGroupMsg
-                    || command.Type == CommandType.SendPrivateMsg
-                )
-            )
-                command.Argument = target;
+            if (command.Argument is null && target is not null)
+                if (command.Type == CommandType.InputServer && !string.IsNullOrEmpty(target.ServerId))
+                    command.Argument = target.ServerId;
+                else if (command.Type == CommandType.SendPrivateMsg && target.UserId.HasValue)
+                    command.Argument = target.UserId.ToString() ?? string.Empty;
+
 
             tasks.Add(_commandRunner.RunAsync(command, context));
         }

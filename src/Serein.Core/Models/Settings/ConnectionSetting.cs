@@ -17,9 +17,9 @@ public class ConnectionSetting : INotifyPropertyChanged
 
     public bool GivePermissionToAllAdmins { get; set; }
 
-    public string[] Groups { get; set; } = [];
+    public long[] Groups { get; set; } = [];
 
-    public string[] Administrators { get; set; } = [];
+    public long[] Administrators { get; set; } = [];
 
     public Dictionary<string, string> Headers { get; set; } = [];
 

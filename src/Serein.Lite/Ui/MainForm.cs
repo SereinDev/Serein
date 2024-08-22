@@ -1,16 +1,19 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Members;
@@ -28,6 +31,7 @@ public partial class MainForm : Form
     private readonly ServerManager _serverManager;
     private readonly CommandParser _commandParser;
     private readonly SettingProvider _settingProvider;
+    private readonly EventDispatcher _eventDispatcher;
     private readonly System.Timers.Timer _timer;
 
     private IServiceProvider Services => _host.Services;
@@ -36,13 +40,15 @@ public partial class MainForm : Form
         IHost host,
         ServerManager serverManager,
         CommandParser commandParser,
-        SettingProvider settingProvider
+        SettingProvider settingProvider,
+        EventDispatcher eventDispatcher
     )
     {
         _host = host;
         _serverManager = serverManager;
         _commandParser = commandParser;
         _settingProvider = settingProvider;
+        _eventDispatcher = eventDispatcher;
         _timer = new(2000);
         _timer.Elapsed += (_, _) => Invoke(UpdateTitle);
         _settingProvider.Value.Application.PropertyChanged += (_, e) =>
@@ -259,9 +265,13 @@ public partial class MainForm : Form
         }
         else
         {
-            NotifyIcon.Visible = false;
             _host.StopAsync();
             _timer.Stop();
+
+            Task.Run(() => _eventDispatcher.Dispatch(Event.SereinClosed));
+            Hide();
+            ShowInTaskbar = false;
+            NotifyIcon.Visible = false;
         }
         base.OnClosing(e);
     }

@@ -55,40 +55,40 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarting:
-                return OnServerStarting(args.First().As<string>());
+                return OnServerStarting(args.First().OfType<string>());
 
             case Event.ServerStopping:
-                return OnServerStopping(args.First().As<string>());
+                return OnServerStopping(args.First().OfType<string>());
 
             case Event.GroupMessageReceived:
-                return OnGroupMessageReceived(args.First().As<MessagePacket>());
+                return OnGroupMessageReceived(args.First().OfType<MessagePacket>());
 
             case Event.PrivateMessageReceived:
-                return OnPrivateMessageReceived(args.First().As<MessagePacket>());
+                return OnPrivateMessageReceived(args.First().OfType<MessagePacket>());
 
             case Event.WsDataReceived:
-                return OnWsDataReceived(args.First().As<string>());
+                return OnWsDataReceived(args.First().OfType<string>());
 
             case Event.PacketReceived:
-                return OnPacketReceived(args.First().As<JsonNode>());
+                return OnPacketReceived(args.First().OfType<JsonNode>());
 
             case Event.ServerOutput:
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerOutput(args.First().As<string>(), args.Last().As<string>());
+                return OnServerOutput(args.First().OfType<string>(), args.Last().OfType<string>());
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerRawOutput(args.First().As<string>(), args.Last().As<string>());
+                return OnServerRawOutput(args.First().OfType<string>(), args.Last().OfType<string>());
 
             case Event.ServerInput:
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerInput(args.First().As<string>(), args.Last().As<string>());
+                return OnServerInput(args.First().OfType<string>(), args.Last().OfType<string>());
 
             case Event.ServerExited:
                 if (
@@ -114,7 +114,7 @@ public abstract partial class PluginBase
                 return OnPluginsUnloading();
 
             case Event.ServerStarted:
-                return OnServerStarted(args.First().As<string>());
+                return OnServerStarted(args.First().OfType<string>());
 
             default:
                 throw new NotSupportedException();

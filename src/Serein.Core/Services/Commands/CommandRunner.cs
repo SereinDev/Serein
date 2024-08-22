@@ -55,6 +55,7 @@ public class CommandRunner
             return;
 
         var body = _commandParser.Value.Format(command, commandContext);
+        var argumentStr = command.Argument as string;
 
         switch (command.Type)
         {
@@ -64,13 +65,10 @@ public class CommandRunner
 
             case CommandType.InputServer:
                 Server? server = null;
-                if (!string.IsNullOrEmpty(command.Argument))
-                    _serverManager.Value.Servers.TryGetValue(command.Argument, out server);
-                else if (
-                    !string.IsNullOrEmpty(commandContext?.ServerId)
-                    && command.Origin == CommandOrigin.ServerOutput
-                )
-                    _serverManager.Value.Servers.TryGetValue(commandContext?.ServerId!, out server);
+                if (!string.IsNullOrEmpty(argumentStr))
+                    _serverManager.Value.Servers.TryGetValue(argumentStr, out server);
+                else if (!string.IsNullOrEmpty(commandContext?.ServerId))
+                    _serverManager.Value.Servers.TryGetValue(commandContext.ServerId, out server);
                 else if (_serverManager.Value.Servers.Count == 1)
                     server = _serverManager.Value.Servers.Values.First();
 
@@ -78,10 +76,12 @@ public class CommandRunner
                 break;
 
             case CommandType.SendGroupMsg:
-                if (!string.IsNullOrEmpty(command.Argument))
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(command.Argument, body);
-                else if (commandContext?.MessagePacket?.GroupId is long groupId)
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, body);
+                if (!string.IsNullOrEmpty(argumentStr))
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(argumentStr, body);
+                else if (command.Argument is long groupId1)
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId1, body);
+                else if (commandContext?.MessagePacket?.GroupId is long groupId2)
+                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId2, body);
                 else if (
                     command.Origin != CommandOrigin.Msg
                     && _settingProvider.Value.Connection.Groups.Length > 0
@@ -93,10 +93,12 @@ public class CommandRunner
                 break;
 
             case CommandType.SendPrivateMsg:
-                if (!string.IsNullOrEmpty(command.Argument))
-                    await _wsConnectionManager.Value.SendPrivateMsgAsync(command.Argument, body);
-                else if (commandContext?.MessagePacket?.UserId is long userId1)
+                if (!string.IsNullOrEmpty(argumentStr))
+                    await _wsConnectionManager.Value.SendPrivateMsgAsync(argumentStr, body);
+                else if (command.Argument is long userId1)
                     await _wsConnectionManager.Value.SendGroupMsgAsync(userId1, body);
+                else if (commandContext?.MessagePacket?.UserId is long userId2)
+                    await _wsConnectionManager.Value.SendPrivateMsgAsync(userId2, body);
                 break;
 
             case CommandType.SendData:
@@ -105,22 +107,21 @@ public class CommandRunner
 
             case CommandType.Bind:
             case CommandType.Unbind:
-                if (commandContext?.MessagePacket?.UserId is not long userId2)
+                if (commandContext?.MessagePacket?.UserId is not long userId3)
                     break;
 
                 try
                 {
                     if (command.Type == CommandType.Bind)
                         _bindingManager.Add(
-                            userId2,
+                            userId3,
                             body,
                             string.IsNullOrEmpty(commandContext.MessagePacket.Sender.Card)
                                 ? commandContext.MessagePacket.Sender.Nickname
                                 : commandContext.MessagePacket.Sender.Card
                         );
                     else
-                        _bindingManager.Remove(userId2, body);
-
+                        _bindingManager.Remove(userId3, body);
                 }
                 catch (BindingFailureException e)
                 {
@@ -130,8 +131,11 @@ public class CommandRunner
                 break;
 
             case CommandType.ExecuteJavascriptCodes:
-                if (!_jsPluginLoader.JsPlugins.TryGetValue(command.Argument, out var jsPlugin))
-                    return;
+                if (
+                    command.Argument is not string id
+                    || !_jsPluginLoader.JsPlugins.TryGetValue(id, out var jsPlugin)
+                )
+                    break;
 
                 var entered = false;
                 try
@@ -163,7 +167,10 @@ public class CommandRunner
     {
         if (messagePacket.MessageType == MessageType.Group && messagePacket.GroupId is long groupId)
             await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, msg);
-        else if (messagePacket.MessageType == MessageType.Private && messagePacket.UserId is long userId)
+        else if (
+            messagePacket.MessageType == MessageType.Private
+            && messagePacket.UserId is long userId
+        )
             await _wsConnectionManager.Value.SendPrivateMsgAsync(userId, msg);
     }
 

@@ -139,7 +139,7 @@ public class Matcher(
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>
-        _settingProvider.Value.Connection.Administrators.Contains(messagePacket.UserId.ToString())
+        _settingProvider.Value.Connection.Administrators.Contains(messagePacket.UserId)
         || _settingProvider.Value.Connection.GivePermissionToAllAdmins
             && messagePacket.MessageType == MessageType.Group
             && messagePacket.Sender.Role != Role.Member;

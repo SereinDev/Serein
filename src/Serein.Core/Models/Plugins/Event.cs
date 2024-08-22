@@ -10,9 +10,6 @@ public enum Event
     ServerRawOutput,
     ServerInput,
 
-    GroupIncreased,
-    GroupDecreased,
-    GroupPoked,
     GroupMessageReceived,
     PrivateMessageReceived,
     WsDataReceived,

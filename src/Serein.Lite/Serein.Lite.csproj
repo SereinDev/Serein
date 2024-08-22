@@ -10,11 +10,11 @@
 
 
     <ItemGroup>
-		<EmbeddedResource Include="../Sources/console/index.html" />
-		<EmbeddedResource Include="../Sources/console/custom.css" />
-        <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
+        <EmbeddedResource Include="../Sources/console/index.html" />
+        <EmbeddedResource Include="../Sources/console/custom.css" />
 
+        <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
         <PackageReference Include="Ookii.Dialogs.WinForms" Version="4.0.0" />
     </ItemGroup>
 </Project>

@@ -10,12 +10,9 @@ using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Network.Connection.OneBot;
 using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils.Json;
@@ -30,10 +27,10 @@ public class WsConnectionManager : INotifyPropertyChanged
         _receivedArg,
         _activeArg;
     private readonly SettingProvider _settingProvider;
-    private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReverseWebSocketService _reverseWebSocketService;
     private readonly WebSocketService _webSocketService;
+    private readonly PacketHandler _packetHandler;
     private readonly Lazy<IConnectionLogger> _connectionLogger;
 
     private Setting Setting => _settingProvider.Value;
@@ -52,17 +49,17 @@ public class WsConnectionManager : INotifyPropertyChanged
     public WsConnectionManager(
         IHost host,
         SettingProvider settingProvider,
-        Matcher matcher,
         EventDispatcher eventDispatcher,
         ReverseWebSocketService reverseWebSocketService,
-        WebSocketService webSocketService
+        WebSocketService webSocketService,
+        PacketHandler packetHandler
     )
     {
         _settingProvider = settingProvider;
-        _matcher = matcher;
         _eventDispatcher = eventDispatcher;
         _reverseWebSocketService = reverseWebSocketService;
         _webSocketService = webSocketService;
+        _packetHandler = packetHandler;
         _connectionLogger = new(host.Services.GetRequiredService<IConnectionLogger>);
 
         _activeArg = new(nameof(Active));
@@ -92,33 +89,7 @@ public class WsConnectionManager : INotifyPropertyChanged
         if (node is null)
             return;
 
-        if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
-            return;
-
-        switch (node["post_type"]?.ToString())
-        {
-            case "message":
-            case "message_sent":
-                var packet = node.ToObject<MessagePacket>(JsonSerializerOptionsFactory.SnakeCase);
-
-                if (packet is not null)
-                {
-                    _connectionLogger.Value.LogReceivedMessage(
-                        $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
-                        );
-
-                    if (
-                        packet.MessageType == MessageType.Group
-                            && !_eventDispatcher.Dispatch(Event.GroupMessageReceived, packet)
-                        || packet.MessageType == MessageType.Private
-                            && !_eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)
-                    )
-                        return;
-
-                    _matcher.MatchMsgAsync(packet);
-                }
-                break;
-        }
+        _packetHandler.Handle(node);
     }
 
     public void Start()

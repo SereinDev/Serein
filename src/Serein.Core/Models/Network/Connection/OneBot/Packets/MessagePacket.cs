@@ -20,8 +20,6 @@ public class MessagePacket : Packet
 
     public Sender Sender { get; init; } = new();
 
-    public long SelfId { get; init; }
-
     public long UserId { get; init; }
 
     public long GroupId { get; init; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 using Serein.Core.Models.Settings;
@@ -104,19 +105,33 @@ public partial class ConnectionSettingPage : UserControl
 
     private void GroupsTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Connection.Groups = GroupsTextBox.Text.Split(
-            ';',
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
-        );
+        var list = new List<long>();
+        foreach (
+            var id in GroupsTextBox.Text.Split(
+                ';',
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+            )
+        )
+            if (long.TryParse(id, out long i))
+                list.Add(i);
+
+        _settingProvider.Value.Connection.Groups = [.. list];
         OnPropertyChanged(sender, e);
     }
 
     private void AdministratorsTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Connection.Administrators = AdministratorsTextBox.Text.Split(
-            ';',
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
-        );
+        var list = new List<long>();
+        foreach (
+            var id in AdministratorsTextBox.Text.Split(
+                ';',
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+            )
+        )
+            if (long.TryParse(id, out long i))
+                list.Add(i);
+
+        _settingProvider.Value.Connection.Administrators = [.. list];
         OnPropertyChanged(sender, e);
     }
 }
