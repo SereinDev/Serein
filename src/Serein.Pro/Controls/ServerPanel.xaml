@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="Serein.Pro.Controls.ServerPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Serein.Pro.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="0,0,10,0">
+            <StackPanel.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="{StaticResource CardBackgroundFillColorDefaultBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource ControlStrokeColorSecondaryBrush}" />
+                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Padding" Value="10" />
+                </Style>
+            </StackPanel.Resources>
+
+            <Border>
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="4" />
+                            <Setter Property="FontSize" Value="12" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="状态" />
+                    <TextBlock
+                        x:Name="Status"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        未启动
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="1" Text="版本" />
+                    <TextBlock
+                        x:Name="Version"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        -
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="2" Text="在线人数" />
+                    <TextBlock
+                        x:Name="Players"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        -
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="3" Text="运行时长" />
+                    <TextBlock
+                        x:Name="RunTime"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        -
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="4" Text="进程占用" />
+                    <TextBlock
+                        x:Name="CPUUsage"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        -
+                    </TextBlock>
+                </Grid>
+            </Border>
+
+            <Border Margin="0,10,0,0">
+                <Grid>
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Click="Button_Click"
+                        Content="启动"
+                        Tag="Start" />
+                    <Button
+                        Grid.Column="1"
+                        Click="Button_Click"
+                        Content="停止"
+                        Tag="Stop" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Click="Button_Click"
+                        Content="强制结束"
+                        Tag="Terminate" />
+                    <Button
+                        Grid.Row="1"
+                        Click="Button_Click"
+                        Content="重新启动"
+                        Tag="Restart" />
+                </Grid>
+            </Border>
+
+            <Border Margin="0,10,0,0">
+                <Grid>
+                    <Grid.Resources>
+                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Button
+                        Click="Button_Click"
+                        Content="打开所在文件夹"
+                        Tag="OpenInExplorer" />
+                    <Button
+                        Grid.Row="1"
+                        Click="Button_Click"
+                        Content="管理插件"
+                        Tag="OpenPluginManager" />
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <RichEditBox
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,10"
+                IsReadOnly="True" />
+
+            <TextBox
+                x:Name="InputBox"
+                Grid.Row="1"
+                Margin="0,0,10,0"
+                KeyDown="InputBox_KeyDown" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                Click="Button_Click"
+                Tag="Send">
+                <SymbolIcon Symbol="Up" />
+            </Button>
+        </Grid>
+
+    </Grid>
+</UserControl>

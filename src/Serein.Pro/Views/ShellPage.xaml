@@ -1,0 +1,85 @@
+<Page
+    x:Class="Serein.Pro.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:Serein.Pro.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="OnLoaded">
+
+    <Grid>
+        <Grid
+            x:Name="AppTitleBar"
+            Width="{x:Bind Width}"
+            Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+            Padding="0,17,0,0"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <Image
+                Width="16"
+                Height="16"
+                HorizontalAlignment="Left"
+                Source="/Assets/logo.ico" />
+            <TextBlock
+                x:Name="AppTitleBarText"
+                Margin="25,0,0,0"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind MainWindow.Title, Mode=OneWay}"
+                TextWrapping="NoWrap" />
+        </Grid>
+        <NavigationView
+            x:Name="NavView"
+            Canvas.ZIndex="0"
+            DisplayModeChanged="NavView_DisplayModeChanged"
+            ExpandedModeThresholdWidth="1280"
+            IsBackButtonVisible="Visible"
+            IsSettingsVisible="True"
+            ItemInvoked="NavView_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    Content="主页"
+                    Icon="Home"
+                    Tag="{x:Bind ViewModel.HomePage}" />
+                <NavigationViewItem
+                    Content="服务器"
+                    Icon="MapDrive"
+                    Tag="{x:Bind ViewModel.ServerPage}"
+                    ToolTipService.ToolTip="查看输出、管理服务器状态" />
+
+                <NavigationViewItemHeader Content="功能" />
+                <NavigationViewItem
+                    Content="匹配"
+                    Icon="List"
+                    Tag="{x:Bind ViewModel.MatchPage}"
+                    ToolTipService.ToolTip="管理匹配列表" />
+                <NavigationViewItem
+                    Content="定时任务"
+                    Icon="Clock"
+                    ToolTipService.ToolTip="管理定时执行的命令" />
+                <NavigationViewItem
+                    Content="连接"
+                    Icon="Link"
+                    ToolTipService.ToolTip="通过WebSocket连接获取消息" />
+                <NavigationViewItem
+                    Content="插件"
+                    Icon="Library"
+                    ToolTipService.ToolTip="扩展Serein玩法和功能" />
+
+                <NavigationViewItemHeader Content="成员" />
+                <NavigationViewItem
+                    Content="绑定"
+                    Icon="People"
+                    ToolTipService.ToolTip="建立用户Id与游戏名称之间的绑定关系" />
+                <NavigationViewItem
+                    Content="权限组"
+                    Icon="Permissions"
+                    ToolTipService.ToolTip="设定用户的权限" />
+
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Page>

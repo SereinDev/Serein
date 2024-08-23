@@ -1,0 +1,40 @@
+<windowex:WindowEx
+    x:Class="Serein.Pro.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Serein.Pro"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:windowex="using:WinUIEx"
+    Title="Serein.Pro"
+    Width="800"
+    Height="600"
+    MinWidth="680"
+    MinHeight="510"
+    mc:Ignorable="d">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="Base" />
+    </Window.SystemBackdrop>
+
+    <Grid>
+        <Frame x:Name="RootFrame" />
+        <InfoBar
+            x:Name="GlobalInfoBar"
+            MaxWidth="500"
+            Margin="0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            CloseButtonClick="GlobalInfoBar_CloseButtonClick">
+            <InfoBar.Resources>
+                <Storyboard x:Name="GlobalInfoBarPopIn">
+                    <PopInThemeAnimation TargetName="GlobalInfoBar" />
+                </Storyboard>
+                <Storyboard x:Name="GlobalInfoBarPopOut">
+                    <PopOutThemeAnimation TargetName="GlobalInfoBar" />
+                </Storyboard>
+            </InfoBar.Resources>
+        </InfoBar>
+    </Grid>
+
+</windowex:WindowEx>

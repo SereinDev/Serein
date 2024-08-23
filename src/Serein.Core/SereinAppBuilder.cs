@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,6 @@ public sealed class SereinAppBuilder
 {
     static SereinAppBuilder()
     {
-        Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         Directory.CreateDirectory(PathConstants.Root);
     }
 
@@ -68,6 +68,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsConnectionManager>();
+        Services.AddSingleton<PacketHandler>();
         Services.AddSingleton<HttpServer>();
         Services.AddTransient<ApiMap>();
         Services.AddTransient<IPBannerModule>();

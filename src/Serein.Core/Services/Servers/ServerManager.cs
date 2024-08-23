@@ -31,10 +31,10 @@ public partial class ServerManager
             throw new InvalidOperationException("服务器Id格式不正确");
     }
 
-    public IReadOnlyDictionary<string, Server> Servers => _server;
+    public IReadOnlyDictionary<string, Server> Servers => _servers;
     public event EventHandler<ServersUpdatedEventArgs>? ServersUpdated;
 
-    private readonly Dictionary<string, Server> _server = [];
+    private readonly Dictionary<string, Server> _servers = [];
     private readonly Matcher _matcher;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
@@ -59,7 +59,7 @@ public partial class ServerManager
         AppDomain.CurrentDomain.UnhandledException += (_, _) => Task.Run(OnCrash);
     }
 
-    public bool AnyRunning => _server.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
+    public bool AnyRunning => _servers.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
 
     public Server Add(string id, Configuration configuration)
     {
@@ -74,7 +74,7 @@ public partial class ServerManager
             _eventDispatcher,
             _reactionManager
         );
-        _server.Add(id, server);
+        _servers.Add(id, server);
         ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Added));
 
         Save(id, configuration);
@@ -84,8 +84,11 @@ public partial class ServerManager
     public bool Remove(string id)
     {
         ValidateId(id);
-        if (!_server.Remove(id))
+        if (!_servers.TryGetValue(id, out var server))
             return false;
+
+        if (server.Status == ServerStatus.Running)
+            throw new InvalidOperationException("无法删除正在运行的服务器");
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
         if (File.Exists(path))
