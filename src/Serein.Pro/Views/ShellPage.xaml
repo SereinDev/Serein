@@ -31,11 +31,13 @@
         </Grid>
         <NavigationView
             x:Name="NavView"
+            BackRequested="NavView_BackRequested"
             Canvas.ZIndex="0"
             DisplayModeChanged="NavView_DisplayModeChanged"
             ExpandedModeThresholdWidth="1280"
             IsBackButtonVisible="Visible"
             IsSettingsVisible="True"
+            IsTitleBarAutoPaddingEnabled="True"
             ItemInvoked="NavView_ItemInvoked">
             <NavigationView.MenuItems>
                 <NavigationViewItem

@@ -11,7 +11,42 @@
     mc:Ignorable="d">
 
     <Grid>
-        <controls:DataGrid AutoGenerateColumns="False" ItemsSource="{x:Bind MatchesProvider.Value}">
+        <controls:DataGrid
+            VerticalAlignment="Stretch"
+            AutoGenerateColumns="False"
+            ItemsSource="{x:Bind MatchesProvider.Value}">
+            <controls:DataGrid.ContextFlyout>
+                <MenuBarItemFlyout Opening="MenuBarItemFlyout_Opening">
+                    <MenuFlyoutItem
+                        Click="MenuFlyoutItem_Click"
+                        Icon="Add"
+                        Tag="Add"
+                        Text="添加..." />
+                    <MenuFlyoutItem
+                        x:Name="EditMenuFlyoutItem"
+                        Click="MenuFlyoutItem_Click"
+                        Icon="Edit"
+                        Tag="Edit"
+                        Text="编辑..." />
+                    <MenuFlyoutItem
+                        x:Name="RemoveMenuFlyoutItem"
+                        Click="MenuFlyoutItem_Click"
+                        Icon="Delete"
+                        Tag="Remove"
+                        Text="删除" />
+                    <MenuFlyoutItem
+                        Click="MenuFlyoutItem_Click"
+                        Icon="Refresh"
+                        Tag="Refresh"
+                        Text="刷新" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem
+                        Click="MenuFlyoutItem_Click"
+                        Icon="Globe"
+                        Tag="OpenDoc"
+                        Text="打开介绍文档" />
+                </MenuBarItemFlyout>
+            </controls:DataGrid.ContextFlyout>
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Binding="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}" Header="正则表达式" />
                 <controls:DataGridTemplateColumn CanUserSort="True" Header="匹配域">
@@ -43,5 +78,12 @@
                 <controls:DataGridTextColumn Binding="{Binding Exclusions}" Header="排除" />
             </controls:DataGrid.Columns>
         </controls:DataGrid>
+        <StackPanel
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <Button Content="↑" />
+            <Button Margin="5" Content="↓" />
+        </StackPanel>
     </Grid>
 </Page>

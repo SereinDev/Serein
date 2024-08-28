@@ -17,24 +17,35 @@
         <MicaBackdrop Kind="Base" />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <Frame x:Name="RootFrame" />
-        <InfoBar
-            x:Name="GlobalInfoBar"
-            MaxWidth="500"
-            Margin="0,20"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            CloseButtonClick="GlobalInfoBar_CloseButtonClick">
-            <InfoBar.Resources>
-                <Storyboard x:Name="GlobalInfoBarPopIn">
-                    <PopInThemeAnimation TargetName="GlobalInfoBar" />
-                </Storyboard>
-                <Storyboard x:Name="GlobalInfoBarPopOut">
-                    <PopOutThemeAnimation TargetName="GlobalInfoBar" />
-                </Storyboard>
-            </InfoBar.Resources>
-        </InfoBar>
-    </Grid>
-
+    <Border
+        x:Name="DragBorder"
+        Padding="0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        AllowDrop="True"
+        BorderBrush="Transparent"
+        BorderThickness="2"
+        DragEnter="DragBorder_DragEnter"
+        DragLeave="DragBorder_DragLeave"
+        DragOver="DragBorder_DragOver">
+        <Grid>
+            <Frame x:Name="RootFrame" />
+            <InfoBar
+                x:Name="GlobalInfoBar"
+                MaxWidth="500"
+                Margin="0,20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                CloseButtonClick="GlobalInfoBar_CloseButtonClick">
+                <InfoBar.Resources>
+                    <Storyboard x:Name="GlobalInfoBarPopIn">
+                        <PopInThemeAnimation TargetName="GlobalInfoBar" />
+                    </Storyboard>
+                    <Storyboard x:Name="GlobalInfoBarPopOut">
+                        <PopOutThemeAnimation TargetName="GlobalInfoBar" />
+                    </Storyboard>
+                </InfoBar.Resources>
+            </InfoBar>
+        </Grid>
+    </Border>
 </windowex:WindowEx>

@@ -1,8 +1,8 @@
 using System;
+using System.Linq;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 
 using Serein.Core;
 using Serein.Pro.ViewModels;
@@ -11,6 +11,7 @@ namespace Serein.Pro.Views.Settings;
 
 public sealed partial class SettingPage : Page
 {
+    private Type? _currentPage;
     private readonly IServiceProvider _services;
     private SettingViewModel ViewModel { get; }
 
@@ -20,12 +21,22 @@ public sealed partial class SettingPage : Page
         ViewModel = _services.GetRequiredService<SettingViewModel>();
 
         InitializeComponent();
+
+        NavView.SelectedItem =
+            NavView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault((item) => item.Tag as Type == _currentPage) ??
+            NavView.MenuItems[0];
+        ContentFrame.Navigate(_currentPage ?? ViewModel.Connection);
     }
 
-    private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (SelectorBar.SelectedItem.Tag is not Type type)
+        if (args.InvokedItemContainer is not NavigationViewItem { Tag: Type type })
             type = typeof(BlankPage);
-        ContentFrame.Navigate(type,null ,new DrillInNavigationTransitionInfo());
+
+        if (ContentFrame.CurrentSourcePageType != type)
+        {
+            ContentFrame.Navigate(type, null, args.RecommendedNavigationTransitionInfo);
+            _currentPage = type;
+        }
     }
 }

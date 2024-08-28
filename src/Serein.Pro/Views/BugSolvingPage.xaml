@@ -10,7 +10,7 @@
 
     <!--
         To solve a crush caused by using Microsoft.UI.Xaml.Controls.SelectorBar
-        solution: https://github.com/microsoft/microsoft-ui-xaml/issues/9424#issuecomment-2035733908
+        solution: https://github.com/microsoft/microsoft-ui-xaml/issues/9424#issuecomment-2035668868
     -->
     <ItemsRepeater />
 </Page>

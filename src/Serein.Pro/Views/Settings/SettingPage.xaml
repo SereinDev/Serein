@@ -6,32 +6,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Serein.Pro.Views.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Border BorderBrush="{StaticResource ControlStrokeColorDefaultBrush}" BorderThickness="0,0,0,1">
-            <SelectorBar x:Name="SelectorBar" SelectionChanged="SelectorBar_SelectionChanged">
-                <SelectorBarItem
-                    IsSelected="True"
-                    Tag="{x:Bind ViewModel.Connection}"
-                    Text="连接" />
-                <SelectorBarItem Text="应用" />
-                <SelectorBarItem Text="反应" />
-                <SelectorBarItem Text="SSH" />
-                <SelectorBarItem Text="Web Api" />
-                <SelectorBarItem Text="关于" />
-            </SelectorBar>
-        </Border>
-
-        <Frame
-            x:Name="ContentFrame"
-            Grid.Row="1"
-            IsNavigationStackEnabled="False" />
-    </Grid>
+    <NavigationView
+        x:Name="NavView"
+        IsBackButtonVisible="Collapsed"
+        IsSettingsVisible="False"
+        ItemInvoked="NavView_ItemInvoked"
+        PaneDisplayMode="Top">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="连接" Tag="{x:Bind ViewModel.Connection}" />
+            <NavigationViewItem Content="应用" />
+            <NavigationViewItem Content="反应" />
+            <NavigationViewItem Content="SSH" />
+            <NavigationViewItem Content="Web Api" />
+            <NavigationViewItem Content="关于" Tag="{x:Bind ViewModel.About}" />
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" />
+    </NavigationView>
 </Page>

@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Serein.Pro_win-x64
-          path: ./src/Serein.Pro/bin/Debug/net8.0-windows10.0.19041.0/win-x64
+          path: ./src/Serein.Pro/bin/Debug/net8.0-windows10.0.19041/win-x64
 
       # Serein.Cli
       - name: Upload binary files(Serein.Cli_win-x64)

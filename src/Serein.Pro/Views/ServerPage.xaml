@@ -11,6 +11,13 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <MenuFlyout x:Name="TabViewMenuFlyout">
+            <MenuFlyoutItem Icon="Add" Text="添加" />
+            <MenuFlyoutItem Icon="Import" Text="导入" />
+        </MenuFlyout>
+    </Page.Resources>
+
     <TabView
         x:Name="TabView"
         Margin="0,5"

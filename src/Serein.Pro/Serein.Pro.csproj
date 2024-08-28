@@ -17,6 +17,7 @@
     <None Remove="Views\BugSolvingPage.xaml" />
     <None Remove="Views\MatchPage.xaml" />
     <None Remove="Views\ServerPage.xaml" />
+    <None Remove="Views\Settings\AboutPage.xaml" />
     <None Remove="Views\Settings\ConnectionSettingPage.xaml" />
     <None Remove="Views\Settings\SettingPage.xaml" />
   </ItemGroup>
@@ -31,6 +32,12 @@
     <PackageReference Include="WinUIEx" Version="2.3.2" />
 
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Settings\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

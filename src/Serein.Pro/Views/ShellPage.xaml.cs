@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
@@ -33,11 +34,9 @@ public sealed partial class ShellPage : Page
 
         ViewModel = SereinApp.Current!.Services.GetRequiredService<ShellViewModel>();
 
-        if (NavView.MenuItems.Count > 0 && NavView.MenuItems[0] is NavigationViewItem { Tag: Type type })
-        {
-            NavView.SelectedItem = NavView.MenuItems[0];
-            ContentFrame.Navigate(type);
-        }
+        NavView.SelectedItem = NavView.MenuItems[0];
+        ContentFrame.Navigate(typeof(HomePage));
+        ContentFrame.BackStack.Clear();
     }
 
     private void NavView_DisplayModeChanged(
@@ -62,7 +61,6 @@ public sealed partial class ShellPage : Page
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
     }
 
-
     private void Settings_ColorValuesChanged(UISettings sender, object args)
     {
         _dispatcherQueue.TryEnqueue(() => TitleBarHelper.UpdateTitleBar(AppTitleBar.ActualTheme));
@@ -70,11 +68,33 @@ public sealed partial class ShellPage : Page
 
     private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        if (args.IsSettingsInvoked)
-            ContentFrame.Navigate(typeof(SettingPage), null, args.RecommendedNavigationTransitionInfo);
-        else if (args.InvokedItemContainer is NavigationViewItem { Tag: Type type })
+        if (args.InvokedItemContainer is not NavigationViewItem { Tag: Type type })
+            type = args.IsSettingsInvoked ? typeof(SettingPage) : typeof(BlankPage);
+
+        if (ContentFrame.CurrentSourcePageType != type)
             ContentFrame.Navigate(type, null, args.RecommendedNavigationTransitionInfo);
-        else
-            ContentFrame.Navigate(typeof(BlankPage), null, args.RecommendedNavigationTransitionInfo);
+
+        NavView.IsBackEnabled = ContentFrame.CanGoBack;
+    }
+
+    private void NavView_BackRequested(
+        NavigationView sender,
+        NavigationViewBackRequestedEventArgs args
+    )
+    {
+        NavView.IsBackEnabled = ContentFrame.CanGoBack;
+
+        if (ContentFrame.CanGoBack)
+        {
+            ContentFrame.GoBack();
+            NavView.SelectedItem =
+                ContentFrame.CurrentSourcePageType == typeof(SettingPage)
+                    ? NavView.SettingsItem
+                    : NavView
+                        .MenuItems.OfType<NavigationViewItem>()
+                        .FirstOrDefault(
+                            (item) => item.Tag as Type == ContentFrame.CurrentSourcePageType
+                        ) ?? NavView.MenuItems[0];
+        }
     }
 }

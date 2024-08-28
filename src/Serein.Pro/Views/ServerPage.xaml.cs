@@ -22,6 +22,7 @@ public sealed partial class ServerPage : Page
     private readonly DispatcherQueue _dispatcherQueue;
     private readonly InfoBarProvider _infoBarProvider;
     private readonly MenuBarItemFlyout _tabMenuBarItem;
+    private readonly MainWindow _mainWindow;
     private CancellationTokenSource? _cancellationTokenSource;
 
     public ServerPage()
@@ -29,6 +30,7 @@ public sealed partial class ServerPage : Page
         _services = SereinApp.Current!.Services;
         _serverManager = _services.GetRequiredService<ServerManager>();
         _infoBarProvider = _services.GetRequiredService<InfoBarProvider>();
+        _mainWindow = _services.GetRequiredService<MainWindow>();
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         var item1 = new MenuFlyoutItem
@@ -135,7 +137,7 @@ public sealed partial class ServerPage : Page
 
     private void TabView_AddTabButtonClick(TabView sender, object args)
     {
-
+        TabViewMenuFlyout.ShowAt(sender);
     }
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)

@@ -21,4 +21,14 @@ public sealed partial class MatchPage : Page
 
         InitializeComponent();
     }
+
+    private void MenuFlyoutItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+
+    }
+
+    private void MenuBarItemFlyout_Opening(object sender, object e)
+    {
+
+    }
 }

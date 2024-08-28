@@ -44,6 +44,7 @@ public partial class App : Application
 
         builder.Services.AddTransient<ShellViewModel>();
         builder.Services.AddTransient<SettingViewModel>();
+        builder.Services.AddTransient<AboutViewModel>();
 
         builder.Services.AddSingleton<ILogger, NotificationLogger>();
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
