@@ -1,0 +1,28 @@
+<ui:Page
+    x:Class="Serein.Plus.Pages.Settings.CategoriesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="clr-namespace:Serein.Plus.Helpers"
+    xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="设置"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <ui:NavigationView
+            x:Name="NavigationView"
+            Grid.Row="1"
+            IsBackButtonVisible="Collapsed"
+            PaneDisplayMode="Top"
+            SelectionChanged="OnNavigationViewSelectionChanged">
+            <ui:Frame
+                x:Name="SubFrame"
+                helper:DisableNavigation.Disable="True"
+                Navigating="OnNavigating"
+                NavigationFailed="OnNavigationFailed" />
+        </ui:NavigationView>
+    </Grid>
+</ui:Page>

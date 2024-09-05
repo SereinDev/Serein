@@ -1,0 +1,103 @@
+<ui:Page
+    x:Class="Serein.Plus.Pages.Settings.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="关于"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/SettingPageBaseStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="版本" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="0,0,20,5" />
+                    </Style>
+
+                    <Style x:Key="ValueTextBlock" TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value="Consolas" />
+                    </Style>
+                </Grid.Resources>
+
+                <TextBlock Text="版本号" />
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource ValueTextBlock}"
+                    Text="{Binding Version, Mode=OneTime}" />
+
+                <TextBlock Grid.Row="1" Text="详细版本" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource ValueTextBlock}"
+                    Text="{Binding AssemblyInformationalVersion, Mode=OneTime}" />
+
+                <TextBlock Grid.Row="2" Text="程序集" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource ValueTextBlock}"
+                    Text="{Binding AssemblyVersion, Mode=OneTime}" />
+            </Grid>
+
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="版权信息" />
+
+            <TextBlock>
+                Copyright © 2022 Zaitonn. All Rights Reserved.<LineBreak />
+                此软件根据<Hyperlink NavigateUri="https://github.com/SereinDev/Serein?tab=GPL-3.0-1-ov-file#" RequestNavigate="OnRequestNavigate">
+                    GPL-3.0 license
+                </Hyperlink>
+                发行</TextBlock>
+
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="免责声明" />
+            <TextBlock Margin="0,5" TextWrapping="Wrap">
+                本程序不涉及分发、修改和传播Minecraft客户端及服务端，仅作为服务端的管理软件方便服务器管理员（软件用户）控制服务器，造成的侵权行为由用户自行承担<LineBreak />
+                · “Minecraft”是 Mojang Synergies AB 的商标<LineBreak />
+                · 此软件与Mojang Studio、网易、Microsoft没有从属关系<LineBreak />
+                · 使用本程序启动任何Minecraft服务端即代表您已阅读并同意了<Hyperlink NavigateUri="https://www.minecraft.net/zh-hans/eula" RequestNavigate="OnRequestNavigate">
+                    MINECRAFT 最终用户许可协议
+                </Hyperlink>
+                和<Hyperlink NavigateUri="https://account.mojang.com/documents/commercial_guidelines" RequestNavigate="OnRequestNavigate">
+                    MINECRAFT 商业使用准则
+                </Hyperlink>
+            </TextBlock>
+            <ui:HyperlinkButton Content="Github仓库" NavigateUri="https://github.com/SereinDev/Serein" />
+            <ui:HyperlinkButton Content="官网/文档" NavigateUri="https://sereindev.github.io/" />
+            <ui:HyperlinkButton Content="交流群" NavigateUri="https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv" />
+        </StackPanel>
+    </ScrollViewer>
+</ui:Page>

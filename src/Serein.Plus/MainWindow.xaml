@@ -1,0 +1,89 @@
+﻿<Window
+    x:Class="Serein.Plus.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Plus"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tb="http://www.hardcodet.net/taskbar"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:utils="clr-namespace:Serein.Plus.Utils"
+    x:Name="Window"
+    Title="Serein.Plus"
+    Width="800"
+    Height="450"
+    MinWidth="600"
+    MinHeight="340"
+    ui:ThemeManager.IsThemeAware="True"
+    ui:TitleBar.ExtendViewIntoTitleBar="True"
+    ui:TitleBar.Height="36"
+    ui:WindowHelper.SystemBackdropType="Mica"
+    ui:WindowHelper.UseModernWindowStyle="True"
+    Closing="Window_Closing"
+    ContentRendered="Window_ContentRendered"
+    Deactivated="Window_Deactivated"
+    Icon="../../logo.ico"
+    IsVisibleChanged="Window_IsVisibleChanged"
+    Loaded="Window_Loaded"
+    mc:Ignorable="d">
+    <Grid>
+        <tb:TaskbarIcon
+            x:Name="AppTaskbarIcon"
+            x:FieldModifier="public"
+            IconSource="../../logo.ico"
+            MenuActivation="RightClick"
+            TrayBalloonTipClicked="AppTaskbarIcon_TrayBalloonTipClicked"
+            Visibility="Visible">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        x:Name="HideMenuItem"
+                        Click="MenuItem_Click"
+                        Header="隐藏"
+                        IsCheckable="True"
+                        Tag="Hide">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.StopPresenting}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        x:Name="TopMostMenuItem"
+                        Click="MenuItem_Click"
+                        Header="置顶"
+                        IsCheckable="True"
+                        IsChecked="{Binding Topmost, ElementName=Window}"
+                        IsEnabled="{Binding IsVisible, ElementName=AppTaskbarIcon, Mode=OneWay}"
+                        Tag="TopMost">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Pinned}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="退出"
+                        Tag="Exit">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.SignOut}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+
+        <ui:Frame x:Name="RootFrame" />
+
+        <ui:InfoBar
+            x:Name="GlobalInfoBar"
+            Margin="0,0,0,10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            IsClosable="True"
+            IsOpen="False"
+            RenderTransformOrigin="0.5,0">
+            <ui:InfoBar.RenderTransform>
+                <TranslateTransform />
+            </ui:InfoBar.RenderTransform>
+        </ui:InfoBar>
+    </Grid>
+</Window>

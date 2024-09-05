@@ -1,0 +1,109 @@
+<ui:Page
+    x:Class="Serein.Plus.Pages.ConnectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:Serein.Plus.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Plus.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="连接"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border
+            x:Name="ContextMenuBorder"
+            Padding="5"
+            BorderBrush="{DynamicResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="5">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="状态" />
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Text="{Binding Status}" />
+
+                <TextBlock Grid.Row="2" Text="时长" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Text="{Binding Time}" />
+
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="15,5" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+            </Grid.Resources>
+
+            <Button
+                Click="ControlButton_Click"
+                Content="连接"
+                Tag="Open" />
+            <Button
+                Grid.Column="1"
+                Click="ControlButton_Click"
+                Content="断开"
+                Tag="Close" />
+        </Grid>
+
+        <Border
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Margin="15,0,0,0"
+            BorderBrush="{DynamicResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="5">
+            <control:ConsoleTextEditor
+                x:Name="Console"
+                Margin="1"
+                Background="{DynamicResource TextControlBackgroundPointerOver}"
+                FontSize="10pt"
+                Foreground="{DynamicResource TextControlForegroundPointerOver}" />
+        </Border>
+    </Grid>
+</ui:Page>

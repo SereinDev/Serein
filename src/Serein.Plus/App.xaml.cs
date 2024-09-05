@@ -7,15 +7,17 @@ using Microsoft.Extensions.Logging;
 using Serein.Core;
 using Serein.Core.Models.Output;
 using Serein.Plus.Loggers;
-using Serein.Plus.Ui.Pages;
-using Serein.Plus.Ui.Pages.Function;
-using Serein.Plus.Ui.Pages.Server;
-using Serein.Plus.Ui.Pages.Settings;
+using Serein.Plus.Pages;
+using Serein.Plus.Pages.Settings;
+using Serein.Plus.Services;
+using Serein.Plus.ViewModels;
 
 namespace Serein.Plus;
 
 public partial class App : Application
 {
+    private readonly SereinApp _app = Build();
+
     public App()
     {
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
@@ -24,7 +26,6 @@ public partial class App : Application
             Shutdown();
         };
 
-        Build();
         ShutdownMode = ShutdownMode.OnMainWindowClose;
     }
 
@@ -33,15 +34,28 @@ public partial class App : Application
         var builder = new SereinAppBuilder();
         builder.ConfigureService();
 
-        builder.Services.AddSingleton<NotImplPage>();
+        builder.Services.AddSingleton<InfoBarProvider>();
+        builder.Services.AddSingleton<BalloonTipProvider>();
+        
+        builder.Services.AddSingleton<MainWindow>();
+        builder.Services.AddTransient<NotImplPage>();
 
+        builder.Services.AddSingleton<ShellPage>();
+        builder.Services.AddTransient<ShellViewModel>();
+
+        builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
+
         builder.Services.AddSingleton<ConnectionPage>();
+        builder.Services.AddTransient<ConnectionViewModel>();
+
+        builder.Services.AddSingleton<PluginPage>();
+        builder.Services.AddTransient<PluginViewModel>();
+
         builder.Services.AddSingleton<PluginConsolePage>();
         builder.Services.AddSingleton<PluginListPage>();
-        builder.Services.AddSingleton<PluginPage>();
 
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
@@ -54,5 +68,15 @@ public partial class App : Application
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
         builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         return builder.Build();
+    }
+
+    private void Application_Startup(object sender, StartupEventArgs e)
+    {
+        _app.Services.GetRequiredService<MainWindow>().Show();
+    }
+
+    private void Application_Exit(object sender, ExitEventArgs e)
+    {
+        _app.StopAsync();
     }
 }

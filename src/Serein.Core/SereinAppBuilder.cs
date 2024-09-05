@@ -68,6 +68,7 @@ public sealed class SereinAppBuilder
         Services.AddSingleton<WebSocketService>();
         Services.AddSingleton<ReverseWebSocketService>();
         Services.AddSingleton<WsConnectionManager>();
+        Services.AddSingleton<PacketHandler>();
         Services.AddSingleton<HttpServer>();
         Services.AddTransient<ApiMap>();
         Services.AddTransient<IPBannerModule>();
