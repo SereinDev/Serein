@@ -23,7 +23,6 @@
         </Grid.RowDefinitions>
 
         <Border
-            x:Name="ContextMenuBorder"
             Padding="5"
             BorderBrush="{DynamicResource SystemControlBackgroundBaseLowRevealBorderBrush}"
             BorderThickness="1"
@@ -44,10 +43,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="状态" />

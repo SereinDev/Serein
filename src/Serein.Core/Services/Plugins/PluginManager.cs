@@ -59,81 +59,87 @@ public class PluginManager(
 
     public void Load()
     {
-        if (Loading)
-            throw new InvalidOperationException("正在加载插件");
-
-        Loading = true;
-
-        if (!Directory.Exists(PathConstants.PluginsDirectory))
+        try
         {
-            Directory.CreateDirectory(PathConstants.PluginsDirectory);
+            if (Loading)
+                throw new InvalidOperationException("正在加载插件");
+
+            Loading = true;
+
+            if (!Directory.Exists(PathConstants.PluginsDirectory))
+            {
+                Directory.CreateDirectory(PathConstants.PluginsDirectory);
+                Loading = false;
+                return;
+            }
+
+            _logger.LogDebug("开始加载插件");
+            _pluginLogger.Log(LogLevel.Trace, string.Empty, "开始加载插件");
+
+            foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
+            {
+                if (!File.Exists(Path.Join(dir, PathConstants.PluginInfoFileName)))
+                    continue;
+
+                PluginInfo pluginInfo;
+                try
+                {
+                    pluginInfo =
+                        JsonSerializer.Deserialize<PluginInfo>(
+                            File.ReadAllText(Path.Join(dir, PathConstants.PluginInfoFileName)),
+                            JsonSerializerOptionsFactory.SnakeCase
+                        ) ?? throw new InvalidDataException("插件信息为空");
+
+                    if (string.IsNullOrWhiteSpace(pluginInfo.Id))
+                        throw new InvalidOperationException("Id不可为空");
+                }
+                catch (Exception e)
+                {
+                    _pluginLogger.Log(LogLevel.Error, Path.GetFileName(dir), e.Message);
+                    continue;
+                }
+
+                try
+                {
+                    if (
+                        _jsPluginLoader.JsPlugins.ContainsKey(pluginInfo.Id)
+                        || _netPluginLoader.NetPlugins.ContainsKey(pluginInfo.Id)
+                    )
+                        throw new InvalidOperationException("插件Id重复");
+
+                    _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载");
+
+                    if (pluginInfo.Type == PluginType.Js)
+                        _jsPluginLoader.Load(pluginInfo, dir);
+                    else if (pluginInfo.Type == PluginType.Net)
+                        _netPluginLoader.Load(pluginInfo, dir);
+                    else
+                        throw new NotSupportedException("未指定插件类型");
+                }
+                catch (Exception e)
+                {
+                    _pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
+                }
+
+                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
+            }
+
+            _logger.LogDebug("开始加载Js单文件插件");
+            _jsPluginLoader.LoadSingle();
+
+            _eventDispatcher.Dispatch(Event.PluginsLoaded);
+            _pluginLogger.Log(
+                LogLevel.Trace,
+                string.Empty,
+                $"所有插件加载完毕。已加载{_jsPluginLoader.Plugins.Count + _netPluginLoader.Plugins.Count}个插件"
+            );
+
+            PluginsLoaded?.Invoke(this, EventArgs.Empty);
+        }
+        finally
+        {
             Loading = false;
-            return;
         }
-
-        _logger.LogDebug("开始加载插件");
-        _pluginLogger.Log(LogLevel.Trace, string.Empty, "开始加载插件");
-
-        foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
-        {
-            if (!File.Exists(Path.Join(dir, PathConstants.PluginInfoFileName)))
-                continue;
-
-            PluginInfo pluginInfo;
-            try
-            {
-                pluginInfo =
-                    JsonSerializer.Deserialize<PluginInfo>(
-                        File.ReadAllText(Path.Join(dir, PathConstants.PluginInfoFileName)),
-                        JsonSerializerOptionsFactory.SnakeCase
-                    ) ?? throw new InvalidDataException("插件信息为空");
-
-                if (string.IsNullOrWhiteSpace(pluginInfo.Id))
-                    throw new InvalidOperationException("Id不可为空");
-            }
-            catch (Exception e)
-            {
-                _pluginLogger.Log(LogLevel.Error, Path.GetFileName(dir), e.Message);
-                continue;
-            }
-
-            try
-            {
-                if (
-                    _jsPluginLoader.JsPlugins.ContainsKey(pluginInfo.Id)
-                    || _netPluginLoader.NetPlugins.ContainsKey(pluginInfo.Id)
-                )
-                    throw new InvalidOperationException("插件Id重复");
-
-                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载");
-
-                if (pluginInfo.Type == PluginType.Js)
-                    _jsPluginLoader.Load(pluginInfo, dir);
-                else if (pluginInfo.Type == PluginType.Net)
-                    _netPluginLoader.Load(pluginInfo, dir);
-                else
-                    throw new NotSupportedException("未指定插件类型");
-            }
-            catch (Exception e)
-            {
-                _pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
-            }
-
-            _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
-        }
-
-        _logger.LogDebug("开始加载Js单文件插件");
-        _jsPluginLoader.LoadSingle();
-
-        Loading = false;
-        _eventDispatcher.Dispatch(Event.PluginsLoaded);
-        _pluginLogger.Log(
-            LogLevel.Trace,
-            string.Empty,
-            $"所有插件加载完毕。已加载{_jsPluginLoader.Plugins.Count + _netPluginLoader.Plugins.Count}个插件"
-        );
-
-        PluginsLoaded?.Invoke(this, EventArgs.Empty);
     }
 
     public void Unload()

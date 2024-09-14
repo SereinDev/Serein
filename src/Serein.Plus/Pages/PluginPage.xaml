@@ -40,6 +40,7 @@
 
                 <ui:NavigationViewItem
                     Content="市场"
+                    IsEnabled="False"
                     Tag="{Binding Market}"
                     ToolTip="从社区下载插件">
                     <ui:NavigationViewItem.Icon>

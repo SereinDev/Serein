@@ -1,6 +1,6 @@
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace Serein.Plus.Utils;
+namespace Serein.Plus.Models.ConsoleTextEditor;
 
 /// <summary>
 /// Gags ANSI color codes and control sequences.

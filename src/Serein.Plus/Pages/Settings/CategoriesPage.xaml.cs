@@ -6,7 +6,6 @@ using System.Windows.Navigation;
 using iNKORE.UI.WPF.Modern.Controls;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -14,12 +13,12 @@ namespace Serein.Plus.Pages.Settings;
 
 public partial class CategoriesPage : Page
 {
-    private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
+    private readonly IServiceProvider _services;
 
-    public CategoriesPage(IHost host)
+    public CategoriesPage(IServiceProvider services)
     {
-        _host = host;
+        _services = services;
+
         InitializeComponent();
         ConfigureNavigation();
     }
@@ -31,60 +30,37 @@ public partial class CategoriesPage : Page
             new()
             {
                 Content = "连接",
-                Tag = nameof(ConnectionSettingPage)
+                Tag = typeof(ConnectionSettingPage)
             },
             new()
             {
                 Content = "反应",
-                Tag = nameof(ReactionSettingPage)
+                Tag = typeof(ReactionSettingPage)
             },
             new()
             {
                 Content = "应用",
-                Tag = nameof(AppSettingPage)
-            },
-            new()
-            {
-                Content = "页面",
-                Tag = nameof(PageSettingPage)
+                Tag = typeof(AppSettingPage)
             },
             new()
             {
                 Content = "关于",
-                Tag = nameof(AboutPage)
+                Tag = typeof(AboutPage)
             },
         };
         NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().First();
     }
 
-    private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+    private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is not NavigationViewItem { Tag: Type type })
+            type = typeof(NotImplPage);
+
+        SubFrame.Navigate(_services.GetRequiredService(type));
+    }
+
+    private void SubFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
     {
         e.Handled = true;
-    }
-
-    private void OnNavigating(object sender, NavigatingCancelEventArgs e)
-    {
-        e.Cancel = e.NavigationMode != NavigationMode.New;
-    }
-
-    private void OnNavigationViewSelectionChanged(
-        object sender,
-        NavigationViewSelectionChangedEventArgs e
-    )
-    {
-        if (e.SelectedItem is not NavigationViewItem item || item is null)
-            return;
-
-        Page page = item.Tag?.ToString() switch
-        {
-            nameof(AboutPage) => Services.GetRequiredService<AboutPage>(),
-            nameof(AppSettingPage) => Services.GetRequiredService<AppSettingPage>(),
-            nameof(ConnectionSettingPage) => Services.GetRequiredService<ConnectionSettingPage>(),
-            nameof(PageSettingPage) => Services.GetRequiredService<PageSettingPage>(),
-            nameof(ReactionSettingPage) => Services.GetRequiredService<ReactionSettingPage>(),
-            _ => Services.GetRequiredService<NotImplPage>(),
-        };
-
-        SubFrame.Navigate(page);
     }
 }

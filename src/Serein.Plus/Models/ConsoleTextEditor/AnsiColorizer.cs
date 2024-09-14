@@ -5,7 +5,9 @@ using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace Serein.Plus.Utils;
+using Serein.Plus.Utils;
+
+namespace Serein.Plus.Models.ConsoleTextEditor;
 
 public partial class AnsiColorizer : DocumentColorizingTransformer
 {

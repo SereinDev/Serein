@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
-using Serein.Plus.Loggers;
 using Serein.Plus.Pages;
 using Serein.Plus.Pages.Settings;
 using Serein.Plus.Services;
+using Serein.Plus.Services.Loggers;
 using Serein.Plus.ViewModels;
 
 namespace Serein.Plus;
@@ -34,6 +34,7 @@ public partial class App : Application
         var builder = new SereinAppBuilder();
         builder.ConfigureService();
 
+        builder.Services.AddSingleton<TitleUpdater>();
         builder.Services.AddSingleton<InfoBarProvider>();
         builder.Services.AddSingleton<BalloonTipProvider>();
         
@@ -55,12 +56,13 @@ public partial class App : Application
         builder.Services.AddTransient<PluginViewModel>();
 
         builder.Services.AddSingleton<PluginConsolePage>();
+        builder.Services.AddTransient<PluginConsoleViewModel>();
+
         builder.Services.AddSingleton<PluginListPage>();
 
         builder.Services.AddSingleton<AboutPage>();
         builder.Services.AddSingleton<AppSettingPage>();
         builder.Services.AddSingleton<ConnectionSettingPage>();
-        builder.Services.AddSingleton<PageSettingPage>();
         builder.Services.AddSingleton<ReactionSettingPage>();
         builder.Services.AddSingleton<CategoriesPage>();
 

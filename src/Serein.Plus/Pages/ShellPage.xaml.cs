@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -8,6 +7,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
 using Serein.Plus.Pages.Settings;
+using Serein.Plus.Services;
 using Serein.Plus.ViewModels;
 
 namespace Serein.Plus.Pages;
@@ -15,15 +15,20 @@ namespace Serein.Plus.Pages;
 public partial class ShellPage : Page
 {
     private readonly IServiceProvider _services;
+    private readonly TitleUpdater _titleUpdater;
+
     public ShellViewModel ViewModel { get; }
 
-    public ShellPage(IServiceProvider services, ShellViewModel shellViewModel)
+    public ShellPage(IServiceProvider services,TitleUpdater titleUpdater, ShellViewModel shellViewModel)
     {
         _services = services;
+        _titleUpdater = titleUpdater;
         ViewModel = shellViewModel;
-        DataContext = ViewModel;
 
         InitializeComponent();
+
+        DataContext = ViewModel;
+        AppTitleBarText.DataContext = _titleUpdater;
         NavView.SelectedItem = NavView.MenuItems[0];
         ContentFrame.Navigate(_services.GetRequiredService<HomePage>());
     }

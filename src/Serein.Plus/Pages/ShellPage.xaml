@@ -23,21 +23,8 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
-        <Rectangle
-            x:Name="XboxContentSafeRect"
-            Width="48"
-            Canvas.ZIndex="0"
-            Fill="Transparent"
-            Visibility="Collapsed" />
-
         <Grid
             x:Name="AppTitleBar"
-            Grid.Column="1"
             Height="{Binding ElementName=NavView, Path=CompactPaneLength}"
             VerticalAlignment="Top"
             Canvas.ZIndex="1"
@@ -58,10 +45,11 @@
                 Margin="10,0"
                 VerticalAlignment="Center"
                 Style="{DynamicResource CaptionTextBlockStyle}"
-                Text="Serein.Plus"
+                Text="{Binding CustomTitle}"
                 TextTrimming="CharacterEllipsis"
                 TextWrapping="NoWrap" />
         </Grid>
+
         <ui:NavigationView
             x:Name="NavView"
             Grid.Column="1"

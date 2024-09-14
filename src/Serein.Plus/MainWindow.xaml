@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    xmlns:utils="clr-namespace:Serein.Plus.Utils"
+    xmlns:utils="clr-namespace:Serein.Plus.Utils" xmlns:services="clr-namespace:Serein.Plus.Services" d:DataContext="{d:DesignInstance Type=services:TitleUpdater}"
     x:Name="Window"
-    Title="Serein.Plus"
+    Title="{Binding CustomTitle}"
     Width="800"
     Height="450"
     MinWidth="600"
@@ -32,6 +32,7 @@
             x:FieldModifier="public"
             IconSource="../../logo.ico"
             MenuActivation="RightClick"
+            ToolTip="{Binding CustomTitle}"
             TrayBalloonTipClicked="AppTaskbarIcon_TrayBalloonTipClicked"
             Visibility="Visible">
             <tb:TaskbarIcon.ContextMenu>

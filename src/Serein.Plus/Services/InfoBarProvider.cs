@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 
 using iNKORE.UI.WPF.Modern.Controls;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using Serein.Plus.Models;
 
 namespace Serein.Plus.Services;
 
-public class InfoBarProvider(MainWindow mainWindow)
+public class InfoBarProvider(IServiceProvider serviceProvider)
 {
     private readonly BlockingCollection<InfoBarTask> _tasks = new(new ConcurrentQueue<InfoBarTask>());
-    private readonly MainWindow _mainWindow = mainWindow;
+    private readonly Lazy<MainWindow> _mainWindow = new(serviceProvider.GetRequiredService<MainWindow>);
     private bool _isRunning;
 
     public void Enqueue(
@@ -46,7 +48,7 @@ public class InfoBarProvider(MainWindow mainWindow)
             if (task.CancellationToken.IsCancellationRequested)
                 continue;
 
-            _mainWindow.Dispatcher.Invoke(_mainWindow.ShowInfoBar, task);
+            _mainWindow.Value.Dispatcher.Invoke(_mainWindow.Value.ShowInfoBar, task);
         }
     }
 }

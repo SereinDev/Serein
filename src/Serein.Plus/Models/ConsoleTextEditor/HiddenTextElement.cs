@@ -2,7 +2,7 @@ using System.Windows.Media.TextFormatting;
 
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace Serein.Plus.Utils;
+namespace Serein.Plus.Models.ConsoleTextEditor;
 
 public class HiddenTextElement(int documentLength) : VisualLineElement(1, documentLength)
 {

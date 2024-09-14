@@ -94,15 +94,14 @@ public partial class MatchPage : Page
                         (r) =>
                         {
                             if (r.Result == ContentDialogResult.Primary)
-                                Dispatcher.Invoke(() =>
-                                {
-                                    m3.Command = m4.Command;
-                                    m3.RegExp = m4.RegExp;
-                                    m3.Description = m4.Description;
-                                    m3.FieldType = m4.FieldType;
-                                    m3.RequireAdmin = m4.RequireAdmin;
-                                    m3.Exclusions = m4.Exclusions;
-                                });
+                            {
+                                m3.Command = m4.Command;
+                                m3.RegExp = m4.RegExp;
+                                m3.Description = m4.Description;
+                                m3.FieldType = m4.FieldType;
+                                m3.RequireAdmin = m4.RequireAdmin;
+                                m3.Exclusions = m4.Exclusions;
+                            };
                         }
                     );
                 break;

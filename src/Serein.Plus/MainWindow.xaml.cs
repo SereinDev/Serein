@@ -17,7 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Serein.Core;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
@@ -25,49 +24,48 @@ using Serein.Plus.Commands;
 using Serein.Plus.Dialogs;
 using Serein.Plus.Models;
 using Serein.Plus.Pages;
+using Serein.Plus.Services;
 
 namespace Serein.Plus;
 
 public partial class MainWindow : Window
 {
     private bool _isTopMost;
-    private readonly System.Timers.Timer _timer;
     private readonly IServiceProvider _services;
     private readonly ServerManager _serverManager;
-    private readonly CommandParser _commandParser;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
-
+    private readonly TitleUpdater _titleUpdater;
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
+
 
     public MainWindow(
         IServiceProvider services,
         ServerManager serverManager,
-        CommandParser commandParser,
         SettingProvider settingProvider,
-        EventDispatcher eventDispatcher
+        EventDispatcher eventDispatcher,
+        TitleUpdater titleUpdater
     )
     {
         _services = services;
         _serverManager = serverManager;
-        _commandParser = commandParser;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
-
+        _titleUpdater = titleUpdater;
 
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
 
         InitializeComponent();
-        UpdateTitle();
         AppTaskbarIcon.ContextMenu.DataContext = this;
         AppTaskbarIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
 
-        _timer = new(2500) { Enabled = true };
-
         RootFrame.Navigate(_services.GetRequiredService<NotImplPage>());
+
+        DataContext = _titleUpdater;
+        _titleUpdater.Update();
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -103,21 +101,6 @@ public partial class MainWindow : Window
         WindowState = WindowState.Normal;
     }
 
-    private void UpdateTitle()
-    {
-        Dispatcher.Invoke(() =>
-        {
-            var text = _commandParser.ApplyVariables(
-                _settingProvider.Value.Application.CustomTitle,
-                null,
-                true
-            );
-
-            AppTaskbarIcon.ToolTipText = Title = !string.IsNullOrEmpty(text.Trim())
-                ? $"Serein.Plus - {text}"
-                : "Serein.Plus";
-        });
-    }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
@@ -130,13 +113,6 @@ public partial class MainWindow : Window
                 _ => ElementTheme.Default,
             }
         );
-
-        _timer.Elapsed += (_, _) => UpdateTitle();
-        _settingProvider.Value.Application.PropertyChanged += (_, e) =>
-        {
-            if (e.PropertyName == nameof(SettingProvider.Value.Application.CustomTitle))
-                UpdateTitle();
-        };
 
         Task.Delay(1000)
             .ContinueWith((_) =>

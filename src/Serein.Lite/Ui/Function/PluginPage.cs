@@ -77,7 +77,7 @@ public partial class PluginPage : UserControl
         PluginInfoLabel.Text =
             PluginListView.SelectedItems.Count == 1
             && PluginListView.SelectedItems[0].Tag is IPlugin plugin
-                ? $"Id: {plugin.Info.Id} ({plugin.FileName.Replace(@"\", "/")})"
+                ? $"Id: {plugin.Info.Id} ({plugin.FileName})"
                 : string.Empty;
     }
 

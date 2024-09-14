@@ -29,6 +29,7 @@ public partial class PanelTabItem : TabItem
         InitializeComponent();
         UpdateInfo();
         Console.EnableAnsiColor();
+        Console.EnableLogLevelHighlight(true);
 
         _timer = new(2500) { Enabled = true };
         _timer.Elapsed += (_, _) => UpdateInfo();

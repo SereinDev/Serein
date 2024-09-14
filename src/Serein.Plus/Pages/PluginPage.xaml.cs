@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Windows.Navigation;
 
 using iNKORE.UI.WPF.Modern.Controls;

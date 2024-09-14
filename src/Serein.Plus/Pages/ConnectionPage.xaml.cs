@@ -31,6 +31,8 @@ public partial class ConnectionPage : Page
         _timer = new(2500) { Enabled = true };
         _timer.Elapsed += UpdateInfo;
         _wsConnectionManager.PropertyChanged += UpdateInfo;
+
+        Console.EnableLogLevelHighlight();
     }
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)

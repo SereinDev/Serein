@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Serein.Core;
 using Serein.Core.Services.Data;
-using Serein.Plus.Utils;
+using Serein.Plus.Models.ConsoleTextEditor;
 
 namespace Serein.Plus.Controls;
 
@@ -31,6 +31,11 @@ public class ConsoleTextEditor : TextEditor
         TextArea.TextView.LineTransformers.Add(new AnsiColorizer());
     }
 
+    public void EnableLogLevelHighlight(bool onlySereinHeader = false)
+    {
+        TextArea.TextView.LineTransformers.Add(new LineHeaderColorizer(onlySereinHeader));
+    }
+
     private static void UpdateLines(object? sender, PropertyChangedEventArgs e)
     {
         s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
@@ -47,9 +52,6 @@ public class ConsoleTextEditor : TextEditor
         Document.UndoStack.SizeLimit = 0;
         TextArea.TextView.Options.EnableHyperlinks = false;
         TextArea.TextView.Options.EnableEmailHyperlinks = false;
-
-        TextArea.TextView.ElementGenerators.Insert(0, new HideLogLevelPrefixElementGenerator());
-        TextArea.TextView.LineTransformers.Add(new LogLevelColorizer());
     }
 
     public void AppendLine(string line)
@@ -71,31 +73,32 @@ public class ConsoleTextEditor : TextEditor
 
     public void AppendInfoLine(string line)
     {
-        var text = $"{LogLevelColorizer.Prefix}[Info] {line}";
-        AppendLine(text);
+        AppendLine($"[Info] {line}");
     }
 
     public void AppendWarnLine(string line)
     {
-        var text = $"{LogLevelColorizer.Prefix}[Warn] {line}";
-        AppendLine(text);
+        AppendLine($"[Warn] {line}");
     }
 
     public void AppendErrorLine(string line)
     {
-        var text = $"{LogLevelColorizer.Prefix}[Error] {line}";
+        var text = $"[Error] {line}";
         AppendLine(text);
     }
 
     public void AppendReceivedMsgLine(string line)
     {
-        var text = $"{LogLevelColorizer.Prefix}[Recv] {line}";
-        AppendLine(text);
+        AppendLine($"[Recv] {line}");
     }
 
     public void AppendSentMsgLine(string line)
     {
-        var text = $"{LogLevelColorizer.Prefix}[Sent] {line}";
-        AppendLine(text);
+        AppendLine($"[Sent] {line}");
+    }
+
+    public void AppendNoticeLine(string line)
+    {
+        AppendLine($"[Serein] {line}");
     }
 }
