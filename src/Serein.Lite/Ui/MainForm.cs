@@ -287,9 +287,9 @@ public partial class MainForm : Form
         if (SereinApp.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
 
-        _host.StartAsync();
         _timer.Start();
         base.OnShown(e);
+        Task.Delay(500).ContinueWith((_) => _host.StartAsync());
     }
 
     private void NotifyIcon_DoubleClick(object sender, EventArgs e)

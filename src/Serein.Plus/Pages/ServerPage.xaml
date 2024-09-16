@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="服务器"
+    d:DataContext="{d:DesignInstance Type=local:ServerPage}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="Page_Loaded"
@@ -16,6 +17,41 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TabControl x:Name="TabControl" ui:TabControlHelper.TabWidthMode="SizeToContent" />
+        <TabControl
+            x:Name="TabControl"
+            Padding="5,5,5,0"
+            ui:TabControlHelper.IsAddTabButtonVisible="False"
+            ui:TabControlHelper.TabWidthMode="SizeToContent"
+            ContextMenuOpening="TabControl_ContextMenuOpening">
+            <TabControl.Resources>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
+                    <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
+                </ResourceDictionary>
+            </TabControl.Resources>
+
+            <TabControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="添加"
+                        Tag="Add">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="导入..."
+                        Tag="Import">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Import}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </TabControl.ContextMenu>
+
+        </TabControl>
     </Grid>
 </ui:Page>

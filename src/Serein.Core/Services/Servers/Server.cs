@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 
 using Microsoft.Extensions.Logging;
 
@@ -34,21 +34,24 @@ public class Server
     public Configuration Configuration { get; }
     public ServerPluginManager PluginManager { get; }
 
-    private readonly List<string> _commandHistory;
-    private readonly List<string> _cache;
-    private readonly Timer _updateTimer;
-    private readonly ServerInfo _serverInfo;
+    private CancellationTokenSource? _restartCancellationTokenSource;
     private BinaryWriter? _inputWriter;
     private Process? _serverProcess;
     private RestartStatus _restartStatus;
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
+
+
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
     private readonly string _id;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly List<string> _commandHistory;
+    private readonly List<string> _cache;
+    private readonly System.Timers.Timer _updateTimer;
+    private readonly ServerInfo _serverInfo;
     public event EventHandler? ServerStatusChanged;
     public event EventHandler<ServerOutputEventArgs>? ServerOutput;
 
@@ -106,7 +109,7 @@ public class Server
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
-        _isTerminated = true;
+        _isTerminated = false;
         _restartStatus = RestartStatus.None;
         _serverInfo.OutputLines = 0;
         _serverInfo.InputLines = 0;
@@ -127,6 +130,7 @@ public class Server
         _serverProcess.OutputDataReceived += OnOutputDataReceived;
 
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
+        _restartCancellationTokenSource?.Cancel();
         ServerOutput?.Invoke(
             this,
             new(ServerOutputType.Information, $"“{Configuration.FileName}”启动中")
@@ -138,6 +142,9 @@ public class Server
 
     public void Stop()
     {
+        if (CancelRestart())
+            return;
+
         if (Status != ServerStatus.Running || _serverProcess is null)
             throw new InvalidOperationException("服务器未运行");
 
@@ -160,12 +167,8 @@ public class Server
             else return;
 
         foreach (string command in Configuration.StopCommands)
-        {
             if (!string.IsNullOrEmpty(command))
-            {
                 Input(command);
-            }
-        }
     }
 
     internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
@@ -175,7 +178,10 @@ public class Server
         else if (command == "start")
             Start();
         else if (command == "stop")
+        {
             _restartStatus = RestartStatus.None;
+            _restartCancellationTokenSource?.Cancel();
+        }
     }
 
     public void Input(
@@ -222,8 +228,21 @@ public class Server
         _matcher.MatchServerInputAsync(_id, command);
     }
 
+    public void RequestRestart()
+    {
+        if (_restartStatus != RestartStatus.None)
+            throw new InvalidOperationException("正在等待重启");
+
+        Stop();
+
+        _restartStatus = RestartStatus.Waiting;
+    }
+
     public void Terminate()
     {
+        if (CancelRestart())
+            return;
+
         if (Status != ServerStatus.Running)
             throw new InvalidOperationException("服务器未运行");
 
@@ -240,18 +259,19 @@ public class Server
             new(ServerOutputType.Information, $"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})")
         );
 
-        if (Configuration.AutoRestart && !_isTerminated)
-            if (
-                _restartStatus == RestartStatus.Waiting
-                || _restartStatus == RestartStatus.None && exitCode != 0
-            )
-                _ = WaitAndRestartAsync();
-
-        if (!_eventDispatcher.Dispatch(Event.ServerExited, _id, exitCode, DateTime.Now))
-            return;
+        if (
+            _restartStatus == RestartStatus.Waiting
+            || _restartStatus == RestartStatus.None && exitCode != 0 && Configuration.AutoRestart && !_isTerminated
+        )
+            Task.Run(WaitAndRestart);
 
         _serverInfo.ExitTime = _serverProcess?.ExitTime;
         _serverProcess = null;
+
+        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
+
+        if (!_eventDispatcher.Dispatch(Event.ServerExited, _id, exitCode, DateTime.Now))
+            return;
 
         _reactionManager.TriggerAsync(
             exitCode == 0
@@ -259,7 +279,6 @@ public class Server
                 : ReactionType.ServerExitedUnexpectedly,
             new(_id)
         );
-        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
     }
 
     private void OnOutputDataReceived(object? sender, DataReceivedEventArgs e)
@@ -292,29 +311,43 @@ public class Server
         _matcher.MatchServerOutputAsync(_id, filtered);
     }
 
-    private async Task WaitAndRestartAsync()
+    private bool CancelRestart()
     {
-        var i = 0;
+        if (_restartCancellationTokenSource is not null && !_restartCancellationTokenSource.IsCancellationRequested)
+        {
+            _restartCancellationTokenSource.Cancel();
+            ServerOutput?.Invoke(
+                  this,
+                  new(ServerOutputType.Information, "重启已取消")
+                  );
+            return true;
+        }
 
+        return false;
+    }
+
+    private void WaitAndRestart()
+    {
         _restartStatus = RestartStatus.Preparing;
+        _restartCancellationTokenSource = new();
+
         ServerOutput?.Invoke(
             this,
             new(ServerOutputType.Information, $"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器")
         );
-        while (i < 50 && _restartStatus == RestartStatus.Preparing)
-        {
-            await Task.Delay(100);
-            i++;
-        }
 
-        try
+        Task.Delay(5000, _restartCancellationTokenSource.Token).ContinueWith((task) =>
         {
-            Start();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("服务器[{}] 重启失败：{}", _id, e.Message);
-        }
+            if (!task.IsCanceled)
+                try
+                {
+                    Start();
+                }
+                catch (Exception e)
+                {
+                    ServerOutput?.Invoke(this, new(ServerOutputType.Error, e.Message));
+                }
+        });
     }
 
     private async Task UpdateInfo()

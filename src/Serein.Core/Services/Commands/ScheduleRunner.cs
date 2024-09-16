@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using System.Timers;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
@@ -10,19 +9,18 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ScheduleRunner(IHost host, CommandRunner commandRunner) : IHostedService
+public class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner commandRunner) : IHostedService
 {
+    private readonly ScheduleProvider _scheduleProvider = scheduleProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
-
-    private ScheduleProvider ScheduleProvider { get; } = host.Services.GetRequiredService<ScheduleProvider>();
 
     private readonly Timer _timer = new(5000);
 
     private void OnElapsed(object? sender, EventArgs e)
     {
-        lock (ScheduleProvider.Value)
+        lock (_scheduleProvider.Value)
         {
-            foreach (var schedule in ScheduleProvider.Value)
+            foreach (var schedule in _scheduleProvider.Value)
             {
                 if (
                     !schedule.Enable

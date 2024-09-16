@@ -1,11 +1,11 @@
 using System;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
 using iNKORE.UI.WPF.Modern.Controls;
 
 using Serein.Core.Services.Network.Connection;
+using Serein.Plus.Services;
 using Serein.Plus.ViewModels;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
@@ -14,23 +14,22 @@ namespace Serein.Plus.Pages;
 
 public partial class ConnectionPage : Page
 {
-    private readonly Timer _timer;
     private ConnectionViewModel ViewModel { get; }
+
+    private readonly InfoBarProvider _infoBarProvider;
     private readonly WsConnectionManager _wsConnectionManager;
 
     public ConnectionPage(
+        InfoBarProvider infoBarProvider,
         ConnectionViewModel connectionViewModel,
         WsConnectionManager wsConnectionManager
     )
     {
+        _infoBarProvider = infoBarProvider;
         ViewModel = connectionViewModel;
         _wsConnectionManager = wsConnectionManager;
         InitializeComponent();
         DataContext = ViewModel;
-
-        _timer = new(2500) { Enabled = true };
-        _timer.Elapsed += UpdateInfo;
-        _wsConnectionManager.PropertyChanged += UpdateInfo;
 
         Console.EnableLogLevelHighlight();
     }
@@ -51,14 +50,7 @@ public partial class ConnectionPage : Page
         }
         catch (Exception ex)
         {
-            new ContentDialog
-            {
-                Content = ex.Message,
-                PrimaryButtonText = "确定",
-                Title = "操作失败",
-            }.ShowAsync();
+            _infoBarProvider.Enqueue("操作失败", ex.Message, InfoBarSeverity.Error);
         }
     }
-
-    private void UpdateInfo(object? sender, EventArgs e) { }
 }

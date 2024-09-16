@@ -49,6 +49,8 @@ public class InfoBarProvider(IServiceProvider serviceProvider)
                 continue;
 
             _mainWindow.Value.Dispatcher.Invoke(_mainWindow.Value.ShowInfoBar, task);
+
+            task.ResetEvent.WaitOne();
         }
     }
 }

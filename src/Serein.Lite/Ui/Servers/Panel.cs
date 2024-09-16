@@ -53,26 +53,26 @@ public partial class Panel : UserControl
             switch (e.OutputType)
             {
                 case ServerOutputType.Raw:
-                    if (!string.IsNullOrEmpty(e.Data))
-                        lock (_lock)
-                            ConsoleBrowser.AppendHtmlLine(
-                                LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
-                            );
+                    lock (_lock)
+                        ConsoleBrowser.AppendHtmlLine(
+                            LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
+                        );
                     break;
 
                 case ServerOutputType.InputCommand:
-                    if (
-                        _server.Configuration.OutputCommandUserInput
-                        && !string.IsNullOrEmpty(e.Data)
-                    )
+                    if (_server.Configuration.OutputCommandUserInput)
                         lock (_lock)
                             ConsoleBrowser.AppendHtmlLine($">{LogColorizer.EscapeLog(e.Data)}");
                     break;
 
                 case ServerOutputType.Information:
-                    if (!string.IsNullOrEmpty(e.Data))
-                        lock (_lock)
-                            ConsoleBrowser.AppendNotice(e.Data);
+                    lock (_lock)
+                        ConsoleBrowser.AppendNotice(e.Data);
+                    break;
+
+                case ServerOutputType.Error:
+                    lock (_lock)
+                        ConsoleBrowser.AppendError(e.Data);
                     break;
 
                 default:
@@ -105,7 +105,17 @@ public partial class Panel : UserControl
         }
     }
 
-    private void RestartButton_Click(object sender, EventArgs e) { }
+    private void RestartButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            _server.RequestRestart();
+        }
+        catch (Exception ex)
+        {
+            MessageBoxHelper.ShowWarningMsgBox($"重启服务器失败\r\n原因：{ex.Message}");
+        }
+    }
 
     private void TerminateButton_Click(object sender, EventArgs e)
     {
@@ -200,10 +210,13 @@ public partial class Panel : UserControl
             var acceptable = files.Where(
                 (f) => ServerPluginManager.AcceptableExtensions.Contains(Path.GetExtension(f))
             );
-            if (acceptable.Any() && MessageBoxHelper.ShowQuestionMsgBox(
-                "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
-                    + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
-            ))
+            if (
+                acceptable.Any()
+                && MessageBoxHelper.ShowQuestionMsgBox(
+                    "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
+                        + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
+                )
+            )
                 try
                 {
                     _server.PluginManager.Add(acceptable.ToArray());

@@ -17,11 +17,11 @@ public partial class OutputFilter
         return stringBuilder.ToString();
     }
 
-    private static readonly Regex ColorCharsPatten = GetColorCharsPatten();
+    private static readonly Regex ColorCharsPattern = GetColorCharsPattern();
 
     public static string RemoveColorChars(string input)
     {
-        return ColorCharsPatten.Replace(input, string.Empty);
+        return ColorCharsPattern.Replace(input, string.Empty);
     }
 
     public static string Clear(string input)
@@ -29,6 +29,6 @@ public partial class OutputFilter
         return RemoveColorChars(RemoveControlChars(input));
     }
 
-    [GeneratedRegex(@"\x1B\[[0-9;]*[ABCDEFGHJKSTfmnsulh]", RegexOptions.Compiled)]
-    private static partial Regex GetColorCharsPatten();
+    [GeneratedRegex(@"\x1B\[[0-9;]*[ABCDEFGHJKSTfmnsulh]")]
+    private static partial Regex GetColorCharsPattern();
 }

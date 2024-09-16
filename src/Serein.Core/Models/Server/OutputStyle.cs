@@ -5,8 +5,4 @@ public enum OutputStyle
     Plain,
 
     RawText,
-
-    Highlight,
-
-    Mixture,
 }

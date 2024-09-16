@@ -204,12 +204,13 @@ public partial class MainWindow : Window
                         translateTransform.BeginAnimation(TranslateTransform.YProperty, _infoBarPopOut);
                         GlobalInfoBar.Closed -= Cancel;
                     });
-                    infoBarTask.ResetEvent.Set();
+                    Task.Delay(500).ContinueWith((_) => infoBarTask.ResetEvent.Set());
                 }
             );
 
         void Cancel(object sender, EventArgs e)
         {
+            infoBarTask.ResetEvent.Set();
             if (!cancellationTokenSource.IsCancellationRequested)
                 cancellationTokenSource.Cancel();
         }

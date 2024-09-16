@@ -17,7 +17,6 @@
         <Setter Property="Margin" Value="0,5,0,10" />
     </Style>
 
-    <converter:LineTerminatorConverter x:Key="lineTerminatorConverter" />
     <converter:EnumConverter x:Key="enumConverter" />
     <converter:MultiLinesConverter x:Key="multiLinesConverter" />
 </ResourceDictionary>

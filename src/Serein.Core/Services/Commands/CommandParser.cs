@@ -17,13 +17,13 @@ public partial class CommandParser(
 )
 {
     [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
-    private static partial Regex GetGeneralCommand();
+    private static partial Regex GetGeneralCommandRegex();
 
     [GeneratedRegex(@"\{([a-zA-Z]+(\.[a-zA-Z]+)?(@\w+)?)\}")]
-    private static partial Regex GetVariable();
+    private static partial Regex GetVariableRegex();
 
-    public static readonly Regex Variable = GetVariable();
-    public static readonly Regex GeneralCommand = GetGeneralCommand();
+    public static readonly Regex Variable = GetVariableRegex();
+    public static readonly Regex GeneralCommand = GetGeneralCommandRegex();
 
     private readonly PluginManager _pluginManager = pluginManager;
     private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;

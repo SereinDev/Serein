@@ -5,4 +5,5 @@ public enum ServerOutputType
     Raw,
     InputCommand,
     Information,
+    Error,
 }

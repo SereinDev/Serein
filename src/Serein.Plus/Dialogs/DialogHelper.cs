@@ -3,6 +3,7 @@
 using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Serein.Plus.Dialogs;
+
 public static class DialogHelper
 {
     public static async Task<bool> ShowDeleteConfirmation(string message)
@@ -12,7 +13,7 @@ public static class DialogHelper
             Content = message + "\r\n这将会永远失去！（真的很久！）",
             PrimaryButtonText = "确认",
             CloseButtonText = "取消",
-            DefaultButton = ContentDialogButton.Primary
+            DefaultButton = ContentDialogButton.Close
         }.ShowAsync() == ContentDialogResult.Primary;
     }
 }

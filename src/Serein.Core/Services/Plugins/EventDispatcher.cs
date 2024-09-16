@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
@@ -17,14 +15,17 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins;
 
-public class EventDispatcher(IHost host)
+public class EventDispatcher(
+    IPluginLogger logger,
+    SettingProvider settingProvider,
+    NetPluginLoader netPluginLoader,
+    JsPluginLoader jsPluginLoader
+)
 {
-    private readonly IHost _host = host;
-    private IServiceProvider Services => _host.Services;
-    private NetPluginLoader Loader => Services.GetRequiredService<NetPluginLoader>();
-    private JsPluginLoader JsManager => Services.GetRequiredService<JsPluginLoader>();
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
+    private readonly IPluginLogger _logger = logger;
+    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
+    private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
 
     public bool Dispatch(Event @event, params object[] args)
     {
@@ -44,11 +45,8 @@ public class EventDispatcher(IHost host)
             return true;
         }
 
-        if (SettingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
-            Task.WaitAll(
-                [.. tasks],
-                SettingProvider.Value.Application.PluginEventMaxWaitingTime
-            );
+        if (_settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
+            Task.WaitAll([.. tasks], _settingProvider.Value.Application.PluginEventMaxWaitingTime);
 
         cancellationTokenSource.Cancel();
         return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
@@ -61,7 +59,7 @@ public class EventDispatcher(IHost host)
         params object[] args
     )
     {
-        foreach ((_, var jsPlugin) in JsManager.JsPlugins)
+        foreach ((_, var jsPlugin) in _jsPluginLoader.Plugins)
             tasks.Add(Task.Run(() => jsPlugin.Invoke(@event, cancellationToken, args)));
     }
 
@@ -73,7 +71,7 @@ public class EventDispatcher(IHost host)
     {
         var tasks = new List<Task>();
 
-        foreach ((var name, var plugin) in Loader.NetPlugins)
+        foreach ((var name, var plugin) in _netPluginLoader.Plugins)
         {
             if (cancellationToken.IsCancellationRequested)
                 break;
@@ -84,7 +82,11 @@ public class EventDispatcher(IHost host)
             }
             catch (Exception e)
             {
-                Logger.Log(LogLevel.Error, name, $"触发事件{name}时出现异常：\n{e.GetDetailString()}");
+                _logger.Log(
+                    LogLevel.Error,
+                    name,
+                    $"触发事件{name}时出现异常：\n{e.GetDetailString()}"
+                );
             }
         }
 

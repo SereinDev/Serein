@@ -31,7 +31,7 @@ public class StartUpService(
 
         foreach (var (_, server) in _serverManager.Servers)
         {
-            if (server.Configuration.AutoRestart)
+            if (server.Configuration.StartWhenSettingUp)
                 try
                 {
                     server.Start();

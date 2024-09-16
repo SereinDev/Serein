@@ -318,7 +318,7 @@
             // 
             OutputStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             OutputStyleComboBox.FormattingEnabled = true;
-            OutputStyleComboBox.Items.AddRange(new object[] { "无颜色", "原始颜色", "高亮", "混合" });
+            OutputStyleComboBox.Items.AddRange(new object[] { "无颜色", "原始颜色" });
             OutputStyleComboBox.Location = new System.Drawing.Point(23, 232);
             OutputStyleComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             OutputStyleComboBox.Name = "OutputStyleComboBox";

@@ -7,10 +7,56 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Plus.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:server="clr-namespace:Serein.Core.Models.Server;assembly=Serein.Core"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    d:DataContext="{d:DesignInstance Type=server:Configuration}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Header="{Binding Name, Mode=OneWay}"
+    Style="{DynamicResource DefaultTabItemStyle}"
     mc:Ignorable="d">
+
+    <TabItem.ContextMenu>
+        <ContextMenu>
+            <MenuItem
+                Click="MenuItem_Click"
+                Header="添加"
+                Tag="Add">
+                <MenuItem.Icon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem
+                Click="MenuItem_Click"
+                Header="导入..."
+                Tag="Import">
+                <MenuItem.Icon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Import}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator />
+
+            <MenuItem
+                Click="MenuItem_Click"
+                Header="编辑"
+                Tag="Edit">
+                <MenuItem.Icon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem
+                Click="MenuItem_Click"
+                Header="删除"
+                Tag="Remove">
+                <MenuItem.Icon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </TabItem.ContextMenu>
 
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
@@ -19,6 +65,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition />
@@ -117,18 +164,18 @@
             <Button
                 Click="ControlButton_Click"
                 Content="启动"
-                Tag="start" />
+                Tag="Start" />
             <Button
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Click="ControlButton_Click"
                 Content="停止"
-                Tag="stop" />
+                Tag="Stop" />
             <Button
                 Grid.Row="1"
                 Click="ControlButton_Click"
                 Content="重启"
-                Tag="restrat" />
+                Tag="Restart" />
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
@@ -140,16 +187,30 @@
                             <Button
                                 Click="ControlButton_Click"
                                 Content="继续"
-                                Tag="terminate" />
+                                Tag="Terminate" />
                         </StackPanel>
                     </ui:Flyout>
                 </ui:FlyoutService.Flyout>
             </Button>
         </Grid>
 
+        <StackPanel Grid.Row="3" Margin="5,10">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+                    <Setter Property="Margin" Value="3" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                </Style>
+            </StackPanel.Resources>
+            <Button
+                Click="ControlButton_Click"
+                Content="打开启动文件位置"
+                Tag="OpenInExplorer" />
+            <Button Click="ControlButton_Click" Content="插件管理" />
+        </StackPanel>
+
 
         <DockPanel
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             Margin="15,0,0,0">
@@ -159,7 +220,7 @@
                     Padding="5"
                     Click="Enter_Click"
                     DockPanel.Dock="Right">
-                    <!-- <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Up}" /> -->
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Up}" />
                 </Button>
                 <TextBox Name="InputBox" PreviewKeyDown="InputBox_PreviewKeyDown" />
             </DockPanel>

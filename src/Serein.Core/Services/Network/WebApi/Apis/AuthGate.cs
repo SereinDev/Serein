@@ -23,12 +23,11 @@ public class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
         if (string.IsNullOrEmpty(auth))
             throw HttpException.Unauthorized();
 
-        if (auth!.StartsWith("Bearer "))
+        if (auth.StartsWith("Bearer "))
             auth = auth[7..];
 
-        if (!_settingProvider.Value.WebApi.AccessTokens.Contains(auth))
-            throw HttpException.Unauthorized();
-
-        return Task.CompletedTask;
+        return !_settingProvider.Value.WebApi.AccessTokens.Contains(auth)
+            ? throw HttpException.Unauthorized()
+            : Task.CompletedTask;
     }
 }

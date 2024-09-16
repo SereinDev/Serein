@@ -5,15 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Plus"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:services="clr-namespace:Serein.Plus.Services"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    xmlns:utils="clr-namespace:Serein.Plus.Utils" xmlns:services="clr-namespace:Serein.Plus.Services" d:DataContext="{d:DesignInstance Type=services:TitleUpdater}"
+    xmlns:utils="clr-namespace:Serein.Plus.Utils"
     x:Name="Window"
     Title="{Binding CustomTitle}"
     Width="800"
     Height="450"
     MinWidth="600"
     MinHeight="340"
+    d:DataContext="{d:DesignInstance Type=services:TitleUpdater}"
     ui:ThemeManager.IsThemeAware="True"
     ui:TitleBar.ExtendViewIntoTitleBar="True"
     ui:TitleBar.Height="36"
@@ -32,7 +34,7 @@
             x:FieldModifier="public"
             IconSource="../../logo.ico"
             MenuActivation="RightClick"
-            ToolTip="{Binding CustomTitle}"
+            ToolTip="Serein.Plus"
             TrayBalloonTipClicked="AppTaskbarIcon_TrayBalloonTipClicked"
             Visibility="Visible">
             <tb:TaskbarIcon.ContextMenu>
@@ -53,7 +55,7 @@
                         Header="置顶"
                         IsCheckable="True"
                         IsChecked="{Binding Topmost, ElementName=Window}"
-                        IsEnabled="{Binding IsVisible, ElementName=AppTaskbarIcon, Mode=OneWay}"
+                        IsEnabled="{Binding IsVisible, ElementName=Window, Mode=OneWay}"
                         Tag="TopMost">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Pinned}" />

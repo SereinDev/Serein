@@ -5,40 +5,40 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Modules;
 
-public class WsModule(WsConnectionManager wsNetwork)
+public class WsModule(WsConnectionManager wsConnectionManager)
 {
-    private readonly WsConnectionManager _wsNetwork = wsNetwork;
+    private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
 
-    public bool Active => _wsNetwork.Active;
+    public bool Active => _wsConnectionManager.Active;
 
     public void Start()
     {
-        _wsNetwork.Start();
+        _wsConnectionManager.Start();
     }
 
     public void Stop()
     {
-        _wsNetwork.Stop();
+        _wsConnectionManager.Stop();
     }
 
     public void SendData(string text)
     {
         ArgumentNullException.ThrowIfNull(text, nameof(text));
 
-        _wsNetwork.SendDataAsync(text).Await();
+        _wsConnectionManager.SendDataAsync(text).Await();
     }
 
     public void SendGroupMsg(long target, string message)
     {
         ArgumentNullException.ThrowIfNull(message, nameof(message));
 
-        _wsNetwork.SendGroupMsgAsync(target, message).Await();
+        _wsConnectionManager.SendGroupMsgAsync(target, message).Await();
     }
 
     public void SendPrivateMsg(long target, string message)
     {
         ArgumentNullException.ThrowIfNull(message, nameof(message));
 
-        _wsNetwork.SendPrivateMsgAsync(target, message).Await();
+        _wsConnectionManager.SendPrivateMsgAsync(target, message).Await();
     }
 }

@@ -35,7 +35,7 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
 
     public void Start()
     {
-        if (State != WebServerState.Stopped)
+        if (State != WebServerState.Stopped && State != WebServerState.Created)
             throw new InvalidOperationException("Web服务器正在运行中");
 
         if (_cancellationTokenSource.IsCancellationRequested)
@@ -63,7 +63,11 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
 
     public void Stop()
     {
-        if (State == WebServerState.Stopped || _webServer is null)
+        if (
+            State == WebServerState.Stopped
+            || State == WebServerState.Created
+            || _webServer is null
+        )
             throw new InvalidOperationException("Web服务器不在运行中");
 
         _cancellationTokenSource.Cancel();
@@ -92,13 +96,12 @@ public class HttpServer(IHost host, MS.ILogger logger, SettingProvider settingPr
             if (string.IsNullOrEmpty(_settingProvider.Value.WebApi.Certificate.Path))
                 return options;
 
-            if (File.Exists(_settingProvider.Value.WebApi.Certificate.Path))
-                options.Certificate = new(
+            options.Certificate = File.Exists(_settingProvider.Value.WebApi.Certificate.Path)
+                ? new(
                     _settingProvider.Value.WebApi.Certificate.Path!,
                     _settingProvider.Value.WebApi.Certificate.Password
-                );
-            else
-                throw new InvalidOperationException(
+                )
+                : throw new InvalidOperationException(
                     $"证书文件“{_settingProvider.Value.WebApi.Certificate.Path}”不存在"
                 );
         }
