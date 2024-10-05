@@ -17,7 +17,11 @@ public partial class PluginListPage : Page
 
     private readonly ObservableCollection<IPlugin> _pluginInfos;
 
-    public PluginListPage(PluginManager pluginManager, JsPluginLoader jsPluginLoader, NetPluginLoader netPluginLoader)
+    public PluginListPage(
+        PluginManager pluginManager,
+        JsPluginLoader jsPluginLoader,
+        NetPluginLoader netPluginLoader
+    )
     {
         _pluginManager = pluginManager;
         _jsPluginLoader = jsPluginLoader;
@@ -27,7 +31,7 @@ public partial class PluginListPage : Page
         InitializeComponent();
         UpdatePlugins();
 
-        PluginDataGrid.ItemsSource = _pluginInfos;
+        PluginListView.ItemsSource = _pluginInfos;
         _pluginManager.PluginsLoaded += (_, _) => Dispatcher.Invoke(UpdatePlugins);
     }
 

@@ -5,9 +5,6 @@ using System.Windows.Controls;
 
 using iNKORE.UI.WPF.Modern;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
@@ -17,49 +14,44 @@ namespace Serein.Plus.Pages.Settings;
 
 public partial class AppSettingPage : Page
 {
-    private readonly IHost _host;
+    private readonly SettingProvider _settingProvider;
 
-    private IServiceProvider Services => _host.Services;
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-
-    public AppSettingPage(IHost host)
+    public AppSettingPage(SettingProvider settingProvider)
     {
-        _host = host;
         InitializeComponent();
-        DataContext = SettingProvider;
+        _settingProvider = settingProvider;
+        DataContext = _settingProvider;
 
         ThemePanel.Children
             .Cast<RadioButton>()
-            .First(c => c?.Tag?.ToString() == SettingProvider.Value.Application.Theme.ToString())
+            .First(c => c?.Tag?.ToString() == _settingProvider.Value.Application.Theme.ToString())
             .IsChecked = true;
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)
     {
         if (IsLoaded)
-            SettingProvider.SaveAsyncWithDebounce();
+            _settingProvider.SaveAsyncWithDebounce();
     }
 
     private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
     {
         var tag = (sender as RadioButton)?.Tag?.ToString();
 
-        ThemeManager.SetRequestedTheme(
-            Application.Current.MainWindow,
-            tag switch
-            {
-                "Light" => ElementTheme.Light,
-                "Dark" => ElementTheme.Dark,
-                _ => ElementTheme.Default
-            }
-        );
-
-        SettingProvider.Value.Application.Theme = tag switch
+        _settingProvider.Value.Application.Theme = tag switch
         {
             "Light" => Theme.Light,
             "Dark" => Theme.Dark,
             _ => Theme.Default
         };
+
+        ThemeManager.Current.ApplicationTheme = _settingProvider.Value.Application.Theme switch
+        {
+            Theme.Light => ApplicationTheme.Light,
+            Theme.Dark => ApplicationTheme.Dark,
+            _ => null,
+        };
+
         OnPropertyChanged(sender, e);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
 
-public class ConnectionSetting : INotifyPropertyChanged
+public class ConnectionSetting : NotifyPropertyChangedModelBase
 {
     public string? AccessToken { get; set; }
 
@@ -28,7 +27,4 @@ public class ConnectionSetting : INotifyPropertyChanged
     public bool UseReverseWebSocket { get; set; }
 
     public string[] SubProtocols { get; set; } = [];
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -1,8 +1,6 @@
-using System.ComponentModel;
-
 namespace Serein.Core.Models.Settings;
 
-public class CertificateSetting : INotifyPropertyChanged
+public class CertificateSetting : NotifyPropertyChangedModelBase
 {
     public bool Enable { get; set; }
 
@@ -13,7 +11,4 @@ public class CertificateSetting : INotifyPropertyChanged
     public string? Path { get; set; }
 
     public string? Password { get; set; }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

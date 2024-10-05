@@ -1,16 +1,16 @@
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
 using Octokit;
 
+using Serein.Core.Models;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network;
 
-public class UpdateChecker : INotifyPropertyChanged
+public class UpdateChecker : NotifyPropertyChangedModelBase
 {
     private readonly ILogger _logger;
     private readonly System.Timers.Timer _timer;
@@ -66,7 +66,4 @@ public class UpdateChecker : INotifyPropertyChanged
         if (_settingProvider.Value.Application.CheckUpdate)
             await CheckAsync();
     }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

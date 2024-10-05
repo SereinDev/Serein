@@ -19,7 +19,7 @@ public partial class ShellPage : Page
 
     public ShellViewModel ViewModel { get; }
 
-    public ShellPage(IServiceProvider services,TitleUpdater titleUpdater, ShellViewModel shellViewModel)
+    public ShellPage(IServiceProvider services, TitleUpdater titleUpdater, ShellViewModel shellViewModel)
     {
         _services = services;
         _titleUpdater = titleUpdater;
@@ -30,7 +30,7 @@ public partial class ShellPage : Page
         DataContext = ViewModel;
         AppTitleBarText.DataContext = _titleUpdater;
         NavView.SelectedItem = NavView.MenuItems[0];
-        ContentFrame.Navigate(_services.GetRequiredService<HomePage>());
+        ContentFrame.Navigate(_services.GetRequiredService<ServerPage>());
     }
 
     private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
@@ -43,17 +43,20 @@ public partial class ShellPage : Page
         if (args.InvokedItemContainer.Tag is not Type type)
             type = args.IsSettingsInvoked ? typeof(CategoriesPage) : typeof(NotImplPage);
 
-        ContentFrame.Navigate(_services.GetRequiredService(type), args.RecommendedNavigationTransitionInfo);
+        var page = _services.GetRequiredService(type);
+
+        ContentFrame.Navigate(page, args.RecommendedNavigationTransitionInfo);
     }
 
     private void NavView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
     {
         var currMargin = AppTitleBar.Margin;
-        AppTitleBar.Margin =  new Thickness(sender.CompactPaneLength, currMargin.Top, currMargin.Right, currMargin.Bottom);
+        AppTitleBar.Margin = new Thickness(sender.CompactPaneLength, currMargin.Top, currMargin.Right, currMargin.Bottom);
     }
 
     private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
     {
         NavView.IsBackEnabled = ContentFrame.CanGoBack;
+        ContentFrame.RemoveBackEntry();
     }
 }

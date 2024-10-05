@@ -123,19 +123,17 @@ public class Matcher(
         await Task.WhenAll(tasks);
     }
 
-    private static bool CheckExclusions(Match match, string id)
+    private static bool CheckExclusions(Match match, string serverId)
     {
-        return match.ExclusionDict.TryGetValue(ExclusionType.ServerId, out var list) && list.Contains(id);
+        return match.MatchExclusion.Servers.Contains(serverId);
     }
 
 
     private static bool CheckExclusions(Match match, MessagePacket messagePacket)
     {
         return match.FieldType == MatchFieldType.GroupMsg
-            && match.ExclusionDict.TryGetValue(ExclusionType.GroupId, out var list)
-            && !list.Contains(messagePacket.GroupId.ToString())
-            || !match.ExclusionDict.TryGetValue(ExclusionType.UserId, out list)
-            || list.Contains(messagePacket.UserId.ToString());
+            && match.MatchExclusion.Groups.Contains(messagePacket.GroupId)
+            || match.MatchExclusion.Users.Contains(messagePacket.UserId);
     }
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>

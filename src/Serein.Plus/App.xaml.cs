@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
+using Serein.Core.Utils;
 using Serein.Plus.Pages;
 using Serein.Plus.Pages.Settings;
 using Serein.Plus.Services;
@@ -23,6 +24,7 @@ public partial class App : Application
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
         {
             MessageBox.Show(e.ExceptionObject.ToString());
+            CrashHelper.CreateLog((Exception)e.ExceptionObject);
             Shutdown();
         };
 
@@ -39,24 +41,25 @@ public partial class App : Application
         builder.Services.AddSingleton<BalloonTipProvider>();
         
         builder.Services.AddSingleton<MainWindow>();
-        builder.Services.AddTransient<NotImplPage>();
+        builder.Services.AddSingleton<NotImplPage>();
 
         builder.Services.AddSingleton<ShellPage>();
-        builder.Services.AddTransient<ShellViewModel>();
+        builder.Services.AddSingleton<ShellViewModel>();
 
-        builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<ServerPage>();
         builder.Services.AddSingleton<MatchPage>();
         builder.Services.AddSingleton<SchedulePage>();
 
         builder.Services.AddSingleton<ConnectionPage>();
-        builder.Services.AddTransient<ConnectionViewModel>();
+        builder.Services.AddSingleton<ConnectionViewModel>();
+
+        builder.Services.AddSingleton<PermissionGroupPage>();
 
         builder.Services.AddSingleton<PluginPage>();
-        builder.Services.AddTransient<PluginViewModel>();
+        builder.Services.AddSingleton<PluginViewModel>();
 
         builder.Services.AddSingleton<PluginConsolePage>();
-        builder.Services.AddTransient<PluginConsoleViewModel>();
+        builder.Services.AddSingleton<PluginConsoleViewModel>();
 
         builder.Services.AddSingleton<PluginListPage>();
 

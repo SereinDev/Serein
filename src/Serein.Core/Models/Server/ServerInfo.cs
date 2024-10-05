@@ -1,11 +1,10 @@
 using System;
-using System.ComponentModel;
 
 using MineStatLib;
 
 namespace Serein.Core.Models.Server;
 
-public class ServerInfo : IServerInfo
+public class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
 {
     public string? FileName { get; internal set; }
 
@@ -19,10 +18,7 @@ public class ServerInfo : IServerInfo
 
     public ulong InputLines { get; internal set; }
 
-    public double CPUUsage { get; internal set; }
+    public int CPUUsage { get; internal set; }
 
     public MineStat? Stat { get; internal set; }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -16,4 +16,15 @@ public static class DialogHelper
             DefaultButton = ContentDialogButton.Close
         }.ShowAsync() == ContentDialogResult.Primary;
     }
+
+    public static void ShowSimpleDialog(string title, string message, string closeButtonText = "确定")
+    {
+        new ContentDialog
+        {
+            Title = title,
+            Content = message,
+            DefaultButton = ContentDialogButton.Close,
+            CloseButtonText = closeButtonText
+        }.ShowAsync();
+    }
 }

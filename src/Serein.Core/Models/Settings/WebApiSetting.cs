@@ -1,8 +1,6 @@
-using System.ComponentModel;
-
 namespace Serein.Core.Models.Settings;
 
-public class WebApiSetting : INotifyPropertyChanged
+public class WebApiSetting : NotifyPropertyChangedModelBase
 {
     public bool Enable { get; set; }
 
@@ -17,7 +15,4 @@ public class WebApiSetting : INotifyPropertyChanged
     public string[] AccessTokens { get; set; } = [];
 
     public CertificateSetting Certificate { get; init; } = new();
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

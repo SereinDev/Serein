@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 using iNKORE.UI.WPF.Modern.Controls;
 
@@ -11,7 +10,6 @@ using Microsoft.Win32;
 
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
-using Serein.Core.Utils;
 using Serein.Plus.Controls;
 using Serein.Plus.Services;
 using Serein.Plus.Windows;
@@ -29,7 +27,11 @@ public partial class ServerPage : Page
 
     private CancellationTokenSource? _cancellationTokenSource;
 
-    public ServerPage(MainWindow mainWindow, InfoBarProvider infoBarProvider, ServerManager serverManager)
+    public ServerPage(
+        MainWindow mainWindow,
+        InfoBarProvider infoBarProvider,
+        ServerManager serverManager
+    )
     {
         _mainWindow = mainWindow;
         _infoBarProvider = infoBarProvider;
@@ -39,7 +41,6 @@ public partial class ServerPage : Page
         InitializeComponent();
 
         DataContext = this;
-
 
         foreach (var (id, server) in _serverManager.Servers)
             Add(id, server);
@@ -54,14 +55,23 @@ public partial class ServerPage : Page
 
     private void Add(string id, Server server)
     {
-        var tabItem = new PanelTabItem(id, server,_serverManager, this, _infoBarProvider)
+        var tabItem = new PanelTabItem(
+            id,
+            server,
+            _serverManager,
+            this,
+            _mainWindow,
+            _infoBarProvider
+        )
         {
             Tag = id,
-            ToolTip = $"Id: {id} \r\n配置文件: {string.Format(PathConstants.ServerConfigFile, id)}"
         };
 
         _panels[id] = tabItem;
         TabControl.Items.Add(tabItem);
+
+        if (TabControl.Items.Count == 1)
+            TabControl.SelectedIndex = 0;
     }
 
     private void ServerManager_ServersUpdated(object? sender, ServersUpdatedEventArgs e)
@@ -79,7 +89,11 @@ public partial class ServerPage : Page
                     TabControl.Items.Remove(page);
                 _panels.Remove(e.Id);
 
-                _infoBarProvider.Enqueue($"服务器（Id: {e.Id}）删除成功", string.Empty, InfoBarSeverity.Success);
+                _infoBarProvider.Enqueue(
+                    $"服务器（Id: {e.Id}）删除成功",
+                    string.Empty,
+                    InfoBarSeverity.Success
+                );
             }
         });
     }
@@ -94,19 +108,13 @@ public partial class ServerPage : Page
                 InfoBarSeverity.Informational,
                 TimeSpan.FromSeconds(5),
                 _cancellationTokenSource.Token
-                );
+            );
     }
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
     {
         if (_cancellationTokenSource?.IsCancellationRequested == false)
             _cancellationTokenSource.Cancel();
-    }
-
-    private void TabControl_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-    {
-        if (Mouse.GetPosition(TabControl).Y > (TabControl.Items.Count > 0 ? 39 : 27))
-            e.Handled = true;
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -121,7 +129,10 @@ public partial class ServerPage : Page
                         return;
 
                     var config = ServerManager.LoadFrom(dialog.FileName);
-                    var editor1 = new ServerConfigurationEditor(_serverManager, config) { Owner = _mainWindow };
+                    var editor1 = new ServerConfigurationEditor(_serverManager, config)
+                    {
+                        Owner = _mainWindow,
+                    };
                     editor1.ShowDialog();
 
                     if (editor1.ShowDialog() != true || string.IsNullOrEmpty(editor1.Id))
@@ -138,10 +149,13 @@ public partial class ServerPage : Page
             case "Add":
                 try
                 {
-                    var editor2 = new ServerConfigurationEditor(_serverManager, new()) { Owner = _mainWindow };
+                    var editor2 = new ServerConfigurationEditor(_serverManager, new())
+                    {
+                        Owner = _mainWindow,
+                    };
+
                     if (editor2.ShowDialog() != true || string.IsNullOrEmpty(editor2.Id))
                         return;
-
                     _serverManager.Add(editor2.Id, editor2.Configuration);
                 }
                 catch (Exception ex)

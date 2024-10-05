@@ -9,5 +9,5 @@ public abstract class Command(IHost host)
     protected readonly IHost _host = host;
     protected IServiceProvider Services => _host.Services;
 
-    public abstract void Parse(string[] args);
+    public abstract void Invoke(string[] args);
 }

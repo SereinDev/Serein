@@ -13,7 +13,6 @@ namespace Serein.Core.Services.Data;
 
 public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
 {
-
     public MatchesProvider()
     {
         Value = [];

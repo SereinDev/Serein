@@ -16,28 +16,22 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Grid>
-        <TabControl
-            x:Name="TabControl"
-            Padding="5,5,5,0"
-            ui:TabControlHelper.IsAddTabButtonVisible="False"
-            ui:TabControlHelper.TabWidthMode="SizeToContent"
-            ContextMenuOpening="TabControl_ContextMenuOpening">
-            <TabControl.Resources>
-                <ResourceDictionary>
-                    <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
-                    <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
-                </ResourceDictionary>
-            </TabControl.Resources>
+    <ui:Page.Resources>
+        <Grid x:Key="Empty" Height="39" />
+        <Button
+            x:Key="AddButton"
+            Margin="3,3,7,3"
+            Padding="7">
+            <ui:FontIcon FontSize="12" Icon="{x:Static ui:SegoeFluentIcons.Add}" />
 
-            <TabControl.ContextMenu>
-                <ContextMenu>
+            <ui:FlyoutService.Flyout>
+                <ui:MenuFlyout>
                     <MenuItem
                         Click="MenuItem_Click"
-                        Header="添加"
+                        Header="新建"
                         Tag="Add">
                         <MenuItem.Icon>
-                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.AddTo}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
@@ -49,8 +43,26 @@
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Import}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                </ContextMenu>
-            </TabControl.ContextMenu>
+                </ui:MenuFlyout>
+            </ui:FlyoutService.Flyout>
+        </Button>
+    </ui:Page.Resources>
+
+    <Grid>
+        <TabControl
+            x:Name="TabControl"
+            Padding="5,5,5,0"
+            ui:TabControlHelper.IsAddTabButtonVisible="False"
+            ui:TabControlHelper.TabStripFooter="{StaticResource AddButton}"
+            ui:TabControlHelper.TabStripHeader="{StaticResource Empty}"
+            ui:TabControlHelper.TabWidthMode="SizeToContent">
+            <TabControl.Resources>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
+                    <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
+                </ResourceDictionary>
+
+            </TabControl.Resources>
 
         </TabControl>
     </Grid>

@@ -1,10 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
@@ -13,22 +8,19 @@ namespace Serein.Plus.Pages;
 
 public partial class SchedulePage : Page
 {
-    private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
-    private ScheduleProvider ScheduleProvider => Services.GetRequiredService<ScheduleProvider>();
-    public ObservableCollection<Schedule> Schedules => ScheduleProvider.Value;
+    private readonly ScheduleProvider _scheduleProvider;
 
-    public SchedulePage(IHost host)
+    public SchedulePage(ScheduleProvider scheduleProvider)
     {
-        _host = host;
+        _scheduleProvider = scheduleProvider;
         InitializeComponent();
-        ScheduleDataGrid.ItemsSource = Schedules;
-        Schedules.CollectionChanged += UpdateDetails;
+        ScheduleDataGrid.ItemsSource = _scheduleProvider.Value;
+        _scheduleProvider.Value.CollectionChanged += UpdateDetails;
     }
 
     private void OnLayoutUpdated(object sender, EventArgs e)
     {
-        ScheduleProvider.SaveAsyncWithDebounce();
+        _scheduleProvider.SaveAsyncWithDebounce();
         UpdateDetails(sender, e);
     }
 
@@ -36,10 +28,10 @@ public partial class SchedulePage : Page
     {
         Details.Text =
             ScheduleDataGrid.SelectedItems.Count > 1
-                ? $"共{Schedules.Count}项，已选择{ScheduleDataGrid.SelectedItems.Count}项"
+                ? $"共{_scheduleProvider.Value.Count}项，已选择{ScheduleDataGrid.SelectedItems.Count}项"
                 : ScheduleDataGrid.SelectedIndex >= 0
-                    ? $"共{Schedules.Count}项，已选择第{ScheduleDataGrid.SelectedIndex + 1}项"
-                    : $"共{Schedules.Count}项";
+                    ? $"共{_scheduleProvider.Value.Count}项，已选择第{ScheduleDataGrid.SelectedIndex + 1}项"
+                    : $"共{_scheduleProvider.Value.Count}项";
         ;
     }
 }

@@ -1,12 +1,10 @@
-using System.ComponentModel;
-
 using Microsoft.Extensions.Logging;
 
 using PropertyChanged;
 
 namespace Serein.Core.Models.Settings;
 
-public class ApplicationSetting : INotifyPropertyChanged
+public class ApplicationSetting : NotifyPropertyChangedModelBase
 {
     private bool _autoUpdate;
 
@@ -40,7 +38,4 @@ public class ApplicationSetting : INotifyPropertyChanged
     public string RegexForCheckingGameId { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";
 
     public string[] PattenForEnableMatchingMuiltLines { get; set; } = [@"players online:", "个玩家在线"];
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

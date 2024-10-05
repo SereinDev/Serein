@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using System.Text.Json.Serialization;
 
 using Serein.Core.Services.Servers;
 
@@ -16,16 +14,14 @@ public class ServerPlugin
 
     public bool IsEnable { get; }
 
-    public FileInfo FileInfo => _fileInfo.Value;
-
-    private readonly Lazy<FileInfo> _fileInfo;
+    public FileInfo FileInfo { get; }
 
     public ServerPlugin(string path, PluginType type)
     {
         Path = path;
         Type = type;
         IsEnable = !Path.EndsWith(ServerPluginManager.DisabledPluginExtension);
-        _fileInfo = new(() => new(Path));
+        FileInfo = new(path);
 
         FriendlyName = IsEnable
             ? System.IO.Path.GetFileName(Path)

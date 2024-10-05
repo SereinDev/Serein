@@ -4,7 +4,6 @@ using Serein.Plus.Pages;
 
 namespace Serein.Plus.ViewModels;
 
-
 public class PluginViewModel
 {
     public Type Console { get; } = typeof(PluginConsolePage);

@@ -1,11 +1,10 @@
 using System;
-using System.ComponentModel;
 
 using Serein.Core.Utils;
 
 namespace Serein.Core.Models.Server;
 
-public class Configuration : INotifyPropertyChanged
+public class Configuration : NotifyPropertyChangedModelBase
 {
     public string Name { get; set; } = "未命名";
 
@@ -36,7 +35,4 @@ public class Configuration : INotifyPropertyChanged
     public bool StartWhenSettingUp { get; set; }
 
     public bool UseUnicodeChars { get; set; }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

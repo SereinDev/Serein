@@ -1,11 +1,8 @@
-using System.ComponentModel;
+using Serein.Core.Models;
 
 namespace Serein.Plus.ViewModels;
 
-public class ConnectionViewModel : INotifyPropertyChanged
+public class ConnectionViewModel : NotifyPropertyChangedModelBase
 {
     public string Status { get; internal set; } = "未连接";
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

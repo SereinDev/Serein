@@ -30,9 +30,10 @@ public class Server
     public int? Pid => _serverProcess?.Id;
     public IServerInfo ServerInfo => _serverInfo;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
-    public int CommandHistoryIndex { get; private set; }
+    public int CommandHistoryIndex { get; internal set; }
     public Configuration Configuration { get; }
     public ServerPluginManager PluginManager { get; }
+    public string Id { get; }
 
     private CancellationTokenSource? _restartCancellationTokenSource;
     private BinaryWriter? _inputWriter;
@@ -41,11 +42,9 @@ public class Server
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
 
-
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
-    private readonly string _id;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly List<string> _commandHistory;
@@ -65,7 +64,7 @@ public class Server
         ReactionTrigger reactionManager
     )
     {
-        _id = id;
+        Id = id;
         _logger = logger;
         Configuration = configuration;
         _settingProvider = settingManager;
@@ -90,7 +89,7 @@ public class Server
         if (string.IsNullOrEmpty(Configuration.FileName))
             throw new InvalidOperationException("启动文件为空");
 
-        if (!_eventDispatcher.Dispatch(Event.ServerStarting, _id))
+        if (!_eventDispatcher.Dispatch(Event.ServerStarting, Id))
             return;
 
         _serverProcess = Process.Start(
@@ -135,8 +134,8 @@ public class Server
             this,
             new(ServerOutputType.Information, $"“{Configuration.FileName}”启动中")
         );
-        _reactionManager.TriggerAsync(ReactionType.ServerStart, new(_id));
-        _eventDispatcher.Dispatch(Event.ServerStarted, _id);
+        _reactionManager.TriggerAsync(ReactionType.ServerStart, new(Id));
+        _eventDispatcher.Dispatch(Event.ServerStarted, Id);
         _updateTimer.Start();
     }
 
@@ -148,7 +147,7 @@ public class Server
         if (Status != ServerStatus.Running || _serverProcess is null)
             throw new InvalidOperationException("服务器未运行");
 
-        if (!_eventDispatcher.Dispatch(Event.ServerStopping, _id))
+        if (!_eventDispatcher.Dispatch(Event.ServerStopping, Id))
             return;
 
         if (Configuration.StopCommands.Length == 0)
@@ -193,7 +192,7 @@ public class Server
         if (_inputWriter is null || Status != ServerStatus.Running)
             return;
 
-        if (!_eventDispatcher.Dispatch(Event.ServerInput, _id, command))
+        if (!_eventDispatcher.Dispatch(Event.ServerInput, Id, command))
             return;
 
         _inputWriter.Write(
@@ -225,7 +224,7 @@ public class Server
 
         CommandHistoryIndex = CommandHistory.Count;
 
-        _matcher.MatchServerInputAsync(_id, command);
+        _matcher.MatchServerInputAsync(Id, command);
     }
 
     public void RequestRestart()
@@ -270,14 +269,14 @@ public class Server
 
         ServerStatusChanged?.Invoke(null, EventArgs.Empty);
 
-        if (!_eventDispatcher.Dispatch(Event.ServerExited, _id, exitCode, DateTime.Now))
+        if (!_eventDispatcher.Dispatch(Event.ServerExited, Id, exitCode, DateTime.Now))
             return;
 
         _reactionManager.TriggerAsync(
             exitCode == 0
                 ? ReactionType.ServerExitedNormally
                 : ReactionType.ServerExitedUnexpectedly,
-            new(_id)
+            new(Id)
         );
     }
 
@@ -290,12 +289,12 @@ public class Server
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));
 
-        if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, _id, e.Data))
+        if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, Id, e.Data))
             return;
 
         var filtered = OutputFilter.Clear(e.Data);
 
-        if (!_eventDispatcher.Dispatch(Event.ServerOutput, _id, filtered))
+        if (!_eventDispatcher.Dispatch(Event.ServerOutput, Id, filtered))
             return;
 
         if (
@@ -303,12 +302,12 @@ public class Server
         )
         {
             _cache.Add(filtered);
-            _matcher.MatchServerOutputAsync(_id, string.Join('\n', _cache));
+            _matcher.MatchServerOutputAsync(Id, string.Join('\n', _cache));
         }
         else
             _cache.Clear();
 
-        _matcher.MatchServerOutputAsync(_id, filtered);
+        _matcher.MatchServerOutputAsync(Id, filtered);
     }
 
     private bool CancelRestart()
@@ -365,10 +364,10 @@ public class Server
         }
 
         _serverInfo.CPUUsage =
-            (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
+            (int)((_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
             / 2000
             / Environment.ProcessorCount
-            * 100;
+            * 100);
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
         if (Configuration.PortIPv4 >= 0)

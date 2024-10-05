@@ -23,7 +23,7 @@ public class ServerCommand(IHost host) : Command(host)
     private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
     private ILogger Logger => Services.GetRequiredService<ILogger>();
 
-    public override void Parse(string[] args)
+    public override void Invoke(string[] args)
     {
         if (args.Length == 1)
             throw new InvalidArgumentException(

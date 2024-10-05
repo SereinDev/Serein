@@ -19,7 +19,7 @@ public interface IServerInfo : INotifyPropertyChanged
 
     public ulong InputLines { get; }
 
-    public double CPUUsage { get; }
+    public int CPUUsage { get; }
 
     public MineStat? Stat { get; }
 }

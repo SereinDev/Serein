@@ -14,16 +14,20 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
 {
     public PermissionGroupProvider()
     {
-        Value = new()
-        {
-            ["everyone"] = new()
-            {
-                Name = "默认",
-                Description = "默认权限组",
-                Priority = int.MinValue
-            }
-        };
+        Value = [];
+        Reset();
         Read();
+    }
+
+    public void Reset()
+    {
+        Value.Clear();
+        Value.Add("everyone", new()
+        {
+            Name = "默认",
+            Description = "默认权限组",
+            Priority = int.MinValue
+        });
     }
 
     public override Dictionary<string, Group> Value { get; }

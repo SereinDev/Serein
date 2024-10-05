@@ -1,0 +1,154 @@
+﻿<Window
+    x:Class="Serein.Plus.Windows.ServerPluginManagerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Serein.Plus.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Plus.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="{Binding ViewModel.Title, Mode=OneTime}"
+    Width="600"
+    Height="400"
+    d:DataContext="{d:DesignInstance Type=local:ServerPluginManagerWindow}"
+    ui:ThemeManager.IsThemeAware="True"
+    ui:TitleBar.ExtendViewIntoTitleBar="True"
+    ui:TitleBar.Height="36"
+    ui:WindowHelper.SystemBackdropType="Mica"
+    ui:WindowHelper.UseModernWindowStyle="True"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <converter:ServerPluginTypeKeyConverter x:Key="ServerPluginTypeKeyConverter" />
+        <converter:StatusConverter x:Key="StatusConverter" />
+        <converter:FileSizeConverter x:Key="FileSizeConverter" />
+
+        <CollectionViewSource x:Key="Plugins" Source="{Binding Plugins}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription Converter="{StaticResource ServerPluginTypeKeyConverter}" PropertyName="Type" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="15,0"
+            VerticalAlignment="Center"
+            Style="{DynamicResource CaptionTextBlockStyle}"
+            Text="{Binding ViewModel.Title, Mode=OneTime}" />
+
+        <ListView
+            x:Name="PluginListView"
+            Grid.Row="1"
+            ItemsSource="{Binding Source={StaticResource Plugins}}"
+            SelectionChanged="PluginListView_SelectionChanged"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            VirtualizingPanel.VirtualizationMode="Recycling">
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="导入..."
+                        Tag="Import">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="删除"
+                        IsEnabled="{Binding ViewModel.Remove, Mode=OneWay}"
+                        Tag="Remove">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="启用"
+                        IsEnabled="{Binding ViewModel.Enable, Mode=OneWay}"
+                        Tag="Enable">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Accept}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="禁用"
+                        IsEnabled="{Binding ViewModel.Disable, Mode=OneWay}"
+                        Tag="Disable">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Blocked2}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="在资源管理器中显示"
+                        IsEnabled="{Binding ViewModel.OpenInExplorer, Mode=OneWay}"
+                        Tag="OpenInExplorer">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenLocal}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="刷新"
+                        Tag="Refresh">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Refresh}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Text="{Binding Name, Mode=OneTime}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn
+                        Width="200"
+                        DisplayMemberBinding="{Binding FriendlyName, Mode=OneTime}"
+                        Header="文件名" />
+
+                    <GridViewColumn
+                        Width="120"
+                        DisplayMemberBinding="{Binding IsEnable, Mode=OneTime, Converter={StaticResource StatusConverter}}"
+                        Header="状态" />
+
+                    <GridViewColumn
+                        Width="120"
+                        DisplayMemberBinding="{Binding FileInfo.Length, Mode=OneTime, Converter={StaticResource FileSizeConverter}}"
+                        Header="文件大小" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

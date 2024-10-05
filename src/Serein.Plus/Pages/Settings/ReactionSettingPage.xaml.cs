@@ -62,7 +62,7 @@ public partial class ReactionSettingPage : Page
         }
         else if (tag == "Remove")
         {
-            DialogHelper.ShowDeleteConfirmation("È·¶¨ÒªÉ¾³ýËùÑ¡ÃüÁîÂð£¿").ContinueWith((task) =>
+            DialogHelper.ShowDeleteConfirmation("ç¡®å®šè¦åˆ é™¤æ‰€é€‰å‘½ä»¤å—ï¼Ÿ").ContinueWith((task) =>
             {
                 if (task.Result)
                     Dispatcher.Invoke(() =>
@@ -101,15 +101,15 @@ public partial class ReactionSettingPage : Page
             Type = reactionType;
             Name = Type switch
             {
-                ReactionType.ServerStart => "·þÎñÆ÷Æô¶¯",
-                ReactionType.ServerExitedNormally => "·þÎñÆ÷¹Ø±Õ£ºÕý³£ÍË³ö",
-                ReactionType.ServerExitedUnexpectedly => "·þÎñÆ÷¹Ø±Õ£º²»Õý³£ÍË³ö",
-                ReactionType.GroupIncreased => "ÈºÈËÊýÔö¼Ó",
-                ReactionType.GroupDecreased => "ÈºÈËÊý¼õÉÙ",
-                ReactionType.GroupPoke => "Èº´ÁÒ»´Á",
-                ReactionType.PermissionDeniedFromPrivateMsg => "È¨ÏÞ²»×ã£ºË½ÁÄ",
-                ReactionType.PermissionDeniedFromGroupMsg => "È¨ÏÞ²»×ã£ºÈºÁÄ",
-                ReactionType.SereinCrash => "Serein±ÀÀ£",
+                ReactionType.ServerStart => "æœåŠ¡å™¨å¯åŠ¨",
+                ReactionType.ServerExitedNormally => "æœåŠ¡å™¨å…³é—­ï¼šæ­£å¸¸é€€å‡º",
+                ReactionType.ServerExitedUnexpectedly => "æœåŠ¡å™¨å…³é—­ï¼šä¸æ­£å¸¸é€€å‡º",
+                ReactionType.GroupIncreased => "ç¾¤äººæ•°å¢žåŠ ",
+                ReactionType.GroupDecreased => "ç¾¤äººæ•°å‡å°‘",
+                ReactionType.GroupPoke => "ç¾¤æˆ³ä¸€æˆ³",
+                ReactionType.PermissionDeniedFromPrivateMsg => "æƒé™ä¸è¶³ï¼šç§èŠ",
+                ReactionType.PermissionDeniedFromGroupMsg => "æƒé™ä¸è¶³ï¼šç¾¤èŠ",
+                ReactionType.SereinCrash => "Sereinå´©æºƒ",
                 _ => throw new NotSupportedException(),
             };
         }

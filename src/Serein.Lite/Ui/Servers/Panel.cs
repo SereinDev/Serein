@@ -136,10 +136,45 @@ public partial class Panel : UserControl
 
     private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
     {
-        e.Handled = true;
-        if (e.KeyCode == Keys.Enter)
+        switch (e.KeyCode)
         {
-            EnterCommand();
+            case Keys.Enter:
+                EnterCommand();
+                e.Handled = true;
+                break;
+
+            case Keys.Up:
+                if (_server.CommandHistoryIndex > 0)
+                    _server.CommandHistoryIndex--;
+
+                if (
+                    _server.CommandHistoryIndex >= 0
+                    && _server.CommandHistoryIndex < _server.CommandHistory.Count
+                )
+                    InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+
+                e.Handled = true;
+                InputTextBox.SelectionStart = InputTextBox.Text.Length;
+                break;
+
+            case Keys.Down:
+                if (_server.CommandHistoryIndex < _server.CommandHistory.Count)
+                    _server.CommandHistoryIndex++;
+
+                if (
+                    _server.CommandHistoryIndex >= 0
+                    && _server.CommandHistoryIndex < _server.CommandHistory.Count
+                )
+                    InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+                else if (
+                    _server.CommandHistoryIndex == _server.CommandHistory.Count
+                    && _server.CommandHistory.Count != 0
+                )
+                    InputTextBox.Text = string.Empty;
+
+                e.Handled = true;
+                InputTextBox.SelectionStart = InputTextBox.Text.Length;
+                break;
         }
     }
 

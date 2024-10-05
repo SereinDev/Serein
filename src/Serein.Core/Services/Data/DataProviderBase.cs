@@ -1,9 +1,11 @@
 using System;
 using System.Threading.Tasks;
 
+using Serein.Core.Models;
+
 namespace Serein.Core.Services.Data;
 
-public abstract class DataProviderBase<T>
+public abstract class DataProviderBase<T> : NotifyPropertyChangedModelBase
     where T : notnull
 {
     private DateTime _last;

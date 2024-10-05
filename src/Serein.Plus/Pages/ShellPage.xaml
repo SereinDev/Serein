@@ -7,7 +7,9 @@
     xmlns:local="clr-namespace:Serein.Plus.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:viewmodels="clr-namespace:Serein.Plus.ViewModels"
     Title="ShellPage"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
@@ -64,11 +66,6 @@
             PaneDisplayMode="Auto">
 
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="主页" Tag="{Binding Home}">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Home}" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
                 <ui:NavigationViewItem
                     Content="服务器"
                     Tag="{Binding Server}"
@@ -118,7 +115,10 @@
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.People}" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="权限组" ToolTip="设定用户的权限">
+                <ui:NavigationViewItem
+                    Content="权限组"
+                    Tag="{Binding PermissionGroup}"
+                    ToolTip="设定用户的权限">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Permissions}" />
                     </ui:NavigationViewItem.Icon>

@@ -14,7 +14,7 @@ public class EnumConverter : IValueConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return !targetType.IsEnum
-            ? throw new InvalidOperationException()
-            : Enum.Parse(targetType, value?.ToString() ?? throw new InvalidOperationException());
+            ? throw new NotSupportedException()
+            : Enum.Parse(targetType, value?.ToString() ?? throw new NotSupportedException());
     }
 }

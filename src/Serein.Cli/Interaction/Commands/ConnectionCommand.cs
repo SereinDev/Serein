@@ -20,7 +20,7 @@ public class ConnectionCommand(IHost host) : Command(host)
     private WsConnectionManager WsNetwork => Services.GetRequiredService<WsConnectionManager>();
     private ILogger Logger => Services.GetRequiredService<ILogger>();
 
-    public override void Parse(string[] args)
+    public override void Invoke(string[] args)
     {
         if (args.Length == 1)
             throw new InvalidArgumentException("缺少参数。可用值：\"info\"、\"open\"和\"close\"");

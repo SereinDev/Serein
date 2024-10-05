@@ -219,6 +219,7 @@ public partial class CommandParser(
                     "sender.id" => commandContext?.MessagePacket?.UserId,
                     "sender.nickname" => commandContext?.MessagePacket?.Sender?.Nickname,
                     "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
+                    "sender.card" => commandContext?.MessagePacket?.Sender?.Card,
                     "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
                     "sender.shownname"
                         => string.IsNullOrEmpty(commandContext?.MessagePacket?.Sender?.Card)
@@ -258,7 +259,7 @@ public partial class CommandParser(
         if (i == 0 || i >= input.Length)
             return null;
 
-        var key = input[..(i + 1)];
+        var key = input[..(i)];
         id = input[(i + 1)..];
 
         return !_serverManager.Servers.TryGetValue(id, out server)
@@ -269,6 +270,8 @@ public partial class CommandParser(
         {
             return server is null ? null : key.ToLowerInvariant() switch
             {
+                "server.id" => server.Id,
+                "server.name" => server.Configuration.Name,
                 "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
                 "server.usage" => server.ServerInfo.CPUUsage,
                 "server.output" => server.ServerInfo.OutputLines,

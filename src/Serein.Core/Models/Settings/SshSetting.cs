@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Serein.Core.Models.Settings;
 
-public class SshSetting : INotifyPropertyChanged
+public class SshSetting : NotifyPropertyChangedModelBase
 {
     public bool Enable { get; set; }
 
@@ -12,7 +11,4 @@ public class SshSetting : INotifyPropertyChanged
     public ushort Port { get; set; } = 22;
 
     public Dictionary<string, string> Users { get; set; } = new() { ["admin"] = "password" };
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

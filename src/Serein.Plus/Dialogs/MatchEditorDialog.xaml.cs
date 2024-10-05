@@ -22,7 +22,7 @@ public partial class MatchEditorDialog : ContentDialog
 
     private void UpdateTip(object? sender, EventArgs e)
     {
-        InfoBar.IsOpen = !string.IsNullOrEmpty(_match.Tip);
+        InfoBar.IsOpen = !string.IsNullOrEmpty(_match.LastError);
     }
 
     private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs e)

@@ -15,7 +15,11 @@ public partial class ServerConfigurationEditor : Window
 {
     private readonly ServerManager _serverManager;
 
-    public ServerConfigurationEditor(ServerManager serverManager, Configuration configuration, string? id = null)
+    public ServerConfigurationEditor(
+        ServerManager serverManager,
+        Configuration configuration,
+        string? id = null
+    )
     {
         DataContext = this;
         _serverManager = serverManager;
@@ -35,9 +39,9 @@ public partial class ServerConfigurationEditor : Window
         {
             if (IdTextBox.IsEnabled)
                 Validate();
-            
+
             DialogResult = true;
-            Hide();
+            Close();
         }
         catch (Exception ex)
         {
@@ -45,7 +49,7 @@ public partial class ServerConfigurationEditor : Window
             {
                 Content = ex.Message,
                 DefaultButton = ContentDialogButton.Close,
-                CloseButtonText = "确定"
+                CloseButtonText = "确定",
             }.ShowAsync();
         }
     }

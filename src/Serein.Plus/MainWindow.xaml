@@ -2,6 +2,7 @@
     x:Class="Serein.Plus.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Serein.Plus.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Serein.Plus"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -28,6 +29,10 @@
     IsVisibleChanged="Window_IsVisibleChanged"
     Loaded="Window_Loaded"
     mc:Ignorable="d">
+    <Window.Resources>
+        <converter:ReverseBooleanConverter x:Key="reverseBooleanConverter" />
+    </Window.Resources>
+
     <Grid>
         <tb:TaskbarIcon
             x:Name="AppTaskbarIcon"
@@ -54,8 +59,6 @@
                         Click="MenuItem_Click"
                         Header="置顶"
                         IsCheckable="True"
-                        IsChecked="{Binding Topmost, ElementName=Window}"
-                        IsEnabled="{Binding IsVisible, ElementName=Window, Mode=OneWay}"
                         Tag="TopMost">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Pinned}" />
@@ -78,6 +81,7 @@
 
         <ui:InfoBar
             x:Name="GlobalInfoBar"
+            MaxWidth="600"
             Margin="0,0,0,10"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"

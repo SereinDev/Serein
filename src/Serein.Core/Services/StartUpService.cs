@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,30 +31,14 @@ public class StartUpService(
         _updateChecker.StartAsync();
 
         foreach (var (_, server) in _serverManager.Servers)
-        {
             if (server.Configuration.StartWhenSettingUp)
-                try
-                {
-                    server.Start();
-                }
-                catch { }
-        }
+                Try(server.Start);
 
         if (_settingProvider.Value.WebApi.Enable)
-            try
-            {
-                _httpServer.Start();
-            }
-            catch
-            { }
+            Try(_httpServer.Start);
 
         if (_settingProvider.Value.Ssh.Enable)
-            try
-            {
-                _sshServiceProvider.Start();
-            }
-            catch
-            { }
+            Try(_sshServiceProvider.Start);
 
         return Task.CompletedTask;
     }
@@ -61,5 +46,15 @@ public class StartUpService(
     public Task StopAsync(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
+    }
+
+    private static void Try(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch
+        { }
     }
 }

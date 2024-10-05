@@ -189,7 +189,7 @@ public class InputReader : IHostedService
         else
             try
             {
-                parser.Parse([.. args]);
+                parser.Invoke([.. args]);
             }
             catch (InvalidArgumentException e)
             {

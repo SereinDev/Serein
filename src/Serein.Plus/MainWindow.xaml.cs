@@ -39,7 +39,6 @@ public partial class MainWindow : Window
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
 
-
     public MainWindow(
         IServiceProvider services,
         ServerManager serverManager,
@@ -66,6 +65,13 @@ public partial class MainWindow : Window
 
         DataContext = _titleUpdater;
         _titleUpdater.Update();
+
+        ThemeManager.Current.ApplicationTheme = _settingProvider.Value.Application.Theme switch
+        {
+            Theme.Light => ApplicationTheme.Light,
+            Theme.Dark => ApplicationTheme.Dark,
+            _ => null,
+        };
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -78,7 +84,8 @@ public partial class MainWindow : Window
         switch (tag)
         {
             case "TopMost":
-                _isTopMost = item.IsChecked;
+                Topmost = _isTopMost = item.IsChecked;
+                HideMenuItem.IsEnabled = !item.IsChecked;
                 break;
 
             case "Exit":
@@ -86,10 +93,12 @@ public partial class MainWindow : Window
                 break;
 
             case "Hide":
-                if (HideMenuItem.IsChecked)
+                if (item.IsChecked)
                     Hide();
                 else
                     ShowWindow();
+
+                TopMostMenuItem.IsEnabled = !item.IsChecked;
                 break;
         }
     }
@@ -104,16 +113,6 @@ public partial class MainWindow : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        ThemeManager.SetRequestedTheme(
-            this,
-            _settingProvider.Value.Application.Theme switch
-            {
-                Theme.Light => ElementTheme.Light,
-                Theme.Dark => ElementTheme.Dark,
-                _ => ElementTheme.Default,
-            }
-        );
-
         Task.Delay(1000)
             .ContinueWith((_) =>
                     Dispatcher.Invoke(
@@ -140,6 +139,7 @@ public partial class MainWindow : Window
     {
         ShowInTaskbar = IsVisible;
         HideMenuItem.IsChecked = !IsVisible;
+        TopMostMenuItem.IsEnabled = IsVisible;
 
         if (Topmost && !IsVisible)
             Topmost = false;
@@ -157,6 +157,9 @@ public partial class MainWindow : Window
         }
 
         e.Cancel = true;
+        HideMenuItem.IsEnabled = HideMenuItem.IsChecked = true;
+        Topmost = _isTopMost = TopMostMenuItem.IsEnabled = TopMostMenuItem.IsChecked = false;
+
         ShowBalloonTip(
             "仍有服务器进程在运行中",
             "已自动最小化至托盘，点击托盘图标即可复原窗口",

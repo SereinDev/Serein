@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
@@ -10,7 +9,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class SettingProvider : DataProviderBase<Setting>, INotifyPropertyChanged
+public class SettingProvider : DataProviderBase<Setting>
 {
     public SettingProvider()
     {
@@ -60,7 +59,4 @@ public class SettingProvider : DataProviderBase<Setting>, INotifyPropertyChanged
             throw new InvalidOperationException($"保存设置文件（{PathConstants.SettingFile}）时出现异常", e);
         }
     }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

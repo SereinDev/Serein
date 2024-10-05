@@ -1,13 +1,9 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 using iNKORE.UI.WPF.Modern.Controls;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
@@ -19,22 +15,19 @@ namespace Serein.Plus.Pages;
 
 public partial class MatchPage : Page
 {
-    private readonly IHost _host;
-    private IServiceProvider Services => _host.Services;
-    private MatchesProvider MatchesProvider => Services.GetRequiredService<MatchesProvider>();
-    public ObservableCollection<Match> Matches => MatchesProvider.Value;
+    private readonly MatchesProvider _matchesProvider;
 
-    public MatchPage(IHost host)
+    public MatchPage(MatchesProvider matchesProvider)
     {
-        _host = host;
+        _matchesProvider = matchesProvider;
         InitializeComponent();
-        MatchesDataGrid.ItemsSource = Matches;
-        Matches.CollectionChanged += UpdateDetails;
+        MatchesDataGrid.ItemsSource = _matchesProvider.Value;
+        _matchesProvider.Value.CollectionChanged += UpdateDetails;
     }
 
     private void MatchesDataGrid_LayoutUpdated(object sender, EventArgs e)
     {
-        MatchesProvider.SaveAsyncWithDebounce();
+        _matchesProvider.SaveAsyncWithDebounce();
         UpdateDetails(sender, e);
     }
 
@@ -42,10 +35,10 @@ public partial class MatchPage : Page
     {
         Details.Text =
             MatchesDataGrid.SelectedItems.Count > 1
-                ? $"共{Matches.Count}项，已选择{MatchesDataGrid.SelectedItems.Count}项"
+                ? $"共{_matchesProvider.Value.Count}项，已选择{MatchesDataGrid.SelectedItems.Count}项"
                 : MatchesDataGrid.SelectedIndex >= 0
-                    ? $"共{Matches.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
-                    : $"共{Matches.Count}项";
+                    ? $"共{_matchesProvider.Value.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
+                    : $"共{_matchesProvider.Value.Count}项";
     }
 
     private void MatchesDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -71,14 +64,14 @@ public partial class MatchPage : Page
                         (r) =>
                         {
                             if (r.Result == ContentDialogResult.Primary)
-                                Dispatcher.Invoke(() => Matches.Add(m1));
+                                Dispatcher.Invoke(() => _matchesProvider.Value.Add(m1));
                         }
                     );
                 break;
 
             case "Remove":
                 foreach (var item in MatchesDataGrid.SelectedItems.OfType<Match>())
-                    Matches.Remove(item);
+                    _matchesProvider.Value.Remove(item);
 
                 break;
 
@@ -111,7 +104,7 @@ public partial class MatchPage : Page
                 break;
 
             case "Refresh":
-                MatchesProvider.Read();
+                _matchesProvider.Read();
                 break;
 
             default:

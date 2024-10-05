@@ -1,17 +1,15 @@
 using System;
-using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 using NCrontab;
 
 using PropertyChanged;
 
-using Serein.Core.Services;
 using Serein.Core.Services.Commands;
 
 namespace Serein.Core.Models.Commands;
 
-public class Schedule : INotifyPropertyChanged
+public class Schedule : NotifyPropertyChangedModelBase
 {
     private string? _command;
     private string? _expression;
@@ -31,11 +29,11 @@ public class Schedule : INotifyPropertyChanged
 
                 Cron = CrontabSchedule.Parse(_expression);
                 NextTime = Cron?.GetNextOccurrence(DateTime.Now);
-                CronExpTip = null;
+                LastCronExpError = null;
             }
             catch (Exception e)
             {
-                CronExpTip = e.Message;
+                LastCronExpError = e.Message;
                 NextTime = null;
             }
         }
@@ -51,11 +49,11 @@ public class Schedule : INotifyPropertyChanged
             try
             {
                 CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value, true);
-                CommandTip = null;
+                LastCommandError = null;
             }
             catch (Exception e)
             {
-                CommandTip = e.Message;
+                LastCommandError = e.Message;
             }
         }
     }
@@ -79,15 +77,12 @@ public class Schedule : INotifyPropertyChanged
     [JsonIgnore]
     internal CrontabSchedule? Cron { get; set; }
 
-    [AlsoNotifyFor(nameof(Tip))]
-    private string? CommandTip { get; set; }
+    [AlsoNotifyFor(nameof(LastError))]
+    private string? LastCommandError { get; set; }
 
-    [AlsoNotifyFor(nameof(Tip))]
-    private string? CronExpTip { get; set; }
+    [AlsoNotifyFor(nameof(LastError))]
+    private string? LastCronExpError { get; set; }
 
     [JsonIgnore]
-    public string? Tip => CronExpTip ?? CommandTip;
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public string? LastError => LastCronExpError ?? LastCommandError;
 }

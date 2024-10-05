@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
-using System.Timers;
+﻿using System.Timers;
 
+using Serein.Core.Models;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 
 namespace Serein.Plus.Services; 
 
-public class TitleUpdater : INotifyPropertyChanged
+public class TitleUpdater : NotifyPropertyChangedModelBase
 {
     private const string Name = "Serein.Plus";
     private readonly SettingProvider _settingProvider;
@@ -34,7 +34,4 @@ public class TitleUpdater : INotifyPropertyChanged
         var postfix = _commandParser.ApplyVariables(_settingProvider.Value.Application.CustomTitle, null);
         CustomTitle = string.IsNullOrEmpty(postfix) ? Name : $"{Name} - {postfix}";
     }
-
-#pragma warning disable CS0067
-    public event PropertyChangedEventHandler? PropertyChanged;
 }

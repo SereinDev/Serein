@@ -17,7 +17,7 @@ public class VersionCommand(IHost host) : Command(host)
 {
     private ILogger Logger => Services.GetRequiredService<ILogger>();
 
-    public override void Parse(string[] args)
+    public override void Invoke(string[] args)
     {
         Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
         var table = new Table()

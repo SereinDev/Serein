@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Serein.Core;
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Services.Servers;
 
 using Xunit;
 
@@ -75,13 +77,13 @@ public class CommandParserTests : IDisposable
     [InlineData("[priVAte:114514]4", CommandType.SendPrivateMsg, "4", "114514")]
     public static void ShouldBeAbleToParseCommand(
         string input,
-        CommandType excepted,
+        CommandType exceptedType,
         string exceptedBody,
         string? exceptedArgument = null
     )
     {
         var cmd = Parser.Parse(CommandOrigin.ConsoleExecute, input);
-        Assert.Equal(excepted, cmd.Type);
+        Assert.Equal(exceptedType, cmd.Type);
         Assert.Equal(exceptedBody, cmd.Body);
 
         if (!string.IsNullOrEmpty(exceptedArgument))
@@ -150,5 +152,49 @@ public class CommandParserTests : IDisposable
     public static void ShouldAnalyzeWhetherToBeVariablePattern(string input, bool result)
     {
         Assert.Equal(result, Parser.Variable.IsMatch(input));
+    }
+
+    [Fact]
+    public void ShouldWorkWithServerVariable()
+    {
+        _app.Services.GetRequiredService<ServerManager>().Add("foo", new()
+        {
+            Name = "5678"
+        });
+        _app.Services.GetRequiredService<ServerManager>().Add("bar", new()
+        {
+            Name = "5678"
+        });
+        Assert.Equal("foo", _commandParser.ApplyVariables("{server.id}", null));
+        Assert.Equal("foo", _commandParser.ApplyVariables("{server.id@foo}", null));
+        Assert.Equal("bar", _commandParser.ApplyVariables("{server.id@bar}", null));
+
+        Assert.Equal("5678", _commandParser.ApplyVariables("{server.name}", null));
+        Assert.Equal("5678", _commandParser.ApplyVariables("{server.name@foo}", null));
+
+        Assert.Equal("未启动", _commandParser.ApplyVariables("{server.status}", null));
+        Assert.Equal("未启动", _commandParser.ApplyVariables("{server.status@foo}", null));
+
+        Assert.Equal("bar", _commandParser.ApplyVariables("{server.id}", new(ServerId: "bar")));
+    }
+
+    [Fact]
+    public void ShouldWorkWithMsgPacketVariable()
+    {
+        var packet = new MessagePacket
+        {
+            UserId = 114514,
+            MessageId = 1,
+            Sender =
+            {
+                Card = "",
+                Nickname = "nickname",
+            }
+        };
+        Assert.Equal("1", _commandParser.ApplyVariables("{msg.id}", new(MessagePacket: packet)));
+        Assert.Equal("成员", _commandParser.ApplyVariables("{sender.role}", new(MessagePacket: packet)));
+        Assert.Equal("114514", _commandParser.ApplyVariables("{sender.id}", new(MessagePacket: packet)));
+        Assert.Equal("nickname", _commandParser.ApplyVariables("{sender.nickname}", new(MessagePacket: packet)));
+        Assert.Equal("nickname", _commandParser.ApplyVariables("{sender.shownname}", new(MessagePacket: packet)));
     }
 }

@@ -1,4 +1,3 @@
-
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Serein.Plus.Services;
