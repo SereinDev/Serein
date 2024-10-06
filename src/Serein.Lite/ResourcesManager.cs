@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Lite;
 
-public class ResourcesManager(ILogger logger)
+public class ResourcesManager(ILogger<ResourcesManager> logger)
 {
     private readonly ILogger _logger = logger;
 

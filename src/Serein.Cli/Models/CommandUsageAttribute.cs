@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Cli.Interaction;
+namespace Serein.Cli.Models;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class CommandUsageAttribute(string example, string description) : Attribute

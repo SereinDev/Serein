@@ -14,6 +14,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using iNKORE.UI.WPF.Modern.Media.Animation;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Plugins;
@@ -34,30 +35,31 @@ namespace Serein.Plus;
 public partial class MainWindow : Window
 {
     private bool _isTopMost;
+    private readonly IHost _host;
     private readonly IServiceProvider _services;
     private readonly ServerManager _serverManager;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly TitleUpdater _titleUpdater;
-    private readonly FileLogger _fileLogger;
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
 
     public MainWindow(
+        IHost host,
         IServiceProvider services,
         ServerManager serverManager,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        TitleUpdater titleUpdater,
-        FileLogger fileLogger
+        TitleUpdater titleUpdater
     )
     {
+        _host = host;
         _services = services;
         _serverManager = serverManager;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
         _titleUpdater = titleUpdater;
-        _fileLogger = fileLogger;
+
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
@@ -135,7 +137,7 @@ public partial class MainWindow : Window
         if (SereinApp.StartForTheFirstTime)
             new WelcomeDialog().ShowAsync();
 
-        if (_fileLogger.IsEnable)
+        if (FileLoggerProvider.IsEnable)
             new ContentDialog
             {
                 Title = "嘿！你开启了日志模式",
@@ -150,7 +152,7 @@ public partial class MainWindow : Window
                 DefaultButton = ContentDialogButton.Close,
             }.ShowAsync();
 
-        SereinApp.Current?.StartAsync();
+        _host.StartAsync();
     }
 
     private void Window_Deactivated(object sender, EventArgs e)

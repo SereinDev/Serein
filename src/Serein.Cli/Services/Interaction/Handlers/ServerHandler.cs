@@ -5,23 +5,22 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
-using Serein.Core.Models.Output;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 
 using Spectre.Console;
 
-namespace Serein.Cli.Interaction.Commands;
+namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandDescription("server", "管理服务器", Priority = 999)]
 [CommandUsage("server <id> info", "显示服务器信息")]
 [CommandUsage("server <id> start", "启动服务器")]
 [CommandUsage("server <id> stop", "关闭服务器")]
 [CommandUsage("server <id> terminate", "强制结束服务器")]
-public class ServerCommand(IHost host) : Command(host)
+public class ServerHandler(IHost host) : CommandHandler
 {
-    private ServerManager ServerManager => Services.GetRequiredService<ServerManager>();
-    private ILogger Logger => Services.GetRequiredService<ILogger>();
+    private readonly ServerManager _serverManager = host.Services.GetRequiredService<ServerManager>();
+    private readonly ILogger _logger =  host.Services.GetRequiredService<ILogger<ServerHandler>>();
 
     public override void Invoke(string[] args)
     {
@@ -33,7 +32,7 @@ public class ServerCommand(IHost host) : Command(host)
         if (args.Length == 2)
             throw new InvalidArgumentException("缺少服务器ID。");
 
-        if (!ServerManager.Servers.TryGetValue(args[1], out Server? server))
+        if (!_serverManager.Servers.TryGetValue(args[1], out Server? server))
             throw new InvalidArgumentException("指定的服务器不存在。");
 
         switch (args[2].ToLowerInvariant())
@@ -80,7 +79,7 @@ public class ServerCommand(IHost host) : Command(host)
                 }
                 catch (Exception e)
                 {
-                    Logger.LogWarning("启动失败：{}", e.Message);
+                    _logger.LogWarning("启动失败：{}", e.Message);
                 }
                 break;
 
@@ -91,7 +90,7 @@ public class ServerCommand(IHost host) : Command(host)
                 }
                 catch (Exception e)
                 {
-                    Logger.LogWarning("关闭失败：{}", e.Message);
+                    _logger.LogWarning("关闭失败：{}", e.Message);
                 }
                 break;
 
@@ -102,7 +101,7 @@ public class ServerCommand(IHost host) : Command(host)
                 }
                 catch (Exception e)
                 {
-                    Logger.LogWarning("强制结束失败：{}", e.Message);
+                    _logger.LogWarning("强制结束失败：{}", e.Message);
                 }
                 break;
 

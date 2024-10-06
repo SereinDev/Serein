@@ -2,6 +2,7 @@
 using System.Windows;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core;
@@ -17,7 +18,7 @@ namespace Serein.Plus;
 
 public partial class App : Application
 {
-    private readonly SereinApp _app = Build();
+    private readonly IHost _app = Build();
 
     public App()
     {
@@ -31,53 +32,47 @@ public partial class App : Application
         ShutdownMode = ShutdownMode.OnMainWindowClose;
     }
 
-    private static SereinApp Build()
+    private static IHost Build()
     {
-        var builder = new SereinAppBuilder();
-        builder.ConfigureService();
+        var builder = SereinAppBuilder.CreateBuilder();
 
-        builder.Services.AddSingleton<TitleUpdater>();
-        builder.Services.AddSingleton<InfoBarProvider>();
-        builder.Services.AddSingleton<BalloonTipProvider>();
+        builder.Logging.SetMinimumLevel(LogLevel.Trace);
 
-        builder.Services.AddSingleton<MainWindow>();
-        builder.Services.AddSingleton<NotImplPage>();
+        builder
+            .Services.AddSingleton<TitleUpdater>()
+            .AddSingleton<InfoBarProvider>()
+            .AddSingleton<BalloonTipProvider>()
+            .AddSingleton<MainWindow>()
+            .AddSingleton<NotImplPage>()
+            .AddSingleton<ShellPage>()
+            .AddSingleton<ShellViewModel>()
+            .AddSingleton<ServerPage>()
+            .AddSingleton<MatchPage>()
+            .AddSingleton<SchedulePage>()
+            .AddSingleton<ConnectionPage>()
+            .AddSingleton<ConnectionViewModel>()
+            .AddSingleton<PermissionGroupPage>()
+            .AddSingleton<PluginPage>()
+            .AddSingleton<PluginViewModel>()
+            .AddSingleton<PluginConsolePage>()
+            .AddSingleton<PluginConsoleViewModel>()
+            .AddSingleton<PluginListPage>()
+            .AddSingleton<AboutPage>()
+            .AddSingleton<AppSettingPage>()
+            .AddSingleton<ConnectionSettingPage>()
+            .AddSingleton<ReactionSettingPage>()
+            .AddSingleton<CategoriesPage>()
+            .AddSingleton<ILogger, NotificationLogger>()
+            .AddSingleton<IPluginLogger, PluginLogger>()
+            .AddSingleton<IConnectionLogger, ConnectionLogger>();
 
-        builder.Services.AddSingleton<ShellPage>();
-        builder.Services.AddSingleton<ShellViewModel>();
-
-        builder.Services.AddSingleton<ServerPage>();
-        builder.Services.AddSingleton<MatchPage>();
-        builder.Services.AddSingleton<SchedulePage>();
-
-        builder.Services.AddSingleton<ConnectionPage>();
-        builder.Services.AddSingleton<ConnectionViewModel>();
-
-        builder.Services.AddSingleton<PermissionGroupPage>();
-
-        builder.Services.AddSingleton<PluginPage>();
-        builder.Services.AddSingleton<PluginViewModel>();
-
-        builder.Services.AddSingleton<PluginConsolePage>();
-        builder.Services.AddSingleton<PluginConsoleViewModel>();
-
-        builder.Services.AddSingleton<PluginListPage>();
-
-        builder.Services.AddSingleton<AboutPage>();
-        builder.Services.AddSingleton<AppSettingPage>();
-        builder.Services.AddSingleton<ConnectionSettingPage>();
-        builder.Services.AddSingleton<ReactionSettingPage>();
-        builder.Services.AddSingleton<CategoriesPage>();
-
-        builder.Services.AddSingleton<ILogger, NotificationLogger>();
-        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
-        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
         return builder.Build();
     }
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        _app.Services.GetRequiredService<MainWindow>().Show();
+        MainWindow = _app.Services.GetRequiredService<MainWindow>();
+        MainWindow.Show();
     }
 
     private void Application_Exit(object sender, ExitEventArgs e)

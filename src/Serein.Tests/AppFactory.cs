@@ -1,7 +1,7 @@
 using System.IO;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
@@ -12,21 +12,24 @@ namespace Serein.Tests;
 
 public static class AppFactory
 {
-    public static SereinApp BuildNew()
+    private static readonly object Lock = new();
+
+    public static IHost BuildNew()
     {
-        if (Directory.Exists(PathConstants.Root))
+        lock (Lock)
         {
-            Directory.Delete(PathConstants.Root, true);
-            Directory.CreateDirectory(PathConstants.Root);
+            if (Directory.Exists(PathConstants.Root))
+            {
+                Directory.Delete(PathConstants.Root, true);
+                Directory.CreateDirectory(PathConstants.Root);
+            }
+
+            var builder = SereinAppBuilder.CreateBuilder();
+
+            builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
+            builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
+
+            return builder.Build();
         }
-
-        var builder = new SereinAppBuilder();
-
-        builder.ConfigureService();
-        builder.Services.AddSingleton<ILogger, MainTestLogger>();
-        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
-        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
-
-        return builder.Build();
     }
 }

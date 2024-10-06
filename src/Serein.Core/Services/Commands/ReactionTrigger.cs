@@ -10,7 +10,11 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ReactionTrigger(ILogger logger, SettingProvider settingProvider, CommandRunner commandRunner)
+public class ReactionTrigger(
+    ILogger<ReactionTrigger> logger,
+    SettingProvider settingProvider,
+    CommandRunner commandRunner
+)
 {
     private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
@@ -28,7 +32,7 @@ public class ReactionTrigger(ILogger logger, SettingProvider settingProvider, Co
         IReadOnlyDictionary<string, string?>? variables = null
     )
     {
-        _logger.LogDebug("[{}] 触发：type={}", nameof(ReactionTrigger), type);
+        _logger.LogDebug("触发：type={}", type);
         if (!_settingProvider.Value.Reactions.TryGetValue(type, out var values))
         {
             _settingProvider.Value.Reactions[type] = [];
@@ -43,21 +47,19 @@ public class ReactionTrigger(ILogger logger, SettingProvider settingProvider, Co
         if (!commands.Any())
             return;
 
-        var context = new CommandContext
-        {
-            Variables = variables,
-            ServerId = target?.ServerId
-        };
+        var context = new CommandContext { Variables = variables, ServerId = target?.ServerId };
 
         var tasks = new List<Task>();
         foreach (var command in commands)
         {
             if (command.Argument is null && target is not null)
-                if (command.Type == CommandType.InputServer && !string.IsNullOrEmpty(target.ServerId))
+                if (
+                    command.Type == CommandType.InputServer
+                    && !string.IsNullOrEmpty(target.ServerId)
+                )
                     command.Argument = target.ServerId;
                 else if (command.Type == CommandType.SendPrivateMsg && target.UserId.HasValue)
                     command.Argument = target.UserId.ToString() ?? string.Empty;
-
 
             tasks.Add(_commandRunner.RunAsync(command, context));
         }

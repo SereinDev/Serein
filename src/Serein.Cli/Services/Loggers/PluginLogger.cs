@@ -6,9 +6,9 @@ using Serein.Core.Models.Output;
 
 using Spectre.Console;
 
-namespace Serein.Cli.Loggers;
+namespace Serein.Cli.Services.Loggers;
 
-public class PluginLogger(ILogger logger) : IPluginLogger
+public class PluginLogger(ILogger<PluginLogger> logger) : IPluginLogger
 {
     private readonly ILogger _logger = logger;
 
@@ -18,26 +18,26 @@ public class PluginLogger(ILogger logger) : IPluginLogger
         {
             case LogLevel.Debug:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[name]] {message}"
+                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[{name}]] {message}"
                 );
                 break;
 
             case LogLevel.Information:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [cadetblue_1]Info [/] [[name]] {message}"
+                    $"{DateTime.Now:T} [cadetblue_1]Info [/] [[{name}]] {message}"
                 );
                 break;
 
             case LogLevel.Warning:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [yellow bold]Warn  [[name]] {message}[/]"
+                    $"{DateTime.Now:T} [yellow bold]Warn  [[{name}]] {message}[/]"
                 );
                 break;
 
             case LogLevel.Critical:
             case LogLevel.Error:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [red bold]Error [[name]] {message}[/]"
+                    $"{DateTime.Now:T} [red bold]Error [[{name}]] {message}[/]"
                 );
                 break;
 

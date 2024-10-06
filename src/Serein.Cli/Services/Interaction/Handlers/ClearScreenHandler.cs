@@ -1,11 +1,11 @@
 using System;
 
-using Microsoft.Extensions.Hosting;
+using Serein.Cli.Models;
 
-namespace Serein.Cli.Interaction.Commands;
+namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandDescription("cls", "清屏", Priority = -1)]
-public class ClearScreenCommand(IHost host) : Command(host)
+public class ClearScreenHandler() : CommandHandler
 {
     public override void Invoke(string[] args)
     {

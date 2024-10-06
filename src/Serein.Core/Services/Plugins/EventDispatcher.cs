@@ -16,7 +16,7 @@ using Serein.Core.Utils.Extensions;
 namespace Serein.Core.Services.Plugins;
 
 public class EventDispatcher(
-    ILogger logger,
+    ILogger<EventDispatcher> logger,
     IPluginLogger pluginLogger,
     SettingProvider settingProvider,
     NetPluginLoader netPluginLoader,
@@ -31,7 +31,7 @@ public class EventDispatcher(
 
     public bool Dispatch(Event @event, params object[] args)
     {
-        _logger.LogDebug("[{}] 分发事件：{}", nameof(EventDispatcher), @event);
+        _logger.LogDebug("分发事件：{}", @event);
 
         var tasks = new List<Task<bool>>();
         var cancellationTokenSource = new CancellationTokenSource();
@@ -42,7 +42,7 @@ public class EventDispatcher(
             if (t is Task<bool> tb)
                 tasks.Add(tb);
 
-        _logger.LogDebug("[{}] 事件（{}）任务数：{}", nameof(EventDispatcher), @event, tasks.Count);
+        _logger.LogDebug("事件（{}）任务数：{}", @event, tasks.Count);
 
         if (tasks.Count == 0)
         {

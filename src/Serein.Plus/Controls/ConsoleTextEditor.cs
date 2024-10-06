@@ -1,30 +1,11 @@
-using System.ComponentModel;
-
 using ICSharpCode.AvalonEdit;
 
-using Microsoft.Extensions.DependencyInjection;
-
-using Serein.Core;
-using Serein.Core.Services.Data;
 using Serein.Plus.Models.ConsoleTextEditor;
 
 namespace Serein.Plus.Controls;
 
 public class ConsoleTextEditor : TextEditor
 {
-    private static readonly SettingProvider SettingProvider;
-    private static uint s_maxLines;
-
-    static ConsoleTextEditor()
-    {
-        SettingProvider = SereinApp.Current!.Services.GetRequiredService<SettingProvider>();
-        SettingProvider.PropertyChanged += UpdateLines;
-        SettingProvider.PropertyChanged += (_, _) =>
-            SettingProvider.Value.Application.PropertyChanged += UpdateLines;
-
-        s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
-    }
-
     public void EnableAnsiColor()
     {
         TextArea.TextView.ElementGenerators.Insert(0, new HideAnsiElementGenerator());
@@ -34,11 +15,6 @@ public class ConsoleTextEditor : TextEditor
     public void EnableLogLevelHighlight(bool onlySereinHeader = false)
     {
         TextArea.TextView.LineTransformers.Add(new LineHeaderColorizer(onlySereinHeader));
-    }
-
-    private static void UpdateLines(object? sender, PropertyChangedEventArgs e)
-    {
-        s_maxLines = SettingProvider.Value.Application.MaxDisplayedLines;
     }
 
     protected readonly object _lock = new();
@@ -60,7 +36,7 @@ public class ConsoleTextEditor : TextEditor
         {
             AppendText(line + "\n");
 
-            var i = (int)(LineCount - (s_maxLines == 0 ? 250 : s_maxLines));
+            var i = LineCount - 250;
 
             if (i > 0)
             {

@@ -22,7 +22,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
     public Release? Latest { get; private set; }
     public event EventHandler? Updated;
 
-    public UpdateChecker(ILogger logger, SettingProvider settingProvider)
+    public UpdateChecker(ILogger<UpdateChecker> logger, SettingProvider settingProvider)
     {
         _logger = logger;
         _settingProvider = settingProvider;
@@ -37,6 +37,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
 
     public async Task CheckAsync()
     {
+        _logger.LogDebug("开始获取更新");
         try
         {
             var release = await _gitHubClient.Repository.Release.GetLatest("SereinDev", "Serein");
@@ -47,15 +48,19 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
 
             Latest = release;
 
+            _logger.LogDebug("获取到最新版本：{}", Latest.TagName);
+            _logger.LogDebug("Body='{}'", Latest.Body);
+
             if (version > Version)
-            {
-                _logger.LogDebug("[{}] 获取到新版本：{}", nameof(UpdateChecker), Latest?.TagName);
                 Updated?.Invoke(this, EventArgs.Empty);
-            }
         }
         catch (Exception e)
         {
             _logger.LogError(e, "获取更新失败");
+        }
+        finally
+        {
+            _logger.LogDebug("获取更新结束");
         }
     }
 

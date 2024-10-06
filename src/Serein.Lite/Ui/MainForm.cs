@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
@@ -32,6 +34,7 @@ public partial class MainForm : Form
     private readonly CommandParser _commandParser;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
+    private readonly ResourcesManager _resourcesManager;
     private readonly System.Timers.Timer _timer;
 
     private IServiceProvider Services => _host.Services;
@@ -41,7 +44,8 @@ public partial class MainForm : Form
         ServerManager serverManager,
         CommandParser commandParser,
         SettingProvider settingProvider,
-        EventDispatcher eventDispatcher
+        EventDispatcher eventDispatcher,
+        ResourcesManager resourcesManager
     )
     {
         _host = host;
@@ -49,6 +53,11 @@ public partial class MainForm : Form
         _commandParser = commandParser;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
+        _resourcesManager = resourcesManager;
+
+        if (!File.Exists(ResourcesManager.IndexPath))
+            _resourcesManager.WriteConsoleHtml();
+
         _timer = new(2000);
         _timer.Elapsed += (_, _) => Invoke(UpdateTitle);
         _settingProvider.Value.Application.PropertyChanged += (_, e) =>
@@ -137,7 +146,8 @@ public partial class MainForm : Form
 
     private void ServerAddToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        SwitchPage<ServerPage>();
+        if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+            SwitchPage<ServerPage>();
 
         var configuration = new Configuration();
 
@@ -148,7 +158,8 @@ public partial class MainForm : Form
 
     private void ServerImportToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        SwitchPage<ServerPage>();
+        if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+            SwitchPage<ServerPage>();
 
         var openFileDialog = new OpenFileDialog { Title = "选择服务器配置", Filter = "服务器配置文件|*.json" };
 
@@ -286,6 +297,9 @@ public partial class MainForm : Form
 
         if (SereinApp.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
+
+        if (FileLoggerProvider.IsEnable)
+            DialogFactory.ShowWarningDialogOfLogMode();
 
         _timer.Start();
         base.OnShown(e);

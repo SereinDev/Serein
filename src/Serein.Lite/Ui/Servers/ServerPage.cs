@@ -11,15 +11,17 @@ public partial class ServerPage : UserControl
 {
     private readonly ServerManager _serverManager;
     private readonly ResourcesManager _resourcesManager;
+    private readonly MainForm _mainForm;
     private readonly Dictionary<string, TabPage> _panels;
 
-    public ServerPage(ServerManager serverManager, ResourcesManager resourcesManager)
+    public ServerPage(ServerManager serverManager, ResourcesManager resourcesManager, MainForm mainForm)
     {
         InitializeComponent();
 
         _panels = [];
         _serverManager = serverManager;
         _resourcesManager = resourcesManager;
+        _mainForm = mainForm;
         _serverManager.ServersUpdated += Update;
 
         foreach (var (id, server) in _serverManager.Servers)
@@ -41,7 +43,7 @@ public partial class ServerPage : UserControl
             Tag = id
         };
 
-        tabPage.Controls.Add(new Panel(server));
+        tabPage.Controls.Add(new Panel(server, _mainForm));
         _panels[id] = tabPage;
         MainTabControl.Controls.Add(tabPage);
     }

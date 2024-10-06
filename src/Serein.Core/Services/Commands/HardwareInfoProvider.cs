@@ -14,7 +14,7 @@ public class HardwareInfoProvider
     private readonly Timer _timer;
     private readonly ILogger _logger;
 
-    public HardwareInfoProvider(ILogger logger)
+    public HardwareInfoProvider(ILogger<HardwareInfoProvider> logger)
     {
         Task.Run(() => Info = new());
 

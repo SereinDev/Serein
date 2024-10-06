@@ -12,7 +12,7 @@ using Serein.Core.Services.Data;
 namespace Serein.Core.Services.Network.Ssh;
 
 public class SshHost(
-    ILogger logger,
+    ILogger<SshHost> logger,
     SettingProvider settingProvider,
     SshServerKeysProvider sshServerKeysProvider
 )

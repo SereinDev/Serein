@@ -12,9 +12,6 @@ public class ConsoleWebBrowser : WebBrowser
 {
     public ConsoleWebBrowser()
     {
-        if (!File.Exists(ResourcesManager.IndexPath))
-            SereinApp.Current?.Services.GetRequiredService<ResourcesManager>().WriteConsoleHtml();
-
         Navigate(@"file:\\\" + Path.GetFullPath(ResourcesManager.IndexPath));
     }
 

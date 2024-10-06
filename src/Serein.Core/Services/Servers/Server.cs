@@ -42,7 +42,6 @@ public class Server
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
 
-    private readonly string _name;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
@@ -57,7 +56,7 @@ public class Server
 
     public Server(
         string id,
-        ILogger logger,
+        ILogger<Server> logger,
         Configuration configuration,
         SettingProvider settingManager,
         Matcher matcher,
@@ -66,7 +65,6 @@ public class Server
     )
     {
         Id = id;
-        _name = $"{nameof(Server)}@{id}";
         _logger = logger;
         Configuration = configuration;
         _settingProvider = settingManager;
@@ -85,7 +83,7 @@ public class Server
 
     public void Start()
     {
-        _logger.LogDebug("[{}] 请求启动", _name);
+        _logger.LogDebug("Id={}: 请求启动", Id);
 
         if (Status == ServerStatus.Running)
             throw new InvalidOperationException("服务器已在运行");
@@ -142,12 +140,12 @@ public class Server
         _eventDispatcher.Dispatch(Event.ServerStarted, Id);
         _updateTimer.Start();
 
-        _logger.LogDebug("[{}] 正在启动", _name);
+        _logger.LogDebug("Id={}: 正在启动", Id);
     }
 
     public void Stop()
     {
-        _logger.LogDebug("[{}] 请求关闭", _name);
+        _logger.LogDebug("Id={}: 请求关闭", Id);
 
         if (CancelRestart())
             return;
@@ -172,7 +170,7 @@ public class Server
                 NativeMethods.GenerateConsoleCtrlEvent(NativeMethods.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
                 NativeMethods.FreeConsole();
 
-                _logger.LogDebug("[{}] 发送Ctrl+C事件", _name);
+                _logger.LogDebug("Id={}: 发送Ctrl+C事件", Id);
             }
             else
                 throw new NotSupportedException("关服命令为空");
@@ -181,7 +179,7 @@ public class Server
             if (!string.IsNullOrEmpty(command))
                 Input(command);
 
-        _logger.LogDebug("[{}] 正在关闭", _name);
+        _logger.LogDebug("Id={}: 正在关闭", Id);
     }
 
     internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
@@ -203,7 +201,7 @@ public class Server
         bool fromUser = false
     )
     {
-        _logger.LogDebug("[{}] command='{}'; encodingType={}; fromUser={}", _name, command, encodingType, fromUser);
+        _logger.LogDebug("Id={}: command='{}'; encodingType={}; fromUser={}", Id, command, encodingType, fromUser);
 
         if (_inputWriter is null || Status != ServerStatus.Running)
             return;
@@ -245,7 +243,7 @@ public class Server
 
     public void RequestRestart()
     {
-        _logger.LogDebug("[{}] 请求重启", _name);
+        _logger.LogDebug("Id={}: 请求重启", Id);
 
         if (_restartStatus != RestartStatus.None)
             throw new InvalidOperationException("正在等待重启");
@@ -257,7 +255,7 @@ public class Server
 
     public void Terminate()
     {
-        _logger.LogDebug("[{}] 请求强制结束", _name);
+        _logger.LogDebug("Id={}: 请求强制结束", Id);
 
         if (CancelRestart())
             return;
@@ -273,7 +271,7 @@ public class Server
     {
         _updateTimer.Stop();
         var exitCode = _serverProcess?.ExitCode ?? 0;
-        _logger.LogDebug("[{}] 进程（PID={}）退出：{}", _name, _serverProcess?.Id, exitCode);
+        _logger.LogDebug("Id={}: 进程（PID={}）退出：{}", Id, _serverProcess?.Id, exitCode);
 
         ServerOutput?.Invoke(
             this,
@@ -307,7 +305,7 @@ public class Server
         if (e.Data is null)
             return;
 
-        _logger.LogDebug("[{}] 输出'{}'", _name, e.Data);
+        _logger.LogDebug("Id={}: 输出'{}'", Id, e.Data);
         _serverInfo.OutputLines++;
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));
@@ -338,7 +336,7 @@ public class Server
         if (_restartCancellationTokenSource is not null && !_restartCancellationTokenSource.IsCancellationRequested)
         {
             _restartCancellationTokenSource.Cancel();
-            _logger.LogDebug("[{}] 取消重启", _name);
+            _logger.LogDebug("Id={}: 取消重启", Id);
             ServerOutput?.Invoke(
                   this,
                   new(ServerOutputType.Information, "重启已取消")

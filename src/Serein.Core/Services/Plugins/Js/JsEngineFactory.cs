@@ -25,7 +25,7 @@ public class JsEngineFactory(
     LocalStorage localStorage,
     SessionStorage sessionStorage,
     IPluginLogger pluginLogger,
-    ILogger logger
+    ILogger<JsEngineFactory> logger
 )
 {
     private readonly SettingProvider _settingProvider = settingProvider;

@@ -33,7 +33,7 @@ public class CommandRunner
 
     public CommandRunner(
         IHost host,
-        ILogger logger,
+        ILogger<CommandRunner> logger,
         SettingProvider settingProvider,
         JsPluginLoader jsPluginLoader,
         BindingManager bindingManager
@@ -55,8 +55,7 @@ public class CommandRunner
             return;
 
         _logger.LogDebug(
-            "[{}] 运行命令：command.Body={}; command.Argument={}",
-            nameof(CommandRunner),
+            "运行命令：command.Body='{}'; command.Argument='{}'",
             command.Body,
             command.Argument
         );
@@ -183,7 +182,7 @@ public class CommandRunner
 
     private async Task ExecuteShellCommand(string line)
     {
-        _logger.LogDebug("[{}] 运行命令行：{}", nameof(CommandRunner), line);
+        _logger.LogDebug("运行命令行：{}", line);
         var process = new Process
         {
             StartInfo =
@@ -209,7 +208,7 @@ public class CommandRunner
         };
 
         process.Start();
-        _logger.LogDebug("[{}] 进程Id：{}", nameof(CommandRunner), process.Id);
+        _logger.LogDebug("进程Id：{}", process.Id);
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));
 
         if (!process.HasExited)

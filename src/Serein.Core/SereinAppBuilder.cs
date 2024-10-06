@@ -25,7 +25,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core;
 
-public sealed class SereinAppBuilder
+public static class SereinAppBuilder
 {
     static SereinAppBuilder()
     {
@@ -33,63 +33,56 @@ public sealed class SereinAppBuilder
         Directory.CreateDirectory(PathConstants.Root);
     }
 
-    public IServiceCollection Services => _hostAppBuilder.Services;
-    public ILoggingBuilder Logging => _hostAppBuilder.Logging;
-
-    private readonly HostApplicationBuilder _hostAppBuilder;
-
-    public SereinAppBuilder()
+    public static HostApplicationBuilder CreateBuilder()
     {
-        _hostAppBuilder = new HostApplicationBuilder();
-        _hostAppBuilder.Logging.ClearProviders();
+        var hostAppBuilder = Host.CreateEmptyApplicationBuilder(null);
+        hostAppBuilder.Logging.ClearProviders();
+        hostAppBuilder.Logging.AddDebug();
+
+        if (FileLoggerProvider.IsEnable)
+        {
+            hostAppBuilder.Logging.SetMinimumLevel(LogLevel.Trace);
+            hostAppBuilder.Logging.AddProvider(new FileLoggerProvider());
+        }
+
+        hostAppBuilder
+            .Services
+            .AddSingleton<SentryReporter>()
+            .AddSingleton<SettingProvider>()
+            .AddSingleton<MatchesProvider>()
+            .AddSingleton<ScheduleProvider>()
+            .AddSingleton<PermissionGroupProvider>()
+            .AddSingleton<SshServerKeysProvider>()
+            .AddSingleton<GroupManager>()
+            .AddSingleton<PermissionManager>()
+            .AddSingleton<HardwareInfoProvider>()
+            .AddSingleton<ReactionTrigger>()
+            .AddSingleton<Matcher>()
+            .AddSingleton<ServerManager>()
+            .AddSingleton<CommandParser>()
+            .AddSingleton<CommandRunner>()
+            .AddSingleton<UpdateChecker>()
+            .AddSingleton<WebSocketService>()
+            .AddSingleton<ReverseWebSocketService>()
+            .AddSingleton<WsConnectionManager>()
+            .AddSingleton<PacketHandler>()
+            .AddSingleton<HttpServer>()
+            .AddTransient<ApiMap>()
+            .AddTransient<IPBannerModule>()
+            .AddSingleton<SshHost>()
+            .AddSingleton<PluginManager>()
+            .AddSingleton<EventDispatcher>()
+            .AddSingleton<JsEngineFactory>()
+            .AddSingleton<JsPluginLoader>()
+            .AddSingleton<NetPluginLoader>()
+            .AddSingleton<LocalStorage>()
+            .AddSingleton<SessionStorage>()
+            .AddDbContext<BindingRecordDbContext>(ServiceLifetime.Singleton)
+            .AddSingleton<BindingManager>()
+            .AddHostedService<PluginService>()
+            .AddHostedService<ScheduleRunner>()
+            .AddHostedService<CoreService>();
+
+        return hostAppBuilder;
     }
-
-    public void ConfigureService()
-    {
-        Services.AddSingleton<FileLogger>();
-        Services.AddSingleton<SentryReporter>();
-
-        Services.AddSingleton<SettingProvider>();
-        Services.AddSingleton<MatchesProvider>();
-        Services.AddSingleton<ScheduleProvider>();
-        Services.AddSingleton<PermissionGroupProvider>();
-        Services.AddSingleton<SshServerKeysProvider>();
-
-        Services.AddDbContext<BindingRecordDbContext>(ServiceLifetime.Singleton);
-        Services.AddSingleton<BindingManager>();
-
-        Services.AddSingleton<GroupManager>();
-        Services.AddSingleton<PermissionManager>();
-
-        Services.AddSingleton<HardwareInfoProvider>();
-        Services.AddSingleton<ReactionTrigger>();
-        Services.AddSingleton<Matcher>();
-        Services.AddSingleton<ServerManager>();
-        Services.AddSingleton<CommandParser>();
-        Services.AddSingleton<CommandRunner>();
-        Services.AddHostedService<ScheduleRunner>();
-
-        Services.AddSingleton<UpdateChecker>();
-        Services.AddSingleton<WebSocketService>();
-        Services.AddSingleton<ReverseWebSocketService>();
-        Services.AddSingleton<WsConnectionManager>();
-        Services.AddSingleton<PacketHandler>();
-        Services.AddSingleton<HttpServer>();
-        Services.AddTransient<ApiMap>();
-        Services.AddTransient<IPBannerModule>();
-        Services.AddSingleton<SshHost>();
-
-        Services.AddSingleton<PluginManager>();
-        Services.AddSingleton<EventDispatcher>();
-        Services.AddSingleton<JsEngineFactory>();
-        Services.AddSingleton<JsPluginLoader>();
-        Services.AddSingleton<NetPluginLoader>();
-        Services.AddSingleton<LocalStorage>();
-        Services.AddSingleton<SessionStorage>();
-        Services.AddHostedService<PluginService>();
-
-        Services.AddHostedService<StartUpService>();
-    }
-
-    public SereinApp Build() => new(_hostAppBuilder.Build());
 }

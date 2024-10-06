@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using Serein.Core;
 using Serein.Core.Models.Commands;
@@ -17,7 +18,7 @@ namespace Serein.Tests.Services;
 [Collection(nameof(SereinApp))]
 public class CommandParserTests : IDisposable
 {
-    private readonly SereinApp _app;
+    private readonly IHost _app;
     private readonly Parser _commandParser;
 
     public CommandParserTests()

@@ -10,7 +10,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-public class SentryReporter(ILogger logger, SettingProvider settingProvider)
+public class SentryReporter(ILogger<SentryReporter> logger, SettingProvider settingProvider)
 {
     private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
@@ -37,7 +37,7 @@ public class SentryReporter(ILogger logger, SettingProvider settingProvider)
 #endif
         });
 
-        _logger.LogDebug("[{}] 已启用Sentry", nameof(SentryReporter));
+        _logger.LogDebug("已启用Sentry");
 
         TaskScheduler.UnobservedTaskException += (_, e) => SentrySdk.CaptureException(e.Exception);
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>

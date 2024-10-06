@@ -1,12 +1,10 @@
-using System.Text.Json.Nodes;
-
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 
-namespace Serein.Cli.Loggers;
+namespace Serein.Cli.Services.Loggers;
 
-public class ConnectionLogger(ILogger logger) : IConnectionLogger
+public class ConnectionLogger(ILogger<ConnectionLogger> logger) : IConnectionLogger
 {
     private readonly ILogger _logger = logger;
 

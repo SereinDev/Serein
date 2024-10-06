@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 using PropertyChanged;
 
 namespace Serein.Core.Models.Settings;
@@ -26,8 +24,6 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
     public Theme Theme { get; set; }
 
     public string CliCommandHeader { get; set; } = "//";
-
-    public LogLevel LogLevel { get; set; } = LogLevel.Information;
 
     public int PluginEventMaxWaitingTime { get; set; } = 500;
 

@@ -12,7 +12,7 @@ namespace Serein.Core.Services.Plugins.Storages;
 
 public class LocalStorage : StorageBase
 {
-    public LocalStorage(ILogger logger) : base(logger)
+    public LocalStorage(ILogger<LocalStorage> logger) : base(logger)
     {
         if (File.Exists(Path))
         {

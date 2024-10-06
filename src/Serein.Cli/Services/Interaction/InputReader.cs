@@ -10,45 +10,49 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Cli.Models;
 using Serein.Core;
 using Serein.Core.Services.Data;
 
-namespace Serein.Cli.Interaction;
+namespace Serein.Cli.Services.Interaction;
 
 public class InputReader : IHostedService
 {
-    private readonly Dictionary<string, Command> _commandParser;
+    private readonly Dictionary<string, CommandHandler> _commandParser;
     private readonly string _allCommands;
     private static readonly char[] Separator = ['\x20'];
     private readonly IHost _host;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
 
-
-    public InputReader(IHost host, ILogger logger, SettingProvider settingProvider)
+    public InputReader(IHost host, ILogger<InputReader> logger, SettingProvider settingProvider)
     {
         _host = host;
         _logger = logger;
         _settingProvider = settingProvider;
 
+        CommandHandler[] commands = [
+            new ExitHandler(_host),
+            new ClearScreenHandler(),
+            new ConnectionHandler(_host),
+            new VersionHandler(_host),
+            new ConnectionHandler(_host)
+        ];
         var stringBuilder = new StringBuilder();
         var attributes = new List<(CommandDescriptionAttribute, CommandUsageAttribute[])>();
-        var commands = new Dictionary<string, Command>();
+        var dict = new Dictionary<string, CommandHandler>();
 
         stringBuilder.AppendLine($"Serein.Cli {SereinApp.Version}");
-        foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
+
+        foreach (var command in commands)
         {
+            var type = command.GetType();
             var attribute = type.GetCustomAttribute<CommandDescriptionAttribute>();
             if (attribute is null)
                 continue;
 
-            var handler = (Command?)Activator.CreateInstance(type, _host);
-
-            if (handler is null)
-                continue;
-
-            commands[attribute.RootCommand] = handler;
+            dict[attribute.RootCommand] = command;
             attributes.Add(
                 (attribute, type.GetCustomAttributes<CommandUsageAttribute>().ToArray())
             );
@@ -66,7 +70,7 @@ public class InputReader : IHostedService
         }
 
         _allCommands = stringBuilder.ToString();
-        _commandParser = commands;
+        _commandParser = dict;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

@@ -3,9 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using Microsoft.Extensions.DependencyInjection;
-
-using Serein.Core;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -16,11 +13,12 @@ namespace Serein.Lite.Ui.Servers;
 public partial class Panel : UserControl
 {
     private readonly Server _server;
+    private readonly MainForm _mainForm;
     private readonly System.Timers.Timer _timer;
     private readonly object _lock = new();
     private readonly Lazy<PluginManagerForm> _pluginManagerForm;
 
-    public Panel(Server server)
+    public Panel(Server server, MainForm mainForm)
     {
         InitializeComponent();
         Dock = DockStyle.Fill;
@@ -29,6 +27,7 @@ public partial class Panel : UserControl
         _timer.Elapsed += (_, _) => Invoke(UpdateInfoLabels);
 
         _server = server;
+        _mainForm = mainForm;
         _server.ServerOutput += OnServerOutput;
         _server.ServerStatusChanged += (_, _) =>
         {
@@ -236,7 +235,7 @@ public partial class Panel : UserControl
 
     private void Panel_DragDrop(object sender, DragEventArgs e)
     {
-        SereinApp.Current?.Services.GetRequiredService<MainForm>().FocusWindow();
+        _mainForm.FocusWindow();
 
         var files = e.Data?.GetData(DataFormats.FileDrop) as string[];
 

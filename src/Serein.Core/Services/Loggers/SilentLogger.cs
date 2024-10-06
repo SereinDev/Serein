@@ -2,9 +2,9 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
-namespace Serein.Tests.Loggers;
+namespace Serein.Core.Services.Loggers;
 
-public class MainTestLogger : ILogger
+public class SilentLogger : ILogger
 {
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull
@@ -14,7 +14,7 @@ public class MainTestLogger : ILogger
 
     public bool IsEnabled(LogLevel logLevel)
     {
-        return true;
+        return false;
     }
 
     public void Log<TState>(
@@ -23,8 +23,5 @@ public class MainTestLogger : ILogger
         TState state,
         Exception? exception,
         Func<TState, Exception?, string> formatter
-    )
-    {
-        Console.WriteLine($"[{logLevel}] {eventId} {state} {exception}");
-    }
+    ) { }
 }

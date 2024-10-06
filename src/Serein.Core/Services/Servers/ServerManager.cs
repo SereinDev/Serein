@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models;
@@ -36,13 +37,15 @@ public partial class ServerManager
 
     private readonly Dictionary<string, Server> _servers = [];
     private readonly Matcher _matcher;
+    private readonly ILogger<Server> _serverlogger;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
 
     public ServerManager(
-        ILogger logger,
+        ILogger<Server> serverlogger,
+        ILogger<ServerManager> logger,
         Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
@@ -50,6 +53,7 @@ public partial class ServerManager
     )
     {
         _matcher = matcher;
+        _serverlogger = serverlogger;
         _logger = logger;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
@@ -67,7 +71,7 @@ public partial class ServerManager
 
         var server = new Server(
             id,
-            _logger,
+            _serverlogger,
             configuration,
             _settingProvider,
             _matcher,
@@ -79,7 +83,7 @@ public partial class ServerManager
 
         Save(id, configuration);
 
-        _logger.LogDebug("[{}] 添加服务器：{}", nameof(ServerManager), id);
+        _logger.LogDebug("添加服务器：{}", id);
         return server;
     }
 
@@ -97,7 +101,7 @@ public partial class ServerManager
         if (File.Exists(path))
             File.Delete(path);
 
-        _logger.LogDebug("[{}] 删除服务器：{}", nameof(ServerManager), id);
+        _logger.LogDebug("删除服务器：{}", id);
         ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Removed));
 
         return true;

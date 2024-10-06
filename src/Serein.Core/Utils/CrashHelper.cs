@@ -44,6 +44,6 @@ public static class CrashHelper
 
     private static void Dispatch()
     {
-        SereinApp.Current?.Services.GetRequiredService<EventDispatcher>().Dispatch(Event.SereinCrashed);
+        // SereinApp.Current?.Services.GetRequiredService<EventDispatcher>().Dispatch(Event.SereinCrashed);
     }
 }

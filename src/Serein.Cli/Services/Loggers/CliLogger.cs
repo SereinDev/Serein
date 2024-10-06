@@ -2,15 +2,16 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Services.Data;
-
 using Spectre.Console;
 
-namespace Serein.Cli.Loggers;
+namespace Serein.Cli.Services.Loggers;
 
-public class CliLogger(SettingProvider settingProvider) : ILogger
+public class CliLogger(string categoryName) : ILogger
 {
-    private readonly LogLevel _logLevel = settingProvider.Value.Application.LogLevel;
+    private static readonly bool EnableDebug = Environment.CommandLine.Contains("--debug");
+    private readonly string _name = categoryName.Contains('.')
+        ? categoryName[(categoryName.LastIndexOf('.') + 1)..]
+        : categoryName;
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull
@@ -20,7 +21,7 @@ public class CliLogger(SettingProvider settingProvider) : ILogger
 
     public bool IsEnabled(LogLevel logLevel)
     {
-        return _logLevel <= logLevel;
+        return EnableDebug || logLevel >= LogLevel.Information;
     }
 
     public void Log<TState>(
@@ -31,44 +32,41 @@ public class CliLogger(SettingProvider settingProvider) : ILogger
         Func<TState, Exception?, string> formatter
     )
     {
-        if (!IsEnabled(logLevel))
-            return;
-
         var text = state?.ToString();
 
         switch (logLevel)
         {
             case LogLevel.Trace:
-                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} Trace [[Serein]] {text}");
+                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} Trace [[{_name}]] {text}");
                 break;
 
             case LogLevel.Debug:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[Serein]] {text}"
+                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[{_name}]] {text}"
                 );
                 break;
 
             case LogLevel.Information:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [cadetblue_1]Info[/]  [[Serein]] {text}"
+                    $"{DateTime.Now:T} [cadetblue_1]Info[/] [[{_name}]] {text}"
                 );
                 break;
 
             case LogLevel.Warning:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [yellow bold]Warn  [[Serein]] {text}[/]"
+                    $"{DateTime.Now:T} [yellow bold]Warn [[{_name}]] {text}[/]"
                 );
                 break;
 
             case LogLevel.Error:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [red bold]Error [[Serein]] {text}[/]"
+                    $"{DateTime.Now:T} [red bold]Error [[{_name}]] {text}[/]"
                 );
                 break;
 
             case LogLevel.Critical:
                 AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [maroon blod]Critical[[Serein]]  {text}[/]"
+                    $"{DateTime.Now:T} [maroon bold]Critical [[{_name}]]  {text}[/]"
                 );
                 break;
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Cli.Interaction;
+namespace Serein.Cli.Models;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class CommandDescriptionAttribute(string rootCommnad, string description) : Attribute

@@ -9,11 +9,10 @@ using Serein.Core.Services.Loggers;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class NotificationLogger(IServiceProvider serviceProvider, FileLogger fileLogger) : ILogger
+public class NotificationLogger(IServiceProvider serviceProvider) : ILogger
 {
     private readonly Lazy<InfoBarProvider> _infoBarProvider =
         new(serviceProvider.GetRequiredService<InfoBarProvider>);
-    private readonly FileLogger _fileLogger = fileLogger;
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull
@@ -34,10 +33,9 @@ public class NotificationLogger(IServiceProvider serviceProvider, FileLogger fil
         Func<TState, Exception?, string> formatter
     )
     {
-        var line = exception is null ? state?.ToString() : logLevel == LogLevel.Debug ? state + Environment.NewLine + exception : state + exception?.Message;
+        var line = state + exception?.Message;
         line ??= string.Empty;
 
-        _fileLogger.Add($"[{logLevel}] {line}");
         InfoBarSeverity? severity = logLevel switch
         {
             //LogLevel.Information => InfoBarSeverity.Informational,

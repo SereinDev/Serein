@@ -6,20 +6,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Serein.Cli.Models;
 using Serein.Core.Utils.Extensions;
 
 using Spectre.Console;
 
-namespace Serein.Cli.Interaction.Commands;
+namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandDescription("version", "显示详细的版本和版权信息", Priority = -1)]
-public class VersionCommand(IHost host) : Command(host)
+public class VersionHandler(IHost host) : CommandHandler
 {
-    private ILogger Logger => Services.GetRequiredService<ILogger>();
+    private readonly ILogger _logger = host.Services.GetRequiredService<ILogger<VersionHandler>>();
 
     public override void Invoke(string[] args)
     {
-        Logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
+        _logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
         var table = new Table()
             .RoundedBorder()
             .AddColumns(
