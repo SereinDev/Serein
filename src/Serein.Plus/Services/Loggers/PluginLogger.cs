@@ -9,14 +9,20 @@ using Serein.Plus.Pages;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
+public class PluginLogger(ILogger logger, IServiceProvider serviceProvider) : IPluginLogger
 {
     private readonly Lazy<PluginConsolePage> _pluginConsolePage =
         new(serviceProvider.GetRequiredService<PluginConsolePage>, LazyThreadSafetyMode.ExecutionAndPublication);
+    private readonly ILogger _logger = logger;
 
     public void Log(LogLevel level, string name, string message)
     {
         var line = level != LogLevel.Trace ? $"[{name}] {message}" : message;
+        if (level == LogLevel.Trace)
+            _logger.LogDebug("[{}] {}", nameof(PluginLogger), line);
+        else
+            _logger.LogDebug("{}", line);
+
         _pluginConsolePage.Value.Dispatcher.Invoke(() =>
         {
             switch (level)

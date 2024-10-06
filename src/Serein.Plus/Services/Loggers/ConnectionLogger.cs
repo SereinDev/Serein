@@ -8,12 +8,14 @@ using Serein.Plus.Pages;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class ConnectionLogger(IServiceProvider serviceProvider) : IConnectionLogger
+public class ConnectionLogger(ILogger logger, IServiceProvider serviceProvider) : IConnectionLogger
 {
     private readonly Lazy<ConnectionPage> _connectionPage = new(serviceProvider.GetRequiredService<ConnectionPage>);
+    private readonly ILogger _logger = logger;
 
     public void Log(LogLevel level, string message)
     {
+        _logger.LogDebug("[{}] [{}] {}", nameof(ConnectionLogger), level, message);
         _connectionPage.Value.Dispatcher.Invoke(() =>
         {
             switch (level)

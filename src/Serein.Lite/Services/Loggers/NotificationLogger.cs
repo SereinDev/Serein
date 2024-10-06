@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 using Microsoft.Extensions.Logging;
 
-namespace Serein.Lite.Loggers;
+namespace Serein.Lite.Services.Loggers;
 
 public class NotificationLogger : ILogger
 {

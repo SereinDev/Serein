@@ -49,7 +49,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
 
             if (version > Version)
             {
-                _logger.LogDebug("获取到新版本：{}", Latest?.TagName);
+                _logger.LogDebug("[{}] 获取到新版本：{}", nameof(UpdateChecker), Latest?.TagName);
                 Updated?.Invoke(this, EventArgs.Empty);
             }
         }

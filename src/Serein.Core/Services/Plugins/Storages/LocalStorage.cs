@@ -2,6 +2,8 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
+using Microsoft.Extensions.Logging;
+
 using Serein.Core.Models;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
@@ -10,7 +12,7 @@ namespace Serein.Core.Services.Plugins.Storages;
 
 public class LocalStorage : StorageBase
 {
-    public LocalStorage()
+    public LocalStorage(ILogger logger) : base(logger)
     {
         if (File.Exists(Path))
         {

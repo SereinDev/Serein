@@ -54,6 +54,13 @@ public class CommandRunner
         if (command.Type == CommandType.Invalid)
             return;
 
+        _logger.LogDebug(
+            "[{}] 运行命令：command.Body={}; command.Argument={}",
+            nameof(CommandRunner),
+            command.Body,
+            command.Argument
+        );
+
         var body = _commandParser.Value.Format(command, commandContext);
         var argumentStr = command.Argument as string;
 
@@ -72,7 +79,7 @@ public class CommandRunner
                 else if (_serverManager.Value.Servers.Count == 1)
                     server = _serverManager.Value.Servers.Values.First();
 
-                server?.Input(body, null, command.Origin == CommandOrigin.ConsoleExecute);
+                server?.InputFromCommand(body, null);
                 break;
 
             case CommandType.SendGroupMsg:
@@ -174,8 +181,9 @@ public class CommandRunner
             await _wsConnectionManager.Value.SendPrivateMsgAsync(userId, msg);
     }
 
-    private static async Task ExecuteShellCommand(string line)
+    private async Task ExecuteShellCommand(string line)
     {
+        _logger.LogDebug("[{}] 运行命令行：{}", nameof(CommandRunner), line);
         var process = new Process
         {
             StartInfo =
@@ -187,7 +195,7 @@ public class CommandRunner
                         CreateNoWindow = true,
                         WorkingDirectory = Directory.GetCurrentDirectory(),
                         FileName = "cmd.exe",
-                        Arguments = "/c " + line
+                        Arguments = "/c " + line,
                     }
                     : new()
                     {
@@ -196,12 +204,12 @@ public class CommandRunner
                         CreateNoWindow = true,
                         WorkingDirectory = Directory.GetCurrentDirectory(),
                         FileName = "sh",
-                        Arguments = "--noprofile --norc " + line
-                    }
+                        Arguments = "--noprofile --norc " + line,
+                    },
         };
 
         process.Start();
-
+        _logger.LogDebug("[{}] 进程Id：{}", nameof(CommandRunner), process.Id);
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));
 
         if (!process.HasExited)

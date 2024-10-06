@@ -259,7 +259,7 @@ public partial class CommandParser(
         if (i == 0 || i >= input.Length)
             return null;
 
-        var key = input[..(i)];
+        var key = input[..i];
         id = input[(i + 1)..];
 
         return !_serverManager.Servers.TryGetValue(id, out server)

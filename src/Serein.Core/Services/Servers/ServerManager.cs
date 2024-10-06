@@ -78,6 +78,8 @@ public partial class ServerManager
         ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Added));
 
         Save(id, configuration);
+
+        _logger.LogDebug("[{}] 添加服务器：{}", nameof(ServerManager), id);
         return server;
     }
 
@@ -95,6 +97,7 @@ public partial class ServerManager
         if (File.Exists(path))
             File.Delete(path);
 
+        _logger.LogDebug("[{}] 删除服务器：{}", nameof(ServerManager), id);
         ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Removed));
 
         return true;

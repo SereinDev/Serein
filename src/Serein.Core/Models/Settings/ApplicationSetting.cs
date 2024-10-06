@@ -19,6 +19,8 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string CustomTitle { get; set; } = "{serein.version}";
 
+    public bool EnableSentry { get; set; } = true;
+
     public uint MaxDisplayedLines { get; set; } = 250;
 
     public Theme Theme { get; set; }

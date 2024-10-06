@@ -4,7 +4,7 @@ using Serein.Core.Models.Output;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Utils;
 
-namespace Serein.Lite.Loggers;
+namespace Serein.Lite.Services.Loggers;
 
 public class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
 {

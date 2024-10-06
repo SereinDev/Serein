@@ -24,8 +24,10 @@ public class ReverseWebSocketService : IConnectionService
     private readonly IHost _host;
     private WebSocketServer? _server;
     private readonly Dictionary<string, IWebSocketConnection> _webSockets = new();
+    private readonly SettingProvider _settingProvider;
 
-    public ReverseWebSocketService(IHost host)
+
+    public ReverseWebSocketService(IHost host, SettingProvider settingProvider)
     {
         _host = host;
         FleckLog.LogAction = (level, msg, _) =>
@@ -33,12 +35,12 @@ public class ReverseWebSocketService : IConnectionService
             if (level == LogLevel.Error)
                 Logger.Log(MsLogLevel.Error, msg);
         };
+        _settingProvider = settingProvider;
+
     }
 
     private IServiceProvider Services => _host.Services;
     private IConnectionLogger Logger => Services.GetRequiredService<IConnectionLogger>();
-    private SettingProvider SettingProvider => Services.GetRequiredService<SettingProvider>();
-    private Setting Setting => SettingProvider.Value;
 
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     public event EventHandler? StatusChanged;
@@ -48,10 +50,10 @@ public class ReverseWebSocketService : IConnectionService
 
     private WebSocketServer CreateNew()
     {
-        var server = new WebSocketServer(Setting.Connection.Uri)
+        var server = new WebSocketServer(_settingProvider.Value.Connection.Uri)
         {
             RestartAfterListenError = true,
-            SupportedSubProtocols = Setting.Connection.SubProtocols
+            SupportedSubProtocols = _settingProvider.Value.Connection.SubProtocols
         };
 
         return server;
@@ -106,7 +108,7 @@ public class ReverseWebSocketService : IConnectionService
 
         _server = CreateNew();
         _server.Start(ConfigServer);
-        Logger.Log(MsLogLevel.Information, $"反向WebSocket服务器已在{Setting.Connection.Uri}开启");
+        Logger.Log(MsLogLevel.Information, $"反向WebSocket服务器已在{_settingProvider.Value.Connection.Uri}开启");
         StatusChanged?.Invoke(null, EventArgs.Empty);
     }
 

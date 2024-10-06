@@ -1,20 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Microsoft.Extensions.Logging;
+
 using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Storages;
 
-public abstract class StorageBase
+public abstract class StorageBase(ILogger logger)
 {
     public const string Path = $"{PathConstants.PluginsDirectory}/{PathConstants.LocalStorageFileName}";
 
-    protected StorageBase()
-    {
-        _data = [];
-    }
-
-    protected readonly Dictionary<string, string> _data;
+    protected readonly Dictionary<string, string> _data = [];
+    protected readonly ILogger _logger = logger;
 
     public int Length => _data.Count;
 
@@ -44,6 +42,7 @@ public abstract class StorageBase
         lock (_data)
             _data[key] = value ?? "null";
 
+        _logger.LogDebug("[{}] 更新：'{}'='{}'", GetType().Name, key, value);
         OnUpdated();
     }
 

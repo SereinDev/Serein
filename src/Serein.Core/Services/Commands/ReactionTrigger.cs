@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
+
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ReactionTrigger(SettingProvider settingProvider, CommandRunner commandRunner)
+public class ReactionTrigger(ILogger logger, SettingProvider settingProvider, CommandRunner commandRunner)
 {
+    private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
 
@@ -25,6 +28,7 @@ public class ReactionTrigger(SettingProvider settingProvider, CommandRunner comm
         IReadOnlyDictionary<string, string?>? variables = null
     )
     {
+        _logger.LogDebug("[{}] 触发：type={}", nameof(ReactionTrigger), type);
         if (!_settingProvider.Value.Reactions.TryGetValue(type, out var values))
         {
             _settingProvider.Value.Reactions[type] = [];

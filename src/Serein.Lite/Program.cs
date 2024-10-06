@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
-using Serein.Lite.Loggers;
+using Serein.Lite.Services.Loggers;
 using Serein.Lite.Ui;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Members;

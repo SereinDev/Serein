@@ -16,19 +16,23 @@ using Serein.Core.Utils.Extensions;
 namespace Serein.Core.Services.Plugins;
 
 public class EventDispatcher(
-    IPluginLogger logger,
+    ILogger logger,
+    IPluginLogger pluginLogger,
     SettingProvider settingProvider,
     NetPluginLoader netPluginLoader,
     JsPluginLoader jsPluginLoader
 )
 {
-    private readonly IPluginLogger _logger = logger;
+    private readonly ILogger _logger = logger;
+    private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
 
     public bool Dispatch(Event @event, params object[] args)
     {
+        _logger.LogDebug("[{}] 分发事件：{}", nameof(EventDispatcher), @event);
+
         var tasks = new List<Task<bool>>();
         var cancellationTokenSource = new CancellationTokenSource();
 
@@ -37,6 +41,8 @@ public class EventDispatcher(
         foreach (var t in DispatchToNetPlugins(@event, cancellationTokenSource.Token, args))
             if (t is Task<bool> tb)
                 tasks.Add(tb);
+
+        _logger.LogDebug("[{}] 事件（{}）任务数：{}", nameof(EventDispatcher), @event, tasks.Count);
 
         if (tasks.Count == 0)
         {
@@ -82,7 +88,7 @@ public class EventDispatcher(
             }
             catch (Exception e)
             {
-                _logger.Log(
+                _pluginLogger.Log(
                     LogLevel.Error,
                     name,
                     $"触发事件{name}时出现异常：\n{e.GetDetailString()}"

@@ -89,6 +89,11 @@
                 SpinButtonPlacementMode="Compact"
                 ToolTip="最大显示的行数；数值过大可能导致内存占用过高"
                 Value="{Binding Value.Application.MaxDisplayedLines}" />
+            <CheckBox
+                Click="OnPropertyChanged"
+                Content="使用Sentry上报"
+                IsChecked="{Binding Value.Application.EnableSentry}"
+                ToolTip="当出现异常或崩溃时自动匿名上报（可能会收集部分系统和环境信息并产生一定网络流量）" />
 
             <TextBlock
                 Margin="0,15,0,5"

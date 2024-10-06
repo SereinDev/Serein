@@ -20,13 +20,13 @@ using Serein.Core.Utils.Json;
 namespace Serein.Core.Services.Plugins;
 
 public class PluginManager(
+    ILogger logger,
     IPluginLogger pluginLogger,
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     EventDispatcher eventDispatcher,
     SessionStorage sessionStorage,
-    PermissionManager permissionManager,
-    ILogger logger
+    PermissionManager permissionManager
 )
 {
     private readonly IPluginLogger _pluginLogger = pluginLogger;
@@ -73,7 +73,7 @@ public class PluginManager(
                 return;
             }
 
-            _logger.LogDebug("开始加载插件");
+            _logger.LogDebug("[{}] 开始加载插件", nameof(PluginManager));
             _pluginLogger.Log(LogLevel.Trace, string.Empty, "开始加载插件");
 
             foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
@@ -124,7 +124,7 @@ public class PluginManager(
                 _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
             }
 
-            _logger.LogDebug("开始加载Js单文件插件");
+            _logger.LogDebug("[{}] 开始加载Js单文件插件", nameof(PluginManager));
             _jsPluginLoader.LoadSingle();
 
             _eventDispatcher.Dispatch(Event.PluginsLoaded);
@@ -136,9 +136,15 @@ public class PluginManager(
 
             PluginsLoaded?.Invoke(this, EventArgs.Empty);
         }
+        catch (Exception e)
+        {
+            _logger.LogDebug(e, "[{}] 插件加载时出现异常", nameof(PluginManager));
+            throw;
+        }
         finally
         {
             Loading = false;
+            _logger.LogDebug("[{}] 插件加载结束", nameof(PluginManager));
         }
     }
 

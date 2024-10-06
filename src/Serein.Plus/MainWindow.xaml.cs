@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using Hardcodet.Wpf.TaskbarNotification;
 
 using iNKORE.UI.WPF.Modern;
+using iNKORE.UI.WPF.Modern.Controls;
 using iNKORE.UI.WPF.Modern.Media.Animation;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +19,10 @@ using Serein.Core;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
+using Serein.Core.Utils;
 using Serein.Plus.Commands;
 using Serein.Plus.Dialogs;
 using Serein.Plus.Models;
@@ -36,6 +39,7 @@ public partial class MainWindow : Window
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly TitleUpdater _titleUpdater;
+    private readonly FileLogger _fileLogger;
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
 
@@ -44,7 +48,8 @@ public partial class MainWindow : Window
         ServerManager serverManager,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        TitleUpdater titleUpdater
+        TitleUpdater titleUpdater,
+        FileLogger fileLogger
     )
     {
         _services = services;
@@ -52,7 +57,7 @@ public partial class MainWindow : Window
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
         _titleUpdater = titleUpdater;
-
+        _fileLogger = fileLogger;
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
@@ -110,22 +115,40 @@ public partial class MainWindow : Window
         WindowState = WindowState.Normal;
     }
 
-
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         Task.Delay(1000)
-            .ContinueWith((_) =>
+            .ContinueWith(
+                (_) =>
                     Dispatcher.Invoke(
-                        () => RootFrame.Navigate(
-                            _services.GetRequiredService<ShellPage>(),
-                            new SuppressNavigationTransitionInfo()
-                            )));
+                        () =>
+                            RootFrame.Navigate(
+                                _services.GetRequiredService<ShellPage>(),
+                                new SuppressNavigationTransitionInfo()
+                            )
+                    )
+            );
     }
 
     private void Window_ContentRendered(object sender, EventArgs e)
     {
         if (SereinApp.StartForTheFirstTime)
             new WelcomeDialog().ShowAsync();
+
+        if (_fileLogger.IsEnable)
+            new ContentDialog
+            {
+                Title = "嘿！你开启了日志模式",
+                Content = new TextBlock
+                {
+                    Text =
+                        $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）\r\n"
+                        + "除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！\r\n\r\n"
+                        + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
+                },
+                CloseButtonText = "我知道了",
+                DefaultButton = ContentDialogButton.Close,
+            }.ShowAsync();
 
         SereinApp.Current?.StartAsync();
     }
@@ -184,7 +207,9 @@ public partial class MainWindow : Window
         GlobalInfoBar.Message = infoBarTask.Message;
         GlobalInfoBar.Severity = infoBarTask.Severity;
 
-        var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(infoBarTask.CancellationToken);
+        var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+            infoBarTask.CancellationToken
+        );
 
         if (GlobalInfoBar.RenderTransform is not TranslateTransform translateTransform)
             return;
@@ -194,9 +219,10 @@ public partial class MainWindow : Window
 
         GlobalInfoBar.Closed += Cancel;
 
-        var interval = infoBarTask.Interval is not null && infoBarTask.Interval.Value.TotalSeconds > 3
-            ? infoBarTask.Interval.Value
-            : TimeSpan.FromSeconds(3);
+        var interval =
+            infoBarTask.Interval is not null && infoBarTask.Interval.Value.TotalSeconds > 3
+                ? infoBarTask.Interval.Value
+                : TimeSpan.FromSeconds(3);
 
         Task.Delay(interval, infoBarTask.CancellationToken)
             .ContinueWith(
@@ -204,7 +230,10 @@ public partial class MainWindow : Window
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        translateTransform.BeginAnimation(TranslateTransform.YProperty, _infoBarPopOut);
+                        translateTransform.BeginAnimation(
+                            TranslateTransform.YProperty,
+                            _infoBarPopOut
+                        );
                         GlobalInfoBar.Closed -= Cancel;
                     });
                     Task.Delay(500).ContinueWith((_) => infoBarTask.ResetEvent.Set());

@@ -9,6 +9,7 @@ using Serein.Core.Services;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Ssh;
@@ -33,6 +34,7 @@ public sealed class SereinAppBuilder
     }
 
     public IServiceCollection Services => _hostAppBuilder.Services;
+    public ILoggingBuilder Logging => _hostAppBuilder.Logging;
 
     private readonly HostApplicationBuilder _hostAppBuilder;
 
@@ -44,6 +46,9 @@ public sealed class SereinAppBuilder
 
     public void ConfigureService()
     {
+        Services.AddSingleton<FileLogger>();
+        Services.AddSingleton<SentryReporter>();
+
         Services.AddSingleton<SettingProvider>();
         Services.AddSingleton<MatchesProvider>();
         Services.AddSingleton<ScheduleProvider>();

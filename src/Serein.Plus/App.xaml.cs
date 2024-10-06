@@ -39,7 +39,7 @@ public partial class App : Application
         builder.Services.AddSingleton<TitleUpdater>();
         builder.Services.AddSingleton<InfoBarProvider>();
         builder.Services.AddSingleton<BalloonTipProvider>();
-        
+
         builder.Services.AddSingleton<MainWindow>();
         builder.Services.AddSingleton<NotImplPage>();
 

@@ -42,6 +42,7 @@ public class Server
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
 
+    private readonly string _name;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
@@ -65,6 +66,7 @@ public class Server
     )
     {
         Id = id;
+        _name = $"{nameof(Server)}@{id}";
         _logger = logger;
         Configuration = configuration;
         _settingProvider = settingManager;
@@ -83,6 +85,8 @@ public class Server
 
     public void Start()
     {
+        _logger.LogDebug("[{}] 请求启动", _name);
+
         if (Status == ServerStatus.Running)
             throw new InvalidOperationException("服务器已在运行");
 
@@ -137,10 +141,14 @@ public class Server
         _reactionManager.TriggerAsync(ReactionType.ServerStart, new(Id));
         _eventDispatcher.Dispatch(Event.ServerStarted, Id);
         _updateTimer.Start();
+
+        _logger.LogDebug("[{}] 正在启动", _name);
     }
 
     public void Stop()
     {
+        _logger.LogDebug("[{}] 请求关闭", _name);
+
         if (CancelRestart())
             return;
 
@@ -159,15 +167,21 @@ public class Server
                     this,
                     new(ServerOutputType.Information, "当前未设置关服命令，将发送Ctrl+C事件作为替代")
                     );
+
                 NativeMethods.AttachConsole((uint)_serverProcess.Id);
                 NativeMethods.GenerateConsoleCtrlEvent(NativeMethods.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
                 NativeMethods.FreeConsole();
+
+                _logger.LogDebug("[{}] 发送Ctrl+C事件", _name);
             }
-            else return;
+            else
+                throw new NotSupportedException("关服命令为空");
 
         foreach (string command in Configuration.StopCommands)
             if (!string.IsNullOrEmpty(command))
                 Input(command);
+
+        _logger.LogDebug("[{}] 正在关闭", _name);
     }
 
     internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
@@ -189,6 +203,8 @@ public class Server
         bool fromUser = false
     )
     {
+        _logger.LogDebug("[{}] command='{}'; encodingType={}; fromUser={}", _name, command, encodingType, fromUser);
+
         if (_inputWriter is null || Status != ServerStatus.Running)
             return;
 
@@ -229,6 +245,8 @@ public class Server
 
     public void RequestRestart()
     {
+        _logger.LogDebug("[{}] 请求重启", _name);
+
         if (_restartStatus != RestartStatus.None)
             throw new InvalidOperationException("正在等待重启");
 
@@ -239,6 +257,8 @@ public class Server
 
     public void Terminate()
     {
+        _logger.LogDebug("[{}] 请求强制结束", _name);
+
         if (CancelRestart())
             return;
 
@@ -253,6 +273,8 @@ public class Server
     {
         _updateTimer.Stop();
         var exitCode = _serverProcess?.ExitCode ?? 0;
+        _logger.LogDebug("[{}] 进程（PID={}）退出：{}", _name, _serverProcess?.Id, exitCode);
+
         ServerOutput?.Invoke(
             this,
             new(ServerOutputType.Information, $"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})")
@@ -285,6 +307,7 @@ public class Server
         if (e.Data is null)
             return;
 
+        _logger.LogDebug("[{}] 输出'{}'", _name, e.Data);
         _serverInfo.OutputLines++;
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));
@@ -315,6 +338,7 @@ public class Server
         if (_restartCancellationTokenSource is not null && !_restartCancellationTokenSource.IsCancellationRequested)
         {
             _restartCancellationTokenSource.Cancel();
+            _logger.LogDebug("[{}] 取消重启", _name);
             ServerOutput?.Invoke(
                   this,
                   new(ServerOutputType.Information, "重启已取消")
