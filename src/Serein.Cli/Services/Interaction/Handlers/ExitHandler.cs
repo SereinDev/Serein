@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -10,14 +11,15 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction.Handlers;
 
-[CommandDescription("exit", "关闭并退出", Priority = -114514)]
+[CommandName("exit", "退出")]
+[CommandDescription(["停止所有服务并退出Serein.Cli"])]
 public class ExitHandler(IHost host) : CommandHandler
 {
     private readonly IHost _host = host;
     private readonly ILogger _logger =  host.Services.GetRequiredService<ILogger<ExitHandler>>();
     private readonly ServerManager _serverManager = host.Services.GetRequiredService<ServerManager>();
 
-    public override void Invoke(string[] args)
+    public override void Invoke(IReadOnlyList<string> args)
     {
         if (!_serverManager.AnyRunning)
         {

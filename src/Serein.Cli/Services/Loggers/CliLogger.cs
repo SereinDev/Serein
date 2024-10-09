@@ -2,7 +2,8 @@ using System;
 
 using Microsoft.Extensions.Logging;
 
-using Spectre.Console;
+using Serein.Cli.Utils;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Cli.Services.Loggers;
 
@@ -32,49 +33,11 @@ public class CliLogger(string categoryName) : ILogger
         Func<TState, Exception?, string> formatter
     )
     {
-        var text = state?.ToString();
+        var text = state?.ToString() ?? string.Empty;
 
-        switch (logLevel)
-        {
-            case LogLevel.Trace:
-                AnsiConsole.MarkupLineInterpolated($"{DateTime.Now:T} Trace [[{_name}]] {text}");
-                break;
+        if (exception != null)
+            text += EnableDebug ? exception.ToString() : exception.GetDetailString();
 
-            case LogLevel.Debug:
-                AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [mediumpurple4]Debug[/] [[{_name}]] {text}"
-                );
-                break;
-
-            case LogLevel.Information:
-                AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [cadetblue_1]Info[/] [[{_name}]] {text}"
-                );
-                break;
-
-            case LogLevel.Warning:
-                AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [yellow bold]Warn [[{_name}]] {text}[/]"
-                );
-                break;
-
-            case LogLevel.Error:
-                AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [red bold]Error [[{_name}]] {text}[/]"
-                );
-                break;
-
-            case LogLevel.Critical:
-                AnsiConsole.MarkupLineInterpolated(
-                    $"{DateTime.Now:T} [maroon bold]Critical [[{_name}]]  {text}[/]"
-                );
-                break;
-
-            case LogLevel.None:
-                break;
-
-            default:
-                throw new NotSupportedException();
-        }
+        CliConsole.WriteLine(logLevel, $"[{_name}] {text}");
     }
 }

@@ -4,6 +4,7 @@ public static class PathConstants
 {
     public const string Root = "Serein";
     public const string LogDirectory = "Serein/logs";
+    public const string ConsoleHistory = "Serein/.console-input-history";
     public const string AppLogFile = "Serein/logs/app/{0}#{1}.log";
     public const string BindingRecordsFile = "Serein/binding-records.sqlite";
     public const string MatchesFile = "Serein/matches.json";

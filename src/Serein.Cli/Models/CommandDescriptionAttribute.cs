@@ -3,11 +3,7 @@ using System;
 namespace Serein.Cli.Models;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public class CommandDescriptionAttribute(string rootCommnad, string description) : Attribute
+public class CommandDescriptionAttribute(string[] lines) : Attribute
 {
-    public string RootCommand { get; } = rootCommnad;
-
-    public string Description { get; } = description;
-
-    public int Priority { get; init; }
+    public string[] Lines { get; } = lines;
 }

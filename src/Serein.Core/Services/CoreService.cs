@@ -39,9 +39,10 @@ public class CoreService : IHostedService
         _httpServer = httpServer;
         _sshServiceProvider = sshServiceProvider;
 
-        _logger.LogInformation("Serein.{} {}", SereinApp.Type, SereinApp.FullVersion);
+        _logger.LogInformation("Serein.{} {}", SereinApp.Type, SereinApp.Version);
         _logger.LogInformation("仓库: {}", UrlConstants.Repository);
         _logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
+        _logger.LogInformation("");
 
         _logger.LogDebug("Pid={}", Environment.ProcessId);
         _logger.LogDebug("版本：{}", SereinApp.FullVersion);

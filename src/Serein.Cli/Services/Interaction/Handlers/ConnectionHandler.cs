@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,14 +8,13 @@ using Microsoft.Extensions.Logging;
 using Serein.Cli.Models;
 using Serein.Core.Services.Network.Connection;
 
-using Spectre.Console;
-
 namespace Serein.Cli.Services.Interaction.Handlers;
 
-[CommandDescription("cn", "管理连接", Priority = 998)]
-[CommandUsage("cn info", "显示连接信息")]
-[CommandUsage("cn open", "连接WebSocket")]
-[CommandUsage("cn close", "断开WebSocket")]
+[CommandName("connection", "连接")]
+[CommandDescription(["连接或断开WebSocket", "查看连接信息"])]
+[CommandChildren("info", "查看WebSocket连接状态")]
+[CommandChildren("open", "打开WebSocket连接")]
+[CommandChildren("close", "关闭WebSocket连接")]
 public class ConnectionHandler(IHost host) : CommandHandler
 {
     private readonly WsConnectionManager _wsConnectionManager =
@@ -23,32 +23,18 @@ public class ConnectionHandler(IHost host) : CommandHandler
         ILogger<ConnectionHandler>
     >();
 
-    public override void Invoke(string[] args)
+    public override void Invoke(IReadOnlyList<string> args)
     {
-        if (args.Length == 1)
+        if (args.Count == 1)
             throw new InvalidArgumentException("缺少参数。可用值：\"info\"、\"open\"和\"close\"");
 
         switch (args[1].ToLowerInvariant())
         {
             case "info":
-
-                var table = new Table();
-
-                table
-                    .RoundedBorder()
-                    .AddColumns(
-                        new TableColumn("连接状态") { Alignment = Justify.Center },
-                        new(
-                            _wsConnectionManager.Active
-                                ? "[green3]●[/] 已连接"
-                                : "[gray]●[/] 未连接"
-                        )
-                        {
-                            Alignment = Justify.Center,
-                        }
-                    );
-
-                AnsiConsole.Write(table);
+                _logger.LogInformation(
+                    "连接状态：{}",
+                    _wsConnectionManager.Active ? "已连接" : "未连接"
+                );
 
                 break;
             case "open":
@@ -58,7 +44,7 @@ public class ConnectionHandler(IHost host) : CommandHandler
                 }
                 catch (Exception e)
                 {
-                    _logger.LogWarning("连接失败：{}", e.Message);
+                    _logger.LogError("连接失败：{}", e.Message);
                 }
                 break;
 
@@ -69,7 +55,7 @@ public class ConnectionHandler(IHost host) : CommandHandler
                 }
                 catch (Exception e)
                 {
-                    _logger.LogWarning("断开失败：{}", e.Message);
+                    _logger.LogError("断开失败：{}", e.Message);
                 }
                 break;
 

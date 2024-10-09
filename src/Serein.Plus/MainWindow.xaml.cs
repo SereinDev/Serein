@@ -79,6 +79,8 @@ public partial class MainWindow : Window
             Theme.Dark => ApplicationTheme.Dark,
             _ => null,
         };
+
+        _services.GetRequiredService<PluginConsolePage>(); // 提前在ui线程实例化
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
