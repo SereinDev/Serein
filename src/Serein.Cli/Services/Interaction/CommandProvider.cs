@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 using PrettyPrompt.Completion;
 using PrettyPrompt.Highlighting;
@@ -18,34 +18,26 @@ namespace Serein.Cli.Services.Interaction;
 
 public class CommandProvider
 {
-    private readonly IHost _host;
-
     public IReadOnlyList<CompletionItem> RootCommandItems { get; }
 
     public IReadOnlyDictionary<string, CommandHandler> Handlers { get; }
 
     public string HelpPage { get; }
 
-    public CommandProvider(IHost host)
+    public CommandProvider(IServiceProvider serviceProvider)
     {
-        _host = host;
         CommandHandler[] commands =
         [
-            new ServerHandler(_host),
-            new ConnectionHandler(_host),
-            new ClearScreenHandler(),
-            new VersionHandler(_host),
-            new ExitHandler(_host),
-            new HelpHandler(this, _host),
+            serviceProvider.GetRequiredService<ServerHandler>(),
+            serviceProvider.GetRequiredService<ConnectionHandler>(),
+            serviceProvider.GetRequiredService<PluginHandler>(),
+            serviceProvider.GetRequiredService<ClearScreenHandler>(),
+            serviceProvider.GetRequiredService<VersionHandler>(),
+            serviceProvider.GetRequiredService<ExitHandler>(),
+            serviceProvider.GetRequiredService<HelpHandler>(),
         ];
 
         var stringBuilder = new StringBuilder();
-        var attributes =
-            new List<(
-                CommandNameAttribute,
-                CommandDescriptionAttribute?,
-                IEnumerable<CommandUsageAttribute>
-            )>();
         var dict = new Dictionary<string, CommandHandler>();
         var list = new List<CompletionItem>();
 

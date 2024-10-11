@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -13,11 +12,12 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("exit", "退出")]
 [CommandDescription(["停止所有服务并退出Serein.Cli"])]
-public class ExitHandler(IHost host) : CommandHandler
+public class ExitHandler(IHost host, ILogger<ExitHandler> logger, ServerManager serverManager)
+    : CommandHandler
 {
     private readonly IHost _host = host;
-    private readonly ILogger _logger =  host.Services.GetRequiredService<ILogger<ExitHandler>>();
-    private readonly ServerManager _serverManager = host.Services.GetRequiredService<ServerManager>();
+    private readonly ILogger<ExitHandler> _logger = logger;
+    private readonly ServerManager _serverManager = serverManager;
 
     public override void Invoke(IReadOnlyList<string> args)
     {
@@ -25,7 +25,7 @@ public class ExitHandler(IHost host) : CommandHandler
         {
             _host.StopAsync().Wait();
             return;
-        };
+        }
 
         var servers = _serverManager.Servers.Where((kv) => kv.Value.Status == ServerStatus.Running);
 

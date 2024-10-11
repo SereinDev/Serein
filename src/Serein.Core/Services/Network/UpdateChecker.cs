@@ -27,7 +27,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
         _logger = logger;
         _settingProvider = settingProvider;
         _gitHubClient = new(new ProductHeaderValue($"Serein.{SereinApp.Type}"));
-        _timer = new(1000 * 60 * 2);
+        _timer = new(1000 * 60 * 10);
         _timer.Elapsed += async (_, _) =>
         {
             if (_settingProvider.Value.Application.CheckUpdate)

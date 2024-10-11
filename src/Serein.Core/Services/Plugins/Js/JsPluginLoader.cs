@@ -45,9 +45,9 @@ public class JsPluginLoader(
 
     public void Load(PluginInfo pluginInfo, string dir)
     {
-        var entry = pluginInfo.EntryFile ?? "index.js";
+        var entry = Path.Join(dir, pluginInfo.EntryFile ?? "index.js");
 
-        if (!File.Exists(Path.Join(dir, entry)))
+        if (!File.Exists(entry))
             throw new FileNotFoundException("找不到指定的入口点文件");
 
         JsPluginConfig? jsConfig = null;
@@ -80,13 +80,14 @@ public class JsPluginLoader(
                 continue;
 
             var name = Path.GetFileNameWithoutExtension(file);
+            var id = Guid.NewGuid().ToString("N");
 
             JsPlugin? jsPlugin = null;
             try
             {
                 jsPlugin = new JsPlugin(
                     _host,
-                    new() { Id = name, Name = name },
+                    new() { Id = id, Name = name },
                     file,
                     JsPluginConfig.Default
                 );
@@ -104,7 +105,7 @@ public class JsPluginLoader(
             finally
             {
                 if (jsPlugin is not null)
-                    JsPlugins.TryAdd(name, jsPlugin);
+                    JsPlugins.TryAdd(id, jsPlugin);
             }
         }
     }

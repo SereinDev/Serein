@@ -13,74 +13,89 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:StatusConverter x:Key="StatusConverter" />
-        <DataTemplate x:Key="RowDetailsTemplate">
-            <Grid>
-                <Grid.Resources>
-                    <Style BasedOn="{StaticResource DefaultTextBlockStyle}" TargetType="TextBlock">
-                        <Setter Property="Margin" Value="2" />
-                    </Style>
-                </Grid.Resources>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Text="Id：" TextWrapping="WrapWithOverflow" />
-                <TextBlock
-                    Grid.Column="1"
-                    FontFamily="Consolas"
-                    Text="{Binding Info.Id}"
-                    TextWrapping="WrapWithOverflow" />
-
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    FontFamily="Consolas"
-                    Text="{Binding FileName}"
-                    TextWrapping="WrapWithOverflow" />
-            </Grid>
-        </DataTemplate>
+        <converter:StatusConverter x:Key="statusConverter" />
+        <converter:AuthorsConverter x:Key="authorsConverter" />
     </Page.Resources>
 
     <Grid>
         <ListView
             x:Name="PluginListView"
+            ContextMenuOpening="PluginListView_ContextMenuOpening"
+            SelectionChanged="PluginListView_SelectionChanged"
+            SelectionMode="Single"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        x:Name="DisableMenuItem"
+                        Click="MenuItem_Click"
+                        Header="禁用"
+                        Tag="Disable">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.StatusCircleBlock}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="重新加载所有插件"
+                        Tag="Reload">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Refresh}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="清空控制台"
+                        Tag="ClearConsole">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Delete}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="查看文档"
+                        Tag="OpenDoc">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
 
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn
                         Width="200"
-                        DisplayMemberBinding="{Binding Info.Name, Mode=OneWay}"
+                        DisplayMemberBinding="{Binding Value.Info.Name, Mode=OneWay}"
                         Header="名称" />
-
                     <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding IsEnable, Mode=OneWay, Converter={StaticResource StatusConverter}}"
+                        DisplayMemberBinding="{Binding Value.IsEnabled, Mode=OneWay, Converter={StaticResource statusConverter}}"
                         Header="状态" />
-
                     <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding Info.Version, Mode=OneWay}"
+                        DisplayMemberBinding="{Binding Value.Info.Version, Mode=OneWay}"
                         Header="版本" />
                     <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding Info.Authors, Mode=OneWay}"
+                        DisplayMemberBinding="{Binding Value.Info.Authors, Mode=OneWay, Converter={StaticResource authorsConverter}}"
                         Header="作者" />
                     <GridViewColumn
-                        Width="260"
-                        DisplayMemberBinding="{Binding Info.Description, Mode=OneWay}"
+                        Width="230"
+                        DisplayMemberBinding="{Binding Value.Info.Description, Mode=OneWay}"
                         Header="描述" />
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <TextBlock
+            x:Name="StatusBar"
+            Margin="4"
+            VerticalAlignment="Bottom"
+            FontSize="13"
+            Foreground="Gray" />
     </Grid>
 </ui:Page>

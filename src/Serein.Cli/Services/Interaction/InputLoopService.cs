@@ -11,6 +11,7 @@ using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils;
 using PrettyPrompt.Highlighting;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Serein.Cli.Services.Interaction;
 
@@ -41,7 +42,7 @@ public class InputLoopService(
 
     private void Loop(CancellationToken cancellationToken)
     {
-        if (!Console.IsInputRedirected)
+        if (!Console.IsInputRedirected && !Environment.GetCommandLineArgs().Contains("--no-color"))
         {
             var prompt = new Prompt(
                 PathConstants.ConsoleHistory,
@@ -63,7 +64,9 @@ public class InputLoopService(
         }
         else
         {
-            _logger.LogWarning("当前输出流已被重定向，已关闭输入自动补全功能，但你仍可以输入\"help\"查看帮助页面");
+            _logger.LogWarning(
+                "当前输出流已被重定向 或 你在启动时指定了禁用彩色输出参数，输入自动补全功能已关闭，但你仍可以输入\"help\"查看帮助页面"
+            );
             _logger.LogWarning("若要体验此功能，请在终端内运行 Serein.Cli");
 
             while (!cancellationToken.IsCancellationRequested)

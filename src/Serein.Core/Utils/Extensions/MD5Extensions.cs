@@ -15,7 +15,7 @@ public static class MD5Extensions
     public static string CalculateMD5(this Stream stream) =>
         GetHexString(MD5.Create().ComputeHash(stream));
 
-    private static string GetHexString(byte[] targetData)
+    public static string GetHexString(this byte[] targetData)
     {
         var stringBuilder = new StringBuilder();
         for (int i = 0; i < targetData.Length; i++)

@@ -71,10 +71,10 @@ public partial class ServerManager
 
         var server = new Server(
             id,
+            _matcher,
             _serverlogger,
             configuration,
             _settingProvider,
-            _matcher,
             _eventDispatcher,
             _reactionManager
         );

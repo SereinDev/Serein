@@ -33,6 +33,9 @@ public class CliLogger(string categoryName) : ILogger
         Func<TState, Exception?, string> formatter
     )
     {
+        if (!IsEnabled(logLevel))
+            return;
+
         var text = state?.ToString() ?? string.Empty;
 
         if (exception != null)

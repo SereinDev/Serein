@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
@@ -15,13 +13,13 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("info", "查看WebSocket连接状态")]
 [CommandChildren("open", "打开WebSocket连接")]
 [CommandChildren("close", "关闭WebSocket连接")]
-public class ConnectionHandler(IHost host) : CommandHandler
+public class ConnectionHandler(
+    ILogger<ConnectionHandler> logger,
+    WsConnectionManager wsConnectionManager
+) : CommandHandler
 {
-    private readonly WsConnectionManager _wsConnectionManager =
-        host.Services.GetRequiredService<WsConnectionManager>();
-    private readonly ILogger _logger = host.Services.GetRequiredService<
-        ILogger<ConnectionHandler>
-    >();
+    private readonly ILogger<ConnectionHandler> _logger = logger;
+    private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
 
     public override void Invoke(IReadOnlyList<string> args)
     {

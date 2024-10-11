@@ -208,7 +208,7 @@ public partial class MainWindow : Window
     {
         GlobalInfoBar.Title = infoBarTask.Title;
         GlobalInfoBar.Content = infoBarTask.Content;
-        GlobalInfoBar.Message = infoBarTask.Message;
+        GlobalInfoBar.Message = string.IsNullOrEmpty(infoBarTask.Message) ? " " : infoBarTask.Message;
         GlobalInfoBar.Severity = infoBarTask.Severity;
 
         var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(

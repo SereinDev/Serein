@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
@@ -21,10 +19,10 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("stop", "关闭")]
 [CommandChildren("terminate", "强制结束")]
 
-public class ServerHandler(IHost host) : CommandHandler
+public class ServerHandler(ILogger<ServerHandler> logger, ServerManager serverManager) : CommandHandler
 {
-    private readonly ServerManager _serverManager = host.Services.GetRequiredService<ServerManager>();
-    private readonly ILogger _logger = host.Services.GetRequiredService<ILogger<ServerHandler>>();
+    private readonly ILogger<ServerHandler> _logger = logger;
+    private readonly ServerManager _serverManager = serverManager;
 
     public override void Invoke(IReadOnlyList<string> args)
     {

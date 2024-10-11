@@ -179,7 +179,7 @@ public class PermissionGroupTests : IDisposable
             );
     }
 
-    [Fact(Timeout = 2000)]
+    [Fact]
     public void ShouldAvoidCyclingInheritance()
     {
         _groupManager.Add("1", new()

@@ -48,44 +48,44 @@
                         Click="MenuItem_Click"
                         Header="添加..."
                         Tag="Add">
-                        <!-- <MenuItem.Icon>
-                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Add}" />
-                        </MenuItem.Icon>-->
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
                         x:Name="Edit"
                         Click="MenuItem_Click"
                         Header="编辑..."
                         Tag="Edit">
-                        <!-- <MenuItem.Icon>
-                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Edit}" />
-                        </MenuItem.Icon>-->
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
                         x:Name="Remove"
                         Click="MenuItem_Click"
                         Header="删除"
                         Tag="Remove">
-                        <!-- <MenuItem.Icon>
-                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Cancel}" />
-                        </MenuItem.Icon>-->
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Cancel}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
                         Click="MenuItem_Click"
                         Header="刷新"
                         Tag="Refresh">
-                        <!-- <MenuItem.Icon>
-                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Refresh}" />
-                        </MenuItem.Icon>-->
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Refresh}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem
                         Click="MenuItem_Click"
                         Header="打开介绍文档"
                         Tag="OpenDoc">
-                        <!-- <MenuItem.Icon>
-                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.OpenInNewWindow}" />
-                        </MenuItem.Icon>-->
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>

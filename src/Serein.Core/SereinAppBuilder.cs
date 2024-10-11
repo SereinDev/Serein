@@ -36,12 +36,12 @@ public static class SereinAppBuilder
     public static HostApplicationBuilder CreateBuilder()
     {
         var hostAppBuilder = Host.CreateEmptyApplicationBuilder(null);
+        hostAppBuilder.Logging.SetMinimumLevel(LogLevel.Trace);
         hostAppBuilder.Logging.ClearProviders();
         hostAppBuilder.Logging.AddDebug();
 
         if (FileLoggerProvider.IsEnable)
         {
-            hostAppBuilder.Logging.SetMinimumLevel(LogLevel.Trace);
             hostAppBuilder.Logging.AddProvider(new FileLoggerProvider());
         }
 

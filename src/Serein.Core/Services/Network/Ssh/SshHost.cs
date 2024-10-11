@@ -8,6 +8,7 @@ using FxSsh.Services;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Services.Data;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Network.Ssh;
 
@@ -39,10 +40,13 @@ public class SshHost(
 
         _sshServer.AddHostKey("ssh-rsa", _sshServerKeysProvider.Value.Rsa);
         _sshServer.AddHostKey("ssh-dss", _sshServerKeysProvider.Value.Dss);
+        _logger.LogDebug("rsa: {}", _sshServerKeysProvider.Value.Rsa);
+        _logger.LogDebug("dss: {}", _sshServerKeysProvider.Value.Dss);
 
         _sshServer.ConnectionAccepted += OnConnectionAccepted;
         _sshServer.ExceptionRasied += OnExceptionRasied;
         _sshServer.Start();
+        _logger.LogInformation("SSH服务器已启动");
     }
 
     public void Stop()
@@ -53,6 +57,7 @@ public class SshHost(
         _sshServer.Stop();
         _sshServer.Dispose();
         _sshServer = null;
+        _logger.LogInformation("SSH服务器已停止");
     }
 
     private void OnExceptionRasied(object? sender, Exception e)
@@ -70,10 +75,7 @@ public class SshHost(
     private void OnServiceRegistered(object? sender, SshService sshService)
     {
         if (sshService is UserauthService userauthService)
-        {
-            userauthService.Succeed += OnSucceed;
             userauthService.Userauth += OnUserauth;
-        }
         else if (sshService is ConnectionService connectionService)
         {
             connectionService.EnvReceived += OnEnvReceived;
@@ -117,17 +119,32 @@ public class SshHost(
 
     private void OnEnvReceived(object? sender, EnvironmentArgs e) { }
 
-
     private void OnUserauth(object? sender, UserauthArgs e)
     {
-        e.Result =
-            !string.IsNullOrEmpty(e.Username)
-            && !string.IsNullOrEmpty(e.Password)
-            && _settingProvider.Value.Ssh.Users.TryGetValue(e.Username, out var pwd)
-            && pwd == e.Password;
-    }
+        if (Authorize())
+        {
+            e.Result = true;
 
-    private void OnSucceed(object? sender, string e) { }
+            if (e.Session.SessionId is not null)
+                _logger.LogInformation(
+                    "Id={}的会话以\"{}\"用户名通过了验证",
+                    e.Session.SessionId.GetHexString(),
+                    e.Username
+                );
+            else
+                _logger.LogInformation("一个会话以\"{}\"用户名通过了验证", e.Username);
+
+            _logger.LogWarning("如果这不是你本人操作，请立即修改SSH的用户名和密码");
+        }
+
+        bool Authorize()
+        {
+            return !string.IsNullOrEmpty(e.Username)
+                && !string.IsNullOrEmpty(e.Password)
+                && _settingProvider.Value.Ssh.Users.TryGetValue(e.Username, out var pwd)
+                && pwd == e.Password;
+        }
+    }
 
     private void OnDisconnected(object? sender, EventArgs e) { }
 

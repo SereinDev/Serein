@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Threading;
 
 using Serein.Core.Models.Plugins.Info;
@@ -18,9 +19,12 @@ public abstract partial class PluginBase : IPlugin
         CancellationTokenSource = new();
     }
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     public void Disable()
     {
         CancellationTokenSource.Cancel();
+        PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
     }
 
     public abstract void Dispose();

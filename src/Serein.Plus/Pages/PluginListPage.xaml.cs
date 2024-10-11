@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 
 using iNKORE.UI.WPF.Modern.Controls;
 
@@ -6,23 +10,32 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
+using Serein.Plus.Services;
+
+using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;
 
 public partial class PluginListPage : Page
 {
+    private readonly PluginConsolePage _consolePage;
+    private readonly InfoBarProvider _infoBarProvider;
     private readonly PluginManager _pluginManager;
     private readonly JsPluginLoader _jsPluginLoader;
     private readonly NetPluginLoader _netPluginLoader;
 
-    private readonly ObservableCollection<IPlugin> _pluginInfos;
+    private readonly ObservableCollection<KeyValuePair<string, IPlugin>> _pluginInfos;
 
     public PluginListPage(
+        PluginConsolePage consolePage,
+        InfoBarProvider infoBarProvider,
         PluginManager pluginManager,
         JsPluginLoader jsPluginLoader,
         NetPluginLoader netPluginLoader
     )
     {
+        _consolePage = consolePage;
+        _infoBarProvider = infoBarProvider;
         _pluginManager = pluginManager;
         _jsPluginLoader = jsPluginLoader;
         _netPluginLoader = netPluginLoader;
@@ -39,10 +52,59 @@ public partial class PluginListPage : Page
     {
         _pluginInfos.Clear();
 
-        foreach (var plugin in _jsPluginLoader.Plugins.Values)
-            _pluginInfos.Add(plugin);
+        foreach (var kv in _jsPluginLoader.Plugins)
+            _pluginInfos.Add(new(kv.Key,kv.Value));
 
-        foreach (var plugin in _netPluginLoader.Plugins.Values)
-            _pluginInfos.Add(plugin);
+        foreach (var kv in _netPluginLoader.Plugins)
+            _pluginInfos.Add(new(kv.Key, kv.Value));
+    }
+
+    private void MenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        var tag = (sender as MenuItem)?.Tag as string;
+        try
+        {
+            switch (tag)
+            {
+                case "OpenDoc":
+                    break;
+
+                case "Reload":
+                    _pluginManager.Reload();
+                    break;
+
+                case "ClearConsole":
+                    _consolePage.Console.Clear();
+                    break;
+
+                case "Disable":
+                    if (PluginListView.SelectedItem is  KeyValuePair<string , IPlugin> kv)
+                    {
+                       kv.Value.Disable();
+                        _infoBarProvider.Enqueue($"插件（Id={kv.Key}）禁用成功", string.Empty, InfoBarSeverity.Success);
+                    }
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (tag == "Reload")
+                _infoBarProvider.Enqueue("重新加载失败", ex.Message, InfoBarSeverity.Error);
+
+            else if (tag == "Disable")
+                _infoBarProvider.Enqueue("禁用失败", ex.Message, InfoBarSeverity.Error);
+        }
+    }
+
+    private void PluginListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+    {
+        DisableMenuItem.IsEnabled = PluginListView.SelectedIndex >= 0;
+    }
+
+    private void PluginListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        StatusBar.Text = PluginListView.SelectedItem is KeyValuePair<string, IPlugin> kv 
+            ? $"Id={kv.Key}\r\nPath={kv.Value.FileName}" 
+            : string.Empty;
     }
 }

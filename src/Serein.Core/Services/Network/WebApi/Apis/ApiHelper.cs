@@ -7,6 +7,7 @@ using EmbedIO;
 
 using Serein.Core.Models.Network.WebApi;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
@@ -84,7 +85,7 @@ public static class ApiHelper
     public static async Task HandleException(IHttpContext context, Exception e)
     {
         await context.SendPacketAsync(
-            new ApiPacket { ErrorMsg = $"{e.GetType()}: {e.Message}", Code = 500 }
+            new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
         );
     }
 }

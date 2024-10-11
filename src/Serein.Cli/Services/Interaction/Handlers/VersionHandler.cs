@@ -11,9 +11,9 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("version", "版本")]
 [CommandDescription(["查看版本信息", "查看版权声明"])]
-public class VersionHandler(IHost host) : CommandHandler
+public class VersionHandler(ILogger<VersionHandler> logger) : CommandHandler
 {
-    private readonly ILogger _logger = host.Services.GetRequiredService<ILogger<VersionHandler>>();
+    private readonly ILogger<VersionHandler> _logger = logger;
 
     public override void Invoke(IReadOnlyList<string> args)
     {

@@ -41,6 +41,7 @@ public partial class PluginConsolePage : Page
         Console.EnableLogLevelHighlight();
 
         _pluginManager.PluginsLoaded += (_, _) => UpdateViewModel();
+        _pluginManager.PluginsReloading += (_, _) => Dispatcher.Invoke(Console.Clear);
     }
 
     public PluginConsoleViewModel ViewModel { get; }
@@ -53,7 +54,7 @@ public partial class PluginConsolePage : Page
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        switch ((sender as Button)?.Tag?.ToString())
+        switch ((sender as Button)?.Tag as string)
         {
             case "Clear":
                 Console.Clear();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Threading;
 
 using Jint;
@@ -33,6 +34,9 @@ public class JsPlugin : IPlugin
 
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly IHost _host;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     private IServiceProvider Services => _host.Services;
     private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
     private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
@@ -99,5 +103,7 @@ public class JsPlugin : IPlugin
     {
         if (!_cancellationTokenSource.IsCancellationRequested)
             _cancellationTokenSource.Cancel();
+
+        PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
     }
 }

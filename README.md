@@ -19,12 +19,13 @@
     <a href="https://github.com/SereinDev/Serein/releases">
         <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/SereinDev/Serein/total?color=blue">
     </a>
-    <a href="https://app.fossa.com/projects/git%2Bgithub.com%2FSereinDev%2FSerein?ref=badge_shield" alt="FOSSA Status">
-        <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FSereinDev%2FSerein.svg?type=shield"/>
-    </a>
     <a href="https://github.com/SereinDev/Serein/actions/workflows/build.yml">
         <img alt="GitHub bulid"
             src="https://img.shields.io/github/actions/workflow/status/SereinDev/Serein/build.yml?branch=main&color=blue">
+    </a>
+    <a href="https://github.com/SereinDev/Serein">
+        <img alt="GitHub bulid"
+            src="https://img.shields.io/github/commit-activity/m/SereinDev/Serein?color=blue">
     </a>
     <a href="https://github.com/SereinDev/Serein">
         <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/SereinDev/Serein">

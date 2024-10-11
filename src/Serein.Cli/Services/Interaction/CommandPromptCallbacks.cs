@@ -52,9 +52,20 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                 case "connection" when args.Length == 2:
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
-                            .. _connectionSubcommnads.OrderByDescending(
+                            .. _connectionSubcommnads.Value.OrderByDescending(
                                 (item) => CalculateRelevance(item.ReplacementText, typedWord)
                             ),
+                        ]
+                    );
+
+                case "plugin" when args.Length == 2:
+                    return Task.FromResult<IReadOnlyList<CompletionItem>>(
+                        [
+                            .. _pluginSubcommnads
+                                .Value.OrderByDescending(
+                                    (item) => CalculateRelevance(item.ReplacementText, typedWord)
+                                )
+                                .ThenBy((item) => item.ReplacementText[0]),
                         ]
                     );
 
@@ -73,7 +84,7 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. _serverSubcommnads
-                                .OrderByDescending(
+                                .Value.OrderByDescending(
                                     (item) => CalculateRelevance(item.ReplacementText, typedWord)
                                 )
                                 .ThenBy((item) => item.ReplacementText[0]),

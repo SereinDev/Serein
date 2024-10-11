@@ -110,7 +110,10 @@
                 </ui:NavigationViewItem>
 
                 <ui:NavigationViewItemHeader Content="成员" />
-                <ui:NavigationViewItem Content="绑定" ToolTip="建立用户Id与游戏名称之间的绑定关系">
+                <ui:NavigationViewItem
+                    Content="绑定"
+                    Tag="{Binding Binding}"
+                    ToolTip="建立用户Id与游戏名称之间的绑定关系">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.People}" />
                     </ui:NavigationViewItem.Icon>

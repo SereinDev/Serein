@@ -19,9 +19,9 @@
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition MinWidth="200" />
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition />
+            <ColumnDefinition MinWidth="200" />
         </Grid.ColumnDefinitions>
 
         <ui:ListView

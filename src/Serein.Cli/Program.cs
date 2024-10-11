@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Services;
 using Serein.Cli.Services.Interaction;
+using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Cli.Services.Loggers;
 using Serein.Cli.Utils;
 using Serein.Core;
@@ -71,6 +72,13 @@ public static class Program
             .AddHostedService<CancelKeyHandlingService>()
             .AddHostedService<InputLoopService>()
             .AddSingleton<InputHandler>()
+            .AddSingleton<PluginHandler>()
+            .AddSingleton<ServerHandler>()
+            .AddSingleton<ConnectionHandler>()
+            .AddSingleton<ClearScreenHandler>()
+            .AddSingleton<VersionHandler>()
+            .AddSingleton<ExitHandler>()
+            .AddSingleton<HelpHandler>()
             .AddSingleton<CommandProvider>()
             .AddSingleton<CommandPromptCallbacks>()
             .AddSingleton<IConnectionLogger, ConnectionLogger>()

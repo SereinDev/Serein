@@ -44,6 +44,7 @@ public class CoreService : IHostedService
         _logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
         _logger.LogInformation("");
 
+        _logger.LogDebug("Path={}", AppDomain.CurrentDomain.BaseDirectory);
         _logger.LogDebug("Pid={}", Environment.ProcessId);
         _logger.LogDebug("版本：{}", SereinApp.FullVersion);
         _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());

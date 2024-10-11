@@ -17,9 +17,12 @@ namespace Serein.Cli.Services.Interaction;
 
 public partial class CommandPromptCallbacks
 {
-    private readonly IEnumerable<CompletionItem> _connectionSubcommnads = LoadFrom<ConnectionHandler>();
+    private readonly Lazy<IEnumerable<CompletionItem>> _connectionSubcommnads =
+        new(LoadFrom<ConnectionHandler>);
 
-    private readonly IEnumerable<CompletionItem> _serverSubcommnads = LoadFrom<ServerHandler>();
+    private readonly Lazy<IEnumerable<CompletionItem>> _serverSubcommnads = new(LoadFrom<ServerHandler>);
+
+    private readonly Lazy<IEnumerable<CompletionItem>> _pluginSubcommnads = new(LoadFrom<PluginHandler>);
 
     private IEnumerable<CompletionItem> GetServerCompletionItem()
     {

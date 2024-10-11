@@ -20,7 +20,7 @@ public class InputHandler(ILogger<InputHandler> logger, CommandProvider commandP
             return;
         }
 
-        if (!_commandProvider.Handlers.TryGetValue(args[0], out var parser))
+        if (!_commandProvider.Handlers.TryGetValue(args[0].ToLowerInvariant(), out var parser))
             _logger.LogError("未知命令。请使用\"help\"查看所有命令");
         else
             try

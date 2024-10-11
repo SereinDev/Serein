@@ -106,4 +106,9 @@ public partial class PermissionGroupPage : Page
         }
         Update();
     }
+
+    private void GroupListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+    {
+        RemoveMenuItem.IsEnabled = EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0;
+    }
 }

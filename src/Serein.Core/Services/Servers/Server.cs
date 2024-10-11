@@ -56,10 +56,10 @@ public class Server
 
     public Server(
         string id,
+        Matcher matcher,
         ILogger<Server> logger,
         Configuration configuration,
         SettingProvider settingManager,
-        Matcher matcher,
         EventDispatcher eventDispatcher,
         ReactionTrigger reactionManager
     )

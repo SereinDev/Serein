@@ -51,6 +51,7 @@ public partial class App : Application
             .AddSingleton<SchedulePage>()
             .AddSingleton<ConnectionPage>()
             .AddSingleton<ConnectionViewModel>()
+            .AddSingleton<BindingPage>()
             .AddSingleton<PermissionGroupPage>()
             .AddSingleton<PluginPage>()
             .AddSingleton<PluginViewModel>()

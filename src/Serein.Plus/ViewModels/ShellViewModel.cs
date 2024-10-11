@@ -17,5 +17,7 @@ public class ShellViewModel
     public Type Plugin { get; } = typeof(PluginPage);
 
     public Type PermissionGroup { get; } = typeof(PermissionGroupPage);
+
+    public Type Binding { get; } = typeof(BindingPage);
 }
 

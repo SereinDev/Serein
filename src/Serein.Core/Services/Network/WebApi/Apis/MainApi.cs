@@ -4,9 +4,6 @@ using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 

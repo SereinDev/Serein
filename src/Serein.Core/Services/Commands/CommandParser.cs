@@ -22,7 +22,11 @@ public partial class CommandParser(
     [GeneratedRegex(@"\{([a-zA-Z]+(\.[a-zA-Z]+)?(@\w+)?)\}")]
     private static partial Regex GetVariableRegex();
 
+    [GeneratedRegex(@"\{([\w\-]+?)\}")]
+    private static partial Regex GetMatchVariableRegex();
+
     public static readonly Regex Variable = GetVariableRegex();
+    public static readonly Regex MatchVariable = GetMatchVariableRegex();
     public static readonly Regex GeneralCommand = GetGeneralCommandRegex();
 
     private readonly PluginManager _pluginManager = pluginManager;
@@ -72,7 +76,7 @@ public partial class CommandParser(
                 "javascript" => CommandType.ExecuteJavascriptCodes,
 
                 "debug" => CommandType.Debug,
-                _ => throw new NotSupportedException("命令类型无效")
+                _ => throw new NotSupportedException("命令类型无效"),
             };
 
             return new()
@@ -80,7 +84,7 @@ public partial class CommandParser(
                 Origin = origin,
                 Type = type,
                 Body = body,
-                Argument = argument
+                Argument = argument,
             };
         }
         catch
@@ -99,11 +103,15 @@ public partial class CommandParser(
 
         var body = ApplyVariables(command.Body, commandContext);
 
-        if (commandContext?.Match != null)
-            foreach (var key in commandContext.Match.Groups.Keys)
-            {
-                body = body.Replace($"{{{key}}}", commandContext.Match.Groups[key].Value);
-            }
+        if (commandContext?.Match is not null)
+            MatchVariable.Replace(
+                body,
+                (match) =>
+                    match.Success
+                    && commandContext.Match.Groups.TryGetValue(match.Groups[1].Value, out var group)
+                        ? group.Value
+                        : match.Value
+            );
 
         return command.Type == CommandType.InputServer ? body : body.Replace("\\n", "\n");
     }
@@ -133,7 +141,10 @@ public partial class CommandParser(
                 )
                     return value;
 
-                if (_pluginManager.CommandVariables.TryGetValue(name, out value) && value is not null)
+                if (
+                    _pluginManager.CommandVariables.TryGetValue(name, out value)
+                    && value is not null
+                )
                     return value;
 
                 object? obj = name switch
@@ -168,50 +179,50 @@ public partial class CommandParser(
 
                     #region CPU
                     "cpu.name" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Name,
-                    "cpu.description"
-                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Description,
+                    "cpu.description" => _hardwareInfoProvider
+                        .Info?.CpuList.FirstOrDefault()
+                        ?.Description,
                     "cpu.caption" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Caption,
-                    "cpu.manufacturer"
-                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Manufacturer,
-                    "cpu.cores"
-                        => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.NumberOfCores,
-                    "cpu.logicalprocessors"
-                        => _hardwareInfoProvider.Info?.CpuList
-                            .FirstOrDefault()
-                            ?.NumberOfLogicalProcessors,
-                    "cpu.percent"
-                        => _hardwareInfoProvider.Info?.CpuList
-                            .FirstOrDefault()
-                            ?.PercentProcessorTime,
+                    "cpu.manufacturer" => _hardwareInfoProvider
+                        .Info?.CpuList.FirstOrDefault()
+                        ?.Manufacturer,
+                    "cpu.cores" => _hardwareInfoProvider
+                        .Info?.CpuList.FirstOrDefault()
+                        ?.NumberOfCores,
+                    "cpu.logicalprocessors" => _hardwareInfoProvider
+                        .Info?.CpuList.FirstOrDefault()
+                        ?.NumberOfLogicalProcessors,
+                    "cpu.percent" => _hardwareInfoProvider
+                        .Info?.CpuList.FirstOrDefault()
+                        ?.PercentProcessorTime,
                     #endregion
 
                     #region RAM
                     "ram.total" => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024,
-                    "ram.totalgb"
-                        => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024 / 1024,
-                    "ram.available"
-                        => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical / 1024,
-                    "ram.availablegb"
-                        => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical / 1024 / 1024,
-                    "ram.used"
-                        => (
-                            _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
-                            - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
-                        ) / 1024,
-                    "ram.usedgb"
-                        => (
+                    "ram.totalgb" => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                        / 1024
+                        / 1024,
+                    "ram.available" => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                        / 1024,
+                    "ram.availablegb" => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                        / 1024
+                        / 1024,
+                    "ram.used" => (
+                        _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                        - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                    ) / 1024,
+                    "ram.usedgb" => (
+                        _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                        - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                    )
+                        / 1024
+                        / 1024,
+                    "ram.percent" => 100
+                        * (
                             _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
                             - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                         )
-                            / 1024
-                            / 1024,
-                    "ram.percent"
-                        => 100
-                            * (
-                                _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
-                                - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
-                            )
-                            / _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical,
+                        / _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical,
                     #endregion
 
                     #region 消息
@@ -221,13 +232,14 @@ public partial class CommandParser(
                     "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
                     "sender.card" => commandContext?.MessagePacket?.Sender?.Card,
                     "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
-                    "sender.shownname"
-                        => string.IsNullOrEmpty(commandContext?.MessagePacket?.Sender?.Card)
-                            ? commandContext?.MessagePacket?.Sender?.Nickname
-                            : commandContext.MessagePacket?.Sender?.Card,
+                    "sender.shownname" => string.IsNullOrEmpty(
+                        commandContext?.MessagePacket?.Sender?.Card
+                    )
+                        ? commandContext?.MessagePacket?.Sender?.Nickname
+                        : commandContext.MessagePacket?.Sender?.Card,
                     #endregion
 
-                    _ => GetServerVariables(name, commandContext?.ServerId)
+                    _ => GetServerVariables(name, commandContext?.ServerId),
                 };
 
                 var r = obj?.ToString();
@@ -262,34 +274,33 @@ public partial class CommandParser(
         var key = input[..i];
         id = input[(i + 1)..];
 
-        return !_serverManager.Servers.TryGetValue(id, out server)
-            ? null
-            : Switch(key, server);
+        return !_serverManager.Servers.TryGetValue(id, out server) ? null : Switch(key, server);
 
         static object? Switch(string key, Server? server)
         {
-            return server is null ? null : key.ToLowerInvariant() switch
-            {
-                "server.id" => server.Id,
-                "server.name" => server.Configuration.Name,
-                "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
-                "server.usage" => server.ServerInfo.CPUUsage,
-                "server.output" => server.ServerInfo.OutputLines,
-                "server.input" => server.ServerInfo.InputLines,
-                "server.time" => (DateTime.Now - server.ServerInfo.StartTime).ToCommonString(),
-                "server.version" => server.ServerInfo.Stat?.Version,
-                "server.motd" => server.ServerInfo.Stat?.Stripped_Motd,
-                "server.players.max" => server.ServerInfo.Stat?.MaximumPlayers,
-                "server.players.current" => server.ServerInfo.Stat?.CurrentPlayers,
-                "server.players.percent"
-                    => server.ServerInfo.Stat is not null
+            return server is null
+                ? null
+                : key.ToLowerInvariant() switch
+                {
+                    "server.id" => server.Id,
+                    "server.name" => server.Configuration.Name,
+                    "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
+                    "server.usage" => server.ServerInfo.CPUUsage,
+                    "server.output" => server.ServerInfo.OutputLines,
+                    "server.input" => server.ServerInfo.InputLines,
+                    "server.time" => (DateTime.Now - server.ServerInfo.StartTime).ToCommonString(),
+                    "server.version" => server.ServerInfo.Stat?.Version,
+                    "server.motd" => server.ServerInfo.Stat?.Stripped_Motd,
+                    "server.players.max" => server.ServerInfo.Stat?.MaximumPlayers,
+                    "server.players.current" => server.ServerInfo.Stat?.CurrentPlayers,
+                    "server.players.percent" => server.ServerInfo.Stat is not null
                         ? 100
                             * server.ServerInfo.Stat.CurrentPlayersInt
                             / server.ServerInfo.Stat.MaximumPlayersInt
                         : null,
 
-                _ => null
-            };
+                    _ => null,
+                };
         }
     }
 }

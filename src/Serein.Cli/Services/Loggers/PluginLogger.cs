@@ -18,7 +18,7 @@ public class PluginLogger(ILogger<PluginLogger> logger) : IPluginLogger
                 break;
 
             default:
-                CliConsole.WriteLine(level, $"[{name}] [{message}]");
+                CliConsole.WriteLine(level, $"[{name}] {message}");
                 break;
         }
     }

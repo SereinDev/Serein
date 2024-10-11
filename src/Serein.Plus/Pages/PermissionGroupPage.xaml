@@ -14,6 +14,7 @@
     <Grid>
         <ListView
             x:Name="GroupListView"
+            ContextMenuOpening="GroupListView_ContextMenuOpening"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ListView.View>
@@ -51,7 +52,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="Edit"
+                        x:Name="EditMenuItem"
                         Click="MenuItem_Click"
                         Header="编辑"
                         Tag="Edit">
@@ -60,7 +61,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="Remove"
+                        x:Name="RemoveMenuItem"
                         Click="MenuItem_Click"
                         Header="删除"
                         Tag="Remove">

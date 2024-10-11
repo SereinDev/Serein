@@ -1,10 +1,11 @@
 using System;
+using System.ComponentModel;
 
 using Serein.Core.Models.Plugins.Info;
 
 namespace Serein.Core.Models.Plugins;
 
-public interface IPlugin : IDisposable
+public interface IPlugin : IDisposable, INotifyPropertyChanged
 {
     public string FileName { get; }
 

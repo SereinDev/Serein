@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -29,6 +30,14 @@ public class PluginManager(
     PermissionManager permissionManager
 )
 {
+    private static readonly JsonSerializerOptions Options = new(JsonSerializerOptionsFactory.SnakeCase)
+    {
+        Converters =
+        {
+            new JsonStringEnumConverter()
+        }
+    };
+
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
@@ -87,7 +96,7 @@ public class PluginManager(
                     pluginInfo =
                         JsonSerializer.Deserialize<PluginInfo>(
                             File.ReadAllText(Path.Join(dir, PathConstants.PluginInfoFileName)),
-                            JsonSerializerOptionsFactory.SnakeCase
+                            Options
                         ) ?? throw new InvalidDataException("插件信息为空");
 
                     if (string.IsNullOrWhiteSpace(pluginInfo.Id))
