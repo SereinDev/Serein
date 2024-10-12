@@ -3,9 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="WebApiSettingPage"
+    d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -17,7 +21,108 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid>
-        <CheckBox />
-    </Grid>
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <CheckBox
+                Click="CheckBox_Click"
+                Content="启用"
+                IsChecked="{Binding Value.WebApi.Enable}" />
+
+            <ui:InfoBar
+                Title="警告"
+                Margin="0,10,0,20"
+                IsClosable="False"
+                IsOpen="True"
+                Message="此功能仍处于实验性阶段，可能存在一定Bug"
+                Severity="Warning" />
+
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="常规" />
+            <TextBox
+                ui:ControlHelper.Header="Url前缀"
+                ui:ControlHelper.PlaceholderText="一行一个"
+                AcceptsReturn="True"
+                Text="{Binding Value.WebApi.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
+                TextChanged="OnPropertyChanged"
+                VerticalScrollBarVisibility="Visible">
+                <TextBox.ToolTip>
+                    <sys:String xml:space="preserve">Http服务器监听的Url（一行一个）
+示例：
+· http://127.0.0.1:{端口}
+  只能由本机访问
+· http://*:{端口} 
+  允许外网访问，但需要手动以管理员权限运行Serein（操作系统限制）
+· https://{域名}/
+  需要在下方配置证书</sys:String>
+                </TextBox.ToolTip>
+            </TextBox>
+            <CheckBox
+                Click="OnPropertyChanged"
+                Content="允许跨源请求"
+                IsChecked="{Binding Value.WebApi.AllowCrossOrigin}"
+                ToolTip="开启后会在响应头添加 Access-Control-Allow-Origin: *" />
+            <ui:NumberBox
+                Width="150"
+                Margin="0,5,0,10"
+                HorizontalAlignment="Left"
+                ui:ControlHelper.Header="每秒最大请求数"
+                Minimum="0"
+                SpinButtonPlacementMode="Compact"
+                ToolTip="每秒请求数超过此值的IP（下方白名单内的除外）将被封禁"
+                ValueChanged="NumberBox_ValueChanged"
+                Value="{Binding Value.WebApi.MaxRequestsPerSecond}" />
+            <TextBox
+                ui:ControlHelper.Header="IP请求白名单"
+                ui:ControlHelper.PlaceholderText="一行一个"
+                AcceptsReturn="True"
+                Text="{Binding Value.WebApi.WhiteList, Converter={StaticResource multiLinesConverter}}"
+                TextChanged="OnPropertyChanged"
+                ToolTip="不会被封禁的IP列表（一行一个）"
+                VerticalScrollBarVisibility="Visible" />
+            <TextBox
+                ui:ControlHelper.Header="访问凭证"
+                ui:ControlHelper.PlaceholderText="一行一个"
+                AcceptsReturn="True"
+                Text="{Binding Value.WebApi.AccessTokens, Converter={StaticResource multiLinesConverter}}"
+                TextChanged="OnPropertyChanged"
+                VerticalScrollBarVisibility="Visible">
+                <TextBox.ToolTip>
+                    <sys:String xml:space="preserve">Access Token（一行一个）
+· 若为空，则访问无需Token（不安全）
+· 若不为空，则访问时需要在Header中添加Authentication项</sys:String>
+                </TextBox.ToolTip>
+            </TextBox>
+
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="证书" />
+            <CheckBox
+                Click="OnPropertyChanged"
+                Content="启用"
+                IsChecked="{Binding Value.WebApi.Certificate.Enable}" />
+            <CheckBox
+                Click="OnPropertyChanged"
+                Content="自动注册证书"
+                IsChecked="{Binding Value.WebApi.Certificate.AutoRegisterCertificate}" />
+            <CheckBox
+                Click="OnPropertyChanged"
+                Content="自动加载证书"
+                IsChecked="{Binding Value.WebApi.Certificate.AutoLoadCertificate}" />
+
+            <TextBox
+                ui:ControlHelper.Header="证书路径"
+                MouseDoubleClick="TextBox_MouseDoubleClick"
+                Text="{Binding Value.WebApi.Certificate.Path}"
+                TextChanged="OnPropertyChanged"
+                ToolTip="【提示】你可以双击文本框打开选择文件对话框" />
+
+            <PasswordBox
+                x:Name="CertificatePasswordBox"
+                ui:ControlHelper.Header="密码"
+                PasswordChanged="PasswordBox_PasswordChanged" />
+        </StackPanel>
+    </ScrollViewer>
 </Page>

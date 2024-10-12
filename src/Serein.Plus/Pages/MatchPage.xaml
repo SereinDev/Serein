@@ -14,15 +14,6 @@
     <Page.Resources>
         <converter:EnumConverter x:Key="enumConverter" />
         <converter:MatchFieldTypeToStringConverter x:Key="matchFieldTypeToStringConverter" />
-
-        <DataTemplate x:Key="RowDetailsTemplate">
-            <Grid>
-                <TextBlock
-                    Margin="5,2"
-                    Text="{Binding Tip, Mode=OneWay, TargetNullValue='-'}"
-                    TextWrapping="WrapWithOverflow" />
-            </Grid>
-        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -36,9 +27,7 @@
             ContextMenuOpening="MatchesDataGrid_ContextMenuOpening"
             GridLinesVisibility="All"
             HeadersVisibility="Column"
-            LayoutUpdated="MatchesDataGrid_LayoutUpdated"
-            RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
-            RowDetailsVisibilityMode="VisibleWhenSelected"
+            IsReadOnly="True"
             SelectedCellsChanged="UpdateDetails"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">

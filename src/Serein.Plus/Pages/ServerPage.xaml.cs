@@ -133,7 +133,6 @@ public partial class ServerPage : Page
                     {
                         Owner = _mainWindow,
                     };
-                    editor1.ShowDialog();
 
                     if (editor1.ShowDialog() != true || string.IsNullOrEmpty(editor1.Id))
                         return;

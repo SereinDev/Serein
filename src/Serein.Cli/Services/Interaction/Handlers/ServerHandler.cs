@@ -40,7 +40,7 @@ public class ServerHandler(ILogger<ServerHandler> logger, ServerManager serverMa
         switch (args[2].ToLowerInvariant())
         {
             case "info":
-                var info = server.ServerInfo;
+                var info = server.Info;
 
                 // var table = new Table();
 

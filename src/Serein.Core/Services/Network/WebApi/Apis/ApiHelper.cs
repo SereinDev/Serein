@@ -84,8 +84,13 @@ public static class ApiHelper
 
     public static async Task HandleException(IHttpContext context, Exception e)
     {
-        await context.SendPacketAsync(
-            new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
-        );
+        if (e is InvalidOperationException ex)
+            await context.SendPacketAsync(
+                new ApiPacket { ErrorMsg = ex.Message, Code = 403 }
+            );
+        else
+            await context.SendPacketAsync(
+               new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
+           );
     }
 }

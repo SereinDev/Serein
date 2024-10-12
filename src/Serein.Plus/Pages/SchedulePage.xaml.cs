@@ -18,12 +18,6 @@ public partial class SchedulePage : Page
         _scheduleProvider.Value.CollectionChanged += UpdateDetails;
     }
 
-    private void OnLayoutUpdated(object sender, EventArgs e)
-    {
-        _scheduleProvider.SaveAsyncWithDebounce();
-        UpdateDetails(sender, e);
-    }
-
     private void UpdateDetails(object? sender, EventArgs e)
     {
         Details.Text =
@@ -32,6 +26,5 @@ public partial class SchedulePage : Page
                 : ScheduleDataGrid.SelectedIndex >= 0
                     ? $"共{_scheduleProvider.Value.Count}项，已选择第{ScheduleDataGrid.SelectedIndex + 1}项"
                     : $"共{_scheduleProvider.Value.Count}项";
-        ;
     }
 }

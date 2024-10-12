@@ -26,7 +26,8 @@ public class PacketHandler(
     ReactionTrigger reactionTrigger
 )
 {
-    private readonly Lazy<IConnectionLogger> _connectionLogger = new(host.Services.GetRequiredService<IConnectionLogger>);
+    private readonly Lazy<IConnectionLogger> _connectionLogger =
+        new(host.Services.GetRequiredService<IConnectionLogger>);
     private readonly Matcher _matcher = matcher;
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly EventDispatcher _eventDispatcher = eventDispatcher;
@@ -80,7 +81,6 @@ public class PacketHandler(
                         new Dictionary<string, string?> { ["sender.id"] = packet.UserId.ToString() }
                     );
                 break;
-
         }
     }
 

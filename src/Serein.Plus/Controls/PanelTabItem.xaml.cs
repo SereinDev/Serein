@@ -208,12 +208,16 @@ public partial class PanelTabItem : TabItem
 
         if (Server.Status == ServerStatus.Running)
         {
-            ViewModel.CPUUsage = Server.ServerInfo.CPUUsage;
-            ViewModel.Version = Server.ServerInfo.Stat?.ConnectionStatus == ConnStatus.Success ?
-                Server.ServerInfo.Stat.Version : null;
-            ViewModel.PlayerCount = Server.ServerInfo.Stat?.ConnectionStatus == ConnStatus.Success
-                ? $"{Server.ServerInfo.Stat.CurrentPlayers}/{Server.ServerInfo.Stat.MaximumPlayers}" : null;
-            ViewModel.RunTime = DateTime.Now - Server.ServerInfo.StartTime;
+            ViewModel.CPUUsage = Server.Info.CPUUsage;
+            ViewModel.Version =
+                Server.Info.Stat?.ConnectionStatus == ConnStatus.Success
+                    ? Server.Info.Stat.Version
+                    : null;
+            ViewModel.PlayerCount =
+                Server.Info.Stat?.ConnectionStatus == ConnStatus.Success
+                    ? $"{Server.Info.Stat.CurrentPlayers}/{Server.Info.Stat.MaximumPlayers}"
+                    : null;
+            ViewModel.RunTime = DateTime.Now - Server.Info.StartTime;
         }
         else
         {

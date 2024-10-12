@@ -9,8 +9,21 @@ namespace Serein.Core.Services.Servers;
 
 public class ServerPluginManager
 {
-    public static readonly IReadOnlyList<string> AcceptableDirectories = ["mods", "plugins", "mod", "plugin"];
-    public static readonly IReadOnlyList<string> AcceptableExtensions = [".dll", ".jar", ".js", ".lua", ".py"];
+    public static readonly IReadOnlyList<string> AcceptableDirectories =
+    [
+        "mods",
+        "plugins",
+        "mod",
+        "plugin",
+    ];
+    public static readonly IReadOnlyList<string> AcceptableExtensions =
+    [
+        ".dll",
+        ".jar",
+        ".js",
+        ".lua",
+        ".py",
+    ];
     public const string DisabledPluginExtension = ".disabled";
 
     public event EventHandler? Updated;
@@ -51,18 +64,24 @@ public class ServerPluginManager
                 {
                     var extension = Path.GetExtension(file).ToLowerInvariant();
                     if (extension == DisabledPluginExtension)
-                        extension = Path.GetExtension(Path.GetFileNameWithoutExtension(file)).ToLowerInvariant();
+                        extension = Path.GetExtension(Path.GetFileNameWithoutExtension(file))
+                            .ToLowerInvariant();
 
                     if (AcceptableExtensions.Contains(extension))
-                        _plugins.Add(new(file, extension switch
-                        {
-                            ".dll" => PluginType.Library,
-                            ".jar" => PluginType.Java,
-                            ".js" => PluginType.JavaScript,
-                            ".lua" => PluginType.Lua,
-                            ".py" => PluginType.Python,
-                            _ => throw new NotSupportedException()
-                        }));
+                        _plugins.Add(
+                            new(
+                                file,
+                                extension switch
+                                {
+                                    ".dll" => PluginType.Library,
+                                    ".jar" => PluginType.Java,
+                                    ".js" => PluginType.JavaScript,
+                                    ".lua" => PluginType.Lua,
+                                    ".py" => PluginType.Python,
+                                    _ => throw new NotSupportedException(),
+                                }
+                            )
+                        );
                 }
             }
             finally
@@ -94,7 +113,10 @@ public class ServerPluginManager
 
     public void Add(params string[] paths)
     {
-        if (string.IsNullOrEmpty(CurrentPluginsDirectory) || !Directory.Exists(CurrentPluginsDirectory))
+        if (
+            string.IsNullOrEmpty(CurrentPluginsDirectory)
+            || !Directory.Exists(CurrentPluginsDirectory)
+        )
             throw new InvalidOperationException("无法获取插件文件夹");
 
         foreach (var path in paths)

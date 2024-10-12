@@ -177,6 +177,7 @@
                     <TextBox
                         Height="100"
                         ui:ControlHelper.Header="关服命令"
+                        ui:ControlHelper.PlaceholderText="一行一个"
                         AcceptsReturn="True"
                         Text="{Binding Configuration.StopCommands, Converter={StaticResource multiLinesConverter}}"
                         ToolTip="关闭服务器时输入的命令（一行一个）"

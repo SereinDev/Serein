@@ -3,10 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="应用设置"
+    d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -26,16 +28,16 @@
                 Text="插件" />
             <ui:NumberBox
                 Width="150"
+                Margin="0,5,0,10"
                 HorizontalAlignment="Left"
                 ui:ControlHelper.Header="事件最大等待时间 (ms)"
-                ui:ControlHelper.PlaceholderText="500"
                 Minimum="-1"
                 SpinButtonPlacementMode="Compact"
                 ToolTip="超出此时间返回的结果将被忽略；设置成-1可禁用等待"
                 Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
             <TextBox
                 ui:ControlHelper.Header="JS插件全局加载的程序集"
-                ui:ControlHelper.PlaceholderText="System"
+                ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
                 Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
                 TextChanged="OnPropertyChanged"
@@ -43,7 +45,7 @@
                 ToolTip="此处的程序集将会被所有JS插件加载（一行一个）" />
             <TextBox
                 ui:ControlHelper.Header="JS插件加载时忽略的文件后缀"
-                ui:ControlHelper.PlaceholderText=".module.js"
+                ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
                 Text="{Binding Value.Application.JSPatternToSkipLoadingSingleFile, Converter={StaticResource multiLinesConverter}}"
                 TextChanged="OnPropertyChanged"
@@ -56,8 +58,7 @@
                 Text="绑定" />
             <TextBox
                 ui:ControlHelper.Header="游戏名称检验正则"
-                ui:ControlHelper.PlaceholderText="^[a-zA-Z0-9_\s-]{3,16}$"
-                Text="{Binding Value.Application.RegexForCheckingGameID}"
+                Text="{Binding Value.Application.RegexForCheckingGameId}"
                 TextChanged="OnPropertyChanged"
                 TextWrapping="Wrap"
                 ToolTip="绑定时游戏名称需要符合此正则" />
@@ -73,27 +74,17 @@
                 Text="其他" />
             <TextBox
                 ui:ControlHelper.Header="用于触发多行匹配的文本"
-                ui:ControlHelper.PlaceholderText="players online:"
+                ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
                 Text="{Binding Value.Application.PattenForEnableMatchingMuiltLines, Converter={StaticResource multiLinesConverter}}"
                 TextChanged="OnPropertyChanged"
                 TextWrapping="Wrap"
                 ToolTip="当输入的内容若含有以下内容将触发多行匹配（一行一个）" />
-            <ui:NumberBox
-                Width="150"
-                HorizontalAlignment="Left"
-                ui:ControlHelper.Header="控制台最大行数"
-                ui:ControlHelper.PlaceholderText="250"
-                LostFocus="OnPropertyChanged"
-                Minimum="0"
-                SpinButtonPlacementMode="Compact"
-                ToolTip="最大显示的行数；数值过大可能导致内存占用过高"
-                Value="{Binding Value.Application.MaxDisplayedLines}" />
             <CheckBox
                 Click="OnPropertyChanged"
                 Content="使用Sentry上报"
                 IsChecked="{Binding Value.Application.EnableSentry}"
-                ToolTip="当出现异常或崩溃时自动匿名上报（可能会收集部分系统和环境信息并产生一定网络流量）" />
+                ToolTip="当出现异常或崩溃时自动匿名上报（建议开启；重启生效；上报时可能会收集部分系统和环境信息并产生一定网络流量）" />
 
             <TextBlock
                 Margin="0,15,0,5"
@@ -141,11 +132,18 @@
                 IsChecked="{Binding Value.Application.CheckUpdate}"
                 ToolTip="启动后自动获取更新提示（建议开启）" />
             <CheckBox
+                x:Name="AutoUpdateCheckBox"
                 Click="OnPropertyChanged"
                 Content="自动更新"
                 IsChecked="{Binding Value.Application.AutoUpdate}"
                 IsEnabled="{Binding Value.Application.CheckUpdate}"
                 ToolTip="应用关闭后自动替换新版本" />
+            <ui:InfoBar
+                Title="警告"
+                IsClosable="False"
+                IsOpen="{Binding ElementName=AutoUpdateCheckBox, Path=IsChecked}"
+                Message="此功能将在下一个版本加入"
+                Severity="Warning" />
         </StackPanel>
     </ScrollViewer>
 </ui:Page>

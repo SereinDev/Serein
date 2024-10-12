@@ -37,14 +37,18 @@ public static class Program
         logger.LogInformation(
             "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助(๑•̀ㅂ•́)و✧"
         );
+        logger.LogInformation("");
         logger.LogInformation("· 官网文档（{}）", UrlConstants.Docs);
         logger.LogInformation("  这里有详细完整的功能介绍和教程，推荐新手仔细阅读");
+        logger.LogInformation("");
         logger.LogInformation("· GitHub仓库（{}）", UrlConstants.Repository);
         logger.LogInformation(
             "  这是储存 Serein 源代码的地方。欢迎每一个人为 Serein 的发展贡献力量"
         );
+        logger.LogInformation("");
         logger.LogInformation("· 交流群（{}）", UrlConstants.Group);
         logger.LogInformation("  欢迎加群闲聊划水:)");
+        logger.LogInformation("");
 
         logger.LogWarning("此软件与Mojang Studio、网易、Microsoft没有从属关系");
         logger.LogWarning("Serein is licensed under GPL-v3.0");

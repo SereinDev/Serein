@@ -52,6 +52,7 @@
             VersionLabel = new System.Windows.Forms.Label();
             AutoUpdateCheckBox = new System.Windows.Forms.CheckBox();
             CheckUpdateCheckBox = new System.Windows.Forms.CheckBox();
+            EnableSentryCheckBox = new System.Windows.Forms.CheckBox();
             PluginGroupBox = new System.Windows.Forms.GroupBox();
             JSPatternToSkipLoadingSingleFileLabel = new System.Windows.Forms.Label();
             JSGlobalAssembliesLabel = new System.Windows.Forms.Label();
@@ -201,6 +202,7 @@
             // 
             // OtherGroupBox
             // 
+            OtherGroupBox.Controls.Add(EnableSentryCheckBox);
             OtherGroupBox.Controls.Add(CustomTitleTextBox);
             OtherGroupBox.Controls.Add(CustomTitleLabel);
             OtherGroupBox.Controls.Add(PattenForEnableMatchingMuiltLinesTextBox);
@@ -208,7 +210,7 @@
             OtherGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             OtherGroupBox.Location = new System.Drawing.Point(10, 695);
             OtherGroupBox.Name = "OtherGroupBox";
-            OtherGroupBox.Size = new System.Drawing.Size(1260, 309);
+            OtherGroupBox.Size = new System.Drawing.Size(1260, 359);
             OtherGroupBox.TabIndex = 2;
             OtherGroupBox.TabStop = false;
             OtherGroupBox.Text = "其他";
@@ -266,7 +268,7 @@
             UpdateGroupBox.Controls.Add(AutoUpdateCheckBox);
             UpdateGroupBox.Controls.Add(CheckUpdateCheckBox);
             UpdateGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            UpdateGroupBox.Location = new System.Drawing.Point(10, 1004);
+            UpdateGroupBox.Location = new System.Drawing.Point(10, 1054);
             UpdateGroupBox.Name = "UpdateGroupBox";
             UpdateGroupBox.Size = new System.Drawing.Size(1260, 196);
             UpdateGroupBox.TabIndex = 3;
@@ -325,6 +327,17 @@
             CheckUpdateCheckBox.UseVisualStyleBackColor = true;
             CheckUpdateCheckBox.Click += OnPropertyChanged;
             // 
+            // EnableSentryCheckBox
+            // 
+            EnableSentryCheckBox.AutoSize = true;
+            EnableSentryCheckBox.Location = new System.Drawing.Point(27, 305);
+            EnableSentryCheckBox.Name = "EnableSentryCheckBox";
+            EnableSentryCheckBox.Size = new System.Drawing.Size(216, 35);
+            EnableSentryCheckBox.TabIndex = 8;
+            EnableSentryCheckBox.Text = "使用Sentry上报";
+            ToolTip.SetToolTip(EnableSentryCheckBox, "当出现异常或崩溃时自动匿名上报（建议开启；重启生效；上报时可能会收集部分系统和环境信息并产生一定网络流量）");
+            EnableSentryCheckBox.UseVisualStyleBackColor = true;
+            // 
             // AppSettingPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
@@ -336,7 +349,7 @@
             Controls.Add(PluginGroupBox);
             Name = "AppSettingPage";
             Padding = new System.Windows.Forms.Padding(10);
-            Size = new System.Drawing.Size(1280, 1211);
+            Size = new System.Drawing.Size(1280, 1265);
             PluginGroupBox.ResumeLayout(false);
             PluginGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PluginEventMaxWaitingTimeNumericUpDown).EndInit();
@@ -363,5 +376,6 @@
         private System.Windows.Forms.Label VersionLabel;
         private System.Windows.Forms.CheckBox AutoUpdateCheckBox;
         private System.Windows.Forms.CheckBox CheckUpdateCheckBox;
+        private System.Windows.Forms.CheckBox EnableSentryCheckBox;
     }
 }

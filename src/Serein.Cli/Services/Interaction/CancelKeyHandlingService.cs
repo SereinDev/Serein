@@ -38,7 +38,7 @@ public class CancelKeyHandlingService(
         {
             _host.StopAsync().Wait();
             return;
-        };
+        }
 
         e.Cancel = true;
         var servers = _serverManager.Servers.Where((kv) => kv.Value.Status == ServerStatus.Running);

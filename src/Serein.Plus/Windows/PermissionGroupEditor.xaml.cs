@@ -89,7 +89,7 @@ public partial class PermissionGroupEditor : Window
                 if (MemberListView.SelectedIndex >= 0)
                     DialogHelper
                         .ShowDeleteConfirmation(
-                            $"你确定要删除\"{(MemberListView.SelectedItem as PermissionItemViewModel)?.Key}\"吗？"
+                            $"你确定要删除\"{MemberListView.SelectedItem}\"吗？"
                         )
                         .ContinueWith(
                             (task) =>
@@ -173,7 +173,7 @@ public partial class PermissionGroupEditor : Window
                 if (PermissionListView.SelectedIndex >= 0)
                     DialogHelper
                         .ShowDeleteConfirmation(
-                            $"你确定要删除\"{PermissionListView.SelectedItem}\"吗？"
+                            $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Key}\"吗？"
                         )
                         .ContinueWith(
                             (task) =>

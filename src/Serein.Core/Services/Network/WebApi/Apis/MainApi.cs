@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EmbedIO;
@@ -9,7 +10,8 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public partial class ApiMap(ServerManager serverManager, SettingProvider settingProvider) : WebApiController
+public partial class ApiMap(ServerManager serverManager, SettingProvider settingProvider)
+    : WebApiController
 {
     private readonly ServerManager _serverManager = serverManager;
     private readonly SettingProvider _settingProvider = settingProvider;
@@ -17,12 +19,13 @@ public partial class ApiMap(ServerManager serverManager, SettingProvider setting
     [Route(HttpVerbs.Get, "/")]
     public async Task Root()
     {
-        await HttpContext.SendPacketAsync(":)");
-    }
-
-    [Route(HttpVerbs.Get, "/version")]
-    public async Task GetVersion()
-    {
-        await HttpContext.SendPacketAsync(SereinApp.Version);
+        await HttpContext.SendPacketAsync(
+            new Dictionary<string, string?>()
+            {
+                ["version"] = SereinApp.Version,
+                ["fullVersion"] = SereinApp.FullVersion,
+                ["type"] = SereinApp.Type.ToString(),
+            }
+        );
     }
 }

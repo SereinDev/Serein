@@ -190,19 +190,19 @@ public partial class Panel : UserControl
     {
         StatusDynamicLabel.Text = _server.Status == ServerStatus.Running ? "运行中" : "未启动";
         VersionDynamicLabel.Text =
-            _server.Status == ServerStatus.Running ? _server.ServerInfo.Stat?.Version ?? "-" : "-";
+            _server.Status == ServerStatus.Running ? _server.Info.Stat?.Version ?? "-" : "-";
         PlayerCountDynamicLabel.Text =
             _server.Status == ServerStatus.Running
-                ? $"{_server.ServerInfo.Stat?.CurrentPlayers}/{_server.ServerInfo.Stat?.MaximumPlayers}"
+                ? $"{_server.Info.Stat?.CurrentPlayers}/{_server.Info.Stat?.MaximumPlayers}"
                 : "-";
         RunTimeDynamicLabel.Text =
-            _server.Status == ServerStatus.Running && _server.ServerInfo.StartTime is not null
-                ? (DateTime.Now - _server.ServerInfo.StartTime).ToCommonString()
+            _server.Status == ServerStatus.Running && _server.Info.StartTime is not null
+                ? (DateTime.Now - _server.Info.StartTime).ToCommonString()
                 : "-";
 
         CPUPercentDynamicLabel.Text =
             _server.Status == ServerStatus.Running
-                ? _server.ServerInfo.CPUUsage.ToString("N2") + "%"
+                ? _server.Info.CPUUsage.ToString("N2") + "%"
                 : "-";
     }
 

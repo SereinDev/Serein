@@ -178,7 +178,7 @@ public partial class MainWindow : Window
 
         if (!_serverManager.AnyRunning)
         {
-            AppTaskbarIcon.Visibility = Visibility.Hidden;
+            AppTaskbarIcon.Visibility = Visibility.Collapsed;
             _eventDispatcher.Dispatch(Event.SereinClosed);
             return;
         }

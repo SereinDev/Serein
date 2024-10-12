@@ -30,7 +30,7 @@ public class PluginManager(
     PermissionManager permissionManager
 )
 {
-    private static readonly JsonSerializerOptions Options = new(JsonSerializerOptionsFactory.SnakeCase)
+    private static readonly JsonSerializerOptions Options = new(JsonSerializerOptionsFactory.CamelCase)
     {
         Converters =
         {

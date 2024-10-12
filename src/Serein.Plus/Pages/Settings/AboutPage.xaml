@@ -73,7 +73,7 @@
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="版权信息" />
 
-            <TextBlock>
+            <TextBlock FontSize="14" LineHeight="25">
                 <Run Text="Copyright © 2022 Zaitonn. All Rights Reserved." />
                 <LineBreak />
                 <Run Text="此软件根据" />
@@ -87,7 +87,11 @@
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="免责声明" />
-            <TextBlock Margin="0,5" TextWrapping="Wrap">
+            <TextBlock
+                Margin="0,5"
+                FontSize="14"
+                LineHeight="25"
+                TextWrapping="Wrap">
                 <Run Text="本程序不涉及分发、修改和传播Minecraft客户端及服务端，仅作为服务端的管理软件方便服务器管理员（软件用户）控制服务器，造成的侵权行为由用户自行承担" />
                 <LineBreak />
                 <Run Text="◾ “Minecraft”是 Mojang Synergies AB 的商标" />

@@ -13,7 +13,6 @@
 
         <PackageReference Include="EmbedIO" Version="3.5.2" />
         <PackageReference Include="Fleck" Version="1.2.0" />
-        <PackageReference Include="FxSsh" Version="1.2.0" />
         <PackageReference Include="Hardware.Info" Version="101.0.0" />
         <PackageReference Include="Jint" Version="4.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />

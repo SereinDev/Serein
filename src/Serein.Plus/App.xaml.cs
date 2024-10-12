@@ -61,6 +61,7 @@ public partial class App : Application
             .AddSingleton<AboutPage>()
             .AddSingleton<AppSettingPage>()
             .AddSingleton<ConnectionSettingPage>()
+            .AddSingleton<WebApiSettingPage>()
             .AddSingleton<ReactionSettingPage>()
             .AddSingleton<CategoriesPage>()
             .AddSingleton<ILogger, NotificationLogger>()

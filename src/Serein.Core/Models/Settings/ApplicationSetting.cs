@@ -19,8 +19,6 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public bool EnableSentry { get; set; } = true;
 
-    public uint MaxDisplayedLines { get; set; } = 250;
-
     public Theme Theme { get; set; }
 
     public string CliCommandHeader { get; set; } = "//";

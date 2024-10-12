@@ -6,7 +6,7 @@ using EmbedIO.Security;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi.Apis;
 
-namespace Serein.Core.Services.Network;
+namespace Serein.Core.Services.Network.WebApi;
 
 public class IPBannerModule : IPBanningModule
 {
@@ -20,7 +20,7 @@ public class IPBannerModule : IPBanningModule
 
     public static async Task Handle403(IHttpContext context, IHttpException exception)
     {
-        if (exception.StatusCode == 403 && context.RequestedPath.StartsWith("/api"))
+        if (exception.StatusCode == 403)
             await ApiHelper.HandleHttpException(context, exception);
     }
 }

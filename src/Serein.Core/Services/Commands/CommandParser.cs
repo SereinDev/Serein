@@ -285,18 +285,18 @@ public partial class CommandParser(
                     "server.id" => server.Id,
                     "server.name" => server.Configuration.Name,
                     "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
-                    "server.usage" => server.ServerInfo.CPUUsage,
-                    "server.output" => server.ServerInfo.OutputLines,
-                    "server.input" => server.ServerInfo.InputLines,
-                    "server.time" => (DateTime.Now - server.ServerInfo.StartTime).ToCommonString(),
-                    "server.version" => server.ServerInfo.Stat?.Version,
-                    "server.motd" => server.ServerInfo.Stat?.Stripped_Motd,
-                    "server.players.max" => server.ServerInfo.Stat?.MaximumPlayers,
-                    "server.players.current" => server.ServerInfo.Stat?.CurrentPlayers,
-                    "server.players.percent" => server.ServerInfo.Stat is not null
+                    "server.usage" => server.Info.CPUUsage,
+                    "server.output" => server.Info.OutputLines,
+                    "server.input" => server.Info.InputLines,
+                    "server.time" => (DateTime.Now - server.Info.StartTime).ToCommonString(),
+                    "server.version" => server.Info.Stat?.Version,
+                    "server.motd" => server.Info.Stat?.Stripped_Motd,
+                    "server.players.max" => server.Info.Stat?.MaximumPlayers,
+                    "server.players.current" => server.Info.Stat?.CurrentPlayers,
+                    "server.players.percent" => server.Info.Stat is not null
                         ? 100
-                            * server.ServerInfo.Stat.CurrentPlayersInt
-                            / server.ServerInfo.Stat.MaximumPlayersInt
+                            * server.Info.Stat.CurrentPlayersInt
+                            / server.Info.Stat.MaximumPlayersInt
                         : null,
 
                     _ => null,

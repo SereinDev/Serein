@@ -27,31 +27,19 @@ public partial class CategoriesPage : Page
     {
         NavigationView.MenuItems = new List<NavigationViewItem>()
         {
-            new()
-            {
-                Content = "连接",
-                Tag = typeof(ConnectionSettingPage)
-            },
-            new()
-            {
-                Content = "反应",
-                Tag = typeof(ReactionSettingPage)
-            },
-            new()
-            {
-                Content = "应用",
-                Tag = typeof(AppSettingPage)
-            },
-            new()
-            {
-                Content = "关于",
-                Tag = typeof(AboutPage)
-            },
+            new() { Content = "连接", Tag = typeof(ConnectionSettingPage) },
+            new() { Content = "反应", Tag = typeof(ReactionSettingPage) },
+            new() { Content = "WebApi", Tag = typeof(WebApiSettingPage) },
+            new() { Content = "应用", Tag = typeof(AppSettingPage) },
+            new() { Content = "关于", Tag = typeof(AboutPage) },
         };
         NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().First();
     }
 
-    private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    private void NavigationView_SelectionChanged(
+        NavigationView sender,
+        NavigationViewSelectionChangedEventArgs args
+    )
     {
         if (args.SelectedItem is not NavigationViewItem { Tag: Type type })
             type = typeof(NotImplPage);

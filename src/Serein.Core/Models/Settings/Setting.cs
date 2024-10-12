@@ -23,8 +23,6 @@ public class Setting
 
     public ConnectionSetting Connection { get; init; } = new();
 
-    public SshSetting Ssh { get; init; } = new();
-
     public WebApiSetting WebApi { get; init; } = new();
 
     public ApplicationSetting Application { get; init; } = new();

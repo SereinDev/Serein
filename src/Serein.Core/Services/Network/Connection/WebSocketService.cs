@@ -45,10 +45,18 @@ public class WebSocketService(IHost host, SettingProvider settingProvider) : ICo
         );
 
         client.MessageReceived += MessageReceived;
-        client.Opened += (_, _) => ConnectionLogger.Log(LogLevel.Information, $"成功连接到{_uri}");
         client.Opened += StatusChanged;
+        client.Opened += (_, _) =>
+        {
+            ConnectionLogger.Log(LogLevel.Information, $"成功连接到{_uri}");
+            Connecting = false;
+        };
         client.Closed += StatusChanged;
-        client.Closed += (_, _) => ConnectionLogger.Log(LogLevel.Warning, "连接已断开");
+        client.Closed += (_, _) =>
+        {
+            ConnectionLogger.Log(LogLevel.Warning, "连接已断开");
+            Connecting = false;
+        };
         client.Error += (_, e) =>
             ConnectionLogger.Log(LogLevel.Error, $"{e.Exception.GetType().FullName}: {e.Exception.Message}");
 
@@ -86,11 +94,8 @@ public class WebSocketService(IHost host, SettingProvider settingProvider) : ICo
                 }
                 catch (Exception e)
                 {
-                    ConnectionLogger.Log(LogLevel.Error, e.Message);
-                }
-                finally
-                {
                     Connecting = false;
+                    ConnectionLogger.Log(LogLevel.Error, e.Message);
                 }
             },
             token

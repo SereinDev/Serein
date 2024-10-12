@@ -200,7 +200,7 @@
             UrlPrefixesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             UrlPrefixesTextBox.Size = new System.Drawing.Size(1211, 132);
             UrlPrefixesTextBox.TabIndex = 2;
-            ToolTip.SetToolTip(UrlPrefixesTextBox, "Http服务器监听的Url\r\n示例：\r\n· http://127.0.0.1:{端口} 只能由本机访问\r\n· http://:*:{端口} 允许外网访问，但需要手动以管理员权限运行Serein（系操作系统限制）\r\n· https://{域名}/ 需要在下方配置证书");
+            ToolTip.SetToolTip(UrlPrefixesTextBox, "Http服务器监听的Url\r\n示例：\r\n· http://127.0.0.1:{端口} 只能由本机访问\r\n· http://*:{端口} 允许外网访问，但需要手动以管理员权限运行Serein（系操作系统限制）\r\n· https://{域名}/ 需要在下方配置证书");
             UrlPrefixesTextBox.TextChanged += UrlPrefixesTextBox_TextChanged;
             // 
             // AllowCrossOriginCheckBox

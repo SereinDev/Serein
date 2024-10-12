@@ -30,13 +30,14 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
     private readonly MS.ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private WebServer? _webServer;
-    private WebServerState State => _webServer?.State ?? WebServerState.Stopped;
     private CancellationTokenSource _cancellationTokenSource = new();
+
+    public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
 
     public void Start()
     {
         if (State != WebServerState.Stopped && State != WebServerState.Created)
-            throw new InvalidOperationException("Web服务器正在运行中");
+            throw new InvalidOperationException("WebApi服务器正在运行中");
 
         if (_cancellationTokenSource.IsCancellationRequested)
             _cancellationTokenSource = new();
@@ -49,7 +50,7 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
         _webServer.WithModule(new AuthGate(_settingProvider));
         _webServer.WithModule(_host.Services.GetRequiredService<IPBannerModule>());
         _webServer.WithWebApi(
-            "/serein",
+            "/",
             (module) =>
                 module
                     .HandleHttpException(ApiHelper.HandleHttpException)
@@ -58,7 +59,12 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
         );
 
         _webServer.Start(_cancellationTokenSource.Token);
-        _logger.LogInformation("Http服务器已启动");
+        _logger.LogInformation("WebApi服务器已启动");
+        _logger.LogInformation(
+            "Urls: {}{}",
+            Environment.NewLine,
+            string.Join(Environment.NewLine, _settingProvider.Value.WebApi.UrlPrefixes)
+        );
     }
 
     public void Stop()
@@ -68,11 +74,11 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
             || State == WebServerState.Created
             || _webServer is null
         )
-            throw new InvalidOperationException("Web服务器不在运行中");
+            throw new InvalidOperationException("WebApi服务器不在运行中");
 
         _cancellationTokenSource.Cancel();
         _webServer.Dispose();
-        _logger.LogInformation("Http服务器已停止");
+        _logger.LogInformation("WebApi服务器已停止");
     }
 
     private WebServerOptions CreateOptions()

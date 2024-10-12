@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,11 +29,12 @@ public class Server
                 ? ServerStatus.Stopped
                 : ServerStatus.Running;
     public int? Pid => _serverProcess?.Id;
-    public IServerInfo ServerInfo => _serverInfo;
+    public IServerInfo Info => _serverInfo;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; internal set; }
     public Configuration Configuration { get; }
     public ServerPluginManager PluginManager { get; }
+    [JsonIgnore]
     public string Id { get; }
 
     private CancellationTokenSource? _restartCancellationTokenSource;
@@ -115,6 +117,7 @@ public class Server
         _serverInfo.OutputLines = 0;
         _serverInfo.InputLines = 0;
         _serverInfo.StartTime = _serverProcess.StartTime;
+        _serverInfo.ExitTime = null;
         _serverInfo.FileName = File.Exists(Configuration.FileName)
             ? Path.GetFileName(Configuration.FileName)
             : Configuration.FileName;

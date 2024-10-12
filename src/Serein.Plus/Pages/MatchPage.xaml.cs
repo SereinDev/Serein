@@ -25,12 +25,6 @@ public partial class MatchPage : Page
         _matchesProvider.Value.CollectionChanged += UpdateDetails;
     }
 
-    private void MatchesDataGrid_LayoutUpdated(object sender, EventArgs e)
-    {
-        _matchesProvider.SaveAsyncWithDebounce();
-        UpdateDetails(sender, e);
-    }
-
     private void UpdateDetails(object? sender, EventArgs e)
     {
         Details.Text =
@@ -64,7 +58,10 @@ public partial class MatchPage : Page
                         (r) =>
                         {
                             if (r.Result == ContentDialogResult.Primary)
+                            {
                                 Dispatcher.Invoke(() => _matchesProvider.Value.Add(m1));
+                                _matchesProvider.SaveAsyncWithDebounce();
+                            }
                         }
                     );
                 break;
@@ -73,6 +70,7 @@ public partial class MatchPage : Page
                 foreach (var item in MatchesDataGrid.SelectedItems.OfType<Match>())
                     _matchesProvider.Value.Remove(item);
 
+                _matchesProvider.SaveAsyncWithDebounce();
                 break;
 
             case "Edit":
@@ -94,6 +92,7 @@ public partial class MatchPage : Page
                                 m3.FieldType = m4.FieldType;
                                 m3.RequireAdmin = m4.RequireAdmin;
                                 m3.Exclusions = m4.Exclusions;
+                                _matchesProvider.SaveAsyncWithDebounce();
                             };
                         }
                     );

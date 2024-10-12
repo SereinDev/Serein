@@ -43,8 +43,7 @@ public static class Program
             .AddSingleton<AppSettingPage>()
             .AddSingleton<ReactionSettingPage>()
             .AddSingleton<ConnectionSettingPage>()
-            .AddSingleton<WebApiSettingPage>()
-            .AddSingleton<SshSettingPage>();
+            .AddSingleton<WebApiSettingPage>();
 
         Host = builder.Build();
     }

@@ -12,7 +12,6 @@ using Serein.Core.Services.Data;
 using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
-using Serein.Core.Services.Network.Ssh;
 using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Network.WebApi.Apis;
 using Serein.Core.Services.Permissions;
@@ -52,7 +51,6 @@ public static class SereinAppBuilder
             .AddSingleton<MatchesProvider>()
             .AddSingleton<ScheduleProvider>()
             .AddSingleton<PermissionGroupProvider>()
-            .AddSingleton<SshServerKeysProvider>()
             .AddSingleton<GroupManager>()
             .AddSingleton<PermissionManager>()
             .AddSingleton<HardwareInfoProvider>()
@@ -69,7 +67,6 @@ public static class SereinAppBuilder
             .AddSingleton<HttpServer>()
             .AddTransient<ApiMap>()
             .AddTransient<IPBannerModule>()
-            .AddSingleton<SshHost>()
             .AddSingleton<PluginManager>()
             .AddSingleton<EventDispatcher>()
             .AddSingleton<JsEngineFactory>()

@@ -10,26 +10,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Page.Resources>
-        <DataTemplate x:Key="RowDetailsTemplate">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <TextBlock
-                    Margin="5,2"
-                    Text="{Binding NextTime, Mode=OneWay, StringFormat=预计执行时间: {0:g}}"
-                    TextWrapping="WrapWithOverflow" />
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="5,2"
-                    Text="{Binding Tip, Mode=OneWay, TargetNullValue='-'}"
-                    TextWrapping="WrapWithOverflow" />
-            </Grid>
-        </DataTemplate>
-    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -42,9 +22,8 @@
             AutoGenerateColumns="False"
             GridLinesVisibility="All"
             HeadersVisibility="Column"
-            LayoutUpdated="OnLayoutUpdated"
-            RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
-            RowDetailsVisibilityMode="VisibleWhenSelected"
+            IsReadOnly="True"
+            SelectedCellsChanged="UpdateDetails"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
 

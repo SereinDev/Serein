@@ -10,8 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Models.Output;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
+using Serein.Core.Utils.Extensions;
 
 using WebSocket4Net;
 
@@ -26,7 +26,6 @@ public class ReverseWebSocketService : IConnectionService
     private readonly Dictionary<string, IWebSocketConnection> _webSockets = new();
     private readonly SettingProvider _settingProvider;
 
-
     public ReverseWebSocketService(IHost host, SettingProvider settingProvider)
     {
         _host = host;
@@ -36,7 +35,6 @@ public class ReverseWebSocketService : IConnectionService
                 Logger.Log(MsLogLevel.Error, msg);
         };
         _settingProvider = settingProvider;
-
     }
 
     private IServiceProvider Services => _host.Services;
@@ -47,13 +45,12 @@ public class ReverseWebSocketService : IConnectionService
 
     public bool Active => _server is not null;
 
-
     private WebSocketServer CreateNew()
     {
         var server = new WebSocketServer(_settingProvider.Value.Connection.Uri)
         {
             RestartAfterListenError = true,
-            SupportedSubProtocols = _settingProvider.Value.Connection.SubProtocols
+            SupportedSubProtocols = _settingProvider.Value.Connection.SubProtocols,
         };
 
         return server;
@@ -70,7 +67,10 @@ public class ReverseWebSocketService : IConnectionService
             Logger.Log(MsLogLevel.Information, $"[{GetEndPoint()}] 从反向WebSocket服务器断开");
 
         webSocket.OnError += (e) =>
-            Logger.Log(MsLogLevel.Error, $"[{GetEndPoint()}] 发生错误：\n{e.GetType().FullName}: {e.Message}");
+            Logger.Log(
+                MsLogLevel.Error,
+                $"[{GetEndPoint()}] 发生错误：{Environment.NewLine}" + e.GetDetailString()
+            );
 
         webSocket.OnMessage += (msg) => MessageReceived?.Invoke(webSocket, new(msg));
 
@@ -108,7 +108,10 @@ public class ReverseWebSocketService : IConnectionService
 
         _server = CreateNew();
         _server.Start(ConfigServer);
-        Logger.Log(MsLogLevel.Information, $"反向WebSocket服务器已在{_settingProvider.Value.Connection.Uri}开启");
+        Logger.Log(
+            MsLogLevel.Information,
+            $"反向WebSocket服务器已在{_settingProvider.Value.Connection.Uri}开启"
+        );
         StatusChanged?.Invoke(null, EventArgs.Empty);
     }
 
