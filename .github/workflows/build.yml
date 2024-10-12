@@ -92,7 +92,7 @@ jobs:
       
       - shell: powershell
         run: | 
-          del ./downloads/*.pdb
+          Remove-Item ./downloads/* -Include *.pdb,*.dll
         
       - uses: actions/attest-build-provenance@v1
         continue-on-error: true
