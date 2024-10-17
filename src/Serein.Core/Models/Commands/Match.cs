@@ -8,7 +8,7 @@ using Serein.Core.Services.Commands;
 
 namespace Serein.Core.Models.Commands;
 
-public class Match : NotifyPropertyChangedModelBase, ICloneable
+public class Match : NotifyPropertyChangedModelBase
 {
     private string _regExp = string.Empty;
     private string _command = string.Empty;
@@ -26,12 +26,8 @@ public class Match : NotifyPropertyChangedModelBase, ICloneable
                     throw new ArgumentException("正则表达式不得为空", nameof(RegExp));
 
                 RegexObj = new Regex(_regExp);
-                LastRegExpError = null;
             }
-            catch (Exception e)
-            {
-                LastRegExpError = e.Message;
-            }
+            catch { }
         }
     }
 
@@ -52,7 +48,12 @@ public class Match : NotifyPropertyChangedModelBase, ICloneable
             _exclusions = value;
             MatchExclusion = new();
 
-            foreach (var item in _exclusions.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            foreach (
+                var item in _exclusions.Split(
+                    ';',
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+                )
+            )
             {
                 var args = item.Split('=');
 
@@ -74,7 +75,6 @@ public class Match : NotifyPropertyChangedModelBase, ICloneable
                             break;
                     }
                 }
-
             }
         }
     }
@@ -101,35 +101,17 @@ public class Match : NotifyPropertyChangedModelBase, ICloneable
                         MatchFieldType.PrivateMsg => CommandOrigin.Msg,
                         MatchFieldType.GroupMsg => CommandOrigin.Msg,
                         MatchFieldType.SelfMsg => CommandOrigin.Msg,
-                        _ => CommandOrigin.Null
+                        _ => CommandOrigin.Null,
                     },
                     value,
                     true
                 );
-                LastCommandError = null;
             }
-            catch (Exception e)
-            {
-                LastCommandError = e.Message;
-            }
+            catch { }
         }
     }
 
     [DoNotNotify]
     [JsonIgnore]
     internal Command? CommandObj { get; private set; }
-
-    [AlsoNotifyFor(nameof(LastError))]
-    private string? LastCommandError { get; set; }
-
-    [AlsoNotifyFor(nameof(LastError))]
-    private string? LastRegExpError { get; set; }
-
-    [JsonIgnore]
-    public string? LastError => LastRegExpError ?? LastCommandError;
-
-    public object Clone()
-    {
-        return MemberwiseClone();
-    }
 }

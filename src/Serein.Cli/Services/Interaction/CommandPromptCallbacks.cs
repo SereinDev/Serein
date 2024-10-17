@@ -72,8 +72,8 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                 case "server" when args.Length == 2:
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
-                            .. GetServerCompletionItem()
-                                .OrderByDescending(
+                            .. _serverSubcommnads
+                                .Value.OrderByDescending(
                                     (item) => CalculateRelevance(item.ReplacementText, typedWord)
                                 )
                                 .ThenBy((item) => item.ReplacementText[0]),
@@ -83,8 +83,8 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                 case "server" when args.Length == 3:
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
-                            .. _serverSubcommnads
-                                .Value.OrderByDescending(
+                            .. GetServerCompletionItem()
+                                .OrderByDescending(
                                     (item) => CalculateRelevance(item.ReplacementText, typedWord)
                                 )
                                 .ThenBy((item) => item.ReplacementText[0]),

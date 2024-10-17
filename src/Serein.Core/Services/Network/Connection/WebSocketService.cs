@@ -17,7 +17,8 @@ namespace Serein.Core.Services.Network.Connection;
 
 public class WebSocketService(IHost host, SettingProvider settingProvider) : IConnectionService
 {
-    private IConnectionLogger ConnectionLogger => host.Services.GetRequiredService<IConnectionLogger>();
+    private IConnectionLogger ConnectionLogger =>
+        host.Services.GetRequiredService<IConnectionLogger>();
     private readonly SettingProvider _settingProvider = settingProvider;
     private WebSocket? _client;
     private string _uri = string.Empty;
@@ -58,7 +59,10 @@ public class WebSocketService(IHost host, SettingProvider settingProvider) : ICo
             Connecting = false;
         };
         client.Error += (_, e) =>
-            ConnectionLogger.Log(LogLevel.Error, $"{e.Exception.GetType().FullName}: {e.Exception.Message}");
+            ConnectionLogger.Log(
+                LogLevel.Error,
+                $"{e.Exception.GetType().FullName}: {e.Exception.Message}"
+            );
 
         return client;
     }

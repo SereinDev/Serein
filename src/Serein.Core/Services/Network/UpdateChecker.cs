@@ -5,12 +5,11 @@ using Microsoft.Extensions.Logging;
 
 using Octokit;
 
-using Serein.Core.Models;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network;
 
-public class UpdateChecker : NotifyPropertyChangedModelBase
+public class UpdateChecker
 {
     private readonly ILogger _logger;
     private readonly System.Timers.Timer _timer;
@@ -19,14 +18,15 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
     private static readonly Version Version =
         typeof(UpdateChecker).Assembly.GetName().Version ?? new();
 
-    public Release? Latest { get; private set; }
+    private Release? _last;
+    public Release? Newest { get; private set; }
     public event EventHandler? Updated;
 
     public UpdateChecker(ILogger<UpdateChecker> logger, SettingProvider settingProvider)
     {
         _logger = logger;
         _settingProvider = settingProvider;
-        _gitHubClient = new(new ProductHeaderValue($"Serein.{SereinApp.Type}"));
+        _gitHubClient = new(new ProductHeaderValue($"Serein.{SereinApp.Type}", SereinApp.Version));
         _timer = new(1000 * 60 * 10);
         _timer.Elapsed += async (_, _) =>
         {
@@ -35,7 +35,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
         };
     }
 
-    public async Task CheckAsync()
+    public async Task<Release?> CheckAsync()
     {
         _logger.LogDebug("开始获取更新");
         try
@@ -43,16 +43,21 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
             var release = await _gitHubClient.Repository.Release.GetLatest("SereinDev", "Serein");
             var version = new Version(release.TagName.TrimStart('v'));
 
-            if (release.TagName == Latest?.TagName)
-                return;
+            if (release.TagName == _last?.TagName)
+                return release;
 
-            Latest = release;
+            _last = release;
 
-            _logger.LogDebug("获取到最新版本：{}", Latest.TagName);
-            _logger.LogDebug("Body='{}'", Latest.Body);
+            _logger.LogDebug("获取到最新版本：{}", release.TagName);
+            _logger.LogDebug("Body='{}'", release.Body);
 
             if (version > Version)
+            {
+                Newest = release;
                 Updated?.Invoke(this, EventArgs.Empty);
+            }
+
+            return release;
         }
         catch (Exception e)
         {
@@ -62,6 +67,7 @@ public class UpdateChecker : NotifyPropertyChangedModelBase
         {
             _logger.LogDebug("获取更新结束");
         }
+        return null;
     }
 
     public async Task StartAsync()

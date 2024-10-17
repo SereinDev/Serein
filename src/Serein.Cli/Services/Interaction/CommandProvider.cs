@@ -79,24 +79,15 @@ public class CommandProvider
         foreach (var line in descriptionAttribute.Lines)
             stringBuilder.AppendLine($"  ▫ {line}");
 
-        var usageAttributes = type.GetCustomAttributes<CommandUsageAttribute>();
-        if (usageAttributes.Any())
+
+        var childrenAttributes = type.GetCustomAttributes<CommandChildrenAttribute>();
+        if (childrenAttributes.Any())
         {
             stringBuilder.AppendLine(" ▢ 用法");
-            foreach (var usage in usageAttributes)
-                stringBuilder.AppendLine($"  ▫ {usage.Example}  {usage.Description}");
-        }
-        else
-        {
-            var childrenAttributes = type.GetCustomAttributes<CommandChildrenAttribute>();
-            if (childrenAttributes.Any())
-            {
-                stringBuilder.AppendLine(" ▢ 用法");
-                foreach (var child in childrenAttributes)
-                    stringBuilder.AppendLine(
-                        $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
-                    );
-            }
+            foreach (var child in childrenAttributes)
+                stringBuilder.AppendLine(
+                    $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
+                );
         }
 
         stringBuilder.AppendLine();

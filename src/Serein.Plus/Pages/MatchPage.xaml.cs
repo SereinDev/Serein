@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
+using Force.DeepCloner;
+
 using iNKORE.UI.WPF.Modern.Controls;
 
 using Serein.Core.Models.Commands;
@@ -77,7 +79,7 @@ public partial class MatchPage : Page
                 if (MatchesDataGrid.SelectedItem is not Match m3)
                     return;
 
-                var m4 = (m3.Clone() as Match)!;
+                var m4 = m3.ShallowClone();
 
                 new MatchEditorDialog(m4)
                     .ShowAsync()

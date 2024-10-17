@@ -24,11 +24,41 @@ public partial class ServerManager
     private static partial Regex GetServerIdRegex();
 
     private static readonly Regex ServerId = GetServerIdRegex();
+    private static readonly string[] Blacklist =
+    [
+        "CON",
+        "PRN",
+        "NUL",
+        "AUX",
+        "COM0",
+        "COM1",
+        "COM2",
+        "COM3",
+        "COM4",
+        "COM5",
+        "COM6",
+        "COM7",
+        "COM8",
+        "COM9",
+        "LPT0",
+        "LPT1",
+        "LPT2",
+        "LPT3",
+        "LPT4",
+        "LPT5",
+        "LPT6",
+        "LPT7",
+        "LPT8",
+        "LPT9",
+    ];
 
     public static void ValidateId(string? id)
     {
         if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
             throw new InvalidOperationException("服务器Id格式不正确");
+
+        if (Blacklist.Contains(id.ToUpperInvariant()))
+            throw new InvalidOperationException("不能使用Windows的保留关键字作为Id");
     }
 
     public IReadOnlyDictionary<string, Server> Servers => _servers;
@@ -138,7 +168,7 @@ public partial class ServerManager
             path,
             JsonSerializer.Serialize(
                 new DataItemWrapper<Configuration>(nameof(Configuration), configuration),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true, }
+                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
             )
         );
     }
@@ -171,9 +201,10 @@ public partial class ServerManager
         {
             try
             {
-                if (server.Configuration.AutoStopWhenCrashing
+                if (
+                    server.Configuration.AutoStopWhenCrashing
                     && server.Status == ServerStatus.Running
-                    )
+                )
                     server.Stop();
             }
             catch { }

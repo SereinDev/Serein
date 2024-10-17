@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -70,7 +71,11 @@ public partial class PluginListPage : Page
                     break;
 
                 case "Reload":
-                    _pluginManager.Reload();
+                    Task.Run(_pluginManager.Reload).ContinueWith((task) =>
+                    {
+                        if (task.IsFaulted && task.Exception is not null)
+                            _infoBarProvider.Enqueue("重新加载插件失败", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
+                    });
                     break;
 
                 case "ClearConsole":
@@ -88,10 +93,7 @@ public partial class PluginListPage : Page
         }
         catch (Exception ex)
         {
-            if (tag == "Reload")
-                _infoBarProvider.Enqueue("重新加载失败", ex.Message, InfoBarSeverity.Error);
-
-            else if (tag == "Disable")
+            if (tag == "Disable")
                 _infoBarProvider.Enqueue("禁用失败", ex.Message, InfoBarSeverity.Error);
         }
     }

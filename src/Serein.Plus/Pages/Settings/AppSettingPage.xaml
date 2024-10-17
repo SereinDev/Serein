@@ -144,6 +144,12 @@
                 IsOpen="{Binding ElementName=AutoUpdateCheckBox, Path=IsChecked}"
                 Message="此功能将在下一个版本加入"
                 Severity="Warning" />
+
+            <ui:InfoBar
+                x:Name="VersionInfoBar"
+                Title="发现新版本"
+                IsClosable="True"
+                Severity="Informational" />
         </StackPanel>
     </ScrollViewer>
 </ui:Page>

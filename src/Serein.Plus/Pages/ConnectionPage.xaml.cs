@@ -1,12 +1,13 @@
 using System;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
 using iNKORE.UI.WPF.Modern.Controls;
 
 using Serein.Core.Services.Network.Connection;
+using Serein.Core.Utils.Extensions;
 using Serein.Plus.Services;
-using Serein.Plus.ViewModels;
 
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -14,24 +15,35 @@ namespace Serein.Plus.Pages;
 
 public partial class ConnectionPage : Page
 {
-    private ConnectionViewModel ViewModel { get; }
-
     private readonly InfoBarProvider _infoBarProvider;
     private readonly WsConnectionManager _wsConnectionManager;
+    private readonly Timer _timer;
 
     public ConnectionPage(
         InfoBarProvider infoBarProvider,
-        ConnectionViewModel connectionViewModel,
         WsConnectionManager wsConnectionManager
     )
     {
+        _timer = new(1000) { AutoReset = true, Enabled = true };
         _infoBarProvider = infoBarProvider;
-        ViewModel = connectionViewModel;
         _wsConnectionManager = wsConnectionManager;
+        DataContext = _wsConnectionManager;
+
         InitializeComponent();
-        DataContext = ViewModel;
+        UpdateTimeText();
 
         Console.EnableLogLevelHighlight();
+        _timer.Elapsed += (_, _) => Dispatcher.Invoke(UpdateTimeText);
+        _wsConnectionManager.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(_wsConnectionManager.ConnectedAt))
+                Dispatcher.Invoke(UpdateTimeText);
+        };
+    }
+
+    private void UpdateTimeText()
+    {
+        TimeTextBlock.Text = (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString() ?? "-";
     }
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)
@@ -52,5 +64,16 @@ public partial class ConnectionPage : Page
         {
             _infoBarProvider.Enqueue("操作失败", ex.Message, InfoBarSeverity.Error);
         }
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        _timer.Start();
+        UpdateTimeText();
+    }
+
+    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        _timer.Stop();
     }
 }

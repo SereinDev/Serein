@@ -12,18 +12,19 @@ public partial class AppSettingPage : UserControl
 {
     private readonly SettingProvider _settingProvider;
     private readonly UpdateChecker _updateChecker;
+    private readonly MainForm _mainForm;
 
-    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker)
+    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker, MainForm mainForm)
     {
         _settingProvider = settingProvider;
         _updateChecker = updateChecker;
-
+        _mainForm = mainForm;
         InitializeComponent();
         SetBindings();
         UpdateLatestVersion();
 
         VersionLabel.Text = $"当前版本：{SereinApp.Version}";
-        _updateChecker.PropertyChanged += (_, _) => Invoke(UpdateLatestVersion);
+
         JSGlobalAssembliesTextBox.Text = string.Join(
             "\r\n",
             _settingProvider.Value.Application.JSGlobalAssemblies
@@ -36,11 +37,16 @@ public partial class AppSettingPage : UserControl
             "\r\n",
             _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines
         );
+        _updateChecker.Updated += (_, _) => Invoke(() =>
+        {
+            UpdateLatestVersion();
+            _mainForm.ShowBalloonTip(5000, "发现新版本", _updateChecker.Newest?.TagName ?? string.Empty, ToolTipIcon.None);
+        });
     }
 
     private void UpdateLatestVersion()
     {
-        LatestVersionLabel.Text = $"最新版本：{_updateChecker.Latest?.TagName ?? "-"}";
+        LatestVersionLabel.Text = $"最新版本：{_updateChecker.Newest?.TagName ?? "-"}";
     }
 
     private void OnPropertyChanged(object sender, EventArgs e)

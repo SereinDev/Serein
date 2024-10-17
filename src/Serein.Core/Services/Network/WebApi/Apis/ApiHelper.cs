@@ -56,6 +56,12 @@ public static class ApiHelper
     private static async Task SendPacketAsync(this IHttpContext httpContext, ApiPacket packet) =>
         await SendApiPacketAsync(httpContext, packet);
 
+    public static async Task SendPacketAsync(this IHttpContext httpContext, HttpStatusCode statusCode = HttpStatusCode.OK)
+    {
+        await httpContext.SendPacketAsync<object>(null, statusCode);
+    }
+
+
     public static async Task SendPacketAsync<T>(
         this IHttpContext httpContext,
         T? data = default,

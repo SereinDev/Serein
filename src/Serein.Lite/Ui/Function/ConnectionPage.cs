@@ -36,7 +36,7 @@ public partial class ConnectionPage : UserControl
         {
             if (
                 e.PropertyName == nameof(_wsConnectionManager.Active)
-                || e.PropertyName == nameof(_wsConnectionManager.ConnectedTime)
+                || e.PropertyName == nameof(_wsConnectionManager.ConnectedAt)
             )
                 Invoke(UpadteInfo);
         };
@@ -71,7 +71,7 @@ public partial class ConnectionPage : UserControl
     {
         StatusDynamicLabel.Text = _wsConnectionManager.Active ? "开启" : "关闭";
         TimeDynamicLabel.Text = _wsConnectionManager.Active
-            ? (DateTime.Now - _wsConnectionManager.ConnectedTime).ToCommonString()
+            ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString()
             : "-";
     }
 }

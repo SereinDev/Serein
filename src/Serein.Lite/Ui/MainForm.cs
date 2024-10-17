@@ -267,7 +267,7 @@ public partial class MainForm : Form
             HideToolStripMenuItem.Checked = true;
             HideToolStripMenuItem.Enabled = true;
 
-            NotifyIcon.ShowBalloonTip(
+            ShowBalloonTip(
                 5000,
                 "还有服务器尚未停止运行",
                 "Serein.Lite 已隐藏窗口并在后台运行。你可以右键托盘图标取消隐藏或直接双击托盘图标以取消隐藏。",
@@ -285,6 +285,11 @@ public partial class MainForm : Form
             NotifyIcon.Visible = false;
         }
         base.OnClosing(e);
+    }
+
+    public void ShowBalloonTip(int timeout, string tipTitle, string tipText, ToolTipIcon tipIcon)
+    {
+        NotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
     }
 
     protected override void OnShown(EventArgs e)

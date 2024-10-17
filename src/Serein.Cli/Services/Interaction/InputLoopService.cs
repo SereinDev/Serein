@@ -1,32 +1,40 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using PrettyPrompt;
+using PrettyPrompt.Highlighting;
 
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils;
-using PrettyPrompt.Highlighting;
-using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace Serein.Cli.Services.Interaction;
 
 public class InputLoopService(
     ILogger<InputLoopService> logger,
+    IServiceProvider serviceProvider,
     SettingProvider settingProvider,
+    ServerManager serverManager,
     CommandPromptCallbacks commandPromptCallbacks,
     InputHandler inputHandler
 ) : IHostedService
 {
     private readonly ILogger<InputLoopService> _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly ServerManager _serverManager = serverManager;
     private readonly CommandPromptCallbacks _commandPromptCallbacks = commandPromptCallbacks;
     private readonly InputHandler _inputHandler = inputHandler;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
+    private readonly Lazy<ServerSwitcher> _serverSwitcher =
+        new(serviceProvider.GetRequiredService<ServerSwitcher>);
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -56,10 +64,22 @@ public class InputLoopService(
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                var response = prompt.ReadLineAsync().Await();
+                if (
+                    !string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId)
+                    && _serverManager.Servers.TryGetValue(
+                        _serverSwitcher.Value.CurrentId,
+                        out var server
+                    )
+                    && server.Status == ServerStatus.Running
+                )
+                    ProcessInput(Console.ReadLine());
+                else
+                {
+                    var response = prompt.ReadLineAsync().Await();
 
-                if (response.IsSuccess)
-                    ProcessInput(response.Text);
+                    if (response.IsSuccess)
+                        ProcessInput(response.Text);
+                }
             }
         }
         else
@@ -79,11 +99,18 @@ public class InputLoopService(
         if (input is null)
             return;
 
-        if (
-            input.StartsWith(_settingProvider.Value.Application.CliCommandHeader)
-            && !string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader)
-        )
-            input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
+        if (!string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId))
+            if (
+                _serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
+                && server.Status == ServerStatus.Running
+            )
+                if (input.StartsWith(_settingProvider.Value.Application.CliCommandHeader))
+                    input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
+                else
+                {
+                    server.Input(input);
+                    return;
+                }
 
         _inputHandler.Handle(
             input.Split(

@@ -13,6 +13,9 @@ public class PluginInfo
 
     [JsonRequired]
     public Version Version { get; init; } = new(0, 0, 0);
+    
+    [JsonRequired]
+    public PluginType Type { get; init; }
 
     public Author[] Authors { get; init; } = [];
 
@@ -25,7 +28,4 @@ public class PluginInfo
     public Dependency[] Dependencies { get; init; } = [];
 
     public string? EntryFile { get; init; }
-
-    [JsonRequired]
-    public PluginType Type { get; init; }
 }

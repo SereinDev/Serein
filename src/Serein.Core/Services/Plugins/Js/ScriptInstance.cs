@@ -27,7 +27,6 @@ public partial class ScriptInstance
     private readonly IHost _host;
     private readonly JsPlugin _jsPlugin;
 
-    private IServiceProvider Services => _host.Services;
     private readonly SettingProvider _settingProvider;
     private readonly CommandRunner _commandRunner;
     private readonly PluginManager _pluginManager;
@@ -42,6 +41,7 @@ public partial class ScriptInstance
     public static string? FullVersion => SereinApp.FullVersion;
     public static AppType Type => SereinApp.Type;
     public string Id => _jsPlugin.Info.Id;
+    public IServiceProvider Services => _host.Services;
 
     public ScriptInstance(IHost host, JsPlugin jsPlugin)
     {

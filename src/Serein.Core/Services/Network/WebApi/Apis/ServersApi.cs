@@ -31,14 +31,14 @@ public partial class ApiMap
             ) ?? throw HttpException.BadRequest();
 
         _serverManager.Add(id, configuration);
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Delete, "/servers/{id}")]
     public async Task RemoveServer(string id)
     {
         _serverManager.Remove(id);
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}")]
@@ -57,7 +57,7 @@ public partial class ApiMap
             throw HttpException.NotFound("未找到指定的服务器");
 
         server.Start();
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}/stop")]
@@ -67,7 +67,7 @@ public partial class ApiMap
             throw HttpException.NotFound("未找到指定的服务器");
 
         server.Stop();
-        await HttpContext.SendPacketAsync<object>(null, HttpStatusCode.Accepted);
+        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}/terminate")]
@@ -77,7 +77,7 @@ public partial class ApiMap
             throw HttpException.NotFound("未找到指定的服务器");
 
         server.Terminate();
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}/input")]
@@ -92,7 +92,7 @@ public partial class ApiMap
         foreach (var l in lines)
             server.Input(l);
 
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/input")]
@@ -110,6 +110,6 @@ public partial class ApiMap
         )
             server.Input(l);
 
-        await HttpContext.SendPacketAsync<object>(null);
+        await HttpContext.SendPacketAsync();
     }
 }

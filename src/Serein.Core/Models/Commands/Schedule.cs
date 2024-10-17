@@ -29,11 +29,9 @@ public class Schedule : NotifyPropertyChangedModelBase
 
                 Cron = CrontabSchedule.Parse(_expression);
                 NextTime = Cron?.GetNextOccurrence(DateTime.Now);
-                LastCronExpError = null;
             }
-            catch (Exception e)
+            catch
             {
-                LastCronExpError = e.Message;
                 NextTime = null;
             }
         }
@@ -49,12 +47,8 @@ public class Schedule : NotifyPropertyChangedModelBase
             try
             {
                 CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value, true);
-                LastCommandError = null;
             }
-            catch (Exception e)
-            {
-                LastCommandError = e.Message;
-            }
+            catch { }
         }
     }
 
@@ -76,13 +70,4 @@ public class Schedule : NotifyPropertyChangedModelBase
     [DoNotNotify]
     [JsonIgnore]
     internal CrontabSchedule? Cron { get; set; }
-
-    [AlsoNotifyFor(nameof(LastError))]
-    private string? LastCommandError { get; set; }
-
-    [AlsoNotifyFor(nameof(LastError))]
-    private string? LastCronExpError { get; set; }
-
-    [JsonIgnore]
-    public string? LastError => LastCronExpError ?? LastCommandError;
 }

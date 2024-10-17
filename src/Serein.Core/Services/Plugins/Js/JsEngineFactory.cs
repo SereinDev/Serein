@@ -92,12 +92,6 @@ public class JsEngineFactory(
         engine.SetValue("localStorage", _localStorage);
         engine.SetValue("sessionStorage", _sessionStorage);
 
-        engine.Modules.Add(
-            "minestat",
-            (builder) 
-                => builder.ExportType<MineStat>().ExportType<ConnStatus>().ExportType<SlpProtocol>()
-        );
-
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<MatchFieldType>();

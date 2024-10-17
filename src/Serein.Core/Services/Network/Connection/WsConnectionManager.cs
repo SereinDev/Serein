@@ -41,7 +41,7 @@ public class WsConnectionManager : INotifyPropertyChanged
     public bool Active => _webSocketService.Active || _reverseWebSocketService.Active;
     public ulong Sent => _sent;
     public ulong Received => _received;
-    public DateTime? ConnectedTime { get; private set; }
+    public DateTime? ConnectedAt { get; private set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -69,8 +69,14 @@ public class WsConnectionManager : INotifyPropertyChanged
         _webSocketService.MessageReceived += OnMessageReceived;
         _reverseWebSocketService.MessageReceived += OnMessageReceived;
 
-        _webSocketService.StatusChanged += (s, _) => PropertyChanged?.Invoke(s, _activeArg);
-        _reverseWebSocketService.StatusChanged += (s, _) => PropertyChanged?.Invoke(s, _activeArg);
+        _webSocketService.StatusChanged += OnStatusChanged;
+        _reverseWebSocketService.StatusChanged += OnStatusChanged;
+
+        void OnStatusChanged(object? sender, EventArgs e)
+        {
+            PropertyChanged?.Invoke(sender, _activeArg);
+            ConnectedAt = Active ? DateTime.Now : null;
+        }
     }
 
     private void OnMessageReceived(object? sender, MessageReceivedEventArgs e)
@@ -101,7 +107,6 @@ public class WsConnectionManager : INotifyPropertyChanged
             throw new InvalidOperationException("WebSocket连接未断开");
 
         _sent = _received = 0;
-        ConnectedTime = DateTime.Now;
 
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
@@ -118,7 +123,7 @@ public class WsConnectionManager : INotifyPropertyChanged
         if (!Active && !_webSocketService.Connecting)
             throw new InvalidOperationException("WebSocket未连接");
 
-        ConnectedTime = null;
+        ConnectedAt = null;
         _sent = _received = 0;
         _cancellationTokenSource?.Cancel();
 

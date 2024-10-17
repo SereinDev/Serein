@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -61,14 +61,11 @@ public partial class PluginConsolePage : Page
                 break;
 
             case "Reload":
-                try
+                Task.Run(_pluginManager.Reload).ContinueWith((task) =>
                 {
-                    _pluginManager.Reload();
-                }
-                catch (Exception ex)
-                {
-                    _infoBarProvider.Enqueue("重新加载插件失败", ex.Message, InfoBarSeverity.Error);
-                }
+                    if (task.IsFaulted && task.Exception is not null)
+                        _infoBarProvider.Enqueue("重新加载插件失败", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
+                });
                 break;
         }
     }

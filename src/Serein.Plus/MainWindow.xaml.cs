@@ -21,6 +21,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Loggers;
+using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
@@ -37,6 +38,7 @@ public partial class MainWindow : Window
     private bool _isTopMost;
     private readonly IHost _host;
     private readonly IServiceProvider _services;
+    private readonly UpdateChecker _updateChecker;
     private readonly ServerManager _serverManager;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
@@ -47,6 +49,7 @@ public partial class MainWindow : Window
     public MainWindow(
         IHost host,
         IServiceProvider services,
+        UpdateChecker updateChecker,
         ServerManager serverManager,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
@@ -55,6 +58,7 @@ public partial class MainWindow : Window
     {
         _host = host;
         _services = services;
+        _updateChecker = updateChecker;
         _serverManager = serverManager;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
@@ -81,6 +85,12 @@ public partial class MainWindow : Window
         };
 
         _services.GetRequiredService<PluginConsolePage>(); // 提前在ui线程实例化
+
+        _updateChecker.Updated += (_, _) =>
+        {
+            if (_updateChecker.Newest is not null)
+                Dispatcher.Invoke(() => ShowBalloonTip("发现新版本", _updateChecker.Newest.TagName, BalloonIcon.Info));
+        };
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
