@@ -20,12 +20,12 @@ public partial class AboutPage : UserControl
 
     private void DeclarationLinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        "https://www.minecraft.net/zh-hans/eula".OpenInBrowser();
+        UrlConstants.Eula.OpenInBrowser();
     }
 
     private void DeclarationLinkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        "https://account.mojang.com/documents/commercial_guidelines".OpenInBrowser();
+        UrlConstants.CommercialGuidelines.OpenInBrowser();
     }
 
     private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

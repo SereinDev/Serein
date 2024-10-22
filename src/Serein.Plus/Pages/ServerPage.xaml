@@ -25,7 +25,7 @@
             <ui:FontIcon FontSize="12" Icon="{x:Static ui:SegoeFluentIcons.Add}" />
 
             <ui:FlyoutService.Flyout>
-                <ui:MenuFlyout>
+                <ui:MenuFlyout Placement="BottomEdgeAlignedRight">
                     <MenuItem
                         Click="MenuItem_Click"
                         Header="新建"

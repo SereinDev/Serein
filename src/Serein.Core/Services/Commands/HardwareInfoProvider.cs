@@ -36,7 +36,7 @@ public class HardwareInfoProvider
         catch (Exception e)
         {
             _logger.LogError("更新信息失败：{}", e.Message);
-            _logger.LogDebug(e, "[{}] 更新信息失败", nameof(HardwareInfoProvider));
+            _logger.LogDebug(e, "更新信息失败");
         }
     }
 }

@@ -46,7 +46,7 @@ public partial class ReactionSettingPage : Page
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        var tag = (sender as MenuItem)?.Tag?.ToString();
+        var tag = (sender as MenuItem)?.Tag as string;
 
         if (tag == "Add")
         {

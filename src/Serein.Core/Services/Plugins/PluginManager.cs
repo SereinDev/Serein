@@ -124,13 +124,13 @@ public class PluginManager(
                         _netPluginLoader.Load(pluginInfo, dir);
                     else
                         throw new NotSupportedException("未指定插件类型");
+
+                    _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
                 }
                 catch (Exception e)
                 {
                     _pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
                 }
-
-                _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
             }
 
             _logger.LogDebug("开始加载Js单文件插件");

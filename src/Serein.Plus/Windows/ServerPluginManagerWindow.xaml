@@ -139,7 +139,7 @@
 
                     <GridViewColumn
                         Width="120"
-                        DisplayMemberBinding="{Binding IsEnable, Mode=OneTime, Converter={StaticResource StatusConverter}}"
+                        DisplayMemberBinding="{Binding IsEnabled, Mode=OneTime, Converter={StaticResource StatusConverter}}"
                         Header="状态" />
 
                     <GridViewColumn

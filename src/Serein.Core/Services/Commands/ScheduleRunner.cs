@@ -24,7 +24,7 @@ public class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner com
             foreach (var schedule in _scheduleProvider.Value)
             {
                 if (
-                    !schedule.Enable
+                    !schedule.IsEnabled
                     || schedule.IsRunning
                     || schedule.CommandObj is null
                     || schedule.CommandObj.Type == CommandType.Invalid

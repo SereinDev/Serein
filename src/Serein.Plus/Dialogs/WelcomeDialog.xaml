@@ -27,7 +27,7 @@
                                 <Run>
                                     官网文档：
                                 </Run>
-                                <Hyperlink NavigateUri="https://serein.cc" RequestNavigate="OnRequestNavigate">
+                                <Hyperlink NavigateUri="https://sereindev.github.io/" RequestNavigate="OnRequestNavigate">
                                     serein.cc
                                 </Hyperlink>
                             </Paragraph>
@@ -59,7 +59,7 @@
                         <Run>
                             使用此软件即视为你已阅读并同意了
                         </Run>
-                        <Hyperlink NavigateUri="https://serein.cc/docs/more/agreement" RequestNavigate="OnRequestNavigate">
+                        <Hyperlink NavigateUri="https://sereindev.github.io//docs/more/agreement" RequestNavigate="OnRequestNavigate">
                             用户协议
                         </Hyperlink>
                     </Paragraph>

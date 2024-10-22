@@ -145,7 +145,7 @@ public partial class ServerPluginManagerWindow : Window
         var selectedPlugins = PluginListView.SelectedItems.OfType<ServerPlugin>();
 
         ViewModel.Remove = ViewModel.OpenInExplorer = selectedPlugins.Any();
-        ViewModel.Enable = ViewModel.Remove && !selectedPlugins.Any((plugin) => plugin.IsEnable);
-        ViewModel.Disable = ViewModel.Remove && !selectedPlugins.Any((plugin) => !plugin.IsEnable);
+        ViewModel.Enable = ViewModel.Remove && !selectedPlugins.Any((plugin) => plugin.IsEnabled);
+        ViewModel.Disable = ViewModel.Remove && !selectedPlugins.Any((plugin) => !plugin.IsEnabled);
     }
 }

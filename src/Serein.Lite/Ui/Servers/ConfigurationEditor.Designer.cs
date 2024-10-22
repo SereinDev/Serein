@@ -39,6 +39,7 @@
             System.Windows.Forms.Label InputEncondingLabel;
             System.Windows.Forms.Label StopLabel;
             System.Windows.Forms.Label PortLabel;
+            System.Windows.Forms.Button OpenFileButton;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationEditor));
             FileNameTextBox = new System.Windows.Forms.TextBox();
             IdTextBox = new System.Windows.Forms.TextBox();
@@ -73,6 +74,7 @@
             InputEncondingLabel = new System.Windows.Forms.Label();
             StopLabel = new System.Windows.Forms.Label();
             PortLabel = new System.Windows.Forms.Label();
+            OpenFileButton = new System.Windows.Forms.Button();
             MainTabControl.SuspendLayout();
             CommonTabPage.SuspendLayout();
             InputAndOutputTabPage.SuspendLayout();
@@ -181,15 +183,25 @@
             PortLabel.Text = "IPv4端口";
             ToolTip.SetToolTip(PortLabel, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
             // 
+            // OpenFileButton
+            // 
+            OpenFileButton.Location = new System.Drawing.Point(605, 241);
+            OpenFileButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            OpenFileButton.Name = "OpenFileButton";
+            OpenFileButton.Size = new System.Drawing.Size(118, 40);
+            OpenFileButton.TabIndex = 8;
+            OpenFileButton.Text = "打开...";
+            OpenFileButton.UseVisualStyleBackColor = true;
+            OpenFileButton.Click += OpenFileButton_Click;
+            // 
             // FileNameTextBox
             // 
             FileNameTextBox.Location = new System.Drawing.Point(23, 242);
             FileNameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
             FileNameTextBox.Name = "FileNameTextBox";
-            FileNameTextBox.Size = new System.Drawing.Size(700, 38);
+            FileNameTextBox.Size = new System.Drawing.Size(576, 38);
             FileNameTextBox.TabIndex = 5;
             ToolTip.SetToolTip(FileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
-            FileNameTextBox.DoubleClick += FileName_DoubleClick;
             // 
             // IdTextBox
             // 
@@ -217,6 +229,7 @@
             // CommonTabPage
             // 
             CommonTabPage.AutoScroll = true;
+            CommonTabPage.Controls.Add(OpenFileButton);
             CommonTabPage.Controls.Add(NameLabel);
             CommonTabPage.Controls.Add(NameTextBox);
             CommonTabPage.Controls.Add(ArgumentTextBox);

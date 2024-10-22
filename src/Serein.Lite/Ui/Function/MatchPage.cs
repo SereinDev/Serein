@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
@@ -129,12 +130,12 @@ public partial class MatchPage : UserControl, IUpdateablePage
 
     private void LookUpIntroDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        "https://sereindev.github.io/".OpenInBrowser();
+        UrlConstants.DocsMatch.OpenInBrowser();
     }
 
     private void LookUpVariablesDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        "https://sereindev.github.io/docs/guidance/variables".OpenInBrowser();
+        UrlConstants.DocsVariables.OpenInBrowser();
     }
 
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)

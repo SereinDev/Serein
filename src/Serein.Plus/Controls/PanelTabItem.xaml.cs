@@ -95,7 +95,7 @@ public partial class PanelTabItem : TabItem
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)
     {
-        var tag = (sender as Control)?.Tag?.ToString();
+        var tag = (sender as Control)?.Tag as string;
 
         try
         {
@@ -230,7 +230,7 @@ public partial class PanelTabItem : TabItem
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        switch ((sender as MenuItem)?.Tag?.ToString())
+        switch ((sender as MenuItem)?.Tag as string)
         {
             case "Edit":
                 var config = Server.Configuration.ShallowClone();

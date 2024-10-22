@@ -34,6 +34,7 @@
             System.Windows.Forms.Label WhiteListLabel;
             System.Windows.Forms.Label AccessTokensLabel;
             System.Windows.Forms.GroupBox CertificateGroupBox;
+            System.Windows.Forms.Button OpenFileButton;
             System.Windows.Forms.Label PasswordLabel;
             System.Windows.Forms.Label PathLabel;
             System.Windows.Forms.ToolTip ToolTip;
@@ -53,6 +54,7 @@
             WhiteListLabel = new System.Windows.Forms.Label();
             AccessTokensLabel = new System.Windows.Forms.Label();
             CertificateGroupBox = new System.Windows.Forms.GroupBox();
+            OpenFileButton = new System.Windows.Forms.Button();
             PasswordLabel = new System.Windows.Forms.Label();
             PathLabel = new System.Windows.Forms.Label();
             ToolTip = new System.Windows.Forms.ToolTip(components);
@@ -103,6 +105,7 @@
             // CertificateGroupBox
             // 
             CertificateGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            CertificateGroupBox.Controls.Add(OpenFileButton);
             CertificateGroupBox.Controls.Add(PasswordMaskedTextBox);
             CertificateGroupBox.Controls.Add(PasswordLabel);
             CertificateGroupBox.Controls.Add(PathTextBox);
@@ -116,6 +119,17 @@
             CertificateGroupBox.TabIndex = 10;
             CertificateGroupBox.TabStop = false;
             CertificateGroupBox.Text = "证书";
+            // 
+            // OpenFileButton
+            // 
+            OpenFileButton.Location = new System.Drawing.Point(1053, 197);
+            OpenFileButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            OpenFileButton.Name = "OpenFileButton";
+            OpenFileButton.Size = new System.Drawing.Size(131, 40);
+            OpenFileButton.TabIndex = 17;
+            OpenFileButton.Text = "打开...";
+            OpenFileButton.UseVisualStyleBackColor = true;
+            OpenFileButton.Click += OpenFileButton_Click;
             // 
             // PasswordMaskedTextBox
             // 
@@ -140,10 +154,9 @@
             PathTextBox.Location = new System.Drawing.Point(31, 198);
             PathTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             PathTextBox.Name = "PathTextBox";
-            PathTextBox.Size = new System.Drawing.Size(1153, 38);
+            PathTextBox.Size = new System.Drawing.Size(1003, 38);
             PathTextBox.TabIndex = 14;
             ToolTip.SetToolTip(PathTextBox, "【提示】你可以双击文本框打开选择文件对话框");
-            PathTextBox.DoubleClick += PathTextBox_DoubleClick;
             // 
             // PathLabel
             // 

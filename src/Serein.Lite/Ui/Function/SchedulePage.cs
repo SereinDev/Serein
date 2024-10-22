@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
@@ -64,7 +65,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
                 var item = new ListViewItem(schedule.Expression) { Tag = schedule };
                 item.SubItems.Add(schedule.Command);
                 item.SubItems.Add(schedule.Description);
-                item.Checked = schedule.Enable;
+                item.Checked = schedule.IsEnabled;
 
                 ScheduleListView.Items.Add(item);
             }
@@ -109,7 +110,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     {
         if (e.Item.Tag is Schedule schedule)
         {
-            schedule.Enable = e.Item.Checked;
+            schedule.IsEnabled = e.Item.Checked;
             _scheduleProvider.SaveAsyncWithDebounce();
         }
     }
@@ -174,12 +175,12 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
     private void LookUpIntroDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        "https://sereindev.github.io/".OpenInBrowser();
+        UrlConstants.DocsSchedule.OpenInBrowser();
     }
 
     private void LookUpVariablesDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        "https://sereindev.github.io/docs/guidance/variables".OpenInBrowser();
+        UrlConstants.DocsVariables.OpenInBrowser();
     }
 
     private void ListViewContextMenuStrip_Opening(object sender, CancelEventArgs e)

@@ -80,15 +80,15 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
         OnPropertyChanged(sender, e);
     }
 
-    private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+    {
+        OnPropertyChanged(sender, args);
+    }
+
+    private void OpenFileButton_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog();
         if (dialog.ShowDialog() == true)
             _settingProvider.Value.WebApi.Certificate.Path = dialog.FileName;
-    }
-
-    private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-    {
-        OnPropertyChanged(sender, args);
     }
 }

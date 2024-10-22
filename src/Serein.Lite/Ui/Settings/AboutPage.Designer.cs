@@ -1,4 +1,6 @@
-﻿namespace Serein.Lite.Ui.Settings
+﻿using Serein.Core.Utils;
+
+namespace Serein.Lite.Ui.Settings
 {
     partial class AboutPage
     {
@@ -212,7 +214,7 @@
             DeclarationLinkLabel1.TabIndex = 11;
             DeclarationLinkLabel1.TabStop = true;
             DeclarationLinkLabel1.Text = "MINECRAFT 最终用户许可协议";
-            ToolTip.SetToolTip(DeclarationLinkLabel1, "https://www.minecraft.net/zh-hans/eula");
+            ToolTip.SetToolTip(DeclarationLinkLabel1, UrlConstants.Eula);
             DeclarationLinkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel1.LinkClicked += DeclarationLinkLabel1_LinkClicked;
             // 
@@ -228,7 +230,7 @@
             DeclarationLinkLabel2.TabIndex = 13;
             DeclarationLinkLabel2.TabStop = true;
             DeclarationLinkLabel2.Text = "MINECRAFT 商业使用准则";
-            ToolTip.SetToolTip(DeclarationLinkLabel2, "https://account.mojang.com/documents/commercial_guidelines");
+            ToolTip.SetToolTip(DeclarationLinkLabel2, UrlConstants.CommercialGuidelines);
             DeclarationLinkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel2.LinkClicked += DeclarationLinkLabel2_LinkClicked;
             // 

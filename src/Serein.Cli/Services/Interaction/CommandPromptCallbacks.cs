@@ -8,20 +8,23 @@ using PrettyPrompt;
 using PrettyPrompt.Completion;
 using PrettyPrompt.Documents;
 
+using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;
 
-public partial class CommandPromptCallbacks : PromptCallbacks
+public partial class CommandPromptCallbacks(
+    CommandProvider commandProvider,
+    ServerManager serverManager,
+    JsPluginLoader jsPluginLoader,
+    NetPluginLoader netPluginLoader
+) : PromptCallbacks
 {
-    private readonly CommandProvider _commandProvider;
-    private readonly ServerManager _serverManager;
-
-    public CommandPromptCallbacks(CommandProvider commandProvider, ServerManager serverManager)
-    {
-        _commandProvider = commandProvider;
-        _serverManager = serverManager;
-    }
+    private readonly CommandProvider _commandProvider = commandProvider;
+    private readonly ServerManager _serverManager = serverManager;
+    private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
+    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
 
     protected override Task<IReadOnlyList<CompletionItem>> GetCompletionItemsAsync(
         string text,
@@ -69,6 +72,18 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                         ]
                     );
 
+                case "plugin"
+                    when args.Length == 3
+                        && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
+                    return Task.FromResult<IReadOnlyList<CompletionItem>>(
+                        [
+                            .. GetPluginIdCompletionItem()
+                                .OrderByDescending(
+                                    (item) => CalculateRelevance(item.ReplacementText, typedWord)
+                                ),
+                        ]
+                    );
+
                 case "server" when args.Length == 2:
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
@@ -92,7 +107,7 @@ public partial class CommandPromptCallbacks : PromptCallbacks
                     );
             }
 
-        return Task.FromResult<IReadOnlyList<CompletionItem>>([]);
+        return _emptyTask;
     }
 
     private static int CalculateRelevance(string word, string input)

@@ -6,7 +6,11 @@ namespace Serein.Core.Models;
 public abstract class DataItemWrapper
 {
     public static DataItemWrapper<TItem> Wrap<TItem>(TItem data)
-        where TItem : notnull => new(typeof(TItem).ToString(), data);
+        where TItem : notnull => new()
+        {
+            Type = typeof(TItem).ToString(),
+            Data = data,
+        };
 
     [JsonRequired]
     [JsonPropertyOrder(-114514)]
@@ -23,9 +27,4 @@ public class DataItemWrapper<T> : DataItemWrapper
     [JsonRequired]
     public T? Data { get; set; }
 
-    public DataItemWrapper(string type, T data)
-    {
-        Type = type;
-        Data = data;
-    }
 }

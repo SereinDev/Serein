@@ -9,7 +9,10 @@ namespace Serein.Cli.Services.Loggers;
 
 public class CliLogger(string categoryName) : ILogger
 {
-    private static readonly bool EnableDebug = Environment.CommandLine.Contains("--debug");
+    private static readonly bool EnableDebug =
+        Environment.CommandLine.Contains("--debug")
+        || Environment.GetEnvironmentVariable("SEREIN_DEBUG") is not null;
+
     private readonly string _name = categoryName.Contains('.')
         ? categoryName[(categoryName.LastIndexOf('.') + 1)..]
         : categoryName;
@@ -39,7 +42,7 @@ public class CliLogger(string categoryName) : ILogger
         var text = state?.ToString() ?? string.Empty;
 
         if (exception != null)
-            text += EnableDebug ? exception.ToString() : exception.GetDetailString();
+            text += Environment.NewLine + (EnableDebug ? exception.ToString() : exception.GetDetailString());
 
         CliConsole.WriteLine(logLevel, $"[{_name}] {text}");
     }

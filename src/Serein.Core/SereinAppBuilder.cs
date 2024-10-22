@@ -26,6 +26,8 @@ namespace Serein.Core;
 
 public static class SereinAppBuilder
 {
+    public static readonly bool StartForTheFirstTime = !File.Exists(PathConstants.SettingFile);
+
     static SereinAppBuilder()
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -39,14 +41,13 @@ public static class SereinAppBuilder
         hostAppBuilder.Logging.ClearProviders();
         hostAppBuilder.Logging.AddDebug();
 
-        if (FileLoggerProvider.IsEnable)
+        if (FileLoggerProvider.IsEnabled)
         {
             hostAppBuilder.Logging.AddProvider(new FileLoggerProvider());
         }
 
         hostAppBuilder
-            .Services
-            .AddSingleton<SentryReporter>()
+            .Services.AddSingleton<SentryReporter>()
             .AddSingleton<SettingProvider>()
             .AddSingleton<MatchesProvider>()
             .AddSingleton<ScheduleProvider>()

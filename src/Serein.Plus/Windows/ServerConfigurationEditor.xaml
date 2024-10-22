@@ -79,15 +79,26 @@
                         ui:ControlHelper.Header="名称"
                         Text="{Binding Configuration.Name}"
                         ToolTip="用于标识服务器，便于管理" />
-                    <TextBox
-                        ui:ControlHelper.Header="启动文件"
-                        MouseDoubleClick="TextBox_MouseDoubleClick"
-                        Text="{Binding Configuration.FileName}">
-                        <TextBox.ToolTip>
-                            <sys:String xml:space="preserve">启动进程的文件，通常为可执行文件或批处理文件
-【提示】你可以双击文本框打开选择文件对话框</sys:String>
-                        </TextBox.ToolTip>
-                    </TextBox>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Margin="0"
+                            ui:ControlHelper.Header="启动文件"
+                            Text="{Binding Configuration.FileName}"
+                            ToolTip="启动进程的文件，通常为可执行文件或批处理文件" />
+
+                        <Button
+                            Grid.Column="1"
+                            Height="32"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Bottom"
+                            Click="OpenFileButton_Click">
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenFile}" />
+                        </Button>
+                    </Grid>
                     <TextBox
                         ui:ControlHelper.Header="启动参数"
                         Text="{Binding Configuration.Argument}"

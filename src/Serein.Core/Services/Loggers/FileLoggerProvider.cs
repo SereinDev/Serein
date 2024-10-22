@@ -12,7 +12,8 @@ namespace Serein.Core.Services.Loggers;
 
 public class FileLoggerProvider : ILoggerProvider
 {
-    public static bool IsEnable { get; } = Environment.GetCommandLineArgs().Contains("--log");
+    public static bool IsEnabled { get; } = Environment.GetCommandLineArgs().Contains("--log")
+        || Environment.GetEnvironmentVariable("SEREIN_LOG") is not null;
     private readonly Dictionary<string, FileLogger> _loggers;
     private readonly List<string> _buffer;
     private readonly string _file;

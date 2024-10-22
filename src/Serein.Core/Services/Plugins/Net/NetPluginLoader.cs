@@ -12,16 +12,15 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Models.Plugins.Net;
-using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-public class NetPluginLoader(IServiceProvider serviceProvider, IPluginLogger logger)
+public class NetPluginLoader(IServiceProvider serviceProvider, ILogger<NetPluginLoader> logger, IPluginLogger pluginLogger)
     : IPluginLoader<PluginBase>
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-    private readonly IPluginLogger _logger = logger;
+    private readonly ILogger<NetPluginLoader> _logger = logger;
+    private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly List<WeakReference<AssemblyLoadContext>> _contexts = [];
     public ConcurrentDictionary<string, PluginBase> NetPlugins { get; } = new();
     public IReadOnlyDictionary<string, PluginBase> Plugins => NetPlugins;
@@ -32,14 +31,17 @@ public class NetPluginLoader(IServiceProvider serviceProvider, IPluginLogger log
 
         try
         {
-            var entry = pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll");
+            var entry = Path.GetFullPath(Path.Join(dir, pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll")));
 
-            var context = new AssemblyLoadContext(pluginInfo.Id, true);
-            context.SetProfileOptimizationRoot(Path.GetFullPath(PathConstants.PluginsDirectory));
+            if (!File.Exists(entry))
+                throw new FileNotFoundException("插件入口点文件不存在", entry);
+
+            var context = new PluginAssemblyLoadContext(entry);
+            context.Unloading += (_) => _logger.LogDebug("插件\"{}\"上下文已卸载", pluginInfo.Id);
 
             _contexts.Add(new(context, true));
 
-            var assembly = context.LoadFromAssemblyPath(Path.GetFullPath(Path.Join(dir, entry)));
+            var assembly = context.LoadFromAssemblyPath(entry);
             plugin = CreatePluginInstance(assembly.GetExportedTypes());
             plugin.FileName = Path.Join(dir, entry);
             plugin.Info = pluginInfo;
@@ -97,7 +99,7 @@ public class NetPluginLoader(IServiceProvider serviceProvider, IPluginLogger log
             }
             catch (Exception e)
             {
-                _logger.Log(
+                _pluginLogger.Log(
                     LogLevel.Error,
                     plugin.Info.Name,
                     "卸载插件时出现异常：" + Environment.NewLine + e.Message

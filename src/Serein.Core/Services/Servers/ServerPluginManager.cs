@@ -139,7 +139,7 @@ public class ServerPluginManager
         if (!Plugins.Contains(serverPlugin))
             throw new InvalidOperationException("无法通过此插件管理器禁用该插件");
 
-        if (!serverPlugin.IsEnable)
+        if (!serverPlugin.IsEnabled)
             throw new InvalidOperationException("不能禁用已经被禁用的插件");
 
         if (!serverPlugin.FileInfo.Exists)
@@ -153,7 +153,7 @@ public class ServerPluginManager
         if (!Plugins.Contains(serverPlugin))
             throw new InvalidOperationException("无法通过此插件管理器启用该插件");
 
-        if (serverPlugin.IsEnable)
+        if (serverPlugin.IsEnabled)
             throw new InvalidOperationException("不能禁用未被禁用的插件");
 
         if (!serverPlugin.FileInfo.Exists)

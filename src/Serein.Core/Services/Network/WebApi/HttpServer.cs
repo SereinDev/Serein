@@ -61,7 +61,7 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
         _webServer.Start(_cancellationTokenSource.Token);
         _logger.LogInformation("WebApi服务器已启动");
         _logger.LogInformation(
-            "Urls: {}{}",
+            "当前监听的Url： {}{}",
             Environment.NewLine,
             string.Join(Environment.NewLine, _settingProvider.Value.WebApi.UrlPrefixes)
         );

@@ -1,7 +1,4 @@
-using System.IO;
 using System.Reflection;
-
-using Serein.Core.Utils;
 
 namespace Serein.Core;
 
@@ -15,7 +12,6 @@ public sealed class SereinApp
         .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
         ?.InformationalVersion;
     public static readonly AppType Type;
-    public static readonly bool StartForTheFirstTime = !File.Exists(PathConstants.SettingFile);
 
     static SereinApp()
     {

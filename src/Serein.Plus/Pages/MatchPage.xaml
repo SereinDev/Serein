@@ -35,23 +35,23 @@
                 <ContextMenu>
                     <MenuItem
                         Click="MenuItem_Click"
-                        Header="添加..."
+                        Header="添加"
                         Tag="Add">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="Edit"
+                        x:Name="EditMenuItem"
                         Click="MenuItem_Click"
-                        Header="编辑..."
+                        Header="编辑"
                         Tag="Edit">
                         <MenuItem.Icon>
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        x:Name="Remove"
+                        x:Name="RemoveMenuItem"
                         Click="MenuItem_Click"
                         Header="删除"
                         Tag="Remove">
@@ -78,32 +78,11 @@
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}" Header="正则表达式" />
-                <DataGridTemplateColumn CanUserSort="True" Header="匹配域">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Style="{StaticResource DataGridTextBlockStyle}"
-                                Text="{Binding FieldType, Converter={StaticResource matchFieldTypeToStringConverter}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
 
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox SelectedIndex="{Binding FieldType, Converter={StaticResource enumConverter}}" Style="{StaticResource DataGridComboBoxStyle}">
-                                <ComboBoxItem Content="禁用" />
-                                <ComboBoxItem Content="服务器输出" />
-                                <ComboBoxItem Content="服务器输入" />
-                                <ComboBoxItem Content="群聊消息" />
-                                <ComboBoxItem Content="私聊消息" />
-                                <ComboBoxItem Content="自身消息" />
-                            </ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}" Header="命令" />
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding RegExp}" Header="正则表达式" />
+                <DataGridTextColumn Binding="{Binding FieldType, Converter={StaticResource matchFieldTypeToStringConverter}}" Header="命令" />
+                <DataGridTextColumn Binding="{Binding Command}" Header="命令" />
                 <DataGridTextColumn Binding="{Binding Description}" Header="描述" />
                 <DataGridCheckBoxColumn Binding="{Binding RequireAdmin}" Header="需要管理权限" />
                 <DataGridTextColumn Binding="{Binding Exclusions}" Header="限制参数" />

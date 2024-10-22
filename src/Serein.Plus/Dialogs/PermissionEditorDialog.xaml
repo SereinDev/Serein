@@ -18,10 +18,9 @@
     mc:Ignorable="d">
     <StackPanel>
         <ui:AutoSuggestBox
-            x:Name="AutoSuggestBox"
             ui:ControlHelper.Header="权限名"
             QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-            Text="{Binding PermissionKey, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding PermissionKey, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             TextChanged="AutoSuggestBox_TextChanged">
             <ui:AutoSuggestBox.QueryIcon>
                 <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Search}" />

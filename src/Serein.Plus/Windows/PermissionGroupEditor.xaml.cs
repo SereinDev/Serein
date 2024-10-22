@@ -20,7 +20,7 @@ public partial class PermissionGroupEditor : Window
 
     public string Id { get; set; }
     public Group Group { get; }
-    public PermissionGroupEditorViewModel ViewModel { get; }
+    public ListViewPageViewModel ViewModel { get; }
 
     public PermissionGroupEditor(
         PermissionManager permissionManager,

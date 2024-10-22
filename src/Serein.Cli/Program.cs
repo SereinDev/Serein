@@ -95,10 +95,10 @@ public static class Program
         var updateChecker = app.Services.GetRequiredService<UpdateChecker>();
         var serverSwitcher = app.Services.GetRequiredService<ServerSwitcher>();
 
-        if (SereinApp.StartForTheFirstTime)
+        if (SereinAppBuilder.StartForTheFirstTime)
             ShowWelcomePage(logger);
 
-        if (FileLoggerProvider.IsEnable)
+        if (FileLoggerProvider.IsEnabled)
             ShowWarningOfLogMode(logger);
 
         app.Start();

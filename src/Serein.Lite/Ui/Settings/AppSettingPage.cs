@@ -12,13 +12,11 @@ public partial class AppSettingPage : UserControl
 {
     private readonly SettingProvider _settingProvider;
     private readonly UpdateChecker _updateChecker;
-    private readonly MainForm _mainForm;
 
-    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker, MainForm mainForm)
+    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker)
     {
         _settingProvider = settingProvider;
         _updateChecker = updateChecker;
-        _mainForm = mainForm;
         InitializeComponent();
         SetBindings();
         UpdateLatestVersion();
@@ -37,11 +35,7 @@ public partial class AppSettingPage : UserControl
             "\r\n",
             _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines
         );
-        _updateChecker.Updated += (_, _) => Invoke(() =>
-        {
-            UpdateLatestVersion();
-            _mainForm.ShowBalloonTip(5000, "发现新版本", _updateChecker.Newest?.TagName ?? string.Empty, ToolTipIcon.None);
-        });
+        _updateChecker.Updated += (_, _) => Invoke(() => UpdateLatestVersion());
     }
 
     private void UpdateLatestVersion()

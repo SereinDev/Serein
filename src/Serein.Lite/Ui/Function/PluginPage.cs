@@ -10,6 +10,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
@@ -115,7 +116,7 @@ public partial class PluginPage : UserControl
 
     private void LookUpDocsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        "".OpenInBrowser();
+        UrlConstants.DocsPlugins.OpenInBrowser();
     }
 
     private void ReloadButton_Click(object sender, EventArgs e)

@@ -64,13 +64,13 @@ public partial class ServerManager
     public IReadOnlyDictionary<string, Server> Servers => _servers;
     public event EventHandler<ServersUpdatedEventArgs>? ServersUpdated;
 
-    private readonly Dictionary<string, Server> _servers = [];
-    private readonly Matcher _matcher;
     private readonly ILogger<Server> _serverlogger;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
+    private readonly Matcher _matcher;
+    private readonly Dictionary<string, Server> _servers = [];
 
     public ServerManager(
         ILogger<Server> serverlogger,
@@ -156,27 +156,25 @@ public partial class ServerManager
         ValidateId(id);
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
-        var dir = Path.GetDirectoryName(path);
 
-        if (string.IsNullOrEmpty(dir))
-            throw new InvalidOperationException();
-
-        if (!Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
+        Directory.CreateDirectory(PathConstants.ServerConfigDirectory);
 
         File.WriteAllText(
             path,
             JsonSerializer.Serialize(
-                new DataItemWrapper<Configuration>(nameof(Configuration), configuration),
+                DataItemWrapper.Wrap(configuration),
                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
             )
         );
     }
 
-    public void LoadAll()
+    private void LoadAll()
     {
         if (!Directory.Exists(PathConstants.ServerConfigDirectory))
+        {
+            Directory.CreateDirectory(PathConstants.ServerConfigDirectory);
             return;
+        }
 
         var files = Directory.EnumerateFiles(PathConstants.ServerConfigDirectory, "*.json");
 
@@ -218,7 +216,7 @@ public partial class ServerManager
             JsonSerializerOptionsFactory.CamelCase
         );
 
-        return data?.Type != nameof(Configuration)
+        return data?.Type != typeof(Configuration).ToString()
             ? throw new InvalidOperationException("类型不正确")
             : data.Data ?? throw new InvalidOperationException("数据为空");
     }

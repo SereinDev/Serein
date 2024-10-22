@@ -17,6 +17,7 @@
         <PackageReference Include="DeepCloner" Version="0.10.4" />
         <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
         <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.30" />
+        <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="all" />
     </ItemGroup>
 

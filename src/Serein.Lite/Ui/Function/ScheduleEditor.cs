@@ -26,7 +26,7 @@ public partial class ScheduleEditor : Form
         CronTextBox.Text = _schedule.Expression;
         CommandTextBox.Text = _schedule.Command;
         DescriptionTextBox.Text = _schedule.Description;
-        EnableCheckBox.Checked = _schedule.Enable;
+        EnableCheckBox.Checked = _schedule.IsEnabled;
     }
 
     private void CronTextBox_TextChanged(object sender, EventArgs e)
@@ -97,7 +97,7 @@ public partial class ScheduleEditor : Form
         _schedule.Expression = CronTextBox.Text;
         _schedule.Command = CommandTextBox.Text;
         _schedule.Description = DescriptionTextBox.Text;
-        _schedule.Enable = EnableCheckBox.Checked;
+        _schedule.IsEnabled = EnableCheckBox.Checked;
 
         DialogResult = DialogResult.OK;
         Close();

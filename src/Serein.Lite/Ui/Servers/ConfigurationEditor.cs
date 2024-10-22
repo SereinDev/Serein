@@ -57,15 +57,6 @@ public partial class ConfigurationEditor : Form
         UseUnicodeCharsCheckBox.Checked = _configuration.UseUnicodeChars;
     }
 
-    private void FileName_DoubleClick(object sender, EventArgs e)
-    {
-        var openFileDialog = new OpenFileDialog { Title = "选择启动文件" };
-        openFileDialog.ShowDialog();
-
-        if (!string.IsNullOrEmpty(openFileDialog.FileName))
-            FileNameTextBox.Text = openFileDialog.FileName;
-    }
-
     private void ConfirmButton_Click(object sender, EventArgs e)
     {
         try
@@ -135,4 +126,12 @@ public partial class ConfigurationEditor : Form
 
     [GeneratedRegex(@"^\w+$")]
     private static partial Regex IdRegex();
+
+    private void OpenFileButton_Click(object sender, EventArgs e)
+    {
+        var openFileDialog = new OpenFileDialog { Title = "选择启动文件" };
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(openFileDialog.FileName))
+            FileNameTextBox.Text = openFileDialog.FileName;
+    }
 }

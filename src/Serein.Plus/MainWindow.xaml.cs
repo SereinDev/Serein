@@ -98,7 +98,7 @@ public partial class MainWindow : Window
         if (sender is not MenuItem item)
             return;
 
-        var tag = item.Tag?.ToString();
+        var tag = item.Tag as string;
 
         switch (tag)
         {
@@ -146,10 +146,10 @@ public partial class MainWindow : Window
 
     private void Window_ContentRendered(object sender, EventArgs e)
     {
-        if (SereinApp.StartForTheFirstTime)
+        if (SereinAppBuilder.StartForTheFirstTime)
             new WelcomeDialog().ShowAsync();
 
-        if (FileLoggerProvider.IsEnable)
+        if (FileLoggerProvider.IsEnabled)
             new ContentDialog
             {
                 Title = "嘿！你开启了日志模式",

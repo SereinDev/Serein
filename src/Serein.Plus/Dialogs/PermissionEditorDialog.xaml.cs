@@ -22,7 +22,6 @@ public partial class PermissionEditorDialog : ContentDialog
         DataContext = this;
         InitializeComponent();
 
-        AutoSuggestBox.Text = PermissionKey;
         ValueComboBox.SelectedIndex = Value switch
         {
             true => 1,
@@ -34,7 +33,7 @@ public partial class PermissionEditorDialog : ContentDialog
 
     private void Update()
     {
-        if (_permissionManager.Permissions.TryGetValue(AutoSuggestBox.Text, out var description))
+        if (_permissionManager.Permissions.TryGetValue(PermissionKey, out var description))
         {
             DescriptionTextBlock.Text = description;
             WarningInfoBar.IsOpen = false;
@@ -45,7 +44,6 @@ public partial class PermissionEditorDialog : ContentDialog
             WarningInfoBar.IsOpen = true;
         }
 
-        PermissionKey = AutoSuggestBox.Text; // fail to bind
     }
 
     private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -53,13 +51,13 @@ public partial class PermissionEditorDialog : ContentDialog
         Update();
 
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            AutoSuggestBox.ItemsSource = _permissionManager.Permissions.Keys.Select((key) => key.Contains(AutoSuggestBox.Text));
+            sender.ItemsSource = _permissionManager.Permissions.Keys.Select((key) => key.Contains(PermissionKey));
     }
 
     private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
         if (args.ChosenSuggestion is not null)
-            AutoSuggestBox.Text = args.ChosenSuggestion.ToString() ?? string.Empty;
+            PermissionKey = args.ChosenSuggestion.ToString() ?? string.Empty;
     }
 
     private void ValueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -31,7 +31,7 @@ public partial class AppSettingPage : Page
 
         ThemePanel.Children
             .Cast<RadioButton>()
-            .First(c => c?.Tag?.ToString() == _settingProvider.Value.Application.Theme.ToString())
+            .First(c => c?.Tag as string == _settingProvider.Value.Application.Theme.ToString())
             .IsChecked = true;
 
         _updateChecker.Updated += (_, _) => Dispatcher.Invoke(UpdateVersionInfoBar);
@@ -51,7 +51,7 @@ public partial class AppSettingPage : Page
 
     private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
     {
-        var tag = (sender as RadioButton)?.Tag?.ToString();
+        var tag = (sender as RadioButton)?.Tag as string; 
 
         _settingProvider.Value.Application.Theme = tag switch
         {

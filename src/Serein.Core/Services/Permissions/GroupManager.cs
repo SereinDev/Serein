@@ -51,12 +51,11 @@ public partial class GroupManager(
         }
     }
 
-    // TODO: 需要重构以提高性能
     public Dictionary<string, bool?> GetAllPermissions(long userId, bool ignoreWildcard = false)
     {
         var result = new Dictionary<string, (int Priority, bool? Value)>();
-        var visitedGroups = new List<string>();
-        var all = _permissionManager.Permissions.Keys;
+        var visitedGroups = new HashSet<string>();
+        var allPermissions = _permissionManager.Permissions.Keys;
 
         lock (_permissionGroupProvider.Value)
         {
@@ -65,39 +64,41 @@ public partial class GroupManager(
                 if (visitedGroups.Contains(kv.Key))
                     continue;
 
-                if (kv.Key != "everyone")
-                    if (kv.Value.Members.Contains(userId))
-                        foreach (var parent in kv.Value.Parents)
-                        {
-                            if (visitedGroups.Contains(kv.Key))
-                                continue;
-
-                            visitedGroups.Add(kv.Key);
-
-                            if (_permissionGroupProvider.Value.TryGetValue(parent, out var group))
-                                AddPermissionKeys(group.Priority, group.Permissions);
-                        }
-                    else
-                        continue;
-
-                visitedGroups.Add(kv.Key);
-                AddPermissionKeys(kv.Value.Priority, kv.Value.Permissions);
+                if (kv.Key == "everyone" || kv.Value.Members.Contains(userId))
+                    ProcessGroup(kv.Key, kv.Value);
             }
         }
-        return result.ToDictionary((kv) => kv.Key, (kv) => kv.Value.Value);
 
-        void AddPermissionKeys(int priority, Dictionary<string, bool?> dict)
+        return result.ToDictionary(kv => kv.Key, kv => kv.Value.Value);
+
+        void ProcessGroup(string groupId, Group group)
         {
-            foreach (var permission in dict)
+            if (visitedGroups.Contains(groupId))
+                return;
+
+            visitedGroups.Add(groupId);
+
+            foreach (var parent in group.Parents)
+                if (_permissionGroupProvider.Value.TryGetValue(parent, out var parentGroup))
+                    ProcessGroup(parent, parentGroup);
+
+            AddPermissionKeys(group.Priority, group.Permissions);
+        }
+
+        void AddPermissionKeys(int priority, Dictionary<string, bool?> permissions)
+        {
+            foreach (var permission in permissions)
+            {
                 if (!ignoreWildcard && permission.Key.EndsWith(".*"))
                 {
                     var keyWithoutWildcard = permission.Key[..^2];
-                    foreach (var key in all)
+                    foreach (var key in allPermissions)
                         if (key.StartsWith(keyWithoutWildcard))
                             CompareAndAdd(key, priority, permission.Value);
                 }
                 else
                     CompareAndAdd(permission.Key, priority, permission.Value);
+            }
         }
 
         void CompareAndAdd(string key, int priority, bool? value)

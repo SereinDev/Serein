@@ -15,6 +15,7 @@ using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Loggers;
+using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Lite.Ui.Function;
@@ -35,6 +36,7 @@ public partial class MainForm : Form
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ResourcesManager _resourcesManager;
+    private readonly UpdateChecker _updateChecker;
     private readonly System.Timers.Timer _timer;
 
     private IServiceProvider Services => _host.Services;
@@ -45,7 +47,8 @@ public partial class MainForm : Form
         CommandParser commandParser,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        ResourcesManager resourcesManager
+        ResourcesManager resourcesManager,
+        UpdateChecker updateChecker
     )
     {
         _host = host;
@@ -54,7 +57,7 @@ public partial class MainForm : Form
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
         _resourcesManager = resourcesManager;
-
+        _updateChecker = updateChecker;
         if (!File.Exists(ResourcesManager.IndexPath))
             _resourcesManager.WriteConsoleHtml();
 
@@ -71,15 +74,27 @@ public partial class MainForm : Form
 
         InitializeComponent();
         UpdateTitle();
+
+        _updateChecker.Updated += (_, _) =>
+            Invoke(
+                () =>
+                    ShowBalloonTip(
+                        5000,
+                        "发现新版本",
+                        _updateChecker.Newest?.TagName ?? string.Empty,
+                        ToolTipIcon.None
+                    )
+            );
     }
 
     private void UpdateTitle()
     {
-        var text = _commandParser.ApplyVariables(_settingProvider.Value.Application.CustomTitle, null);
+        var text = _commandParser.ApplyVariables(
+            _settingProvider.Value.Application.CustomTitle,
+            null
+        );
 
-        Text = !string.IsNullOrEmpty(text.Trim())
-            ? $"Serein.Lite - {text}"
-            : "Serein.Lite";
+        Text = !string.IsNullOrEmpty(text.Trim()) ? $"Serein.Lite - {text}" : "Serein.Lite";
     }
 
     private void SwitchPage<T>()
@@ -161,7 +176,11 @@ public partial class MainForm : Form
         if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
             SwitchPage<ServerPage>();
 
-        var openFileDialog = new OpenFileDialog { Title = "选择服务器配置", Filter = "服务器配置文件|*.json" };
+        var openFileDialog = new OpenFileDialog
+        {
+            Title = "选择服务器配置",
+            Filter = "服务器配置文件|*.json",
+        };
 
         if (
             openFileDialog.ShowDialog() != DialogResult.OK
@@ -279,10 +298,12 @@ public partial class MainForm : Form
             _host.StopAsync();
             _timer.Stop();
 
-            Task.Run(() => _eventDispatcher.Dispatch(Event.SereinClosed));
             Hide();
             ShowInTaskbar = false;
             NotifyIcon.Visible = false;
+            NotifyIcon.Dispose();
+
+            _eventDispatcher.Dispatch(Event.SereinClosed);
         }
         base.OnClosing(e);
     }
@@ -300,10 +321,10 @@ public partial class MainForm : Form
 
         SwitchPage<ServerPage>();
 
-        if (SereinApp.StartForTheFirstTime)
+        if (SereinAppBuilder.StartForTheFirstTime)
             DialogFactory.ShowWelcomeDialog();
 
-        if (FileLoggerProvider.IsEnable)
+        if (FileLoggerProvider.IsEnabled)
             DialogFactory.ShowWarningDialogOfLogMode();
 
         _timer.Start();

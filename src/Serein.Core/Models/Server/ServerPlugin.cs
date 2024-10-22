@@ -12,7 +12,7 @@ public class ServerPlugin
 
     public PluginType Type { get; }
 
-    public bool IsEnable { get; }
+    public bool IsEnabled { get; }
 
     public FileInfo FileInfo { get; }
 
@@ -20,10 +20,10 @@ public class ServerPlugin
     {
         Path = path;
         Type = type;
-        IsEnable = !Path.EndsWith(ServerPluginManager.DisabledPluginExtension);
+        IsEnabled = !Path.EndsWith(ServerPluginManager.DisabledPluginExtension);
         FileInfo = new(path);
 
-        FriendlyName = IsEnable
+        FriendlyName = IsEnabled
             ? System.IO.Path.GetFileName(Path)
             : System.IO.Path.GetFileNameWithoutExtension(Path);
     }

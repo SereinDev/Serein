@@ -20,16 +20,73 @@
             x:Name="ScheduleDataGrid"
             HorizontalAlignment="Stretch"
             AutoGenerateColumns="False"
+            ContextMenuOpening="ScheduleDataGrid_ContextMenuOpening"
             GridLinesVisibility="All"
             HeadersVisibility="Column"
             IsReadOnly="True"
             SelectedCellsChanged="UpdateDetails"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="添加"
+                        Tag="Add">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        x:Name="EditMenuItem"
+                        Click="MenuItem_Click"
+                        Header="编辑"
+                        Tag="Edit">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Edit}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="删除"
+                        IsEnabled="{Binding IsSelected}"
+                        Tag="Remove">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Cancel}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="切换状态"
+                        IsEnabled="{Binding IsSelected}"
+                        Tag="Toggle">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Switch}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="刷新"
+                        Tag="Refresh">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Refresh}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="打开介绍文档"
+                        Tag="OpenDoc">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Expression, UpdateSourceTrigger=PropertyChanged}" Header="Cron表达式" />
-                <DataGridCheckBoxColumn Binding="{Binding Enable}" Header="启用" />
+                <DataGridCheckBoxColumn Binding="{Binding IsEnabled}" Header="启用" />
                 <DataGridTextColumn Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}" Header="命令" />
                 <DataGridTextColumn Binding="{Binding Description}" Header="描述" />
             </DataGrid.Columns>

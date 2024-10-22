@@ -7,6 +7,8 @@ namespace Serein.Core.Services.Plugins;
 
 public class PluginService(PluginManager pluginManager) : IHostedService
 {
+    private bool _unloaded;
+
     private readonly PluginManager _pluginManager = pluginManager;
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -18,7 +20,10 @@ public class PluginService(PluginManager pluginManager) : IHostedService
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        Task.Run(_pluginManager.Unload, cancellationToken);
+        if (!_unloaded)
+            Task.Run(_pluginManager.Unload, cancellationToken);
+
+        _unloaded = true;
 
         return Task.CompletedTask;
     }

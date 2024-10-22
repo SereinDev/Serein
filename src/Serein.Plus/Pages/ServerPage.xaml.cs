@@ -119,7 +119,7 @@ public partial class ServerPage : Page
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        switch ((sender as MenuItem)?.Tag?.ToString())
+        switch ((sender as MenuItem)?.Tag as string)
         {
             case "Import":
                 try

@@ -31,9 +31,8 @@ public class Match : NotifyPropertyChangedModelBase
         }
     }
 
-    [DoNotNotify]
     [JsonIgnore]
-    internal Regex? RegexObj { get; set; }
+    public Regex? RegexObj { get; set; }
 
     public MatchFieldType FieldType { get; set; }
 
@@ -90,28 +89,21 @@ public class Match : NotifyPropertyChangedModelBase
         set
         {
             _command = value;
-
-            try
-            {
-                CommandObj = CommandParser.Parse(
-                    FieldType switch
-                    {
-                        MatchFieldType.ServerOutput => CommandOrigin.ServerOutput,
-                        MatchFieldType.ServerInput => CommandOrigin.ServerInput,
-                        MatchFieldType.PrivateMsg => CommandOrigin.Msg,
-                        MatchFieldType.GroupMsg => CommandOrigin.Msg,
-                        MatchFieldType.SelfMsg => CommandOrigin.Msg,
-                        _ => CommandOrigin.Null,
-                    },
-                    value,
-                    true
-                );
-            }
-            catch { }
+            CommandObj = CommandParser.Parse(
+                FieldType switch
+                {
+                    MatchFieldType.ServerOutput => CommandOrigin.ServerOutput,
+                    MatchFieldType.ServerInput => CommandOrigin.ServerInput,
+                    MatchFieldType.PrivateMsg => CommandOrigin.Msg,
+                    MatchFieldType.GroupMsg => CommandOrigin.Msg,
+                    MatchFieldType.SelfMsg => CommandOrigin.Msg,
+                    _ => CommandOrigin.Null,
+                },
+                value
+            );
         }
     }
 
-    [DoNotNotify]
     [JsonIgnore]
-    internal Command? CommandObj { get; private set; }
+    public Command? CommandObj { get; private set; }
 }

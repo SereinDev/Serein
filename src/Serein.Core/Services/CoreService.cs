@@ -44,7 +44,7 @@ public class CoreService : IHostedService
         _logger.LogDebug("Pid={}", Environment.ProcessId);
         _logger.LogDebug("版本：{}", SereinApp.FullVersion);
         _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());
-        _logger.LogDebug("首次启动：{}", SereinApp.StartForTheFirstTime);
+        _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

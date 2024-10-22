@@ -48,7 +48,7 @@ public partial class ConnectionPage : Page
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)
     {
-        var tag = (sender as Control)?.Tag?.ToString();
+        var tag = (sender as Control)?.Tag as string;
 
         try
         {

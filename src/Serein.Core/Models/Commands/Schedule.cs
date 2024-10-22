@@ -14,7 +14,6 @@ public class Schedule : NotifyPropertyChangedModelBase
     private string? _command;
     private string? _expression;
 
-    [AlsoNotifyFor(nameof(NextTime))]
     public string? Expression
     {
         get => _expression;
@@ -43,31 +42,27 @@ public class Schedule : NotifyPropertyChangedModelBase
         set
         {
             _command = value;
+            CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
 
-            try
-            {
-                CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value, true);
-            }
-            catch { }
         }
     }
 
     public string? Description { get; set; }
 
-    public bool Enable { get; set; } = true;
+    public bool IsEnabled { get; set; } = true;
 
     [DoNotNotify]
     [JsonIgnore]
-    internal Command? CommandObj { get; private set; }
+    public Command? CommandObj { get; private set; }
 
     [JsonIgnore]
     public DateTime? NextTime { get; internal set; }
 
     [JsonIgnore]
     [DoNotNotify]
-    internal bool IsRunning { get; set; }
+    public bool IsRunning { get; internal set; }
 
-    [DoNotNotify]
+    [AlsoNotifyFor(nameof(NextTime))]
     [JsonIgnore]
-    internal CrontabSchedule? Cron { get; set; }
+    public CrontabSchedule? Cron { get; internal set; }
 }

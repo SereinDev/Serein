@@ -61,7 +61,7 @@ public partial class ServerConfigurationEditor : Window
             throw new InvalidOperationException("此Id已被占用");
     }
 
-    private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private void OpenFileButton_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog();
         if (dialog.ShowDialog() == true)

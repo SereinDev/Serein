@@ -144,12 +144,11 @@ public partial class WebApiSettingPage : UserControl
         }
     }
 
-    private void PathTextBox_DoubleClick(object sender, EventArgs e)
+    private void OpenFileButton_Click(object sender, EventArgs e)
     {
         var dialog = new OpenFileDialog { Title = "选择证书文件" };
-        dialog.ShowDialog();
 
-        if (!string.IsNullOrEmpty(dialog.FileName))
+        if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
             PathTextBox.Text = dialog.FileName;
     }
 }

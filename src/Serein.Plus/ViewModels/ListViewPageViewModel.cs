@@ -2,7 +2,7 @@
 
 namespace Serein.Plus.ViewModels;
 
-public class PermissionGroupEditorViewModel: NotifyPropertyChangedModelBase
+public class ListViewPageViewModel: NotifyPropertyChangedModelBase
 {
     public bool IsSelected { get; set; }
 }

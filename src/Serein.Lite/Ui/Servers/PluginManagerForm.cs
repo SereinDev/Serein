@@ -60,7 +60,7 @@ public partial class PluginManagerForm : Form
             else
                 item.SubItems.Add("-");
 
-            if (!plugin.IsEnable)
+            if (!plugin.IsEnabled)
             {
                 item.ForeColor = Color.DarkGray;
                 item.Text += " (已禁用)";
@@ -123,9 +123,9 @@ public partial class PluginManagerForm : Form
 
         RemoveToolStripMenuItem.Enabled = PluginListView.SelectedItems.Count > 0;
         EnableToolStripMenuItem.Enabled =
-            selectedPlugins.Any() && !selectedPlugins.Any((plugin) => plugin?.IsEnable ?? false);
+            selectedPlugins.Any() && !selectedPlugins.Any((plugin) => plugin?.IsEnabled ?? false);
         DisableToolStripMenuItem.Enabled =
-            selectedPlugins.Any() && !selectedPlugins.Any((plugin) => !plugin?.IsEnable ?? false);
+            selectedPlugins.Any() && !selectedPlugins.Any((plugin) => !plugin?.IsEnabled ?? false);
     }
 
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
