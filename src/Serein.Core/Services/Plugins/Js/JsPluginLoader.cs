@@ -20,13 +20,13 @@ using Serein.Core.Utils.Json;
 namespace Serein.Core.Services.Plugins.Js;
 
 public class JsPluginLoader(
-    IHost host,
+    IServiceProvider serviceProvider,
     IPluginLogger pluginLogger,
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider
 ) : IPluginLoader<JsPlugin>
 {
-    private readonly IHost _host = host;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly SettingProvider _settingProvider = settingProvider;
@@ -62,7 +62,7 @@ public class JsPluginLoader(
         JsPlugin? jsPlugin = null;
         try
         {
-            jsPlugin = new JsPlugin(_host, pluginInfo, entry, jsConfig ?? JsPluginConfig.Default);
+            jsPlugin = new JsPlugin(_serviceProvider, pluginInfo, entry, jsConfig ?? JsPluginConfig.Default);
             jsPlugin.Execute(File.ReadAllText(entry));
         }
         finally
@@ -86,7 +86,7 @@ public class JsPluginLoader(
             try
             {
                 jsPlugin = new JsPlugin(
-                    _host,
+                    _serviceProvider,
                     new() { Id = id, Name = name },
                     file,
                     JsPluginConfig.Default

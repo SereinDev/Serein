@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -22,11 +23,7 @@ public partial class CommandParser(
     [GeneratedRegex(@"\{([a-zA-Z]+(\.[a-zA-Z]+)?(@\w+)?)\}")]
     private static partial Regex GetVariableRegex();
 
-    [GeneratedRegex(@"\{([\w\-]+?)\}")]
-    private static partial Regex GetMatchVariableRegex();
-
     public static readonly Regex Variable = GetVariableRegex();
-    public static readonly Regex MatchVariable = GetMatchVariableRegex();
     public static readonly Regex GeneralCommand = GetGeneralCommandRegex();
 
     private readonly PluginManager _pluginManager = pluginManager;
@@ -104,14 +101,8 @@ public partial class CommandParser(
         var body = ApplyVariables(command.Body, commandContext);
 
         if (commandContext?.Match is not null)
-            MatchVariable.Replace(
-                body,
-                (match) =>
-                    match.Success
-                    && commandContext.Match.Groups.TryGetValue(match.Groups[1].Value, out var group)
-                        ? group.Value
-                        : match.Value
-            );
+            foreach (KeyValuePair<string, Group> kv in commandContext.Match.Groups)
+                body = body.Replace("$" + kv.Key, kv.Value.Value);
 
         return command.Type == CommandType.InputServer ? body : body.Replace("\\n", "\n");
     }

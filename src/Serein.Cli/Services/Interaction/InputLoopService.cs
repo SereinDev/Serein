@@ -50,8 +50,13 @@ public class InputLoopService(
 
     private void Loop(CancellationToken cancellationToken)
     {
-        if (!Console.IsInputRedirected && !Environment.GetCommandLineArgs().Contains("--no-color"))
+        if (
+            !Console.IsInputRedirected
+            && !Environment.GetCommandLineArgs().Contains("--no-color")
+            && Environment.GetEnvironmentVariable("SEREIN_NO_COLOR") is null
+        )
         {
+            var flag = false;
             var prompt = new Prompt(
                 PathConstants.ConsoleHistory,
                 _commandPromptCallbacks,
@@ -72,9 +77,18 @@ public class InputLoopService(
                     )
                     && server.Status == ServerStatus.Running
                 )
+                {
+                    flag = true;
+                    Console.CancelKeyPress += IgnoreCtrlC;
                     ProcessInput(Console.ReadLine());
+                }
                 else
                 {
+                    if (flag)
+                    {
+                        Console.CancelKeyPress -= IgnoreCtrlC;
+                        flag = false;
+                    }
                     var response = prompt.ReadLineAsync().Await();
 
                     if (response.IsSuccess)
@@ -93,6 +107,8 @@ public class InputLoopService(
                 ProcessInput(Console.ReadLine());
         }
     }
+
+    private static void IgnoreCtrlC(object? sender, ConsoleCancelEventArgs e) => e.Cancel = true;
 
     private void ProcessInput(string? input)
     {

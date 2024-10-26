@@ -19,14 +19,14 @@ using MS = Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider settingProvider)
+public class HttpServer(IServiceProvider serviceProvider, ILogger<HttpServer> logger, SettingProvider settingProvider)
 {
     static HttpServer()
     {
         Logger.NoLogging();
     }
 
-    private readonly IHost _host = host;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly MS.ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;
     private WebServer? _webServer;
@@ -47,15 +47,16 @@ public class HttpServer(IHost host, ILogger<HttpServer> logger, SettingProvider 
         if (_settingProvider.Value.WebApi.AllowCrossOrigin)
             _webServer.WithCors();
 
+        _webServer.WithModule(_serviceProvider.GetRequiredService<BroadcastWebSocketModule>());
         _webServer.WithModule(new AuthGate(_settingProvider));
-        _webServer.WithModule(_host.Services.GetRequiredService<IPBannerModule>());
+        _webServer.WithModule(_serviceProvider.GetRequiredService<IPBannerModule>());
         _webServer.WithWebApi(
             "/",
             (module) =>
                 module
                     .HandleHttpException(ApiHelper.HandleHttpException)
                     .HandleUnhandledException(ApiHelper.HandleException)
-                    .WithController(() => _host.Services.GetRequiredService<ApiMap>())
+                    .WithController(() => _serviceProvider.GetRequiredService<ApiMap>())
         );
 
         _webServer.Start(_cancellationTokenSource.Token);

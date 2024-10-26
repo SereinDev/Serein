@@ -108,7 +108,7 @@ public partial class ServerManager
             _reactionManager
         );
         _servers.Add(id, server);
-        ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Added));
+        ServersUpdated?.Invoke(this, new(ServersUpdatedType.Added, id, server));
 
         Save(id, configuration);
 
@@ -123,7 +123,7 @@ public partial class ServerManager
         if (_servers.TryGetValue(id, out var server) && server.Status == ServerStatus.Running)
             throw new InvalidOperationException("服务器仍在运行中");
 
-        if (!_servers.Remove(id))
+        if (!_servers.Remove(id) || server is null)
             return false;
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
@@ -131,7 +131,7 @@ public partial class ServerManager
             File.Delete(path);
 
         _logger.LogDebug("删除服务器：{}", id);
-        ServersUpdated?.Invoke(this, new(id, ServersUpdatedType.Removed));
+        ServersUpdated?.Invoke(this, new(ServersUpdatedType.Removed, id, server));
 
         return true;
     }

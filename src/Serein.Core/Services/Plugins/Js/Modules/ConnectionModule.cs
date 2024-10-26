@@ -5,7 +5,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Modules;
 
-public class WsModule(WsConnectionManager wsConnectionManager)
+public class ConnectionModule(WsConnectionManager wsConnectionManager)
 {
     private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
 

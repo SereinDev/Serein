@@ -16,7 +16,7 @@ public partial class PermissionManager
     public void Register(string id, string key, string? description = null)
     {
         if (!GetKeyRegex().IsMatch(key))
-            throw new ArgumentException("权限值存在不允许的字符或不合法", nameof(key));
+            throw new ArgumentException("权限键不合法", nameof(key));
 
         _permissions.Add($"{id}.{key}", description);
     }

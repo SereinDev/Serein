@@ -133,7 +133,7 @@ public class Server
         _serverProcess.ErrorDataReceived += OnOutputDataReceived;
         _serverProcess.OutputDataReceived += OnOutputDataReceived;
 
-        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
+        ServerStatusChanged?.Invoke(this, EventArgs.Empty);
         _restartCancellationTokenSource?.Cancel();
         ServerOutput?.Invoke(
             this,
@@ -290,7 +290,7 @@ public class Server
         _serverInfo.ExitTime = _serverProcess?.ExitTime;
         _serverProcess = null;
 
-        ServerStatusChanged?.Invoke(null, EventArgs.Empty);
+        ServerStatusChanged?.Invoke(this, EventArgs.Empty);
 
         if (!_eventDispatcher.Dispatch(Event.ServerExited, Id, exitCode, DateTime.Now))
             return;

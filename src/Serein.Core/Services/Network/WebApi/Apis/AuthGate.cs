@@ -15,6 +15,9 @@ public class AuthGate(SettingProvider settingProvider) : WebModuleBase("/")
 
     protected override Task OnRequestAsync(IHttpContext context)
     {
+        if (context.RequestedPath == "/broadcast")
+            return Task.CompletedTask;
+
         var auth = context.Request.Headers.Get("Authorization");
 
         if (_settingProvider.Value.WebApi.AccessTokens.Length == 0)

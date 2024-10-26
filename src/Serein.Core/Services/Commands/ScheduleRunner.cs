@@ -32,15 +32,14 @@ public class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner com
                 )
                     continue;
 
-                if (schedule.NextTime > DateTime.Now)
+                if (schedule.NextTime < DateTime.Now)
                 {
+                    schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
                     schedule.IsRunning = true;
                     _commandRunner
                         .RunAsync(schedule.CommandObj)
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }
-
-                schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
             }
         }
     }

@@ -42,7 +42,7 @@ public abstract class StorageBase(ILogger logger)
         lock (_data)
             _data[key] = value ?? "null";
 
-        _logger.LogDebug("[{}] 更新：'{}'='{}'", GetType().Name, key, value);
+        _logger.LogDebug("更新：'{}'='{}'", key, value);
         OnUpdated();
     }
 

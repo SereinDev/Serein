@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 
@@ -7,7 +8,6 @@ using Jint;
 using Jint.Native.Function;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
@@ -21,37 +21,42 @@ namespace Serein.Core.Models.Plugins.Js;
 
 public class JsPlugin : IPlugin
 {
-    public PluginInfo Info { get; }
     public string FileName { get; }
+    public PluginInfo Info { get; }
     public JsPluginConfig Config { get; }
     public Engine Engine { get; }
     public ScriptInstance ScriptInstance { get; }
     public JsConsole Console { get; }
+    public TimerFactory TimerFactory { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
-    public ConcurrentDictionary<Event, Function> EventHandlers;
+    public IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
     public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
-    private readonly IHost _host;
+    private readonly IPluginLogger _pluginLogger;
+    private readonly ConcurrentDictionary<Event, Function> _eventHandlers;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private IServiceProvider Services => _host.Services;
-    private JsEngineFactory EngineFactory => Services.GetRequiredService<JsEngineFactory>();
-    private IPluginLogger Logger => Services.GetRequiredService<IPluginLogger>();
-
-    public JsPlugin(IHost host, PluginInfo pluginInfo, string fileName, JsPluginConfig config)
+    public JsPlugin(
+        IServiceProvider serviceProvider,
+        PluginInfo pluginInfo,
+        string fileName,
+        JsPluginConfig config
+    )
     {
         _cancellationTokenSource = new();
-        _host = host;
+        _pluginLogger = serviceProvider.GetRequiredService<IPluginLogger>();
+
+        _eventHandlers = new();
         Info = pluginInfo;
         FileName = fileName;
         Config = config;
-        EventHandlers = new();
-        Console = new(Logger, Info.Name);
-        ScriptInstance = new(_host, this);
-        Engine = EngineFactory.Create(this);
+        TimerFactory = new(_cancellationTokenSource.Token);
+        Console = new(_pluginLogger, Info.Name);
+        ScriptInstance = new(serviceProvider, this);
+        Engine = serviceProvider.GetRequiredService<JsEngineFactory>().Create(this);
     }
 
     public void Execute(string text) => Engine.Execute(text);
@@ -59,7 +64,7 @@ public class JsPlugin : IPlugin
     public void Dispose()
     {
         Disable();
-        EventHandlers.Clear();
+        _eventHandlers.Clear();
         Engine.Dispose();
         GC.SuppressFinalize(this);
     }
@@ -89,7 +94,11 @@ public class JsPlugin : IPlugin
         }
         catch (Exception e)
         {
-            Logger.Log(LogLevel.Error, Info.Name, $"触发事件{@event}时出现异常：\n{e.GetDetailString()}");
+            _pluginLogger.Log(
+                LogLevel.Error,
+                Info.Name,
+                $"触发事件{@event}时出现异常：\n{e.GetDetailString()}"
+            );
             return false;
         }
         finally

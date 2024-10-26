@@ -5,28 +5,27 @@ using Jint;
 using Jint.Native;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Commands;
+using Serein.Core.Services.Servers;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Modules;
-using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
+using Jint.Native.Function;
 
 namespace Serein.Core.Services.Plugins.Js;
 
 public partial class ScriptInstance
 {
-    private readonly IHost _host;
+    private readonly IServiceProvider _serviceProvider;
     private readonly JsPlugin _jsPlugin;
-
     private readonly SettingProvider _settingProvider;
     private readonly CommandRunner _commandRunner;
     private readonly PluginManager _pluginManager;
@@ -34,33 +33,32 @@ public partial class ScriptInstance
 
     public PermissionModule Permissions { get; }
     public ServerModule Servers { get; }
-    public WsModule Ws { get; }
+    public ConnectionModule Connection { get; }
     public Console Console => _jsPlugin.Console;
     public Setting Setting => _settingProvider.Value;
     public static string Version => SereinApp.Version;
     public static string? FullVersion => SereinApp.FullVersion;
     public static AppType Type => SereinApp.Type;
     public string Id => _jsPlugin.Info.Id;
-    public IServiceProvider Services => _host.Services;
 
-    public ScriptInstance(IHost host, JsPlugin jsPlugin)
+    public ScriptInstance(IServiceProvider serviceProvider, JsPlugin jsPlugin)
     {
-        _host = host;
+        _serviceProvider = serviceProvider;
+
         _jsPlugin = jsPlugin;
 
-        _settingProvider = Services.GetRequiredService<SettingProvider>();
-        _commandRunner = Services.GetRequiredService<CommandRunner>();
-        _pluginManager = Services.GetRequiredService<PluginManager>();
-        _pluginLogger = Services.GetRequiredService<IPluginLogger>();
+        _settingProvider = _serviceProvider.GetRequiredService<SettingProvider>();
+        _commandRunner = _serviceProvider.GetRequiredService<CommandRunner>();
+        _pluginManager = _serviceProvider.GetRequiredService<PluginManager>();
+        _pluginLogger = _serviceProvider.GetRequiredService<IPluginLogger>();
 
-        Servers = new(Services.GetRequiredService<ServerManager>());
-        Ws = new(Services.GetRequiredService<WsConnectionManager>());
+        Servers = new(_serviceProvider.GetRequiredService<ServerManager>());
+        Connection = new(_serviceProvider.GetRequiredService<WsConnectionManager>());
         Permissions = new(
             Id,
-            Services.GetRequiredService<PermissionManager>(),
-            Services.GetRequiredService<GroupManager>()
+            _serviceProvider.GetRequiredService<PermissionManager>(),
+            _serviceProvider.GetRequiredService<GroupManager>()
         );
-
     }
 
     public void RunCommand(string? command)
@@ -110,4 +108,24 @@ public partial class ScriptInstance
     }
 
     public string Resolve(params string[] paths) => PluginManager.Resolve(_jsPlugin, paths);
+
+    public long SetTimeout(Function function, long milliseconds, params JsValue[] args)
+    {
+        return _jsPlugin.TimerFactory.SetTimeout(function, milliseconds, args);
+    }
+
+    public long SetInterval(Function function, long milliseconds, params JsValue[] args)
+    {
+        return _jsPlugin.TimerFactory.SetInterval(function, milliseconds, args);
+    }
+
+    public void ClearTimeout(long id)
+    {
+        _jsPlugin.TimerFactory.ClearTimeout(id);
+    }
+
+    public void ClearInterval(long id)
+    {
+        _jsPlugin.TimerFactory.ClearInterval(id);
+    }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using Serein.Core.Services.Permissions;
 
 namespace Serein.Core.Services.Plugins.Js.Modules;

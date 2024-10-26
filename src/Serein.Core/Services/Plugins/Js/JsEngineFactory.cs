@@ -5,11 +5,10 @@ using System.Linq;
 using System.Reflection;
 
 using Jint;
+using Jint.Native;
 using Jint.Runtime.Interop;
 
 using Microsoft.Extensions.Logging;
-
-using MineStatLib;
 
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
@@ -36,7 +35,8 @@ public class JsEngineFactory(
 
     private Options CreateOptions(JsPlugin jsPlugin)
     {
-        var assemblies = new List<Assembly>();
+        var assemblies = new List<Assembly> { typeof(System.Console).Assembly };
+
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
                 _settingProvider.Value.Application.JSGlobalAssemblies
@@ -54,7 +54,12 @@ public class JsEngineFactory(
                     jsPlugin.Info.Name,
                     $"加载所需程序集“{assemblyName}”时出现异常：\n" + e.Message
                 );
-                _logger.LogDebug(e, "[{}] 加载所需程序集“{}”时出现异常", jsPlugin.Info.Name, assemblyName);
+                _logger.LogDebug(
+                    e,
+                    "[{}] 加载所需程序集“{}”时出现异常",
+                    jsPlugin.Info.Name,
+                    assemblyName
+                );
             }
         }
 
@@ -63,22 +68,21 @@ public class JsEngineFactory(
             Modules = { RegisterRequire = true },
             Interop =
             {
+                Enabled = true,
                 AllowGetType = jsPlugin.Config.AllowGetType,
                 AllowOperatorOverloading = jsPlugin.Config.AllowOperatorOverloading,
                 AllowSystemReflection = jsPlugin.Config.AllowSystemReflection,
                 AllowWrite = jsPlugin.Config.AllowWrite,
                 AllowedAssemblies = assemblies,
-                ExceptionHandler = (_) => true
+                ExceptionHandler = (_) => true,
             },
             StringCompilationAllowed = jsPlugin.Config.StringCompilationAllowed,
-            Strict = jsPlugin.Config.Strict
+            Strict = jsPlugin.Config.Strict,
         };
 
         cfg.CatchClrExceptions();
         cfg.CancellationToken(jsPlugin.CancellationToken);
-        cfg.EnableModules(
-            Path.GetFullPath(Path.GetDirectoryName(jsPlugin.FileName) ?? PathConstants.PluginsDirectory)
-        );
+        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginsDirectory));
 
         return cfg;
     }
@@ -92,17 +96,29 @@ public class JsEngineFactory(
         engine.SetValue("localStorage", _localStorage);
         engine.SetValue("sessionStorage", _sessionStorage);
 
+        engine.SetValue("window", JsValue.Undefined);
+        engine.SetValue("exports", JsValue.Undefined);
+
+        engine.SetValue("__filename", Path.GetFullPath(jsPlugin.FileName));
+        engine.SetValue("__dirname", Path.GetDirectoryName(Path.GetFullPath(jsPlugin.FileName)));
+
+        engine.SetValue("setTimeout", jsPlugin.TimerFactory.SetTimeout);
+        engine.SetValue("setInterval", jsPlugin.TimerFactory.SetInterval);
+        engine.SetValue("clearTimeout", jsPlugin.TimerFactory.ClearTimeout);
+        engine.SetValue("clearInterval", jsPlugin.TimerFactory.ClearInterval);
+
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<MatchFieldType>();
         AddTypeReference<Match>();
         AddTypeReference<Schedule>();
+        AddTypeReference<AppType>();
 
         return engine;
 
         void AddTypeReference<T>()
         {
-            engine.SetValue(typeof(T).ToString(), TypeReference.CreateTypeReference<T>(engine));
+            engine.SetValue(typeof(T).Name, TypeReference.CreateTypeReference<T>(engine));
         }
     }
 }

@@ -68,7 +68,7 @@ public class ServerSwitcher(
                 "添加更多服务器配置后，你可以用\"server switch <id>\"选择要进行操作的服务器"
             );
 
-            CurrentId = _serverManager.Servers.First().Key;
+            SwitchTo( _serverManager.Servers.First().Key);
         }
         else if (_serverManager.Servers.Count > 1)
         {
