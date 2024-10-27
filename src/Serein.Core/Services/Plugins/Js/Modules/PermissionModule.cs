@@ -13,10 +13,10 @@ public class PermissionModule(
 
     public GroupManager Groups { get; } = groupManager;
 
-    public string? this[string key] => _permissionManager.Permissions[key];
+    public string? this[string key] => _permissionManager.Nodes[key];
 
-    public void Register(string key, string? description = null) =>
-        _permissionManager.Register(_id, key, description);
+    public void Register(string node, string? description = null) =>
+        _permissionManager.Register(_id, node, description);
 
-    public void Unregister(string key) => _permissionManager.Unregister(_id, key);
+    public void Unregister(string node) => _permissionManager.Unregister(_id, node);
 }

@@ -40,8 +40,11 @@ public class TimerFactory
         });
     }
 
-    public long SetTimeout(JsValue function, long milliseconds, params JsValue[] args)
+    public long SetTimeout(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
+        if (jsValue is not Function function)
+            throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
+
         var timer = new Timer(milliseconds) { AutoReset = false };
         var id = _timeoutTimerId++;
         timer.Start();
@@ -62,8 +65,11 @@ public class TimerFactory
         }
     }
 
-    public long SetInterval(JsValue function, long milliseconds, params JsValue[] args)
+    public long SetInterval(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
+        if (jsValue is not Function function)
+            throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
+
         var timer = new Timer(milliseconds) { AutoReset = true };
         var id = _intervalTimerId++;
         timer.Start();
@@ -84,12 +90,9 @@ public class TimerFactory
         }
     }
 
-    private static void SafeCall(JsValue jsValue, params JsValue[] args)
+    private static void SafeCall(Function function, params JsValue[] args)
     {
         var entered = false;
-
-        if (jsValue is not Function function)
-            return;
 
         try
         {

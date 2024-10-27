@@ -18,7 +18,6 @@ using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Modules;
 using Serein.Core.Utils.Extensions;
-using Jint.Native.Function;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -108,24 +107,4 @@ public partial class ScriptInstance
     }
 
     public string Resolve(params string[] paths) => PluginManager.Resolve(_jsPlugin, paths);
-
-    public long SetTimeout(Function function, long milliseconds, params JsValue[] args)
-    {
-        return _jsPlugin.TimerFactory.SetTimeout(function, milliseconds, args);
-    }
-
-    public long SetInterval(Function function, long milliseconds, params JsValue[] args)
-    {
-        return _jsPlugin.TimerFactory.SetInterval(function, milliseconds, args);
-    }
-
-    public void ClearTimeout(long id)
-    {
-        _jsPlugin.TimerFactory.ClearTimeout(id);
-    }
-
-    public void ClearInterval(long id)
-    {
-        _jsPlugin.TimerFactory.ClearInterval(id);
-    }
 }

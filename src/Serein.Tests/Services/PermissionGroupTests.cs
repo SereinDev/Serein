@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
 
@@ -12,7 +11,7 @@ using Xunit;
 
 namespace Serein.Tests.Services;
 
-[Collection(nameof(SereinApp))]
+[Collection(nameof(Serein))]
 public class PermissionGroupTests : IDisposable
 {
     private readonly IHost _app;
@@ -22,7 +21,7 @@ public class PermissionGroupTests : IDisposable
 
     public PermissionGroupTests()
     {
-        _app = AppFactory.BuildNew();
+        _app = HostFactory.BuildNew();
         _app.StartAsync();
 
         _groupManager = _app.Services.GetRequiredService<GroupManager>();
@@ -100,13 +99,13 @@ public class PermissionGroupTests : IDisposable
         _groupManager.Add(nameof(ShouldWorkWithWildcard), new()
         {
             Members = [114514],
-            Permissions = new()
+            Nodes = new()
             {
                 [permissionKey] = true
             }
         });
 
-        var result = _groupManager.GetAllPermissions(114514);
+        var result = _groupManager.GetAllNodes(114514);
         Assert.Equal(result1, TryGet(result, nameof(PermissionGroupTests) + ".foo.foo"));
         Assert.Equal(result2, TryGet(result, nameof(PermissionGroupTests) + ".bar"));
     }
@@ -118,11 +117,11 @@ public class PermissionGroupTests : IDisposable
         {
             Members = [114514],
         });
-        _groupManager["everyone"].Permissions[nameof(PermissionGroupTests) + ".foo.bar"] = true;
+        _groupManager["everyone"].Nodes[nameof(PermissionGroupTests) + ".foo.bar"] = true;
 
         Assert.Equal(
             true,
-            TryGet(_groupManager.GetAllPermissions(114514), nameof(PermissionGroupTests) + ".foo.bar")
+            TryGet(_groupManager.GetAllNodes(114514), nameof(PermissionGroupTests) + ".foo.bar")
             );
     }
 
@@ -131,7 +130,7 @@ public class PermissionGroupTests : IDisposable
     {
         _groupManager.Add("1", new()
         {
-            Permissions =
+            Nodes =
             {
                 ["foo.bar"] = true
             }
@@ -144,7 +143,7 @@ public class PermissionGroupTests : IDisposable
 
         Assert.Equal(
             true,
-            TryGet(_groupManager.GetAllPermissions(114514), "foo.bar")
+            TryGet(_groupManager.GetAllNodes(114514), "foo.bar")
             );
     }
 
@@ -156,7 +155,7 @@ public class PermissionGroupTests : IDisposable
     {
         _groupManager.Add("1", new()
         {
-            Permissions =
+            Nodes =
             {
                 ["foo.bar"] = true
             },
@@ -165,7 +164,7 @@ public class PermissionGroupTests : IDisposable
         _groupManager.Add("2", new()
         {
             Members = [114514],
-            Permissions =
+            Nodes =
             {
                 ["foo.bar"] = false
             },
@@ -175,7 +174,7 @@ public class PermissionGroupTests : IDisposable
 
         Assert.Equal(
             expected,
-            TryGet(_groupManager.GetAllPermissions(114514), "foo.bar")
+            TryGet(_groupManager.GetAllNodes(114514), "foo.bar")
             );
     }
 
@@ -184,7 +183,7 @@ public class PermissionGroupTests : IDisposable
     {
         _groupManager.Add("1", new()
         {
-            Permissions =
+            Nodes =
             {
                 ["a.b"] = true
             },
@@ -196,6 +195,6 @@ public class PermissionGroupTests : IDisposable
             Parents = ["1"]
         });
 
-        Assert.Equal(true, TryGet(_groupManager.GetAllPermissions(114514), "a.b"));
+        Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "a.b"));
     }
 }

@@ -15,6 +15,7 @@ using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils;
+using Serein.Cli.Utils;
 
 namespace Serein.Cli.Services.Interaction;
 
@@ -52,8 +53,7 @@ public class InputLoopService(
     {
         if (
             !Console.IsInputRedirected
-            && !Environment.GetCommandLineArgs().Contains("--no-color")
-            && Environment.GetEnvironmentVariable("SEREIN_NO_COLOR") is null
+            && CliConsole.IsColorful
         )
         {
             var flag = false;

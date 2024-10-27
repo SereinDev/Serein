@@ -87,7 +87,6 @@ public class Matcher(
             foreach (var match in _matchesProvider.Value)
             {
                 if (
-                    // 基础
                     string.IsNullOrEmpty(messagePacket.RawMessage)
                     || string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
@@ -97,9 +96,7 @@ public class Matcher(
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
-                    // 权限
                     || match.RequireAdmin && !IsFromAdmin(messagePacket)
-                    // 类型
                     || !(
                         match.FieldType == MatchFieldType.SelfMsg
                             && messagePacket.SelfId == messagePacket.UserId

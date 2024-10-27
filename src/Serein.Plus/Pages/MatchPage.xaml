@@ -76,6 +76,14 @@
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="打开变量文档"
+                        Tag="OpenVariablesDoc">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 
@@ -85,7 +93,7 @@
                 <DataGridTextColumn Binding="{Binding Command}" Header="命令" />
                 <DataGridTextColumn Binding="{Binding Description}" Header="描述" />
                 <DataGridCheckBoxColumn Binding="{Binding RequireAdmin}" Header="需要管理权限" />
-                <DataGridTextColumn Binding="{Binding Exclusions}" Header="限制参数" />
+                <DataGridTextColumn Binding="{Binding Exclusions}" Header="排除" />
             </DataGrid.Columns>
         </DataGrid>
 

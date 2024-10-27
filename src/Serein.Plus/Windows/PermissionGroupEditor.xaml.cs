@@ -43,13 +43,13 @@ public partial class PermissionGroupEditor : Window
         foreach (var userId in Group.Members)
             MemberListView.Items.Add(userId);
 
-        foreach ((var key, var value) in group.Permissions)
+        foreach ((var key, var value) in group.Nodes)
             PermissionListView.Items.Add(
                 new PermissionItemViewModel
                 {
                     Value = value,
-                    Key = key,
-                    Description = _permissionManager.Permissions.TryGetValue(
+                    Node = key,
+                    Description = _permissionManager.Nodes.TryGetValue(
                         key,
                         out var description
                     )
@@ -124,11 +124,11 @@ public partial class PermissionGroupEditor : Window
                                         PermissionListView.Items.Add(
                                             new PermissionItemViewModel
                                             {
-                                                Key = dialog1.PermissionKey,
+                                                Node = dialog1.Node,
                                                 Value = dialog1.Value,
                                                 Description =
-                                                    _permissionManager.Permissions.TryGetValue(
-                                                        dialog1.PermissionKey,
+                                                    _permissionManager.Nodes.TryGetValue(
+                                                        dialog1.Node,
                                                         out var description
                                                     )
                                                         ? description
@@ -146,7 +146,7 @@ public partial class PermissionGroupEditor : Window
 
                 var dialog2 = new PermissionEditorDialog(
                     _permissionManager,
-                    viewModel.Key,
+                    viewModel.Node,
                     viewModel.Value
                 );
                 dialog2
@@ -157,9 +157,9 @@ public partial class PermissionGroupEditor : Window
                             if (task.Result == ContentDialogResult.Primary)
                             {
                                 viewModel.Value = dialog2.Value;
-                                viewModel.Key = dialog2.PermissionKey;
-                                viewModel.Description = _permissionManager.Permissions.TryGetValue(
-                                    dialog2.PermissionKey,
+                                viewModel.Node = dialog2.Node;
+                                viewModel.Description = _permissionManager.Nodes.TryGetValue(
+                                    dialog2.Node,
                                     out var description
                                 )
                                     ? description
@@ -173,7 +173,7 @@ public partial class PermissionGroupEditor : Window
                 if (PermissionListView.SelectedIndex >= 0)
                     DialogHelper
                         .ShowDeleteConfirmation(
-                            $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Key}\"吗？"
+                            $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
                         )
                         .ContinueWith(
                             (task) =>
@@ -204,9 +204,9 @@ public partial class PermissionGroupEditor : Window
 
             var dict = new Dictionary<string, bool?>();
             foreach (var item in PermissionListView.Items.OfType<PermissionItemViewModel>())
-                if (!string.IsNullOrEmpty(item.Key))
-                    dict.TryAdd(item.Key, item.Value);
-            Group.Permissions = dict;
+                if (!string.IsNullOrEmpty(item.Node))
+                    dict.TryAdd(item.Node, item.Value);
+            Group.Nodes = dict;
             DialogResult = true;
             Close();
         }

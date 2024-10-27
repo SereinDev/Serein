@@ -7,7 +7,9 @@ namespace Serein.Cli.Utils;
 
 public static class CliConsole
 {
-    public static bool IsColorful { get; } = !Environment.GetCommandLineArgs().Contains("--no-color");
+    public static bool IsColorful { get; } =
+        !Environment.GetCommandLineArgs().Contains("--no-color")
+        && Environment.GetEnvironmentVariable("SEREIN_NO_COLOR") is null;
 
     public static void WriteLine(LogLevel logLevel, string line)
     {
@@ -19,14 +21,18 @@ public static class CliConsole
 
             case LogLevel.Debug:
                 if (IsColorful)
-                    Console.WriteLine($"\x1b[0m{DateTime.Now:T} \x1b[38;2;95;95;135mDebug\x1b[0m {line}");
+                    Console.WriteLine(
+                        $"\x1b[0m{DateTime.Now:T} \x1b[38;2;95;95;135mDebug\x1b[0m {line}"
+                    );
                 else
                     Console.WriteLine($"{DateTime.Now:T} Debug {line}");
                 break;
 
             case LogLevel.Information:
                 if (IsColorful)
-                    Console.WriteLine($"\x1b[0m{DateTime.Now:T} \x1b[38;2;95;175;175mInfo\x1b[0m {line}");
+                    Console.WriteLine(
+                        $"\x1b[0m{DateTime.Now:T} \x1b[38;2;95;175;175mInfo\x1b[0m {line}"
+                    );
                 else
                     Console.WriteLine($"{DateTime.Now:T} Info {line}");
                 break;

@@ -52,11 +52,11 @@ public partial class PermissionGroupEditor : Form
         PriorityNumericUpDown.Value = _group.Priority;
         ParentsTextBox.Text = string.Join("\r\n", _group.Parents);
 
-        foreach (var kv in _group.Permissions)
+        foreach (var kv in _group.Nodes)
         {
             var item = new ListViewItem(kv.Key) { Tag = kv };
 
-            if (_permissionManager.Permissions.TryGetValue(kv.Key, out var description))
+            if (_permissionManager.Nodes.TryGetValue(kv.Key, out var description))
                 item.SubItems.Add(description);
             else
                 item.SubItems.Add(string.Empty);
@@ -70,8 +70,8 @@ public partial class PermissionGroupEditor : Form
     {
         PermissionComboBox.Items.Clear();
 
-        lock (_permissionManager.Permissions)
-            foreach (var key in _permissionManager.Permissions.Keys)
+        lock (_permissionManager.Nodes)
+            foreach (var key in _permissionManager.Nodes.Keys)
                 PermissionComboBox.Items.Add(key);
     }
 
@@ -96,7 +96,7 @@ public partial class PermissionGroupEditor : Form
         {
             PermissionListView.SelectedItems[0].Text = PermissionComboBox.Text;
             PermissionListView.SelectedItems[0].SubItems[1].Text =
-                _permissionManager.Permissions.TryGetValue(
+                _permissionManager.Nodes.TryGetValue(
                     PermissionComboBox.Text,
                     out var description
                 )
@@ -163,7 +163,7 @@ public partial class PermissionGroupEditor : Form
                             _ => null
                         };
                 }
-                _group.Permissions = permissions;
+                _group.Nodes = permissions;
 
                 var list = new List<long>();
                 foreach (var item in MemberListView.Items)

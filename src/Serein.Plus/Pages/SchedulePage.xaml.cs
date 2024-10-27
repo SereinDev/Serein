@@ -106,6 +106,10 @@ public partial class SchedulePage : Page
                 UrlConstants.DocsSchedule.OpenInBrowser();
                 break;
 
+            case "OpenVariablesDoc":
+                UrlConstants.DocsVariables.OpenInBrowser();
+                break;
+
             case "Refresh":
                 _scheduleProvider.Read();
                 break;

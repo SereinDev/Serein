@@ -9,23 +9,23 @@ public partial class PermissionManager
     [GeneratedRegex(@"^([a-zA-Z][a-zA-Z0-9\-]*\.)*[a-zA-Z][a-zA-Z0-9\-]*$")]
     private static partial Regex GetKeyRegex();
 
-    private readonly Dictionary<string, string?> _permissions = [];
+    private readonly Dictionary<string, string?> _nodes = [];
 
-    public IReadOnlyDictionary<string, string?> Permissions => _permissions;
+    public IReadOnlyDictionary<string, string?> Nodes => _nodes;
 
-    public void Register(string id, string key, string? description = null)
+    public void Register(string id, string node, string? description = null)
     {
-        if (!GetKeyRegex().IsMatch(key))
-            throw new ArgumentException("权限键不合法", nameof(key));
+        if (!GetKeyRegex().IsMatch(node))
+            throw new ArgumentException("权限节点不合法", nameof(node));
 
-        _permissions.Add($"{id}.{key}", description);
+        _nodes.Add($"{id}.{node}", description);
     }
 
-    public void Unregister(string id, string key)
+    public void Unregister(string id, string node)
     {
-        if (!_permissions.Remove($"{id}.{key}"))
+        if (!_nodes.Remove($"{id}.{node}"))
             throw new KeyNotFoundException();
     }
 
-    internal void Clear() => _permissions.Clear();
+    internal void Clear() => _nodes.Clear();
 }

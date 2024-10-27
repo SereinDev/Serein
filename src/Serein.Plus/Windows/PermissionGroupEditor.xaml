@@ -153,8 +153,8 @@
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn
                                 Width="120"
-                                DisplayMemberBinding="{Binding Key}"
-                                Header="权限键名" />
+                                DisplayMemberBinding="{Binding Node}"
+                                Header="权限节点" />
 
                             <GridViewColumn
                                 Width="170"

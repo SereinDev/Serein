@@ -10,7 +10,7 @@ public class Group
 
     public int Priority { get; set; }
 
-    public Dictionary<string, bool?> Permissions { get; set; } = [];
+    public Dictionary<string, bool?> Nodes { get; set; } = [];
 
     public string[] Parents { get; set; } = [];
 

@@ -11,13 +11,13 @@ public partial class PermissionEditorDialog : ContentDialog
 {
     private readonly PermissionManager _permissionManager;
 
-    public string PermissionKey { get; set; }
+    public string Node { get; set; }
     public bool? Value { get; set; }
 
-    public PermissionEditorDialog(PermissionManager permissionManager, string? key = null, bool? value = null)
+    public PermissionEditorDialog(PermissionManager permissionManager, string? node = null, bool? value = null)
     {
         _permissionManager = permissionManager;
-        PermissionKey = key ?? string.Empty;
+        Node = node ?? string.Empty;
         Value = value;
         DataContext = this;
         InitializeComponent();
@@ -33,7 +33,7 @@ public partial class PermissionEditorDialog : ContentDialog
 
     private void Update()
     {
-        if (_permissionManager.Permissions.TryGetValue(PermissionKey, out var description))
+        if (_permissionManager.Nodes.TryGetValue(Node, out var description))
         {
             DescriptionTextBlock.Text = description;
             WarningInfoBar.IsOpen = false;
@@ -51,13 +51,13 @@ public partial class PermissionEditorDialog : ContentDialog
         Update();
 
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            sender.ItemsSource = _permissionManager.Permissions.Keys.Select((key) => key.Contains(PermissionKey));
+            sender.ItemsSource = _permissionManager.Nodes.Keys.Select((key) => key.Contains(Node));
     }
 
     private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
         if (args.ChosenSuggestion is not null)
-            PermissionKey = args.ChosenSuggestion.ToString() ?? string.Empty;
+            Node = args.ChosenSuggestion.ToString() ?? string.Empty;
     }
 
     private void ValueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

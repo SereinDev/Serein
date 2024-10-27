@@ -18,9 +18,9 @@
     mc:Ignorable="d">
     <StackPanel>
         <ui:AutoSuggestBox
-            ui:ControlHelper.Header="权限名"
+            ui:ControlHelper.Header="权限节点"
             QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-            Text="{Binding PermissionKey, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            Text="{Binding Node, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             TextChanged="AutoSuggestBox_TextChanged">
             <ui:AutoSuggestBox.QueryIcon>
                 <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Search}" />
@@ -29,7 +29,7 @@
         <TextBlock x:Name="DescriptionTextBlock" />
         <ui:InfoBar
             x:Name="WarningInfoBar"
-            Title="权限名无效"
+            Title="权限节点无效"
             Margin="0,10"
             IsClosable="False"
             IsOpen="True"

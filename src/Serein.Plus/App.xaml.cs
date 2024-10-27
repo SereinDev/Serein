@@ -9,6 +9,7 @@ using Ookii.Dialogs.Wpf;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
+using Serein.Core.Services;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Plus.Pages;
@@ -66,7 +67,9 @@ public partial class App : Application
             .AddSingleton<IPluginLogger, PluginLogger>()
             .AddSingleton<IConnectionLogger, ConnectionLogger>();
 
-        return builder.Build();
+        var app = builder.Build();
+        app.Services.GetRequiredService<SentryReporter>().Initialize();
+        return app;
     }
 
     private void Application_Startup(object sender, StartupEventArgs e)

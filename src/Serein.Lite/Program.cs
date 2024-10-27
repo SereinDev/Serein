@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core;
 using Serein.Core.Models.Output;
+using Serein.Core.Services;
 using Serein.Lite.Services.Loggers;
 using Serein.Lite.Ui;
 using Serein.Lite.Ui.Function;
@@ -46,6 +47,7 @@ public static class Program
             .AddSingleton<WebApiSettingPage>();
 
         Host = builder.Build();
+        Host.Services.GetRequiredService<SentryReporter>().Initialize();
     }
 
     [STAThread]

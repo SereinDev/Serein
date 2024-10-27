@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -109,6 +110,7 @@ public partial class PermissionGroupPage : Page
 
     private void GroupListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
-        RemoveMenuItem.IsEnabled = EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0;
+         EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count == 1;
+        RemoveMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0 && !GroupListView.SelectedItems.OfType<KeyValuePair<string , Group>>().Any((kv)=>kv.Key=="everyone");
     }
 }

@@ -84,7 +84,7 @@
             </ComboBox>
             <TextBox ui:ControlHelper.Header="命令" Text="{Binding Command}" />
             <TextBox ui:ControlHelper.Header="描述" Text="{Binding Description}" />
-            <TextBox ui:ControlHelper.Header="限制参数" Text="{Binding Exclusions}" />
+            <TextBox ui:ControlHelper.Header="排除" Text="{Binding Exclusions}" />
             <CheckBox
                 x:Name="RequireAdminCheckBox"
                 Content="需要管理权限"

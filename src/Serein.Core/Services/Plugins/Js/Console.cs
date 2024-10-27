@@ -1,5 +1,3 @@
-using System;
-
 using Jint.Native;
 
 using Microsoft.Extensions.Logging;
@@ -11,7 +9,7 @@ namespace Serein.Core.Services.Plugins.Js;
 public class Console(IPluginLogger logger, string title)
 {
     private readonly IPluginLogger _logger = logger;
-    private readonly string _title = title ?? throw new ArgumentNullException(nameof(title));
+    private readonly string _title = title;
 
     public void Log(params JsValue[] jsValues) => Info(jsValues);
 

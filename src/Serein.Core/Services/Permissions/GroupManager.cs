@@ -51,11 +51,11 @@ public partial class GroupManager(
         }
     }
 
-    public Dictionary<string, bool?> GetAllPermissions(long userId, bool ignoreWildcard = false)
+    public Dictionary<string, bool?> GetAllNodes(long userId, bool ignoreWildcard = false)
     {
         var result = new Dictionary<string, (int Priority, bool? Value)>();
         var visitedGroups = new HashSet<string>();
-        var allPermissions = _permissionManager.Permissions.Keys;
+        var nodes = _permissionManager.Nodes.Keys;
 
         lock (_permissionGroupProvider.Value)
         {
@@ -82,17 +82,17 @@ public partial class GroupManager(
                 if (_permissionGroupProvider.Value.TryGetValue(parent, out var parentGroup))
                     ProcessGroup(parent, parentGroup);
 
-            AddPermissionKeys(group.Priority, group.Permissions);
+            AddNodes(group.Priority, group.Nodes);
         }
 
-        void AddPermissionKeys(int priority, Dictionary<string, bool?> permissions)
+        void AddNodes(int priority, Dictionary<string, bool?> permissions)
         {
             foreach (var permission in permissions)
             {
                 if (!ignoreWildcard && permission.Key.EndsWith(".*"))
                 {
                     var keyWithoutWildcard = permission.Key[..^2];
-                    foreach (var key in allPermissions)
+                    foreach (var key in nodes)
                         if (key.StartsWith(keyWithoutWildcard))
                             CompareAndAdd(key, priority, permission.Value);
                 }
@@ -107,5 +107,4 @@ public partial class GroupManager(
                 result[key] = (priority, value);
         }
     }
-
 }

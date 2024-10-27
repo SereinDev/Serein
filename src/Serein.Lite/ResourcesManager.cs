@@ -3,6 +3,8 @@ using System.IO;
 
 using Microsoft.Extensions.Logging;
 
+using Sentry;
+
 namespace Serein.Lite;
 
 public class ResourcesManager(ILogger<ResourcesManager> logger)
@@ -31,6 +33,7 @@ public class ResourcesManager(ILogger<ResourcesManager> logger)
         catch (Exception e)
         {
             _logger.LogError(e, "写入控制台网页时出现异常");
+            SentrySdk.CaptureException(e);
         }
     }
 

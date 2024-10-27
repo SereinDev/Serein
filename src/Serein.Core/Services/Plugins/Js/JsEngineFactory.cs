@@ -33,7 +33,7 @@ public class JsEngineFactory(
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly ILogger _logger = logger;
 
-    private Options CreateOptions(JsPlugin jsPlugin)
+    private Options PrepareOptions(JsPlugin jsPlugin)
     {
         var assemblies = new List<Assembly> { typeof(System.Console).Assembly };
 
@@ -80,16 +80,15 @@ public class JsEngineFactory(
             Strict = jsPlugin.Config.Strict,
         };
 
-        cfg.CatchClrExceptions();
         cfg.CancellationToken(jsPlugin.CancellationToken);
-        cfg.EnableModules(Path.GetFullPath(PathConstants.PluginsDirectory));
+        cfg.EnableModules(Path.GetDirectoryName(Path.GetFullPath(jsPlugin.FileName))!, false);
 
         return cfg;
     }
 
     public Engine Create(JsPlugin jsPlugin)
     {
-        var engine = new Engine(CreateOptions(jsPlugin));
+        var engine = new Engine(PrepareOptions(jsPlugin));
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);

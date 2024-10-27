@@ -13,6 +13,7 @@ using Serein.Cli.Services.Loggers;
 using Serein.Cli.Utils;
 using Serein.Core;
 using Serein.Core.Models.Output;
+using Serein.Core.Services;
 using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Utils;
@@ -91,6 +92,7 @@ public static class Program
             .AddSingleton<IPluginLogger, PluginLogger>();
 
         var app = builder.Build();
+        app.Services.GetRequiredService<SentryReporter>().Initialize();
         var logger = app.Services.GetRequiredService<ILogger<SereinApp>>();
         var updateChecker = app.Services.GetRequiredService<UpdateChecker>();
         var serverSwitcher = app.Services.GetRequiredService<ServerSwitcher>();

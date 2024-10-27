@@ -10,7 +10,7 @@ using Serein.Tests.Loggers;
 
 namespace Serein.Tests;
 
-public static class AppFactory
+public static class HostFactory
 {
     private static readonly object Lock = new();
 

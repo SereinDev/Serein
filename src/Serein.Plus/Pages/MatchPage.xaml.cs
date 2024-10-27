@@ -104,6 +104,10 @@ public partial class MatchPage : Page
                 UrlConstants.DocsMatch.OpenInBrowser();
                 break;
 
+            case "OpenVariablesDoc":
+                UrlConstants.DocsVariables.OpenInBrowser();
+                break;
+
             case "Refresh":
                 _matchesProvider.Read();
                 break;

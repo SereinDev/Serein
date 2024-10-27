@@ -3,7 +3,7 @@
 namespace Serein.Plus.ViewModels;
 public class PermissionItemViewModel: NotifyPropertyChangedModelBase
 {
-    public string Key { get; set; } = string.Empty;
+    public string Node { get; set; } = string.Empty;
 
     public string? Description { get; set; }
 

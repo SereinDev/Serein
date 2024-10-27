@@ -30,13 +30,11 @@ public class PluginManager(
     PermissionManager permissionManager
 )
 {
-    private static readonly JsonSerializerOptions Options = new(JsonSerializerOptionsFactory.CamelCase)
-    {
-        Converters =
+    private static readonly JsonSerializerOptions Options =
+        new(JsonSerializerOptionsFactory.CamelCase)
         {
-            new JsonStringEnumConverter()
-        }
-    };
+            Converters = { new JsonStringEnumConverter() },
+        };
 
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
@@ -116,7 +114,11 @@ public class PluginManager(
                     )
                         throw new InvalidOperationException("插件Id重复");
 
-                    _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "正在加载");
+                    _pluginLogger.Log(
+                        LogLevel.Trace,
+                        string.Empty,
+                        $"\"{pluginInfo.Name}\"正在加载"
+                    );
 
                     if (pluginInfo.Type == PluginType.Js)
                         _jsPluginLoader.Load(pluginInfo, dir);
@@ -125,7 +127,11 @@ public class PluginManager(
                     else
                         throw new NotSupportedException("未指定插件类型");
 
-                    _pluginLogger.Log(LogLevel.Information, pluginInfo.Name, "加载成功并已启用");
+                    _pluginLogger.Log(
+                        LogLevel.Trace,
+                        string.Empty,
+                        $"\"{pluginInfo.Name}\"加载成功并已启用"
+                    );
                 }
                 catch (Exception e)
                 {

@@ -15,7 +15,7 @@ using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services;
 
-[Collection(nameof(SereinApp))]
+[Collection(nameof(Serein))]
 public class CommandParserTests : IDisposable
 {
     private readonly IHost _app;
@@ -23,7 +23,7 @@ public class CommandParserTests : IDisposable
 
     public CommandParserTests()
     {
-        _app = AppFactory.BuildNew();
+        _app = HostFactory.BuildNew();
         _app.StartAsync();
         _commandParser = _app.Services.GetRequiredService<Parser>();
     }

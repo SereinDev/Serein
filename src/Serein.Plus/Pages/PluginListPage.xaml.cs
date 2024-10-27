@@ -74,7 +74,7 @@ public partial class PluginListPage : Page
                     Task.Run(_pluginManager.Reload).ContinueWith((task) =>
                     {
                         if (task.IsFaulted && task.Exception is not null)
-                            _infoBarProvider.Enqueue("ÖØĞÂ¼ÓÔØ²å¼şÊ§°Ü", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
+                            _infoBarProvider.Enqueue("é‡æ–°åŠ è½½æ’ä»¶å¤±è´¥", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
                     });
                     break;
 
@@ -86,7 +86,7 @@ public partial class PluginListPage : Page
                     if (PluginListView.SelectedItem is  KeyValuePair<string , IPlugin> kv)
                     {
                        kv.Value.Disable();
-                        _infoBarProvider.Enqueue($"²å¼ş£¨Id={kv.Key}£©½ûÓÃ³É¹¦", string.Empty, InfoBarSeverity.Success);
+                        _infoBarProvider.Enqueue($"æ’ä»¶ï¼ˆId={kv.Key}ï¼‰ç¦ç”¨æˆåŠŸ", string.Empty, InfoBarSeverity.Success);
                     }
                     break;
             }
@@ -94,7 +94,7 @@ public partial class PluginListPage : Page
         catch (Exception ex)
         {
             if (tag == "Disable")
-                _infoBarProvider.Enqueue("½ûÓÃÊ§°Ü", ex.Message, InfoBarSeverity.Error);
+                _infoBarProvider.Enqueue("ç¦ç”¨å¤±è´¥", ex.Message, InfoBarSeverity.Error);
         }
     }
 

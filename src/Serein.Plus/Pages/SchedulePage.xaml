@@ -81,6 +81,14 @@
                             <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="打开变量文档"
+                        Tag="OpenVariablesDoc">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
 

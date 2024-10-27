@@ -313,7 +313,7 @@
             // 
             // columnHeader1
             // 
-            columnHeader1.Text = "权限名";
+            columnHeader1.Text = "权限节点";
             columnHeader1.Width = 350;
             // 
             // columnHeader2
@@ -401,7 +401,7 @@
             PermissionLabel.Name = "PermissionLabel";
             PermissionLabel.Size = new System.Drawing.Size(786, 31);
             PermissionLabel.TabIndex = 6;
-            PermissionLabel.Text = "权限名";
+            PermissionLabel.Text = "权限节点";
             ToolTip.SetToolTip(PermissionLabel, "支持通配符（*）");
             // 
             // ValueLabel
