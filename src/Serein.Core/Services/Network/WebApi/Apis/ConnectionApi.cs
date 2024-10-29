@@ -6,7 +6,7 @@ using EmbedIO.Routing;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public partial class ApiMap
+internal partial class ApiMap
 {
     [Route(HttpVerbs.Get, "/connection")]
     public async Task GetConnectionInfo()

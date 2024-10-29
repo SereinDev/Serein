@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Loggers;
 
-public class FileLogger(string categoryName, List<string> buffer) : ILogger
+internal class FileLogger(string categoryName, List<string> buffer) : ILogger
 {
     private readonly string _categoryName = categoryName;
     private readonly List<string> _buffer = buffer;

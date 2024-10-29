@@ -3,11 +3,16 @@ using System.Linq;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 
-namespace Serein.Core.Services.Plugins.Js.Modules;
+namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class ServerModule(ServerManager servers)
+public class ServerProperty
 {
-    private readonly ServerManager _serverManager = servers;
+    private readonly ServerManager _serverManager;
+
+    internal ServerProperty(ServerManager servers)
+    {
+        _serverManager = servers;
+    }
 
     public Server this[string id] => _serverManager.Servers[id];
 

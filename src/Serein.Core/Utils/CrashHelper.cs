@@ -2,12 +2,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Extensions.DependencyInjection;
-
-using Serein.Core.Models.Plugins;
-using Serein.Core.Services.Plugins;
 
 namespace Serein.Core.Utils;
 
@@ -18,7 +12,6 @@ public static class CrashHelper
         try
         {
             Directory.CreateDirectory(PathConstants.LogDirectory + "/crash");
-            Task.Run(Dispatch);
 
             var date = DateTime.Now;
             var fileName = PathConstants.LogDirectory + $"/crash/{date:yyyy-MM-dd}.log";
@@ -40,10 +33,5 @@ public static class CrashHelper
         }
         catch { }
         return string.Empty;
-    }
-
-    private static void Dispatch()
-    {
-        // SereinApp.Current?.Services.GetRequiredService<EventDispatcher>().Dispatch(Event.SereinCrashed);
     }
 }

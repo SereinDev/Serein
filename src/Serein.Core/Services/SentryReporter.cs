@@ -10,7 +10,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-public class SentryReporter(ILogger<SentryReporter> logger, SettingProvider settingProvider)
+internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider settingProvider)
 {
     private readonly ILogger _logger = logger;
     private readonly SettingProvider _settingProvider = settingProvider;

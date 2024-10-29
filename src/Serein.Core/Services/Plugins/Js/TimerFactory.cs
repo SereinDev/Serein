@@ -16,7 +16,7 @@ public class TimerFactory
     private readonly Dictionary<long, Timer> _timeoutTimers;
     private readonly Dictionary<long, Timer> _intervalTimers;
 
-    public TimerFactory(CancellationToken cancellationToken)
+    internal TimerFactory(CancellationToken cancellationToken)
     {
         _timeoutTimers = [];
         _intervalTimers = [];

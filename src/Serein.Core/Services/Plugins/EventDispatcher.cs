@@ -29,7 +29,7 @@ public class EventDispatcher(
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
 
-    public bool Dispatch(Event @event, params object[] args)
+    internal bool Dispatch(Event @event, params object[] args)
     {
         _logger.LogDebug("分发事件：{}", @event);
 

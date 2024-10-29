@@ -12,7 +12,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public partial class ApiMap
+internal partial class ApiMap
 {
     [Route(HttpVerbs.Get, "/servers")]
     public async Task GetServers()

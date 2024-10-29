@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.WebApi;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 
@@ -26,6 +28,7 @@ public class CoreService : IHostedService
         SettingProvider settingProvider,
         ServerManager serverManager,
         UpdateChecker updateChecker,
+        EventDispatcher eventDispatcher,
         HttpServer httpServer
 )
     {
@@ -45,6 +48,8 @@ public class CoreService : IHostedService
         _logger.LogDebug("版本：{}", SereinApp.FullVersion);
         _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());
         _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
+
+        AppDomain.CurrentDomain.UnhandledException += (_, _) => eventDispatcher.Dispatch(Event.SereinCrashed);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

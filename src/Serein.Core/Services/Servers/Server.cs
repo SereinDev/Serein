@@ -56,7 +56,7 @@ public class Server
     public event EventHandler? ServerStatusChanged;
     public event EventHandler<ServerOutputEventArgs>? ServerOutput;
 
-    public Server(
+    internal Server(
         string id,
         Matcher matcher,
         ILogger<Server> logger,

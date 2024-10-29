@@ -19,7 +19,11 @@ using MS = Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-public class HttpServer(IServiceProvider serviceProvider, ILogger<HttpServer> logger, SettingProvider settingProvider)
+public class HttpServer(
+    IServiceProvider serviceProvider,
+    ILogger<HttpServer> logger,
+    SettingProvider settingProvider
+)
 {
     static HttpServer()
     {

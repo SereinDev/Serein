@@ -16,7 +16,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-public class BroadcastWebSocketModule : WebSocketModule
+internal class BroadcastWebSocketModule : WebSocketModule
 {
     private readonly ServerManager _serverManager;
     private readonly SettingProvider _settingProvider;

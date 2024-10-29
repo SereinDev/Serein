@@ -15,7 +15,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public partial class ApiMap(
+internal partial class ApiMap(
     HardwareInfoProvider hardwareInfoProvider,
     ServerManager serverManager,
     SettingProvider settingProvider,

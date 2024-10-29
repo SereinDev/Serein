@@ -3,11 +3,16 @@ using System;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 
-namespace Serein.Core.Services.Plugins.Js.Modules;
+namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class ConnectionModule(WsConnectionManager wsConnectionManager)
+public class ConnectionProperty
 {
-    private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
+    private readonly WsConnectionManager _wsConnectionManager;
+
+    internal ConnectionProperty(WsConnectionManager wsConnectionManager)
+    {
+        _wsConnectionManager = wsConnectionManager;
+    }
 
     public bool Active => _wsConnectionManager.Active;
 

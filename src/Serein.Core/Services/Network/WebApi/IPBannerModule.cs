@@ -8,7 +8,7 @@ using Serein.Core.Services.Network.WebApi.Apis;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-public class IPBannerModule : IPBanningModule
+internal class IPBannerModule : IPBanningModule
 {
     public IPBannerModule(SettingProvider settingProvider)
         : base("/")

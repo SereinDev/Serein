@@ -4,12 +4,19 @@ using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
 
-namespace Serein.Core.Services.Plugins.Js;
+namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class Console(IPluginLogger logger, string title)
+public class Console
 {
-    private readonly IPluginLogger _logger = logger;
-    private readonly string _title = title;
+    private readonly IPluginLogger _logger;
+    private readonly string _title;
+
+    internal Console(IPluginLogger logger, string title)
+    {
+        _logger = logger;
+        _title = title;
+    }
+
 
     public void Log(params JsValue[] jsValues) => Info(jsValues);
 

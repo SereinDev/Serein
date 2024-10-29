@@ -9,7 +9,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner commandRunner)
+internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner commandRunner)
     : IHostedService
 {
     private readonly ScheduleProvider _scheduleProvider = scheduleProvider;

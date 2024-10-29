@@ -38,21 +38,29 @@ public class ConnectionLogger(ILogger<ConnectionLogger> logger, IServiceProvider
 
     public void LogReceivedData(string data)
     {
-        _connectionPage.Value.Console.AppendReceivedMsgLine(data);
+        _connectionPage.Value.Dispatcher.Invoke(
+            () => _connectionPage.Value.Console.AppendReceivedMsgLine(data)
+        );
     }
 
     public void LogReceivedMessage(string line)
     {
-        _connectionPage.Value.Console.AppendReceivedMsgLine(line);
+        _connectionPage.Value.Dispatcher.Invoke(
+            () => _connectionPage.Value.Console.AppendReceivedMsgLine(line)
+        );
     }
 
     public void LogSentData(string data)
     {
-        _connectionPage.Value.Console.AppendSentMsgLine(data);
+        _connectionPage.Value.Dispatcher.Invoke(
+            () => _connectionPage.Value.Console.AppendSentMsgLine(data)
+        );
     }
 
     public void LogSentPacket(string line)
     {
-        _connectionPage.Value.Console.AppendSentMsgLine(line);
+        _connectionPage.Value.Dispatcher.Invoke(
+            () => _connectionPage.Value.Console.AppendSentMsgLine(line)
+        );
     }
 }

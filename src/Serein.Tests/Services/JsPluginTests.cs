@@ -55,7 +55,7 @@ public class JsPluginTests : IDisposable
     [Fact]
     public async Task ShouldAccessToBuiltInProperties()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "1.js"), "");
+        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "2.js"), "");
 
         await _host.StartAsync();
         await Task.Delay(500);
@@ -71,7 +71,7 @@ public class JsPluginTests : IDisposable
     [Fact]
     public async Task ShouldAccessToClrType()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "1.js"), "");
+        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "3.js"), "");
 
         await _host.StartAsync();
         await Task.Delay(500);
@@ -84,7 +84,7 @@ public class JsPluginTests : IDisposable
     [Fact]
     public async Task ShouldAccessToClrMethod()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "1.js"), "");
+        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "4.js"), "");
 
         await _host.StartAsync();
         await Task.Delay(500);

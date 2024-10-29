@@ -15,7 +15,6 @@ using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Storages;
-using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -86,7 +85,7 @@ public class JsEngineFactory(
         return cfg;
     }
 
-    public Engine Create(JsPlugin jsPlugin)
+    internal Engine Create(JsPlugin jsPlugin)
     {
         var engine = new Engine(PrepareOptions(jsPlugin));
 

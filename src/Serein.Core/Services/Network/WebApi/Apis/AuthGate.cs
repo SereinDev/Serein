@@ -7,7 +7,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
-public class AuthGate(SettingProvider settingProvider) : WebModuleBase("/")
+internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/")
 {
     private readonly SettingProvider _settingProvider = settingProvider;
 

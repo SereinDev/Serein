@@ -20,13 +20,13 @@ public class ReactionTrigger(
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
 
-    public Task TriggerAsync(
+    internal Task TriggerAsync(
         ReactionType type,
         ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
     ) => Task.Run(() => Trigger(type, target, variables));
 
-    public void Trigger(
+    internal void Trigger(
         ReactionType type,
         ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null

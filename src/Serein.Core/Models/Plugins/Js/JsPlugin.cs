@@ -15,7 +15,7 @@ using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils.Extensions;
 
-using JsConsole = Serein.Core.Services.Plugins.Js.Console;
+using JsConsole = Serein.Core.Services.Plugins.Js.Properties.Console;
 
 namespace Serein.Core.Models.Plugins.Js;
 

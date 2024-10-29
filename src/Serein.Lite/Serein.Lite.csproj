@@ -6,6 +6,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
 
 

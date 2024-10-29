@@ -34,7 +34,7 @@ public class ServerPluginManager
     private readonly List<ServerPlugin> _plugins;
     private bool _updating;
 
-    public ServerPluginManager(Server server)
+    internal ServerPluginManager(Server server)
     {
         _server = server;
         _plugins = [];

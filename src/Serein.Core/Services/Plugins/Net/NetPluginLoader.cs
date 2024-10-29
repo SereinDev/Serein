@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Loader;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,13 +14,16 @@ using Serein.Core.Models.Plugins.Net;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-public class NetPluginLoader(IServiceProvider serviceProvider, ILogger<NetPluginLoader> logger, IPluginLogger pluginLogger)
-    : IPluginLoader<PluginBase>
+public class NetPluginLoader(
+    IServiceProvider serviceProvider,
+    ILogger<NetPluginLoader> logger,
+    IPluginLogger pluginLogger
+) : IPluginLoader<PluginBase>
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly ILogger<NetPluginLoader> _logger = logger;
     private readonly IPluginLogger _pluginLogger = pluginLogger;
-    private readonly List<WeakReference<AssemblyLoadContext>> _contexts = [];
+    private readonly List<WeakReference<PluginAssemblyLoadContext>> _contexts = [];
     public ConcurrentDictionary<string, PluginBase> NetPlugins { get; } = new();
     public IReadOnlyDictionary<string, PluginBase> Plugins => NetPlugins;
 
@@ -31,7 +33,9 @@ public class NetPluginLoader(IServiceProvider serviceProvider, ILogger<NetPlugin
 
         try
         {
-            var entry = Path.GetFullPath(Path.Join(dir, pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll")));
+            var entry = Path.GetFullPath(
+                Path.Join(dir, pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll"))
+            );
 
             if (!File.Exists(entry))
                 throw new FileNotFoundException("插件入口点文件不存在", entry);

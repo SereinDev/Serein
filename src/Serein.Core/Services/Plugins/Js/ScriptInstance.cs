@@ -7,7 +7,6 @@ using Jint.Native;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
@@ -16,8 +15,9 @@ using Serein.Core.Services.Commands;
 using Serein.Core.Services.Servers;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
-using Serein.Core.Services.Plugins.Js.Modules;
-using Serein.Core.Utils.Extensions;
+using Serein.Core.Services.Plugins.Js.Properties;
+
+using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -26,31 +26,28 @@ public partial class ScriptInstance
     private readonly IServiceProvider _serviceProvider;
     private readonly JsPlugin _jsPlugin;
     private readonly SettingProvider _settingProvider;
-    private readonly CommandRunner _commandRunner;
     private readonly PluginManager _pluginManager;
     private readonly IPluginLogger _pluginLogger;
 
-    public PermissionModule Permissions { get; }
-    public ServerModule Servers { get; }
-    public ConnectionModule Connection { get; }
+    public PermissionProperty Permissions { get; }
+    public ServerProperty Servers { get; }
+    public ConnectionProperty Connection { get; }
+    public MetadataProperty Metadata { get; }
+    public CommandProperty Command { get; }
     public Console Console => _jsPlugin.Console;
     public Setting Setting => _settingProvider.Value;
-    public static string Version => SereinApp.Version;
-    public static string? FullVersion => SereinApp.FullVersion;
-    public static AppType Type => SereinApp.Type;
     public string Id => _jsPlugin.Info.Id;
 
-    public ScriptInstance(IServiceProvider serviceProvider, JsPlugin jsPlugin)
+    internal ScriptInstance(IServiceProvider serviceProvider, JsPlugin jsPlugin)
     {
         _serviceProvider = serviceProvider;
-
         _jsPlugin = jsPlugin;
-
         _settingProvider = _serviceProvider.GetRequiredService<SettingProvider>();
-        _commandRunner = _serviceProvider.GetRequiredService<CommandRunner>();
         _pluginManager = _serviceProvider.GetRequiredService<PluginManager>();
         _pluginLogger = _serviceProvider.GetRequiredService<IPluginLogger>();
 
+        Metadata = new();
+        Command = new(_pluginManager, _serviceProvider.GetRequiredService<CommandRunner>());
         Servers = new(_serviceProvider.GetRequiredService<ServerManager>());
         Connection = new(_serviceProvider.GetRequiredService<WsConnectionManager>());
         Permissions = new(
@@ -59,18 +56,6 @@ public partial class ScriptInstance
             _serviceProvider.GetRequiredService<GroupManager>()
         );
     }
-
-    public void RunCommand(string? command)
-    {
-        _commandRunner.RunAsync(CommandParser.Parse(CommandOrigin.Plugin, command)).Await();
-    }
-
-#pragma warning disable CA1822
-    public Command ParseCommand(string? command)
-    {
-        return CommandParser.Parse(CommandOrigin.Plugin, command);
-    }
-#pragma warning restore CA1822
 
     public void Log(params JsValue[] jsValues)
     {
@@ -104,6 +89,14 @@ public partial class ScriptInstance
             || !_pluginManager.ExportedVariables.TryGetValue(name, out object? o)
             ? JsValue.Undefined
             : JsValue.FromObject(_jsPlugin.Engine, o);
+    }
+
+    public object GetService(string type)
+    {
+        var t = Type.GetType(type);
+        return t?.IsPublic == true
+            ? _serviceProvider.GetRequiredService(t)
+            : throw new InvalidOperationException("无法获取指定的类型");
     }
 
     public string Resolve(params string[] paths) => PluginManager.Resolve(_jsPlugin, paths);

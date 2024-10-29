@@ -10,7 +10,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Loggers;
 
-public class FileLoggerProvider : ILoggerProvider
+internal class FileLoggerProvider : ILoggerProvider
 {
     public static bool IsEnabled { get; } = Environment.GetCommandLineArgs().Contains("--log")
         || Environment.GetEnvironmentVariable("SEREIN_LOG") is not null;
