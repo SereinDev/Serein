@@ -20,5 +20,18 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Run tests
+        continue-on-error: true
         run: |
-          dotnet test ./src/Serein.Tests --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
+          dotnet test src/Serein.Tests
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./src/Serein.Tests/TestResults.trx
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        with:
+          name: Test Result
+          path: ./src/Serein.Tests/TestResults.trx
+          reporter: dotnet-trx

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +21,10 @@ public static class HostFactory
         {
             if (Directory.Exists(PathConstants.Root))
             {
-                Directory.Delete(PathConstants.Root, true);
-                Directory.CreateDirectory(PathConstants.Root);
+                Array.ForEach(
+                    Directory.GetFiles(PathConstants.Root, "*", SearchOption.AllDirectories),
+                    File.Delete
+                );
             }
 
             var builder = SereinAppBuilder.CreateBuilder();

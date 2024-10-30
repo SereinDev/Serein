@@ -25,7 +25,7 @@ public class Server
     [JsonIgnore]
     public string Id { get; }
     public RestartStatus RestartStatus { get; private set; }
-    public bool Status => _serverProcess is not null && _serverProcess.HasExited;
+    public bool Status => _serverProcess is not null && !_serverProcess.HasExited;
     public int? Pid => _serverProcess?.Id;
     public IServerInfo Info => _serverInfo;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
