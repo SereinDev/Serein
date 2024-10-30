@@ -75,7 +75,7 @@ public class InputLoopService(
                         _serverSwitcher.Value.CurrentId,
                         out var server
                     )
-                    && server.Status == ServerStatus.Running
+                    && server.Status
                 )
                 {
                     flag = true;
@@ -118,7 +118,7 @@ public class InputLoopService(
         if (!string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId))
             if (
                 _serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
-                && server.Status == ServerStatus.Running
+                && server.Status
             )
                 if (input.StartsWith(_settingProvider.Value.Application.CliCommandHeader))
                     input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];

@@ -12,6 +12,7 @@ public sealed class SereinApp
         .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
         ?.InformationalVersion;
     public static readonly AppType Type;
+    public static readonly bool IsDebugConfiguration;
 
     static SereinApp()
     {
@@ -22,5 +23,9 @@ public sealed class SereinApp
             "Serein.Plus" => AppType.Plus,
             _ => AppType.Unknown,
         };
+
+#if DEBUG
+        IsDebugConfiguration = true;
+#endif
     }
 }

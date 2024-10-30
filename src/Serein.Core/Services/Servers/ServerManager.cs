@@ -92,7 +92,7 @@ public partial class ServerManager
         AppDomain.CurrentDomain.UnhandledException += (_, _) => Task.Run(OnCrash);
     }
 
-    public bool AnyRunning => _servers.Any(static (kv) => kv.Value.Status == ServerStatus.Running);
+    public bool AnyRunning => _servers.Any(static (kv) => kv.Value.Status);
 
     public Server Add(string id, Configuration configuration)
     {
@@ -120,7 +120,7 @@ public partial class ServerManager
     {
         ValidateId(id);
 
-        if (_servers.TryGetValue(id, out var server) && server.Status == ServerStatus.Running)
+        if (_servers.TryGetValue(id, out var server) && server.Status)
             throw new InvalidOperationException("服务器仍在运行中");
 
         if (!_servers.Remove(id) || server is null)
@@ -201,7 +201,7 @@ public partial class ServerManager
             {
                 if (
                     server.Configuration.AutoStopWhenCrashing
-                    && server.Status == ServerStatus.Running
+                    && server.Status
                 )
                     server.Stop();
             }

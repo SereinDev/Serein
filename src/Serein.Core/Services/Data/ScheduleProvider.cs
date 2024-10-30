@@ -51,7 +51,10 @@ public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"加载定时任务文件（{PathConstants.SchedulesFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"加载定时任务文件（{PathConstants.SchedulesFile}）时出现异常",
+                e
+            );
         }
     }
 
@@ -70,7 +73,10 @@ public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"保存定时任务文件（{PathConstants.SchedulesFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"保存定时任务文件（{PathConstants.SchedulesFile}）时出现异常",
+                e
+            );
         }
     }
 }

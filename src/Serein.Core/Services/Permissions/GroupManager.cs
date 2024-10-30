@@ -14,6 +14,7 @@ public partial class GroupManager(
 {
     [System.Text.RegularExpressions.GeneratedRegex(@"^\w{3,}$")]
     private static partial System.Text.RegularExpressions.Regex GetGroupIdRegex();
+
     private static readonly System.Text.RegularExpressions.Regex GroupIdRegex = GetGroupIdRegex();
 
     private readonly PermissionManager _permissionManager = permissionManager;

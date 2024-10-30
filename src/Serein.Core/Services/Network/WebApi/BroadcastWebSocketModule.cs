@@ -23,7 +23,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
     private readonly Dictionary<string, List<IWebSocketContext>> _clients = [];
 
     public BroadcastWebSocketModule(ServerManager serverManager, SettingProvider settingProvider)
-        : base("/broadcast", true)
+        : base("/ws/broadcast", true)
     {
         _serverManager = serverManager;
         _settingProvider = settingProvider;
@@ -51,8 +51,11 @@ internal class BroadcastWebSocketModule : WebSocketModule
         var auth = query.Get("token");
 
         if (
-            _settingProvider.Value.WebApi.AccessTokens.Length != 0 && (string.IsNullOrEmpty(auth)
-            || !_settingProvider.Value.WebApi.AccessTokens.Contains(auth))
+            _settingProvider.Value.WebApi.AccessTokens.Length != 0
+            && (
+                string.IsNullOrEmpty(auth)
+                || !_settingProvider.Value.WebApi.AccessTokens.Contains(auth)
+            )
         )
         {
             await context.WebSocket.CloseAsync();
@@ -111,7 +114,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
                 var payload = EncodingMap.UTF8.GetBytes(
                     JsonSerializer.Serialize(
                         new WebSocketBroadcastPacket(WebSocketBroadcastType.Removed),
-                    JsonSerializerOptionsFactory.CamelCase
+                        JsonSerializerOptionsFactory.CamelCase
                     )
                 );
 
@@ -160,11 +163,9 @@ internal class BroadcastWebSocketModule : WebSocketModule
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(
                     new WebSocketBroadcastPacket(
-                        server.Status switch
-                        {
-                            ServerStatus.Running => WebSocketBroadcastType.Started,
-                            _ => WebSocketBroadcastType.Stopped,
-                        }
+                        server.Status
+                            ? WebSocketBroadcastType.Started
+                            : WebSocketBroadcastType.Stopped
                     ),
                     JsonSerializerOptionsFactory.CamelCase
                 )

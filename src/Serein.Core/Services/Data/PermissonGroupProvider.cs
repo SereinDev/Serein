@@ -22,12 +22,15 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
     public void Reset()
     {
         Value.Clear();
-        Value.Add("everyone", new()
-        {
-            Name = "默认",
-            Description = "默认权限组",
-            Priority = int.MinValue
-        });
+        Value.Add(
+            "everyone",
+            new()
+            {
+                Name = "默认",
+                Description = "默认权限组",
+                Priority = int.MinValue,
+            }
+        );
     }
 
     public override Dictionary<string, Group> Value { get; }
@@ -38,7 +41,9 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
         {
             if (File.Exists(PathConstants.PermissionGroupsFile))
             {
-                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<Dictionary<string, Group>>>(
+                var wrapper = JsonSerializer.Deserialize<
+                    DataItemWrapper<Dictionary<string, Group>>
+                >(
                     File.ReadAllText(PathConstants.PermissionGroupsFile),
                     JsonSerializerOptionsFactory.CamelCase
                 );
@@ -62,7 +67,10 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"加载权限组文件（{PathConstants.PermissionGroupsFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"加载权限组文件（{PathConstants.PermissionGroupsFile}）时出现异常",
+                e
+            );
         }
     }
 
@@ -81,7 +89,10 @@ public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"保存权限组文件（{PathConstants.PermissionGroupsFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"保存权限组文件（{PathConstants.PermissionGroupsFile}）时出现异常",
+                e
+            );
         }
     }
 }

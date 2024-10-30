@@ -33,7 +33,7 @@ public partial class Panel : UserControl
         {
             Invoke(UpdateInfoLabels);
 
-            if (_server.Status == ServerStatus.Running)
+            if (_server.Status)
             {
                 Invoke(ConsoleBrowser.ClearLines);
                 _timer.Start();
@@ -179,7 +179,7 @@ public partial class Panel : UserControl
 
     private void EnterCommand()
     {
-        if (_server.Status == ServerStatus.Running)
+        if (_server.Status)
         {
             _server.Input(InputTextBox.Text, fromUser: true);
             InputTextBox.Text = string.Empty;
@@ -188,20 +188,20 @@ public partial class Panel : UserControl
 
     private void UpdateInfoLabels()
     {
-        StatusDynamicLabel.Text = _server.Status == ServerStatus.Running ? "运行中" : "未启动";
+        StatusDynamicLabel.Text = _server.Status ? "运行中" : "未启动";
         VersionDynamicLabel.Text =
-            _server.Status == ServerStatus.Running ? _server.Info.Stat?.Version ?? "-" : "-";
+            _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
         PlayerCountDynamicLabel.Text =
-            _server.Status == ServerStatus.Running
+            _server.Status
                 ? $"{_server.Info.Stat?.CurrentPlayers}/{_server.Info.Stat?.MaximumPlayers}"
                 : "-";
         RunTimeDynamicLabel.Text =
-            _server.Status == ServerStatus.Running && _server.Info.StartTime is not null
+            _server.Status && _server.Info.StartTime is not null
                 ? (DateTime.Now - _server.Info.StartTime).ToCommonString()
                 : "-";
 
         CPUPercentDynamicLabel.Text =
-            _server.Status == ServerStatus.Running
+            _server.Status
                 ? _server.Info.CPUUsage.ToString("N2") + "%"
                 : "-";
     }

@@ -12,7 +12,8 @@ namespace Serein.Core.Services.Loggers;
 
 internal class FileLoggerProvider : ILoggerProvider
 {
-    public static bool IsEnabled { get; } = Environment.GetCommandLineArgs().Contains("--log")
+    public static bool IsEnabled { get; } =
+        Environment.GetCommandLineArgs().Contains("--log")
         || Environment.GetEnvironmentVariable("SEREIN_LOG") is not null;
     private readonly Dictionary<string, FileLogger> _loggers;
     private readonly List<string> _buffer;
@@ -55,7 +56,11 @@ internal class FileLoggerProvider : ILoggerProvider
         var id = 1;
         while (true)
         {
-            var path = string.Format(PathConstants.AppLogFile, DateTime.Now.ToString("yyyy-MM-dd"), id);
+            var path = string.Format(
+                PathConstants.AppLogFile,
+                DateTime.Now.ToString("yyyy-MM-dd"),
+                id
+            );
 
             if (!File.Exists(path))
                 return path;

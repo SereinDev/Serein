@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
@@ -62,7 +61,12 @@ public class JsPluginLoader(
         JsPlugin? jsPlugin = null;
         try
         {
-            jsPlugin = new JsPlugin(_serviceProvider, pluginInfo, entry, jsConfig ?? JsPluginConfig.Default);
+            jsPlugin = new JsPlugin(
+                _serviceProvider,
+                pluginInfo,
+                entry,
+                jsConfig ?? JsPluginConfig.Default
+            );
             jsPlugin.Execute(File.ReadAllText(entry));
         }
         finally
@@ -76,7 +80,11 @@ public class JsPluginLoader(
     {
         foreach (var file in Directory.GetFiles(PathConstants.PluginsDirectory, "*.js"))
         {
-            if (_settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile.Any(file.EndsWith))
+            if (
+                _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile.Any(
+                    file.EndsWith
+                )
+            )
                 continue;
 
             var name = Path.GetFileNameWithoutExtension(file);

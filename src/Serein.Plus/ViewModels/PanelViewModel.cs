@@ -1,13 +1,12 @@
 ﻿using System;
 
 using Serein.Core.Models;
-using Serein.Core.Models.Server;
 
 namespace Serein.Plus.ViewModels;
 
 public class PanelViewModel : NotifyPropertyChangedModelBase
 {
-    public ServerStatus Status { get; set; }
+    public bool Status { get; set; }
 
     public TimeSpan? RunTime { get; set; }
 

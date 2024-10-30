@@ -8,13 +8,18 @@
         <Trademark>Serein@Zaitonn</Trademark>
         <Company>https://github.com/SereinDev/Serein</Company>
     </PropertyGroup>
-    
+
     <PropertyGroup>
         <Nullable>enable</Nullable>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
         <NoWarn>$(NoWarn);CS1416</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>embedded</DebugType>
+        <Optimize>true</Optimize>
     </PropertyGroup>
 
 </Project>

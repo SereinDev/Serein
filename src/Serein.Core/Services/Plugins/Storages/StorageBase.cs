@@ -3,14 +3,10 @@ using System.Linq;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Utils;
-
 namespace Serein.Core.Services.Plugins.Storages;
 
 public abstract class StorageBase(ILogger logger)
 {
-    public const string Path = $"{PathConstants.PluginsDirectory}/{PathConstants.LocalStorageFileName}";
-
     protected readonly Dictionary<string, string> _data = [];
     protected readonly ILogger _logger = logger;
 

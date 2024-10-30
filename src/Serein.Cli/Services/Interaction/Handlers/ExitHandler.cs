@@ -27,7 +27,7 @@ public class ExitHandler(IHost host, ILogger<ExitHandler> logger, ServerManager 
             return;
         }
 
-        var servers = _serverManager.Servers.Where((kv) => kv.Value.Status == ServerStatus.Running);
+        var servers = _serverManager.Servers.Where((kv) => kv.Value.Status);
 
         _logger.LogError("当前还有以下{}个服务器未关闭", servers.Count());
         foreach (var kv in servers)

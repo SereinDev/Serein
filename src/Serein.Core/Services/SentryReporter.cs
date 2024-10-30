@@ -40,7 +40,5 @@ internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider se
         _logger.LogDebug("已启用Sentry");
 
         TaskScheduler.UnobservedTaskException += (_, e) => SentrySdk.CaptureException(e.Exception);
-        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
-            SentrySdk.CaptureException((Exception)e.ExceptionObject);
     }
 }

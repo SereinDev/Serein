@@ -45,14 +45,7 @@ public partial class CommandPromptCallbacks
             stringBuilder.AppendLine(kv.Value.Configuration.Name);
             stringBuilder.AppendLine();
             stringBuilder.AppendLine(
-                "状态："
-                    + kv.Value.Status switch
-                    {
-                        ServerStatus.Unknown => "未启动",
-                        ServerStatus.Running => "运行中",
-                        ServerStatus.Stopped => "已停止",
-                        _ => throw new NotSupportedException(),
-                    }
+                "状态：" + (kv.Value.Status ? "运行中" : "已停止")
             );
             stringBuilder.AppendLine(
                 "启动命令行："

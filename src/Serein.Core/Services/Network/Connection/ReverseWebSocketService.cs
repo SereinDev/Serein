@@ -23,7 +23,7 @@ public class ReverseWebSocketService : IConnectionService
 {
     private readonly IHost _host;
     private WebSocketServer? _server;
-    private readonly Dictionary<string, IWebSocketConnection> _webSockets = new();
+    private readonly Dictionary<string, IWebSocketConnection> _webSockets = [];
     private readonly SettingProvider _settingProvider;
 
     public ReverseWebSocketService(IHost host, SettingProvider settingProvider)

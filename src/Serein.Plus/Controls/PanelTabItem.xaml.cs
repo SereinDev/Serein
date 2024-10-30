@@ -196,7 +196,7 @@ public partial class PanelTabItem : TabItem
 
     private void OnServerStatusChanged(object? sender, EventArgs e)
     {
-        if (Server.Status == ServerStatus.Running)
+        if (Server.Status)
             Dispatcher.Invoke(Console.Clear);
 
         UpdateInfo();
@@ -206,7 +206,7 @@ public partial class PanelTabItem : TabItem
     {
         ViewModel.Status = Server.Status;
 
-        if (Server.Status == ServerStatus.Running)
+        if (Server.Status)
         {
             ViewModel.CPUUsage = Server.Info.CPUUsage;
             ViewModel.Version =

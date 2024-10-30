@@ -86,7 +86,7 @@ internal partial class ApiMap
         if (!_serverManager.Servers.TryGetValue(id, out var server))
             throw HttpException.NotFound("未找到指定的服务器");
 
-        if (server.Status != ServerStatus.Running)
+        if (!server.Status)
             throw HttpException.Forbidden("服务器未运行");
 
         foreach (var l in lines)
@@ -101,7 +101,7 @@ internal partial class ApiMap
         if (!_serverManager.Servers.TryGetValue(id, out var server))
             throw HttpException.NotFound("未找到指定的服务器");
 
-        if (server.Status != ServerStatus.Running)
+        if (!server.Status)
             throw HttpException.Forbidden("服务器未运行");
 
         foreach (

@@ -56,11 +56,13 @@ public static class ApiHelper
     private static async Task SendPacketAsync(this IHttpContext httpContext, ApiPacket packet) =>
         await SendApiPacketAsync(httpContext, packet);
 
-    public static async Task SendPacketAsync(this IHttpContext httpContext, HttpStatusCode statusCode = HttpStatusCode.OK)
+    public static async Task SendPacketAsync(
+        this IHttpContext httpContext,
+        HttpStatusCode statusCode = HttpStatusCode.OK
+    )
     {
         await httpContext.SendPacketAsync<object>(null, statusCode);
     }
-
 
     public static async Task SendPacketAsync<T>(
         this IHttpContext httpContext,
@@ -80,10 +82,11 @@ public static class ApiHelper
         await context.SendPacketAsync(
             new ApiPacket
             {
-                ErrorMsg = exception.Message
-                        ?? HttpStatusDescription.Get(exception.StatusCode)
-                        ?? "Unknown",
-                Code = exception.StatusCode
+                ErrorMsg =
+                    exception.Message
+                    ?? HttpStatusDescription.Get(exception.StatusCode)
+                    ?? "Unknown",
+                Code = exception.StatusCode,
             }
         );
     }
@@ -91,12 +94,10 @@ public static class ApiHelper
     public static async Task HandleException(IHttpContext context, Exception e)
     {
         if (e is InvalidOperationException ex)
-            await context.SendPacketAsync(
-                new ApiPacket { ErrorMsg = ex.Message, Code = 403 }
-            );
+            await context.SendPacketAsync(new ApiPacket { ErrorMsg = ex.Message, Code = 403 });
         else
             await context.SendPacketAsync(
-               new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
-           );
+                new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
+            );
     }
 }

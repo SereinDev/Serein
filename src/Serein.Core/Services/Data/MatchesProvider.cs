@@ -51,7 +51,10 @@ public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"加载匹配文件（{PathConstants.MatchesFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"加载匹配文件（{PathConstants.MatchesFile}）时出现异常",
+                e
+            );
         }
     }
 
@@ -70,7 +73,10 @@ public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"保存匹配文件（{PathConstants.MatchesFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"保存匹配文件（{PathConstants.MatchesFile}）时出现异常",
+                e
+            );
         }
     }
 }

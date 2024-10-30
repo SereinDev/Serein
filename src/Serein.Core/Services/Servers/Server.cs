@@ -22,25 +22,20 @@ namespace Serein.Core.Services.Servers;
 
 public class Server
 {
-    public ServerStatus Status =>
-        _serverProcess is null
-            ? ServerStatus.Unknown
-            : _serverProcess.HasExited
-                ? ServerStatus.Stopped
-                : ServerStatus.Running;
+    [JsonIgnore]
+    public string Id { get; }
+    public RestartStatus RestartStatus { get; private set; }
+    public bool Status => _serverProcess is not null && _serverProcess.HasExited;
     public int? Pid => _serverProcess?.Id;
     public IServerInfo Info => _serverInfo;
     public IReadOnlyList<string> CommandHistory => _commandHistory;
     public int CommandHistoryIndex { get; internal set; }
     public Configuration Configuration { get; }
     public ServerPluginManager PluginManager { get; }
-    [JsonIgnore]
-    public string Id { get; }
 
     private CancellationTokenSource? _restartCancellationTokenSource;
     private BinaryWriter? _inputWriter;
     private Process? _serverProcess;
-    private RestartStatus _restartStatus;
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
 
@@ -87,7 +82,7 @@ public class Server
     {
         _logger.LogDebug("Id={}: 请求启动", Id);
 
-        if (Status == ServerStatus.Running)
+        if (Status)
             throw new InvalidOperationException("服务器已在运行");
 
         if (string.IsNullOrEmpty(Configuration.FileName))
@@ -108,12 +103,12 @@ public class Server
                 StandardOutputEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
                 StandardErrorEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
                 WorkingDirectory = Path.GetDirectoryName(Configuration.FileName),
-                Arguments = Configuration.Argument
+                Arguments = Configuration.Argument,
             }
         );
         _serverProcess!.EnableRaisingEvents = true;
         _isTerminated = false;
-        _restartStatus = RestartStatus.None;
+        RestartStatus = RestartStatus.None;
         _serverInfo.OutputLines = 0;
         _serverInfo.InputLines = 0;
         _serverInfo.StartTime = _serverProcess.StartTime;
@@ -153,24 +148,31 @@ public class Server
         if (CancelRestart())
             return;
 
-        if (Status != ServerStatus.Running || _serverProcess is null)
+        if (!Status || _serverProcess is null)
             throw new InvalidOperationException("服务器未运行");
 
         if (!_eventDispatcher.Dispatch(Event.ServerStopping, Id))
             return;
 
         if (Configuration.StopCommands.Length == 0)
-            if (SereinApp.Type is AppType.Lite or AppType.Plus
+            if (
+                SereinApp.Type is AppType.Lite or AppType.Plus
                 && Environment.OSVersion.Platform == PlatformID.Win32NT
-                )
+            )
             {
                 ServerOutput?.Invoke(
                     this,
-                    new(ServerOutputType.Information, "当前未设置关服命令，将发送Ctrl+C事件作为替代")
-                    );
+                    new(
+                        ServerOutputType.Information,
+                        "当前未设置关服命令，将发送Ctrl+C事件作为替代"
+                    )
+                );
 
                 NativeMethods.AttachConsole((uint)_serverProcess.Id);
-                NativeMethods.GenerateConsoleCtrlEvent(NativeMethods.CtrlTypes.CTRL_C_EVENT, (uint)_serverProcess.Id);
+                NativeMethods.GenerateConsoleCtrlEvent(
+                    NativeMethods.CtrlTypes.CTRL_C_EVENT,
+                    (uint)_serverProcess.Id
+                );
                 NativeMethods.FreeConsole();
 
                 _logger.LogDebug("Id={}: 发送Ctrl+C事件", Id);
@@ -187,13 +189,13 @@ public class Server
 
     internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
     {
-        if (Status == ServerStatus.Running)
+        if (Status)
             Input(command, encodingType);
         else if (command == "start")
             Start();
         else if (command == "stop")
         {
-            _restartStatus = RestartStatus.None;
+            RestartStatus = RestartStatus.None;
             _restartCancellationTokenSource?.Cancel();
         }
     }
@@ -204,9 +206,15 @@ public class Server
         bool fromUser = false
     )
     {
-        _logger.LogDebug("Id={}: command='{}'; encodingType={}; fromUser={}", Id, command, encodingType, fromUser);
+        _logger.LogDebug(
+            "Id={}: command='{}'; encodingType={}; fromUser={}",
+            Id,
+            command,
+            encodingType,
+            fromUser
+        );
 
-        if (_inputWriter is null || Status != ServerStatus.Running)
+        if (_inputWriter is null || !Status)
             return;
 
         if (!_eventDispatcher.Dispatch(Event.ServerInput, Id, command))
@@ -217,17 +225,14 @@ public class Server
                 .GetEncoding(encodingType ?? Configuration.InputEncoding)
                 .GetBytes(
                     (Configuration.UseUnicodeChars ? command.ToUnicode() : command)
-                    + Configuration.LineTerminator
+                        + Configuration.LineTerminator
                 )
         );
         _inputWriter.Flush();
 
         _serverInfo.InputLines++;
 
-        if (
-            fromUser
-            && !string.IsNullOrEmpty(command)
-        )
+        if (fromUser && !string.IsNullOrEmpty(command))
         {
             if (
                 _commandHistory.Count > 0 && _commandHistory[^1] != command
@@ -248,12 +253,12 @@ public class Server
     {
         _logger.LogDebug("Id={}: 请求重启", Id);
 
-        if (_restartStatus != RestartStatus.None)
+        if (RestartStatus != RestartStatus.None)
             throw new InvalidOperationException("正在等待重启");
 
         Stop();
 
-        _restartStatus = RestartStatus.Waiting;
+        RestartStatus = RestartStatus.Waiting;
     }
 
     public void Terminate()
@@ -263,7 +268,7 @@ public class Server
         if (CancelRestart())
             return;
 
-        if (Status != ServerStatus.Running)
+        if (!Status)
             throw new InvalidOperationException("服务器未运行");
 
         _serverProcess?.Kill(true);
@@ -278,12 +283,18 @@ public class Server
 
         ServerOutput?.Invoke(
             this,
-            new(ServerOutputType.Information, $"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})")
+            new(
+                ServerOutputType.Information,
+                $"进程已退出，退出代码为 {exitCode} (0x{exitCode:x8})"
+            )
         );
 
         if (
-            _restartStatus == RestartStatus.Waiting
-            || _restartStatus == RestartStatus.None && exitCode != 0 && Configuration.AutoRestart && !_isTerminated
+            RestartStatus == RestartStatus.Waiting
+            || RestartStatus == RestartStatus.None
+                && exitCode != 0
+                && Configuration.AutoRestart
+                && !_isTerminated
         )
             Task.Run(WaitAndRestart);
 
@@ -322,7 +333,9 @@ public class Server
             return;
 
         if (
-            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(filtered.Contains)
+            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(
+                filtered.Contains
+            )
         )
         {
             _cache.Add(filtered);
@@ -336,14 +349,14 @@ public class Server
 
     private bool CancelRestart()
     {
-        if (_restartCancellationTokenSource is not null && !_restartCancellationTokenSource.IsCancellationRequested)
+        if (
+            _restartCancellationTokenSource is not null
+            && !_restartCancellationTokenSource.IsCancellationRequested
+        )
         {
             _restartCancellationTokenSource.Cancel();
             _logger.LogDebug("Id={}: 取消重启", Id);
-            ServerOutput?.Invoke(
-                  this,
-                  new(ServerOutputType.Information, "重启已取消")
-                  );
+            ServerOutput?.Invoke(this, new(ServerOutputType.Information, "重启已取消"));
             return true;
         }
 
@@ -352,31 +365,38 @@ public class Server
 
     private void WaitAndRestart()
     {
-        _restartStatus = RestartStatus.Preparing;
+        RestartStatus = RestartStatus.Preparing;
         _restartCancellationTokenSource = new();
 
         ServerOutput?.Invoke(
             this,
-            new(ServerOutputType.Information, $"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器")
+            new(
+                ServerOutputType.Information,
+                $"将在五秒后({DateTime.Now.AddSeconds(5):T})重启服务器"
+            )
         );
 
-        Task.Delay(5000, _restartCancellationTokenSource.Token).ContinueWith((task) =>
-        {
-            if (!task.IsCanceled)
-                try
+        Task.Delay(5000, _restartCancellationTokenSource.Token)
+            .ContinueWith(
+                (task) =>
                 {
-                    Start();
+                    RestartStatus = RestartStatus.None;
+                    if (!task.IsCanceled)
+                        try
+                        {
+                            Start();
+                        }
+                        catch (Exception e)
+                        {
+                            ServerOutput?.Invoke(this, new(ServerOutputType.Error, e.Message));
+                        }
                 }
-                catch (Exception e)
-                {
-                    ServerOutput?.Invoke(this, new(ServerOutputType.Error, e.Message));
-                }
-        });
+            );
     }
 
     private async Task UpdateInfo()
     {
-        if (Status != ServerStatus.Running || _serverProcess is null)
+        if (!Status|| _serverProcess is null)
         {
             _serverInfo.Argument = null;
             _serverInfo.FileName = null;
@@ -388,11 +408,12 @@ public class Server
             return;
         }
 
-        _serverInfo.CPUUsage =
-            (int)((_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
+        _serverInfo.CPUUsage = (int)(
+            (_serverProcess.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
             / 2000
             / Environment.ProcessorCount
-            * 100);
+            * 100
+        );
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
         if (Configuration.PortIPv4 >= 0)

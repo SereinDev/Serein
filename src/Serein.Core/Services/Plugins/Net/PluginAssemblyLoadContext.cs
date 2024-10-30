@@ -9,7 +9,8 @@ internal class PluginAssemblyLoadContext : AssemblyLoadContext
 {
     private readonly AssemblyDependencyResolver _resolver;
 
-    public PluginAssemblyLoadContext(string entry) : base(true)
+    public PluginAssemblyLoadContext(string entry)
+        : base(true)
     {
         var dir = Path.GetDirectoryName(entry)!;
         _resolver = new(entry);

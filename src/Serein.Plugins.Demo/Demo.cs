@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 using Serein.Core.Models.Plugins.Net;
 
-namespace Serein.Tests.Plugin;
+namespace Serein.Plugins.Demo;
 
-public class TestPlugin : PluginBase
+public class Demo : PluginBase
 {
-    public TestPlugin(IServiceProvider serviceProvider)
+    public Demo(IServiceProvider serviceProvider)
     {
         Call();
         Console.WriteLine(JsonConvert.DeserializeObject("{}"));

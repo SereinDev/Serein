@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -275,7 +274,7 @@ public partial class CommandParser(
                 {
                     "server.id" => server.Id,
                     "server.name" => server.Configuration.Name,
-                    "server.status" => server.Status == ServerStatus.Running ? "已启动" : "未启动",
+                    "server.status" => server.Status ? "已启动" : "未启动",
                     "server.usage" => server.Info.CPUUsage,
                     "server.output" => server.Info.OutputLines,
                     "server.input" => server.Info.InputLines,

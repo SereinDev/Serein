@@ -1,0 +1,13 @@
+{
+    "id": "serein-plugins-demo",
+    "name": "示例插件",
+    "version": "1.0.0",
+    "description": "这是一个示例插件",
+    "authors": [
+        {
+            "name": "Zaitonn"
+        }
+    ],
+    "type": "net",
+    "entryFile": "Serein.Plugins.Demo.dll"
+}

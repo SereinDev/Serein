@@ -17,7 +17,6 @@ public class Console
         _title = title;
     }
 
-
     public void Log(params JsValue[] jsValues) => Info(jsValues);
 
     public void Info(params JsValue[] jsValues)

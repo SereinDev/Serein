@@ -47,7 +47,7 @@ public class ServerSwitcher(
             CurrentId = id;
             _logger.LogInformation("成功选择到\"{}\"(Id={})", server.Configuration.Name, id);
 
-            if (server.Status == ServerStatus.Running)
+            if (server.Status)
             {
                 if (string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader))
                     _settingProvider.Value.Application.CliCommandHeader = "//";

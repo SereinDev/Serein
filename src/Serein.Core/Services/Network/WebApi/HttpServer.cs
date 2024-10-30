@@ -55,7 +55,7 @@ public class HttpServer(
         _webServer.WithModule(new AuthGate(_settingProvider));
         _webServer.WithModule(_serviceProvider.GetRequiredService<IPBannerModule>());
         _webServer.WithWebApi(
-            "/",
+            "/api",
             (module) =>
                 module
                     .HandleHttpException(ApiHelper.HandleHttpException)

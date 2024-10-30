@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 
 using Serein.Cli.Models;
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 
@@ -46,13 +45,7 @@ public class ServerHandler(
             {
                 stringBuilder.AppendLine($"▢ {kv.Value.Configuration.Name}");
                 stringBuilder.AppendLine($"  ▫ Id： {kv.Key}");
-                stringBuilder.AppendLine($"  ▫ 状态: " + kv.Value.Status switch
-                {
-                    ServerStatus.Running => "运行中",
-                    ServerStatus.Stopped => "已关闭",
-                    ServerStatus.Unknown => "未启动",
-                    _ => throw new NotSupportedException()
-                });
+                stringBuilder.AppendLine($"  ▫ 状态: " + (kv.Value.Status ? "运行中" : "已停止"));
                 stringBuilder.AppendLine(
                     "  ▫ 启动命令行："
                         + kv.Value.Configuration.FileName

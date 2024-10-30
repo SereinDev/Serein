@@ -38,7 +38,10 @@ public class SettingProvider : DataProviderBase<Setting>
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"加载设置文件（{PathConstants.SettingFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"加载设置文件（{PathConstants.SettingFile}）时出现异常",
+                e
+            );
         }
     }
 
@@ -47,16 +50,19 @@ public class SettingProvider : DataProviderBase<Setting>
         try
         {
             File.WriteAllText(
-            PathConstants.SettingFile,
-            JsonSerializer.Serialize(
-                DataItemWrapper.Wrap(Value),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                PathConstants.SettingFile,
+                JsonSerializer.Serialize(
+                    DataItemWrapper.Wrap(Value),
+                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
                 )
             );
         }
         catch (Exception e)
         {
-            throw new InvalidOperationException($"保存设置文件（{PathConstants.SettingFile}）时出现异常", e);
+            throw new InvalidOperationException(
+                $"保存设置文件（{PathConstants.SettingFile}）时出现异常",
+                e
+            );
         }
     }
 }

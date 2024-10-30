@@ -3,12 +3,15 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
+using Sentry;
+
 namespace Serein.Core.Utils;
 
 public static class CrashHelper
 {
     public static string CreateLog(Exception e)
     {
+        SentrySdk.CaptureException(e);
         try
         {
             Directory.CreateDirectory(PathConstants.LogDirectory + "/crash");
