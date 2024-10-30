@@ -7,6 +7,11 @@ on:
       - "**.cs"
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: write
+  checks: write
+
 jobs:
   test:
     runs-on: windows-latest
