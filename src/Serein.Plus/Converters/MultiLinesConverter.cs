@@ -12,7 +12,7 @@ public class MultiLinesConverter : IValueConverter
     {
         return value is IEnumerable<string> s
             ? string.Join("\r\n", s)
-            : throw new InvalidOperationException();
+            : throw new NotSupportedException();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,6 +24,6 @@ public class MultiLinesConverter : IValueConverter
                 )
                 .Select(v => v.Trim('\r'))
                 .ToArray()
-            : throw new InvalidOperationException();
+            : throw new NotSupportedException();
     }
 }

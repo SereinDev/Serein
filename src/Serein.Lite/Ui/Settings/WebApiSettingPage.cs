@@ -75,7 +75,7 @@ public partial class WebApiSettingPage : UserControl
         EnableCheckBox.DataBindings.Add(
            nameof(EnableCheckBox.Checked),
            _settingProvider.Value.WebApi,
-           nameof(WebApiSetting.Enable),
+           nameof(WebApiSetting.IsEnabled),
            false,
            DataSourceUpdateMode.OnPropertyChanged
         );

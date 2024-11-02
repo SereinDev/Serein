@@ -104,7 +104,7 @@ public class Matcher(
                             && messagePacket.MessageType == MessageType.Group
                         || match.FieldType == MatchFieldType.PrivateMsg
                             && messagePacket.MessageType == MessageType.Private)
-                    || !CheckExclusions(match, messagePacket)
+                    || CheckExclusions(match, messagePacket)
                 )
                     continue;
 
@@ -135,7 +135,7 @@ public class Matcher(
 
     private bool IsFromAdmin(MessagePacket messagePacket) =>
         _settingProvider.Value.Connection.Administrators.Contains(messagePacket.UserId)
-        || _settingProvider.Value.Connection.GivePermissionToAllAdmins
+        || _settingProvider.Value.Connection.GrantPermissionToOwnerAndAdmins
             && messagePacket.MessageType == MessageType.Group
             && messagePacket.Sender.Role != Role.Member;
 }

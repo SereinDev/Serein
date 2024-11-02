@@ -138,8 +138,8 @@ public partial class Panel : UserControl
         switch (e.KeyCode)
         {
             case Keys.Enter:
-                EnterCommand();
                 e.Handled = true;
+                EnterCommand();
                 break;
 
             case Keys.Up:

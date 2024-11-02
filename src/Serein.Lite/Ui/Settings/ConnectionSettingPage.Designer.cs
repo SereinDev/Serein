@@ -37,7 +37,7 @@
             System.Windows.Forms.ToolTip ToolTip;
             AdministratorsTextBox = new System.Windows.Forms.TextBox();
             GroupsTextBox = new System.Windows.Forms.TextBox();
-            GivePermissionToAllAdminsCheckBox = new System.Windows.Forms.CheckBox();
+            GrantPermissionToOwnerAndAdminsCheckBox = new System.Windows.Forms.CheckBox();
             SaveLogCheckBox = new System.Windows.Forms.CheckBox();
             AutoEscapeCheckBox = new System.Windows.Forms.CheckBox();
             OutputDataCheckBox = new System.Windows.Forms.CheckBox();
@@ -126,17 +126,17 @@
             ToolTip.SetToolTip(GroupsTextBox, "要监听的群聊Id（使用;分隔）");
             GroupsTextBox.TextChanged += GroupsTextBox_TextChanged;
             // 
-            // GivePermissionToAllAdminsCheckBox
+            // GrantPermissionToOwnerAndAdminsCheckBox
             // 
-            GivePermissionToAllAdminsCheckBox.AutoSize = true;
-            GivePermissionToAllAdminsCheckBox.Location = new System.Drawing.Point(21, 595);
-            GivePermissionToAllAdminsCheckBox.Name = "GivePermissionToAllAdminsCheckBox";
-            GivePermissionToAllAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
-            GivePermissionToAllAdminsCheckBox.TabIndex = 27;
-            GivePermissionToAllAdminsCheckBox.Text = "赋予所有群主和管理员管理权限";
-            ToolTip.SetToolTip(GivePermissionToAllAdminsCheckBox, "开启后监听群的群主和管理员有着和下方设置一样的管理权限");
-            GivePermissionToAllAdminsCheckBox.UseVisualStyleBackColor = true;
-            GivePermissionToAllAdminsCheckBox.Click += OnPropertyChanged;
+            GrantPermissionToOwnerAndAdminsCheckBox.AutoSize = true;
+            GrantPermissionToOwnerAndAdminsCheckBox.Location = new System.Drawing.Point(21, 595);
+            GrantPermissionToOwnerAndAdminsCheckBox.Name = "GrantPermissionToOwnerAndAdminsCheckBox";
+            GrantPermissionToOwnerAndAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
+            GrantPermissionToOwnerAndAdminsCheckBox.TabIndex = 27;
+            GrantPermissionToOwnerAndAdminsCheckBox.Text = "赋予所有群主和管理员管理权限";
+            ToolTip.SetToolTip(GrantPermissionToOwnerAndAdminsCheckBox, "开启后监听群的群主和管理员有着和下方设置一样的管理权限");
+            GrantPermissionToOwnerAndAdminsCheckBox.UseVisualStyleBackColor = true;
+            GrantPermissionToOwnerAndAdminsCheckBox.Click += OnPropertyChanged;
             // 
             // SaveLogCheckBox
             // 
@@ -243,7 +243,7 @@
             Controls.Add(AdministratorsLabel);
             Controls.Add(GroupsTextBox);
             Controls.Add(GroupsLabel);
-            Controls.Add(GivePermissionToAllAdminsCheckBox);
+            Controls.Add(GrantPermissionToOwnerAndAdminsCheckBox);
             Controls.Add(SaveLogCheckBox);
             Controls.Add(AutoEscapeCheckBox);
             Controls.Add(OutputDataCheckBox);
@@ -265,7 +265,7 @@
 
         private System.Windows.Forms.TextBox AdministratorsTextBox;
         private System.Windows.Forms.TextBox GroupsTextBox;
-        private System.Windows.Forms.CheckBox GivePermissionToAllAdminsCheckBox;
+        private System.Windows.Forms.CheckBox GrantPermissionToOwnerAndAdminsCheckBox;
         private System.Windows.Forms.CheckBox SaveLogCheckBox;
         private System.Windows.Forms.CheckBox AutoEscapeCheckBox;
         private System.Windows.Forms.CheckBox OutputDataCheckBox;

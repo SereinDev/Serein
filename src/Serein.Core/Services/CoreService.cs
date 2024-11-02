@@ -60,7 +60,7 @@ public class CoreService : IHostedService
             if (server.Configuration.StartWhenSettingUp)
                 Try(server.Start);
 
-        if (_settingProvider.Value.WebApi.Enable)
+        if (_settingProvider.Value.WebApi.IsEnabled)
             Try(_httpServer.Start);
 
         _logger.LogInformation("Serein启动成功！");

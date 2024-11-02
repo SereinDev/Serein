@@ -47,7 +47,7 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
     {
         try
         {
-            if (_settingProvider.Value.WebApi.Enable)
+            if (_settingProvider.Value.WebApi.IsEnabled)
             {
                 _httpServer.Start();
                 _infoBarProvider.Enqueue(
@@ -90,5 +90,6 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
         var dialog = new OpenFileDialog();
         if (dialog.ShowDialog() == true)
             _settingProvider.Value.WebApi.Certificate.Path = dialog.FileName;
+        OnPropertyChanged(sender, e);
     }
 }

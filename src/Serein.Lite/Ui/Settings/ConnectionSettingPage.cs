@@ -85,10 +85,10 @@ public partial class ConnectionSettingPage : UserControl
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        GivePermissionToAllAdminsCheckBox.DataBindings.Add(
-            nameof(GivePermissionToAllAdminsCheckBox.Checked),
+        GrantPermissionToOwnerAndAdminsCheckBox.DataBindings.Add(
+            nameof(GrantPermissionToOwnerAndAdminsCheckBox.Checked),
             _settingProvider.Value.Connection,
-            nameof(ConnectionSetting.GivePermissionToAllAdmins),
+            nameof(ConnectionSetting.GrantPermissionToOwnerAndAdmins),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );

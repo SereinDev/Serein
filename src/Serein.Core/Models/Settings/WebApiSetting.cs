@@ -2,7 +2,7 @@ namespace Serein.Core.Models.Settings;
 
 public class WebApiSetting : NotifyPropertyChangedModelBase
 {
-    public bool Enable { get; set; }
+    public bool IsEnabled { get; set; }
 
     public string[] UrlPrefixes { get; set; } = ["http://127.0.0.1:50000/"];
 

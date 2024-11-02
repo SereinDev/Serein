@@ -12,7 +12,7 @@ public class AuthorsConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value is Author[] authors 
-            ? (object)string.Join(',', authors.Select(author => author.Name)) 
+            ? string.Join(',', authors.Select(author => author.Name)) 
             : throw new NotSupportedException();
     }
 

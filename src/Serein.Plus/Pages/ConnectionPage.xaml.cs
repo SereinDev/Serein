@@ -19,10 +19,7 @@ public partial class ConnectionPage : Page
     private readonly WsConnectionManager _wsConnectionManager;
     private readonly Timer _timer;
 
-    public ConnectionPage(
-        InfoBarProvider infoBarProvider,
-        WsConnectionManager wsConnectionManager
-    )
+    public ConnectionPage(InfoBarProvider infoBarProvider, WsConnectionManager wsConnectionManager)
     {
         _timer = new(1000) { AutoReset = true, Enabled = true };
         _infoBarProvider = infoBarProvider;
@@ -43,7 +40,9 @@ public partial class ConnectionPage : Page
 
     private void UpdateTimeText()
     {
-        TimeTextBlock.Text = (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString() ?? "-";
+        TimeTextBlock.Text = _wsConnectionManager.Active
+            ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString() ?? "-"
+            : "-";
     }
 
     private void ControlButton_Click(object sender, RoutedEventArgs e)

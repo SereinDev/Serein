@@ -200,7 +200,12 @@ public class Server
         }
     }
 
-    public void Input(
+    public void Input(string command)
+    {
+        Input(command, null, false);
+    }
+
+    internal void Input(
         string command,
         EncodingMap.EncodingType? encodingType = null,
         bool fromUser = false
@@ -396,7 +401,7 @@ public class Server
 
     private async Task UpdateInfo()
     {
-        if (!Status|| _serverProcess is null)
+        if (!Status || _serverProcess is null)
         {
             _serverInfo.Argument = null;
             _serverInfo.FileName = null;

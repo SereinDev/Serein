@@ -26,7 +26,7 @@
             <CheckBox
                 Click="CheckBox_Click"
                 Content="启用"
-                IsChecked="{Binding Value.WebApi.Enable}" />
+                IsChecked="{Binding Value.WebApi.IsEnabled}" />
 
             <ui:InfoBar
                 Title="警告"
@@ -44,8 +44,8 @@
                 ui:ControlHelper.Header="Url前缀"
                 ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
+                LostFocus="OnPropertyChanged"
                 Text="{Binding Value.WebApi.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
-                TextChanged="OnPropertyChanged"
                 VerticalScrollBarVisibility="Visible">
                 <TextBox.ToolTip>
                     <sys:String xml:space="preserve">Http服务器监听的Url（一行一个）
@@ -77,16 +77,16 @@
                 ui:ControlHelper.Header="IP请求白名单"
                 ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
+                LostFocus="OnPropertyChanged"
                 Text="{Binding Value.WebApi.WhiteList, Converter={StaticResource multiLinesConverter}}"
-                TextChanged="OnPropertyChanged"
                 ToolTip="不会被封禁的IP列表（一行一个）"
                 VerticalScrollBarVisibility="Visible" />
             <TextBox
                 ui:ControlHelper.Header="访问凭证"
                 ui:ControlHelper.PlaceholderText="一行一个"
                 AcceptsReturn="True"
+                LostFocus="OnPropertyChanged"
                 Text="{Binding Value.WebApi.AccessTokens, Converter={StaticResource multiLinesConverter}}"
-                TextChanged="OnPropertyChanged"
                 VerticalScrollBarVisibility="Visible">
                 <TextBox.ToolTip>
                     <sys:String xml:space="preserve">Access Token（一行一个）
@@ -120,8 +120,8 @@
                 <TextBox
                     Margin="0"
                     ui:ControlHelper.Header="证书路径"
-                    Text="{Binding Value.WebApi.Certificate.Path}"
-                    TextChanged="OnPropertyChanged" />
+                    LostFocus="OnPropertyChanged"
+                    Text="{Binding Value.WebApi.Certificate.Path}" />
 
                 <Button
                     Grid.Column="1"

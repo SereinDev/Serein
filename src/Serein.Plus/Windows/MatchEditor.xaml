@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:Serein.Plus.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:validations="clr-namespace:Serein.Plus.Validations"
     Title="匹配编辑器"
     Width="400"
     Height="500"
@@ -69,7 +70,16 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="20,10">
-            <TextBox ui:ControlHelper.Header="正则表达式" Text="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox ui:ControlHelper.Header="正则表达式">
+                <TextBox.Text>
+                    <Binding Path="RegExp">
+                        <Binding.ValidationRules>
+                            <validations:NotEmptyValidationRule />
+                            <validations:RegexValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <ComboBox
                 Width="150"
                 ui:ControlHelper.Header="匹配域"
@@ -82,7 +92,16 @@
                 <ComboBoxItem Content="私聊消息" />
                 <ComboBoxItem Content="自身消息" />
             </ComboBox>
-            <TextBox ui:ControlHelper.Header="命令" Text="{Binding Command}" />
+            <TextBox ui:ControlHelper.Header="命令">
+                <TextBox.Text>
+                    <Binding Path="Command">
+                        <Binding.ValidationRules>
+                            <validations:CommandValidationRule />
+                            <validations:NotEmptyValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBox ui:ControlHelper.Header="描述" Text="{Binding Description}" />
             <TextBox ui:ControlHelper.Header="排除" Text="{Binding Exclusions}" />
             <CheckBox

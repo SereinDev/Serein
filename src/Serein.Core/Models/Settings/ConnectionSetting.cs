@@ -14,7 +14,7 @@ public class ConnectionSetting : NotifyPropertyChangedModelBase
 
     public bool OutputData { get; set; }
 
-    public bool GivePermissionToAllAdmins { get; set; }
+    public bool GrantPermissionToOwnerAndAdmins { get; set; }
 
     public long[] Groups { get; set; } = [];
 

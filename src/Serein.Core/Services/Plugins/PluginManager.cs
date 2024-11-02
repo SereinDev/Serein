@@ -197,7 +197,7 @@ public class PluginManager(
 
     public static string Resolve(IPlugin plugin, params string[] paths)
     {
-        var path = Path.Join(paths);
+        var path = Path.Combine(paths);
         return Path.IsPathRooted(path)
             ? path
             : Path.GetFullPath(Path.Join(Path.GetDirectoryName(plugin.FileName), path));

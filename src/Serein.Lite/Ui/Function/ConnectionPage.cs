@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;

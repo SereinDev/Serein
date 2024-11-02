@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Serein.Plus.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    xmlns:validations="clr-namespace:Serein.Plus.Validations"
     Title="定时任务编辑器"
     Width="400"
     Height="350"
@@ -68,16 +69,31 @@
 
         <StackPanel Grid.Row="1" Margin="20,0">
 
-            <TextBox
-                ui:ControlHelper.Header="Cron表达式"
-                Text="{Binding Expression, UpdateSourceTrigger=PropertyChanged}"
-                TextChanged="TextBox_TextChanged" />
+            <TextBox ui:ControlHelper.Header="Cron表达式" TextChanged="TextBox_TextChanged">
+                <TextBox.Text>
+                    <Binding Path="Expression" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validations:CronExpressionValidationRule />
+                            <validations:NotEmptyValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBlock
                 x:Name="PreviewTextBlock"
                 FontSize="13"
                 Foreground="Gray"
                 Text="{Binding NextTime, StringFormat=预计下一次执行：{0:f}, TargetNullValue=语法不正确, ConverterCulture=zh-CN}" />
-            <TextBox ui:ControlHelper.Header="命令" Text="{Binding Command}" />
+            <TextBox ui:ControlHelper.Header="命令">
+                <TextBox.Text>
+                    <Binding Path="Command">
+                        <Binding.ValidationRules>
+                            <validations:CommandValidationRule />
+                            <validations:NotEmptyValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBox ui:ControlHelper.Header="描述" Text="{Binding Description}" />
             <CheckBox Content="启用" IsChecked="{Binding IsEnabled}" />
 

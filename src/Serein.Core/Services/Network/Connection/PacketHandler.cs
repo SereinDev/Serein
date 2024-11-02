@@ -95,6 +95,12 @@ public class PacketHandler(
 
         if (
             packet.MessageType == MessageType.Group
+            && !_settingProvider.Value.Connection.Groups.Contains(packet.GroupId)
+        )
+            return;
+
+        if (
+            packet.MessageType == MessageType.Group
                 && !_eventDispatcher.Dispatch(Event.GroupMessageReceived, packet)
             || packet.MessageType == MessageType.Private
                 && !_eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)

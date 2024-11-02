@@ -29,19 +29,19 @@
                 ui:ControlHelper.Header="地址"
                 ui:ControlHelper.PlaceholderText="ws://..."
                 AcceptsReturn="False"
+                LostFocus="OnPropertyChanged"
                 Text="{Binding Value.Connection.Uri}"
-                TextChanged="OnPropertyChanged"
                 ToolTip="Websocket服务器的地址" />
             <PasswordBox
                 x:Name="AccessToken"
                 ui:ControlHelper.Header="鉴权凭证（Token）"
-                PasswordChanged="OnPasswordChanged"
+                LostFocus="OnPasswordChanged"
                 ToolTip="用于鉴权的Access-Token（可为空）" />
             <TextBox
                 ui:ControlHelper.Header="WebSocket子协议"
                 AcceptsReturn="True"
+                LostFocus="OnPropertyChanged"
                 Text="{Binding Value.Connection.SubProtocols, Converter={StaticResource multiLinesConverter}}"
-                TextChanged="OnPropertyChanged"
                 ToolTip="连接WebSocket时的子协议（仅正向WebSocket有效；一行一个）" />
             <CheckBox
                 Click="UseReverseWebSocket_Click"
@@ -81,17 +81,21 @@
             <CheckBox
                 Click="OnPropertyChanged"
                 Content="赋予所有群主和管理员管理权限"
-                IsChecked="{Binding Value.Connection.GivePermissionToAllAdmins}"
+                IsChecked="{Binding Value.Connection.GrantPermissionToOwnerAndAdmins}"
                 ToolTip="使监听群的群主和管理员与下面的管理权限列表中的用户拥有相同权限" />
             <TextBox
+                x:Name="GroupTextBox"
                 ui:ControlHelper.Header="监听群列表"
                 ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
                 AcceptsReturn="False"
+                LostFocus="GroupTextBox_LostFocus"
                 ToolTip="要监听消息的群聊" />
             <TextBox
+                x:Name="AdministratorsTextBox"
                 ui:ControlHelper.Header="管理权限列表"
                 ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
                 AcceptsReturn="False"
+                LostFocus="AdministratorsTextBox_LostFocus"
                 ToolTip="有管理权限的用户" />
         </StackPanel>
     </ScrollViewer>

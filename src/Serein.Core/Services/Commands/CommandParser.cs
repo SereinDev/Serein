@@ -100,7 +100,10 @@ public partial class CommandParser(
         var body = ApplyVariables(command.Body, commandContext);
 
         if (commandContext?.Match is not null)
-            foreach (KeyValuePair<string, Group> kv in commandContext.Match.Groups)
+            foreach (
+                KeyValuePair<string, Group> kv in (IEnumerable<KeyValuePair<string, Group>>)
+                    commandContext.Match.Groups
+            )
                 body = body.Replace("$" + kv.Key, kv.Value.Value);
 
         return command.Type == CommandType.InputServer ? body : body.Replace("\\n", "\n");
