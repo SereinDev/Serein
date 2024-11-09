@@ -14,7 +14,7 @@ public class JsPluginConfig
 
     public bool AllowWrite { get; init; } = true;
 
-    public bool Strict { get; init; }
+    public bool AllowStringCompilation { get; init; } = true;
 
-    public bool StringCompilationAllowed { get; init; } = true;
+    public bool Strict { get; init; }
 }

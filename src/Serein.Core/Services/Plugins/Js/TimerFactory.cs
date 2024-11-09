@@ -9,7 +9,7 @@ using Timer = System.Timers.Timer;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class TimerFactory
+public sealed class TimerFactory
 {
     private long _timeoutTimerId;
     private long _intervalTimerId;

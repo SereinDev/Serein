@@ -7,7 +7,7 @@ using Serein.Core.Models.Server;
 
 namespace Serein.Core.Services.Servers;
 
-public class ServerPluginManager
+public sealed class ServerPluginManager
 {
     public static readonly IReadOnlyList<string> AcceptableDirectories =
     [

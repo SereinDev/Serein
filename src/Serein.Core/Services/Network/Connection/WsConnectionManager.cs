@@ -21,7 +21,7 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class WsConnectionManager : INotifyPropertyChanged
+public sealed class WsConnectionManager : INotifyPropertyChanged
 {
     private readonly PropertyChangedEventArgs _sentArg,
         _receivedArg,

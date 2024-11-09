@@ -8,7 +8,7 @@ using Serein.Plus.Pages;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class ConnectionLogger(ILogger<ConnectionLogger> logger, IServiceProvider serviceProvider)
+public sealed class ConnectionLogger(ILogger<ConnectionLogger> logger, IServiceProvider serviceProvider)
     : IConnectionLogger
 {
     private readonly Lazy<ConnectionPage> _connectionPage =

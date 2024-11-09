@@ -10,7 +10,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins.Storages;
 
-public class LocalStorage : StorageBase
+public sealed class LocalStorage : StorageBase
 {
     public const string Path =
         $"{PathConstants.PluginsDirectory}/{PathConstants.LocalStorageFileName}";

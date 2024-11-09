@@ -14,7 +14,7 @@ using Serein.Core.Models.Plugins.Net;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-public class NetPluginLoader(
+public sealed class NetPluginLoader(
     IServiceProvider serviceProvider,
     ILogger<NetPluginLoader> logger,
     IPluginLogger pluginLogger

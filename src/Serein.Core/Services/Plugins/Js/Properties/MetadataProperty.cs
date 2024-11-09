@@ -1,6 +1,6 @@
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class MetadataProperty
+public sealed class MetadataProperty
 {
     internal MetadataProperty() { }
 

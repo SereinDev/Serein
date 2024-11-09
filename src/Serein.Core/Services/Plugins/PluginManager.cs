@@ -20,7 +20,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins;
 
-public class PluginManager(
+public sealed class PluginManager(
     ILogger<PluginManager> logger,
     IPluginLogger pluginLogger,
     JsPluginLoader jsPluginLoader,

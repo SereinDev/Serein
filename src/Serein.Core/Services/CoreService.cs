@@ -15,7 +15,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services;
 
-public class CoreService : IHostedService
+public sealed class CoreService : IHostedService
 {
     private readonly ILogger<CoreService> _logger;
     private readonly SettingProvider _settingProvider;
@@ -30,7 +30,7 @@ public class CoreService : IHostedService
         UpdateChecker updateChecker,
         EventDispatcher eventDispatcher,
         HttpServer httpServer
-)
+    )
     {
         _logger = logger;
         _settingProvider = settingProvider;
@@ -49,7 +49,8 @@ public class CoreService : IHostedService
         _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());
         _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
 
-        AppDomain.CurrentDomain.UnhandledException += (_, _) => eventDispatcher.Dispatch(Event.SereinCrashed);
+        AppDomain.CurrentDomain.UnhandledException += (_, _) =>
+            eventDispatcher.Dispatch(Event.SereinCrashed);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

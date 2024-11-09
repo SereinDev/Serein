@@ -18,7 +18,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsPluginLoader(
+public sealed class JsPluginLoader(
     IServiceProvider serviceProvider,
     IPluginLogger pluginLogger,
     NetPluginLoader netPluginLoader,

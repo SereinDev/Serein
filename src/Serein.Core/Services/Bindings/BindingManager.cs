@@ -11,7 +11,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Bindings;
 
-public class BindingManager(SettingProvider settingProvider, IServiceProvider services)
+public sealed class BindingManager(SettingProvider settingProvider, IServiceProvider services)
 {
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly IServiceProvider _services = services;
@@ -42,57 +42,86 @@ public class BindingManager(SettingProvider settingProvider, IServiceProvider se
     public bool TryGetValue(long id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
     {
         lock (_lock)
-            bindingRecord = BindingRecordDbContext.Records.FirstOrDefault((v) => v.UserId == id);
+        {
+            using var context = BindingRecordDbContext;
+            return TryGetValue(context, id, out bindingRecord);
+        }
+    }
+
+    private bool TryGetValue(BindingRecordDbContext context, long id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
+    {
+        lock (_lock)
+            bindingRecord = context.Records.FirstOrDefault((v) => v.UserId == id);
         return bindingRecord is not null;
     }
 
     public void CheckConflict(long id, string gameId)
     {
         lock (_lock)
-            foreach (var record in BindingRecordDbContext.Records)
+        {
+            using var context = BindingRecordDbContext;
+            CheckConflict(context, id, gameId);
+        }
+    }
+
+    private void CheckConflict(BindingRecordDbContext context, long id, string gameId)
+    {
+        lock (_lock)
+        {
+            foreach (var record in context.Records)
                 if (record.UserId != id && record.GameIds.Contains(gameId))
                     throw new BindingFailureException("此Id已被占用");
+        }
     }
 
     public void Add(long id, string gameId, string? shownName = null)
     {
         ValidateGameId(gameId);
-        CheckConflict(id, gameId);
 
-        if (!TryGetValue(id, out var record))
+        lock (_lock)
         {
-            record = new()
+            using var context = BindingRecordDbContext;
+
+            CheckConflict(context, id, gameId);
+            if (!TryGetValue(context, id, out var record))
             {
-                UserId = id,
-                GameIds = [gameId],
-                ShownName = shownName ?? string.Empty,
-                Time = DateTime.Now
-            };
-            BindingRecordDbContext.Records.Add(record);
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(shownName))
-                record.ShownName = shownName;
-
-            if (record.GameIds.Contains(gameId))
-                throw new BindingFailureException("已经绑定过此Id了");
+                record = new()
+                {
+                    UserId = id,
+                    GameIds = [gameId],
+                    ShownName = shownName ?? string.Empty,
+                    Time = DateTime.Now
+                };
+                context.Records.Add(record);
+            }
             else
-                record.GameIds.Add(gameId);
+            {
+                if (!string.IsNullOrEmpty(shownName))
+                    record.ShownName = shownName;
 
-            record.Update();
+                if (record.GameIds.Contains(gameId))
+                    throw new BindingFailureException("已经绑定过此Id了");
+                else
+                    record.GameIds.Add(gameId);
+
+                record.Update();
+            }
+
+            context.SaveChanges();
         }
-
-        BindingRecordDbContext.SaveChanges();
     }
 
     public void Remove(long id, string gameId)
     {
-        if (!TryGetValue(id, out var record) || !record.GameIds.Remove(gameId))
-            throw new BindingFailureException("未绑定此Id");
+        lock (_lock)
+        {
+            using var context = BindingRecordDbContext;
+            if (!TryGetValue(context, id, out var record) || !record.GameIds.Remove(gameId))
+                throw new BindingFailureException("未绑定此Id");
 
-        record.Update();
+            record.Update();
 
-        BindingRecordDbContext.SaveChanges();
+            context.SaveChanges();
+        }
     }
 }

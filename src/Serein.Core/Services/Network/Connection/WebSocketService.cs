@@ -15,7 +15,7 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class WebSocketService(IHost host, SettingProvider settingProvider) : IConnectionService
+public sealed class WebSocketService(IHost host, SettingProvider settingProvider) : IConnectionService
 {
     private IConnectionLogger ConnectionLogger =>
         host.Services.GetRequiredService<IConnectionLogger>();

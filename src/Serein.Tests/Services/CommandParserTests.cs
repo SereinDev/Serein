@@ -16,7 +16,7 @@ using Parser = Serein.Core.Services.Commands.CommandParser;
 namespace Serein.Tests.Services;
 
 [Collection(nameof(Serein))]
-public class CommandParserTests : IDisposable
+public sealed class CommandParserTests : IDisposable
 {
     private readonly IHost _app;
     private readonly Parser _commandParser;
@@ -83,7 +83,7 @@ public class CommandParserTests : IDisposable
         string? exceptedArgument = null
     )
     {
-        var cmd = Parser.Parse(CommandOrigin.ConsoleExecute, input);
+        var cmd = Parser.Parse(CommandOrigin.Null, input);
         Assert.Equal(exceptedType, cmd.Type);
         Assert.Equal(exceptedBody, cmd.Body);
 

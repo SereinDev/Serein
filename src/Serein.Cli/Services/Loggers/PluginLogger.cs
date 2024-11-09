@@ -5,7 +5,7 @@ using Serein.Core.Models.Output;
 
 namespace Serein.Cli.Services.Loggers;
 
-public class PluginLogger(ILogger<PluginLogger> logger) : IPluginLogger
+public sealed class PluginLogger(ILogger<PluginLogger> logger) : IPluginLogger
 {
     private readonly ILogger _logger = logger;
 

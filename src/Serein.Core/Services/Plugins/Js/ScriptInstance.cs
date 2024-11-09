@@ -21,7 +21,7 @@ using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public partial class ScriptInstance
+public sealed partial class ScriptInstance
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly JsPlugin _jsPlugin;

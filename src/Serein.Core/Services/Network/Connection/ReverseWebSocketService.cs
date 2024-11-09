@@ -19,7 +19,7 @@ using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class ReverseWebSocketService : IConnectionService
+public sealed class ReverseWebSocketService : IConnectionService
 {
     private readonly IHost _host;
     private WebSocketServer? _server;

@@ -10,7 +10,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("help", "帮助")]
 [CommandDescription(["显示帮助页面"])]
-public class HelpHandler(ILogger<HelpHandler> logger, IServiceProvider serviceProvider)
+public sealed class HelpHandler(ILogger<HelpHandler> logger, IServiceProvider serviceProvider)
     : CommandHandler
 {
     private readonly ILogger<HelpHandler> _logger = logger;

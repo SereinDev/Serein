@@ -5,7 +5,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class ServerProperty
+public sealed class ServerProperty
 {
     private readonly ServerManager _serverManager;
 

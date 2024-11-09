@@ -4,7 +4,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class CommandProperty
+public sealed class CommandProperty
 {
     private readonly PluginManager _pluginManager;
     private readonly CommandRunner _commandRunner;

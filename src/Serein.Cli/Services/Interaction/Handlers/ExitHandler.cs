@@ -12,7 +12,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("exit", "退出")]
 [CommandDescription(["停止所有服务并退出Serein.Cli"])]
-public class ExitHandler(IHost host, ILogger<ExitHandler> logger, ServerManager serverManager)
+public sealed class ExitHandler(IHost host, ILogger<ExitHandler> logger, ServerManager serverManager)
     : CommandHandler
 {
     private readonly IHost _host = host;

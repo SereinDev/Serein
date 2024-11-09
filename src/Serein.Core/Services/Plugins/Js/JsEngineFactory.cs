@@ -18,7 +18,7 @@ using Serein.Core.Services.Plugins.Storages;
 
 namespace Serein.Core.Services.Plugins.Js;
 
-public class JsEngineFactory(
+public sealed class JsEngineFactory(
     SettingProvider settingProvider,
     LocalStorage localStorage,
     SessionStorage sessionStorage,
@@ -75,7 +75,7 @@ public class JsEngineFactory(
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
             },
-            StringCompilationAllowed = jsPlugin.Config.StringCompilationAllowed,
+            StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation,
             Strict = jsPlugin.Config.Strict,
         };
 

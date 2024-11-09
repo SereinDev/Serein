@@ -9,7 +9,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;
 
-public class ServerSwitcher(
+public sealed class ServerSwitcher(
     ILogger<ServerSwitcher> logger,
     ILogger<Server> serverLogger,
     ServerManager serverManager,

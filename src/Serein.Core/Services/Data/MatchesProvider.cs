@@ -11,7 +11,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
+public sealed class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
 {
     public MatchesProvider()
     {

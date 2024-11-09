@@ -18,7 +18,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public class PacketHandler(
+public sealed class PacketHandler(
     IHost host,
     Matcher matcher,
     SettingProvider settingProvider,

@@ -11,7 +11,7 @@ using Serein.Plus.Models;
 
 namespace Serein.Plus.Services;
 
-public class InfoBarProvider(IServiceProvider serviceProvider)
+public sealed class InfoBarProvider(IServiceProvider serviceProvider)
 {
     private readonly BlockingCollection<InfoBarTask> _tasks = new(new ConcurrentQueue<InfoBarTask>());
     private readonly Lazy<MainWindow> _mainWindow = new(serviceProvider.GetRequiredService<MainWindow>);

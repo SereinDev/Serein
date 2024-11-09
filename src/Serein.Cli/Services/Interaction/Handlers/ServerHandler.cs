@@ -18,7 +18,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("terminate", "强制结束")]
 [CommandChildren("switch", "选择并控制")]
 [CommandChildren("list", "列出所有服务器")]
-public class ServerHandler(
+public sealed class ServerHandler(
     ILogger<ServerHandler> logger,
     SettingProvider settingProvider,
     ServerManager serverManager,

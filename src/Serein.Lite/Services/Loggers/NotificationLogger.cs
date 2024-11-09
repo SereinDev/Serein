@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Lite.Services.Loggers;
 
-public class NotificationLogger : ILogger
+public sealed class NotificationLogger : ILogger
 {
     public NotificationLogger()
     {

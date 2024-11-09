@@ -11,7 +11,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;
 
-public class CancelKeyHandlingService(
+public sealed class CancelKeyHandlingService(
     IHost host,
     ILogger<CancelKeyHandlingService> logger,
     ServerManager serverManager

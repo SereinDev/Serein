@@ -12,7 +12,7 @@ using Xunit;
 namespace Serein.Tests.Services;
 
 [Collection(nameof(Serein))]
-public class PermissionGroupTests : IDisposable
+public sealed class PermissionGroupTests : IDisposable
 {
     private readonly IHost _app;
     private readonly PermissionManager _permissionManager;

@@ -20,7 +20,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers;
 
-public class Server
+public sealed class Server
 {
     [JsonIgnore]
     public string Id { get; }

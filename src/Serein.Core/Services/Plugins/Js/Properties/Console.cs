@@ -6,7 +6,7 @@ using Serein.Core.Models.Output;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class Console
+public sealed class Console
 {
     private readonly IPluginLogger _logger;
     private readonly string _title;

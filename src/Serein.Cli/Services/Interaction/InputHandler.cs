@@ -7,7 +7,7 @@ using Serein.Cli.Models;
 
 namespace Serein.Cli.Services.Interaction;
 
-public class InputHandler(ILogger<InputHandler> logger, CommandProvider commandProvider)
+public sealed class InputHandler(ILogger<InputHandler> logger, CommandProvider commandProvider)
 {
     private readonly ILogger<InputHandler> _logger = logger;
     private readonly CommandProvider _commandProvider = commandProvider;

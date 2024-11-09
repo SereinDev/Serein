@@ -5,7 +5,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class ConnectionProperty
+public sealed class ConnectionProperty
 {
     private readonly WsConnectionManager _wsConnectionManager;
 

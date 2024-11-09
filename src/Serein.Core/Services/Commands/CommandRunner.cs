@@ -21,7 +21,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Commands;
 
-public class CommandRunner
+public sealed class CommandRunner
 {
     private readonly Lazy<CommandParser> _commandParser;
     private readonly Lazy<WsConnectionManager> _wsConnectionManager;

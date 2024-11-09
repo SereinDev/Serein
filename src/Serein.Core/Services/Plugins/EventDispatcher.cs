@@ -15,7 +15,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins;
 
-public class EventDispatcher(
+public sealed class EventDispatcher(
     ILogger<EventDispatcher> logger,
     IPluginLogger pluginLogger,
     SettingProvider settingProvider,

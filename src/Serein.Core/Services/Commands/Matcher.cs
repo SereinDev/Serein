@@ -10,7 +10,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class Matcher(
+public sealed class Matcher(
     MatchesProvider matchesProvider,
     CommandRunner commandRunner,
     SettingProvider settingProvider

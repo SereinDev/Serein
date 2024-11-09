@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Commands;
 
-public class HardwareInfoProvider
+public sealed class HardwareInfoProvider
 {
     public HardwareInfo? Info { get; private set; }
     private readonly Timer _timer;

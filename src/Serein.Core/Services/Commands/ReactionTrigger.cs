@@ -10,7 +10,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public class ReactionTrigger(
+public sealed class ReactionTrigger(
     ILogger<ReactionTrigger> logger,
     SettingProvider settingProvider,
     CommandRunner commandRunner

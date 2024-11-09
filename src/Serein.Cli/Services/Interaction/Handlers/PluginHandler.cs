@@ -19,7 +19,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("reload", "重新加载插件")]
 [CommandChildren("list", "显示插件列表")]
 [CommandChildren("disable", "禁用插件")]
-public class PluginHandler(
+public sealed class PluginHandler(
     ILogger<PluginHandler> logger,
     PluginManager pluginManager,
     JsPluginLoader jsPluginLoader,

@@ -4,7 +4,7 @@ using Serein.Core.Models.Output;
 
 namespace Serein.Cli.Services.Loggers;
 
-public class ConnectionLogger(ILogger<ConnectionLogger> logger) : IConnectionLogger
+public sealed class ConnectionLogger(ILogger<ConnectionLogger> logger) : IConnectionLogger
 {
     private readonly ILogger _logger = logger;
 

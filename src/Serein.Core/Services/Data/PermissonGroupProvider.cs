@@ -10,7 +10,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group>>
+public sealed class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group>>
 {
     public PermissionGroupProvider()
     {

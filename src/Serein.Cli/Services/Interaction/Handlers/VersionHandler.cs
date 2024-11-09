@@ -11,7 +11,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("version", "版本")]
 [CommandDescription(["查看版本信息", "查看版权声明"])]
-public class VersionHandler(ILogger<VersionHandler> logger) : CommandHandler
+public sealed class VersionHandler(ILogger<VersionHandler> logger) : CommandHandler
 {
     private readonly ILogger<VersionHandler> _logger = logger;
 

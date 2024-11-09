@@ -9,7 +9,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network;
 
-public class UpdateChecker
+public sealed class UpdateChecker
 {
     private readonly ILogger _logger;
     private readonly System.Timers.Timer _timer;

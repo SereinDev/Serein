@@ -9,7 +9,7 @@ using Serein.Core.Services.Loggers;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class NotificationLogger(IServiceProvider serviceProvider) : ILogger
+public sealed class NotificationLogger(IServiceProvider serviceProvider) : ILogger
 {
     private readonly Lazy<InfoBarProvider> _infoBarProvider =
         new(serviceProvider.GetRequiredService<InfoBarProvider>);

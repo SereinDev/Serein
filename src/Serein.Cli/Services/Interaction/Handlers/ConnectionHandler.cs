@@ -13,7 +13,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("info", "查看WebSocket连接状态")]
 [CommandChildren("open", "打开WebSocket连接")]
 [CommandChildren("close", "关闭WebSocket连接")]
-public class ConnectionHandler(
+public sealed class ConnectionHandler(
     ILogger<ConnectionHandler> logger,
     WsConnectionManager wsConnectionManager
 ) : CommandHandler

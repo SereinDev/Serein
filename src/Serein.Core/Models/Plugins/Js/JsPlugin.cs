@@ -24,10 +24,11 @@ public class JsPlugin : IPlugin
     public string FileName { get; }
     public PluginInfo Info { get; }
     public JsPluginConfig Config { get; }
+
     public Engine Engine { get; }
-    public ScriptInstance ScriptInstance { get; }
     public JsConsole Console { get; }
     public TimerFactory TimerFactory { get; }
+    public ScriptInstance ScriptInstance { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
@@ -39,7 +40,7 @@ public class JsPlugin : IPlugin
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public JsPlugin(
+    internal JsPlugin(
         IServiceProvider serviceProvider,
         PluginInfo pluginInfo,
         string fileName,

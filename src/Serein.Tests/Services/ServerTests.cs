@@ -14,7 +14,7 @@ using Xunit;
 namespace Serein.Tests.Services;
 
 [Collection(nameof(Serein))]
-public class ServerTests : IDisposable
+public sealed class ServerTests : IDisposable
 {
     private readonly IHost _app;
     private readonly ServerManager _serverManager;

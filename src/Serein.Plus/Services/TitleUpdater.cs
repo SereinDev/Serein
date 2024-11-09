@@ -7,7 +7,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Plus.Services; 
 
-public class TitleUpdater : NotifyPropertyChangedModelBase
+public sealed class TitleUpdater : NotifyPropertyChangedModelBase
 {
     private const string Name = "Serein.Plus";
     private readonly SettingProvider _settingProvider;

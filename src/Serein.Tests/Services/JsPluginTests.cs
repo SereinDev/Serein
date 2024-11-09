@@ -17,7 +17,7 @@ using Xunit;
 namespace Serein.Tests.Services;
 
 [Collection(nameof(Serein))]
-public class JsPluginTests : IDisposable
+public sealed class JsPluginTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;

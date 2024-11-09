@@ -11,7 +11,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
+public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
 {
     public override ObservableCollection<Schedule> Value { get; }
 

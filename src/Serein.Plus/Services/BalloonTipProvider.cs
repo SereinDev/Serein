@@ -2,7 +2,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Serein.Plus.Services;
 
-public class BalloonTipProvider(MainWindow mainWindow)
+public sealed class BalloonTipProvider(MainWindow mainWindow)
 {
     private readonly MainWindow _mainWindow = mainWindow;
 

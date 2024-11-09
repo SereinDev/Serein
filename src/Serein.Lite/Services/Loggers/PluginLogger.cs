@@ -9,7 +9,7 @@ using Serein.Lite.Ui.Function;
 
 namespace Serein.Lite.Services.Loggers;
 
-public class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
+public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
 {
     private readonly Lazy<PluginPage> _pluginPage =
         new(serviceProvider.GetRequiredService<PluginPage>);

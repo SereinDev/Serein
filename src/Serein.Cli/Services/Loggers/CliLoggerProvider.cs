@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Cli.Services.Loggers;
 
-public class CliLoggerProvider : ILoggerProvider
+public sealed class CliLoggerProvider : ILoggerProvider
 {
     private readonly Dictionary<string, CliLogger> _loggers = [];
 

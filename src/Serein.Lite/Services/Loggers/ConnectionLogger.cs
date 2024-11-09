@@ -6,7 +6,7 @@ using Serein.Lite.Utils;
 
 namespace Serein.Lite.Services.Loggers;
 
-public class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
+public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
 {
     private readonly object _lock = new();
     private readonly ConnectionPage _connectionPage = connectionPage;

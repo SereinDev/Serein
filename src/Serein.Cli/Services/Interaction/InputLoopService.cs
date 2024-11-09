@@ -19,7 +19,7 @@ using Serein.Cli.Utils;
 
 namespace Serein.Cli.Services.Interaction;
 
-public class InputLoopService(
+public sealed class InputLoopService(
     ILogger<InputLoopService> logger,
     IServiceProvider serviceProvider,
     SettingProvider settingProvider,

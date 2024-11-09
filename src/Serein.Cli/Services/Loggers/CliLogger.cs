@@ -7,7 +7,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Cli.Services.Loggers;
 
-public class CliLogger(string categoryName) : ILogger
+public sealed class CliLogger(string categoryName) : ILogger
 {
     private static readonly bool EnableDebug =
         Environment.CommandLine.Contains("--debug")

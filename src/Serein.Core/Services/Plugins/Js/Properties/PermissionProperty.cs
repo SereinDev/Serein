@@ -2,7 +2,7 @@ using Serein.Core.Services.Permissions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
-public class PermissionProperty
+public sealed class PermissionProperty
 {
     private readonly string _id;
     private readonly PermissionManager _permissionManager;

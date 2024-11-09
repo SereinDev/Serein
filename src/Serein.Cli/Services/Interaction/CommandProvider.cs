@@ -16,7 +16,7 @@ using Serein.Core;
 
 namespace Serein.Cli.Services.Interaction;
 
-public class CommandProvider
+public sealed class CommandProvider
 {
     public IReadOnlyList<CompletionItem> RootCommandItems { get; }
 

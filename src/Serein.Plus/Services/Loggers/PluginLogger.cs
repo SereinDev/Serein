@@ -9,7 +9,7 @@ using Serein.Plus.Pages;
 
 namespace Serein.Plus.Services.Loggers;
 
-public class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider serviceProvider)
+public sealed class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider serviceProvider)
     : IPluginLogger
 {
     private readonly Lazy<PluginConsolePage> _pluginConsolePage =

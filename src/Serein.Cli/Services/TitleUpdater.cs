@@ -9,7 +9,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Cli.Services;
 
-public class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
+public sealed class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
     : IHostedService
 {
     private readonly SettingProvider _settingProvider = settingProvider;

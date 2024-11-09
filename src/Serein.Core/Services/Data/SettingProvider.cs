@@ -9,7 +9,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public class SettingProvider : DataProviderBase<Setting>
+public sealed class SettingProvider : DataProviderBase<Setting>
 {
     public SettingProvider()
     {

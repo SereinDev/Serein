@@ -7,7 +7,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("clear", "清屏")]
 [CommandDescription(["清除控制台所有输出"])]
-public class ClearScreenHandler() : CommandHandler
+public sealed class ClearScreenHandler() : CommandHandler
 {
     public override void Invoke(IReadOnlyList<string> args)
     {

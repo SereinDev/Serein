@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +54,13 @@ public static class Program
     [STAThread]
     public static void Main()
     {
+#if DEBUG
+        // InvalidOperationException is thrown when updating binding source in another thread in debug mode
+        // https://github.com/dotnet/winforms/issues/8582
+        if (Debugger.IsAttached)
+            Control.CheckForIllegalCrossThreadCalls = false;
+#endif
+
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
             DialogFactory.ShowErrorDialog((Exception)e.ExceptionObject);
         Application.ThreadException += (_, e) => DialogFactory.ShowErrorDialog(e.Exception);
