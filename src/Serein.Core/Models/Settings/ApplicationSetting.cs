@@ -33,5 +33,5 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string RegexForCheckingGameId { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";
 
-    public string[] PattenForEnableMatchingMuiltLines { get; set; } = [@"players online:", "个玩家在线"];
+    public string[] PattenForEnableMatchingMuiltLines { get; set; } = [];
 }

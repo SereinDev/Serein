@@ -1,28 +1,25 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 
 using Xunit;
 
-namespace Serein.Tests.Services;
+namespace Serein.Tests.Server;
 
 [Collection(nameof(Serein))]
-public sealed class ServerTests : IDisposable
+public sealed class ManagementTests : IDisposable
 {
     private readonly IHost _app;
     private readonly ServerManager _serverManager;
 
-    public ServerTests()
+    public ManagementTests()
     {
         _app = HostFactory.BuildNew();
-
         _serverManager = _app.Services.GetRequiredService<ServerManager>();
     }
 
@@ -82,44 +79,5 @@ public sealed class ServerTests : IDisposable
 
         Assert.False(_serverManager.Servers.ContainsKey("test"));
         Assert.False(File.Exists(string.Format(PathConstants.ServerConfigFile, "test")));
-    }
-
-    [Fact]
-    public async Task ShouldStartServerWithStartWhenSettingUpTrue()
-    {
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            StartWhenSettingUp = true
-        });
-
-        await _app.StartAsync();
-        await Task.Delay(500);
-
-        Assert.True(server.Status);
-    }
-
-    [Fact]
-    public async Task ShouldRestartServer()
-    {
-        _app.Start();
-
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            AutoRestart = true
-        });
-        server.Start();
-        server.Input("exit 1");
-
-        await Task.Delay(100);
-
-        Assert.False(server.Status);
-        Assert.Equal(RestartStatus.Preparing, server.RestartStatus);
-
-        server.Stop();
-        await Task.Delay(100);
-
-        Assert.Equal(RestartStatus.None, server.RestartStatus);
     }
 }

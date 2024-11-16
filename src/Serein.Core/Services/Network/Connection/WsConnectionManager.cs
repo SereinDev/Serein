@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Network.Connection.OneBot;
 using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
@@ -15,6 +16,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 using WebSocket4Net;
@@ -26,14 +28,14 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
     private readonly PropertyChangedEventArgs _sentArg,
         _receivedArg,
         _activeArg;
+    private readonly LogWriter _logWriter;
+    private readonly PacketHandler _packetHandler;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly ReverseWebSocketService _reverseWebSocketService;
     private readonly WebSocketService _webSocketService;
-    private readonly PacketHandler _packetHandler;
+    private readonly ReverseWebSocketService _reverseWebSocketService;
     private readonly Lazy<IConnectionLogger> _connectionLogger;
 
-    private Setting Setting => _settingProvider.Value;
     private CancellationTokenSource? _cancellationTokenSource;
     private ulong _sent;
     private ulong _received;
@@ -45,9 +47,9 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-
     public WsConnectionManager(
         IHost host,
+        ILogger<LogWriter> logger,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
         ReverseWebSocketService reverseWebSocketService,
@@ -55,6 +57,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         PacketHandler packetHandler
     )
     {
+        _logWriter = new(logger, PathConstants.ConnectionLogDirectory);
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
         _reverseWebSocketService = reverseWebSocketService;
@@ -84,11 +87,14 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         Interlocked.Increment(ref _received);
         PropertyChanged?.Invoke(this, _receivedArg);
 
+        if (_settingProvider.Value.Connection.SaveLog)
+            _logWriter.WriteAsync($"{DateTime.Now:t} [Received] {e.Message}");
+
+        if (_settingProvider.Value.Connection.OutputData)
+            _connectionLogger.Value.LogReceivedData(e.Message);
+
         if (!_eventDispatcher.Dispatch(Event.WsDataReceived, e.Message))
             return;
-
-        if (Setting.Connection.OutputData)
-            _connectionLogger.Value.LogReceivedData(e.Message);
 
         var node = JsonSerializer.Deserialize<JsonNode>(e.Message);
 
@@ -112,7 +118,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new();
 
-        if (Setting.Connection.UseReverseWebSocket)
+        if (_settingProvider.Value.Connection.UseReverseWebSocket)
             _reverseWebSocketService.Start(_cancellationTokenSource.Token);
         else
             _webSocketService.Start(_cancellationTokenSource.Token);
@@ -147,7 +153,10 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         Interlocked.Increment(ref _sent);
         PropertyChanged?.Invoke(this, _sentArg);
 
-        if (Setting.Connection.OutputData)
+        if (_settingProvider.Value.Connection.SaveLog)
+            _logWriter.WriteAsync($"{DateTime.Now:t} [Sent] {data}");
+
+        if (_settingProvider.Value.Connection.OutputData)
             _connectionLogger.Value.LogSentData(data);
 
         if (_reverseWebSocketService.Active)
@@ -173,7 +182,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = Setting.Connection.AutoEscape
+                AutoEscape = _settingProvider.Value.Connection.AutoEscape
             }
         );
         _connectionLogger.Value.LogReceivedMessage($"[群聊({target})] {message}");
@@ -189,7 +198,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = Setting.Connection.AutoEscape
+                AutoEscape = _settingProvider.Value.Connection.AutoEscape
             }
         );
         _connectionLogger.Value.LogReceivedMessage($"[私聊({target})] {message}");

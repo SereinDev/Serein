@@ -39,6 +39,7 @@ public sealed class Server
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private bool _isTerminated;
 
+    private readonly LogWriter _logWriter;
     private readonly Matcher _matcher;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
@@ -55,6 +56,7 @@ public sealed class Server
         string id,
         Matcher matcher,
         ILogger<Server> logger,
+        ILogger<LogWriter> writerLogger,
         Configuration configuration,
         SettingProvider settingManager,
         EventDispatcher eventDispatcher,
@@ -62,6 +64,7 @@ public sealed class Server
     )
     {
         Id = id;
+        _logWriter = new(writerLogger, string.Format(PathConstants.ServerLogDirectory, id));
         _logger = logger;
         Configuration = configuration;
         _settingProvider = settingManager;
@@ -139,6 +142,9 @@ public sealed class Server
         _updateTimer.Start();
 
         _logger.LogDebug("Id={}: 正在启动", Id);
+
+        if (Configuration.SaveLog)
+            _logWriter.WriteAsync(DateTime.Now.ToString("T") + " 服务器已启动");
     }
 
     public void Stop()
@@ -286,6 +292,9 @@ public sealed class Server
         var exitCode = _serverProcess?.ExitCode ?? 0;
         _logger.LogDebug("Id={}: 进程（PID={}）退出：{}", Id, _serverProcess?.Id, exitCode);
 
+        if (Configuration.SaveLog)
+            _logWriter.WriteAsync(DateTime.Now.ToString("T") + " 进程退出：" + exitCode);
+
         ServerOutput?.Invoke(
             this,
             new(
@@ -325,6 +334,9 @@ public sealed class Server
             return;
 
         _logger.LogDebug("Id={}: 输出'{}'", Id, e.Data);
+        if (Configuration.SaveLog)
+            _logWriter.WriteAsync(e.Data);
+
         _serverInfo.OutputLines++;
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));

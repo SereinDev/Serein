@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Serein.Tests.Static;
 
-public class SereinAppInfoTests
+public sealed class SereinAppInfoTests
 {
     [Fact]
     public void VersionShouldBeEqualToThisTestAssembly()

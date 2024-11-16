@@ -59,10 +59,10 @@ public sealed class CoreService : IHostedService
 
         foreach (var (_, server) in _serverManager.Servers)
             if (server.Configuration.StartWhenSettingUp)
-                Try(server.Start);
+                Try(server.Start, $"服务器{server.Configuration.Name}({server.Id})");
 
         if (_settingProvider.Value.WebApi.IsEnabled)
-            Try(_httpServer.Start);
+            Try(_httpServer.Start, "WebApi");
 
         _logger.LogInformation("Serein启动成功！");
 
@@ -75,12 +75,15 @@ public sealed class CoreService : IHostedService
         return Task.CompletedTask;
     }
 
-    private static void Try(Action action)
+    private void Try(Action action, string name)
     {
         try
         {
             action();
         }
-        catch { }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "{}启动失败", name);
+        }
     }
 }

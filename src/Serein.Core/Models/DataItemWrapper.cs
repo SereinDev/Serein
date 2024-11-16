@@ -26,5 +26,4 @@ public class DataItemWrapper<T> : DataItemWrapper
 {
     [JsonRequired]
     public T? Data { get; set; }
-
 }

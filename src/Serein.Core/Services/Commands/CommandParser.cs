@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using Serein.Core.Models.Commands;
+using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -13,6 +14,7 @@ namespace Serein.Core.Services.Commands;
 public partial class CommandParser(
     PluginManager pluginManager,
     ServerManager servers,
+    BindingManager bindingManager,
     HardwareInfoProvider hardwareInfoProvider
 )
 {
@@ -28,6 +30,7 @@ public partial class CommandParser(
     private readonly PluginManager _pluginManager = pluginManager;
     private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
     private readonly ServerManager _serverManager = servers;
+    private readonly BindingManager _bindingManager = bindingManager;
 
     public static Command Parse(CommandOrigin origin, string? command, bool throws = false)
     {
@@ -225,6 +228,7 @@ public partial class CommandParser(
                     "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
                     "sender.card" => commandContext?.MessagePacket?.Sender?.Card,
                     "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
+                    "sender.gameId" => GetGameId(commandContext?.MessagePacket?.UserId),
                     "sender.shownname" => string.IsNullOrEmpty(
                         commandContext?.MessagePacket?.Sender?.Card
                     )
@@ -247,6 +251,16 @@ public partial class CommandParser(
         return text;
     }
 #pragma warning restore IDE0046
+
+    private string? GetGameId(long? userId)
+    {
+        if (userId is null)
+            return null;
+
+        return _bindingManager.TryGetValue(userId.Value, out var binding)
+            ? binding.GameIds.FirstOrDefault()
+            : null;
+    }
 
     private object? GetServerVariables(string input, string? id = null)
     {

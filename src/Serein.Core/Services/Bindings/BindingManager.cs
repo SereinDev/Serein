@@ -48,7 +48,11 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    private bool TryGetValue(BindingRecordDbContext context, long id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
+    private bool TryGetValue(
+        BindingRecordDbContext context,
+        long id,
+        [NotNullWhen(true)] out BindingRecord? bindingRecord
+    )
     {
         lock (_lock)
             bindingRecord = context.Records.FirstOrDefault((v) => v.UserId == id);
@@ -90,7 +94,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
                     UserId = id,
                     GameIds = [gameId],
                     ShownName = shownName ?? string.Empty,
-                    Time = DateTime.Now
+                    Time = DateTime.Now,
                 };
                 context.Records.Add(record);
             }

@@ -4,7 +4,7 @@ namespace Serein.Core.Models.Settings;
 
 public class ConnectionSetting : NotifyPropertyChangedModelBase
 {
-    public string? AccessToken { get; set; }
+    public string AccessToken { get; set; } = string.Empty;
 
     public bool AutoEscape { get; set; }
 

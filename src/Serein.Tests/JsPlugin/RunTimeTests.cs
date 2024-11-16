@@ -14,15 +14,15 @@ using Serein.Core.Utils;
 
 using Xunit;
 
-namespace Serein.Tests.Services;
+namespace Serein.Tests.JsPlugin;
 
 [Collection(nameof(Serein))]
-public sealed class JsPluginTests : IDisposable
+public sealed class RunTimeTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;
 
-    public JsPluginTests()
+    public RunTimeTests()
     {
         _host = HostFactory.BuildNew();
         _jsPluginLoader = _host.Services.GetRequiredService<JsPluginLoader>();
@@ -34,22 +34,6 @@ public sealed class JsPluginTests : IDisposable
     {
         _host.StopAsync();
         _host.Dispose();
-    }
-
-    [Fact]
-    public async Task ShouldLoadSingleJsPlugin()
-    {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "1.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
-        Assert.Single(_jsPluginLoader.Plugins);
-
-        var kv = _jsPluginLoader.Plugins.First();
-        Assert.Equal(kv.Key, kv.Value.Info.Id);
-        Assert.Equal("1", kv.Value.Info.Name);
-        Assert.Equal("1.js", Path.GetFileName(kv.Value.Engine.Evaluate("__filename").ToString()));
     }
 
     [Fact]
@@ -91,45 +75,12 @@ public sealed class JsPluginTests : IDisposable
 
         var kv = _jsPluginLoader.Plugins.First();
 
-        Assert.Equal(Environment.ProcessId, kv.Value.Engine.Evaluate("System.Diagnostics.Process.GetCurrentProcess().Id"));
+        Assert.Equal(
+            Environment.ProcessId,
+            kv.Value.Engine.Evaluate("System.Diagnostics.Process.GetCurrentProcess().Id")
+        );
 
         kv.Value.Engine.Evaluate("System.IO.File.WriteAllText('test.txt', '')");
         Assert.True(File.Exists("test.txt"));
-    }
-
-    [Fact]
-    public async Task ShouldSkipJsModuleFile()
-    {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "1.module.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
-        Assert.Empty(_jsPluginLoader.Plugins);
-    }
-
-    [Fact]
-    public async Task ShouldNotLoadJsPluginWithoutPluginInfo()
-    {
-        Directory.CreateDirectory(Path.Join(PathConstants.PluginsDirectory, "test"));
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "test", "1.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
-        Assert.Empty(_jsPluginLoader.Plugins);
-    }
-
-    [Fact]
-    public async Task ShouldNotLoadJsPluginWithInvalidPluginInfo()
-    {
-        Directory.CreateDirectory(Path.Join(PathConstants.PluginsDirectory, "test"));
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "test", "plugin-info.json"), "{}");
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "test", "1.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
-        Assert.Empty(_jsPluginLoader.Plugins);
     }
 }

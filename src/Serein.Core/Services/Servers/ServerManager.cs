@@ -66,6 +66,7 @@ public partial class ServerManager
 
     private readonly ILogger<Server> _serverlogger;
     private readonly ILogger _logger;
+    private readonly ILogger<LogWriter> _logWriterLogger;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
@@ -75,6 +76,7 @@ public partial class ServerManager
     public ServerManager(
         ILogger<Server> serverlogger,
         ILogger<ServerManager> logger,
+        ILogger<LogWriter> logWriterLogger,
         Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
@@ -84,6 +86,7 @@ public partial class ServerManager
         _matcher = matcher;
         _serverlogger = serverlogger;
         _logger = logger;
+        _logWriterLogger = logWriterLogger;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
         _reactionManager = reactionManager;
@@ -102,6 +105,7 @@ public partial class ServerManager
             id,
             _matcher,
             _serverlogger,
+            _logWriterLogger,
             configuration,
             _settingProvider,
             _eventDispatcher,
