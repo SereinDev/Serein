@@ -30,7 +30,7 @@ internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider se
             options.AddIntegration(new ProfilingIntegration(TimeSpan.FromMilliseconds(1000)));
 
 #if DEBUG
-            options.Debug = true;
+            // options.Debug = true;
             options.Environment = "development";
 #else
             options.Environment = "production";

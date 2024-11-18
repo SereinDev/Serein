@@ -9,11 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Network.Connection.OneBot;
-using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
+using Serein.Core.Models.Network.Connection.OneBot.Actions;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
@@ -36,7 +34,6 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
     private readonly ReverseWebSocketService _reverseWebSocketService;
     private readonly Lazy<IConnectionLogger> _connectionLogger;
 
-    private CancellationTokenSource? _cancellationTokenSource;
     private ulong _sent;
     private ulong _received;
 
@@ -114,14 +111,10 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
         _sent = _received = 0;
 
-        _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = new();
-
         if (_settingProvider.Value.Connection.UseReverseWebSocket)
-            _reverseWebSocketService.Start(_cancellationTokenSource.Token);
+            _reverseWebSocketService.Start();
         else
-            _webSocketService.Start(_cancellationTokenSource.Token);
+            _webSocketService.Start();
     }
 
     public void Stop()
@@ -131,7 +124,8 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
         ConnectedAt = null;
         _sent = _received = 0;
-        _cancellationTokenSource?.Cancel();
+        PropertyChanged?.Invoke(this, _sentArg);
+        PropertyChanged?.Invoke(this, _receivedArg);
 
         if (_reverseWebSocketService.Active)
             _reverseWebSocketService.Stop();

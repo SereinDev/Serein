@@ -48,4 +48,9 @@ public partial class BindingPage : UserControl, IUpdateablePage
     }
 
     public void UpdatePage() => LoadData();
+
+    private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        LoadData();
+    }
 }

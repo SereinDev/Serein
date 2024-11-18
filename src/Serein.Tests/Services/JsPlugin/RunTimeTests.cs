@@ -14,7 +14,7 @@ using Serein.Core.Utils;
 
 using Xunit;
 
-namespace Serein.Tests.JsPlugin;
+namespace Serein.Tests.Services.JsPlugin;
 
 [Collection(nameof(Serein))]
 public sealed class RunTimeTests : IDisposable

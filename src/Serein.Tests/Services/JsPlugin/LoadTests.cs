@@ -1,22 +1,17 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
-
-using Jint.Native;
-using Jint.Runtime;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils;
-using Serein.Core.Utils.Json;
 
 using Xunit;
 
-namespace Serein.Tests.JsPlugin;
+namespace Serein.Tests.Services.JsPlugin;
 
 [Collection(nameof(Serein))]
 public sealed class LoadTests : IDisposable

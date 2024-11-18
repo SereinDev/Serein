@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 using WebSocket4Net;
@@ -15,7 +14,7 @@ public interface IConnectionService : IDisposable
 
     Task SendAsync(string text);
 
-    void Start(CancellationToken token);
+    void Start();
 
     void Stop();
 }

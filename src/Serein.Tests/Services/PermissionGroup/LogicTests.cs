@@ -9,7 +9,7 @@ using Serein.Core.Services.Permissions;
 
 using Xunit;
 
-namespace Serein.Tests.PermissionGroup;
+namespace Serein.Tests.Services.PermissionGroup;
 
 [Collection(nameof(Serein))]
 public sealed class LogicTests : IDisposable

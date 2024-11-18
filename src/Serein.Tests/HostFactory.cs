@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -20,12 +19,12 @@ public static class HostFactory
         lock (Lock)
         {
             if (Directory.Exists(PathConstants.Root))
-            {
-                Array.ForEach(
-                    Directory.GetFiles(PathConstants.Root, "*", SearchOption.AllDirectories),
-                    File.Delete
-                );
-            }
+                foreach (var file in Directory.GetFiles(PathConstants.Root, "*", SearchOption.AllDirectories))
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch { }
 
             var builder = SereinAppBuilder.CreateBuilder();
 

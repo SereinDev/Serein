@@ -9,7 +9,7 @@ using Xunit;
 
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
-namespace Serein.Tests.CommandParser;
+namespace Serein.Tests.Services.CommandParser;
 
 [Collection(nameof(Serein))]
 public sealed class CommandTests : IDisposable

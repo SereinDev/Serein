@@ -4,35 +4,22 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
 
 using Xunit;
 
-namespace Serein.Tests.PermissionGroup;
+namespace Serein.Tests.Services.PermissionGroup;
 
 [Collection(nameof(Serein))]
-public sealed class NodeTests : IDisposable
+public sealed class NodeTests
 {
     private readonly IHost _app;
     private readonly PermissionManager _permissionManager;
-    private readonly GroupManager _groupManager;
-    private readonly PermissionGroupProvider _permissionGroupProvider;
 
     public NodeTests()
     {
         _app = HostFactory.BuildNew();
-        _app.StartAsync();
-
-        _groupManager = _app.Services.GetRequiredService<GroupManager>();
         _permissionManager = _app.Services.GetRequiredService<PermissionManager>();
-        _permissionGroupProvider = _app.Services.GetRequiredService<PermissionGroupProvider>();
-    }
-
-    public void Dispose()
-    {
-        _app.StopAsync();
-        _app.Dispose();
     }
 
     [Theory]

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Fleck;
@@ -101,7 +100,7 @@ public sealed class ReverseWebSocketService : IConnectionService
         await Task.WhenAll(tasks);
     }
 
-    public void Start(CancellationToken token)
+    public void Start()
     {
         if (Active)
             throw new InvalidOperationException();

@@ -1,5 +1,3 @@
-using System;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -8,10 +6,10 @@ using Serein.Core.Services.Permissions;
 
 using Xunit;
 
-namespace Serein.Tests.PermissionGroup;
+namespace Serein.Tests.Services.PermissionGroup;
 
 [Collection(nameof(Serein))]
-public sealed class DefaultValueTests : IDisposable
+public sealed class DefaultValueTests
 {
     private readonly IHost _app;
     private readonly GroupManager _groupManager;
@@ -24,12 +22,6 @@ public sealed class DefaultValueTests : IDisposable
 
         _groupManager = _app.Services.GetRequiredService<GroupManager>();
         _permissionGroupProvider = _app.Services.GetRequiredService<PermissionGroupProvider>();
-    }
-
-    public void Dispose()
-    {
-        _app.StopAsync();
-        _app.Dispose();
     }
 
     [Fact]

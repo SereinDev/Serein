@@ -28,33 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.ColumnHeader columnHeader1;
             System.Windows.Forms.ColumnHeader columnHeader2;
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.StatusStrip StatusStrip;
-            BindingListView = new System.Windows.Forms.ListView();
+            System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
             ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            BindingListView = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             columnHeader3 = new System.Windows.Forms.ColumnHeader();
             StatusStrip = new System.Windows.Forms.StatusStrip();
+            ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
             StatusStrip.SuspendLayout();
+            ContextMenuStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // BindingListView
-            // 
-            BindingListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
-            BindingListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            BindingListView.FullRowSelect = true;
-            BindingListView.GridLines = true;
-            BindingListView.Location = new System.Drawing.Point(0, 0);
-            BindingListView.MultiSelect = false;
-            BindingListView.Name = "BindingListView";
-            BindingListView.Size = new System.Drawing.Size(1200, 720);
-            BindingListView.TabIndex = 0;
-            BindingListView.UseCompatibleStateImageBehavior = false;
-            BindingListView.View = System.Windows.Forms.View.Details;
-            BindingListView.SelectedIndexChanged += BindingListView_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
@@ -87,6 +77,36 @@
             ToolStripStatusLabel.Size = new System.Drawing.Size(24, 31);
             ToolStripStatusLabel.Text = "-";
             // 
+            // ContextMenuStrip
+            // 
+            ContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { RefreshToolStripMenuItem });
+            ContextMenuStrip.Name = "ContextMenuStrip";
+            ContextMenuStrip.Size = new System.Drawing.Size(137, 42);
+            // 
+            // RefreshToolStripMenuItem
+            // 
+            RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
+            RefreshToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            RefreshToolStripMenuItem.Text = "刷新";
+            RefreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
+            // 
+            // BindingListView
+            // 
+            BindingListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+            BindingListView.ContextMenuStrip = ContextMenuStrip;
+            BindingListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            BindingListView.FullRowSelect = true;
+            BindingListView.GridLines = true;
+            BindingListView.Location = new System.Drawing.Point(0, 0);
+            BindingListView.MultiSelect = false;
+            BindingListView.Name = "BindingListView";
+            BindingListView.Size = new System.Drawing.Size(1200, 720);
+            BindingListView.TabIndex = 0;
+            BindingListView.UseCompatibleStateImageBehavior = false;
+            BindingListView.View = System.Windows.Forms.View.Details;
+            BindingListView.SelectedIndexChanged += BindingListView_SelectedIndexChanged;
+            // 
             // BindingPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
@@ -98,6 +118,7 @@
             Size = new System.Drawing.Size(1200, 720);
             StatusStrip.ResumeLayout(false);
             StatusStrip.PerformLayout();
+            ContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -106,5 +127,6 @@
 
         private System.Windows.Forms.ListView BindingListView;
         private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
     }
 }

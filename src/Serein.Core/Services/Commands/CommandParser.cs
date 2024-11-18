@@ -228,7 +228,7 @@ public partial class CommandParser(
                     "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
                     "sender.card" => commandContext?.MessagePacket?.Sender?.Card,
                     "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
-                    "sender.gameId" => GetGameId(commandContext?.MessagePacket?.UserId),
+                    "sender.gameid" => GetGameId(commandContext?.MessagePacket?.UserId),
                     "sender.shownname" => string.IsNullOrEmpty(
                         commandContext?.MessagePacket?.Sender?.Card
                     )

@@ -8,40 +8,46 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Serein.Core.Models.Output;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
 using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
 
-public sealed class WebSocketService(IHost host, SettingProvider settingProvider) : IConnectionService
+public sealed class WebSocketService(IHost host, SettingProvider settingProvider)
+    : IConnectionService
 {
-    private IConnectionLogger ConnectionLogger =>
-        host.Services.GetRequiredService<IConnectionLogger>();
+    private readonly Lazy<IConnectionLogger> _connectionLogger =
+        new(host.Services.GetRequiredService<IConnectionLogger>);
     private readonly SettingProvider _settingProvider = settingProvider;
+
+    private CancellationTokenSource? _reconnectCancellationToken;
+    private bool _closedManually;
+    private bool _connectedSuccessfully;
     private WebSocket? _client;
     private string _uri = string.Empty;
-
-    private Setting Setting => _settingProvider.Value;
 
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     public event EventHandler? StatusChanged;
 
-    public bool Active => _client?.State == WebSocketState.Open;
     public bool Connecting { get; private set; }
+    public bool Active =>
+        _client?.State == WebSocketState.Open
+        || Connecting
+        || _reconnectCancellationToken is not null
+            && !_reconnectCancellationToken.IsCancellationRequested;
 
     private WebSocket CreateNew()
     {
-        _uri = Setting.Connection.Uri;
+        _uri = _settingProvider.Value.Connection.Uri;
 
-        var headers = new Dictionary<string, string>(Setting.Connection.Headers);
-        if (!string.IsNullOrEmpty(Setting.Connection.AccessToken))
-            headers["Authorization"] = $"Bearer {Setting.Connection.AccessToken}";
+        var headers = new Dictionary<string, string>(_settingProvider.Value.Connection.Headers);
+        if (!string.IsNullOrEmpty(_settingProvider.Value.Connection.AccessToken))
+            headers["Authorization"] = $"Bearer {_settingProvider.Value.Connection.AccessToken}";
 
         var client = new WebSocket(
-            Setting.Connection.Uri,
-            string.Join('\x20', Setting.Connection.SubProtocols),
+            _settingProvider.Value.Connection.Uri,
+            string.Join('\x20', _settingProvider.Value.Connection.SubProtocols),
             customHeaderItems: [.. headers]
         );
 
@@ -49,17 +55,20 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
         client.Opened += StatusChanged;
         client.Opened += (_, _) =>
         {
-            ConnectionLogger.Log(LogLevel.Information, $"成功连接到{_uri}");
+            _connectionLogger.Value.Log(LogLevel.Information, $"成功连接到 {_uri}");
             Connecting = false;
+            _connectedSuccessfully = true;
         };
         client.Closed += StatusChanged;
         client.Closed += (_, _) =>
         {
-            ConnectionLogger.Log(LogLevel.Warning, "连接已断开");
+            _connectionLogger.Value.Log(LogLevel.Warning, "连接已断开");
             Connecting = false;
+
+            TryReconnect();
         };
         client.Error += (_, e) =>
-            ConnectionLogger.Log(
+            _connectionLogger.Value.Log(
                 LogLevel.Error,
                 $"{e.Exception.GetType().FullName}: {e.Exception.Message}"
             );
@@ -81,13 +90,14 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
         return Task.CompletedTask;
     }
 
-    public void Start(CancellationToken token)
+    public void Start()
     {
         if (Connecting)
             throw new InvalidOperationException("正在连接中");
 
         _client = CreateNew();
         Connecting = true;
+        _connectedSuccessfully = _closedManually = false;
 
         Task.Run(
             () =>
@@ -99,15 +109,42 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
                 catch (Exception e)
                 {
                     Connecting = false;
-                    ConnectionLogger.Log(LogLevel.Error, e.Message);
+                    _connectionLogger.Value.Log(LogLevel.Error, e.Message);
                 }
-            },
-            token
+            }
         );
     }
 
     public void Stop()
     {
+        if (
+            _reconnectCancellationToken is not null
+            && !_reconnectCancellationToken.IsCancellationRequested
+        )
+        {
+            _reconnectCancellationToken.Cancel();
+            _connectionLogger.Value.Log(LogLevel.Information, $"重连已取消");
+            return;
+        }
+
+        _closedManually = true;
         _client?.Close();
+    }
+
+    private async Task TryReconnect()
+    {
+        if (_closedManually || !_connectedSuccessfully)
+            return;
+
+        _reconnectCancellationToken = new();
+        _connectionLogger.Value.Log(
+            LogLevel.Information,
+            $"将在五秒后（{DateTime.Now.AddSeconds(5):T}）尝试重新连接"
+        );
+
+        await Task.Delay(5000, _reconnectCancellationToken.Token);
+
+        Start();
+        _reconnectCancellationToken.Cancel();
     }
 }

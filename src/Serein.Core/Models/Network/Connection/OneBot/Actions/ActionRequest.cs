@@ -1,14 +1,13 @@
 using System.Text.Json.Serialization;
 
-using Serein.Core.Models.Network.Connection.OneBot.ActionParams;
-
-namespace Serein.Core.Models.Network.Connection.OneBot;
+namespace Serein.Core.Models.Network.Connection.OneBot.Actions;
 
 public class ActionRequest<T>
     where T : notnull, IActionParams
 {
     public string Action { get; set; } = string.Empty;
 
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public T? Params { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

@@ -9,7 +9,7 @@ using Serein.Core.Utils;
 
 using Xunit;
 
-namespace Serein.Tests.Server;
+namespace Serein.Tests.Services.Server;
 
 [Collection(nameof(Serein))]
 public sealed class ManagementTests : IDisposable

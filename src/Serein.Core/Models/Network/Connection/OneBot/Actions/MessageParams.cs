@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Serein.Core.Models.Network.Connection.OneBot.ActionParams;
+namespace Serein.Core.Models.Network.Connection.OneBot.Actions;
 
 public class MessageParams : IActionParams
 {

@@ -11,7 +11,7 @@ using Xunit;
 using Runner = Serein.Core.Services.Commands.CommandRunner;
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
-namespace Serein.Tests.CommandRunner;
+namespace Serein.Tests.Services;
 
 [Collection(nameof(Serein))]
 public sealed class CommandTests

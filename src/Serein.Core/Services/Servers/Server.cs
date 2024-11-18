@@ -91,7 +91,7 @@ public sealed class Server
         if (string.IsNullOrEmpty(Configuration.FileName))
             throw new InvalidOperationException("启动文件为空");
 
-        if (!_eventDispatcher.Dispatch(Event.ServerStarting, Id))
+        if (!_eventDispatcher.Dispatch(Event.ServerStarting, this))
             return;
 
         _serverProcess = Process.Start(
@@ -138,7 +138,7 @@ public sealed class Server
             new(ServerOutputType.Information, $"“{Configuration.FileName}”启动中")
         );
         _reactionManager.TriggerAsync(ReactionType.ServerStart, new(Id));
-        _eventDispatcher.Dispatch(Event.ServerStarted, Id);
+        _eventDispatcher.Dispatch(Event.ServerStarted, this);
         _updateTimer.Start();
 
         _logger.LogDebug("Id={}: 正在启动", Id);
@@ -157,7 +157,7 @@ public sealed class Server
         if (!Status || _serverProcess is null)
             throw new InvalidOperationException("服务器未运行");
 
-        if (!_eventDispatcher.Dispatch(Event.ServerStopping, Id))
+        if (!_eventDispatcher.Dispatch(Event.ServerStopping, this))
             return;
 
         if (Configuration.StopCommands.Length == 0)
@@ -228,7 +228,7 @@ public sealed class Server
         if (_inputWriter is null || !Status)
             return;
 
-        if (!_eventDispatcher.Dispatch(Event.ServerInput, Id, command))
+        if (!_eventDispatcher.Dispatch(Event.ServerInput, this, command))
             return;
 
         _inputWriter.Write(
@@ -317,7 +317,7 @@ public sealed class Server
 
         ServerStatusChanged?.Invoke(this, EventArgs.Empty);
 
-        if (!_eventDispatcher.Dispatch(Event.ServerExited, Id, exitCode, DateTime.Now))
+        if (!_eventDispatcher.Dispatch(Event.ServerExited, this, exitCode, DateTime.Now))
             return;
 
         _reactionManager.TriggerAsync(
@@ -341,12 +341,12 @@ public sealed class Server
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));
 
-        if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, Id, e.Data))
+        if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, this, e.Data))
             return;
 
         var filtered = OutputFilter.Clear(e.Data);
 
-        if (!_eventDispatcher.Dispatch(Event.ServerOutput, Id, filtered))
+        if (!_eventDispatcher.Dispatch(Event.ServerOutput, this, filtered))
             return;
 
         if (

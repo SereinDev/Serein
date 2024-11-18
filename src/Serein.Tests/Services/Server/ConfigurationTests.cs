@@ -10,7 +10,7 @@ using Serein.Core.Utils;
 
 using Xunit;
 
-namespace Serein.Tests.Server;
+namespace Serein.Tests.Services.Server;
 
 [Collection(nameof(Serein))]
 public sealed class ConfigurationTests : IDisposable
@@ -61,7 +61,8 @@ public sealed class ConfigurationTests : IDisposable
         _app.Start();
 
         server.Start();
-        await Task.Delay(1000);
+        server.Input("help");
+        await Task.Delay(2000);
 
         Assert.True(Directory.Exists(string.Format(PathConstants.ServerLogDirectory, server.Id)));
         Assert.NotEmpty(Directory.GetFiles(string.Format(PathConstants.ServerLogDirectory, server.Id)));

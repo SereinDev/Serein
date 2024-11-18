@@ -76,7 +76,7 @@ public static class SereinAppBuilder
             .AddSingleton<NetPluginLoader>()
             .AddSingleton<LocalStorage>()
             .AddSingleton<SessionStorage>()
-            .AddDbContext<BindingRecordDbContext>()
+            .AddDbContext<BindingRecordDbContext>(ServiceLifetime.Transient)
             .AddSingleton<BindingManager>()
             .AddHostedService<PluginService>()
             .AddHostedService<ScheduleRunner>()

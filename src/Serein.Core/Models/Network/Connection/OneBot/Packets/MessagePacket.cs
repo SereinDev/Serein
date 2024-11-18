@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 
@@ -12,6 +13,7 @@ public class MessagePacket : Packet
 
     public SubType SubType { get; init; }
 
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Echo { get; init; }
 
     public long MessageId { get; init; }

@@ -43,7 +43,6 @@ public class Schedule : NotifyPropertyChangedModelBase
         {
             _command = value;
             CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
-
         }
     }
 

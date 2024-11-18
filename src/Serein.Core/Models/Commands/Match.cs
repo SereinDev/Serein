@@ -27,7 +27,10 @@ public class Match : NotifyPropertyChangedModelBase
 
                 RegexObj = new Regex(_regExp);
             }
-            catch { }
+            catch
+            {
+                RegexObj = null;
+            }
         }
     }
 

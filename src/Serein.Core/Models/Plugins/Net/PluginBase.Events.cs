@@ -11,20 +11,20 @@ namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(string id) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerStarted(string id) => Task.CompletedTask;
+    protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(string id) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerExited(string id, int exitcode, DateTime exitTime) =>
+    protected virtual Task OnServerExited(Services.Servers.Server server, int exitcode, DateTime exitTime) =>
         Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerOutput(string id, string line) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) => Task.FromResult(true);
 
-    protected virtual Task<bool> OnServerRawOutput(string id, string line) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) => Task.FromResult(true);
 
-    protected virtual Task OnServerInput(string id, string line) => Task.CompletedTask;
+    protected virtual Task OnServerInput(Services.Servers.Server server, string line) => Task.CompletedTask;
 
     protected virtual Task OnGroupIncreased() => Task.CompletedTask;
 
@@ -54,11 +54,14 @@ public abstract partial class PluginBase
     {
         switch (@event)
         {
+            case Event.ServerStarted:
+                return OnServerStarted(args.First().OfType<Services.Servers.Server>());
+
             case Event.ServerStarting:
-                return OnServerStarting(args.First().OfType<string>());
+                return OnServerStarting(args.First().OfType<Services.Servers.Server>());
 
             case Event.ServerStopping:
-                return OnServerStopping(args.First().OfType<string>());
+                return OnServerStopping(args.First().OfType<Services.Servers.Server>());
 
             case Event.GroupMessageReceived:
                 return OnGroupMessageReceived(args.First().OfType<MessagePacket>());
@@ -76,30 +79,30 @@ public abstract partial class PluginBase
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerOutput(args.First().OfType<string>(), args.Last().OfType<string>());
+                return OnServerOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerRawOutput(args.First().OfType<string>(), args.Last().OfType<string>());
+                return OnServerRawOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
             case Event.ServerInput:
                 if (args.Length != 2)
                     ThrowArgumentException();
 
-                return OnServerInput(args.First().OfType<string>(), args.Last().OfType<string>());
+                return OnServerInput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
             case Event.ServerExited:
                 if (
                     args.Length != 3
-                    || args[0] is not string id
+                    || args[0] is not Services.Servers.Server server
                     || args[1] is not int code
                     || args[2] is not DateTime time
                 )
                     ThrowArgumentException();
 
-                return OnServerExited(id, code, time);
+                return OnServerExited(server, code, time);
 
             case Event.SereinClosed:
                 return OnSereinClosed();
@@ -113,8 +116,6 @@ public abstract partial class PluginBase
             case Event.PluginsUnloading:
                 return OnPluginsUnloading();
 
-            case Event.ServerStarted:
-                return OnServerStarted(args.First().OfType<string>());
 
             default:
                 throw new NotSupportedException();
