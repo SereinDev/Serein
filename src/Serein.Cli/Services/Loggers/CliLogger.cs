@@ -37,12 +37,16 @@ public sealed class CliLogger(string categoryName) : ILogger
     )
     {
         if (!IsEnabled(logLevel))
+        {
             return;
+        }
 
         var text = state?.ToString() ?? string.Empty;
 
         if (exception != null)
+        {
             text += Environment.NewLine + (EnableDebug ? exception.ToString() : exception.GetDetailString());
+        }
 
         CliConsole.WriteLine(logLevel, $"[{_name}] {text}");
     }

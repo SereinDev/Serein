@@ -45,7 +45,9 @@ internal partial class ApiMap
     public async Task GetServer(string id)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         await HttpContext.SendPacketAsync(server);
     }
@@ -54,7 +56,9 @@ internal partial class ApiMap
     public async Task StartServer(string id)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         server.Start();
         await HttpContext.SendPacketAsync();
@@ -64,7 +68,9 @@ internal partial class ApiMap
     public async Task StopServer(string id)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         server.Stop();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
@@ -74,7 +80,9 @@ internal partial class ApiMap
     public async Task TerminateServer(string id)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         server.Terminate();
         await HttpContext.SendPacketAsync();
@@ -84,13 +92,19 @@ internal partial class ApiMap
     public async Task InputServer(string id, [QueryField("line", true)] string[] lines)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         if (!server.Status)
+        {
             throw HttpException.Forbidden("服务器未运行");
+        }
 
         foreach (var l in lines)
+        {
             server.Input(l);
+        }
 
         await HttpContext.SendPacketAsync();
     }
@@ -99,16 +113,22 @@ internal partial class ApiMap
     public async Task InputServer(string id)
     {
         if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
             throw HttpException.NotFound("未找到指定的服务器");
+        }
 
         if (!server.Status)
+        {
             throw HttpException.Forbidden("服务器未运行");
+        }
 
         foreach (
             var l in await HttpContext.ConvertRequestAs<string[]>()
                 ?? throw HttpException.BadRequest()
         )
+        {
             server.Input(l);
+        }
 
         await HttpContext.SendPacketAsync();
     }

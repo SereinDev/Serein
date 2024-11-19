@@ -57,9 +57,13 @@ public partial class PermissionGroupEditor : Form
             var item = new ListViewItem(kv.Key) { Tag = kv };
 
             if (_permissionManager.Nodes.TryGetValue(kv.Key, out var description))
+            {
                 item.SubItems.Add(description);
+            }
             else
+            {
                 item.SubItems.Add(string.Empty);
+            }
 
             item.SubItems.Add(kv.Value is not null ? kv.Value.ToString() : "Null");
             PermissionListView.Items.Add(item);
@@ -71,8 +75,12 @@ public partial class PermissionGroupEditor : Form
         PermissionComboBox.Items.Clear();
 
         lock (_permissionManager.Nodes)
+        {
             foreach (var key in _permissionManager.Nodes.Keys)
+            {
                 PermissionComboBox.Items.Add(key);
+            }
+        }
     }
 
     private void PermissionListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +116,9 @@ public partial class PermissionGroupEditor : Form
     private void ValueComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (PermissionListView.SelectedItems.Count == 1)
+        {
             PermissionListView.SelectedItems[0].SubItems[2].Text = ValueComboBox.Text;
+        }
     }
 
     private void PermissionContextMenuStrip_Opening(object sender, CancelEventArgs e)
@@ -123,26 +133,35 @@ public partial class PermissionGroupEditor : Form
         item.SubItems.Add("Null");
 
         if (PermissionListView.SelectedItems.Count == 1)
+        {
             PermissionListView.Items.Insert(PermissionListView.SelectedItems[0].Index, item);
+        }
         else
+        {
             PermissionListView.Items.Add(item);
+        }
     }
 
     private void DeletePermissionToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (PermissionListView.SelectedItems.Count == 1)
+        {
             PermissionListView.Items.RemoveAt(PermissionListView.SelectedItems[0].Index);
+        }
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
     {
         lock (_group)
+        {
             try
             {
                 GroupManager.ValidateGroupId(Id);
 
                 if (!IdTextBox.ReadOnly && _groupManager.Ids.Contains(Id))
+                {
                     throw new InvalidOperationException("此Id已被占用");
+                }
 
                 _group.Name = NameTextBox.Text;
                 _group.Description = DescriptionTextBox.Text;
@@ -156,23 +175,29 @@ public partial class PermissionGroupEditor : Form
                 foreach (var item in PermissionListView.Items)
                 {
                     if (item is ListViewItem listViewItem)
+                    {
                         permissions[listViewItem.Text] = listViewItem.SubItems[2].Text switch
                         {
                             "True" => true,
                             "False" => false,
                             _ => null
                         };
+                    }
                 }
                 _group.Nodes = permissions;
 
                 var list = new List<long>();
                 foreach (var item in MemberListView.Items)
+                {
                     if (
                         item is ListViewItem listViewItem
                         && long.TryParse(listViewItem.Text, out var id)
                         && !list.Contains(id)
                     )
+                    {
                         list.Add(id);
+                    }
+                }
                 _group.Members = [.. list];
 
                 DialogResult = DialogResult.OK;
@@ -182,6 +207,7 @@ public partial class PermissionGroupEditor : Form
             {
                 MessageBoxHelper.ShowWarningMsgBox(ex.Message);
             }
+        }
     }
 
     private void MemberContextMenuStrip_Opening(object sender, CancelEventArgs e)
@@ -192,15 +218,21 @@ public partial class PermissionGroupEditor : Form
     private void AddMemberToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (MemberListView.SelectedItems.Count == 1)
+        {
             MemberListView.Items.Insert(MemberListView.SelectedItems[0].Index, "0");
+        }
         else
+        {
             MemberListView.Items.Add("0");
+        }
     }
 
     private void DeleteMemberToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (MemberListView.SelectedItems.Count == 1)
+        {
             MemberListView.Items.RemoveAt(MemberListView.SelectedItems[0].Index);
+        }
     }
 
     private void IdTextBox_Enter(object sender, EventArgs e)
@@ -211,11 +243,17 @@ public partial class PermissionGroupEditor : Form
     private void IdTextBox_Validating(object sender, CancelEventArgs e)
     {
         if (string.IsNullOrEmpty(IdTextBox.Text))
+        {
             ErrorProvider.SetError(IdTextBox, "Id不能为空");
+        }
         else if (!IdRegex().IsMatch(IdTextBox.Text))
+        {
             ErrorProvider.SetError(IdTextBox, "Id只能由字母、数字和下划线组成");
+        }
         else if (IdTextBox.Text.Length <= 2)
+        {
             ErrorProvider.SetError(IdTextBox, "Id长度太短");
+        }
     }
 
     private void ParentsTextBox_Enter(object sender, EventArgs e)
@@ -233,9 +271,11 @@ public partial class PermissionGroupEditor : Form
             .Where((id) => !_groupManager.Ids.Contains(id));
 
         if (nonExistent.Any())
+        {
             ErrorProvider.SetError(
                 ParentsTextBox,
                 $"以下权限组不存在：\r\n" + string.Join("\r\n", nonExistent)
             );
+        }
     }
 }

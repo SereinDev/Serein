@@ -46,7 +46,9 @@ public sealed class ServerPluginManager
     public void Update()
     {
         if (_updating)
+        {
             return;
+        }
 
         lock (_plugins)
         {
@@ -58,7 +60,9 @@ public sealed class ServerPluginManager
                 _plugins.Clear();
 
                 if (!File.Exists(_server.Configuration.FileName))
+                {
                     return;
+                }
 
                 foreach (var file in EnumerateFiles())
                 {
@@ -68,6 +72,7 @@ public sealed class ServerPluginManager
                             .ToLowerInvariant();
 
                     if (AcceptableExtensions.Contains(extension))
+                    {
                         _plugins.Add(
                             new(
                                 file,
@@ -82,6 +87,7 @@ public sealed class ServerPluginManager
                                 }
                             )
                         );
+                    }
                 }
             }
             finally
@@ -102,7 +108,9 @@ public sealed class ServerPluginManager
             var path = Path.GetFullPath(Path.Join(root, dir));
 
             if (!Directory.Exists(path))
+            {
                 continue;
+            }
 
             CurrentPluginsDirectory = path;
             return Directory.EnumerateFiles(path, "*.*");
@@ -117,7 +125,9 @@ public sealed class ServerPluginManager
             string.IsNullOrEmpty(CurrentPluginsDirectory)
             || !Directory.Exists(CurrentPluginsDirectory)
         )
+        {
             throw new InvalidOperationException("无法获取插件文件夹");
+        }
 
         foreach (var path in paths)
             File.Copy(path, Path.Join(CurrentPluginsDirectory, Path.GetFileName(path)));
@@ -126,10 +136,14 @@ public sealed class ServerPluginManager
     public void Remove(ServerPlugin serverPlugin)
     {
         if (!_plugins.Remove(serverPlugin))
+        {
             throw new InvalidOperationException("无法通过此插件管理器删除该插件");
+        }
 
         if (!serverPlugin.FileInfo.Exists)
+        {
             throw new FileNotFoundException($"插件\"{serverPlugin.Path}\"不存在");
+        }
 
         serverPlugin.FileInfo.Delete();
     }
@@ -137,13 +151,18 @@ public sealed class ServerPluginManager
     public void Disable(ServerPlugin serverPlugin)
     {
         if (!Plugins.Contains(serverPlugin))
+        {
             throw new InvalidOperationException("无法通过此插件管理器禁用该插件");
+        }
 
         if (!serverPlugin.IsEnabled)
+        {
             throw new InvalidOperationException("不能禁用已经被禁用的插件");
-
+        }
         if (!serverPlugin.FileInfo.Exists)
+        {
             throw new FileNotFoundException($"插件\"{serverPlugin.Path}\"不存在");
+        }
 
         serverPlugin.FileInfo.MoveTo(serverPlugin.Path + DisabledPluginExtension);
     }
@@ -151,20 +170,28 @@ public sealed class ServerPluginManager
     public void Enable(ServerPlugin serverPlugin)
     {
         if (!Plugins.Contains(serverPlugin))
+        {
             throw new InvalidOperationException("无法通过此插件管理器启用该插件");
+        }
 
         if (serverPlugin.IsEnabled)
+        {
             throw new InvalidOperationException("不能禁用未被禁用的插件");
+        }
 
         if (!serverPlugin.FileInfo.Exists)
+        {
             throw new FileNotFoundException($"插件\"{serverPlugin.Path}\"不存在");
+        }
 
         if (Path.GetExtension(serverPlugin.Path) == DisabledPluginExtension)
+        {
             serverPlugin.FileInfo.MoveTo(
-                Path.Join(
-                    CurrentPluginsDirectory,
-                    Path.GetFileNameWithoutExtension(serverPlugin.Path)
-                )
-            );
+               Path.Join(
+                   CurrentPluginsDirectory,
+                   Path.GetFileNameWithoutExtension(serverPlugin.Path)
+               )
+           );
+        }
     }
 }

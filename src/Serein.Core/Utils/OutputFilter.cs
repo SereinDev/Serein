@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Core.Utils;
 
-public partial class OutputFilter
+public static partial class OutputFilter
 {
     public static string RemoveControlChars(string input)
     {
@@ -12,7 +12,9 @@ public partial class OutputFilter
         {
             var c = input[i];
             if (c > 31 && c != 127 || c == 0x1b)
+            {
                 stringBuilder.Append(input[i]);
+            }
         }
         return stringBuilder.ToString();
     }

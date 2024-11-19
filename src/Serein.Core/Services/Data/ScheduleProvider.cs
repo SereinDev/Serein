@@ -33,20 +33,25 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
                 );
 
                 if (wrapper?.Type == typeof(ObservableCollection<Schedule>).ToString())
+                {
                     lock (Value)
                     {
                         Value.Clear();
 
                         if (wrapper.Data is not null)
+                        {
                             foreach (var match in wrapper.Data)
                             {
                                 Value.Add(match);
                             }
+                        }
                     }
+                }
             }
             else
+            {
                 Save();
-
+            }
             return Value;
         }
         catch (Exception e)

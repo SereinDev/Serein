@@ -96,7 +96,9 @@ public partial class MainWindow : Window
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem item)
+        {
             return;
+        }
 
         var tag = item.Tag as string;
 
@@ -147,22 +149,26 @@ public partial class MainWindow : Window
     private void Window_ContentRendered(object sender, EventArgs e)
     {
         if (SereinAppBuilder.StartForTheFirstTime)
+        {
             new WelcomeDialog().ShowAsync();
+        }
 
         if (FileLoggerProvider.IsEnabled)
+        {
             new ContentDialog
             {
                 Title = "嘿！你开启了日志模式",
                 Content = new TextBlock
                 {
                     Text =
-                        $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）\r\n"
-                        + "除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！\r\n\r\n"
-                        + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
+                      $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）\r\n"
+                      + "除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！\r\n\r\n"
+                      + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
                 },
                 CloseButtonText = "我知道了",
                 DefaultButton = ContentDialogButton.Close,
             }.ShowAsync();
+        }
 
         _host.StartAsync();
     }
@@ -179,7 +185,9 @@ public partial class MainWindow : Window
         TopMostMenuItem.IsEnabled = IsVisible;
 
         if (Topmost && !IsVisible)
+        {
             Topmost = false;
+        }
     }
 
     private void Window_Closing(object sender, CancelEventArgs e)
@@ -226,7 +234,9 @@ public partial class MainWindow : Window
         );
 
         if (GlobalInfoBar.RenderTransform is not TranslateTransform translateTransform)
+        {
             return;
+        }
 
         GlobalInfoBar.IsOpen = true;
         translateTransform.BeginAnimation(TranslateTransform.YProperty, _infoBarPopIn);
@@ -258,7 +268,9 @@ public partial class MainWindow : Window
         {
             infoBarTask.ResetEvent.Set();
             if (!cancellationTokenSource.IsCancellationRequested)
+            {
                 cancellationTokenSource.Cancel();
+            }
         }
     }
 }

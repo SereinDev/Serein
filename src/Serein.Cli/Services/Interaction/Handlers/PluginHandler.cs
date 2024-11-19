@@ -64,19 +64,33 @@ public sealed class PluginHandler(
 
             case "disable" when args.Count == 3:
                 if (args.Count == 2)
+                {
                     throw new InvalidArgumentException("缺少插件Id");
+                }
 
                 if (_jsPluginLoader.Plugins.TryGetValue(args[2], out var jsPlugin))
+                {
                     if (jsPlugin.IsEnabled)
+                    {
                         jsPlugin.Disable();
+                    }
                     else
+                    {
                         throw new InvalidOperationException("插件已经被禁用");
+                    }
+                }
 
                 if (_netPluginLoader.Plugins.TryGetValue(args[2], out var netPlugin))
+                {
                     if (netPlugin.IsEnabled)
+                    {
                         netPlugin.Disable();
+                    }
                     else
+                    {
                         throw new InvalidOperationException("插件已经被禁用");
+                    }
+                }
                 break;
 
             default:

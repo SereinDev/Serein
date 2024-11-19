@@ -37,7 +37,9 @@ public partial class ConnectionPage : UserControl
                 e.PropertyName == nameof(_wsConnectionManager.Active)
                 || e.PropertyName == nameof(_wsConnectionManager.ConnectedAt)
             )
+            {
                 Invoke(UpadteInfo);
+            }
         };
     }
 

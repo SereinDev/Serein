@@ -21,6 +21,7 @@ public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogg
         Debug.WriteLine($"[Plugin::{(string.IsNullOrEmpty(name) ? "Serein" : name)}] [{level}] {message}");
 
         if (_pluginPage.Value.IsHandleCreated)
+        {
             _pluginPage.Value.Invoke(() =>
             {
                 lock (_lock)
@@ -48,5 +49,6 @@ public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogg
                     }
                 }
             });
+        }
     }
 }

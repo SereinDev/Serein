@@ -20,7 +20,8 @@ public abstract class DataProviderBase<T> : NotifyPropertyChangedModelBase
         await Task.Delay(1000);
 
         if ((DateTime.Now - _last).TotalMilliseconds > 900)
-            Save();
+           { Save();
+           }
     }
 
     public abstract T Value { get; }

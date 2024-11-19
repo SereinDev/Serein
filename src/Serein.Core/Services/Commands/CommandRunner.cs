@@ -52,8 +52,9 @@ public sealed class CommandRunner
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
     {
         if (command.Type == CommandType.Invalid)
+        {
             return;
-
+        }
         _logger.LogDebug(
             "运行命令：command.Body='{}'; command.Argument='{}'",
             command.Body,
@@ -72,39 +73,58 @@ public sealed class CommandRunner
             case CommandType.InputServer:
                 Server? server = null;
                 if (!string.IsNullOrEmpty(argumentStr))
+                {
                     _serverManager.Value.Servers.TryGetValue(argumentStr, out server);
+                }
                 else if (!string.IsNullOrEmpty(commandContext?.ServerId))
+                {
                     _serverManager.Value.Servers.TryGetValue(commandContext.ServerId, out server);
+                }
                 else if (_serverManager.Value.Servers.Count == 1)
+                {
                     server = _serverManager.Value.Servers.Values.First();
-
+                }
                 server?.InputFromCommand(body, null);
                 break;
 
             case CommandType.SendGroupMsg:
                 if (!string.IsNullOrEmpty(argumentStr))
+                {
                     await _wsConnectionManager.Value.SendGroupMsgAsync(argumentStr, body);
+                }
                 else if (command.Argument is long groupId1)
+                {
                     await _wsConnectionManager.Value.SendGroupMsgAsync(groupId1, body);
+                }
                 else if (commandContext?.MessagePacket?.GroupId is long groupId2)
+                {
                     await _wsConnectionManager.Value.SendGroupMsgAsync(groupId2, body);
+                }
                 else if (
                     command.Origin != CommandOrigin.Msg
                     && _settingProvider.Value.Connection.Groups.Length > 0
                 )
+                {
                     await _wsConnectionManager.Value.SendGroupMsgAsync(
                         _settingProvider.Value.Connection.Groups[0],
                         body
                     );
+                }
                 break;
 
             case CommandType.SendPrivateMsg:
                 if (!string.IsNullOrEmpty(argumentStr))
+                {
                     await _wsConnectionManager.Value.SendPrivateMsgAsync(argumentStr, body);
+                }
                 else if (command.Argument is long userId1)
+                {
                     await _wsConnectionManager.Value.SendGroupMsgAsync(userId1, body);
+                }
                 else if (commandContext?.MessagePacket?.UserId is long userId2)
+                {
                     await _wsConnectionManager.Value.SendPrivateMsgAsync(userId2, body);
+                }
                 break;
 
             case CommandType.SendData:
@@ -114,11 +134,13 @@ public sealed class CommandRunner
             case CommandType.Bind:
             case CommandType.Unbind:
                 if (commandContext?.MessagePacket?.UserId is not long userId3)
+                {
                     break;
-
+                }
                 try
                 {
                     if (command.Type == CommandType.Bind)
+                    {
                         _bindingManager.Add(
                             userId3,
                             body,
@@ -126,8 +148,11 @@ public sealed class CommandRunner
                                 ? commandContext.MessagePacket.Sender.Nickname
                                 : commandContext.MessagePacket.Sender.Card
                         );
+                    }
                     else
+                    {
                         _bindingManager.Remove(userId3, body);
+                    }
                 }
                 catch (BindingFailureException e)
                 {
@@ -141,21 +166,25 @@ public sealed class CommandRunner
                     command.Argument is not string id
                     || !_jsPluginLoader.JsPlugins.TryGetValue(id, out var jsPlugin)
                 )
+                {
                     break;
-
+                }
                 var entered = false;
                 try
                 {
                     if (!Monitor.TryEnter(jsPlugin.Engine, 1000))
+                    {
                         throw new TimeoutException("等待引擎超时");
-
+                    }
                     entered = true;
                     jsPlugin.Engine.Execute(body);
                 }
                 finally
                 {
                     if (entered)
+                    {
                         Monitor.Exit(jsPlugin.Engine);
+                    }
                 }
                 break;
 
@@ -172,12 +201,16 @@ public sealed class CommandRunner
     private async Task FastReply(MessagePacket messagePacket, string msg)
     {
         if (messagePacket.MessageType == MessageType.Group && messagePacket.GroupId is long groupId)
+        {
             await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, msg);
+        }
         else if (
             messagePacket.MessageType == MessageType.Private
             && messagePacket.UserId is long userId
         )
+        {
             await _wsConnectionManager.Value.SendPrivateMsgAsync(userId, msg);
+        }
     }
 
     private async Task ExecuteShellCommand(string line)
@@ -212,8 +245,9 @@ public sealed class CommandRunner
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));
 
         if (!process.HasExited)
+        {
             process.Kill(true);
-
+        }
         process.Dispose();
     }
 }

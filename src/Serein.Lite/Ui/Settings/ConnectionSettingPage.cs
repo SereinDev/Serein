@@ -112,8 +112,12 @@ public partial class ConnectionSettingPage : UserControl
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             )
         )
+        {
             if (long.TryParse(id, out long i))
+            {
                 list.Add(i);
+            }
+        }
 
         _settingProvider.Value.Connection.Groups = [.. list];
         OnPropertyChanged(sender, e);
@@ -128,8 +132,12 @@ public partial class ConnectionSettingPage : UserControl
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             )
         )
+        {
             if (long.TryParse(id, out long i))
+            {
                 list.Add(i);
+            }
+        }
 
         _settingProvider.Value.Connection.Administrators = [.. list];
         OnPropertyChanged(sender, e);

@@ -104,9 +104,13 @@ public partial class PluginPage : UserControl
     private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!_pluginManager.Loading && !_pluginManager.Reloading)
+        {
             Task.Run(_pluginManager.Reload);
+        }
         else
+        {
             MessageBoxHelper.ShowWarningMsgBox("正在加载插件中");
+        }
     }
 
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -122,9 +126,13 @@ public partial class PluginPage : UserControl
     private void ReloadButton_Click(object sender, EventArgs e)
     {
         if (!_pluginManager.Loading && !_pluginManager.Reloading)
+        {
             Task.Run(_pluginManager.Reload);
+        }
         else
+        {
             MessageBoxHelper.ShowWarningMsgBox("正在加载插件中");
+        }
     }
 
     private void ClearConsoleButton_Click(object sender, EventArgs e)

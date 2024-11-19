@@ -26,7 +26,7 @@ public static class CrashHelper
             sb.AppendLine("程序集：" + Assembly.GetEntryAssembly()?.FullName);
             sb.AppendLine("时间：" + date.ToString("s"));
             sb.AppendLine("文件路径：" + AppDomain.CurrentDomain.BaseDirectory);
-            sb.AppendLine("操作系统：" + Environment.OSVersion.ToString());
+            sb.AppendLine("操作系统：" + Environment.OSVersion);
             sb.AppendLine("CLR版本：" + Environment.Version);
             sb.AppendLine(e.ToString());
             sb.AppendLine();

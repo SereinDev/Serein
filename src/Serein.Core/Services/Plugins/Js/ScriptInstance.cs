@@ -66,12 +66,16 @@ public sealed partial class ScriptInstance
     public bool Exports(string? name, JsValue jsValue)
     {
         if (string.IsNullOrEmpty(name))
+        {
             return false;
+        }
 
         try
         {
             if (jsValue.IsNull() || jsValue.IsUndefined())
+            {
                 return _pluginManager.ExportedVariables.Remove(name, out _);
+            }
 
             _pluginManager.ExportedVariables[name] = jsValue.ToObject();
             return true;

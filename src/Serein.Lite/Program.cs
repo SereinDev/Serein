@@ -58,7 +58,9 @@ public static class Program
         // InvalidOperationException is thrown when updating binding source in another thread in debug mode
         // https://github.com/dotnet/winforms/issues/8582
         if (Debugger.IsAttached)
+        {
             Control.CheckForIllegalCrossThreadCalls = false;
+        }
 #endif
 
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>

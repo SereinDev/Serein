@@ -40,7 +40,9 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
     private void OnPropertyChanged(object sender, EventArgs e)
     {
         if (IsLoaded)
+        {
             _settingProvider.SaveAsyncWithDebounce();
+        }
     }
 
     private void CheckBox_Click(object sender, RoutedEventArgs e)
@@ -89,7 +91,9 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
     {
         var dialog = new OpenFileDialog();
         if (dialog.ShowDialog() == true)
+        {
             _settingProvider.Value.WebApi.Certificate.Path = dialog.FileName;
+        }
         OnPropertyChanged(sender, e);
     }
 }

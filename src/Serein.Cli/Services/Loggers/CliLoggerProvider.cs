@@ -13,8 +13,9 @@ public sealed class CliLoggerProvider : ILoggerProvider
         lock (_loggers)
         {
             if (!_loggers.TryGetValue(categoryName, out var logger))
+            {
                 logger = _loggers[categoryName] = new(categoryName);
-
+            }
             return logger;
         }
     }

@@ -98,23 +98,28 @@ public static class Program
         var serverSwitcher = app.Services.GetRequiredService<ServerSwitcher>();
 
         if (SereinAppBuilder.StartForTheFirstTime)
+        {
             ShowWelcomePage(logger);
+        }
 
         if (FileLoggerProvider.IsEnabled)
+        {
             ShowWarningOfLogMode(logger);
-
+        }
         app.Start();
 
         serverSwitcher.Initialize();
-        updateChecker.Updated += (_, e) =>
+        updateChecker.Updated += (_, _) =>
         {
             if (updateChecker.Newest is not null)
+            {
                 logger.LogInformation(
                     "发现新版本：{}{}发布地址：{}",
                     updateChecker.Newest.TagName,
                     Environment.NewLine,
                     updateChecker.Newest.Url
                 );
+            }
         };
 
         app.WaitForShutdown();

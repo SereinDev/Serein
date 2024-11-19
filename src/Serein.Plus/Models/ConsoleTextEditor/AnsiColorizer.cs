@@ -16,7 +16,9 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
         var text = CurrentContext.Document.GetText(line);
 
         if (!text.Contains('\x1b'))
+        {
             return;
+        }
 
         int mIndex = -1;
 
@@ -31,18 +33,24 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
         for (int i = 0; i < text.Length; i++)
         {
             if (text[i] != '\x1b' || i + 1 >= text.Length || text[i + 1] != '[')
+            {
                 continue;
+            }
 
             mIndex = text.IndexOf('m', i);
 
             if (mIndex < 0) // invalid index of 'm'
+            {
                 continue;
+            }
 
             var args = text.Substring(i + 2, mIndex - i - 2)
                 .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             if (args.Length == 0)
+            {
                 continue;
+            }
 
             for (int j = 0; j < args.Length; j++)
             {
@@ -237,7 +245,7 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     case "107":
                         background = null;
                         break;
-                        #endregion
+                    #endregion
                 }
             }
 
@@ -273,24 +281,28 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
     )
     {
         if (foreground is not null)
+        {
             if (reversed)
-                element.TextRunProperties.SetBackgroundBrush(
-                    new SolidColorBrush(foreground ?? throw new NullReferenceException())
-                );
+            {
+                element.TextRunProperties.SetBackgroundBrush(new SolidColorBrush(foreground.Value));
+            }
             else
-                element.TextRunProperties.SetForegroundBrush(
-                    new SolidColorBrush(foreground ?? throw new NullReferenceException())
-                );
+            {
+                element.TextRunProperties.SetForegroundBrush(new SolidColorBrush(foreground.Value));
+            }
+        }
 
         if (background is not null)
+        {
             if (reversed)
-                element.TextRunProperties.SetForegroundBrush(
-                    new SolidColorBrush(background ?? throw new NullReferenceException())
-                );
+            {
+                element.TextRunProperties.SetForegroundBrush(new SolidColorBrush(background.Value));
+            }
             else
-                element.TextRunProperties.SetBackgroundBrush(
-                    new SolidColorBrush(background ?? throw new NullReferenceException())
-                );
+            {
+                element.TextRunProperties.SetBackgroundBrush(new SolidColorBrush(background.Value));
+            }
+        }
 
         if (bold || italic)
         {
@@ -310,10 +322,14 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
             var decorations = new TextDecorationCollection();
 
             if (strikethrough)
+            {
                 decorations.Add(TextDecorations.Strikethrough);
+            }
 
             if (underline)
+            {
                 decorations.Add(TextDecorations.Underline);
+            }
 
             element.TextRunProperties.SetTextDecorations(decorations);
         }

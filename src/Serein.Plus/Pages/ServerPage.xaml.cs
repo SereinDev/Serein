@@ -43,7 +43,9 @@ public partial class ServerPage : Page
         DataContext = this;
 
         foreach (var (id, server) in _serverManager.Servers)
+        {
             Add(id, server);
+        }
 
         _serverManager.ServersUpdated += ServerManager_ServersUpdated;
     }
@@ -71,7 +73,9 @@ public partial class ServerPage : Page
         TabControl.Items.Add(tabItem);
 
         if (TabControl.Items.Count == 1)
+        {
             TabControl.SelectedIndex = 0;
+        }
     }
 
     private void ServerManager_ServersUpdated(object? sender, ServersUpdatedEventArgs e)
@@ -82,11 +86,15 @@ public partial class ServerPage : Page
                 e.Type == ServersUpdatedType.Added
                 && _serverManager.Servers.TryGetValue(e.Id, out var server)
             )
+            {
                 Add(e.Id, server);
+            }
             else if (_panels.TryGetValue(e.Id, out var page))
             {
                 if (TabControl.Items.Contains(page))
+                {
                     TabControl.Items.Remove(page);
+                }
                 _panels.Remove(e.Id);
 
                 _infoBarProvider.Enqueue(
@@ -100,8 +108,10 @@ public partial class ServerPage : Page
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new();
         if (_serverManager.Servers.Count == 0)
+        {
             _infoBarProvider.Enqueue(
                 "当前没有服务器配置",
                 "你可以点击上方的加号进行添加",
@@ -109,12 +119,15 @@ public partial class ServerPage : Page
                 TimeSpan.FromSeconds(5),
                 _cancellationTokenSource.Token
             );
+        }
     }
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
     {
         if (_cancellationTokenSource?.IsCancellationRequested == false)
+        {
             _cancellationTokenSource.Cancel();
+        }
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -126,7 +139,9 @@ public partial class ServerPage : Page
                 {
                     var dialog = new OpenFileDialog() { Filter = "服务器配置文件|*.json" };
                     if (dialog.ShowDialog() != true)
+                    {
                         return;
+                    }
 
                     var config = ServerManager.LoadFrom(dialog.FileName);
                     var editor1 = new ServerConfigurationEditor(_serverManager, config)
@@ -135,7 +150,9 @@ public partial class ServerPage : Page
                     };
 
                     if (editor1.ShowDialog() != true || string.IsNullOrEmpty(editor1.Id))
+                    {
                         return;
+                    }
 
                     _serverManager.Add(editor1.Id, editor1.Configuration);
                 }
@@ -154,7 +171,10 @@ public partial class ServerPage : Page
                     };
 
                     if (editor2.ShowDialog() != true || string.IsNullOrEmpty(editor2.Id))
+                    {
                         return;
+                    }
+
                     _serverManager.Add(editor2.Id, editor2.Configuration);
                 }
                 catch (Exception ex)

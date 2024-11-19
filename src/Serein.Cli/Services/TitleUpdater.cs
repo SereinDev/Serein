@@ -34,8 +34,9 @@ public sealed class TitleUpdater(SettingProvider settingProvider, CommandParser 
     private void Update()
     {
         if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+        {
             return;
-
+        }
         var text = _commandParser.ApplyVariables(
             _settingProvider.Value.Application.CustomTitle,
             null

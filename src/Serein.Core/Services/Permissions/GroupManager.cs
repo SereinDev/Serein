@@ -25,13 +25,17 @@ public partial class GroupManager(
     public static void ValidateGroupId(string? id)
     {
         if (string.IsNullOrEmpty(id) || !GroupIdRegex.IsMatch(id))
+        {
             throw new InvalidOperationException("权限组Id格式不正确");
+        }
     }
 
     public void Add(string id, Group group)
     {
         if (!_permissionGroupProvider.Value.TryAdd(id, group))
+        {
             throw new InvalidOperationException("已经存在了相同Id的权限组");
+        }
 
         _permissionGroupProvider.SaveAsyncWithDebounce();
     }
@@ -63,10 +67,14 @@ public partial class GroupManager(
             foreach (var kv in _permissionGroupProvider.Value)
             {
                 if (visitedGroups.Contains(kv.Key))
+                {
                     continue;
+                }
 
                 if (kv.Key == "everyone" || kv.Value.Members.Contains(userId))
+                {
                     ProcessGroup(kv.Key, kv.Value);
+                }
             }
         }
 
@@ -75,13 +83,18 @@ public partial class GroupManager(
         void ProcessGroup(string groupId, Group group)
         {
             if (visitedGroups.Contains(groupId))
+            {
                 return;
-
+            }
             visitedGroups.Add(groupId);
 
             foreach (var parent in group.Parents)
+            {
                 if (_permissionGroupProvider.Value.TryGetValue(parent, out var parentGroup))
+                {
                     ProcessGroup(parent, parentGroup);
+                }
+            }
 
             AddNodes(group.Priority, group.Nodes);
         }
@@ -94,18 +107,26 @@ public partial class GroupManager(
                 {
                     var keyWithoutWildcard = permission.Key[..^2];
                     foreach (var key in nodes)
+                    {
                         if (key.StartsWith(keyWithoutWildcard))
+                        {
                             CompareAndAdd(key, priority, permission.Value);
+                        }
+                    }
                 }
                 else
+                {
                     CompareAndAdd(permission.Key, priority, permission.Value);
+                }
             }
         }
 
         void CompareAndAdd(string key, int priority, bool? value)
         {
             if (!result.TryGetValue(key, out var permission) || permission.Priority <= priority)
+            {
                 result[key] = (priority, value);
+            }
         }
     }
 }

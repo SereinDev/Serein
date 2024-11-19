@@ -16,18 +16,25 @@ internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/")
     protected override Task OnRequestAsync(IHttpContext context)
     {
         if (context.RequestedPath == "/broadcast")
+        {
             return Task.CompletedTask;
-
+        }
         var auth = context.Request.Headers.Get("Authorization");
 
         if (_settingProvider.Value.WebApi.AccessTokens.Length == 0)
+        {
             return Task.CompletedTask;
+        }
 
         if (string.IsNullOrEmpty(auth))
+        {
             throw HttpException.Unauthorized();
+        }
 
         if (auth.StartsWith("Bearer "))
+        {
             auth = auth[7..];
+        }
 
         return !_settingProvider.Value.WebApi.AccessTokens.Contains(auth)
             ? throw HttpException.Unauthorized()

@@ -41,9 +41,12 @@ public partial class PermissionGroupEditor : Window
         IdTextBox.IsEnabled = string.IsNullOrEmpty(id);
 
         foreach (var userId in Group.Members)
+        {
             MemberListView.Items.Add(userId);
+        }
 
         foreach ((var key, var value) in group.Nodes)
+        {
             PermissionListView.Items.Add(
                 new PermissionItemViewModel
                 {
@@ -57,6 +60,7 @@ public partial class PermissionGroupEditor : Window
                         : string.Empty,
                 }
             );
+        }
     }
 
     private void MemberMenuItem_Click(object sender, RoutedEventArgs e)
@@ -74,12 +78,16 @@ public partial class PermissionGroupEditor : Window
                                 Dispatcher.Invoke(() =>
                                 {
                                     if (!MemberListView.Items.Contains(dialog.Id))
+                                    {
                                         MemberListView.Items.Add(dialog.Id);
+                                    }
                                     else
+                                    {
                                         DialogHelper.ShowSimpleDialog(
                                             "添加失败",
                                             "已经添加过此用户Id"
                                         );
+                                    }
                                 });
                         }
                     );
@@ -87,6 +95,7 @@ public partial class PermissionGroupEditor : Window
 
             case "Remove":
                 if (MemberListView.SelectedIndex >= 0)
+                {
                     DialogHelper
                         .ShowDeleteConfirmation(
                             $"你确定要删除\"{MemberListView.SelectedItem}\"吗？"
@@ -103,6 +112,7 @@ public partial class PermissionGroupEditor : Window
                                     );
                             }
                         );
+                }
                 break;
         }
     }
@@ -119,6 +129,7 @@ public partial class PermissionGroupEditor : Window
                         (task) =>
                         {
                             if (task.Result == ContentDialogResult.Primary)
+                            {
                                 Dispatcher.Invoke(
                                     () =>
                                         PermissionListView.Items.Add(
@@ -136,13 +147,16 @@ public partial class PermissionGroupEditor : Window
                                             }
                                         )
                                 );
+                            }
                         }
                     );
                 break;
 
             case "Edit":
                 if (PermissionListView.SelectedItem is not PermissionItemViewModel viewModel)
+                {
                     break;
+                }
 
                 var dialog2 = new PermissionEditorDialog(
                     _permissionManager,
@@ -171,22 +185,26 @@ public partial class PermissionGroupEditor : Window
 
             case "Remove":
                 if (PermissionListView.SelectedIndex >= 0)
+                {
                     DialogHelper
-                        .ShowDeleteConfirmation(
-                            $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
-                        )
-                        .ContinueWith(
-                            (task) =>
-                            {
-                                if (task.Result)
-                                    Dispatcher.Invoke(
-                                        () =>
-                                            PermissionListView.Items.RemoveAt(
-                                                PermissionListView.SelectedIndex
-                                            )
-                                    );
-                            }
-                        );
+                       .ShowDeleteConfirmation(
+                           $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
+                       )
+                       .ContinueWith(
+                           (task) =>
+                           {
+                               if (task.Result)
+                               {
+                                   Dispatcher.Invoke(
+                                     () =>
+                                         PermissionListView.Items.RemoveAt(
+                                             PermissionListView.SelectedIndex
+                                         )
+                                 );
+                               }
+                           }
+                       );
+                }
                 break;
         }
     }
@@ -198,14 +216,20 @@ public partial class PermissionGroupEditor : Window
             GroupManager.ValidateGroupId(Id);
 
             if (IdTextBox.IsEnabled && _groupManager.Ids.Contains(Id))
+            {
                 throw new InvalidOperationException("此Id已被占用");
+            }
 
             Group.Members = [.. MemberListView.Items.OfType<long>().Distinct()];
 
             var dict = new Dictionary<string, bool?>();
             foreach (var item in PermissionListView.Items.OfType<PermissionItemViewModel>())
+            {
                 if (!string.IsNullOrEmpty(item.Node))
+                {
                     dict.TryAdd(item.Node, item.Value);
+                }
+            }
             Group.Nodes = dict;
             DialogResult = true;
             Close();

@@ -38,7 +38,9 @@ public partial class ServerConfigurationEditor : Window
         try
         {
             if (IdTextBox.IsEnabled)
+            {
                 Validate();
+            }
 
             DialogResult = true;
             Close();
@@ -58,13 +60,17 @@ public partial class ServerConfigurationEditor : Window
     {
         ServerManager.ValidateId(Id);
         if (_serverManager.Servers.ContainsKey(Id!))
+        {
             throw new InvalidOperationException("此Id已被占用");
+        }
     }
 
     private void OpenFileButton_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog();
         if (dialog.ShowDialog() == true)
+        {
             Configuration.FileName = dialog.FileName;
+        }
     }
 }

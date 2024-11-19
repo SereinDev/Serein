@@ -45,6 +45,8 @@ public sealed class CancelKeyHandlingService(
 
         _logger.LogError("当前还有以下{}个服务器未关闭", servers.Count());
         foreach (var kv in servers)
+        {
             _logger.LogError("▫ {} (Id:{})", kv.Value.Configuration.Name, kv.Key);
+        }
     }
 }

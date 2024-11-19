@@ -65,8 +65,10 @@ public class JsPlugin : IPlugin
     public void Dispose()
     {
         Disable();
+
         _eventHandlers.Clear();
         Engine.Dispose();
+        _cancellationTokenSource.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -80,18 +82,23 @@ public class JsPlugin : IPlugin
                 || !EventHandlers.TryGetValue(@event, out Function? func)
                 || func is null
             )
+            {
                 return false;
-
+            }
             if (!Monitor.TryEnter(Engine, 1000))
+            {
                 throw new TimeoutException("等待引擎超时");
-
+            }
             entered = true;
 
             if (cancellationToken.IsCancellationRequested)
+            {
                 return false;
-
+            }
             var result = Engine.Invoke(func, args);
-            return result.IsBoolean() && result.AsBoolean();
+            {
+                return result.IsBoolean() && result.AsBoolean();
+            }
         }
         catch (Exception e)
         {
@@ -105,15 +112,18 @@ public class JsPlugin : IPlugin
         finally
         {
             if (entered)
+            {
                 Monitor.Exit(Engine);
+            }
         }
     }
 
     public void Disable()
     {
         if (!_cancellationTokenSource.IsCancellationRequested)
+        {
             _cancellationTokenSource.Cancel();
-
+        }
         PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
     }
 }

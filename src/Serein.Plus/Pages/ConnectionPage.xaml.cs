@@ -34,7 +34,9 @@ public partial class ConnectionPage : Page
         _wsConnectionManager.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(_wsConnectionManager.ConnectedAt))
+            {
                 Dispatcher.Invoke(UpdateTimeText);
+            }
         };
     }
 
@@ -52,7 +54,9 @@ public partial class ConnectionPage : Page
         try
         {
             if (tag == "Close")
+            {
                 _wsConnectionManager.Stop();
+            }
             else if (tag == "Open")
             {
                 _wsConnectionManager.Start();

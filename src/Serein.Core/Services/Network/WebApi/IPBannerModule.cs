@@ -21,6 +21,8 @@ internal class IPBannerModule : IPBanningModule
     public static async Task Handle403(IHttpContext context, IHttpException exception)
     {
         if (exception.StatusCode == 403)
+        {
             await ApiHelper.HandleHttpException(context, exception);
+        }
     }
 }

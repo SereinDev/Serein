@@ -30,7 +30,9 @@ internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner c
                     || schedule.CommandObj.Type == CommandType.Invalid
                     || schedule.Cron is null
                 )
+                {
                     continue;
+                }
 
                 if (schedule.NextTime < DateTime.Now)
                 {

@@ -32,7 +32,8 @@ public partial class SchedulePage : Page
 
         InitializeComponent();
         ScheduleDataGrid.ItemsSource = _scheduleProvider.Value;
-        _scheduleProvider.Value.CollectionChanged += (o, e) => Dispatcher.Invoke(UpdateDetails, o, e);
+        _scheduleProvider.Value.CollectionChanged += (o, e) =>
+            Dispatcher.Invoke(UpdateDetails, o, e);
     }
 
     private void UpdateDetails(object? sender, EventArgs e)
@@ -41,9 +42,9 @@ public partial class SchedulePage : Page
         Details.Text =
             ScheduleDataGrid.SelectedItems.Count > 1
                 ? $"共{_scheduleProvider.Value.Count}项，已选择{ScheduleDataGrid.SelectedItems.Count}项"
-                : ScheduleDataGrid.SelectedIndex >= 0
-                    ? $"共{_scheduleProvider.Value.Count}项，已选择第{ScheduleDataGrid.SelectedIndex + 1}项"
-                    : $"共{_scheduleProvider.Value.Count}项";
+            : ScheduleDataGrid.SelectedIndex >= 0
+                ? $"共{_scheduleProvider.Value.Count}项，已选择第{ScheduleDataGrid.SelectedIndex + 1}项"
+            : $"共{_scheduleProvider.Value.Count}项";
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -64,24 +65,38 @@ public partial class SchedulePage : Page
                 break;
 
             case "Remove":
-                DialogHelper.ShowDeleteConfirmation("确定要删除所选项吗？").ContinueWith((task) =>
-                {
-                    if (!task.Result)
-                        return;
+                DialogHelper
+                    .ShowDeleteConfirmation("确定要删除所选项吗？")
+                    .ContinueWith(
+                        (task) =>
+                        {
+                            if (!task.Result)
+                            {
+                                return;
+                            }
 
-                    Dispatcher.Invoke(() =>
-                    {
-                        foreach (var item in ScheduleDataGrid.SelectedItems.OfType<Schedule>().ToArray())
-                            _scheduleProvider.Value.Remove(item);
+                            Dispatcher.Invoke(() =>
+                            {
+                                foreach (
+                                    var item in ScheduleDataGrid
+                                        .SelectedItems.OfType<Schedule>()
+                                        .ToArray()
+                                )
+                                {
+                                    _scheduleProvider.Value.Remove(item);
+                                }
 
-                        _scheduleProvider.SaveAsyncWithDebounce();
-                    });
-                });
+                                _scheduleProvider.SaveAsyncWithDebounce();
+                            });
+                        }
+                    );
                 break;
 
             case "Edit":
                 if (ScheduleDataGrid.SelectedItem is not Schedule s3)
+                {
                     return;
+                }
 
                 var s4 = s3.ShallowClone();
 
@@ -99,7 +114,9 @@ public partial class SchedulePage : Page
 
             case "Toggle":
                 foreach (var item in ScheduleDataGrid.SelectedItems.OfType<Schedule>().ToArray())
+                {
                     item.IsEnabled = !item.IsEnabled;
+                }
                 break;
 
             case "OpenDoc":
@@ -121,6 +138,7 @@ public partial class SchedulePage : Page
 
     private void ScheduleDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
-        EditMenuItem.IsEnabled = ScheduleDataGrid.SelectedItems.Count == 1 && ScheduleDataGrid.SelectedItem is Schedule;
+        EditMenuItem.IsEnabled =
+            ScheduleDataGrid.SelectedItems.Count == 1 && ScheduleDataGrid.SelectedItem is Schedule;
     }
 }

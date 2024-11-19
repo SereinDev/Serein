@@ -36,8 +36,9 @@ public sealed class PacketHandler(
     public void Handle(JsonNode node)
     {
         if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
+        {
             return;
-
+        }
         switch (node["post_type"]?.ToString())
         {
             case "message":
@@ -58,8 +59,9 @@ public sealed class PacketHandler(
     private void HandleNoticePacket(NoticePacket? packet)
     {
         if (packet is null || !_settingProvider.Value.Connection.Groups.Contains(packet.GroupId))
+        {
             return;
-
+        }
         switch (packet.NoticeType)
         {
             case "group_decrease":
@@ -87,17 +89,21 @@ public sealed class PacketHandler(
     private void HandleMessagePacket(MessagePacket? packet)
     {
         if (packet is null)
+        {
             return;
+        }
 
         _connectionLogger.Value.LogReceivedMessage(
-            $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
-        );
+             $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
+         );
 
         if (
             packet.MessageType == MessageType.Group
             && !_settingProvider.Value.Connection.Groups.Contains(packet.GroupId)
         )
+        {
             return;
+        }
 
         if (
             packet.MessageType == MessageType.Group
@@ -105,7 +111,9 @@ public sealed class PacketHandler(
             || packet.MessageType == MessageType.Private
                 && !_eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)
         )
+        {
             return;
+        }
 
         _matcher.MatchMsgAsync(packet);
     }

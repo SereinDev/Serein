@@ -35,7 +35,9 @@ public partial class ServerPluginManagerWindow : Window
     {
         Plugins.Clear();
         foreach (var plugin in _server.PluginManager.Plugins)
+        {
             Plugins.Add(plugin);
+        }
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -56,6 +58,7 @@ public partial class ServerPluginManagerWindow : Window
                     Filter = "可接受的插件文件|*.dll;*.jar;*.js;*.py;*.lua",
                 };
                 if (openFileDialog.ShowDialog() == true)
+                {
                     try
                     {
                         _server.PluginManager.Add(openFileDialog.FileNames);
@@ -64,12 +67,15 @@ public partial class ServerPluginManagerWindow : Window
                     {
                         DialogHelper.ShowSimpleDialog("导入失败", ex.Message);
                     }
+                }
+
                 _server.PluginManager.Update();
                 Update();
                 break;
 
             case "Enable":
                 foreach (var plugin in selectedPlugins)
+                {
                     try
                     {
                         _server.PluginManager.Enable(plugin);
@@ -82,10 +88,12 @@ public partial class ServerPluginManagerWindow : Window
                         );
                         break;
                     }
+                }
                 break;
 
             case "Disable":
                 foreach (var plugin in selectedPlugins)
+                {
                     try
                     {
                         _server.PluginManager.Disable(plugin);
@@ -98,6 +106,7 @@ public partial class ServerPluginManagerWindow : Window
                         );
                         break;
                     }
+                }
                 break;
 
             case "Remove":
@@ -114,7 +123,9 @@ public partial class ServerPluginManagerWindow : Window
                         (task) =>
                         {
                             if (task.Result)
+                            {
                                 foreach (var plugin in selectedPlugins)
+                                {
                                     try
                                     {
                                         _server.PluginManager.Remove(plugin);
@@ -130,6 +141,8 @@ public partial class ServerPluginManagerWindow : Window
                                         );
                                         break;
                                     }
+                                }
+                            }
                         }
                     );
                 break;

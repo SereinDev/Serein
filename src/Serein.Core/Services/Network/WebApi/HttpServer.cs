@@ -41,15 +41,22 @@ public sealed class HttpServer(
     public void Start()
     {
         if (State != WebServerState.Stopped && State != WebServerState.Created)
+        {
             throw new InvalidOperationException("WebApi服务器正在运行中");
+        }
 
         if (_cancellationTokenSource.IsCancellationRequested)
+        {
+            _cancellationTokenSource.Dispose();
             _cancellationTokenSource = new();
+        }
 
         _webServer = new WebServer(CreateOptions());
 
         if (_settingProvider.Value.WebApi.AllowCrossOrigin)
+        {
             _webServer.WithCors();
+        }
 
         _webServer.WithModule(_serviceProvider.GetRequiredService<BroadcastWebSocketModule>());
         _webServer.WithModule(new AuthGate(_settingProvider));
@@ -79,8 +86,9 @@ public sealed class HttpServer(
             || State == WebServerState.Created
             || _webServer is null
         )
+        {
             throw new InvalidOperationException("WebApi服务器不在运行中");
-
+        }
         _cancellationTokenSource.Cancel();
         _webServer.Dispose();
         _logger.LogInformation("WebApi服务器已停止");
@@ -105,8 +113,9 @@ public sealed class HttpServer(
                 .AutoRegisterCertificate;
 
             if (string.IsNullOrEmpty(_settingProvider.Value.WebApi.Certificate.Path))
+            {
                 return options;
-
+            }
             options.Certificate = File.Exists(_settingProvider.Value.WebApi.Certificate.Path)
                 ? new(
                     _settingProvider.Value.WebApi.Certificate.Path!,

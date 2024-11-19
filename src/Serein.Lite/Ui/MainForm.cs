@@ -59,17 +59,25 @@ public partial class MainForm : Form
         _resourcesManager = resourcesManager;
         _updateChecker = updateChecker;
         if (!File.Exists(ResourcesManager.IndexPath))
+        {
             _resourcesManager.WriteConsoleHtml();
+        }
 
         _timer = new(2000);
         _timer.Elapsed += (_, _) => Invoke(UpdateTitle);
         _settingProvider.Value.Application.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ApplicationSetting.CustomTitle))
+            {
                 if (InvokeRequired)
+                {
                     Invoke(UpdateTitle);
+                }
                 else
+                {
                     UpdateTitle();
+                }
+            }
         };
 
         InitializeComponent();
@@ -107,7 +115,9 @@ public partial class MainForm : Form
         ChildrenPanel.Controls.Add(page);
 
         if (page is IUpdateablePage updateablePage)
+        {
             updateablePage.UpdatePage();
+        }
     }
 
     private void ServerConsoleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -162,19 +172,25 @@ public partial class MainForm : Form
     private void ServerAddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+        {
             SwitchPage<ServerPage>();
+        }
 
         var configuration = new Configuration();
 
         var editor = new ConfigurationEditor(_serverManager, configuration);
         if (editor.ShowDialog() == DialogResult.OK)
+        {
             _serverManager.Add(editor.Id, configuration);
+        }
     }
 
     private void ServerImportToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+        {
             SwitchPage<ServerPage>();
+        }
 
         var openFileDialog = new OpenFileDialog
         {
@@ -186,7 +202,9 @@ public partial class MainForm : Form
             openFileDialog.ShowDialog() != DialogResult.OK
             || string.IsNullOrEmpty(openFileDialog.FileName)
         )
+        {
             return;
+        }
 
         Configuration configuration;
 
@@ -203,7 +221,9 @@ public partial class MainForm : Form
         var editor = new ConfigurationEditor(_serverManager, configuration);
 
         if (editor.ShowDialog() == DialogResult.OK)
+        {
             _serverManager.Add(editor.Id, configuration);
+        }
     }
 
     private void ServerEditToolStripMenuItem_Click(object sender, EventArgs e)
@@ -211,14 +231,17 @@ public partial class MainForm : Form
         var serverPage = Services.GetRequiredService<ServerPage>();
 
         if (serverPage.MainTabControl.Controls.Count == 0)
+        {
             return;
+        }
 
         var panel = serverPage.MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex];
         var id = panel.Tag?.ToString();
 
         if (string.IsNullOrEmpty(id) || !_serverManager.Servers.TryGetValue(id, out var server))
+        {
             return;
-
+        }
         var editor = new ConfigurationEditor(_serverManager, server.Configuration, id);
         editor.ShowDialog();
 
@@ -236,7 +259,9 @@ public partial class MainForm : Form
             serverPage.MainTabControl.Controls.Count == 0
             || serverPage.MainTabControl.SelectedIndex == -1
         )
+        {
             return;
+        }
 
         var id = serverPage
             .MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex]
@@ -246,7 +271,9 @@ public partial class MainForm : Form
             !string.IsNullOrEmpty(id)
             && MessageBoxHelper.ShowDeleteConfirmation($"确定要删除此服务器配置（{id}）吗？")
         )
+        {
             _serverManager.Remove(id);
+        }
     }
 
     private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -322,10 +349,14 @@ public partial class MainForm : Form
         SwitchPage<ServerPage>();
 
         if (SereinAppBuilder.StartForTheFirstTime)
+        {
             DialogFactory.ShowWelcomeDialog();
+        }
 
         if (FileLoggerProvider.IsEnabled)
+        {
             DialogFactory.ShowWarningDialogOfLogMode();
+        }
 
         _timer.Start();
         base.OnShown(e);

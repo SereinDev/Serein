@@ -25,7 +25,9 @@ public partial class ServerPage : UserControl
         _serverManager.ServersUpdated += Update;
 
         foreach (var (id, server) in _serverManager.Servers)
+        {
             Add(id, server);
+        }
 
         StatusStrip.Visible = _panels.Count == 0;
     }
@@ -33,7 +35,9 @@ public partial class ServerPage : UserControl
     private void Add(string id, Server server)
     {
         if (!File.Exists(ResourcesManager.IndexPath))
+        {
             _resourcesManager.WriteConsoleHtml();
+        }
 
         var tabPage = new TabPage
         {
@@ -56,7 +60,9 @@ public partial class ServerPage : UserControl
                 e.Type == ServersUpdatedType.Added
                 && _serverManager.Servers.TryGetValue(e.Id, out var server)
             )
+            {
                 Add(e.Id, server);
+            }
             else if (_panels.TryGetValue(e.Id, out var page))
             {
                 MainTabControl.Controls.Remove(page);

@@ -25,9 +25,13 @@ public partial class MatchEditor : Window
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var index = (sender as ComboBox)?.SelectedIndex;
-        if ((MatchFieldType?)index is  MatchFieldType.GroupMsg or MatchFieldType.PrivateMsg)
+        if ((MatchFieldType?)index is MatchFieldType.GroupMsg or MatchFieldType.PrivateMsg)
+        {
             RequireAdminCheckBox.IsEnabled = true;
+        }
         else
+        {
             RequireAdminCheckBox.IsChecked = RequireAdminCheckBox.IsEnabled = false;
+        }
     }
 }

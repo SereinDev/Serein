@@ -41,7 +41,9 @@ public partial class ShellPage : Page
     private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         if (args.InvokedItemContainer.Tag is not Type type)
+        {
             type = args.IsSettingsInvoked ? typeof(CategoriesPage) : typeof(NotImplPage);
+        }
 
         var page = _services.GetRequiredService(type);
 

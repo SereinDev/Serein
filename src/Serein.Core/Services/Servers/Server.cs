@@ -86,13 +86,19 @@ public sealed class Server
         _logger.LogDebug("Id={}: 请求启动", Id);
 
         if (Status)
+        {
             throw new InvalidOperationException("服务器已在运行");
+        }
 
         if (string.IsNullOrEmpty(Configuration.FileName))
+        {
             throw new InvalidOperationException("启动文件为空");
+        }
 
         if (!_eventDispatcher.Dispatch(Event.ServerStarting, this))
+        {
             return;
+        }
 
         _serverProcess = Process.Start(
             new ProcessStartInfo
@@ -144,7 +150,9 @@ public sealed class Server
         _logger.LogDebug("Id={}: 正在启动", Id);
 
         if (Configuration.SaveLog)
+        {
             _logWriter.WriteAsync(DateTime.Now.ToString("T") + " 服务器已启动");
+        }
     }
 
     public void Stop()
@@ -152,15 +160,22 @@ public sealed class Server
         _logger.LogDebug("Id={}: 请求关闭", Id);
 
         if (CancelRestart())
+        {
             return;
+        }
 
         if (!Status || _serverProcess is null)
+        {
             throw new InvalidOperationException("服务器未运行");
+        }
 
         if (!_eventDispatcher.Dispatch(Event.ServerStopping, this))
+        {
             return;
+        }
 
         if (Configuration.StopCommands.Length == 0)
+        {
             if (
                 SereinApp.Type is AppType.Lite or AppType.Plus
                 && Environment.OSVersion.Platform == PlatformID.Win32NT
@@ -184,11 +199,18 @@ public sealed class Server
                 _logger.LogDebug("Id={}: 发送Ctrl+C事件", Id);
             }
             else
+            {
                 throw new NotSupportedException("关服命令为空");
+            }
+        }
 
         foreach (string command in Configuration.StopCommands)
+        {
             if (!string.IsNullOrEmpty(command))
+            {
                 Input(command);
+            }
+        }
 
         _logger.LogDebug("Id={}: 正在关闭", Id);
     }
@@ -196,9 +218,13 @@ public sealed class Server
     internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
     {
         if (Status)
+        {
             Input(command, encodingType);
+        }
         else if (command == "start")
+        {
             Start();
+        }
         else if (command == "stop")
         {
             RestartStatus = RestartStatus.None;
@@ -208,7 +234,7 @@ public sealed class Server
 
     public void Input(string command)
     {
-        Input(command, null, false);
+        Input(command, fromUser: false);
     }
 
     internal void Input(
@@ -226,10 +252,14 @@ public sealed class Server
         );
 
         if (_inputWriter is null || !Status)
+        {
             return;
+        }
 
         if (!_eventDispatcher.Dispatch(Event.ServerInput, this, command))
+        {
             return;
+        }
 
         _inputWriter.Write(
             EncodingMap
@@ -249,10 +279,14 @@ public sealed class Server
                 _commandHistory.Count > 0 && _commandHistory[^1] != command
                 || _commandHistory.Count == 0
             )
+            {
                 _commandHistory.Add(command);
+            }
 
             if (SereinApp.Type != AppType.Cli)
+            {
                 ServerOutput?.Invoke(this, new(ServerOutputType.InputCommand, command));
+            }
         }
 
         CommandHistoryIndex = CommandHistory.Count;
@@ -265,7 +299,9 @@ public sealed class Server
         _logger.LogDebug("Id={}: 请求重启", Id);
 
         if (RestartStatus != RestartStatus.None)
+        {
             throw new InvalidOperationException("正在等待重启");
+        }
 
         Stop();
 
@@ -277,10 +313,14 @@ public sealed class Server
         _logger.LogDebug("Id={}: 请求强制结束", Id);
 
         if (CancelRestart())
+        {
             return;
+        }
 
         if (!Status)
+        {
             throw new InvalidOperationException("服务器未运行");
+        }
 
         _serverProcess?.Kill(true);
         _isTerminated = true;
@@ -293,7 +333,9 @@ public sealed class Server
         _logger.LogDebug("Id={}: 进程（PID={}）退出：{}", Id, _serverProcess?.Id, exitCode);
 
         if (Configuration.SaveLog)
+        {
             _logWriter.WriteAsync(DateTime.Now.ToString("T") + " 进程退出：" + exitCode);
+        }
 
         ServerOutput?.Invoke(
             this,
@@ -310,7 +352,9 @@ public sealed class Server
                 && Configuration.AutoRestart
                 && !_isTerminated
         )
+        {
             Task.Run(WaitAndRestart);
+        }
 
         _serverInfo.ExitTime = _serverProcess?.ExitTime;
         _serverProcess = null;
@@ -318,7 +362,9 @@ public sealed class Server
         ServerStatusChanged?.Invoke(this, EventArgs.Empty);
 
         if (!_eventDispatcher.Dispatch(Event.ServerExited, this, exitCode, DateTime.Now))
+        {
             return;
+        }
 
         _reactionManager.TriggerAsync(
             exitCode == 0
@@ -331,23 +377,31 @@ public sealed class Server
     private void OnOutputDataReceived(object? sender, DataReceivedEventArgs e)
     {
         if (e.Data is null)
+        {
             return;
+        }
 
         _logger.LogDebug("Id={}: 输出'{}'", Id, e.Data);
         if (Configuration.SaveLog)
+        {
             _logWriter.WriteAsync(e.Data);
+        }
 
         _serverInfo.OutputLines++;
 
         ServerOutput?.Invoke(this, new(ServerOutputType.Raw, e.Data));
 
         if (!_eventDispatcher.Dispatch(Event.ServerRawOutput, this, e.Data))
+        {
             return;
+        }
 
         var filtered = OutputFilter.Clear(e.Data);
 
         if (!_eventDispatcher.Dispatch(Event.ServerOutput, this, filtered))
+        {
             return;
+        }
 
         if (
             _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(
@@ -359,7 +413,9 @@ public sealed class Server
             _matcher.MatchServerOutputAsync(Id, string.Join('\n', _cache));
         }
         else
+        {
             _cache.Clear();
+        }
 
         _matcher.MatchServerOutputAsync(Id, filtered);
     }
@@ -383,6 +439,7 @@ public sealed class Server
     private void WaitAndRestart()
     {
         RestartStatus = RestartStatus.Preparing;
+        _restartCancellationTokenSource?.Dispose();
         _restartCancellationTokenSource = new();
 
         ServerOutput?.Invoke(
@@ -399,6 +456,7 @@ public sealed class Server
                 {
                     RestartStatus = RestartStatus.None;
                     if (!task.IsCanceled)
+                    {
                         try
                         {
                             Start();
@@ -407,6 +465,7 @@ public sealed class Server
                         {
                             ServerOutput?.Invoke(this, new(ServerOutputType.Error, e.Message));
                         }
+                    }
                 }
             );
     }
@@ -434,8 +493,10 @@ public sealed class Server
         _prevProcessCpuTime = _serverProcess.TotalProcessorTime;
 
         if (Configuration.PortIPv4 >= 0)
+        {
             await Task.Run(
                 () => _serverInfo.Stat = new("127.0.0.1", (ushort)Configuration.PortIPv4)
             );
+        }
     }
 }

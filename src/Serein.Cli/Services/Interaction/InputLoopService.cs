@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using PrettyPrompt;
 using PrettyPrompt.Highlighting;
 
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -46,15 +44,13 @@ public sealed class InputLoopService(
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
         return Task.CompletedTask;
     }
 
     private void Loop(CancellationToken cancellationToken)
     {
-        if (
-            !Console.IsInputRedirected
-            && CliConsole.IsColorful
-        )
+        if (!Console.IsInputRedirected && CliConsole.IsColorful)
         {
             var flag = false;
             var prompt = new Prompt(
@@ -104,7 +100,9 @@ public sealed class InputLoopService(
             _logger.LogWarning("若要体验此功能，请在终端内运行 Serein.Cli");
 
             while (!cancellationToken.IsCancellationRequested)
+            {
                 ProcessInput(Console.ReadLine());
+            }
         }
     }
 
@@ -113,20 +111,25 @@ public sealed class InputLoopService(
     private void ProcessInput(string? input)
     {
         if (input is null)
+        {
             return;
-
+        }
         if (!string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId))
+        {
             if (
                 _serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
                 && server.Status
             )
                 if (input.StartsWith(_settingProvider.Value.Application.CliCommandHeader))
+                {
                     input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
+                }
                 else
                 {
                     server.Input(input);
                     return;
                 }
+        }
 
         _inputHandler.Handle(
             input.Split(

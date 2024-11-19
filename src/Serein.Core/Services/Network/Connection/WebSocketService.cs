@@ -43,7 +43,9 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
 
         var headers = new Dictionary<string, string>(_settingProvider.Value.Connection.Headers);
         if (!string.IsNullOrEmpty(_settingProvider.Value.Connection.AccessToken))
+        {
             headers["Authorization"] = $"Bearer {_settingProvider.Value.Connection.AccessToken}";
+        }
 
         var client = new WebSocket(
             _settingProvider.Value.Connection.Uri,
@@ -85,16 +87,18 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
     public Task SendAsync(string text)
     {
         if (_client is not null && _client.State == WebSocketState.Open)
+        {
             _client.Send(text);
-
+        }
         return Task.CompletedTask;
     }
 
     public void Start()
     {
         if (Connecting)
+        {
             throw new InvalidOperationException("正在连接中");
-
+        }
         _client = CreateNew();
         Connecting = true;
         _connectedSuccessfully = _closedManually = false;
@@ -134,8 +138,11 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
     private async Task TryReconnect()
     {
         if (_closedManually || !_connectedSuccessfully)
+        {
             return;
+        }
 
+        _reconnectCancellationToken?.Dispose();
         _reconnectCancellationToken = new();
         _connectionLogger.Value.Log(
             LogLevel.Information,

@@ -118,9 +118,13 @@ public partial class App : Application
             var btn = dialog.ShowDialog();
 
             if (btn == button1)
+            {
                 UrlConstants.Issues.OpenInBrowser();
+            }
             else if (btn == button2)
+            {
                 UrlConstants.Group.OpenInBrowser();
+            }
         }
         catch { }
     }

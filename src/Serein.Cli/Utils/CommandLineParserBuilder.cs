@@ -62,9 +62,13 @@ public static class CommandLineParserBuilder
         Console.ResetColor();
 
         if (!Console.IsInputRedirected)
+        {
             Console.ReadLine();
+        }
 
         if (e.HResult != 0 && context is not null)
+        {
             context.ExitCode = e.HResult;
+        }
     }
 }

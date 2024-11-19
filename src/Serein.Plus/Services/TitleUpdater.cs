@@ -5,7 +5,7 @@ using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 
-namespace Serein.Plus.Services; 
+namespace Serein.Plus.Services;
 
 public sealed class TitleUpdater : NotifyPropertyChangedModelBase
 {
@@ -18,15 +18,17 @@ public sealed class TitleUpdater : NotifyPropertyChangedModelBase
     {
         _settingProvider = settingProvider;
         _commandParser = commandParser;
-        _timer= new(2000) { Enabled = true };
+        _timer = new(2000) { Enabled = true };
         _timer.Elapsed += (_, _) => Update();
         _settingProvider.Value.Application.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(ApplicationSetting.CustomTitle))
+            {
                 Update();
-        }; 
+            }
+        };
     }
-    
+
     public string CustomTitle { get; private set; } = Name;
 
     public void Update()

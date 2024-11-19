@@ -26,16 +26,24 @@ public static class StringExtension
     public static string ToSizeString(this long size)
     {
         if (size < 1024)
+        {
             return size.ToString() + " B";
+        }
 
         if (size < 1024 * 1024)
+        {
             return ((double)size / 1024).ToString("N1") + " KB";
+        }
 
         if (size < 1024 * 1024 * 1024)
+        {
             return ((double)size / 1024 / 1024).ToString("N1") + " MB";
+        }
 
         if (size < (long)1024 * 1024 * 1024 * 1024)
+        {
             return ((double)size / 1024 / 1024 / 1024).ToString("N1") + " GB";
+        }
 
         return ((double)size / 1024 / 1024 / 1024 / 1024).ToString("N1") + " TB";
     }
@@ -43,7 +51,9 @@ public static class StringExtension
     public static void OpenInExplorer(this string path)
     {
         if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+        {
             throw new PlatformNotSupportedException();
+        }
 
         Process.Start(
             new ProcessStartInfo("explorer.exe")
@@ -57,7 +67,9 @@ public static class StringExtension
     {
         var stringBuilder = new StringBuilder();
         for (int i = 0; i < targetData.Length; i++)
+        {
             stringBuilder.Append(targetData[i].ToString("x2"));
+        }
 
         return stringBuilder.ToString();
     }

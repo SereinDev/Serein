@@ -36,12 +36,18 @@ public partial class ReactionSettingPage : Page
     private void ReactionTypeListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (ReactionTypeListView.SelectedItem is not DisplayedItem item)
+        {
             return;
+        }
 
         CommandListView.Items.Clear();
         if (_settingProvider.Value.Reactions.TryGetValue(item.Type, out var commands))
+        {
             foreach (var command in commands)
+            {
                 CommandListView.Items.Add(command);
+            }
+        }
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -54,7 +60,9 @@ public partial class ReactionSettingPage : Page
             dialog.ShowAsync().ContinueWith((task) => Dispatcher.Invoke(() =>
             {
                 if (task.Result != ContentDialogResult.Primary)
+                {
                     return;
+                }
 
                 CommandListView.Items.Add(dialog.Command);
                 Save();
@@ -68,8 +76,9 @@ public partial class ReactionSettingPage : Page
                     Dispatcher.Invoke(() =>
                     {
                         foreach (var command in CommandListView.SelectedItems.OfType<string>().ToArray())
+                        {
                             CommandListView.Items.Remove(command);
-
+                        }
                         Save();
                     });
             });
@@ -79,7 +88,9 @@ public partial class ReactionSettingPage : Page
     private void Save()
     {
         if (ReactionTypeListView.SelectedItem is not DisplayedItem item)
+        {
             return;
+        }
 
         _settingProvider.Value.Reactions[item.Type] = CommandListView.Items.OfType<string>().ToArray();
         _settingProvider.SaveAsyncWithDebounce();

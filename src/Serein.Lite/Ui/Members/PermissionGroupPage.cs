@@ -44,6 +44,7 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
         GroupListView.Items.Clear();
 
         lock (_permissionGroupProvider.Value)
+        {
             foreach (var kv in _permissionGroupProvider.Value)
             {
                 var item = new ListViewItem(kv.Key) { Tag = kv };
@@ -53,7 +54,7 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
 
                 GroupListView.Items.Add(item);
             }
-
+        }
         GroupListView.EndUpdate();
     }
 
@@ -64,7 +65,9 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
         var group = new Group();
         var dialog = new PermissionGroupEditor(_groupManager, _permissionManager, group);
         if (dialog.ShowDialog() != DialogResult.OK)
+        {
             return;
+        }
 
         _permissionGroupProvider.Value.TryAdd(dialog.Id, group);
         _permissionGroupProvider.SaveAsyncWithDebounce();
@@ -78,11 +81,15 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
             GroupListView.SelectedItems.Count != 1
             || GroupListView.SelectedItems[0].Tag is not KeyValuePair<string, Group> kv
         )
+        {
             return;
+        }
 
         var dialog = new PermissionGroupEditor(_groupManager, _permissionManager, kv.Value, kv.Key);
         if (dialog.ShowDialog() != DialogResult.OK)
+        {
             return;
+        }
 
         _permissionGroupProvider.SaveAsyncWithDebounce();
         LoadData();
@@ -90,8 +97,13 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
 
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (GroupListView.SelectedItems.Count != 1 || !MessageBoxHelper.ShowDeleteConfirmation("你确定要删除所选项吗？"))
+        if (
+            GroupListView.SelectedItems.Count != 1
+            || !MessageBoxHelper.ShowDeleteConfirmation("你确定要删除所选项吗？")
+        )
+        {
             return;
+        }
 
         _permissionGroupProvider.Value.Remove(GroupListView.SelectedItems[0].Text);
         _permissionGroupProvider.SaveAsyncWithDebounce();

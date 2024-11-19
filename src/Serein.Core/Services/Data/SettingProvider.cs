@@ -31,7 +31,9 @@ public sealed class SettingProvider : DataProviderBase<Setting>
                 );
 
                 if (wrapper?.Type == typeof(Setting).ToString())
+                {
                     return wrapper.Data ?? new();
+                }
             }
 
             return new();

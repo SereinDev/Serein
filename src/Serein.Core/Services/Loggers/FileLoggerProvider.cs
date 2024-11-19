@@ -40,8 +40,9 @@ internal class FileLoggerProvider : ILoggerProvider
         lock (_loggers)
         {
             if (!_loggers.TryGetValue(categoryName, out var logger))
+            {
                 logger = _loggers[categoryName] = new FileLogger(categoryName, _buffer);
-
+            }
             return logger;
         }
     }
@@ -63,8 +64,9 @@ internal class FileLoggerProvider : ILoggerProvider
             );
 
             if (!File.Exists(path))
+            {
                 return path;
-
+            }
             id++;
         }
     }
@@ -72,6 +74,7 @@ internal class FileLoggerProvider : ILoggerProvider
     private void Flush()
     {
         if (_buffer.Count > 0)
+        {
             lock (_buffer)
             {
                 Directory.CreateDirectory(Path.Combine(PathConstants.LogDirectory, "app"));
@@ -81,5 +84,6 @@ internal class FileLoggerProvider : ILoggerProvider
                 );
                 _buffer.Clear();
             }
+        }
     }
 }

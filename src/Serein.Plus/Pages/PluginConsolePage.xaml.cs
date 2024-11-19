@@ -27,7 +27,7 @@ public partial class PluginConsolePage : Page
         PluginManager pluginManager,
         NetPluginLoader netPluginLoader,
         JsPluginLoader jsPluginLoader
-        )
+    )
     {
         ViewModel = pluginConsoleViewModel;
         _infoBarProvider = infoBarProvider;
@@ -61,11 +61,20 @@ public partial class PluginConsolePage : Page
                 break;
 
             case "Reload":
-                Task.Run(_pluginManager.Reload).ContinueWith((task) =>
-                {
-                    if (task.IsFaulted && task.Exception is not null)
-                        _infoBarProvider.Enqueue("重新加载插件失败", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
-                });
+                Task.Run(_pluginManager.Reload)
+                    .ContinueWith(
+                        (task) =>
+                        {
+                            if (task.IsFaulted && task.Exception is not null)
+                            {
+                                _infoBarProvider.Enqueue(
+                                    "重新加载插件失败",
+                                    task.Exception.InnerException!.Message,
+                                    InfoBarSeverity.Error
+                                );
+                            }
+                        }
+                    );
                 break;
         }
     }

@@ -134,9 +134,13 @@ public partial class WebApiSettingPage : UserControl
         try
         {
             if (EnableCheckBox.Checked)
+            {
                 _httpServer.Start();
+            }
             else
+            {
                 _httpServer.Stop();
+            }
         }
         catch (Exception ex)
         {
@@ -149,6 +153,8 @@ public partial class WebApiSettingPage : UserControl
         var dialog = new OpenFileDialog { Title = "选择证书文件" };
 
         if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
+        {
             PathTextBox.Text = dialog.FileName;
+        }
     }
 }

@@ -43,7 +43,9 @@ public sealed class TimerFactory
     public long SetTimeout(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
         if (jsValue is not Function function)
+        {
             throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
+        }
 
         var timer = new Timer(milliseconds) { AutoReset = false };
         var id = _timeoutTimerId++;
@@ -68,7 +70,9 @@ public sealed class TimerFactory
     public long SetInterval(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
         if (jsValue is not Function function)
+        {
             throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
+        }
 
         var timer = new Timer(milliseconds) { AutoReset = true };
         var id = _intervalTimerId++;
@@ -102,12 +106,16 @@ public sealed class TimerFactory
                 function.Engine.Call(function, args);
             }
             else
+            {
                 throw new TimeoutException();
+            }
         }
         finally
         {
             if (entered)
+            {
                 Monitor.Exit(function.Engine);
+            }
         }
     }
 }

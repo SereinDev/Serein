@@ -67,16 +67,24 @@ public partial class ConfigurationEditor : Form
 
             ServerManager.ValidateId(IdTextBox.Text);
             if (!IdTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
+            {
                 throw new InvalidOperationException("此Id已被占用");
+            }
 
             if (InputEncondingComboBox.SelectedIndex < 0)
+            {
                 InputEncondingComboBox.SelectedIndex = 0;
+            }
 
             if (OutputEncondingComboBox.SelectedIndex < 0)
+            {
                 OutputEncondingComboBox.SelectedIndex = 0;
+            }
 
             if (OutputStyleComboBox.SelectedIndex < 0)
+            {
                 OutputStyleComboBox.SelectedIndex = 0;
+            }
 
             input = (EncodingMap.EncodingType)InputEncondingComboBox.SelectedIndex;
             output = (EncodingMap.EncodingType)OutputEncondingComboBox.SelectedIndex;
@@ -117,11 +125,17 @@ public partial class ConfigurationEditor : Form
     private void IdTextBox_Validating(object sender, CancelEventArgs e)
     {
         if (string.IsNullOrEmpty(IdTextBox.Text))
+        {
             ErrorProvider.SetError(IdTextBox, "Id不能为空");
+        }
         else if (!IdRegex().IsMatch(IdTextBox.Text))
+        {
             ErrorProvider.SetError(IdTextBox, "Id只能由字母、数字和下划线组成");
+        }
         else if (IdTextBox.Text.Length <= 2)
+        {
             ErrorProvider.SetError(IdTextBox, "Id长度太短");
+        }
     }
 
     [GeneratedRegex(@"^\w+$")]
@@ -132,6 +146,8 @@ public partial class ConfigurationEditor : Form
         var openFileDialog = new OpenFileDialog { Title = "选择启动文件" };
 
         if (openFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(openFileDialog.FileName))
+        {
             FileNameTextBox.Text = openFileDialog.FileName;
+        }
     }
 }

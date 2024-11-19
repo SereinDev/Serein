@@ -54,10 +54,14 @@ public partial class PluginListPage : Page
         _pluginInfos.Clear();
 
         foreach (var kv in _jsPluginLoader.Plugins)
-            _pluginInfos.Add(new(kv.Key,kv.Value));
+        {
+            _pluginInfos.Add(new(kv.Key, kv.Value));
+        }
 
         foreach (var kv in _netPluginLoader.Plugins)
+        {
             _pluginInfos.Add(new(kv.Key, kv.Value));
+        }
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -71,11 +75,20 @@ public partial class PluginListPage : Page
                     break;
 
                 case "Reload":
-                    Task.Run(_pluginManager.Reload).ContinueWith((task) =>
-                    {
-                        if (task.IsFaulted && task.Exception is not null)
-                            _infoBarProvider.Enqueue("重新加载插件失败", task.Exception.InnerException!.Message, InfoBarSeverity.Error);
-                    });
+                    Task.Run(_pluginManager.Reload)
+                        .ContinueWith(
+                            (task) =>
+                            {
+                                if (task.IsFaulted && task.Exception is not null)
+                                {
+                                    _infoBarProvider.Enqueue(
+                                        "重新加载插件失败",
+                                        task.Exception.InnerException!.Message,
+                                        InfoBarSeverity.Error
+                                    );
+                                }
+                            }
+                        );
                     break;
 
                 case "ClearConsole":
@@ -83,10 +96,14 @@ public partial class PluginListPage : Page
                     break;
 
                 case "Disable":
-                    if (PluginListView.SelectedItem is  KeyValuePair<string , IPlugin> kv)
+                    if (PluginListView.SelectedItem is KeyValuePair<string, IPlugin> kv)
                     {
-                       kv.Value.Disable();
-                        _infoBarProvider.Enqueue($"插件（Id={kv.Key}）禁用成功", string.Empty, InfoBarSeverity.Success);
+                        kv.Value.Disable();
+                        _infoBarProvider.Enqueue(
+                            $"插件（Id={kv.Key}）禁用成功",
+                            string.Empty,
+                            InfoBarSeverity.Success
+                        );
                     }
                     break;
             }
@@ -94,7 +111,9 @@ public partial class PluginListPage : Page
         catch (Exception ex)
         {
             if (tag == "Disable")
+            {
                 _infoBarProvider.Enqueue("禁用失败", ex.Message, InfoBarSeverity.Error);
+            }
         }
     }
 
@@ -105,8 +124,8 @@ public partial class PluginListPage : Page
 
     private void PluginListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        StatusBar.Text = PluginListView.SelectedItem is KeyValuePair<string, IPlugin> kv 
-            ? $"Id={kv.Key}\r\nPath={kv.Value.FileName}" 
+        StatusBar.Text = PluginListView.SelectedItem is KeyValuePair<string, IPlugin> kv
+            ? $"Id={kv.Key}\r\nPath={kv.Value.FileName}"
             : string.Empty;
     }
 }

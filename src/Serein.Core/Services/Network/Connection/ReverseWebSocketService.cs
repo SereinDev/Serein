@@ -28,16 +28,19 @@ public sealed class ReverseWebSocketService : IConnectionService
     public ReverseWebSocketService(IHost host, SettingProvider settingProvider)
     {
         _host = host;
+        _settingProvider = settingProvider;
+        _logger = new(_host.Services.GetRequiredService<IConnectionLogger>);
+
         FleckLog.LogAction = (level, msg, _) =>
         {
             if (level == LogLevel.Error)
-                Logger.Log(MsLogLevel.Error, msg);
+            {
+                _logger.Value.Log(MsLogLevel.Error, msg);
+            }
         };
-        _settingProvider = settingProvider;
     }
 
-    private IServiceProvider Services => _host.Services;
-    private IConnectionLogger Logger => Services.GetRequiredService<IConnectionLogger>();
+    private readonly Lazy<IConnectionLogger> _logger;
 
     public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
     public event EventHandler? StatusChanged;
@@ -59,14 +62,20 @@ public sealed class ReverseWebSocketService : IConnectionService
     {
         webSocket.OnOpen += () => _webSockets.Add(GetEndPoint(), webSocket);
         webSocket.OnOpen += () =>
-            Logger.Log(MsLogLevel.Information, $"[{GetEndPoint()}] 连接到反向WebSocket服务器");
+            _logger.Value.Log(
+                MsLogLevel.Information,
+                $"[{GetEndPoint()}] 连接到反向WebSocket服务器"
+            );
 
         webSocket.OnClose += () => _webSockets.Remove(GetEndPoint());
         webSocket.OnClose += () =>
-            Logger.Log(MsLogLevel.Information, $"[{GetEndPoint()}] 从反向WebSocket服务器断开");
+            _logger.Value.Log(
+                MsLogLevel.Information,
+                $"[{GetEndPoint()}] 从反向WebSocket服务器断开"
+            );
 
         webSocket.OnError += (e) =>
-            Logger.Log(
+            _logger.Value.Log(
                 MsLogLevel.Error,
                 $"[{GetEndPoint()}] 发生错误：{Environment.NewLine}" + e.GetDetailString()
             );
@@ -91,11 +100,14 @@ public sealed class ReverseWebSocketService : IConnectionService
         List<Task> tasks;
 
         lock (_webSockets)
-            tasks = new(
-                _webSockets.Values.Select(
+        {
+            tasks =
+            [
+                .. _webSockets.Values.Select(
                     (client) => client.IsAvailable ? client.Send(text) : Task.CompletedTask
-                )
-            );
+                ),
+            ];
+        }
 
         await Task.WhenAll(tasks);
     }
@@ -103,11 +115,12 @@ public sealed class ReverseWebSocketService : IConnectionService
     public void Start()
     {
         if (Active)
+        {
             throw new InvalidOperationException();
-
+        }
         _server = CreateNew();
         _server.Start(ConfigServer);
-        Logger.Log(
+        _logger.Value.Log(
             MsLogLevel.Information,
             $"反向WebSocket服务器已在{_settingProvider.Value.Connection.Uri}开启"
         );
@@ -120,7 +133,7 @@ public sealed class ReverseWebSocketService : IConnectionService
         {
             _server.Dispose();
             StatusChanged?.Invoke(null, EventArgs.Empty);
-            Logger.Log(MsLogLevel.Information, "反向WebSocket服务器已停止");
+            _logger.Value.Log(MsLogLevel.Information, "反向WebSocket服务器已停止");
             _server = null;
             _webSockets.Clear();
         }

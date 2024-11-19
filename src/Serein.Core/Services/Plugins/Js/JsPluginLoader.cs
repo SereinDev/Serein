@@ -47,16 +47,20 @@ public sealed class JsPluginLoader(
         var entry = Path.Join(dir, pluginInfo.EntryFile ?? "index.js");
 
         if (!File.Exists(entry))
+        {
             throw new FileNotFoundException("找不到指定的入口点文件");
+        }
 
         JsPluginConfig? jsConfig = null;
 
         var configPath = Path.Join(dir, PathConstants.JsPluginConfigFileName);
         if (File.Exists(configPath))
+        {
             jsConfig = JsonSerializer.Deserialize<JsPluginConfig>(
-                File.ReadAllText(configPath),
-                JsonSerializerOptionsFactory.CamelCase
-            );
+              File.ReadAllText(configPath),
+              JsonSerializerOptionsFactory.CamelCase
+          );
+        }
 
         JsPlugin? jsPlugin = null;
         try
@@ -85,7 +89,9 @@ public sealed class JsPluginLoader(
                     file.EndsWith
                 )
             )
+            {
                 continue;
+            }
 
             var name = Path.GetFileNameWithoutExtension(file);
             var id = Guid.NewGuid().ToString("N");
@@ -101,7 +107,9 @@ public sealed class JsPluginLoader(
                 );
 
                 if (_netPluginLoader.Plugins.ContainsKey(name))
+                {
                     throw new NotSupportedException($"尝试加载“{file}”插件时发现Id重复");
+                }
 
                 jsPlugin.Execute(File.ReadAllText(file));
             }
@@ -113,7 +121,9 @@ public sealed class JsPluginLoader(
             finally
             {
                 if (jsPlugin is not null)
+                {
                     JsPlugins.TryAdd(id, jsPlugin);
+                }
             }
         }
     }

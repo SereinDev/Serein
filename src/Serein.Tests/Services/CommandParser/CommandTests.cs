@@ -62,9 +62,13 @@ public sealed class CommandTests : IDisposable
         Assert.Equal(exceptedBody, cmd.Body);
 
         if (!string.IsNullOrEmpty(exceptedArgument))
+        {
             Assert.Equal(exceptedArgument, cmd.Argument);
+        }
         else
+        {
             Assert.Equal(string.Empty, cmd.Argument);
+        }
     }
 
     [Theory]

@@ -84,9 +84,10 @@ internal class BroadcastWebSocketModule : WebSocketModule
         {
             list.Remove(context);
             if (list.Count == 0)
+            {
                 _clients.Remove(id);
+            }
         }
-
         return Task.CompletedTask;
     }
 

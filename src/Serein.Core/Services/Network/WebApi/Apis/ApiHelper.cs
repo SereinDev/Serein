@@ -20,7 +20,9 @@ public static class ApiHelper
         if (httpContext.Request.HttpVerb is not HttpVerbs.Get or HttpVerbs.Head)
         {
             if (httpContext.Request.ContentType != "application/json")
+            {
                 throw HttpException.BadRequest("不支持的\"ContentType\"");
+            }
 
             try
             {
@@ -61,7 +63,7 @@ public static class ApiHelper
         HttpStatusCode statusCode = HttpStatusCode.OK
     )
     {
-        await httpContext.SendPacketAsync<object>(null, statusCode);
+        await httpContext.SendPacketAsync<object>(statusCode: statusCode);
     }
 
     public static async Task SendPacketAsync<T>(
@@ -94,10 +96,14 @@ public static class ApiHelper
     public static async Task HandleException(IHttpContext context, Exception e)
     {
         if (e is InvalidOperationException ex)
+        {
             await context.SendPacketAsync(new ApiPacket { ErrorMsg = ex.Message, Code = 403 });
+        }
         else
+        {
             await context.SendPacketAsync(
-                new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
-            );
+                 new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
+             );
+        }
     }
 }

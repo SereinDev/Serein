@@ -33,9 +33,11 @@ public sealed class ServerHandler(
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (args.Count == 1)
+        {
             throw new InvalidArgumentException(
                 "缺少参数。可用值：\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
             );
+        }
 
         if (args[1].Equals("list", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -62,18 +64,24 @@ public sealed class ServerHandler(
             args[1].Equals("switch", StringComparison.InvariantCultureIgnoreCase)
             && args.Count == 2
         )
+        {
             throw new InvalidArgumentException("缺少服务器Id。");
+        }
 
         var id = args.Count == 3 ? args[2] : _serverSwitcher.CurrentId;
 
         if (string.IsNullOrEmpty(id))
+        {
             throw new InvalidArgumentException(
                 "缺少服务器Id。"
                     + "你可以在命令末尾添加服务器Id或使用\"server switch <id>\"选择你要控制的服务器"
             );
+        }
 
         if (!_serverManager.Servers.TryGetValue(id, out Server? server))
+        {
             throw new InvalidArgumentException("指定的服务器不存在");
+        }
 
         switch (args[1].ToLowerInvariant())
         {
@@ -119,7 +127,9 @@ public sealed class ServerHandler(
                     server.Start();
 
                     if (string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader))
+                    {
                         _settingProvider.Value.Application.CliCommandHeader = "//";
+                    }
 
                     _logger.LogWarning(
                         "服务器已启动，输入的命令将转发至服务器。若要执行Serein的命令，你需要在命令前加上\"{}\"",

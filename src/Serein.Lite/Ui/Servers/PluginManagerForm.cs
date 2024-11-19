@@ -44,8 +44,12 @@ public partial class PluginManagerForm : Form
         PluginListView.Items.Clear();
 
         foreach (var group in PluginListView.Groups)
+        {
             if (group is ListViewGroup listViewGroup)
+            {
                 listViewGroup.Items.Clear();
+            }
+        }
 
         foreach (var plugin in _server.PluginManager.Plugins)
         {
@@ -56,9 +60,13 @@ public partial class PluginManagerForm : Form
             };
 
             if (plugin.FileInfo.Exists)
+            {
                 item.SubItems.Add(plugin.FileInfo.Length.ToSizeString());
+            }
             else
+            {
                 item.SubItems.Add("-");
+            }
 
             if (!plugin.IsEnabled)
             {
@@ -132,6 +140,7 @@ public partial class PluginManagerForm : Form
     {
         var openFileDialog = new OpenFileDialog { Filter = "可接受的插件文件|*.dll;*.jar;*.js;*.py;*.lua" };
         if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
             try
             {
                 _server.PluginManager.Add(openFileDialog.FileNames);
@@ -140,6 +149,7 @@ public partial class PluginManagerForm : Form
             {
                 MessageBoxHelper.ShowWarningMsgBox("导入失败：\r\n" + ex.Message);
             }
+        }
 
         _server.PluginManager.Update();
         LoadData();
@@ -149,7 +159,9 @@ public partial class PluginManagerForm : Form
     {
         var selectedPlugins = SelectedPlugins;
         foreach (var plugin in selectedPlugins)
+        {
             if (plugin is not null)
+            {
                 try
                 {
                     _server.PluginManager.Enable(plugin);
@@ -161,6 +173,8 @@ public partial class PluginManagerForm : Form
                     );
                     break;
                 }
+            }
+        }
 
         _server.PluginManager.Update();
         LoadData();
@@ -170,7 +184,9 @@ public partial class PluginManagerForm : Form
     {
         var selectedPlugins = SelectedPlugins;
         foreach (var plugin in selectedPlugins)
+        {
             if (plugin is not null)
+            {
                 try
                 {
                     _server.PluginManager.Disable(plugin);
@@ -182,7 +198,8 @@ public partial class PluginManagerForm : Form
                     );
                     break;
                 }
-
+            }
+        }
         _server.PluginManager.Update();
         LoadData();
     }
@@ -200,10 +217,14 @@ public partial class PluginManagerForm : Form
                     : $"确定要删除\"{selectedPlugins.First()?.FriendlyName}\"等{count}个插件吗？"
             )
         )
+        {
             return;
+        }
 
         foreach (var plugin in selectedPlugins)
+        {
             if (plugin is not null)
+            {
                 try
                 {
                     _server.PluginManager.Remove(plugin);
@@ -215,6 +236,8 @@ public partial class PluginManagerForm : Form
                     );
                     break;
                 }
+            }
+        }
 
         _server.PluginManager.Update();
         LoadData();
@@ -246,6 +269,7 @@ public partial class PluginManagerForm : Form
                 "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
                     + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
             ))
+            {
                 try
                 {
                     _server.PluginManager.Add(acceptable.ToArray());
@@ -254,6 +278,7 @@ public partial class PluginManagerForm : Form
                 {
                     MessageBoxHelper.ShowWarningMsgBox("导入失败：\r\n" + ex.Message);
                 }
+            }
         }
     }
 

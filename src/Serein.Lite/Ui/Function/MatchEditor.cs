@@ -32,7 +32,9 @@ public partial class MatchEditor : Form
     {
         RequireAdminCheckBox.Enabled = FieldTypeComboBox.SelectedIndex is 3 or 4;
         if (!RequireAdminCheckBox.Enabled)
+        {
             RequireAdminCheckBox.Checked = false;
+        }
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
@@ -56,8 +58,11 @@ public partial class MatchEditor : Form
     {
         RegexErrorProvider.Clear();
         if (string.IsNullOrEmpty(RegexTextBox.Text))
+        {
             RegexErrorProvider.SetError(RegexTextBox, "正则内容为空");
+        }
         else
+        {
             try
             {
                 _ = new Regex(RegexTextBox.Text);
@@ -66,6 +71,7 @@ public partial class MatchEditor : Form
             {
                 RegexErrorProvider.SetError(RegexTextBox, "正则语法不正确：\r\n" + ex.Message);
             }
+        }
     }
 
     private void CommandTextBox_Enter(object sender, EventArgs e)
@@ -77,8 +83,11 @@ public partial class MatchEditor : Form
     {
         CommandErrorProvider.Clear();
         if (string.IsNullOrEmpty(CommandTextBox.Text))
+        {
             CommandErrorProvider.SetError(CommandTextBox, "命令内容为空");
+        }
         else
+        {
             try
             {
                 CommandParser.Parse(CommandOrigin.Null, CommandTextBox.Text, true);
@@ -87,5 +96,6 @@ public partial class MatchEditor : Form
             {
                 CommandErrorProvider.SetError(CommandTextBox, ex.Message);
             }
+        }
     }
 }

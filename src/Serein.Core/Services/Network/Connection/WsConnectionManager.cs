@@ -85,43 +85,57 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, _receivedArg);
 
         if (_settingProvider.Value.Connection.SaveLog)
+        {
             _logWriter.WriteAsync($"{DateTime.Now:t} [Received] {e.Message}");
+        }
 
         if (_settingProvider.Value.Connection.OutputData)
+        {
             _connectionLogger.Value.LogReceivedData(e.Message);
+        }
 
         if (!_eventDispatcher.Dispatch(Event.WsDataReceived, e.Message))
+        {
             return;
-
+        }
         var node = JsonSerializer.Deserialize<JsonNode>(e.Message);
 
         if (node is null)
+        {
             return;
-
+        }
         _packetHandler.Handle(node);
     }
 
     public void Start()
     {
         if (_reverseWebSocketService.Active)
+        {
             throw new InvalidOperationException("反向WebSocket服务器未关闭");
-
+        }
         if (_webSocketService.Active)
+        {
             throw new InvalidOperationException("WebSocket连接未断开");
+        }
 
         _sent = _received = 0;
 
         if (_settingProvider.Value.Connection.UseReverseWebSocket)
+        {
             _reverseWebSocketService.Start();
+        }
         else
+        {
             _webSocketService.Start();
+        }
     }
 
     public void Stop()
     {
         if (!Active && !_webSocketService.Connecting)
+        {
             throw new InvalidOperationException("WebSocket未连接");
-
+        }
         ConnectedAt = null;
         _sent = _received = 0;
         PropertyChanged?.Invoke(this, _sentArg);
@@ -148,15 +162,22 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, _sentArg);
 
         if (_settingProvider.Value.Connection.SaveLog)
+        {
             _logWriter.WriteAsync($"{DateTime.Now:t} [Sent] {data}");
-
+        }
         if (_settingProvider.Value.Connection.OutputData)
+        {
             _connectionLogger.Value.LogSentData(data);
+        }
 
         if (_reverseWebSocketService.Active)
+        {
             await _reverseWebSocketService.SendAsync(data);
+        }
         else if (_webSocketService.Active)
+        {
             await _webSocketService.SendAsync(data);
+        }
     }
 
     private async Task SendActionRequestAsync<T>(string endpoint, T @params)

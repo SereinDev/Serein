@@ -39,6 +39,7 @@ public partial class CommandPromptCallbacks(
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
         );
         if (args.Length <= 1) // 根命令
+        {
             return Task.FromResult<IReadOnlyList<CompletionItem>>(
                 [
                     .. _commandProvider
@@ -48,6 +49,7 @@ public partial class CommandPromptCallbacks(
                         .ThenBy((item) => item.ReplacementText[0]),
                 ]
             );
+        }
 
         if (args.Length > 0)
             switch (args[0])
@@ -113,11 +115,16 @@ public partial class CommandPromptCallbacks(
     private static int CalculateRelevance(string word, string input)
     {
         for (int i = word.Length; i > 0; i--)
+        {
             if (input == word[..i])
+            {
                 return i;
+            }
             else if (input.Contains(word[..i]))
+            {
                 return i - 10;
-
+            }
+        }
         return int.MinValue;
     }
 }

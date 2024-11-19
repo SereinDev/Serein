@@ -29,7 +29,9 @@ public sealed class HardwareInfoProvider
     public void Update()
     {
         if (_isLoading)
+        {
             return;
+        }
 
         lock (_lock)
             try
@@ -37,9 +39,13 @@ public sealed class HardwareInfoProvider
                 _isLoading = true;
 
                 if (Info is null)
+                {
                     Info = new();
+                }
                 else
+                {
                     Info.RefreshAll();
+                }
             }
             catch (Exception e)
             {

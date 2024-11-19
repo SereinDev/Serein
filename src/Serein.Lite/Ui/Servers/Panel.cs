@@ -39,7 +39,9 @@ public partial class Panel : UserControl
                 _timer.Start();
             }
             else
+            {
                 _timer.Stop();
+            }
         };
 
         _pluginManagerForm = new(() => new(_server));
@@ -53,25 +55,35 @@ public partial class Panel : UserControl
             {
                 case ServerOutputType.Raw:
                     lock (_lock)
+                    {
                         ConsoleBrowser.AppendHtmlLine(
-                            LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
-                        );
+                        LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
+                    );
+                    }
                     break;
 
                 case ServerOutputType.InputCommand:
                     if (_server.Configuration.OutputCommandUserInput)
+                    {
                         lock (_lock)
+                        {
                             ConsoleBrowser.AppendHtmlLine($">{LogColorizer.EscapeLog(e.Data)}");
+                        }
+                    }
                     break;
 
                 case ServerOutputType.Information:
                     lock (_lock)
+                    {
                         ConsoleBrowser.AppendNotice(e.Data);
+                    }
                     break;
 
                 case ServerOutputType.Error:
                     lock (_lock)
+                    {
                         ConsoleBrowser.AppendError(e.Data);
+                    }
                     break;
 
                 default:
@@ -144,13 +156,17 @@ public partial class Panel : UserControl
 
             case Keys.Up:
                 if (_server.CommandHistoryIndex > 0)
+                {
                     _server.CommandHistoryIndex--;
+                }
 
                 if (
                     _server.CommandHistoryIndex >= 0
                     && _server.CommandHistoryIndex < _server.CommandHistory.Count
                 )
+                {
                     InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+                }
 
                 e.Handled = true;
                 InputTextBox.SelectionStart = InputTextBox.Text.Length;
@@ -158,18 +174,24 @@ public partial class Panel : UserControl
 
             case Keys.Down:
                 if (_server.CommandHistoryIndex < _server.CommandHistory.Count)
+                {
                     _server.CommandHistoryIndex++;
+                }
 
                 if (
                     _server.CommandHistoryIndex >= 0
                     && _server.CommandHistoryIndex < _server.CommandHistory.Count
                 )
+                {
                     InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+                }
                 else if (
                     _server.CommandHistoryIndex == _server.CommandHistory.Count
                     && _server.CommandHistory.Count != 0
                 )
+                {
                     InputTextBox.Text = string.Empty;
+                }
 
                 e.Handled = true;
                 InputTextBox.SelectionStart = InputTextBox.Text.Length;
@@ -220,9 +242,13 @@ public partial class Panel : UserControl
     private void OpenDirectoryButton_Click(object sender, EventArgs e)
     {
         if (File.Exists(_server.Configuration.FileName))
+        {
             _server.Configuration.FileName.OpenInExplorer();
+        }
         else
+        {
             MessageBoxHelper.ShowWarningMsgBox("启动文件不存在，无法打开其所在文件夹");
+        }
     }
 
     private void Panel_DragEnter(object sender, DragEventArgs e)
@@ -251,6 +277,7 @@ public partial class Panel : UserControl
                         + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
                 )
             )
+            {
                 try
                 {
                     _server.PluginManager.Add(acceptable.ToArray());
@@ -259,6 +286,7 @@ public partial class Panel : UserControl
                 {
                     MessageBoxHelper.ShowWarningMsgBox("导入失败：\r\n" + ex.Message);
                 }
+            }
         }
     }
 }

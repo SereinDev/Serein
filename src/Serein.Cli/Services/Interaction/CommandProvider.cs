@@ -48,12 +48,14 @@ public sealed class CommandProvider
             var type = command.GetType();
             var attribute = type.GetCustomAttribute<CommandNameAttribute>();
             if (attribute is null)
+            {
                 continue;
-
+            }
             dict[attribute.RootCommand] = command;
             if (attribute.RootCommand == "help")
+            {
                 dict["?"] = command;
-
+            }
             GenerateHelpPage(list, stringBuilder, type);
         }
 
@@ -71,23 +73,28 @@ public sealed class CommandProvider
         var nameAttribute = type.GetCustomAttribute<CommandNameAttribute>();
         var descriptionAttribute = type.GetCustomAttribute<CommandDescriptionAttribute>();
         if (nameAttribute is null || descriptionAttribute is null)
+        {
             return;
+        }
 
         stringBuilder.AppendLine($"■ {nameAttribute.RootCommand}  {nameAttribute.Name}");
 
         stringBuilder.AppendLine(" ▢ 描述");
         foreach (var line in descriptionAttribute.Lines)
+        {
             stringBuilder.AppendLine($"  ▫ {line}");
-
+        }
 
         var childrenAttributes = type.GetCustomAttributes<CommandChildrenAttribute>();
         if (childrenAttributes.Any())
         {
             stringBuilder.AppendLine(" ▢ 用法");
             foreach (var child in childrenAttributes)
+            {
                 stringBuilder.AppendLine(
-                    $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
-                );
+                      $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
+                  );
+            }
         }
 
         stringBuilder.AppendLine();
@@ -101,7 +108,7 @@ public sealed class CommandProvider
     {
         return new(
             nameAttribute.RootCommand,
-            getExtendedDescription: (cancellationToken) =>
+            getExtendedDescription: (_) =>
             {
                 var stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine(nameAttribute.Name);
@@ -111,7 +118,9 @@ public sealed class CommandProvider
                 {
                     stringBuilder.AppendLine("描述");
                     foreach (var line in descriptionAttribute.Lines)
+                    {
                         stringBuilder.AppendLine($"▫ {line}");
+                    }
                 }
 
                 return Task.FromResult<FormattedString>(

@@ -14,7 +14,7 @@ public sealed class Matcher(
     MatchesProvider matchesProvider,
     CommandRunner commandRunner,
     SettingProvider settingProvider
-    )
+)
 {
     private readonly MatchesProvider _matchesProvider = matchesProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
@@ -37,12 +37,16 @@ public sealed class Matcher(
                     || match.CommandObj.Type == CommandType.Invalid
                     || CheckExclusions(match, id)
                 )
+                {
                     continue;
+                }
 
                 var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
+                {
                     tasks.Add(_commandRunner.RunAsync(match.CommandObj, new(matches)));
+                }
             }
         }
 
@@ -66,12 +70,16 @@ public sealed class Matcher(
                     || match.CommandObj.Type == CommandType.Invalid
                     || CheckExclusions(match, id)
                 )
+                {
                     continue;
+                }
 
                 var matches = match.RegexObj.Match(line);
 
                 if (matches.Success)
+                {
                     tasks.Add(_commandRunner.RunAsync(match.CommandObj, new(matches)));
+                }
             }
         }
 
@@ -103,17 +111,22 @@ public sealed class Matcher(
                         || match.FieldType == MatchFieldType.GroupMsg
                             && messagePacket.MessageType == MessageType.Group
                         || match.FieldType == MatchFieldType.PrivateMsg
-                            && messagePacket.MessageType == MessageType.Private)
+                            && messagePacket.MessageType == MessageType.Private
+                    )
                     || CheckExclusions(match, messagePacket)
                 )
+                {
                     continue;
+                }
 
                 var matches = match.RegexObj.Match(messagePacket.RawMessage);
 
                 if (matches.Success)
+                {
                     tasks.Add(
                         _commandRunner.RunAsync(match.CommandObj, new(matches, messagePacket))
                     );
+                }
             }
         }
 
@@ -125,11 +138,10 @@ public sealed class Matcher(
         return match.MatchExclusion.Servers.Contains(serverId);
     }
 
-
     private static bool CheckExclusions(Match match, MessagePacket messagePacket)
     {
         return match.FieldType == MatchFieldType.GroupMsg
-            && match.MatchExclusion.Groups.Contains(messagePacket.GroupId)
+                && match.MatchExclusion.Groups.Contains(messagePacket.GroupId)
             || match.MatchExclusion.Users.Contains(messagePacket.UserId);
     }
 

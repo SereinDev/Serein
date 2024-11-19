@@ -49,19 +49,25 @@ public sealed class PermissionGroupProvider : DataProviderBase<Dictionary<string
                 );
 
                 if (wrapper?.Type == typeof(Dictionary<string, Group>).ToString())
+                {
                     lock (Value)
                     {
                         Value.Clear();
 
                         if (wrapper.Data is not null)
+                        {
                             foreach (var kv in wrapper.Data)
                             {
                                 Value.Add(kv.Key, kv.Value);
                             }
+                        }
                     }
+                }
             }
             else
+            {
                 Save();
+            }
 
             return Value;
         }

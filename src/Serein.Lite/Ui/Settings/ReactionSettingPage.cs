@@ -18,7 +18,9 @@ public partial class ReactionSettingPage : UserControl
         InitializeComponent();
 
         foreach (var type in Enum.GetValues<ReactionType>())
+        {
             EventListBox.Items.Add(new DisplayedItem(type));
+        }
 
         CommandListView.SetExploreTheme();
         _settingProvider = settingProvider;
@@ -27,7 +29,9 @@ public partial class ReactionSettingPage : UserControl
     private void SaveData()
     {
         if (EventListBox.SelectedItem is not DisplayedItem displayedItem)
+        {
             return;
+        }
 
         _settingProvider.Value.Reactions[displayedItem.Type] = CommandListView
             .Items.Cast<ListViewItem>()
@@ -47,12 +51,16 @@ public partial class ReactionSettingPage : UserControl
             CommandListView.Items.Clear();
 
             foreach (var command in commands)
+            {
                 CommandListView.Items.Add(command);
+            }
 
             CommandListView.EndUpdate();
         }
         else
+        {
             CommandListView.Items.Clear();
+        }
     }
 
     private void CommandListView_AfterLabelEdit(object sender, LabelEditEventArgs e)
@@ -68,10 +76,13 @@ public partial class ReactionSettingPage : UserControl
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (CommandListView.SelectedItems.Count == 1)
+        {
             CommandListView.Items.Insert(CommandListView.SelectedItems[0].Index, string.Empty);
+        }
         else
+        {
             CommandListView.Items.Add(string.Empty);
-
+        }
         SaveData();
     }
 

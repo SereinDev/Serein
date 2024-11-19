@@ -69,7 +69,9 @@ public sealed class PluginManager(
         try
         {
             if (Loading)
+            {
                 throw new InvalidOperationException("正在加载插件");
+            }
 
             Loading = true;
 
@@ -86,7 +88,9 @@ public sealed class PluginManager(
             foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
             {
                 if (!File.Exists(Path.Join(dir, PathConstants.PluginInfoFileName)))
+                {
                     continue;
+                }
 
                 PluginInfo pluginInfo;
                 try
@@ -98,7 +102,9 @@ public sealed class PluginManager(
                         ) ?? throw new InvalidDataException("插件信息为空");
 
                     if (string.IsNullOrWhiteSpace(pluginInfo.Id))
+                    {
                         throw new InvalidOperationException("Id不可为空");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -112,7 +118,9 @@ public sealed class PluginManager(
                         _jsPluginLoader.JsPlugins.ContainsKey(pluginInfo.Id)
                         || _netPluginLoader.NetPlugins.ContainsKey(pluginInfo.Id)
                     )
+                    {
                         throw new InvalidOperationException("插件Id重复");
+                    }
 
                     _pluginLogger.Log(
                         LogLevel.Trace,
@@ -121,12 +129,17 @@ public sealed class PluginManager(
                     );
 
                     if (pluginInfo.Type == PluginType.Js)
+                    {
                         _jsPluginLoader.Load(pluginInfo, dir);
+                    }
                     else if (pluginInfo.Type == PluginType.Net)
+                    {
                         _netPluginLoader.Load(pluginInfo, dir);
+                    }
                     else
+                    {
                         throw new NotSupportedException("未指定插件类型");
-
+                    }
                     _pluginLogger.Log(
                         LogLevel.Trace,
                         string.Empty,
@@ -178,7 +191,9 @@ public sealed class PluginManager(
     public void Reload()
     {
         if (Reloading || Loading)
+        {
             throw new InvalidOperationException("正在加载插件");
+        }
 
         Reloading = true;
 

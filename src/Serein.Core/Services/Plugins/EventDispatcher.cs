@@ -39,8 +39,12 @@ public sealed class EventDispatcher(
         DispatchToJsPlugins(tasks, @event, cancellationTokenSource.Token, args);
 
         foreach (var t in DispatchToNetPlugins(@event, cancellationTokenSource.Token, args))
+        {
             if (t is Task<bool> tb)
+            {
                 tasks.Add(tb);
+            }
+        }
 
         _logger.LogDebug("事件（{}）任务数：{}", @event, tasks.Count);
 
@@ -52,7 +56,9 @@ public sealed class EventDispatcher(
         }
 
         if (_settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
+        {
             Task.WaitAll([.. tasks], _settingProvider.Value.Application.PluginEventMaxWaitingTime);
+        }
 
         cancellationTokenSource.Cancel();
         return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
@@ -66,7 +72,9 @@ public sealed class EventDispatcher(
     )
     {
         foreach ((_, var jsPlugin) in _jsPluginLoader.Plugins)
+        {
             tasks.Add(Task.Run(() => jsPlugin.Invoke(@event, cancellationToken, args)));
+        }
     }
 
     private List<Task> DispatchToNetPlugins(
@@ -80,7 +88,9 @@ public sealed class EventDispatcher(
         foreach ((var name, var plugin) in _netPluginLoader.Plugins)
         {
             if (cancellationToken.IsCancellationRequested)
+            {
                 break;
+            }
 
             try
             {

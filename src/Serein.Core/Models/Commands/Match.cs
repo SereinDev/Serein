@@ -23,8 +23,9 @@ public class Match : NotifyPropertyChangedModelBase
             try
             {
                 if (string.IsNullOrEmpty(_regExp))
+                {
                     throw new ArgumentException("正则表达式不得为空", nameof(RegExp));
-
+                }
                 RegexObj = new Regex(_regExp);
             }
             catch

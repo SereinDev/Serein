@@ -28,21 +28,21 @@ public sealed class ConnectionProperty
 
     public void SendData(string text)
     {
-        ArgumentNullException.ThrowIfNull(text, nameof(text));
+        ArgumentNullException.ThrowIfNull(text);
 
         _wsConnectionManager.SendDataAsync(text).Await();
     }
 
     public void SendGroupMsg(long target, string message)
     {
-        ArgumentNullException.ThrowIfNull(message, nameof(message));
+        ArgumentNullException.ThrowIfNull(message);
 
         _wsConnectionManager.SendGroupMsgAsync(target, message).Await();
     }
 
     public void SendPrivateMsg(long target, string message)
     {
-        ArgumentNullException.ThrowIfNull(message, nameof(message));
+        ArgumentNullException.ThrowIfNull(message);
 
         _wsConnectionManager.SendPrivateMsgAsync(target, message).Await();
     }

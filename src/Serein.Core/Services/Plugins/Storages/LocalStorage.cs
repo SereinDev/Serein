@@ -26,23 +26,31 @@ public sealed class LocalStorage : StorageBase
             );
 
             if (data?.Type == typeof(JsonObject).ToString() && data.Data is not null)
+            {
                 foreach ((string key, JsonNode? value) in data.Data)
+                {
                     _data.TryAdd(key, value?.ToString() ?? "null");
+                }
+            }
         }
         else
+        {
             OnUpdated();
+        }
     }
 
     protected override void OnUpdated()
     {
         Directory.CreateDirectory(PathConstants.PluginsDirectory);
         lock (_data)
+        {
             File.WriteAllText(
-                Path,
-                JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(_data),
-                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
-                )
-            );
+             Path,
+             JsonSerializer.Serialize(
+                 DataItemWrapper.Wrap(_data),
+                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+             )
+         );
+        }
     }
 }

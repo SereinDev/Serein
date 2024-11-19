@@ -16,7 +16,9 @@ public partial class PermissionManager
     public void Register(string id, string node, string? description = null)
     {
         if (!GetKeyRegex().IsMatch(node))
+        {
             throw new ArgumentException("权限节点不合法", nameof(node));
+        }
 
         _nodes.Add($"{id}.{node}", description);
     }
@@ -24,7 +26,9 @@ public partial class PermissionManager
     public void Unregister(string id, string node)
     {
         if (!_nodes.Remove($"{id}.{node}"))
+        {
             throw new KeyNotFoundException();
+        }
     }
 
     internal void Clear() => _nodes.Clear();

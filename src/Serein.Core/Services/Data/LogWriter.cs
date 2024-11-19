@@ -24,16 +24,21 @@ public class LogWriter(ILogger<LogWriter> logger, string directory)
         await Task.Delay(500);
 
         if ((DateTime.Now - _last).TotalMilliseconds > 450)
+        {
             Flush();
+        }
     }
 
     public void Flush()
     {
         lock (_lock)
+        {
             lock (_buffer)
             {
                 if (!Directory.Exists(_directory))
+                {
                     Directory.CreateDirectory(_directory);
+                }
 
                 var path = Path.Combine(_directory, $"{DateTime.Now:yyyy-MM-dd}.log");
 
@@ -47,5 +52,6 @@ public class LogWriter(ILogger<LogWriter> logger, string directory)
                     _logger.LogDebug(e, "写入“{}”失败", path);
                 }
             }
+        }
     }
 }

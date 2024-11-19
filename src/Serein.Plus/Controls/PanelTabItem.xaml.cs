@@ -80,7 +80,9 @@ public partial class PanelTabItem : TabItem
 
             case ServerOutputType.InputCommand:
                 if (Server.Configuration.OutputCommandUserInput)
+                {
                     Dispatcher.Invoke(() => Console.AppendLine($">{e.Data}"));
+                }
                 break;
 
             case ServerOutputType.Information:
@@ -120,9 +122,13 @@ public partial class PanelTabItem : TabItem
 
                 case "OpenInExplorer":
                     if (File.Exists(Server.Configuration.FileName))
+                    {
                         Server.Configuration.FileName.OpenInExplorer();
+                    }
                     else
+                    {
                         throw new InvalidOperationException("启动文件不存在，无法打开其所在文件夹");
+                    }
                     break;
 
                 case "PluginManager":
@@ -154,13 +160,17 @@ public partial class PanelTabItem : TabItem
 
             case Key.Up:
                 if (Server.CommandHistoryIndex > 0)
+                {
                     Server.CommandHistoryIndex--;
+                }
 
                 if (
                     Server.CommandHistoryIndex >= 0
                     && Server.CommandHistoryIndex < Server.CommandHistory.Count
                 )
+                {
                     InputBox.Text = Server.CommandHistory[Server.CommandHistoryIndex];
+                }
 
                 e.Handled = true;
                 InputBox.SelectionStart = InputBox.Text.Length;
@@ -168,18 +178,24 @@ public partial class PanelTabItem : TabItem
 
             case Key.Down:
                 if (Server.CommandHistoryIndex < Server.CommandHistory.Count)
+                {
                     Server.CommandHistoryIndex++;
+                }
 
                 if (
                     Server.CommandHistoryIndex >= 0
                     && Server.CommandHistoryIndex < Server.CommandHistory.Count
                 )
+                {
                     InputBox.Text = Server.CommandHistory[Server.CommandHistoryIndex];
+                }
                 else if (
                     Server.CommandHistoryIndex == Server.CommandHistory.Count
                     && Server.CommandHistory.Count != 0
                 )
+                {
                     InputBox.Text = string.Empty;
+                }
 
                 e.Handled = true;
                 InputBox.SelectionStart = InputBox.Text.Length;
@@ -237,7 +253,9 @@ public partial class PanelTabItem : TabItem
                 var editor = new ServerConfigurationEditor(_serverManager, config, _id);
 
                 if (editor.ShowDialog() != true)
+                {
                     return;
+                }
 
                 editor.Configuration.ShallowCloneTo(Server.Configuration);
                 Header = Server.Configuration.Name;
@@ -251,6 +269,7 @@ public partial class PanelTabItem : TabItem
                         (task) =>
                         {
                             if (task.Result)
+                            {
                                 try
                                 {
                                     _serverManager.Remove(_id);
@@ -263,6 +282,7 @@ public partial class PanelTabItem : TabItem
                                         InfoBarSeverity.Error
                                     );
                                 }
+                            }
                         }
                     );
                 break;

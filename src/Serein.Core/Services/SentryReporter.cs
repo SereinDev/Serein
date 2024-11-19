@@ -18,7 +18,9 @@ internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider se
     public void Initialize()
     {
         if (!_settingProvider.Value.Application.EnableSentry || SereinApp.Type == AppType.Unknown)
+        {
             return;
+        }
 
         SentrySdk.Init(options =>
         {

@@ -26,8 +26,12 @@ public sealed class ManagementTests : IDisposable
     public void Dispose()
     {
         foreach (var (_, server) in _serverManager.Servers)
+        {
             if (server.Status)
+            {
                 server.Terminate();
+            }
+        }
 
         _app.StopAsync();
     }

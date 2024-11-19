@@ -3,7 +3,6 @@ using System.Linq;
 
 using Microsoft.Extensions.Logging;
 
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 
@@ -35,8 +34,9 @@ public sealed class ServerSwitcher(
             }
 
             if (!_serverManager.Servers.TryGetValue(id, out var server))
+            {
                 throw new InvalidOperationException("选择的服务器不存在");
-
+            }
             if (
                 !string.IsNullOrEmpty(CurrentId)
                 && _serverManager.Servers.TryGetValue(CurrentId, out var oldServer)
@@ -50,7 +50,9 @@ public sealed class ServerSwitcher(
             if (server.Status)
             {
                 if (string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader))
+                {
                     _settingProvider.Value.Application.CliCommandHeader = "//";
+                }
                 _logger.LogWarning(
                     "此服务器正在运行中，输入的命令将转发至服务器。若要执行Serein的命令，你需要在命令前加上\"{}\"",
                     _settingProvider.Value.Application.CliCommandHeader
@@ -68,7 +70,7 @@ public sealed class ServerSwitcher(
                 "添加更多服务器配置后，你可以用\"server switch <id>\"选择要进行操作的服务器"
             );
 
-            SwitchTo( _serverManager.Servers.First().Key);
+            SwitchTo(_serverManager.Servers.First().Key);
         }
         else if (_serverManager.Servers.Count > 1)
         {
@@ -81,8 +83,9 @@ public sealed class ServerSwitcher(
     private void LogToConsole(object? sender, ServerOutputEventArgs e)
     {
         if (sender is not Server server)
+        {
             return;
-
+        }
         switch (e.OutputType)
         {
             case ServerOutputType.Raw:

@@ -18,7 +18,9 @@ public class ConsoleWebBrowser : WebBrowser
     public void AppendHtmlLine(string html)
     {
         if (Document?.Body?.InnerHtml is null)
+        {
             Refresh();
+        }
 
         Document?.InvokeScript("appendText", [html]);
     }

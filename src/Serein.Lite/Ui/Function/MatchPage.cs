@@ -51,6 +51,7 @@ public partial class MatchPage : UserControl, IUpdateablePage
         MatchListView.Items.Clear();
 
         lock (_matchesProvider.Value)
+        {
             foreach (var match in _matchesProvider.Value)
             {
                 var item = new ListViewItem(match.RegExp) { Tag = match };
@@ -68,6 +69,7 @@ public partial class MatchPage : UserControl, IUpdateablePage
 
                 MatchListView.Items.Add(item);
             }
+        }
         MatchListView.EndUpdate();
         UpdateText();
     }
@@ -104,7 +106,9 @@ public partial class MatchPage : UserControl, IUpdateablePage
     private void MatchListView_KeyDown(object sender, KeyEventArgs e)
     {
         if (!e.Control || MatchListView.Items.Count <= 1 || MatchListView.SelectedItems.Count != 1)
+        {
             return;
+        }
 
         ListViewItem item;
         var i = MatchListView.SelectedItems[0].Index;
@@ -164,7 +168,9 @@ public partial class MatchPage : UserControl, IUpdateablePage
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所选项吗？"))
+        {
             return;
+        }
 
         foreach (var item in MatchListView.SelectedItems.Cast<ListViewItem>())
         {
@@ -177,7 +183,9 @@ public partial class MatchPage : UserControl, IUpdateablePage
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所有项吗？"))
+        {
             return;
+        }
 
         _matchesProvider.Value.Clear();
         _matchesProvider.SaveAsyncWithDebounce();

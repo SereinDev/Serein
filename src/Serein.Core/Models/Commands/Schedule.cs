@@ -24,8 +24,9 @@ public class Schedule : NotifyPropertyChangedModelBase
             try
             {
                 if (string.IsNullOrEmpty(_expression))
+                {
                     throw new ArgumentException("Cron表达式不得为空", nameof(Expression));
-
+                }
                 Cron = CrontabSchedule.Parse(_expression);
                 NextTime = Cron?.GetNextOccurrence(DateTime.Now);
             }

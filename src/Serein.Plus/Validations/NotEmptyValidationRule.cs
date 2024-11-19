@@ -10,7 +10,9 @@ public class NotEmptyValidationRule : ValidationRule
         if (value is string s)
         {
             if (!string.IsNullOrEmpty(s))
+            {
                 return ValidationResult.ValidResult;
+            }
             return new(false, "Value cannot be empty.");
         }
         return new(false, "Value must be a string.");

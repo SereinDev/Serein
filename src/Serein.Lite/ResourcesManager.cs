@@ -40,7 +40,9 @@ public class ResourcesManager(ILogger<ResourcesManager> logger)
     private void WriteHtml()
     {
         if (_consoleHtml is null)
+        {
             throw new InvalidDataException($"{IndexHtml} 未找到");
+        }
 
         lock (_lock)
         {
@@ -55,7 +57,9 @@ public class ResourcesManager(ILogger<ResourcesManager> logger)
     private void WriteCss()
     {
         if (_consoleCss is null)
+        {
             throw new InvalidDataException($"{CustomCss} 未找到");
+        }
 
         lock (_lock)
         {

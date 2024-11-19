@@ -58,11 +58,17 @@ public sealed class CoreService : IHostedService
         _updateChecker.StartAsync();
 
         foreach (var (_, server) in _serverManager.Servers)
+        {
             if (server.Configuration.StartWhenSettingUp)
+            {
                 Try(server.Start, $"服务器{server.Configuration.Name}({server.Id})");
+            }
+        }
 
         if (_settingProvider.Value.WebApi.IsEnabled)
+        {
             Try(_httpServer.Start, "WebApi");
+        }
 
         _logger.LogInformation("Serein启动成功！");
 

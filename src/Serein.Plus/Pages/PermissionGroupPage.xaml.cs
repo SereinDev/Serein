@@ -57,7 +57,9 @@ public partial class PermissionGroupPage : Page
                 };
 
                 if (dialog1.ShowDialog() == true)
+                {
                     _groupManager.Add(dialog1.Id, dialog1.Group);
+                }
 
                 break;
 
@@ -70,6 +72,7 @@ public partial class PermissionGroupPage : Page
                     GroupListView.SelectedItem is KeyValuePair<string, Group> kv1
                     && kv1.Key != "everyone"
                 )
+                {
                     DialogHelper
                         .ShowDeleteConfirmation($"确定要删除权限组（\"{kv1.Key}\"）吗？")
                         .ContinueWith(
@@ -82,6 +85,7 @@ public partial class PermissionGroupPage : Page
                                 }
                             }
                         );
+                }
                 break;
 
             case "Edit":
@@ -110,7 +114,7 @@ public partial class PermissionGroupPage : Page
 
     private void GroupListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
-         EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count == 1;
-        RemoveMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0 && !GroupListView.SelectedItems.OfType<KeyValuePair<string , Group>>().Any((kv)=>kv.Key=="everyone");
+        EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count == 1;
+        RemoveMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0 && !GroupListView.SelectedItems.OfType<KeyValuePair<string, Group>>().Any((kv) => kv.Key == "everyone");
     }
 }

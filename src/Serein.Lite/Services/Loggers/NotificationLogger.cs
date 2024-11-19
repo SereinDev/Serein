@@ -36,7 +36,9 @@ public sealed class NotificationLogger : ILogger
     {
         Messages.Add((logLevel, formatter(state, exception)));
         if (Messages.Count > 50)
+        {
             Messages.RemoveAt(0);
+        }
 
         Debug.WriteLine($"[{logLevel}] {formatter(state, exception)}");
     }

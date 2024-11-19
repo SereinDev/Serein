@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using NCrontab;
 
 using Serein.Core.Models.Commands;
-using Serein.Core.Services;
 using Serein.Core.Services.Commands;
 
 namespace Serein.Lite.Ui.Function;
@@ -80,8 +79,11 @@ public partial class ScheduleEditor : Form
     {
         CommandErrorProvider.Clear();
         if (string.IsNullOrEmpty(CommandTextBox.Text))
+        {
             CommandErrorProvider.SetError(CommandTextBox, "命令内容为空");
+        }
         else
+        {
             try
             {
                 CommandParser.Parse(CommandOrigin.Null, CommandTextBox.Text, true);
@@ -90,6 +92,7 @@ public partial class ScheduleEditor : Form
             {
                 CommandErrorProvider.SetError(CommandTextBox, ex.Message);
             }
+        }
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)

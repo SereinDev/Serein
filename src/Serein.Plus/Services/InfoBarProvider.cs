@@ -35,7 +35,9 @@ public sealed class InfoBarProvider(IServiceProvider serviceProvider)
         }, cancellationToken);
 
         if (!_isRunning)
+        {
             Task.Run(RunInfoBarLoop, CancellationToken.None);
+        }
     }
 
     private void RunInfoBarLoop()
@@ -46,7 +48,9 @@ public sealed class InfoBarProvider(IServiceProvider serviceProvider)
             var task = _tasks.Take();
 
             if (task.CancellationToken.IsCancellationRequested)
+            {
                 continue;
+            }
 
             _mainWindow.Value.Dispatcher.Invoke(_mainWindow.Value.ShowInfoBar, task);
 

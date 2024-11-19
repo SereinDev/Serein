@@ -27,12 +27,16 @@ public sealed class ConfigurationTests : IDisposable
     public void Dispose()
     {
         foreach (var (_, server) in _serverManager.Servers)
+        {
             if (server.Status)
+            {
                 server.Terminate();
+            }
+        }
 
         _app.StopAsync();
     }
-    
+
     [Fact]
     public async Task ShouldStartServerWithStartWhenSettingUpTrue()
     {

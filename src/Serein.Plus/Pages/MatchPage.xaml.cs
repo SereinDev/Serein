@@ -67,13 +67,13 @@ public partial class MatchPage : Page
             case "Remove":
                 DialogHelper.ShowDeleteConfirmation("确定要删除所选项吗？").ContinueWith((task) =>
                 {
-                    if (!task.Result)
-                        return;
+                    if (!task.Result){
+                        return;}
                     Dispatcher.Invoke(() =>
                 {
 
-                    foreach (var item in MatchesDataGrid.SelectedItems.OfType<Match>().ToArray())
-                        _matchesProvider.Value.Remove(item);
+                    foreach (var item in MatchesDataGrid.SelectedItems.OfType<Match>().ToArray()){
+                        _matchesProvider.Value.Remove(item);}
 
                     _matchesProvider.SaveAsyncWithDebounce();
                 });
@@ -81,8 +81,8 @@ public partial class MatchPage : Page
                 break;
 
             case "Edit":
-                if (MatchesDataGrid.SelectedItem is not Match m3)
-                    return;
+                if (MatchesDataGrid.SelectedItem is not Match m3){
+                    return;}
 
                 var m4 = m3.ShallowClone();
 

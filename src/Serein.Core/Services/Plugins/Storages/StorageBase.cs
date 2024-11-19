@@ -15,7 +15,9 @@ public abstract class StorageBase(ILogger logger)
     public void Clear()
     {
         lock (_data)
+        {
             _data.Clear();
+        }
 
         OnUpdated();
     }
@@ -28,7 +30,9 @@ public abstract class StorageBase(ILogger logger)
     public void RemoveItem(string key)
     {
         lock (_data)
+        {
             _data.Remove(key);
+        }
 
         OnUpdated();
     }
@@ -36,8 +40,10 @@ public abstract class StorageBase(ILogger logger)
     public void SetItem(string key, string value)
     {
         lock (_data)
+        {
             _data[key] = value ?? "null";
-
+        }
+        
         _logger.LogDebug("更新：'{}'='{}'", key, value);
         OnUpdated();
     }

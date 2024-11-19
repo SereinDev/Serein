@@ -51,13 +51,17 @@ public partial class PermissionEditorDialog : ContentDialog
         Update();
 
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
             sender.ItemsSource = _permissionManager.Nodes.Keys.Select((key) => key.Contains(Node));
+        }
     }
 
     private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
         if (args.ChosenSuggestion is not null)
+        {
             Node = args.ChosenSuggestion.ToString() ?? string.Empty;
+        }
     }
 
     private void ValueComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -38,7 +38,9 @@ public sealed class NetPluginLoader(
             );
 
             if (!File.Exists(entry))
+            {
                 throw new FileNotFoundException("插件入口点文件不存在", entry);
+            }
 
             var context = new PluginAssemblyLoadContext(entry);
             context.Unloading += (_) => _logger.LogDebug("插件\"{}\"上下文已卸载", pluginInfo.Id);
@@ -58,7 +60,9 @@ public sealed class NetPluginLoader(
         finally
         {
             if (plugin is not null)
+            {
                 NetPlugins.TryAdd(pluginInfo.Id, plugin);
+            }
         }
     }
 
@@ -68,25 +72,36 @@ public sealed class NetPluginLoader(
         var count = types.Count();
 
         if (count > 1)
+        {
             throw new InvalidOperationException("该程序集存在多个插件入口点");
+        }
         if (count == 0)
+        {
             throw new InvalidOperationException("未找到有效的插件入口点");
+        }
 
         var type = types.First();
 
         foreach (var ctor in type.GetConstructors())
         {
             if (ctor.IsStatic || !ctor.IsPublic)
+            {
                 continue;
+            }
 
             var args = new List<object?>();
 
             foreach (var parameterInfo in ctor.GetParameters())
+            {
                 if (parameterInfo.ParameterType == typeof(IServiceProvider))
+                {
                     args.Add(_serviceProvider);
+                }
                 else
+                {
                     args.Add(_serviceProvider.GetRequiredService(parameterInfo.ParameterType));
-
+                }
+            }
             return ctor.Invoke([.. args]) as PluginBase ?? throw new NotSupportedException();
         }
 
@@ -117,7 +132,9 @@ public sealed class NetPluginLoader(
             try
             {
                 if (reference.TryGetTarget(out var context))
+                {
                     context.Unload();
+                }
             }
             catch { }
         }

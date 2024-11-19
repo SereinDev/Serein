@@ -21,7 +21,9 @@ internal class PluginService(PluginManager pluginManager) : IHostedService
     public Task StopAsync(CancellationToken cancellationToken)
     {
         if (!_unloaded)
+        {
             Task.Run(_pluginManager.Unload, cancellationToken);
+        }
 
         _unloaded = true;
 

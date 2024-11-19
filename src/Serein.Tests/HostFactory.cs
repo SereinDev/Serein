@@ -19,12 +19,16 @@ public static class HostFactory
         lock (Lock)
         {
             if (Directory.Exists(PathConstants.Root))
+            {
                 foreach (var file in Directory.GetFiles(PathConstants.Root, "*", SearchOption.AllDirectories))
+                {
                     try
                     {
                         File.Delete(file);
                     }
                     catch { }
+                }
+            }
 
             var builder = SereinAppBuilder.CreateBuilder();
 

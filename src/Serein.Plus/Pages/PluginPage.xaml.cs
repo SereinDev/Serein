@@ -34,7 +34,9 @@ public partial class PluginPage : Page
     private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         if (args.InvokedItemContainer.Tag is not Type type)
+        {
             type = typeof(NotImplPage);
+        }
 
         ContentFrame.Navigate(_services.GetRequiredService(type));
     }

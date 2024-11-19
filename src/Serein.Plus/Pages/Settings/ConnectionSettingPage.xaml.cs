@@ -36,7 +36,9 @@ public partial class ConnectionSettingPage : Page
     private void OnPropertyChanged(object? sender, EventArgs e)
     {
         if (IsLoaded)
+        {
             _settingProvider.SaveAsyncWithDebounce();
+        }
     }
 
     private void UseReverseWebSocket_Click(object sender, RoutedEventArgs e)
@@ -60,8 +62,12 @@ public partial class ConnectionSettingPage : Page
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             )
         )
+        {
             if (long.TryParse(id, out long i))
+            {
                 list.Add(i);
+            }
+        }
 
         _settingProvider.Value.Connection.Groups = [.. list];
         OnPropertyChanged(sender, e);
@@ -76,8 +82,12 @@ public partial class ConnectionSettingPage : Page
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             )
         )
+        {
             if (long.TryParse(id, out long i))
+            {
                 list.Add(i);
+            }
+        }
 
         _settingProvider.Value.Connection.Administrators = [.. list];
         OnPropertyChanged(sender, e);

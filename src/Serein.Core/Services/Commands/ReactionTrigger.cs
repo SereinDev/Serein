@@ -42,10 +42,13 @@ public sealed class ReactionTrigger(
 
         IEnumerable<Command> commands;
         lock (values)
+        {
             commands = values.Select((cmd) => CommandParser.Parse(CommandOrigin.Reaction, cmd));
-
+        }
         if (!commands.Any())
+        {
             return;
+        }
 
         var context = new CommandContext { Variables = variables, ServerId = target?.ServerId };
 
@@ -53,13 +56,19 @@ public sealed class ReactionTrigger(
         foreach (var command in commands)
         {
             if (command.Argument is null && target is not null)
+            {
                 if (
                     command.Type == CommandType.InputServer
                     && !string.IsNullOrEmpty(target.ServerId)
                 )
+                {
                     command.Argument = target.ServerId;
+                }
                 else if (command.Type == CommandType.SendPrivateMsg && target.UserId.HasValue)
+                {
                     command.Argument = target.UserId.ToString() ?? string.Empty;
+                }
+            }
 
             tasks.Add(_commandRunner.RunAsync(command, context));
         }

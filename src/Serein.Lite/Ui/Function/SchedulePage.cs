@@ -60,6 +60,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
         ScheduleListView.Items.Clear();
 
         lock (_scheduleProvider.Value)
+        {
             foreach (var schedule in _scheduleProvider.Value)
             {
                 var item = new ListViewItem(schedule.Expression) { Tag = schedule };
@@ -69,6 +70,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
                 ScheduleListView.Items.Add(item);
             }
+        }
         ScheduleListView.EndUpdate();
         UpdateText();
     }
@@ -80,7 +82,9 @@ public partial class SchedulePage : UserControl, IUpdateablePage
             || ScheduleListView.Items.Count <= 1
             || ScheduleListView.SelectedItems.Count != 1
         )
+        {
             return;
+        }
 
         ListViewItem item;
         var i = ScheduleListView.SelectedItems[0].Index;
@@ -147,7 +151,9 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所选项吗？"))
+        {
             return;
+        }
 
         foreach (var item in ScheduleListView.SelectedItems.Cast<ListViewItem>())
         {
@@ -160,7 +166,9 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!MessageBoxHelper.ShowDeleteConfirmation("确定要删除所有项吗？"))
+        {
             return;
+        }
 
         _scheduleProvider.Value.Clear();
         _scheduleProvider.SaveAsyncWithDebounce();

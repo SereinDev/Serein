@@ -55,10 +55,14 @@ public partial class ServerManager
     public static void ValidateId(string? id)
     {
         if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
-            throw new InvalidOperationException("服务器Id格式不正确");
+        {
+            throw new ArgumentException("服务器Id格式不正确", nameof(id));
+        }
 
         if (Blacklist.Contains(id.ToUpperInvariant()))
-            throw new InvalidOperationException("不能使用Windows的保留关键字作为Id");
+        {
+            throw new ArgumentException("不能使用Windows的保留关键字作为Id", nameof(id));
+        }
     }
 
     public IReadOnlyDictionary<string, Server> Servers => _servers;
@@ -125,14 +129,20 @@ public partial class ServerManager
         ValidateId(id);
 
         if (_servers.TryGetValue(id, out var server) && server.Status)
+        {
             throw new InvalidOperationException("服务器仍在运行中");
+        }
 
         if (!_servers.Remove(id) || server is null)
+        {
             return false;
+        }
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
         if (File.Exists(path))
+        {
             File.Delete(path);
+        }
 
         _logger.LogDebug("删除服务器：{}", id);
         ServersUpdated?.Invoke(this, new(ServersUpdatedType.Removed, id, server));
@@ -207,7 +217,9 @@ public partial class ServerManager
                     server.Configuration.AutoStopWhenCrashing
                     && server.Status
                 )
+                {
                     server.Stop();
+                }
             }
             catch { }
         }

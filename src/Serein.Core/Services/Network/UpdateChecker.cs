@@ -31,7 +31,9 @@ public sealed class UpdateChecker
         _timer.Elapsed += async (_, _) =>
         {
             if (_settingProvider.Value.Application.CheckUpdate)
+            {
                 await CheckAsync();
+            }
         };
     }
 
@@ -44,7 +46,9 @@ public sealed class UpdateChecker
             var version = new Version(release.TagName.TrimStart('v'));
 
             if (release.TagName == _last?.TagName)
+            {
                 return release;
+            }
 
             _last = release;
 
@@ -67,6 +71,7 @@ public sealed class UpdateChecker
         {
             _logger.LogDebug("获取更新结束");
         }
+
         return null;
     }
 
@@ -75,6 +80,8 @@ public sealed class UpdateChecker
         _timer.Start();
 
         if (_settingProvider.Value.Application.CheckUpdate)
+        {
             await CheckAsync();
+        }
     }
 }

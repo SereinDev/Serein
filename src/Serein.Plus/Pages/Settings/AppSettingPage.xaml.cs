@@ -26,7 +26,7 @@ public partial class AppSettingPage : Page
 
         InitializeComponent();
         UpdateVersionInfoBar();
-        
+
         DataContext = _settingProvider;
 
         ThemePanel.Children
@@ -40,18 +40,20 @@ public partial class AppSettingPage : Page
     private void UpdateVersionInfoBar()
     {
         VersionInfoBar.IsOpen = _updateChecker.Newest is not null;
-        VersionInfoBar.Message = string.Format("µ±Ç°°æ±¾£º{0}£»×îÐÂ°æ±¾£º{1}", SereinApp.Version, _updateChecker.Newest?.TagName);
+        VersionInfoBar.Message = string.Format("ï¿½ï¿½Ç°ï¿½æ±¾ï¿½ï¿½{0}ï¿½ï¿½ï¿½ï¿½ï¿½Â°æ±¾ï¿½ï¿½{1}", SereinApp.Version, _updateChecker.Newest?.TagName);
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)
     {
         if (IsLoaded)
+        {
             _settingProvider.SaveAsyncWithDebounce();
+        }
     }
 
     private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
     {
-        var tag = (sender as RadioButton)?.Tag as string; 
+        var tag = (sender as RadioButton)?.Tag as string;
 
         _settingProvider.Value.Application.Theme = tag switch
         {

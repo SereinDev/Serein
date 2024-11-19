@@ -36,7 +36,7 @@ public partial class CommandPromptCallbacks
     {
         return _serverManager.Servers.Select(
             (kv) =>
-                new CompletionItem(kv.Key, getExtendedDescription: (token) => GetDescription(kv))
+                new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
         static Task<FormattedString> GetDescription(KeyValuePair<string, Server> kv)
@@ -67,14 +67,18 @@ public partial class CommandPromptCallbacks
         var dictionary = new Dictionary<string, IPlugin>();
 
         foreach (var kv in _jsPluginLoader.Plugins)
+        {
             dictionary.TryAdd(kv.Key, kv.Value);
+        }
 
         foreach (var kv in _netPluginLoader.Plugins)
+        {
             dictionary.TryAdd(kv.Key, kv.Value);
+        }
 
         return dictionary.Select(
             (kv) =>
-                new CompletionItem(kv.Key, getExtendedDescription: (token) => GetDescription(kv))
+                new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
         static Task<FormattedString> GetDescription(KeyValuePair<string, IPlugin> kv)
@@ -106,7 +110,7 @@ public partial class CommandPromptCallbacks
                 (attr) =>
                     new CompletionItem(
                         attr.Command,
-                        getExtendedDescription: (token) =>
+                        getExtendedDescription: (_) =>
                             Task.FromResult(new FormattedString(attr.Description))
                     )
             );

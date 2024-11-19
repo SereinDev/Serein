@@ -42,7 +42,9 @@ public partial class CategoriesPage : Page
     )
     {
         if (args.SelectedItem is not NavigationViewItem { Tag: Type type })
+        {
             type = typeof(NotImplPage);
+        }
 
         SubFrame.Navigate(_services.GetRequiredService(type));
     }
