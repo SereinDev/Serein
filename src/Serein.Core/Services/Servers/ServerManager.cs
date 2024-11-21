@@ -177,7 +177,7 @@ public partial class ServerManager
             path,
             JsonSerializer.Serialize(
                 DataItemWrapper.Wrap(configuration),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
             )
         );
     }
@@ -229,7 +229,7 @@ public partial class ServerManager
     {
         var data = JsonSerializer.Deserialize<DataItemWrapper<Configuration>>(
             File.ReadAllText(path),
-            JsonSerializerOptionsFactory.CamelCase
+            JsonSerializerOptionsFactory.Common
         );
 
         return data?.Type != typeof(Configuration).ToString()

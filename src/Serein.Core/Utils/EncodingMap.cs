@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Serein.Core.Utils;
 
+/// <summary>
+/// 编码
+/// </summary>
 public static class EncodingMap
 {
     static EncodingMap()
@@ -20,6 +23,10 @@ public static class EncodingMap
     public static readonly Encoding BigEndianUnicode;
     public static readonly Encoding GBK;
 
+    /// <summary>
+    /// 获取编码
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Encoding GetEncoding(EncodingType encodingType)
     {
         return encodingType switch
@@ -32,6 +39,9 @@ public static class EncodingMap
         };
     }
 
+    /// <summary>
+    /// 编码类型
+    /// </summary>
     public enum EncodingType
     {
         UTF8,

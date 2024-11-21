@@ -50,14 +50,14 @@ public sealed class ConnectionLogger(ILogger<ConnectionLogger> logger, IServiceP
         );
     }
 
-    public void LogSentData(string data)
+    public void LogSentMessage(string data)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(data)
         );
     }
 
-    public void LogSentPacket(string line)
+    public void LogSentData(string line)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(line)

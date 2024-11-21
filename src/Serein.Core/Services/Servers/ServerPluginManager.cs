@@ -7,8 +7,14 @@ using Serein.Core.Models.Server;
 
 namespace Serein.Core.Services.Servers;
 
+/// <summary>
+/// 服务器插件管理器
+/// </summary>
 public sealed class ServerPluginManager
 {
+    /// <summary>
+    /// 文件夹
+    /// </summary>
     public static readonly IReadOnlyList<string> AcceptableDirectories =
     [
         "mods",
@@ -16,6 +22,10 @@ public sealed class ServerPluginManager
         "mod",
         "plugin",
     ];
+
+    /// <summary>
+    /// 可接受的扩展名
+    /// </summary>
     public static readonly IReadOnlyList<string> AcceptableExtensions =
     [
         ".dll",
@@ -24,6 +34,10 @@ public sealed class ServerPluginManager
         ".lua",
         ".py",
     ];
+
+    /// <summary>
+    /// 禁用插件的扩展名
+    /// </summary>
     public const string DisabledPluginExtension = ".disabled";
 
     public event EventHandler? Updated;
@@ -43,6 +57,10 @@ public sealed class ServerPluginManager
         Update();
     }
 
+    /// <summary>
+    /// 更新插件
+    /// </summary>
+    /// <exception cref="NotSupportedException"></exception>
     public void Update()
     {
         if (_updating)
@@ -68,8 +86,10 @@ public sealed class ServerPluginManager
                 {
                     var extension = Path.GetExtension(file).ToLowerInvariant();
                     if (extension == DisabledPluginExtension)
+                    {
                         extension = Path.GetExtension(Path.GetFileNameWithoutExtension(file))
-                            .ToLowerInvariant();
+                        .ToLowerInvariant();
+                    }
 
                     if (AcceptableExtensions.Contains(extension))
                     {
@@ -119,6 +139,11 @@ public sealed class ServerPluginManager
         return [];
     }
 
+    /// <summary>
+    /// 添加插件
+    /// </summary>
+    /// <param name="paths">文件路径</param>
+    /// <exception cref="InvalidOperationException"></exception>
     public void Add(params string[] paths)
     {
         if (
@@ -130,9 +155,17 @@ public sealed class ServerPluginManager
         }
 
         foreach (var path in paths)
+        {
             File.Copy(path, Path.Join(CurrentPluginsDirectory, Path.GetFileName(path)));
+        }
     }
 
+    /// <summary>
+    /// 删除插件
+    /// </summary>
+    /// <param name="serverPlugin">插件对象</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="FileNotFoundException"></exception>
     public void Remove(ServerPlugin serverPlugin)
     {
         if (!_plugins.Remove(serverPlugin))
@@ -148,6 +181,12 @@ public sealed class ServerPluginManager
         serverPlugin.FileInfo.Delete();
     }
 
+    /// <summary>
+    /// 禁用插件
+    /// </summary>
+    /// <param name="serverPlugin">插件对象</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="FileNotFoundException"></exception>
     public void Disable(ServerPlugin serverPlugin)
     {
         if (!Plugins.Contains(serverPlugin))
@@ -159,6 +198,7 @@ public sealed class ServerPluginManager
         {
             throw new InvalidOperationException("不能禁用已经被禁用的插件");
         }
+
         if (!serverPlugin.FileInfo.Exists)
         {
             throw new FileNotFoundException($"插件\"{serverPlugin.Path}\"不存在");
@@ -167,6 +207,12 @@ public sealed class ServerPluginManager
         serverPlugin.FileInfo.MoveTo(serverPlugin.Path + DisabledPluginExtension);
     }
 
+    /// <summary>
+    /// 启用插件
+    /// </summary>
+    /// <param name="serverPlugin">插件对象</param>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="FileNotFoundException"></exception>
     public void Enable(ServerPlugin serverPlugin)
     {
         if (!Plugins.Contains(serverPlugin))
@@ -187,11 +233,11 @@ public sealed class ServerPluginManager
         if (Path.GetExtension(serverPlugin.Path) == DisabledPluginExtension)
         {
             serverPlugin.FileInfo.MoveTo(
-               Path.Join(
-                   CurrentPluginsDirectory,
-                   Path.GetFileNameWithoutExtension(serverPlugin.Path)
-               )
-           );
+                Path.Join(
+                    CurrentPluginsDirectory,
+                    Path.GetFileNameWithoutExtension(serverPlugin.Path)
+                )
+            );
         }
     }
 }

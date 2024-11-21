@@ -111,7 +111,9 @@ public partial class ServerPluginManagerWindow : Window
 
             case "Remove":
                 if (count <= 0)
+                {
                     return;
+                }
 
                 DialogHelper
                     .ShowDeleteConfirmation(

@@ -70,7 +70,9 @@ internal class BroadcastWebSocketModule : WebSocketModule
         }
 
         if (!_clients.TryGetValue(id, out var list))
+        {
             list = _clients[id] = [];
+        }
 
         list.Add(context);
     }
@@ -115,12 +117,14 @@ internal class BroadcastWebSocketModule : WebSocketModule
                 var payload = EncodingMap.UTF8.GetBytes(
                     JsonSerializer.Serialize(
                         new WebSocketBroadcastPacket(WebSocketBroadcastType.Removed),
-                        JsonSerializerOptionsFactory.CamelCase
+                        JsonSerializerOptionsFactory.Common
                     )
                 );
 
                 foreach (var context in list)
+                {
                     context.WebSocket.SendAsync(payload, true);
+                }
             }
         }
     }
@@ -128,7 +132,9 @@ internal class BroadcastWebSocketModule : WebSocketModule
     private void NotifyOutput(object? sender, ServerOutputEventArgs e)
     {
         if (sender is not Server server)
+        {
             return;
+        }
 
         if (_clients.TryGetValue(server.Id, out var list) && list.Count != 0)
         {
@@ -145,19 +151,23 @@ internal class BroadcastWebSocketModule : WebSocketModule
                         },
                         e.Data
                     ),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 )
             );
 
             foreach (var context in list)
+            {
                 context.WebSocket.SendAsync(payload, true);
+            }
         }
     }
 
     private void NotifyStatusChanged(object? sender, EventArgs e)
     {
         if (sender is not Server server)
+        {
             return;
+        }
 
         if (_clients.TryGetValue(server.Id, out var list) && list.Count != 0)
         {
@@ -168,12 +178,14 @@ internal class BroadcastWebSocketModule : WebSocketModule
                             ? WebSocketBroadcastType.Started
                             : WebSocketBroadcastType.Stopped
                     ),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 )
             );
 
             foreach (var context in list)
+            {
                 context.WebSocket.SendAsync(payload, true);
+            }
         }
     }
 }

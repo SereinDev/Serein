@@ -136,28 +136,38 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         {
             throw new InvalidOperationException("WebSocket未连接");
         }
+
         ConnectedAt = null;
         _sent = _received = 0;
         PropertyChanged?.Invoke(this, _sentArg);
         PropertyChanged?.Invoke(this, _receivedArg);
 
         if (_reverseWebSocketService.Active)
+        {
             _reverseWebSocketService.Stop();
+        }
 
         if (_webSocketService.Active)
+        {
             _webSocketService.Stop();
+        }
     }
 
     public async Task SendAsync<T>(T body)
         where T : notnull
     {
-        var text = JsonSerializer.Serialize(body, JsonSerializerOptionsFactory.SnakeCase);
+        var text = JsonSerializer.Serialize(body, JsonSerializerOptionsFactory.PacketStyle);
 
         await SendDataAsync(text);
     }
 
     public async Task SendDataAsync(string data)
     {
+        if (!Active)
+        {
+            return;
+        }
+
         Interlocked.Increment(ref _sent);
         PropertyChanged?.Invoke(this, _sentArg);
 
@@ -200,7 +210,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
                 AutoEscape = _settingProvider.Value.Connection.AutoEscape
             }
         );
-        _connectionLogger.Value.LogReceivedMessage($"[群聊({target})] {message}");
+        _connectionLogger.Value.LogSentMessage($"[群聊({target})] {message}");
     }
     public Task SendPrivateMsgAsync(string target, string message)
         => SendPrivateMsgAsync(long.Parse(target), message);
@@ -216,6 +226,6 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
                 AutoEscape = _settingProvider.Value.Connection.AutoEscape
             }
         );
-        _connectionLogger.Value.LogReceivedMessage($"[私聊({target})] {message}");
+        _connectionLogger.Value.LogSentData($"[私聊({target})] {message}");
     }
 }

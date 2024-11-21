@@ -29,7 +29,7 @@ public sealed class MatchesProvider : DataProviderBase<ObservableCollection<Matc
             {
                 var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Match>>>(
                     File.ReadAllText(PathConstants.MatchesFile),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 );
 
                 if (wrapper?.Type == typeof(ObservableCollection<Match>).ToString())
@@ -72,7 +72,7 @@ public sealed class MatchesProvider : DataProviderBase<ObservableCollection<Matc
                 PathConstants.MatchesFile,
                 JsonSerializer.Serialize(
                     DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
                 )
             );
         }

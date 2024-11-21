@@ -60,7 +60,9 @@ public static partial class LogColorizer
     public static List<LineFragment> ParseAnsiCode(string line)
     {
         if (!line.Contains('\x1b'))
+        {
             return [new(line)];
+        }
 
         var list = new List<LineFragment>();
 
@@ -69,7 +71,9 @@ public static partial class LogColorizer
             if (!part.StartsWith('[') || !part.Contains('m'))
             {
                 list.Add(Create(part));
-                continue;
+                {
+                    continue;
+                }
             }
 
             var fragment = Create(part[(part.IndexOf('m') + 1)..]);
@@ -97,19 +101,25 @@ public static partial class LogColorizer
 
                     case "38":
                         if (i + 4 <= args.Length && args[i + 1] == "2")
+                        {
                             fragment.Styles["color"] =
                                 $"rgb({args[i + 2]},{args[i + 3]},{args[i + 4]})";
+                        }
                         break;
 
                     case "48":
                         if (i + 4 <= args.Length && args[i + 1] == "2")
+                        {
                             fragment.Styles["background"] =
                                 $"rgb({args[i + 2]},{args[i + 3]},{args[i + 4]})";
+                        }
                         break;
 
                     default:
                         if (ColorCodes.Contains(args[i]))
+                        {
                             fragment.Classes.Add($"ansi{args[i]}");
+                        }
                         break;
                 }
             }

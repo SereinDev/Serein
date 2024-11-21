@@ -43,7 +43,9 @@ public partial class PermissionGroupPage : Page
     {
         GroupListView.Items.Clear();
         foreach (var kv in _permissionGroupProvider.Value)
+        {
             GroupListView.Items.Add(kv);
+        }
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)

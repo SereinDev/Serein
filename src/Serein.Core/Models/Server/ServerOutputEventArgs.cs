@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Core.Services.Servers;
+namespace Serein.Core.Models.Server;
 
 public sealed class ServerOutputEventArgs(ServerOutputType outputType, string data) : EventArgs
 {

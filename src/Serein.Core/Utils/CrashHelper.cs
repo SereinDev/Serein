@@ -7,7 +7,7 @@ using Sentry;
 
 namespace Serein.Core.Utils;
 
-public static class CrashHelper
+internal static class CrashHelper
 {
     public static string CreateLog(Exception e)
     {

@@ -95,7 +95,9 @@ public sealed class ReverseWebSocketService : IConnectionService
     public async Task SendAsync(string text)
     {
         if (_server is null)
+        {
             return;
+        }
 
         List<Task> tasks;
 

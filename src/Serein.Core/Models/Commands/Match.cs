@@ -68,13 +68,19 @@ public class Match : NotifyPropertyChangedModelBase
                         case "server":
                             MatchExclusion.Servers.Add(arg);
                             break;
+
                         case "group":
                             if (long.TryParse(arg, out var group))
+                            {
                                 MatchExclusion.Groups.Add(group);
+                            }
                             break;
+
                         case "user":
                             if (long.TryParse(arg, out var user))
+                            {
                                 MatchExclusion.Users.Add(user);
+                            }
                             break;
                     }
                 }

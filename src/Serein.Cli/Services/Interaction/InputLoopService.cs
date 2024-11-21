@@ -44,7 +44,6 @@ public sealed class InputLoopService(
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
         return Task.CompletedTask;
     }
 
@@ -88,7 +87,9 @@ public sealed class InputLoopService(
                     var response = prompt.ReadLineAsync().Await();
 
                     if (response.IsSuccess)
+                    {
                         ProcessInput(response.Text);
+                    }
                 }
             }
         }
@@ -114,6 +115,7 @@ public sealed class InputLoopService(
         {
             return;
         }
+
         if (!string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId))
         {
             if (

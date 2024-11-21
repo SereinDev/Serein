@@ -52,7 +52,7 @@ public sealed class PluginConfigTests : IDisposable
                     Name = "test",
                     Type = PluginType.Js,
                 },
-                JsonSerializerOptionsFactory.CamelCase
+                JsonSerializerOptionsFactory.Common
             )
         );
 
@@ -66,7 +66,7 @@ public sealed class PluginConfigTests : IDisposable
 
         File.WriteAllText(
             Path.Join(PathConstants.PluginsDirectory, "test", PathConstants.JsPluginConfigFileName),
-            JsonSerializer.Serialize(config, JsonSerializerOptionsFactory.CamelCase)
+            JsonSerializer.Serialize(config, JsonSerializerOptionsFactory.Common)
         );
         File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "test", "index.js"), "");
 

@@ -52,10 +52,7 @@ public partial class PermissionGroupEditor : Window
                 {
                     Value = value,
                     Node = key,
-                    Description = _permissionManager.Nodes.TryGetValue(
-                        key,
-                        out var description
-                    )
+                    Description = _permissionManager.Nodes.TryGetValue(key, out var description)
                         ? description
                         : string.Empty,
                 }
@@ -75,6 +72,7 @@ public partial class PermissionGroupEditor : Window
                         (task) =>
                         {
                             if (task.Result == ContentDialogResult.Primary)
+                            {
                                 Dispatcher.Invoke(() =>
                                 {
                                     if (!MemberListView.Items.Contains(dialog.Id))
@@ -89,6 +87,7 @@ public partial class PermissionGroupEditor : Window
                                         );
                                     }
                                 });
+                            }
                         }
                     );
                 break;
@@ -104,12 +103,14 @@ public partial class PermissionGroupEditor : Window
                             (task) =>
                             {
                                 if (task.Result)
+                                {
                                     Dispatcher.Invoke(
                                         () =>
                                             MemberListView.Items.RemoveAt(
                                                 MemberListView.SelectedIndex
                                             )
                                     );
+                                }
                             }
                         );
                 }
@@ -137,13 +138,12 @@ public partial class PermissionGroupEditor : Window
                                             {
                                                 Node = dialog1.Node,
                                                 Value = dialog1.Value,
-                                                Description =
-                                                    _permissionManager.Nodes.TryGetValue(
-                                                        dialog1.Node,
-                                                        out var description
-                                                    )
-                                                        ? description
-                                                        : string.Empty,
+                                                Description = _permissionManager.Nodes.TryGetValue(
+                                                    dialog1.Node,
+                                                    out var description
+                                                )
+                                                    ? description
+                                                    : string.Empty,
                                             }
                                         )
                                 );
@@ -187,23 +187,23 @@ public partial class PermissionGroupEditor : Window
                 if (PermissionListView.SelectedIndex >= 0)
                 {
                     DialogHelper
-                       .ShowDeleteConfirmation(
-                           $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
-                       )
-                       .ContinueWith(
-                           (task) =>
-                           {
-                               if (task.Result)
-                               {
-                                   Dispatcher.Invoke(
-                                     () =>
-                                         PermissionListView.Items.RemoveAt(
-                                             PermissionListView.SelectedIndex
-                                         )
-                                 );
-                               }
-                           }
-                       );
+                        .ShowDeleteConfirmation(
+                            $"你确定要删除\"{(PermissionListView.SelectedItem as PermissionItemViewModel)?.Node}\"吗？"
+                        )
+                        .ContinueWith(
+                            (task) =>
+                            {
+                                if (task.Result)
+                                {
+                                    Dispatcher.Invoke(
+                                        () =>
+                                            PermissionListView.Items.RemoveAt(
+                                                PermissionListView.SelectedIndex
+                                            )
+                                    );
+                                }
+                            }
+                        );
                 }
                 break;
         }

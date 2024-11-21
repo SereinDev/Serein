@@ -41,22 +41,7 @@ public sealed class ServerHandler(
 
         if (args[1].Equals("list", StringComparison.InvariantCultureIgnoreCase))
         {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"当前共{_serverManager.Servers.Count}个服务器配置");
-            foreach (var kv in _serverManager.Servers)
-            {
-                stringBuilder.AppendLine($"▢ {kv.Value.Configuration.Name}");
-                stringBuilder.AppendLine($"  ▫ Id： {kv.Key}");
-                stringBuilder.AppendLine($"  ▫ 状态: " + (kv.Value.Status ? "运行中" : "已停止"));
-                stringBuilder.AppendLine(
-                    "  ▫ 启动命令行："
-                        + kv.Value.Configuration.FileName
-                        + " "
-                        + kv.Value.Configuration.Argument
-                );
-            }
-
-            _logger.LogInformation(stringBuilder.ToString());
+            LogList();
             return;
         }
 
@@ -86,39 +71,7 @@ public sealed class ServerHandler(
         switch (args[1].ToLowerInvariant())
         {
             case "info" when args.Count <= 3:
-                var info = server.Info;
-
-                // var table = new Table();
-
-                // table
-                //     .RoundedBorder()
-                //     .AddColumns(
-                //         new TableColumn("服务器状态") { Alignment = Justify.Center },
-                //         new(
-                //             server.Status switch
-                //             {
-                //                 ServerStatus.Running => "[green3]●[/] 运行中",
-                //                 ServerStatus.Stopped => "[gray]●[/] 已关闭",
-                //                 ServerStatus.Unknown => "[gray]●[/] 未启动",
-                //                 _ => throw new NotSupportedException()
-                //             }
-                //         )
-                //         {
-                //             Alignment = Justify.Center
-                //         }
-                //     )
-                //     .AddRow(
-                //         "运行时长",
-                //         info?.StartTime is null
-                //             ? "-"
-                //             : (DateTime.Now - info.StartTime).ToString() ?? "-"
-                //     )
-                //     .AddRow("CPU占用", (info?.CPUUsage ?? 0).ToString("N1") + "%")
-                //     .AddRow("输入行数", info?.InputLines.ToString() ?? "-")
-                //     .AddRow("输出行数", info?.OutputLines.ToString() ?? "-");
-
-                // AnsiConsole.Write(table);
-
+                LogServerInfo(server);
                 break;
 
             case "start" when args.Count <= 3:
@@ -180,5 +133,66 @@ public sealed class ServerHandler(
                     "未知的参数。可用值：\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
                 );
         }
+    }
+
+    private void LogServerInfo(Server server)
+    {
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine($"{server.Configuration.Name}({server.Id})");
+
+        if (server.Status)
+        {
+            stringBuilder.AppendLine($"▫ 状态: 运行中 (Pid={server.Pid})");
+        }
+        else
+        {
+            stringBuilder.AppendLine("▫ 状态: 已停止");
+        }
+
+        stringBuilder.AppendLine(
+            "▫ 启动命令行：" + server.Configuration.FileName + " " + server.Configuration.Argument
+        );
+
+        if (server.Info.StartTime is not null)
+        {
+            stringBuilder.AppendLine("▫ 启动时间：" + server.Info.StartTime.Value.ToString("G"));
+        }
+        else if (server.Info.ExitTime is not null)
+        {
+            stringBuilder.AppendLine("▫ 停止时间：" + server.Info.ExitTime.Value.ToString("G"));
+        }
+
+        if (server.Status && server.Info.Stat is not null && server.Info.Stat.ServerUp)
+        {
+            stringBuilder.AppendLine("▫ 版本：" + server.Info.Stat.Version);
+            stringBuilder.AppendLine(
+                "▫ 在线人数："
+                    + server.Info.Stat.CurrentPlayers
+                    + "/"
+                    + server.Info.Stat.MaximumPlayers
+            );
+        }
+
+        _logger.LogInformation(stringBuilder.ToString());
+    }
+
+    private void LogList()
+    {
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine($"当前共{_serverManager.Servers.Count}个服务器配置");
+        foreach (var kv in _serverManager.Servers)
+        {
+            stringBuilder.AppendLine($"▢ {kv.Value.Configuration.Name}");
+            stringBuilder.AppendLine($"  ▫ Id： {kv.Key}");
+            stringBuilder.AppendLine($"  ▫ 状态: " + (kv.Value.Status ? "运行中" : "已停止"));
+            stringBuilder.AppendLine(
+                "  ▫ 启动命令行："
+                    + kv.Value.Configuration.FileName
+                    + " "
+                    + kv.Value.Configuration.Argument
+            );
+        }
+
+        _logger.LogInformation(stringBuilder.ToString());
     }
 }

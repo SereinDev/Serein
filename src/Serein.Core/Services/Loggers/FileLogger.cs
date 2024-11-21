@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Loggers;
 
-internal class FileLogger(string categoryName, List<string> buffer) : ILogger
+internal class FileLogger(string categoryName, IList<string> buffer) : ILogger
 {
     private readonly string _categoryName = categoryName;
-    private readonly List<string> _buffer = buffer;
+    private readonly IList<string> _buffer = buffer;
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull

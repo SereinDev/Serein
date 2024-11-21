@@ -51,7 +51,7 @@ public sealed class ManagementTests : IDisposable
     public void ShouldNotAddServerWithInvalidId(string id)
     {
         _app.Start();
-        Assert.Throws<InvalidOperationException>(() => _serverManager.Add(id, new()));
+        Assert.Throws<ArgumentException>(() => _serverManager.Add(id, new()));
     }
 
     [Fact]

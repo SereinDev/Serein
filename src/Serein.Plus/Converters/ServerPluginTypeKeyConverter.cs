@@ -17,7 +17,9 @@ public class ServerPluginTypeKeyConverter : IValueConverter
                 return "动态链接库";
             }
             else
+            {
                 return pluginType.ToString();
+            }
         }
 
         throw new NotSupportedException();

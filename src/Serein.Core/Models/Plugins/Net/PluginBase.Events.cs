@@ -77,19 +77,25 @@ public abstract partial class PluginBase
 
             case Event.ServerOutput:
                 if (args.Length != 2)
+                {
                     ThrowArgumentException();
+                }
 
                 return OnServerOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
+                {
                     ThrowArgumentException();
+                }
 
                 return OnServerRawOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
             case Event.ServerInput:
                 if (args.Length != 2)
+                {
                     ThrowArgumentException();
+                }
 
                 return OnServerInput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
 
@@ -100,7 +106,9 @@ public abstract partial class PluginBase
                     || args[1] is not int code
                     || args[2] is not DateTime time
                 )
+                {
                     ThrowArgumentException();
+                }
 
                 return OnServerExited(server, code, time);
 
@@ -115,7 +123,6 @@ public abstract partial class PluginBase
 
             case Event.PluginsUnloading:
                 return OnPluginsUnloading();
-
 
             default:
                 throw new NotSupportedException();

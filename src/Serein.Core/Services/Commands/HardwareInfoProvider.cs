@@ -8,9 +8,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Commands;
 
+/// <summary>
+/// 硬件信息提供者
+/// </summary>
 public sealed class HardwareInfoProvider
 {
+    /// <summary>
+    /// 硬件信息
+    /// </summary>
     public HardwareInfo? Info { get; private set; }
+
     private readonly object _lock;
     private readonly Timer _timer;
     private readonly ILogger _logger;
@@ -26,6 +33,9 @@ public sealed class HardwareInfoProvider
         _timer.Start();
     }
 
+    /// <summary>
+    /// 更新信息
+    /// </summary>
     public void Update()
     {
         if (_isLoading)

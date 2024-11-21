@@ -58,7 +58,7 @@ public sealed class JsPluginLoader(
         {
             jsConfig = JsonSerializer.Deserialize<JsPluginConfig>(
               File.ReadAllText(configPath),
-              JsonSerializerOptionsFactory.CamelCase
+              JsonSerializerOptionsFactory.Common
           );
         }
 
@@ -76,7 +76,9 @@ public sealed class JsPluginLoader(
         finally
         {
             if (jsPlugin is not null)
+            {
                 JsPlugins.TryAdd(pluginInfo.Id, jsPlugin);
+            }
         }
     }
 

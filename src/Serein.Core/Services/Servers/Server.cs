@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -219,7 +220,7 @@ public sealed class Server
     {
         if (Status)
         {
-            Input(command, encodingType);
+            Input(command, encodingType, false);
         }
         else if (command == "start")
         {
@@ -234,13 +235,13 @@ public sealed class Server
 
     public void Input(string command)
     {
-        Input(command, fromUser: false);
+        Input(command, null, false);
     }
 
     internal void Input(
         string command,
-        EncodingMap.EncodingType? encodingType = null,
-        bool fromUser = false
+        EncodingMap.EncodingType? encodingType,
+        bool fromUser
     )
     {
         _logger.LogDebug(

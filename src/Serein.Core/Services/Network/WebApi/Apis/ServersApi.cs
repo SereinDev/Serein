@@ -27,7 +27,7 @@ internal partial class ApiMap
         var configuration =
             JsonSerializer.Deserialize<Configuration>(
                 jsonObject?["configuration"],
-                JsonSerializerOptionsFactory.CamelCase
+                JsonSerializerOptionsFactory.Common
             ) ?? throw HttpException.BadRequest();
 
         _serverManager.Add(id, configuration);

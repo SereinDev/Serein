@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace Serein.Core.Utils;
 
-public partial class NativeMethods
+internal partial class NativeMethods
 {
     [LibraryImport("kernel32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]

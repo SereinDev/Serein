@@ -11,6 +11,9 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Commands;
 
+/// <summary>
+/// 命令解析
+/// </summary>
 public partial class CommandParser(
     PluginManager pluginManager,
     ServerManager servers,
@@ -32,21 +35,34 @@ public partial class CommandParser(
     private readonly ServerManager _serverManager = servers;
     private readonly BindingManager _bindingManager = bindingManager;
 
+    /// <summary>
+    /// 解析命令
+    /// </summary>
+    /// <param name="origin">命令来源</param>
+    /// <param name="command">命令文本</param>
+    /// <param name="throws">是否在解析出错时抛出异常</param>
+    /// <returns>命令对象</returns>
     public static Command Parse(CommandOrigin origin, string? command, bool throws = false)
     {
         var cmd = command?.TrimStart();
         try
         {
             if (string.IsNullOrEmpty(cmd) || string.IsNullOrWhiteSpace(cmd))
+            {
                 throw new ArgumentException("命令为空", nameof(command));
+            }
 
             if (cmd.Length < 2 || !cmd.StartsWith('[') || !cmd.Contains(']'))
+            {
                 throw new ArgumentException("缺少命令标识：'['和']'", nameof(command));
+            }
 
             var matchResult = GeneralCommand.Match(cmd);
 
             if (!matchResult.Success || matchResult.Groups.Count != 5)
+            {
                 throw new NotSupportedException("命令语法不正确");
+            }
 
             var name = matchResult.Groups["name"].Value;
             var body = matchResult.Groups["body"].Value;
@@ -95,37 +111,59 @@ public partial class CommandParser(
         }
     }
 
+    /// <summary>
+    /// 格式化命令
+    /// </summary>
+    /// <param name="command">命令对象</param>
+    /// <param name="commandContext">上下文</param>
+    /// <returns>格式化后的命令主体部分</returns>
     public string Format(Command command, CommandContext? commandContext)
     {
         if (string.IsNullOrEmpty(command.Body))
+        {
             return string.Empty;
+        }
 
         var body = ApplyVariables(command.Body, commandContext);
 
         if (commandContext?.Match is not null)
+        {
             foreach (
                 KeyValuePair<string, Group> kv in (IEnumerable<KeyValuePair<string, Group>>)
                     commandContext.Match.Groups
             )
+            {
                 body = body.Replace("$" + kv.Key, kv.Value.Value);
+            }
+        }
 
         return command.Type == CommandType.InputServer ? body : body.Replace("\\n", "\n");
     }
 
 #pragma warning disable IDE0046
+
+    /// <summary>
+    /// 应用变量
+    /// </summary>
+    /// <param name="input">输入</param>
+    /// <param name="commandContext">命令上下文</param>
+    /// <param name="removeInvalidVariablePatten">删除无效的命令片段</param>
+    /// <returns>应用变量后的文本</returns>
     public string ApplyVariables(
-        string line,
+        string input,
         CommandContext? commandContext,
         bool removeInvalidVariablePatten = false
     )
     {
-        if (!line.Contains('{') || !line.Contains('}'))
-            return line;
+        if (!input.Contains('{') || !input.Contains('}'))
+        {
+            return input;
+        }
 
         var currentTime = DateTime.Now;
 
         var text = Variable.Replace(
-            line,
+            input,
             (match) =>
             {
                 var name = match.Groups[1].Value.ToLowerInvariant();
@@ -135,13 +173,17 @@ public partial class CommandParser(
                     && commandContext.Variables.TryGetValue(name, out string? value)
                     && value is not null
                 )
+                {
                     return value;
+                }
 
                 if (
                     _pluginManager.CommandVariables.TryGetValue(name, out value)
                     && value is not null
                 )
+                {
                     return value;
+                }
 
                 object? obj = name switch
                 {
@@ -242,7 +284,9 @@ public partial class CommandParser(
                 var r = obj?.ToString();
 
                 if (r is not null)
+                {
                     return r;
+                }
 
                 return removeInvalidVariablePatten ? string.Empty : match.Value;
             }
@@ -255,7 +299,9 @@ public partial class CommandParser(
     private string? GetGameId(long? userId)
     {
         if (userId is null)
+        {
             return null;
+        }
 
         return _bindingManager.TryGetValue(userId.Value, out var binding)
             ? binding.GameIds.FirstOrDefault()
@@ -268,15 +314,19 @@ public partial class CommandParser(
         Server? server;
 
         if (i < 0)
+        {
             return Switch(
-                input,
-                !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
-                    ? server
-                    : _serverManager.Servers.Values.FirstOrDefault()
-            );
+                 input,
+                 !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
+                     ? server
+                     : _serverManager.Servers.Values.FirstOrDefault()
+             );
+        }
 
         if (i == 0 || i >= input.Length)
+        {
             return null;
+        }
 
         var key = input[..i];
         id = input[(i + 1)..];

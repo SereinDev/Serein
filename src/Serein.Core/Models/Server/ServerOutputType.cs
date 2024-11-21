@@ -1,4 +1,4 @@
-namespace Serein.Core.Services.Servers;
+namespace Serein.Core.Models.Server;
 
 public enum ServerOutputType
 {

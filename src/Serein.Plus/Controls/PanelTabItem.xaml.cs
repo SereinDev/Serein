@@ -205,7 +205,7 @@ public partial class PanelTabItem : TabItem
 
     private void Input()
     {
-        Server.Input(InputBox.Text, fromUser: true);
+        Server.Input(InputBox.Text, null, true);
         InputBox.Text = string.Empty;
         InputBox.Focus();
     }
@@ -213,7 +213,9 @@ public partial class PanelTabItem : TabItem
     private void OnServerStatusChanged(object? sender, EventArgs e)
     {
         if (Server.Status)
+        {
             Dispatcher.Invoke(Console.Clear);
+        }
 
         UpdateInfo();
     }

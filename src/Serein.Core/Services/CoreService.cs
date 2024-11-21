@@ -15,7 +15,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services;
 
-public sealed class CoreService : IHostedService
+internal sealed class CoreService : IHostedService
 {
     private readonly ILogger<CoreService> _logger;
     private readonly SettingProvider _settingProvider;

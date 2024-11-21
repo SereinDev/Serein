@@ -27,7 +27,7 @@ public sealed class SettingProvider : DataProviderBase<Setting>
             {
                 var wrapper = JsonSerializer.Deserialize<DataItemWrapper<Setting>>(
                     File.ReadAllText(PathConstants.SettingFile),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 );
 
                 if (wrapper?.Type == typeof(Setting).ToString())
@@ -55,7 +55,7 @@ public sealed class SettingProvider : DataProviderBase<Setting>
                 PathConstants.SettingFile,
                 JsonSerializer.Serialize(
                     DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
                 )
             );
         }

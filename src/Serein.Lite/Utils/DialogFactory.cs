@@ -43,9 +43,13 @@ public static class DialogFactory
         var btn = dialog.ShowDialog();
 
         if (btn == button1)
+        {
             UrlConstants.Docs.OpenInBrowser();
+        }
         else if (btn == button2)
+        {
             UrlConstants.Repository.OpenInBrowser();
+        }
     }
 
     public static void ShowErrorDialog(Exception e)
@@ -83,9 +87,13 @@ public static class DialogFactory
             var btn = dialog.ShowDialog();
 
             if (btn == button1)
+            {
                 UrlConstants.Issues.OpenInBrowser();
+            }
             else if (btn == button2)
+            {
                 UrlConstants.Group.OpenInBrowser();
+            }
         }
         catch { }
     }

@@ -23,13 +23,13 @@ public sealed class ConnectionLogger(ILogger<ConnectionLogger> logger) : IConnec
         _logger.LogInformation("[Recv] {}", data);
     }
 
-    public void LogSentPacket(string line)
-    {
-        _logger.LogInformation("[Sent] {}", line);
-    }
-
-    public void LogSentData(string data)
+    public void LogSentMessage(string data)
     {
         _logger.LogInformation("[Sent] {}", data);
+    }
+
+    public void LogSentData(string line)
+    {
+        _logger.LogInformation("[Sent] {}", line);
     }
 }

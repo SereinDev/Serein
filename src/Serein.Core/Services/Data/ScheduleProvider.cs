@@ -29,7 +29,7 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
             {
                 var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Schedule>>>(
                     File.ReadAllText(PathConstants.SchedulesFile),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 );
 
                 if (wrapper?.Type == typeof(ObservableCollection<Schedule>).ToString())
@@ -72,7 +72,7 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
                 PathConstants.SchedulesFile,
                 JsonSerializer.Serialize(
                     DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
                 )
             );
         }

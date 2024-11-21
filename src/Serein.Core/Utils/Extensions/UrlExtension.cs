@@ -5,10 +5,15 @@ namespace Serein.Core.Utils.Extensions;
 
 public static class UrlExtension
 {
+    /// <summary>
+    /// 在浏览器中打开
+    /// </summary>
     public static void OpenInBrowser(this string url)
     {
         if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+        {
             return;
+        }
 
         try
         {
@@ -17,6 +22,9 @@ public static class UrlExtension
         catch { }
     }
 
+    /// <summary>
+    /// 在浏览器中打开
+    /// </summary>
     public static void OpenInBrowser(this Uri uri)
     {
         uri.ToString().OpenInBrowser();

@@ -12,7 +12,7 @@ namespace Serein.Core.Services.Plugins.Storages;
 
 public sealed class LocalStorage : StorageBase
 {
-    public const string Path =
+    public static readonly string Path =
         $"{PathConstants.PluginsDirectory}/{PathConstants.LocalStorageFileName}";
 
     public LocalStorage(ILogger<LocalStorage> logger)
@@ -22,7 +22,7 @@ public sealed class LocalStorage : StorageBase
         {
             var data = JsonSerializer.Deserialize<DataItemWrapper<JsonObject>>(
                 File.ReadAllText(Path),
-                options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
             );
 
             if (data?.Type == typeof(JsonObject).ToString() && data.Data is not null)
@@ -48,7 +48,7 @@ public sealed class LocalStorage : StorageBase
              Path,
              JsonSerializer.Serialize(
                  DataItemWrapper.Wrap(_data),
-                 options: new(JsonSerializerOptionsFactory.CamelCase) { WriteIndented = true }
+                 options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
              )
          );
         }

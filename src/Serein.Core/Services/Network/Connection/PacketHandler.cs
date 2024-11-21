@@ -39,18 +39,19 @@ public sealed class PacketHandler(
         {
             return;
         }
+
         switch (node["post_type"]?.ToString())
         {
             case "message":
             case "message_sent":
                 HandleMessagePacket(
-                    node.ToObject<MessagePacket>(JsonSerializerOptionsFactory.SnakeCase)
+                    node.ToObject<MessagePacket>(JsonSerializerOptionsFactory.PacketStyle)
                 );
                 break;
 
             case "notice":
                 HandleNoticePacket(
-                    node.ToObject<NoticePacket>(JsonSerializerOptionsFactory.SnakeCase)
+                    node.ToObject<NoticePacket>(JsonSerializerOptionsFactory.PacketStyle)
                 );
                 break;
         }
@@ -62,6 +63,7 @@ public sealed class PacketHandler(
         {
             return;
         }
+
         switch (packet.NoticeType)
         {
             case "group_decrease":
@@ -77,11 +79,13 @@ public sealed class PacketHandler(
 
             case "notify":
                 if (packet.SubType == "poke" && packet.TargetId == packet.SelfId)
+                {
                     _reactionTrigger.Trigger(
                         ReactionType.GroupPoke,
                         new(GroupId: packet.GroupId, UserId: packet.UserId),
                         new Dictionary<string, string?> { ["sender.id"] = packet.UserId.ToString() }
                     );
+                }
                 break;
         }
     }
@@ -94,8 +98,8 @@ public sealed class PacketHandler(
         }
 
         _connectionLogger.Value.LogReceivedMessage(
-             $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
-         );
+            $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
+        );
 
         if (
             packet.MessageType == MessageType.Group

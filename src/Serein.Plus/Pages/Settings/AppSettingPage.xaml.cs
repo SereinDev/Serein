@@ -29,8 +29,8 @@ public partial class AppSettingPage : Page
 
         DataContext = _settingProvider;
 
-        ThemePanel.Children
-            .Cast<RadioButton>()
+        ThemePanel
+            .Children.Cast<RadioButton>()
             .First(c => c?.Tag as string == _settingProvider.Value.Application.Theme.ToString())
             .IsChecked = true;
 
@@ -40,7 +40,11 @@ public partial class AppSettingPage : Page
     private void UpdateVersionInfoBar()
     {
         VersionInfoBar.IsOpen = _updateChecker.Newest is not null;
-        VersionInfoBar.Message = string.Format("��ǰ�汾��{0}�����°汾��{1}", SereinApp.Version, _updateChecker.Newest?.TagName);
+        VersionInfoBar.Message = string.Format(
+            "当前版本：{0}\r\n新版本：{1}",
+            SereinApp.Version,
+            _updateChecker.Newest?.TagName
+        );
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)
@@ -59,7 +63,7 @@ public partial class AppSettingPage : Page
         {
             "Light" => Theme.Light,
             "Dark" => Theme.Dark,
-            _ => Theme.Default
+            _ => Theme.Default,
         };
 
         ThemeManager.Current.ApplicationTheme = _settingProvider.Value.Application.Theme switch

@@ -3,6 +3,7 @@ using System.Linq;
 
 using Microsoft.Extensions.Logging;
 
+using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 
@@ -37,11 +38,14 @@ public sealed class ServerSwitcher(
             {
                 throw new InvalidOperationException("选择的服务器不存在");
             }
+
             if (
                 !string.IsNullOrEmpty(CurrentId)
                 && _serverManager.Servers.TryGetValue(CurrentId, out var oldServer)
             )
+            {
                 oldServer.ServerOutput -= LogToConsole;
+            }
 
             server.ServerOutput += LogToConsole;
             CurrentId = id;

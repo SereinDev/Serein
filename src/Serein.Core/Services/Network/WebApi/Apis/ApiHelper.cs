@@ -28,7 +28,7 @@ public static class ApiHelper
             {
                 return JsonSerializer.Deserialize<T>(
                     await httpContext.GetRequestBodyAsStringAsync(),
-                    JsonSerializerOptionsFactory.CamelCase
+                    JsonSerializerOptionsFactory.Common
                 );
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ public static class ApiHelper
     {
         httpContext.Response.StatusCode = packet.Code;
         await httpContext.SendStringAsync(
-            JsonSerializer.Serialize(packet, JsonSerializerOptionsFactory.CamelCase),
+            JsonSerializer.Serialize(packet, JsonSerializerOptionsFactory.Common),
             "text/json",
             EncodingMap.UTF8
         );

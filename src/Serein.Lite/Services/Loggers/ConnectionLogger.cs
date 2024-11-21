@@ -63,7 +63,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogSentPacket(string line)
+    public void LogSentData(string line)
     {
         _connectionPage.Invoke(() =>
         {
@@ -77,7 +77,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogSentData(string data)
+    public void LogSentMessage(string data)
     {
         _connectionPage.Invoke(() =>
         {

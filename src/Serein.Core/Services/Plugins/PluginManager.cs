@@ -31,7 +31,7 @@ public sealed class PluginManager(
 )
 {
     private static readonly JsonSerializerOptions Options =
-        new(JsonSerializerOptionsFactory.CamelCase)
+        new(JsonSerializerOptionsFactory.Common)
         {
             Converters = { new JsonStringEnumConverter() },
         };

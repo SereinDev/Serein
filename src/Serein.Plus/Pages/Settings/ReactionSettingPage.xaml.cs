@@ -28,7 +28,9 @@ public partial class ReactionSettingPage : Page
 
         var list = new List<DisplayedItem>();
         foreach (var type in Enum.GetValues<ReactionType>())
+        {
             list.Add(new(type));
+        }
         ReactionTypeListView.ItemsSource = list;
         ReactionTypeListView.SelectedIndex = 0;
     }
@@ -73,6 +75,7 @@ public partial class ReactionSettingPage : Page
             DialogHelper.ShowDeleteConfirmation("确定要删除所选命令吗？").ContinueWith((task) =>
             {
                 if (task.Result)
+                {
                     Dispatcher.Invoke(() =>
                     {
                         foreach (var command in CommandListView.SelectedItems.OfType<string>().ToArray())
@@ -81,6 +84,7 @@ public partial class ReactionSettingPage : Page
                         }
                         Save();
                     });
+                }
             });
         }
     }

@@ -89,7 +89,9 @@ public partial class MainWindow : Window
         _updateChecker.Updated += (_, _) =>
         {
             if (_updateChecker.Newest is not null)
+            {
                 Dispatcher.Invoke(() => ShowBalloonTip("发现新版本", _updateChecker.Newest.TagName, BalloonIcon.Info));
+            }
         };
     }
 
@@ -115,9 +117,13 @@ public partial class MainWindow : Window
 
             case "Hide":
                 if (item.IsChecked)
+                {
                     Hide();
+                }
                 else
+                {
                     ShowWindow();
+                }
 
                 TopMostMenuItem.IsEnabled = !item.IsChecked;
                 break;

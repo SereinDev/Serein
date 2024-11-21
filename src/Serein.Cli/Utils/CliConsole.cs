@@ -27,7 +27,9 @@ public static class CliConsole
                     );
                 }
                 else
+                {
                     Console.WriteLine($"{DateTime.Now:T} Debug {line}");
+                }
                 break;
 
             case LogLevel.Information:
@@ -38,7 +40,9 @@ public static class CliConsole
                     );
                 }
                 else
+                {
                     Console.WriteLine($"{DateTime.Now:T} Info {line}");
+                }
                 break;
 
             case LogLevel.Warning:

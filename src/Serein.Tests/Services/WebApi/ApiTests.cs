@@ -36,8 +36,10 @@ public class ApiTests : IDisposable
 
     public void Dispose()
     {
-        if (_httpServer.State != WebServerState.Stopped){
-            _httpServer.Stop();}
+        if (_httpServer.State != WebServerState.Stopped)
+        {
+            _httpServer.Stop();
+        }
 
         _app.StopAsync();
     }
@@ -71,8 +73,10 @@ public class ApiTests : IDisposable
                 attribute is null
                 || attribute.Verb != HttpVerbs.Get
                 || !attribute.Route.StartsWith("/hardware")
-            ){
-                continue;}
+            )
+            {
+                continue;
+            }
 
             var response = await _client.GetAsync("/api" + attribute.Route);
             Assert.True(response.IsSuccessStatusCode);

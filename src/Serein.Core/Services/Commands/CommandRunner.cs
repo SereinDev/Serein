@@ -21,6 +21,9 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Commands;
 
+/// <summary>
+/// 命令运行器
+/// </summary>
 public sealed class CommandRunner
 {
     private readonly Lazy<CommandParser> _commandParser;
@@ -49,6 +52,13 @@ public sealed class CommandRunner
         _bindingManager = bindingManager;
     }
 
+    /// <summary>
+    /// 运行命令
+    /// </summary>
+    /// <param name="command">命令</param>
+    /// <param name="commandContext">命令上下文</param>
+    /// <exception cref="TimeoutException"></exception>
+    /// <exception cref="NotSupportedException"></exception>
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
     {
         if (command.Type == CommandType.Invalid)

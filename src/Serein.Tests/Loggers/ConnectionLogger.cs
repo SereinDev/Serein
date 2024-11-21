@@ -11,7 +11,7 @@ public class ConnectionLogger : IConnectionLogger
 
     public void LogReceivedMessage(string line) { }
 
-    public void LogSentData(string data) { }
+    public void LogSentMessage(string data) { }
 
-    public void LogSentPacket(string line) { }
+    public void LogSentData(string line) { }
 }

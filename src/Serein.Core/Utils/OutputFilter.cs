@@ -3,8 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Core.Utils;
 
+/// <summary>
+/// 输出过滤
+/// </summary>
 public static partial class OutputFilter
 {
+    /// <summary>
+    /// 移除控制字符
+    /// </summary>
+    /// <param name="input">输入</param>
+    /// <returns>移除后的文本</returns>
     public static string RemoveControlChars(string input)
     {
         var stringBuilder = new StringBuilder();
@@ -21,11 +29,21 @@ public static partial class OutputFilter
 
     private static readonly Regex ColorCharsPattern = GetColorCharsPattern();
 
+    /// <summary>
+    /// 移除颜色字符
+    /// </summary>
+    /// <param name="input">输入</param>
+    /// <returns>移除后的文本</returns>
     public static string RemoveColorChars(string input)
     {
         return ColorCharsPattern.Replace(input, string.Empty);
     }
 
+    /// <summary>
+    /// 移除颜色字符和控制字符
+    /// </summary>
+    /// <param name="input">输入</param>
+    /// <returns>移除后的文本</returns>
     public static string Clear(string input)
     {
         return RemoveColorChars(RemoveControlChars(input));

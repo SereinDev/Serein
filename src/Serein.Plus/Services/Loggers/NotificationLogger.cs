@@ -45,10 +45,12 @@ public sealed class NotificationLogger(IServiceProvider serviceProvider) : ILogg
         };
 
         if (severity is not null)
+        {
             _infoBarProvider.Value.Enqueue(
                 "Serein.Plus",
                 line,
                 severity.Value
             );
+        }
     }
 }

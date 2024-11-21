@@ -45,7 +45,9 @@ internal partial class ApiMap(
     public async Task GetUrlInfo()
     {
         if (_records is null)
+        {
             GenerateUrlInfos();
+        }
 
         await HttpContext.SendPacketAsync(_records);
     }

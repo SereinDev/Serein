@@ -18,7 +18,9 @@ public class LogWriter(ILogger<LogWriter> logger, string directory)
     public async Task WriteAsync(string line)
     {
         lock (_buffer)
+        {
             _buffer.Add(line);
+        }
 
         _last = DateTime.Now;
         await Task.Delay(500);
