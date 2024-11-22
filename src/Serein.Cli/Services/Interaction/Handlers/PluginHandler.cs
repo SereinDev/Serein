@@ -34,7 +34,9 @@ public sealed class PluginHandler(
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (args.Count == 1)
+        {
             throw new InvalidArgumentException("缺少参数。可用值：\"reload\"、\"list\"和\"disable\"");
+        }
 
         switch (args[1].ToLowerInvariant())
         {

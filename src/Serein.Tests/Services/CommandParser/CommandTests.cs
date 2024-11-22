@@ -12,24 +12,8 @@ using Parser = Serein.Core.Services.Commands.CommandParser;
 namespace Serein.Tests.Services.CommandParser;
 
 [Collection(nameof(Serein))]
-public sealed class CommandTests : IDisposable
+public static class CommandTests 
 {
-    private readonly IHost _app;
-    private readonly Parser _commandParser;
-
-    public CommandTests()
-    {
-        _app = HostFactory.BuildNew();
-        _app.StartAsync();
-        _commandParser = _app.Services.GetRequiredService<Parser>();
-    }
-
-    public void Dispose()
-    {
-        _app.StopAsync();
-        _app.Dispose();
-    }
-
     [Theory]
     [InlineData("[cmd]114", CommandType.ExecuteShellCommand, "114")]
     [InlineData("[CmD]514", CommandType.ExecuteShellCommand, "514")]

@@ -52,6 +52,7 @@ public partial class CommandPromptCallbacks(
         }
 
         if (args.Length > 0)
+        {
             switch (args[0])
             {
                 case "connection" when args.Length == 2:
@@ -75,8 +76,8 @@ public partial class CommandPromptCallbacks(
                     );
 
                 case "plugin"
-                    when args.Length == 3
-                        && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
+                     when args.Length == 3
+                         && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. GetPluginIdCompletionItem()
@@ -108,7 +109,7 @@ public partial class CommandPromptCallbacks(
                         ]
                     );
             }
-
+        }
         return _emptyTask;
     }
 

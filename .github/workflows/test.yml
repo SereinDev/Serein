@@ -7,11 +7,6 @@ on:
       - "**.cs"
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: write
-  checks: write
-
 jobs:
   test:
     runs-on: windows-latest
@@ -25,18 +20,20 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Run tests
+        run: 
+          dotnet test src/Serein.Tests --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
+
+      - name: Generate coverage
         continue-on-error: true
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
-          dotnet test src/Serein.Tests
+          dotnet tool install --global JetBrains.dotCover.CommandLineTools
+          dotnet dotcover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --no-build
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+      - name: Run codacy-coverage-reporter
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
-          path: ./src/Serein.Tests/TestResults.trx
+          api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: AppCoverageReport.xml
 
-      - name: Report test results
-        uses: dorny/test-reporter@v1
-        with:
-          name: Test Result
-          path: ./src/Serein.Tests/TestResults.trx
-          reporter: dotnet-trx

@@ -122,6 +122,7 @@ public sealed class InputLoopService(
                 _serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
                 && server.Status
             )
+            {
                 if (input.StartsWith(_settingProvider.Value.Application.CliCommandHeader))
                 {
                     input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
@@ -131,6 +132,7 @@ public sealed class InputLoopService(
                     server.Input(input);
                     return;
                 }
+            }
         }
 
         _inputHandler.Handle(

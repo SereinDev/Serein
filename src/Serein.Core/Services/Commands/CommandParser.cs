@@ -105,7 +105,9 @@ public partial class CommandParser(
         catch
         {
             if (throws)
+            {
                 throw;
+            }
 
             return new() { Origin = origin, Type = CommandType.Invalid };
         }
