@@ -31,7 +31,7 @@ jobs:
           dotnet dotcover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --no-build
 
       - name: Run codacy-coverage-reporter
-        if: steps.coverage.conclusion != 'skipped'
+        if: steps.coverage.conclusion != 'skipped' && (failure() || success())
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}
