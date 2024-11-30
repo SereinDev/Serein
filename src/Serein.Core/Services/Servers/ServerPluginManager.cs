@@ -38,7 +38,7 @@ public sealed class ServerPluginManager
     /// <summary>
     /// 禁用插件的扩展名
     /// </summary>
-    public const string DisabledPluginExtension = ".disabled";
+    public static readonly string DisabledPluginExtension = ".disabled";
 
     public event EventHandler? Updated;
     public IReadOnlyList<ServerPlugin> Plugins => _plugins;

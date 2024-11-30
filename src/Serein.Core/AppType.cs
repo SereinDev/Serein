@@ -8,5 +8,6 @@ public enum AppType
     Unknown,
     Cli,
     Lite,
-    Plus
+    Plus,
+    Tests,
 }

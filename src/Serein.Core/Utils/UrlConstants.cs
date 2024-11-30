@@ -22,15 +22,15 @@ public static class UrlConstants
 
     public static readonly string Docs = "https://sereindev.github.io/";
 
-    public static readonly string DocsPlugins = "https://sereindev.github.io/docs/guidance/plugins";
+    public static readonly string DocsArgument = "https://sereindev.github.io/docs/more/agreement";
 
-    public static readonly string DocsVariables =
-        "https://sereindev.github.io/docs/guidance/variables";
+    public static readonly string DocsPlugins = "https://sereindev.github.io/docs/guidance/plugins";
 
     public static readonly string DocsMatch = "https://sereindev.github.io/docs/guidance/match";
 
     public static readonly string DocsSchedule =
         "https://sereindev.github.io/docs/guidance/schedule";
 
-    public static readonly string DocsArgument = "https://sereindev.github.io/docs/more/agreement";
+    public static readonly string DocsVariables =
+        "https://sereindev.github.io/docs/guidance/variables";
 }

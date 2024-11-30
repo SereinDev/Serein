@@ -11,7 +11,11 @@ internal static class CrashHelper
 {
     public static string CreateLog(Exception e)
     {
-        SentrySdk.CaptureException(e);
+        if (SentrySdk.IsEnabled)
+        {
+            SentrySdk.CaptureException(e);
+        }
+
         try
         {
             Directory.CreateDirectory(PathConstants.LogDirectory + "/crash");

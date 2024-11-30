@@ -78,6 +78,8 @@ internal sealed class CoreService : IHostedService
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("正在停止");
+        _updateChecker.Dispose();
+
         return Task.CompletedTask;
     }
 

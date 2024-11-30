@@ -29,7 +29,7 @@ internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider se
             options.AutoSessionTracking = true;
             options.TracesSampleRate = 1;
             options.ProfilesSampleRate = 0.5;
-            options.AddIntegration(new ProfilingIntegration(TimeSpan.FromMilliseconds(1000)));
+            options.AddIntegration(new ProfilingIntegration(TimeSpan.FromMilliseconds(500)));
 
 #if DEBUG
             // options.Debug = true;

@@ -24,14 +24,14 @@ jobs:
           dotnet test src/Serein.Tests --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
 
       - name: Generate coverage
-        continue-on-error: true
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        id: coverage
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (failure() || success())
         run: |
           dotnet tool install --global JetBrains.dotCover.CommandLineTools
           dotnet dotcover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --no-build
 
       - name: Run codacy-coverage-reporter
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        if: steps.coverage.conclusion != 'skipped'
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}

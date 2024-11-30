@@ -29,6 +29,10 @@ public sealed class EventDispatcher(
     private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
 
+    /// <summary>
+    /// 分发事件
+    /// </summary>
+    /// <returns>如果此事件被拦截则返回false</returns>
     internal bool Dispatch(Event @event, params object[] args)
     {
         _logger.LogDebug("分发事件：{}", @event);
@@ -61,7 +65,7 @@ public sealed class EventDispatcher(
         }
 
         cancellationTokenSource.Cancel();
-        return tasks.Select((t) => !t.IsCompleted || t.Result).Any((b) => !b);
+        return !tasks.Where((task) => task.IsCompleted).Any((task) => !task.Result);
     }
 
     private void DispatchToJsPlugins(

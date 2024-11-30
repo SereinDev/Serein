@@ -27,7 +27,7 @@ public sealed class CommandProperty
     }
 #pragma warning restore CA1822
 
-    public void SetVariable(string key, object? value)
+    public void SetVariable(string key, string? value)
     {
         _pluginManager.SetCommandVariable(key, value);
     }

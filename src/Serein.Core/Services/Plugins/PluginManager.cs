@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Plugins;
 
-public sealed class PluginManager(
+public sealed partial class PluginManager(
     ILogger<PluginManager> logger,
     IPluginLogger pluginLogger,
     JsPluginLoader jsPluginLoader,
@@ -30,6 +31,9 @@ public sealed class PluginManager(
     PermissionManager permissionManager
 )
 {
+    [GeneratedRegex(@"^[a-zA-Z][a-zA-Z0-9\-]{2,24}$")]
+    private static partial Regex GetIdRegex();
+    private static readonly Regex IdRegex = GetIdRegex();
     private static readonly JsonSerializerOptions Options =
         new(JsonSerializerOptionsFactory.Common)
         {
@@ -50,35 +54,41 @@ public sealed class PluginManager(
     public event EventHandler? PluginsReloading;
     public event EventHandler? PluginsLoaded;
 
-    public bool Loading { get; private set; }
-    public bool Reloading { get; private set; }
+    public bool IsLoading { get; private set; }
+    public bool IsReloading { get; private set; }
 
     public void ExportVariables(string key, object? value)
     {
         ExportedVariables.AddOrUpdate(key, value, (_, _) => value);
     }
 
-    public void SetCommandVariable(string key, object? value)
+    public void SetCommandVariable(string key, string? value)
     {
-        var str = value?.ToString() ?? string.Empty;
-        CommandVariables.AddOrUpdate(key, str, (_, _) => str);
+        if (value == null)
+        {
+            CommandVariables.TryRemove(key, out _);
+        }
+        else
+        {
+            CommandVariables.AddOrUpdate(key, value, (_, _) => value);
+        }
     }
 
     public void Load()
     {
         try
         {
-            if (Loading)
+            if (IsLoading)
             {
                 throw new InvalidOperationException("正在加载插件");
             }
 
-            Loading = true;
+            IsLoading = true;
 
             if (!Directory.Exists(PathConstants.PluginsDirectory))
             {
                 Directory.CreateDirectory(PathConstants.PluginsDirectory);
-                Loading = false;
+                IsLoading = false;
                 return;
             }
 
@@ -101,9 +111,14 @@ public sealed class PluginManager(
                             Options
                         ) ?? throw new InvalidDataException("插件信息为空");
 
-                    if (string.IsNullOrWhiteSpace(pluginInfo.Id))
+                    if (string.IsNullOrEmpty(pluginInfo.Id))
                     {
                         throw new InvalidOperationException("Id不可为空");
+                    }
+
+                    if(!IdRegex.IsMatch(pluginInfo.Id))
+                    {
+                        throw new InvalidOperationException("Id不符合规范");
                     }
                 }
                 catch (Exception e)
@@ -166,12 +181,12 @@ public sealed class PluginManager(
         }
         catch (Exception e)
         {
-            _logger.LogDebug(e, "[{}] 插件加载时出现异常", nameof(PluginManager));
+            _logger.LogDebug(e, "插件加载时出现异常");
             throw;
         }
         finally
         {
-            Loading = false;
+            IsLoading = false;
             _logger.LogDebug("插件加载结束");
         }
     }
@@ -190,12 +205,12 @@ public sealed class PluginManager(
 
     public void Reload()
     {
-        if (Reloading || Loading)
+        if (IsReloading || IsLoading)
         {
             throw new InvalidOperationException("正在加载插件");
         }
 
-        Reloading = true;
+        IsReloading = true;
 
         try
         {
@@ -206,7 +221,7 @@ public sealed class PluginManager(
         }
         finally
         {
-            Reloading = false;
+            IsReloading = false;
         }
     }
 

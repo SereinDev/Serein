@@ -1,6 +1,6 @@
 namespace Serein.Core.Models.Plugins.Js;
 
-public class JsPluginConfig
+public sealed class JsPluginConfig
 {
     public static readonly JsPluginConfig Default = new();
 

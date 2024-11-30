@@ -72,7 +72,22 @@ public class JsPlugin : IPlugin
         GC.SuppressFinalize(this);
     }
 
-    public bool Invoke(Event @event, CancellationToken cancellationToken, params object[] args)
+    internal void SetListener(Event @event, Function? func)
+    {
+        lock (_eventHandlers)
+        {
+            if (func is null)
+            {
+                _eventHandlers.TryRemove(@event, out _);
+            }
+            else
+            {
+                _eventHandlers[@event] = func;
+            }
+        }
+    }
+
+    internal bool Invoke(Event @event, CancellationToken cancellationToken, params object[] args)
     {
         var entered = false;
         try

@@ -9,7 +9,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network;
 
-public sealed class UpdateChecker
+public sealed class UpdateChecker : IDisposable
 {
     private readonly ILogger _logger;
     private readonly System.Timers.Timer _timer;
@@ -83,5 +83,11 @@ public sealed class UpdateChecker
         {
             await CheckAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _timer.Stop();
+        _timer.Dispose();
     }
 }

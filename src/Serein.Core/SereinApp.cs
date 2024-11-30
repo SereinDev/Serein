@@ -21,6 +21,7 @@ public sealed class SereinApp
             "Serein.Cli" => AppType.Cli,
             "Serein.Lite" => AppType.Lite,
             "Serein.Plus" => AppType.Plus,
+            "Serein.Tests" => AppType.Tests,
             _ => AppType.Unknown,
         };
 

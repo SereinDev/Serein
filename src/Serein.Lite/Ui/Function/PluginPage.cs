@@ -103,7 +103,7 @@ public partial class PluginPage : UserControl
 
     private void ReloadToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (!_pluginManager.Loading && !_pluginManager.Reloading)
+        if (!_pluginManager.IsLoading && !_pluginManager.IsReloading)
         {
             Task.Run(_pluginManager.Reload);
         }
@@ -125,7 +125,7 @@ public partial class PluginPage : UserControl
 
     private void ReloadButton_Click(object sender, EventArgs e)
     {
-        if (!_pluginManager.Loading && !_pluginManager.Reloading)
+        if (!_pluginManager.IsLoading && !_pluginManager.IsReloading)
         {
             Task.Run(_pluginManager.Reload);
         }

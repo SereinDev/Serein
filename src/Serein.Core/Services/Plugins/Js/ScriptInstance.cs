@@ -18,6 +18,8 @@ using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Properties;
 
 using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
+using Jint.Native.Function;
+using Serein.Core.Models.Plugins;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -100,7 +102,19 @@ public sealed partial class ScriptInstance
         var t = Type.GetType(type);
         return t?.IsPublic == true
             ? _serviceProvider.GetRequiredService(t)
-            : throw new InvalidOperationException("无法获取指定的类型");
+            : throw new ArgumentException("无法获取指定的类型", nameof(type));
+    }
+
+    public void SetListener(string eventName, JsValue jsValue)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(eventName);
+
+        if (!Enum.TryParse<Event>(eventName, true, out var @event))
+        {
+            throw new ArgumentException("无效的事件名称", nameof(eventName));
+        }
+
+        _jsPlugin.SetListener(@event, jsValue as Function);
     }
 
     public string Resolve(params string[] paths) => PluginManager.Resolve(_jsPlugin, paths);
