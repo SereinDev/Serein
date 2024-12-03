@@ -1,11 +1,16 @@
 using System;
 
-using Ookii.Dialogs.WinForms;
-
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 
+#if LITE
+using Ookii.Dialogs.WinForms;
 namespace Serein.Lite.Utils;
+#elif PLUS
+using Ookii.Dialogs.Wpf;
+namespace Serein.Plus.Utils;
+#endif
+
 public static class DialogFactory
 {
     public static void ShowWelcomeDialog()
@@ -98,6 +103,7 @@ public static class DialogFactory
         catch { }
     }
 
+#if LITE
     public static void ShowWarningDialogOfLogMode()
     {
         var dialog = new TaskDialog
@@ -115,4 +121,5 @@ public static class DialogFactory
 
         dialog.ShowDialog();
     }
+#endif
 }

@@ -101,14 +101,14 @@ partial class MainForm
         // 
         ServerAddToolStripMenuItem.Name = "ServerAddToolStripMenuItem";
         ServerAddToolStripMenuItem.Size = new Size(219, 44);
-        ServerAddToolStripMenuItem.Text = "添加";
+        ServerAddToolStripMenuItem.Text = "添加...";
         ServerAddToolStripMenuItem.Click += ServerAddToolStripMenuItem_Click;
         // 
         // ServerEditToolStripMenuItem
         // 
         ServerEditToolStripMenuItem.Name = "ServerEditToolStripMenuItem";
         ServerEditToolStripMenuItem.Size = new Size(219, 44);
-        ServerEditToolStripMenuItem.Text = "编辑";
+        ServerEditToolStripMenuItem.Text = "编辑...";
         ServerEditToolStripMenuItem.Click += ServerEditToolStripMenuItem_Click;
         // 
         // ServerRemoveToolStripMenuItem

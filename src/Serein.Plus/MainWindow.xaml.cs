@@ -26,10 +26,10 @@ using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 using Serein.Plus.Commands;
-using Serein.Plus.Dialogs;
 using Serein.Plus.Models;
 using Serein.Plus.Pages;
 using Serein.Plus.Services;
+using Serein.Plus.Utils;
 
 namespace Serein.Plus;
 
@@ -90,7 +90,14 @@ public partial class MainWindow : Window
         {
             if (_updateChecker.Newest is not null)
             {
-                Dispatcher.Invoke(() => ShowBalloonTip("发现新版本", _updateChecker.Newest.TagName, BalloonIcon.Info));
+                Dispatcher.Invoke(
+                    () =>
+                        ShowBalloonTip(
+                            "发现新版本",
+                            _updateChecker.Newest.TagName,
+                            BalloonIcon.Info
+                        )
+                );
             }
         };
     }
@@ -156,7 +163,7 @@ public partial class MainWindow : Window
     {
         if (SereinAppBuilder.StartForTheFirstTime)
         {
-            new WelcomeDialog().ShowAsync();
+            DialogFactory.ShowWelcomeDialog();
         }
 
         if (FileLoggerProvider.IsEnabled)
@@ -167,9 +174,9 @@ public partial class MainWindow : Window
                 Content = new TextBlock
                 {
                     Text =
-                      $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）\r\n"
-                      + "除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！\r\n\r\n"
-                      + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
+                        $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）\r\n"
+                        + "除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！\r\n\r\n"
+                        + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
                 },
                 CloseButtonText = "我知道了",
                 DefaultButton = ContentDialogButton.Close,
@@ -232,7 +239,9 @@ public partial class MainWindow : Window
     {
         GlobalInfoBar.Title = infoBarTask.Title;
         GlobalInfoBar.Content = infoBarTask.Content;
-        GlobalInfoBar.Message = string.IsNullOrEmpty(infoBarTask.Message) ? " " : infoBarTask.Message;
+        GlobalInfoBar.Message = string.IsNullOrEmpty(infoBarTask.Message)
+            ? " "
+            : infoBarTask.Message;
         GlobalInfoBar.Severity = infoBarTask.Severity;
 
         var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(

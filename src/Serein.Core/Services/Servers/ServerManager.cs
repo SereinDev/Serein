@@ -187,6 +187,7 @@ public partial class ServerManager
         if (!Directory.Exists(PathConstants.ServerConfigDirectory))
         {
             Directory.CreateDirectory(PathConstants.ServerConfigDirectory);
+            Add("myserver", new());
             return;
         }
 

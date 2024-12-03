@@ -31,6 +31,7 @@ public sealed class EventTests : IDisposable
         _netPluginLoader = _host.Services.GetRequiredService<NetPluginLoader>();
 
         Directory.CreateDirectory(PathConstants.PluginsDirectory);
+        Directory.CreateDirectory(Path.Join(PathConstants.PluginsDirectory, "test"));
     }
 
     public void Dispose()
@@ -42,7 +43,7 @@ public sealed class EventTests : IDisposable
     [Fact]
     public async Task ShouldInvokePluginLoadedEvent()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             using System;
             using System.Threading.Tasks;
@@ -92,7 +93,7 @@ public sealed class EventTests : IDisposable
     [Fact]
     public async Task ShouldInvokeServerEvent()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             using System;
             using System.Collections.Generic;

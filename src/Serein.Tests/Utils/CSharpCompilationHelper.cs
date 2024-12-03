@@ -10,7 +10,7 @@ namespace Serein.Tests.Utils;
 
 #pragma warning disable IL3000
 
-public static class CSharpCompilationOptionsHelper
+public static class CSharpCompilationHelper
 {
     private static readonly CSharpCompilationOptions Default = new CSharpCompilationOptions(
         OutputKind.DynamicallyLinkedLibrary

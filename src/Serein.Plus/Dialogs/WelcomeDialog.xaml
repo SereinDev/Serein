@@ -28,7 +28,7 @@
                                     官网文档：
                                 </Run>
                                 <Hyperlink NavigateUri="https://sereindev.github.io/" RequestNavigate="OnRequestNavigate">
-                                    serein.cc
+                                    sereindev.github.io
                                 </Hyperlink>
                             </Paragraph>
                         </ListItem>

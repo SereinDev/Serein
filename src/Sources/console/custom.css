@@ -1,41 +1,6 @@
-/*
-  用于自定义特殊高亮样式
-  - 需以 ".custom> " 开头
-  - 用".[NAME]"指定高亮对象
-*/
-.custom > .file {
-  color: #688292;
-}
-
-.custom > .server {
-  color: #8bd645;
-}
-
-.custom > .debug {
-  color: #865fc5;
-}
-
-.custom > .error {
-  color: #d16969;
-}
-
-.custom > .warn {
-  color: #aa5612;
-}
-
-.custom > .info {
-  color: #20b2aa;
-}
-
-.custom > .LiteLoader,
-.custom > .LiteXLoader,
-.custom > .LLMoney {
-  color: #5a93c2;
-}
-
-/* 
-  颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code
-*/
+/** 
+  * 颜色参考来源：https://en.wikipedia.org/wiki/ANSI_escape_code
+  */
 .ansi30 {
   color: #0c0c0c;
 }

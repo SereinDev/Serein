@@ -7,11 +7,13 @@
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <DefineConstants>LITE;</DefineConstants>
     </PropertyGroup>
 
 
     <ItemGroup>
         <Resource Include="../Sources/logo.ico" />
+        <Compile Include="../Shared/Utils/DialogFactory.cs" />
         <EmbeddedResource Include="../Sources/console/index.html" />
         <EmbeddedResource Include="../Sources/console/custom.css" />
 

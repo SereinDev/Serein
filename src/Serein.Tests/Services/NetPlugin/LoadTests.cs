@@ -28,7 +28,6 @@ public sealed class LoadTests : IDisposable
         _host = HostFactory.BuildNew();
         _netPluginLoader = _host.Services.GetRequiredService<NetPluginLoader>();
 
-        Directory.CreateDirectory(PathConstants.PluginsDirectory);
         Directory.CreateDirectory(Path.Join(PathConstants.PluginsDirectory, "test"));
     }
 
@@ -41,7 +40,7 @@ public sealed class LoadTests : IDisposable
     [Fact]
     public async Task ShouldNotLoadNetPluginWithoutValidPluginClass()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             namespace EmptyPlugin;
             public class EmptyClass{}
@@ -73,7 +72,7 @@ public sealed class LoadTests : IDisposable
     [Fact]
     public async Task ShouldNotLoadNetPluginWithTwoPluginClasses()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             using Serein.Core.Models.Plugins.Net;
 
@@ -120,7 +119,7 @@ public sealed class LoadTests : IDisposable
     [Fact]
     public async Task ShouldLoadNetPluginWithValidAssembly()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             using Serein.Core.Models.Plugins.Net;
 
@@ -158,7 +157,7 @@ public sealed class LoadTests : IDisposable
     [Fact]
     public async Task ShouldLoadNetPluginWithoutSpecifyingEntryFile()
     {
-        CSharpCompilationOptionsHelper.Compile(
+        CSharpCompilationHelper.Compile(
             """
             using System;
             using Serein.Core.Models.Plugins.Net;

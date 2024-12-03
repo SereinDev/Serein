@@ -6,11 +6,13 @@
         <UseWPF>true</UseWPF>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <DefineConstants>PLUS;</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
+        <Compile Include="../Shared/Utils/DialogFactory.cs" />
     </ItemGroup>
 
     <ItemGroup>
