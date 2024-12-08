@@ -4,9 +4,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.Text;
-
 using Sentry;
-
 using Serein.Core.Utils;
 
 namespace Serein.Cli.Utils;
@@ -20,7 +18,9 @@ public static class CommandLineParserBuilder
 
         rootCommnad.AddOption(new Option<bool>("--debug", "启用调试输出"));
         rootCommnad.AddOption(new Option<bool>("--log", "启用日志模式"));
-        rootCommnad.AddOption(new Option<bool>("--no-color", "禁用控制台彩色输出（服务器输出不受影响）"));
+        rootCommnad.AddOption(
+            new Option<bool>("--no-color", "禁用控制台彩色输出（服务器输出不受影响）")
+        );
 
         return new CommandLineBuilder(rootCommnad)
             .UseExceptionHandler(OnException)

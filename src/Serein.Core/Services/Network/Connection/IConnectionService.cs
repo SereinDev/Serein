@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-
 using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;

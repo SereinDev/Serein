@@ -2,11 +2,9 @@ using System.Net;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-
 using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Utils.Json;
 

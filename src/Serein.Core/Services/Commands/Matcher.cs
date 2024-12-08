@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;

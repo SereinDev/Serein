@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;

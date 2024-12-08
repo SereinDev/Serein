@@ -1,12 +1,9 @@
 using System;
 using System.IO;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
-
 using Xunit;
 
 namespace Serein.Tests.Services.Server;

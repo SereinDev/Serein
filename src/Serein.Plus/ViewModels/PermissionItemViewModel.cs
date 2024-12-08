@@ -1,7 +1,8 @@
 ﻿using Serein.Core.Models;
 
 namespace Serein.Plus.ViewModels;
-public class PermissionItemViewModel: NotifyPropertyChangedModelBase
+
+public class PermissionItemViewModel : NotifyPropertyChangedModelBase
 {
     public string Node { get; set; } = string.Empty;
 

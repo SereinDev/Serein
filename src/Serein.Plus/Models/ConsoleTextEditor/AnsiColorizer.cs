@@ -1,10 +1,8 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
-
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
-
 using Serein.Plus.Utils;
 
 namespace Serein.Plus.Models.ConsoleTextEditor;

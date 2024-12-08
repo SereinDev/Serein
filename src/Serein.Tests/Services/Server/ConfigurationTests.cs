@@ -1,13 +1,10 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
-
 using Xunit;
 
 namespace Serein.Tests.Services.Server;
@@ -40,11 +37,10 @@ public sealed class ConfigurationTests : IDisposable
     [Fact]
     public async Task ShouldStartServerWithStartWhenSettingUpTrue()
     {
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            StartWhenSettingUp = true
-        });
+        var server = _serverManager.Add(
+            "test",
+            new() { FileName = "cmd", StartWhenSettingUp = true }
+        );
 
         await _app.StartAsync();
         await Task.Delay(500);
@@ -55,11 +51,7 @@ public sealed class ConfigurationTests : IDisposable
     [Fact]
     public async Task ShouldOutputToFile()
     {
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            SaveLog = true
-        });
+        var server = _serverManager.Add("test", new() { FileName = "cmd", SaveLog = true });
 
         await _app.StartAsync();
         _app.Start();
@@ -69,6 +61,8 @@ public sealed class ConfigurationTests : IDisposable
         await Task.Delay(2000);
 
         Assert.True(Directory.Exists(string.Format(PathConstants.ServerLogDirectory, server.Id)));
-        Assert.NotEmpty(Directory.GetFiles(string.Format(PathConstants.ServerLogDirectory, server.Id)));
+        Assert.NotEmpty(
+            Directory.GetFiles(string.Format(PathConstants.ServerLogDirectory, server.Id))
+        );
     }
 }

@@ -1,18 +1,14 @@
 using System;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
-
 using Xunit;
-
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services.CommandParser;
 
 [Collection(nameof(Serein))]
-public static class CommandTests 
+public static class CommandTests
 {
     [Theory]
     [InlineData("[cmd]114", CommandType.ExecuteShellCommand, "114")]

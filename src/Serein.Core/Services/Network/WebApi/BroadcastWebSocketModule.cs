@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
-
 using EmbedIO.WebSockets;
-
 using Serein.Core.Models.Network.WebApi;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Models;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;

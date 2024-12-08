@@ -5,9 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
@@ -33,12 +31,10 @@ public sealed partial class PluginManager(
 {
     [GeneratedRegex(@"^[a-zA-Z][a-zA-Z0-9\-]{2,24}$")]
     private static partial Regex GetIdRegex();
+
     private static readonly Regex IdRegex = GetIdRegex();
     private static readonly JsonSerializerOptions Options =
-        new(JsonSerializerOptionsFactory.Common)
-        {
-            Converters = { new JsonStringEnumConverter() },
-        };
+        new(JsonSerializerOptionsFactory.Common) { Converters = { new JsonStringEnumConverter() } };
 
     private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
@@ -116,7 +112,7 @@ public sealed partial class PluginManager(
                         throw new InvalidOperationException("Id不可为空");
                     }
 
-                    if(!IdRegex.IsMatch(pluginInfo.Id))
+                    if (!IdRegex.IsMatch(pluginInfo.Id))
                     {
                         throw new InvalidOperationException("Id不符合规范");
                     }

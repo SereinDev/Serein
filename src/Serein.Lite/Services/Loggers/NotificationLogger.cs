@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-
 using Microsoft.Extensions.Logging;
 
 namespace Serein.Lite.Services.Loggers;

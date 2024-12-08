@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Controls;
-
 using Serein.Core.Services.Servers;
 
 namespace Serein.Plus.Validations;

@@ -1,10 +1,7 @@
 using System;
 using System.Windows.Navigation;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using Serein.Plus.ViewModels;
 
 namespace Serein.Plus.Pages;

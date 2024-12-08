@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Plugins.Storages;
@@ -43,7 +42,7 @@ public abstract class StorageBase(ILogger logger)
         {
             _data[key] = value ?? "null";
         }
-        
+
         _logger.LogDebug("更新：'{}'='{}'", key, value);
         OnUpdated();
     }

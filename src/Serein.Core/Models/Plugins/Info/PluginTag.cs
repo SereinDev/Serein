@@ -15,5 +15,5 @@ public enum PluginTag
 
     Management,
 
-    Api
+    Api,
 }

@@ -2,13 +2,10 @@ using System;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Plus.Services;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;

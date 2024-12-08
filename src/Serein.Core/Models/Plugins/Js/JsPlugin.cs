@@ -3,18 +3,15 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
-
 using Jint;
 using Jint.Native.Function;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Utils.Extensions;
-
 using JsConsole = Serein.Core.Services.Plugins.Js.Properties.Console;
 
 namespace Serein.Core.Models.Plugins.Js;
@@ -29,6 +26,8 @@ public class JsPlugin : IPlugin
     public JsConsole Console { get; }
     public TimerFactory TimerFactory { get; }
     public ScriptInstance ScriptInstance { get; }
+
+    // public FileSystem FileSystem { get; }
 
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;

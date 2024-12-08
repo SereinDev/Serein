@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Bindings;
 using Serein.Lite.Utils.Native;
@@ -25,15 +24,14 @@ public partial class BindingPage : UserControl, IUpdateablePage
         BindingListView.BeginUpdate();
         BindingListView.Items.Clear();
 
-        _bindingManager.Records.ForEach((record) =>
-        {
-            var item = new ListViewItem(record.UserId.ToString())
+        _bindingManager.Records.ForEach(
+            (record) =>
             {
-                Tag = record
-            };
-            item.SubItems.Add(record.ShownName);
-            item.SubItems.Add(string.Join(";", record.GameIds));
-        });
+                var item = new ListViewItem(record.UserId.ToString()) { Tag = record };
+                item.SubItems.Add(record.ShownName);
+                item.SubItems.Add(string.Join(";", record.GameIds));
+            }
+        );
 
         BindingListView.EndUpdate();
     }

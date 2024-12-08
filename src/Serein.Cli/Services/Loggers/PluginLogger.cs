@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Utils;
 using Serein.Core.Models.Output;
 

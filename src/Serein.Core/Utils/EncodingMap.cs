@@ -35,7 +35,7 @@ public static class EncodingMap
             EncodingType.UTF16LE => LittleEndianUnicode,
             EncodingType.UTF16BE => BigEndianUnicode,
             EncodingType.GBK => GBK,
-            _ => throw new ArgumentOutOfRangeException(nameof(encodingType))
+            _ => throw new ArgumentOutOfRangeException(nameof(encodingType)),
         };
     }
 
@@ -47,6 +47,6 @@ public static class EncodingMap
         UTF8,
         UTF16LE,
         UTF16BE,
-        GBK
+        GBK,
     }
 }

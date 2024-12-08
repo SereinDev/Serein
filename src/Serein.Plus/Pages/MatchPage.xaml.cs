@@ -2,16 +2,13 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Force.DeepCloner;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Plus.Dialogs;
 using Serein.Plus.Windows;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;
@@ -35,9 +32,9 @@ public partial class MatchPage : Page
         Details.Text =
             MatchesDataGrid.SelectedItems.Count > 1
                 ? $"共{_matchesProvider.Value.Count}项，已选择{MatchesDataGrid.SelectedItems.Count}项"
-                : MatchesDataGrid.SelectedIndex >= 0
-                    ? $"共{_matchesProvider.Value.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
-                    : $"共{_matchesProvider.Value.Count}项";
+            : MatchesDataGrid.SelectedIndex >= 0
+                ? $"共{_matchesProvider.Value.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
+            : $"共{_matchesProvider.Value.Count}项";
     }
 
     private void MatchesDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -65,23 +62,30 @@ public partial class MatchPage : Page
                 break;
 
             case "Remove":
-                DialogHelper.ShowDeleteConfirmation("确定要删除所选项吗？").ContinueWith((task) =>
-                {
-                    if (!task.Result)
-                    {
-                        return;
-                    }
-                    Dispatcher.Invoke(() =>
-                {
+                DialogHelper
+                    .ShowDeleteConfirmation("确定要删除所选项吗？")
+                    .ContinueWith(
+                        (task) =>
+                        {
+                            if (!task.Result)
+                            {
+                                return;
+                            }
+                            Dispatcher.Invoke(() =>
+                            {
+                                foreach (
+                                    var item in MatchesDataGrid
+                                        .SelectedItems.OfType<Match>()
+                                        .ToArray()
+                                )
+                                {
+                                    _matchesProvider.Value.Remove(item);
+                                }
 
-                    foreach (var item in MatchesDataGrid.SelectedItems.OfType<Match>().ToArray())
-                    {
-                        _matchesProvider.Value.Remove(item);
-                    }
-
-                    _matchesProvider.SaveAsyncWithDebounce();
-                });
-                });
+                                _matchesProvider.SaveAsyncWithDebounce();
+                            });
+                        }
+                    );
                 break;
 
             case "Edit":

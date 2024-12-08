@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
-
 using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
@@ -103,20 +100,18 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
         Connecting = true;
         _connectedSuccessfully = _closedManually = false;
 
-        Task.Run(
-            () =>
+        Task.Run(() =>
+        {
+            try
             {
-                try
-                {
-                    _client.Open();
-                }
-                catch (Exception e)
-                {
-                    Connecting = false;
-                    _connectionLogger.Value.Log(LogLevel.Error, e.Message);
-                }
+                _client.Open();
             }
-        );
+            catch (Exception e)
+            {
+                Connecting = false;
+                _connectionLogger.Value.Log(LogLevel.Error, e.Message);
+            }
+        });
     }
 
     public void Stop()

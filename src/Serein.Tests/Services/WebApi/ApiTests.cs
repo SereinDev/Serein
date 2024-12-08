@@ -2,17 +2,13 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 using EmbedIO;
 using EmbedIO.Routing;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi;
 using Serein.Core.Services.Network.WebApi.Apis;
-
 using Xunit;
 
 namespace Serein.Tests.Services.WebApi;

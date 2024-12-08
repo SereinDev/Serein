@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.Windows.Controls;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Commands;
 

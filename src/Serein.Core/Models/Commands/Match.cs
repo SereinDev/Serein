@@ -1,9 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-
 using PropertyChanged;
-
 using Serein.Core.Services.Commands;
 
 namespace Serein.Core.Models.Commands;

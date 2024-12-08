@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Win32;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 

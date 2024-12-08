@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-
 using Serein.Core.Models.Plugins.Info;
 
 namespace Serein.Core.Models.Plugins;

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -57,8 +56,8 @@ public partial class Panel : UserControl
                     lock (_lock)
                     {
                         ConsoleBrowser.AppendHtmlLine(
-                        LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
-                    );
+                            LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
+                        );
                     }
                     break;
 
@@ -211,21 +210,18 @@ public partial class Panel : UserControl
     private void UpdateInfoLabels()
     {
         StatusDynamicLabel.Text = _server.Status ? "运行中" : "未启动";
-        VersionDynamicLabel.Text =
-            _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
-        PlayerCountDynamicLabel.Text =
-            _server.Status
-                ? $"{_server.Info.Stat?.CurrentPlayers}/{_server.Info.Stat?.MaximumPlayers}"
-                : "-";
+        VersionDynamicLabel.Text = _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
+        PlayerCountDynamicLabel.Text = _server.Status
+            ? $"{_server.Info.Stat?.CurrentPlayers}/{_server.Info.Stat?.MaximumPlayers}"
+            : "-";
         RunTimeDynamicLabel.Text =
             _server.Status && _server.Info.StartTime is not null
                 ? (DateTime.Now - _server.Info.StartTime).ToCommonString()
                 : "-";
 
-        CPUPercentDynamicLabel.Text =
-            _server.Status
-                ? _server.Info.CPUUsage.ToString("N2") + "%"
-                : "-";
+        CPUPercentDynamicLabel.Text = _server.Status
+            ? _server.Info.CPUUsage.ToString("N2") + "%"
+            : "-";
     }
 
     protected override void OnLoad(EventArgs e)

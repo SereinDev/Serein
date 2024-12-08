@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Models.Output;

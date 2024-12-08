@@ -4,15 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
 using PrettyPrompt.Completion;
 using PrettyPrompt.Highlighting;
-
 using Serein.Cli.Models;
 using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Js;
-using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;
@@ -35,8 +32,7 @@ public partial class CommandPromptCallbacks
     private IEnumerable<CompletionItem> GetServerCompletionItem()
     {
         return _serverManager.Servers.Select(
-            (kv) =>
-                new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
+            (kv) => new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
         static Task<FormattedString> GetDescription(KeyValuePair<string, Server> kv)
@@ -44,9 +40,7 @@ public partial class CommandPromptCallbacks
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(kv.Value.Configuration.Name);
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine(
-                "状态：" + (kv.Value.Status ? "运行中" : "已停止")
-            );
+            stringBuilder.AppendLine("状态：" + (kv.Value.Status ? "运行中" : "已停止"));
             stringBuilder.AppendLine(
                 "启动命令行："
                     + kv.Value.Configuration.FileName
@@ -77,8 +71,7 @@ public partial class CommandPromptCallbacks
         }
 
         return dictionary.Select(
-            (kv) =>
-                new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
+            (kv) => new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
         static Task<FormattedString> GetDescription(KeyValuePair<string, IPlugin> kv)
@@ -91,7 +84,7 @@ public partial class CommandPromptCallbacks
             stringBuilder.AppendLine($"描述：{kv.Value.Info.Description}");
             stringBuilder.AppendLine(
                 $" 作者：{string.Join(',', kv.Value.Info.Authors.Select(author => author.ToString()))}"
-                );
+            );
             return Task.FromResult(
                 new FormattedString(
                     stringBuilder.ToString(),

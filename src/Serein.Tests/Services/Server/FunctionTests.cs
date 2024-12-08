@@ -1,12 +1,9 @@
 using System;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
-
 using Xunit;
 
 namespace Serein.Tests.Services.Server;
@@ -41,11 +38,7 @@ public sealed class FunctionTests : IDisposable
     {
         _app.Start();
 
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            AutoRestart = true
-        });
+        var server = _serverManager.Add("test", new() { FileName = "cmd", AutoRestart = true });
         server.Start();
         server.Input("exit 1");
 
@@ -75,11 +68,7 @@ public sealed class FunctionTests : IDisposable
     {
         _app.Start();
 
-        var server = _serverManager.Add("test", new()
-        {
-            FileName = "cmd",
-            AutoRestart = true
-        });
+        var server = _serverManager.Add("test", new() { FileName = "cmd", AutoRestart = true });
 
         Assert.Null(server.Pid);
         server.Start();

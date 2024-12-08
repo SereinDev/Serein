@@ -2,13 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils;
-
 using Xunit;
 
 namespace Serein.Tests.Services.JsPlugin;

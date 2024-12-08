@@ -19,5 +19,4 @@ public enum ReactionType
     PermissionDeniedFromGroupMsg,
 
     SereinCrash,
-
 }

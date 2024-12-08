@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Microsoft.Win32;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;

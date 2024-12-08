@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
 using Jint;
 using Jint.Native;
 using Jint.Runtime.Interop;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
 
 namespace Serein.Core.Services.Plugins.Js;
@@ -34,7 +32,7 @@ public sealed class JsEngineFactory(
 
     private Options PrepareOptions(JsPlugin jsPlugin)
     {
-        var assemblies = new List<Assembly> { typeof(System.Console).Assembly };
+        var assemblies = new List<Assembly> { typeof(Console).Assembly };
 
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
@@ -105,11 +103,11 @@ public sealed class JsEngineFactory(
         engine.SetValue("clearTimeout", jsPlugin.TimerFactory.ClearTimeout);
         engine.SetValue("clearInterval", jsPlugin.TimerFactory.ClearInterval);
 
+        engine.SetValue("fs", TypeReference.CreateTypeReference(engine, typeof(FileSystem)));
+        engine.SetValue("process", TypeReference.CreateTypeReference(engine, typeof(Process)));
+
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
-        AddTypeReference<MatchFieldType>();
-        AddTypeReference<Match>();
-        AddTypeReference<Schedule>();
         AddTypeReference<AppType>();
 
         return engine;

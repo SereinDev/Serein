@@ -20,7 +20,7 @@ public class Sender
             Role.Member => "成员",
             Role.Admin => "管理员",
             Role.Owner => "群主",
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
     public string TinyId { get; set; } = string.Empty;

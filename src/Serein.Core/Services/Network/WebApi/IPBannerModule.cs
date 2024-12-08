@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-
 using EmbedIO;
 using EmbedIO.Security;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi.Apis;
 

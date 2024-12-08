@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Plugins;
@@ -318,11 +317,11 @@ public partial class CommandParser(
         if (i < 0)
         {
             return Switch(
-                 input,
-                 !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
-                     ? server
-                     : _serverManager.Servers.Values.FirstOrDefault()
-             );
+                input,
+                !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
+                    ? server
+                    : _serverManager.Servers.Values.FirstOrDefault()
+            );
         }
 
         if (i == 0 || i >= input.Length)

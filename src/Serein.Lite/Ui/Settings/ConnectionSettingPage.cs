@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 

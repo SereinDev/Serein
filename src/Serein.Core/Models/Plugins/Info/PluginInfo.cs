@@ -13,7 +13,7 @@ public class PluginInfo
 
     [JsonRequired]
     public Version Version { get; init; } = new(0, 0, 0);
-    
+
     [JsonRequired]
     public PluginType Type { get; init; }
 

@@ -13,7 +13,8 @@ public static class AutoPanningMode
             "IsEnabled",
             typeof(bool),
             typeof(AutoPanningMode),
-            new PropertyMetadata(false, OnIsEnabledChanged));
+            new PropertyMetadata(false, OnIsEnabledChanged)
+        );
 
     public static bool GetIsEnabled(ScrollViewer scrollViewer)
     {
@@ -45,41 +46,57 @@ public static class AutoPanningMode
 
         if (sv.TemplatedParent == null)
         {
-            var valueSource = DependencyPropertyHelper.GetValueSource(sv, ScrollViewer.PanningModeProperty).BaseValueSource;
+            var valueSource = DependencyPropertyHelper
+                .GetValueSource(sv, ScrollViewer.PanningModeProperty)
+                .BaseValueSource;
             if (valueSource == BaseValueSource.Default)
             {
-                sv.SetBinding(ScrollViewer.PanningModeProperty, new MultiBinding
-                {
-                    Bindings =
+                sv.SetBinding(
+                    ScrollViewer.PanningModeProperty,
+                    new MultiBinding
+                    {
+                        Bindings =
                         {
                             new Binding
                             {
-                                Path = new PropertyPath(ScrollViewer.ComputedHorizontalScrollBarVisibilityProperty),
-                                RelativeSource = new RelativeSource(RelativeSourceMode.Self)
+                                Path = new PropertyPath(
+                                    ScrollViewer.ComputedHorizontalScrollBarVisibilityProperty
+                                ),
+                                RelativeSource = new RelativeSource(RelativeSourceMode.Self),
                             },
                             new Binding
                             {
-                                Path = new PropertyPath(ScrollViewer.ComputedVerticalScrollBarVisibilityProperty),
-                                RelativeSource = new RelativeSource(RelativeSourceMode.Self)
+                                Path = new PropertyPath(
+                                    ScrollViewer.ComputedVerticalScrollBarVisibilityProperty
+                                ),
+                                RelativeSource = new RelativeSource(RelativeSourceMode.Self),
                             },
                         },
-                    Converter = new PanningModeConverter()
-                });
+                        Converter = new PanningModeConverter(),
+                    }
+                );
             }
         }
     }
 
     private class PanningModeConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(
+            object[] values,
+            Type targetType,
+            object parameter,
+            CultureInfo culture
+        )
         {
             PanningMode mode;
 
             var computedHorizontalScrollBarVisibility = (Visibility)values[0];
             var computedVerticalScrollBarVisibility = (Visibility)values[1];
 
-            if (computedHorizontalScrollBarVisibility != Visibility.Collapsed &&
-                computedVerticalScrollBarVisibility != Visibility.Collapsed)
+            if (
+                computedHorizontalScrollBarVisibility != Visibility.Collapsed
+                && computedVerticalScrollBarVisibility != Visibility.Collapsed
+            )
             {
                 mode = PanningMode.Both;
             }
@@ -99,7 +116,12 @@ public static class AutoPanningMode
             return mode;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[] ConvertBack(
+            object value,
+            Type[] targetTypes,
+            object parameter,
+            CultureInfo culture
+        )
         {
             throw new NotImplementedException();
         }

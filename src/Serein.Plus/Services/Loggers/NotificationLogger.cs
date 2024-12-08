@@ -1,10 +1,7 @@
 ﻿using System;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Services.Loggers;
 
 namespace Serein.Plus.Services.Loggers;
@@ -46,11 +43,7 @@ public sealed class NotificationLogger(IServiceProvider serviceProvider) : ILogg
 
         if (severity is not null)
         {
-            _infoBarProvider.Value.Enqueue(
-                "Serein.Plus",
-                line,
-                severity.Value
-            );
+            _infoBarProvider.Value.Enqueue("Serein.Plus", line, severity.Value);
         }
     }
 }

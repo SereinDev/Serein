@@ -1,8 +1,8 @@
 ﻿using PropertyChanged;
-
 using Serein.Core.Models;
 
 namespace Serein.Plus.ViewModels;
+
 public class PluginConsoleViewModel : NotifyPropertyChangedModelBase
 {
     public int Total => JavaScriptPluginCount + NetPluginCount;

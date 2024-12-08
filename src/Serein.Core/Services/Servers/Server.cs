@@ -7,9 +7,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
 using Serein.Core.Models.Settings;
@@ -238,11 +236,7 @@ public sealed class Server
         Input(command, null, false);
     }
 
-    internal void Input(
-        string command,
-        EncodingMap.EncodingType? encodingType,
-        bool fromUser
-    )
+    internal void Input(string command, EncodingMap.EncodingType? encodingType, bool fromUser)
     {
         _logger.LogDebug(
             "Id={}: command='{}'; encodingType={}; fromUser={}",

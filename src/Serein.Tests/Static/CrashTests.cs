@@ -1,7 +1,5 @@
 using System.IO;
-
 using Serein.Core.Utils;
-
 using Xunit;
 
 namespace Serein.Tests.Static;

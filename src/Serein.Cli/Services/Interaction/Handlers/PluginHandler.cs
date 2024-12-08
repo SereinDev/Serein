@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Models;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
@@ -35,7 +33,9 @@ public sealed class PluginHandler(
     {
         if (args.Count == 1)
         {
-            throw new InvalidArgumentException("缺少参数。可用值：\"reload\"、\"list\"和\"disable\"");
+            throw new InvalidArgumentException(
+                "缺少参数。可用值：\"reload\"、\"list\"和\"disable\""
+            );
         }
 
         switch (args[1].ToLowerInvariant())
@@ -96,7 +96,9 @@ public sealed class PluginHandler(
                 break;
 
             default:
-                throw new InvalidArgumentException("未知的参数。可用值：\"reload\"、\"list\"和\"disable\"");
+                throw new InvalidArgumentException(
+                    "未知的参数。可用值：\"reload\"、\"list\"和\"disable\""
+                );
         }
     }
 

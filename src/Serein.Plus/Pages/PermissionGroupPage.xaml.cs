@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Force.DeepCloner;
-
 using Serein.Core.Models.Permissions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
@@ -117,6 +115,10 @@ public partial class PermissionGroupPage : Page
     private void GroupListView_ContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
         EditMenuItem.IsEnabled = GroupListView.SelectedItems.Count == 1;
-        RemoveMenuItem.IsEnabled = GroupListView.SelectedItems.Count > 0 && !GroupListView.SelectedItems.OfType<KeyValuePair<string, Group>>().Any((kv) => kv.Key == "everyone");
+        RemoveMenuItem.IsEnabled =
+            GroupListView.SelectedItems.Count > 0
+            && !GroupListView
+                .SelectedItems.OfType<KeyValuePair<string, Group>>()
+                .Any((kv) => kv.Key == "everyone");
     }
 }

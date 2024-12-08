@@ -1,5 +1,4 @@
 using Serein.Core.Models.Commands;
-
 using Xunit;
 
 namespace Serein.Tests.Static;

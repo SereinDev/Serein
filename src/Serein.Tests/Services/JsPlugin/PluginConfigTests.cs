@@ -3,18 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-
 using Jint.Runtime;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
-
 using Xunit;
 
 namespace Serein.Tests.Services.JsPlugin;

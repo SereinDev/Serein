@@ -2,18 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Fleck;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Output;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Extensions;
-
 using WebSocket4Net;
-
 using MsLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Serein.Core.Services.Network.Connection;

@@ -12,5 +12,5 @@ public enum MatchFieldType
 
     PrivateMsg,
 
-    SelfMsg
+    SelfMsg,
 }

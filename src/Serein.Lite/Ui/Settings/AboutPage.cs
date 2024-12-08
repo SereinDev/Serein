@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using Serein.Core;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;

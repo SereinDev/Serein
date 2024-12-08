@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Utils;
@@ -42,8 +41,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
             lock (_lock)
             {
                 _connectionPage.ConsoleWebBrowser.AppendHtmlLine(
-                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    LogColorizer.EscapeLog(line)
+                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>"
+                        + LogColorizer.EscapeLog(line)
                 );
             }
         });
@@ -56,8 +55,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
             lock (_lock)
             {
                 _connectionPage.ConsoleWebBrowser.AppendHtmlLine(
-                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>" +
-                    LogColorizer.EscapeLog(data)
+                    "<span style=\"color:#239B56;font-weight: bold;\">[↓]</span>"
+                        + LogColorizer.EscapeLog(data)
                 );
             }
         });
@@ -70,8 +69,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
             lock (_lock)
             {
                 _connectionPage.ConsoleWebBrowser.AppendHtmlLine(
-                   "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                    LogColorizer.EscapeLog(line)
+                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>"
+                        + LogColorizer.EscapeLog(line)
                 );
             }
         });
@@ -84,8 +83,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
             lock (_lock)
             {
                 _connectionPage.ConsoleWebBrowser.AppendHtmlLine(
-                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>" +
-                    LogColorizer.EscapeLog(data)
+                    "<span style=\"color:#2874A6;font-weight: bold;\">[↑]</span>"
+                        + LogColorizer.EscapeLog(data)
                 );
             }
         });

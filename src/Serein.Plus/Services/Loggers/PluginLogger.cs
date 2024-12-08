@@ -1,9 +1,7 @@
 using System;
 using System.Threading;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Plus.Pages;
 

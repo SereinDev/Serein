@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Navigation;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using Serein.Plus.Pages.Settings;
 using Serein.Plus.Services;
 using Serein.Plus.ViewModels;
@@ -19,7 +16,11 @@ public partial class ShellPage : Page
 
     public ShellViewModel ViewModel { get; }
 
-    public ShellPage(IServiceProvider services, TitleUpdater titleUpdater, ShellViewModel shellViewModel)
+    public ShellPage(
+        IServiceProvider services,
+        TitleUpdater titleUpdater,
+        ShellViewModel shellViewModel
+    )
     {
         _services = services;
         _titleUpdater = titleUpdater;
@@ -50,10 +51,18 @@ public partial class ShellPage : Page
         ContentFrame.Navigate(page, args.RecommendedNavigationTransitionInfo);
     }
 
-    private void NavView_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+    private void NavView_DisplayModeChanged(
+        NavigationView sender,
+        NavigationViewDisplayModeChangedEventArgs args
+    )
     {
         var currMargin = AppTitleBar.Margin;
-        AppTitleBar.Margin = new Thickness(sender.CompactPaneLength, currMargin.Top, currMargin.Right, currMargin.Bottom);
+        AppTitleBar.Margin = new Thickness(
+            sender.CompactPaneLength,
+            currMargin.Top,
+            currMargin.Right,
+            currMargin.Bottom
+        );
     }
 
     private void ContentFrame_Navigated(object sender, NavigationEventArgs e)

@@ -1,5 +1,4 @@
 using System.Windows.Media.TextFormatting;
-
 using ICSharpCode.AvalonEdit.Rendering;
 
 namespace Serein.Plus.Models.ConsoleTextEditor;

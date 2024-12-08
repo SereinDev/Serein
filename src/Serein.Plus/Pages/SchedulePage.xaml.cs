@@ -2,9 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Force.DeepCloner;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
@@ -12,7 +10,6 @@ using Serein.Core.Utils.Extensions;
 using Serein.Plus.Dialogs;
 using Serein.Plus.ViewModels;
 using Serein.Plus.Windows;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;

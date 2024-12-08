@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Serein.Core.Services.Permissions;
 
 namespace Serein.Plus.Dialogs;
@@ -14,7 +12,11 @@ public partial class PermissionEditorDialog : ContentDialog
     public string Node { get; set; }
     public bool? Value { get; set; }
 
-    public PermissionEditorDialog(PermissionManager permissionManager, string? node = null, bool? value = null)
+    public PermissionEditorDialog(
+        PermissionManager permissionManager,
+        string? node = null,
+        bool? value = null
+    )
     {
         _permissionManager = permissionManager;
         Node = node ?? string.Empty;
@@ -26,7 +28,7 @@ public partial class PermissionEditorDialog : ContentDialog
         {
             true => 1,
             false => 2,
-            _ => 0
+            _ => 0,
         };
         Update();
     }
@@ -43,10 +45,12 @@ public partial class PermissionEditorDialog : ContentDialog
             DescriptionTextBlock.Text = string.Empty;
             WarningInfoBar.IsOpen = true;
         }
-
     }
 
-    private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void AutoSuggestBox_TextChanged(
+        AutoSuggestBox sender,
+        AutoSuggestBoxTextChangedEventArgs args
+    )
     {
         Update();
 
@@ -56,7 +60,10 @@ public partial class PermissionEditorDialog : ContentDialog
         }
     }
 
-    private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    private void AutoSuggestBox_QuerySubmitted(
+        AutoSuggestBox sender,
+        AutoSuggestBoxQuerySubmittedEventArgs args
+    )
     {
         if (args.ChosenSuggestion is not null)
         {
@@ -70,7 +77,7 @@ public partial class PermissionEditorDialog : ContentDialog
         {
             1 => true,
             2 => false,
-            _ => null
+            _ => null,
         };
     }
 }

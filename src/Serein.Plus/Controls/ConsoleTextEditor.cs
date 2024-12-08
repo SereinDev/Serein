@@ -1,5 +1,4 @@
 using ICSharpCode.AvalonEdit;
-
 using Serein.Plus.Models.ConsoleTextEditor;
 
 namespace Serein.Plus.Controls;

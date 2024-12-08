@@ -1,9 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
-
 using Xunit;
 
 namespace Serein.Tests.Services.PermissionGroup;

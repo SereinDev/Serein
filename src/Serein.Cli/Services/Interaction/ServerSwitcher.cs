@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;

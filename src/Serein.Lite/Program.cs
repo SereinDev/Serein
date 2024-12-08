@@ -1,11 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core;
 using Serein.Core.Models.Output;
 using Serein.Core.Services;

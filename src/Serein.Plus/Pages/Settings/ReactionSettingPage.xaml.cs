@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Extensions;
 using Serein.Plus.Dialogs;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages.Settings;
@@ -59,33 +56,46 @@ public partial class ReactionSettingPage : Page
         if (tag == "Add")
         {
             var dialog = new CommandEditorDialog();
-            dialog.ShowAsync().ContinueWith((task) => Dispatcher.Invoke(() =>
-            {
-                if (task.Result != ContentDialogResult.Primary)
-                {
-                    return;
-                }
+            dialog
+                .ShowAsync()
+                .ContinueWith(
+                    (task) =>
+                        Dispatcher.Invoke(() =>
+                        {
+                            if (task.Result != ContentDialogResult.Primary)
+                            {
+                                return;
+                            }
 
-                CommandListView.Items.Add(dialog.Command);
-                Save();
-            }));
+                            CommandListView.Items.Add(dialog.Command);
+                            Save();
+                        })
+                );
         }
         else if (tag == "Remove")
         {
-            DialogHelper.ShowDeleteConfirmation("确定要删除所选命令吗？").ContinueWith((task) =>
-            {
-                if (task.Result)
-                {
-                    Dispatcher.Invoke(() =>
+            DialogHelper
+                .ShowDeleteConfirmation("确定要删除所选命令吗？")
+                .ContinueWith(
+                    (task) =>
                     {
-                        foreach (var command in CommandListView.SelectedItems.OfType<string>().ToArray())
+                        if (task.Result)
                         {
-                            CommandListView.Items.Remove(command);
+                            Dispatcher.Invoke(() =>
+                            {
+                                foreach (
+                                    var command in CommandListView
+                                        .SelectedItems.OfType<string>()
+                                        .ToArray()
+                                )
+                                {
+                                    CommandListView.Items.Remove(command);
+                                }
+                                Save();
+                            });
                         }
-                        Save();
-                    });
-                }
-            });
+                    }
+                );
         }
     }
 
@@ -96,7 +106,9 @@ public partial class ReactionSettingPage : Page
             return;
         }
 
-        _settingProvider.Value.Reactions[item.Type] = CommandListView.Items.OfType<string>().ToArray();
+        _settingProvider.Value.Reactions[item.Type] = CommandListView
+            .Items.OfType<string>()
+            .ToArray();
         _settingProvider.SaveAsyncWithDebounce();
     }
 

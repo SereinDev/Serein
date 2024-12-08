@@ -1,11 +1,9 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Parsing;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Services;
 using Serein.Cli.Services.Interaction;
 using Serein.Cli.Services.Interaction.Handlers;

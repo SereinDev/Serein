@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 
 namespace Serein.Core.Models.Network.Connection.OneBot.Packets;

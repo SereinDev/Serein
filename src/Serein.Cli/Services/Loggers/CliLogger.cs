@@ -1,7 +1,5 @@
 using System;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Utils;
 using Serein.Core.Utils.Extensions;
 
@@ -45,7 +43,9 @@ public sealed class CliLogger(string categoryName) : ILogger
 
         if (exception != null)
         {
-            text += Environment.NewLine + (EnableDebug ? exception.ToString() : exception.GetDetailString());
+            text +=
+                Environment.NewLine
+                + (EnableDebug ? exception.ToString() : exception.GetDetailString());
         }
 
         CliConsole.WriteLine(logLevel, $"[{_name}] {text}");

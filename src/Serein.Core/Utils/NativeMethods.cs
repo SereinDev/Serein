@@ -18,7 +18,7 @@ internal partial class NativeMethods
         CTRL_BREAK_EVENT,
         CTRL_CLOSE_EVENT,
         CTRL_LOGOFF_EVENT = 5,
-        CTRL_SHUTDOWN_EVENT
+        CTRL_SHUTDOWN_EVENT,
     }
 
     [LibraryImport("kernel32.dll")]

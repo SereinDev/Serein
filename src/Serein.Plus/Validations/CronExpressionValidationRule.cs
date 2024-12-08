@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.Windows.Controls;
-
 using NCrontab;
 
 namespace Serein.Plus.Validations;

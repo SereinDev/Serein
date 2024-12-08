@@ -1,19 +1,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using PrettyPrompt;
 using PrettyPrompt.Highlighting;
-
+using Serein.Cli.Utils;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
-using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils;
-using Serein.Cli.Utils;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Cli.Services.Interaction;
 

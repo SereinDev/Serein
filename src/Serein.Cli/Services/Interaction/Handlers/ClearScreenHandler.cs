@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using Serein.Cli.Models;
 
 namespace Serein.Cli.Services.Interaction.Handlers;

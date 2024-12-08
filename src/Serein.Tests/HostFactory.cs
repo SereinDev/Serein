@@ -1,8 +1,6 @@
 using System.IO;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core;
 using Serein.Core.Models.Output;
 using Serein.Core.Utils;
@@ -20,7 +18,13 @@ public static class HostFactory
         {
             if (Directory.Exists(PathConstants.Root))
             {
-                foreach (var file in Directory.GetFiles(PathConstants.Root, "*", SearchOption.AllDirectories))
+                foreach (
+                    var file in Directory.GetFiles(
+                        PathConstants.Root,
+                        "*",
+                        SearchOption.AllDirectories
+                    )
+                )
                 {
                     try
                     {

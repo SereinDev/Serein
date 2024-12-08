@@ -1,13 +1,9 @@
 using System;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Bindings;
-
 using Xunit;
-
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services;

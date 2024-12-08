@@ -5,9 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Commands;
@@ -214,10 +212,7 @@ public partial class ServerManager
         {
             try
             {
-                if (
-                    server.Configuration.AutoStopWhenCrashing
-                    && server.Status
-                )
+                if (server.Configuration.AutoStopWhenCrashing && server.Status)
                 {
                     server.Stop();
                 }

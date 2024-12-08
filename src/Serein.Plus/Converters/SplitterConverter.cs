@@ -11,8 +11,8 @@ public class SplitterConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value is IEnumerable e && parameter is string p && !string.IsNullOrEmpty(p)
-           ? string.Join(p, e.Cast<object>())
-           : throw new NotSupportedException();
+            ? string.Join(p, e.Cast<object>())
+            : throw new NotSupportedException();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

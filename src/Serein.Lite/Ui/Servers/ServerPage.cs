@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 
@@ -14,7 +13,11 @@ public partial class ServerPage : UserControl
     private readonly MainForm _mainForm;
     private readonly Dictionary<string, TabPage> _panels;
 
-    public ServerPage(ServerManager serverManager, ResourcesManager resourcesManager, MainForm mainForm)
+    public ServerPage(
+        ServerManager serverManager,
+        ResourcesManager resourcesManager,
+        MainForm mainForm
+    )
     {
         InitializeComponent();
 
@@ -44,7 +47,7 @@ public partial class ServerPage : UserControl
             Text = string.IsNullOrEmpty(server.Configuration.Name)
                 ? $"未命名-{id}"
                 : server.Configuration.Name,
-            Tag = id
+            Tag = id,
         };
 
         tabPage.Controls.Add(new Panel(server, _mainForm));

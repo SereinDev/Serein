@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
@@ -90,7 +89,11 @@ public partial class ConfigurationEditor : Form
             output = (EncodingMap.EncodingType)OutputEncondingComboBox.SelectedIndex;
             outputStyle = (OutputStyle)OutputStyleComboBox.SelectedIndex;
 
-            _configuration.Name = string.IsNullOrEmpty(NameTextBox.Text) || string.IsNullOrWhiteSpace(NameTextBox.Text) ? "未命名" : NameTextBox.Text;
+            _configuration.Name =
+                string.IsNullOrEmpty(NameTextBox.Text)
+                || string.IsNullOrWhiteSpace(NameTextBox.Text)
+                    ? "未命名"
+                    : NameTextBox.Text;
             _configuration.FileName = FileNameTextBox.Text;
             _configuration.Argument = ArgumentTextBox.Text;
             _configuration.AutoRestart = AutoRestartCheckBox.Checked;
@@ -145,7 +148,10 @@ public partial class ConfigurationEditor : Form
     {
         var openFileDialog = new OpenFileDialog { Title = "选择启动文件" };
 
-        if (openFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(openFileDialog.FileName))
+        if (
+            openFileDialog.ShowDialog() == DialogResult.OK
+            && !string.IsNullOrEmpty(openFileDialog.FileName)
+        )
         {
             FileNameTextBox.Text = openFileDialog.FileName;
         }

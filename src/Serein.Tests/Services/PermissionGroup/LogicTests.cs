@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
-
 using Xunit;
 
 namespace Serein.Tests.Services.PermissionGroup;
@@ -48,14 +45,14 @@ public sealed class LogicTests : IDisposable
         _permissionManager.Register(nameof(NodeTests), "foo.foo");
         _permissionManager.Register(nameof(NodeTests), "bar");
 
-        _groupManager.Add(nameof(ShouldWorkWithWildcard), new()
-        {
-            Members = [114514],
-            Nodes = new()
+        _groupManager.Add(
+            nameof(ShouldWorkWithWildcard),
+            new()
             {
-                [permissionKey] = true
+                Members = [114514],
+                Nodes = new() { [permissionKey] = true },
             }
-        });
+        );
 
         var result = _groupManager.GetAllNodes(114514);
         Assert.Equal(result1, TryGet(result, nameof(NodeTests) + ".foo.foo"));
@@ -65,38 +62,22 @@ public sealed class LogicTests : IDisposable
     [Fact]
     public void ShouldInheritFromDefaultGroup()
     {
-        _groupManager.Add("1", new()
-        {
-            Members = [114514],
-        });
+        _groupManager.Add("1", new() { Members = [114514] });
         _groupManager["everyone"].Nodes[nameof(NodeTests) + ".foo.bar"] = true;
 
         Assert.Equal(
             true,
             TryGet(_groupManager.GetAllNodes(114514), nameof(NodeTests) + ".foo.bar")
-            );
+        );
     }
 
     [Fact]
     public void ShouldWorkWithInheritance()
     {
-        _groupManager.Add("1", new()
-        {
-            Nodes =
-            {
-                ["foo.bar"] = true
-            }
-        });
-        _groupManager.Add("2", new()
-        {
-            Members = [114514],
-            Parents = ["1"]
-        });
+        _groupManager.Add("1", new() { Nodes = { ["foo.bar"] = true } });
+        _groupManager.Add("2", new() { Members = [114514], Parents = ["1"] });
 
-        Assert.Equal(
-            true,
-            TryGet(_groupManager.GetAllNodes(114514), "foo.bar")
-            );
+        Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "foo.bar"));
     }
 
     [Theory]
@@ -105,47 +86,26 @@ public sealed class LogicTests : IDisposable
     [InlineData(0, 0, false)]
     public void ShouldWorkWithInheritanceAndPriority(int priority1, int priority2, bool expected)
     {
-        _groupManager.Add("1", new()
-        {
-            Nodes =
+        _groupManager.Add("1", new() { Nodes = { ["foo.bar"] = true }, Priority = priority1 });
+        _groupManager.Add(
+            "2",
+            new()
             {
-                ["foo.bar"] = true
-            },
-            Priority = priority1
-        });
-        _groupManager.Add("2", new()
-        {
-            Members = [114514],
-            Nodes =
-            {
-                ["foo.bar"] = false
-            },
-            Parents = ["1"],
-            Priority = priority2
-        });
+                Members = [114514],
+                Nodes = { ["foo.bar"] = false },
+                Parents = ["1"],
+                Priority = priority2,
+            }
+        );
 
-        Assert.Equal(
-            expected,
-            TryGet(_groupManager.GetAllNodes(114514), "foo.bar")
-            );
+        Assert.Equal(expected, TryGet(_groupManager.GetAllNodes(114514), "foo.bar"));
     }
 
     [Fact]
     public void ShouldAvoidCyclingInheritance()
     {
-        _groupManager.Add("1", new()
-        {
-            Nodes =
-            {
-                ["a.b"] = true
-            },
-            Parents = ["2"]
-        });
-        _groupManager.Add("2", new()
-        {
-            Members = [114514],
-            Parents = ["1"]
-        });
+        _groupManager.Add("1", new() { Nodes = { ["a.b"] = true }, Parents = ["2"] });
+        _groupManager.Add("2", new() { Members = [114514], Parents = ["1"] });
 
         Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "a.b"));
     }

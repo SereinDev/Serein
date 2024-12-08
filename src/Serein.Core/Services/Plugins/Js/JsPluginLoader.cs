@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Models.Plugins.Js;
@@ -57,9 +55,9 @@ public sealed class JsPluginLoader(
         if (File.Exists(configPath))
         {
             jsConfig = JsonSerializer.Deserialize<JsPluginConfig>(
-              File.ReadAllText(configPath),
-              JsonSerializerOptionsFactory.Common
-          );
+                File.ReadAllText(configPath),
+                JsonSerializerOptionsFactory.Common
+            );
         }
 
         JsPlugin? jsPlugin = null;

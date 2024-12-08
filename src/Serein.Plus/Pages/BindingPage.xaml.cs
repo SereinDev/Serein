@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-
 using Serein.Core.Services.Bindings;
 
 namespace Serein.Plus.Pages;

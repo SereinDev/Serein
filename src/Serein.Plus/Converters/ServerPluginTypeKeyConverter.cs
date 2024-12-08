@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-
 using Serein.Core.Models.Server;
 
 namespace Serein.Plus.Converters;

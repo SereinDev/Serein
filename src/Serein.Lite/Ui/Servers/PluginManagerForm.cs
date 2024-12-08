@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -56,7 +55,7 @@ public partial class PluginManagerForm : Form
             var item = new ListViewItem(plugin.FriendlyName)
             {
                 Tag = plugin,
-                ToolTipText = plugin.Path
+                ToolTipText = plugin.Path,
             };
 
             if (plugin.FileInfo.Exists)
@@ -138,7 +137,10 @@ public partial class PluginManagerForm : Form
 
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var openFileDialog = new OpenFileDialog { Filter = "可接受的插件文件|*.dll;*.jar;*.js;*.py;*.lua" };
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = "可接受的插件文件|*.dll;*.jar;*.js;*.py;*.lua",
+        };
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
             try
@@ -265,10 +267,13 @@ public partial class PluginManagerForm : Form
             var acceptable = files.Where(
                 (f) => ServerPluginManager.AcceptableExtensions.Contains(Path.GetExtension(f))
             );
-            if (acceptable.Any() && MessageBoxHelper.ShowQuestionMsgBox(
-                "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
-                    + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
-            ))
+            if (
+                acceptable.Any()
+                && MessageBoxHelper.ShowQuestionMsgBox(
+                    "是否将以下文件作为插件导入到服务器的插件文件夹？\r\n"
+                        + string.Join("\r\n", files.Select((f) => Path.GetFileName(f)))
+                )
+            )
             {
                 try
                 {

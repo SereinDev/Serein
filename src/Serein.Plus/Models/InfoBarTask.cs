@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Windows;
-
 using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Serein.Plus.Models;

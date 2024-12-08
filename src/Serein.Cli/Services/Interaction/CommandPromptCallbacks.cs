@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using PrettyPrompt;
 using PrettyPrompt.Completion;
 using PrettyPrompt.Documents;
-
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
@@ -76,8 +74,8 @@ public partial class CommandPromptCallbacks(
                     );
 
                 case "plugin"
-                     when args.Length == 3
-                         && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
+                    when args.Length == 3
+                        && args[1].Equals("disable", StringComparison.InvariantCultureIgnoreCase):
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. GetPluginIdCompletionItem()

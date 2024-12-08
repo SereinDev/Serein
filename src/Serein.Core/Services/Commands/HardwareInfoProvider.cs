@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Timers;
-
 using Hardware.Info;
-
 using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Commands;

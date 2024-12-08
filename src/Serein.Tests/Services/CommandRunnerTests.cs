@@ -1,15 +1,11 @@
 using System.IO;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
-
 using Xunit;
-
-using Runner = Serein.Core.Services.Commands.CommandRunner;
 using Parser = Serein.Core.Services.Commands.CommandParser;
+using Runner = Serein.Core.Services.Commands.CommandRunner;
 
 namespace Serein.Tests.Services;
 

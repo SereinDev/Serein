@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -48,13 +47,13 @@ public partial class PluginPage : UserControl
         PluginListView.Items.Clear();
 
         var plugins = _jsPluginLoader
-            .Plugins
-            .Select(kv => new KeyValuePair<string, IPlugin>(kv.Key, kv.Value))
+            .Plugins.Select(kv => new KeyValuePair<string, IPlugin>(kv.Key, kv.Value))
             .Concat(
-                _netPluginLoader
-                .Plugins
-                .Select(kv => new KeyValuePair<string, IPlugin>(kv.Key, kv.Value)
-                ));
+                _netPluginLoader.Plugins.Select(kv => new KeyValuePair<string, IPlugin>(
+                    kv.Key,
+                    kv.Value
+                ))
+            );
 
         foreach (var kv in plugins)
         {
@@ -84,16 +83,19 @@ public partial class PluginPage : UserControl
 
     private void ListViewContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DisableToolStripMenuItem.Enabled = PluginListView.SelectedItems.Count == 1
+        DisableToolStripMenuItem.Enabled =
+            PluginListView.SelectedItems.Count == 1
             && PluginListView.SelectedItems[0].Tag is IPlugin plugin
             && plugin.IsEnabled;
     }
 
     private void DisableToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (PluginListView.SelectedItems.Count == 1
+        if (
+            PluginListView.SelectedItems.Count == 1
             && PluginListView.SelectedItems[0].Tag is IPlugin plugin
-            && plugin.IsEnabled)
+            && plugin.IsEnabled
+        )
         {
             plugin.Disable();
             PluginListView.SelectedItems[0].ForeColor = Color.DarkGray;

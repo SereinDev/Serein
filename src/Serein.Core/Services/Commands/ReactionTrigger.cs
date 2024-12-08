@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;

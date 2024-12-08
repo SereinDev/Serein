@@ -1,9 +1,7 @@
 using System;
 using System.Diagnostics;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Lite.Ui.Function;
 
@@ -18,7 +16,9 @@ public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogg
 
     public void Log(LogLevel level, string name, string message)
     {
-        Debug.WriteLine($"[Plugin::{(string.IsNullOrEmpty(name) ? "Serein" : name)}] [{level}] {message}");
+        Debug.WriteLine(
+            $"[Plugin::{(string.IsNullOrEmpty(name) ? "Serein" : name)}] [{level}] {message}"
+        );
 
         if (_pluginPage.Value.IsHandleCreated)
         {

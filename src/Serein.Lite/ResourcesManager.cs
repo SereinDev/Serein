@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-
 using Microsoft.Extensions.Logging;
-
 using Sentry;
 
 namespace Serein.Lite;

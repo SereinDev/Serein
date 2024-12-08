@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-
 using Serein.Core.Models.Commands;
 
 namespace Serein.Plus.Converters;
@@ -19,7 +18,7 @@ public class MatchFieldTypeToStringConverter : IValueConverter
                 MatchFieldType.GroupMsg => "群聊消息",
                 MatchFieldType.PrivateMsg => "私聊消息",
                 MatchFieldType.SelfMsg => "自身消息",
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException(),
             }
             : "禁用";
     }

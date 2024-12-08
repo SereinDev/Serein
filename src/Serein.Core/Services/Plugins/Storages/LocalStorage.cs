@@ -1,9 +1,7 @@
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
@@ -45,12 +43,12 @@ public sealed class LocalStorage : StorageBase
         lock (_data)
         {
             File.WriteAllText(
-             Path,
-             JsonSerializer.Serialize(
-                 DataItemWrapper.Wrap(_data),
-                 options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
-             )
-         );
+                Path,
+                JsonSerializer.Serialize(
+                    DataItemWrapper.Wrap(_data),
+                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
+                )
+            );
         }
     }
 }

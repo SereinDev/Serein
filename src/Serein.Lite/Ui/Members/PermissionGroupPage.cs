@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Permissions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;

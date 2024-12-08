@@ -1,11 +1,8 @@
 using System;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Sentry;
 using Sentry.Profiling;
-
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;

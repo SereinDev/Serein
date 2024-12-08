@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Cli.Models;
 using Serein.Core.Services.Servers;
 
@@ -11,8 +9,11 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("exit", "退出")]
 [CommandDescription(["停止所有服务并退出Serein.Cli"])]
-public sealed class ExitHandler(IHost host, ILogger<ExitHandler> logger, ServerManager serverManager)
-    : CommandHandler
+public sealed class ExitHandler(
+    IHost host,
+    ILogger<ExitHandler> logger,
+    ServerManager serverManager
+) : CommandHandler
 {
     private readonly IHost _host = host;
     private readonly ILogger<ExitHandler> _logger = logger;

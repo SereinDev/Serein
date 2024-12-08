@@ -2,19 +2,18 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using Serein.Plus.Models;
 
 namespace Serein.Plus.Services;
 
 public sealed class InfoBarProvider(IServiceProvider serviceProvider)
 {
-    private readonly BlockingCollection<InfoBarTask> _tasks = new(new ConcurrentQueue<InfoBarTask>());
-    private readonly Lazy<MainWindow> _mainWindow = new(serviceProvider.GetRequiredService<MainWindow>);
+    private readonly BlockingCollection<InfoBarTask> _tasks =
+        new(new ConcurrentQueue<InfoBarTask>());
+    private readonly Lazy<MainWindow> _mainWindow =
+        new(serviceProvider.GetRequiredService<MainWindow>);
     private bool _isRunning;
 
     public void Enqueue(
@@ -25,14 +24,17 @@ public sealed class InfoBarProvider(IServiceProvider serviceProvider)
         CancellationToken cancellationToken = default
     )
     {
-        _tasks.Add(new InfoBarTask
-        {
-            Title = title,
-            Message = message,
-            Severity = severity,
-            Interval = interval,
-            CancellationToken = cancellationToken
-        }, cancellationToken);
+        _tasks.Add(
+            new InfoBarTask
+            {
+                Title = title,
+                Message = message,
+                Severity = severity,
+                Interval = interval,
+                CancellationToken = cancellationToken,
+            },
+            cancellationToken
+        );
 
         if (!_isRunning)
         {

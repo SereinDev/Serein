@@ -4,11 +4,9 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Network.Connection.OneBot.Actions;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
@@ -16,7 +14,6 @@ using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
-
 using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
@@ -196,8 +193,8 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         await SendAsync(new ActionRequest<T> { Action = endpoint, Params = @params });
     }
 
-    public Task SendGroupMsgAsync(string target, string message)
-        => SendGroupMsgAsync(long.Parse(target), message);
+    public Task SendGroupMsgAsync(string target, string message) =>
+        SendGroupMsgAsync(long.Parse(target), message);
 
     public async Task SendGroupMsgAsync(long target, string message)
     {
@@ -207,13 +204,14 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
             {
                 GroupId = target,
                 Message = message,
-                AutoEscape = _settingProvider.Value.Connection.AutoEscape
+                AutoEscape = _settingProvider.Value.Connection.AutoEscape,
             }
         );
         _connectionLogger.Value.LogSentMessage($"[群聊({target})] {message}");
     }
-    public Task SendPrivateMsgAsync(string target, string message)
-        => SendPrivateMsgAsync(long.Parse(target), message);
+
+    public Task SendPrivateMsgAsync(string target, string message) =>
+        SendPrivateMsgAsync(long.Parse(target), message);
 
     public async Task SendPrivateMsgAsync(long target, string message)
     {
@@ -223,7 +221,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
             {
                 UserId = target,
                 Message = message,
-                AutoEscape = _settingProvider.Value.Connection.AutoEscape
+                AutoEscape = _settingProvider.Value.Connection.AutoEscape,
             }
         );
         _connectionLogger.Value.LogSentData($"[私聊({target})] {message}");

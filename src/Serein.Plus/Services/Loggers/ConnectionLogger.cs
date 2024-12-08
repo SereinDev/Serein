@@ -1,15 +1,15 @@
 using System;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
 using Serein.Plus.Pages;
 
 namespace Serein.Plus.Services.Loggers;
 
-public sealed class ConnectionLogger(ILogger<ConnectionLogger> logger, IServiceProvider serviceProvider)
-    : IConnectionLogger
+public sealed class ConnectionLogger(
+    ILogger<ConnectionLogger> logger,
+    IServiceProvider serviceProvider
+) : IConnectionLogger
 {
     private readonly Lazy<ConnectionPage> _connectionPage =
         new(serviceProvider.GetRequiredService<ConnectionPage>);

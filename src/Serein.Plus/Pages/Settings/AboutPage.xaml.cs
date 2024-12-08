@@ -1,9 +1,7 @@
 using System.Reflection;
 using System.Windows.Navigation;
-
 using Serein.Core;
 using Serein.Core.Utils.Extensions;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages.Settings;

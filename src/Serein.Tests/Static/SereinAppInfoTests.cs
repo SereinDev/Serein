@@ -1,5 +1,4 @@
 using Serein.Core;
-
 using Xunit;
 
 namespace Serein.Tests.Static;

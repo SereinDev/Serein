@@ -2,7 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
-
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 

@@ -56,10 +56,7 @@ public static class StringExtension
         }
 
         Process.Start(
-            new ProcessStartInfo("explorer.exe")
-            {
-                Arguments = $"/e,/select,\"{path}\""
-            }
+            new ProcessStartInfo("explorer.exe") { Arguments = $"/e,/select,\"{path}\"" }
         );
     }
 

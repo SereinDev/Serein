@@ -20,5 +20,5 @@ public enum CommandType
 
     ExecuteJavascriptCodes,
 
-    Debug
+    Debug,
 }

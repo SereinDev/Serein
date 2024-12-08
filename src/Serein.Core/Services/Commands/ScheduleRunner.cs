@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Timers;
-
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 

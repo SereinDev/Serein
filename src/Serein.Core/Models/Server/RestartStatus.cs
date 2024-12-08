@@ -4,5 +4,5 @@ public enum RestartStatus
 {
     None,
     Waiting,
-    Preparing
+    Preparing,
 }

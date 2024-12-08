@@ -1,10 +1,7 @@
 using System;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Logging;
-
 using Octokit;
-
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network;

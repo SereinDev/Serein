@@ -2,9 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-
 using NCrontab;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Commands;
 

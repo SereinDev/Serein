@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Serein.Core.Models;
 
 namespace Serein.Plus.ViewModels;

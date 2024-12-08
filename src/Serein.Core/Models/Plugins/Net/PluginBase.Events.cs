@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Utils.Extensions;
 
@@ -11,20 +10,28 @@ namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) =>
+        Task.FromResult(true);
 
     protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) =>
+        Task.FromResult(true);
 
-    protected virtual Task OnServerExited(Services.Servers.Server server, int exitcode, DateTime exitTime) =>
+    protected virtual Task OnServerExited(
+        Services.Servers.Server server,
+        int exitcode,
+        DateTime exitTime
+    ) => Task.CompletedTask;
+
+    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task OnServerInput(Services.Servers.Server server, string line) =>
         Task.CompletedTask;
-
-    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) => Task.FromResult(true);
-
-    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) => Task.FromResult(true);
-
-    protected virtual Task OnServerInput(Services.Servers.Server server, string line) => Task.CompletedTask;
 
     protected virtual Task OnGroupIncreased() => Task.CompletedTask;
 
@@ -81,7 +88,10 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
+                return OnServerOutput(
+                    args.First().OfType<Services.Servers.Server>(),
+                    args.Last().OfType<string>()
+                );
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
@@ -89,7 +99,10 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerRawOutput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
+                return OnServerRawOutput(
+                    args.First().OfType<Services.Servers.Server>(),
+                    args.Last().OfType<string>()
+                );
 
             case Event.ServerInput:
                 if (args.Length != 2)
@@ -97,7 +110,10 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerInput(args.First().OfType<Services.Servers.Server>(), args.Last().OfType<string>());
+                return OnServerInput(
+                    args.First().OfType<Services.Servers.Server>(),
+                    args.Last().OfType<string>()
+                );
 
             case Event.ServerExited:
                 if (

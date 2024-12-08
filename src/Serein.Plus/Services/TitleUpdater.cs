@@ -1,5 +1,4 @@
 ﻿using System.Timers;
-
 using Serein.Core.Models;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
@@ -33,7 +32,10 @@ public sealed class TitleUpdater : NotifyPropertyChangedModelBase
 
     public void Update()
     {
-        var postfix = _commandParser.ApplyVariables(_settingProvider.Value.Application.CustomTitle, null);
+        var postfix = _commandParser.ApplyVariables(
+            _settingProvider.Value.Application.CustomTitle,
+            null
+        );
         CustomTitle = string.IsNullOrEmpty(postfix) ? Name : $"{Name} - {postfix}";
     }
 }

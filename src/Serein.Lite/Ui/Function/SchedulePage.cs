@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
@@ -45,13 +44,12 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     private void UpdateText()
     {
         ToolStripStatusLabel.Text =
-            ScheduleListView.SelectedItems.Count == 0
-                ? $"共{ScheduleListView.Items.Count}项"
-                : ScheduleListView.SelectedItems.Count == 1
-                && ScheduleListView.SelectedItems[0].Tag is Schedule schedule
-                && schedule.Cron is not null
-                    ? $"共{ScheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Cron.GetNextOccurrence(DateTime.Now):f}"
-                    : $"共{ScheduleListView.Items.Count}项；已选择{ScheduleListView.SelectedItems.Count}项";
+            ScheduleListView.SelectedItems.Count == 0 ? $"共{ScheduleListView.Items.Count}项"
+            : ScheduleListView.SelectedItems.Count == 1
+            && ScheduleListView.SelectedItems[0].Tag is Schedule schedule
+            && schedule.Cron is not null
+                ? $"共{ScheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Cron.GetNextOccurrence(DateTime.Now):f}"
+            : $"共{ScheduleListView.Items.Count}项；已选择{ScheduleListView.SelectedItems.Count}项";
     }
 
     private void LoadData()

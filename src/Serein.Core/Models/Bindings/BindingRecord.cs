@@ -18,7 +18,11 @@ public class BindingRecord
 
     public string ShownName { get; set; } = string.Empty;
 
-    public DateTime Time { get => _time; init => _time = value; }
+    public DateTime Time
+    {
+        get => _time;
+        init => _time = value;
+    }
 
     internal void Update()
     {

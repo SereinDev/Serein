@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
-
 using Serein.Core.Models;
 using Serein.Core.Models.Commands;
 using Serein.Core.Utils;

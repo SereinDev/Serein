@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
-
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi;
 using Serein.Plus.Services;

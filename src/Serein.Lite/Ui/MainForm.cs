@@ -4,10 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;

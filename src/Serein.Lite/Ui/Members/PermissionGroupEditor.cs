@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
 using Serein.Core.Services.Permissions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
@@ -104,10 +103,7 @@ public partial class PermissionGroupEditor : Form
         {
             PermissionListView.SelectedItems[0].Text = PermissionComboBox.Text;
             PermissionListView.SelectedItems[0].SubItems[1].Text =
-                _permissionManager.Nodes.TryGetValue(
-                    PermissionComboBox.Text,
-                    out var description
-                )
+                _permissionManager.Nodes.TryGetValue(PermissionComboBox.Text, out var description)
                     ? description
                     : string.Empty;
         }
@@ -180,7 +176,7 @@ public partial class PermissionGroupEditor : Form
                         {
                             "True" => true,
                             "False" => false,
-                            _ => null
+                            _ => null,
                         };
                     }
                 }

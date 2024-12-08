@@ -4,12 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using PrettyPrompt.Completion;
 using PrettyPrompt.Highlighting;
-
 using Serein.Cli.Models;
 using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Core;
@@ -92,8 +89,8 @@ public sealed class CommandProvider
             foreach (var child in childrenAttributes)
             {
                 stringBuilder.AppendLine(
-                      $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
-                  );
+                    $"  ▫ {nameAttribute.RootCommand} {child.Command}  {child.Description}"
+                );
             }
         }
 

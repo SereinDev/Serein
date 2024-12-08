@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Utils;
 using Serein.Lite.Models;
@@ -45,16 +44,17 @@ public static partial class LogColorizer
         "104",
         "105",
         "106",
-        "107"
+        "107",
     ];
 
     [GeneratedRegex(@"\s")]
     private static partial Regex SpaceRegex();
 
     public static string EscapeLog(string text) =>
-        SpaceRegex().Replace(
-            WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
-            "&nbsp;"
+        SpaceRegex()
+            .Replace(
+                WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
+                "&nbsp;"
             );
 
     public static List<LineFragment> ParseAnsiCode(string line)

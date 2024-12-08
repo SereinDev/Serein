@@ -34,7 +34,7 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
         'J',
         'K',
         'S',
-        'T'
+        'T',
     ];
 
     /// <summary>
@@ -59,7 +59,7 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
 
         var m = new Match
         {
-            MatchOffset = index > -1 ? index - relevantText.Offset + startOffset : -1
+            MatchOffset = index > -1 ? index - relevantText.Offset + startOffset : -1,
         };
 
         if (index == -1)

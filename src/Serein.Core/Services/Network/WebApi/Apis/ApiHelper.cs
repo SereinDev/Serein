@@ -2,9 +2,7 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-
 using EmbedIO;
-
 using Serein.Core.Models.Network.WebApi;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
@@ -102,8 +100,8 @@ public static class ApiHelper
         else
         {
             await context.SendPacketAsync(
-                 new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
-             );
+                new ApiPacket { ErrorMsg = e.GetDetailString(), Code = 500 }
+            );
         }
     }
 }

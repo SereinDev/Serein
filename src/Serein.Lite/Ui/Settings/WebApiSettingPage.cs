@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi;
@@ -20,42 +19,33 @@ public partial class WebApiSettingPage : UserControl
         InitializeComponent();
         SetBindings();
 
-        UrlPrefixesTextBox.Text = string.Join(
-            "\r\n",
-            _settingProvider.Value.WebApi.UrlPrefixes
-        );
-        WhiteListTextBox.Text = string.Join(
-            "\r\n",
-            _settingProvider.Value.WebApi.WhiteList
-        );
-        AccessTokensTextBox.Text = string.Join(
-            "\r\n",
-            _settingProvider.Value.WebApi.AccessTokens
-        );
+        UrlPrefixesTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.UrlPrefixes);
+        WhiteListTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.WhiteList);
+        AccessTokensTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.AccessTokens);
     }
 
     private void SetBindings()
     {
         CertificateEnableCheckBox.DataBindings.Add(
-           nameof(CertificateEnableCheckBox.Checked),
-           _settingProvider.Value.WebApi.Certificate,
-           nameof(CertificateSetting.Enable),
-           false,
-           DataSourceUpdateMode.OnPropertyChanged
+            nameof(CertificateEnableCheckBox.Checked),
+            _settingProvider.Value.WebApi.Certificate,
+            nameof(CertificateSetting.Enable),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
         AutoLoadCertificateCheckBox.DataBindings.Add(
-           nameof(AutoLoadCertificateCheckBox.Checked),
-           _settingProvider.Value.WebApi.Certificate,
-           nameof(CertificateSetting.AutoLoadCertificate),
-           false,
-           DataSourceUpdateMode.OnPropertyChanged
+            nameof(AutoLoadCertificateCheckBox.Checked),
+            _settingProvider.Value.WebApi.Certificate,
+            nameof(CertificateSetting.AutoLoadCertificate),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
         AutoRegisterCertificateCheckBox.DataBindings.Add(
-           nameof(AutoRegisterCertificateCheckBox.Checked),
-           _settingProvider.Value.WebApi.Certificate,
-           nameof(CertificateSetting.AutoRegisterCertificate),
-           false,
-           DataSourceUpdateMode.OnPropertyChanged
+            nameof(AutoRegisterCertificateCheckBox.Checked),
+            _settingProvider.Value.WebApi.Certificate,
+            nameof(CertificateSetting.AutoRegisterCertificate),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
         PasswordMaskedTextBox.DataBindings.Add(
             nameof(PasswordMaskedTextBox.Text),
@@ -65,26 +55,26 @@ public partial class WebApiSettingPage : UserControl
             DataSourceUpdateMode.OnPropertyChanged
         );
         PathTextBox.DataBindings.Add(
-          nameof(PathTextBox.Text),
-          _settingProvider.Value.WebApi.Certificate,
-          nameof(CertificateSetting.Path),
-          false,
-          DataSourceUpdateMode.OnPropertyChanged
+            nameof(PathTextBox.Text),
+            _settingProvider.Value.WebApi.Certificate,
+            nameof(CertificateSetting.Path),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
 
         EnableCheckBox.DataBindings.Add(
-           nameof(EnableCheckBox.Checked),
-           _settingProvider.Value.WebApi,
-           nameof(WebApiSetting.IsEnabled),
-           false,
-           DataSourceUpdateMode.OnPropertyChanged
+            nameof(EnableCheckBox.Checked),
+            _settingProvider.Value.WebApi,
+            nameof(WebApiSetting.IsEnabled),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
         AllowCrossOriginCheckBox.DataBindings.Add(
-           nameof(AllowCrossOriginCheckBox.Checked),
-           _settingProvider.Value.WebApi,
-           nameof(WebApiSetting.AllowCrossOrigin),
-           false,
-           DataSourceUpdateMode.OnPropertyChanged
+            nameof(AllowCrossOriginCheckBox.Checked),
+            _settingProvider.Value.WebApi,
+            nameof(WebApiSetting.AllowCrossOrigin),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
         );
         MaxRequestsPerSecondNumericUpDown.DataBindings.Add(
             nameof(MaxRequestsPerSecondNumericUpDown.Value),
@@ -92,7 +82,7 @@ public partial class WebApiSettingPage : UserControl
             nameof(WebApiSetting.MaxRequestsPerSecond),
             false,
             DataSourceUpdateMode.OnPropertyChanged
-       );
+        );
     }
 
     private void OnPropertyChanged(object sender, EventArgs e)

@@ -29,7 +29,7 @@ public partial class SettingPage : UserControl
             Dock = DockStyle.Fill,
             Margin = Padding.Empty,
             Padding = Padding.Empty,
-            AutoScroll = true
+            AutoScroll = true,
         };
 
         panel.Controls.Add(userControl);

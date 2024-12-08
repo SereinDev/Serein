@@ -1,5 +1,4 @@
 using System;
-
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 

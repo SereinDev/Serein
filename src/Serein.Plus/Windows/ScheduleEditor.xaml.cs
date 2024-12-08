@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using Serein.Core.Models.Commands;
 
 namespace Serein.Plus.Windows;

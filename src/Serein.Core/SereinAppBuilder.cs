@@ -1,10 +1,8 @@
 using System;
 using System.IO;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Services;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;

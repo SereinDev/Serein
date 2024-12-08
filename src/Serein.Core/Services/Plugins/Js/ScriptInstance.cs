@@ -1,25 +1,22 @@
 using System;
 using System.Collections.Generic;
-
+using Hardware.Info;
 using Jint;
 using Jint.Native;
-
+using Jint.Native.Function;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using Serein.Core.Models.Output;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
-using Serein.Core.Services.Data;
 using Serein.Core.Services.Commands;
-using Serein.Core.Services.Servers;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Properties;
-
+using Serein.Core.Services.Servers;
 using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
-using Jint.Native.Function;
-using Serein.Core.Models.Plugins;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -29,6 +26,7 @@ public sealed partial class ScriptInstance
     private readonly JsPlugin _jsPlugin;
     private readonly SettingProvider _settingProvider;
     private readonly PluginManager _pluginManager;
+    private readonly HardwareInfoProvider _hardwareInfoProvider;
     private readonly IPluginLogger _pluginLogger;
 
     public PermissionProperty Permissions { get; }
@@ -38,15 +36,17 @@ public sealed partial class ScriptInstance
     public CommandProperty Command { get; }
     public Console Console => _jsPlugin.Console;
     public Setting Setting => _settingProvider.Value;
+    public HardwareInfo? HardwareInfo => _hardwareInfoProvider.Info;
     public string Id => _jsPlugin.Info.Id;
 
     internal ScriptInstance(IServiceProvider serviceProvider, JsPlugin jsPlugin)
     {
         _serviceProvider = serviceProvider;
         _jsPlugin = jsPlugin;
+        _pluginLogger = _serviceProvider.GetRequiredService<IPluginLogger>();
         _settingProvider = _serviceProvider.GetRequiredService<SettingProvider>();
         _pluginManager = _serviceProvider.GetRequiredService<PluginManager>();
-        _pluginLogger = _serviceProvider.GetRequiredService<IPluginLogger>();
+        _hardwareInfoProvider = _serviceProvider.GetRequiredService<HardwareInfoProvider>();
 
         Metadata = new();
         Command = new(_pluginManager, _serviceProvider.GetRequiredService<CommandRunner>());

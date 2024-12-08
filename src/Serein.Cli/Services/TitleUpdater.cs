@@ -1,9 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 

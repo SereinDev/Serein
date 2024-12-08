@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Threading;
-
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins;
 

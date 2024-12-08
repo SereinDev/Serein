@@ -1,7 +1,5 @@
 using System.Windows.Navigation;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Plus.Dialogs;

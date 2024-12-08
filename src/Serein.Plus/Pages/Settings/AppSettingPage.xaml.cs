@@ -2,14 +2,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using iNKORE.UI.WPF.Modern;
-
 using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
-
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages.Settings;

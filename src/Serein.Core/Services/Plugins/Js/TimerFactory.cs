@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-
 using Jint.Native;
 using Jint.Native.Function;
-
 using Timer = System.Timers.Timer;
 
 namespace Serein.Core.Services.Plugins.Js;

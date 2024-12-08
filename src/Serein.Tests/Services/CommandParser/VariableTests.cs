@@ -1,16 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Services.Servers;
-
 using Xunit;
-
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
 namespace Serein.Tests.Services.CommandParser;

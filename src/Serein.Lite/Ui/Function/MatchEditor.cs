@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-
 using Serein.Core.Models.Commands;
 using Serein.Core.Services;
 using Serein.Core.Services.Commands;

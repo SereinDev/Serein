@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;

@@ -34,7 +34,7 @@ public static class ColorMap
     {
         Invalid,
         EightBit,
-        TwentyFourBit
+        TwentyFourBit,
     }
 
     // https://en.wikipedia.org/wiki/ANSI_escape_code#Colors

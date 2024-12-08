@@ -4,13 +4,9 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
 using Force.DeepCloner;
-
 using iNKORE.UI.WPF.Modern.Controls;
-
 using MineStatLib;
-
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using Serein.Core.Models.Server;
 
 namespace Serein.Core.Services.Servers;
@@ -88,7 +87,7 @@ public sealed class ServerPluginManager
                     if (extension == DisabledPluginExtension)
                     {
                         extension = Path.GetExtension(Path.GetFileNameWithoutExtension(file))
-                        .ToLowerInvariant();
+                            .ToLowerInvariant();
                     }
 
                     if (AcceptableExtensions.Contains(extension))

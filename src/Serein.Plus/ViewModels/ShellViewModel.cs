@@ -1,5 +1,4 @@
 using System;
-
 using Serein.Plus.Pages;
 
 namespace Serein.Plus.ViewModels;
@@ -20,4 +19,3 @@ public class ShellViewModel
 
     public Type Binding { get; } = typeof(BindingPage);
 }
-

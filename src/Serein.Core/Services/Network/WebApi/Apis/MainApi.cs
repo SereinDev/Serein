@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-
 using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
-
 using Serein.Core.Models.Network.WebApi;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
