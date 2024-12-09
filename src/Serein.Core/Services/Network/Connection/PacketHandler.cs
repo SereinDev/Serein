@@ -117,6 +117,6 @@ public sealed class PacketHandler(
             return;
         }
 
-        _matcher.MatchMsgAsync(packet);
+        _matcher.QueueMsg(packet);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,24 +10,41 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-public sealed class Matcher(
-    MatchesProvider matchesProvider,
-    CommandRunner commandRunner,
-    SettingProvider settingProvider
-)
+public sealed class Matcher
 {
-    private readonly MatchesProvider _matchesProvider = matchesProvider;
-    private readonly CommandRunner _commandRunner = commandRunner;
-    private readonly SettingProvider _settingProvider = settingProvider;
+    private record ServerLine(string Id, string Line, bool IsInput);
+
+    private readonly MatchesProvider _matchesProvider;
+    private readonly CommandRunner _commandRunner;
+    private readonly SettingProvider _settingProvider;
+
+    private readonly BlockingCollection<MessagePacket> _packets;
+    private readonly BlockingCollection<ServerLine> _serverLines;
+
+    public Matcher(
+        MatchesProvider matchesProvider,
+        CommandRunner commandRunner,
+        SettingProvider settingProvider
+    )
+    {
+        _matchesProvider = matchesProvider;
+        _commandRunner = commandRunner;
+        _settingProvider = settingProvider;
+        _packets = [.. new ConcurrentQueue<MessagePacket>()];
+        _serverLines = [.. new ConcurrentQueue<ServerLine>()];
+
+        Task.Run(StartMatchMsgLoop);
+        Task.Run(StartMatchServerLineLoop);
+    }
 
     /// <summary>
     /// 匹配服务器输出
     /// </summary>
     /// <param name="id">服务器Id</param>
     /// <param name="line">输出行</param>
-    public async Task MatchServerOutputAsync(string id, string line)
+    public void QueueServerOutputLine(string id, string line)
     {
-        await MatchFromServerInputOrOutput(id, line, false);
+        _serverLines.Add(new(id, line, false));
     }
 
     /// <summary>
@@ -34,12 +52,12 @@ public sealed class Matcher(
     /// </summary>
     /// <param name="id">服务器Id</param>
     /// <param name="line">输入行</param>
-    public async Task MatchServerInputAsync(string id, string line)
+    public void QueueServerInputLine(string id, string line)
     {
-        await MatchFromServerInputOrOutput(id, line, true);
+        _serverLines.Add(new(id, line, true));
     }
 
-    private async Task MatchFromServerInputOrOutput(string id, string line, bool isInput)
+    private void MatchServerLine(ServerLine serverLine)
     {
         var tasks = new List<Task>();
 
@@ -51,33 +69,56 @@ public sealed class Matcher(
                     string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
                     || match.FieldType
-                        != (isInput ? MatchFieldType.ServerInput : MatchFieldType.ServerOutput)
+                        != (
+                            serverLine.IsInput
+                                ? MatchFieldType.ServerInput
+                                : MatchFieldType.ServerOutput
+                        )
                     || match.RegexObj is null
                     || match.CommandObj is null
                     || match.CommandObj.Type == CommandType.Invalid
-                    || CheckExclusions(match, id)
+                    || CheckExclusions(match, serverLine.Id)
                 )
                 {
                     continue;
                 }
 
-                var matches = match.RegexObj.Match(line);
+                var matches = match.RegexObj.Match(serverLine.Line);
 
                 if (matches.Success)
                 {
-                    tasks.Add(_commandRunner.RunAsync(match.CommandObj, new(matches)));
+                    tasks.Add(
+                        _commandRunner.RunAsync(
+                            match.CommandObj,
+                            new(matches, ServerId: serverLine.Id)
+                        )
+                    );
                 }
             }
         }
 
-        await Task.WhenAll(tasks);
+        Task.WaitAll([.. tasks]);
     }
 
-    /// <summary>
-    /// 匹配消息
-    /// </summary>
-    /// <param name="messagePacket">OneBot消息数据包</param>
-    public async Task MatchMsgAsync(MessagePacket messagePacket)
+    private void StartMatchServerLineLoop()
+    {
+        while (true)
+        {
+            var line = _serverLines.Take();
+            MatchServerLine(line);
+        }
+    }
+
+    private void StartMatchMsgLoop()
+    {
+        while (true)
+        {
+            var packet = _packets.Take();
+            MatchMessagePacket(packet);
+        }
+    }
+
+    private void MatchMessagePacket(MessagePacket messagePacket)
     {
         var tasks = new List<Task>();
 
@@ -121,7 +162,16 @@ public sealed class Matcher(
             }
         }
 
-        await Task.WhenAll(tasks);
+        Task.WaitAll([.. tasks]);
+    }
+
+    /// <summary>
+    /// 匹配消息
+    /// </summary>
+    /// <param name="messagePacket">OneBot消息数据包</param>
+    public void QueueMsg(MessagePacket messagePacket)
+    {
+        _packets.Add(messagePacket);
     }
 
     private static bool CheckExclusions(Match match, string serverId)

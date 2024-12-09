@@ -27,8 +27,6 @@ public class JsPlugin : IPlugin
     public TimerFactory TimerFactory { get; }
     public ScriptInstance ScriptInstance { get; }
 
-    // public FileSystem FileSystem { get; }
-
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
     public IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
     public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
@@ -97,7 +95,7 @@ public class JsPlugin : IPlugin
                 || func is null
             )
             {
-                return false;
+                return true;
             }
             if (!Monitor.TryEnter(Engine, 1000))
             {
@@ -107,11 +105,11 @@ public class JsPlugin : IPlugin
 
             if (cancellationToken.IsCancellationRequested)
             {
-                return false;
+                return true;
             }
             var result = Engine.Invoke(func, args);
             {
-                return result.IsBoolean() && result.AsBoolean();
+                return !result.IsBoolean() || result.AsBoolean();
             }
         }
         catch (Exception e)

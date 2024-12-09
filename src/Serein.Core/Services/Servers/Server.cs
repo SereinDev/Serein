@@ -286,7 +286,7 @@ public sealed class Server
 
         CommandHistoryIndex = CommandHistory.Count;
 
-        _matcher.MatchServerInputAsync(Id, command);
+        _matcher.QueueServerInputLine(Id, command);
     }
 
     public void RequestRestart()
@@ -405,14 +405,14 @@ public sealed class Server
         )
         {
             _cache.Add(filtered);
-            _matcher.MatchServerOutputAsync(Id, string.Join('\n', _cache));
+            _matcher.QueueServerOutputLine(Id, string.Join('\n', _cache));
         }
         else
         {
             _cache.Clear();
         }
 
-        _matcher.MatchServerOutputAsync(Id, filtered);
+        _matcher.QueueServerOutputLine(Id, filtered);
     }
 
     private bool CancelRestart()

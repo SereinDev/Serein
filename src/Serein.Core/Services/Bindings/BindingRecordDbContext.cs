@@ -5,6 +5,8 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Bindings;
 
+#pragma warning disable CS8618
+
 internal sealed class BindingRecordDbContext : DbContext
 {
     public DbSet<BindingRecord> Records { get; private set; }

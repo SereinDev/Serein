@@ -6,10 +6,16 @@ namespace Serein.Core.Models.Network.Connection.OneBot.Messages;
 public enum SubType
 {
     Unknown,
+
     Friend,
+
     Normal,
+
     Anonymous,
+
     Group,
+
     GroupSelf,
+
     Notice,
 }
