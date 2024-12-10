@@ -13,6 +13,10 @@ public partial class BindingPage : Page
         _bindingManager = bindingManager;
 
         InitializeComponent();
+    }
+
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
         BindingListView.ItemsSource = _bindingManager.Records;
     }
 

@@ -15,16 +15,14 @@ namespace Serein.Core.Services.Network.Connection;
 
 public sealed class ReverseWebSocketService : IConnectionService
 {
-    private readonly IHost _host;
     private WebSocketServer? _server;
     private readonly Dictionary<string, IWebSocketConnection> _webSockets = [];
     private readonly SettingProvider _settingProvider;
 
     public ReverseWebSocketService(IHost host, SettingProvider settingProvider)
     {
-        _host = host;
         _settingProvider = settingProvider;
-        _logger = new(_host.Services.GetRequiredService<IConnectionLogger>);
+        _logger = new(host.Services.GetRequiredService<IConnectionLogger>);
 
         FleckLog.LogAction = (level, msg, _) =>
         {
@@ -129,10 +127,10 @@ public sealed class ReverseWebSocketService : IConnectionService
         if (_server is not null)
         {
             _server.Dispose();
-            StatusChanged?.Invoke(null, EventArgs.Empty);
             _logger.Value.Log(MsLogLevel.Information, "反向WebSocket服务器已停止");
             _server = null;
             _webSockets.Clear();
+            StatusChanged?.Invoke(null, EventArgs.Empty);
         }
     }
 }

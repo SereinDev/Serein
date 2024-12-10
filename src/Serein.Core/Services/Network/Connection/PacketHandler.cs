@@ -31,25 +31,25 @@ public sealed class PacketHandler(
     private readonly EventDispatcher _eventDispatcher = eventDispatcher;
     private readonly ReactionTrigger _reactionTrigger = reactionTrigger;
 
-    public void Handle(JsonNode node)
+    public void Handle(JsonObject jsonObject)
     {
-        if (!_eventDispatcher.Dispatch(Event.PacketReceived, node))
+        if (!_eventDispatcher.Dispatch(Event.PacketReceived, jsonObject))
         {
             return;
         }
 
-        switch (node["post_type"]?.ToString())
+        switch (jsonObject["post_type"]?.ToString())
         {
             case "message":
             case "message_sent":
                 HandleMessagePacket(
-                    node.ToObject<MessagePacket>(JsonSerializerOptionsFactory.PacketStyle)
+                    jsonObject.ToObject<MessagePacket>(JsonSerializerOptionsFactory.PacketStyle)
                 );
                 break;
 
             case "notice":
                 HandleNoticePacket(
-                    node.ToObject<NoticePacket>(JsonSerializerOptionsFactory.PacketStyle)
+                    jsonObject.ToObject<NoticePacket>(JsonSerializerOptionsFactory.PacketStyle)
                 );
                 break;
         }

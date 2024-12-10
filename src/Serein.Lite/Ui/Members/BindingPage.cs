@@ -15,8 +15,8 @@ public partial class BindingPage : UserControl, IUpdateablePage
         _bindingManager = bindingManager;
         InitializeComponent();
 
-        LoadData();
         BindingListView.SetExploreTheme();
+        LoadData();
     }
 
     private void LoadData()
@@ -30,6 +30,7 @@ public partial class BindingPage : UserControl, IUpdateablePage
                 var item = new ListViewItem(record.UserId.ToString()) { Tag = record };
                 item.SubItems.Add(record.ShownName);
                 item.SubItems.Add(string.Join(";", record.GameIds));
+                BindingListView.Items.Add(item);
             }
         );
 

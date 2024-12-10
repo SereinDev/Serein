@@ -71,7 +71,7 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
         void OnStatusChanged(object? sender, EventArgs e)
         {
-            PropertyChanged?.Invoke(sender, _activeArg);
+            PropertyChanged?.Invoke(this, _activeArg);
             ConnectedAt = Active ? DateTime.Now : null;
         }
     }
@@ -95,13 +95,22 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         {
             return;
         }
-        var node = JsonSerializer.Deserialize<JsonNode>(e.Message);
 
-        if (node is null)
+        try
         {
-            return;
+            var jsonObject = JsonSerializer.Deserialize<JsonObject>(e.Message);
+
+            if (jsonObject is null)
+            {
+                return;
+            }
+            _packetHandler.Handle(jsonObject);
         }
-        _packetHandler.Handle(node);
+        catch (Exception ex)
+        {
+            _connectionLogger.Value.Log(LogLevel.Error, ex.Message);
+            _logWriter.WriteAsync($"{DateTime.Now:t} [Error] {ex}");
+        }
     }
 
     public void Start()

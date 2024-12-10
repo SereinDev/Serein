@@ -156,10 +156,12 @@ public sealed class CommandRunner
                                 ? commandContext.MessagePacket.Sender.Nickname
                                 : commandContext.MessagePacket.Sender.Card
                         );
+                        await FastReply(commandContext.MessagePacket, "绑定成功");
                     }
                     else
                     {
                         _bindingManager.Remove(userId3, body);
+                        await FastReply(commandContext.MessagePacket, "解绑成功");
                     }
                 }
                 catch (BindingFailureException e)

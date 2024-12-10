@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Commands;
 
@@ -18,13 +19,16 @@ public sealed class ReactionTrigger(
     private readonly SettingProvider _settingProvider = settingProvider;
     private readonly CommandRunner _commandRunner = commandRunner;
 
-    internal Task TriggerAsync(
+    internal void Trigger(
         ReactionType type,
         ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
-    ) => Task.Run(() => Trigger(type, target, variables));
+    )
+    {
+        TriggerAsync(type, target, variables).Await();
+    }
 
-    internal void Trigger(
+    internal async Task TriggerAsync(
         ReactionType type,
         ReactionTarget? target = null,
         IReadOnlyDictionary<string, string?>? variables = null
@@ -50,7 +54,6 @@ public sealed class ReactionTrigger(
 
         var context = new CommandContext { Variables = variables, ServerId = target?.ServerId };
 
-        var tasks = new List<Task>();
         foreach (var command in commands)
         {
             if (command.Argument is null && target is not null)
@@ -68,9 +71,7 @@ public sealed class ReactionTrigger(
                 }
             }
 
-            tasks.Add(_commandRunner.RunAsync(command, context));
+            await _commandRunner.RunAsync(command, context);
         }
-
-        Task.WaitAll([.. tasks], 1000);
     }
 }

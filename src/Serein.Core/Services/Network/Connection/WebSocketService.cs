@@ -29,7 +29,7 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
 
     public bool Connecting { get; private set; }
     public bool Active =>
-        _client?.State == WebSocketState.Open
+        _client?.State is WebSocketState.Open or WebSocketState.Connecting
         || Connecting
         || _reconnectCancellationToken is not null
             && !_reconnectCancellationToken.IsCancellationRequested;
@@ -52,13 +52,15 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
 
         client.MessageReceived += MessageReceived;
         client.Opened += StatusChanged;
+        client.Closed += StatusChanged;
+        client.Error += (_, _) => StatusChanged?.Invoke(this, EventArgs.Empty);
+
         client.Opened += (_, _) =>
         {
             _connectionLogger.Value.Log(LogLevel.Information, $"成功连接到 {_uri}");
             Connecting = false;
             _connectedSuccessfully = true;
         };
-        client.Closed += StatusChanged;
         client.Closed += (_, _) =>
         {
             _connectionLogger.Value.Log(LogLevel.Warning, "连接已断开");
@@ -123,6 +125,7 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
         {
             _reconnectCancellationToken.Cancel();
             _connectionLogger.Value.Log(LogLevel.Information, $"重连已取消");
+            StatusChanged?.Invoke(this, EventArgs.Empty);
             return;
         }
 
