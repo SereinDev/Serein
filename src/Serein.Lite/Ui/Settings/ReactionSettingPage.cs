@@ -111,6 +111,8 @@ public partial class ReactionSettingPage : UserControl
                 ReactionType.GroupIncreased => "群人数增加",
                 ReactionType.GroupDecreased => "群人数减少",
                 ReactionType.GroupPoke => "群戳一戳",
+                ReactionType.BindingSucceeded => "绑定成功",
+                ReactionType.UnbindingSucceeded => "解绑成功",
                 ReactionType.PermissionDeniedFromPrivateMsg => "权限不足：私聊",
                 ReactionType.PermissionDeniedFromGroupMsg => "权限不足：群聊",
                 ReactionType.SereinCrash => "Serein崩溃",

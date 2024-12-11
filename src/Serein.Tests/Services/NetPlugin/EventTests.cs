@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
@@ -73,7 +74,7 @@ public sealed class EventTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldInvokePluginLoadedEvent),
+                    Id = nameof(Event.PluginsLoaded),
                     Name = "test",
                     Type = PluginType.Net,
                     EntryFile = nameof(ShouldInvokePluginLoadedEvent) + ".dll",
@@ -161,7 +162,7 @@ public sealed class EventTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldInvokeServerEvent),
+                    Id = nameof(Event.ServerStarting),
                     Name = "test",
                     Type = PluginType.Net,
                     EntryFile = nameof(ShouldInvokeServerEvent) + ".dll",

@@ -29,9 +29,9 @@ public sealed class SettingProvider : DataProviderBase<Setting>
                     JsonSerializerOptionsFactory.Common
                 );
 
-                if (wrapper?.Type == typeof(Setting).ToString())
+                if (wrapper?.Type == typeof(Setting).ToString() && wrapper.Data is not null)
                 {
-                    return wrapper.Data ?? new();
+                    return CompleteReactions(wrapper.Data);
                 }
             }
 
@@ -44,6 +44,21 @@ public sealed class SettingProvider : DataProviderBase<Setting>
                 e
             );
         }
+    }
+
+    private static Setting CompleteReactions(Setting setting)
+    {
+        if (setting.Reactions.Count != Setting.DefaultReactions.Count)
+        {
+            foreach (var kv in Setting.DefaultReactions)
+            {
+                if (!setting.Reactions.ContainsKey(kv.Key))
+                {
+                    setting.Reactions.Add(kv.Key, kv.Value);
+                }
+            }
+        }
+        return setting;
     }
 
     public override void Save()

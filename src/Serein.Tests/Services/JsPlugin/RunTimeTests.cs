@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Jint;
 using Jint.Native;
 using Jint.Runtime;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,9 @@ public sealed class RunTimeTests : IDisposable
         _jsPluginLoader = _host.Services.GetRequiredService<JsPluginLoader>();
 
         Directory.CreateDirectory(PathConstants.PluginsDirectory);
+        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "114514.js"), "");
+        _host.Start();
+        Task.Delay(1000).Wait();
     }
 
     public void Dispose()
@@ -33,13 +37,8 @@ public sealed class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public async Task ShouldAccessToBuiltInProperties()
+    public void ShouldAccessToBuiltInProperties()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "2.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
         var kv = _jsPluginLoader.Plugins.First();
 
         Assert.Equal(Types.Object, kv.Value.Engine.Evaluate("serein").Type);
@@ -49,26 +48,16 @@ public sealed class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public async Task ShouldAccessToClrType()
+    public void ShouldAccessToClrType()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "3.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
         var kv = _jsPluginLoader.Plugins.First();
 
         Assert.NotEqual(JsValue.Undefined, kv.Value.Engine.Evaluate("System.Console"));
     }
 
     [Fact]
-    public async Task ShouldAccessToClrMethod()
+    public void ShouldAccessToClrMethod()
     {
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "4.js"), "");
-
-        await _host.StartAsync();
-        await Task.Delay(500);
-
         var kv = _jsPluginLoader.Plugins.First();
 
         Assert.Equal(
@@ -78,5 +67,37 @@ public sealed class RunTimeTests : IDisposable
 
         kv.Value.Engine.Evaluate("System.IO.File.WriteAllText('test.txt', '')");
         Assert.True(File.Exists("test.txt"));
+    }
+
+    [Fact]
+    public void ShouldAccessToBuiltInModuleProcess()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+
+        Assert.Equal(Environment.ProcessId, kv.Value.Engine.Evaluate("process.pid"));
+        Assert.Equal(Environment.ExitCode, kv.Value.Engine.Evaluate("process.exitCode"));
+        Assert.Equal(Environment.Version.ToString(), kv.Value.Engine.Evaluate("process.version"));
+        Assert.Equal(Environment.CurrentDirectory, kv.Value.Engine.Evaluate("process.cwd()"));
+    }
+
+    [Fact]
+    public void ShouldAccessToBuiltInModuleFs()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+
+        kv.Value.Engine.Evaluate("fs.writeFileSync('test.txt', 'test')");
+        Assert.True(File.Exists("test.txt"));
+        Assert.Equal(
+            File.ReadAllText("test.txt"),
+            kv.Value.Engine.Evaluate("fs.readFileSync('test.txt')")
+        );
+    }
+
+    [Fact]
+    public void ShouldBeAbleToOutput()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+        kv.Value.Engine.Evaluate("serein.console.log('test')");
+        kv.Value.Engine.Evaluate("console.log('test')");
     }
 }

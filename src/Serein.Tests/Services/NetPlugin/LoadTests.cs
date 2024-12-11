@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Plugins.Info;
+using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
@@ -55,7 +56,7 @@ public sealed class LoadTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldNotLoadNetPluginWithoutValidPluginClass),
+                    Id = nameof(PluginBase),
                     Name = "test",
                     EntryFile = nameof(ShouldNotLoadNetPluginWithoutValidPluginClass) + ".dll",
                     Type = PluginType.Net,
@@ -102,7 +103,7 @@ public sealed class LoadTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldNotLoadNetPluginWithTwoPluginClasses),
+                    Id = nameof(PluginBase),
                     Name = "test",
                     EntryFile = nameof(ShouldNotLoadNetPluginWithTwoPluginClasses) + ".dll",
                     Type = PluginType.Net,
@@ -143,7 +144,7 @@ public sealed class LoadTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldLoadNetPluginWithValidAssembly),
+                    Id = nameof(PluginBase),
                     Name = "test",
                     EntryFile = nameof(ShouldLoadNetPluginWithValidAssembly) + ".dll",
                     Type = PluginType.Net,
@@ -190,7 +191,7 @@ public sealed class LoadTests : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldLoadNetPluginWithoutSpecifyingEntryFile),
+                    Id = nameof(PluginBase),
                     Name = "test",
                     Type = PluginType.Net,
                 },

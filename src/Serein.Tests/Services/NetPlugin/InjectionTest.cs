@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Jint.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Plugins.Info;
@@ -63,7 +64,7 @@ public sealed class InjectionTest : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldSupportInjectionWithIServiceProvider),
+                    Id = nameof(IServiceProvider),
                     Name = "test",
                     Type = PluginType.Net,
                     EntryFile = nameof(ShouldSupportInjectionWithIServiceProvider) + ".dll",
@@ -106,7 +107,7 @@ public sealed class InjectionTest : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldSupportInjectionWithOneType),
+                    Id = nameof(Type),
                     Name = "test",
                     Type = PluginType.Net,
                     EntryFile = $"{nameof(ShouldSupportInjectionWithOneType)}.dll",
@@ -150,7 +151,7 @@ public sealed class InjectionTest : IDisposable
             JsonSerializer.Serialize(
                 new PluginInfo
                 {
-                    Id = nameof(ShouldSupportInjectionWithMultipleTypes),
+                    Id = nameof(Types),
                     Name = "test",
                     Type = PluginType.Net,
                     EntryFile = $"{nameof(ShouldSupportInjectionWithMultipleTypes)}.dll",

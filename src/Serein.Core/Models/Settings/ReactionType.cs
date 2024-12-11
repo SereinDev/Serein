@@ -14,6 +14,10 @@ public enum ReactionType
 
     GroupPoke,
 
+    BindingSucceeded,
+
+    UnbindingSucceeded,
+
     PermissionDeniedFromPrivateMsg,
 
     PermissionDeniedFromGroupMsg,

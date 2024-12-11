@@ -11,6 +11,7 @@ using Serein.Core.Models.Bindings;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Models.Settings;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
@@ -27,6 +28,7 @@ public sealed class CommandRunner
     private readonly Lazy<CommandParser> _commandParser;
     private readonly Lazy<WsConnectionManager> _wsConnectionManager;
     private readonly Lazy<ServerManager> _serverManager;
+    private readonly Lazy<ReactionTrigger> _reactionTrigger;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly JsPluginLoader _jsPluginLoader;
@@ -42,6 +44,7 @@ public sealed class CommandRunner
     {
         var services = host.Services;
         _wsConnectionManager = new(services.GetRequiredService<WsConnectionManager>);
+        _reactionTrigger = new(services.GetRequiredService<ReactionTrigger>);
         _serverManager = new(services.GetRequiredService<ServerManager>);
         _commandParser = new(services.GetRequiredService<CommandParser>);
         _logger = logger;
@@ -156,12 +159,18 @@ public sealed class CommandRunner
                                 ? commandContext.MessagePacket.Sender.Nickname
                                 : commandContext.MessagePacket.Sender.Card
                         );
-                        await FastReply(commandContext.MessagePacket, "绑定成功");
+                        await _reactionTrigger.Value.TriggerAsync(
+                            ReactionType.BindingSucceeded,
+                            new(UserId: userId3, GroupId: commandContext.MessagePacket.GroupId)
+                        );
                     }
                     else
                     {
                         _bindingManager.Remove(userId3, body);
-                        await FastReply(commandContext.MessagePacket, "解绑成功");
+                        await _reactionTrigger.Value.TriggerAsync(
+                            ReactionType.UnbindingSucceeded,
+                            new(UserId: userId3, GroupId: commandContext.MessagePacket.GroupId)
+                        );
                     }
                 }
                 catch (BindingFailureException e)
