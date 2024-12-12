@@ -51,7 +51,6 @@ public class ServerWithPty(
         }
 
         _isPreparing = true;
-        WriteInfoLine("正在使用虚拟终端启动服务器进程。若出现问题请尝试关闭虚拟终端功能。");
         PtyProvider
             .SpawnAsync(
                 new()
@@ -108,6 +107,9 @@ public class ServerWithPty(
                     );
 
                     OnServerStatusChanged();
+                    WriteInfoLine(
+                        "正在使用虚拟终端启动服务器进程。若出现问题请尝试关闭虚拟终端功能。"
+                    );
                     ReadLineLoop();
                 }
             );

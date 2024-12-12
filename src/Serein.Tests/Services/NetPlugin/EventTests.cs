@@ -130,18 +130,6 @@ public sealed class EventTests : IDisposable
                     return Task.CompletedTask;
                 }
 
-                protected override Task<bool> OnServerOutput(ServerBase server, string line)
-                {
-                    Events.Add(nameof(OnServerOutput));
-                    return Task.FromResult(true);
-                }
-
-                protected override Task<bool> OnServerRawOutput(ServerBase server, string line)
-                {
-                    Events.Add(nameof(OnServerRawOutput));
-                    return Task.FromResult(true);
-                }
-
                 protected override Task OnServerInput(ServerBase server, string line)
                 {
                     Events.Add(nameof(OnServerInput));
@@ -189,8 +177,6 @@ public sealed class EventTests : IDisposable
         Assert.Contains("OnServerStarted", list);
         Assert.Contains("OnServerStopping", list);
         Assert.Contains("OnServerExited", list);
-        Assert.Contains("OnServerOutput", list);
-        Assert.Contains("OnServerRawOutput", list);
         Assert.Contains("OnServerInput", list);
     }
 }

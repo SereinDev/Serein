@@ -157,10 +157,7 @@ public sealed class LoadTests : IDisposable
         await Task.Delay(100);
 
         Assert.Single(_netPluginLoader.Plugins);
-        Assert.Equal(
-            nameof(ShouldLoadNetPluginWithValidAssembly),
-            _netPluginLoader.Plugins.First().Key
-        );
+        Assert.Equal(nameof(PluginBase), _netPluginLoader.Plugins.First().Key);
     }
 
     [Fact]
@@ -179,11 +176,7 @@ public sealed class LoadTests : IDisposable
             }
             """,
             nameof(ShouldLoadNetPluginWithoutSpecifyingEntryFile),
-            Path.Join(
-                PathConstants.PluginsDirectory,
-                "test",
-                nameof(ShouldLoadNetPluginWithoutSpecifyingEntryFile) + ".dll"
-            )
+            Path.Join(PathConstants.PluginsDirectory, "test", nameof(PluginBase) + ".dll")
         );
 
         File.WriteAllText(

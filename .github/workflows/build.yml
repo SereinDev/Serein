@@ -92,7 +92,7 @@ jobs:
       
       - shell: powershell
         run: | 
-          Remove-Item ./downloads/* -Exclude *.exe,*.Cli -Recurse
+          Remove-Item ./downloads/* -Exclude Serein.* -Recurse
         
       - uses: actions/attest-build-provenance@v1
         continue-on-error: true

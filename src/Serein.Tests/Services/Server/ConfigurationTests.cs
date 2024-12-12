@@ -65,4 +65,20 @@ public sealed class ConfigurationTests : IDisposable
             Directory.GetFiles(string.Format(PathConstants.ServerLogDirectory, server.Id))
         );
     }
+
+    [Fact]
+    public void ShouldCreateCommonServer()
+    {
+        var server = _serverManager.Add("test", new() { FileName = "cmd", UsePty = false });
+
+        Assert.Equal(typeof(Core.Services.Servers.Server), server.GetType());
+    }
+
+    [Fact]
+    public void ShouldCreateServerWithPty()
+    {
+        var server = _serverManager.Add("test", new() { FileName = "cmd", UsePty = true });
+
+        Assert.Equal(typeof(ServerWithPty), server.GetType());
+    }
 }

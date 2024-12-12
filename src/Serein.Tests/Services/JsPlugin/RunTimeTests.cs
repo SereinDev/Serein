@@ -7,6 +7,9 @@ using Jint.Native;
 using Jint.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.Core.Models.Plugins;
+using Serein.Core.Models.Plugins.Js;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils;
 using Xunit;
@@ -18,16 +21,23 @@ public sealed class RunTimeTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;
+    private readonly EventDispatcher _eventDispatcher;
 
     public RunTimeTests()
     {
         _host = HostFactory.BuildNew();
+        _eventDispatcher = _host.Services.GetRequiredService<EventDispatcher>();
         _jsPluginLoader = _host.Services.GetRequiredService<JsPluginLoader>();
-
-        Directory.CreateDirectory(PathConstants.PluginsDirectory);
-        File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "114514.js"), "");
+        _jsPluginLoader.JsPlugins.TryAdd(
+            "test",
+            new Core.Models.Plugins.Js.JsPlugin(
+                _host.Services,
+                new() { Id = "test" },
+                Path.Join(PathConstants.PluginsDirectory, "114514.js"),
+                JsPluginConfig.Default
+            )
+        );
         _host.Start();
-        Task.Delay(1000).Wait();
     }
 
     public void Dispose()
@@ -99,5 +109,52 @@ public sealed class RunTimeTests : IDisposable
         var kv = _jsPluginLoader.Plugins.First();
         kv.Value.Engine.Evaluate("serein.console.log('test')");
         kv.Value.Engine.Evaluate("console.log('test')");
+    }
+
+    [Fact]
+    public async Task ShouldBeAbleToSetListener()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+        kv.Value.Engine.Execute(
+            "var called = false; serein.setListener('PluginsLoaded', () => { called = true; });"
+        );
+        _eventDispatcher.Dispatch(Event.PluginsLoaded);
+        await Task.Delay(1000);
+        Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
+    }
+
+    [Fact]
+    public async Task ShouldBeAbleToSetTimeout()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+        kv.Value.Engine.Execute(
+            """
+            var called = false;
+            setTimeout(() => { called = true; }, 100);
+            """
+        );
+
+        await Task.Delay(1000);
+        Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
+    }
+
+    [Fact]
+    public async Task ShouldBeAbleToSetInterval()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+        kv.Value.Engine.Execute(
+            """
+            var count = 0;
+            var interval = setInterval(() => {
+                count++;
+                if (count > 5) {
+                    clearInterval(interval);
+                }
+            }, 100);
+            """
+        );
+
+        await Task.Delay(1000);
+        Assert.True(kv.Value.Engine.Evaluate("count").AsNumber() > 5);
     }
 }
