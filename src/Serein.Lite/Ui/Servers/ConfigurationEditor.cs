@@ -54,6 +54,7 @@ public partial class ConfigurationEditor : Form
         InputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
         OutputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
         UseUnicodeCharsCheckBox.Checked = _configuration.UseUnicodeChars;
+        UsePtyCheckBox.Checked = _configuration.UsePty;
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
@@ -94,6 +95,7 @@ public partial class ConfigurationEditor : Form
                 || string.IsNullOrWhiteSpace(NameTextBox.Text)
                     ? "未命名"
                     : NameTextBox.Text;
+            _configuration.UsePty = UsePtyCheckBox.Checked;
             _configuration.FileName = FileNameTextBox.Text;
             _configuration.Argument = ArgumentTextBox.Text;
             _configuration.AutoRestart = AutoRestartCheckBox.Checked;

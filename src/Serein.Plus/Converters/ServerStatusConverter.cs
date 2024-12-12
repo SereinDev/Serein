@@ -11,7 +11,7 @@ public class ServerStatusConverter : IValueConverter
         return value is bool b
             ? b
                 ? "运行中"
-                : "已停止"
+                : "未启动"
             : throw new NotSupportedException();
     }
 

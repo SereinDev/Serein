@@ -75,7 +75,15 @@ public sealed class EventDispatcher(
     {
         foreach ((_, var jsPlugin) in _jsPluginLoader.Plugins)
         {
-            tasks.Add(Task.Run(() => jsPlugin.Invoke(@event, cancellationToken, args)));
+            if (cancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+
+            if (jsPlugin.IsEnabled)
+            {
+                tasks.Add(Task.Run(() => jsPlugin.Invoke(@event, cancellationToken, args)));
+            }
         }
     }
 
@@ -94,17 +102,20 @@ public sealed class EventDispatcher(
                 break;
             }
 
-            try
+            if (plugin.IsEnabled)
             {
-                tasks.Add(plugin.Invoke(@event, args));
-            }
-            catch (Exception e)
-            {
-                _pluginLogger.Log(
-                    LogLevel.Error,
-                    name,
-                    $"触发事件{name}时出现异常：\n{e.GetDetailString()}"
-                );
+                try
+                {
+                    tasks.Add(plugin.Invoke(@event, args));
+                }
+                catch (Exception e)
+                {
+                    _pluginLogger.Log(
+                        LogLevel.Error,
+                        name,
+                        $"触发事件{name}时出现异常：\n{e.GetDetailString()}"
+                    );
+                }
             }
         }
 

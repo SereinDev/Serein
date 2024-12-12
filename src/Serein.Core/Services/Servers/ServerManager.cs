@@ -63,7 +63,7 @@ public partial class ServerManager
         }
     }
 
-    public IReadOnlyDictionary<string, Server> Servers => _servers;
+    public IReadOnlyDictionary<string, ServerBase> Servers => _servers;
     public event EventHandler<ServersUpdatedEventArgs>? ServersUpdated;
 
     private readonly ILogger<Server> _serverlogger;
@@ -73,7 +73,7 @@ public partial class ServerManager
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
     private readonly Matcher _matcher;
-    private readonly Dictionary<string, Server> _servers = [];
+    private readonly Dictionary<string, ServerBase> _servers = [];
 
     public ServerManager(
         ILogger<Server> serverlogger,
@@ -99,20 +99,31 @@ public partial class ServerManager
 
     public bool AnyRunning => _servers.Any(static (kv) => kv.Value.Status);
 
-    public Server Add(string id, Configuration configuration)
+    public ServerBase Add(string id, Configuration configuration)
     {
         ValidateId(id);
 
-        var server = new Server(
-            id,
-            _matcher,
-            _serverlogger,
-            _logWriterLogger,
-            configuration,
-            _settingProvider,
-            _eventDispatcher,
-            _reactionManager
-        );
+        ServerBase server = configuration.UsePty
+            ? new ServerWithPty(
+                id,
+                _matcher,
+                _serverlogger,
+                _logWriterLogger,
+                configuration,
+                _settingProvider,
+                _eventDispatcher,
+                _reactionManager
+            )
+            : new Server(
+                id,
+                _matcher,
+                _serverlogger,
+                _logWriterLogger,
+                configuration,
+                _settingProvider,
+                _eventDispatcher,
+                _reactionManager
+            );
         _servers.Add(id, server);
         ServersUpdated?.Invoke(this, new(ServersUpdatedType.Added, id, server));
 

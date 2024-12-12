@@ -11,26 +11,26 @@ namespace Serein.Lite.Ui.Servers;
 
 public partial class Panel : UserControl
 {
-    private readonly Server _server;
+    private readonly ServerBase _server;
     private readonly MainForm _mainForm;
     private readonly System.Timers.Timer _timer;
     private readonly object _lock = new();
     private readonly Lazy<PluginManagerForm> _pluginManagerForm;
 
-    public Panel(Server server, MainForm mainForm)
+    public Panel(ServerBase server, MainForm mainForm)
     {
         InitializeComponent();
         Dock = DockStyle.Fill;
 
         _timer = new(1000);
-        _timer.Elapsed += (_, _) => Invoke(UpdateInfoLabels);
+        _timer.Elapsed += (_, _) => Invoke(UpdateInfo);
 
         _server = server;
         _mainForm = mainForm;
         _server.ServerOutput += OnServerOutput;
         _server.ServerStatusChanged += (_, _) =>
         {
-            Invoke(UpdateInfoLabels);
+            Invoke(UpdateInfo);
 
             if (_server.Status)
             {
@@ -207,7 +207,7 @@ public partial class Panel : UserControl
         }
     }
 
-    private void UpdateInfoLabels()
+    private void UpdateInfo()
     {
         StatusDynamicLabel.Text = _server.Status ? "运行中" : "未启动";
         VersionDynamicLabel.Text = _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
@@ -222,6 +222,10 @@ public partial class Panel : UserControl
         CPUPercentDynamicLabel.Text = _server.Status
             ? _server.Info.CPUUsage.ToString("N2") + "%"
             : "-";
+
+        ToolTipProvider.SetToolTip(VersionDynamicLabel, VersionDynamicLabel.Text);
+        ToolTipProvider.SetToolTip(PlayerCountDynamicLabel, PlayerCountDynamicLabel.Text);
+        ToolTipProvider.SetToolTip(RunTimeDynamicLabel, RunTimeDynamicLabel.Text);
     }
 
     protected override void OnLoad(EventArgs e)

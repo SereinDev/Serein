@@ -10,19 +10,11 @@ namespace Serein.Plus.Models.ConsoleTextEditor;
 /// </remarks>
 public class HideAnsiElementGenerator : VisualLineElementGenerator
 {
-    public bool ParseExtended { get; set; } = true;
-
-    /// <summary>
-    /// A basic list of ANSI control sequences.
-    /// </summary>
-    private static readonly char[] EndMarkers = ['m', 'A', 'B', 'C', 'D', 'J'];
-
     /// <summary>
     /// A more extensive list of the ANSI control sequences.
     /// </summary>
     private static readonly char[] EndMarkersExtended =
     [
-        'm',
         'A',
         'B',
         'C',
@@ -35,6 +27,13 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
         'K',
         'S',
         'T',
+        'f',
+        'm',
+        'n',
+        's',
+        'u',
+        'l',
+        'h',
     ];
 
     /// <summary>
@@ -67,10 +66,7 @@ public class HideAnsiElementGenerator : VisualLineElementGenerator
             return m;
         }
 
-        int endIndex = relevantText.Text.IndexOfAny(
-            ParseExtended ? EndMarkersExtended : EndMarkers,
-            index
-        );
+        int endIndex = relevantText.Text.IndexOfAny(EndMarkersExtended, index);
 
         if (endIndex > -1)
         {

@@ -25,7 +25,7 @@ public class Configuration : NotifyPropertyChangedModelBase
 
     public EncodingMap.EncodingType OutputEncoding { get; set; }
 
-    public OutputStyle OutputStyle { get; set; }
+    public OutputStyle OutputStyle { get; set; } = OutputStyle.RawText;
 
     public short PortIPv4 { get; set; } = 19132;
 
@@ -34,4 +34,10 @@ public class Configuration : NotifyPropertyChangedModelBase
     public bool StartWhenSettingUp { get; set; }
 
     public bool UseUnicodeChars { get; set; }
+
+    public bool UsePty { get; set; }
+
+    public int? TerminalWidth { get; set; } = 150;
+
+    public int? TerminalHeight { get; set; } = 80;
 }

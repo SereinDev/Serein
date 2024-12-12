@@ -64,6 +64,7 @@
             ConfirmButton = new System.Windows.Forms.Button();
             ErrorProvider = new System.Windows.Forms.ErrorProvider(components);
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            UsePtyCheckBox = new System.Windows.Forms.CheckBox();
             IdLabel = new System.Windows.Forms.Label();
             NameLabel = new System.Windows.Forms.Label();
             FileNameLabel = new System.Windows.Forms.Label();
@@ -266,6 +267,7 @@
             // 
             // InputAndOutputTabPage
             // 
+            InputAndOutputTabPage.Controls.Add(UsePtyCheckBox);
             InputAndOutputTabPage.Controls.Add(LineTerminatorTextBox);
             InputAndOutputTabPage.Controls.Add(LineTerminatorLabel);
             InputAndOutputTabPage.Controls.Add(UseUnicodeCharsCheckBox);
@@ -445,6 +447,17 @@
             // 
             ErrorProvider.ContainerControl = this;
             // 
+            // UsePtyCheckBox
+            // 
+            UsePtyCheckBox.AutoSize = true;
+            UsePtyCheckBox.Location = new System.Drawing.Point(365, 194);
+            UsePtyCheckBox.Name = "UsePtyCheckBox";
+            UsePtyCheckBox.Size = new System.Drawing.Size(310, 35);
+            UsePtyCheckBox.TabIndex = 11;
+            UsePtyCheckBox.Text = "使用虚拟终端（实验性）";
+            ToolTip.SetToolTip(UsePtyCheckBox, "使用虚拟终端输入和输出\r\n· 用于解决一些控制台无输入或输出的问题\r\n· 在编辑服务器配置时修改此项需重启Serein方可生效\r\n· 可能因系统版本不同而有不同的效果                                     \r\n· 这是一个实验性选项，后续版本中可能会发生变化");
+            UsePtyCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ConfigurationEditor
             // 
             AcceptButton = ConfirmButton;
@@ -500,5 +513,6 @@
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.ErrorProvider ErrorProvider;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.CheckBox UsePtyCheckBox;
     }
 }

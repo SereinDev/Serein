@@ -4,34 +4,29 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(ServerBase server) => Task.FromResult(true);
 
-    protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
+    protected virtual Task OnServerStarted(ServerBase server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(ServerBase server) => Task.FromResult(true);
 
-    protected virtual Task OnServerExited(
-        Services.Servers.Server server,
-        int exitcode,
-        DateTime exitTime
-    ) => Task.CompletedTask;
-
-    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) =>
-        Task.FromResult(true);
-
-    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) =>
-        Task.FromResult(true);
-
-    protected virtual Task OnServerInput(Services.Servers.Server server, string line) =>
+    protected virtual Task OnServerExited(ServerBase server, int exitcode, DateTime exitTime) =>
         Task.CompletedTask;
+
+    protected virtual Task<bool> OnServerOutput(ServerBase server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task<bool> OnServerRawOutput(ServerBase server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task OnServerInput(ServerBase server, string line) => Task.CompletedTask;
 
     protected virtual Task OnGroupIncreased() => Task.CompletedTask;
 
@@ -62,13 +57,13 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarted:
-                return OnServerStarted(args.First().OfType<Services.Servers.Server>());
+                return OnServerStarted(args.First().OfType<ServerBase>());
 
             case Event.ServerStarting:
-                return OnServerStarting(args.First().OfType<Services.Servers.Server>());
+                return OnServerStarting(args.First().OfType<ServerBase>());
 
             case Event.ServerStopping:
-                return OnServerStopping(args.First().OfType<Services.Servers.Server>());
+                return OnServerStopping(args.First().OfType<ServerBase>());
 
             case Event.GroupMessageReceived:
                 return OnGroupMessageReceived(args.First().OfType<MessagePacket>());
@@ -89,7 +84,7 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerOutput(
-                    args.First().OfType<Services.Servers.Server>(),
+                    args.First().OfType<ServerBase>(),
                     args.Last().OfType<string>()
                 );
 
@@ -100,7 +95,7 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerRawOutput(
-                    args.First().OfType<Services.Servers.Server>(),
+                    args.First().OfType<ServerBase>(),
                     args.Last().OfType<string>()
                 );
 
@@ -111,14 +106,14 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerInput(
-                    args.First().OfType<Services.Servers.Server>(),
+                    args.First().OfType<ServerBase>(),
                     args.Last().OfType<string>()
                 );
 
             case Event.ServerExited:
                 if (
                     args.Length != 3
-                    || args[0] is not Services.Servers.Server server
+                    || args[0] is not ServerBase server
                     || args[1] is not int code
                     || args[2] is not DateTime time
                 )

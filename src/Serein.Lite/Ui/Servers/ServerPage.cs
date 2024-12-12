@@ -35,7 +35,7 @@ public partial class ServerPage : UserControl
         StatusStrip.Visible = _panels.Count == 0;
     }
 
-    private void Add(string id, Server server)
+    private void Add(string id, ServerBase server)
     {
         if (!File.Exists(ResourcesManager.IndexPath))
         {

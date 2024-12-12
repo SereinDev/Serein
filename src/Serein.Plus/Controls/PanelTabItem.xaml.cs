@@ -27,12 +27,12 @@ public partial class PanelTabItem : TabItem
     private readonly MainWindow _mainWindow;
     private readonly InfoBarProvider _infoBarProvider;
     private readonly Timer _timer;
-    public Server Server { get; }
+    public ServerBase Server { get; }
     public PanelViewModel ViewModel { get; }
 
     public PanelTabItem(
         string id,
-        Server server,
+        ServerBase server,
         ServerManager serverManager,
         ServerPage page,
         MainWindow mainWindow,
@@ -68,7 +68,7 @@ public partial class PanelTabItem : TabItem
                     () =>
                         Console.AppendLine(
                             Server.Configuration.OutputStyle == OutputStyle.Plain
-                                ? OutputFilter.RemoveColorChars(e.Data)
+                                ? OutputFilter.RemoveANSIEscapeChars(e.Data)
                                 : e.Data
                         )
                 );

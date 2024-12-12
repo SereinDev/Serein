@@ -129,7 +129,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
 
     private void NotifyOutput(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not Server server)
+        if (sender is not ServerBase server)
         {
             return;
         }
@@ -162,7 +162,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
 
     private void NotifyStatusChanged(object? sender, EventArgs e)
     {
-        if (sender is not Server server)
+        if (sender is not ServerBase server)
         {
             return;
         }

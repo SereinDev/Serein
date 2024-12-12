@@ -157,6 +157,18 @@
                                     使用Unicode字符输入（如"§"→"\u00a7"），通常用于解决基岩版服务器输入Tellraw的编码问题
                                 </CheckBox.ToolTip>
                             </CheckBox>
+                            <CheckBox
+                                Margin="0,20"
+                                Content="使用虚拟终端"
+                                IsChecked="{Binding Configuration.UsePty}">
+                                <CheckBox.ToolTip>
+                                    <sys:String xml:space="preserve">使用虚拟终端输入和输出
+· 用于解决一些控制台无输入或输出的问题
+· 在编辑服务器配置时修改此项需重启Serein方可生效
+· 可能因系统版本不同而有不同的效果                                     
+· 这是一个实验性选项，后续版本中可能会发生变化</sys:String>
+                                </CheckBox.ToolTip>
+                            </CheckBox>
                         </StackPanel>
                     </Grid>
                     <TextBox ui:ControlHelper.Header="行终止符" Text="{Binding Configuration.LineTerminator, Converter={StaticResource lineTerminatorConverter}}">

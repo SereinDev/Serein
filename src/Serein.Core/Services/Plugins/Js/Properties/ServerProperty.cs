@@ -13,7 +13,7 @@ public sealed class ServerProperty
         _serverManager = servers;
     }
 
-    public Server this[string id] => _serverManager.Servers[id];
+    public ServerBase this[string id] => _serverManager.Servers[id];
 
     public string[] Ids => _serverManager.Servers.Keys.ToArray();
 

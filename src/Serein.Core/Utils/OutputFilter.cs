@@ -27,16 +27,16 @@ public static partial class OutputFilter
         return stringBuilder.ToString();
     }
 
-    private static readonly Regex ColorCharsPattern = GetColorCharsPattern();
+    private static readonly Regex ANSIEscapePattern = GetANSIEscapePattern();
 
     /// <summary>
     /// 移除颜色字符
     /// </summary>
     /// <param name="input">输入</param>
     /// <returns>移除后的文本</returns>
-    public static string RemoveColorChars(string input)
+    public static string RemoveANSIEscapeChars(string input)
     {
-        return ColorCharsPattern.Replace(input, string.Empty);
+        return ANSIEscapePattern.Replace(input, string.Empty);
     }
 
     /// <summary>
@@ -46,9 +46,9 @@ public static partial class OutputFilter
     /// <returns>移除后的文本</returns>
     public static string Clear(string input)
     {
-        return RemoveColorChars(RemoveControlChars(input));
+        return RemoveANSIEscapeChars(RemoveControlChars(input));
     }
 
-    [GeneratedRegex(@"\x1B\[[0-9;]*[ABCDEFGHJKSTfmnsulh]")]
-    private static partial Regex GetColorCharsPattern();
+    [GeneratedRegex(@"\x1B\[[0-9;\?=]*[ABCDEFGHJKSTfmnsulh]")]
+    private static partial Regex GetANSIEscapePattern();
 }

@@ -82,7 +82,7 @@ public sealed class CommandRunner
                 break;
 
             case CommandType.InputServer:
-                Server? server = null;
+                ServerBase? server = null;
                 if (!string.IsNullOrEmpty(argumentStr))
                 {
                     _serverManager.Value.Servers.TryGetValue(argumentStr, out server);

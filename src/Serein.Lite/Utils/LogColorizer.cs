@@ -48,14 +48,19 @@ public static partial class LogColorizer
     ];
 
     [GeneratedRegex(@"\s")]
-    private static partial Regex SpaceRegex();
+    private static partial Regex GetSpaceRegex();
+
+    [GeneratedRegex(@"\[[0-9;]*m")]
+    private static partial Regex GetColorEscapePattern();
+
+    private static readonly Regex SpaceRegex = GetSpaceRegex();
+    private static readonly Regex ColorEscapePattern = GetColorEscapePattern();
 
     public static string EscapeLog(string text) =>
-        SpaceRegex()
-            .Replace(
-                WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
-                "&nbsp;"
-            );
+        SpaceRegex.Replace(
+            WebUtility.HtmlEncode(text).Replace("\r", null).Replace("\n", "<br>"),
+            "&nbsp;"
+        );
 
     public static List<LineFragment> ParseAnsiCode(string line)
     {
@@ -68,12 +73,10 @@ public static partial class LogColorizer
 
         foreach (var part in line.Split('\x1b', StringSplitOptions.RemoveEmptyEntries))
         {
-            if (!part.StartsWith('[') || !part.Contains('m'))
+            if (!ColorEscapePattern.IsMatch(part))
             {
-                list.Add(Create(part));
-                {
-                    continue;
-                }
+                list.Add(Create(OutputFilter.RemoveANSIEscapeChars("\x1b" + part)));
+                continue;
             }
 
             var fragment = Create(part[(part.IndexOf('m') + 1)..]);

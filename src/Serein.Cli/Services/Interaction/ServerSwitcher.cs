@@ -84,7 +84,7 @@ public sealed class ServerSwitcher(
 
     private void LogToConsole(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not Server server)
+        if (sender is not ServerBase server)
         {
             return;
         }

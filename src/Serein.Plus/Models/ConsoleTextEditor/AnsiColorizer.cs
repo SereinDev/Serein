@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
@@ -9,6 +10,11 @@ namespace Serein.Plus.Models.ConsoleTextEditor;
 
 public partial class AnsiColorizer : DocumentColorizingTransformer
 {
+    [GeneratedRegex(@"^[0-9;]*$")]
+    private static partial Regex GetColorArgsEscapePattern();
+
+    private static readonly Regex ColorArgsEscapePattern = GetColorArgsEscapePattern();
+
     protected override void ColorizeLine(DocumentLine line)
     {
         var text = CurrentContext.Document.GetText(line);
@@ -42,8 +48,16 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                 continue;
             }
 
-            var args = text.Substring(i + 2, mIndex - i - 2)
-                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var argsPart = text.Substring(i + 2, mIndex - i - 2);
+            if (!ColorArgsEscapePattern.IsMatch(argsPart))
+            {
+                continue;
+            }
+
+            var args = argsPart.Split(
+                ';',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+            );
 
             if (args.Length == 0)
             {

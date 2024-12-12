@@ -14,11 +14,11 @@ namespace Serein.Plus.Windows;
 
 public partial class ServerPluginManagerWindow : Window
 {
-    private readonly Server _server;
+    private readonly ServerBase _server;
     public ObservableCollection<ServerPlugin> Plugins { get; }
     public ServerPluginManagerViewModel ViewModel { get; }
 
-    public ServerPluginManagerWindow(Server server)
+    public ServerPluginManagerWindow(ServerBase server)
     {
         _server = server;
         _server.PluginManager.Update();

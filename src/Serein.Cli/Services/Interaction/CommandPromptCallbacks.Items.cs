@@ -35,7 +35,7 @@ public partial class CommandPromptCallbacks
             (kv) => new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
-        static Task<FormattedString> GetDescription(KeyValuePair<string, Server> kv)
+        static Task<FormattedString> GetDescription(KeyValuePair<string, ServerBase> kv)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(kv.Value.Configuration.Name);

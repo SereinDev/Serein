@@ -95,14 +95,16 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.Version, Mode=OneWay, TargetNullValue=-}" />
+                    Text="{Binding ViewModel.Version, Mode=OneWay, TargetNullValue=-}"
+                    ToolTip="{Binding ViewModel.Version, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="2" Text="在线人数" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.PlayerCount, Mode=OneWay, TargetNullValue=-}" />
+                    Text="{Binding ViewModel.PlayerCount, Mode=OneWay, TargetNullValue=-}"
+                    ToolTip="{Binding ViewModel.PlayerCount, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="3" Text="运行时长" />
                 <TextBlock
@@ -110,7 +112,8 @@
                     Grid.Row="3"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource timeSpanConverter}}" />
+                    Text="{Binding ViewModel.RunTime, Mode=OneWay, TargetNullValue=-, Converter={StaticResource timeSpanConverter}}"
+                    ToolTip="{Binding ViewModel.RunTime, Mode=OneWay, Converter={StaticResource timeSpanConverter}}" />
 
                 <TextBlock Grid.Row="4" Text="进程占用" />
                 <TextBlock

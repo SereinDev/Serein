@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.TableLayoutPanel MainTableLayoutPanel;
             System.Windows.Forms.GroupBox InfoGroupBox;
             System.Windows.Forms.TableLayoutPanel InformationTableLayoutPanel;
@@ -56,6 +57,7 @@
             ConsoleBrowser = new Controls.ConsoleWebBrowser();
             InputTextBox = new System.Windows.Forms.TextBox();
             EnterButton = new System.Windows.Forms.Button();
+            ToolTipProvider = new System.Windows.Forms.ToolTip(components);
             MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             InfoGroupBox = new System.Windows.Forms.GroupBox();
             InformationTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -475,5 +477,6 @@
         private System.Windows.Forms.Label PlayerCountDynamicLabel;
         private System.Windows.Forms.Label CPUPercentDynamicLabel;
         private Serein.Lite.Ui.Controls.ConsoleWebBrowser ConsoleBrowser;
+        private System.Windows.Forms.ToolTip ToolTipProvider;
     }
 }
