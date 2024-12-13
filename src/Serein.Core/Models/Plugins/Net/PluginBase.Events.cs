@@ -28,12 +28,6 @@ public abstract partial class PluginBase
 
     protected virtual Task OnServerInput(ServerBase server, string line) => Task.CompletedTask;
 
-    protected virtual Task OnGroupIncreased() => Task.CompletedTask;
-
-    protected virtual Task OnGroupDecreased() => Task.CompletedTask;
-
-    protected virtual Task OnGroupPoked() => Task.CompletedTask;
-
     protected virtual Task<bool> OnGroupMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);
 
@@ -42,7 +36,7 @@ public abstract partial class PluginBase
 
     protected virtual Task<bool> OnWsDataReceived(string data) => Task.FromResult(true);
 
-    protected virtual Task<bool> OnPacketReceived(JsonNode packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnPacketReceived(JsonObject packet) => Task.FromResult(true);
 
     protected virtual Task OnSereinClosed() => Task.CompletedTask;
 
@@ -75,7 +69,7 @@ public abstract partial class PluginBase
                 return OnWsDataReceived(args.First().OfType<string>());
 
             case Event.PacketReceived:
-                return OnPacketReceived(args.First().OfType<JsonNode>());
+                return OnPacketReceived(args.First().OfType<JsonObject>());
 
             case Event.ServerOutput:
                 if (args.Length != 2)

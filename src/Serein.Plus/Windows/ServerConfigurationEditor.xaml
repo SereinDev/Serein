@@ -158,15 +158,25 @@
                                 </CheckBox.ToolTip>
                             </CheckBox>
                             <CheckBox
-                                Margin="0,20"
+                                Margin="0,15,0,5"
                                 Content="使用虚拟终端"
-                                IsChecked="{Binding Configuration.UsePty}">
+                                IsChecked="{Binding Configuration.Pty.IsEnabled}">
                                 <CheckBox.ToolTip>
                                     <sys:String xml:space="preserve">使用虚拟终端输入和输出
 · 用于解决一些控制台无输入或输出的问题
 · 在编辑服务器配置时修改此项需重启Serein方可生效
 · 可能因系统版本不同而有不同的效果                                     
 · 这是一个实验性选项，后续版本中可能会发生变化</sys:String>
+                                </CheckBox.ToolTip>
+                            </CheckBox>
+                            <CheckBox
+                                Content="强制使用WinPty"
+                                IsChecked="{Binding Configuration.Pty.ForceWinPty}"
+                                IsEnabled="{Binding Configuration.Pty.IsEnabled}">
+                                <CheckBox.ToolTip>
+                                    <sys:String xml:space="preserve">· 仅在Windows平台下生效
+· 若不勾选此项，你需要手动补全相应的动态链接库
+· 不推荐修改此项，除非你知道你在做什么！</sys:String>
                                 </CheckBox.ToolTip>
                             </CheckBox>
                         </StackPanel>

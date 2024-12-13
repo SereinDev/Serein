@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Models.Server;
@@ -11,6 +11,8 @@ public class Configuration : NotifyPropertyChangedModelBase
 
     public string Argument { get; set; } = string.Empty;
 
+    public Dictionary<string, string> Environment { get; set; } = [];
+
     public bool AutoStopWhenCrashing { get; set; } = true;
 
     public bool AutoRestart { get; set; }
@@ -19,7 +21,7 @@ public class Configuration : NotifyPropertyChangedModelBase
 
     public bool SaveLog { get; set; }
 
-    public string LineTerminator { get; set; } = Environment.NewLine;
+    public string LineTerminator { get; set; } = System.Environment.NewLine;
 
     public EncodingMap.EncodingType InputEncoding { get; set; }
 
@@ -35,9 +37,16 @@ public class Configuration : NotifyPropertyChangedModelBase
 
     public bool UseUnicodeChars { get; set; }
 
-    public bool UsePty { get; set; }
+    public PtyOptions Pty { get; set; } = new();
 
-    public int? TerminalWidth { get; set; } = 150;
+    public sealed class PtyOptions : NotifyPropertyChangedModelBase
+    {
+        public bool IsEnabled { get; set; }
 
-    public int? TerminalHeight { get; set; } = 80;
+        public int? TerminalWidth { get; set; } = 150;
+
+        public int? TerminalHeight { get; set; } = 80;
+
+        public bool ForceWinPty { get; set; } = true;
+    }
 }

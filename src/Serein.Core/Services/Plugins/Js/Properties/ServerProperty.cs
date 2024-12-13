@@ -17,7 +17,7 @@ public sealed class ServerProperty
 
     public string[] Ids => _serverManager.Servers.Keys.ToArray();
 
-    public void Add(string id, Configuration configuration) =>
+    public ServerBase Add(string id, Configuration configuration) =>
         _serverManager.Add(id, configuration);
 
     public bool Remove(string id) => _serverManager.Remove(id);

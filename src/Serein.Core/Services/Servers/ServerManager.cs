@@ -103,7 +103,7 @@ public partial class ServerManager
     {
         ValidateId(id);
 
-        ServerBase server = configuration.UsePty
+        ServerBase server = configuration.Pty.IsEnabled
             ? new ServerWithPty(
                 id,
                 _matcher,

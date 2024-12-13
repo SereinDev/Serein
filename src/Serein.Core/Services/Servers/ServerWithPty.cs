@@ -66,15 +66,15 @@ public class ServerWithPty(
                     Rows =
                         SereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
-                        && Configuration.TerminalHeight is null
+                        && Configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
-                            : Configuration.TerminalHeight ?? 80,
+                            : Configuration.Pty.TerminalHeight ?? 80,
                     Cols =
                         SereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
-                        && Configuration.TerminalHeight is null
+                        && Configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
-                            : Configuration.TerminalWidth ?? 150,
+                            : Configuration.Pty.TerminalWidth ?? 150,
                 },
                 _cancellationTokenSource.Token
             )

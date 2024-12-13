@@ -39,21 +39,25 @@ public sealed class Server : ServerBase
 
     protected override void StartProcess()
     {
-        _process = Process.Start(
-            new ProcessStartInfo
-            {
-                FileName = Configuration.FileName,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                RedirectStandardInput = true,
-                StandardOutputEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
-                StandardErrorEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
-                WorkingDirectory = Path.GetDirectoryName(Configuration.FileName),
-                Arguments = Configuration.Argument,
-            }
-        );
+        var psi = new ProcessStartInfo
+        {
+            FileName = Configuration.FileName,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            RedirectStandardInput = true,
+            StandardOutputEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
+            StandardErrorEncoding = EncodingMap.GetEncoding(Configuration.OutputEncoding),
+            WorkingDirectory = Path.GetDirectoryName(Configuration.FileName),
+            Arguments = Configuration.Argument,
+        };
+        foreach (var (key, value) in Configuration.Environment)
+        {
+            psi.Environment[key] = value;
+        }
+
+        _process = Process.Start(psi);
         _process!.EnableRaisingEvents = true;
 
         _inputWriter = new(_process.StandardInput.BaseStream);

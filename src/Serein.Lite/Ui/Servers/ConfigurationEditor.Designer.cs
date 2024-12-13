@@ -48,6 +48,7 @@
             NameTextBox = new System.Windows.Forms.TextBox();
             ArgumentTextBox = new System.Windows.Forms.TextBox();
             InputAndOutputTabPage = new System.Windows.Forms.TabPage();
+            UsePtyCheckBox = new System.Windows.Forms.CheckBox();
             LineTerminatorTextBox = new System.Windows.Forms.TextBox();
             UseUnicodeCharsCheckBox = new System.Windows.Forms.CheckBox();
             OutputCommandUserInputCheckBox = new System.Windows.Forms.CheckBox();
@@ -64,7 +65,7 @@
             ConfirmButton = new System.Windows.Forms.Button();
             ErrorProvider = new System.Windows.Forms.ErrorProvider(components);
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            UsePtyCheckBox = new System.Windows.Forms.CheckBox();
+            ForceWinPtyCheckBox = new System.Windows.Forms.CheckBox();
             IdLabel = new System.Windows.Forms.Label();
             NameLabel = new System.Windows.Forms.Label();
             FileNameLabel = new System.Windows.Forms.Label();
@@ -267,6 +268,7 @@
             // 
             // InputAndOutputTabPage
             // 
+            InputAndOutputTabPage.Controls.Add(ForceWinPtyCheckBox);
             InputAndOutputTabPage.Controls.Add(UsePtyCheckBox);
             InputAndOutputTabPage.Controls.Add(LineTerminatorTextBox);
             InputAndOutputTabPage.Controls.Add(LineTerminatorLabel);
@@ -286,6 +288,18 @@
             InputAndOutputTabPage.TabIndex = 1;
             InputAndOutputTabPage.Text = "输出/输入";
             InputAndOutputTabPage.UseVisualStyleBackColor = true;
+            // 
+            // UsePtyCheckBox
+            // 
+            UsePtyCheckBox.AutoSize = true;
+            UsePtyCheckBox.Location = new System.Drawing.Point(365, 194);
+            UsePtyCheckBox.Name = "UsePtyCheckBox";
+            UsePtyCheckBox.Size = new System.Drawing.Size(310, 35);
+            UsePtyCheckBox.TabIndex = 11;
+            UsePtyCheckBox.Text = "使用虚拟终端（实验性）";
+            ToolTip.SetToolTip(UsePtyCheckBox, "使用虚拟终端输入和输出\r\n· 用于解决一些控制台无输入或输出的问题\r\n· 在编辑服务器配置时修改此项需重启Serein方可生效\r\n· 可能因系统版本不同而有不同的效果                                     \r\n· 这是一个实验性选项，后续版本中可能会发生变化");
+            UsePtyCheckBox.UseVisualStyleBackColor = true;
+            UsePtyCheckBox.CheckedChanged += UsePtyCheckBox_CheckedChanged;
             // 
             // LineTerminatorTextBox
             // 
@@ -447,16 +461,16 @@
             // 
             ErrorProvider.ContainerControl = this;
             // 
-            // UsePtyCheckBox
+            // ForceWinPtyCheckBox
             // 
-            UsePtyCheckBox.AutoSize = true;
-            UsePtyCheckBox.Location = new System.Drawing.Point(365, 194);
-            UsePtyCheckBox.Name = "UsePtyCheckBox";
-            UsePtyCheckBox.Size = new System.Drawing.Size(310, 35);
-            UsePtyCheckBox.TabIndex = 11;
-            UsePtyCheckBox.Text = "使用虚拟终端（实验性）";
-            ToolTip.SetToolTip(UsePtyCheckBox, "使用虚拟终端输入和输出\r\n· 用于解决一些控制台无输入或输出的问题\r\n· 在编辑服务器配置时修改此项需重启Serein方可生效\r\n· 可能因系统版本不同而有不同的效果                                     \r\n· 这是一个实验性选项，后续版本中可能会发生变化");
-            UsePtyCheckBox.UseVisualStyleBackColor = true;
+            ForceWinPtyCheckBox.AutoSize = true;
+            ForceWinPtyCheckBox.Location = new System.Drawing.Point(365, 236);
+            ForceWinPtyCheckBox.Name = "ForceWinPtyCheckBox";
+            ForceWinPtyCheckBox.Size = new System.Drawing.Size(224, 35);
+            ForceWinPtyCheckBox.TabIndex = 12;
+            ForceWinPtyCheckBox.Text = "强制使用WinPty";
+            ToolTip.SetToolTip(ForceWinPtyCheckBox, "· 仅在Windows平台下生效\r\n· 若不勾选此项，你需要手动补全相应的动态链接库\r\n· 不推荐修改此项，除非你知道你在做什么！");
+            ForceWinPtyCheckBox.UseVisualStyleBackColor = true;
             // 
             // ConfigurationEditor
             // 
@@ -514,5 +528,6 @@
         private System.Windows.Forms.ErrorProvider ErrorProvider;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.CheckBox UsePtyCheckBox;
+        private System.Windows.Forms.CheckBox ForceWinPtyCheckBox;
     }
 }

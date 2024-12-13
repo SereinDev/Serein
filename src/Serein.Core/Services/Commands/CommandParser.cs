@@ -23,7 +23,7 @@ public partial class CommandParser(
     [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommandRegex();
 
-    [GeneratedRegex(@"\{([a-zA-Z]+(\.[a-zA-Z]+)?(@\w+)?)\}")]
+    [GeneratedRegex(@"\{([a-zA-Z][a-zA-Z0-9\.]+?(@\w+)?)\}")]
     private static partial Regex GetVariableRegex();
 
     public static readonly Regex Variable = GetVariableRegex();
@@ -295,7 +295,6 @@ public partial class CommandParser(
 
         return text;
     }
-#pragma warning restore IDE0046
 
     private string? GetGameId(long? userId)
     {
@@ -308,6 +307,8 @@ public partial class CommandParser(
             ? binding.GameIds.FirstOrDefault()
             : null;
     }
+
+#pragma warning restore IDE0046
 
     private object? GetServerVariables(string input, string? id = null)
     {
