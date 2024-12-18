@@ -17,8 +17,8 @@ public static class UrlConstants
 
     public static readonly string Eula = "https://www.minecraft.net/zh-hans/eula";
 
-    public static readonly string CommercialGuidelines =
-        "https://account.mojang.com/documents/commercial_guidelines";
+    public static readonly string UsageGuidelines =
+        "https://www.minecraft.net/zh-hans/usage-guidelines";
 
     public static readonly string Docs = "https://sereindev.github.io/";
 

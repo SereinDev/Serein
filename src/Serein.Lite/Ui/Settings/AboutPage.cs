@@ -24,7 +24,7 @@ public partial class AboutPage : UserControl
 
     private void DeclarationLinkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        UrlConstants.CommercialGuidelines.OpenInBrowser();
+        UrlConstants.UsageGuidelines.OpenInBrowser();
     }
 
     private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

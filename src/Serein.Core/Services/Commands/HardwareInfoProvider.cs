@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Timers;
 using Hardware.Info;
@@ -42,6 +43,7 @@ public sealed class HardwareInfoProvider
         }
 
         lock (_lock)
+        {
             try
             {
                 _isLoading = true;
@@ -52,17 +54,49 @@ public sealed class HardwareInfoProvider
                 }
                 else
                 {
-                    Info.RefreshAll();
+                    Try(Info.RefreshBatteryList);
+                    Try(Info.RefreshBIOSList);
+                    Try(Info.RefreshComputerSystemList);
+                    Try(() => Info.RefreshCPUList());
+                    Try(Info.RefreshDriveList);
+                    Try(Info.RefreshKeyboardList);
+                    Try(Info.RefreshMemoryList);
+                    Try(Info.RefreshMemoryStatus);
+                    Try(Info.RefreshMonitorList);
+                    Try(Info.RefreshMotherboardList);
+                    Try(Info.RefreshMouseList);
+                    Try(() => Info.RefreshNetworkAdapterList());
+                    Try(Info.RefreshOperatingSystem);
+                    Try(Info.RefreshPrinterList);
+                    Try(Info.RefreshSoundDeviceList);
+                    Try(Info.RefreshVideoControllerList);
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError("更新信息失败：{}", e.Message);
-                _logger.LogDebug(e, "更新信息失败");
+                _logger.LogError("初始化失败：{}", e.Message);
+                _logger.LogDebug(e, "初始化失败");
             }
             finally
             {
                 _isLoading = false;
             }
+        }
+
+        void Try(
+            Action action,
+            [CallerArgumentExpression(nameof(action))] string? expression = null
+        )
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("更新信息失败：{}（{}）", e.Message, expression);
+                _logger.LogDebug(e, "更新信息失败");
+            }
+        }
     }
 }

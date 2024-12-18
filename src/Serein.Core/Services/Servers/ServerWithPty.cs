@@ -51,6 +51,13 @@ public class ServerWithPty(
         }
 
         _isPreparing = true;
+
+        var cwd = Path.GetDirectoryName(Configuration.FileName);
+        if (string.IsNullOrEmpty(cwd))
+        {
+            cwd = Directory.GetCurrentDirectory();
+        }
+
         PtyProvider
             .SpawnAsync(
                 new()
@@ -58,9 +65,7 @@ public class ServerWithPty(
                     Name = Id,
                     App = Configuration.FileName,
                     CommandLine = [Configuration.Argument],
-                    Cwd =
-                        Path.GetDirectoryName(Configuration.FileName)
-                        ?? Directory.GetCurrentDirectory(),
+                    Cwd = cwd,
                     ForceWinPty = Environment.OSVersion.Platform == PlatformID.Win32NT,
 
                     Rows =
@@ -98,6 +103,7 @@ public class ServerWithPty(
                     {
                         _ptyConnection = null;
                         _process = null;
+                        _streamReader?.Close();
                         OnServerExit(e.ExitCode);
                         _cancellationTokenSource.Cancel();
                     };

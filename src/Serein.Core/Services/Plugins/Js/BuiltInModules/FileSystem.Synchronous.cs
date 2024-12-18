@@ -10,10 +10,27 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js.BuiltInModules;
 
-#pragma warning disable CA1822
-
 public static partial class FileSystem
 {
+    internal static void DisposeAll()
+    {
+        foreach (var stream in FileStreams.Values)
+        {
+            stream.Close();
+            stream.Dispose();
+        }
+        FileStreams.Clear();
+    }
+
+    internal static readonly Dictionary<int, FileStream> FileStreams = [];
+
+    private static FileStream GetFileStream(int fd)
+    {
+        return !FileStreams.TryGetValue(fd, out var stream)
+            ? throw new IOException("Invalid file descriptor")
+            : stream;
+    }
+
     public static void AccessSync(string path, int mode = 0)
     {
         throw new NotSupportedException();
@@ -56,7 +73,10 @@ public static partial class FileSystem
 
     public static void CloseSync(int fd)
     {
-        throw new NotSupportedException();
+        var fileStream = GetFileStream(fd);
+        fileStream.Close();
+        fileStream.Dispose();
+        FileStreams.Remove(fd);
     }
 
     public static void CopyFileSync(string src, string dest, int flags = 0)
@@ -64,7 +84,7 @@ public static partial class FileSystem
         File.Copy(src, dest, flags != 1);
     }
 
-    public static void Cp(string src, string dest, JsValue? options = default)
+    public static void CpSync(string src, string dest, JsValue? options = default)
     {
         throw new NotSupportedException();
     }
@@ -96,17 +116,19 @@ public static partial class FileSystem
 
     public static void FsyncSync(int fd)
     {
-        throw new NotSupportedException();
+        GetFileStream(fd).Flush();
     }
 
-    public static void FtruncateSync(int fd, int len)
+    public static void FtruncateSync(int fd, int len = 0)
     {
-        throw new NotSupportedException();
+        GetFileStream(fd).SetLength(len);
     }
 
-    public static void FutimesSync(int fd, int atime, int mtime)
+    public static void FutimesSync(int fd, DateTime atime, DateTime mtime)
     {
-        throw new NotSupportedException();
+        var fileStream = GetFileStream(fd);
+        File.SetLastAccessTime(fileStream.Name, atime);
+        File.SetLastWriteTime(fileStream.Name, mtime);
     }
 
     public static string[] GlobSync(string pattern, JsValue? options = default)
@@ -211,7 +233,7 @@ public static partial class FileSystem
         {
 #pragma warning disable CA1416
             Directory.CreateDirectory(path, (UnixFileMode)mode);
-#pragma warning restore format
+#pragma warning restore CA1416
         }
     }
 
@@ -227,9 +249,31 @@ public static partial class FileSystem
         throw new NotSupportedException();
     }
 
-    public static void OpenSync(string path, string flags, JsValue? mode = default)
+    public static int OpenSync(string path, string flags, JsValue? mode = default)
     {
-        throw new NotSupportedException();
+        var fileStream = new FileStream(
+            path,
+            flags switch
+            {
+                "r" => FileMode.Open,
+                "r+" => FileMode.Open,
+                "rs" => FileMode.Open,
+                "rs+" => FileMode.Open,
+                "w" => FileMode.Create,
+                "wx" => FileMode.CreateNew,
+                "w+" => FileMode.OpenOrCreate,
+                "wx+" => FileMode.CreateNew,
+                "a" => FileMode.Append,
+                "ax" => FileMode.Append,
+                "a+" => FileMode.Append,
+                "ax+" => FileMode.Append,
+                _ => throw new ArgumentException("Invalid flags", nameof(flags)),
+            }
+        );
+
+        FileStreams.Add(FileStreams.GetHashCode(), fileStream);
+
+        return FileStreams.GetHashCode();
     }
 
     public static string ReadFileSync(string path, JsValue? options = default)
@@ -253,9 +297,9 @@ public static partial class FileSystem
         }
     }
 
-    public static void ReaddirSync(string path, JsValue? options = default)
+    public static string[] ReaddirSync(string path, JsValue? options = default)
     {
-        throw new NotSupportedException();
+        return Directory.GetFiles(path);
     }
 
     public static void ReadlinkSync(string path, JsValue? options = default)
@@ -263,9 +307,11 @@ public static partial class FileSystem
         throw new NotSupportedException();
     }
 
-    public static void ReadSync(int fd, byte[] buffer, int offset, int length, int position)
+    public static int ReadSync(int fd, byte[] buffer, int offset, int length, int position = 0)
     {
-        throw new NotSupportedException();
+        var fileStream = GetFileStream(fd);
+        fileStream.Seek(position, SeekOrigin.Begin);
+        return fileStream.Read(buffer, offset, length);
     }
 
     public static void RealpathSync(string path, JsValue? options = default)
@@ -344,6 +390,7 @@ public static partial class FileSystem
     {
         using var file = File.Open(path, FileMode.Open);
         file.SetLength(len);
+        file.Flush();
         file.Close();
     }
 
@@ -383,13 +430,37 @@ public static partial class FileSystem
         file.Close();
     }
 
-    public static void WriteSync(int fd, byte[] buffer)
+    public static int WriteSync(int fd, byte[] buffer)
     {
-        throw new NotSupportedException();
+        return WriteSync(fd, buffer, 0, buffer.Length, 0);
     }
 
-    public static void WriteSync(int fd, byte[] buffer, int offset, int length, int position)
+    public static int WriteSync(
+        int fd,
+        byte[] buffer,
+        int offset = 0,
+        int? length = null,
+        int position = 0
+    )
     {
-        throw new NotSupportedException();
+        var l = length ?? (buffer.Length - offset);
+
+        var fileStream = GetFileStream(fd);
+        fileStream.Seek(position, SeekOrigin.Begin);
+        fileStream.Write(buffer, offset, l);
+        fileStream.Flush();
+
+        return l;
+    }
+
+    public static int WriteSync(int fd, string data, int position = 0, string encoding = "utf8")
+    {
+        var buffer = (
+            encoding.Equals("utf8", StringComparison.InvariantCultureIgnoreCase)
+                ? EncodingMap.UTF8
+                : Encoding.GetEncoding(encoding)
+        ).GetBytes(data);
+
+        return WriteSync(fd, buffer, 0, buffer.Length, position);
     }
 }

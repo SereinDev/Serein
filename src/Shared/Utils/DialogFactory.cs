@@ -3,11 +3,13 @@ using Serein.Core;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 #if LITE
+
 using Ookii.Dialogs.WinForms;
 
 namespace Serein.Lite.Utils;
 
 #elif PLUS
+
 using Ookii.Dialogs.Wpf;
 
 namespace Serein.Plus.Utils;
@@ -35,7 +37,7 @@ public static class DialogFactory
                 "如果你是第一次使用Serein，那么一定要仔细阅读以下内容，相信这些会对你有所帮助(๑•̀ㅂ•́)و✧",
             EnableHyperlinks = true,
             Footer =
-                $"使用此软件即视为你已阅读并同意了<a href=\"{UrlConstants.DocsArgument}\">用户协议</a>",
+                $"使用此软件即视为你已阅读并同意了<a href=\"{UrlConstants.DocsArgument}\">使用协议</a>",
             ExpandedInformation =
                 "此软件与Mojang Studio、网易、Microsoft没有从属关系\n"
                 + $"Serein is licensed under <a href=\"{UrlConstants.License}\">GPL-v3.0</a>\n"

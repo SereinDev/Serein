@@ -229,8 +229,8 @@ namespace Serein.Lite.Ui.Settings
             DeclarationLinkLabel2.Size = new System.Drawing.Size(304, 31);
             DeclarationLinkLabel2.TabIndex = 13;
             DeclarationLinkLabel2.TabStop = true;
-            DeclarationLinkLabel2.Text = "MINECRAFT 商业使用准则";
-            ToolTip.SetToolTip(DeclarationLinkLabel2, UrlConstants.CommercialGuidelines);
+            DeclarationLinkLabel2.Text = "MINECRAFT 使用准则";
+            ToolTip.SetToolTip(DeclarationLinkLabel2, UrlConstants.UsageGuidelines);
             DeclarationLinkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             DeclarationLinkLabel2.LinkClicked += DeclarationLinkLabel2_LinkClicked;
             // 

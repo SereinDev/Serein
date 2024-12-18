@@ -11,6 +11,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Storages;
 using Serein.Core.Utils;
@@ -191,6 +192,7 @@ public sealed partial class PluginManager(
     {
         _eventDispatcher.Dispatch(Event.PluginsUnloading);
 
+        FileSystem.DisposeAll();
         _netPluginLoader.Unload();
         _jsPluginLoader.Unload();
         _sessionStorage.Clear();

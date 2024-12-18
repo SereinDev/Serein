@@ -51,7 +51,7 @@ public class JsPlugin : IPlugin
         Info = pluginInfo;
         FileName = fileName;
         Config = config;
-        TimerFactory = new(_cancellationTokenSource.Token);
+        TimerFactory = new(Info.Name, _pluginLogger, _cancellationTokenSource.Token);
         Console = new(_pluginLogger, Info.Name);
         ScriptInstance = new(serviceProvider, this);
         Engine = serviceProvider.GetRequiredService<JsEngineFactory>().Create(this);

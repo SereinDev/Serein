@@ -4,7 +4,6 @@ using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.Text;
-using Sentry;
 using Serein.Core.Utils;
 
 namespace Serein.Cli.Utils;
@@ -34,8 +33,6 @@ public static class CommandLineParserBuilder
 
     private static void OnException(Exception e, InvocationContext? context)
     {
-        SentrySdk.CaptureException(e);
-
         var fileName = CrashHelper.CreateLog(e);
 
         Console.ForegroundColor = ConsoleColor.Red;

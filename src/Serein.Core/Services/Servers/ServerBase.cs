@@ -166,18 +166,24 @@ public abstract class ServerBase
             return;
         }
 
+        _cache.Add(filtered);
+
+        if (_cache.Count > 1)
+        {
+            _matcher.QueueServerOutputLine(Id, string.Join('\n', _cache));
+        }
+
         if (
-            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(
+            !_settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(
                 filtered.Contains
             )
         )
         {
-            _cache.Add(filtered);
-            _matcher.QueueServerOutputLine(Id, string.Join('\n', _cache));
-        }
-        else
-        {
             _cache.Clear();
+        }
+        else if (_cache.Count > 100)
+        {
+            _cache.RemoveRange(0, _cache.Count - 100);
         }
 
         _matcher.QueueServerOutputLine(Id, filtered);

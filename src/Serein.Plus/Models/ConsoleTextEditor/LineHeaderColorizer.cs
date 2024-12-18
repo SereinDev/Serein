@@ -118,7 +118,10 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
                 return;
         }
 
-        ChangeLinePart(line.Offset, line.Offset + match.Value.Length, action);
+        if (action is not null)
+        {
+            ChangeLinePart(line.Offset, line.Offset + match.Value.Length, action);
+        }
     }
 
     private static readonly Regex HeaderRegex = GetHeaderRegex();

@@ -92,7 +92,7 @@
                 FontSize="14"
                 LineHeight="25"
                 TextWrapping="Wrap">
-                <Run Text="本程序不涉及分发、修改和传播Minecraft客户端及服务端，仅作为服务端的管理软件方便服务器管理员（软件用户）控制服务器，造成的侵权行为由用户自行承担" />
+                <Run Text="本程序不涉及分发、修改和传播 Minecraft 客户端及服务端，仅作为服务端的管理软件方便服务器管理员（即用户）控制服务器，造成的侵权行为由用户自行承担" />
                 <LineBreak />
                 <Run Text="◾ “Minecraft”是 Mojang Synergies AB 的商标" />
                 <LineBreak />
@@ -103,8 +103,8 @@
                     MINECRAFT 最终用户许可协议
                 </Hyperlink>
                 <Run Text="和" />
-                <Hyperlink NavigateUri="https://account.mojang.com/documents/commercial_guidelines" RequestNavigate="OnRequestNavigate">
-                    MINECRAFT 商业使用准则
+                <Hyperlink NavigateUri="https://www.minecraft.net/zh-hans/usage-guidelines" RequestNavigate="OnRequestNavigate">
+                    MINECRAFT 使用准则
                 </Hyperlink>
             </TextBlock>
             <ui:HyperlinkButton Content="Github仓库" NavigateUri="https://github.com/SereinDev/Serein" />
