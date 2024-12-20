@@ -23,7 +23,7 @@ public partial class CommandParser(
     [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommandRegex();
 
-    [GeneratedRegex(@"\{([a-zA-Z][a-zA-Z0-9\.]+?(@\w+)?)\}")]
+    [GeneratedRegex(@"\{([a-zA-Z][a-zA-Z0-9\.]*(@\w+)?)\}")]
     private static partial Regex GetVariableRegex();
 
     public static readonly Regex Variable = GetVariableRegex();
@@ -312,7 +312,13 @@ public partial class CommandParser(
 
     private object? GetServerVariables(string input, string? id = null)
     {
+        if (!input.StartsWith("server.", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return null;
+        }
+
         var i = input.IndexOf('@');
+
         ServerBase? server;
 
         if (i < 0)

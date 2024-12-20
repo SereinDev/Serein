@@ -10,15 +10,13 @@ public sealed class PluginLogger(ILogger<PluginLogger> logger) : IPluginLogger
 
     public void Log(LogLevel level, string name, string message)
     {
-        switch (level)
+        if (level == LogLevel.Trace)
         {
-            case LogLevel.Trace:
-                _logger.LogInformation(message);
-                break;
-
-            default:
-                CliConsole.WriteLine(level, $"[{name}] {message}");
-                break;
+            _logger.LogInformation(message);
+        }
+        else
+        {
+            CliConsole.WriteLine(level, $"[{name}] {message}");
         }
     }
 }

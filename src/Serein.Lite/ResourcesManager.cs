@@ -11,7 +11,7 @@ public class ResourcesManager(ILogger<ResourcesManager> logger)
 
     private const string IndexHtml = "index.html";
     private const string CustomCss = "custom.css";
-    public const string IndexPath = "Serein/console/index.html";
+    public static readonly string IndexPath = "Serein/console/index.html";
 
     private readonly object _lock = new();
 

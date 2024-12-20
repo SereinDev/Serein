@@ -432,7 +432,7 @@ public static partial class FileSystem
 
     public static int WriteSync(int fd, byte[] buffer)
     {
-        return WriteSync(fd, buffer, 0, buffer.Length, 0);
+        return WriteSync(fd, buffer, length: buffer.Length);
     }
 
     public static int WriteSync(

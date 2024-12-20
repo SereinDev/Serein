@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serein.Core.Services.Permissions;
 using Xunit;
 
@@ -10,13 +9,12 @@ namespace Serein.Tests.Services.PermissionGroup;
 [Collection(nameof(Serein))]
 public sealed class NodeTests
 {
-    private readonly IHost _app;
     private readonly PermissionManager _permissionManager;
 
     public NodeTests()
     {
-        _app = HostFactory.BuildNew();
-        _permissionManager = _app.Services.GetRequiredService<PermissionManager>();
+        var app = HostFactory.BuildNew();
+        _permissionManager = app.Services.GetRequiredService<PermissionManager>();
     }
 
     [Theory]

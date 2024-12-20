@@ -47,6 +47,7 @@ public class ServerWithPty(
     {
         if (_cancellationTokenSource.IsCancellationRequested)
         {
+            _cancellationTokenSource.Dispose();
             _cancellationTokenSource = new();
         }
 
@@ -101,6 +102,7 @@ public class ServerWithPty(
                     _process = Process.GetProcessById(_ptyConnection.Pid);
                     _ptyConnection.ProcessExited += (_, e) =>
                     {
+                        _ptyConnection.Dispose();
                         _ptyConnection = null;
                         _process = null;
                         _streamReader?.Close();

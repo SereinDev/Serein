@@ -17,7 +17,7 @@ using Xunit;
 namespace Serein.Tests.Services.JsPlugin;
 
 [Collection(nameof(Serein))]
-public sealed class RunTimeTests : IDisposable
+public sealed partial class RunTimeTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;
@@ -91,19 +91,6 @@ public sealed class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public void ShouldAccessToBuiltInModuleFs()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        kv.Value.Engine.Evaluate("fs.writeFileSync('test.txt', 'test')");
-        Assert.True(File.Exists("test.txt"));
-        Assert.Equal(
-            File.ReadAllText("test.txt"),
-            kv.Value.Engine.Evaluate("fs.readFileSync('test.txt')")
-        );
-    }
-
-    [Fact]
     public void ShouldBeAbleToOutput()
     {
         var kv = _jsPluginLoader.Plugins.First();
@@ -156,5 +143,34 @@ public sealed class RunTimeTests : IDisposable
 
         await Task.Delay(1000);
         Assert.True(kv.Value.Engine.Evaluate("count").AsNumber() > 5);
+    }
+
+    [Fact]
+    public void ShouldAccessToBuiltInModuleFs()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+
+        Assert.NotEmpty(kv.Value.Engine.Evaluate("fs.globSync('*.*')").AsArray());
+
+        kv.Value.Engine.Evaluate("fs.writeFileSync('test.txt', 'test')");
+        Assert.True(File.Exists("test.txt"));
+        Assert.Equal(
+            File.ReadAllText("test.txt"),
+            kv.Value.Engine.Evaluate("fs.readFileSync('test.txt')")
+        );
+    }
+
+    [Fact]
+    public void ShouldBeAbleToResolveFile()
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+        Assert.Equal(
+            Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "111.txt")),
+            kv.Value.Engine.Evaluate("serein.resolve('111.txt')")
+        );
+        Assert.Equal(
+            Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "a", "b", "111.txt")),
+            kv.Value.Engine.Evaluate("serein.resolve('a', 'b', '111.txt')")
+        );
     }
 }

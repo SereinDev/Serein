@@ -1,7 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Commands;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;
@@ -12,15 +11,14 @@ namespace Serein.Tests.Services;
 [Collection(nameof(Serein))]
 public sealed class CommandTests
 {
-    private readonly IHost _app;
     private readonly Runner _commandRunner;
 
     public CommandTests()
     {
-        _app = HostFactory.BuildNew();
-        _app.StartAsync();
+        var app = HostFactory.BuildNew();
+        app.StartAsync();
 
-        _commandRunner = _app.Services.GetRequiredService<Runner>();
+        _commandRunner = app.Services.GetRequiredService<Runner>();
     }
 
     [Fact]

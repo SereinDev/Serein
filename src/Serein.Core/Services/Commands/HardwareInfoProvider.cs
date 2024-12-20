@@ -18,7 +18,6 @@ public sealed class HardwareInfoProvider
     public HardwareInfo? Info { get; private set; }
 
     private readonly object _lock;
-    private readonly Timer _timer;
     private readonly ILogger _logger;
     private bool _isLoading;
 
@@ -27,9 +26,10 @@ public sealed class HardwareInfoProvider
         Task.Run(Update);
         _lock = new();
         _logger = logger;
-        _timer = new(5000);
-        _timer.Elapsed += (_, _) => Update();
-        _timer.Start();
+
+        var timer = new Timer(5000);
+        timer.Elapsed += (_, _) => Update();
+        timer.Start();
     }
 
     /// <summary>

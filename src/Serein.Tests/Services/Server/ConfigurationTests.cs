@@ -69,7 +69,7 @@ public sealed class ConfigurationTests : IDisposable
     [Fact]
     public void ShouldCreateCommonServer()
     {
-        var server = _serverManager.Add("test", new() { FileName = "cmd", UsePty = false });
+        var server = _serverManager.Add("test", new() { FileName = "cmd" });
 
         Assert.Equal(typeof(Core.Services.Servers.Server), server.GetType());
     }
@@ -77,7 +77,10 @@ public sealed class ConfigurationTests : IDisposable
     [Fact]
     public void ShouldCreateServerWithPty()
     {
-        var server = _serverManager.Add("test", new() { FileName = "cmd", UsePty = true });
+        var server = _serverManager.Add(
+            "test",
+            new() { FileName = "cmd", Pty = { IsEnabled = true } }
+        );
 
         Assert.Equal(typeof(ServerWithPty), server.GetType());
     }

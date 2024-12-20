@@ -19,15 +19,15 @@ public class ApiTests : IDisposable
     private readonly HttpClient _client;
     private readonly IHost _app;
     private readonly HttpServer _httpServer;
-    private readonly SettingProvider _settingProvider;
 
     public ApiTests()
     {
         _app = HostFactory.BuildNew();
-        _settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        _settingProvider.Value.WebApi.IsEnabled = true;
+
+        var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
+        settingProvider.Value.WebApi.IsEnabled = true;
         _httpServer = _app.Services.GetRequiredService<HttpServer>();
-        _client = new() { BaseAddress = new(_settingProvider.Value.WebApi.UrlPrefixes.First()) };
+        _client = new() { BaseAddress = new(settingProvider.Value.WebApi.UrlPrefixes.First()) };
     }
 
     public void Dispose()
