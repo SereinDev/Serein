@@ -65,6 +65,11 @@ public sealed partial class ScriptInstance
         _pluginLogger.Log(LogLevel.Information, _jsPlugin.Info.Name, str);
     }
 
+    public void Log(JsValue jsValue)
+    {
+        _pluginLogger.Log(LogLevel.Information, _jsPlugin.Info.Name, jsValue.ToString());
+    }
+
     public bool Exports(string? name, JsValue jsValue)
     {
         if (string.IsNullOrEmpty(name))

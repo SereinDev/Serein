@@ -8,11 +8,14 @@ using Jint.Native;
 using Jint.Runtime.Interop;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Js;
+using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
+using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -106,9 +109,15 @@ public sealed class JsEngineFactory(
         engine.SetValue("fs", TypeReference.CreateTypeReference(engine, typeof(FileSystem)));
         engine.SetValue("process", TypeReference.CreateTypeReference(engine, typeof(Process)));
 
+        AddTypeReference<EncodingMap.EncodingType>();
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<AppType>();
+        AddTypeReference<ReactionType>();
+        AddTypeReference<Role>();
+        AddTypeReference<SubType>();
+        AddTypeReference<MessageFormat>();
+        AddTypeReference<MessageType>();
 
         return engine;
 

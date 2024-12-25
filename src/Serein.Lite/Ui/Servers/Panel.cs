@@ -220,7 +220,7 @@ public partial class Panel : UserControl
                 : "-";
 
         CPUPercentDynamicLabel.Text = _server.Status
-            ? _server.Info.CPUUsage.ToString("N2") + "%"
+            ? _server.Info.CpuUsage.ToString("N2") + "%"
             : "-";
 
         ToolTipProvider.SetToolTip(VersionDynamicLabel, VersionDynamicLabel.Text);

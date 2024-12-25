@@ -121,7 +121,7 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding ViewModel.CPUUsage, Mode=OneWay, TargetNullValue=-, StringFormat={}{0}%}" />
+                    Text="{Binding ViewModel.CpuUsage, Mode=OneWay, TargetNullValue=-, StringFormat={}{0}%}" />
             </Grid>
         </Border>
 

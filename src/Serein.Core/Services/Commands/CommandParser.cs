@@ -350,7 +350,7 @@ public partial class CommandParser(
                     "server.id" => server.Id,
                     "server.name" => server.Configuration.Name,
                     "server.status" => server.Status ? "已启动" : "未启动",
-                    "server.usage" => server.Info.CPUUsage,
+                    "server.usage" => server.Info.CpuUsage,
                     "server.output" => server.Info.OutputLines,
                     "server.input" => server.Info.InputLines,
                     "server.time" => (DateTime.Now - server.Info.StartTime).ToCommonString(),

@@ -17,7 +17,7 @@ public class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
 
     public ulong InputLines { get; internal set; }
 
-    public int CPUUsage { get; internal set; }
+    public int CpuUsage { get; internal set; }
 
     public MineStat? Stat { get; internal set; }
 }

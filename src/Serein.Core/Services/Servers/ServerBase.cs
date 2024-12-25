@@ -451,7 +451,7 @@ public abstract class ServerBase
             _info.Stat = null;
             _info.OutputLines = 0;
             _info.InputLines = 0;
-            _info.CPUUsage = 0;
+            _info.CpuUsage = 0;
             return;
         }
         else if (_process is null)
@@ -459,7 +459,7 @@ public abstract class ServerBase
             return;
         }
 
-        _info.CPUUsage = (int)(
+        _info.CpuUsage = (int)(
             (_process.TotalProcessorTime - _prevProcessCpuTime).TotalMilliseconds
             / 2000
             / Environment.ProcessorCount

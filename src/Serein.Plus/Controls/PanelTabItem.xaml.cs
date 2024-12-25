@@ -222,7 +222,7 @@ public partial class PanelTabItem : TabItem
 
         if (Server.Status)
         {
-            ViewModel.CPUUsage = Server.Info.CPUUsage;
+            ViewModel.CpuUsage = Server.Info.CpuUsage;
             ViewModel.Version =
                 Server.Info.Stat?.ConnectionStatus == ConnStatus.Success
                     ? Server.Info.Stat.Version
@@ -235,7 +235,7 @@ public partial class PanelTabItem : TabItem
         }
         else
         {
-            ViewModel.CPUUsage = null;
+            ViewModel.CpuUsage = null;
             ViewModel.Version = null;
             ViewModel.PlayerCount = null;
             ViewModel.RunTime = null;

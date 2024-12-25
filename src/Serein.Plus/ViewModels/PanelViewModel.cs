@@ -13,5 +13,5 @@ public class PanelViewModel : NotifyPropertyChangedModelBase
 
     public string? Version { get; set; }
 
-    public int? CPUUsage { get; set; }
+    public int? CpuUsage { get; set; }
 }
