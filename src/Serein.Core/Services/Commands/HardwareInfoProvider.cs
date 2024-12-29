@@ -94,8 +94,7 @@ public sealed class HardwareInfoProvider
             }
             catch (Exception e)
             {
-                _logger.LogError("更新信息失败：{}（{}）", e.Message, expression);
-                _logger.LogDebug(e, "更新信息失败");
+                _logger.LogDebug(e, "更新信息失败：（{}）", expression);
             }
         }
     }

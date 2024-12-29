@@ -261,16 +261,23 @@ public partial class MainForm : Form
             return;
         }
 
-        var id = serverPage
-            .MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex]
-            .Tag?.ToString();
-
-        if (
-            !string.IsNullOrEmpty(id)
-            && MessageBoxHelper.ShowDeleteConfirmation($"确定要删除此服务器配置（{id}）吗？")
-        )
+        try
         {
-            _serverManager.Remove(id);
+            var id = serverPage
+                .MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex]
+                .Tag?.ToString();
+
+            if (
+                !string.IsNullOrEmpty(id)
+                && MessageBoxHelper.ShowDeleteConfirmation($"确定要删除此服务器配置（{id}）吗？")
+            )
+            {
+                _serverManager.Remove(id);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBoxHelper.ShowWarningMsgBox("删除失败：\r\n" + ex.Message);
         }
     }
 
