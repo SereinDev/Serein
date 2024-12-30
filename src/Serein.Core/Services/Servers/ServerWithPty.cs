@@ -105,8 +105,8 @@ public class ServerWithPty(
                         _ptyConnection.Dispose();
                         _ptyConnection = null;
                         _process = null;
-                        _streamReader?.Close();
                         OnServerExit(e.ExitCode);
+                        _streamReader?.Close();
                         _cancellationTokenSource.Cancel();
                     };
                     _streamReader = new(
@@ -137,9 +137,18 @@ public class ServerWithPty(
                     OnServerOutput(line);
                 }
             }
+            catch (ObjectDisposedException)
+            {
+                break;
+            }
             catch (OperationCanceledException)
             {
                 break;
+            }
+            catch (Exception e)
+            {
+                WriteErrorLine(e.Message);
+                _logger.LogDebug(e, "读取服务器输出时发生错误");
             }
         }
 
