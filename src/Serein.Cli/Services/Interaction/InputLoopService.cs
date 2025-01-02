@@ -81,11 +81,22 @@ public sealed class InputLoopService(
                         Console.CancelKeyPress -= IgnoreCtrlC;
                         flag = false;
                     }
-                    var response = prompt.ReadLineAsync().Await();
 
-                    if (response.IsSuccess)
+                    try
                     {
-                        ProcessInput(response.Text);
+                        var response = prompt.ReadLineAsync().Await();
+
+                        if (response.IsSuccess)
+                        {
+                            ProcessInput(response.Text);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(
+                            e,
+                            "读取输入时发生错误。若此错误持续出现，请尝试关闭彩色输出"
+                        );
                     }
                 }
             }

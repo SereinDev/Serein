@@ -70,11 +70,11 @@ public abstract class ServerBase
         _commandHistory = [];
         _cache = [];
         _updateTimer = new(2000) { AutoReset = true };
-        _updateTimer.Elapsed += (_, _) => UpdateInfo();
+        _updateTimer.Elapsed += (_, _) => Task.Run(UpdateInfo);
         _info = new();
         PluginManager = new(this);
 
-        ServerStatusChanged += (_, _) => UpdateInfo();
+        ServerStatusChanged += (_, _) => Task.Run(UpdateInfo);
     }
 
     protected abstract void StartProcess();
@@ -441,7 +441,7 @@ public abstract class ServerBase
             );
     }
 
-    private async Task UpdateInfo()
+    private void UpdateInfo()
     {
         if (!Status && _process is null)
         {
@@ -454,7 +454,7 @@ public abstract class ServerBase
             _info.CpuUsage = 0;
             return;
         }
-        else if (_process is null)
+        else if (_process is null || _process.HasExited)
         {
             return;
         }
@@ -469,7 +469,7 @@ public abstract class ServerBase
 
         if (Configuration.PortIPv4 >= 0)
         {
-            await Task.Run(() => _info.Stat = new("127.0.0.1", (ushort)Configuration.PortIPv4));
+            _info.Stat = new("127.0.0.1", (ushort)Configuration.PortIPv4);
         }
     }
 }
