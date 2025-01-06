@@ -32,9 +32,9 @@
                 HorizontalAlignment="Left"
                 ui:ControlHelper.Header="事件最大等待时间 (ms)"
                 LostFocus="OnPropertyChanged"
-                Minimum="-1"
+                Minimum="0"
                 SpinButtonPlacementMode="Compact"
-                ToolTip="超出此时间返回的结果将被忽略；设置成-1可禁用等待"
+                ToolTip="超出此时间返回的结果将被忽略；设置成0可禁用等待"
                 Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
             <TextBox
                 ui:ControlHelper.Header="JS插件全局加载的程序集"

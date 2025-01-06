@@ -63,7 +63,9 @@ public sealed class EventDispatcher(
         }
 
         cancellationTokenSource.Cancel();
-        return !tasks.Where((task) => task.IsCompleted).Any((task) => !task.Result);
+
+        var completedTasks = tasks.Where(task => task.IsCompleted);
+        return !completedTasks.Any() || completedTasks.All(task => task.Result);
     }
 
     private void DispatchToJsPlugins(
