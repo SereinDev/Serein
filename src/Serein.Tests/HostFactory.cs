@@ -1,45 +1,42 @@
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core;
 using Serein.Core.Models.Output;
 using Serein.Core.Utils;
 using Serein.Tests.Loggers;
+using Serein.Tests.Utils;
 
 namespace Serein.Tests;
 
 public static class HostFactory
 {
-    private static readonly object Lock = new();
-
-    public static IHost BuildNew()
+    static HostFactory()
     {
-        lock (Lock)
+        if (Directory.Exists("tests"))
         {
-            if (Directory.Exists(PathConstants.Root))
+            try
             {
-                foreach (
-                    var file in Directory.GetFiles(
-                        PathConstants.Root,
-                        "*",
-                        SearchOption.AllDirectories
-                    )
-                )
-                {
-                    try
-                    {
-                        File.Delete(file);
-                    }
-                    catch { }
-                }
+                Directory.Delete("tests", true);
             }
-
-            var builder = SereinAppBuilder.CreateBuilder();
-
-            builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
-            builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
-
-            return builder.Build();
+            catch { }
         }
+    }
+
+    public static IHost BuildNew([CallerFilePath] string caller = "")
+    {
+        TestHelper.Initialize(caller);
+        Directory.CreateDirectory(PathConstants.Root);
+        Directory.CreateDirectory(PathConstants.PluginsDirectory);
+        Task.Delay(1000).Wait();
+
+        var builder = SereinAppBuilder.CreateBuilder();
+
+        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
+        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
+
+        return builder.Build();
     }
 }

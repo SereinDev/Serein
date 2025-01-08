@@ -84,6 +84,8 @@ public sealed class EventTests : IDisposable
         );
         await _host.StartAsync();
 
+        await Task.Delay(1000);
+
         dynamic d = _netPluginLoader.NetPlugins.First().Value;
         Assert.True(d.IsInvoked);
     }

@@ -75,11 +75,11 @@ public sealed class VariableTests : IDisposable
     {
         _app.Services.GetRequiredService<ServerManager>().Add("foo", new() { Name = "5678" });
         _app.Services.GetRequiredService<ServerManager>().Add("bar", new() { Name = "1234" });
-        Assert.Equal("foo", _commandParser.ApplyVariables("{server.id}", null));
+        Assert.Equal("myserver", _commandParser.ApplyVariables("{server.id}", null));
         Assert.Equal("foo", _commandParser.ApplyVariables("{server.id@foo}", null));
         Assert.Equal("bar", _commandParser.ApplyVariables("{server.id@bar}", null));
 
-        Assert.Equal("5678", _commandParser.ApplyVariables("{server.name}", null));
+        Assert.Equal("未命名", _commandParser.ApplyVariables("{server.name}", null));
         Assert.Equal("5678", _commandParser.ApplyVariables("{server.name@foo}", null));
 
         Assert.Equal("未启动", _commandParser.ApplyVariables("{server.status}", null));

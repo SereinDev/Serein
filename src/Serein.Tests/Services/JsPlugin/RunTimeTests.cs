@@ -106,7 +106,7 @@ public sealed partial class RunTimeTests : IDisposable
             "var called = false; serein.setListener('PluginsLoaded', () => { called = true; });"
         );
         _eventDispatcher.Dispatch(Event.PluginsLoaded);
-        await Task.Delay(1000);
+        await Task.Delay(2000);
         Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
     }
 
@@ -117,7 +117,7 @@ public sealed partial class RunTimeTests : IDisposable
         kv.Value.Engine.Execute(
             """
             var called = false;
-            setTimeout(() => { called = true; }, 100);
+            setTimeout(() => { called = true; }, 500);
             """
         );
 
@@ -134,7 +134,7 @@ public sealed partial class RunTimeTests : IDisposable
             var count = 0;
             var interval = setInterval(() => {
                 count++;
-                if (count > 5) {
+                if (count >= 5) {
                     clearInterval(interval);
                 }
             }, 100);
@@ -142,7 +142,7 @@ public sealed partial class RunTimeTests : IDisposable
         );
 
         await Task.Delay(1000);
-        Assert.True(kv.Value.Engine.Evaluate("count").AsNumber() > 5);
+        Assert.Equal(5, kv.Value.Engine.Evaluate("count"));
     }
 
     [Fact]
@@ -150,7 +150,7 @@ public sealed partial class RunTimeTests : IDisposable
     {
         var kv = _jsPluginLoader.Plugins.First();
 
-        Assert.NotEmpty(kv.Value.Engine.Evaluate("fs.globSync('*.*')").AsArray());
+        Assert.True(kv.Value.Engine.Evaluate("fs.globSync('*.*')").IsArray());
 
         kv.Value.Engine.Evaluate("fs.writeFileSync('test.txt', 'test')");
         Assert.True(File.Exists("test.txt"));

@@ -7,7 +7,7 @@
   极简但多功能的服务器面板软件
 </p>
 <p align="center" style="font-weight: bold;">
-  <a href="http://serein.cc">官网</a> · <a href="http://serein.cc">扩展市场</a> · <a
+  <a href="https://sereindev.github.io/">官网</a> · <a href="https://sereincommunity.github.io/">社区</a> · <a
     href="https://github.com/SereinDev/Serein/releases/latest">下载</a> · <a
     href="https://www.minebbs.com/resources/serein.4169/">MineBBS发布页</a>
 </p>
@@ -31,8 +31,6 @@
   </a>
 </p>
 </p>
-
-2.0船新版本重构中...敬请期待...
 
 ## ▶ 运行环境
 
