@@ -14,5 +14,5 @@ public enum WebSocketBroadcastType
 
     Error,
 
-    Information,
+    Info,
 }

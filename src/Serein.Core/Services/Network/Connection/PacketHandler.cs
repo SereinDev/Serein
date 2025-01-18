@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,13 +44,19 @@ public sealed class PacketHandler(
             case "message":
             case "message_sent":
                 HandleMessagePacket(
-                    jsonObject.ToObject<MessagePacket>(JsonSerializerOptionsFactory.PacketStyle)
+                    JsonSerializer.Deserialize<MessagePacket>(
+                        jsonObject,
+                        JsonSerializerOptionsFactory.PacketStyle
+                    )
                 );
                 break;
 
             case "notice":
                 HandleNoticePacket(
-                    jsonObject.ToObject<NoticePacket>(JsonSerializerOptionsFactory.PacketStyle)
+                    JsonSerializer.Deserialize<NoticePacket>(
+                        jsonObject,
+                        JsonSerializerOptionsFactory.PacketStyle
+                    )
                 );
                 break;
         }

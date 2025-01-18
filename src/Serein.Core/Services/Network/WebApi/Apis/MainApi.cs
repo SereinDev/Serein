@@ -14,16 +14,20 @@ using Serein.Core.Services.Servers;
 namespace Serein.Core.Services.Network.WebApi.Apis;
 
 internal partial class ApiMap(
-    HardwareInfoProvider hardwareInfoProvider,
     ServerManager serverManager,
     SettingProvider settingProvider,
-    WsConnectionManager wsConnectionManager
+    MatchesProvider matchesProvider,
+    ScheduleProvider scheduleProvider,
+    WsConnectionManager wsConnectionManager,
+    HardwareInfoProvider hardwareInfoProvider
 ) : WebApiController
 {
-    private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
     private readonly ServerManager _serverManager = serverManager;
     private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly MatchesProvider _matchesProvider = matchesProvider;
+    private readonly ScheduleProvider _scheduleProvider = scheduleProvider;
     private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
+    private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
     private List<ApiEndpointRecord>? _records;
 
     [Route(HttpVerbs.Get, "/metadata")]

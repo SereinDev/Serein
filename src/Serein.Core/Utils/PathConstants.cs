@@ -38,4 +38,5 @@ public static class PathConstants
     public static readonly string ServerConfigFile = "Serein/servers/{0}.json";
 
     public static readonly string ServerConfigDirectory = "Serein/servers";
+    public static readonly string WebRoot = "Serein/web";
 }

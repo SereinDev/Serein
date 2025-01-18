@@ -9,27 +9,37 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Utils;
 using Swan.Logging;
 using MS = Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-public sealed class HttpServer(
-    IServiceProvider serviceProvider,
-    ILogger<HttpServer> logger,
-    SettingProvider settingProvider
-)
+public sealed class HttpServer
 {
     static HttpServer()
     {
         Logger.NoLogging();
     }
 
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-    private readonly MS.ILogger _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly MS.ILogger _logger;
+    private readonly SettingProvider _settingProvider;
     private WebServer? _webServer;
     private CancellationTokenSource _cancellationTokenSource = new();
+
+    public HttpServer(
+        IServiceProvider serviceProvider,
+        ILogger<HttpServer> logger,
+        SettingProvider settingProvider
+    )
+    {
+        _serviceProvider = serviceProvider;
+        _logger = logger;
+        _settingProvider = settingProvider;
+
+        Directory.CreateDirectory(PathConstants.WebRoot);
+    }
 
     public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
 
@@ -53,8 +63,8 @@ public sealed class HttpServer(
             _webServer.WithCors();
         }
 
-        _webServer.WithModule(_serviceProvider.GetRequiredService<BroadcastWebSocketModule>());
         _webServer.WithModule(new AuthGate(_settingProvider));
+        _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<IPBannerModule>());
         _webServer.WithWebApi(
             "/api",
@@ -64,6 +74,7 @@ public sealed class HttpServer(
                     .HandleUnhandledException(ApiHelper.HandleException)
                     .WithController(() => _serviceProvider.GetRequiredService<ApiMap>())
         );
+        _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
 
         _webServer.Start(_cancellationTokenSource.Token);
         _logger.LogInformation("WebApi服务器已启动");

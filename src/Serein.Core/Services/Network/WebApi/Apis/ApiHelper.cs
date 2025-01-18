@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using EmbedIO;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.WebApi;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
@@ -12,7 +14,17 @@ namespace Serein.Core.Services.Network.WebApi.Apis;
 
 public static class ApiHelper
 {
-    public static async Task<T?> ConvertRequestAs<T>(this IHttpContext httpContext)
+    private static readonly JsonSerializerOptions Options =
+        new(JsonSerializerOptionsFactory.Common)
+        {
+            Converters =
+            {
+                new JsonObjectWithIdConverter<Match>(),
+                new JsonObjectWithIdConverter<Schedule>(),
+            },
+        };
+
+    public static async Task<T> ConvertRequestAs<T>(this IHttpContext httpContext)
         where T : notnull
     {
         if (httpContext.Request.HttpVerb is not HttpVerbs.Get or HttpVerbs.Head)
@@ -24,10 +36,12 @@ public static class ApiHelper
 
             try
             {
-                return JsonSerializer.Deserialize<T>(
+                var value = JsonSerializer.Deserialize<T>(
                     await httpContext.GetRequestBodyAsStringAsync(),
                     JsonSerializerOptionsFactory.Common
                 );
+
+                return value is null ? throw HttpException.BadRequest("Body 不能为空") : value;
             }
             catch (Exception e)
             {
@@ -45,7 +59,7 @@ public static class ApiHelper
     {
         httpContext.Response.StatusCode = packet.Code;
         await httpContext.SendStringAsync(
-            JsonSerializer.Serialize(packet, JsonSerializerOptionsFactory.Common),
+            JsonSerializer.Serialize(packet, Options),
             "text/json",
             EncodingMap.UTF8
         );
@@ -93,9 +107,9 @@ public static class ApiHelper
 
     public static async Task HandleException(IHttpContext context, Exception e)
     {
-        if (e is InvalidOperationException ex)
+        if (e is InvalidOperationException)
         {
-            await context.SendPacketAsync(new ApiPacket { ErrorMsg = ex.Message, Code = 403 });
+            await context.SendPacketAsync(new ApiPacket { ErrorMsg = e.Message, Code = 403 });
         }
         else
         {

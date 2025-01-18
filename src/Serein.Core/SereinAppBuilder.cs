@@ -66,7 +66,7 @@ public static class SereinAppBuilder
             .AddSingleton<HttpServer>()
             .AddTransient<ApiMap>()
             .AddTransient<IPBannerModule>()
-            .AddTransient<BroadcastWebSocketModule>()
+            .AddTransient<ServerWebSocketModule>()
             .AddSingleton<PluginManager>()
             .AddSingleton<EventDispatcher>()
             .AddSingleton<JsEngineFactory>()
