@@ -248,7 +248,10 @@ public partial class PanelTabItem : TabItem
         {
             case "Edit":
                 var config = Server.Configuration.ShallowClone();
-                var editor = new ServerConfigurationEditor(_serverManager, config, _id);
+                var editor = new ServerConfigurationEditor(_serverManager, config, _id)
+                {
+                    Owner = _mainWindow,
+                };
 
                 if (editor.ShowDialog() != true)
                 {

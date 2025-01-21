@@ -103,7 +103,7 @@ public partial class ConfigurationEditor : Form
             _configuration.AutoRestart = AutoRestartCheckBox.Checked;
             _configuration.SaveLog = SaveLogCheckBox.Checked;
             _configuration.AutoStopWhenCrashing = AutoStopWhenCrashingCheckBox.Checked;
-            _configuration.PortIPv4 = (short)PortNumericUpDown.Value;
+            _configuration.PortIPv4 = (ushort)PortNumericUpDown.Value;
             _configuration.LineTerminator = LineTerminatorTextBox
                 .Text.Replace("\\r", "\r")
                 .Replace("\\n", "\n");

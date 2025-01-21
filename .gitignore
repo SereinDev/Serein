@@ -481,3 +481,6 @@ $RECYCLE.BIN/
 test
 TestResults.trx
 AppCoverageReport.xml
+
+.idea
+*.user

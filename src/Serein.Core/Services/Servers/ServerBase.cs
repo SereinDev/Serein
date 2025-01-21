@@ -467,9 +467,9 @@ public abstract class ServerBase
         );
         _prevProcessCpuTime = _process.TotalProcessorTime;
 
-        if (Configuration.PortIPv4 >= 0)
+        if (Configuration.PortIPv4 != 0)
         {
-            _info.Stat = new("127.0.0.1", (ushort)Configuration.PortIPv4);
+            _info.Stat = new("127.0.0.1", Configuration.PortIPv4);
         }
     }
 }

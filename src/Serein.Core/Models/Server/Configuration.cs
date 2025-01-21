@@ -29,7 +29,7 @@ public class Configuration : NotifyPropertyChangedModelBase
 
     public OutputStyle OutputStyle { get; set; } = OutputStyle.RawText;
 
-    public short PortIPv4 { get; set; } = 19132;
+    public ushort PortIPv4 { get; set; } = 19132;
 
     public string[] StopCommands { get; set; } = ["stop"];
 
