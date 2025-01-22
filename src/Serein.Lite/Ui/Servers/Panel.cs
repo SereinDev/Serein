@@ -11,13 +11,13 @@ namespace Serein.Lite.Ui.Servers;
 
 public partial class Panel : UserControl
 {
-    private readonly ServerBase _server;
+    private readonly Server _server;
     private readonly MainForm _mainForm;
     private readonly System.Timers.Timer _timer;
     private readonly object _lock = new();
     private readonly Lazy<PluginManagerForm> _pluginManagerForm;
 
-    public Panel(ServerBase server, MainForm mainForm)
+    public Panel(Server server, MainForm mainForm)
     {
         InitializeComponent();
         Dock = DockStyle.Fill;
@@ -27,8 +27,8 @@ public partial class Panel : UserControl
 
         _server = server;
         _mainForm = mainForm;
-        _server.ServerOutput += OnServerOutput;
-        _server.ServerStatusChanged += (_, _) =>
+        _server.Logger.Output += OnServerOutput;
+        _server.StatusChanged += (_, _) =>
         {
             Invoke(UpdateInfo);
 
@@ -52,7 +52,7 @@ public partial class Panel : UserControl
         {
             switch (e.OutputType)
             {
-                case ServerOutputType.Raw:
+                case ServerOutputType.StandardOutput:
                     lock (_lock)
                     {
                         ConsoleBrowser.AppendHtmlLine(
@@ -61,7 +61,7 @@ public partial class Panel : UserControl
                     }
                     break;
 
-                case ServerOutputType.InputCommand:
+                case ServerOutputType.StandardInput:
                     if (_server.Configuration.OutputCommandUserInput)
                     {
                         lock (_lock)
@@ -71,14 +71,14 @@ public partial class Panel : UserControl
                     }
                     break;
 
-                case ServerOutputType.Information:
+                case ServerOutputType.InternalInfo:
                     lock (_lock)
                     {
                         ConsoleBrowser.AppendNotice(e.Data);
                     }
                     break;
 
-                case ServerOutputType.Error:
+                case ServerOutputType.InternalError:
                     lock (_lock)
                     {
                         ConsoleBrowser.AppendError(e.Data);

@@ -43,11 +43,11 @@ public sealed class ServerPluginManager
     public IReadOnlyList<ServerPlugin> Plugins => _plugins;
     public string? CurrentPluginsDirectory { get; private set; }
 
-    private readonly ServerBase _server;
+    private readonly Server _server;
     private readonly List<ServerPlugin> _plugins;
     private bool _updating;
 
-    internal ServerPluginManager(ServerBase server)
+    internal ServerPluginManager(Server server)
     {
         _server = server;
         _plugins = [];

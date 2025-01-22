@@ -6,44 +6,35 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pty.Net;
 using Serein.Core.Models.Server;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
 
-namespace Serein.Core.Services.Servers;
+namespace Serein.Core.Services.Servers.ProcessSpawners;
 
-public class ServerWithPty(
+internal sealed class PtyProcessSpawner(
     string id,
-    Matcher matcher,
-    ILogger<Server> logger,
-    ILogger<LogWriter> writerLogger,
-    Configuration configuration,
-    SettingProvider settingManager,
-    EventDispatcher eventDispatcher,
-    ReactionTrigger reactionManager
-)
-    : ServerBase(
-        id,
-        matcher,
-        logger,
-        writerLogger,
-        configuration,
-        settingManager,
-        eventDispatcher,
-        reactionManager
-    )
+    LogWriter logWriter,
+    ServerLogger serverLogger,
+    ILogger<Server> logger
+) : IProcessSpawner
 {
+    public Process? CurrentProcess { get; private set; }
+
+    public bool Status => _ptyConnection is not null && !_isPreparing;
+
+    public event EventHandler? StatusChanged;
+    public event EventHandler<int>? ProcessExited;
+
     private CancellationTokenSource _cancellationTokenSource = new();
     private IPtyConnection? _ptyConnection;
     private StreamReader? _streamReader;
     private bool _isPreparing;
+    private readonly string _id = id;
+    private readonly ServerLogger _serverLogger = serverLogger;
+    private readonly LogWriter _logWriter = logWriter;
+    private readonly ILogger _logger = logger;
 
-    public override bool Status => _ptyConnection is not null && !_isPreparing;
-
-    public override int? Pid => _ptyConnection?.Pid;
-
-    protected override void StartProcess()
+    public void Start(Configuration configuration)
     {
         if (_cancellationTokenSource.IsCancellationRequested)
         {
@@ -53,7 +44,7 @@ public class ServerWithPty(
 
         _isPreparing = true;
 
-        var cwd = Path.GetDirectoryName(Configuration.FileName);
+        var cwd = Path.GetDirectoryName(configuration.FileName);
         if (string.IsNullOrEmpty(cwd))
         {
             cwd = Directory.GetCurrentDirectory();
@@ -63,24 +54,24 @@ public class ServerWithPty(
             .SpawnAsync(
                 new()
                 {
-                    Name = Id,
-                    App = Configuration.FileName,
-                    CommandLine = [Configuration.Argument],
+                    Name = _id,
+                    App = configuration.FileName,
+                    CommandLine = [configuration.Argument],
                     Cwd = cwd,
                     ForceWinPty = Environment.OSVersion.Platform == PlatformID.Win32NT,
 
                     Rows =
                         SereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
-                        && Configuration.Pty.TerminalHeight is null
+                        && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
-                            : Configuration.Pty.TerminalHeight ?? 80,
+                            : configuration.Pty.TerminalHeight ?? 80,
                     Cols =
                         SereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
-                        && Configuration.Pty.TerminalHeight is null
+                        && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
-                            : Configuration.Pty.TerminalWidth ?? 150,
+                            : configuration.Pty.TerminalWidth ?? 150,
                 },
                 _cancellationTokenSource.Token
             )
@@ -89,38 +80,48 @@ public class ServerWithPty(
                 {
                     if (task.IsFaulted)
                     {
-                        if (Configuration.SaveLog)
+                        if (configuration.SaveLog)
                         {
                             _logWriter.WriteAsync(task.Exception.ToString());
                         }
-                        WriteErrorLine(task.Exception.Message);
+                        _serverLogger.WriteInternalError(task.Exception.Message);
                         return;
                     }
 
                     _isPreparing = false;
                     _ptyConnection = task.Result;
-                    _process = Process.GetProcessById(_ptyConnection.Pid);
+                    CurrentProcess = Process.GetProcessById(_ptyConnection.Pid);
                     _ptyConnection.ProcessExited += (_, e) =>
                     {
                         _ptyConnection.Dispose();
                         _ptyConnection = null;
-                        _process = null;
-                        OnServerExit(e.ExitCode);
                         _streamReader?.Close();
                         _cancellationTokenSource.Cancel();
+
+                        ProcessExited?.Invoke(this, e.ExitCode);
                     };
                     _streamReader = new(
                         _ptyConnection.ReaderStream,
-                        EncodingMap.GetEncoding(Configuration.OutputEncoding)
+                        EncodingMap.GetEncoding(configuration.OutputEncoding)
                     );
 
-                    OnServerStatusChanged();
-                    WriteInfoLine(
+                    StatusChanged?.Invoke(this, EventArgs.Empty);
+                    _serverLogger.WriteInternalInfo(
                         "正在使用虚拟终端启动服务器进程。若出现问题请尝试关闭虚拟终端功能。"
                     );
                     ReadLineLoop();
                 }
             );
+    }
+
+    public void Terminate()
+    {
+        CurrentProcess?.Kill(true);
+    }
+
+    public void Write(byte[] bytes)
+    {
+        _ptyConnection?.WriterStream.Write(bytes);
     }
 
     private async Task ReadLineLoop()
@@ -134,7 +135,7 @@ public class ServerWithPty(
                 var line = await _streamReader.ReadLineAsync(_cancellationTokenSource.Token);
                 if (line is not null)
                 {
-                    OnServerOutput(line);
+                    _serverLogger.WriteStandardOutput(line);
                 }
             }
             catch (ObjectDisposedException)
@@ -147,21 +148,11 @@ public class ServerWithPty(
             }
             catch (Exception e)
             {
-                WriteErrorLine(e.Message);
+                _serverLogger.WriteInternalError(e.Message);
                 _logger.LogDebug(e, "读取服务器输出时发生错误");
             }
         }
 
         _streamReader?.Dispose();
-    }
-
-    protected override void TerminateProcess()
-    {
-        _process?.Kill(true);
-    }
-
-    protected override void WriteLine(byte[] bytes)
-    {
-        _ptyConnection?.WriterStream.Write(bytes);
     }
 }

@@ -13,11 +13,11 @@ public sealed class ServerProperty
         _serverManager = servers;
     }
 
-    public ServerBase this[string id] => _serverManager.Servers[id];
+    public Server this[string id] => _serverManager.Servers[id];
 
     public string[] Ids => _serverManager.Servers.Keys.ToArray();
 
-    public ServerBase Add(string id, Configuration configuration) =>
+    public Server Add(string id, Configuration configuration) =>
         _serverManager.Add(id, configuration);
 
     public bool Remove(string id) => _serverManager.Remove(id);

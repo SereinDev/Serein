@@ -42,10 +42,10 @@ public sealed class ServerSwitcher(
                 && _serverManager.Servers.TryGetValue(CurrentId, out var oldServer)
             )
             {
-                oldServer.ServerOutput -= LogToConsole;
+                oldServer.Logger.Output -= LogToConsole;
             }
 
-            server.ServerOutput += LogToConsole;
+            server.Logger.Output += LogToConsole;
             CurrentId = id;
             _logger.LogInformation("成功选择到\"{}\"(Id={})", server.Configuration.Name, id);
 
@@ -84,17 +84,17 @@ public sealed class ServerSwitcher(
 
     private void LogToConsole(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not ServerBase server)
+        if (sender is not Server server)
         {
             return;
         }
         switch (e.OutputType)
         {
-            case ServerOutputType.Raw:
+            case ServerOutputType.StandardOutput:
                 Console.WriteLine(e.Data);
                 break;
 
-            case ServerOutputType.Information:
+            case ServerOutputType.InternalInfo:
                 _serverLogger.LogInformation(
                     "[{}(Id={})] {}",
                     server.Configuration.Name,
@@ -103,7 +103,7 @@ public sealed class ServerSwitcher(
                 );
                 break;
 
-            case ServerOutputType.Error:
+            case ServerOutputType.InternalError:
                 _serverLogger.LogError(
                     "[{}(Id={})] {}",
                     server.Configuration.Name,

@@ -11,22 +11,22 @@ namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(ServerBase server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerStarted(ServerBase server) => Task.CompletedTask;
+    protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(ServerBase server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerExited(ServerBase server, int exitcode, DateTime exitTime) =>
+    protected virtual Task OnServerExited(Services.Servers.Server server, int exitcode, DateTime exitTime) =>
         Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerOutput(ServerBase server, string line) =>
+    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) =>
         Task.FromResult(true);
 
-    protected virtual Task<bool> OnServerRawOutput(ServerBase server, string line) =>
+    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) =>
         Task.FromResult(true);
 
-    protected virtual Task OnServerInput(ServerBase server, string line) => Task.CompletedTask;
+    protected virtual Task OnServerInput(Services.Servers.Server server, string line) => Task.CompletedTask;
 
     protected virtual Task<bool> OnGroupMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);
@@ -51,13 +51,13 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarted:
-                return OnServerStarted(args.First().OfType<ServerBase>());
+                return OnServerStarted(args.First().OfType<Services.Servers.Server>());
 
             case Event.ServerStarting:
-                return OnServerStarting(args.First().OfType<ServerBase>());
+                return OnServerStarting(args.First().OfType<Services.Servers.Server>());
 
             case Event.ServerStopping:
-                return OnServerStopping(args.First().OfType<ServerBase>());
+                return OnServerStopping(args.First().OfType<Services.Servers.Server>());
 
             case Event.GroupMessageReceived:
                 return OnGroupMessageReceived(args.First().OfType<MessagePacket>());
@@ -78,7 +78,7 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerOutput(
-                    args.First().OfType<ServerBase>(),
+                    args.First().OfType<Services.Servers.Server>(),
                     args.Last().OfType<string>()
                 );
 
@@ -89,7 +89,7 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerRawOutput(
-                    args.First().OfType<ServerBase>(),
+                    args.First().OfType<Services.Servers.Server>(),
                     args.Last().OfType<string>()
                 );
 
@@ -100,14 +100,14 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerInput(
-                    args.First().OfType<ServerBase>(),
+                    args.First().OfType<Services.Servers.Server>(),
                     args.Last().OfType<string>()
                 );
 
             case Event.ServerExited:
                 if (
                     args.Length != 3
-                    || args[0] is not ServerBase server
+                    || args[0] is not Services.Servers.Server server
                     || args[1] is not int code
                     || args[2] is not DateTime time
                 )

@@ -51,7 +51,7 @@ public partial class ServerPage : Page
         MenuItem_Click(sender, e);
     }
 
-    private void Add(string id, ServerBase server)
+    private void Add(string id, Server server)
     {
         var tabItem = new PanelTabItem(
             id,

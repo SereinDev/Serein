@@ -61,7 +61,7 @@ public sealed class ServerHandler(
             );
         }
 
-        if (!_serverManager.Servers.TryGetValue(id, out ServerBase? server))
+        if (!_serverManager.Servers.TryGetValue(id, out Server? server))
         {
             throw new InvalidArgumentException("指定的服务器不存在");
         }
@@ -133,7 +133,7 @@ public sealed class ServerHandler(
         }
     }
 
-    private void LogServerInfo(ServerBase server)
+    private void LogServerInfo(Server server)
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.AppendLine($"{server.Configuration.Name}({server.Id})");

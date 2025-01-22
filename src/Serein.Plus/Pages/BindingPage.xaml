@@ -14,14 +14,18 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:GameIdsConverter x:Key="gameIdsConverter" />
+        <converter:GameIdsConverter x:Key="GameIdsConverter" />
     </Page.Resources>
 
     <Grid>
+        <ui:ProgressRing x:Name="Ring"
+                         Height="50"
+                         Width="50" />
         <ListView
             x:Name="BindingListView"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-            VirtualizingPanel.VirtualizationMode="Recycling">
+            VirtualizingPanel.VirtualizationMode="Recycling"
+            IsEnabled="False">
 
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -47,7 +51,7 @@
 
                     <GridViewColumn
                         Width="300"
-                        DisplayMemberBinding="{Binding GameIds, Mode=OneWay, Converter={StaticResource gameIdsConverter}}"
+                        DisplayMemberBinding="{Binding GameIds, Mode=OneWay, Converter={StaticResource GameIdsConverter}}"
                         Header="游戏名称" />
                 </GridView>
             </ListView.View>

@@ -319,7 +319,7 @@ public partial class CommandParser(
 
         var i = input.IndexOf('@');
 
-        ServerBase? server;
+        Server? server;
 
         if (i < 0)
         {
@@ -341,7 +341,7 @@ public partial class CommandParser(
 
         return !_serverManager.Servers.TryGetValue(id, out server) ? null : Switch(key, server);
 
-        static object? Switch(string key, ServerBase? server)
+        static object? Switch(string key, Server? server)
         {
             return server is null
                 ? null

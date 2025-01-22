@@ -29,8 +29,8 @@ internal class BroadcastWebSocketModule : WebSocketModule
 
         foreach (var server in _serverManager.Servers.Values)
         {
-            server.ServerOutput += NotifyOutput;
-            server.ServerStatusChanged += NotifyStatusChanged;
+            server.Logger.Output += NotifyOutput;
+            server.StatusChanged += NotifyStatusChanged;
         }
     }
 
@@ -102,13 +102,13 @@ internal class BroadcastWebSocketModule : WebSocketModule
     {
         if (e.Type == ServersUpdatedType.Added)
         {
-            e.Server.ServerOutput += NotifyOutput;
-            e.Server.ServerStatusChanged += NotifyStatusChanged;
+            e.Server.Logger.Output += NotifyOutput;
+            e.Server.StatusChanged += NotifyStatusChanged;
         }
         else if (e.Type == ServersUpdatedType.Removed)
         {
-            e.Server.ServerOutput -= NotifyOutput;
-            e.Server.ServerStatusChanged += NotifyStatusChanged;
+            e.Server.Logger.Output -= NotifyOutput;
+            e.Server.StatusChanged += NotifyStatusChanged;
 
             if (_clients.TryGetValue(e.Id, out var list) && list.Count != 0)
             {
@@ -129,7 +129,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
 
     private void NotifyOutput(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not ServerBase server)
+        if (sender is not Server server)
         {
             return;
         }
@@ -141,10 +141,10 @@ internal class BroadcastWebSocketModule : WebSocketModule
                     new WebSocketBroadcastPacket(
                         e.OutputType switch
                         {
-                            ServerOutputType.Information => WebSocketBroadcastType.Information,
-                            ServerOutputType.Raw => WebSocketBroadcastType.Output,
-                            ServerOutputType.Error => WebSocketBroadcastType.Error,
-                            ServerOutputType.InputCommand => WebSocketBroadcastType.Input,
+                            ServerOutputType.InternalInfo => WebSocketBroadcastType.Information,
+                            ServerOutputType.StandardOutput => WebSocketBroadcastType.Output,
+                            ServerOutputType.InternalError => WebSocketBroadcastType.Error,
+                            ServerOutputType.StandardInput => WebSocketBroadcastType.Input,
                             _ => throw new NotSupportedException(),
                         },
                         e.Data
@@ -162,7 +162,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
 
     private void NotifyStatusChanged(object? sender, EventArgs e)
     {
-        if (sender is not ServerBase server)
+        if (sender is not Server server)
         {
             return;
         }

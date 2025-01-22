@@ -15,7 +15,7 @@ namespace Serein.Lite.Ui.Servers;
 
 public partial class PluginManagerForm : Form
 {
-    private readonly ServerBase _server;
+    private readonly Server _server;
     private readonly ListViewGroup _jsGroup = new("JavaScript");
     private readonly ListViewGroup _luaGroup = new("Lua");
     private readonly ListViewGroup _jarGroup = new("Java");
@@ -27,7 +27,7 @@ public partial class PluginManagerForm : Form
             .SelectedItems.OfType<ListViewItem>()
             .Select((item) => item.Tag as ServerPlugin);
 
-    public PluginManagerForm(ServerBase server)
+    public PluginManagerForm(Server server)
     {
         _server = server;
 

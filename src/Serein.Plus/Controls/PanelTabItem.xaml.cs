@@ -27,12 +27,12 @@ public partial class PanelTabItem : TabItem
     private readonly MainWindow _mainWindow;
     private readonly InfoBarProvider _infoBarProvider;
     private readonly Timer _timer;
-    public ServerBase Server { get; }
+    public Server Server { get; }
     public PanelViewModel ViewModel { get; }
 
     public PanelTabItem(
         string id,
-        ServerBase server,
+        Server server,
         ServerManager serverManager,
         ServerPage page,
         MainWindow mainWindow,
@@ -55,15 +55,15 @@ public partial class PanelTabItem : TabItem
 
         _timer = new(2500) { Enabled = true };
         _timer.Elapsed += (_, _) => UpdateInfo();
-        Server.ServerStatusChanged += OnServerStatusChanged;
-        Server.ServerOutput += Output;
+        Server.StatusChanged += OnServerStatusChanged;
+        Server.Logger.Output += Output;
     }
 
     private void Output(object? sender, ServerOutputEventArgs e)
     {
         switch (e.OutputType)
         {
-            case ServerOutputType.Raw:
+            case ServerOutputType.StandardOutput:
                 Dispatcher.Invoke(
                     () =>
                         Console.AppendLine(
@@ -74,18 +74,18 @@ public partial class PanelTabItem : TabItem
                 );
                 break;
 
-            case ServerOutputType.InputCommand:
+            case ServerOutputType.StandardInput:
                 if (Server.Configuration.OutputCommandUserInput)
                 {
                     Dispatcher.Invoke(() => Console.AppendLine($">{e.Data}"));
                 }
                 break;
 
-            case ServerOutputType.Information:
+            case ServerOutputType.InternalInfo:
                 Dispatcher.Invoke(() => Console.AppendNoticeLine(e.Data));
                 break;
 
-            case ServerOutputType.Error:
+            case ServerOutputType.InternalError:
                 Dispatcher.Invoke(() => Console.AppendErrorLine(e.Data));
                 break;
         }
