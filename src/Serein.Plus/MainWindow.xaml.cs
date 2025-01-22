@@ -178,6 +178,12 @@ public partial class MainWindow : Window
             Topmost = false;
         }
     }
+    
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        NavView.SelectedItem = NavView.MenuItems[0];
+        ContentFrame.Navigate(_services.GetRequiredService<ServerPage>());
+    }
 
     private void Window_Closing(object sender, CancelEventArgs e)
     {
@@ -302,4 +308,5 @@ public partial class MainWindow : Window
         NavView.IsBackEnabled = ContentFrame.CanGoBack;
         ContentFrame.RemoveBackEntry();
     }
+
 }
