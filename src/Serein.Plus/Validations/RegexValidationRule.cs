@@ -7,7 +7,7 @@ namespace Serein.Plus.Validations;
 
 public class RegexValidationRule : ValidationRule
 {
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    public override ValidationResult Validate(object? value, CultureInfo cultureInfo)
     {
         if (value is string s)
         {

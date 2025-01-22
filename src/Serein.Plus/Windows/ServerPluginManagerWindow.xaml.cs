@@ -40,8 +40,8 @@ public partial class ServerPluginManagerWindow : Window
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        var selectedPlugins = PluginListView.SelectedItems.OfType<ServerPlugin>();
-        var count = selectedPlugins.Count();
+        var selectedPlugins = PluginListView.SelectedItems.OfType<ServerPlugin>().ToArray();
+        var count = selectedPlugins.Length;
 
         switch ((sender as MenuItem)?.Tag as string)
         {
@@ -155,10 +155,10 @@ public partial class ServerPluginManagerWindow : Window
 
     private void PluginListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var selectedPlugins = PluginListView.SelectedItems.OfType<ServerPlugin>();
+        var selectedPlugins = PluginListView.SelectedItems.OfType<ServerPlugin>().ToArray();
 
         ViewModel.Remove = ViewModel.OpenInExplorer = selectedPlugins.Any();
         ViewModel.Enable = ViewModel.Remove && !selectedPlugins.Any((plugin) => plugin.IsEnabled);
-        ViewModel.Disable = ViewModel.Remove && !selectedPlugins.Any((plugin) => !plugin.IsEnabled);
+        ViewModel.Disable = ViewModel.Remove && selectedPlugins.All(plugin => plugin.IsEnabled);
     }
 }

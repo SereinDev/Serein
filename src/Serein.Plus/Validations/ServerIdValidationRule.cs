@@ -7,7 +7,7 @@ namespace Serein.Plus.Validations;
 
 public sealed class ServerIdValidationRule : ValidationRule
 {
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    public override ValidationResult Validate(object? value, CultureInfo cultureInfo)
     {
         var id = value?.ToString();
 

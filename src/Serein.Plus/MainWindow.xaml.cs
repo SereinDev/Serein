@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Navigation;
 using Hardcodet.Wpf.TaskbarNotification;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
-using iNKORE.UI.WPF.Modern.Media.Animation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core;
@@ -24,6 +24,7 @@ using Serein.Core.Utils;
 using Serein.Plus.Commands;
 using Serein.Plus.Models;
 using Serein.Plus.Pages;
+using Serein.Plus.Pages.Settings;
 using Serein.Plus.Services;
 using Serein.Plus.Utils;
 
@@ -36,9 +37,7 @@ public partial class MainWindow : Window
     private readonly IServiceProvider _services;
     private readonly UpdateChecker _updateChecker;
     private readonly ServerManager _serverManager;
-    private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly TitleUpdater _titleUpdater;
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
 
@@ -56,24 +55,20 @@ public partial class MainWindow : Window
         _services = services;
         _updateChecker = updateChecker;
         _serverManager = serverManager;
-        _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
-        _titleUpdater = titleUpdater;
 
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
 
         InitializeComponent();
-        AppTaskbarIcon.ContextMenu.DataContext = this;
+        AppTaskbarIcon.ContextMenu!.DataContext = this;
         AppTaskbarIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
 
-        RootFrame.Navigate(_services.GetRequiredService<NotImplPage>());
+        DataContext = titleUpdater;
+        titleUpdater.Update();
 
-        DataContext = _titleUpdater;
-        _titleUpdater.Update();
-
-        ThemeManager.Current.ApplicationTheme = _settingProvider.Value.Application.Theme switch
+        ThemeManager.Current.ApplicationTheme = settingProvider.Value.Application.Theme switch
         {
             Theme.Light => ApplicationTheme.Light,
             Theme.Dark => ApplicationTheme.Dark,
@@ -138,21 +133,6 @@ public partial class MainWindow : Window
         Show();
         Activate();
         WindowState = WindowState.Normal;
-    }
-
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        Task.Delay(1000)
-            .ContinueWith(
-                (_) =>
-                    Dispatcher.Invoke(
-                        () =>
-                            RootFrame.Navigate(
-                                _services.GetRequiredService<ShellPage>(),
-                                new SuppressNavigationTransitionInfo()
-                            )
-                    )
-            );
     }
 
     private void Window_ContentRendered(object sender, EventArgs e)
@@ -271,8 +251,9 @@ public partial class MainWindow : Window
                         );
                         GlobalInfoBar.Closed -= Cancel;
                     });
-                    Task.Delay(500).ContinueWith((_) => infoBarTask.ResetEvent.Set());
-                }
+                    Task.Delay(500, infoBarTask.CancellationToken).ContinueWith((_) => infoBarTask.ResetEvent.Set(),
+                        infoBarTask.CancellationToken);
+                }, infoBarTask.CancellationToken
             );
 
         void Cancel(object sender, EventArgs e)
@@ -283,5 +264,42 @@ public partial class MainWindow : Window
                 cancellationTokenSource.Cancel();
             }
         }
+    }
+
+    private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    {
+        if (args.InvokedItemContainer.Tag is not Type type)
+        {
+            type = args.IsSettingsInvoked ? typeof(CategoriesPage) : typeof(NotImplPage);
+        }
+
+        var page = _services.GetRequiredService(type);
+
+        ContentFrame.Navigate(page, args.RecommendedNavigationTransitionInfo);
+    }
+
+    private void NavView_DisplayModeChanged(
+        NavigationView sender,
+        NavigationViewDisplayModeChangedEventArgs args
+    )
+    {
+        var currMargin = AppTitleBar.Margin;
+        AppTitleBar.Margin = new Thickness(
+            sender.CompactPaneLength,
+            currMargin.Top,
+            currMargin.Right,
+            currMargin.Bottom
+        );
+    }
+
+    private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+    {
+        NavView.IsBackEnabled = ContentFrame.CanGoBack;
+        ContentFrame.RemoveBackEntry();
     }
 }

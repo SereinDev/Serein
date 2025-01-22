@@ -6,13 +6,10 @@ namespace Serein.Plus.Windows;
 
 public partial class MatchEditor : Window
 {
-    private readonly Match _match;
-
     public MatchEditor(Match match)
     {
-        _match = match;
         InitializeComponent();
-        DataContext = _match;
+        DataContext = match;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

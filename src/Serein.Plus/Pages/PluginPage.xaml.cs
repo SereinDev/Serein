@@ -10,13 +10,9 @@ public partial class PluginPage : Page
 {
     private readonly IServiceProvider _services;
 
-    public PluginViewModel ViewModel { get; }
-
-    public PluginPage(IServiceProvider services, PluginViewModel viewModel)
+    public PluginPage(IServiceProvider services)
     {
         _services = services;
-        ViewModel = viewModel;
-        DataContext = ViewModel;
 
         InitializeComponent();
         NavView.SelectedItem = NavView.MenuItems[0];

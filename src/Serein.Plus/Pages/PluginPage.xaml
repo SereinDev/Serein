@@ -15,14 +15,13 @@
     <Grid>
         <ui:NavigationView
             x:Name="NavView"
-            Grid.Row="1"
             IsBackButtonVisible="Collapsed"
             ItemInvoked="NavView_ItemInvoked"
             PaneDisplayMode="Top">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem
                     Content="控制台"
-                    Tag="{Binding Console}"
+                    Tag="{x:Type local:PluginConsolePage}"
                     ToolTip="查看插件输出信息">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.CommandPrompt}" />
@@ -31,7 +30,7 @@
 
                 <ui:NavigationViewItem
                     Content="管理"
-                    Tag="{Binding List}"
+                    Tag="{x:Type local:PluginListPage}"
                     ToolTip="管理已经加载的插件列表">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.AllApps}" />

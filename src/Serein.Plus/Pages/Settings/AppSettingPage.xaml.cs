@@ -37,11 +37,7 @@ public partial class AppSettingPage : Page
     private void UpdateVersionInfoBar()
     {
         VersionInfoBar.IsOpen = _updateChecker.Newest is not null;
-        VersionInfoBar.Message = string.Format(
-            "当前版本：{0}\r\n新版本：{1}",
-            SereinApp.Version,
-            _updateChecker.Newest?.TagName
-        );
+        VersionInfoBar.Message = $"当前版本：{SereinApp.Version}\r\n新版本：{_updateChecker.Newest?.TagName}";
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)
