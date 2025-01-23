@@ -14,14 +14,14 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.WebApi;
 
-internal class BroadcastWebSocketModule : WebSocketModule
+internal class ServerWebSocketModule : WebSocketModule
 {
     private readonly ServerManager _serverManager;
     private readonly SettingProvider _settingProvider;
     private readonly Dictionary<string, List<IWebSocketContext>> _clients = [];
 
-    public BroadcastWebSocketModule(ServerManager serverManager, SettingProvider settingProvider)
-        : base("/ws/broadcast", true)
+    public ServerWebSocketModule(ServerManager serverManager, SettingProvider settingProvider)
+        : base("/ws/server", true)
     {
         _serverManager = serverManager;
         _settingProvider = settingProvider;
@@ -141,7 +141,7 @@ internal class BroadcastWebSocketModule : WebSocketModule
                     new WebSocketBroadcastPacket(
                         e.OutputType switch
                         {
-                            ServerOutputType.InternalInfo => WebSocketBroadcastType.Information,
+                            ServerOutputType.InternalInfo => WebSocketBroadcastType.Info,
                             ServerOutputType.StandardOutput => WebSocketBroadcastType.Output,
                             ServerOutputType.InternalError => WebSocketBroadcastType.Error,
                             ServerOutputType.StandardInput => WebSocketBroadcastType.Input,

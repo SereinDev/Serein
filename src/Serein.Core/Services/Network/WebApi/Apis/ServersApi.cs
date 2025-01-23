@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
+using Force.DeepCloner;
 using Serein.Core.Models.Server;
 using Serein.Core.Utils.Json;
 
@@ -26,9 +27,29 @@ internal partial class ApiMap
             JsonSerializer.Deserialize<Configuration>(
                 jsonObject?["configuration"],
                 JsonSerializerOptionsFactory.Common
-            ) ?? throw HttpException.BadRequest();
+            ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
 
         _serverManager.Add(id, configuration);
+        await HttpContext.SendPacketAsync();
+    }
+
+    [Route(HttpVerbs.Put, "/servers/{id}")]
+    public async Task UpdateServer(string id)
+    {
+        var jsonObject = await HttpContext.ConvertRequestAs<JsonObject>();
+        var configuration =
+            JsonSerializer.Deserialize<Configuration>(
+                jsonObject?["configuration"],
+                JsonSerializerOptionsFactory.Common
+            ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
+
+        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        {
+            throw HttpException.NotFound("未找到指定的服务器");
+        }
+
+        configuration.DeepCloneTo(server.Configuration);
+
         await HttpContext.SendPacketAsync();
     }
 

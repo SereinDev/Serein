@@ -47,7 +47,7 @@ internal sealed class CommonProcessSpawner(ServerLogger serverLogger) : IProcess
         CurrentProcess.BeginOutputReadLine();
         CurrentProcess.BeginErrorReadLine();
 
-        CurrentProcess.Exited += (_, e) => ProcessExited?.Invoke(this, CurrentProcess.ExitCode);
+        CurrentProcess.Exited += (_, _) => ProcessExited?.Invoke(this, CurrentProcess.ExitCode);
         CurrentProcess.ErrorDataReceived += OnOutputDataReceived;
         CurrentProcess.OutputDataReceived += OnOutputDataReceived;
     }
