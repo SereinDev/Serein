@@ -10,16 +10,13 @@ namespace Serein.Core.Services.Commands;
 internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner commandRunner)
     : IHostedService
 {
-    private readonly ScheduleProvider _scheduleProvider = scheduleProvider;
-    private readonly CommandRunner _commandRunner = commandRunner;
-
     private readonly Timer _timer = new(5000);
 
     private void OnElapsed(object? sender, EventArgs e)
     {
-        lock (_scheduleProvider.Value)
+        lock (scheduleProvider.Value)
         {
-            foreach (var schedule in _scheduleProvider.Value)
+            foreach (var schedule in scheduleProvider.Value)
             {
                 if (
                     !schedule.IsEnabled
@@ -36,7 +33,7 @@ internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner c
                 {
                     schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
                     schedule.IsRunning = true;
-                    _commandRunner
+                    commandRunner
                         .RunAsync(schedule.CommandObj)
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }

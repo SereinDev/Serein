@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.WebApi;
+using Serein.Core.Services.Network.Web;
 using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui.Settings;
@@ -10,9 +10,9 @@ namespace Serein.Lite.Ui.Settings;
 public partial class WebApiSettingPage : UserControl
 {
     private readonly SettingProvider _settingProvider;
-    private readonly HttpServer _httpServer;
+    private readonly WebServer _httpServer;
 
-    public WebApiSettingPage(SettingProvider settingProvider, HttpServer httpServer)
+    public WebApiSettingPage(SettingProvider settingProvider, WebServer httpServer)
     {
         _settingProvider = settingProvider;
         _httpServer = httpServer;

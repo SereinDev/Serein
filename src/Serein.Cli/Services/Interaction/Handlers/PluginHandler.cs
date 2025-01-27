@@ -24,11 +24,6 @@ public sealed class PluginHandler(
     NetPluginLoader netPluginLoader
 ) : CommandHandler
 {
-    private readonly ILogger<PluginHandler> _logger = logger;
-    private readonly PluginManager _pluginManager = pluginManager;
-    private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
-    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
-
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (args.Count == 1)
@@ -41,27 +36,27 @@ public sealed class PluginHandler(
         switch (args[1].ToLowerInvariant())
         {
             case "reload" when args.Count == 2:
-                Task.Run(_pluginManager.Reload);
+                Task.Run(pluginManager.Reload);
                 break;
 
             case "list" when args.Count == 2:
                 var stringBuilder = new StringBuilder();
 
                 stringBuilder.AppendLine(
-                    $"当前共有{_jsPluginLoader.Plugins.Count + _netPluginLoader.Plugins.Count}个插件"
+                    $"当前共有{jsPluginLoader.Plugins.Count + netPluginLoader.Plugins.Count}个插件"
                 );
-                foreach (var plugin in _jsPluginLoader.Plugins)
+                foreach (var plugin in jsPluginLoader.Plugins)
                 {
                     stringBuilder.AppendLine($"[JS] {plugin.Key}");
                     AppendPluginInfo(stringBuilder, plugin.Value);
                 }
-                foreach (var plugin in _netPluginLoader.Plugins)
+                foreach (var plugin in netPluginLoader.Plugins)
                 {
                     stringBuilder.AppendLine($"[NET] {plugin.Key}");
                     AppendPluginInfo(stringBuilder, plugin.Value);
                 }
 
-                _logger.LogInformation("{}", stringBuilder);
+                logger.LogInformation("{}", stringBuilder);
                 break;
 
             case "disable" when args.Count == 3:
@@ -70,7 +65,7 @@ public sealed class PluginHandler(
                     throw new InvalidArgumentException("缺少插件Id");
                 }
 
-                if (_jsPluginLoader.Plugins.TryGetValue(args[2], out var jsPlugin))
+                if (jsPluginLoader.Plugins.TryGetValue(args[2], out var jsPlugin))
                 {
                     if (jsPlugin.IsEnabled)
                     {
@@ -82,7 +77,7 @@ public sealed class PluginHandler(
                     }
                 }
 
-                if (_netPluginLoader.Plugins.TryGetValue(args[2], out var netPlugin))
+                if (netPluginLoader.Plugins.TryGetValue(args[2], out var netPlugin))
                 {
                     if (netPlugin.IsEnabled)
                     {

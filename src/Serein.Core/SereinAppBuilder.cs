@@ -10,8 +10,8 @@ using Serein.Core.Services.Data;
 using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
-using Serein.Core.Services.Network.WebApi;
-using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Services.Network.Web;
+using Serein.Core.Services.Network.Web.Apis;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -63,10 +63,12 @@ public static class SereinAppBuilder
             .AddSingleton<ReverseWebSocketService>()
             .AddSingleton<WsConnectionManager>()
             .AddSingleton<PacketHandler>()
-            .AddSingleton<HttpServer>()
+            .AddSingleton<WebServer>()
             .AddTransient<ApiMap>()
             .AddTransient<IPBannerModule>()
             .AddTransient<ServerWebSocketModule>()
+            .AddTransient<ConnectionWebSocketModule>()
+            .AddSingleton<PageExtractor>()
             .AddSingleton<PluginManager>()
             .AddSingleton<EventDispatcher>()
             .AddSingleton<JsEngineFactory>()

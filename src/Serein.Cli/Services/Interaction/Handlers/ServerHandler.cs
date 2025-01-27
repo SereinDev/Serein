@@ -23,11 +23,6 @@ public sealed class ServerHandler(
     ServerSwitcher serverSwitcher
 ) : CommandHandler
 {
-    private readonly ILogger<ServerHandler> _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly ServerManager _serverManager = serverManager;
-    private readonly ServerSwitcher _serverSwitcher = serverSwitcher;
-
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (args.Count == 1)
@@ -51,7 +46,7 @@ public sealed class ServerHandler(
             throw new InvalidArgumentException("缺少服务器Id。");
         }
 
-        var id = args.Count == 3 ? args[2] : _serverSwitcher.CurrentId;
+        var id = args.Count == 3 ? args[2] : serverSwitcher.CurrentId;
 
         if (string.IsNullOrEmpty(id))
         {
@@ -61,7 +56,7 @@ public sealed class ServerHandler(
             );
         }
 
-        if (!_serverManager.Servers.TryGetValue(id, out Server? server))
+        if (!serverManager.Servers.TryGetValue(id, out Server? server))
         {
             throw new InvalidArgumentException("指定的服务器不存在");
         }
@@ -77,19 +72,19 @@ public sealed class ServerHandler(
                 {
                     server.Start();
 
-                    if (string.IsNullOrEmpty(_settingProvider.Value.Application.CliCommandHeader))
+                    if (string.IsNullOrEmpty(settingProvider.Value.Application.CliCommandHeader))
                     {
-                        _settingProvider.Value.Application.CliCommandHeader = "//";
+                        settingProvider.Value.Application.CliCommandHeader = "//";
                     }
 
-                    _logger.LogWarning(
+                    logger.LogWarning(
                         "服务器已启动，输入的命令将转发至服务器。若要执行Serein的命令，你需要在命令前加上\"{}\"",
-                        _settingProvider.Value.Application.CliCommandHeader
+                        settingProvider.Value.Application.CliCommandHeader
                     );
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("启动失败：{}", e.Message);
+                    logger.LogError("启动失败：{}", e.Message);
                 }
                 break;
 
@@ -100,18 +95,18 @@ public sealed class ServerHandler(
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("关闭失败：{}", e.Message);
+                    logger.LogError("关闭失败：{}", e.Message);
                 }
                 break;
 
             case "switch" when args.Count == 3:
                 try
                 {
-                    _serverSwitcher.SwitchTo(id);
+                    serverSwitcher.SwitchTo(id);
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("选择服务器失败：{}", e.Message);
+                    logger.LogError("选择服务器失败：{}", e.Message);
                 }
                 break;
 
@@ -122,7 +117,7 @@ public sealed class ServerHandler(
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("强制结束失败：{}", e.Message);
+                    logger.LogError("强制结束失败：{}", e.Message);
                 }
                 break;
 
@@ -171,14 +166,14 @@ public sealed class ServerHandler(
             );
         }
 
-        _logger.LogInformation(stringBuilder.ToString());
+        logger.LogInformation(stringBuilder.ToString());
     }
 
     private void LogList()
     {
         var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine($"当前共{_serverManager.Servers.Count}个服务器配置");
-        foreach (var kv in _serverManager.Servers)
+        stringBuilder.AppendLine($"当前共{serverManager.Servers.Count}个服务器配置");
+        foreach (var kv in serverManager.Servers)
         {
             stringBuilder.AppendLine($"▢ {kv.Value.Configuration.Name}");
             stringBuilder.AppendLine($"  ▫ Id： {kv.Key}");
@@ -191,6 +186,6 @@ public sealed class ServerHandler(
             );
         }
 
-        _logger.LogInformation(stringBuilder.ToString());
+        logger.LogInformation(stringBuilder.ToString());
     }
 }

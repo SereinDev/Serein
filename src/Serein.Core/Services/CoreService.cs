@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
-using Serein.Core.Services.Network.WebApi;
+using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
@@ -19,7 +20,7 @@ internal sealed class CoreService : IHostedService
     private readonly SettingProvider _settingProvider;
     private readonly ServerManager _serverManager;
     private readonly UpdateChecker _updateChecker;
-    private readonly HttpServer _httpServer;
+    private readonly WebServer _httpServer;
 
     public CoreService(
         ILogger<CoreService> logger,
@@ -27,7 +28,7 @@ internal sealed class CoreService : IHostedService
         ServerManager serverManager,
         UpdateChecker updateChecker,
         EventDispatcher eventDispatcher,
-        HttpServer httpServer
+        WebServer httpServer
     )
     {
         _logger = logger;
@@ -47,6 +48,11 @@ internal sealed class CoreService : IHostedService
         _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());
         _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
 
+        if (Debugger.IsAttached)
+        {
+            _logger.LogWarning("调试器已附加");
+        }
+
         AppDomain.CurrentDomain.UnhandledException += (_, _) =>
             eventDispatcher.Dispatch(Event.SereinCrashed);
     }
@@ -65,7 +71,7 @@ internal sealed class CoreService : IHostedService
 
         if (_settingProvider.Value.WebApi.IsEnabled)
         {
-            Try(_httpServer.Start, "WebApi");
+            Try(_httpServer.Start, "Web Server");
         }
 
         _logger.LogInformation("Serein启动成功！");

@@ -10,7 +10,7 @@ namespace Serein.Core.Services.Plugins.Storages;
 
 public sealed class LocalStorage : StorageBase
 {
-    public static readonly string Path =
+    private static readonly string Path =
         $"{PathConstants.PluginsDirectory}/{PathConstants.LocalStorageFileName}";
 
     public LocalStorage(ILogger<LocalStorage> logger)

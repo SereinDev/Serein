@@ -9,7 +9,16 @@ public abstract class StorageBase(ILogger logger)
     protected readonly Dictionary<string, string> _data = [];
     protected readonly ILogger _logger = logger;
 
-    public int Length => _data.Count;
+    public int Length
+    {
+        get
+        {
+            lock (_data)
+            {
+                return _data.Count;
+            }
+        }
+    }
 
     public void Clear()
     {
@@ -23,7 +32,10 @@ public abstract class StorageBase(ILogger logger)
 
     public string? GetItem(string key)
     {
-        return _data.TryGetValue(key, out var value) ? value : null;
+        lock (_data)
+        {
+            return _data.TryGetValue(key, out var value) ? value : null;
+        }
     }
 
     public void RemoveItem(string key)
@@ -49,7 +61,10 @@ public abstract class StorageBase(ILogger logger)
 
     public string? Key(int index)
     {
-        return _data.Keys.ElementAtOrDefault(index);
+        lock (_data)
+        {
+            return _data.Keys.ElementAtOrDefault(index);
+        }
     }
 
     public string? this[string key]

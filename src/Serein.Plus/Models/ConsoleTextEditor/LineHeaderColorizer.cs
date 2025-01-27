@@ -10,8 +10,6 @@ namespace Serein.Plus.Models.ConsoleTextEditor;
 public partial class LineHeaderColorizer(bool onlySereinHeader = false)
     : DocumentColorizingTransformer
 {
-    private readonly bool _onlySereinHeader = onlySereinHeader;
-
     protected override void ColorizeLine(DocumentLine line)
     {
         var text = CurrentContext.Document.GetText(line);
@@ -41,7 +39,7 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
                 break;
 
             case "Info":
-                if (!_onlySereinHeader)
+                if (!onlySereinHeader)
                 {
                     action = (element) =>
                         element.TextRunProperties.SetForegroundBrush(
@@ -51,7 +49,7 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
                 break;
 
             case "Warn":
-                if (!_onlySereinHeader)
+                if (!onlySereinHeader)
                 {
                     action = (element) =>
                     {
@@ -72,7 +70,7 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
                 break;
 
             case "Error":
-                if (!_onlySereinHeader)
+                if (!onlySereinHeader)
                 {
                     action = (element) =>
                     {
@@ -94,7 +92,7 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
 
             case "Recv":
             case "↓":
-                if (!_onlySereinHeader)
+                if (!onlySereinHeader)
                 {
                     action = (element) =>
                         element.TextRunProperties.SetForegroundBrush(
@@ -105,7 +103,7 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
 
             case "Sent":
             case "↑":
-                if (!_onlySereinHeader)
+                if (!onlySereinHeader)
                 {
                     action = (element) =>
                         element.TextRunProperties.SetForegroundBrush(

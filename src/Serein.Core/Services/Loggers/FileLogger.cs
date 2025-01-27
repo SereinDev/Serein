@@ -7,9 +7,6 @@ namespace Serein.Core.Services.Loggers;
 
 internal class FileLogger(string categoryName, IList<string> buffer) : ILogger
 {
-    private readonly string _categoryName = categoryName;
-    private readonly IList<string> _buffer = buffer;
-
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull
     {
@@ -32,7 +29,7 @@ internal class FileLogger(string categoryName, IList<string> buffer) : ILogger
         var stringBuilder = new StringBuilder();
         stringBuilder.Append(DateTime.Now.ToString("HH:mm:ss.ffffff"));
         stringBuilder.Append(" [");
-        stringBuilder.Append(_categoryName);
+        stringBuilder.Append(categoryName);
         stringBuilder.Append("] [");
         stringBuilder.Append(logLevel);
         stringBuilder.Append('/');
@@ -46,6 +43,6 @@ internal class FileLogger(string categoryName, IList<string> buffer) : ILogger
             stringBuilder.Append(exception);
         }
 
-        _buffer.Add(stringBuilder.ToString());
+        buffer.Add(stringBuilder.ToString());
     }
 }

@@ -18,6 +18,16 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v8
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          repo: SereinDev/Web
+          workflow_conclusion: success
+          path: src/Sources/
+
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:

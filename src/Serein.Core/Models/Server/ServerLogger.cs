@@ -4,7 +4,12 @@ namespace Serein.Core.Models.Server;
 
 public sealed class ServerLogger
 {
-    internal ServerLogger() { }
+    public string Id { get; }
+
+    internal ServerLogger(string id)
+    {
+        Id = id;
+    }
 
     public event EventHandler<ServerOutputEventArgs>? Output;
 

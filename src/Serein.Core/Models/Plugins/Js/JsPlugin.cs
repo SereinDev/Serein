@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using System.Threading;
 using Jint;
 using Jint.Native.Function;
@@ -22,13 +23,22 @@ public class JsPlugin : IPlugin
     public PluginInfo Info { get; }
     public JsPluginConfig Config { get; }
 
+    [JsonIgnore]
     public Engine Engine { get; }
+
+    [JsonIgnore]
     public JsConsole Console { get; }
+
+    [JsonIgnore]
     public TimerFactory TimerFactory { get; }
+
+    [JsonIgnore]
     public ScriptInstance ScriptInstance { get; }
 
+    [JsonIgnore]
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
-    public IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
+
+    private IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
     public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
@@ -97,16 +107,19 @@ public class JsPlugin : IPlugin
             {
                 return true;
             }
+
             if (!Monitor.TryEnter(Engine, 1000))
             {
                 throw new TimeoutException("等待引擎超时");
             }
+
             entered = true;
 
             if (cancellationToken.IsCancellationRequested)
             {
                 return true;
             }
+
             var result = Engine.Invoke(func, args);
             {
                 return !result.IsBoolean() || result.AsBoolean();
@@ -136,6 +149,7 @@ public class JsPlugin : IPlugin
         {
             _cancellationTokenSource.Cancel();
         }
+
         PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
     }
 }

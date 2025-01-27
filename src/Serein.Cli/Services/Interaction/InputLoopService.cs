@@ -23,14 +23,10 @@ public sealed class InputLoopService(
     InputHandler inputHandler
 ) : IHostedService
 {
-    private readonly ILogger<InputLoopService> _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly ServerManager _serverManager = serverManager;
-    private readonly CommandPromptCallbacks _commandPromptCallbacks = commandPromptCallbacks;
-    private readonly InputHandler _inputHandler = inputHandler;
     private readonly CancellationTokenSource _cancellationTokenSource = new();
-    private readonly Lazy<ServerSwitcher> _serverSwitcher =
-        new(serviceProvider.GetRequiredService<ServerSwitcher>);
+    private readonly Lazy<ServerSwitcher> _serverSwitcher = new(
+        serviceProvider.GetRequiredService<ServerSwitcher>
+    );
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -51,7 +47,7 @@ public sealed class InputLoopService(
             var flag = false;
             var prompt = new Prompt(
                 PathConstants.ConsoleHistory,
-                _commandPromptCallbacks,
+                commandPromptCallbacks,
                 configuration: new(
                     completionBoxBorderFormat: new() { Foreground = AnsiColor.BrightBlack },
                     selectedCompletionItemBackground: AnsiColor.Rgb(30, 30, 30),
@@ -63,7 +59,7 @@ public sealed class InputLoopService(
             {
                 if (
                     !string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId)
-                    && _serverManager.Servers.TryGetValue(
+                    && serverManager.Servers.TryGetValue(
                         _serverSwitcher.Value.CurrentId,
                         out var server
                     )
@@ -93,7 +89,7 @@ public sealed class InputLoopService(
                     }
                     catch (Exception e)
                     {
-                        _logger.LogError(
+                        logger.LogError(
                             e,
                             "读取输入时发生错误。若此错误持续出现，请尝试关闭彩色输出"
                         );
@@ -103,10 +99,10 @@ public sealed class InputLoopService(
         }
         else
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "当前输出流已被重定向 或 你在启动时指定了禁用彩色输出参数，输入自动补全功能已关闭，但你仍可以输入\"help\"查看帮助页面"
             );
-            _logger.LogWarning("若要体验此功能，请在终端内运行 Serein.Cli");
+            logger.LogWarning("若要体验此功能，请在终端内运行 Serein.Cli");
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -127,13 +123,13 @@ public sealed class InputLoopService(
         if (!string.IsNullOrEmpty(_serverSwitcher.Value.CurrentId))
         {
             if (
-                _serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
+                serverManager.Servers.TryGetValue(_serverSwitcher.Value.CurrentId, out var server)
                 && server.Status
             )
             {
-                if (input.StartsWith(_settingProvider.Value.Application.CliCommandHeader))
+                if (input.StartsWith(settingProvider.Value.Application.CliCommandHeader))
                 {
-                    input = input[_settingProvider.Value.Application.CliCommandHeader.Length..];
+                    input = input[settingProvider.Value.Application.CliCommandHeader.Length..];
                 }
                 else
                 {
@@ -143,7 +139,7 @@ public sealed class InputLoopService(
             }
         }
 
-        _inputHandler.Handle(
+        inputHandler.Handle(
             input.Split(
                 '\x20',
                 StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries

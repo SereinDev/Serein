@@ -5,7 +5,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.WebApi;
+using Serein.Core.Services.Network.Web;
 using Serein.Plus.Services;
 
 namespace Serein.Plus.Pages.Settings;
@@ -13,13 +13,13 @@ namespace Serein.Plus.Pages.Settings;
 public partial class WebApiSettingPage : System.Windows.Controls.Page
 {
     private readonly ILogger<WebApiSettingPage> _logger;
-    private readonly HttpServer _httpServer;
+    private readonly WebServer _httpServer;
     private readonly InfoBarProvider _infoBarProvider;
     private readonly SettingProvider _settingProvider;
 
     public WebApiSettingPage(
         ILogger<WebApiSettingPage> logger,
-        HttpServer httpServer,
+        WebServer httpServer,
         InfoBarProvider infoBarProvider,
         SettingProvider settingProvider
     )
@@ -50,7 +50,7 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
             {
                 _httpServer.Start();
                 _infoBarProvider.Enqueue(
-                    "WebApi服务器开启成功",
+                    "网页服务器开启成功",
                     string.Empty,
                     InfoBarSeverity.Success
                 );
@@ -59,7 +59,7 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
             {
                 _httpServer.Stop();
                 _infoBarProvider.Enqueue(
-                    "WebApi服务器关闭成功",
+                    "网页服务器关闭成功",
                     string.Empty,
                     InfoBarSeverity.Success
                 );

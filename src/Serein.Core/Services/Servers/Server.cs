@@ -79,7 +79,7 @@ public sealed class Server
         _updateTimer.Elapsed += (_, _) => Task.Run(UpdateInfo);
         _info = new();
         PluginManager = new(this);
-        Logger = new();
+        Logger = new(id);
 
         StatusChanged += (_, _) => Task.Run(UpdateInfo);
 

@@ -178,7 +178,7 @@ public partial class MainWindow : Window
             Topmost = false;
         }
     }
-    
+
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         NavView.SelectedItem = NavView.MenuItems[0];
@@ -257,9 +257,13 @@ public partial class MainWindow : Window
                         );
                         GlobalInfoBar.Closed -= Cancel;
                     });
-                    Task.Delay(500, infoBarTask.CancellationToken).ContinueWith((_) => infoBarTask.ResetEvent.Set(),
-                        infoBarTask.CancellationToken);
-                }, infoBarTask.CancellationToken
+                    Task.Delay(500, infoBarTask.CancellationToken)
+                        .ContinueWith(
+                            (_) => infoBarTask.ResetEvent.Set(),
+                            infoBarTask.CancellationToken
+                        );
+                },
+                infoBarTask.CancellationToken
             );
 
         void Cancel(object sender, EventArgs e)
@@ -308,5 +312,4 @@ public partial class MainWindow : Window
         NavView.IsBackEnabled = ContentFrame.CanGoBack;
         ContentFrame.RemoveBackEntry();
     }
-
 }

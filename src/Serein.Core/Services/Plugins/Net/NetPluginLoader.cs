@@ -17,9 +17,6 @@ public sealed class NetPluginLoader(
     IPluginLogger pluginLogger
 ) : IPluginLoader<PluginBase>
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-    private readonly ILogger<NetPluginLoader> _logger = logger;
-    private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly List<WeakReference<PluginAssemblyLoadContext>> _contexts = [];
     public ConcurrentDictionary<string, PluginBase> NetPlugins { get; } = new();
     public IReadOnlyDictionary<string, PluginBase> Plugins => NetPlugins;
@@ -40,7 +37,7 @@ public sealed class NetPluginLoader(
             }
 
             var context = new PluginAssemblyLoadContext(entry);
-            context.Unloading += (_) => _logger.LogDebug("插件\"{}\"上下文已卸载", pluginInfo.Id);
+            context.Unloading += (_) => logger.LogDebug("插件\"{}\"上下文已卸载", pluginInfo.Id);
 
             _contexts.Add(new(context, true));
 
@@ -65,8 +62,8 @@ public sealed class NetPluginLoader(
 
     private PluginBase CreatePluginInstance(Type[] allTypes)
     {
-        var types = allTypes.Where(type => type.BaseType == typeof(PluginBase));
-        var count = types.Count();
+        var types = allTypes.Where(type => type.BaseType == typeof(PluginBase)).ToArray();
+        var count = types.Length;
 
         if (count > 1)
         {
@@ -92,11 +89,11 @@ public sealed class NetPluginLoader(
             {
                 if (parameterInfo.ParameterType == typeof(IServiceProvider))
                 {
-                    args.Add(_serviceProvider);
+                    args.Add(serviceProvider);
                 }
                 else
                 {
-                    args.Add(_serviceProvider.GetRequiredService(parameterInfo.ParameterType));
+                    args.Add(serviceProvider.GetRequiredService(parameterInfo.ParameterType));
                 }
             }
             return ctor.Invoke([.. args]) as PluginBase ?? throw new NotSupportedException();
@@ -115,7 +112,7 @@ public sealed class NetPluginLoader(
             }
             catch (Exception e)
             {
-                _pluginLogger.Log(
+                pluginLogger.Log(
                     LogLevel.Error,
                     plugin.Info.Name,
                     "卸载插件时出现异常：" + Environment.NewLine + e.Message
@@ -133,7 +130,10 @@ public sealed class NetPluginLoader(
                     context.Unload();
                 }
             }
-            catch { }
+            catch (Exception e)
+            {
+                logger.LogDebug(e, "尝试卸载插件上下文时异常");
+            }
         }
 
         NetPlugins.Clear();

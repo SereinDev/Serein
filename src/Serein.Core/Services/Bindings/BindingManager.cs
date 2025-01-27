@@ -11,15 +11,13 @@ namespace Serein.Core.Services.Bindings;
 
 public sealed class BindingManager(SettingProvider settingProvider, IServiceProvider services)
 {
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly IServiceProvider _services = services;
     private readonly object _lock = new();
 
     private BindingRecordDbContext BindingRecordDbContext
     {
         get
         {
-            var ctx = _services.GetRequiredService<BindingRecordDbContext>();
+            var ctx = services.GetRequiredService<BindingRecordDbContext>();
             ctx.Database.EnsureCreated();
             return ctx;
         }
@@ -29,7 +27,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
     {
         ArgumentException.ThrowIfNullOrEmpty(gameId, nameof(gameId));
 
-        var regex = new Regex(_settingProvider.Value.Application.RegexForCheckingGameId);
+        var regex = new Regex(settingProvider.Value.Application.RegexForCheckingGameId);
 
         if (!regex.IsMatch(gameId))
         {

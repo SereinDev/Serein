@@ -9,8 +9,9 @@ namespace Serein.Lite.Services.Loggers;
 
 public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
 {
-    private readonly Lazy<PluginPage> _pluginPage =
-        new(serviceProvider.GetRequiredService<PluginPage>);
+    private readonly Lazy<PluginPage> _pluginPage = new(
+        serviceProvider.GetRequiredService<PluginPage>
+    );
 
     private readonly object _lock = new();
 

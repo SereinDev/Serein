@@ -7,8 +7,6 @@ namespace Serein.Plus.Commands;
 
 public class TaskbarIconDoubleClickCommand(MainWindow mainWindow) : ICommand
 {
-    private readonly MainWindow _mainWindow = mainWindow;
-
     public bool CanExecute(object? parameter)
     {
         return true;
@@ -16,7 +14,7 @@ public class TaskbarIconDoubleClickCommand(MainWindow mainWindow) : ICommand
 
     public void Execute(object? parameter)
     {
-        _mainWindow.ShowWindow();
+        mainWindow.ShowWindow();
     }
 
     public event EventHandler? CanExecuteChanged;

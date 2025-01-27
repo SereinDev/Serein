@@ -11,12 +11,12 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 public sealed class HelpHandler(ILogger<HelpHandler> logger, IServiceProvider serviceProvider)
     : CommandHandler
 {
-    private readonly ILogger<HelpHandler> _logger = logger;
-    private readonly Lazy<CommandProvider> _commandProvider =
-        new(serviceProvider.GetRequiredService<CommandProvider>);
+    private readonly Lazy<CommandProvider> _commandProvider = new(
+        serviceProvider.GetRequiredService<CommandProvider>
+    );
 
     public override void Invoke(IReadOnlyList<string> args)
     {
-        _logger.LogInformation("{}", _commandProvider.Value.HelpPage);
+        logger.LogInformation("{}", _commandProvider.Value.HelpPage);
     }
 }

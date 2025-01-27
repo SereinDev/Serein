@@ -25,16 +25,13 @@ public sealed class PacketHandler(
     ReactionTrigger reactionTrigger
 )
 {
-    private readonly Lazy<IConnectionLogger> _connectionLogger =
-        new(host.Services.GetRequiredService<IConnectionLogger>);
-    private readonly Matcher _matcher = matcher;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly EventDispatcher _eventDispatcher = eventDispatcher;
-    private readonly ReactionTrigger _reactionTrigger = reactionTrigger;
+    private readonly Lazy<IConnectionLogger> _connectionLogger = new(
+        host.Services.GetRequiredService<IConnectionLogger>
+    );
 
     public void Handle(JsonObject jsonObject)
     {
-        if (!_eventDispatcher.Dispatch(Event.PacketReceived, jsonObject))
+        if (!eventDispatcher.Dispatch(Event.PacketReceived, jsonObject))
         {
             return;
         }
@@ -64,7 +61,7 @@ public sealed class PacketHandler(
 
     private void HandleNoticePacket(NoticePacket? packet)
     {
-        if (packet is null || !_settingProvider.Value.Connection.Groups.Contains(packet.GroupId))
+        if (packet is null || !settingProvider.Value.Connection.Groups.Contains(packet.GroupId))
         {
             return;
         }
@@ -73,7 +70,7 @@ public sealed class PacketHandler(
         {
             case "group_decrease":
             case "group_increase":
-                _reactionTrigger.Trigger(
+                reactionTrigger.Trigger(
                     packet.NoticeType == "group_increase"
                         ? ReactionType.GroupIncreased
                         : ReactionType.GroupDecreased,
@@ -85,7 +82,7 @@ public sealed class PacketHandler(
             case "notify":
                 if (packet.SubType == "poke" && packet.TargetId == packet.SelfId)
                 {
-                    _reactionTrigger.Trigger(
+                    reactionTrigger.Trigger(
                         ReactionType.GroupPoke,
                         new(GroupId: packet.GroupId, UserId: packet.UserId),
                         new Dictionary<string, string?> { ["sender.id"] = packet.UserId.ToString() }
@@ -108,7 +105,7 @@ public sealed class PacketHandler(
 
         if (
             packet.MessageType == MessageType.Group
-            && !_settingProvider.Value.Connection.Groups.Contains(packet.GroupId)
+            && !settingProvider.Value.Connection.Groups.Contains(packet.GroupId)
         )
         {
             return;
@@ -116,14 +113,14 @@ public sealed class PacketHandler(
 
         if (
             packet.MessageType == MessageType.Group
-                && !_eventDispatcher.Dispatch(Event.GroupMessageReceived, packet)
+                && !eventDispatcher.Dispatch(Event.GroupMessageReceived, packet)
             || packet.MessageType == MessageType.Private
-                && !_eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)
+                && !eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)
         )
         {
             return;
         }
 
-        _matcher.QueueMsg(packet);
+        matcher.QueueMsg(packet);
     }
 }

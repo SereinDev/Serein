@@ -10,14 +10,11 @@ namespace Serein.Cli.Services;
 public sealed class TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
     : IHostedService
 {
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly CommandParser _commandParser = commandParser;
-
     public Task StartAsync(CancellationToken cancellationToken)
     {
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
-            _settingProvider.Value.Application.PropertyChanged += (_, _) => Update();
+            settingProvider.Value.Application.PropertyChanged += (_, _) => Update();
             Update();
         }
 
@@ -35,8 +32,8 @@ public sealed class TitleUpdater(SettingProvider settingProvider, CommandParser 
         {
             return;
         }
-        var text = _commandParser.ApplyVariables(
-            _settingProvider.Value.Application.CustomTitle,
+        var text = commandParser.ApplyVariables(
+            settingProvider.Value.Application.CustomTitle,
             null
         );
 

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text.Json.Serialization;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Models.Server;
@@ -13,6 +14,7 @@ public class ServerPlugin
 
     public bool IsEnabled { get; }
 
+    [JsonIgnore]
     public FileInfo FileInfo { get; }
 
     public ServerPlugin(string path, PluginType type)

@@ -10,10 +10,12 @@ namespace Serein.Plus.Services;
 
 public sealed class InfoBarProvider(IServiceProvider serviceProvider)
 {
-    private readonly BlockingCollection<InfoBarTask> _tasks =
-        new(new ConcurrentQueue<InfoBarTask>());
-    private readonly Lazy<MainWindow> _mainWindow =
-        new(serviceProvider.GetRequiredService<MainWindow>);
+    private readonly BlockingCollection<InfoBarTask> _tasks = new(
+        new ConcurrentQueue<InfoBarTask>()
+    );
+    private readonly Lazy<MainWindow> _mainWindow = new(
+        serviceProvider.GetRequiredService<MainWindow>
+    );
     private bool _isRunning;
 
     public void Enqueue(

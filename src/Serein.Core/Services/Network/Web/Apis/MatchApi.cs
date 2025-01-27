@@ -5,22 +5,22 @@ using EmbedIO.Routing;
 using Force.DeepCloner;
 using Serein.Core.Models.Commands;
 
-namespace Serein.Core.Services.Network.WebApi.Apis;
+namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap
 {
     [Route(HttpVerbs.Get, "/matches")]
     public async Task GetMatches()
     {
-        await HttpContext.SendPacketAsync(_matchesProvider.Value);
+        await HttpContext.SendPacketAsync(matchesProvider.Value);
     }
 
     [Route(HttpVerbs.Post, "/matches")]
     public async Task AddMatch()
     {
         var match = await HttpContext.ConvertRequestAs<Match>();
-        _matchesProvider.Value.Add(match);
-        _matchesProvider.SaveAsyncWithDebounce();
+        matchesProvider.Value.Add(match);
+        matchesProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync(match.GetHashCode());
     }
@@ -28,11 +28,11 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/matches/{id}")]
     public async Task DeleteMatch(int id)
     {
-        var fisrt = _matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
         if (fisrt is not null)
         {
-            _matchesProvider.Value.Remove(fisrt);
-            _matchesProvider.SaveAsyncWithDebounce();
+            matchesProvider.Value.Remove(fisrt);
+            matchesProvider.SaveAsyncWithDebounce();
             await HttpContext.SendPacketAsync();
         }
         else
@@ -45,12 +45,12 @@ internal partial class ApiMap
     public async Task UpdateMatch(int id)
     {
         var match = await HttpContext.ConvertRequestAs<Match>();
-        var fisrt = _matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
         if (fisrt is not null)
         {
             match.DeepCloneTo(fisrt);
 
-            _matchesProvider.SaveAsyncWithDebounce();
+            matchesProvider.SaveAsyncWithDebounce();
             await HttpContext.SendPacketAsync(fisrt.GetHashCode());
         }
         else

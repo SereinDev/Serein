@@ -29,9 +29,6 @@ internal sealed class PtyProcessSpawner(
     private IPtyConnection? _ptyConnection;
     private StreamReader? _streamReader;
     private bool _isPreparing;
-    private readonly string _id = id;
-    private readonly ServerLogger _serverLogger = serverLogger;
-    private readonly LogWriter _logWriter = logWriter;
     private readonly ILogger _logger = logger;
 
     public void Start(Configuration configuration)
@@ -54,7 +51,7 @@ internal sealed class PtyProcessSpawner(
             .SpawnAsync(
                 new()
                 {
-                    Name = _id,
+                    Name = id,
                     App = configuration.FileName,
                     CommandLine = [configuration.Argument],
                     Cwd = cwd,
@@ -82,9 +79,9 @@ internal sealed class PtyProcessSpawner(
                     {
                         if (configuration.SaveLog)
                         {
-                            _logWriter.WriteAsync(task.Exception.ToString());
+                            logWriter.WriteAsync(task.Exception.ToString());
                         }
-                        _serverLogger.WriteInternalError(task.Exception.Message);
+                        serverLogger.WriteInternalError(task.Exception.Message);
                         return;
                     }
 
@@ -106,7 +103,7 @@ internal sealed class PtyProcessSpawner(
                     );
 
                     StatusChanged?.Invoke(this, EventArgs.Empty);
-                    _serverLogger.WriteInternalInfo(
+                    serverLogger.WriteInternalInfo(
                         "正在使用虚拟终端启动服务器进程。若出现问题请尝试关闭虚拟终端功能。"
                     );
                     ReadLineLoop();
@@ -135,7 +132,7 @@ internal sealed class PtyProcessSpawner(
                 var line = await _streamReader.ReadLineAsync(_cancellationTokenSource.Token);
                 if (line is not null)
                 {
-                    _serverLogger.WriteStandardOutput(line);
+                    serverLogger.WriteStandardOutput(line);
                 }
             }
             catch (ObjectDisposedException)
@@ -148,7 +145,7 @@ internal sealed class PtyProcessSpawner(
             }
             catch (Exception e)
             {
-                _serverLogger.WriteInternalError(e.Message);
+                serverLogger.WriteInternalError(e.Message);
                 _logger.LogDebug(e, "读取服务器输出时发生错误");
             }
         }

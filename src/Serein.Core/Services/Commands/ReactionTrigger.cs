@@ -16,8 +16,6 @@ public sealed class ReactionTrigger(
 )
 {
     private readonly ILogger _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly CommandRunner _commandRunner = commandRunner;
 
     internal void Trigger(
         ReactionType type,
@@ -35,10 +33,10 @@ public sealed class ReactionTrigger(
     )
     {
         _logger.LogDebug("触发：type={}", type);
-        if (!_settingProvider.Value.Reactions.TryGetValue(type, out var values))
+        if (!settingProvider.Value.Reactions.TryGetValue(type, out var values))
         {
-            _settingProvider.Value.Reactions[type] = [];
-            _settingProvider.SaveAsyncWithDebounce();
+            settingProvider.Value.Reactions[type] = [];
+            settingProvider.SaveAsyncWithDebounce();
             return;
         }
 
@@ -71,7 +69,7 @@ public sealed class ReactionTrigger(
                 }
             }
 
-            await _commandRunner.RunAsync(command, context);
+            await commandRunner.RunAsync(command, context);
         }
     }
 }

@@ -10,11 +10,10 @@ namespace Serein.Plus.Services.Loggers;
 public sealed class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider serviceProvider)
     : IPluginLogger
 {
-    private readonly Lazy<PluginConsolePage> _pluginConsolePage =
-        new(
-            serviceProvider.GetRequiredService<PluginConsolePage>,
-            LazyThreadSafetyMode.ExecutionAndPublication
-        );
+    private readonly Lazy<PluginConsolePage> _pluginConsolePage = new(
+        serviceProvider.GetRequiredService<PluginConsolePage>,
+        LazyThreadSafetyMode.ExecutionAndPublication
+    );
     private readonly ILogger _logger = logger;
 
     public void Log(LogLevel level, string name, string message)

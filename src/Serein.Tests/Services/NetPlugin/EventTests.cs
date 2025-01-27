@@ -108,31 +108,31 @@ public sealed class EventTests : IDisposable
                 public List<string> Events { get; } = [];
                 public override void Dispose() { }
 
-                protected override Task<bool> OnServerStarting(ServerBase server)
+                protected override Task<bool> OnServerStarting(Server server)
                 {
                     Events.Add(nameof(OnServerStarting));
                     return Task.FromResult(true);
                 }
 
-                protected override Task OnServerStarted(ServerBase server)
+                protected override Task OnServerStarted(Server server)
                 {
                     Events.Add(nameof(OnServerStarted));
                     return Task.CompletedTask;
                 }
 
-                protected override Task<bool> OnServerStopping(ServerBase server)
+                protected override Task<bool> OnServerStopping(Server server)
                 {
                     Events.Add(nameof(OnServerStopping));
                     return Task.FromResult(true);
                 }
 
-                protected override Task OnServerExited(ServerBase server, int exitcode, DateTime exitTime)
+                protected override Task OnServerExited(Server server, int exitcode, DateTime exitTime)
                 {
                     Events.Add(nameof(OnServerExited));
                     return Task.CompletedTask;
                 }
 
-                protected override Task OnServerInput(ServerBase server, string line)
+                protected override Task OnServerInput(Server server, string line)
                 {
                     Events.Add(nameof(OnServerInput));
                     return Task.CompletedTask;

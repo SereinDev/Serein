@@ -29,11 +29,6 @@ public partial class CommandParser(
     public static readonly Regex Variable = GetVariableRegex();
     public static readonly Regex GeneralCommand = GetGeneralCommandRegex();
 
-    private readonly PluginManager _pluginManager = pluginManager;
-    private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
-    private readonly ServerManager _serverManager = servers;
-    private readonly BindingManager _bindingManager = bindingManager;
-
     /// <summary>
     /// 解析命令
     /// </summary>
@@ -179,8 +174,7 @@ public partial class CommandParser(
                 }
 
                 if (
-                    _pluginManager.CommandVariables.TryGetValue(name, out value)
-                    && value is not null
+                    pluginManager.CommandVariables.TryGetValue(name, out value) && value is not null
                 )
                 {
                     return value;
@@ -212,56 +206,56 @@ public partial class CommandParser(
                     #endregion
 
                     #region 操作系统
-                    "os.name" => _hardwareInfoProvider.Info?.OperatingSystem.Name,
-                    "os.version" => _hardwareInfoProvider.Info?.OperatingSystem.VersionString,
+                    "os.name" => hardwareInfoProvider.Info?.OperatingSystem.Name,
+                    "os.version" => hardwareInfoProvider.Info?.OperatingSystem.VersionString,
                     #endregion
 
                     #region CPU
-                    "cpu.name" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Name,
-                    "cpu.description" => _hardwareInfoProvider
+                    "cpu.name" => hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Name,
+                    "cpu.description" => hardwareInfoProvider
                         .Info?.CpuList.FirstOrDefault()
                         ?.Description,
-                    "cpu.caption" => _hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Caption,
-                    "cpu.manufacturer" => _hardwareInfoProvider
+                    "cpu.caption" => hardwareInfoProvider.Info?.CpuList.FirstOrDefault()?.Caption,
+                    "cpu.manufacturer" => hardwareInfoProvider
                         .Info?.CpuList.FirstOrDefault()
                         ?.Manufacturer,
-                    "cpu.cores" => _hardwareInfoProvider
+                    "cpu.cores" => hardwareInfoProvider
                         .Info?.CpuList.FirstOrDefault()
                         ?.NumberOfCores,
-                    "cpu.logicalprocessors" => _hardwareInfoProvider
+                    "cpu.logicalprocessors" => hardwareInfoProvider
                         .Info?.CpuList.FirstOrDefault()
                         ?.NumberOfLogicalProcessors,
-                    "cpu.percent" => _hardwareInfoProvider
+                    "cpu.percent" => hardwareInfoProvider
                         .Info?.CpuList.FirstOrDefault()
                         ?.PercentProcessorTime,
                     #endregion
 
                     #region RAM
-                    "ram.total" => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024,
-                    "ram.totalgb" => _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                    "ram.total" => hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical / 1024,
+                    "ram.totalgb" => hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
                         / 1024
                         / 1024,
-                    "ram.available" => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                    "ram.available" => hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                         / 1024,
-                    "ram.availablegb" => _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                    "ram.availablegb" => hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                         / 1024
                         / 1024,
                     "ram.used" => (
-                        _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
-                        - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                        hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                        - hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                     ) / 1024,
                     "ram.usedgb" => (
-                        _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
-                        - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                        hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                        - hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                     )
                         / 1024
                         / 1024,
                     "ram.percent" => 100
                         * (
-                            _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
-                            - _hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
+                            hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical
+                            - hardwareInfoProvider.Info?.MemoryStatus.AvailablePhysical
                         )
-                        / _hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical,
+                        / hardwareInfoProvider.Info?.MemoryStatus.TotalPhysical,
                     #endregion
 
                     #region 消息
@@ -303,7 +297,7 @@ public partial class CommandParser(
             return null;
         }
 
-        return _bindingManager.TryGetValue(userId.Value, out var binding)
+        return bindingManager.TryGetValue(userId.Value, out var binding)
             ? binding.GameIds.FirstOrDefault()
             : null;
     }
@@ -325,9 +319,9 @@ public partial class CommandParser(
         {
             return Switch(
                 input,
-                !string.IsNullOrEmpty(id) && _serverManager.Servers.TryGetValue(id, out server)
+                !string.IsNullOrEmpty(id) && servers.Servers.TryGetValue(id, out server)
                     ? server
-                    : _serverManager.Servers.Values.FirstOrDefault()
+                    : servers.Servers.Values.FirstOrDefault()
             );
         }
 
@@ -339,7 +333,7 @@ public partial class CommandParser(
         var key = input[..i];
         id = input[(i + 1)..];
 
-        return !_serverManager.Servers.TryGetValue(id, out server) ? null : Switch(key, server);
+        return !servers.Servers.TryGetValue(id, out server) ? null : Switch(key, server);
 
         static object? Switch(string key, Server? server)
         {

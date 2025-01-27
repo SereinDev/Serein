@@ -3,17 +3,15 @@ using System.Threading.Tasks;
 using EmbedIO;
 using Serein.Core.Services.Data;
 
-namespace Serein.Core.Services.Network.WebApi.Apis;
+namespace Serein.Core.Services.Network.Web.Apis;
 
 internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
 {
-    private readonly SettingProvider _settingProvider = settingProvider;
-
     public override bool IsFinalHandler => false;
 
     protected override async Task OnRequestAsync(IHttpContext context)
     {
-        if (_settingProvider.Value.WebApi.AccessTokens.Length == 0)
+        if (settingProvider.Value.WebApi.AccessTokens.Length == 0)
         {
             return;
         }
@@ -31,7 +29,7 @@ internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
             auth = auth[7..];
         }
 
-        if (!_settingProvider.Value.WebApi.AccessTokens.Contains(auth))
+        if (!settingProvider.Value.WebApi.AccessTokens.Contains(auth))
         {
             await ApiHelper.HandleHttpException(context, HttpException.Unauthorized());
         }

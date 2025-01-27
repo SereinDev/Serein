@@ -247,8 +247,15 @@ public partial class PluginManagerForm : Form
 
     private void ShowInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var selectedPlugins = SelectedPlugins;
-        selectedPlugins.FirstOrDefault()!.Path.OpenInExplorer();
+        var selectedPlugin = SelectedPlugins.FirstOrDefault();
+        if (selectedPlugin is not null)
+        {
+            selectedPlugin.Path.OpenInExplorer();
+        }
+        else if (Directory.Exists(_server.PluginManager.CurrentPluginsDirectory))
+        {
+            _server.PluginManager.CurrentPluginsDirectory.OpenInExplorer();
+        }
     }
 
     private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)

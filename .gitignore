@@ -484,3 +484,5 @@ AppCoverageReport.xml
 
 .idea
 *.user
+
+*.zip

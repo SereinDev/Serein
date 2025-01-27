@@ -15,25 +15,21 @@ public sealed class ExitHandler(
     ServerManager serverManager
 ) : CommandHandler
 {
-    private readonly IHost _host = host;
-    private readonly ILogger<ExitHandler> _logger = logger;
-    private readonly ServerManager _serverManager = serverManager;
-
     public override void Invoke(IReadOnlyList<string> args)
     {
-        if (!_serverManager.AnyRunning)
+        if (!serverManager.AnyRunning)
         {
-            _host.StopAsync().Wait();
+            host.StopAsync().Wait();
             return;
         }
 
-        var servers = _serverManager.Servers.Where((kv) => kv.Value.Status);
+        var servers = serverManager.Servers.Where((kv) => kv.Value.Status);
 
-        _logger.LogError("当前还有以下{}个服务器未关闭", servers.Count());
+        logger.LogError("当前还有以下{}个服务器未关闭", servers.Count());
 
         foreach (var kv in servers)
         {
-            _logger.LogError("- {} (Id={})", kv.Value.Configuration.Name, kv.Key);
+            logger.LogError("- {} (Id={})", kv.Value.Configuration.Name, kv.Key);
         }
     }
 }

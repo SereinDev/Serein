@@ -16,14 +16,17 @@ namespace Serein.Cli.Services.Interaction;
 
 public partial class CommandPromptCallbacks
 {
-    private readonly Lazy<IEnumerable<CompletionItem>> _connectionSubcommnads =
-        new(LoadFrom<ConnectionHandler>);
+    private readonly Lazy<IEnumerable<CompletionItem>> _connectionSubcommnads = new(
+        LoadFrom<ConnectionHandler>
+    );
 
-    private readonly Lazy<IEnumerable<CompletionItem>> _serverSubcommnads =
-        new(LoadFrom<ServerHandler>);
+    private readonly Lazy<IEnumerable<CompletionItem>> _serverSubcommnads = new(
+        LoadFrom<ServerHandler>
+    );
 
-    private readonly Lazy<IEnumerable<CompletionItem>> _pluginSubcommnads =
-        new(LoadFrom<PluginHandler>);
+    private readonly Lazy<IEnumerable<CompletionItem>> _pluginSubcommnads = new(
+        LoadFrom<PluginHandler>
+    );
 
     private readonly Task<IReadOnlyList<CompletionItem>> _emptyTask = Task.FromResult<
         IReadOnlyList<CompletionItem>
@@ -31,7 +34,7 @@ public partial class CommandPromptCallbacks
 
     private IEnumerable<CompletionItem> GetServerCompletionItem()
     {
-        return _serverManager.Servers.Select(
+        return serverManager.Servers.Select(
             (kv) => new CompletionItem(kv.Key, getExtendedDescription: (_) => GetDescription(kv))
         );
 
@@ -60,12 +63,12 @@ public partial class CommandPromptCallbacks
     {
         var dictionary = new Dictionary<string, IPlugin>();
 
-        foreach (var kv in _jsPluginLoader.Plugins)
+        foreach (var kv in jsPluginLoader.Plugins)
         {
             dictionary.TryAdd(kv.Key, kv.Value);
         }
 
-        foreach (var kv in _netPluginLoader.Plugins)
+        foreach (var kv in netPluginLoader.Plugins)
         {
             dictionary.TryAdd(kv.Key, kv.Value);
         }

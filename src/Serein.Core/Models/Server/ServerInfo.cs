@@ -3,7 +3,7 @@ using MineStatLib;
 
 namespace Serein.Core.Models.Server;
 
-public class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
+internal class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
 {
     public string? FileName { get; internal set; }
 

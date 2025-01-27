@@ -22,10 +22,6 @@ public sealed class EventDispatcher(
 )
 {
     private readonly ILogger _logger = logger;
-    private readonly IPluginLogger _pluginLogger = pluginLogger;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
-    private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
 
     /// <summary>
     /// 分发事件
@@ -57,9 +53,9 @@ public sealed class EventDispatcher(
             return true;
         }
 
-        if (_settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
+        if (settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
         {
-            Task.WaitAll([.. tasks], _settingProvider.Value.Application.PluginEventMaxWaitingTime);
+            Task.WaitAll([.. tasks], settingProvider.Value.Application.PluginEventMaxWaitingTime);
         }
 
         cancellationTokenSource.Cancel();
@@ -75,7 +71,7 @@ public sealed class EventDispatcher(
         params object[] args
     )
     {
-        foreach ((_, var jsPlugin) in _jsPluginLoader.Plugins)
+        foreach ((_, var jsPlugin) in jsPluginLoader.Plugins)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -97,7 +93,7 @@ public sealed class EventDispatcher(
     {
         var tasks = new List<Task>();
 
-        foreach ((var name, var plugin) in _netPluginLoader.Plugins)
+        foreach ((var name, var plugin) in netPluginLoader.Plugins)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -112,7 +108,7 @@ public sealed class EventDispatcher(
                 }
                 catch (Exception e)
                 {
-                    _pluginLogger.Log(
+                    pluginLogger.Log(
                         LogLevel.Error,
                         name,
                         $"触发事件{name}时出现异常：\n{e.GetDetailString()}"

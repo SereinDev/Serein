@@ -16,10 +16,7 @@ public partial class GroupManager(
 
     private static readonly System.Text.RegularExpressions.Regex GroupIdRegex = GetGroupIdRegex();
 
-    private readonly PermissionManager _permissionManager = permissionManager;
-    private readonly PermissionGroupProvider _permissionGroupProvider = permissionGroupProvider;
-
-    public string[] Ids => [.. _permissionGroupProvider.Value.Keys];
+    public string[] Ids => [.. permissionGroupProvider.Value.Keys];
 
     public static void ValidateGroupId(string? id)
     {
@@ -31,27 +28,27 @@ public partial class GroupManager(
 
     public void Add(string id, Group group)
     {
-        if (!_permissionGroupProvider.Value.TryAdd(id, group))
+        if (!permissionGroupProvider.Value.TryAdd(id, group))
         {
             throw new InvalidOperationException("已经存在了相同Id的权限组");
         }
 
-        _permissionGroupProvider.SaveAsyncWithDebounce();
+        permissionGroupProvider.SaveAsyncWithDebounce();
     }
 
     public bool Remove(string id)
     {
-        _permissionGroupProvider.SaveAsyncWithDebounce();
-        return _permissionGroupProvider.Value.Remove(id);
+        permissionGroupProvider.SaveAsyncWithDebounce();
+        return permissionGroupProvider.Value.Remove(id);
     }
 
     public Group this[string id]
     {
-        get => _permissionGroupProvider.Value[id];
+        get => permissionGroupProvider.Value[id];
         set
         {
-            _permissionGroupProvider.Value[id] = value;
-            _permissionGroupProvider.SaveAsyncWithDebounce();
+            permissionGroupProvider.Value[id] = value;
+            permissionGroupProvider.SaveAsyncWithDebounce();
         }
     }
 
@@ -59,11 +56,11 @@ public partial class GroupManager(
     {
         var result = new Dictionary<string, (int Priority, bool? Value)>();
         var visitedGroups = new HashSet<string>();
-        var nodes = _permissionManager.Nodes.Keys;
+        var nodes = permissionManager.Nodes.Keys;
 
-        lock (_permissionGroupProvider.Value)
+        lock (permissionGroupProvider.Value)
         {
-            foreach (var kv in _permissionGroupProvider.Value)
+            foreach (var kv in permissionGroupProvider.Value)
             {
                 if (visitedGroups.Contains(kv.Key))
                 {
@@ -89,7 +86,7 @@ public partial class GroupManager(
 
             foreach (var parent in group.Parents)
             {
-                if (_permissionGroupProvider.Value.TryGetValue(parent, out var parentGroup))
+                if (permissionGroupProvider.Value.TryGetValue(parent, out var parentGroup))
                 {
                     ProcessGroup(parent, parentGroup);
                 }

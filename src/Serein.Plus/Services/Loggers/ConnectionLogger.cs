@@ -11,8 +11,9 @@ public sealed class ConnectionLogger(
     IServiceProvider serviceProvider
 ) : IConnectionLogger
 {
-    private readonly Lazy<ConnectionPage> _connectionPage =
-        new(serviceProvider.GetRequiredService<ConnectionPage>);
+    private readonly Lazy<ConnectionPage> _connectionPage = new(
+        serviceProvider.GetRequiredService<ConnectionPage>
+    );
     private readonly ILogger _logger = logger;
 
     public void Log(LogLevel level, string message)

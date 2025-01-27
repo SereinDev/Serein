@@ -8,8 +8,9 @@ namespace Serein.Plus.Services.Loggers;
 
 public sealed class NotificationLogger(IServiceProvider serviceProvider) : ILogger
 {
-    private readonly Lazy<InfoBarProvider> _infoBarProvider =
-        new(serviceProvider.GetRequiredService<InfoBarProvider>);
+    private readonly Lazy<InfoBarProvider> _infoBarProvider = new(
+        serviceProvider.GetRequiredService<InfoBarProvider>
+    );
 
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull

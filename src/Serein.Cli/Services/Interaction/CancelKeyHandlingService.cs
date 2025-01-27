@@ -14,9 +14,7 @@ public sealed class CancelKeyHandlingService(
     ServerManager serverManager
 ) : IHostedService
 {
-    private readonly IHost _host = host;
     private readonly ILogger _logger = logger;
-    private readonly ServerManager _serverManager = serverManager;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -31,14 +29,14 @@ public sealed class CancelKeyHandlingService(
 
     private void OnCancelKeyPress(object? sender, ConsoleCancelEventArgs e)
     {
-        if (!_serverManager.AnyRunning)
+        if (!serverManager.AnyRunning)
         {
-            _host.StopAsync().Wait();
+            host.StopAsync().Wait();
             return;
         }
 
         e.Cancel = true;
-        var servers = _serverManager.Servers.Where((kv) => kv.Value.Status);
+        var servers = serverManager.Servers.Where((kv) => kv.Value.Status);
 
         _logger.LogError("当前还有以下{}个服务器未关闭", servers.Count());
         foreach (var kv in servers)

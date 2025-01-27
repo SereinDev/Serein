@@ -11,14 +11,19 @@ namespace Serein.Core.Models.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) =>
+        Task.FromResult(true);
 
     protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) =>
+        Task.FromResult(true);
 
-    protected virtual Task OnServerExited(Services.Servers.Server server, int exitcode, DateTime exitTime) =>
-        Task.CompletedTask;
+    protected virtual Task OnServerExited(
+        Services.Servers.Server server,
+        int exitcode,
+        DateTime exitTime
+    ) => Task.CompletedTask;
 
     protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) =>
         Task.FromResult(true);
@@ -26,7 +31,8 @@ public abstract partial class PluginBase
     protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) =>
         Task.FromResult(true);
 
-    protected virtual Task OnServerInput(Services.Servers.Server server, string line) => Task.CompletedTask;
+    protected virtual Task OnServerInput(Services.Servers.Server server, string line) =>
+        Task.CompletedTask;
 
     protected virtual Task<bool> OnGroupMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);

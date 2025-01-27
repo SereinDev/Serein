@@ -5,14 +5,14 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using EmbedIO.WebSockets;
-using Serein.Core.Models.Network.WebApi;
+using Serein.Core.Models.Network.Web;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
-namespace Serein.Core.Services.Network.WebApi;
+namespace Serein.Core.Services.Network.Web;
 
 internal class ServerWebSocketModule : WebSocketModule
 {
@@ -129,12 +129,12 @@ internal class ServerWebSocketModule : WebSocketModule
 
     private void NotifyOutput(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not Server server)
+        if (sender is not ServerLogger logger)
         {
             return;
         }
 
-        if (_clients.TryGetValue(server.Id, out var list) && list.Count != 0)
+        if (_clients.TryGetValue(logger.Id, out var list) && list.Count != 0)
         {
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(

@@ -9,14 +9,14 @@ using Force.DeepCloner;
 using Serein.Core.Models.Server;
 using Serein.Core.Utils.Json;
 
-namespace Serein.Core.Services.Network.WebApi.Apis;
+namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap
 {
     [Route(HttpVerbs.Get, "/servers")]
     public async Task GetServers()
     {
-        await HttpContext.SendPacketAsync(_serverManager.Servers);
+        await HttpContext.SendPacketAsync(serverManager.Servers);
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}")]
@@ -29,7 +29,7 @@ internal partial class ApiMap
                 JsonSerializerOptionsFactory.Common
             ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
 
-        _serverManager.Add(id, configuration);
+        serverManager.Add(id, configuration);
         await HttpContext.SendPacketAsync();
     }
 
@@ -43,7 +43,7 @@ internal partial class ApiMap
                 JsonSerializerOptionsFactory.Common
             ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
 
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -56,14 +56,14 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/servers/{id}")]
     public async Task RemoveServer(string id)
     {
-        _serverManager.Remove(id);
+        serverManager.Remove(id);
         await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}")]
     public async Task GetServer(string id)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -74,7 +74,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/servers/{id}/start")]
     public async Task StartServer(string id)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -86,7 +86,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/servers/{id}/stop")]
     public async Task StopServer(string id)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -98,7 +98,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/servers/{id}/terminate")]
     public async Task TerminateServer(string id)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -110,7 +110,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/servers/{id}/input")]
     public async Task InputServer(string id, [QueryField("line", true)] string[] lines)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }
@@ -131,7 +131,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Post, "/servers/{id}/input")]
     public async Task InputServer(string id)
     {
-        if (!_serverManager.Servers.TryGetValue(id, out var server))
+        if (!serverManager.Servers.TryGetValue(id, out var server))
         {
             throw HttpException.NotFound("未找到指定的服务器");
         }

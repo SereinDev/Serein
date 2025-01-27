@@ -5,22 +5,22 @@ using EmbedIO.Routing;
 using Force.DeepCloner;
 using Serein.Core.Models.Commands;
 
-namespace Serein.Core.Services.Network.WebApi.Apis;
+namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap
 {
     [Route(HttpVerbs.Get, "/schedules")]
     public async Task GetSchedules()
     {
-        await HttpContext.SendPacketAsync(_scheduleProvider.Value);
+        await HttpContext.SendPacketAsync(scheduleProvider.Value);
     }
 
     [Route(HttpVerbs.Post, "/schedules")]
     public async Task CreateMatch()
     {
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
-        _scheduleProvider.Value.Add(schedule);
-        _scheduleProvider.SaveAsyncWithDebounce();
+        scheduleProvider.Value.Add(schedule);
+        scheduleProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync(schedule.GetHashCode());
     }
@@ -28,11 +28,11 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/schedules/{id}")]
     public async Task DeleteSchedules(int id)
     {
-        var fisrt = _scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        var fisrt = scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
         if (fisrt is not null)
         {
-            _scheduleProvider.Value.Remove(fisrt);
-            _scheduleProvider.SaveAsyncWithDebounce();
+            scheduleProvider.Value.Remove(fisrt);
+            scheduleProvider.SaveAsyncWithDebounce();
             await HttpContext.SendPacketAsync();
         }
         else
@@ -45,12 +45,12 @@ internal partial class ApiMap
     public async Task UpdateSchedule(int id)
     {
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
-        var fisrt = _scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        var fisrt = scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
         if (fisrt is not null)
         {
             schedule.DeepCloneTo(fisrt);
 
-            _scheduleProvider.SaveAsyncWithDebounce();
+            scheduleProvider.SaveAsyncWithDebounce();
             await HttpContext.SendPacketAsync(fisrt.GetHashCode());
         }
         else

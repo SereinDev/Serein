@@ -8,8 +8,6 @@ namespace Serein.Core.Services.Data;
 
 public class LogWriter(ILogger<LogWriter> logger, string directory)
 {
-    private readonly ILogger<LogWriter> _logger = logger;
-    private readonly string _directory = directory;
     private readonly object _lock = new();
     private readonly List<string> _buffer = [];
     private DateTime _last;
@@ -36,12 +34,12 @@ public class LogWriter(ILogger<LogWriter> logger, string directory)
         {
             lock (_buffer)
             {
-                if (!Directory.Exists(_directory))
+                if (!Directory.Exists(directory))
                 {
-                    Directory.CreateDirectory(_directory);
+                    Directory.CreateDirectory(directory);
                 }
 
-                var path = Path.Combine(_directory, $"{DateTime.Now:yyyy-MM-dd}.log");
+                var path = Path.Combine(directory, $"{DateTime.Now:yyyy-MM-dd}.log");
 
                 try
                 {
@@ -50,7 +48,7 @@ public class LogWriter(ILogger<LogWriter> logger, string directory)
                 }
                 catch (Exception e)
                 {
-                    _logger.LogDebug(e, "写入“{}”失败", path);
+                    logger.LogDebug(e, "写入“{}”失败", path);
                 }
             }
         }

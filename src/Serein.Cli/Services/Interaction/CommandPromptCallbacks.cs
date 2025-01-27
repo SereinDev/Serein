@@ -19,11 +19,6 @@ public partial class CommandPromptCallbacks(
     NetPluginLoader netPluginLoader
 ) : PromptCallbacks
 {
-    private readonly CommandProvider _commandProvider = commandProvider;
-    private readonly ServerManager _serverManager = serverManager;
-    private readonly JsPluginLoader _jsPluginLoader = jsPluginLoader;
-    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
-
     protected override Task<IReadOnlyList<CompletionItem>> GetCompletionItemsAsync(
         string text,
         int caret,
@@ -40,7 +35,7 @@ public partial class CommandPromptCallbacks(
         {
             return Task.FromResult<IReadOnlyList<CompletionItem>>(
                 [
-                    .. _commandProvider
+                    .. commandProvider
                         .RootCommandItems.OrderByDescending(
                             (item) => CalculateRelevance(item.ReplacementText, typedWord)
                         )

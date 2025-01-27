@@ -23,11 +23,6 @@ public sealed class JsPluginLoader(
     SettingProvider settingProvider
 ) : IPluginLoader<JsPlugin>
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-    private readonly IPluginLogger _pluginLogger = pluginLogger;
-    private readonly NetPluginLoader _netPluginLoader = netPluginLoader;
-    private readonly SettingProvider _settingProvider = settingProvider;
-
     internal ConcurrentDictionary<string, JsPlugin> JsPlugins { get; } = new();
     public IReadOnlyDictionary<string, JsPlugin> Plugins => JsPlugins;
 
@@ -64,7 +59,7 @@ public sealed class JsPluginLoader(
         try
         {
             jsPlugin = new JsPlugin(
-                _serviceProvider,
+                serviceProvider,
                 pluginInfo,
                 entry,
                 jsConfig ?? JsPluginConfig.Default
@@ -85,7 +80,7 @@ public sealed class JsPluginLoader(
         foreach (var file in Directory.GetFiles(PathConstants.PluginsDirectory, "*.js"))
         {
             if (
-                _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile.Any(
+                settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile.Any(
                     file.EndsWith
                 )
             )
@@ -100,13 +95,13 @@ public sealed class JsPluginLoader(
             try
             {
                 jsPlugin = new JsPlugin(
-                    _serviceProvider,
+                    serviceProvider,
                     new() { Id = id, Name = name },
                     file,
                     JsPluginConfig.Default
                 );
 
-                if (_netPluginLoader.Plugins.ContainsKey(name))
+                if (netPluginLoader.Plugins.ContainsKey(name))
                 {
                     throw new NotSupportedException($"尝试加载“{file}”插件时发现Id重复");
                 }
@@ -115,7 +110,7 @@ public sealed class JsPluginLoader(
             }
             catch (Exception e)
             {
-                _pluginLogger.Log(LogLevel.Error, name, e.GetDetailString());
+                pluginLogger.Log(LogLevel.Error, name, e.GetDetailString());
                 jsPlugin?.Disable();
             }
             finally

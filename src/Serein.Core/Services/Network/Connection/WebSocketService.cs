@@ -14,9 +14,9 @@ namespace Serein.Core.Services.Network.Connection;
 public sealed class WebSocketService(IHost host, SettingProvider settingProvider)
     : IConnectionService
 {
-    private readonly Lazy<IConnectionLogger> _connectionLogger =
-        new(host.Services.GetRequiredService<IConnectionLogger>);
-    private readonly SettingProvider _settingProvider = settingProvider;
+    private readonly Lazy<IConnectionLogger> _connectionLogger = new(
+        host.Services.GetRequiredService<IConnectionLogger>
+    );
 
     private CancellationTokenSource? _reconnectCancellationToken;
     private bool _closedManually;
@@ -36,17 +36,17 @@ public sealed class WebSocketService(IHost host, SettingProvider settingProvider
 
     private WebSocket CreateNew()
     {
-        _uri = _settingProvider.Value.Connection.Uri;
+        _uri = settingProvider.Value.Connection.Uri;
 
-        var headers = new Dictionary<string, string>(_settingProvider.Value.Connection.Headers);
-        if (!string.IsNullOrEmpty(_settingProvider.Value.Connection.AccessToken))
+        var headers = new Dictionary<string, string>(settingProvider.Value.Connection.Headers);
+        if (!string.IsNullOrEmpty(settingProvider.Value.Connection.AccessToken))
         {
-            headers["Authorization"] = $"Bearer {_settingProvider.Value.Connection.AccessToken}";
+            headers["Authorization"] = $"Bearer {settingProvider.Value.Connection.AccessToken}";
         }
 
         var client = new WebSocket(
-            _settingProvider.Value.Connection.Uri,
-            string.Join('\x20', _settingProvider.Value.Connection.SubProtocols),
+            settingProvider.Value.Connection.Uri,
+            string.Join('\x20', settingProvider.Value.Connection.SubProtocols),
             customHeaderItems: [.. headers]
         );
 

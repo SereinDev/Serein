@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Security;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Services.Network.Web.Apis;
 
-namespace Serein.Core.Services.Network.WebApi;
+namespace Serein.Core.Services.Network.Web;
 
 internal class IPBannerModule : IPBanningModule
 {

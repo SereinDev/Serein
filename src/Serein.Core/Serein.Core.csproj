@@ -6,6 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <EmbeddedResource Condition="Exists('../Sources/frontend.zip')" Include="../Sources/frontend.zip" />
+
         <InternalsVisibleTo Include="Serein.Cli" />
         <InternalsVisibleTo Include="Serein.Lite" />
         <InternalsVisibleTo Include="Serein.Tests" />

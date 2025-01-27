@@ -7,8 +7,8 @@ using EmbedIO.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.WebApi;
-using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Services.Network.Web;
+using Serein.Core.Services.Network.Web.Apis;
 using Xunit;
 
 namespace Serein.Tests.Services.WebApi;
@@ -18,7 +18,7 @@ public class ApiTests : IDisposable
 {
     private readonly HttpClient _client;
     private readonly IHost _app;
-    private readonly HttpServer _httpServer;
+    private readonly Core.Services.Network.Web.WebServer _httpServer;
 
     public ApiTests()
     {
@@ -26,7 +26,7 @@ public class ApiTests : IDisposable
 
         var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
         settingProvider.Value.WebApi.IsEnabled = true;
-        _httpServer = _app.Services.GetRequiredService<HttpServer>();
+        _httpServer = _app.Services.GetRequiredService<Core.Services.Network.Web.WebServer>();
         _client = new() { BaseAddress = new(settingProvider.Value.WebApi.UrlPrefixes.First()) };
     }
 

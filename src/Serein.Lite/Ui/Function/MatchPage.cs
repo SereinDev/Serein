@@ -14,16 +14,15 @@ namespace Serein.Lite.Ui.Function;
 
 public partial class MatchPage : UserControl, IUpdateablePage
 {
-    private static readonly Dictionary<MatchFieldType, string> MatchFieldTypeTexts =
-        new()
-        {
-            [MatchFieldType.Disabled] = "禁用",
-            [MatchFieldType.ServerOutput] = "服务器输出",
-            [MatchFieldType.ServerInput] = "服务器输入",
-            [MatchFieldType.GroupMsg] = "群聊消息",
-            [MatchFieldType.PrivateMsg] = "私聊消息",
-            [MatchFieldType.SelfMsg] = "自身消息",
-        };
+    private static readonly Dictionary<MatchFieldType, string> MatchFieldTypeTexts = new()
+    {
+        [MatchFieldType.Disabled] = "禁用",
+        [MatchFieldType.ServerOutput] = "服务器输出",
+        [MatchFieldType.ServerInput] = "服务器输入",
+        [MatchFieldType.GroupMsg] = "群聊消息",
+        [MatchFieldType.PrivateMsg] = "私聊消息",
+        [MatchFieldType.SelfMsg] = "自身消息",
+    };
 
     private readonly MatchesProvider _matchesProvider;
 

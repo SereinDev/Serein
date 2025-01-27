@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -8,37 +9,45 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.WebApi.Apis;
+using Serein.Core.Services.Network.Web.Apis;
 using Serein.Core.Utils;
 using Swan.Logging;
-using MS = Microsoft.Extensions.Logging;
 
-namespace Serein.Core.Services.Network.WebApi;
+namespace Serein.Core.Services.Network.Web;
 
-public sealed class HttpServer
+public sealed class WebServer
 {
-    static HttpServer()
+    static WebServer()
     {
         Logger.NoLogging();
     }
 
     private readonly IServiceProvider _serviceProvider;
-    private readonly MS.ILogger _logger;
+    private readonly ILogger<WebServer> _logger;
     private readonly SettingProvider _settingProvider;
-    private WebServer? _webServer;
+    private readonly List<IDisposable> _disposables;
+    private EmbedIO.WebServer? _webServer;
     private CancellationTokenSource _cancellationTokenSource = new();
 
-    public HttpServer(
+    public WebServer(
         IServiceProvider serviceProvider,
-        ILogger<HttpServer> logger,
-        SettingProvider settingProvider
+        ILogger<WebServer> logger,
+        SettingProvider settingProvider,
+        PageExtractor pageExtractor
     )
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
         _settingProvider = settingProvider;
+        _disposables = [];
 
-        Directory.CreateDirectory(PathConstants.WebRoot);
+        if (!Directory.Exists(PathConstants.WebRoot) && !pageExtractor.TryExtract())
+        {
+            File.WriteAllText(
+                Path.Combine(PathConstants.WebRoot, "index.html"),
+                $"<p>你可以在 https://github.com/SereinDev/Web 仓库下载最新的构建或最新的版本，手动将解压后的文件复制到文件夹“{PathConstants.WebRoot}”下</p>"
+            );
+        }
     }
 
     public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
@@ -47,7 +56,7 @@ public sealed class HttpServer
     {
         if (State != WebServerState.Stopped && State != WebServerState.Created)
         {
-            throw new InvalidOperationException("WebApi服务器正在运行中");
+            throw new InvalidOperationException("网页服务器正在运行中");
         }
 
         if (_cancellationTokenSource.IsCancellationRequested)
@@ -56,7 +65,7 @@ public sealed class HttpServer
             _cancellationTokenSource = new();
         }
 
-        _webServer = new WebServer(CreateOptions());
+        _webServer = new EmbedIO.WebServer(CreateOptions());
 
         if (_settingProvider.Value.WebApi.AllowCrossOrigin)
         {
@@ -64,8 +73,20 @@ public sealed class HttpServer
         }
 
         _webServer.WithModule(new AuthGate(_settingProvider));
-        _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
-        _webServer.WithModule(_serviceProvider.GetRequiredService<IPBannerModule>());
+
+        var serverWebSocketModule = _serviceProvider.GetRequiredService<ServerWebSocketModule>();
+        _webServer.WithModule(serverWebSocketModule);
+        _disposables.Add(serverWebSocketModule);
+
+        var connectionWebSocketModule =
+            _serviceProvider.GetRequiredService<ConnectionWebSocketModule>();
+        _webServer.WithModule(connectionWebSocketModule);
+        _disposables.Add(connectionWebSocketModule);
+
+        var ipBannerModule = _serviceProvider.GetRequiredService<IPBannerModule>();
+        _webServer.WithModule(ipBannerModule);
+        _disposables.Add(ipBannerModule);
+
         _webServer.WithWebApi(
             "/api",
             (module) =>
@@ -77,7 +98,7 @@ public sealed class HttpServer
         _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
 
         _webServer.Start(_cancellationTokenSource.Token);
-        _logger.LogInformation("WebApi服务器已启动");
+        _logger.LogInformation("网页服务器已启动");
         _logger.LogInformation(
             "当前监听的Url： {}{}",
             Environment.NewLine,
@@ -93,11 +114,15 @@ public sealed class HttpServer
             || _webServer is null
         )
         {
-            throw new InvalidOperationException("WebApi服务器不在运行中");
+            throw new InvalidOperationException("网页服务器不在运行中");
         }
+
+        _disposables.ForEach((d) => d.Dispose());
+        _disposables.Clear();
+
         _cancellationTokenSource.Cancel();
         _webServer.Dispose();
-        _logger.LogInformation("WebApi服务器已停止");
+        _logger.LogInformation("网页服务器已停止");
     }
 
     private WebServerOptions CreateOptions()

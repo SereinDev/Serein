@@ -16,9 +16,6 @@ public sealed class ConnectionHandler(
     WsConnectionManager wsConnectionManager
 ) : CommandHandler
 {
-    private readonly ILogger<ConnectionHandler> _logger = logger;
-    private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
-
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (args.Count == 1)
@@ -29,31 +26,31 @@ public sealed class ConnectionHandler(
         switch (args[1].ToLowerInvariant())
         {
             case "info":
-                _logger.LogInformation(
+                logger.LogInformation(
                     "连接状态：{}",
-                    _wsConnectionManager.Active ? "已连接" : "未连接"
+                    wsConnectionManager.Active ? "已连接" : "未连接"
                 );
 
                 break;
             case "open":
                 try
                 {
-                    _wsConnectionManager.Start();
+                    wsConnectionManager.Start();
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("连接失败：{}", e.Message);
+                    logger.LogError("连接失败：{}", e.Message);
                 }
                 break;
 
             case "close":
                 try
                 {
-                    _wsConnectionManager.Stop();
+                    wsConnectionManager.Stop();
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("断开失败：{}", e.Message);
+                    logger.LogError("断开失败：{}", e.Message);
                 }
                 break;
 

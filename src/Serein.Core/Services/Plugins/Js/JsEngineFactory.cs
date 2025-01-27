@@ -27,10 +27,6 @@ public sealed class JsEngineFactory(
     ILogger<JsEngineFactory> logger
 )
 {
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly LocalStorage _localStorage = localStorage;
-    private readonly SessionStorage _sessionStorage = sessionStorage;
-    private readonly IPluginLogger _pluginLogger = pluginLogger;
     private readonly ILogger _logger = logger;
 
     private Options PrepareOptions(JsPlugin jsPlugin)
@@ -39,7 +35,7 @@ public sealed class JsEngineFactory(
 
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
-                _settingProvider.Value.Application.JSGlobalAssemblies
+                settingProvider.Value.Application.JSGlobalAssemblies
             )
         )
         {
@@ -49,7 +45,7 @@ public sealed class JsEngineFactory(
             }
             catch (Exception e)
             {
-                _pluginLogger.Log(
+                pluginLogger.Log(
                     LogLevel.Warning,
                     jsPlugin.Info.Name,
                     $"加载所需程序集“{assemblyName}”时出现异常：\n" + e.Message
@@ -92,8 +88,8 @@ public sealed class JsEngineFactory(
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);
-        engine.SetValue("localStorage", _localStorage);
-        engine.SetValue("sessionStorage", _sessionStorage);
+        engine.SetValue("localStorage", localStorage);
+        engine.SetValue("sessionStorage", sessionStorage);
 
         engine.SetValue("window", JsValue.Undefined);
         engine.SetValue("exports", JsValue.Undefined);

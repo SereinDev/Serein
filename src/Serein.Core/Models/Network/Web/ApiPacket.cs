@@ -1,6 +1,6 @@
 using System;
 
-namespace Serein.Core.Models.Network.WebApi;
+namespace Serein.Core.Models.Network.Web;
 
 public class ApiPacket<T>
 {

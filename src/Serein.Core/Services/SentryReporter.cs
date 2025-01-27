@@ -10,11 +10,10 @@ namespace Serein.Core.Services;
 internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider settingProvider)
 {
     private readonly ILogger _logger = logger;
-    private readonly SettingProvider _settingProvider = settingProvider;
 
     public void Initialize()
     {
-        if (!_settingProvider.Value.Application.EnableSentry || SereinApp.Type == AppType.Unknown)
+        if (!settingProvider.Value.Application.EnableSentry || SereinApp.Type == AppType.Unknown)
         {
             return;
         }

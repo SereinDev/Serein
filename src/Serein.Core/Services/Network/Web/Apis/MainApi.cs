@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
-using Serein.Core.Models.Network.WebApi;
+using Serein.Core.Models.Network.Web;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Plugins;
+using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Servers;
 
-namespace Serein.Core.Services.Network.WebApi.Apis;
+namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap(
     ServerManager serverManager,
@@ -19,15 +22,12 @@ internal partial class ApiMap(
     MatchesProvider matchesProvider,
     ScheduleProvider scheduleProvider,
     WsConnectionManager wsConnectionManager,
-    HardwareInfoProvider hardwareInfoProvider
+    HardwareInfoProvider hardwareInfoProvider,
+    PluginManager pluginManager,
+    NetPluginLoader netPluginLoader,
+    JsPluginLoader jsPluginLoader
 ) : WebApiController
 {
-    private readonly ServerManager _serverManager = serverManager;
-    private readonly SettingProvider _settingProvider = settingProvider;
-    private readonly MatchesProvider _matchesProvider = matchesProvider;
-    private readonly ScheduleProvider _scheduleProvider = scheduleProvider;
-    private readonly WsConnectionManager _wsConnectionManager = wsConnectionManager;
-    private readonly HardwareInfoProvider _hardwareInfoProvider = hardwareInfoProvider;
     private List<ApiEndpointRecord>? _records;
 
     [Route(HttpVerbs.Get, "/metadata")]

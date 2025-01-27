@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Network.Connection.OneBot.Actions;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
@@ -40,6 +41,8 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
     public DateTime? ConnectedAt { get; private set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    public event EventHandler<DataTranferredEventArgs>? DataTransferred;
 
     public WsConnectionManager(
         IHost host,
@@ -80,6 +83,10 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
     {
         Interlocked.Increment(ref _received);
         PropertyChanged?.Invoke(this, _receivedArg);
+        DataTransferred?.Invoke(
+            this,
+            new() { Data = e.Message, Type = DataTranferredType.Received }
+        );
 
         if (_settingProvider.Value.Connection.SaveLog)
         {
@@ -176,6 +183,8 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
         Interlocked.Increment(ref _sent);
         PropertyChanged?.Invoke(this, _sentArg);
+
+        DataTransferred?.Invoke(this, new() { Data = data, Type = DataTranferredType.Sent });
 
         if (_settingProvider.Value.Connection.SaveLog)
         {
