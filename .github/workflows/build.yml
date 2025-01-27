@@ -1,6 +1,7 @@
 ﻿on:
   push:
     paths:
+      - "**.yml"
       - "**.cs"
       - "**.csproj"
   workflow_dispatch:
@@ -27,6 +28,8 @@ jobs:
           repo: SereinDev/Web
           workflow_conclusion: success
           path: src/Sources/
+          skip_unpack: true
+          if_no_artifact_found: warn
 
       - name: Install .NET
         uses: actions/setup-dotnet@v4
