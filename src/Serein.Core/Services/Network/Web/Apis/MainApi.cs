@@ -17,15 +17,16 @@ using Serein.Core.Services.Servers;
 namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap(
+    SereinApp sereinApp,
+    PluginManager pluginManager,
     ServerManager serverManager,
+    JsPluginLoader jsPluginLoader,
+    NetPluginLoader netPluginLoader,
     SettingProvider settingProvider,
     MatchesProvider matchesProvider,
     ScheduleProvider scheduleProvider,
     WsConnectionManager wsConnectionManager,
-    HardwareInfoProvider hardwareInfoProvider,
-    PluginManager pluginManager,
-    NetPluginLoader netPluginLoader,
-    JsPluginLoader jsPluginLoader
+    HardwareInfoProvider hardwareInfoProvider
 ) : WebApiController
 {
     private List<ApiEndpointRecord>? _records;
@@ -33,14 +34,7 @@ internal partial class ApiMap(
     [Route(HttpVerbs.Get, "/metadata")]
     public async Task GetMetaData()
     {
-        await HttpContext.SendPacketAsync(
-            new Dictionary<string, string?>()
-            {
-                ["version"] = SereinApp.Version,
-                ["fullVersion"] = SereinApp.FullVersion,
-                ["type"] = SereinApp.Type.ToString(),
-            }
-        );
+        await HttpContext.SendPacketAsync(sereinApp);
     }
 
     [Route(HttpVerbs.Get, "/")]

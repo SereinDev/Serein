@@ -1,21 +1,27 @@
+using System;
 using System.Reflection;
 
 namespace Serein.Core;
 
 public sealed class SereinApp
 {
-    private SereinApp() { }
+    private static SereinApp? s_sereinApp;
 
-    public static readonly string Version =
-        typeof(SereinApp).Assembly.GetName().Version?.ToString() ?? "¿¿¿";
-    public static readonly string? FullVersion = typeof(SereinApp)
-        .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-        ?.InformationalVersion;
-    public static readonly AppType Type;
-    public static readonly bool IsDebugConfiguration;
-
-    static SereinApp()
+    public static SereinApp GetCurrentApp()
     {
+        return s_sereinApp ?? throw new InvalidOperationException("没有正在运行的 SereinApp 实例");
+    }
+
+    public SereinApp(IServiceProvider serviceProvider)
+    {
+        s_sereinApp = this;
+
+        Services = serviceProvider;
+        AssemblyName = typeof(SereinApp).Assembly.FullName!;
+        Version = typeof(SereinApp).Assembly.GetName().Version!;
+        FullVersion = typeof(SereinApp)
+            .Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
+            .InformationalVersion;
         Type = Assembly.GetEntryAssembly()?.GetName().Name switch
         {
             "Serein.Cli" => AppType.Cli,
@@ -25,8 +31,20 @@ public sealed class SereinApp
             _ => AppType.Unknown,
         };
 
-#if DEBUG
-        IsDebugConfiguration = true;
+#if RELEASE
+        IsReleaseConfiguration = true;
 #endif
     }
+
+    public IServiceProvider Services { get; }
+
+    public string AssemblyName { get; }
+
+    public Version Version { get; }
+
+    public string? FullVersion { get; }
+
+    public AppType Type { get; }
+
+    public bool IsReleaseConfiguration { get; }
 }

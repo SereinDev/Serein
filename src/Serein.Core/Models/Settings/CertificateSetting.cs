@@ -2,7 +2,7 @@ namespace Serein.Core.Models.Settings;
 
 public class CertificateSetting : NotifyPropertyChangedModelBase
 {
-    public bool Enable { get; set; }
+    public bool IsEnabled { get; set; }
 
     public bool AutoRegisterCertificate { get; set; }
 

@@ -13,11 +13,17 @@ namespace Serein.Plus.Pages.Settings;
 
 public partial class AppSettingPage : Page
 {
+    private readonly SereinApp _sereinApp;
     private readonly SettingProvider _settingProvider;
     private readonly UpdateChecker _updateChecker;
 
-    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker)
+    public AppSettingPage(
+        SereinApp sereinApp,
+        SettingProvider settingProvider,
+        UpdateChecker updateChecker
+    )
     {
+        _sereinApp = sereinApp;
         _settingProvider = settingProvider;
         _updateChecker = updateChecker;
 
@@ -36,9 +42,9 @@ public partial class AppSettingPage : Page
 
     private void UpdateVersionInfoBar()
     {
-        VersionInfoBar.IsOpen = _updateChecker.Newest is not null;
+        VersionInfoBar.IsOpen = _updateChecker.Latest is not null;
         VersionInfoBar.Message =
-            $"当前版本：{SereinApp.Version}\r\n新版本：{_updateChecker.Newest?.TagName}";
+            $"当前版本：{_sereinApp.Version}\r\n新版本：{_updateChecker.Latest?.TagName}";
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)

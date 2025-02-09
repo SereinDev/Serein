@@ -12,7 +12,11 @@ public partial class AppSettingPage : UserControl
     private readonly SettingProvider _settingProvider;
     private readonly UpdateChecker _updateChecker;
 
-    public AppSettingPage(SettingProvider settingProvider, UpdateChecker updateChecker)
+    public AppSettingPage(
+        SereinApp sereinApp,
+        SettingProvider settingProvider,
+        UpdateChecker updateChecker
+    )
     {
         _settingProvider = settingProvider;
         _updateChecker = updateChecker;
@@ -20,7 +24,7 @@ public partial class AppSettingPage : UserControl
         SetBindings();
         UpdateLatestVersion();
 
-        VersionLabel.Text = $"当前版本：{SereinApp.Version}";
+        VersionLabel.Text = $"当前版本：{sereinApp.Version}";
 
         JSGlobalAssembliesTextBox.Text = string.Join(
             "\r\n",
@@ -39,7 +43,7 @@ public partial class AppSettingPage : UserControl
 
     private void UpdateLatestVersion()
     {
-        LatestVersionLabel.Text = $"最新版本：{_updateChecker.Newest?.TagName ?? "-"}";
+        LatestVersionLabel.Text = $"最新版本：{_updateChecker.LastResult?.TagName ?? "-"}";
     }
 
     private void OnPropertyChanged(object sender, EventArgs e)

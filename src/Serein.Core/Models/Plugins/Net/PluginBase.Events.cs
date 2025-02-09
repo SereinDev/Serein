@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
-using Serein.Core.Services.Servers;
-using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Models.Plugins.Net;
 
@@ -57,25 +55,25 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarted:
-                return OnServerStarted(args.First().OfType<Services.Servers.Server>());
+                return OnServerStarted((Services.Servers.Server)args.First());
 
             case Event.ServerStarting:
-                return OnServerStarting(args.First().OfType<Services.Servers.Server>());
+                return OnServerStarting((Services.Servers.Server)args.First());
 
             case Event.ServerStopping:
-                return OnServerStopping(args.First().OfType<Services.Servers.Server>());
+                return OnServerStopping((Services.Servers.Server)args.First());
 
             case Event.GroupMessageReceived:
-                return OnGroupMessageReceived(args.First().OfType<MessagePacket>());
+                return OnGroupMessageReceived((MessagePacket)args.First());
 
             case Event.PrivateMessageReceived:
-                return OnPrivateMessageReceived(args.First().OfType<MessagePacket>());
+                return OnPrivateMessageReceived((MessagePacket)args.First());
 
             case Event.WsDataReceived:
-                return OnWsDataReceived(args.First().OfType<string>());
+                return OnWsDataReceived((string)args.First());
 
             case Event.PacketReceived:
-                return OnPacketReceived(args.First().OfType<JsonObject>());
+                return OnPacketReceived((JsonObject)args.First());
 
             case Event.ServerOutput:
                 if (args.Length != 2)
@@ -83,10 +81,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerOutput(
-                    args.First().OfType<Services.Servers.Server>(),
-                    args.Last().OfType<string>()
-                );
+                return OnServerOutput((Services.Servers.Server)args.First(), (string)args.Last());
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
@@ -95,8 +90,8 @@ public abstract partial class PluginBase
                 }
 
                 return OnServerRawOutput(
-                    args.First().OfType<Services.Servers.Server>(),
-                    args.Last().OfType<string>()
+                    (Services.Servers.Server)args.First(),
+                    (string)args.Last()
                 );
 
             case Event.ServerInput:
@@ -105,10 +100,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerInput(
-                    args.First().OfType<Services.Servers.Server>(),
-                    args.Last().OfType<string>()
-                );
+                return OnServerInput((Services.Servers.Server)args.First(), (string)args.Last());
 
             case Event.ServerExited:
                 if (

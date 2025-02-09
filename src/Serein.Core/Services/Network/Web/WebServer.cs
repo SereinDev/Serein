@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web.Apis;
+using Serein.Core.Services.Network.Web.WebSockets;
 using Serein.Core.Utils;
 using Swan.Logging;
 
@@ -83,7 +84,7 @@ public sealed class WebServer
         _webServer.WithModule(connectionWebSocketModule);
         _disposables.Add(connectionWebSocketModule);
 
-        var ipBannerModule = _serviceProvider.GetRequiredService<IPBannerModule>();
+        var ipBannerModule = _serviceProvider.GetRequiredService<IpBannerModule>();
         _webServer.WithModule(ipBannerModule);
         _disposables.Add(ipBannerModule);
 
@@ -130,7 +131,7 @@ public sealed class WebServer
         var options = new WebServerOptions();
 
         _settingProvider.Value.WebApi.UrlPrefixes.ToList().ForEach(options.AddUrlPrefix);
-        if (_settingProvider.Value.WebApi.Certificate.Enable)
+        if (_settingProvider.Value.WebApi.Certificate.IsEnabled)
         {
             options.AutoLoadCertificate = _settingProvider
                 .Value

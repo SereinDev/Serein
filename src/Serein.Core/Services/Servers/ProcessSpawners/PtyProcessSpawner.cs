@@ -13,6 +13,7 @@ namespace Serein.Core.Services.Servers.ProcessSpawners;
 
 internal sealed class PtyProcessSpawner(
     string id,
+    SereinApp sereinApp,
     LogWriter logWriter,
     ServerLogger serverLogger,
     ILogger<Server> logger
@@ -58,13 +59,13 @@ internal sealed class PtyProcessSpawner(
                     ForceWinPty = Environment.OSVersion.Platform == PlatformID.Win32NT,
 
                     Rows =
-                        SereinApp.Type == AppType.Cli
+                        sereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
                         && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
                             : configuration.Pty.TerminalHeight ?? 80,
                     Cols =
-                        SereinApp.Type == AppType.Cli
+                        sereinApp.Type == AppType.Cli
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
                         && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight

@@ -87,7 +87,7 @@ public partial class MainForm : Form
                     ShowBalloonTip(
                         5000,
                         "发现新版本",
-                        _updateChecker.Newest?.TagName ?? string.Empty,
+                        _updateChecker.Latest?.TagName ?? string.Empty,
                         ToolTipIcon.None
                     )
             );

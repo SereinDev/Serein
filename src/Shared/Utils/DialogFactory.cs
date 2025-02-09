@@ -44,7 +44,7 @@ public static class DialogFactory
                 + $"Copyright © 2022 <a href=\"{UrlConstants.Author}\">Zaitonn</a>. All Rights Reserved.",
             FooterIcon = TaskDialogIcon.Information,
             MainInstruction = "欢迎使用Serein！！",
-            WindowTitle = "Serein." + SereinApp.Type,
+            WindowTitle = "Serein." + SereinApp.GetCurrentApp().Type,
             ButtonStyle = TaskDialogButtonStyle.CommandLinks,
         };
 
@@ -90,7 +90,7 @@ public static class DialogFactory
                 ExpandedInformation = e.StackTrace,
                 MainIcon = TaskDialogIcon.Error,
                 MainInstruction = "唔……崩溃了(っ °Д °;)っ",
-                WindowTitle = "Serein." + SereinApp.Type,
+                WindowTitle = "Serein." + SereinApp.GetCurrentApp().Type,
                 ButtonStyle = TaskDialogButtonStyle.CommandLinks,
             };
 

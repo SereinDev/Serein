@@ -29,7 +29,7 @@ public partial class WebApiSettingPage : UserControl
         CertificateEnableCheckBox.DataBindings.Add(
             nameof(CertificateEnableCheckBox.Checked),
             _settingProvider.Value.WebApi.Certificate,
-            nameof(CertificateSetting.Enable),
+            nameof(CertificateSetting.IsEnabled),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );

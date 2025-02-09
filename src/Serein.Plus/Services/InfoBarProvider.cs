@@ -27,7 +27,7 @@ public sealed class InfoBarProvider(IServiceProvider serviceProvider)
     )
     {
         _tasks.Add(
-            new InfoBarTask
+            new()
             {
                 Title = title,
                 Message = message,

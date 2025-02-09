@@ -12,6 +12,7 @@ using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Network.Web.Apis;
+using Serein.Core.Services.Network.Web.WebSockets;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -65,7 +66,7 @@ public static class SereinAppBuilder
             .AddSingleton<PacketHandler>()
             .AddSingleton<WebServer>()
             .AddTransient<ApiMap>()
-            .AddTransient<IPBannerModule>()
+            .AddTransient<IpBannerModule>()
             .AddTransient<ServerWebSocketModule>()
             .AddTransient<ConnectionWebSocketModule>()
             .AddSingleton<PageExtractor>()
@@ -80,7 +81,8 @@ public static class SereinAppBuilder
             .AddSingleton<BindingManager>()
             .AddHostedService<PluginService>()
             .AddHostedService<ScheduleRunner>()
-            .AddHostedService<CoreService>();
+            .AddHostedService<CoreService>()
+            .AddSingleton<SereinApp>();
 
         return hostAppBuilder;
     }

@@ -12,7 +12,7 @@ using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
-namespace Serein.Core.Services.Network.Web;
+namespace Serein.Core.Services.Network.Web.WebSockets;
 
 internal class ServerWebSocketModule : WebSocketModule
 {

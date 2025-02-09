@@ -8,12 +8,12 @@ namespace Serein.Lite.Ui.Settings;
 
 public partial class AboutPage : UserControl
 {
-    public AboutPage()
+    public AboutPage(SereinApp sereinApp)
     {
         InitializeComponent();
 
-        VersionLabel.Text += SereinApp.Version;
-        DetailedVersionLabel.Text += SereinApp.FullVersion;
+        VersionLabel.Text += sereinApp.Version;
+        DetailedVersionLabel.Text += sereinApp.FullVersion;
         AssemblyLabel.Text += typeof(Program).Assembly.ToString();
     }
 

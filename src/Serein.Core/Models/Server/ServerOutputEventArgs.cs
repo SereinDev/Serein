@@ -4,7 +4,7 @@ namespace Serein.Core.Models.Server;
 
 public sealed class ServerOutputEventArgs(ServerOutputType outputType, string data) : EventArgs
 {
-    public ServerOutputType OutputType { get; init; } = outputType;
+    public ServerOutputType OutputType { get; } = outputType;
 
-    public string Data { get; init; } = data;
+    public string Data { get; } = data;
 }

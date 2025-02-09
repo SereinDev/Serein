@@ -53,17 +53,7 @@ public partial class ServerPage : Page
 
     private void Add(string id, Server server)
     {
-        var tabItem = new PanelTabItem(
-            id,
-            server,
-            _serverManager,
-            this,
-            _mainWindow,
-            _infoBarProvider
-        )
-        {
-            Tag = id,
-        };
+        var tabItem = new PanelTabItem(id, server, _serverManager, this, _mainWindow) { Tag = id };
 
         _panels[id] = tabItem;
         TabControl.Items.Add(tabItem);

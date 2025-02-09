@@ -9,14 +9,14 @@ public sealed class SereinAppInfoTests
     public void VersionShouldBeEqualToThisTestAssembly()
     {
         Assert.Equal(
-            SereinApp.Version,
-            typeof(SereinAppInfoTests).Assembly.GetName().Version!.ToString()
+            SereinApp.GetCurrentApp().Version,
+            typeof(SereinAppInfoTests).Assembly.GetName().Version
         );
     }
 
     [Fact]
     public void AppTypeShouleBeUnknown()
     {
-        Assert.Equal(AppType.Unknown, SereinApp.Type);
+        Assert.Equal(AppType.Unknown, SereinApp.GetCurrentApp().Type);
     }
 }

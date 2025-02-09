@@ -21,7 +21,7 @@ public sealed class CommandProvider
 
     public string HelpPage { get; }
 
-    public CommandProvider(IServiceProvider serviceProvider)
+    public CommandProvider(IServiceProvider serviceProvider, SereinApp sereinApp)
     {
         CommandHandler[] commands =
         [
@@ -38,7 +38,7 @@ public sealed class CommandProvider
         var dict = new Dictionary<string, CommandHandler>();
         var list = new List<CompletionItem>();
 
-        stringBuilder.AppendLine($"Serein.Cli {SereinApp.Version}");
+        stringBuilder.AppendLine($"Serein.Cli {sereinApp.Version}");
 
         foreach (var command in commands)
         {

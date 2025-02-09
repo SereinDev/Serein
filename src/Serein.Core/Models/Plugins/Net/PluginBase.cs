@@ -16,6 +16,9 @@ public abstract partial class PluginBase : IPlugin
     protected PluginBase()
     {
         CancellationTokenSource = new();
+        CancellationTokenSource.Token.Register(
+            () => PropertyChanged?.Invoke(this, new(nameof(IsEnabled)))
+        );
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,7 +26,6 @@ public abstract partial class PluginBase : IPlugin
     public void Disable()
     {
         CancellationTokenSource.Cancel();
-        PropertyChanged?.Invoke(this, new(nameof(IsEnabled)));
     }
 
     public abstract void Dispose();

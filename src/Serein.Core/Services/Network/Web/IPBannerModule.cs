@@ -1,26 +1,22 @@
-using System.Threading.Tasks;
-using EmbedIO;
 using EmbedIO.Security;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Web.Apis;
 
 namespace Serein.Core.Services.Network.Web;
 
-internal class IPBannerModule : IPBanningModule
+internal class IpBannerModule : IPBanningModule
 {
-    public IPBannerModule(SettingProvider settingProvider)
+    public IpBannerModule(SettingProvider settingProvider)
         : base("/")
     {
         this.WithMaxRequestsPerSecond(settingProvider.Value.WebApi.MaxRequestsPerSecond);
         this.WithWhitelist(settingProvider.Value.WebApi.WhiteList);
-        OnHttpException = Handle403;
-    }
-
-    public static async Task Handle403(IHttpContext context, IHttpException exception)
-    {
-        if (exception.StatusCode == 403)
+        OnHttpException = async (context, exception) =>
         {
-            await ApiHelper.HandleHttpException(context, exception);
-        }
+            if (exception.StatusCode == 403)
+            {
+                await ApiHelper.HandleHttpException(context, exception);
+            }
+        };
     }
 }

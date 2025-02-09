@@ -2,24 +2,21 @@ using System;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using iNKORE.UI.WPF.Modern.Controls;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
-using Serein.Plus.Services;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;
 
 public partial class ConnectionPage : Page
 {
-    private readonly InfoBarProvider _infoBarProvider;
     private readonly WsConnectionManager _wsConnectionManager;
     private readonly Timer _timer;
 
-    public ConnectionPage(InfoBarProvider infoBarProvider, WsConnectionManager wsConnectionManager)
+    public ConnectionPage(WsConnectionManager wsConnectionManager)
     {
         _timer = new(1000) { AutoReset = true, Enabled = true };
-        _infoBarProvider = infoBarProvider;
         _wsConnectionManager = wsConnectionManager;
         DataContext = _wsConnectionManager;
 
@@ -62,7 +59,7 @@ public partial class ConnectionPage : Page
         }
         catch (Exception ex)
         {
-            _infoBarProvider.Enqueue("操作失败", ex.Message, InfoBarSeverity.Error);
+            MessageBox.Show(ex.Message, "操作失败", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 

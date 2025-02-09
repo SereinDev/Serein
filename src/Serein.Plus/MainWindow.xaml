@@ -41,7 +41,7 @@
     <Grid>
         <tb:TaskbarIcon
             x:Name="AppTaskbarIcon"
-            x:FieldModifier="public"
+            x:FieldModifier="protected"
             IconSource="../../logo.ico"
             MenuActivation="RightClick"
             ToolTip="Serein.Plus"
@@ -119,7 +119,8 @@
             IsTabStop="False"
             IsTitleBarAutoPaddingEnabled="False"
             ItemInvoked="NavView_ItemInvoked"
-            PaneDisplayMode="LeftCompact">
+            PaneDisplayMode="Auto"
+            IsPaneOpen="False">
 
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem

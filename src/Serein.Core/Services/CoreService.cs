@@ -24,6 +24,7 @@ internal sealed class CoreService : IHostedService
 
     public CoreService(
         ILogger<CoreService> logger,
+        SereinApp sereinApp,
         SettingProvider settingProvider,
         ServerManager serverManager,
         UpdateChecker updateChecker,
@@ -37,15 +38,15 @@ internal sealed class CoreService : IHostedService
         _updateChecker = updateChecker;
         _httpServer = httpServer;
 
-        _logger.LogInformation("Serein.{} {}", SereinApp.Type, SereinApp.Version);
+        _logger.LogInformation("Serein.{} {}", sereinApp.Type, sereinApp.Version);
         _logger.LogInformation("仓库: {}", UrlConstants.Repository);
         _logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
         _logger.LogInformation("");
 
         _logger.LogDebug("Path={}", AppDomain.CurrentDomain.BaseDirectory);
         _logger.LogDebug("Pid={}", Environment.ProcessId);
-        _logger.LogDebug("版本：{}", SereinApp.FullVersion);
-        _logger.LogDebug("程序集：{}", typeof(SereinApp).Assembly.GetName());
+        _logger.LogDebug("版本：{}", sereinApp.FullVersion);
+        _logger.LogDebug("程序集：{}", sereinApp.AssemblyName);
         _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
 
         if (Debugger.IsAttached)

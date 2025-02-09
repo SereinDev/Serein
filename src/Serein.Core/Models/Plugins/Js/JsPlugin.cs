@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Plugins.Js;
-using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Utils.Extensions;
 using JsConsole = Serein.Core.Services.Plugins.Js.Properties.Console;
 
@@ -38,7 +37,7 @@ public class JsPlugin : IPlugin
     [JsonIgnore]
     public CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
-    private IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
+    internal IReadOnlyDictionary<Event, Function> EventHandlers => _eventHandlers;
     public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
 
     private readonly CancellationTokenSource _cancellationTokenSource;

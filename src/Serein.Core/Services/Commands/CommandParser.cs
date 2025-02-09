@@ -14,6 +14,7 @@ namespace Serein.Core.Services.Commands;
 /// 命令解析
 /// </summary>
 public partial class CommandParser(
+    SereinApp sereinApp,
     PluginManager pluginManager,
     ServerManager servers,
     BindingManager bindingManager,
@@ -183,9 +184,9 @@ public partial class CommandParser(
                 object? obj = name switch
                 {
                     #region Serein
-                    "serein.type" => SereinApp.Type,
-                    "serein.version" => SereinApp.Version,
-                    "serein.fullversion" => SereinApp.FullVersion,
+                    "serein.type" => sereinApp.Type,
+                    "serein.version" => sereinApp.Version,
+                    "serein.fullversion" => sereinApp.FullVersion,
                     #endregion
 
                     #region 时间

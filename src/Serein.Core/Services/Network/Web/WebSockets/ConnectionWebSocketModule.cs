@@ -11,7 +11,7 @@ using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
 
-namespace Serein.Core.Services.Network.Web;
+namespace Serein.Core.Services.Network.Web.WebSockets;
 
 internal class ConnectionWebSocketModule : WebSocketModule
 {

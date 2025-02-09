@@ -13,9 +13,9 @@ using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Plus.Dialogs;
 using Serein.Plus.Pages;
-using Serein.Plus.Services;
 using Serein.Plus.ViewModels;
 using Serein.Plus.Windows;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Plus.Controls;
 
@@ -25,7 +25,6 @@ public partial class PanelTabItem : TabItem
     private readonly ServerManager _serverManager;
     private readonly ServerPage _page;
     private readonly MainWindow _mainWindow;
-    private readonly InfoBarProvider _infoBarProvider;
     private readonly Timer _timer;
     public Server Server { get; }
     public PanelViewModel ViewModel { get; }
@@ -35,8 +34,7 @@ public partial class PanelTabItem : TabItem
         Server server,
         ServerManager serverManager,
         ServerPage page,
-        MainWindow mainWindow,
-        InfoBarProvider infoBarProvider
+        MainWindow mainWindow
     )
     {
         _id = id;
@@ -44,7 +42,6 @@ public partial class PanelTabItem : TabItem
         _serverManager = serverManager;
         _page = page;
         _mainWindow = mainWindow;
-        _infoBarProvider = infoBarProvider;
         ViewModel = new() { Status = Server.Status };
 
         DataContext = this;
@@ -135,7 +132,7 @@ public partial class PanelTabItem : TabItem
         }
         catch (Exception ex)
         {
-            _infoBarProvider.Enqueue("操作失败", ex.Message, InfoBarSeverity.Error);
+            MessageBox.Show(ex.Message, "操作失败", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -277,10 +274,11 @@ public partial class PanelTabItem : TabItem
                                 }
                                 catch (Exception ex)
                                 {
-                                    _infoBarProvider.Enqueue(
-                                        "删除服务器失败",
+                                    MessageBox.Show(
                                         ex.Message,
-                                        InfoBarSeverity.Error
+                                        "删除服务器失败",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Error
                                     );
                                 }
                             }

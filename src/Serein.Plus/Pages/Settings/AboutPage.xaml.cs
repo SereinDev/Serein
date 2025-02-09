@@ -8,15 +8,18 @@ namespace Serein.Plus.Pages.Settings;
 
 public partial class AboutPage : Page
 {
-    public AboutPage()
+    public AboutPage(SereinApp sereinApp)
     {
+        Version = sereinApp.Version.ToString();
+        AssemblyInformationalVersion = sereinApp.FullVersion;
+
         InitializeComponent();
         DataContext = this;
     }
 
-    public string Version { get; } = SereinApp.Version;
+    public string Version { get; }
     public string AssemblyVersion { get; } = Assembly.GetExecutingAssembly().ToString();
-    public string? AssemblyInformationalVersion { get; } = SereinApp.FullVersion;
+    public string? AssemblyInformationalVersion { get; }
 
     private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
     {

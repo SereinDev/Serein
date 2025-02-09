@@ -7,6 +7,7 @@ namespace Serein.Core.Services.Network.Connection;
 public interface IConnectionService : IDisposable
 {
     event EventHandler<MessageReceivedEventArgs>? MessageReceived;
+
     event EventHandler? StatusChanged;
 
     bool Active { get; }

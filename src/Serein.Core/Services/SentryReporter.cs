@@ -7,13 +7,17 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services;
 
-internal class SentryReporter(ILogger<SentryReporter> logger, SettingProvider settingProvider)
+internal class SentryReporter(
+    ILogger<SentryReporter> logger,
+    SereinApp sereinApp,
+    SettingProvider settingProvider
+)
 {
     private readonly ILogger _logger = logger;
 
     public void Initialize()
     {
-        if (!settingProvider.Value.Application.EnableSentry || SereinApp.Type == AppType.Unknown)
+        if (!settingProvider.Value.Application.EnableSentry || sereinApp.Type == AppType.Unknown)
         {
             return;
         }

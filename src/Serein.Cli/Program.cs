@@ -109,16 +109,19 @@ public static class Program
         serverSwitcher.Initialize();
         updateChecker.Updated += (_, _) =>
         {
-            if (updateChecker.Newest is not null)
+            if (updateChecker.Latest is not null)
             {
                 logger.LogInformation(
                     "发现新版本：{}{}发布地址：{}",
-                    updateChecker.Newest.TagName,
+                    updateChecker.Latest.TagName,
                     Environment.NewLine,
-                    updateChecker.Newest.Url
+                    updateChecker.Latest.Url
                 );
             }
         };
+
+        updateChecker.Prepared += (_, _) =>
+            logger.LogInformation("新的版本下载完成，并将在退出时自动替换");
 
         app.WaitForShutdown();
     }

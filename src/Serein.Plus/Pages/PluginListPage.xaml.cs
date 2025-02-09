@@ -9,7 +9,10 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Net;
+using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
 using Serein.Plus.Services;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages;
@@ -69,6 +72,7 @@ public partial class PluginListPage : Page
             switch (tag)
             {
                 case "OpenDoc":
+                    UrlConstants.DocsPlugins.OpenInBrowser();
                     break;
 
                 case "Reload":
@@ -109,7 +113,7 @@ public partial class PluginListPage : Page
         {
             if (tag == "Disable")
             {
-                _infoBarProvider.Enqueue("禁用失败", ex.Message, InfoBarSeverity.Error);
+                MessageBox.Show(ex.Message, "禁用失败", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

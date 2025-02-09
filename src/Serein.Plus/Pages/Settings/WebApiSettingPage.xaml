@@ -102,7 +102,7 @@
             <CheckBox
                 Click="OnPropertyChanged"
                 Content="启用"
-                IsChecked="{Binding Value.WebApi.Certificate.Enable}" />
+                IsChecked="{Binding Value.WebApi.Certificate.IsEnabled}" />
             <CheckBox
                 Click="OnPropertyChanged"
                 Content="自动注册证书"

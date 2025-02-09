@@ -44,6 +44,7 @@ public sealed class Server
     private readonly EventDispatcher _eventDispatcher;
     private readonly ReactionTrigger _reactionManager;
     private readonly ILogger _logger;
+    private readonly SereinApp _sereinApp;
     private readonly SettingProvider _settingProvider;
     private readonly List<string> _commandHistory;
     private readonly List<string> _cache;
@@ -56,9 +57,10 @@ public sealed class Server
 
     internal Server(
         string id,
-        Matcher matcher,
         ILogger<Server> logger,
         ILogger<LogWriter> writerLogger,
+        SereinApp sereinApp,
+        Matcher matcher,
         Configuration configuration,
         SettingProvider settingManager,
         EventDispatcher eventDispatcher,
@@ -68,6 +70,7 @@ public sealed class Server
         Id = id;
         _logWriter = new(writerLogger, string.Format(PathConstants.ServerLogDirectory, id));
         _logger = logger;
+        _sereinApp = sereinApp;
         Configuration = configuration;
         _settingProvider = settingManager;
         _matcher = matcher;
@@ -85,7 +88,7 @@ public sealed class Server
 
         _ptyProcessSpawner = new(() =>
         {
-            var spawner = new PtyProcessSpawner(Id, _logWriter, Logger, logger);
+            var spawner = new PtyProcessSpawner(Id, _sereinApp, _logWriter, Logger, logger);
             spawner.StatusChanged += (_, _) => OnServerStatusChanged();
             spawner.ProcessExited += (_, exitCode) => OnServerExit(exitCode);
             return spawner;
@@ -294,7 +297,7 @@ public sealed class Server
         if (Configuration.StopCommands.Length == 0)
         {
             if (
-                SereinApp.Type is AppType.Lite or AppType.Plus
+                _sereinApp.Type is AppType.Lite or AppType.Plus
                 && Environment.OSVersion.Platform == PlatformID.Win32NT
                 && Pid is not null
             )
@@ -390,7 +393,7 @@ public sealed class Server
                 _commandHistory.Add(command);
             }
 
-            if (SereinApp.Type != AppType.Cli)
+            if (_sereinApp.Type != AppType.Cli)
             {
                 Logger.WriteStandardInput(command);
             }

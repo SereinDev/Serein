@@ -79,16 +79,17 @@ public partial class MainWindow : Window
 
         _updateChecker.Updated += (_, _) =>
         {
-            if (_updateChecker.Newest is not null)
+            if (_updateChecker.Latest is not null)
             {
-                Dispatcher.Invoke(
-                    () =>
-                        ShowBalloonTip(
-                            "发现新版本",
-                            _updateChecker.Newest.TagName,
-                            BalloonIcon.Info
-                        )
-                );
+                Dispatcher.Invoke(() =>
+                {
+                    ShowBalloonTip("发现新版本", _updateChecker.Latest.TagName, BalloonIcon.Info);
+
+                    if (NavView.SettingsItem is NavigationViewItem navViewItem)
+                    {
+                        navViewItem.InfoBadge ??= new() { Value = 1 };
+                    }
+                });
             }
         };
     }
@@ -285,7 +286,18 @@ public partial class MainWindow : Window
     {
         if (args.InvokedItemContainer.Tag is not Type type)
         {
-            type = args.IsSettingsInvoked ? typeof(CategoriesPage) : typeof(NotImplPage);
+            if (args.IsSettingsInvoked)
+            {
+                type = typeof(CategoriesPage);
+                if (args.InvokedItem is NavigationViewItem navigationViewItem)
+                {
+                    navigationViewItem.InfoBadge = null;
+                }
+            }
+            else
+            {
+                type = typeof(NotImplPage);
+            }
         }
 
         var page = _services.GetRequiredService(type);
