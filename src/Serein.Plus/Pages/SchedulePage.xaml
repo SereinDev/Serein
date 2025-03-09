@@ -93,9 +93,9 @@
             </DataGrid.ContextMenu>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Expression, UpdateSourceTrigger=PropertyChanged}" Header="Cron表达式" />
+                <DataGridTextColumn Binding="{Binding Expression}" Header="Cron表达式" />
                 <DataGridCheckBoxColumn Binding="{Binding IsEnabled}" Header="启用" />
-                <DataGridTextColumn Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}" Header="命令" />
+                <DataGridTextColumn Binding="{Binding Command}" Header="命令" />
                 <DataGridTextColumn Binding="{Binding Description}" Header="描述" />
             </DataGrid.Columns>
         </DataGrid>

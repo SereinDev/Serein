@@ -12,7 +12,7 @@
     <ItemGroup>
         <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
         <Resource Include="../Sources/logo.ico" />
-        <Compile Include="../Shared/Utils/DialogFactory.cs" />
+        <Compile Include="../Shared/**" />
     </ItemGroup>
 
     <ItemGroup>

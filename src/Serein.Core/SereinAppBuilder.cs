@@ -51,6 +51,7 @@ public static class SereinAppBuilder
             .AddSingleton<MatchesProvider>()
             .AddSingleton<ScheduleProvider>()
             .AddSingleton<PermissionGroupProvider>()
+            .AddSingleton<ImportHandler>()
             .AddSingleton<GroupManager>()
             .AddSingleton<PermissionManager>()
             .AddSingleton<HardwareInfoProvider>()

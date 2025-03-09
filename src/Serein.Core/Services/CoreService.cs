@@ -25,11 +25,11 @@ internal sealed class CoreService : IHostedService
     public CoreService(
         ILogger<CoreService> logger,
         SereinApp sereinApp,
-        SettingProvider settingProvider,
+        WebServer httpServer,
         ServerManager serverManager,
         UpdateChecker updateChecker,
-        EventDispatcher eventDispatcher,
-        WebServer httpServer
+        SettingProvider settingProvider,
+        EventDispatcher eventDispatcher
     )
     {
         _logger = logger;

@@ -14,5 +14,5 @@ public class WebApiSetting : NotifyPropertyChangedModelBase
 
     public string[] AccessTokens { get; set; } = [];
 
-    public CertificateSetting Certificate { get; init; } = new();
+    public CertificateSetting Certificate { get; set; } = new();
 }

@@ -5,7 +5,6 @@
         <TargetFramework>net8.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon>../Sources/logo.ico</ApplicationIcon>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <DefineConstants>LITE;</DefineConstants>
     </PropertyGroup>
@@ -13,7 +12,7 @@
 
     <ItemGroup>
         <Resource Include="../Sources/logo.ico" />
-        <Compile Include="../Shared/Utils/DialogFactory.cs" />
+        <Compile Include="../Shared/**" />
         <EmbeddedResource Include="../Sources/console/index.html" />
         <EmbeddedResource Include="../Sources/console/custom.css" />
 

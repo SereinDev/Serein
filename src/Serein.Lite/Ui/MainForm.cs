@@ -16,6 +16,7 @@ using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
+using Serein.Core.Utils;
 using Serein.Lite.Ui.Function;
 using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
@@ -363,6 +364,12 @@ public partial class MainForm : Form
             DialogFactory.ShowWarningDialogOfLogMode();
         }
 
+        var processes = BaseChecker.CheckConflictProcesses();
+        if (processes.Count > 0)
+        {
+            DialogFactory.ShowConflictWarning(processes);
+        }
+
         _timer.Start();
         base.OnShown(e);
         Task.Delay(500).ContinueWith((_) => _host.StartAsync());
@@ -382,5 +389,10 @@ public partial class MainForm : Form
         ShowInTaskbar = true;
         WindowState = FormWindowState.Normal;
         Activate();
+    }
+
+    private void MainForm_DragDrop(object sender, DragEventArgs e)
+    {
+        // TODO
     }
 }

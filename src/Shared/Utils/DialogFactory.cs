@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 using Serein.Core;
+using Serein.Core.Models;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 #if LITE
@@ -16,8 +20,12 @@ namespace Serein.Plus.Utils;
 
 #endif
 
-public static class DialogFactory
+internal static class DialogFactory
 {
+    private static readonly Lazy<string> Title = new(
+        () => "Serein." + SereinApp.GetCurrentApp().Type
+    );
+
     public static void ShowWelcomeDialog()
     {
         var button1 = new TaskDialogButton("官网文档")
@@ -44,7 +52,7 @@ public static class DialogFactory
                 + $"Copyright © 2022 <a href=\"{UrlConstants.Author}\">Zaitonn</a>. All Rights Reserved.",
             FooterIcon = TaskDialogIcon.Information,
             MainInstruction = "欢迎使用Serein！！",
-            WindowTitle = "Serein." + SereinApp.GetCurrentApp().Type,
+            WindowTitle = Title.Value,
             ButtonStyle = TaskDialogButtonStyle.CommandLinks,
         };
 
@@ -90,7 +98,7 @@ public static class DialogFactory
                 ExpandedInformation = e.StackTrace,
                 MainIcon = TaskDialogIcon.Error,
                 MainInstruction = "唔……崩溃了(っ °Д °;)っ",
-                WindowTitle = "Serein." + SereinApp.GetCurrentApp().Type,
+                WindowTitle = Title.Value,
                 ButtonStyle = TaskDialogButtonStyle.CommandLinks,
             };
 
@@ -108,6 +116,74 @@ public static class DialogFactory
         catch { }
     }
 
+    public static void ShowConflictWarning(List<Process> processes)
+    {
+        var sb = new StringBuilder();
+
+        foreach (var process in processes)
+        {
+            sb.AppendLine($" · {process.ProcessName}, Id={process.Id}");
+        }
+
+        var dialog = new TaskDialog
+        {
+            Buttons = { new(ButtonType.Ok) },
+            CenterParent = true,
+            Content = "在同一文件夹内同时运行多个Serein实例可能导致文件读写冲突或无法正确保存",
+            ExpandedControlText = "查看进程",
+            ExpandedInformation = sb.ToString(),
+            MainIcon = TaskDialogIcon.Warning,
+            MainInstruction = "检测到冲突进程",
+            WindowTitle = Title.Value,
+        };
+
+        dialog.ShowDialog();
+    }
+
+    public static bool ShowImportServerConfigurationConfirm()
+    {
+        var dialog = new TaskDialog
+        {
+            Buttons = { new(ButtonType.Ok), new(ButtonType.Cancel) },
+            CenterParent = true,
+            Content = "确认要导入此服务器配置项吗？",
+            MainIcon = TaskDialogIcon.Information,
+            MainInstruction = "导入确认",
+            WindowTitle = Title.Value,
+        };
+
+        return dialog.ShowDialog().ButtonType == ButtonType.Ok;
+    }
+
+    public static bool? ShowImportConfirmWithMergeOption(ImportActionType importActionType)
+    {
+        if (importActionType is not ImportActionType.Match and not ImportActionType.Schedule)
+        {
+            return null;
+        }
+
+        var btn1 = new TaskDialogButton("确认并合并");
+        var btn2 = new TaskDialogButton("确认并替换");
+        var dialog = new TaskDialog
+        {
+            Buttons = { btn1, btn2, new(ButtonType.Cancel) },
+            CenterParent = true,
+            Content =
+                importActionType == ImportActionType.Match
+                    ? "确认要导入此匹配文件吗？"
+                    : "确认要导入此定时任务文件吗？",
+            MainIcon = TaskDialogIcon.Information,
+            MainInstruction = "导入确认",
+            WindowTitle = Title.Value,
+        };
+
+        var result = dialog.ShowDialog();
+
+        return result == btn1 ? true
+            : result == btn2 ? false
+            : null;
+    }
+
 #if LITE
     public static void ShowWarningDialogOfLogMode()
     {
@@ -121,7 +197,7 @@ public static class DialogFactory
                 + "当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D",
             MainIcon = TaskDialogIcon.Warning,
             MainInstruction = "嘿！你开启了日志模式",
-            WindowTitle = "Serein.Lite",
+            WindowTitle = Title.Value,
         };
 
         dialog.ShowDialog();

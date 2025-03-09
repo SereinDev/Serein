@@ -81,7 +81,7 @@ partial class MainForm
         // 
         ServerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ServerConsoleToolStripMenuItem, ServerToolStripSeparator, ServerAddToolStripMenuItem, ServerEditToolStripMenuItem, ServerRemoveToolStripMenuItem, ServerImportToolStripMenuItem });
         ServerToolStripMenuItem.Name = "ServerToolStripMenuItem";
-        ServerToolStripMenuItem.Size = new Size(106, 38);
+        ServerToolStripMenuItem.Size = new Size(106, 35);
         ServerToolStripMenuItem.Text = "服务器";
         ServerToolStripMenuItem.DropDownOpening += ServerToolStripMenuItem_DropDownOpening;
         // 
@@ -129,7 +129,7 @@ partial class MainForm
         // 
         FunctionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ConnectionToolStripMenuItem, MatchToolStripMenuItem, ScheduleToolStripMenuItem, PluginToolStripMenuItem });
         FunctionsToolStripMenuItem.Name = "FunctionsToolStripMenuItem";
-        FunctionsToolStripMenuItem.Size = new Size(82, 38);
+        FunctionsToolStripMenuItem.Size = new Size(82, 35);
         FunctionsToolStripMenuItem.Text = "功能";
         // 
         // ConnectionToolStripMenuItem
@@ -163,7 +163,7 @@ partial class MainForm
         // SettingToolStripMenuItem
         // 
         SettingToolStripMenuItem.Name = "SettingToolStripMenuItem";
-        SettingToolStripMenuItem.Size = new Size(82, 38);
+        SettingToolStripMenuItem.Size = new Size(82, 35);
         SettingToolStripMenuItem.Text = "设置";
         SettingToolStripMenuItem.Click += SettingToolStripMenuItem_Click;
         // 
@@ -204,20 +204,20 @@ partial class MainForm
         // 
         MembersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { BindingToolStripMenuItem, PermissionGroupToolStripMenuItem });
         MembersToolStripMenuItem.Name = "MembersToolStripMenuItem";
-        MembersToolStripMenuItem.Size = new Size(82, 38);
+        MembersToolStripMenuItem.Size = new Size(82, 35);
         MembersToolStripMenuItem.Text = "成员";
         // 
         // BindingToolStripMenuItem
         // 
         BindingToolStripMenuItem.Name = "BindingToolStripMenuItem";
-        BindingToolStripMenuItem.Size = new Size(359, 44);
+        BindingToolStripMenuItem.Size = new Size(219, 44);
         BindingToolStripMenuItem.Text = "绑定";
         BindingToolStripMenuItem.Click += BindingToolStripMenuItem_Click;
         // 
         // PermissionGroupToolStripMenuItem
         // 
         PermissionGroupToolStripMenuItem.Name = "PermissionGroupToolStripMenuItem";
-        PermissionGroupToolStripMenuItem.Size = new Size(359, 44);
+        PermissionGroupToolStripMenuItem.Size = new Size(219, 44);
         PermissionGroupToolStripMenuItem.Text = "权限组";
         PermissionGroupToolStripMenuItem.Click += PermissionGroupToolStripMenuItem_Click;
         // 
@@ -227,7 +227,7 @@ partial class MainForm
         MenuStrip.Items.AddRange(new ToolStripItem[] { ServerToolStripMenuItem, FunctionsToolStripMenuItem, MembersToolStripMenuItem, SettingToolStripMenuItem });
         MenuStrip.Location = new Point(0, 0);
         MenuStrip.Name = "MenuStrip";
-        MenuStrip.Size = new Size(1254, 42);
+        MenuStrip.Size = new Size(1254, 39);
         MenuStrip.TabIndex = 0;
         MenuStrip.Text = "menuStrip1";
         // 
@@ -242,9 +242,9 @@ partial class MainForm
         // ChildrenPanel
         // 
         ChildrenPanel.Dock = DockStyle.Fill;
-        ChildrenPanel.Location = new Point(0, 42);
+        ChildrenPanel.Location = new Point(0, 39);
         ChildrenPanel.Name = "ChildrenPanel";
-        ChildrenPanel.Size = new Size(1254, 687);
+        ChildrenPanel.Size = new Size(1254, 690);
         ChildrenPanel.TabIndex = 1;
         // 
         // MainForm
@@ -259,6 +259,7 @@ partial class MainForm
         MinimumSize = new Size(800, 600);
         Name = "MainForm";
         Text = "Serein.Lite";
+        DragDrop += MainForm_DragDrop;
         NotifyIconContextMenuStrip.ResumeLayout(false);
         MenuStrip.ResumeLayout(false);
         MenuStrip.PerformLayout();

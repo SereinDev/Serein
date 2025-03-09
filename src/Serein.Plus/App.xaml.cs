@@ -22,6 +22,7 @@ public partial class App : Application
     public App()
     {
         ShutdownMode = ShutdownMode.OnMainWindowClose;
+
         DispatcherUnhandledException += static (_, e) => DialogFactory.ShowErrorDialog(e.Exception);
         AppDomain.CurrentDomain.UnhandledException += static (_, e) =>
             DialogFactory.ShowErrorDialog((Exception)e.ExceptionObject);
@@ -30,8 +31,6 @@ public partial class App : Application
     private static IHost Build()
     {
         var builder = SereinAppBuilder.CreateBuilder();
-
-        builder.Logging.SetMinimumLevel(LogLevel.Trace);
 
         builder
             .Services.AddSingleton<TitleUpdater>()

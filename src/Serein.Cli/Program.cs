@@ -59,11 +59,29 @@ public static class Program
     {
         logger.LogWarning("你开启了日志模式！");
         logger.LogWarning(
-            $"在此模式下，应用程序会将完整的调试日志保存在\"{PathConstants.LogDirectory}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）"
+            "在此模式下，应用程序会将完整的调试日志保存在\"{}/app\"目录下（可能很大很大很大，并对硬盘的读写速度产生一定影响）",
+            PathConstants.LogDirectory
         );
         logger.LogWarning("除非你知道你在干什么 / 是开发者要求的，请不要在此模式下运行Serein！！");
         logger.LogWarning("");
         logger.LogWarning("当然你也不需要太担心，若要退出此模式只需要重新启动就行啦 :D");
+    }
+
+    private static void CheckConflict(ILogger logger)
+    {
+        var processes = BaseChecker.CheckConflictProcesses();
+        if (processes.Count > 0)
+        {
+            logger.LogWarning("检测到冲突进程：");
+            foreach (var process in processes)
+            {
+                logger.LogWarning(" · {}, Id={}", process.ProcessName, process.Id);
+            }
+
+            logger.LogWarning(
+                "在同一文件夹内同时运行多个Serein实例可能导致文件读写冲突或无法正确保存"
+            );
+        }
     }
 
     private static void BuildApp()
@@ -104,9 +122,12 @@ public static class Program
         {
             ShowWarningOfLogMode(logger);
         }
-        app.Start();
 
+        CheckConflict(logger);
+
+        app.Start();
         serverSwitcher.Initialize();
+
         updateChecker.Updated += (_, _) =>
         {
             if (updateChecker.Latest is not null)

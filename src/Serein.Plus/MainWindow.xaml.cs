@@ -13,6 +13,7 @@ using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core;
+using Serein.Core.Models;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
@@ -27,6 +28,7 @@ using Serein.Plus.Pages;
 using Serein.Plus.Pages.Settings;
 using Serein.Plus.Services;
 using Serein.Plus.Utils;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
 
 namespace Serein.Plus;
 
@@ -38,6 +40,7 @@ public partial class MainWindow : Window
     private readonly UpdateChecker _updateChecker;
     private readonly ServerManager _serverManager;
     private readonly EventDispatcher _eventDispatcher;
+    private readonly ImportHandler _importHandler;
     private readonly DoubleAnimation _infoBarPopIn;
     private readonly DoubleAnimation _infoBarPopOut;
 
@@ -48,7 +51,8 @@ public partial class MainWindow : Window
         ServerManager serverManager,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        TitleUpdater titleUpdater
+        TitleUpdater titleUpdater,
+        ImportHandler importHandler
     )
     {
         _host = host;
@@ -56,7 +60,7 @@ public partial class MainWindow : Window
         _updateChecker = updateChecker;
         _serverManager = serverManager;
         _eventDispatcher = eventDispatcher;
-
+        _importHandler = importHandler;
         var powerEase = new PowerEase { EasingMode = EasingMode.EaseInOut };
         _infoBarPopIn = new(200, 0, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
@@ -141,6 +145,12 @@ public partial class MainWindow : Window
         if (SereinAppBuilder.StartForTheFirstTime)
         {
             DialogFactory.ShowWelcomeDialog();
+        }
+
+        var processes = BaseChecker.CheckConflictProcesses();
+        if (processes.Count > 0)
+        {
+            DialogFactory.ShowConflictWarning(processes);
         }
 
         if (FileLoggerProvider.IsEnabled)
@@ -323,5 +333,55 @@ public partial class MainWindow : Window
     {
         NavView.IsBackEnabled = ContentFrame.CanGoBack;
         ContentFrame.RemoveBackEntry();
+    }
+
+    private void Window_DragLeave(object sender, DragEventArgs e)
+    {
+        DropBorder.Visibility = Visibility.Collapsed;
+    }
+
+    private void Window_DragEnter(object sender, DragEventArgs e)
+    {
+        DropBorder.Visibility = Visibility.Visible;
+    }
+
+    private void Window_Drop(object sender, DragEventArgs e)
+    {
+        DropBorder.Visibility = Visibility.Collapsed;
+        ShowWindow();
+
+        if (e.Data.GetData(DataFormats.FileDrop) is not string[] datas)
+        {
+            return;
+        }
+
+        try
+        {
+            var type = ImportActionType.Invalid;
+            var result = new Lazy<bool?>(
+                () => DialogFactory.ShowImportConfirmWithMergeOption(type)
+            );
+            _importHandler.Import(
+                datas,
+                (actionType) =>
+                {
+                    if (actionType == ImportActionType.Server)
+                    {
+                        return DialogFactory.ShowImportServerConfigurationConfirm();
+                    }
+                    else
+                    {
+                        type = actionType;
+
+                        return result != null;
+                    }
+                },
+                (actionType) => result.Value.HasValue && result.Value.Value
+            );
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "导入失败", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

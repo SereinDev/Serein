@@ -1,6 +1,9 @@
 using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Serein.Core;
+using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
@@ -28,6 +31,22 @@ public partial class AboutPage : Page
         {
             uri.OpenInBrowser();
             e.Handled = true;
+        }
+    }
+
+    private void SettingsCard_Click(object sender, RoutedEventArgs e)
+    {
+        switch ((sender as Control)?.Tag as string)
+        {
+            case "Repo":
+                UrlConstants.Repository.OpenInBrowser();
+                break;
+            case "Group":
+                UrlConstants.Group.OpenInBrowser();
+                break;
+            case "Docs":
+                UrlConstants.Docs.OpenInBrowser();
+                break;
         }
     }
 }

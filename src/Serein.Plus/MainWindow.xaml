@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="clr-namespace:Serein.Plus.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:services="clr-namespace:Serein.Plus.Services"
     xmlns:pages="clr-namespace:Serein.Plus.Pages"
+    xmlns:services="clr-namespace:Serein.Plus.Services"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     x:Name="Window"
@@ -21,12 +21,16 @@
     ui:TitleBar.Height="36"
     ui:WindowHelper.SystemBackdropType="Mica"
     ui:WindowHelper.UseModernWindowStyle="True"
-    Loaded="Window_Loaded"
+    AllowDrop="True"
     Closing="Window_Closing"
     ContentRendered="Window_ContentRendered"
     Deactivated="Window_Deactivated"
+    DragEnter="Window_DragEnter"
+    DragLeave="Window_DragLeave"
+    Drop="Window_Drop"
     Icon="../../logo.ico"
     IsVisibleChanged="Window_IsVisibleChanged"
+    Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Window.Resources>
         <Style BasedOn="{StaticResource DefaultScrollViewerStyle}" TargetType="ScrollViewer">
@@ -115,12 +119,12 @@
             DisplayModeChanged="NavView_DisplayModeChanged"
             ExpandedModeThresholdWidth="1280"
             IsBackButtonVisible="Collapsed"
+            IsPaneOpen="False"
             IsSettingsVisible="True"
             IsTabStop="False"
             IsTitleBarAutoPaddingEnabled="False"
             ItemInvoked="NavView_ItemInvoked"
-            PaneDisplayMode="Auto"
-            IsPaneOpen="False">
+            PaneDisplayMode="Auto">
 
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem
@@ -206,5 +210,11 @@
                 <TranslateTransform />
             </ui:InfoBar.RenderTransform>
         </ui:InfoBar>
+
+        <Border
+            x:Name="DropBorder"
+            BorderBrush="Orange"
+            BorderThickness="5"
+            Visibility="Collapsed" />
     </Grid>
 </Window>

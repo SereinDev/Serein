@@ -19,6 +19,7 @@ internal class SentryReporter(
     {
         if (!settingProvider.Value.Application.EnableSentry || sereinApp.Type == AppType.Unknown)
         {
+            _logger.LogDebug("Sentry未启用。这可能导致开发者无法及时发现问题");
             return;
         }
 

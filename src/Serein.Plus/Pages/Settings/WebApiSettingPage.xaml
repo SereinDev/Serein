@@ -28,14 +28,6 @@
                 Content="启用"
                 IsChecked="{Binding Value.WebApi.IsEnabled}" />
 
-            <ui:InfoBar
-                Title="警告"
-                Margin="0,10,0,20"
-                IsClosable="False"
-                IsOpen="True"
-                Message="此功能仍处于实验性阶段，可能存在一定Bug"
-                Severity="Warning" />
-
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"

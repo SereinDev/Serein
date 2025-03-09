@@ -34,6 +34,14 @@ public sealed class SereinApp
 #if RELEASE
         IsReleaseConfiguration = true;
 #endif
+
+        try
+        {
+#pragma warning disable IL3000
+            IsSingleFile = string.IsNullOrEmpty(Assembly.GetEntryAssembly()?.Location);
+#pragma warning restore IL3000
+        }
+        catch { }
     }
 
     public IServiceProvider Services { get; }
@@ -47,4 +55,6 @@ public sealed class SereinApp
     public AppType Type { get; }
 
     public bool IsReleaseConfiguration { get; }
+
+    public bool IsSingleFile { get; }
 }

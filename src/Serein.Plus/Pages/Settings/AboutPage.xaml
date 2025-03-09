@@ -20,62 +20,48 @@
 
     <ScrollViewer>
         <StackPanel Margin="20">
+            <StackPanel.Resources>
+                <Style TargetType="ui:SettingsCard">
+                    <Setter Property="Margin" Value="0,5" />
+                </Style>
+
+                <Style x:Key="ValueTextBlock" TargetType="TextBlock">
+                    <Setter Property="FontFamily" Value="Consolas" />
+                </Style>
+            </StackPanel.Resources>
+
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{StaticResource SubtitleTextBlockStyle}"
                 Text="版本" />
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <ui:SettingsExpander Description="Copyright © 2022 Zaitonn. All Rights Reserved." Header="Serein.Plus">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                <ui:SettingsExpander.HeaderIcon>
+                    <Image
+                        Width="20"
+                        Height="20"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Source="../../logo.ico" />
+                </ui:SettingsExpander.HeaderIcon>
 
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Margin" Value="0,0,20,5" />
-                    </Style>
-
-                    <Style x:Key="ValueTextBlock" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="Consolas" />
-                    </Style>
-                </Grid.Resources>
-
-                <TextBlock Text="版本号" />
                 <TextBlock
-                    Grid.Column="1"
+                    Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}"
                     Style="{StaticResource ValueTextBlock}"
                     Text="{Binding Version, Mode=OneTime}" />
 
-                <TextBlock Grid.Row="1" Text="详细版本" />
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Style="{StaticResource ValueTextBlock}"
-                    Text="{Binding AssemblyInformationalVersion, Mode=OneTime}" />
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="程序集">
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding AssemblyVersion, Mode=OneTime}" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="详细版本">
+                        <TextBlock Style="{StaticResource ValueTextBlock}" Text="{Binding AssemblyInformationalVersion, Mode=OneTime}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
-                <TextBlock Grid.Row="2" Text="程序集" />
-                <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Style="{StaticResource ValueTextBlock}"
-                    Text="{Binding AssemblyVersion, Mode=OneTime}" />
-            </Grid>
 
-            <TextBlock
-                Margin="0,15,0,5"
-                Style="{DynamicResource SubtitleTextBlockStyle}"
-                Text="版权信息" />
-
-            <TextBlock FontSize="14" LineHeight="25">
-                <Run Text="Copyright © 2022 Zaitonn. All Rights Reserved." />
-                <LineBreak />
+            <TextBlock Margin="5" FontSize="14">
                 <Run Text="此软件根据" />
                 <Hyperlink NavigateUri="https://github.com/SereinDev/Serein?tab=GPL-3.0-1-ov-file#" RequestNavigate="OnRequestNavigate">
                     GPL-3.0 license
@@ -87,6 +73,7 @@
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="免责声明" />
+
             <TextBlock
                 Margin="0,5"
                 FontSize="14"
@@ -107,9 +94,53 @@
                     MINECRAFT 使用准则
                 </Hyperlink>
             </TextBlock>
-            <ui:HyperlinkButton Content="Github仓库" NavigateUri="https://github.com/SereinDev/Serein" />
-            <ui:HyperlinkButton Content="官网/文档" NavigateUri="https://sereindev.github.io/" />
-            <ui:HyperlinkButton Content="交流群" NavigateUri="https://jq.qq.com/?_wv=1027&amp;k=XNZqPSPv" />
+
+
+            <TextBlock
+                Margin="0,15,0,5"
+                Style="{DynamicResource SubtitleTextBlockStyle}"
+                Text="有用的链接" />
+
+            <ui:SettingsCard
+                Click="SettingsCard_Click"
+                Header="GitHub仓库"
+                IsClickEnabled="True"
+                Tag="Repo">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.GiftboxOpen}" />
+                </ui:SettingsCard.HeaderIcon>
+                <ui:SettingsCard.ActionIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                </ui:SettingsCard.ActionIcon>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Click="SettingsCard_Click"
+                Header="官网/文档"
+                IsClickEnabled="True"
+                Tag="Docs">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Document}" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:SettingsCard.ActionIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                </ui:SettingsCard.ActionIcon>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Click="SettingsCard_Click"
+                Header="交流群"
+                IsClickEnabled="True"
+                Tag="Group">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Group}" />
+                </ui:SettingsCard.HeaderIcon>
+                <ui:SettingsCard.ActionIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenInNewWindow}" />
+                </ui:SettingsCard.ActionIcon>
+            </ui:SettingsCard>
+
         </StackPanel>
     </ScrollViewer>
 </ui:Page>
