@@ -43,7 +43,7 @@ public sealed class NetPluginLoader(
 
             var assembly = context.LoadFromAssemblyPath(entry);
             plugin = CreatePluginInstance(assembly.GetExportedTypes());
-            plugin.FileName = entry;
+            plugin.FileName = entry.Replace('\\', '/');
             plugin.Info = pluginInfo;
         }
         catch

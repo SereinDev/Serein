@@ -50,7 +50,7 @@ public partial class Panel : UserControl
     {
         Invoke(() =>
         {
-            switch (e.OutputType)
+            switch (e.Type)
             {
                 case ServerOutputType.StandardOutput:
                     lock (_lock)

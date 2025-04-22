@@ -103,7 +103,7 @@ public sealed class Server
 
         Logger.Output += (_, e) =>
         {
-            if (e.OutputType == ServerOutputType.StandardOutput)
+            if (e.Type == ServerOutputType.StandardOutput)
             {
                 OnServerOutput(e.Data);
             }
@@ -260,6 +260,7 @@ public sealed class Server
 
         _isTerminated = false;
         _prevProcessCpuTime = TimeSpan.Zero;
+        Logger.ClearHistory();
         _commandHistory.Clear();
         _restartCancellationTokenSource?.Cancel();
 

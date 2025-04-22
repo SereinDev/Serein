@@ -13,17 +13,17 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(wsConnectionManager);
     }
 
-    [Route(HttpVerbs.Get, "/connection/open")]
+    [Route(HttpVerbs.Post, "/connection")]
     public async Task StartConnection()
     {
         wsConnectionManager.Start();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
-    [Route(HttpVerbs.Get, "/connection/close")]
+    [Route(HttpVerbs.Delete, "/connection")]
     public async Task StopConnection()
     {
         wsConnectionManager.Stop();
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 }

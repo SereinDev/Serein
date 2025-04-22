@@ -19,10 +19,17 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(serverManager.Servers);
     }
 
-    [Route(HttpVerbs.Post, "/servers/{id}")]
-    public async Task AddServer(string id)
+    [Route(HttpVerbs.Post, "/servers")]
+    public async Task AddServer()
     {
         var jsonObject = await HttpContext.ConvertRequestAs<JsonObject>();
+
+        var id = jsonObject?["id"]?.GetValue<string>();
+        if (string.IsNullOrEmpty(id))
+        {
+            throw HttpException.BadRequest("请求中未包含有效的服务器 Id");
+        }
+
         var configuration =
             JsonSerializer.Deserialize<Configuration>(
                 jsonObject?["configuration"],
@@ -30,7 +37,8 @@ internal partial class ApiMap
             ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
 
         serverManager.Add(id, configuration);
-        await HttpContext.SendPacketAsync();
+
+        await HttpContext.SendPacketAsync(HttpStatusCode.Created);
     }
 
     [Route(HttpVerbs.Put, "/servers/{id}")]
@@ -57,7 +65,7 @@ internal partial class ApiMap
     public async Task RemoveServer(string id)
     {
         serverManager.Remove(id);
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}")]
@@ -71,7 +79,18 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(server);
     }
 
-    [Route(HttpVerbs.Get, "/servers/{id}/start")]
+    [Route(HttpVerbs.Get, "/servers/{id}/history")]
+    public async Task GetServerOutputHistory(string id)
+    {
+        if (!serverManager.Servers.TryGetValue(id, out var server))
+        {
+            throw HttpException.NotFound("未找到指定的服务器");
+        }
+
+        await HttpContext.SendPacketAsync(server.Logger.History);
+    }
+
+    [Route(HttpVerbs.Post, "/servers/{id}/start")]
     public async Task StartServer(string id)
     {
         if (!serverManager.Servers.TryGetValue(id, out var server))
@@ -80,10 +99,10 @@ internal partial class ApiMap
         }
 
         server.Start();
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
-    [Route(HttpVerbs.Get, "/servers/{id}/stop")]
+    [Route(HttpVerbs.Post, "/servers/{id}/stop")]
     public async Task StopServer(string id)
     {
         if (!serverManager.Servers.TryGetValue(id, out var server))
@@ -95,7 +114,7 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
-    [Route(HttpVerbs.Get, "/servers/{id}/terminate")]
+    [Route(HttpVerbs.Post, "/servers/{id}/terminate")]
     public async Task TerminateServer(string id)
     {
         if (!serverManager.Servers.TryGetValue(id, out var server))
@@ -104,32 +123,11 @@ internal partial class ApiMap
         }
 
         server.Terminate();
-        await HttpContext.SendPacketAsync();
-    }
-
-    [Route(HttpVerbs.Get, "/servers/{id}/input")]
-    public async Task InputServer(string id, [QueryField("line", true)] string[] lines)
-    {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
-
-        if (!server.Status)
-        {
-            throw HttpException.Forbidden("服务器未运行");
-        }
-
-        foreach (var l in lines)
-        {
-            server.Input(l);
-        }
-
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/input")]
-    public async Task InputServer(string id)
+    public async Task InputServer(string id, [QueryField("line")] string[] lines)
     {
         if (!serverManager.Servers.TryGetValue(id, out var server))
         {
@@ -141,14 +139,24 @@ internal partial class ApiMap
             throw HttpException.Forbidden("服务器未运行");
         }
 
-        foreach (
-            var l in await HttpContext.ConvertRequestAs<string[]>()
-                ?? throw HttpException.BadRequest()
-        )
+        if (lines.Length == 0)
         {
-            server.Input(l);
+            foreach (
+                var l in await HttpContext.ConvertRequestAs<string[]>()
+                    ?? throw HttpException.BadRequest()
+            )
+            {
+                server.Input(l);
+            }
+        }
+        else
+        {
+            foreach (var l in lines)
+            {
+                server.Input(l);
+            }
         }
 
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 }

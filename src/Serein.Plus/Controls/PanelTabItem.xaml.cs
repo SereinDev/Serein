@@ -58,7 +58,7 @@ public partial class PanelTabItem : TabItem
 
     private void Output(object? sender, ServerOutputEventArgs e)
     {
-        switch (e.OutputType)
+        switch (e.Type)
         {
             case ServerOutputType.StandardOutput:
                 Dispatcher.Invoke(

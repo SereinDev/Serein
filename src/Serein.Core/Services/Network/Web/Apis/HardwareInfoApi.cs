@@ -6,7 +6,7 @@ namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap
 {
-    [Route(HttpVerbs.Get, "/hardware/memoryStatus")]
+    [Route(HttpVerbs.Get, "/hardware/memory-status")]
     public async Task GetMemoryStatus()
     {
         await HttpContext.SendPacketAsync(hardwareInfoProvider.Info?.MemoryStatus);
@@ -66,7 +66,7 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(hardwareInfoProvider.Info?.MonitorList);
     }
 
-    [Route(HttpVerbs.Get, "/hardware/mouses")]
+    [Route(HttpVerbs.Get, "/hardware/mice")]
     public async Task GetMouseList()
     {
         await HttpContext.SendPacketAsync(hardwareInfoProvider.Info?.MouseList);

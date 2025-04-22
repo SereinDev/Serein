@@ -12,7 +12,7 @@ namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap
 {
-    [Route(HttpVerbs.Get, "/pluginManager")]
+    [Route(HttpVerbs.Get, "/plugin-manager")]
     public async Task GetPluginManager()
     {
         await HttpContext.SendPacketAsync(
@@ -25,14 +25,14 @@ internal partial class ApiMap
         );
     }
 
-    [Route(HttpVerbs.Get, "/pluginManager/reload")]
+    [Route(HttpVerbs.Post, "/plugin-manager/reload")]
     public async Task ReloadPlugins()
     {
-        pluginManager.Reload();
+        Task.Run(pluginManager.Reload);
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
-    [Route(HttpVerbs.Get, "/pluginManager/plugins")]
+    [Route(HttpVerbs.Get, "/plugins")]
     public async Task GetPlugins()
     {
         var dictionary = new Dictionary<string, IPlugin>();
@@ -48,7 +48,7 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(dictionary);
     }
 
-    [Route(HttpVerbs.Get, "/pluginManager/plugins/{id}")]
+    [Route(HttpVerbs.Get, "/plugins/{id}")]
     public async Task GetPlugin(string id)
     {
         if (netPluginLoader.Plugins.TryGetValue(id, out PluginBase? netPlugin))
@@ -65,7 +65,7 @@ internal partial class ApiMap
         }
     }
 
-    [Route(HttpVerbs.Get, "/pluginManager/plugins/{id}/disable")]
+    [Route(HttpVerbs.Post, "/plugins/{id}/disable")]
     public async Task DisablePlugin(string id)
     {
         if (netPluginLoader.Plugins.TryGetValue(id, out PluginBase? netPlugin))

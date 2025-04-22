@@ -84,7 +84,7 @@ public sealed class ServerSwitcher(
         {
             return;
         }
-        switch (e.OutputType)
+        switch (e.Type)
         {
             case ServerOutputType.StandardOutput:
                 Console.WriteLine(e.Data);

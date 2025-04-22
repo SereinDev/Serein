@@ -24,7 +24,7 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync();
     }
 
-    [Route(HttpVerbs.Put, "/settings/webApi")]
+    [Route(HttpVerbs.Put, "/settings/web-api")]
     public async Task UpdateWebApiSetting()
     {
         var webApiSetting = await HttpContext.ConvertRequestAs<WebApiSetting>();

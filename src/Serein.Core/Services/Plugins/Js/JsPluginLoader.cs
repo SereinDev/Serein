@@ -61,7 +61,7 @@ public sealed class JsPluginLoader(
             jsPlugin = new JsPlugin(
                 serviceProvider,
                 pluginInfo,
-                entry,
+                entry.Replace('\\', '/'),
                 jsConfig ?? JsPluginConfig.Default
             );
             jsPlugin.Execute(File.ReadAllText(entry));
@@ -88,6 +88,8 @@ public sealed class JsPluginLoader(
                 continue;
             }
 
+            var filtered = file.Replace('\\', '/');
+
             var name = Path.GetFileNameWithoutExtension(file);
             var id = Guid.NewGuid().ToString("N");
 
@@ -96,8 +98,14 @@ public sealed class JsPluginLoader(
             {
                 jsPlugin = new JsPlugin(
                     serviceProvider,
-                    new() { Id = id, Name = name },
-                    file,
+                    new()
+                    {
+                        Id = id,
+                        Name = name,
+                        EntryFile = filtered,
+                        Type = PluginType.Js,
+                    },
+                    filtered,
                     JsPluginConfig.Default
                 );
 

@@ -16,7 +16,7 @@ internal partial class ApiMap
     }
 
     [Route(HttpVerbs.Post, "/schedules")]
-    public async Task CreateMatch()
+    public async Task AddSchedule()
     {
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
         scheduleProvider.Value.Add(schedule);

@@ -139,7 +139,7 @@ internal class ServerWebSocketModule : WebSocketModule
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(
                     new WebSocketBroadcastPacket(
-                        e.OutputType switch
+                        e.Type switch
                         {
                             ServerOutputType.InternalInfo => WebSocketBroadcastType.Info,
                             ServerOutputType.StandardOutput => WebSocketBroadcastType.Output,

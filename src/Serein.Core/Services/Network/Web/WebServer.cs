@@ -148,6 +148,7 @@ public sealed class WebServer
             {
                 return options;
             }
+
             options.Certificate = File.Exists(_settingProvider.Value.WebApi.Certificate.Path)
                 ? new(
                     _settingProvider.Value.WebApi.Certificate.Path!,
