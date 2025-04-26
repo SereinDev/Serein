@@ -1,0 +1,19 @@
+using Serein.Core.Services.Commands;
+using Serein.Core.Services.Network.Connection;
+using Serein.Core.Services.Servers;
+
+namespace Serein.Core.Services.Plugins.Js.Properties;
+
+internal class PropertyFactory(
+    ServerManager serverManager,
+    WsConnectionManager connectionManager,
+    PluginManager pluginManager,
+    CommandRunner commandRunner
+)
+{
+    public ServerProperty ServerProperty { get; } = new(serverManager);
+
+    public ConnectionProperty ConnectionProperty { get; } = new(connectionManager);
+
+    public CommandProperty CommandProperty { get; } = new(pluginManager, commandRunner);
+}

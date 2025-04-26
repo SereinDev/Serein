@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Serein.Core.Models.Network.Connection;
 
-public partial class DataTranferredEventArgs : EventArgs
+public class DataTranferredEventArgs : EventArgs
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public required DataTranferredType Type { get; init; }

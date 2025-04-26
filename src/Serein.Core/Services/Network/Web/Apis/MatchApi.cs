@@ -15,6 +15,12 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(matchesProvider.Value);
     }
 
+    [Route(HttpVerbs.Get, "/matches/{id}")]
+    public async Task GetMatch(int id)
+    {
+        await HttpContext.SendPacketAsync(FastGetMatch(id));
+    }
+
     [Route(HttpVerbs.Post, "/matches")]
     public async Task AddMatch()
     {
@@ -28,34 +34,25 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/matches/{id}")]
     public async Task DeleteMatch(int id)
     {
-        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
-        if (fisrt is not null)
-        {
-            matchesProvider.Value.Remove(fisrt);
-            matchesProvider.SaveAsyncWithDebounce();
-            await HttpContext.SendPacketAsync();
-        }
-        else
-        {
-            throw HttpException.NotFound("未找到指定的匹配");
-        }
+        var march = FastGetMatch(id);
+        matchesProvider.Value.Remove(march);
+        matchesProvider.SaveAsyncWithDebounce();
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Put, "/matches/{id}")]
     public async Task UpdateMatch(int id)
     {
         var match = await HttpContext.ConvertRequestAs<Match>();
-        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
-        if (fisrt is not null)
-        {
-            match.DeepCloneTo(fisrt);
+        var oldMatch = FastGetMatch(id);
+        match.DeepCloneTo(oldMatch);
+        matchesProvider.SaveAsyncWithDebounce();
+        await HttpContext.SendPacketAsync(oldMatch.GetHashCode());
+    }
 
-            matchesProvider.SaveAsyncWithDebounce();
-            await HttpContext.SendPacketAsync(fisrt.GetHashCode());
-        }
-        else
-        {
-            throw HttpException.NotFound("未找到指定的匹配");
-        }
+    private Match FastGetMatch(int id)
+    {
+        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        return fisrt is not null ? fisrt : throw HttpException.NotFound("未找到指定的匹配");
     }
 }

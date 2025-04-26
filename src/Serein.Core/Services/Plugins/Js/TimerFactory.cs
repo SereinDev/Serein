@@ -12,11 +12,10 @@ namespace Serein.Core.Services.Plugins.Js;
 
 public sealed class TimerFactory
 {
-    private long _timeoutTimerId;
-    private long _intervalTimerId;
-    private readonly Dictionary<long, Timer> _timeoutTimers;
-    private readonly Dictionary<long, Timer> _intervalTimers;
+    private long _timerId;
+    private readonly Dictionary<long, Timer> _timers;
     private readonly IPluginLogger _pluginLogger;
+    private readonly CancellationToken _cancellationToken;
     private readonly string _name;
 
     internal TimerFactory(
@@ -25,81 +24,69 @@ public sealed class TimerFactory
         CancellationToken cancellationToken
     )
     {
-        _timeoutTimers = [];
-        _intervalTimers = [];
-
-        cancellationToken.Register(() =>
-        {
-            foreach (var timer in _timeoutTimers.Values)
-            {
-                timer.Stop();
-                timer.Dispose();
-            }
-
-            foreach (var timer in _intervalTimers.Values)
-            {
-                timer.Stop();
-                timer.Dispose();
-            }
-
-            _timeoutTimers.Clear();
-            _intervalTimers.Clear();
-        });
+        _timers = [];
         _pluginLogger = pluginLogger;
+        _cancellationToken = cancellationToken;
         _name = name;
+
+        _cancellationToken.Register(() =>
+        {
+            foreach (var timer in _timers.Values)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
+
+            _timers.Clear();
+        });
     }
 
     public long SetTimeout(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
-        if (jsValue is not Function function)
-        {
-            throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
-        }
-
-        var timer = new Timer(milliseconds) { AutoReset = false };
-        var id = _timeoutTimerId++;
-        timer.Start();
-        timer.Elapsed += (_, _) => SafeCall(function, args);
-
-        _timeoutTimers.Add(id, timer);
-
-        return id;
+        return Add(jsValue, milliseconds, false, args);
     }
 
     public void ClearTimeout(long id)
     {
-        if (_timeoutTimers.TryGetValue(id, out var timer))
-        {
-            timer.Stop();
-            timer.Dispose();
-            _timeoutTimers.Remove(id);
-        }
+        Clear(id);
     }
 
     public long SetInterval(JsValue jsValue, long milliseconds, params JsValue[] args)
     {
+        return Add(jsValue, milliseconds, true, args);
+    }
+
+    public void ClearInterval(long id)
+    {
+        Clear(id);
+    }
+
+    private long Add(JsValue jsValue, long milliseconds, bool autoReset, params JsValue[] args)
+    {
+        _cancellationToken.ThrowIfCancellationRequested();
+
         if (jsValue is not Function function)
         {
             throw new ArgumentException("The first argument must be a function.", nameof(jsValue));
         }
 
-        var timer = new Timer(milliseconds) { AutoReset = true };
-        var id = _intervalTimerId++;
+        var timer = new Timer(milliseconds) { AutoReset = autoReset };
+        var id = _timerId++;
         timer.Start();
         timer.Elapsed += (_, _) => SafeCall(function, args);
 
-        _intervalTimers.Add(id, timer);
+        _timers.Add(id, timer);
 
         return id;
     }
 
-    public void ClearInterval(long id)
+    private void Clear(long id)
     {
-        if (_intervalTimers.TryGetValue(id, out var timer))
+        if (_timers.TryGetValue(id, out var timer))
         {
             timer.Stop();
             timer.Dispose();
-            _intervalTimers.Remove(id);
+            _timers.Remove(id);
         }
     }
 

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Serein.Core.Models.Server;
 
-namespace Serein.Core.Models.Server;
+namespace Serein.Core.Services.Servers;
 
 public sealed class ServerLogger
 {
@@ -15,6 +16,7 @@ public sealed class ServerLogger
     public event EventHandler<ServerOutputEventArgs>? Output;
 
     public IReadOnlyCollection<ServerOutputEventArgs> History => _history;
+
     private readonly Queue<ServerOutputEventArgs> _history = new(100);
 
     internal void WriteStandardOutput(string output)

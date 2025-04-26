@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Serein.Core.Models.Plugins.Net;
+using Serein.Core.Services.Plugins.Net;
 
 namespace Serein.Plugins.Demo;
 

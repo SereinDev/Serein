@@ -9,12 +9,13 @@ using Jint.Native.Function;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
-using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Utils.Extensions;
 using JsConsole = Serein.Core.Services.Plugins.Js.Properties.Console;
 
-namespace Serein.Core.Models.Plugins.Js;
+namespace Serein.Core.Services.Plugins.Js;
 
 public class JsPlugin : IPlugin
 {

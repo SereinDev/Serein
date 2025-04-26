@@ -16,6 +16,7 @@ using Serein.Core.Services.Network.Web.WebSockets;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Js.Properties;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Services.Plugins.Storages;
 using Serein.Core.Services.Servers;
@@ -75,6 +76,7 @@ public static class SereinAppBuilder
             .AddSingleton<EventDispatcher>()
             .AddSingleton<JsEngineFactory>()
             .AddSingleton<JsPluginLoader>()
+            .AddSingleton<PropertyFactory>()
             .AddSingleton<NetPluginLoader>()
             .AddSingleton<LocalStorage>()
             .AddSingleton<SessionStorage>()

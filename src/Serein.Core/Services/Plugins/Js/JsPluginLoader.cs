@@ -23,16 +23,16 @@ public sealed class JsPluginLoader(
     SettingProvider settingProvider
 ) : IPluginLoader<JsPlugin>
 {
-    internal ConcurrentDictionary<string, JsPlugin> JsPlugins { get; } = new();
-    public IReadOnlyDictionary<string, JsPlugin> Plugins => JsPlugins;
+    private readonly ConcurrentDictionary<string, JsPlugin> _plugins = new();
+    public IReadOnlyDictionary<string, JsPlugin> Plugins => _plugins;
 
     public void Unload()
     {
-        foreach ((_, var jsPlugin) in JsPlugins)
+        foreach ((_, var jsPlugin) in _plugins)
         {
             jsPlugin.Dispose();
         }
-        JsPlugins.Clear();
+        _plugins.Clear();
     }
 
     public void Load(PluginInfo pluginInfo, string dir)
@@ -70,7 +70,7 @@ public sealed class JsPluginLoader(
         {
             if (jsPlugin is not null)
             {
-                JsPlugins.TryAdd(pluginInfo.Id, jsPlugin);
+                _plugins.TryAdd(pluginInfo.Id, jsPlugin);
             }
         }
     }
@@ -125,7 +125,7 @@ public sealed class JsPluginLoader(
             {
                 if (jsPlugin is not null)
                 {
-                    JsPlugins.TryAdd(id, jsPlugin);
+                    _plugins.TryAdd(id, jsPlugin);
                 }
             }
         }

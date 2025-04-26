@@ -6,6 +6,7 @@ using System.Web;
 using EmbedIO.WebSockets;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Network.Connection;
+using Serein.Core.Models.Network.Web;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
@@ -43,7 +44,12 @@ internal class ConnectionWebSocketModule : WebSocketModule
     {
         try
         {
-            BroadcastAsync(JsonSerializer.Serialize(e, JsonSerializerOptionsFactory.Common))
+            BroadcastAsync(
+                    JsonSerializer.Serialize(
+                        new BroadcastPacket(e.Type.ToString().ToLowerInvariant(), e.Data),
+                        JsonSerializerOptionsFactory.Common
+                    )
+                )
                 .Await();
         }
         catch (Exception ex)

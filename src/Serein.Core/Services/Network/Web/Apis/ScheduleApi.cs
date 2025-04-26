@@ -15,6 +15,12 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(scheduleProvider.Value);
     }
 
+    [Route(HttpVerbs.Get, "/schedules/{id}")]
+    public async Task GetSchedule(int id)
+    {
+        await HttpContext.SendPacketAsync(FastGetSchedule(id));
+    }
+
     [Route(HttpVerbs.Post, "/schedules")]
     public async Task AddSchedule()
     {
@@ -28,34 +34,25 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/schedules/{id}")]
     public async Task DeleteSchedules(int id)
     {
-        var fisrt = scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
-        if (fisrt is not null)
-        {
-            scheduleProvider.Value.Remove(fisrt);
-            scheduleProvider.SaveAsyncWithDebounce();
-            await HttpContext.SendPacketAsync();
-        }
-        else
-        {
-            throw HttpException.NotFound("未找到指定的定时任务");
-        }
+        var schedule = FastGetSchedule(id);
+        scheduleProvider.Value.Remove(schedule);
+        scheduleProvider.SaveAsyncWithDebounce();
+        await HttpContext.SendPacketAsync();
     }
 
     [Route(HttpVerbs.Put, "/schedules/{id}")]
     public async Task UpdateSchedule(int id)
     {
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
-        var fisrt = scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
-        if (fisrt is not null)
-        {
-            schedule.DeepCloneTo(fisrt);
+        var old = FastGetSchedule(id);
+        schedule.DeepCloneTo(old);
+        scheduleProvider.SaveAsyncWithDebounce();
+        await HttpContext.SendPacketAsync(old.GetHashCode());
+    }
 
-            scheduleProvider.SaveAsyncWithDebounce();
-            await HttpContext.SendPacketAsync(fisrt.GetHashCode());
-        }
-        else
-        {
-            throw HttpException.NotFound("未找到指定的匹配");
-        }
+    private Schedule FastGetSchedule(int id)
+    {
+        var fisrt = scheduleProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        return fisrt is not null ? fisrt : throw HttpException.NotFound("未找到指定的匹配");
     }
 }

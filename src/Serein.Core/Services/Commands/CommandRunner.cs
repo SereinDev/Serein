@@ -183,7 +183,7 @@ public sealed class CommandRunner
             case CommandType.ExecuteJavascriptCodes:
                 if (
                     command.Argument is not string id
-                    || !_jsPluginLoader.JsPlugins.TryGetValue(id, out var jsPlugin)
+                    || !_jsPluginLoader.Plugins.TryGetValue(id, out var jsPlugin)
                 )
                 {
                     break;

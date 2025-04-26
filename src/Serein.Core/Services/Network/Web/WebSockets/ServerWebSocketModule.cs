@@ -114,7 +114,7 @@ internal class ServerWebSocketModule : WebSocketModule
             {
                 var payload = EncodingMap.UTF8.GetBytes(
                     JsonSerializer.Serialize(
-                        new WebSocketBroadcastPacket(WebSocketBroadcastType.Removed),
+                        new BroadcastPacket(BroadcastTypes.Removed),
                         JsonSerializerOptionsFactory.Common
                     )
                 );
@@ -138,13 +138,13 @@ internal class ServerWebSocketModule : WebSocketModule
         {
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(
-                    new WebSocketBroadcastPacket(
+                    new BroadcastPacket(
                         e.Type switch
                         {
-                            ServerOutputType.InternalInfo => WebSocketBroadcastType.Info,
-                            ServerOutputType.StandardOutput => WebSocketBroadcastType.Output,
-                            ServerOutputType.InternalError => WebSocketBroadcastType.Error,
-                            ServerOutputType.StandardInput => WebSocketBroadcastType.Input,
+                            ServerOutputType.InternalError => BroadcastTypes.Error,
+                            ServerOutputType.InternalInfo => BroadcastTypes.Info,
+                            ServerOutputType.StandardOutput => BroadcastTypes.Output,
+                            ServerOutputType.StandardInput => BroadcastTypes.Input,
                             _ => throw new NotSupportedException(),
                         },
                         e.Data
@@ -171,10 +171,8 @@ internal class ServerWebSocketModule : WebSocketModule
         {
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(
-                    new WebSocketBroadcastPacket(
-                        server.Status
-                            ? WebSocketBroadcastType.Started
-                            : WebSocketBroadcastType.Stopped
+                    new BroadcastPacket(
+                        server.Status ? BroadcastTypes.Started : BroadcastTypes.Stopped
                     ),
                     JsonSerializerOptionsFactory.Common
                 )

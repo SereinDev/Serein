@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,9 +29,12 @@ public sealed partial class RunTimeTests : IDisposable
         _host = HostFactory.BuildNew();
         _eventDispatcher = _host.Services.GetRequiredService<EventDispatcher>();
         _jsPluginLoader = _host.Services.GetRequiredService<JsPluginLoader>();
-        _jsPluginLoader.JsPlugins.TryAdd(
+
+        (
+            (ConcurrentDictionary<string, Core.Services.Plugins.Js.JsPlugin>)_jsPluginLoader.Plugins
+        ).TryAdd(
             "test",
-            new Core.Models.Plugins.Js.JsPlugin(
+            new(
                 _host.Services,
                 new() { Id = "test" },
                 Path.Join(PathConstants.PluginsDirectory, "114514.js"),

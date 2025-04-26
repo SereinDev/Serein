@@ -123,8 +123,8 @@ public sealed partial class PluginManager(
                 try
                 {
                     if (
-                        jsPluginLoader.JsPlugins.ContainsKey(pluginInfo.Id)
-                        || netPluginLoader.NetPlugins.ContainsKey(pluginInfo.Id)
+                        jsPluginLoader.Plugins.ContainsKey(pluginInfo.Id)
+                        || netPluginLoader.Plugins.ContainsKey(pluginInfo.Id)
                     )
                     {
                         throw new InvalidOperationException("插件Id重复");

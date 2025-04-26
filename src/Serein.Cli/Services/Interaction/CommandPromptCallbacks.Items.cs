@@ -9,7 +9,7 @@ using PrettyPrompt.Highlighting;
 using Serein.Cli.Models;
 using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Plugins.Js;
+using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;

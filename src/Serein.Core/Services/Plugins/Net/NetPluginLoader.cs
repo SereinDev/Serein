@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins.Info;
-using Serein.Core.Models.Plugins.Net;
 
 namespace Serein.Core.Services.Plugins.Net;
 
@@ -18,8 +17,8 @@ public sealed class NetPluginLoader(
 ) : IPluginLoader<PluginBase>
 {
     private readonly List<WeakReference<PluginAssemblyLoadContext>> _contexts = [];
-    public ConcurrentDictionary<string, PluginBase> NetPlugins { get; } = new();
-    public IReadOnlyDictionary<string, PluginBase> Plugins => NetPlugins;
+    private readonly ConcurrentDictionary<string, PluginBase> _plugins = new();
+    public IReadOnlyDictionary<string, PluginBase> Plugins => _plugins;
 
     public void Load(PluginInfo pluginInfo, string dir)
     {
@@ -55,7 +54,7 @@ public sealed class NetPluginLoader(
         {
             if (plugin is not null)
             {
-                NetPlugins.TryAdd(pluginInfo.Id, plugin);
+                _plugins.TryAdd(pluginInfo.Id, plugin);
             }
         }
     }
@@ -104,7 +103,7 @@ public sealed class NetPluginLoader(
 
     public void Unload()
     {
-        foreach ((_, PluginBase plugin) in NetPlugins)
+        foreach ((_, PluginBase plugin) in _plugins)
         {
             try
             {
@@ -136,6 +135,6 @@ public sealed class NetPluginLoader(
             }
         }
 
-        NetPlugins.Clear();
+        _plugins.Clear();
     }
 }

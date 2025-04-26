@@ -4,33 +4,29 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Models.Plugins;
+using Serein.Core.Services.Servers;
 
-namespace Serein.Core.Models.Plugins.Net;
+namespace Serein.Core.Services.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(Services.Servers.Server server) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerStarted(Services.Servers.Server server) => Task.CompletedTask;
+    protected virtual Task OnServerStarted(Server server) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnServerStopping(Services.Servers.Server server) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Server server) => Task.FromResult(true);
 
-    protected virtual Task OnServerExited(
-        Services.Servers.Server server,
-        int exitcode,
-        DateTime exitTime
-    ) => Task.CompletedTask;
-
-    protected virtual Task<bool> OnServerOutput(Services.Servers.Server server, string line) =>
-        Task.FromResult(true);
-
-    protected virtual Task<bool> OnServerRawOutput(Services.Servers.Server server, string line) =>
-        Task.FromResult(true);
-
-    protected virtual Task OnServerInput(Services.Servers.Server server, string line) =>
+    protected virtual Task OnServerExited(Server server, int exitcode, DateTime exitTime) =>
         Task.CompletedTask;
+
+    protected virtual Task<bool> OnServerOutput(Server server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task<bool> OnServerRawOutput(Server server, string line) =>
+        Task.FromResult(true);
+
+    protected virtual Task OnServerInput(Server server, string line) => Task.CompletedTask;
 
     protected virtual Task<bool> OnGroupMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);
@@ -55,13 +51,13 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarted:
-                return OnServerStarted((Services.Servers.Server)args.First());
+                return OnServerStarted((Server)args.First());
 
             case Event.ServerStarting:
-                return OnServerStarting((Services.Servers.Server)args.First());
+                return OnServerStarting((Server)args.First());
 
             case Event.ServerStopping:
-                return OnServerStopping((Services.Servers.Server)args.First());
+                return OnServerStopping((Server)args.First());
 
             case Event.GroupMessageReceived:
                 return OnGroupMessageReceived((MessagePacket)args.First());
@@ -81,7 +77,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerOutput((Services.Servers.Server)args.First(), (string)args.Last());
+                return OnServerOutput((Server)args.First(), (string)args.Last());
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
@@ -89,10 +85,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerRawOutput(
-                    (Services.Servers.Server)args.First(),
-                    (string)args.Last()
-                );
+                return OnServerRawOutput((Server)args.First(), (string)args.Last());
 
             case Event.ServerInput:
                 if (args.Length != 2)
@@ -100,12 +93,12 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerInput((Services.Servers.Server)args.First(), (string)args.Last());
+                return OnServerInput((Server)args.First(), (string)args.Last());
 
             case Event.ServerExited:
                 if (
                     args.Length != 3
-                    || args[0] is not Services.Servers.Server server
+                    || args[0] is not Server server
                     || args[1] is not int code
                     || args[2] is not DateTime time
                 )

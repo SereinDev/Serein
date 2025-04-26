@@ -6,17 +6,13 @@ using Jint.Native;
 using Jint.Native.Function;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Sentry.Protocol;
 using Serein.Core.Models.Output;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Properties;
-using Serein.Core.Services.Servers;
 using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
 
 namespace Serein.Core.Services.Plugins.Js;
@@ -50,9 +46,12 @@ public sealed partial class ScriptInstance
         _hardwareInfoProvider = _serviceProvider.GetRequiredService<HardwareInfoProvider>();
 
         App = _serviceProvider.GetRequiredService<SereinApp>();
-        Command = new(_pluginManager, _serviceProvider.GetRequiredService<CommandRunner>());
-        Servers = new(_serviceProvider.GetRequiredService<ServerManager>());
-        Connection = new(_serviceProvider.GetRequiredService<WsConnectionManager>());
+
+        var propertyBuilder = _serviceProvider.GetRequiredService<PropertyFactory>();
+        Command = propertyBuilder.CommandProperty;
+        Servers = propertyBuilder.ServerProperty;
+        Connection = propertyBuilder.ConnectionProperty;
+
         Permissions = new(
             Id,
             _serviceProvider.GetRequiredService<PermissionManager>(),

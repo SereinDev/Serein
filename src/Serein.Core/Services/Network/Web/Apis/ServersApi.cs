@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -6,7 +8,9 @@ using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using Force.DeepCloner;
+using Serein.Core.Models.Network.Web;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Web.Apis;
@@ -44,17 +48,14 @@ internal partial class ApiMap
     [Route(HttpVerbs.Put, "/servers/{id}")]
     public async Task UpdateServer(string id)
     {
+        var server = FastGetServer(id);
+
         var jsonObject = await HttpContext.ConvertRequestAs<JsonObject>();
         var configuration =
             JsonSerializer.Deserialize<Configuration>(
                 jsonObject?["configuration"],
                 JsonSerializerOptionsFactory.Common
             ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
-
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
 
         configuration.DeepCloneTo(server.Configuration);
 
@@ -71,32 +72,38 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/servers/{id}")]
     public async Task GetServer(string id)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
         await HttpContext.SendPacketAsync(server);
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}/history")]
-    public async Task GetServerOutputHistory(string id)
+    public async Task GetServerConsoleHistory(string id)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
-        await HttpContext.SendPacketAsync(server.Logger.History);
+        await HttpContext.SendPacketAsync(
+            server.Logger.History.Select(
+                (line) =>
+                    new BroadcastPacket(
+                        line.Type switch
+                        {
+                            ServerOutputType.StandardOutput => BroadcastTypes.Output,
+                            ServerOutputType.StandardInput => BroadcastTypes.Input,
+                            ServerOutputType.InternalError => BroadcastTypes.Error,
+                            ServerOutputType.InternalInfo => BroadcastTypes.Info,
+                            _ => throw new NotSupportedException(),
+                        },
+                        line.Data
+                    )
+            )
+        );
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/start")]
     public async Task StartServer(string id)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
         server.Start();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
@@ -105,10 +112,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Post, "/servers/{id}/stop")]
     public async Task StopServer(string id)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
         server.Stop();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
@@ -117,10 +121,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Post, "/servers/{id}/terminate")]
     public async Task TerminateServer(string id)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
         server.Terminate();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
@@ -129,10 +130,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Post, "/servers/{id}/input")]
     public async Task InputServer(string id, [QueryField("line")] string[] lines)
     {
-        if (!serverManager.Servers.TryGetValue(id, out var server))
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        var server = FastGetServer(id);
 
         if (!server.Status)
         {
@@ -157,6 +155,13 @@ internal partial class ApiMap
             }
         }
 
-        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
+        await HttpContext.SendPacketAsync(HttpStatusCode.OK);
+    }
+
+    private Server FastGetServer(string id)
+    {
+        return serverManager.Servers.TryGetValue(id, out var server)
+            ? server
+            : throw HttpException.NotFound("未找到指定的服务器");
     }
 }

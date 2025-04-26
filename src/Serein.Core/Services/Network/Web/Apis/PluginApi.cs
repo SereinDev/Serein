@@ -5,8 +5,8 @@ using EmbedIO;
 using EmbedIO.Routing;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Plugins.Js;
-using Serein.Core.Models.Plugins.Net;
+using Serein.Core.Services.Plugins.Js;
+using Serein.Core.Services.Plugins.Net;
 
 namespace Serein.Core.Services.Network.Web.Apis;
 
@@ -51,36 +51,20 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/plugins/{id}")]
     public async Task GetPlugin(string id)
     {
-        if (netPluginLoader.Plugins.TryGetValue(id, out PluginBase? netPlugin))
-        {
-            await HttpContext.SendPacketAsync(netPlugin);
-        }
-        else if (jsPluginLoader.Plugins.TryGetValue(id, out JsPlugin? jsPlugin))
-        {
-            await HttpContext.SendPacketAsync(jsPlugin);
-        }
-        else
-        {
-            throw HttpException.NotFound($"未找到插件（Id={id}）");
-        }
+        await HttpContext.SendPacketAsync(FastGetPlugin(id));
     }
 
     [Route(HttpVerbs.Post, "/plugins/{id}/disable")]
     public async Task DisablePlugin(string id)
     {
-        if (netPluginLoader.Plugins.TryGetValue(id, out PluginBase? netPlugin))
-        {
-            netPlugin.Disable();
-            await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
-        }
-        else if (jsPluginLoader.Plugins.TryGetValue(id, out JsPlugin? jsPlugin))
-        {
-            jsPlugin.Disable();
-            await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
-        }
-        else
-        {
-            throw HttpException.NotFound($"未找到插件（Id={id}）");
-        }
+        Task.Run(FastGetPlugin(id).Disable);
+        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+    }
+
+    private IPlugin FastGetPlugin(string id)
+    {
+        return netPluginLoader.Plugins.TryGetValue(id, out PluginBase? netPlugin) ? netPlugin
+            : jsPluginLoader.Plugins.TryGetValue(id, out JsPlugin? jsPlugin) ? jsPlugin
+            : throw HttpException.NotFound($"未找到插件（Id={id}）");
     }
 }

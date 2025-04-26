@@ -72,7 +72,7 @@ public sealed class JsEngineFactory(
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
             },
-            StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation,
+            Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
             Strict = jsPlugin.Config.Strict,
         };
 

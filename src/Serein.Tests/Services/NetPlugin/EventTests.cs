@@ -86,7 +86,7 @@ public sealed class EventTests : IDisposable
 
         await Task.Delay(1000);
 
-        dynamic d = _netPluginLoader.NetPlugins.First().Value;
+        dynamic d = _netPluginLoader.Plugins.First().Value;
         Assert.True(d.IsInvoked);
     }
 
@@ -173,7 +173,7 @@ public sealed class EventTests : IDisposable
         server.Terminate();
         await Task.Delay(1000);
 
-        dynamic d = _netPluginLoader.NetPlugins.First().Value;
+        dynamic d = _netPluginLoader.Plugins.First().Value;
         var list = (List<string>)d.Events;
         Assert.Contains("OnServerStarting", list);
         Assert.Contains("OnServerStarted", list);

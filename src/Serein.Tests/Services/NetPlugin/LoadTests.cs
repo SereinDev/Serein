@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Plugins.Info;
-using Serein.Core.Models.Plugins.Net;
 using Serein.Core.Services.Plugins.Net;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;

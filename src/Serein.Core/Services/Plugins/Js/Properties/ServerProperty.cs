@@ -15,7 +15,7 @@ public sealed class ServerProperty
 
     public Server this[string id] => _serverManager.Servers[id];
 
-    public string[] Ids => _serverManager.Servers.Keys.ToArray();
+    public string[] Ids => [.. _serverManager.Servers.Keys];
 
     public Server Add(string id, Configuration configuration) =>
         _serverManager.Add(id, configuration);

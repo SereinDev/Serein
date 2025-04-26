@@ -1,9 +1,9 @@
 using System.ComponentModel;
 using System.Threading;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
-using Serein.Core.Services.Plugins;
 
-namespace Serein.Core.Models.Plugins.Net;
+namespace Serein.Core.Services.Plugins.Net;
 
 public abstract partial class PluginBase : IPlugin
 {
