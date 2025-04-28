@@ -75,7 +75,7 @@ public sealed class LoadTests : IDisposable
     {
         CSharpCompilationHelper.Compile(
             """
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
 
             namespace MyPlugin;
 
@@ -122,7 +122,7 @@ public sealed class LoadTests : IDisposable
     {
         CSharpCompilationHelper.Compile(
             """
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
 
             namespace MyPlugin;
             public class Plugin: PluginBase
@@ -165,7 +165,7 @@ public sealed class LoadTests : IDisposable
         CSharpCompilationHelper.Compile(
             """
             using System;
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
 
             namespace MyPlugin;
 

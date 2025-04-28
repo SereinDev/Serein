@@ -79,7 +79,9 @@ public partial class MainWindow : Window
             _ => null,
         };
 
-        _services.GetRequiredService<PluginConsolePage>(); // 提前在ui线程实例化
+        // 提前在ui线程实例化 避免在其他线程中实例化导致异常
+        _services.GetRequiredService<ConnectionPage>();
+        _services.GetRequiredService<PluginConsolePage>();
 
         _updateChecker.Updated += (_, _) =>
         {

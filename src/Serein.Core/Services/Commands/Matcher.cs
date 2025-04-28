@@ -2,7 +2,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection.OneBot.Messages;
 using Serein.Core.Models.Network.Connection.OneBot.Packets;
@@ -14,6 +16,7 @@ public sealed class Matcher
 {
     private record ServerLine(string Id, string Line, bool IsInput);
 
+    private readonly ILogger<Matcher> _logger;
     private readonly MatchesProvider _matchesProvider;
     private readonly CommandRunner _commandRunner;
     private readonly SettingProvider _settingProvider;
@@ -22,19 +25,28 @@ public sealed class Matcher
     private readonly BlockingCollection<ServerLine> _serverLines;
 
     public Matcher(
+        ILogger<Matcher> logger,
         MatchesProvider matchesProvider,
         CommandRunner commandRunner,
-        SettingProvider settingProvider
+        SettingProvider settingProvider,
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
+        _logger = logger;
         _matchesProvider = matchesProvider;
         _commandRunner = commandRunner;
         _settingProvider = settingProvider;
         _packets = [.. new ConcurrentQueue<MessagePacket>()];
         _serverLines = [.. new ConcurrentQueue<ServerLine>()];
 
-        Task.Run(StartMatchMsgLoop);
-        Task.Run(StartMatchServerLineLoop);
+        Task.Run(
+            () => StartMatchMsgLoop(cancellationTokenProvider.Token),
+            cancellationTokenProvider.Token
+        );
+        Task.Run(
+            () => StartMatchServerLineLoop(cancellationTokenProvider.Token),
+            cancellationTokenProvider.Token
+        );
     }
 
     /// <summary>
@@ -100,21 +112,43 @@ public sealed class Matcher
         Task.WaitAll([.. tasks]);
     }
 
-    private void StartMatchServerLineLoop()
+    private void StartMatchServerLineLoop(CancellationToken cancellationToken)
     {
-        while (true)
+        while (!cancellationToken.IsCancellationRequested)
         {
-            var line = _serverLines.Take();
-            MatchServerLine(line);
+            try
+            {
+                var line = _serverLines.Take(cancellationToken);
+                MatchServerLine(line);
+            }
+            catch (Exception e) when (e is OperationCanceledException or TaskCanceledException)
+            {
+                break;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "匹配服务器行失败");
+            }
         }
     }
 
-    private void StartMatchMsgLoop()
+    private void StartMatchMsgLoop(CancellationToken cancellationToken)
     {
-        while (true)
+        while (!cancellationToken.IsCancellationRequested)
         {
-            var packet = _packets.Take();
-            MatchMessagePacket(packet);
+            try
+            {
+                var packet = _packets.Take(cancellationToken);
+                MatchMessagePacket(packet);
+            }
+            catch (Exception e) when (e is OperationCanceledException or TaskCanceledException)
+            {
+                break;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "匹配消息失败");
+            }
         }
     }
 

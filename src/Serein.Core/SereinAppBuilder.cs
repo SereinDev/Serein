@@ -47,7 +47,8 @@ public static class SereinAppBuilder
         }
 
         hostAppBuilder
-            .Services.AddSingleton<SentryReporter>()
+            .Services.AddSingleton<CancellationTokenProvider>()
+            .AddSingleton<SettingProvider>()
             .AddSingleton<SettingProvider>()
             .AddSingleton<MatchesProvider>()
             .AddSingleton<ScheduleProvider>()

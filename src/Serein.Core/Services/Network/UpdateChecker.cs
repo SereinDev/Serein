@@ -13,7 +13,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Network;
 
-public sealed class UpdateChecker : NotifyPropertyChangedModelBase, IDisposable
+public sealed class UpdateChecker : NotifyPropertyChangedModelBase
 {
     private bool _listened;
     private readonly SereinApp _sereinApp;
@@ -34,7 +34,8 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase, IDisposable
     public UpdateChecker(
         SereinApp sereinApp,
         ILogger<UpdateChecker> logger,
-        SettingProvider settingProvider
+        SettingProvider settingProvider,
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
         _sereinApp = sereinApp;
@@ -53,6 +54,8 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase, IDisposable
         };
 
         _httpClient = new();
+
+        cancellationTokenProvider.Token.Register(Stop);
     }
 
     public async Task CheckAsync()
@@ -174,7 +177,7 @@ public sealed class UpdateChecker : NotifyPropertyChangedModelBase, IDisposable
         }
     }
 
-    public void Dispose()
+    private void Stop()
     {
         _timer.Stop();
         _timer.Dispose();

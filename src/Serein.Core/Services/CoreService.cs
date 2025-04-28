@@ -14,10 +14,11 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services;
 
-internal sealed class CoreService : IHostedService
+internal sealed partial class CoreService : IHostedService
 {
     private readonly ILogger<CoreService> _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly CancellationTokenProvider _cancellationTokenProvider;
     private readonly ServerManager _serverManager;
     private readonly UpdateChecker _updateChecker;
     private readonly WebServer _httpServer;
@@ -29,14 +30,16 @@ internal sealed class CoreService : IHostedService
         ServerManager serverManager,
         UpdateChecker updateChecker,
         SettingProvider settingProvider,
-        EventDispatcher eventDispatcher
+        EventDispatcher eventDispatcher,
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
         _logger = logger;
-        _settingProvider = settingProvider;
+        _httpServer = httpServer;
         _serverManager = serverManager;
         _updateChecker = updateChecker;
-        _httpServer = httpServer;
+        _settingProvider = settingProvider;
+        _cancellationTokenProvider = cancellationTokenProvider;
 
         _logger.LogInformation("Serein.{} {}", sereinApp.Type, sereinApp.Version);
         _logger.LogInformation("仓库: {}", UrlConstants.Repository);
@@ -83,7 +86,8 @@ internal sealed class CoreService : IHostedService
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("正在停止");
-        _updateChecker.Dispose();
+
+        _cancellationTokenProvider.Cancel();
 
         return Task.CompletedTask;
     }

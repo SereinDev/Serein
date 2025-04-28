@@ -21,7 +21,10 @@ public sealed class HardwareInfoProvider
     private readonly ILogger _logger;
     private bool _isLoading;
 
-    public HardwareInfoProvider(ILogger<HardwareInfoProvider> logger)
+    public HardwareInfoProvider(
+        ILogger<HardwareInfoProvider> logger,
+        CancellationTokenProvider cancellationTokenProvider
+    )
     {
         Task.Run(Update);
         _lock = new();
@@ -30,6 +33,12 @@ public sealed class HardwareInfoProvider
         var timer = new Timer(5000);
         timer.Elapsed += (_, _) => Update();
         timer.Start();
+
+        cancellationTokenProvider.Token.Register(() =>
+        {
+            timer.Stop();
+            timer.Dispose();
+        });
     }
 
     /// <summary>

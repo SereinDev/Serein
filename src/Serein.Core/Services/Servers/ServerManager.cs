@@ -84,7 +84,8 @@ public partial class ServerManager
         Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        ReactionTrigger reactionManager
+        ReactionTrigger reactionManager,
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
         _matcher = matcher;
@@ -97,7 +98,9 @@ public partial class ServerManager
         _reactionManager = reactionManager;
 
         LoadAll();
-        AppDomain.CurrentDomain.UnhandledException += (_, _) => Task.Run(OnCrash);
+
+        AppDomain.CurrentDomain.UnhandledException += (_, _) => Task.Run(TryStopAll);
+        cancellationTokenProvider.Token.Register(TryStopAll);
     }
 
     public bool AnyRunning => _servers.Any(static (kv) => kv.Value.Status);
@@ -210,7 +213,7 @@ public partial class ServerManager
         }
     }
 
-    private void OnCrash()
+    private void TryStopAll()
     {
         foreach (var (_, server) in Servers)
         {

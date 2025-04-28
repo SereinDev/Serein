@@ -6,10 +6,6 @@
       - "**.csproj"
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  attestations: write
-
 jobs:
   build:
     runs-on: windows-latest
@@ -20,7 +16,6 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Download artifact
-        id: download-artifact
         uses: dawidd6/action-download-artifact@v8
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -89,27 +84,3 @@ jobs:
         with:
           name: Serein.Cli_osx-arm64
           path: ./src/Serein.Cli/bin/Release/net8.0/osx-arm64/publish
-
-  attest-build-provenance:
-    needs: [ build ]
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        names: [ Serein.Lite_win-x64, Serein.Plus_win-x64, Serein.Cli_win-x64, Serein.Cli_linux-x64, Serein.Cli_linux-arm, Serein.Cli_osx-x64, Serein.Cli_osx-arm64 ]
-   
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: downloads
-          name: ${{ matrix.names }}
-      
-      - shell: powershell
-        run: | 
-          Remove-Item ./downloads/* -Exclude Serein.* -Recurse
-        
-      - uses: actions/attest-build-provenance@v1
-        continue-on-error: true
-        with:
-          subject-path: downloads/*
-          subject-name: ${{ matrix.names }}
-  

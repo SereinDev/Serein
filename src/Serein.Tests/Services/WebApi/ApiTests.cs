@@ -45,7 +45,7 @@ public class ApiTests : IDisposable
     [InlineData("/api/metadata")]
     [InlineData("/api/connection")]
     [InlineData("/api/servers")]
-    [InlineData("/api/setting")]
+    [InlineData("/api/settings")]
     public async Task ShouldBeAbleToVisitSpecifiedPath(string path)
     {
         _app.Start();

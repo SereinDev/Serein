@@ -42,7 +42,7 @@ public sealed class InjectionTest : IDisposable
             """
             using System;
             using System.Threading.Tasks;
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
 
             namespace MyPlugin;
 
@@ -84,7 +84,7 @@ public sealed class InjectionTest : IDisposable
             $$"""
             using System;
             using System.Threading.Tasks;
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
             using Serein.Core.Services.Servers;
 
             namespace MyPlugin;
@@ -127,8 +127,8 @@ public sealed class InjectionTest : IDisposable
             $$"""
             using System;
             using System.Threading.Tasks;
-            using Serein.Core.Models.Plugins.Net;
             using Serein.Core.Services.Commands;
+            using Serein.Core.Services.Plugins.Net;
             using Serein.Core.Services.Servers;
 
             namespace MyPlugin;

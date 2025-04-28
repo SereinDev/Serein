@@ -51,7 +51,8 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
         EventDispatcher eventDispatcher,
         ReverseWebSocketService reverseWebSocketService,
         WebSocketService webSocketService,
-        PacketHandler packetHandler
+        PacketHandler packetHandler,
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
         _logWriter = new(logger, PathConstants.ConnectionLogDirectory);
@@ -71,6 +72,20 @@ public sealed class WsConnectionManager : INotifyPropertyChanged
 
         _webSocketService.StatusChanged += OnStatusChanged;
         _reverseWebSocketService.StatusChanged += OnStatusChanged;
+
+        cancellationTokenProvider.Token.Register(() =>
+        {
+            if (!Active)
+            {
+                return;
+            }
+
+            try
+            {
+                Stop();
+            }
+            catch { }
+        });
 
         void OnStatusChanged(object? sender, EventArgs e)
         {

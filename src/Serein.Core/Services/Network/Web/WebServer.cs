@@ -28,13 +28,13 @@ public sealed class WebServer
     private readonly SettingProvider _settingProvider;
     private readonly List<IDisposable> _disposables;
     private EmbedIO.WebServer? _webServer;
-    private CancellationTokenSource _cancellationTokenSource = new();
 
     public WebServer(
         IServiceProvider serviceProvider,
         ILogger<WebServer> logger,
+        PageExtractor pageExtractor,
         SettingProvider settingProvider,
-        PageExtractor pageExtractor
+        CancellationTokenProvider cancellationTokenProvider
     )
     {
         _serviceProvider = serviceProvider;
@@ -49,6 +49,18 @@ public sealed class WebServer
                 $"<p>你可以在 https://github.com/SereinDev/Web 仓库下载最新的构建或最新的版本，手动将解压后的文件复制到文件夹“{PathConstants.WebRoot}”下</p>"
             );
         }
+
+        cancellationTokenProvider.Token.Register(() =>
+        {
+            try
+            {
+                Stop();
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                _logger.LogError(ex, "网页服务器关闭失败");
+            }
+        });
     }
 
     public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
@@ -58,12 +70,6 @@ public sealed class WebServer
         if (State != WebServerState.Stopped && State != WebServerState.Created)
         {
             throw new InvalidOperationException("网页服务器正在运行中");
-        }
-
-        if (_cancellationTokenSource.IsCancellationRequested)
-        {
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = new();
         }
 
         _webServer = new EmbedIO.WebServer(CreateOptions());
@@ -98,7 +104,7 @@ public sealed class WebServer
         );
         _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
 
-        _webServer.Start(_cancellationTokenSource.Token);
+        _webServer.Start();
         _logger.LogInformation("网页服务器已启动");
         _logger.LogInformation(
             "当前监听的Url： {}{}",
@@ -121,7 +127,6 @@ public sealed class WebServer
         _disposables.ForEach((d) => d.Dispose());
         _disposables.Clear();
 
-        _cancellationTokenSource.Cancel();
         _webServer.Dispose();
         _logger.LogInformation("网页服务器已停止");
     }

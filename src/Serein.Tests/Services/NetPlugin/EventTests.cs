@@ -45,7 +45,7 @@ public sealed class EventTests : IDisposable
             """
             using System;
             using System.Threading.Tasks;
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
 
             namespace MyPlugin;
 
@@ -98,7 +98,7 @@ public sealed class EventTests : IDisposable
             using System;
             using System.Collections.Generic;
             using System.Threading.Tasks;
-            using Serein.Core.Models.Plugins.Net;
+            using Serein.Core.Services.Plugins.Net;
             using Serein.Core.Services.Servers;
 
             namespace MyPlugin;

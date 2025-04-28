@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
 using Xunit;
 
@@ -14,7 +13,6 @@ public sealed class LogicTests : IDisposable
     private readonly IHost _app;
     private readonly PermissionManager _permissionManager;
     private readonly GroupManager _groupManager;
-    private readonly PermissionGroupProvider _permissionGroupProvider;
 
     public LogicTests()
     {
@@ -23,7 +21,6 @@ public sealed class LogicTests : IDisposable
 
         _groupManager = _app.Services.GetRequiredService<GroupManager>();
         _permissionManager = _app.Services.GetRequiredService<PermissionManager>();
-        _permissionGroupProvider = _app.Services.GetRequiredService<PermissionGroupProvider>();
     }
 
     private static bool? TryGet(Dictionary<string, bool?> dict, string key)
