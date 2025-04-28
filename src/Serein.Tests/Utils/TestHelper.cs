@@ -22,6 +22,5 @@ public static class TestHelper
 
         Directory.CreateDirectory(path);
         Directory.SetCurrentDirectory(path);
-        File.WriteAllText(Path.Join(path, "caller.txt"), caller);
     }
 }

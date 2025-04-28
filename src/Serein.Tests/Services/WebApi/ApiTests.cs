@@ -7,18 +7,16 @@ using EmbedIO.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Services.Data;
-using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Network.Web.Apis;
 using Xunit;
 
 namespace Serein.Tests.Services.WebApi;
 
 [Collection(nameof(Serein))]
-public class ApiTests : IDisposable
+public partial class ApiTests : IDisposable
 {
     private readonly HttpClient _client;
     private readonly IHost _app;
-    private readonly Core.Services.Network.Web.WebServer _httpServer;
 
     public ApiTests()
     {
@@ -26,29 +24,25 @@ public class ApiTests : IDisposable
 
         var settingProvider = _app.Services.GetRequiredService<SettingProvider>();
         settingProvider.Value.WebApi.IsEnabled = true;
-        _httpServer = _app.Services.GetRequiredService<Core.Services.Network.Web.WebServer>();
         _client = new() { BaseAddress = new(settingProvider.Value.WebApi.UrlPrefixes.First()) };
+        _app.Start();
     }
 
     public void Dispose()
     {
-        if (_httpServer.State != WebServerState.Stopped)
-        {
-            _httpServer.Stop();
-        }
-
         _app.StopAsync();
+        _app.Dispose();
+        _client.Dispose();
     }
 
     [Theory]
     [InlineData("/api/")]
     [InlineData("/api/metadata")]
-    [InlineData("/api/connection")]
     [InlineData("/api/servers")]
     [InlineData("/api/settings")]
+    [InlineData("/api/plugin-manager")]
     public async Task ShouldBeAbleToVisitSpecifiedPath(string path)
     {
-        _app.Start();
         var response = await _client.GetAsync(path);
 
         Assert.True(response.IsSuccessStatusCode);
@@ -57,7 +51,6 @@ public class ApiTests : IDisposable
     [Fact]
     public async Task ShouldBeAbleToGetHardwareInfo()
     {
-        _app.Start();
         foreach (var methodInfo in typeof(ApiMap).GetMethods())
         {
             var attribute = methodInfo
@@ -77,5 +70,12 @@ public class ApiTests : IDisposable
             var response = await _client.GetAsync("/api" + attribute.Route);
             Assert.True(response.IsSuccessStatusCode);
         }
+    }
+
+    [Fact]
+    public async Task ShouldBeAbleToGetSettings()
+    {
+        var response = await _client.GetAsync("/api/settings");
+        Assert.True(response.IsSuccessStatusCode);
     }
 }

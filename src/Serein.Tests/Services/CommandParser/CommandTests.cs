@@ -1,6 +1,4 @@
 using System;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Commands;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;

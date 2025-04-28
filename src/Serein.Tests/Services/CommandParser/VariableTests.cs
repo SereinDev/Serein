@@ -9,6 +9,8 @@ using Serein.Core.Services.Servers;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;
 
+#pragma warning disable SYSLIB1045
+
 namespace Serein.Tests.Services.CommandParser;
 
 [Collection(nameof(Serein))]
