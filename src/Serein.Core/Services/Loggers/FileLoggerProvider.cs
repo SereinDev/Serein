@@ -17,20 +17,23 @@ internal class FileLoggerProvider : ILoggerProvider
     private readonly List<string> _buffer;
     private readonly string _file;
 
-    public FileLoggerProvider()
+    public FileLoggerProvider(CancellationTokenProvider cancellationTokenProvider)
     {
         _file = GetFileName();
         _buffer = [];
         _loggers = [];
 
-        Task.Run(() =>
-        {
-            while (true)
+        Task.Run(
+            () =>
             {
-                Flush();
-                Task.Delay(1000).Wait();
-            }
-        });
+                while (!cancellationTokenProvider.Token.IsCancellationRequested)
+                {
+                    Task.Delay(1000).Wait();
+                    Flush();
+                }
+            },
+            cancellationTokenProvider.Token
+        );
     }
 
     public ILogger CreateLogger(string categoryName)

@@ -7,10 +7,10 @@ public static class TestHelper
 {
     public static void Initialize(string caller)
     {
-        string? path = null;
         var i = 0;
 
-        while (string.IsNullOrEmpty(path) || Directory.Exists(path))
+        string? path;
+        do
         {
             i++;
             path = Path.Join(
@@ -18,7 +18,7 @@ public static class TestHelper
                 "tests",
                 Path.GetFileNameWithoutExtension(caller) + "#" + i
             );
-        }
+        } while (string.IsNullOrEmpty(path) || Directory.Exists(path));
 
         Directory.CreateDirectory(path);
         Directory.SetCurrentDirectory(path);

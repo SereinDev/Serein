@@ -23,7 +23,7 @@ internal partial class ApiMap(
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider,
-    MatchesProvider matchesProvider,
+    MatchProvider matchProvider,
     ScheduleProvider scheduleProvider,
     WsConnectionManager wsConnectionManager,
     HardwareInfoProvider hardwareInfoProvider

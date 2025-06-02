@@ -16,25 +16,25 @@ namespace Serein.Plus.Pages;
 public partial class MatchPage : Page
 {
     private readonly MainWindow _mainWindow;
-    private readonly MatchesProvider _matchesProvider;
+    private readonly MatchProvider _matchProvider;
 
-    public MatchPage(MainWindow mainWindow, MatchesProvider matchesProvider)
+    public MatchPage(MainWindow mainWindow, MatchProvider matchProvider)
     {
         _mainWindow = mainWindow;
-        _matchesProvider = matchesProvider;
+        _matchProvider = matchProvider;
         InitializeComponent();
-        MatchesDataGrid.ItemsSource = _matchesProvider.Value;
-        _matchesProvider.Value.CollectionChanged += UpdateDetails;
+        MatchesDataGrid.ItemsSource = _matchProvider.Value;
+        _matchProvider.Value.CollectionChanged += UpdateDetails;
     }
 
     private void UpdateDetails(object? sender, EventArgs e)
     {
         Details.Text =
             MatchesDataGrid.SelectedItems.Count > 1
-                ? $"共{_matchesProvider.Value.Count}项，已选择{MatchesDataGrid.SelectedItems.Count}项"
+                ? $"共{_matchProvider.Value.Count}项，已选择{MatchesDataGrid.SelectedItems.Count}项"
             : MatchesDataGrid.SelectedIndex >= 0
-                ? $"共{_matchesProvider.Value.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
-            : $"共{_matchesProvider.Value.Count}项";
+                ? $"共{_matchProvider.Value.Count}项，已选择第{MatchesDataGrid.SelectedIndex + 1}项"
+            : $"共{_matchProvider.Value.Count}项";
     }
 
     private void MatchesDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -56,8 +56,8 @@ public partial class MatchPage : Page
 
                 if (dialog1.ShowDialog() == true)
                 {
-                    _matchesProvider.Value.Add(m1);
-                    _matchesProvider.SaveAsyncWithDebounce();
+                    _matchProvider.Value.Add(m1);
+                    _matchProvider.SaveAsyncWithDebounce();
                 }
                 break;
 
@@ -79,10 +79,10 @@ public partial class MatchPage : Page
                                         .ToArray()
                                 )
                                 {
-                                    _matchesProvider.Value.Remove(item);
+                                    _matchProvider.Value.Remove(item);
                                 }
 
-                                _matchesProvider.SaveAsyncWithDebounce();
+                                _matchProvider.SaveAsyncWithDebounce();
                             });
                         }
                     );
@@ -106,7 +106,7 @@ public partial class MatchPage : Page
                     m3.FieldType = m4.FieldType;
                     m3.RequireAdmin = m4.RequireAdmin;
                     m3.Exclusions = m4.Exclusions;
-                    _matchesProvider.SaveAsyncWithDebounce();
+                    _matchProvider.SaveAsyncWithDebounce();
                 }
                 break;
 
@@ -119,7 +119,7 @@ public partial class MatchPage : Page
                 break;
 
             case "Refresh":
-                _matchesProvider.Read();
+                _matchProvider.Read();
                 break;
 
             default:

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
@@ -28,7 +29,7 @@ internal partial class ApiMap
         scheduleProvider.Value.Add(schedule);
         scheduleProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync(schedule.GetHashCode());
+        await HttpContext.SendPacketAsync(schedule.GetHashCode(), HttpStatusCode.Created);
     }
 
     [Route(HttpVerbs.Delete, "/schedules/{id}")]
@@ -37,7 +38,7 @@ internal partial class ApiMap
         var schedule = FastGetSchedule(id);
         scheduleProvider.Value.Remove(schedule);
         scheduleProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Put, "/schedules/{id}")]

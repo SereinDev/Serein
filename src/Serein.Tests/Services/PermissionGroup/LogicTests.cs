@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
 using Xunit;
 
@@ -21,6 +22,8 @@ public sealed class LogicTests : IDisposable
 
         _groupManager = _app.Services.GetRequiredService<GroupManager>();
         _permissionManager = _app.Services.GetRequiredService<PermissionManager>();
+
+        _app.Services.GetRequiredService<PermissionGroupProvider>().Reset();
     }
 
     private static bool? TryGet(Dictionary<string, bool?> dict, string key)
@@ -59,7 +62,7 @@ public sealed class LogicTests : IDisposable
     [Fact]
     public void ShouldInheritFromDefaultGroup()
     {
-        _groupManager.Add("1", new() { Members = [114514] });
+        _groupManager.Add("example", new() { Members = [114514] });
         _groupManager["everyone"].Nodes[nameof(NodeTests) + ".foo.bar"] = true;
 
         Assert.Equal(
@@ -83,14 +86,14 @@ public sealed class LogicTests : IDisposable
     [InlineData(0, 0, false)]
     public void ShouldWorkWithInheritanceAndPriority(int priority1, int priority2, bool expected)
     {
-        _groupManager.Add("1", new() { Nodes = { ["foo.bar"] = true }, Priority = priority1 });
+        _groupManager.Add("foo", new() { Nodes = { ["foo.bar"] = true }, Priority = priority1 });
         _groupManager.Add(
-            "2",
+            "bar",
             new()
             {
                 Members = [114514],
                 Nodes = { ["foo.bar"] = false },
-                Parents = ["1"],
+                Parents = ["foo"],
                 Priority = priority2,
             }
         );
@@ -101,8 +104,8 @@ public sealed class LogicTests : IDisposable
     [Fact]
     public void ShouldAvoidCyclingInheritance()
     {
-        _groupManager.Add("1", new() { Nodes = { ["a.b"] = true }, Parents = ["2"] });
-        _groupManager.Add("2", new() { Members = [114514], Parents = ["1"] });
+        _groupManager.Add("5", new() { Nodes = { ["a.b"] = true }, Parents = ["6"] });
+        _groupManager.Add("6", new() { Members = [114514], Parents = ["5"] });
 
         Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "a.b"));
     }

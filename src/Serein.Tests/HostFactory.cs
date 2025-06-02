@@ -25,14 +25,15 @@ public static class HostFactory
         }
     }
 
-    public static IHost BuildNew([CallerFilePath] string caller = "")
+    public static IHost BuildNew(bool enableFileLogger = false, [CallerFilePath] string caller = "")
     {
+        Task.Delay(1000).Wait();
+
         TestHelper.Initialize(caller);
         Directory.CreateDirectory(PathConstants.Root);
         Directory.CreateDirectory(PathConstants.PluginsDirectory);
-        Task.Delay(1000).Wait();
 
-        var builder = SereinAppBuilder.CreateBuilder();
+        var builder = SereinAppBuilder.CreateBuilder(enableFileLogger);
 
         builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
         builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();

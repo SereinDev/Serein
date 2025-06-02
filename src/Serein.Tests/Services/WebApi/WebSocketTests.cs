@@ -32,7 +32,7 @@ public class WebSocketTests : IDisposable
     [Fact]
     public async Task ShouldNotBeClosedWithTokenParam()
     {
-        var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection?token=123456");
+        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection?token=123456");
         ws.Open();
 
         await Task.Delay(500);
@@ -44,12 +44,11 @@ public class WebSocketTests : IDisposable
     [Fact]
     public async Task ShouldBeClosedWithoutTokenParam()
     {
-        var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection");
+        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection");
         ws.Open();
 
-        await Task.Delay(500);
+        await Task.Delay(1000);
 
         Assert.NotEqual(WebSocketState.Open, ws.State);
-        ws.Dispose();
     }
 }

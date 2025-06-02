@@ -22,7 +22,7 @@ public partial class ApiTests
     public async Task ShouldBeAbleToGetMatch()
     {
         var match = new Match();
-        _app.Services.GetRequiredService<MatchesProvider>().Value.Add(match);
+        _app.Services.GetRequiredService<MatchProvider>().Value.Add(match);
 
         var response = await _client.GetAsync("/api/matches/" + match.GetHashCode());
         Assert.True(response.IsSuccessStatusCode);
@@ -45,10 +45,10 @@ public partial class ApiTests
     public async Task ShouldBeAbleToRemoveMatch()
     {
         var match = new Match();
-        _app.Services.GetRequiredService<MatchesProvider>().Value.Add(match);
+        _app.Services.GetRequiredService<MatchProvider>().Value.Add(match);
 
         var response = await _client.DeleteAsync("/api/matches/" + match.GetHashCode());
         Assert.True(response.IsSuccessStatusCode);
-        Assert.Empty(_app.Services.GetRequiredService<MatchesProvider>().Value);
+        Assert.Empty(_app.Services.GetRequiredService<MatchProvider>().Value);
     }
 }

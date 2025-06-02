@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using EmbedIO;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Web;
-using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
@@ -57,11 +56,15 @@ public static class ApiHelper
     )
     {
         httpContext.Response.StatusCode = packet.Code;
-        await httpContext.SendStringAsync(
-            JsonSerializer.Serialize(packet, Options),
-            "text/json",
-            EncodingMap.UTF8
-        );
+
+        if (packet.Code != (int)HttpStatusCode.NoContent)
+        {
+            await httpContext.SendStringAsync(
+                JsonSerializer.Serialize(packet, Options),
+                "text/json",
+                EncodingMap.UTF8
+            );
+        }
 
         httpContext.SetHandled();
     }

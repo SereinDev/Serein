@@ -17,7 +17,7 @@ public sealed class Matcher
     private record ServerLine(string Id, string Line, bool IsInput);
 
     private readonly ILogger<Matcher> _logger;
-    private readonly MatchesProvider _matchesProvider;
+    private readonly MatchProvider _matchProvider;
     private readonly CommandRunner _commandRunner;
     private readonly SettingProvider _settingProvider;
 
@@ -26,14 +26,14 @@ public sealed class Matcher
 
     public Matcher(
         ILogger<Matcher> logger,
-        MatchesProvider matchesProvider,
+        MatchProvider matchProvider,
         CommandRunner commandRunner,
         SettingProvider settingProvider,
         CancellationTokenProvider cancellationTokenProvider
     )
     {
         _logger = logger;
-        _matchesProvider = matchesProvider;
+        _matchProvider = matchProvider;
         _commandRunner = commandRunner;
         _settingProvider = settingProvider;
         _packets = [.. new ConcurrentQueue<MessagePacket>()];
@@ -73,9 +73,9 @@ public sealed class Matcher
     {
         var tasks = new List<Task>();
 
-        lock (_matchesProvider.Value)
+        lock (_matchProvider.Value)
         {
-            foreach (var match in _matchesProvider.Value)
+            foreach (var match in _matchProvider.Value)
             {
                 if (
                     string.IsNullOrEmpty(match.RegExp)
@@ -156,9 +156,9 @@ public sealed class Matcher
     {
         var tasks = new List<Task>();
 
-        lock (_matchesProvider.Value)
+        lock (_matchProvider.Value)
         {
-            foreach (var match in _matchesProvider.Value)
+            foreach (var match in _matchProvider.Value)
             {
                 if (
                     string.IsNullOrEmpty(messagePacket.RawMessage)

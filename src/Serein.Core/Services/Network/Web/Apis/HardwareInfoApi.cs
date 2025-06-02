@@ -84,7 +84,7 @@ internal partial class ApiMap
         await HttpContext.SendPacketAsync(hardwareInfoProvider.Info?.PrinterList);
     }
 
-    [Route(HttpVerbs.Get, "/hardware/soundDevices")]
+    [Route(HttpVerbs.Get, "/hardware/sound-devices")]
     public async Task GetSoundDeviceList()
     {
         await HttpContext.SendPacketAsync(hardwareInfoProvider.Info?.SoundDeviceList);

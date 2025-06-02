@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
@@ -12,7 +13,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/matches")]
     public async Task GetMatches()
     {
-        await HttpContext.SendPacketAsync(matchesProvider.Value);
+        await HttpContext.SendPacketAsync(matchProvider.Value);
     }
 
     [Route(HttpVerbs.Get, "/matches/{id}")]
@@ -25,19 +26,19 @@ internal partial class ApiMap
     public async Task AddMatch()
     {
         var match = await HttpContext.ConvertRequestAs<Match>();
-        matchesProvider.Value.Add(match);
-        matchesProvider.SaveAsyncWithDebounce();
+        matchProvider.Value.Add(match);
+        matchProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync(match.GetHashCode());
+        await HttpContext.SendPacketAsync(match.GetHashCode(), HttpStatusCode.Created);
     }
 
     [Route(HttpVerbs.Delete, "/matches/{id}")]
     public async Task DeleteMatch(int id)
     {
         var march = FastGetMatch(id);
-        matchesProvider.Value.Remove(march);
-        matchesProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync();
+        matchProvider.Value.Remove(march);
+        matchProvider.SaveAsyncWithDebounce();
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Put, "/matches/{id}")]
@@ -46,13 +47,13 @@ internal partial class ApiMap
         var match = await HttpContext.ConvertRequestAs<Match>();
         var oldMatch = FastGetMatch(id);
         match.DeepCloneTo(oldMatch);
-        matchesProvider.SaveAsyncWithDebounce();
+        matchProvider.SaveAsyncWithDebounce();
         await HttpContext.SendPacketAsync(oldMatch.GetHashCode());
     }
 
     private Match FastGetMatch(int id)
     {
-        var fisrt = matchesProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
+        var fisrt = matchProvider.Value.FirstOrDefault((m) => m.GetHashCode() == id);
         return fisrt is not null ? fisrt : throw HttpException.NotFound("未找到指定的匹配");
     }
 }

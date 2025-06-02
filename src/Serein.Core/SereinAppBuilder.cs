@@ -36,21 +36,28 @@ public static class SereinAppBuilder
 
     public static HostApplicationBuilder CreateBuilder()
     {
+        return CreateBuilder(false);
+    }
+
+    internal static HostApplicationBuilder CreateBuilder(bool enableFileLogger = false)
+    {
         var hostAppBuilder = Host.CreateEmptyApplicationBuilder(null);
         hostAppBuilder.Logging.SetMinimumLevel(LogLevel.Trace);
         hostAppBuilder.Logging.ClearProviders();
         hostAppBuilder.Logging.AddDebug();
 
-        if (FileLoggerProvider.IsEnabled)
+        var cancellationTokenProvider = new CancellationTokenProvider();
+
+        if (FileLoggerProvider.IsEnabled || enableFileLogger)
         {
-            hostAppBuilder.Logging.AddProvider(new FileLoggerProvider());
+            hostAppBuilder.Logging.AddProvider(new FileLoggerProvider(cancellationTokenProvider));
         }
 
         hostAppBuilder
-            .Services.AddSingleton<CancellationTokenProvider>()
+            .Services.AddSingleton(cancellationTokenProvider)
             .AddSingleton<SentryReporter>()
             .AddSingleton<SettingProvider>()
-            .AddSingleton<MatchesProvider>()
+            .AddSingleton<MatchProvider>()
             .AddSingleton<ScheduleProvider>()
             .AddSingleton<PermissionGroupProvider>()
             .AddSingleton<ImportHandler>()

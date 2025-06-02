@@ -90,6 +90,8 @@ public sealed partial class PluginManager(
 
             foreach (var dir in Directory.GetDirectories(PathConstants.PluginsDirectory))
             {
+                _logger.LogDebug("尝试从{}加载插件", dir);
+
                 if (!File.Exists(Path.Join(dir, PathConstants.PluginInfoFileName)))
                 {
                     continue;

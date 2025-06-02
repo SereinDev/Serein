@@ -24,6 +24,6 @@ internal partial class ApiMap
     public async Task StopConnection()
     {
         wsConnectionManager.Stop();
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 }

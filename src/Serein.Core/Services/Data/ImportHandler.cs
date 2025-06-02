@@ -14,7 +14,7 @@ namespace Serein.Core.Services.Data;
 
 public class ImportHandler(
     ILogger<ImportHandler> logger,
-    MatchesProvider matchesProvider,
+    MatchProvider matchProvider,
     ScheduleProvider scheduleProvider,
     ServerManager serverManager
 )
@@ -77,11 +77,11 @@ public class ImportHandler(
 
             var merge = shouldMerge.Invoke(ImportActionType.Match);
 
-            lock (matchesProvider.Value)
+            lock (matchProvider.Value)
             {
                 if (merge)
                 {
-                    matchesProvider.Value.Clear();
+                    matchProvider.Value.Clear();
                 }
 
                 foreach (
@@ -90,7 +90,7 @@ public class ImportHandler(
                     ) ?? []
                 )
                 {
-                    matchesProvider.Value.Add(match);
+                    matchProvider.Value.Add(match);
                 }
             }
         }

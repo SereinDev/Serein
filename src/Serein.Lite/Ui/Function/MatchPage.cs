@@ -24,11 +24,11 @@ public partial class MatchPage : UserControl, IUpdateablePage
         [MatchFieldType.SelfMsg] = "自身消息",
     };
 
-    private readonly MatchesProvider _matchesProvider;
+    private readonly MatchProvider _matchProvider;
 
-    public MatchPage(MatchesProvider matchesProvider)
+    public MatchPage(MatchProvider matchProvider)
     {
-        _matchesProvider = matchesProvider;
+        _matchProvider = matchProvider;
 
         InitializeComponent();
         LoadData();
@@ -48,9 +48,9 @@ public partial class MatchPage : UserControl, IUpdateablePage
         MatchListView.BeginUpdate();
         MatchListView.Items.Clear();
 
-        lock (_matchesProvider.Value)
+        lock (_matchProvider.Value)
         {
-            foreach (var match in _matchesProvider.Value)
+            foreach (var match in _matchProvider.Value)
             {
                 var item = new ListViewItem(match.RegExp) { Tag = match };
                 item.SubItems.Add(MatchFieldTypeTexts[match.FieldType]);
@@ -74,19 +74,19 @@ public partial class MatchPage : UserControl, IUpdateablePage
 
     private void SaveData()
     {
-        lock (_matchesProvider.Value)
+        lock (_matchProvider.Value)
         {
-            _matchesProvider.Value.Clear();
+            _matchProvider.Value.Clear();
             foreach (ListViewItem item in MatchListView.Items)
             {
                 if (item.Tag is Match match)
                 {
-                    _matchesProvider.Value.Add(match);
+                    _matchProvider.Value.Add(match);
                 }
             }
         }
 
-        _matchesProvider.SaveAsyncWithDebounce();
+        _matchProvider.SaveAsyncWithDebounce();
     }
 
     private void MatchListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -145,8 +145,8 @@ public partial class MatchPage : UserControl, IUpdateablePage
         var match = new Match();
         if (new MatchEditor(match).ShowDialog() == DialogResult.OK)
         {
-            _matchesProvider.Value.Add(match);
-            _matchesProvider.SaveAsyncWithDebounce();
+            _matchProvider.Value.Add(match);
+            _matchProvider.SaveAsyncWithDebounce();
             LoadData();
         }
     }
@@ -158,7 +158,7 @@ public partial class MatchPage : UserControl, IUpdateablePage
             && new MatchEditor(match).ShowDialog() == DialogResult.OK
         )
         {
-            _matchesProvider.SaveAsyncWithDebounce();
+            _matchProvider.SaveAsyncWithDebounce();
             LoadData();
         }
     }
@@ -185,14 +185,14 @@ public partial class MatchPage : UserControl, IUpdateablePage
             return;
         }
 
-        _matchesProvider.Value.Clear();
-        _matchesProvider.SaveAsyncWithDebounce();
+        _matchProvider.Value.Clear();
+        _matchProvider.SaveAsyncWithDebounce();
         LoadData();
     }
 
     private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        _matchesProvider.Read();
+        _matchProvider.Read();
         LoadData();
     }
 

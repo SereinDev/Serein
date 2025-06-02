@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using EmbedIO;
 using EmbedIO.WebApi;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,11 +51,16 @@ public sealed class WebServer
 
         cancellationTokenProvider.Token.Register(() =>
         {
+            if (State == WebServerState.Stopped)
+            {
+                return;
+            }
+
             try
             {
                 Stop();
             }
-            catch (Exception ex) when (ex is not OperationCanceledException)
+            catch (Exception ex) when (ex is not InvalidOperationException)
             {
                 _logger.LogError(ex, "网页服务器关闭失败");
             }

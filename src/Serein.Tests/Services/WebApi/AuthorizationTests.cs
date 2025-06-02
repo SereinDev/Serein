@@ -44,7 +44,7 @@ public class AuthorizationTests : IDisposable
         var response = await _client.GetAsync(path);
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
 
-        _client.DefaultRequestHeaders.Authorization = new("Bearer", "114514");
+        _client.DefaultRequestHeaders.Authorization = new("Bearer", "wrongtoken");
         response = await _client.GetAsync(path);
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }

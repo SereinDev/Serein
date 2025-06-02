@@ -23,8 +23,6 @@ public class PluginInfo
 
     public PluginTag[] Tags { get; init; } = [];
 
-    public Version[] TargetingSerein { get; init; } = [];
-
     public Dependency[] Dependencies { get; init; } = [];
 
     public string? EntryFile { get; init; }

@@ -10,9 +10,9 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public sealed class MatchesProvider : DataProviderBase<ObservableCollection<Match>>
+public sealed class MatchProvider : DataProviderBase<ObservableCollection<Match>>
 {
-    public MatchesProvider()
+    public MatchProvider()
     {
         Value = [];
         Read();
