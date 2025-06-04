@@ -4,7 +4,7 @@ using System.Threading;
 using Jint.Native;
 using Jint.Native.Function;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Utils.Extensions;
 using Timer = System.Timers.Timer;
 

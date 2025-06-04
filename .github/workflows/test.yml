@@ -17,22 +17,23 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Run tests
         if: github.event_name == 'pull_request'
         run: 
-          dotnet test src/Serein.Tests --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
+          dotnet test src/Serein.Tests --logger "GitHubActions;summary.includeSkippedTests=true"
 
       - name: Generate coverage
         id: coverage
-        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (failure() || success())
+        continue-on-error: true
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           dotnet tool install --global JetBrains.dotCover.CommandLineTools
-          dotCover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --logger "GitHubActions;summary.includePassedTests=true;summary.includeSkippedTests=true"
+          dotCover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --logger "GitHubActions;summary.includeSkippedTests=true"
 
       - name: Run codacy-coverage-reporter
-        if: steps.coverage.conclusion != 'skipped' && (failure() || success())
+        if: steps.coverage.conclusion == 'success'
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Serein.Cli.Utils;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Cli.Services.Loggers;
 

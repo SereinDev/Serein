@@ -1,6 +1,6 @@
 using Jint.Native;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 

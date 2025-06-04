@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -48,15 +49,11 @@ public class ImportHandler(
         }
 
         var text = File.ReadAllText(path);
-        var dataItemWrapper = JsonSerializer.Deserialize<DataItemWrapper<JsonNode>>(
-            text,
-            JsonSerializerOptionsFactory.Common
-        );
-
-        if (dataItemWrapper is null)
-        {
-            throw new InvalidDataException("文件为空");
-        }
+        var dataItemWrapper =
+            JsonSerializer.Deserialize<DataItemWrapper<JsonNode>>(
+                text,
+                JsonSerializerOptionsFactory.Common
+            ) ?? throw new InvalidDataException("文件为空");
 
         HandleFile(path, dataItemWrapper, comfirm, shouldMerge);
     }
@@ -68,7 +65,14 @@ public class ImportHandler(
         Func<ImportActionType, bool> shouldMerge
     )
     {
-        if (dataItemWrapper.Type == typeof(ObservableCollection<Match>).ToString())
+        if (
+            TryUnwrap(
+                dataItemWrapper,
+                typeof(ObservableCollection<Match>).ToString(),
+                out Match[]? matches,
+                JsonSerializerOptionsFactory.Common
+            )
+        )
         {
             if (!comfirm.Invoke(ImportActionType.Match))
             {
@@ -79,22 +83,25 @@ public class ImportHandler(
 
             lock (matchProvider.Value)
             {
-                if (merge)
+                if (!merge)
                 {
                     matchProvider.Value.Clear();
                 }
 
-                foreach (
-                    var match in dataItemWrapper.Data.Deserialize<Match[]>(
-                        JsonSerializerOptionsFactory.Common
-                    ) ?? []
-                )
+                foreach (var match in matches)
                 {
                     matchProvider.Value.Add(match);
                 }
             }
         }
-        else if (dataItemWrapper.Type == typeof(ObservableCollection<Schedule>).ToString())
+        else if (
+            TryUnwrap(
+                dataItemWrapper,
+                typeof(ObservableCollection<Schedule>).ToString(),
+                out Schedule[]? schedules,
+                JsonSerializerOptionsFactory.Common
+            )
+        )
         {
             if (!comfirm.Invoke(ImportActionType.Schedule))
             {
@@ -105,36 +112,63 @@ public class ImportHandler(
 
             lock (scheduleProvider.Value)
             {
-                if (merge)
+                if (!merge)
                 {
                     scheduleProvider.Value.Clear();
                 }
 
-                foreach (
-                    var schedule in dataItemWrapper.Data.Deserialize<Schedule[]>(
-                        JsonSerializerOptionsFactory.Common
-                    ) ?? []
-                )
+                foreach (var schedule in schedules)
                 {
                     scheduleProvider.Value.Add(schedule);
                 }
             }
         }
-        else if (dataItemWrapper.Type == typeof(Configuration).ToString())
+        else if (
+            TryUnwrap(
+                dataItemWrapper,
+                out Configuration? configuration,
+                JsonSerializerOptionsFactory.Common
+            )
+        )
         {
             if (!comfirm.Invoke(ImportActionType.Server))
             {
                 return;
             }
 
-            serverManager.Add(
-                Path.GetFileNameWithoutExtension(path),
-                dataItemWrapper.Data.Deserialize<Configuration>()!
-            );
+            serverManager.Add(Path.GetFileNameWithoutExtension(path), configuration);
         }
         else
         {
             throw new NotSupportedException("不支持导入此文件类型：" + dataItemWrapper.Type);
         }
+    }
+
+    private static bool TryUnwrap<TItem>(
+        DataItemWrapper<JsonNode> wrapper,
+        [NotNullWhen(true)] out TItem? item,
+        JsonSerializerOptions? jsonSerializerOptions = null
+    )
+        where TItem : notnull
+    {
+        return TryUnwrap(wrapper, typeof(TItem).ToString(), out item, jsonSerializerOptions);
+    }
+
+    private static bool TryUnwrap<TItem>(
+        DataItemWrapper<JsonNode> wrapper,
+        string expectedTypeName,
+        [NotNullWhen(true)] out TItem? item,
+        JsonSerializerOptions? jsonSerializerOptions = null
+    )
+        where TItem : notnull
+    {
+        if (wrapper is null || wrapper.Type != expectedTypeName)
+        {
+            item = default;
+            return false;
+        }
+
+        item = wrapper.Data.Deserialize<TItem>(jsonSerializerOptions);
+        return item is not null;
     }
 }

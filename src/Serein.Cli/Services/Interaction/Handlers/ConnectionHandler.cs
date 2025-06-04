@@ -13,7 +13,7 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 [CommandChildren("close", "关闭WebSocket连接")]
 public sealed class ConnectionHandler(
     ILogger<ConnectionHandler> logger,
-    WsConnectionManager wsConnectionManager
+    ConnectionManager wsConnectionManager
 ) : CommandHandler
 {
     public override void Invoke(IReadOnlyList<string> args)
@@ -28,7 +28,7 @@ public sealed class ConnectionHandler(
             case "info":
                 logger.LogInformation(
                     "连接状态：{}",
-                    wsConnectionManager.Active ? "已连接" : "未连接"
+                    wsConnectionManager.IsActive ? "已连接" : "未连接"
                 );
 
                 break;

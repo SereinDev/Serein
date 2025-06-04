@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Services.Servers;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;

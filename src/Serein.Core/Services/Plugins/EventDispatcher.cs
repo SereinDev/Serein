@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js;

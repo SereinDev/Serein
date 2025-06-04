@@ -6,7 +6,7 @@ namespace Serein.Core.Services.Plugins.Js.Properties;
 
 internal class PropertyFactory(
     ServerManager serverManager,
-    WsConnectionManager connectionManager,
+    ConnectionManager connectionManager,
     PluginManager pluginManager,
     CommandRunner commandRunner
 )

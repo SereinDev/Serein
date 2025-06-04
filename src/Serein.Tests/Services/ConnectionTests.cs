@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
@@ -19,13 +19,13 @@ public class ConnectionTests : IDisposable
 {
     private readonly IHost _app;
     private readonly SettingProvider _settingProvider;
-    private readonly WsConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _wsConnectionManager;
 
     public ConnectionTests()
     {
         _app = HostFactory.BuildNew();
         _settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        _wsConnectionManager = _app.Services.GetRequiredService<WsConnectionManager>();
+        _wsConnectionManager = _app.Services.GetRequiredService<ConnectionManager>();
         _app.Start();
     }
 
@@ -53,7 +53,7 @@ public class ConnectionTests : IDisposable
         _wsConnectionManager.Start();
 
         Task.Delay(2000).Await();
-        Assert.True(_wsConnectionManager.Active);
+        Assert.True(_wsConnectionManager.IsActive);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class ConnectionTests : IDisposable
         _wsConnectionManager.Start();
 
         Task.Delay(2000).Await();
-        Assert.True(_wsConnectionManager.Active);
+        Assert.True(_wsConnectionManager.IsActive);
 
         using var ws = new WebSocket("ws://127.0.0.1:8080");
         ws.Open();

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Services;
 using Serein.Lite.Services.Loggers;
 using Serein.Lite.Ui;

@@ -7,10 +7,9 @@ using Jint;
 using Jint.Native;
 using Jint.Runtime.Interop;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
-using Serein.Core.Models.Output;
-using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
@@ -74,6 +73,7 @@ public sealed class JsEngineFactory(
             },
             Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
             Strict = jsPlugin.Config.Strict,
+            ExperimentalFeatures = ExperimentalFeature.All,
         };
 
         cfg.CancellationToken(jsPlugin.CancellationToken);

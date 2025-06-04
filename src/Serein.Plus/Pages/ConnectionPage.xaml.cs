@@ -11,10 +11,10 @@ namespace Serein.Plus.Pages;
 
 public partial class ConnectionPage : Page
 {
-    private readonly WsConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _wsConnectionManager;
     private readonly Timer _timer;
 
-    public ConnectionPage(WsConnectionManager wsConnectionManager)
+    public ConnectionPage(ConnectionManager wsConnectionManager)
     {
         _timer = new(1000) { AutoReset = true, Enabled = true };
         _wsConnectionManager = wsConnectionManager;
@@ -36,7 +36,7 @@ public partial class ConnectionPage : Page
 
     private void UpdateTimeText()
     {
-        TimeTextBlock.Text = _wsConnectionManager.Active
+        TimeTextBlock.Text = _wsConnectionManager.IsActive
             ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString() ?? "-"
             : "-";
     }

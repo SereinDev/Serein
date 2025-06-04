@@ -10,7 +10,7 @@ using Serein.Cli.Services.Interaction.Handlers;
 using Serein.Cli.Services.Loggers;
 using Serein.Cli.Utils;
 using Serein.Core;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Services;
 using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;

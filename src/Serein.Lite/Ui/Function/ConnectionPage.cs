@@ -8,10 +8,10 @@ namespace Serein.Lite.Ui.Function;
 
 public partial class ConnectionPage : UserControl
 {
-    private readonly WsConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _wsConnectionManager;
     private readonly System.Timers.Timer _timer;
 
-    public ConnectionPage(WsConnectionManager wsConnectionManager)
+    public ConnectionPage(ConnectionManager wsConnectionManager)
     {
         _wsConnectionManager = wsConnectionManager;
         InitializeComponent();
@@ -33,7 +33,7 @@ public partial class ConnectionPage : UserControl
         _wsConnectionManager.PropertyChanged += (_, e) =>
         {
             if (
-                e.PropertyName == nameof(_wsConnectionManager.Active)
+                e.PropertyName == nameof(_wsConnectionManager.IsActive)
                 || e.PropertyName == nameof(_wsConnectionManager.ConnectedAt)
             )
             {
@@ -69,8 +69,8 @@ public partial class ConnectionPage : UserControl
 
     private void UpadteInfo()
     {
-        StatusDynamicLabel.Text = _wsConnectionManager.Active ? "开启" : "关闭";
-        TimeDynamicLabel.Text = _wsConnectionManager.Active
+        StatusDynamicLabel.Text = _wsConnectionManager.IsActive ? "开启" : "关闭";
+        TimeDynamicLabel.Text = _wsConnectionManager.IsActive
             ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString()
             : "-";
     }

@@ -6,43 +6,43 @@ namespace Serein.Core.Services.Plugins.Js.Properties;
 
 public sealed class ConnectionProperty
 {
-    private readonly WsConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _connectionManager;
 
-    internal ConnectionProperty(WsConnectionManager wsConnectionManager)
+    internal ConnectionProperty(ConnectionManager connectionManager)
     {
-        _wsConnectionManager = wsConnectionManager;
+        _connectionManager = connectionManager;
     }
 
-    public bool Active => _wsConnectionManager.Active;
+    public bool Active => _connectionManager.IsActive;
 
     public void Start()
     {
-        _wsConnectionManager.Start();
+        _connectionManager.Start();
     }
 
     public void Stop()
     {
-        _wsConnectionManager.Stop();
+        _connectionManager.Stop();
     }
 
     public void SendData(string text)
     {
         ArgumentNullException.ThrowIfNull(text);
 
-        _wsConnectionManager.SendDataAsync(text).Await();
+        _connectionManager.SendDataAsync(text).Await();
     }
 
     public void SendGroupMsg(long target, string message)
     {
         ArgumentNullException.ThrowIfNull(message);
 
-        _wsConnectionManager.SendGroupMsgAsync(target, message).Await();
+        _connectionManager.SendGroupMsgAsync(target, message).Await();
     }
 
     public void SendPrivateMsg(long target, string message)
     {
         ArgumentNullException.ThrowIfNull(message);
 
-        _wsConnectionManager.SendPrivateMsgAsync(target, message).Await();
+        _connectionManager.SendPrivateMsgAsync(target, message).Await();
     }
 }

@@ -1,9 +1,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Servers;
 
@@ -34,9 +33,9 @@ public abstract partial class PluginBase
     protected virtual Task<bool> OnPrivateMessageReceived(MessagePacket packet) =>
         Task.FromResult(true);
 
-    protected virtual Task<bool> OnWsDataReceived(string data) => Task.FromResult(true);
+    protected virtual Task<bool> OnConnectionDataReceived(string data) => Task.FromResult(true);
 
-    protected virtual Task<bool> OnPacketReceived(JsonObject packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnPacketReceived(JsonNode packet) => Task.FromResult(true);
 
     protected virtual Task OnSereinClosed() => Task.CompletedTask;
 
@@ -51,25 +50,25 @@ public abstract partial class PluginBase
         switch (@event)
         {
             case Event.ServerStarted:
-                return OnServerStarted((Server)args.First());
+                return OnServerStarted((Server)args[0]);
 
             case Event.ServerStarting:
-                return OnServerStarting((Server)args.First());
+                return OnServerStarting((Server)args[0]);
 
             case Event.ServerStopping:
-                return OnServerStopping((Server)args.First());
+                return OnServerStopping((Server)args[0]);
 
             case Event.GroupMessageReceived:
-                return OnGroupMessageReceived((MessagePacket)args.First());
+                return OnGroupMessageReceived((MessagePacket)args[0]);
 
             case Event.PrivateMessageReceived:
-                return OnPrivateMessageReceived((MessagePacket)args.First());
+                return OnPrivateMessageReceived((MessagePacket)args[0]);
 
-            case Event.WsDataReceived:
-                return OnWsDataReceived((string)args.First());
+            case Event.ConnectionDataReceived:
+                return OnConnectionDataReceived((string)args[0]);
 
             case Event.PacketReceived:
-                return OnPacketReceived((JsonObject)args.First());
+                return OnPacketReceived((JsonNode)args[0]);
 
             case Event.ServerOutput:
                 if (args.Length != 2)
@@ -77,7 +76,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerOutput((Server)args.First(), (string)args.Last());
+                return OnServerOutput((Server)args[0], (string)args[1]);
 
             case Event.ServerRawOutput:
                 if (args.Length != 2)
@@ -85,7 +84,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerRawOutput((Server)args.First(), (string)args.Last());
+                return OnServerRawOutput((Server)args[0], (string)args[1]);
 
             case Event.ServerInput:
                 if (args.Length != 2)
@@ -93,7 +92,7 @@ public abstract partial class PluginBase
                     ThrowArgumentException();
                 }
 
-                return OnServerInput((Server)args.First(), (string)args.Last());
+                return OnServerInput((Server)args[0], (string)args[1]);
 
             case Event.ServerExited:
                 if (

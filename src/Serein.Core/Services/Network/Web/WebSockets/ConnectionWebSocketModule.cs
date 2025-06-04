@@ -18,12 +18,12 @@ internal class ConnectionWebSocketModule : WebSocketModule
 {
     private readonly ILogger<ConnectionWebSocketModule> _logger;
     private readonly SettingProvider _settingProvider;
-    private readonly WsConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _wsConnectionManager;
 
     public ConnectionWebSocketModule(
         ILogger<ConnectionWebSocketModule> logger,
         SettingProvider settingProvider,
-        WsConnectionManager wsConnectionManager
+        ConnectionManager wsConnectionManager
     )
         : base("/ws/connection", true)
     {

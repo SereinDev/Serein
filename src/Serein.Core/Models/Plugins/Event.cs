@@ -12,7 +12,7 @@ public enum Event
 
     GroupMessageReceived,
     PrivateMessageReceived,
-    WsDataReceived,
+    ConnectionDataReceived,
     PacketReceived,
 
     SereinClosed,

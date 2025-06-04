@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using RegexMatch = System.Text.RegularExpressions.Match;
 
 namespace Serein.Core.Models.Commands;

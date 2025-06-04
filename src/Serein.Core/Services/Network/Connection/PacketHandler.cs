@@ -5,9 +5,11 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
-using Serein.Core.Models.Output;
+using Serein.ConnectionProtocols.Models.OneBot;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Abstractions;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
@@ -29,20 +31,35 @@ public sealed class PacketHandler(
         host.Services.GetRequiredService<IConnectionLogger>
     );
 
-    public void Handle(JsonObject jsonObject)
+    public void Handle(AdapterType adapter, JsonNode jsonNode)
     {
-        if (!eventDispatcher.Dispatch(Event.PacketReceived, jsonObject))
+        if (!eventDispatcher.Dispatch(Event.PacketReceived, jsonNode))
         {
             return;
         }
 
-        switch (jsonObject["post_type"]?.ToString())
+        if (
+            adapter == AdapterType.OneBot_ReverseWebSocket
+            || adapter == AdapterType.OneBot_ForwardWebSocket
+        )
+        {
+            if (settingProvider.Value.Connection.OneBot.Version == OneBotVersion.V11)
+            {
+                HandleOneBotV11Packet(jsonNode);
+            }
+            else if (settingProvider.Value.Connection.OneBot.Version == OneBotVersion.V12) { }
+        }
+    }
+
+    private void HandleOneBotV11Packet(JsonNode jsonNode)
+    {
+        switch (jsonNode["post_type"]?.ToString())
         {
             case "message":
             case "message_sent":
                 HandleMessagePacket(
                     JsonSerializer.Deserialize<MessagePacket>(
-                        jsonObject,
+                        jsonNode,
                         JsonSerializerOptionsFactory.PacketStyle
                     )
                 );
@@ -51,7 +68,7 @@ public sealed class PacketHandler(
             case "notice":
                 HandleNoticePacket(
                     JsonSerializer.Deserialize<NoticePacket>(
-                        jsonObject,
+                        jsonNode,
                         JsonSerializerOptionsFactory.PacketStyle
                     )
                 );
@@ -61,7 +78,10 @@ public sealed class PacketHandler(
 
     private void HandleNoticePacket(NoticePacket? packet)
     {
-        if (packet is null || !settingProvider.Value.Connection.Groups.Contains(packet.GroupId))
+        if (
+            packet is null
+            || !settingProvider.Value.Connection.OneBot.GroupIds.Contains(packet.GroupId.ToString())
+        )
         {
             return;
         }
@@ -105,7 +125,7 @@ public sealed class PacketHandler(
 
         if (
             packet.MessageType == MessageType.Group
-            && !settingProvider.Value.Connection.Groups.Contains(packet.GroupId)
+            && !settingProvider.Value.Connection.OneBot.GroupIds.Contains(packet.GroupId.ToString())
         )
         {
             return;

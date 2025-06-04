@@ -1,30 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Serein.Core.Models.Network.Connection;
 
 namespace Serein.Core.Models.Settings;
 
 public class ConnectionSetting : NotifyPropertyChangedModelBase
 {
-    public string AccessToken { get; set; } = string.Empty;
+    public AdapterType Adapter { get; set; } = AdapterType.OneBot_ForwardWebSocket;
 
-    public bool AutoEscape { get; set; }
-
-    public bool AutoReconnect { get; set; }
+    public bool AutoReconnect { get; set; } = true;
 
     public bool SaveLog { get; set; }
 
     public bool OutputData { get; set; }
 
-    public bool GrantPermissionToOwnerAndAdmins { get; set; }
+    public OneBotSetting OneBot { get; set; } = new();
 
-    public long[] Groups { get; set; } = [];
-
-    public long[] Administrators { get; set; } = [];
-
-    public Dictionary<string, string> Headers { get; set; } = [];
-
-    public string Uri { get; set; } = "ws://127.0.0.1:8080";
-
-    public bool UseReverseWebSocket { get; set; }
-
-    public string[] SubProtocols { get; set; } = [];
+    public SatoriSetting Satori { get; set; } = new();
 }

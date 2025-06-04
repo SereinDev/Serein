@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Tests.Loggers;
 

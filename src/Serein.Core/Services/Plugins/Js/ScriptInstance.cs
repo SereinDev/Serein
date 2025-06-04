@@ -6,7 +6,7 @@ using Jint.Native;
 using Jint.Native.Function;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;

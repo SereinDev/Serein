@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Data;

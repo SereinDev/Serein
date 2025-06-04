@@ -18,7 +18,7 @@ public class Command
     /// <summary>
     /// 参数
     /// </summary>
-    public object? Argument { get; set; }
+    public string? Argument { get; set; }
 
     /// <summary>
     /// 主体

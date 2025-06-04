@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Models.Bindings;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Data;
@@ -26,7 +27,7 @@ namespace Serein.Core.Services.Commands;
 public sealed class CommandRunner
 {
     private readonly Lazy<CommandParser> _commandParser;
-    private readonly Lazy<WsConnectionManager> _wsConnectionManager;
+    private readonly Lazy<ConnectionManager> _connectionManager;
     private readonly Lazy<ServerManager> _serverManager;
     private readonly Lazy<ReactionTrigger> _reactionTrigger;
     private readonly ILogger _logger;
@@ -43,7 +44,7 @@ public sealed class CommandRunner
     )
     {
         var services = host.Services;
-        _wsConnectionManager = new(services.GetRequiredService<WsConnectionManager>);
+        _connectionManager = new(services.GetRequiredService<ConnectionManager>);
         _reactionTrigger = new(services.GetRequiredService<ReactionTrigger>);
         _serverManager = new(services.GetRequiredService<ServerManager>);
         _commandParser = new(services.GetRequiredService<CommandParser>);
@@ -101,22 +102,30 @@ public sealed class CommandRunner
             case CommandType.SendGroupMsg:
                 if (!string.IsNullOrEmpty(argumentStr))
                 {
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(argumentStr, body);
+                    await _connectionManager.Value.SendMessageAsync(
+                        TargetType.Group,
+                        argumentStr,
+                        body
+                    );
                 }
-                else if (command.Argument is long groupId1)
+                else if (!string.IsNullOrEmpty(command.Argument))
                 {
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId1, body);
+                    await _connectionManager.Value.SendMessageAsync(
+                        TargetType.Group,
+                        command.Argument,
+                        body
+                    );
                 }
                 else if (commandContext?.MessagePacket?.GroupId is long groupId2)
                 {
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(groupId2, body);
+                    await _connectionManager.Value.SendGroupMsgAsync(groupId2, body);
                 }
                 else if (
                     command.Origin != CommandOrigin.Msg
                     && _settingProvider.Value.Connection.Groups.Length > 0
                 )
                 {
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(
+                    await _connectionManager.Value.SendGroupMsgAsync(
                         _settingProvider.Value.Connection.Groups[0],
                         body
                     );
@@ -126,20 +135,20 @@ public sealed class CommandRunner
             case CommandType.SendPrivateMsg:
                 if (!string.IsNullOrEmpty(argumentStr))
                 {
-                    await _wsConnectionManager.Value.SendPrivateMsgAsync(argumentStr, body);
+                    await _connectionManager.Value.SendPrivateMsgAsync(argumentStr, body);
                 }
                 else if (command.Argument is long userId1)
                 {
-                    await _wsConnectionManager.Value.SendGroupMsgAsync(userId1, body);
+                    await _connectionManager.Value.SendGroupMsgAsync(userId1, body);
                 }
                 else if (commandContext?.MessagePacket?.UserId is long userId2)
                 {
-                    await _wsConnectionManager.Value.SendPrivateMsgAsync(userId2, body);
+                    await _connectionManager.Value.SendPrivateMsgAsync(userId2, body);
                 }
                 break;
 
             case CommandType.SendData:
-                await _wsConnectionManager.Value.SendDataAsync(body);
+                await _connectionManager.Value.SendDataAsync(body);
                 break;
 
             case CommandType.Bind:
@@ -221,14 +230,14 @@ public sealed class CommandRunner
     {
         if (messagePacket.MessageType == MessageType.Group && messagePacket.GroupId is long groupId)
         {
-            await _wsConnectionManager.Value.SendGroupMsgAsync(groupId, msg);
+            await _connectionManager.Value.SendGroupMsgAsync(groupId, msg);
         }
         else if (
             messagePacket.MessageType == MessageType.Private
             && messagePacket.UserId is long userId
         )
         {
-            await _wsConnectionManager.Value.SendPrivateMsgAsync(userId, msg);
+            await _connectionManager.Value.SendPrivateMsgAsync(userId, msg);
         }
     }
 

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.Connection.OneBot.Messages;
-using Serein.Core.Models.Network.Connection.OneBot.Packets;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;

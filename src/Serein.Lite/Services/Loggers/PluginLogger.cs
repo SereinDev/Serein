@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models.Output;
+using Serein.Core.Models.Abstractions;
 using Serein.Lite.Ui.Function;
 
 namespace Serein.Lite.Services.Loggers;
