@@ -55,7 +55,17 @@ public sealed class EventDispatcher(
 
         if (settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
         {
-            Task.WaitAll([.. tasks], settingProvider.Value.Application.PluginEventMaxWaitingTime);
+            try
+            {
+                Task.WaitAll(
+                    [.. tasks],
+                    settingProvider.Value.Application.PluginEventMaxWaitingTime
+                );
+            }
+            catch (Exception e) when (e is not AggregateException)
+            {
+                throw;
+            }
         }
 
         cancellationTokenSource.Cancel();

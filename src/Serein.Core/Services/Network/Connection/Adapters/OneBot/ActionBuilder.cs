@@ -45,7 +45,7 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
         else
         {
             var segments = ParseMessageSegments(text);
-            var action = new ActionRequest<V12.MessageParams>()
+            var action = new ActionRequest<V12.MessageParams>
             {
                 Action = "send_message",
                 Params = targetType switch
@@ -53,25 +53,25 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
                     TargetType.Private => new()
                     {
                         Message = segments,
-                        DetailType = "private",
+                        DetailType = MessageDetailType.Private,
                         UserId = target,
                     },
                     TargetType.Group => new()
                     {
                         Message = segments,
-                        DetailType = "group",
+                        DetailType = MessageDetailType.Group,
                         GroupId = target,
                     },
                     TargetType.Channel => new()
                     {
                         Message = segments,
-                        DetailType = "channel",
+                        DetailType = MessageDetailType.Channel,
                         ChannelId = target,
                     },
                     TargetType.Guild => new()
                     {
                         Message = segments,
-                        DetailType = "guild",
+                        DetailType = MessageDetailType.Guild,
                         GuildId = target,
                     },
                     _ => throw new NotSupportedException(),

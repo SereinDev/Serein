@@ -5,6 +5,16 @@ namespace Serein.Core.Models.Commands;
 /// </summary>
 public class Command
 {
+    public Command() { }
+
+    public Command(Command command)
+    {
+        Origin = command.Origin;
+        Type = command.Type;
+        Argument = command.Argument;
+        Body = command.Body;
+    }
+
     /// <summary>
     /// 来源
     /// </summary>

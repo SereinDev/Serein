@@ -19,6 +19,9 @@ public class MessagePacket : EventPacket
 
     public string? ChannelId { get; init; }
 
+    [JsonConverter(typeof(JsonStringEnumConverter<MessageDetailType>))]
+    public new MessageDetailType DetailType { get; init; }
+
     [JsonIgnore]
     public string FriendlyMessage
     {

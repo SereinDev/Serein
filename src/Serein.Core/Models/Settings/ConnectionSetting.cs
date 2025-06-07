@@ -12,6 +12,10 @@ public class ConnectionSetting : NotifyPropertyChangedModelBase
 
     public bool OutputData { get; set; }
 
+    public string[] ListenedIds { get; set; } = [];
+
+    public string[] AdministratorUserIds { get; set; } = [];
+
     public OneBotSetting OneBot { get; set; } = new();
 
     public SatoriSetting Satori { get; set; } = new();

@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Timers;
 using Hardware.Info;
 using Microsoft.Extensions.Logging;
 
@@ -15,30 +14,26 @@ public sealed class HardwareInfoProvider
     /// <summary>
     /// 硬件信息
     /// </summary>
-    public HardwareInfo? Info { get; private set; }
+    public HardwareInfo? Info
+    {
+        get
+        {
+            Update();
+            return _info;
+        }
+    }
 
     private readonly object _lock;
     private readonly ILogger _logger;
     private bool _isLoading;
+    private HardwareInfo? _info;
+    private DateTime _dateTime;
 
-    public HardwareInfoProvider(
-        ILogger<HardwareInfoProvider> logger,
-        CancellationTokenProvider cancellationTokenProvider
-    )
+    public HardwareInfoProvider(ILogger<HardwareInfoProvider> logger)
     {
         Task.Run(Update);
         _lock = new();
         _logger = logger;
-
-        var timer = new Timer(5000);
-        timer.Elapsed += (_, _) => Update();
-        timer.Start();
-
-        cancellationTokenProvider.Token.Register(() =>
-        {
-            timer.Stop();
-            timer.Dispose();
-        });
     }
 
     /// <summary>
@@ -46,7 +41,7 @@ public sealed class HardwareInfoProvider
     /// </summary>
     public void Update()
     {
-        if (_isLoading)
+        if (_isLoading || (DateTime.Now - _dateTime).TotalSeconds < 3)
         {
             return;
         }
@@ -57,28 +52,28 @@ public sealed class HardwareInfoProvider
             {
                 _isLoading = true;
 
-                if (Info is null)
+                if (_info is null)
                 {
-                    Info = new();
+                    _info = new();
                 }
                 else
                 {
-                    Try(Info.RefreshBatteryList);
-                    Try(Info.RefreshBIOSList);
-                    Try(Info.RefreshComputerSystemList);
-                    Try(() => Info.RefreshCPUList());
-                    Try(Info.RefreshDriveList);
-                    Try(Info.RefreshKeyboardList);
-                    Try(Info.RefreshMemoryList);
-                    Try(Info.RefreshMemoryStatus);
-                    Try(Info.RefreshMonitorList);
-                    Try(Info.RefreshMotherboardList);
-                    Try(Info.RefreshMouseList);
-                    Try(() => Info.RefreshNetworkAdapterList());
-                    Try(Info.RefreshOperatingSystem);
-                    Try(Info.RefreshPrinterList);
-                    Try(Info.RefreshSoundDeviceList);
-                    Try(Info.RefreshVideoControllerList);
+                    Try(_info.RefreshBatteryList);
+                    Try(_info.RefreshBIOSList);
+                    Try(_info.RefreshComputerSystemList);
+                    Try(() => _info.RefreshCPUList());
+                    Try(_info.RefreshDriveList);
+                    Try(_info.RefreshKeyboardList);
+                    Try(_info.RefreshMemoryList);
+                    Try(_info.RefreshMemoryStatus);
+                    Try(_info.RefreshMonitorList);
+                    Try(_info.RefreshMotherboardList);
+                    Try(_info.RefreshMouseList);
+                    Try(() => _info.RefreshNetworkAdapterList());
+                    Try(_info.RefreshOperatingSystem);
+                    Try(_info.RefreshPrinterList);
+                    Try(_info.RefreshSoundDeviceList);
+                    Try(_info.RefreshVideoControllerList);
                 }
             }
             catch (Exception e)
@@ -89,22 +84,23 @@ public sealed class HardwareInfoProvider
             finally
             {
                 _isLoading = false;
+                _dateTime = DateTime.Now;
             }
         }
+    }
 
-        void Try(
-            Action action,
-            [CallerArgumentExpression(nameof(action))] string? expression = null
-        )
+    private void Try(
+        Action action,
+        [CallerArgumentExpression(nameof(action))] string? expression = null
+    )
+    {
+        try
         {
-            try
-            {
-                action();
-            }
-            catch (Exception e)
-            {
-                _logger.LogDebug(e, "更新信息失败：（{}）", expression);
-            }
+            action();
+        }
+        catch (Exception e)
+        {
+            _logger.LogDebug(e, "更新信息失败：（{}）", expression);
         }
     }
 }

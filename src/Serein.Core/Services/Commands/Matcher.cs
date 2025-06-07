@@ -220,9 +220,13 @@ public sealed class Matcher
             || match.MatchExclusion.Users.Contains(messagePacket.UserId);
     }
 
-    private bool IsFromAdmin(MessagePacket messagePacket) =>
-        _settingProvider.Value.Connection.Administrators.Contains(messagePacket.UserId)
-        || _settingProvider.Value.Connection.GrantPermissionToOwnerAndAdmins
-            && messagePacket.MessageType == MessageType.Group
-            && messagePacket.Sender.Role != Role.Member;
+    private bool IsFromAdmin(MessagePacket messagePacket)
+    {
+        return _settingProvider.Value.Connection.AdministratorUserIds.Contains(
+                messagePacket.UserId.ToString()
+            )
+            || _settingProvider.Value.Connection.OneBot.GrantPermissionToGroupOwnerAndAdmins
+                && messagePacket.MessageType == MessageType.Group
+                && messagePacket.Sender.Role != Role.Member;
+    }
 }

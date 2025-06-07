@@ -33,6 +33,7 @@ public sealed class ReactionTrigger(
     )
     {
         _logger.LogDebug("触发：type={}", type);
+
         if (!settingProvider.Value.Reactions.TryGetValue(type, out var values))
         {
             settingProvider.Value.Reactions[type] = [];
@@ -40,12 +41,16 @@ public sealed class ReactionTrigger(
             return;
         }
 
-        IEnumerable<Command> commands;
+        List<Command> commands;
         lock (values)
         {
-            commands = values.Select((cmd) => CommandParser.Parse(CommandOrigin.Reaction, cmd));
+            commands =
+            [
+                .. values.Select((cmd) => CommandParser.Parse(CommandOrigin.Reaction, cmd)),
+            ];
         }
-        if (!commands.Any())
+
+        if (commands.Count == 0)
         {
             return;
         }
@@ -54,22 +59,24 @@ public sealed class ReactionTrigger(
 
         foreach (var command in commands)
         {
-            if (command.Argument is null && target is not null)
+            var command1 = new Command(command);
+
+            if (string.IsNullOrEmpty(command1.Argument) && target is not null)
             {
                 if (
-                    command.Type == CommandType.InputServer
+                    command1.Type == CommandType.InputServer
                     && !string.IsNullOrEmpty(target.ServerId)
                 )
                 {
-                    command.Argument = target.ServerId;
+                    command1.Argument = target.ServerId;
                 }
-                else if (command.Type == CommandType.SendPrivateMsg && target.UserId.HasValue)
+                else if (command1.Type == CommandType.SendPrivateMsg)
                 {
-                    command.Argument = target.UserId.ToString() ?? string.Empty;
+                    command1.Argument = target.UserId;
                 }
             }
 
-            await commandRunner.RunAsync(command, context);
+            await commandRunner.RunAsync(command1, context);
         }
     }
 }

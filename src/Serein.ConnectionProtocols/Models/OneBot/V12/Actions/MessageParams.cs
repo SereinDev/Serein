@@ -5,7 +5,8 @@ namespace Serein.ConnectionProtocols.Models.OneBot.V12.Actions;
 
 public class MessageParams
 {
-    public string DetailType { get; init; } = string.Empty;
+    [JsonConverter(typeof(JsonStringEnumConverter<MessageDetailType>))]
+    public MessageDetailType DetailType { get; init; }
 
     public MessageSegment[] Message { get; init; } = [];
 

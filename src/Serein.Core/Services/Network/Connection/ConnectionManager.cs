@@ -102,6 +102,11 @@ public sealed class ConnectionManager : INotifyPropertyChanged
 
     private void OnMessageReceived(object? sender, MessageReceivedEventArgs e)
     {
+        if (sender is not IConnectionAdapter adapter)
+        {
+            return;
+        }
+
         Interlocked.Increment(ref _received);
         PropertyChanged?.Invoke(this, _receivedArg);
         DataTransferred?.Invoke(
@@ -133,17 +138,16 @@ public sealed class ConnectionManager : INotifyPropertyChanged
                 return;
             }
 
-            // _packetHandler.Handle(
-            //     sender is ReverseWebSocketAdapter or ForwardWebSocketAdapter ? Protocol.OneBotV11
-            //         : sender is SatoriAdapter ? Protocol.SatoriV1
-            //         : Protocol.Unknown,
-            //     jsonNode
-            // );
+            _packetHandler.Handle(adapter.Type, jsonNode);
         }
         catch (Exception ex)
         {
             _connectionLogger.Value.Log(LogLevel.Error, ex.Message);
-            _logWriter.WriteAsync($"{DateTime.Now:t} [Error] {ex}");
+
+            if (_settingProvider.Value.Connection.OutputData)
+            {
+                _logWriter.WriteAsync($"{DateTime.Now:t} [Error] {ex}");
+            }
         }
     }
 

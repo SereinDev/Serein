@@ -68,6 +68,7 @@ public sealed class NetPluginLoader(
         {
             throw new InvalidOperationException("该程序集存在多个插件入口点");
         }
+
         if (count == 0)
         {
             throw new InvalidOperationException("未找到有效的插件入口点");

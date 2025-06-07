@@ -22,9 +22,9 @@ public static partial class FileSystem
         FileStreams.Clear();
     }
 
-    internal static readonly Dictionary<int, FileStream> FileStreams = [];
+    internal static readonly Dictionary<long, FileStream> FileStreams = [];
 
-    private static FileStream GetFileStream(int fd)
+    private static FileStream GetFileStream(long fd)
     {
         return !FileStreams.TryGetValue(fd, out var stream)
             ? throw new IOException("Invalid file descriptor")
@@ -71,7 +71,7 @@ public static partial class FileSystem
         throw new NotSupportedException();
     }
 
-    public static void CloseSync(int fd)
+    public static void CloseSync(long fd)
     {
         var fileStream = GetFileStream(fd);
         fileStream.Close();
@@ -94,37 +94,37 @@ public static partial class FileSystem
         return Path.Exists(path);
     }
 
-    public static void FchmodSync(int fd, int mode)
+    public static void FchmodSync(long fd, int mode)
     {
         throw new NotSupportedException();
     }
 
-    public static void FchownSync(int fd, int uid, int gid)
+    public static void FchownSync(long fd, int uid, int gid)
     {
         throw new NotSupportedException();
     }
 
-    public static void FdatasyncSync(int fd)
+    public static void FdatasyncSync(long fd)
     {
         throw new NotSupportedException();
     }
 
-    public static void FstatSync(int fd, JsValue? options = default)
+    public static void FstatSync(long fd, JsValue? options = default)
     {
         throw new NotSupportedException();
     }
 
-    public static void FsyncSync(int fd)
+    public static void FsyncSync(long fd)
     {
         GetFileStream(fd).Flush();
     }
 
-    public static void FtruncateSync(int fd, int len = 0)
+    public static void FtruncateSync(long fd, int len = 0)
     {
         GetFileStream(fd).SetLength(len);
     }
 
-    public static void FutimesSync(int fd, DateTime atime, DateTime mtime)
+    public static void FutimesSync(long fd, DateTime atime, DateTime mtime)
     {
         var fileStream = GetFileStream(fd);
         File.SetLastAccessTime(fileStream.Name, atime);
@@ -307,7 +307,7 @@ public static partial class FileSystem
         throw new NotSupportedException();
     }
 
-    public static int ReadSync(int fd, byte[] buffer, int offset, int length, int position = 0)
+    public static int ReadSync(long fd, byte[] buffer, int offset, int length, int position = 0)
     {
         var fileStream = GetFileStream(fd);
         fileStream.Seek(position, SeekOrigin.Begin);
@@ -430,13 +430,13 @@ public static partial class FileSystem
         file.Close();
     }
 
-    public static int WriteSync(int fd, byte[] buffer)
+    public static int WriteSync(long fd, byte[] buffer)
     {
         return WriteSync(fd, buffer, length: buffer.Length);
     }
 
     public static int WriteSync(
-        int fd,
+        long fd,
         byte[] buffer,
         int offset = 0,
         int? length = null,
@@ -453,7 +453,7 @@ public static partial class FileSystem
         return l;
     }
 
-    public static int WriteSync(int fd, string data, int position = 0, string encoding = "utf8")
+    public static int WriteSync(long fd, string data, int position = 0, string encoding = "utf8")
     {
         var buffer = (
             encoding.Equals("utf8", StringComparison.InvariantCultureIgnoreCase)

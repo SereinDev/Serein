@@ -13,10 +13,6 @@ public class OneBotSetting : NotifyPropertyChangedModelBase
 
     public bool GrantPermissionToGroupOwnerAndAdmins { get; set; }
 
-    public string[] GroupIds { get; set; } = [];
-
-    public string[] AdministratorIds { get; set; } = [];
-
     public IDictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
 
     public string Uri { get; set; } = "ws://127.0.0.1:8080";
