@@ -97,14 +97,17 @@ public class Match : NotifyPropertyChangedModelBase
         set
         {
             _command = value;
+
             CommandObj = CommandParser.Parse(
                 FieldType switch
                 {
                     MatchFieldType.ServerOutput => CommandOrigin.ServerOutput,
                     MatchFieldType.ServerInput => CommandOrigin.ServerInput,
-                    MatchFieldType.PrivateMsg => CommandOrigin.Msg,
-                    MatchFieldType.GroupMsg => CommandOrigin.Msg,
-                    MatchFieldType.SelfMsg => CommandOrigin.Msg,
+                    MatchFieldType.PrivateMsg
+                    or MatchFieldType.SelfMsg
+                    or MatchFieldType.GroupMsg
+                    or MatchFieldType.ChannelMsg
+                    or MatchFieldType.GuildMsg => CommandOrigin.Msg,
                     _ => CommandOrigin.Null,
                 },
                 value

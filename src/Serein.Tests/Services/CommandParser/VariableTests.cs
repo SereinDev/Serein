@@ -99,22 +99,22 @@ public sealed class VariableTests : IDisposable
             MessageId = 1,
             Sender = { Card = "", Nickname = "nickname" },
         };
-        Assert.Equal("1", _commandParser.ApplyVariables("{msg.id}", new(MessagePacket: packet)));
+        Assert.Equal("1", _commandParser.ApplyVariables("{msg.id}", new(V11MessagePacket: packet)));
         Assert.Equal(
             "成员",
-            _commandParser.ApplyVariables("{sender.role}", new(MessagePacket: packet))
+            _commandParser.ApplyVariables("{sender.role}", new(V11MessagePacket: packet))
         );
         Assert.Equal(
             "114514",
-            _commandParser.ApplyVariables("{sender.id}", new(MessagePacket: packet))
+            _commandParser.ApplyVariables("{sender.id}", new(V11MessagePacket: packet))
         );
         Assert.Equal(
             "nickname",
-            _commandParser.ApplyVariables("{sender.nickname}", new(MessagePacket: packet))
+            _commandParser.ApplyVariables("{sender.nickname}", new(V11MessagePacket: packet))
         );
         Assert.Equal(
             "nickname",
-            _commandParser.ApplyVariables("{sender.shownname}", new(MessagePacket: packet))
+            _commandParser.ApplyVariables("{sender.shownname}", new(V11MessagePacket: packet))
         );
     }
 

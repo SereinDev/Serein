@@ -13,4 +13,8 @@ public enum MatchFieldType
     PrivateMsg,
 
     SelfMsg,
+
+    ChannelMsg,
+
+    GuildMsg,
 }

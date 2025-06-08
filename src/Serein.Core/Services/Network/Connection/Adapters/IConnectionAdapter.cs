@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Network.Connection;
 using WebSocket4Net;
 
@@ -15,7 +16,7 @@ public interface IConnectionAdapter : IDisposable
 
     bool IsActive { get; }
 
-    Task SendMessageAsync(TargetType type, string target, string text);
+    Task SendMessageAsync(TargetType type, string target, string content, Self? self = null);
 
     Task SendAsync(string payload);
 

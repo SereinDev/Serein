@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Commands;
-using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;
 
@@ -15,9 +15,9 @@ public sealed class CommandProperty
         _commandRunner = commandRunner;
     }
 
-    public void Run(string? command)
+    public async Task RunAsync(string? command)
     {
-        _commandRunner.RunAsync(Parse(command)).Await();
+        await _commandRunner.RunAsync(Parse(command));
     }
 
 #pragma warning disable CA1822

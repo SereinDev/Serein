@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
 using Force.DeepCloner;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Settings;
 
 namespace Serein.Core.Services.Network.Web.Apis;

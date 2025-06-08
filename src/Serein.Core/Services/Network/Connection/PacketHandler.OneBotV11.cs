@@ -3,9 +3,9 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Settings;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Connection;

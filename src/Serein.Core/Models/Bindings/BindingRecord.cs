@@ -12,7 +12,7 @@ public class BindingRecord
     private DateTime _time;
 
     [Key]
-    public long UserId { get; set; }
+    public required string UserId { get; set; }
 
     public List<string> GameIds { get; init; } = [];
 

@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Packets;
+using Serein.Core.Models.Commands;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Connection;
@@ -26,12 +29,12 @@ public partial class PacketHandler
                 break;
 
             case "notice":
-                // HandleNoticePacket(
-                //     JsonSerializer.Deserialize<NoticePacket>(
-                //         jsonNode,
-                //         JsonSerializerOptionsFactory.PacketStyle
-                //     )
-                // );
+                HandleNoticePacket(
+                    JsonSerializer.Deserialize<NoticePacket>(
+                        jsonNode,
+                        JsonSerializerOptionsFactory.PacketStyle
+                    )
+                );
                 break;
         }
     }
@@ -51,6 +54,25 @@ public partial class PacketHandler
                 MessageDetailType.Channel => "频道",
                 _ => throw new NotSupportedException()
             }}] {packet.UserId}: {packet.FriendlyMessage} (id={packet.MessageId})"
+        );
+    }
+
+    private void HandleNoticePacket(NoticePacket? packet)
+    {
+        if (packet is null || !IsListenedId(TargetType.Group, packet.GroupId))
+        {
+            return;
+        }
+
+        reactionTrigger.Trigger(
+            packet.DetailType switch
+            {
+                "group_increase" => ReactionType.GroupIncreased,
+                "group_decrease" => ReactionType.GroupDecreased,
+                _ => throw new NotSupportedException(),
+            },
+            new(GroupId: packet.GroupId, UserId: packet.UserId),
+            new Dictionary<string, string?> { ["sender.id"] = packet.UserId }
         );
     }
 }

@@ -46,26 +46,33 @@ public sealed class BindingTests : IDisposable
     [Fact]
     public void ShouldCheckConflict()
     {
-        _bindingManager.Add(123456, "gameId");
-        Assert.True(_bindingManager.TryGetValue(123456, out var record));
-        Assert.Throws<BindingFailureException>(() => _bindingManager.Add(123456, "gameId"));
+        _bindingManager.Add("123456", "gameId");
+        Assert.True(_bindingManager.TryGetValue("123456", out var record));
+        Assert.Throws<BindingFailureException>(() => _bindingManager.Add("123456", "gameId"));
     }
 
     [Fact]
     public void ShouldThrowWhenTryingToRemoveNonExistentRecord()
     {
-        Assert.Throws<BindingFailureException>(() => _bindingManager.Remove(123456, "gameId"));
+        Assert.Throws<BindingFailureException>(() => _bindingManager.Remove("123456", "gameId"));
     }
 
     [Fact]
     public void ShouldBeAbleToAccessUsingCommandVariable()
     {
-        _bindingManager.Add(123456, "test_name");
+        _bindingManager.Add("123456", "test_name");
         Assert.Equal(
             "test_name",
             _parser.ApplyVariables(
                 "{sender.gameid}",
-                new(MessagePacket: new() { UserId = 123456, Sender = { UserId = 123456 } })
+                new()
+                {
+                    OneBotV11MessagePacket = new()
+                    {
+                        UserId = 123456,
+                        Sender = { UserId = 123456 },
+                    },
+                }
             )
         );
     }

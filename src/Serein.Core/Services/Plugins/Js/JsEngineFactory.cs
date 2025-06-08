@@ -7,10 +7,10 @@ using Jint;
 using Jint.Native;
 using Jint.Runtime.Interop;
 using Microsoft.Extensions.Logging;
-using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Settings;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
@@ -30,7 +30,12 @@ public sealed class JsEngineFactory(
 
     private Options PrepareOptions(JsPlugin jsPlugin)
     {
-        var assemblies = new List<Assembly> { typeof(Console).Assembly };
+        var assemblies = new List<Assembly>
+        {
+            typeof(Console).Assembly, // System
+            typeof(SereinApp).Assembly, // Serein.Core
+            typeof(Protocol).Assembly, // Serein.ConnectionProtocols
+        };
 
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
@@ -110,10 +115,7 @@ public sealed class JsEngineFactory(
         AddTypeReference<CommandOrigin>();
         AddTypeReference<AppType>();
         AddTypeReference<ReactionType>();
-        AddTypeReference<Role>();
-        AddTypeReference<SubType>();
-        AddTypeReference<MessageFormat>();
-        AddTypeReference<MessageType>();
+        AddTypeReference<TargetType>();
 
         return engine;
 

@@ -14,6 +14,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection.Adapters;
 using Serein.Core.Services.Network.Connection.Adapters.OneBot;
+using Serein.Core.Services.Network.Connection.Adapters.Satori;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
@@ -32,6 +33,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     private readonly EventDispatcher _eventDispatcher;
     private readonly Lazy<ForwardWebSocketAdapter> _forwardWebSocketAdapter;
     private readonly Lazy<ReverseWebSocketAdapter> _reverseWebSocketAdapter;
+    private readonly Lazy<SatoriAdapter> _satoriAdapter;
     private readonly Lazy<IConnectionLogger> _connectionLogger;
 
     private IConnectionAdapter? _activeAdapter;
@@ -66,6 +68,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         _eventDispatcher = eventDispatcher;
         _packetHandler = packetHandler;
 
+        _satoriAdapter = new(GetConfiguredAdapter<SatoriAdapter>);
         _reverseWebSocketAdapter = new(GetConfiguredAdapter<ReverseWebSocketAdapter>);
         _forwardWebSocketAdapter = new(GetConfiguredAdapter<ForwardWebSocketAdapter>);
         _connectionLogger = new(host.Services.GetRequiredService<IConnectionLogger>);
@@ -160,15 +163,25 @@ public sealed class ConnectionManager : INotifyPropertyChanged
 
         _sent = _received = 0;
 
-        if (_settingProvider.Value.Connection.Adapter == AdapterType.OneBot_ReverseWebSocket)
+        switch (_settingProvider.Value.Connection.Adapter)
         {
-            _reverseWebSocketAdapter.Value.Start();
-            _activeAdapter = _reverseWebSocketAdapter.Value;
-        }
-        else if (_settingProvider.Value.Connection.Adapter == AdapterType.OneBot_ForwardWebSocket)
-        {
-            _forwardWebSocketAdapter.Value.Start();
-            _activeAdapter = _forwardWebSocketAdapter.Value;
+            case AdapterType.OneBot_ForwardWebSocket:
+                _forwardWebSocketAdapter.Value.Start();
+                _activeAdapter = _forwardWebSocketAdapter.Value;
+                break;
+
+            case AdapterType.OneBot_ReverseWebSocket:
+                _reverseWebSocketAdapter.Value.Start();
+                _activeAdapter = _reverseWebSocketAdapter.Value;
+                break;
+
+            case AdapterType.Satori:
+                _satoriAdapter.Value.Start();
+                _activeAdapter = _satoriAdapter.Value;
+                break;
+
+            default:
+                throw new NotSupportedException("不支持的适配器类型");
         }
     }
 

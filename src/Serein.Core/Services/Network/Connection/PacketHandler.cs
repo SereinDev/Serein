@@ -26,6 +26,8 @@ public sealed partial class PacketHandler(
         host.Services.GetRequiredService<IConnectionLogger>
     );
 
+    public Action<JsonNode>? PluginPacketHandler { get; set; }
+
     public void Handle(AdapterType adapter, JsonNode jsonNode)
     {
         if (!eventDispatcher.Dispatch(Event.PacketReceived, jsonNode))
@@ -51,12 +53,16 @@ public sealed partial class PacketHandler(
                 HandleSatoriPacket(jsonNode);
                 break;
 
+            case AdapterType.Plugin when PluginPacketHandler is not null:
+                PluginPacketHandler(jsonNode);
+                break;
+
             default:
                 throw new NotSupportedException($"不支持处理的适配器类型: {adapter}");
         }
     }
 
-    private bool IsListenedId(TargetType targetType, [NotNullWhen(true)] string? id)
+    public bool IsListenedId(TargetType targetType, [NotNullWhen(true)] string? id)
     {
         if (targetType == TargetType.Auto || string.IsNullOrEmpty(id))
         {

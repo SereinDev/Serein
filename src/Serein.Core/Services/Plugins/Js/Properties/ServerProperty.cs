@@ -1,4 +1,3 @@
-using System.Linq;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
 

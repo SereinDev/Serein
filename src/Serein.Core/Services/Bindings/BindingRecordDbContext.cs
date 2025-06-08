@@ -9,7 +9,7 @@ namespace Serein.Core.Services.Bindings;
 
 internal sealed class BindingRecordDbContext : DbContext
 {
-    public DbSet<BindingRecord> Records { get; private set; }
+    public DbSet<BindingRecord> Datas { get; private set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

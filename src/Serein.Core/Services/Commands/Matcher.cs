@@ -102,7 +102,7 @@ public sealed class Matcher
                     tasks.Add(
                         _commandRunner.RunAsync(
                             match.CommandObj,
-                            new(matches, ServerId: serverLine.Id)
+                            new() { Match = matches, ServerId = serverLine.Id }
                         )
                     );
                 }
@@ -190,7 +190,10 @@ public sealed class Matcher
                 if (matches.Success)
                 {
                     tasks.Add(
-                        _commandRunner.RunAsync(match.CommandObj, new(matches, messagePacket))
+                        _commandRunner.RunAsync(
+                            match.CommandObj,
+                            new() { Match = matches, OneBotV11MessagePacket = messagePacket }
+                        )
                     );
                 }
             }

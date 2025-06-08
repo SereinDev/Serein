@@ -11,6 +11,8 @@ namespace Serein.Core.Services.Network.Connection.Adapters.Satori;
 
 public partial class SatoriAdapter
 {
+    private WebSocket? _webSocket;
+
     private WebSocket CreateNew()
     {
         var webSocket = new WebSocket(

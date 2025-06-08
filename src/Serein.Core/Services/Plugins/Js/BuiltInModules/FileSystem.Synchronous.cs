@@ -10,7 +10,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js.BuiltInModules;
 
-public static partial class FileSystem
+public static class FileSystem
 {
     internal static void DisposeAll()
     {

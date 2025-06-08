@@ -35,9 +35,9 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public List<BindingRecord> Records => [.. BindingRecordDbContext.Records];
+    public List<BindingRecord> Records => [.. BindingRecordDbContext.Datas];
 
-    public bool TryGetValue(long id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
+    public bool TryGetValue(string id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
     {
         lock (_lock)
         {
@@ -48,18 +48,18 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
 
     private bool TryGetValue(
         BindingRecordDbContext context,
-        long id,
+        string id,
         [NotNullWhen(true)] out BindingRecord? bindingRecord
     )
     {
         lock (_lock)
         {
-            bindingRecord = context.Records.FirstOrDefault((v) => v.UserId == id);
+            bindingRecord = context.Datas.FirstOrDefault((v) => v.UserId == id);
         }
         return bindingRecord is not null;
     }
 
-    public void CheckConflict(long id, string gameId)
+    public void CheckConflict(string id, string gameId)
     {
         lock (_lock)
         {
@@ -68,11 +68,11 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    private void CheckConflict(BindingRecordDbContext context, long id, string gameId)
+    private void CheckConflict(BindingRecordDbContext context, string id, string gameId)
     {
         lock (_lock)
         {
-            foreach (var record in context.Records)
+            foreach (var record in context.Datas)
             {
                 if (record.UserId != id && record.GameIds.Contains(gameId))
                 {
@@ -82,7 +82,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public void Add(long id, string gameId, string? shownName = null)
+    public void Add(string id, string gameId, string? shownName = null)
     {
         ValidateGameId(gameId);
 
@@ -100,7 +100,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
                     ShownName = shownName ?? string.Empty,
                     Time = DateTime.Now,
                 };
-                context.Records.Add(record);
+                context.Datas.Add(record);
             }
             else
             {
@@ -124,7 +124,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public void Remove(long id, string gameId)
+    public void Remove(string id, string gameId)
     {
         lock (_lock)
         {

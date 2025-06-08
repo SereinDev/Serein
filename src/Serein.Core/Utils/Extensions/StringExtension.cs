@@ -59,4 +59,17 @@ public static class StringExtension
             new ProcessStartInfo("explorer.exe") { Arguments = $"/e,/select,\"{path}\"" }
         );
     }
+
+    public static string? SelectNotNullOrEmpty(params string?[] values)
+    {
+        foreach (var value in values)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+        }
+
+        return null;
+    }
 }

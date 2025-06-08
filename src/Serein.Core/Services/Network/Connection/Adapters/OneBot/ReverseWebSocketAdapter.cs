@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
@@ -150,8 +151,8 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
         }
     }
 
-    public Task SendMessageAsync(TargetType type, string target, string text)
+    public Task SendMessageAsync(TargetType type, string target, string content, Self? self = null)
     {
-        return SendAsync(_actionBuilder.Build(type, target, text));
+        return SendAsync(_actionBuilder.Build(type, target, content, self));
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Plugins;
@@ -21,7 +22,7 @@ public partial class CommandParser(
     HardwareInfoProvider hardwareInfoProvider
 )
 {
-    [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s]+))?\](?<body>.+)$")]
+    [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s,=]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommandRegex();
 
     [GeneratedRegex(@"\{([a-zA-Z][a-zA-Z0-9\.]*(@\w+)?)\}")]
@@ -94,7 +95,7 @@ public partial class CommandParser(
                 Origin = origin,
                 Type = type,
                 Body = body,
-                Argument = argument,
+                Arguments = ParseCommandArguments(argument),
             };
         }
         catch
@@ -106,6 +107,97 @@ public partial class CommandParser(
 
             return new() { Origin = origin, Type = CommandType.Invalid };
         }
+    }
+
+    private static CommandArguments ParseCommandArguments(string arguments)
+    {
+        if (string.IsNullOrEmpty(arguments))
+        {
+            return new CommandArguments();
+        }
+
+        if (!arguments.Contains(','))
+        {
+            return new CommandArguments { Target = arguments.Trim() };
+        }
+
+        var args = arguments.Split(
+            ',',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+        );
+
+        var commandArgs = new CommandArguments();
+
+        foreach (var arg in args)
+        {
+            var parts = arg.Split('=', 2, StringSplitOptions.TrimEntries);
+
+            if (parts.Length == 2)
+            {
+                continue;
+            }
+
+            var key = parts[0].ToLowerInvariant();
+            var value = parts[1];
+
+            switch (key)
+            {
+                case "target":
+                    commandArgs.Target = value;
+                    break;
+
+                case "as_segments":
+                case "assegments":
+                    commandArgs.AsSegments = GetArgumentValueAsBool(value);
+
+                    break;
+
+                case "auto_escape":
+                case "autoescape":
+                    commandArgs.AutoEscape = GetArgumentValueAsBool(value);
+                    break;
+
+                case "use_unicode":
+                case "useunicode":
+                    commandArgs.UseUnicode = GetArgumentValueAsBool(value);
+                    break;
+
+                case "self":
+                    var selfParts = value.Split(
+                        '.',
+                        2,
+                        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+                    );
+                    if (selfParts.Length == 2)
+                    {
+                        commandArgs.Self = new Self
+                        {
+                            Platform = selfParts[0],
+                            UserId = selfParts[1],
+                        };
+                    }
+                    break;
+
+                case "self_id":
+                    commandArgs.Self ??= new();
+                    commandArgs.Self.UserId = value;
+                    break;
+
+                case "self_platform":
+                    commandArgs.Self ??= new();
+                    commandArgs.Self.Platform = value;
+                    break;
+            }
+        }
+
+        return commandArgs;
+    }
+
+    private static bool? GetArgumentValueAsBool(string value)
+    {
+        return value.Equals("true", StringComparison.OrdinalIgnoreCase) ? true
+            : value.Equals("false", StringComparison.OrdinalIgnoreCase) ? false
+            : null;
     }
 
     /// <summary>
@@ -127,7 +219,7 @@ public partial class CommandParser(
         {
             foreach (
                 KeyValuePair<string, Group> kv in (IEnumerable<KeyValuePair<string, Group>>)
-                    commandContext.Match.Groups
+                    commandContext.Value.Match.Groups
             )
             {
                 body = body.Replace("$" + kv.Key, kv.Value.Value);
@@ -167,7 +259,7 @@ public partial class CommandParser(
 
                 if (
                     commandContext?.Variables is not null
-                    && commandContext.Variables.TryGetValue(name, out string? value)
+                    && commandContext.Value.Variables.TryGetValue(name, out string? value)
                     && value is not null
                 )
                 {
@@ -260,18 +352,32 @@ public partial class CommandParser(
                     #endregion
 
                     #region 消息
-                    "msg.id" => commandContext?.MessagePacket?.MessageId,
-                    "sender.id" => commandContext?.MessagePacket?.UserId,
-                    "sender.nickname" => commandContext?.MessagePacket?.Sender?.Nickname,
-                    "sender.title" => commandContext?.MessagePacket?.Sender?.Title,
-                    "sender.card" => commandContext?.MessagePacket?.Sender?.Card,
-                    "sender.role" => commandContext?.MessagePacket?.Sender?.RoleName,
-                    "sender.gameid" => GetGameId(commandContext?.MessagePacket?.UserId),
-                    "sender.shownname" => string.IsNullOrEmpty(
-                        commandContext?.MessagePacket?.Sender?.Card
-                    )
-                        ? commandContext?.MessagePacket?.Sender?.Nickname
-                        : commandContext.MessagePacket?.Sender?.Card,
+                    "msg.id" => commandContext.HasValue
+                        ? StringExtension.SelectNotNullOrEmpty(
+                            commandContext.Value.OneBotV11MessagePacket?.MessageId.ToString(),
+                            commandContext.Value.OneBotV12MessagePacket?.MessageId.ToString(),
+                            commandContext.Value.SatoriV1MessagePacket?.Message?.Id
+                        )
+                        : null,
+                    "sender.id" => commandContext?.UserId,
+                    "sender.nickname" => commandContext.HasValue
+                        ? StringExtension.SelectNotNullOrEmpty(
+                            commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
+                            commandContext.Value.SatoriV1MessagePacket?.User?.Nick
+                        )
+                        : null,
+                    "sender.title" => commandContext?.OneBotV11MessagePacket?.Sender?.Title,
+                    "sender.card" => commandContext?.OneBotV11MessagePacket?.Sender?.Card,
+                    "sender.role" => commandContext?.OneBotV11MessagePacket?.Sender?.RoleName,
+                    "sender.gameid" => GetGameId(commandContext?.UserId),
+                    "sender.shownname" => commandContext.HasValue
+                        ? StringExtension.SelectNotNullOrEmpty(
+                            commandContext.Value.OneBotV11MessagePacket?.Sender.Card,
+                            commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
+                            commandContext.Value.SatoriV1MessagePacket?.User?.Nick,
+                            commandContext.Value.SatoriV1MessagePacket?.User?.Name
+                        )
+                        : null,
                     #endregion
 
                     _ => GetServerVariables(name, commandContext?.ServerId),
@@ -291,14 +397,14 @@ public partial class CommandParser(
         return text;
     }
 
-    private string? GetGameId(long? userId)
+    private string? GetGameId(string? userId)
     {
         if (userId is null)
         {
             return null;
         }
 
-        return bindingManager.TryGetValue(userId.Value, out var binding)
+        return bindingManager.TryGetValue(userId, out var binding)
             ? binding.GameIds.FirstOrDefault()
             : null;
     }

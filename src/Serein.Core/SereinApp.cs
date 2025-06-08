@@ -50,7 +50,7 @@ public sealed class SereinApp
 
     public Version Version { get; }
 
-    public string? FullVersion { get; }
+    public string FullVersion { get; }
 
     public AppType Type { get; }
 

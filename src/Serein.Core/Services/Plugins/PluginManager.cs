@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Info;
+using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
@@ -23,10 +24,11 @@ namespace Serein.Core.Services.Plugins;
 public sealed partial class PluginManager(
     ILogger<PluginManager> logger,
     IPluginLogger pluginLogger,
+    PacketHandler packetHandler,
+    SessionStorage sessionStorage,
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     EventDispatcher eventDispatcher,
-    SessionStorage sessionStorage,
     PermissionManager permissionManager
 )
 {
@@ -188,6 +190,7 @@ public sealed partial class PluginManager(
 
     public void Unload()
     {
+        packetHandler.PluginPacketHandler = null;
         eventDispatcher.Dispatch(Event.PluginsUnloading);
 
         FileSystem.DisposeAll();

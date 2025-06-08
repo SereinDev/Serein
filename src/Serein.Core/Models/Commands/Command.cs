@@ -11,7 +11,7 @@ public class Command
     {
         Origin = command.Origin;
         Type = command.Type;
-        Argument = command.Argument;
+        Arguments = command.Arguments;
         Body = command.Body;
     }
 
@@ -28,7 +28,7 @@ public class Command
     /// <summary>
     /// 参数
     /// </summary>
-    public string? Argument { get; set; }
+    public CommandArguments? Arguments { get; set; }
 
     /// <summary>
     /// 主体

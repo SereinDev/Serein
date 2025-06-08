@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.OneBot;
 using Serein.ConnectionProtocols.Models.OneBot.Shared;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
@@ -14,7 +15,7 @@ namespace Serein.Core.Services.Network.Connection.Adapters.OneBot;
 
 public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settingProvider)
 {
-    public string Build(TargetType targetType, string target, string text)
+    public string Build(TargetType targetType, string target, string text, Self? self)
     {
         if (settingProvider.Value.Connection.OneBot.Version == OneBotVersion.V11)
         {
@@ -76,6 +77,7 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
                     },
                     _ => throw new NotSupportedException(),
                 },
+                Self = self,
             };
 
             return JsonSerializer.Serialize(action, JsonSerializerOptionsFactory.PacketStyle);

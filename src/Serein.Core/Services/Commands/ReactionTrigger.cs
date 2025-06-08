@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Extensions;
 
@@ -61,18 +60,20 @@ public sealed class ReactionTrigger(
         {
             var command1 = new Command(command);
 
-            if (string.IsNullOrEmpty(command1.Argument) && target is not null)
+            if (string.IsNullOrEmpty(command1.Arguments?.Target) && target is not null)
             {
+                command1.Arguments ??= new();
+
                 if (
                     command1.Type == CommandType.InputServer
                     && !string.IsNullOrEmpty(target.ServerId)
                 )
                 {
-                    command1.Argument = target.ServerId;
+                    command1.Arguments.Target = target.ServerId;
                 }
                 else if (command1.Type == CommandType.SendPrivateMsg)
                 {
-                    command1.Argument = target.UserId;
+                    command1.Arguments.Target = target.UserId;
                 }
             }
 

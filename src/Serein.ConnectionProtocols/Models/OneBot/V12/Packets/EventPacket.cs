@@ -11,4 +11,6 @@ public class EventPacket
     public string DetailType { get; init; } = string.Empty;
 
     public string SubType { get; init; } = string.Empty;
+
+    public Self Self { get; init; } = new();
 }

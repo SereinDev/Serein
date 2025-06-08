@@ -18,12 +18,12 @@ namespace Serein.Core.Services.Network.Web.Apis;
 
 internal partial class ApiMap(
     SereinApp sereinApp,
+    MatchProvider matchProvider,
     PluginManager pluginManager,
     ServerManager serverManager,
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider,
-    MatchProvider matchProvider,
     ScheduleProvider scheduleProvider,
     ConnectionManager wsConnectionManager,
     HardwareInfoProvider hardwareInfoProvider

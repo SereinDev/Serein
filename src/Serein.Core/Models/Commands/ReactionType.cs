@@ -1,4 +1,4 @@
-namespace Serein.Core.Models.Settings;
+namespace Serein.Core.Models.Commands;
 
 public enum ReactionType
 {

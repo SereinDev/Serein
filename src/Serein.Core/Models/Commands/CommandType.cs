@@ -12,6 +12,12 @@ public enum CommandType
 
     SendPrivateMsg,
 
+    SendChannelMsg,
+
+    SendGuildMsg,
+
+    SendReply,
+
     SendData,
 
     Bind,

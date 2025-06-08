@@ -1,19 +1,33 @@
 using System.Collections.Generic;
-using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using RegexMatch = System.Text.RegularExpressions.Match;
+using V11 = Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using V12 = Serein.ConnectionProtocols.Models.OneBot.V12.Packets;
 
 namespace Serein.Core.Models.Commands;
 
 /// <summary>
 /// 命令上下文
 /// </summary>
-/// <param name="Match">匹配对象（来自匹配功能）</param>
-/// <param name="MessagePacket">消息数据包（来自消息匹配）</param>
-/// <param name="ServerId">服务器Id（与服务器相关的命令）</param>
-/// <param name="Variables">自定义变量</param>
-public record CommandContext(
-    RegexMatch? Match = null,
-    MessagePacket? MessagePacket = null,
-    string? ServerId = null,
-    IReadOnlyDictionary<string, string?>? Variables = null
-);
+public readonly record struct CommandContext()
+{
+    public RegexMatch? Match { get; init; }
+
+    public V11.MessagePacket? OneBotV11MessagePacket { get; init; }
+
+    public V12.MessagePacket? OneBotV12MessagePacket { get; init; }
+
+    public EventBody? SatoriV1MessagePacket { get; init; }
+
+    public string? ServerId { get; init; }
+
+    public IReadOnlyDictionary<string, string?>? Variables { get; init; }
+
+    public string? UserId =>
+        OneBotV11MessagePacket?.UserId.ToString()
+        ?? OneBotV12MessagePacket?.UserId
+        ?? SatoriV1MessagePacket?.User?.Id;
+
+    public string? GroupId =>
+        OneBotV11MessagePacket?.GroupId.ToString() ?? OneBotV12MessagePacket?.GroupId;
+}

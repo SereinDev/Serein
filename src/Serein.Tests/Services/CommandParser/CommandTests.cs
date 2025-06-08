@@ -41,11 +41,11 @@ public static class CommandTests
 
         if (!string.IsNullOrEmpty(exceptedArgument))
         {
-            Assert.Equal(exceptedArgument, cmd.Argument);
+            Assert.Equal(exceptedArgument, cmd.Arguments);
         }
         else
         {
-            Assert.Equal(string.Empty, cmd.Argument);
+            Assert.Equal(string.Empty, cmd.Arguments);
         }
     }
 
