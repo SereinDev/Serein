@@ -81,15 +81,15 @@ public sealed class CommandRunner
                 break;
 
             case CommandType.InputServer:
-                InputServer();
+                InputServer(command, commandContext, body);
                 break;
 
             case CommandType.SendGroupMsg:
-                await SendGroupMsgAsync();
+                await SendGroupMsgAsync(command, commandContext, body);
                 break;
 
             case CommandType.SendPrivateMsg:
-                await SendPrivateMsgAsync();
+                await SendPrivateMsgAsync(command, commandContext, body);
                 break;
 
             case CommandType.SendData:
@@ -190,86 +190,93 @@ public sealed class CommandRunner
                 _logger.LogDebug("{}", body);
                 break;
 
-            case CommandType.Invalid:
             default:
                 throw new NotSupportedException();
         }
+    }
 
-        async Task SendPrivateMsgAsync()
+    private async Task SendPrivateMsgAsync(
+        Command command,
+        CommandContext? commandContext,
+        string body
+    )
+    {
+        if (!string.IsNullOrEmpty(command.Arguments?.Target))
         {
-            if (!string.IsNullOrEmpty(command.Arguments?.Target))
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Private,
+                command.Arguments.Target,
+                body
+            );
+        }
+        else if (!string.IsNullOrEmpty(commandContext?.UserId))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Private,
+                commandContext.Value.UserId,
+                body
+            );
+        }
+    }
+
+    private async Task SendGroupMsgAsync(
+        Command command,
+        CommandContext? commandContext,
+        string body
+    )
+    {
+        if (!string.IsNullOrEmpty(command.Arguments?.Target))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Group,
+                command.Arguments.Target,
+                body
+            );
+        }
+        else if (!string.IsNullOrEmpty(commandContext?.GroupId))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Group,
+                commandContext.Value.GroupId,
+                body
+            );
+        }
+        else if (
+            command.Origin != CommandOrigin.Msg
+            && _settingProvider.Value.Connection.ListenedIds.Length > 0
+        )
+        {
+            var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
+                (id) => id.StartsWith("group:") || id.StartsWith("g:")
+            );
+
+            if (string.IsNullOrEmpty(first))
             {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Private,
-                    command.Arguments.Target,
-                    body
-                );
+                return;
             }
-            else if (!string.IsNullOrEmpty(commandContext?.UserId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Private,
-                    commandContext.Value.UserId,
-                    body
-                );
-            }
+
+            await _connectionManager.Value.SendMessageAsync(TargetType.Group, first, body);
+        }
+    }
+
+    private void InputServer(Command command, CommandContext? commandContext, string body)
+    {
+        Server? server = null;
+
+        if (!string.IsNullOrEmpty(command.Arguments?.Target))
+        {
+            _serverManager.Value.Servers.TryGetValue(command.Arguments.Target, out server);
+        }
+        else if (!string.IsNullOrEmpty(commandContext?.ServerId))
+        {
+            _serverManager.Value.Servers.TryGetValue(commandContext.Value.ServerId, out server);
+        }
+        else if (_serverManager.Value.Servers.Count == 1)
+        {
+            server = _serverManager.Value.Servers.Values.First();
         }
 
-        async Task SendGroupMsgAsync()
-        {
-            if (!string.IsNullOrEmpty(command.Arguments?.Target))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Group,
-                    command.Arguments.Target,
-                    body
-                );
-            }
-            else if (!string.IsNullOrEmpty(commandContext?.GroupId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Group,
-                    commandContext.Value.GroupId,
-                    body
-                );
-            }
-            else if (
-                command.Origin != CommandOrigin.Msg
-                && _settingProvider.Value.Connection.ListenedIds.Length > 0
-            )
-            {
-                var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
-                    (id) => id.StartsWith("group:") || id.StartsWith("g:")
-                );
-
-                if (string.IsNullOrEmpty(first))
-                {
-                    return;
-                }
-
-                await _connectionManager.Value.SendMessageAsync(TargetType.Group, first, body);
-            }
-        }
-
-        void InputServer()
-        {
-            Server? server = null;
-
-            if (!string.IsNullOrEmpty(command.Arguments?.Target))
-            {
-                _serverManager.Value.Servers.TryGetValue(command.Arguments.Target, out server);
-            }
-            else if (!string.IsNullOrEmpty(commandContext?.ServerId))
-            {
-                _serverManager.Value.Servers.TryGetValue(commandContext.Value.ServerId, out server);
-            }
-            else if (_serverManager.Value.Servers.Count == 1)
-            {
-                server = _serverManager.Value.Servers.Values.First();
-            }
-
-            server?.InputFromCommand(body, null);
-        }
+        server?.InputFromCommand(body, null);
     }
 
     private async Task FastReply(CommandContext commandContext, string content)

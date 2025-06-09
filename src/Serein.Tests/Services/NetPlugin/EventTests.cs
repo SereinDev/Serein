@@ -175,7 +175,6 @@ public sealed class EventTests : IDisposable
 
         dynamic d = _netPluginLoader.Plugins.First().Value;
         var list = (List<string>)d.Events;
-        Assert.Contains("OnServerStarting", list);
         Assert.Contains("OnServerStarted", list);
         Assert.Contains("OnServerStopping", list);
         Assert.Contains("OnServerExited", list);

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Models.Commands;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Commands;
 using Serein.Core.Services.Servers;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;
@@ -49,7 +49,7 @@ public sealed class VariableTests : IDisposable
             "[114514]",
             _commandParser.ApplyVariables(
                 "[{shit}]",
-                new(Variables: new Dictionary<string, string?> { ["shit"] = "114514" })
+                new() { Variables = new Dictionary<string, string?> { ["shit"] = "114514" } }
             )
         );
     }
@@ -87,7 +87,10 @@ public sealed class VariableTests : IDisposable
         Assert.Equal("未启动", _commandParser.ApplyVariables("{server.status}", null));
         Assert.Equal("未启动", _commandParser.ApplyVariables("{server.status@foo}", null));
 
-        Assert.Equal("bar", _commandParser.ApplyVariables("{server.id}", new(ServerId: "bar")));
+        Assert.Equal(
+            "bar",
+            _commandParser.ApplyVariables("{server.id}", new() { ServerId = "bar" })
+        );
     }
 
     [Fact]
@@ -99,22 +102,34 @@ public sealed class VariableTests : IDisposable
             MessageId = 1,
             Sender = { Card = "", Nickname = "nickname" },
         };
-        Assert.Equal("1", _commandParser.ApplyVariables("{msg.id}", new(V11MessagePacket: packet)));
+        Assert.Equal(
+            "1",
+            _commandParser.ApplyVariables("{msg.id}", new() { OneBotV11MessagePacket = packet })
+        );
         Assert.Equal(
             "成员",
-            _commandParser.ApplyVariables("{sender.role}", new(V11MessagePacket: packet))
+            _commandParser.ApplyVariables(
+                "{sender.role}",
+                new() { OneBotV11MessagePacket = packet }
+            )
         );
         Assert.Equal(
             "114514",
-            _commandParser.ApplyVariables("{sender.id}", new(V11MessagePacket: packet))
+            _commandParser.ApplyVariables("{sender.id}", new() { OneBotV11MessagePacket = packet })
         );
         Assert.Equal(
             "nickname",
-            _commandParser.ApplyVariables("{sender.nickname}", new(V11MessagePacket: packet))
+            _commandParser.ApplyVariables(
+                "{sender.nickname}",
+                new() { OneBotV11MessagePacket = packet }
+            )
         );
         Assert.Equal(
             "nickname",
-            _commandParser.ApplyVariables("{sender.shownname}", new(V11MessagePacket: packet))
+            _commandParser.ApplyVariables(
+                "{sender.shownname}",
+                new() { OneBotV11MessagePacket = packet }
+            )
         );
     }
 
@@ -125,14 +140,14 @@ public sealed class VariableTests : IDisposable
             "a",
             _commandParser.Format(
                 Parser.Parse(CommandOrigin.Null, "[cmd]$1"),
-                new(Match: Regex.Match("a1", @"([a-z])"))
+                new() { Match = Regex.Match("a1", @"([a-z])") }
             )
         );
         Assert.Equal(
             "1",
             _commandParser.Format(
                 Parser.Parse(CommandOrigin.Null, "[cmd]$a"),
-                new(Match: Regex.Match("a1", @"(?<a>\d)"))
+                new() { Match = Regex.Match("a1", @"(?<a>\d)") }
             )
         );
     }

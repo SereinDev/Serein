@@ -5,6 +5,7 @@ using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
@@ -19,13 +20,13 @@ public class ConnectionTests : IDisposable
 {
     private readonly IHost _app;
     private readonly SettingProvider _settingProvider;
-    private readonly ConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _connectionManager;
 
     public ConnectionTests()
     {
         _app = HostFactory.BuildNew();
         _settingProvider = _app.Services.GetRequiredService<SettingProvider>();
-        _wsConnectionManager = _app.Services.GetRequiredService<ConnectionManager>();
+        _connectionManager = _app.Services.GetRequiredService<ConnectionManager>();
         _app.Start();
     }
 
@@ -38,7 +39,7 @@ public class ConnectionTests : IDisposable
     [Fact]
     public void ShouldBeAbleToConnectToWebSocketServer()
     {
-        using var server = new WebSocketServer(_settingProvider.Value.Connection.Uri);
+        using var server = new WebSocketServer(_settingProvider.Value.Connection.OneBot.Uri);
         server.Start(
             (socket) =>
                 socket.OnOpen = () =>
@@ -50,21 +51,21 @@ public class ConnectionTests : IDisposable
                     )
         );
 
-        _wsConnectionManager.Start();
+        _connectionManager.Start();
 
         Task.Delay(2000).Await();
-        Assert.True(_wsConnectionManager.IsActive);
+        Assert.True(_connectionManager.IsActive);
     }
 
     [Fact]
     public void ShouldStartReverseWebSocketServer()
     {
-        _settingProvider.Value.Connection.UseReverseWebSocket = true;
-        _settingProvider.Value.Connection.Uri = "http://127.0.0.1:8080";
-        _wsConnectionManager.Start();
+        _settingProvider.Value.Connection.Adapter = AdapterType.OneBot_ReverseWebSocket;
+        _settingProvider.Value.Connection.OneBot.Uri = "http://127.0.0.1:8080";
+        _connectionManager.Start();
 
         Task.Delay(2000).Await();
-        Assert.True(_wsConnectionManager.IsActive);
+        Assert.True(_connectionManager.IsActive);
 
         using var ws = new WebSocket("ws://127.0.0.1:8080");
         ws.Open();

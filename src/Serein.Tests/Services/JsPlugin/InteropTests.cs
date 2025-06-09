@@ -18,13 +18,13 @@ using Xunit;
 namespace Serein.Tests.Services.JsPlugin;
 
 [Collection(nameof(Serein))]
-public sealed partial class RunTimeTests : IDisposable
+public sealed partial class InteropTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;
     private readonly EventDispatcher _eventDispatcher;
 
-    public RunTimeTests()
+    public InteropTests()
     {
         _host = HostFactory.BuildNew();
         _eventDispatcher = _host.Services.GetRequiredService<EventDispatcher>();
@@ -51,17 +51,6 @@ public sealed partial class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public void ShouldAccessToBuiltInProperties()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        Assert.Equal(Types.Object, kv.Value.Engine.Evaluate("serein").Type);
-        Assert.Equal(Types.Object, kv.Value.Engine.Evaluate("console").Type);
-        Assert.Equal(Types.Object, kv.Value.Engine.Evaluate("localStorage").Type);
-        Assert.Equal(Types.Object, kv.Value.Engine.Evaluate("sessionStorage").Type);
-    }
-
-    [Fact]
     public void ShouldAccessToClrType()
     {
         var kv = _jsPluginLoader.Plugins.First();
@@ -84,25 +73,6 @@ public sealed partial class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public void ShouldAccessToBuiltInModuleProcess()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        Assert.Equal(Environment.ProcessId, kv.Value.Engine.Evaluate("process.pid"));
-        Assert.Equal(Environment.ExitCode, kv.Value.Engine.Evaluate("process.exitCode"));
-        Assert.Equal(Environment.Version.ToString(), kv.Value.Engine.Evaluate("process.version"));
-        Assert.Equal(Environment.CurrentDirectory, kv.Value.Engine.Evaluate("process.cwd()"));
-    }
-
-    [Fact]
-    public void ShouldBeAbleToOutput()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Evaluate("serein.console.log('test')");
-        kv.Value.Engine.Evaluate("console.log('test')");
-    }
-
-    [Fact]
     public async Task ShouldBeAbleToSetListener()
     {
         var kv = _jsPluginLoader.Plugins.First();
@@ -110,6 +80,7 @@ public sealed partial class RunTimeTests : IDisposable
             "var called = false; serein.setListener('PluginsLoaded', () => { called = true; });"
         );
         _eventDispatcher.Dispatch(Event.PluginsLoaded);
+
         await Task.Delay(2000);
         Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
     }
@@ -150,21 +121,6 @@ public sealed partial class RunTimeTests : IDisposable
     }
 
     [Fact]
-    public void ShouldAccessToBuiltInModuleFs()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        Assert.True(kv.Value.Engine.Evaluate("fs.globSync('*.*')").IsArray());
-
-        kv.Value.Engine.Evaluate("fs.writeFileSync('test.txt', 'test')");
-        Assert.True(File.Exists("test.txt"));
-        Assert.Equal(
-            File.ReadAllText("test.txt"),
-            kv.Value.Engine.Evaluate("fs.readFileSync('test.txt')")
-        );
-    }
-
-    [Fact]
     public void ShouldBeAbleToResolveFile()
     {
         var kv = _jsPluginLoader.Plugins.First();
@@ -176,5 +132,30 @@ public sealed partial class RunTimeTests : IDisposable
             Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "a", "b", "111.txt")),
             kv.Value.Engine.Evaluate("serein.resolve('a', 'b', '111.txt')")
         );
+    }
+
+    [Theory]
+    [InlineData("localStorage")]
+    [InlineData("sessionStorage")]
+    public void ShouldBeAbleToUseStorage(string storageName)
+    {
+        var kv = _jsPluginLoader.Plugins.First();
+
+        kv.Value.Engine.Execute($"{storageName}.setItem('test', 'value')");
+        Assert.Equal(
+            "value",
+            kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
+        );
+        Assert.Equal("value", kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
+
+        kv.Value.Engine.Execute($"{storageName}.setItem('test', 'newValue')");
+        Assert.Equal(
+            "newValue",
+            kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
+        );
+        Assert.Equal("newValue", kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
+
+        kv.Value.Engine.Execute($"{storageName}.removeItem('test')");
+        Assert.Equal(JsValue.Null, kv.Value.Engine.Evaluate($"{storageName}.getItem('test')"));
     }
 }

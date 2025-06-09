@@ -4,9 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using iNKORE.UI.WPF.Modern.Controls;
-using Serein.Core.Models.Settings;
+using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
-using Serein.Core.Utils.Extensions;
 using Serein.Plus.Dialogs;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 

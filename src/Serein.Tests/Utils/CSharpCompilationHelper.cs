@@ -44,10 +44,12 @@ public static class CSharpCompilationHelper
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Compilation failed:");
+
             foreach (var diagnostic in emitResult.Diagnostics)
             {
                 stringBuilder.AppendLine("  " + diagnostic.ToString());
             }
+
             throw new InvalidOperationException(stringBuilder.ToString());
         }
     }

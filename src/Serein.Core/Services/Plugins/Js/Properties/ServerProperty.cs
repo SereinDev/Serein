@@ -16,10 +16,15 @@ public sealed class ServerProperty
 
     public string[] Ids => [.. _serverManager.Servers.Keys];
 
-    public Server Add(string id, Configuration configuration) =>
-        _serverManager.Add(id, configuration);
+    public Server Add(string id, Configuration configuration)
+    {
+        return _serverManager.Add(id, configuration);
+    }
 
-    public bool Remove(string id) => _serverManager.Remove(id);
+    public bool Remove(string id)
+    {
+        return _serverManager.Remove(id);
+    }
 
     public bool AnyRunning => _serverManager.AnyRunning;
 }

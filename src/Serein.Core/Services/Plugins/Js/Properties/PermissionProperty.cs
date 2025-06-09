@@ -22,8 +22,13 @@ public sealed class PermissionProperty
 
     public string? this[string key] => _permissionManager.Nodes[key];
 
-    public void Register(string node, string? description = null) =>
+    public void Register(string node, string? description = null)
+    {
         _permissionManager.Register(_id, node, description);
+    }
 
-    public void Unregister(string node) => _permissionManager.Unregister(_id, node);
+    public void Unregister(string node)
+    {
+        _permissionManager.Unregister(_id, node);
+    }
 }

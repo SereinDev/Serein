@@ -17,19 +17,21 @@ public static class HostFactory
     {
         if (Directory.Exists("tests"))
         {
-            try
-            {
-                Directory.Delete("tests", true);
-            }
-            catch { }
+            Directory.Delete("tests", true);
+        }
+
+        if (Directory.Exists("Serein"))
+        {
+            Directory.Delete("Serein", true);
         }
     }
 
     public static IHost BuildNew(bool enableFileLogger = false, [CallerFilePath] string caller = "")
     {
         Task.Delay(1000).Wait();
-
         TestHelper.Initialize(caller);
+        Task.Delay(1000).Wait();
+
         Directory.CreateDirectory(PathConstants.Root);
         Directory.CreateDirectory(PathConstants.PluginsDirectory);
 

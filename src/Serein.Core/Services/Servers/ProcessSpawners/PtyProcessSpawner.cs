@@ -57,6 +57,7 @@ internal sealed class PtyProcessSpawner(
                     CommandLine = [configuration.Argument],
                     Cwd = cwd,
                     ForceWinPty = Environment.OSVersion.Platform == PlatformID.Win32NT,
+                    Environment = configuration.Environment,
 
                     Rows =
                         sereinApp.Type == AppType.Cli

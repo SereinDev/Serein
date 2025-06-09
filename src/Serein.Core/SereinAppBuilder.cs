@@ -11,6 +11,7 @@ using Serein.Core.Services.Loggers;
 using Serein.Core.Services.Network;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Connection.Adapters.OneBot;
+using Serein.Core.Services.Network.Connection.Adapters.Satori;
 using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Network.Web.Apis;
 using Serein.Core.Services.Network.Web.WebSockets;
@@ -72,6 +73,9 @@ public static class SereinAppBuilder
             .AddSingleton<CommandRunner>()
             .AddSingleton<UpdateChecker>()
             .AddSingleton<ConnectionManager>()
+            .AddSingleton<ForwardWebSocketAdapter>()
+            .AddSingleton<ReverseWebSocketAdapter>()
+            .AddSingleton<SatoriAdapter>()
             .AddSingleton<ActionBuilder>()
             .AddSingleton<PacketHandler>()
             .AddSingleton<WebServer>()
