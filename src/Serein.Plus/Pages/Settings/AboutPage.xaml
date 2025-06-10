@@ -18,7 +18,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer>
+    <ui:ScrollViewerEx>
         <StackPanel Margin="20">
             <StackPanel.Resources>
                 <Style TargetType="ui:SettingsCard">
@@ -142,5 +142,5 @@
             </ui:SettingsCard>
 
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

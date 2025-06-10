@@ -1,8 +1,8 @@
 namespace Serein.Core.Models.Settings;
 
-public class SatoriSetting
+public class SatoriSetting : NotifyPropertyChangedModelBase
 {
-    public string ApiUrl { get; set; } = "http://127.0.0.1:3000/v1/";
+    public string ApiUrl { get; set; } = "http://127.0.0.1:3000/";
 
     public string EventUrl { get; set; } = "ws://";
 

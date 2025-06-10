@@ -21,114 +21,161 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <ScrollViewer>
+
+    <ui:ScrollViewerEx>
         <StackPanel Margin="20">
-            <CheckBox
-                Click="CheckBox_Click"
-                Content="启用"
-                IsChecked="{Binding Value.WebApi.IsEnabled}" />
+
+            <ui:SettingsCard Header="启用">
+                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.IsEnabled}" Toggled="ToggleSwitch_Toggled" />
+            </ui:SettingsCard>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="常规" />
-            <TextBox
-                ui:ControlHelper.Header="Url前缀"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.WebApi.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
-                VerticalScrollBarVisibility="Visible">
-                <TextBox.ToolTip>
-                    <sys:String xml:space="preserve">Http服务器监听的Url（一行一个）
-示例：
-· http://127.0.0.1:{端口}
-  只能由本机访问
-· http://*:{端口} 
-  允许外网访问，但需要手动以管理员权限运行Serein（操作系统限制）
-· https://{域名}/
-  需要在下方配置证书</sys:String>
-                </TextBox.ToolTip>
-            </TextBox>
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="允许跨源请求"
-                IsChecked="{Binding Value.WebApi.AllowCrossOrigin}"
-                ToolTip="开启后会在响应头添加 Access-Control-Allow-Origin: *" />
-            <ui:NumberBox
-                Width="150"
-                Margin="0,5,0,10"
-                HorizontalAlignment="Left"
-                ui:ControlHelper.Header="每秒最大请求数"
-                Minimum="0"
-                SpinButtonPlacementMode="Compact"
-                ToolTip="每秒请求数超过此值的IP（下方白名单内的除外）将被封禁"
-                ValueChanged="NumberBox_ValueChanged"
-                Value="{Binding Value.WebApi.MaxRequestsPerSecond}" />
-            <TextBox
-                ui:ControlHelper.Header="IP请求白名单"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.WebApi.WhiteList, Converter={StaticResource multiLinesConverter}}"
-                ToolTip="不会被封禁的IP列表（一行一个）"
-                VerticalScrollBarVisibility="Visible" />
-            <TextBox
-                ui:ControlHelper.Header="访问凭证"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.WebApi.AccessTokens, Converter={StaticResource multiLinesConverter}}"
-                VerticalScrollBarVisibility="Visible">
-                <TextBox.ToolTip>
-                    <sys:String xml:space="preserve">Access Token（一行一个）
-· 若为空，则访问无需Token（不安全）
-· 若不为空，则访问时需要在Header中添加Authentication项</sys:String>
-                </TextBox.ToolTip>
-            </TextBox>
+
+            <ui:SettingsExpander Description="Http服务器监听的Url（一行一个）" Header="Url前缀">
+                <ui:SettingsExpander.ItemsHeader>
+                    <StackPanel>
+                        <ui:InfoBar
+                            Title="示例"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="0"
+                            IsOpen="True"
+                            Severity="Informational">
+                            <ui:InfoBar.Message>
+                                “http://127.0.0.1:12345”（只允许内网访问）、“http://*:8080”（允许外网访问，需要以管理员身份运行Serein）、“http://example.com”（使用域名）
+                            </ui:InfoBar.Message>
+                        </ui:InfoBar>
+                        <ui:InfoBar
+                            Title="提示"
+                            BorderThickness="0"
+                            CornerRadius="0"
+                            IsOpen="True"
+                            Severity="Informational">
+                            <ui:InfoBar.Message>
+                                此Url支持HTTPS，但需要在下方填写证书设置
+                            </ui:InfoBar.Message>
+                        </ui:InfoBar>
+                    </StackPanel>
+                </ui:SettingsExpander.ItemsHeader>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.WebApi.UrlPrefixes, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsCard Description="开启后会在响应头添加“Access-Control-Allow-Origin: *”" Header="允许跨源请求">
+                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.AllowCrossOrigin}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Description="每秒请求数超过此值的IP（下方白名单内的除外）将被封禁" Header="每秒最大请求数">
+                <ui:NumberBox
+                    Width="150"
+                    MinWidth="100"
+                    Margin="0,5,0,10"
+                    HorizontalAlignment="Left"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Compact"
+                    ValueChanged="OnPropertyChanged"
+                    Value="{Binding Value.WebApi.MaxRequestsPerSecond}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsExpander Description="无视请求速度限制的IP列表；一行一个" Header="IP请求白名单">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.WebApi.WhiteList, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="访问凭证">
+                <ui:SettingsExpander.Description>
+                    <sys:String xml:space="preserve">一行一个
+· 若值不为空，请求时“/api”下的任意资源均需要在Header中添加Authentication Bearer项</sys:String>
+                </ui:SettingsExpander.Description>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.WebApi.AccessTokens, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="证书" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="启用"
-                IsChecked="{Binding Value.WebApi.Certificate.IsEnabled}" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="自动注册证书"
-                IsChecked="{Binding Value.WebApi.Certificate.AutoRegisterCertificate}" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="自动加载证书"
-                IsChecked="{Binding Value.WebApi.Certificate.AutoLoadCertificate}" />
 
-            <Grid Margin="0,5,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    Margin="0"
-                    ui:ControlHelper.Header="证书路径"
-                    LostFocus="OnPropertyChanged"
-                    Text="{Binding Value.WebApi.Certificate.Path}" />
+            <ui:InfoBar
+                Title="警告"
+                IsClosable="False"
+                IsOpen="True"
+                Message="此功能仅适用于Windows系统"
+                Severity="Warning" />
 
-                <Button
-                    Grid.Column="1"
-                    Height="32"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Bottom"
-                    Click="OpenFileButton_Click">
-                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenFile}" />
-                </Button>
-            </Grid>
+            <ui:SettingsCard Header="启用">
+                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.IsEnabled}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+            <ui:SettingsCard Description="自动将使用的证书注册到默认的证书存储区" Header="自动注册证书">
+                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.AutoRegisterCertificate}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+            <ui:SettingsCard Description="自动从默认的证书存储区中读取证书" Header="自动加载证书">
+                <ui:ToggleSwitch IsOn="{Binding Value.WebApi.Certificate.AutoLoadCertificate}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
 
-            <PasswordBox
-                x:Name="CertificatePasswordBox"
-                ui:ControlHelper.Header="密码"
-                PasswordChanged="PasswordBox_PasswordChanged" />
+            <ui:SettingsExpander Header="证书文件路径">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.WebApi.Certificate.Path}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+
+                        <Grid Margin="0,5,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Margin="0"
+                                LostFocus="OnPropertyChanged"
+                                Text="{Binding Value.WebApi.Certificate.Path}" />
+
+                            <Button
+                                Grid.Column="1"
+                                Height="32"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Click="OpenFileButton_Click">
+                                <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenFile}" />
+                            </Button>
+                        </Grid>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="证书密码">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.WebApi.Certificate.Password}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </Page>

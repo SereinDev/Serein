@@ -17,17 +17,17 @@ public partial class ConnectionSettingPage : Page
         DataContext = _settingProvider;
 
         InitializeComponent();
-        AccessToken.Password = _settingProvider.Value.Connection.AccessToken;
-        GroupTextBox.Text = string.Join(';', _settingProvider.Value.Connection.Groups);
-        AdministratorsTextBox.Text = string.Join(
-            ';',
-            _settingProvider.Value.Connection.Administrators
-        );
+        //AccessToken.Password = _settingProvider.Value.Connection.AccessToken;
+        //GroupTextBox.Text = string.Join(';', _settingProvider.Value.Connection.Groups);
+        //AdministratorsTextBox.Text = string.Join(
+        //    ';',
+        //    _settingProvider.Value.Connection.Administrators
+        //);
     }
 
     private void OnPasswordChanged(object? sender, EventArgs e)
     {
-        _settingProvider.Value.Connection.AccessToken = AccessToken.Password;
+        //_settingProvider.Value.Connection.AccessToken = AccessToken.Password;
         OnPropertyChanged(sender, e);
     }
 
@@ -41,12 +41,12 @@ public partial class ConnectionSettingPage : Page
 
     private void UseReverseWebSocket_Click(object sender, RoutedEventArgs e)
     {
-        _settingProvider.Value.Connection.Uri = _settingProvider
-            .Value
-            .Connection
-            .UseReverseWebSocket
-            ? Regex.Replace(_settingProvider.Value.Connection.Uri, @"^ws://", "http://")
-            : Regex.Replace(_settingProvider.Value.Connection.Uri, @"^http://", "ws://");
+        //_settingProvider.Value.Connection.Uri = _settingProvider
+        //    .Value
+        //    .Connection
+        //    .UseReverseWebSocket
+        //    ? Regex.Replace(_settingProvider.Value.Connection.Uri, @"^ws://", "http://")
+        //    : Regex.Replace(_settingProvider.Value.Connection.Uri, @"^http://", "ws://");
 
         OnPropertyChanged(sender, e);
     }
@@ -54,20 +54,20 @@ public partial class ConnectionSettingPage : Page
     private void GroupTextBox_LostFocus(object sender, RoutedEventArgs e)
     {
         var list = new List<long>();
-        foreach (
-            var id in GroupTextBox.Text.Split(
-                ';',
-                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
-            )
-        )
-        {
-            if (long.TryParse(id, out long i))
-            {
-                list.Add(i);
-            }
-        }
+        //foreach (
+        //    var id in GroupTextBox.Text.Split(
+        //        ';',
+        //        StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+        //    )
+        //)
+        //{
+        //    if (long.TryParse(id, out long i))
+        //    {
+        //        list.Add(i);
+        //    }
+        //}
 
-        _settingProvider.Value.Connection.Groups = [.. list];
+        //_settingProvider.Value.Connection.Groups = [.. list];
         OnPropertyChanged(sender, e);
     }
 
@@ -87,7 +87,7 @@ public partial class ConnectionSettingPage : Page
             }
         }
 
-        _settingProvider.Value.Connection.Administrators = [.. list];
+        //_settingProvider.Value.Connection.Administrators = [.. list];
         OnPropertyChanged(sender, e);
     }
 }

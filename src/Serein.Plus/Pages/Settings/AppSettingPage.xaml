@@ -6,6 +6,8 @@
     xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:net="clr-namespace:Serein.Core.Services.Network;assembly=Serein.Core"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="应用设置"
     d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
@@ -20,137 +22,170 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer>
-        <StackPanel Margin="20">
+    <ui:ScrollViewerEx>
+        <StackPanel Margin="20,5,20,20">
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="插件" />
-            <ui:NumberBox
-                Width="150"
-                Margin="0,5,0,10"
-                HorizontalAlignment="Left"
-                ui:ControlHelper.Header="事件最大等待时间 (ms)"
-                LostFocus="OnPropertyChanged"
-                Minimum="0"
-                SpinButtonPlacementMode="Compact"
-                ToolTip="超出此时间返回的结果将被忽略；设置成0可禁用等待"
-                Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
-            <TextBox
-                ui:ControlHelper.Header="JS插件全局加载的程序集"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
-                TextWrapping="Wrap"
-                ToolTip="此处的程序集将会被所有JS插件加载（一行一个）" />
-            <TextBox
-                ui:ControlHelper.Header="JS插件加载时忽略的文件后缀"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Application.JSPatternToSkipLoadingSingleFile, Converter={StaticResource multiLinesConverter}}"
-                TextWrapping="Wrap"
-                ToolTip="凡是以所选内容结尾的文件都不会被加载（一行一个）" />
+
+            <ui:SettingsCard Description="超出此时间返回的结果将被忽略；设置成0可禁用等待" Header="事件最大等待时间 (ms)">
+                <ui:NumberBox
+                    Width="150"
+                    MinWidth="100"
+                    Margin="0,5,0,10"
+                    HorizontalAlignment="Left"
+                    LostFocus="OnPropertyChanged"
+                    Minimum="0"
+                    SpinButtonPlacementMode="Compact"
+                    Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsExpander Description="此处的程序集将会被所有JS插件加载；一行一个" Header="JS插件全局加载的程序集">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            ui:ControlHelper.PlaceholderText="一行一个"
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="凡是以所选内容结尾的文件都不会被加载；一行一个" Header="JS插件加载时忽略的文件后缀">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Application.JSPatternToSkipLoadingSingleFile, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="绑定" />
-            <TextBox
-                ui:ControlHelper.Header="游戏名称检验正则"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Application.RegexForCheckingGameId}"
-                TextWrapping="Wrap"
-                ToolTip="绑定时游戏名称需要符合此正则" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="当服务器关闭时禁用绑定功能"
-                IsChecked="{Binding Value.Application.DisableBinderWhenServerClosed}"
-                ToolTip="只影响通过Serein命令执行的绑定" />
+
+            <ui:SettingsExpander Description="绑定时游戏名称需要符合此正则" Header="游戏名称检验正则">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.RegexForCheckingGameId}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Application.RegexForCheckingGameId}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsCard Description="只影响通过Serein命令执行的绑定" Header="当服务器关闭时禁用绑定功能">
+                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBinderWhenServerClosed}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="其他" />
-            <TextBox
-                ui:ControlHelper.Header="用于触发多行匹配的文本"
-                ui:ControlHelper.PlaceholderText="一行一个"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Application.PattenForEnableMatchingMuiltLines, Converter={StaticResource multiLinesConverter}}"
-                TextWrapping="Wrap"
-                ToolTip="当输入的内容若含有以下内容将触发多行匹配（一行一个）" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="使用Sentry上报"
-                IsChecked="{Binding Value.Application.EnableSentry}"
-                ToolTip="当出现异常或崩溃时自动匿名上报（建议开启；重启生效；上报时可能会收集部分系统和环境信息并产生一定网络流量）" />
+
+            <ui:SettingsExpander Description="当输入的内容若含有以下内容将触发多行匹配；一行一个" Header="用于触发多行匹配的文本">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Application.PattenForEnableMatchingMuiltLines, Converter={StaticResource multiLinesConverter}}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsCard Header="启用Sentry上报">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">当出现异常或崩溃时自动匿名上报，便于开发者及时定位问题（建议开启）
+· 更改后重启生效
+· 上报时可能会收集部分系统和环境信息并产生一定网络流量</sys:String>
+                </ui:SettingsCard.Description>
+                <ui:ToggleSwitch IsOn="{Binding Value.Application.EnableSentry}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="外观" />
-            <TextBlock Text="主题" />
-            <StackPanel
-                x:Name="ThemePanel"
-                Margin="0,5,0,10"
-                Orientation="Horizontal">
-                <RadioButton
-                    x:Name="DefaultThemeRadioButton"
-                    Click="OnThemeRadioButtonChecked"
-                    Content="跟随系统"
-                    Tag="Default" />
-                <RadioButton
-                    Click="OnThemeRadioButtonChecked"
-                    Content="浅色"
-                    Tag="Light" />
-                <RadioButton
-                    Click="OnThemeRadioButtonChecked"
-                    Content="深色"
-                    Tag="Dark" />
-            </StackPanel>
-            <ui:InfoBar
-                Title="警告"
-                IsClosable="False"
-                IsOpen="{Binding ElementName=DefaultThemeRadioButton, Path=IsChecked}"
-                Message="此选项可能无法生效"
-                Severity="Warning" />
-            <TextBox
-                ui:ControlHelper.Header="标题后缀"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Application.CustomTitle, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap"
-                ToolTip="显示在标题栏的内容（可使用命令的变量）" />
+
+            <ui:SettingsCard Header="主题颜色">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">决定Serein的主题样式
+· 跟随系统选项可能无法生效</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ComboBox SelectedIndex="{Binding Value.Application.Theme, Converter={StaticResource enumConverter}}" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem>跟随系统</ComboBoxItem>
+                    <ComboBoxItem>浅色</ComboBoxItem>
+                    <ComboBoxItem>深色</ComboBoxItem>
+                </ComboBox>
+            </ui:SettingsCard>
+
+            <ui:SettingsExpander Header="标题后缀">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.CustomTitle}" />
+
+                <ui:SettingsExpander.Description>
+                    <sys:String xml:space="preserve">显示在标题栏的内容
+· 可使用命令的变量</sys:String>
+                </ui:SettingsExpander.Description>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Application.CustomTitle, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="更新" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="获取更新提示"
-                IsChecked="{Binding Value.Application.CheckUpdate}"
-                ToolTip="启动后自动获取更新提示（建议开启）" />
-            <CheckBox
-                x:Name="AutoUpdateCheckBox"
-                Click="OnPropertyChanged"
-                Content="自动更新"
-                IsChecked="{Binding Value.Application.AutoUpdate}"
-                IsEnabled="{Binding Value.Application.CheckUpdate}"
-                ToolTip="应用关闭后自动替换新版本" />
-            <ui:InfoBar
-                Title="警告"
-                IsClosable="False"
-                IsOpen="{Binding ElementName=AutoUpdateCheckBox, Path=IsChecked}"
-                Message="此功能将在下一个版本加入"
-                Severity="Warning" />
+
+            <ui:SettingsCard Description="启动后自动获取更新提示（建议开启）" Header="获取更新提示">
+                <ui:ToggleSwitch IsOn="{Binding Value.Application.CheckUpdate}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Description="应用关闭后自动替换新版本" Header="自动更新">
+                <ui:ToggleSwitch
+                    IsEnabled="{Binding Value.Application.CheckUpdate}"
+                    IsOn="{Binding Value.Application.AutoUpdate}"
+                    Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Click="SettingsCard_Click"
+                Header="检查更新"
+                IsClickEnabled="True" />
 
             <ui:InfoBar
                 x:Name="VersionInfoBar"
-                Title="发现新版本"
-                IsClosable="True"
-                Severity="Informational" />
+                Margin="0,5"
+                IsClosable="False" />
+
+            <ui:InfoBar
+                x:Name="ReadyToReplaceInfoBar"
+                Title="新版本下载完毕"
+                Margin="0,5"
+                d:DataContext="{d:DesignInstance Type=net:UpdateChecker}"
+                IsClosable="False"
+                IsOpen="{Binding IsReadyToReplace}"
+                Message="重新启动Serein即可更新"
+                Severity="Success" />
+
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

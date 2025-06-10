@@ -61,7 +61,7 @@
                 <TextBlock
                     Grid.Column="1"
                     HorizontalAlignment="Right"
-                    Text="{Binding Active, Converter={StaticResource connectionStatusConverter}, Mode=OneWay}" />
+                    Text="{Binding IsActive, Converter={StaticResource connectionStatusConverter}, Mode=OneWay}" />
 
                 <TextBlock Grid.Row="1" Text="发送数" />
                 <TextBlock

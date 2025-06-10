@@ -18,4 +18,6 @@ public class OneBotSetting : NotifyPropertyChangedModelBase
     public string Uri { get; set; } = "ws://127.0.0.1:8080";
 
     public string[] SubProtocols { get; set; } = [];
+
+    public bool AutoReconnect { get; set; } = true;
 }

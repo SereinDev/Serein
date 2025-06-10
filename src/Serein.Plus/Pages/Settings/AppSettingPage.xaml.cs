@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using iNKORE.UI.WPF.Modern;
+using iNKORE.UI.WPF.Modern.Controls;
 using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
@@ -30,21 +30,28 @@ public partial class AppSettingPage : Page
         InitializeComponent();
         UpdateVersionInfoBar();
 
+        ReadyToReplaceInfoBar.DataContext = _updateChecker;
         DataContext = _settingProvider;
-
-        ThemePanel
-            .Children.Cast<RadioButton>()
-            .First(c => c?.Tag as string == _settingProvider.Value.Application.Theme.ToString())
-            .IsChecked = true;
 
         _updateChecker.Updated += (_, _) => Dispatcher.Invoke(UpdateVersionInfoBar);
     }
 
     private void UpdateVersionInfoBar()
     {
-        VersionInfoBar.IsOpen = _updateChecker.Latest is not null;
-        VersionInfoBar.Message =
-            $"褰撳墠鐗堟湰锛歿_sereinApp.Version}\r\n鏂扮増鏈細{_updateChecker.Latest?.TagName}";
+        if (_updateChecker.Latest is not null)
+        {
+            VersionInfoBar.IsOpen = true;
+            VersionInfoBar.Severity = InfoBarSeverity.Informational;
+            VersionInfoBar.Title = "发现新版本";
+            VersionInfoBar.Message = $"当前版本：{_sereinApp.Version}，最新版本：{_updateChecker.Latest.TagName}";
+        }
+        else if (_updateChecker.LastResult is not null)
+        {
+            VersionInfoBar.IsOpen = true;
+            VersionInfoBar.Severity = InfoBarSeverity.Success;
+            VersionInfoBar.Title = $"当前已是最新版本（{_sereinApp.Version}）";
+            VersionInfoBar.Message = null;
+        }
     }
 
     private void OnPropertyChanged(object? sender, EventArgs e)
@@ -55,17 +62,8 @@ public partial class AppSettingPage : Page
         }
     }
 
-    private void OnThemeRadioButtonChecked(object sender, RoutedEventArgs e)
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var tag = (sender as RadioButton)?.Tag as string;
-
-        _settingProvider.Value.Application.Theme = tag switch
-        {
-            "Light" => Theme.Light,
-            "Dark" => Theme.Dark,
-            _ => Theme.Default,
-        };
-
         ThemeManager.Current.ApplicationTheme = _settingProvider.Value.Application.Theme switch
         {
             Theme.Light => ApplicationTheme.Light,
@@ -74,5 +72,23 @@ public partial class AppSettingPage : Page
         };
 
         OnPropertyChanged(sender, e);
+    }
+
+    private void SettingsCard_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is SettingsCard { IsEnabled: true } settingsCard)
+        {
+                    VersionInfoBar.IsOpen = false;
+            settingsCard.IsEnabled = false;
+            settingsCard.Content = new ProgressRing { IsActive = true, Width = 25, Height = 25 };
+
+            _updateChecker.CheckAsync().ContinueWith((task) =>
+                Dispatcher.Invoke(() =>
+                {
+                    settingsCard.IsEnabled = true;
+                    settingsCard.Content = null;
+                    UpdateVersionInfoBar();
+                }));
+        }
     }
 }

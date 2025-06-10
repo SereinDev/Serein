@@ -6,8 +6,6 @@ public class ConnectionSetting : NotifyPropertyChangedModelBase
 {
     public AdapterType Adapter { get; set; } = AdapterType.OneBot_ForwardWebSocket;
 
-    public bool AutoReconnect { get; set; } = true;
-
     public bool SaveLog { get; set; }
 
     public bool OutputData { get; set; }

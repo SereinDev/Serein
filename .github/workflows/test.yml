@@ -26,14 +26,13 @@ jobs:
 
       - name: Generate coverage
         id: coverage
-        continue-on-error: true
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
           dotnet tool install --global JetBrains.dotCover.CommandLineTools
           dotCover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --logger "GitHubActions;summary.includeSkippedTests=true"
 
       - name: Run codacy-coverage-reporter
-        if: steps.coverage.conclusion == 'success'
+        if: steps.coverage.conclusion != 'skipped' && (failure() || success())
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}

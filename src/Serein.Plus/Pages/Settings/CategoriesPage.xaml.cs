@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Navigation;
 using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,15 +21,15 @@ public partial class CategoriesPage : Page
 
     private void ConfigureNavigation()
     {
-        NavigationView.MenuItems = new List<NavigationViewItem>()
+        NavigationView.MenuItems = new List<NavigationViewItem>
         {
             new() { Content = "连接", Tag = typeof(ConnectionSettingPage) },
             new() { Content = "反应", Tag = typeof(ReactionSettingPage) },
-            new() { Content = "WebApi", Tag = typeof(WebApiSettingPage) },
+            new() { Content = "网页", Tag = typeof(WebApiSettingPage) },
             new() { Content = "应用", Tag = typeof(AppSettingPage) },
             new() { Content = "关于", Tag = typeof(AboutPage) },
         };
-        NavigationView.SelectedItem = NavigationView.MenuItems.OfType<NavigationViewItem>().First();
+        NavigationView.SelectedItem = NavigationView.MenuItems[0];
     }
 
     private void NavigationView_SelectionChanged(

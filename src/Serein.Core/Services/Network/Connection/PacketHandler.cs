@@ -70,7 +70,7 @@ public sealed partial class PacketHandler(
         }
 
         var key = targetType.ToString().ToLowerInvariant();
-        var shortKey = key[0];
+        var shortKey = targetType != TargetType.Guild ? key[0].ToString() : key;
 
         return settingProvider.Value.Connection.ListenedIds.Contains(id)
             || settingProvider.Value.Connection.ListenedIds.Contains($"{key}:*")

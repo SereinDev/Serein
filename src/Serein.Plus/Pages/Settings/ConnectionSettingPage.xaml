@@ -6,6 +6,7 @@
     xmlns:data="clr-namespace:Serein.Core.Services.Data;assembly=Serein.Core"
     xmlns:local="clr-namespace:Serein.Plus.Pages.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="连接设置"
     d:DataContext="{d:DesignInstance Type=data:SettingProvider}"
@@ -19,84 +20,205 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <ScrollViewer>
+    <ui:ScrollViewerEx>
         <StackPanel Margin="20">
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
-                Text="Websocket" />
-            <TextBox
-                ui:ControlHelper.Header="地址"
-                ui:ControlHelper.PlaceholderText="ws://..."
-                AcceptsReturn="False"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Connection.Uri}"
-                ToolTip="Websocket服务器的地址" />
-            <PasswordBox
-                x:Name="AccessToken"
-                ui:ControlHelper.Header="鉴权凭证（Token）"
-                LostFocus="OnPasswordChanged"
-                ToolTip="用于鉴权的Access-Token（可为空）" />
-            <TextBox
-                ui:ControlHelper.Header="WebSocket子协议"
-                AcceptsReturn="True"
-                LostFocus="OnPropertyChanged"
-                Text="{Binding Value.Connection.SubProtocols, Converter={StaticResource multiLinesConverter}}"
-                ToolTip="连接WebSocket时的子协议（仅正向WebSocket有效；一行一个）" />
-            <CheckBox
-                Click="UseReverseWebSocket_Click"
-                Content="使用反向WebSocket"
-                IsChecked="{Binding Value.Connection.UseReverseWebSocket}"
-                ToolTip="开启WebSocket服务器供机器人连接" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="断线自动重连"
-                IsChecked="{Binding Value.Connection.AutoReconnect}"
-                ToolTip="WebSocket连接异常断开时自动重连" />
+                Text="通用" />
+
+            <ui:SettingsCard Description="决定Serein将以何种方式连接" Header="适配器">
+                <ComboBox SelectedIndex="{Binding Value.Connection.Adapter, Converter={StaticResource enumConverter}}" SelectionChanged="OnPropertyChanged">
+                    <ComboBoxItem>OneBot（WebSocket正向连接）</ComboBoxItem>
+                    <ComboBoxItem>OneBot（WebSocket反向连接）</ComboBoxItem>
+                    <ComboBoxItem>Satori</ComboBoxItem>
+                    <ComboBoxItem>插件注册</ComboBoxItem>
+                </ComboBox>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Description="在连接控制台中输出接收和发送的数据，但可能导致控制台可读性下降" Header="输出收发的数据">
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.OutputData}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Description="将收到的数据包以文本格式保存到日志文件（./log/connection/）" Header="保存到日志">
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.SaveLog}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsExpander Description="要监听消息的群聊、频道或群组" Header="监听列表">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            直接填写Id 或 {来源}:{Id}的格式字符串，其中来源可为g/group（群聊）、c/channel（频道）、guild（群组），如“g:12345”或“group:12345”
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="有管理权限的用户" Header="管理权限列表">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            x:Name="AdministratorsTextBox"
+                            ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
-                Text="数据" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="输出收发的数据"
-                IsChecked="{Binding Value.Connection.OutputData}"
-                ToolTip="在连接控制台中输出接收和发送的数据" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="纯文本发送"
-                IsChecked="{Binding Value.Connection.AutoEscape}"
-                ToolTip="消息内容作为纯文本发送（即不解析CQ码）" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="保存数据包到日志"
-                IsChecked="{Binding Value.Connection.SaveLog}"
-                ToolTip="将收到的数据包以文本格式保存到日志文件（./log/msg）" />
+                Text="OneBot" />
+
+            <ui:SettingsCard Description="将影响Serein中对数据包的处理方式" Header="OneBot版本">
+                <ComboBox SelectedIndex="{Binding Value.Connection.OneBot.Version, Converter={StaticResource enumConverter}}">
+                    <ComboBoxItem Content="V11" />
+                    <ComboBoxItem Content="V12" />
+                </ComboBox>
+            </ui:SettingsCard>
+
+            <ui:SettingsExpander Description="Websocket服务器的地址" Header="WebSocket">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.OneBot.Uri}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            Margin="0,10"
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.OneBot.Uri}">
+                            <TextBox.ToolTip>
+                                <sys:String xml:space="preserve">· 当选择了正向连接适配器时，这个地址应以"ws://"或"wss://"开头，Serein将会连接到这个地址
+· 当选择了反向连接适配器时，这个地址应以"http://"或"https://"开头，Serein将会开启一个WebSocket服务器供OneBot实现连接</sys:String>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="用于鉴权的Access-Token" Header="鉴权凭证（Token）">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.OneBot.AccessToken}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="WebSocket子协议">
+                <ui:SettingsExpander.Description>
+                    <sys:String xml:space="preserve">连接WebSocket时的子协议（一行一个）
+· 仅适用于WebSocket正向连接</sys:String>
+                </ui:SettingsExpander.Description>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="True"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.OneBot.SubProtocols, Converter={StaticResource multiLinesConverter}}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsCard Header="断线自动重连">
+
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">WebSocket连接异常断开时自动重连
+· 仅适用于WebSocket正向连接</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.OneBot.AutoReconnect}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Header="纯文本发送">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">消息内容作为纯文本发送（即不解析CQ码）
+· 仅当OneBot版本为V11时生效</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.OneBot.AutoEscape}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Header="赋予所有群主和管理员管理权限">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">使监听群的群主和管理员与上方的管理权限列表中的用户拥有相同权限
+· 仅当OneBot版本为V11时生效</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.OneBot.GrantPermissionToGroupOwnerAndAdmins}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
 
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
-                Text="权限" />
-            <CheckBox
-                Click="OnPropertyChanged"
-                Content="赋予所有群主和管理员管理权限"
-                IsChecked="{Binding Value.Connection.GrantPermissionToOwnerAndAdmins}"
-                ToolTip="使监听群的群主和管理员与下面的管理权限列表中的用户拥有相同权限" />
-            <TextBox
-                x:Name="GroupTextBox"
-                ui:ControlHelper.Header="监听群列表"
-                ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
-                AcceptsReturn="False"
-                LostFocus="GroupTextBox_LostFocus"
-                ToolTip="要监听消息的群聊" />
-            <TextBox
-                x:Name="AdministratorsTextBox"
-                ui:ControlHelper.Header="管理权限列表"
-                ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
-                AcceptsReturn="False"
-                LostFocus="AdministratorsTextBox_LostFocus"
-                ToolTip="有管理权限的用户" />
+                Text="Satori" />
+
+            <ui:SettingsExpander Description="Api请求地址" Header="Api地址">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.Satori.ApiUrl}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            ui:ControlHelper.PlaceholderText="http://..."
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Satori.ApiUrl}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="用于鉴权的Authorization Bear Header" Header="Api鉴权凭证">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Satori.ApiAccessToken}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="事件WebSocket服务器地址" Header="事件地址">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.Satori.EventUrl}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            ui:ControlHelper.PlaceholderText="ws://..."
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Satori.EventUrl}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Description="用于鉴权的Token" Header="事件WebSocket鉴权凭证">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <TextBox
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Satori.EventAccessToken}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

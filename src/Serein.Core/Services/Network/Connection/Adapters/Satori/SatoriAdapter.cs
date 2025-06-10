@@ -68,7 +68,7 @@ public partial class SatoriAdapter : IConnectionAdapter
             JsonSerializerOptionsFactory.PacketStyle
         );
 
-        var request = new HttpRequestMessage(HttpMethod.Post, "message.create")
+        var request = new HttpRequestMessage(HttpMethod.Post, "v1/message.create")
         {
             Content = new StringContent(body, new MediaTypeHeaderValue("application/json")),
             Headers =
@@ -100,6 +100,7 @@ public partial class SatoriAdapter : IConnectionAdapter
         }
 
         _sn = null;
+        IsActive = true;
         HttpClient = new() { BaseAddress = new(_settingProvider.Value.Connection.Satori.ApiUrl) };
         _webSocket = CreateNew();
     }
@@ -111,6 +112,7 @@ public partial class SatoriAdapter : IConnectionAdapter
             throw new InvalidOperationException();
         }
 
+        IsActive = false;
         _webSocket?.Close();
         HttpClient.CancelPendingRequests();
         HttpClient.Dispose();
