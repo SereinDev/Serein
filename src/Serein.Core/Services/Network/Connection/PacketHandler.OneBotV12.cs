@@ -55,6 +55,8 @@ public partial class PacketHandler
                 _ => throw new NotSupportedException()
             }}] {packet.UserId}: {packet.FriendlyMessage} (id={packet.MessageId})"
         );
+
+        matcher.QueueMsg(packet);
     }
 
     private void HandleNoticePacket(NoticePacket? packet)

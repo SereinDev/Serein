@@ -19,7 +19,7 @@ public static class MatchTests
     }
 
     [Fact]
-    public static void ShouldCalculateMatchExclusion()
+    public static void ShouldWorkOutCorrectMatchExclusion()
     {
         var match = new Match { Exclusions = "a=1; b=2" };
         Assert.Empty(match.MatchExclusion.Servers);
@@ -35,11 +35,11 @@ public static class MatchTests
         Assert.Contains("1", match.MatchExclusion.Servers);
         Assert.Contains("4", match.MatchExclusion.Servers);
 
-        Assert.Contains(2, match.MatchExclusion.Groups);
-        Assert.Contains(5, match.MatchExclusion.Groups);
+        Assert.Contains("2", match.MatchExclusion.Groups);
+        Assert.Contains("5", match.MatchExclusion.Groups);
 
-        Assert.Contains(3, match.MatchExclusion.Users);
-        Assert.Contains(6, match.MatchExclusion.Users);
+        Assert.Contains("3", match.MatchExclusion.Users);
+        Assert.Contains("6", match.MatchExclusion.Users);
     }
 
     [Fact]

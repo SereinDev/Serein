@@ -1,10 +1,10 @@
 using System;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.OneBot;
 using Serein.ConnectionProtocols.Models.OneBot.Shared;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Json;
@@ -15,10 +15,17 @@ namespace Serein.Core.Services.Network.Connection.Adapters.OneBot;
 
 public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settingProvider)
 {
-    public string Build(TargetType targetType, string target, string text, Self? self)
+    public string Build(
+        TargetType targetType,
+        string target,
+        string text,
+        CommandArguments? commandArguments = null
+    )
     {
         if (settingProvider.Value.Connection.OneBot.Version == OneBotVersion.V11)
         {
+            var autoEscape =
+                commandArguments?.AutoEscape ?? settingProvider.Value.Connection.OneBot.AutoEscape;
             return JsonSerializer.Serialize(
                 new ActionRequest<V11.MessageParams>
                 {
@@ -29,14 +36,14 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
                             {
                                 UserId = long.Parse(target),
                                 Message = text,
-                                AutoEscape = settingProvider.Value.Connection.OneBot.AutoEscape,
+                                AutoEscape = autoEscape,
                             }
                         : targetType is TargetType.Group
                             ? new()
                             {
                                 GroupId = long.Parse(target),
                                 Message = text,
-                                AutoEscape = settingProvider.Value.Connection.OneBot.AutoEscape,
+                                AutoEscape = autoEscape,
                             }
                         : throw new NotSupportedException(),
                 },
@@ -45,6 +52,17 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
         }
         else
         {
+            var self = commandArguments?.Self;
+
+            if (
+                self is null
+                && !string.IsNullOrEmpty(settingProvider.Value.Connection.Self.Platform)
+                && !string.IsNullOrEmpty(settingProvider.Value.Connection.Self.UserId)
+            )
+            {
+                self = settingProvider.Value.Connection.Self;
+            }
+
             var segments = ParseMessageSegments(text);
             var action = new ActionRequest<V12.MessageParams>
             {

@@ -51,6 +51,11 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
 
     private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
     {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
         try
         {
             if (_settingProvider.Value.WebApi.IsEnabled)
@@ -77,6 +82,7 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
             _infoBarProvider.Enqueue("切换状态失败", ex.Message, InfoBarSeverity.Error);
             _logger.LogError(ex, "切换状态失败");
         }
+
         OnPropertyChanged(sender, e);
     }
 }

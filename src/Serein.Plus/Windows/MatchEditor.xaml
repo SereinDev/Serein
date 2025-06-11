@@ -91,6 +91,8 @@
                 <ComboBoxItem Content="群聊消息" />
                 <ComboBoxItem Content="私聊消息" />
                 <ComboBoxItem Content="自身消息" />
+                <ComboBoxItem Content="频道消息" />
+                <ComboBoxItem Content="群组消息" />
             </ComboBox>
             <TextBox ui:ControlHelper.Header="命令">
                 <TextBox.Text>

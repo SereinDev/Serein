@@ -23,7 +23,7 @@
     </Page.Resources>
 
     <ui:ScrollViewerEx>
-        <StackPanel Margin="20">
+        <StackPanel Margin="20,5,20,20">
 
             <ui:SettingsCard Header="启用">
                 <ui:ToggleSwitch IsOn="{Binding Value.WebApi.IsEnabled}" Toggled="ToggleSwitch_Toggled" />
@@ -34,19 +34,9 @@
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="常规" />
 
-            <ui:SettingsExpander Description="Http服务器监听的Url（一行一个）" Header="Url前缀">
+            <ui:SettingsExpander Description="Http服务器监听的Url" Header="Url前缀">
                 <ui:SettingsExpander.ItemsHeader>
                     <StackPanel>
-                        <ui:InfoBar
-                            Title="示例"
-                            BorderThickness="0,0,0,1"
-                            CornerRadius="0"
-                            IsOpen="True"
-                            Severity="Informational">
-                            <ui:InfoBar.Message>
-                                “http://127.0.0.1:12345”（只允许内网访问）、“http://*:8080”（允许外网访问，需要以管理员身份运行Serein）、“http://example.com”（使用域名）
-                            </ui:InfoBar.Message>
-                        </ui:InfoBar>
                         <ui:InfoBar
                             Title="提示"
                             BorderThickness="0"
@@ -54,7 +44,20 @@
                             IsOpen="True"
                             Severity="Informational">
                             <ui:InfoBar.Message>
-                                此Url支持HTTPS，但需要在下方填写证书设置
+                                <sys:String xml:space="preserve">· 使用换行符分隔每一个值，即一行一个值
+· 使用HTTPS协议时，需要在下方设置证书</sys:String>
+                            </ui:InfoBar.Message>
+                        </ui:InfoBar>
+                        <ui:InfoBar
+                            Title="示例"
+                            BorderThickness="0,1"
+                            CornerRadius="0"
+                            IsOpen="True"
+                            Severity="Informational">
+                            <ui:InfoBar.Message>
+                                <sys:String xml:space="preserve">· 只允许内网访问：“http://127.0.0.1:12345”、“https://127.0.0.1:12345”、“http://[::1]:12345”
+· 允许外网访问：“http://*:8080”（可能需要以管理员身份运行）
+· 使用域名：“http://example.com”</sys:String>
                             </ui:InfoBar.Message>
                         </ui:InfoBar>
                     </StackPanel>
@@ -87,7 +90,20 @@
                     Value="{Binding Value.WebApi.MaxRequestsPerSecond}" />
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Description="无视请求速度限制的IP列表；一行一个" Header="IP请求白名单">
+            <ui:SettingsExpander Description="无视请求速度限制的IP列表" Header="IP请求白名单">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用换行符分隔每一个值，即一行一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
@@ -100,10 +116,23 @@
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="访问凭证">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用换行符分隔每一个值，即一行一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <ui:SettingsExpander.Description>
-                    <sys:String xml:space="preserve">一行一个
-· 若值不为空，请求时“/api”下的任意资源均需要在Header中添加Authentication Bearer项</sys:String>
+                    若值不为空，请求时“/api”下的任意资源均需要在请求头中添加Authentication项，即“Authentication: Bearer [Token]”
                 </ui:SettingsExpander.Description>
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
@@ -122,6 +151,7 @@
 
             <ui:InfoBar
                 Title="警告"
+                Margin="0,5"
                 IsClosable="False"
                 IsOpen="True"
                 Message="此功能仅适用于Windows系统"

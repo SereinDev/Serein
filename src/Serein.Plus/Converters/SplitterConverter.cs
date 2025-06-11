@@ -17,12 +17,9 @@ public class SplitterConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string v && parameter is string p && !string.IsNullOrEmpty(p))
+        if (value is string v && parameter is string p && !string.IsNullOrEmpty(p)&& targetType == typeof(string[]))
         {
-            if (targetType.IsArray && targetType.GetElementType() is Type type)
-            {
-                return v.Split(p).Select(x => System.Convert.ChangeType(x, type)).ToArray();
-            }
+            return v.Split(p, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         }
         throw new NotSupportedException();
     }

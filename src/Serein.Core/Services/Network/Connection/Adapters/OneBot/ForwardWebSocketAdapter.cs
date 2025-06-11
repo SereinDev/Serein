@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using WebSocket4Net;
@@ -104,9 +104,14 @@ public sealed class ForwardWebSocketAdapter(
         return Task.CompletedTask;
     }
 
-    public Task SendMessageAsync(TargetType type, string target, string content, Self? self = null)
+    public Task SendMessageAsync(
+        TargetType type,
+        string target,
+        string content,
+        CommandArguments? commandArguments = null
+    )
     {
-        return SendAsync(actionBuilder.Build(type, target, content, self));
+        return SendAsync(actionBuilder.Build(type, target, content, commandArguments));
     }
 
     public void Start()

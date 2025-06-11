@@ -76,4 +76,38 @@ public static class CommandTests
             Assert.True(e.Message == exceptedMsg || e.Message.Contains(exceptedMsg));
         }
     }
+
+    [Fact]
+    public static void ShouldParseCommandWithMultiArguments()
+    {
+        var cmd = Parser.Parse(
+            CommandOrigin.Null,
+            "[g:target=114514,autoEscape=true,self=qq.121313]hello world",
+            true
+        );
+
+        Assert.Equal(CommandType.SendGroupMsg, cmd.Type);
+        Assert.Equal("hello world", cmd.Body);
+
+        Assert.NotNull(cmd.Arguments);
+        Assert.Equal("114514", cmd.Arguments.Target);
+        Assert.True(cmd.Arguments.AutoEscape);
+        Assert.Equal("qq", cmd.Arguments.Self?.Platform);
+        Assert.Equal("121313", cmd.Arguments.Self?.UserId);
+    }
+
+    [Theory]
+    [InlineData("[g:self=qq.121313]hello world")]
+    [InlineData("[g:self_id=121313,self_platform=qq]hello world")]
+    [InlineData("[g:selfId=121313,selfPlatform=qq]hello world")]
+    [InlineData("[g:self_id=123131313123,self_platform=awdadwdasdwa,self=qq.121313]hello world")]
+    public static void ShouldParseCommandWithSenderArguments(string command)
+    {
+        var cmd = Parser.Parse(CommandOrigin.Null, command, true);
+
+        Assert.NotNull(cmd.Arguments);
+        Assert.True(string.IsNullOrEmpty(cmd.Arguments.Target));
+        Assert.Equal("qq", cmd.Arguments.Self?.Platform);
+        Assert.Equal("121313", cmd.Arguments.Self?.UserId);
+    }
 }

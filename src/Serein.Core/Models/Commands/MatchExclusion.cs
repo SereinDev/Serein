@@ -4,9 +4,11 @@ namespace Serein.Core.Models.Commands;
 
 public record MatchExclusion
 {
-    public List<long> Groups { get; init; } = [];
+    public List<string> Channels { get; init; } = [];
 
-    public List<long> Users { get; init; } = [];
+    public List<string> Groups { get; init; } = [];
+
+    public List<string> Users { get; init; } = [];
 
     public List<string> Servers { get; init; } = [];
 }

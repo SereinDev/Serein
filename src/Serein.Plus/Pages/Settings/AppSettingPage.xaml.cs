@@ -42,14 +42,15 @@ public partial class AppSettingPage : Page
         {
             VersionInfoBar.IsOpen = true;
             VersionInfoBar.Severity = InfoBarSeverity.Informational;
-            VersionInfoBar.Title = "·¢ÏÖÐÂ°æ±¾";
-            VersionInfoBar.Message = $"µ±Ç°°æ±¾£º{_sereinApp.Version}£¬×îÐÂ°æ±¾£º{_updateChecker.Latest.TagName}";
+            VersionInfoBar.Title = "å‘çŽ°æ–°ç‰ˆæœ¬";
+            VersionInfoBar.Message =
+                $"å½“å‰ç‰ˆæœ¬ï¼š{_sereinApp.Version}ï¼Œæœ€æ–°ç‰ˆæœ¬ï¼š{_updateChecker.Latest.TagName}";
         }
         else if (_updateChecker.LastResult is not null)
         {
             VersionInfoBar.IsOpen = true;
             VersionInfoBar.Severity = InfoBarSeverity.Success;
-            VersionInfoBar.Title = $"µ±Ç°ÒÑÊÇ×îÐÂ°æ±¾£¨{_sereinApp.Version}£©";
+            VersionInfoBar.Title = $"å½“å‰å·²æ˜¯æœ€æ–°ç‰ˆæœ¬ï¼ˆ{_sereinApp.Version}ï¼‰";
             VersionInfoBar.Message = null;
         }
     }
@@ -78,17 +79,26 @@ public partial class AppSettingPage : Page
     {
         if (sender is SettingsCard { IsEnabled: true } settingsCard)
         {
-                    VersionInfoBar.IsOpen = false;
+            VersionInfoBar.IsOpen = false;
             settingsCard.IsEnabled = false;
-            settingsCard.Content = new ProgressRing { IsActive = true, Width = 25, Height = 25 };
+            settingsCard.Content = new ProgressRing
+            {
+                IsActive = true,
+                Width = 25,
+                Height = 25,
+            };
 
-            _updateChecker.CheckAsync().ContinueWith((task) =>
-                Dispatcher.Invoke(() =>
-                {
-                    settingsCard.IsEnabled = true;
-                    settingsCard.Content = null;
-                    UpdateVersionInfoBar();
-                }));
+            _updateChecker
+                .CheckAsync()
+                .ContinueWith(
+                    (task) =>
+                        Dispatcher.Invoke(() =>
+                        {
+                            settingsCard.IsEnabled = true;
+                            settingsCard.Content = null;
+                            UpdateVersionInfoBar();
+                        })
+                );
         }
     }
 }

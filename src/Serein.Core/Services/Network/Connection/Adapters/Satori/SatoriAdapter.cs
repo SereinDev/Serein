@@ -4,9 +4,9 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Timers;
-using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.Satori.V1;
 using Serein.Core.Models.Abstractions;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils.Json;
@@ -55,7 +55,7 @@ public partial class SatoriAdapter : IConnectionAdapter
         TargetType type,
         string target,
         string content,
-        Self? self = null
+        CommandArguments? commandArguments = null
     )
     {
         if (!IsActive)
@@ -80,6 +80,17 @@ public partial class SatoriAdapter : IConnectionAdapter
                     : null,
             },
         };
+
+        var self = commandArguments?.Self;
+
+        if (
+            self is null
+            && !string.IsNullOrEmpty(_settingProvider.Value.Connection.Self.Platform)
+            && !string.IsNullOrEmpty(_settingProvider.Value.Connection.Self.UserId)
+        )
+        {
+            self = _settingProvider.Value.Connection.Self;
+        }
 
         if (self is not null)
         {

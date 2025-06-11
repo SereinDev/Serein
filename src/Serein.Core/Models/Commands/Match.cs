@@ -61,24 +61,22 @@ public class Match : NotifyPropertyChangedModelBase
                 if (args.Length == 2)
                 {
                     var arg = args[1].Trim();
-                    switch (args[0].Trim())
+                    switch (args[0].Trim().ToLowerInvariant())
                     {
                         case "server":
                             MatchExclusion.Servers.Add(arg);
                             break;
 
                         case "group":
-                            if (long.TryParse(arg, out var group))
-                            {
-                                MatchExclusion.Groups.Add(group);
-                            }
+                            MatchExclusion.Groups.Add(arg);
+                            break;
+
+                        case "channel":
+                            MatchExclusion.Channels.Add(arg);
                             break;
 
                         case "user":
-                            if (long.TryParse(arg, out var user))
-                            {
-                                MatchExclusion.Users.Add(user);
-                            }
+                            MatchExclusion.Users.Add(arg);
                             break;
                     }
                 }

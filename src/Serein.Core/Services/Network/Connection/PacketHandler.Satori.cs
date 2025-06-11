@@ -21,28 +21,30 @@ public partial class PacketHandler
             return;
         }
 
-        var eventData = JsonSerializer.Deserialize<EventBody>(
+        var eventBody = JsonSerializer.Deserialize<EventBody>(
             signal.Body,
             JsonSerializerOptionsFactory.PacketStyle
         );
 
         // https://satori.js.org/zh-CN/resources/message.html
         if (
-            eventData?.Type != "message-created"
-            || string.IsNullOrEmpty(eventData.Channel?.Id)
-            || eventData.Message is null
+            eventBody?.Type != "message-created"
+            || string.IsNullOrEmpty(eventBody.Channel?.Id)
+            || eventBody.Message is null
         )
         {
             return;
         }
 
         _connectionLogger.Value.LogReceivedMessage(
-            $"[频道({eventData.Channel.Id})] {eventData.Message.User?.Nick ?? eventData.Message.User?.Name}({eventData.Message.User?.Id}: {eventData.Message.Content} (id={eventData.Message.Id})"
+            $"[频道({eventBody.Channel.Id})] {eventBody.Message.User?.Nick ?? eventBody.Message.User?.Name}({eventBody.Message.User?.Id}: {eventBody.Message.Content} (id={eventBody.Message.Id})"
         );
 
-        if (!IsListenedId(TargetType.Channel, eventData.Channel.Id))
+        if (!IsListenedId(TargetType.Channel, eventBody.Channel.Id))
         {
             return;
         }
+
+        matcher.QueueMsg(eventBody);
     }
 }

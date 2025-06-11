@@ -224,6 +224,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         {
             _logWriter.WriteAsync($"{DateTime.Now:t} [Sent] {data}");
         }
+
         if (_settingProvider.Value.Connection.OutputData)
         {
             _connectionLogger.Value.LogSentData(data);

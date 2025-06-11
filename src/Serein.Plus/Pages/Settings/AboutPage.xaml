@@ -19,7 +19,7 @@
     </Page.Resources>
 
     <ui:ScrollViewerEx>
-        <StackPanel Margin="20">
+        <StackPanel Margin="20,5,20,20">
             <StackPanel.Resources>
                 <Style TargetType="ui:SettingsCard">
                     <Setter Property="Margin" Value="0,5" />

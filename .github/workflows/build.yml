@@ -32,7 +32,6 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Publish the solution
-        continue-on-error: true
         run: ./src/Scripts/publish.bat
 
       # Serein.Lite

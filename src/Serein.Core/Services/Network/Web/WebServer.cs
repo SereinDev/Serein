@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using EmbedIO;
 using EmbedIO.WebApi;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,8 +25,9 @@ public sealed class WebServer
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<WebServer> _logger;
     private readonly SettingProvider _settingProvider;
-    private readonly List<IDisposable> _disposables;
+    private readonly CancellationTokenProvider _cancellationTokenProvider;
     private EmbedIO.WebServer? _webServer;
+    private CancellationTokenSource? _cancellationTokenSource;
 
     public WebServer(
         IServiceProvider serviceProvider,
@@ -39,7 +40,7 @@ public sealed class WebServer
         _serviceProvider = serviceProvider;
         _logger = logger;
         _settingProvider = settingProvider;
-        _disposables = [];
+        _cancellationTokenProvider = cancellationTokenProvider;
 
         if (!Directory.Exists(PathConstants.WebRoot) && !pageExtractor.TryExtract())
         {
@@ -48,23 +49,6 @@ public sealed class WebServer
                 $"<p>你可以在 https://github.com/SereinDev/Web 仓库下载最新的构建或最新的版本，手动将解压后的文件复制到文件夹“{PathConstants.WebRoot}”下</p>"
             );
         }
-
-        cancellationTokenProvider.Token.Register(() =>
-        {
-            if (State == WebServerState.Stopped)
-            {
-                return;
-            }
-
-            try
-            {
-                Stop();
-            }
-            catch (Exception ex) when (ex is not InvalidOperationException)
-            {
-                _logger.LogError(ex, "网页服务器关闭失败");
-            }
-        });
     }
 
     public WebServerState State => _webServer?.State ?? WebServerState.Stopped;
@@ -87,16 +71,13 @@ public sealed class WebServer
 
         var serverWebSocketModule = _serviceProvider.GetRequiredService<ServerWebSocketModule>();
         _webServer.WithModule(serverWebSocketModule);
-        _disposables.Add(serverWebSocketModule);
 
         var connectionWebSocketModule =
             _serviceProvider.GetRequiredService<ConnectionWebSocketModule>();
         _webServer.WithModule(connectionWebSocketModule);
-        _disposables.Add(connectionWebSocketModule);
 
         var ipBannerModule = _serviceProvider.GetRequiredService<IpBannerModule>();
         _webServer.WithModule(ipBannerModule);
-        _disposables.Add(ipBannerModule);
 
         _webServer.WithWebApi(
             "/api",
@@ -108,7 +89,11 @@ public sealed class WebServer
         );
         _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
 
-        _webServer.Start();
+        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+            _cancellationTokenProvider.Token
+        );
+        _webServer.Start(_cancellationTokenSource.Token);
+
         _logger.LogInformation("网页服务器已启动");
         _logger.LogInformation(
             "当前监听的Url： {}{}",
@@ -128,9 +113,8 @@ public sealed class WebServer
             throw new InvalidOperationException("网页服务器不在运行中");
         }
 
-        _disposables.ForEach((d) => d.Dispose());
-        _disposables.Clear();
-
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
         _webServer.Dispose();
         _logger.LogInformation("网页服务器已停止");
     }

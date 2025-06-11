@@ -41,11 +41,23 @@
                     Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Description="此处的程序集将会被所有JS插件加载；一行一个" Header="JS插件全局加载的程序集">
+            <ui:SettingsExpander Description="此处的程序集将会被所有JS插件加载" Header="JS插件全局加载的程序集">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用换行符分隔每一个值，即一行一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
-                            ui:ControlHelper.PlaceholderText="一行一个"
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
                             Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
@@ -54,7 +66,20 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Description="凡是以所选内容结尾的文件都不会被加载；一行一个" Header="JS插件加载时忽略的文件后缀">
+            <ui:SettingsExpander Description="凡是以所选内容结尾的文件都不会被加载" Header="JS插件加载时忽略的文件后缀">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用换行符分隔每一个值，即一行一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
@@ -72,6 +97,19 @@
                 Text="绑定" />
 
             <ui:SettingsExpander Description="绑定时游戏名称需要符合此正则" Header="游戏名称检验正则">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            正则语法错误可能导致无法正确处理绑定
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.RegexForCheckingGameId}" />
 
                 <ui:SettingsExpander.Items>
@@ -94,7 +132,21 @@
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="其他" />
 
-            <ui:SettingsExpander Description="当输入的内容若含有以下内容将触发多行匹配；一行一个" Header="用于触发多行匹配的文本">
+            <ui:SettingsExpander Description="当输入的内容若含有以下内容将触发多行匹配" Header="用于触发多行匹配的文本">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用换行符分隔每一个值，即一行一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox

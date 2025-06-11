@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
+using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
@@ -18,6 +19,7 @@ internal sealed partial class CoreService : IHostedService
 {
     private readonly ILogger<CoreService> _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly ConnectionManager _connectionManager;
     private readonly CancellationTokenProvider _cancellationTokenProvider;
     private readonly ServerManager _serverManager;
     private readonly UpdateChecker _updateChecker;
@@ -31,6 +33,7 @@ internal sealed partial class CoreService : IHostedService
         UpdateChecker updateChecker,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
+        ConnectionManager connectionManager,
         CancellationTokenProvider cancellationTokenProvider
     )
     {
@@ -39,6 +42,7 @@ internal sealed partial class CoreService : IHostedService
         _serverManager = serverManager;
         _updateChecker = updateChecker;
         _settingProvider = settingProvider;
+        _connectionManager = connectionManager;
         _cancellationTokenProvider = cancellationTokenProvider;
 
         _logger.LogInformation("Serein.{} {}", sereinApp.Type, sereinApp.Version);
@@ -76,6 +80,11 @@ internal sealed partial class CoreService : IHostedService
         if (_settingProvider.Value.WebApi.IsEnabled)
         {
             Try(_httpServer.Start, "Web Server");
+        }
+
+        if (_settingProvider.Value.Connection.ConnectWhenSettingUp)
+        {
+            Try(_connectionManager.Start, "Connection");
         }
 
         _logger.LogInformation("Serein启动成功！");

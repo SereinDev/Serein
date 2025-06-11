@@ -119,7 +119,7 @@ public sealed class CommandRunner
                         _bindingManager.Add(
                             commandContext.Value.UserId,
                             body,
-                            StringExtension.SelectNotNullOrEmpty(
+                            StringExtension.SelectValueNotNullOrEmpty(
                                 commandContext.Value.OneBotV11MessagePacket?.Sender.Card,
                                 commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
                                 commandContext.Value.SatoriV1MessagePacket?.User?.Nick,

@@ -21,7 +21,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <ui:ScrollViewerEx>
-        <StackPanel Margin="20">
+        <StackPanel Margin="20,5,20,20">
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"
@@ -44,6 +44,10 @@
                 <ui:ToggleSwitch IsOn="{Binding Value.Connection.SaveLog}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
+            <ui:SettingsCard Description="Serein启动后自动开启连接" Header="自动连接">
+                <ui:ToggleSwitch IsOn="{Binding Value.Connection.ConnectWhenSettingUp}" Toggled="OnPropertyChanged" />
+            </ui:SettingsCard>
+
             <ui:SettingsExpander Description="要监听消息的群聊、频道或群组" Header="监听列表">
                 <ui:SettingsExpander.ItemsHeader>
                     <ui:InfoBar
@@ -53,7 +57,10 @@
                         IsOpen="True"
                         Severity="Informational">
                         <ui:InfoBar.Message>
-                            直接填写Id 或 {来源}:{Id}的格式字符串，其中来源可为g/group（群聊）、c/channel（频道）、guild（群组），如“g:12345”或“group:12345”
+                            <sys:String xml:space="preserve">· 直接填写Id 或 [来源]:[Id] 的格式字符串
+    · 其中来源可为g/group（群聊）、c/channel（频道）、guild（群组）
+    · 例：“g:12345”或“group:12345”
+· 使用分号";"分隔每一个值</sys:String>
                         </ui:InfoBar.Message>
                     </ui:InfoBar>
                 </ui:SettingsExpander.ItemsHeader>
@@ -61,21 +68,59 @@
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
-                            ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
                             AcceptsReturn="False"
-                            LostFocus="OnPropertyChanged" />
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.ListenedIds, Converter={StaticResource splitterConverter}, ConverterParameter=';'}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Description="有管理权限的用户" Header="管理权限列表">
+                <ui:SettingsExpander.ItemsHeader>
+                    <ui:InfoBar
+                        Title="提示"
+                        BorderThickness="0"
+                        CornerRadius="0"
+                        IsOpen="True"
+                        Severity="Informational">
+                        <ui:InfoBar.Message>
+                            使用分号";"分隔每一个值
+                        </ui:InfoBar.Message>
+                    </ui:InfoBar>
+                </ui:SettingsExpander.ItemsHeader>
+
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
-                            x:Name="AdministratorsTextBox"
-                            ui:ControlHelper.PlaceholderText="使用&quot;;&quot;分隔"
                             AcceptsReturn="False"
-                            LostFocus="OnPropertyChanged" />
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.AdministratorUserIds, Converter={StaticResource splitterConverter}, ConverterParameter=';'}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="默认发送者">
+                <ui:SettingsExpander.Description>
+                    <sys:String xml:space="preserve">当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者
+· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项
+· 若选择Satori适配器，无论是否登录多个账号都需要设置此项</sys:String>
+                </ui:SettingsExpander.Description>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="用户Id">
+                        <TextBox
+                            Width="300"
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Self.UserId}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="平台名称">
+                        <TextBox
+                            Width="300"
+                            AcceptsReturn="False"
+                            LostFocus="OnPropertyChanged"
+                            Text="{Binding Value.Connection.Self.Platform}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
@@ -184,7 +229,7 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Description="用于鉴权的Authorization Bear Header" Header="Api鉴权凭证">
+            <ui:SettingsExpander Description="用于鉴权的Authorization Header" Header="Api鉴权凭证">
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox

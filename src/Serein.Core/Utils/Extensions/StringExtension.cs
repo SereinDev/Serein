@@ -60,7 +60,7 @@ public static class StringExtension
         );
     }
 
-    public static string? SelectNotNullOrEmpty(params string?[] values)
+    public static string? SelectValueNotNullOrEmpty(params string?[] values)
     {
         foreach (var value in values)
         {
