@@ -167,6 +167,12 @@
                 <ui:ToggleSwitch IsOn="{Binding Value.Application.EnableSentry}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
+            <ui:SettingsCard
+                Click="OpenConsole_Click"
+                Description="查看Serein内部的输出，这可能带来一定卡顿和延迟"
+                Header="打开日志控制台"
+                IsClickEnabled="True" />
+
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"

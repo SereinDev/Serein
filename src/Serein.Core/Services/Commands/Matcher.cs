@@ -200,18 +200,18 @@ public sealed class Matcher
                     continue;
                 }
 
-                if (!CheckExclusions(match, v11Packet, v12Packet, satoriPacket))
+                if (CheckExclusions(match, v11Packet, v12Packet, satoriPacket))
                 {
                     continue;
                 }
 
-                Match(match);
+                RunMatch(match);
             }
         }
 
         Task.WaitAll([.. tasks]);
 
-        void Match(Match match)
+        void RunMatch(Match match)
         {
             if (
                 match.RegexObj is null
@@ -247,7 +247,9 @@ public sealed class Matcher
             {
                 case MatchFieldType.GroupMsg:
                     return v11Packet?.MessageType == MessageType.Group
-                        || v12Packet?.DetailType == MessageDetailType.Group;
+                        || v12Packet?.DetailType == MessageDetailType.Group
+                        || satoriPacket is not null
+                            && satoriPacket.Channel?.Type != ChannelType.Direct;
 
                 case MatchFieldType.PrivateMsg:
                     return v11Packet?.MessageType == MessageType.Private
@@ -258,9 +260,7 @@ public sealed class Matcher
                     return v11Packet is not null && v11Packet.UserId == v11Packet.SelfId;
 
                 case MatchFieldType.ChannelMsg:
-                    return v12Packet?.DetailType == MessageDetailType.Channel
-                        || satoriPacket is not null
-                            && satoriPacket.Channel?.Type == ChannelType.Direct;
+                    return v12Packet?.DetailType == MessageDetailType.Channel;
 
                 case MatchFieldType.GuildMsg:
                     return v12Packet?.DetailType == MessageDetailType.Guild;
@@ -321,9 +321,9 @@ public sealed class Matcher
 
         if (eventBody is not null)
         {
-            return match.FieldType == MatchFieldType.ChannelMsg
+            return match.FieldType == MatchFieldType.GroupMsg
                     && !string.IsNullOrEmpty(eventBody.Channel?.Id)
-                    && match.MatchExclusion.Channels.Contains(eventBody.Channel.Id)
+                    && match.MatchExclusion.Groups.Contains(eventBody.Channel.Id)
                 || match.MatchExclusion.Users.Contains(eventBody.User?.Id ?? string.Empty);
         }
 

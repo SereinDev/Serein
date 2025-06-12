@@ -32,8 +32,12 @@ public partial class App : Application
     {
         var builder = SereinAppBuilder.CreateBuilder();
 
+        var provider = new ConsoleLoggerProvider();
+        builder.Logging.AddProvider(provider);
+
         builder
-            .Services.AddSingleton<TitleUpdater>()
+            .Services.AddSingleton(provider)
+            .AddSingleton<TitleUpdater>()
             .AddSingleton<InfoBarProvider>()
             .AddSingleton<BalloonTipProvider>()
             .AddSingleton<MainWindow>()

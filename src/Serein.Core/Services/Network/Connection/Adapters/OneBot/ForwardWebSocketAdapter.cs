@@ -60,9 +60,6 @@ public sealed class ForwardWebSocketAdapter(
         );
 
         client.MessageReceived += DataReceived;
-        client.Opened += StatusChanged;
-        client.Closed += StatusChanged;
-        client.Error += (_, _) => StatusChanged?.Invoke(this, EventArgs.Empty);
 
         client.Opened += (_, _) =>
         {
@@ -82,6 +79,10 @@ public sealed class ForwardWebSocketAdapter(
                 LogLevel.Error,
                 $"{e.Exception.GetType().FullName}: {e.Exception.Message}"
             );
+
+        client.Opened += StatusChanged;
+        client.Closed += StatusChanged;
+        client.Error += (_, _) => StatusChanged?.Invoke(this, EventArgs.Empty);
 
         return client;
     }

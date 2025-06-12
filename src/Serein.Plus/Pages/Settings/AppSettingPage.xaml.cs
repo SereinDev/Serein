@@ -3,10 +3,13 @@ using System.Windows;
 using System.Windows.Controls;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
+using Microsoft.Extensions.Logging;
 using Serein.Core;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network;
+using Serein.Plus.Services.Loggers;
+using Serein.Plus.Windows;
 using Page = iNKORE.UI.WPF.Modern.Controls.Page;
 
 namespace Serein.Plus.Pages.Settings;
@@ -16,17 +19,19 @@ public partial class AppSettingPage : Page
     private readonly SereinApp _sereinApp;
     private readonly SettingProvider _settingProvider;
     private readonly UpdateChecker _updateChecker;
+    private readonly ConsoleLoggerProvider _consoleLoggerProvider;
 
     public AppSettingPage(
         SereinApp sereinApp,
         SettingProvider settingProvider,
-        UpdateChecker updateChecker
+        UpdateChecker updateChecker,
+        ConsoleLoggerProvider consoleLoggerProvider
     )
     {
         _sereinApp = sereinApp;
         _settingProvider = settingProvider;
         _updateChecker = updateChecker;
-
+        _consoleLoggerProvider = consoleLoggerProvider;
         InitializeComponent();
         UpdateVersionInfoBar();
 
@@ -91,7 +96,7 @@ public partial class AppSettingPage : Page
             _updateChecker
                 .CheckAsync()
                 .ContinueWith(
-                    (task) =>
+                    (_) =>
                         Dispatcher.Invoke(() =>
                         {
                             settingsCard.IsEnabled = true;
@@ -99,6 +104,32 @@ public partial class AppSettingPage : Page
                             UpdateVersionInfoBar();
                         })
                 );
+        }
+    }
+
+    private ConsoleWindow? _consoleWindow;
+
+    private void OpenConsole_Click(object sender, RoutedEventArgs e)
+    {
+        if (_consoleWindow is null)
+        {
+            _consoleWindow = new();
+            _consoleLoggerProvider.LogWritten += Write;
+            _consoleWindow.Closed += (_, _) =>
+            {
+                _consoleLoggerProvider.LogWritten -= Write;
+                _consoleWindow = null;
+            };
+        }
+
+        _consoleWindow.Show();
+        _consoleWindow.Focus();
+
+        void Write(object? sender, (LogLevel Level, string Line) args)
+        {
+            _consoleWindow?.Dispatcher.Invoke(
+                () => _consoleWindow.WriteLine(args.Level, args.Line)
+            );
         }
     }
 }

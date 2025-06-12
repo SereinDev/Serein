@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Models.Network.Connection;
@@ -37,10 +38,13 @@ public partial class PacketHandler
         }
 
         _connectionLogger.Value.LogReceivedMessage(
-            $"[频道({eventBody.Channel.Id})] {eventBody.Message.User?.Nick ?? eventBody.Message.User?.Name}({eventBody.Message.User?.Id}: {eventBody.Message.Content} (id={eventBody.Message.Id})"
+            $"[{(eventBody.Channel.Type == ChannelType.Direct ? "私聊" : "群聊")}({eventBody.Channel.Id})] {eventBody.User?.Nick ?? eventBody.User?.Name}({eventBody.User?.Id}): {eventBody.Message.Content} (id={eventBody.Message.Id})"
         );
 
-        if (!IsListenedId(TargetType.Channel, eventBody.Channel.Id))
+        if (
+            eventBody.Channel.Type != ChannelType.Direct
+            && !IsListenedId(TargetType.Group, eventBody.Channel.Id)
+        )
         {
             return;
         }

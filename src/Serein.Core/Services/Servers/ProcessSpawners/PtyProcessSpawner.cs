@@ -92,7 +92,7 @@ internal sealed class PtyProcessSpawner(
                     CurrentProcess = Process.GetProcessById(_ptyConnection.Pid);
                     _ptyConnection.ProcessExited += (_, e) =>
                     {
-                        _ptyConnection.Dispose();
+                        _ptyConnection?.Dispose();
                         _ptyConnection = null;
                         _streamReader?.Close();
                         _cancellationTokenSource.Cancel();

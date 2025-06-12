@@ -187,7 +187,6 @@
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Permissions}" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-
             </ui:NavigationView.MenuItems>
 
             <ui:Frame

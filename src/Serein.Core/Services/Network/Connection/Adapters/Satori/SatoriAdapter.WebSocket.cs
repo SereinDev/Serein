@@ -1,6 +1,8 @@
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
@@ -13,31 +15,66 @@ public partial class SatoriAdapter
 {
     private WebSocket? _webSocket;
 
+    private string _uri = string.Empty;
+
     private WebSocket CreateNew()
     {
+        var uri = UrlRegex.Replace(_settingProvider.Value.Connection.Satori.Uri, "ws");
+
+        if (!uri.EndsWith('/'))
+        {
+            uri += "/";
+        }
+
+        uri += "v1/events";
+
+        _uri = uri;
+
         var webSocket = new WebSocket(
-            _settingProvider.Value.Connection.Satori.EventUrl,
+            uri,
             customHeaderItems: !string.IsNullOrEmpty(
                 _settingProvider.Value.Connection.OneBot.AccessToken
             )
                 ? new()
                 {
-                    new KeyValuePair<string, string>(
+                    new(
                         "Authorization",
-                        $"Bearer {_settingProvider.Value.Connection.Satori.ApiAccessToken}"
+                        $"Bearer {_settingProvider.Value.Connection.Satori.AccessToken}"
                     ),
                 }
                 : null
         );
 
         webSocket.Opened += (_, _) => OnOpened(webSocket);
-        webSocket.Closed += StatusChanged;
-        webSocket.Closed += (_, _) => _timer.Stop();
-        webSocket.MessageReceived += DataReceived;
+        webSocket.Closed += (_, _) =>
+        {
+            _timer.Stop();
+            _logger.Log(LogLevel.Information, $"WebSocket 连接已断开");
+            StatusChanged?.Invoke(this, EventArgs.Empty);
+
+            TryReconnect();
+        };
         webSocket.MessageReceived += OnDataReceived;
         webSocket.Error += (_, e) => _logger.Log(LogLevel.Error, e.Exception.Message);
 
         return webSocket;
+    }
+
+    private async Task TryReconnect()
+    {
+        if (!IsActive || _webSocket?.State != WebSocketState.Closed)
+        {
+            return;
+        }
+
+        _logger.Log(
+            LogLevel.Information,
+            $"将在五秒后（{DateTime.Now.AddSeconds(5):T}）尝试重新连接"
+        );
+
+        await Task.Delay(5000, _cancellationTokenSource.Token);
+
+        _webSocket = CreateNew();
     }
 
     private void OnDataReceived(object? sender, MessageReceivedEventArgs e)
@@ -64,24 +101,33 @@ public partial class SatoriAdapter
                 _sn = eventBody.Sn;
             }
         }
+
+        DataReceived?.Invoke(this, new(e.Message));
     }
 
     private void OnOpened(WebSocket webSocket)
     {
-        webSocket.Send(
-            JsonSerializer.Serialize(
-                new Signal<IdentifyBody>
+        _logger.Log(LogLevel.Information, $"成功连接到 {_uri}");
+
+        var data = JsonSerializer.Serialize(
+            new Signal<IdentifyBody>
+            {
+                Op = Opcode.Identify,
+                Body = new()
                 {
-                    Op = Opcode.Identify,
-                    Body = new()
-                    {
-                        Token = _settingProvider.Value.Connection.Satori.EventAccessToken,
-                        Sn = _sn,
-                    },
+                    Token = _settingProvider.Value.Connection.Satori.AccessToken,
+                    Sn = _sn,
                 },
-                JsonSerializerOptionsFactory.PacketStyle
-            )
+            },
+            JsonSerializerOptionsFactory.PacketStyle
         );
+
+        webSocket.Send(data);
+
+        if (_settingProvider.Value.Connection.OutputData)
+        {
+            _logger.LogSentData(data);
+        }
 
         _timer.Start();
     }
@@ -93,11 +139,21 @@ public partial class SatoriAdapter
             return;
         }
 
-        _webSocket.Send(
-            JsonSerializer.Serialize(
-                new Signal<object?> { Op = Opcode.Ping },
-                JsonSerializerOptionsFactory.PacketStyle
-            )
+        var data = JsonSerializer.Serialize(
+            new Signal<object?> { Op = Opcode.Ping },
+            JsonSerializerOptionsFactory.PacketStyle
         );
+
+        _webSocket.Send(data);
+
+        if (_settingProvider.Value.Connection.OutputData)
+        {
+            _logger.LogSentData(data);
+        }
     }
+
+    private static readonly Regex UrlRegex = GetUrlRegex();
+
+    [GeneratedRegex(@"^http")]
+    private static partial Regex GetUrlRegex();
 }

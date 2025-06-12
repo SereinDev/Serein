@@ -215,8 +215,8 @@
                 Style="{DynamicResource SubtitleTextBlockStyle}"
                 Text="Satori" />
 
-            <ui:SettingsExpander Description="Api请求地址" Header="Api地址">
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.Satori.ApiUrl}" />
+            <ui:SettingsExpander Description="用于Api请求的地址" Header="地址">
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.Satori.Uri}" />
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
@@ -224,43 +224,18 @@
                             ui:ControlHelper.PlaceholderText="http://..."
                             AcceptsReturn="False"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Connection.Satori.ApiUrl}" />
+                            Text="{Binding Value.Connection.Satori.Uri}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Description="用于鉴权的Authorization Header" Header="Api鉴权凭证">
+            <ui:SettingsExpander Description="用于鉴权的Token" Header="鉴权凭证">
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
                             AcceptsReturn="False"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Connection.Satori.ApiAccessToken}" />
-                    </ui:SettingsCard>
-                </ui:SettingsExpander.Items>
-            </ui:SettingsExpander>
-
-            <ui:SettingsExpander Description="事件WebSocket服务器地址" Header="事件地址">
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.Satori.EventUrl}" />
-
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsCard ContentAlignment="Left">
-                        <TextBox
-                            ui:ControlHelper.PlaceholderText="ws://..."
-                            AcceptsReturn="False"
-                            LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Connection.Satori.EventUrl}" />
-                    </ui:SettingsCard>
-                </ui:SettingsExpander.Items>
-            </ui:SettingsExpander>
-
-            <ui:SettingsExpander Description="用于鉴权的Token" Header="事件WebSocket鉴权凭证">
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsCard ContentAlignment="Left">
-                        <TextBox
-                            AcceptsReturn="False"
-                            LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Connection.Satori.EventAccessToken}" />
+                            Text="{Binding Value.Connection.Satori.AccessToken}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>

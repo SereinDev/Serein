@@ -48,6 +48,16 @@ public partial class LineHeaderColorizer(bool onlySereinHeader = false)
                 }
                 break;
 
+            case "Debug":
+                if (!onlySereinHeader)
+                {
+                    action = (element) =>
+                        element.TextRunProperties.SetForegroundBrush(
+                            new SolidColorBrush(Color.FromRgb(0x8d, 0x72, 0xb5))
+                        );
+                }
+                break;
+
             case "Warn":
                 if (!onlySereinHeader)
                 {

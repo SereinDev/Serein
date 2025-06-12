@@ -18,7 +18,7 @@ public partial class CommandParser(
     HardwareInfoProvider hardwareInfoProvider
 )
 {
-    [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s,=\.]+))?\](?<body>.+)$")]
+    [GeneratedRegex(@"^\[(?<name>[a-zA-Z]+)(:(?<argument>[\w\-\s,=\.:]+))?\](?<body>.+)$")]
     private static partial Regex GetGeneralCommandRegex();
 
     [GeneratedRegex(@"\{([a-zA-Z][a-zA-Z0-9\.]*(@\w+)?)\}")]

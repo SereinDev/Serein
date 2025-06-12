@@ -42,7 +42,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     private ulong _received;
 
     [MemberNotNullWhen(true, nameof(_activeAdapter))]
-    public bool IsActive => _activeAdapter is not null;
+    public bool IsActive => _activeAdapter is not null && _activeAdapter.IsActive;
     public ulong Sent => _sent;
     public ulong Received => _received;
     public DateTime? ConnectedAt { get; private set; }

@@ -63,7 +63,7 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
                 self = settingProvider.Value.Connection.Self;
             }
 
-            var segments = ParseMessageSegments(text);
+            var segments = ParseMessageSegments(text, commandArguments?.AsSegments ?? false);
             var action = new ActionRequest<V12.MessageParams>
             {
                 Action = "send_message",
@@ -102,9 +102,9 @@ public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settin
         }
     }
 
-    private MessageSegment[] ParseMessageSegments(string text, bool skipParse = true)
+    private MessageSegment[] ParseMessageSegments(string text, bool parseSegments = false)
     {
-        if (!skipParse && text.StartsWith('[') && text.EndsWith(']'))
+        if (parseSegments && text.StartsWith('[') && text.EndsWith(']'))
         {
             try
             {

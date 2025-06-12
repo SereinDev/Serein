@@ -1,9 +1,10 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using Serein.ConnectionProtocols.Models.Satori.V1;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
@@ -18,21 +19,25 @@ public partial class SatoriAdapter : IConnectionAdapter
 {
     private readonly IConnectionLogger _logger;
     private readonly SettingProvider _settingProvider;
-    private readonly Timer _timer;
+    private readonly System.Timers.Timer _timer;
 
     public event EventHandler<MessageReceivedEventArgs>? DataReceived;
     public event EventHandler? StatusChanged;
 
-    public bool IsActive { get; private set; }
+    [MemberNotNullWhen(true, nameof(_cancellationTokenSource))]
+    public bool IsActive => !_cancellationTokenSource?.IsCancellationRequested ?? false;
     public HttpClient HttpClient { get; private set; }
 
     public AdapterType Type { get; } = AdapterType.Satori;
+
+    private CancellationTokenSource? _cancellationTokenSource;
 
     private long? _sn;
 
     public SatoriAdapter(IConnectionLogger logger, SettingProvider settingProvider)
     {
         HttpClient = new();
+
         _logger = logger;
         _settingProvider = settingProvider;
         _timer = new(10_000) { AutoReset = true };
@@ -42,6 +47,7 @@ public partial class SatoriAdapter : IConnectionAdapter
     public void Dispose()
     {
         HttpClient?.Dispose();
+        _cancellationTokenSource?.Dispose();
 
         GC.SuppressFinalize(this);
     }
@@ -74,9 +80,9 @@ public partial class SatoriAdapter : IConnectionAdapter
             Headers =
             {
                 Authorization = !string.IsNullOrEmpty(
-                    _settingProvider.Value.Connection.Satori.ApiAccessToken
+                    _settingProvider.Value.Connection.Satori.AccessToken
                 )
-                    ? new("Bearer", _settingProvider.Value.Connection.Satori.ApiAccessToken)
+                    ? new("Bearer", _settingProvider.Value.Connection.Satori.AccessToken)
                     : null,
             },
         };
@@ -94,8 +100,13 @@ public partial class SatoriAdapter : IConnectionAdapter
 
         if (self is not null)
         {
+            // Docs
             request.Headers.Add("Satori-Platform", self.Platform);
             request.Headers.Add("Satori-User-ID", self.UserId);
+
+            // Third-party libs
+            request.Headers.Add("X-Platform", self.Platform);
+            request.Headers.Add("X-User-ID", self.UserId);
         }
 
         var response = await HttpClient.SendAsync(request);
@@ -107,25 +118,32 @@ public partial class SatoriAdapter : IConnectionAdapter
     {
         if (IsActive)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("连接未关闭");
         }
 
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new();
         _sn = null;
-        IsActive = true;
-        HttpClient = new() { BaseAddress = new(_settingProvider.Value.Connection.Satori.ApiUrl) };
+        HttpClient = new() { BaseAddress = new(_settingProvider.Value.Connection.Satori.Uri) };
+
         _webSocket = CreateNew();
+        _webSocket.Open();
+
+        StatusChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void Stop()
     {
         if (!IsActive)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("连接已关闭");
         }
 
-        IsActive = false;
+        _cancellationTokenSource.Cancel();
         _webSocket?.Close();
         HttpClient.CancelPendingRequests();
         HttpClient.Dispose();
+
+        StatusChanged?.Invoke(this, EventArgs.Empty);
     }
 }
