@@ -37,6 +37,13 @@ public sealed class JsEngineFactory(
             typeof(Protocol).Assembly, // Serein.ConnectionProtocols
         };
 
+        var entry = Assembly.GetEntryAssembly();
+
+        if (entry is not null)
+        {
+            assemblies.Add(entry);
+        }
+
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
                 settingProvider.Value.Application.JSGlobalAssemblies

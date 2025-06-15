@@ -59,7 +59,7 @@ public sealed class ForwardWebSocketAdapter(
             customHeaderItems: [.. headers]
         );
 
-        client.MessageReceived += DataReceived;
+        client.MessageReceived += (_, e) => DataReceived?.Invoke(this, e);
 
         client.Opened += (_, _) =>
         {

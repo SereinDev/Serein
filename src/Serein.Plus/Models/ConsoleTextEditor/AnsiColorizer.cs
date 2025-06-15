@@ -10,6 +10,8 @@ namespace Serein.Plus.Models.ConsoleTextEditor;
 
 public partial class AnsiColorizer : DocumentColorizingTransformer
 {
+    public static bool AllowHighContrastColor { get; set; } = false;
+
     [GeneratedRegex(@"^[0-9;]*$")]
     private static partial Regex GetColorArgsEscapePattern();
 
@@ -120,7 +122,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                     #region foreground
 
                     case "30":
-                        foreground = null;
+                        if (AllowHighContrastColor)
+                        {
+                            foreground = ColorMap.Black;
+                        }
                         break;
                     case "31":
                         foreground = ColorMap.Red;
@@ -141,7 +146,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         foreground = ColorMap.Cyan;
                         break;
                     case "37":
-                        foreground = null;
+                        if (AllowHighContrastColor)
+                        {
+                            foreground = ColorMap.White;
+                        }
                         break;
 
                     case "38":
@@ -163,7 +171,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         break;
 
                     case "90":
-                        foreground = null;
+                        if (AllowHighContrastColor)
+                        {
+                            foreground = ColorMap.BrightBlack;
+                        }
                         break;
                     case "91":
                         foreground = ColorMap.BrightRed;
@@ -184,14 +195,20 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         foreground = ColorMap.BrightCyan;
                         break;
                     case "97":
-                        foreground = null;
+                        if (AllowHighContrastColor)
+                        {
+                            foreground = ColorMap.BrightWhite;
+                        }
                         break;
                     #endregion
 
                     #region background
 
                     case "40":
-                        background = null;
+                        if (AllowHighContrastColor)
+                        {
+                            background = ColorMap.Black;
+                        }
                         break;
                     case "41":
                         background = ColorMap.Red;
@@ -212,7 +229,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         background = ColorMap.Cyan;
                         break;
                     case "47":
-                        background = null;
+                        if (AllowHighContrastColor)
+                        {
+                            background = ColorMap.White;
+                        }
                         break;
 
                     case "48":
@@ -234,7 +254,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         break;
 
                     case "100":
-                        background = null;
+                        if (AllowHighContrastColor)
+                        {
+                            background = ColorMap.BrightBlack;
+                        }
                         break;
                     case "101":
                         background = ColorMap.BrightRed;
@@ -255,7 +278,10 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         background = ColorMap.BrightCyan;
                         break;
                     case "107":
-                        background = null;
+                        if (AllowHighContrastColor)
+                        {
+                            background = ColorMap.BrightWhite;
+                        }
                         break;
                     #endregion
                 }

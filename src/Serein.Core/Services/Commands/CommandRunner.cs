@@ -92,6 +92,10 @@ public sealed class CommandRunner
                 await SendPrivateMsgAsync(command, commandContext, body);
                 break;
 
+            case CommandType.SendChannelMsg:
+                await SendChannelMsgAsync(command, commandContext, body);
+                break;
+
             case CommandType.SendData:
                 await _connectionManager.Value.SendDataAsync(body);
                 break;
@@ -219,6 +223,59 @@ public sealed class CommandRunner
         }
     }
 
+    private async Task SendChannelMsgAsync(
+        Command command,
+        CommandContext? commandContext,
+        string body
+    )
+    {
+        if (!string.IsNullOrEmpty(command.Arguments?.Target))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Channel,
+                command.Arguments.Target,
+                body
+            );
+        }
+        else if (!string.IsNullOrEmpty(commandContext?.OneBotV12MessagePacket?.ChannelId))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Channel,
+                commandContext.Value.OneBotV12MessagePacket.ChannelId,
+                body
+            );
+        }
+        else if (!string.IsNullOrEmpty(commandContext?.SatoriV1MessagePacket?.Channel?.Id))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Channel,
+                commandContext.Value.SatoriV1MessagePacket.Channel.Id,
+                body
+            );
+        }
+        else if (
+            command.Origin != CommandOrigin.Msg
+            && _settingProvider.Value.Connection.ListenedIds.Length > 0
+        )
+        {
+            var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
+                (id) => id.StartsWith("channel:") || id.StartsWith("c:") || !id.Contains(':')
+            );
+
+            if (string.IsNullOrEmpty(first))
+            {
+                return;
+            }
+
+            if (first.Contains(':'))
+            {
+                first = first[(first.IndexOf(':') + 1)..];
+            }
+
+            await _connectionManager.Value.SendMessageAsync(TargetType.Channel, first, body);
+        }
+    }
+
     private async Task SendGroupMsgAsync(
         Command command,
         CommandContext? commandContext,
@@ -247,12 +304,17 @@ public sealed class CommandRunner
         )
         {
             var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
-                (id) => id.StartsWith("group:") || id.StartsWith("g:")
+                (id) => id.StartsWith("group:") || id.StartsWith("g:") || !id.Contains(':')
             );
 
             if (string.IsNullOrEmpty(first))
             {
                 return;
+            }
+
+            if (first.Contains(':'))
+            {
+                first = first[(first.IndexOf(':') + 1)..];
             }
 
             await _connectionManager.Value.SendMessageAsync(TargetType.Group, first, body);

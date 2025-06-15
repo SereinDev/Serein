@@ -82,7 +82,7 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
                 $"[{GetEndPoint()}] 发生错误：{Environment.NewLine}" + e.GetDetailString()
             );
 
-        webSocket.OnMessage += (msg) => DataReceived?.Invoke(webSocket, new(msg));
+        webSocket.OnMessage += (msg) => DataReceived?.Invoke(this, new(msg));
 
         string GetEndPoint() =>
             $"{webSocket.ConnectionInfo.ClientIpAddress}:{webSocket.ConnectionInfo.ClientPort}";

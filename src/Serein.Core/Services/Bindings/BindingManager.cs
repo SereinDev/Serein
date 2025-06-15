@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Data;
@@ -19,6 +22,18 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         {
             var ctx = services.GetRequiredService<BindingRecordDbContext>();
             ctx.Database.EnsureCreated();
+
+            try
+            {
+                var databaseCreator =
+                    ctx.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                databaseCreator?.CreateTables();
+            }
+            catch (SqliteException)
+            {
+                // A SqlException will be thrown if tables already exist. So simply ignore it.
+            }
+
             return ctx;
         }
     }

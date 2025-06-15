@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Web;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Models.Commands;
@@ -76,7 +77,7 @@ public partial class PacketHandler
         }
 
         _connectionLogger.Value.LogReceivedMessage(
-            $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {packet.RawMessage} (id={packet.MessageId})"
+            $"[{(packet.MessageType == MessageType.Group ? $"群聊({packet.GroupId})" : "私聊")}] {packet.Sender.Nickname}({packet.UserId}): {HttpUtility.HtmlDecode(packet.RawMessage)} (id={packet.MessageId})"
         );
 
         if (

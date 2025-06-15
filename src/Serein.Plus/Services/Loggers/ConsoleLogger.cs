@@ -30,6 +30,13 @@ public class ConsoleLogger(string categoryName) : ILogger
         Func<TState, Exception?, string> formatter
     )
     {
-        LogWritten?.Invoke(this, (logLevel, $"[{_name}] " + formatter(state, exception)));
+        var line = $"[{_name}] " + state;
+
+        if (exception is not null)
+        {
+            line += $"\r\n{exception}";
+        }
+
+        LogWritten?.Invoke(this, (logLevel, line));
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
@@ -166,7 +167,10 @@ public sealed class Matcher
         var satoriPacket = packet as EventBody;
 
         var msg =
-            v11Packet?.RawMessage ?? v12Packet?.FriendlyMessage ?? satoriPacket?.Message?.Content;
+            v12Packet?.FriendlyMessage
+            ?? HttpUtility.HtmlDecode(v11Packet?.RawMessage)
+            ?? HttpUtility.HtmlDecode(satoriPacket?.Message?.Content);
+
         var userId = v11Packet?.UserId.ToString() ?? v12Packet?.UserId ?? satoriPacket?.User?.Id;
 
         var tasks = new List<Task>();
@@ -260,7 +264,8 @@ public sealed class Matcher
                     return v11Packet is not null && v11Packet.UserId == v11Packet.SelfId;
 
                 case MatchFieldType.ChannelMsg:
-                    return v12Packet?.DetailType == MessageDetailType.Channel;
+                    return v12Packet?.DetailType == MessageDetailType.Channel
+                        || satoriPacket is not null;
 
                 case MatchFieldType.GuildMsg:
                     return v12Packet?.DetailType == MessageDetailType.Guild;
@@ -323,6 +328,7 @@ public sealed class Matcher
         {
             return match.FieldType == MatchFieldType.GroupMsg
                     && !string.IsNullOrEmpty(eventBody.Channel?.Id)
+                    && eventBody.Channel.Type != ChannelType.Direct
                     && match.MatchExclusion.Groups.Contains(eventBody.Channel.Id)
                 || match.MatchExclusion.Users.Contains(eventBody.User?.Id ?? string.Empty);
         }

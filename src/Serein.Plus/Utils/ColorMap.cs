@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Windows.Media;
 
@@ -39,47 +40,47 @@ public static class ColorMap
 
     // https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 
-    // public static readonly Color Black = Color.FromRgb(12, 12, 12);
+    public static readonly Color Black = Color.FromRgb(12, 12, 12);
     public static readonly Color Red = Color.FromRgb(197, 15, 31);
     public static readonly Color Green = Color.FromRgb(19, 161, 14);
     public static readonly Color Yellow = Color.FromRgb(193, 156, 0);
     public static readonly Color Blue = Color.FromRgb(0, 55, 218);
     public static readonly Color Magenta = Color.FromRgb(136, 23, 152);
     public static readonly Color Cyan = Color.FromRgb(58, 150, 221);
+    public static readonly Color White = Color.FromRgb(204, 204, 204);
 
-    // public static readonly Color White = Color.FromRgb(204, 204, 204);
-
-    // public static readonly Color BrightBlack = Color.FromRgb(118, 118, 118);
+    public static readonly Color BrightBlack = Color.FromRgb(118, 118, 118);
     public static readonly Color BrightRed = Color.FromRgb(231, 72, 86);
     public static readonly Color BrightGreen = Color.FromRgb(22, 198, 12);
     public static readonly Color BrightYellow = Color.FromRgb(249, 241, 165);
     public static readonly Color BrightBlue = Color.FromRgb(59, 120, 255);
     public static readonly Color BrightMagenta = Color.FromRgb(180, 0, 158);
     public static readonly Color BrightCyan = Color.FromRgb(97, 214, 214);
-
-    // public static readonly Color BrightWhite = Color.FromRgb(242, 242, 242);
-
+    public static readonly Color BrightWhite = Color.FromRgb(242, 242, 242);
 
     // https://en.wikipedia.org/wiki/ANSI_escape_code#8-bits
-    public static readonly Dictionary<string, Color> EightBitColors = new()
+    public static readonly IReadOnlyDictionary<string, Color> EightBitColors = new Dictionary<
+        string,
+        Color
+    >
     {
-        // ["0"] = Color.FromRgb(0x00, 0x00, 0x00),
+        ["0"] = Color.FromRgb(0x00, 0x00, 0x00),
         ["1"] = Color.FromRgb(0x80, 0x00, 0x00),
         ["2"] = Color.FromRgb(0x00, 0x80, 0x00),
         ["3"] = Color.FromRgb(0x80, 0x80, 0x00),
         ["4"] = Color.FromRgb(0x00, 0x00, 0x80),
         ["5"] = Color.FromRgb(0x80, 0x00, 0x80),
         ["6"] = Color.FromRgb(0x00, 0x80, 0x80),
-        // ["7"] = Color.FromRgb(0xc0, 0xc0, 0xc0),
-        // ["8"] = Color.FromRgb(0x80, 0x80, 0x80),
+        ["7"] = Color.FromRgb(0xc0, 0xc0, 0xc0),
+        ["8"] = Color.FromRgb(0x80, 0x80, 0x80),
         ["9"] = Color.FromRgb(0xff, 0x00, 0x00),
         ["10"] = Color.FromRgb(0x00, 0xff, 0x00),
         ["11"] = Color.FromRgb(0xff, 0xff, 0x00),
         ["12"] = Color.FromRgb(0x00, 0x00, 0xff),
         ["13"] = Color.FromRgb(0xff, 0x00, 0xff),
         ["14"] = Color.FromRgb(0x00, 0xff, 0xff),
-        // ["15"] = Color.FromRgb(0xff, 0xff, 0xff),
-        // ["16"] = Color.FromRgb(0x00, 0x00, 0x00),
+        ["15"] = Color.FromRgb(0xff, 0xff, 0xff),
+        ["16"] = Color.FromRgb(0x00, 0x00, 0x00),
         ["17"] = Color.FromRgb(0x00, 0x00, 0x5f),
         ["18"] = Color.FromRgb(0x00, 0x00, 0x87),
         ["19"] = Color.FromRgb(0x00, 0x00, 0xaf),
@@ -319,5 +320,5 @@ public static class ColorMap
         ["253"] = Color.FromRgb(0xda, 0xda, 0xda),
         ["254"] = Color.FromRgb(0xe4, 0xe4, 0xe4),
         ["255"] = Color.FromRgb(0xee, 0xee, 0xee),
-    };
+    }.ToFrozenDictionary();
 }

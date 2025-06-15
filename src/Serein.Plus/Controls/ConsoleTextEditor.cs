@@ -5,6 +5,8 @@ namespace Serein.Plus.Controls;
 
 public class ConsoleTextEditor : TextEditor
 {
+    public static int MaxLineCount { get; set; } = 250;
+
     public void EnableAnsiColor()
     {
         TextArea.TextView.ElementGenerators.Insert(0, new HideAnsiElementGenerator());
@@ -35,7 +37,7 @@ public class ConsoleTextEditor : TextEditor
         {
             AppendText(line + "\n");
 
-            var i = LineCount - 250;
+            var i = LineCount - MaxLineCount;
 
             if (i > 0)
             {
