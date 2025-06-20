@@ -28,94 +28,94 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TabControl TabControl;
-            ConnectionTabPage = new System.Windows.Forms.TabPage();
-            ReactionTabPage = new System.Windows.Forms.TabPage();
-            WebApiTabPage = new System.Windows.Forms.TabPage();
-            ApplicationTabPage = new System.Windows.Forms.TabPage();
-            AboutTabPage = new System.Windows.Forms.TabPage();
-            TabControl = new System.Windows.Forms.TabControl();
-            TabControl.SuspendLayout();
+            System.Windows.Forms.TabControl tabControl;
+            _connectionTabPage = new System.Windows.Forms.TabPage();
+            _reactionTabPage = new System.Windows.Forms.TabPage();
+            _webTabPage = new System.Windows.Forms.TabPage();
+            _applicationTabPage = new System.Windows.Forms.TabPage();
+            _aboutTabPage = new System.Windows.Forms.TabPage();
+            tabControl = new System.Windows.Forms.TabControl();
+            tabControl.SuspendLayout();
             SuspendLayout();
             // 
-            // TabControl
+            // tabControl
             // 
-            TabControl.Controls.Add(ConnectionTabPage);
-            TabControl.Controls.Add(ReactionTabPage);
-            TabControl.Controls.Add(WebApiTabPage);
-            TabControl.Controls.Add(ApplicationTabPage);
-            TabControl.Controls.Add(AboutTabPage);
-            TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            TabControl.Location = new System.Drawing.Point(0, 0);
-            TabControl.Margin = new System.Windows.Forms.Padding(0);
-            TabControl.Name = "TabControl";
-            TabControl.SelectedIndex = 0;
-            TabControl.Size = new System.Drawing.Size(1280, 720);
-            TabControl.TabIndex = 0;
+            tabControl.Controls.Add(_connectionTabPage);
+            tabControl.Controls.Add(_reactionTabPage);
+            tabControl.Controls.Add(_webTabPage);
+            tabControl.Controls.Add(_applicationTabPage);
+            tabControl.Controls.Add(_aboutTabPage);
+            tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            tabControl.Location = new System.Drawing.Point(0, 0);
+            tabControl.Margin = new System.Windows.Forms.Padding(0);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new System.Drawing.Size(1280, 720);
+            tabControl.TabIndex = 0;
             // 
-            // ConnectionTabPage
+            // _connectionTabPage
             // 
-            ConnectionTabPage.Location = new System.Drawing.Point(8, 45);
-            ConnectionTabPage.Name = "ConnectionTabPage";
-            ConnectionTabPage.Size = new System.Drawing.Size(1264, 667);
-            ConnectionTabPage.TabIndex = 0;
-            ConnectionTabPage.Text = "连接";
-            ConnectionTabPage.UseVisualStyleBackColor = true;
+            _connectionTabPage.Location = new System.Drawing.Point(8, 45);
+            _connectionTabPage.Name = "_connectionTabPage";
+            _connectionTabPage.Size = new System.Drawing.Size(1264, 667);
+            _connectionTabPage.TabIndex = 0;
+            _connectionTabPage.Text = "连接";
+            _connectionTabPage.UseVisualStyleBackColor = true;
             // 
-            // ReactionTabPage
+            // _reactionTabPage
             // 
-            ReactionTabPage.Location = new System.Drawing.Point(8, 45);
-            ReactionTabPage.Name = "ReactionTabPage";
-            ReactionTabPage.Size = new System.Drawing.Size(1264, 667);
-            ReactionTabPage.TabIndex = 1;
-            ReactionTabPage.Text = "反应";
-            ReactionTabPage.UseVisualStyleBackColor = true;
+            _reactionTabPage.Location = new System.Drawing.Point(8, 45);
+            _reactionTabPage.Name = "_reactionTabPage";
+            _reactionTabPage.Size = new System.Drawing.Size(1264, 667);
+            _reactionTabPage.TabIndex = 1;
+            _reactionTabPage.Text = "反应";
+            _reactionTabPage.UseVisualStyleBackColor = true;
             // 
-            // WebApiTabPage
+            // _webTabPage
             // 
-            WebApiTabPage.Location = new System.Drawing.Point(8, 45);
-            WebApiTabPage.Name = "WebApiTabPage";
-            WebApiTabPage.Size = new System.Drawing.Size(1264, 667);
-            WebApiTabPage.TabIndex = 4;
-            WebApiTabPage.Text = "Web Api";
-            WebApiTabPage.UseVisualStyleBackColor = true;
+            _webTabPage.Location = new System.Drawing.Point(8, 45);
+            _webTabPage.Name = "_webTabPage";
+            _webTabPage.Size = new System.Drawing.Size(1264, 667);
+            _webTabPage.TabIndex = 4;
+            _webTabPage.Text = "网页";
+            _webTabPage.UseVisualStyleBackColor = true;
             // 
-            // ApplicationTabPage
+            // _applicationTabPage
             // 
-            ApplicationTabPage.Location = new System.Drawing.Point(8, 45);
-            ApplicationTabPage.Margin = new System.Windows.Forms.Padding(0);
-            ApplicationTabPage.Name = "ApplicationTabPage";
-            ApplicationTabPage.Size = new System.Drawing.Size(1264, 667);
-            ApplicationTabPage.TabIndex = 2;
-            ApplicationTabPage.Text = "应用";
-            ApplicationTabPage.UseVisualStyleBackColor = true;
+            _applicationTabPage.Location = new System.Drawing.Point(8, 45);
+            _applicationTabPage.Margin = new System.Windows.Forms.Padding(0);
+            _applicationTabPage.Name = "_applicationTabPage";
+            _applicationTabPage.Size = new System.Drawing.Size(1264, 667);
+            _applicationTabPage.TabIndex = 2;
+            _applicationTabPage.Text = "应用";
+            _applicationTabPage.UseVisualStyleBackColor = true;
             // 
-            // AboutTabPage
+            // _aboutTabPage
             // 
-            AboutTabPage.Location = new System.Drawing.Point(8, 45);
-            AboutTabPage.Name = "AboutTabPage";
-            AboutTabPage.Size = new System.Drawing.Size(1264, 667);
-            AboutTabPage.TabIndex = 3;
-            AboutTabPage.Text = "关于";
-            AboutTabPage.UseVisualStyleBackColor = true;
+            _aboutTabPage.Location = new System.Drawing.Point(8, 45);
+            _aboutTabPage.Name = "_aboutTabPage";
+            _aboutTabPage.Size = new System.Drawing.Size(1264, 667);
+            _aboutTabPage.TabIndex = 3;
+            _aboutTabPage.Text = "关于";
+            _aboutTabPage.UseVisualStyleBackColor = true;
             // 
             // SettingPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Controls.Add(TabControl);
+            Controls.Add(tabControl);
             Name = "SettingPage";
             Size = new System.Drawing.Size(1280, 720);
-            TabControl.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.TabPage AboutTabPage;
-        private System.Windows.Forms.TabPage ConnectionTabPage;
-        private System.Windows.Forms.TabPage ApplicationTabPage;
-        private System.Windows.Forms.TabPage ReactionTabPage;
-        private System.Windows.Forms.TabPage WebApiTabPage;
+        private System.Windows.Forms.TabPage _aboutTabPage;
+        private System.Windows.Forms.TabPage _connectionTabPage;
+        private System.Windows.Forms.TabPage _applicationTabPage;
+        private System.Windows.Forms.TabPage _reactionTabPage;
+        private System.Windows.Forms.TabPage _webTabPage;
     }
 }

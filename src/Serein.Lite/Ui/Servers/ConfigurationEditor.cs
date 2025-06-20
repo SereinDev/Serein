@@ -14,7 +14,7 @@ public partial class ConfigurationEditor : Form
     private readonly ServerManager _serverManager;
     private readonly Configuration _configuration;
 
-    public string Id => IdTextBox.Text;
+    public string Id => _idTextBox.Text;
 
     public ConfigurationEditor(
         ServerManager serverManager,
@@ -26,8 +26,8 @@ public partial class ConfigurationEditor : Form
 
         if (!string.IsNullOrEmpty(id))
         {
-            IdTextBox.ReadOnly = true;
-            IdTextBox.Text = id;
+            _idTextBox.ReadOnly = true;
+            _idTextBox.Text = id;
         }
         _serverManager = serverManager;
         _configuration = configuration;
@@ -37,25 +37,25 @@ public partial class ConfigurationEditor : Form
 
     private void SyncData()
     {
-        NameTextBox.Text = _configuration.Name;
-        FileNameTextBox.Text = _configuration.FileName;
-        ArgumentTextBox.Text = _configuration.Argument;
-        AutoRestartCheckBox.Checked = _configuration.AutoRestart;
-        SaveLogCheckBox.Checked = _configuration.SaveLog;
-        AutoStopWhenCrashingCheckBox.Checked = _configuration.AutoStopWhenCrashing;
-        PortNumericUpDown.Value = _configuration.PortIPv4;
-        LineTerminatorTextBox.Text = _configuration
+        _nameTextBox.Text = _configuration.Name;
+        _fileNameTextBox.Text = _configuration.FileName;
+        _argumentTextBox.Text = _configuration.Argument;
+        _autoRestartCheckBox.Checked = _configuration.AutoRestart;
+        _saveLogCheckBox.Checked = _configuration.SaveLog;
+        _autoStopWhenCrashingCheckBox.Checked = _configuration.AutoStopWhenCrashing;
+        _portNumericUpDown.Value = _configuration.PortIPv4;
+        _lineTerminatorTextBox.Text = _configuration
             .LineTerminator.Replace("\r", "\\r")
             .Replace("\n", "\\n");
-        StartWhenSettingUpCheckBox.Checked = _configuration.StartWhenSettingUp;
-        OutputCommandUserInputCheckBox.Checked = _configuration.OutputCommandUserInput;
-        StopCommandsTextBox.Text = string.Join("\r\n", _configuration.StopCommands);
-        OutputStyleComboBox.SelectedIndex = (int)_configuration.OutputStyle;
-        InputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
-        OutputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
-        UseUnicodeCharsCheckBox.Checked = _configuration.UseUnicodeChars;
-        UsePtyCheckBox.Checked = ForceWinPtyCheckBox.Enabled = _configuration.Pty.IsEnabled;
-        ForceWinPtyCheckBox.Checked = _configuration.Pty.ForceWinPty;
+        _startWhenSettingUpCheckBox.Checked = _configuration.StartWhenSettingUp;
+        _outputCommandUserInputCheckBox.Checked = _configuration.OutputCommandUserInput;
+        _stopCommandsTextBox.Text = string.Join("\r\n", _configuration.StopCommands);
+        _outputStyleComboBox.SelectedIndex = (int)_configuration.OutputStyle;
+        _inputEncondingComboBox.SelectedIndex = (int)_configuration.InputEncoding;
+        _outputEncondingComboBox.SelectedIndex = (int)_configuration.OutputEncoding;
+        _useUnicodeCharsCheckBox.Checked = _configuration.UseUnicodeChars;
+        _usePtyCheckBox.Checked = _forceWinPtyCheckBox.Enabled = _configuration.Pty.IsEnabled;
+        _forceWinPtyCheckBox.Checked = _configuration.Pty.ForceWinPty;
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
@@ -66,52 +66,52 @@ public partial class ConfigurationEditor : Form
             EncodingMap.EncodingType output;
             OutputStyle outputStyle;
 
-            ServerManager.ValidateId(IdTextBox.Text);
-            if (!IdTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
+            ServerManager.ValidateId(_idTextBox.Text);
+            if (!_idTextBox.ReadOnly && _serverManager.Servers.ContainsKey(Id))
             {
                 throw new InvalidOperationException("此Id已被占用");
             }
 
-            if (InputEncondingComboBox.SelectedIndex < 0)
+            if (_inputEncondingComboBox.SelectedIndex < 0)
             {
-                InputEncondingComboBox.SelectedIndex = 0;
+                _inputEncondingComboBox.SelectedIndex = 0;
             }
 
-            if (OutputEncondingComboBox.SelectedIndex < 0)
+            if (_outputEncondingComboBox.SelectedIndex < 0)
             {
-                OutputEncondingComboBox.SelectedIndex = 0;
+                _outputEncondingComboBox.SelectedIndex = 0;
             }
 
-            if (OutputStyleComboBox.SelectedIndex < 0)
+            if (_outputStyleComboBox.SelectedIndex < 0)
             {
-                OutputStyleComboBox.SelectedIndex = 0;
+                _outputStyleComboBox.SelectedIndex = 0;
             }
 
-            input = (EncodingMap.EncodingType)InputEncondingComboBox.SelectedIndex;
-            output = (EncodingMap.EncodingType)OutputEncondingComboBox.SelectedIndex;
-            outputStyle = (OutputStyle)OutputStyleComboBox.SelectedIndex;
+            input = (EncodingMap.EncodingType)_inputEncondingComboBox.SelectedIndex;
+            output = (EncodingMap.EncodingType)_outputEncondingComboBox.SelectedIndex;
+            outputStyle = (OutputStyle)_outputStyleComboBox.SelectedIndex;
 
             _configuration.Name =
-                string.IsNullOrEmpty(NameTextBox.Text)
-                || string.IsNullOrWhiteSpace(NameTextBox.Text)
+                string.IsNullOrEmpty(_nameTextBox.Text)
+                || string.IsNullOrWhiteSpace(_nameTextBox.Text)
                     ? "未命名"
-                    : NameTextBox.Text;
-            _configuration.Pty.IsEnabled = UsePtyCheckBox.Checked;
-            _configuration.Pty.ForceWinPty = ForceWinPtyCheckBox.Checked;
-            _configuration.FileName = FileNameTextBox.Text;
-            _configuration.Argument = ArgumentTextBox.Text;
-            _configuration.AutoRestart = AutoRestartCheckBox.Checked;
-            _configuration.SaveLog = SaveLogCheckBox.Checked;
-            _configuration.AutoStopWhenCrashing = AutoStopWhenCrashingCheckBox.Checked;
-            _configuration.PortIPv4 = (ushort)PortNumericUpDown.Value;
-            _configuration.LineTerminator = LineTerminatorTextBox
+                    : _nameTextBox.Text;
+            _configuration.Pty.IsEnabled = _usePtyCheckBox.Checked;
+            _configuration.Pty.ForceWinPty = _forceWinPtyCheckBox.Checked;
+            _configuration.FileName = _fileNameTextBox.Text;
+            _configuration.Argument = _argumentTextBox.Text;
+            _configuration.AutoRestart = _autoRestartCheckBox.Checked;
+            _configuration.SaveLog = _saveLogCheckBox.Checked;
+            _configuration.AutoStopWhenCrashing = _autoStopWhenCrashingCheckBox.Checked;
+            _configuration.PortIPv4 = (ushort)_portNumericUpDown.Value;
+            _configuration.LineTerminator = _lineTerminatorTextBox
                 .Text.Replace("\\r", "\r")
                 .Replace("\\n", "\n");
-            _configuration.StartWhenSettingUp = StartWhenSettingUpCheckBox.Checked;
-            _configuration.OutputCommandUserInput = OutputCommandUserInputCheckBox.Checked;
-            _configuration.UseUnicodeChars = UseUnicodeCharsCheckBox.Checked;
+            _configuration.StartWhenSettingUp = _startWhenSettingUpCheckBox.Checked;
+            _configuration.OutputCommandUserInput = _outputCommandUserInputCheckBox.Checked;
+            _configuration.UseUnicodeChars = _useUnicodeCharsCheckBox.Checked;
             _configuration.OutputStyle = outputStyle;
-            _configuration.StopCommands = StopCommandsTextBox.Text.Replace("\r", null).Split('\n');
+            _configuration.StopCommands = _stopCommandsTextBox.Text.Replace("\r", null).Split('\n');
             _configuration.InputEncoding = input;
             _configuration.OutputEncoding = output;
 
@@ -126,22 +126,22 @@ public partial class ConfigurationEditor : Form
 
     private void IdTextBox_Enter(object sender, EventArgs e)
     {
-        ErrorProvider.Clear();
+        _errorProvider.Clear();
     }
 
     private void IdTextBox_Validating(object sender, CancelEventArgs e)
     {
-        if (string.IsNullOrEmpty(IdTextBox.Text))
+        if (string.IsNullOrEmpty(_idTextBox.Text))
         {
-            ErrorProvider.SetError(IdTextBox, "Id不能为空");
+            _errorProvider.SetError(_idTextBox, "Id不能为空");
         }
-        else if (!IdRegex().IsMatch(IdTextBox.Text))
+        else if (!IdRegex().IsMatch(_idTextBox.Text))
         {
-            ErrorProvider.SetError(IdTextBox, "Id只能由字母、数字和下划线组成");
+            _errorProvider.SetError(_idTextBox, "Id只能由字母、数字和下划线组成");
         }
-        else if (IdTextBox.Text.Length <= 2)
+        else if (_idTextBox.Text.Length <= 2)
         {
-            ErrorProvider.SetError(IdTextBox, "Id长度太短");
+            _errorProvider.SetError(_idTextBox, "Id长度太短");
         }
     }
 
@@ -157,12 +157,12 @@ public partial class ConfigurationEditor : Form
             && !string.IsNullOrEmpty(openFileDialog.FileName)
         )
         {
-            FileNameTextBox.Text = openFileDialog.FileName;
+            _fileNameTextBox.Text = openFileDialog.FileName;
         }
     }
 
     private void UsePtyCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        ForceWinPtyCheckBox.Enabled = UsePtyCheckBox.Checked;
+        _forceWinPtyCheckBox.Enabled = _usePtyCheckBox.Checked;
     }
 }

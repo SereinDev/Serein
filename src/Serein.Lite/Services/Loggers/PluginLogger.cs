@@ -3,11 +3,11 @@ using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
-using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Functions;
 
 namespace Serein.Lite.Services.Loggers;
 
-public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogger
+public sealed class PluginLogger(IServiceProvider serviceProvider) : PluginLoggerBase
 {
     private readonly Lazy<PluginPage> _pluginPage = new(
         serviceProvider.GetRequiredService<PluginPage>
@@ -15,7 +15,7 @@ public sealed class PluginLogger(IServiceProvider serviceProvider) : IPluginLogg
 
     private readonly object _lock = new();
 
-    public void Log(LogLevel level, string name, string message)
+    public override void Log(LogLevel level, string name, string message)
     {
         Debug.WriteLine(
             $"[Plugin::{(string.IsNullOrEmpty(name) ? "Serein" : name)}] [{level}] {message}"

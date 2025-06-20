@@ -1,15 +1,15 @@
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
-using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Functions;
 using Serein.Lite.Utils;
 
 namespace Serein.Lite.Services.Loggers;
 
-public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectionLogger
+public sealed class ConnectionLogger(ConnectionPage connectionPage) : ConnectionLoggerBase
 {
     private readonly object _lock = new();
 
-    public void Log(LogLevel level, string message)
+    public override void Log(LogLevel level, string message)
     {
         connectionPage.Invoke(() =>
         {
@@ -33,7 +33,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogReceivedMessage(string line)
+    public override void LogReceivedMessage(string line)
     {
         connectionPage.Invoke(() =>
         {
@@ -47,7 +47,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogReceivedData(string data)
+    public override void LogReceivedData(string data)
     {
         connectionPage.Invoke(() =>
         {
@@ -61,7 +61,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogSentData(string line)
+    public override void LogSentData(string line)
     {
         connectionPage.Invoke(() =>
         {
@@ -75,7 +75,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : IConnectio
         });
     }
 
-    public void LogSentMessage(string data)
+    public override void LogSentMessage(string data)
     {
         connectionPage.Invoke(() =>
         {

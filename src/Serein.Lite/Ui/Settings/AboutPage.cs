@@ -12,9 +12,9 @@ public partial class AboutPage : UserControl
     {
         InitializeComponent();
 
-        VersionLabel.Text += sereinApp.Version;
-        DetailedVersionLabel.Text += sereinApp.FullVersion;
-        AssemblyLabel.Text += typeof(Program).Assembly.ToString();
+        _versionLabel.Text += sereinApp.Version;
+        _detailedVersionLabel.Text += sereinApp.FullVersion;
+        _assemblyLabel.Text += typeof(Program).Assembly.ToString();
     }
 
     private void DeclarationLinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

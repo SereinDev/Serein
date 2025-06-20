@@ -1,7 +1,5 @@
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using Serein.Core;
 using Serein.Lite.Utils;
 
 namespace Serein.Lite.Ui.Controls;

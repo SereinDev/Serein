@@ -29,119 +29,119 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.StatusStrip StatusStrip;
+            System.Windows.Forms.StatusStrip statusStrip;
             System.Windows.Forms.ColumnHeader columnHeader2;
-            System.Windows.Forms.ContextMenuStrip ListViewContextMenuStrip;
-            System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
-            System.Windows.Forms.ToolStripSeparator ToolStripSeparator;
+            System.Windows.Forms.ContextMenuStrip listViewContextMenuStrip;
+            System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PluginManagerForm));
-            ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            EnableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            DisableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            RemoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ShowInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            PluginListView = new System.Windows.Forms.ListView();
+            _toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            _enableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _disableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _showInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _pluginListView = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            StatusStrip = new System.Windows.Forms.StatusStrip();
+            statusStrip = new System.Windows.Forms.StatusStrip();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            ListViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
-            AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            StatusStrip.SuspendLayout();
-            ListViewContextMenuStrip.SuspendLayout();
+            listViewContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            statusStrip.SuspendLayout();
+            listViewContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // StatusStrip
+            // statusStrip
             // 
-            StatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ToolStripStatusLabel });
-            StatusStrip.Location = new System.Drawing.Point(0, 638);
-            StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new System.Drawing.Size(974, 41);
-            StatusStrip.TabIndex = 0;
-            StatusStrip.Text = "statusStrip1";
+            statusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { _toolStripStatusLabel });
+            statusStrip.Location = new System.Drawing.Point(0, 638);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new System.Drawing.Size(974, 41);
+            statusStrip.TabIndex = 0;
+            statusStrip.Text = "statusStrip1";
             // 
-            // ToolStripStatusLabel
+            // _toolStripStatusLabel
             // 
-            ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            ToolStripStatusLabel.Size = new System.Drawing.Size(24, 31);
-            ToolStripStatusLabel.Text = "-";
+            _toolStripStatusLabel.Name = "_toolStripStatusLabel";
+            _toolStripStatusLabel.Size = new System.Drawing.Size(24, 31);
+            _toolStripStatusLabel.Text = "-";
             // 
             // columnHeader2
             // 
             columnHeader2.Text = "文件大小";
             columnHeader2.Width = 200;
             // 
-            // ListViewContextMenuStrip
+            // listViewContextMenuStrip
             // 
-            ListViewContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            ListViewContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, EnableToolStripMenuItem, DisableToolStripMenuItem, RemoveToolStripMenuItem, ShowInExplorerToolStripMenuItem, ToolStripSeparator, RefreshToolStripMenuItem });
-            ListViewContextMenuStrip.Name = "ListViewContextMenuStrip";
-            ListViewContextMenuStrip.Size = new System.Drawing.Size(305, 238);
-            ListViewContextMenuStrip.Opening += ListViewContextMenuStrip_Opening;
+            listViewContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            listViewContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addToolStripMenuItem, _enableToolStripMenuItem, _disableToolStripMenuItem, _removeToolStripMenuItem, _showInExplorerToolStripMenuItem, toolStripSeparator, refreshToolStripMenuItem });
+            listViewContextMenuStrip.Name = "ListViewContextMenuStrip";
+            listViewContextMenuStrip.Size = new System.Drawing.Size(305, 282);
+            listViewContextMenuStrip.Opening += ListViewContextMenuStrip_Opening;
             // 
-            // AddToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            AddToolStripMenuItem.Name = "AddToolStripMenuItem";
-            AddToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            AddToolStripMenuItem.Text = "添加";
-            AddToolStripMenuItem.Click += AddToolStripMenuItem_Click;
+            addToolStripMenuItem.Name = "addToolStripMenuItem";
+            addToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            addToolStripMenuItem.Text = "添加";
+            addToolStripMenuItem.Click += AddToolStripMenuItem_Click;
             // 
-            // EnableToolStripMenuItem
+            // _enableToolStripMenuItem
             // 
-            EnableToolStripMenuItem.Name = "EnableToolStripMenuItem";
-            EnableToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            EnableToolStripMenuItem.Text = "启用";
-            EnableToolStripMenuItem.Click += EnableToolStripMenuItem_Click;
+            _enableToolStripMenuItem.Name = "_enableToolStripMenuItem";
+            _enableToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            _enableToolStripMenuItem.Text = "启用";
+            _enableToolStripMenuItem.Click += EnableToolStripMenuItem_Click;
             // 
-            // DisableToolStripMenuItem
+            // _disableToolStripMenuItem
             // 
-            DisableToolStripMenuItem.Name = "DisableToolStripMenuItem";
-            DisableToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            DisableToolStripMenuItem.Text = "禁用";
-            DisableToolStripMenuItem.Click += DisableToolStripMenuItem_Click;
+            _disableToolStripMenuItem.Name = "_disableToolStripMenuItem";
+            _disableToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            _disableToolStripMenuItem.Text = "禁用";
+            _disableToolStripMenuItem.Click += DisableToolStripMenuItem_Click;
             // 
-            // RemoveToolStripMenuItem
+            // _removeToolStripMenuItem
             // 
-            RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem";
-            RemoveToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            RemoveToolStripMenuItem.Text = "删除";
-            RemoveToolStripMenuItem.Click += RemoveToolStripMenuItem_Click;
+            _removeToolStripMenuItem.Name = "_removeToolStripMenuItem";
+            _removeToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            _removeToolStripMenuItem.Text = "删除";
+            _removeToolStripMenuItem.Click += RemoveToolStripMenuItem_Click;
             // 
-            // ShowInExplorerToolStripMenuItem
+            // _showInExplorerToolStripMenuItem
             // 
-            ShowInExplorerToolStripMenuItem.Name = "ShowInExplorerToolStripMenuItem";
-            ShowInExplorerToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            ShowInExplorerToolStripMenuItem.Text = "在资源管理器中显示";
-            ShowInExplorerToolStripMenuItem.Click += ShowInExplorerToolStripMenuItem_Click;
+            _showInExplorerToolStripMenuItem.Name = "_showInExplorerToolStripMenuItem";
+            _showInExplorerToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            _showInExplorerToolStripMenuItem.Text = "在资源管理器中显示";
+            _showInExplorerToolStripMenuItem.Click += ShowInExplorerToolStripMenuItem_Click;
             // 
-            // ToolStripSeparator
+            // toolStripSeparator
             // 
-            ToolStripSeparator.Name = "ToolStripSeparator";
-            ToolStripSeparator.Size = new System.Drawing.Size(301, 6);
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new System.Drawing.Size(301, 6);
             // 
-            // RefreshToolStripMenuItem
+            // refreshToolStripMenuItem
             // 
-            RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
-            RefreshToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
-            RefreshToolStripMenuItem.Text = "刷新";
-            RefreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
+            refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            refreshToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
+            refreshToolStripMenuItem.Text = "刷新";
+            refreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
             // 
-            // PluginListView
+            // _pluginListView
             // 
-            PluginListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2 });
-            PluginListView.ContextMenuStrip = ListViewContextMenuStrip;
-            PluginListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            PluginListView.FullRowSelect = true;
-            PluginListView.GridLines = true;
-            PluginListView.Location = new System.Drawing.Point(0, 0);
-            PluginListView.Name = "PluginListView";
-            PluginListView.Size = new System.Drawing.Size(974, 638);
-            PluginListView.TabIndex = 1;
-            PluginListView.UseCompatibleStateImageBehavior = false;
-            PluginListView.View = System.Windows.Forms.View.Details;
-            PluginListView.SelectedIndexChanged += PluginListView_SelectedIndexChanged;
+            _pluginListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2 });
+            _pluginListView.ContextMenuStrip = listViewContextMenuStrip;
+            _pluginListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            _pluginListView.FullRowSelect = true;
+            _pluginListView.GridLines = true;
+            _pluginListView.Location = new System.Drawing.Point(0, 0);
+            _pluginListView.Name = "_pluginListView";
+            _pluginListView.Size = new System.Drawing.Size(974, 638);
+            _pluginListView.TabIndex = 1;
+            _pluginListView.UseCompatibleStateImageBehavior = false;
+            _pluginListView.View = System.Windows.Forms.View.Details;
+            _pluginListView.SelectedIndexChanged += PluginListView_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
@@ -154,8 +154,8 @@
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(974, 679);
-            Controls.Add(PluginListView);
-            Controls.Add(StatusStrip);
+            Controls.Add(_pluginListView);
+            Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(600, 450);
             Name = "PluginManagerForm";
@@ -164,22 +164,22 @@
             Text = "服务器插件管理";
             DragDrop += PluginManagerForm_DragDrop;
             DragEnter += PluginManagerForm_DragEnter;
-            StatusStrip.ResumeLayout(false);
-            StatusStrip.PerformLayout();
-            ListViewContextMenuStrip.ResumeLayout(false);
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
+            listViewContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
-        private System.Windows.Forms.ListView PluginListView;
+        private System.Windows.Forms.ToolStripStatusLabel _toolStripStatusLabel;
+        private System.Windows.Forms.ListView _pluginListView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ToolStripMenuItem EnableToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem DisableToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RemoveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ShowInExplorerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _enableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _disableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _removeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _showInExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }

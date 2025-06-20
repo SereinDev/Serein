@@ -23,7 +23,7 @@ public partial class PluginManagerForm : Form
     private readonly ListViewGroup _dllGroup = new("动态链接库");
 
     private IEnumerable<ServerPlugin?> SelectedPlugins =>
-        PluginListView
+        _pluginListView
             .SelectedItems.OfType<ListViewItem>()
             .Select((item) => item.Tag as ServerPlugin);
 
@@ -34,15 +34,15 @@ public partial class PluginManagerForm : Form
         InitializeComponent();
         UpdateText();
 
-        PluginListView.Groups.AddRange([_dllGroup, _jarGroup, _jsGroup, _luaGroup, _pyGroup]);
+        _pluginListView.Groups.AddRange([_dllGroup, _jarGroup, _jsGroup, _luaGroup, _pyGroup]);
     }
 
     private void LoadData()
     {
-        PluginListView.BeginUpdate();
-        PluginListView.Items.Clear();
+        _pluginListView.BeginUpdate();
+        _pluginListView.Items.Clear();
 
-        foreach (var group in PluginListView.Groups)
+        foreach (var group in _pluginListView.Groups)
         {
             if (group is ListViewGroup listViewGroup)
             {
@@ -96,18 +96,18 @@ public partial class PluginManagerForm : Form
                     break;
             }
 
-            PluginListView.Items.Add(item);
+            _pluginListView.Items.Add(item);
         }
 
-        PluginListView.EndUpdate();
+        _pluginListView.EndUpdate();
     }
 
     private void UpdateText()
     {
-        ToolStripStatusLabel.Text =
-            PluginListView.SelectedItems.Count > 0
-                ? $"共{PluginListView.Items.Count}项；已选择{PluginListView.SelectedItems.Count}项"
-                : $"共{PluginListView.Items.Count}项";
+        _toolStripStatusLabel.Text =
+            _pluginListView.SelectedItems.Count > 0
+                ? $"共{_pluginListView.Items.Count}项；已选择{_pluginListView.SelectedItems.Count}项"
+                : $"共{_pluginListView.Items.Count}项";
     }
 
     private void PluginListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,7 +120,7 @@ public partial class PluginManagerForm : Form
         base.OnLoad(e);
 
         Text = "插件管理 - " + _server.Configuration.Name;
-        PluginListView.SetExploreTheme();
+        _pluginListView.SetExploreTheme();
         LoadData();
     }
 
@@ -128,10 +128,10 @@ public partial class PluginManagerForm : Form
     {
         var selectedPlugins = SelectedPlugins;
 
-        RemoveToolStripMenuItem.Enabled = PluginListView.SelectedItems.Count > 0;
-        EnableToolStripMenuItem.Enabled =
+        _removeToolStripMenuItem.Enabled = _pluginListView.SelectedItems.Count > 0;
+        _enableToolStripMenuItem.Enabled =
             selectedPlugins.Any() && !selectedPlugins.Any((plugin) => plugin?.IsEnabled ?? false);
-        DisableToolStripMenuItem.Enabled =
+        _disableToolStripMenuItem.Enabled =
             selectedPlugins.Any() && !selectedPlugins.Any((plugin) => !plugin?.IsEnabled ?? false);
     }
 

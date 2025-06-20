@@ -28,53 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MainTabControl = new System.Windows.Forms.TabControl();
-            StatusStrip = new System.Windows.Forms.StatusStrip();
-            ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            StatusStrip.SuspendLayout();
+            System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+            _statusStrip = new System.Windows.Forms.StatusStrip();
+            _mainTabControl = new System.Windows.Forms.TabControl();
+            toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            _statusStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // MainTabControl
+            // _statusStrip
             // 
-            MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            MainTabControl.Location = new System.Drawing.Point(0, 0);
-            MainTabControl.Name = "MainTabControl";
-            MainTabControl.SelectedIndex = 0;
-            MainTabControl.Size = new System.Drawing.Size(1000, 750);
-            MainTabControl.TabIndex = 0;
+            _statusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            _statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel });
+            _statusStrip.Location = new System.Drawing.Point(0, 709);
+            _statusStrip.Name = "_statusStrip";
+            _statusStrip.Size = new System.Drawing.Size(1000, 41);
+            _statusStrip.TabIndex = 1;
             // 
-            // StatusStrip
+            // toolStripStatusLabel
             // 
-            StatusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ToolStripStatusLabel });
-            StatusStrip.Location = new System.Drawing.Point(0, 709);
-            StatusStrip.Name = "StatusStrip";
-            StatusStrip.Size = new System.Drawing.Size(1000, 41);
-            StatusStrip.TabIndex = 1;
+            toolStripStatusLabel.Name = "toolStripStatusLabel";
+            toolStripStatusLabel.Size = new System.Drawing.Size(710, 31);
+            toolStripStatusLabel.Text = "当前没有服务器配置。你可以在左上角的服务器菜单栏添加或导入";
             // 
-            // ToolStripStatusLabel
+            // _mainTabControl
             // 
-            ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            ToolStripStatusLabel.Size = new System.Drawing.Size(710, 31);
-            ToolStripStatusLabel.Text = "当前没有服务器配置。你可以在左上角的服务器菜单栏添加或导入";
+            _mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            _mainTabControl.Location = new System.Drawing.Point(0, 0);
+            _mainTabControl.Name = "_mainTabControl";
+            _mainTabControl.SelectedIndex = 0;
+            _mainTabControl.Size = new System.Drawing.Size(1000, 750);
+            _mainTabControl.TabIndex = 0;
             // 
             // ServerPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Controls.Add(StatusStrip);
-            Controls.Add(MainTabControl);
+            Controls.Add(_statusStrip);
+            Controls.Add(_mainTabControl);
             Name = "ServerPage";
             Size = new System.Drawing.Size(1000, 750);
-            StatusStrip.ResumeLayout(false);
-            StatusStrip.PerformLayout();
+            _statusStrip.ResumeLayout(false);
+            _statusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private System.Windows.Forms.StatusStrip StatusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
-        internal System.Windows.Forms.TabControl MainTabControl;
+        private System.Windows.Forms.StatusStrip _statusStrip;
+        internal System.Windows.Forms.TabControl _mainTabControl;
     }
 }

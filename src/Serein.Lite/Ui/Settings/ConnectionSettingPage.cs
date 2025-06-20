@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using Serein.ConnectionProtocols.Models;
+using Serein.ConnectionProtocols.Models.OneBot;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Data;
 
@@ -16,6 +18,10 @@ public partial class ConnectionSettingPage : UserControl
 
         InitializeComponent();
         SetBindings();
+
+        _adapterComboBox.SelectedIndex = (int)_settingProvider.Value.Connection.Adapter;
+        _oneBotVersionComboBox.SelectedIndex = (int)
+            _settingProvider.Value.Connection.OneBot.Version;
     }
 
     private void OnPropertyChanged(object sender, EventArgs e)
@@ -25,78 +31,139 @@ public partial class ConnectionSettingPage : UserControl
 
     private void SetBindings()
     {
-        //UriTextBox.DataBindings.Add(
-        //    nameof(UriTextBox.Text),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.Uri),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //AccessTokenMaskedTextBox.DataBindings.Add(
-        //    nameof(AccessTokenMaskedTextBox.Text),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.AccessToken),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //UseReverseWebSocketCheckBox.DataBindings.Add(
-        //    nameof(UseReverseWebSocketCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.UseReverseWebSocket),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //AutoReconnectCheckBox.DataBindings.Add(
-        //    nameof(AutoReconnectCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.AutoReconnect),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //OutputDataCheckBox.DataBindings.Add(
-        //    nameof(OutputDataCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.OutputData),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //AutoEscapeCheckBox.DataBindings.Add(
-        //    nameof(AutoEscapeCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.AutoEscape),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //SaveLogCheckBox.DataBindings.Add(
-        //    nameof(SaveLogCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.SaveLog),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
-        //GrantPermissionToOwnerAndAdminsCheckBox.DataBindings.Add(
-        //    nameof(GrantPermissionToOwnerAndAdminsCheckBox.Checked),
-        //    _settingProvider.Value.Connection,
-        //    nameof(ConnectionSetting.GrantPermissionToOwnerAndAdmins),
-        //    false,
-        //    DataSourceUpdateMode.OnPropertyChanged
-        //);
+        _outputDataCheckBox.DataBindings.Add(
+            nameof(_outputDataCheckBox.Checked),
+            _settingProvider.Value.Connection,
+            nameof(ConnectionSetting.OutputData),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _saveLogCheckBox.DataBindings.Add(
+            nameof(_saveLogCheckBox.Checked),
+            _settingProvider.Value.Connection,
+            nameof(ConnectionSetting.SaveLog),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _connectWhenSettingUpcheckBox.DataBindings.Add(
+            nameof(_connectWhenSettingUpcheckBox.Checked),
+            _settingProvider.Value.Connection,
+            nameof(ConnectionSetting.ConnectWhenSettingUp),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+
+        _selfUserIdTextBox.DataBindings.Add(
+            nameof(_selfUserIdTextBox.Text),
+            _settingProvider.Value.Connection.Self,
+            nameof(Self.UserId),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _selfPlatformTextBox.DataBindings.Add(
+            nameof(_selfPlatformTextBox.Text),
+            _settingProvider.Value.Connection.Self,
+            nameof(Self.Platform),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+
+        _webSocketUriTextBox.DataBindings.Add(
+            nameof(_webSocketUriTextBox.Text),
+            _settingProvider.Value.Connection.OneBot,
+            nameof(OneBotSetting.Uri),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _oneBotAccessTokenMaskedTextBox.DataBindings.Add(
+            nameof(_oneBotAccessTokenMaskedTextBox.Text),
+            _settingProvider.Value.Connection.OneBot,
+            nameof(OneBotSetting.AccessToken),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _autoReconnectCheckBox.DataBindings.Add(
+            nameof(_autoReconnectCheckBox.Checked),
+            _settingProvider.Value.Connection.OneBot,
+            nameof(OneBotSetting.AutoReconnect),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _autoEscapeCheckBox.DataBindings.Add(
+            nameof(_autoEscapeCheckBox.Checked),
+            _settingProvider.Value.Connection.OneBot,
+            nameof(OneBotSetting.AutoEscape),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _grantPermissionToGroupOwnerAndAdminsCheckBox.DataBindings.Add(
+            nameof(_grantPermissionToGroupOwnerAndAdminsCheckBox.Checked),
+            _settingProvider.Value.Connection.OneBot,
+            nameof(OneBotSetting.GrantPermissionToGroupOwnerAndAdmins),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+
+        _satoriUriTextBox.DataBindings.Add(
+            nameof(_satoriUriTextBox.Text),
+            _settingProvider.Value.Connection.Satori,
+            nameof(SatoriSetting.Uri),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _satoriAccessTokenMaskedTextBox.DataBindings.Add(
+            nameof(_satoriAccessTokenMaskedTextBox.Text),
+            _settingProvider.Value.Connection.Satori,
+            nameof(SatoriSetting.AccessToken),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
     }
 
-    private void SubProtocolsTextBox_TextChanged(object sender, EventArgs e)
+    private void AdapterComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      
+        _settingProvider.Value.Connection.Adapter = (AdapterType)_adapterComboBox.SelectedIndex;
+
         OnPropertyChanged(sender, e);
     }
 
-    private void GroupsTextBox_TextChanged(object sender, EventArgs e)
+    private void AdministratorUserIdsTextBox_TextChanged(object sender, EventArgs e)
     {
-      
+        _settingProvider.Value.Connection.AdministratorUserIds =
+            _administratorUserIdsTextBox.Text.Split(
+                ';',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+            );
+
         OnPropertyChanged(sender, e);
     }
 
-    private void AdministratorsTextBox_TextChanged(object sender, EventArgs e)
+    private void ListenedIdsTextBox_TextChanged(object sender, EventArgs e)
     {
+        _settingProvider.Value.Connection.ListenedIds = _listenedIdsTextBox.Text.Split(
+            ';',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+        );
+
+        OnPropertyChanged(sender, e);
+    }
+
+    private void OneBotVersionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        _settingProvider.Value.Connection.OneBot.Version = (OneBotVersion)
+            _oneBotVersionComboBox.SelectedIndex;
+
+        OnPropertyChanged(sender, e);
+    }
+
+    private void WebSocketSubProtocolsTextBox_TextChanged(object sender, EventArgs e)
+    {
+        _settingProvider.Value.Connection.OneBot.SubProtocols =
+            _webSocketSubProtocolsTextBox.Text.Split(
+                "\r\n",
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+            );
+
         OnPropertyChanged(sender, e);
     }
 }

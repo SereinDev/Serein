@@ -19,65 +19,65 @@ public partial class WebApiSettingPage : UserControl
         InitializeComponent();
         SetBindings();
 
-        UrlPrefixesTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.UrlPrefixes);
-        WhiteListTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.WhiteList);
-        AccessTokensTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.AccessTokens);
+        _urlPrefixesTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.UrlPrefixes);
+        _whiteListTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.WhiteList);
+        _accessTokensTextBox.Text = string.Join("\r\n", _settingProvider.Value.WebApi.AccessTokens);
     }
 
     private void SetBindings()
     {
-        CertificateEnableCheckBox.DataBindings.Add(
-            nameof(CertificateEnableCheckBox.Checked),
+        _certificateEnableCheckBox.DataBindings.Add(
+            nameof(_certificateEnableCheckBox.Checked),
             _settingProvider.Value.WebApi.Certificate,
             nameof(CertificateSetting.IsEnabled),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        AutoLoadCertificateCheckBox.DataBindings.Add(
-            nameof(AutoLoadCertificateCheckBox.Checked),
+        _autoLoadCertificateCheckBox.DataBindings.Add(
+            nameof(_autoLoadCertificateCheckBox.Checked),
             _settingProvider.Value.WebApi.Certificate,
             nameof(CertificateSetting.AutoLoadCertificate),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        AutoRegisterCertificateCheckBox.DataBindings.Add(
-            nameof(AutoRegisterCertificateCheckBox.Checked),
+        _autoRegisterCertificateCheckBox.DataBindings.Add(
+            nameof(_autoRegisterCertificateCheckBox.Checked),
             _settingProvider.Value.WebApi.Certificate,
             nameof(CertificateSetting.AutoRegisterCertificate),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        PasswordMaskedTextBox.DataBindings.Add(
-            nameof(PasswordMaskedTextBox.Text),
+        _passwordMaskedTextBox.DataBindings.Add(
+            nameof(_passwordMaskedTextBox.Text),
             _settingProvider.Value.WebApi.Certificate,
             nameof(CertificateSetting.Password),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        PathTextBox.DataBindings.Add(
-            nameof(PathTextBox.Text),
+        _pathTextBox.DataBindings.Add(
+            nameof(_pathTextBox.Text),
             _settingProvider.Value.WebApi.Certificate,
             nameof(CertificateSetting.Path),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
 
-        EnableCheckBox.DataBindings.Add(
-            nameof(EnableCheckBox.Checked),
+        _isEnableCheckBox.DataBindings.Add(
+            nameof(_isEnableCheckBox.Checked),
             _settingProvider.Value.WebApi,
             nameof(WebApiSetting.IsEnabled),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        AllowCrossOriginCheckBox.DataBindings.Add(
-            nameof(AllowCrossOriginCheckBox.Checked),
+        _allowCrossOriginCheckBox.DataBindings.Add(
+            nameof(_allowCrossOriginCheckBox.Checked),
             _settingProvider.Value.WebApi,
             nameof(WebApiSetting.AllowCrossOrigin),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        MaxRequestsPerSecondNumericUpDown.DataBindings.Add(
-            nameof(MaxRequestsPerSecondNumericUpDown.Value),
+        _maxRequestsPerSecondNumericUpDown.DataBindings.Add(
+            nameof(_maxRequestsPerSecondNumericUpDown.Value),
             _settingProvider.Value.WebApi,
             nameof(WebApiSetting.MaxRequestsPerSecond),
             false,
@@ -92,7 +92,7 @@ public partial class WebApiSettingPage : UserControl
 
     private void UrlPrefixesTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.WebApi.UrlPrefixes = UrlPrefixesTextBox.Text.Split(
+        _settingProvider.Value.WebApi.UrlPrefixes = _urlPrefixesTextBox.Text.Split(
             ';',
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
         );
@@ -101,7 +101,7 @@ public partial class WebApiSettingPage : UserControl
 
     private void WhiteListTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.WebApi.WhiteList = WhiteListTextBox.Text.Split(
+        _settingProvider.Value.WebApi.WhiteList = _whiteListTextBox.Text.Split(
             ';',
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
         );
@@ -110,7 +110,7 @@ public partial class WebApiSettingPage : UserControl
 
     private void AccessTokensTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.WebApi.AccessTokens = AccessTokensTextBox.Text.Split(
+        _settingProvider.Value.WebApi.AccessTokens = _accessTokensTextBox.Text.Split(
             ';',
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
         );
@@ -123,7 +123,7 @@ public partial class WebApiSettingPage : UserControl
 
         try
         {
-            if (EnableCheckBox.Checked)
+            if (_isEnableCheckBox.Checked)
             {
                 _httpServer.Start();
             }
@@ -144,7 +144,7 @@ public partial class WebApiSettingPage : UserControl
 
         if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
         {
-            PathTextBox.Text = dialog.FileName;
+            _pathTextBox.Text = dialog.FileName;
         }
     }
 }

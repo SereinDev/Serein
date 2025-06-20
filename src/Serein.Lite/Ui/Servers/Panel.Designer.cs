@@ -29,454 +29,454 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TableLayoutPanel MainTableLayoutPanel;
-            System.Windows.Forms.GroupBox InfoGroupBox;
-            System.Windows.Forms.TableLayoutPanel InformationTableLayoutPanel;
-            System.Windows.Forms.Label StatusLabel;
-            System.Windows.Forms.Label VersionLabel;
-            System.Windows.Forms.Label PlayerCountLabel;
-            System.Windows.Forms.Label RunTimeLabel;
-            System.Windows.Forms.Label CPUPercentLabel;
-            System.Windows.Forms.GroupBox ControlGroupBox;
-            System.Windows.Forms.TableLayoutPanel ControlTableLayoutPanel;
-            System.Windows.Forms.GroupBox ConsoleGroupBox;
-            System.Windows.Forms.TableLayoutPanel ConsoleTableLayoutPanel;
-            System.Windows.Forms.GroupBox ShortcutGroupBox;
-            System.Windows.Forms.TableLayoutPanel ShortcutTableLayoutPanel;
-            System.Windows.Forms.Button OpenDirectoryButton;
-            System.Windows.Forms.Button StartPluginManagerButton;
-            CPUPercentDynamicLabel = new System.Windows.Forms.Label();
-            RunTimeDynamicLabel = new System.Windows.Forms.Label();
-            StatusDynamicLabel = new System.Windows.Forms.Label();
-            VersionDynamicLabel = new System.Windows.Forms.Label();
-            PlayerCountDynamicLabel = new System.Windows.Forms.Label();
-            StartButton = new System.Windows.Forms.Button();
-            StopButton = new System.Windows.Forms.Button();
-            RestartButton = new System.Windows.Forms.Button();
-            TerminateButton = new System.Windows.Forms.Button();
-            ConsoleBrowser = new Controls.ConsoleWebBrowser();
-            InputTextBox = new System.Windows.Forms.TextBox();
-            EnterButton = new System.Windows.Forms.Button();
-            ToolTipProvider = new System.Windows.Forms.ToolTip(components);
-            MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            InfoGroupBox = new System.Windows.Forms.GroupBox();
-            InformationTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            StatusLabel = new System.Windows.Forms.Label();
-            VersionLabel = new System.Windows.Forms.Label();
-            PlayerCountLabel = new System.Windows.Forms.Label();
-            RunTimeLabel = new System.Windows.Forms.Label();
-            CPUPercentLabel = new System.Windows.Forms.Label();
-            ControlGroupBox = new System.Windows.Forms.GroupBox();
-            ControlTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            ConsoleGroupBox = new System.Windows.Forms.GroupBox();
-            ConsoleTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            ShortcutGroupBox = new System.Windows.Forms.GroupBox();
-            ShortcutTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            OpenDirectoryButton = new System.Windows.Forms.Button();
-            StartPluginManagerButton = new System.Windows.Forms.Button();
-            MainTableLayoutPanel.SuspendLayout();
-            InfoGroupBox.SuspendLayout();
-            InformationTableLayoutPanel.SuspendLayout();
-            ControlGroupBox.SuspendLayout();
-            ControlTableLayoutPanel.SuspendLayout();
-            ConsoleGroupBox.SuspendLayout();
-            ConsoleTableLayoutPanel.SuspendLayout();
-            ShortcutGroupBox.SuspendLayout();
-            ShortcutTableLayoutPanel.SuspendLayout();
+            System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
+            System.Windows.Forms.GroupBox infoGroupBox;
+            System.Windows.Forms.TableLayoutPanel informationTableLayoutPanel;
+            System.Windows.Forms.Label statusLabel;
+            System.Windows.Forms.Label versionLabel;
+            System.Windows.Forms.Label playerCountLabel;
+            System.Windows.Forms.Label runTimeLabel;
+            System.Windows.Forms.Label cpuPercentLabel;
+            System.Windows.Forms.GroupBox controlGroupBox;
+            System.Windows.Forms.TableLayoutPanel controlTableLayoutPanel;
+            System.Windows.Forms.Button startButton;
+            System.Windows.Forms.Button stopButton;
+            System.Windows.Forms.Button restartButton;
+            System.Windows.Forms.Button terminateButton;
+            System.Windows.Forms.GroupBox consoleGroupBox;
+            System.Windows.Forms.TableLayoutPanel consoleTableLayoutPanel;
+            System.Windows.Forms.Button enterButton;
+            System.Windows.Forms.GroupBox shortcutGroupBox;
+            System.Windows.Forms.TableLayoutPanel shortcutTableLayoutPanel;
+            System.Windows.Forms.Button openDirectoryButton;
+            System.Windows.Forms.Button startPluginManagerButton;
+            _cpuPercentDynamicLabel = new System.Windows.Forms.Label();
+            _runTimeDynamicLabel = new System.Windows.Forms.Label();
+            _statusDynamicLabel = new System.Windows.Forms.Label();
+            _versionDynamicLabel = new System.Windows.Forms.Label();
+            _playerCountDynamicLabel = new System.Windows.Forms.Label();
+            _consoleBrowser = new Serein.Lite.Ui.Controls.ConsoleWebBrowser();
+            _inputTextBox = new System.Windows.Forms.TextBox();
+            _toolTip = new System.Windows.Forms.ToolTip(components);
+            mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            infoGroupBox = new System.Windows.Forms.GroupBox();
+            informationTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            statusLabel = new System.Windows.Forms.Label();
+            versionLabel = new System.Windows.Forms.Label();
+            playerCountLabel = new System.Windows.Forms.Label();
+            runTimeLabel = new System.Windows.Forms.Label();
+            cpuPercentLabel = new System.Windows.Forms.Label();
+            controlGroupBox = new System.Windows.Forms.GroupBox();
+            controlTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            startButton = new System.Windows.Forms.Button();
+            stopButton = new System.Windows.Forms.Button();
+            restartButton = new System.Windows.Forms.Button();
+            terminateButton = new System.Windows.Forms.Button();
+            consoleGroupBox = new System.Windows.Forms.GroupBox();
+            consoleTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            enterButton = new System.Windows.Forms.Button();
+            shortcutGroupBox = new System.Windows.Forms.GroupBox();
+            shortcutTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            openDirectoryButton = new System.Windows.Forms.Button();
+            startPluginManagerButton = new System.Windows.Forms.Button();
+            mainTableLayoutPanel.SuspendLayout();
+            infoGroupBox.SuspendLayout();
+            informationTableLayoutPanel.SuspendLayout();
+            controlGroupBox.SuspendLayout();
+            controlTableLayoutPanel.SuspendLayout();
+            consoleGroupBox.SuspendLayout();
+            consoleTableLayoutPanel.SuspendLayout();
+            shortcutGroupBox.SuspendLayout();
+            shortcutTableLayoutPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // MainTableLayoutPanel
+            // mainTableLayoutPanel
             // 
-            MainTableLayoutPanel.ColumnCount = 2;
-            MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            MainTableLayoutPanel.Controls.Add(InfoGroupBox, 0, 0);
-            MainTableLayoutPanel.Controls.Add(ControlGroupBox, 0, 1);
-            MainTableLayoutPanel.Controls.Add(ConsoleGroupBox, 1, 0);
-            MainTableLayoutPanel.Controls.Add(ShortcutGroupBox, 0, 2);
-            MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            MainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            MainTableLayoutPanel.Name = "MainTableLayoutPanel";
-            MainTableLayoutPanel.RowCount = 3;
-            MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            MainTableLayoutPanel.Size = new System.Drawing.Size(1280, 720);
-            MainTableLayoutPanel.TabIndex = 0;
+            mainTableLayoutPanel.ColumnCount = 2;
+            mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            mainTableLayoutPanel.Controls.Add(infoGroupBox, 0, 0);
+            mainTableLayoutPanel.Controls.Add(controlGroupBox, 0, 1);
+            mainTableLayoutPanel.Controls.Add(consoleGroupBox, 1, 0);
+            mainTableLayoutPanel.Controls.Add(shortcutGroupBox, 0, 2);
+            mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            mainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            mainTableLayoutPanel.Name = "mainTableLayoutPanel";
+            mainTableLayoutPanel.RowCount = 3;
+            mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            mainTableLayoutPanel.Size = new System.Drawing.Size(1280, 720);
+            mainTableLayoutPanel.TabIndex = 0;
             // 
-            // InfoGroupBox
+            // infoGroupBox
             // 
-            InfoGroupBox.Controls.Add(InformationTableLayoutPanel);
-            InfoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            InfoGroupBox.Location = new System.Drawing.Point(3, 3);
-            InfoGroupBox.Name = "InfoGroupBox";
-            InfoGroupBox.Size = new System.Drawing.Size(294, 244);
-            InfoGroupBox.TabIndex = 0;
-            InfoGroupBox.TabStop = false;
-            InfoGroupBox.Text = "信息";
+            infoGroupBox.Controls.Add(informationTableLayoutPanel);
+            infoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            infoGroupBox.Location = new System.Drawing.Point(3, 3);
+            infoGroupBox.Name = "infoGroupBox";
+            infoGroupBox.Size = new System.Drawing.Size(294, 244);
+            infoGroupBox.TabIndex = 0;
+            infoGroupBox.TabStop = false;
+            infoGroupBox.Text = "信息";
             // 
-            // InformationTableLayoutPanel
+            // informationTableLayoutPanel
             // 
-            InformationTableLayoutPanel.ColumnCount = 2;
-            InformationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            InformationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            InformationTableLayoutPanel.Controls.Add(CPUPercentDynamicLabel, 1, 4);
-            InformationTableLayoutPanel.Controls.Add(RunTimeDynamicLabel, 1, 3);
-            InformationTableLayoutPanel.Controls.Add(StatusLabel, 0, 0);
-            InformationTableLayoutPanel.Controls.Add(StatusDynamicLabel, 1, 0);
-            InformationTableLayoutPanel.Controls.Add(VersionLabel, 0, 1);
-            InformationTableLayoutPanel.Controls.Add(VersionDynamicLabel, 1, 1);
-            InformationTableLayoutPanel.Controls.Add(PlayerCountLabel, 0, 2);
-            InformationTableLayoutPanel.Controls.Add(PlayerCountDynamicLabel, 1, 2);
-            InformationTableLayoutPanel.Controls.Add(RunTimeLabel, 0, 3);
-            InformationTableLayoutPanel.Controls.Add(CPUPercentLabel, 0, 4);
-            InformationTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            InformationTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
-            InformationTableLayoutPanel.Name = "InformationTableLayoutPanel";
-            InformationTableLayoutPanel.RowCount = 5;
-            InformationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            InformationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            InformationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            InformationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            InformationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            InformationTableLayoutPanel.Size = new System.Drawing.Size(288, 207);
-            InformationTableLayoutPanel.TabIndex = 0;
+            informationTableLayoutPanel.ColumnCount = 2;
+            informationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            informationTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            informationTableLayoutPanel.Controls.Add(_cpuPercentDynamicLabel, 1, 4);
+            informationTableLayoutPanel.Controls.Add(_runTimeDynamicLabel, 1, 3);
+            informationTableLayoutPanel.Controls.Add(statusLabel, 0, 0);
+            informationTableLayoutPanel.Controls.Add(_statusDynamicLabel, 1, 0);
+            informationTableLayoutPanel.Controls.Add(versionLabel, 0, 1);
+            informationTableLayoutPanel.Controls.Add(_versionDynamicLabel, 1, 1);
+            informationTableLayoutPanel.Controls.Add(playerCountLabel, 0, 2);
+            informationTableLayoutPanel.Controls.Add(_playerCountDynamicLabel, 1, 2);
+            informationTableLayoutPanel.Controls.Add(runTimeLabel, 0, 3);
+            informationTableLayoutPanel.Controls.Add(cpuPercentLabel, 0, 4);
+            informationTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            informationTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
+            informationTableLayoutPanel.Name = "informationTableLayoutPanel";
+            informationTableLayoutPanel.RowCount = 5;
+            informationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            informationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            informationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            informationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            informationTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            informationTableLayoutPanel.Size = new System.Drawing.Size(288, 207);
+            informationTableLayoutPanel.TabIndex = 0;
             // 
-            // CPUPercentDynamicLabel
+            // _cpuPercentDynamicLabel
             // 
-            CPUPercentDynamicLabel.AutoEllipsis = true;
-            CPUPercentDynamicLabel.AutoSize = true;
-            CPUPercentDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            CPUPercentDynamicLabel.Location = new System.Drawing.Point(123, 164);
-            CPUPercentDynamicLabel.Name = "CPUPercentDynamicLabel";
-            CPUPercentDynamicLabel.Size = new System.Drawing.Size(162, 43);
-            CPUPercentDynamicLabel.TabIndex = 9;
-            CPUPercentDynamicLabel.Text = "-";
-            CPUPercentDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            _cpuPercentDynamicLabel.AutoEllipsis = true;
+            _cpuPercentDynamicLabel.AutoSize = true;
+            _cpuPercentDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            _cpuPercentDynamicLabel.Location = new System.Drawing.Point(123, 164);
+            _cpuPercentDynamicLabel.Name = "_cpuPercentDynamicLabel";
+            _cpuPercentDynamicLabel.Size = new System.Drawing.Size(162, 43);
+            _cpuPercentDynamicLabel.TabIndex = 9;
+            _cpuPercentDynamicLabel.Text = "-";
+            _cpuPercentDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // RunTimeDynamicLabel
+            // _runTimeDynamicLabel
             // 
-            RunTimeDynamicLabel.AutoEllipsis = true;
-            RunTimeDynamicLabel.AutoSize = true;
-            RunTimeDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            RunTimeDynamicLabel.Location = new System.Drawing.Point(123, 123);
-            RunTimeDynamicLabel.Name = "RunTimeDynamicLabel";
-            RunTimeDynamicLabel.Size = new System.Drawing.Size(162, 41);
-            RunTimeDynamicLabel.TabIndex = 7;
-            RunTimeDynamicLabel.Text = "-";
-            RunTimeDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            _runTimeDynamicLabel.AutoEllipsis = true;
+            _runTimeDynamicLabel.AutoSize = true;
+            _runTimeDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            _runTimeDynamicLabel.Location = new System.Drawing.Point(123, 123);
+            _runTimeDynamicLabel.Name = "_runTimeDynamicLabel";
+            _runTimeDynamicLabel.Size = new System.Drawing.Size(162, 41);
+            _runTimeDynamicLabel.TabIndex = 7;
+            _runTimeDynamicLabel.Text = "-";
+            _runTimeDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // StatusLabel
+            // statusLabel
             // 
-            StatusLabel.AutoSize = true;
-            StatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            StatusLabel.Location = new System.Drawing.Point(3, 0);
-            StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new System.Drawing.Size(114, 41);
-            StatusLabel.TabIndex = 0;
-            StatusLabel.Text = "状态";
-            StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            statusLabel.AutoSize = true;
+            statusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            statusLabel.Location = new System.Drawing.Point(3, 0);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new System.Drawing.Size(114, 41);
+            statusLabel.TabIndex = 0;
+            statusLabel.Text = "状态";
+            statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // StatusDynamicLabel
+            // _statusDynamicLabel
             // 
-            StatusDynamicLabel.AutoSize = true;
-            StatusDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            StatusDynamicLabel.Location = new System.Drawing.Point(123, 0);
-            StatusDynamicLabel.Name = "StatusDynamicLabel";
-            StatusDynamicLabel.Size = new System.Drawing.Size(162, 41);
-            StatusDynamicLabel.TabIndex = 1;
-            StatusDynamicLabel.Text = "未启动";
-            StatusDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            _statusDynamicLabel.AutoSize = true;
+            _statusDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            _statusDynamicLabel.Location = new System.Drawing.Point(123, 0);
+            _statusDynamicLabel.Name = "_statusDynamicLabel";
+            _statusDynamicLabel.Size = new System.Drawing.Size(162, 41);
+            _statusDynamicLabel.TabIndex = 1;
+            _statusDynamicLabel.Text = "未启动";
+            _statusDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // VersionLabel
+            // versionLabel
             // 
-            VersionLabel.AutoSize = true;
-            VersionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            VersionLabel.Location = new System.Drawing.Point(3, 41);
-            VersionLabel.Name = "VersionLabel";
-            VersionLabel.Size = new System.Drawing.Size(114, 41);
-            VersionLabel.TabIndex = 2;
-            VersionLabel.Text = "版本";
-            VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            versionLabel.AutoSize = true;
+            versionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            versionLabel.Location = new System.Drawing.Point(3, 41);
+            versionLabel.Name = "versionLabel";
+            versionLabel.Size = new System.Drawing.Size(114, 41);
+            versionLabel.TabIndex = 2;
+            versionLabel.Text = "版本";
+            versionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // VersionDynamicLabel
+            // _versionDynamicLabel
             // 
-            VersionDynamicLabel.AutoEllipsis = true;
-            VersionDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            VersionDynamicLabel.Location = new System.Drawing.Point(123, 41);
-            VersionDynamicLabel.Name = "VersionDynamicLabel";
-            VersionDynamicLabel.Size = new System.Drawing.Size(162, 41);
-            VersionDynamicLabel.TabIndex = 3;
-            VersionDynamicLabel.Text = "-";
-            VersionDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            _versionDynamicLabel.AutoEllipsis = true;
+            _versionDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            _versionDynamicLabel.Location = new System.Drawing.Point(123, 41);
+            _versionDynamicLabel.Name = "_versionDynamicLabel";
+            _versionDynamicLabel.Size = new System.Drawing.Size(162, 41);
+            _versionDynamicLabel.TabIndex = 3;
+            _versionDynamicLabel.Text = "-";
+            _versionDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // PlayerCountLabel
+            // playerCountLabel
             // 
-            PlayerCountLabel.AutoSize = true;
-            PlayerCountLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PlayerCountLabel.Location = new System.Drawing.Point(3, 82);
-            PlayerCountLabel.Name = "PlayerCountLabel";
-            PlayerCountLabel.Size = new System.Drawing.Size(114, 41);
-            PlayerCountLabel.TabIndex = 4;
-            PlayerCountLabel.Text = "玩家数";
-            PlayerCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            playerCountLabel.AutoSize = true;
+            playerCountLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            playerCountLabel.Location = new System.Drawing.Point(3, 82);
+            playerCountLabel.Name = "playerCountLabel";
+            playerCountLabel.Size = new System.Drawing.Size(114, 41);
+            playerCountLabel.TabIndex = 4;
+            playerCountLabel.Text = "玩家数";
+            playerCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // PlayerCountDynamicLabel
+            // _playerCountDynamicLabel
             // 
-            PlayerCountDynamicLabel.AutoEllipsis = true;
-            PlayerCountDynamicLabel.AutoSize = true;
-            PlayerCountDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            PlayerCountDynamicLabel.Location = new System.Drawing.Point(123, 82);
-            PlayerCountDynamicLabel.Name = "PlayerCountDynamicLabel";
-            PlayerCountDynamicLabel.Size = new System.Drawing.Size(162, 41);
-            PlayerCountDynamicLabel.TabIndex = 5;
-            PlayerCountDynamicLabel.Text = "-";
-            PlayerCountDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            _playerCountDynamicLabel.AutoEllipsis = true;
+            _playerCountDynamicLabel.AutoSize = true;
+            _playerCountDynamicLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            _playerCountDynamicLabel.Location = new System.Drawing.Point(123, 82);
+            _playerCountDynamicLabel.Name = "_playerCountDynamicLabel";
+            _playerCountDynamicLabel.Size = new System.Drawing.Size(162, 41);
+            _playerCountDynamicLabel.TabIndex = 5;
+            _playerCountDynamicLabel.Text = "-";
+            _playerCountDynamicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // RunTimeLabel
+            // runTimeLabel
             // 
-            RunTimeLabel.AutoSize = true;
-            RunTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            RunTimeLabel.Location = new System.Drawing.Point(3, 123);
-            RunTimeLabel.Name = "RunTimeLabel";
-            RunTimeLabel.Size = new System.Drawing.Size(114, 41);
-            RunTimeLabel.TabIndex = 6;
-            RunTimeLabel.Text = "运行时长";
-            RunTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            runTimeLabel.AutoSize = true;
+            runTimeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            runTimeLabel.Location = new System.Drawing.Point(3, 123);
+            runTimeLabel.Name = "runTimeLabel";
+            runTimeLabel.Size = new System.Drawing.Size(114, 41);
+            runTimeLabel.TabIndex = 6;
+            runTimeLabel.Text = "运行时长";
+            runTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // CPUPercentLabel
+            // cpuPercentLabel
             // 
-            CPUPercentLabel.AutoSize = true;
-            CPUPercentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            CPUPercentLabel.Location = new System.Drawing.Point(3, 164);
-            CPUPercentLabel.Name = "CPUPercentLabel";
-            CPUPercentLabel.Size = new System.Drawing.Size(114, 43);
-            CPUPercentLabel.TabIndex = 8;
-            CPUPercentLabel.Text = "进程占用";
-            CPUPercentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            cpuPercentLabel.AutoSize = true;
+            cpuPercentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            cpuPercentLabel.Location = new System.Drawing.Point(3, 164);
+            cpuPercentLabel.Name = "cpuPercentLabel";
+            cpuPercentLabel.Size = new System.Drawing.Size(114, 43);
+            cpuPercentLabel.TabIndex = 8;
+            cpuPercentLabel.Text = "进程占用";
+            cpuPercentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ControlGroupBox
+            // controlGroupBox
             // 
-            ControlGroupBox.Controls.Add(ControlTableLayoutPanel);
-            ControlGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ControlGroupBox.Location = new System.Drawing.Point(3, 253);
-            ControlGroupBox.Name = "ControlGroupBox";
-            ControlGroupBox.Size = new System.Drawing.Size(294, 154);
-            ControlGroupBox.TabIndex = 1;
-            ControlGroupBox.TabStop = false;
-            ControlGroupBox.Text = "控制";
+            controlGroupBox.Controls.Add(controlTableLayoutPanel);
+            controlGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            controlGroupBox.Location = new System.Drawing.Point(3, 253);
+            controlGroupBox.Name = "controlGroupBox";
+            controlGroupBox.Size = new System.Drawing.Size(294, 154);
+            controlGroupBox.TabIndex = 1;
+            controlGroupBox.TabStop = false;
+            controlGroupBox.Text = "控制";
             // 
-            // ControlTableLayoutPanel
+            // controlTableLayoutPanel
             // 
-            ControlTableLayoutPanel.ColumnCount = 2;
-            ControlTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ControlTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ControlTableLayoutPanel.Controls.Add(StartButton, 0, 0);
-            ControlTableLayoutPanel.Controls.Add(StopButton, 1, 0);
-            ControlTableLayoutPanel.Controls.Add(RestartButton, 0, 1);
-            ControlTableLayoutPanel.Controls.Add(TerminateButton, 1, 1);
-            ControlTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ControlTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
-            ControlTableLayoutPanel.Name = "ControlTableLayoutPanel";
-            ControlTableLayoutPanel.RowCount = 2;
-            ControlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ControlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ControlTableLayoutPanel.Size = new System.Drawing.Size(288, 117);
-            ControlTableLayoutPanel.TabIndex = 0;
+            controlTableLayoutPanel.ColumnCount = 2;
+            controlTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            controlTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            controlTableLayoutPanel.Controls.Add(startButton, 0, 0);
+            controlTableLayoutPanel.Controls.Add(stopButton, 1, 0);
+            controlTableLayoutPanel.Controls.Add(restartButton, 0, 1);
+            controlTableLayoutPanel.Controls.Add(terminateButton, 1, 1);
+            controlTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            controlTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
+            controlTableLayoutPanel.Name = "controlTableLayoutPanel";
+            controlTableLayoutPanel.RowCount = 2;
+            controlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            controlTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            controlTableLayoutPanel.Size = new System.Drawing.Size(288, 117);
+            controlTableLayoutPanel.TabIndex = 0;
             // 
-            // StartButton
+            // startButton
             // 
-            StartButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            StartButton.Location = new System.Drawing.Point(3, 3);
-            StartButton.Name = "StartButton";
-            StartButton.Size = new System.Drawing.Size(138, 52);
-            StartButton.TabIndex = 0;
-            StartButton.Text = "启动";
-            StartButton.UseVisualStyleBackColor = true;
-            StartButton.Click += StartButton_Click;
+            startButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            startButton.Location = new System.Drawing.Point(3, 3);
+            startButton.Name = "startButton";
+            startButton.Size = new System.Drawing.Size(138, 52);
+            startButton.TabIndex = 0;
+            startButton.Text = "启动";
+            startButton.UseVisualStyleBackColor = true;
+            startButton.Click += StartButton_Click;
             // 
-            // StopButton
+            // stopButton
             // 
-            StopButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            StopButton.Location = new System.Drawing.Point(147, 3);
-            StopButton.Name = "StopButton";
-            StopButton.Size = new System.Drawing.Size(138, 52);
-            StopButton.TabIndex = 1;
-            StopButton.Text = "停止";
-            StopButton.UseVisualStyleBackColor = true;
-            StopButton.Click += StopButton_Click;
+            stopButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            stopButton.Location = new System.Drawing.Point(147, 3);
+            stopButton.Name = "stopButton";
+            stopButton.Size = new System.Drawing.Size(138, 52);
+            stopButton.TabIndex = 1;
+            stopButton.Text = "停止";
+            stopButton.UseVisualStyleBackColor = true;
+            stopButton.Click += StopButton_Click;
             // 
-            // RestartButton
+            // restartButton
             // 
-            RestartButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            RestartButton.Location = new System.Drawing.Point(3, 61);
-            RestartButton.Name = "RestartButton";
-            RestartButton.Size = new System.Drawing.Size(138, 53);
-            RestartButton.TabIndex = 2;
-            RestartButton.Text = "重启";
-            RestartButton.UseVisualStyleBackColor = true;
-            RestartButton.Click += RestartButton_Click;
+            restartButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            restartButton.Location = new System.Drawing.Point(3, 61);
+            restartButton.Name = "restartButton";
+            restartButton.Size = new System.Drawing.Size(138, 53);
+            restartButton.TabIndex = 2;
+            restartButton.Text = "重启";
+            restartButton.UseVisualStyleBackColor = true;
+            restartButton.Click += RestartButton_Click;
             // 
-            // TerminateButton
+            // terminateButton
             // 
-            TerminateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            TerminateButton.Location = new System.Drawing.Point(147, 61);
-            TerminateButton.Name = "TerminateButton";
-            TerminateButton.Size = new System.Drawing.Size(138, 53);
-            TerminateButton.TabIndex = 3;
-            TerminateButton.Text = "强制结束";
-            TerminateButton.UseVisualStyleBackColor = true;
-            TerminateButton.Click += TerminateButton_Click;
+            terminateButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            terminateButton.Location = new System.Drawing.Point(147, 61);
+            terminateButton.Name = "terminateButton";
+            terminateButton.Size = new System.Drawing.Size(138, 53);
+            terminateButton.TabIndex = 3;
+            terminateButton.Text = "强制结束";
+            terminateButton.UseVisualStyleBackColor = true;
+            terminateButton.Click += TerminateButton_Click;
             // 
-            // ConsoleGroupBox
+            // consoleGroupBox
             // 
-            ConsoleGroupBox.Controls.Add(ConsoleTableLayoutPanel);
-            ConsoleGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            ConsoleGroupBox.Location = new System.Drawing.Point(303, 3);
-            ConsoleGroupBox.Name = "ConsoleGroupBox";
-            MainTableLayoutPanel.SetRowSpan(ConsoleGroupBox, 3);
-            ConsoleGroupBox.Size = new System.Drawing.Size(974, 714);
-            ConsoleGroupBox.TabIndex = 2;
-            ConsoleGroupBox.TabStop = false;
-            ConsoleGroupBox.Text = "控制台";
+            consoleGroupBox.Controls.Add(consoleTableLayoutPanel);
+            consoleGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            consoleGroupBox.Location = new System.Drawing.Point(303, 3);
+            consoleGroupBox.Name = "consoleGroupBox";
+            mainTableLayoutPanel.SetRowSpan(consoleGroupBox, 3);
+            consoleGroupBox.Size = new System.Drawing.Size(974, 714);
+            consoleGroupBox.TabIndex = 2;
+            consoleGroupBox.TabStop = false;
+            consoleGroupBox.Text = "控制台";
             // 
-            // ConsoleTableLayoutPanel
+            // consoleTableLayoutPanel
             // 
-            ConsoleTableLayoutPanel.ColumnCount = 2;
-            ConsoleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            ConsoleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            ConsoleTableLayoutPanel.Controls.Add(ConsoleBrowser, 0, 0);
-            ConsoleTableLayoutPanel.Controls.Add(InputTextBox, 0, 1);
-            ConsoleTableLayoutPanel.Controls.Add(EnterButton, 1, 1);
-            ConsoleTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ConsoleTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
-            ConsoleTableLayoutPanel.Name = "ConsoleTableLayoutPanel";
-            ConsoleTableLayoutPanel.RowCount = 2;
-            ConsoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            ConsoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            ConsoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            ConsoleTableLayoutPanel.Size = new System.Drawing.Size(968, 677);
-            ConsoleTableLayoutPanel.TabIndex = 0;
+            consoleTableLayoutPanel.ColumnCount = 2;
+            consoleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            consoleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            consoleTableLayoutPanel.Controls.Add(_consoleBrowser, 0, 0);
+            consoleTableLayoutPanel.Controls.Add(_inputTextBox, 0, 1);
+            consoleTableLayoutPanel.Controls.Add(enterButton, 1, 1);
+            consoleTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            consoleTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
+            consoleTableLayoutPanel.Name = "consoleTableLayoutPanel";
+            consoleTableLayoutPanel.RowCount = 2;
+            consoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            consoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            consoleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            consoleTableLayoutPanel.Size = new System.Drawing.Size(968, 677);
+            consoleTableLayoutPanel.TabIndex = 0;
             // 
-            // ConsoleBrowser
+            // _consoleBrowser
             // 
-            ConsoleBrowser.AllowNavigation = false;
-            ConsoleTableLayoutPanel.SetColumnSpan(ConsoleBrowser, 2);
-            ConsoleBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            ConsoleBrowser.IsWebBrowserContextMenuEnabled = false;
-            ConsoleBrowser.Location = new System.Drawing.Point(5, 5);
-            ConsoleBrowser.Margin = new System.Windows.Forms.Padding(5);
-            ConsoleBrowser.Name = "ConsoleBrowser";
-            ConsoleBrowser.Size = new System.Drawing.Size(958, 619);
-            ConsoleBrowser.TabIndex = 0;
-            ConsoleBrowser.TabStop = false;
+            _consoleBrowser.AllowNavigation = false;
+            consoleTableLayoutPanel.SetColumnSpan(_consoleBrowser, 2);
+            _consoleBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            _consoleBrowser.IsWebBrowserContextMenuEnabled = false;
+            _consoleBrowser.Location = new System.Drawing.Point(5, 5);
+            _consoleBrowser.Margin = new System.Windows.Forms.Padding(5);
+            _consoleBrowser.Name = "_consoleBrowser";
+            _consoleBrowser.Size = new System.Drawing.Size(958, 619);
+            _consoleBrowser.TabIndex = 0;
+            _consoleBrowser.TabStop = false;
             // 
-            // InputTextBox
+            // _inputTextBox
             // 
-            InputTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            InputTextBox.Location = new System.Drawing.Point(3, 632);
-            InputTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
-            InputTextBox.Name = "InputTextBox";
-            InputTextBox.Size = new System.Drawing.Size(910, 38);
-            InputTextBox.TabIndex = 0;
-            InputTextBox.KeyDown += InputTextBox_KeyDown;
+            _inputTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            _inputTextBox.Location = new System.Drawing.Point(3, 632);
+            _inputTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            _inputTextBox.Name = "_inputTextBox";
+            _inputTextBox.Size = new System.Drawing.Size(910, 38);
+            _inputTextBox.TabIndex = 0;
+            _inputTextBox.KeyDown += InputTextBox_KeyDown;
             // 
-            // EnterButton
+            // enterButton
             // 
-            EnterButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            EnterButton.Location = new System.Drawing.Point(921, 632);
-            EnterButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 5);
-            EnterButton.Name = "EnterButton";
-            EnterButton.Size = new System.Drawing.Size(44, 40);
-            EnterButton.TabIndex = 1;
-            EnterButton.Text = "▲";
-            EnterButton.UseVisualStyleBackColor = true;
-            EnterButton.Click += EnterButton_Click;
+            enterButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            enterButton.Location = new System.Drawing.Point(921, 632);
+            enterButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 5);
+            enterButton.Name = "enterButton";
+            enterButton.Size = new System.Drawing.Size(44, 40);
+            enterButton.TabIndex = 1;
+            enterButton.Text = "▲";
+            enterButton.UseVisualStyleBackColor = true;
+            enterButton.Click += EnterButton_Click;
             // 
-            // ShortcutGroupBox
+            // shortcutGroupBox
             // 
-            ShortcutGroupBox.Controls.Add(ShortcutTableLayoutPanel);
-            ShortcutGroupBox.Location = new System.Drawing.Point(3, 413);
-            ShortcutGroupBox.Name = "ShortcutGroupBox";
-            ShortcutGroupBox.Size = new System.Drawing.Size(294, 161);
-            ShortcutGroupBox.TabIndex = 3;
-            ShortcutGroupBox.TabStop = false;
-            ShortcutGroupBox.Text = "快捷操作";
+            shortcutGroupBox.Controls.Add(shortcutTableLayoutPanel);
+            shortcutGroupBox.Location = new System.Drawing.Point(3, 413);
+            shortcutGroupBox.Name = "shortcutGroupBox";
+            shortcutGroupBox.Size = new System.Drawing.Size(294, 161);
+            shortcutGroupBox.TabIndex = 3;
+            shortcutGroupBox.TabStop = false;
+            shortcutGroupBox.Text = "快捷操作";
             // 
-            // ShortcutTableLayoutPanel
+            // shortcutTableLayoutPanel
             // 
-            ShortcutTableLayoutPanel.ColumnCount = 1;
-            ShortcutTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ShortcutTableLayoutPanel.Controls.Add(OpenDirectoryButton, 0, 0);
-            ShortcutTableLayoutPanel.Controls.Add(StartPluginManagerButton, 0, 1);
-            ShortcutTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            ShortcutTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
-            ShortcutTableLayoutPanel.Name = "ShortcutTableLayoutPanel";
-            ShortcutTableLayoutPanel.RowCount = 2;
-            ShortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ShortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            ShortcutTableLayoutPanel.Size = new System.Drawing.Size(288, 124);
-            ShortcutTableLayoutPanel.TabIndex = 0;
+            shortcutTableLayoutPanel.ColumnCount = 1;
+            shortcutTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            shortcutTableLayoutPanel.Controls.Add(openDirectoryButton, 0, 0);
+            shortcutTableLayoutPanel.Controls.Add(startPluginManagerButton, 0, 1);
+            shortcutTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            shortcutTableLayoutPanel.Location = new System.Drawing.Point(3, 34);
+            shortcutTableLayoutPanel.Name = "shortcutTableLayoutPanel";
+            shortcutTableLayoutPanel.RowCount = 2;
+            shortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            shortcutTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            shortcutTableLayoutPanel.Size = new System.Drawing.Size(288, 124);
+            shortcutTableLayoutPanel.TabIndex = 0;
             // 
-            // OpenDirectoryButton
+            // openDirectoryButton
             // 
-            OpenDirectoryButton.Dock = System.Windows.Forms.DockStyle.Top;
-            OpenDirectoryButton.Location = new System.Drawing.Point(3, 3);
-            OpenDirectoryButton.Name = "OpenDirectoryButton";
-            OpenDirectoryButton.Size = new System.Drawing.Size(282, 46);
-            OpenDirectoryButton.TabIndex = 0;
-            OpenDirectoryButton.Text = "打开启动文件所在位置";
-            OpenDirectoryButton.UseVisualStyleBackColor = true;
-            OpenDirectoryButton.Click += OpenDirectoryButton_Click;
+            openDirectoryButton.Dock = System.Windows.Forms.DockStyle.Top;
+            openDirectoryButton.Location = new System.Drawing.Point(3, 3);
+            openDirectoryButton.Name = "openDirectoryButton";
+            openDirectoryButton.Size = new System.Drawing.Size(282, 46);
+            openDirectoryButton.TabIndex = 0;
+            openDirectoryButton.Text = "打开启动文件所在位置";
+            openDirectoryButton.UseVisualStyleBackColor = true;
+            openDirectoryButton.Click += OpenDirectoryButton_Click;
             // 
-            // StartPluginManagerButton
+            // startPluginManagerButton
             // 
-            StartPluginManagerButton.Dock = System.Windows.Forms.DockStyle.Top;
-            StartPluginManagerButton.Location = new System.Drawing.Point(3, 65);
-            StartPluginManagerButton.Name = "StartPluginManagerButton";
-            StartPluginManagerButton.Size = new System.Drawing.Size(282, 46);
-            StartPluginManagerButton.TabIndex = 1;
-            StartPluginManagerButton.Text = "插件管理";
-            StartPluginManagerButton.UseVisualStyleBackColor = true;
-            StartPluginManagerButton.Click += StartPluginManagerButton_Click;
+            startPluginManagerButton.Dock = System.Windows.Forms.DockStyle.Top;
+            startPluginManagerButton.Location = new System.Drawing.Point(3, 65);
+            startPluginManagerButton.Name = "startPluginManagerButton";
+            startPluginManagerButton.Size = new System.Drawing.Size(282, 46);
+            startPluginManagerButton.TabIndex = 1;
+            startPluginManagerButton.Text = "插件管理";
+            startPluginManagerButton.UseVisualStyleBackColor = true;
+            startPluginManagerButton.Click += StartPluginManagerButton_Click;
             // 
             // Panel
             // 
             AllowDrop = true;
             BackColor = System.Drawing.Color.White;
-            Controls.Add(MainTableLayoutPanel);
+            Controls.Add(mainTableLayoutPanel);
             Name = "Panel";
             Size = new System.Drawing.Size(1280, 720);
             DragDrop += Panel_DragDrop;
             DragEnter += Panel_DragEnter;
-            MainTableLayoutPanel.ResumeLayout(false);
-            InfoGroupBox.ResumeLayout(false);
-            InformationTableLayoutPanel.ResumeLayout(false);
-            InformationTableLayoutPanel.PerformLayout();
-            ControlGroupBox.ResumeLayout(false);
-            ControlTableLayoutPanel.ResumeLayout(false);
-            ConsoleGroupBox.ResumeLayout(false);
-            ConsoleTableLayoutPanel.ResumeLayout(false);
-            ConsoleTableLayoutPanel.PerformLayout();
-            ShortcutGroupBox.ResumeLayout(false);
-            ShortcutTableLayoutPanel.ResumeLayout(false);
+            mainTableLayoutPanel.ResumeLayout(false);
+            infoGroupBox.ResumeLayout(false);
+            informationTableLayoutPanel.ResumeLayout(false);
+            informationTableLayoutPanel.PerformLayout();
+            controlGroupBox.ResumeLayout(false);
+            controlTableLayoutPanel.ResumeLayout(false);
+            consoleGroupBox.ResumeLayout(false);
+            consoleTableLayoutPanel.ResumeLayout(false);
+            consoleTableLayoutPanel.PerformLayout();
+            shortcutGroupBox.ResumeLayout(false);
+            shortcutTableLayoutPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox InputTextBox;
-        private System.Windows.Forms.Button EnterButton;
-        private System.Windows.Forms.Button StartButton;
-        private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Button RestartButton;
-        private System.Windows.Forms.Button TerminateButton;
-        private System.Windows.Forms.Label StatusDynamicLabel;
-        private System.Windows.Forms.Label RunTimeDynamicLabel;
-        private System.Windows.Forms.Label VersionDynamicLabel;
-        private System.Windows.Forms.Label PlayerCountDynamicLabel;
-        private System.Windows.Forms.Label CPUPercentDynamicLabel;
-        private Serein.Lite.Ui.Controls.ConsoleWebBrowser ConsoleBrowser;
-        private System.Windows.Forms.ToolTip ToolTipProvider;
+        private System.Windows.Forms.TextBox _inputTextBox;
+        private System.Windows.Forms.Label _statusDynamicLabel;
+        private System.Windows.Forms.Label _runTimeDynamicLabel;
+        private System.Windows.Forms.Label _versionDynamicLabel;
+        private System.Windows.Forms.Label _playerCountDynamicLabel;
+        private System.Windows.Forms.Label _cpuPercentDynamicLabel;
+        private Serein.Lite.Ui.Controls.ConsoleWebBrowser _consoleBrowser;
+        private System.Windows.Forms.ToolTip _toolTip;
     }
 }

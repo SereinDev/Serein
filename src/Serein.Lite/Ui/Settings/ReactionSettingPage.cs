@@ -18,47 +18,47 @@ public partial class ReactionSettingPage : UserControl
 
         foreach (var type in Enum.GetValues<ReactionType>())
         {
-            EventListBox.Items.Add(new DisplayedItem(type));
+            _eventListBox.Items.Add(new DisplayedItem(type));
         }
 
-        CommandListView.SetExploreTheme();
+        _commandListView.SetExploreTheme();
         _settingProvider = settingProvider;
     }
 
     private void SaveData()
     {
-        if (EventListBox.SelectedItem is not DisplayedItem displayedItem)
+        if (_eventListBox.SelectedItem is not DisplayedItem displayedItem)
         {
             return;
         }
 
-        _settingProvider.Value.Reactions[displayedItem.Type] = CommandListView
-            .Items.Cast<ListViewItem>()
-            .Select((item) => item.Text)
-            .ToArray();
+        _settingProvider.Value.Reactions[displayedItem.Type] =
+        [
+            .. _commandListView.Items.Cast<ListViewItem>().Select((item) => item.Text),
+        ];
         _settingProvider.SaveAsyncWithDebounce();
     }
 
     private void EventListBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (
-            EventListBox.SelectedItem is DisplayedItem displayedItem
+            _eventListBox.SelectedItem is DisplayedItem displayedItem
             && _settingProvider.Value.Reactions.TryGetValue(displayedItem.Type, out var commands)
         )
         {
-            CommandListView.BeginUpdate();
-            CommandListView.Items.Clear();
+            _commandListView.BeginUpdate();
+            _commandListView.Items.Clear();
 
             foreach (var command in commands)
             {
-                CommandListView.Items.Add(command);
+                _commandListView.Items.Add(command);
             }
 
-            CommandListView.EndUpdate();
+            _commandListView.EndUpdate();
         }
         else
         {
-            CommandListView.Items.Clear();
+            _commandListView.Items.Clear();
         }
     }
 
@@ -69,32 +69,32 @@ public partial class ReactionSettingPage : UserControl
 
     private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DeleteToolStripMenuItem.Enabled = CommandListView.SelectedItems.Count == 1;
+        _deleteToolStripMenuItem.Enabled = _commandListView.SelectedItems.Count == 1;
     }
 
     private void AddToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (CommandListView.SelectedItems.Count == 1)
+        if (_commandListView.SelectedItems.Count == 1)
         {
-            CommandListView.Items.Insert(CommandListView.SelectedItems[0].Index, string.Empty);
+            _commandListView.Items.Insert(_commandListView.SelectedItems[0].Index, string.Empty);
         }
         else
         {
-            CommandListView.Items.Add(string.Empty);
+            _commandListView.Items.Add(string.Empty);
         }
         SaveData();
     }
 
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (CommandListView.SelectedItems.Count == 1)
+        if (_commandListView.SelectedItems.Count == 1)
         {
-            CommandListView.Items.Remove(CommandListView.SelectedItems[0]);
+            _commandListView.Items.Remove(_commandListView.SelectedItems[0]);
             SaveData();
         }
     }
 
-    private class DisplayedItem
+    private sealed class DisplayedItem
     {
         public ReactionType Type { get; }
 

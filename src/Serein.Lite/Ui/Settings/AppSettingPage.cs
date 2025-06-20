@@ -24,17 +24,17 @@ public partial class AppSettingPage : UserControl
         SetBindings();
         UpdateLatestVersion();
 
-        VersionLabel.Text = $"当前版本：{sereinApp.Version}";
+        _versionLabel.Text = $"当前版本：{sereinApp.Version}";
 
-        JSGlobalAssembliesTextBox.Text = string.Join(
+        _jsGlobalAssembliesTextBox.Text = string.Join(
             "\r\n",
             _settingProvider.Value.Application.JSGlobalAssemblies
         );
-        JSPatternToSkipLoadingSingleFileTextBox.Text = string.Join(
+        _jsPatternToSkipLoadingSingleFileTextBox.Text = string.Join(
             "\r\n",
             _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile
         );
-        PattenForEnableMatchingMuiltLinesTextBox.Text = string.Join(
+        _pattenForEnableMatchingMuiltLinesTextBox.Text = string.Join(
             "\r\n",
             _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines
         );
@@ -43,7 +43,7 @@ public partial class AppSettingPage : UserControl
 
     private void UpdateLatestVersion()
     {
-        LatestVersionLabel.Text = $"最新版本：{_updateChecker.LastResult?.TagName ?? "-"}";
+        _latestVersionLabel.Text = $"最新版本：{_updateChecker.LastResult?.TagName ?? "-"}";
     }
 
     private void OnPropertyChanged(object sender, EventArgs e)
@@ -53,50 +53,50 @@ public partial class AppSettingPage : UserControl
 
     private void SetBindings()
     {
-        PluginEventMaxWaitingTimeNumericUpDown.DataBindings.Add(
-            nameof(PluginEventMaxWaitingTimeNumericUpDown.Value),
+        _pluginEventMaxWaitingTimeNumericUpDown.DataBindings.Add(
+            nameof(_pluginEventMaxWaitingTimeNumericUpDown.Value),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.PluginEventMaxWaitingTime),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        RegexForCheckingGameIDTextBox.DataBindings.Add(
-            nameof(RegexForCheckingGameIDTextBox.Text),
+        _regexForCheckingGameIDTextBox.DataBindings.Add(
+            nameof(_regexForCheckingGameIDTextBox.Text),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.RegexForCheckingGameId),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        CustomTitleTextBox.DataBindings.Add(
-            nameof(CustomTitleTextBox.Text),
+        _customTitleTextBox.DataBindings.Add(
+            nameof(_customTitleTextBox.Text),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.CustomTitle),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        DisableBinderWhenServerClosedCheckBox.DataBindings.Add(
-            nameof(DisableBinderWhenServerClosedCheckBox.Checked),
+        _disableBinderWhenServerClosedCheckBox.DataBindings.Add(
+            nameof(_disableBinderWhenServerClosedCheckBox.Checked),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.DisableBinderWhenServerClosed),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        CheckUpdateCheckBox.DataBindings.Add(
-            nameof(CheckUpdateCheckBox.Checked),
+        _checkUpdateCheckBox.DataBindings.Add(
+            nameof(_checkUpdateCheckBox.Checked),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.CheckUpdate),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        AutoUpdateCheckBox.DataBindings.Add(
-            nameof(AutoUpdateCheckBox.Checked),
+        _autoUpdateCheckBox.DataBindings.Add(
+            nameof(_autoUpdateCheckBox.Checked),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.AutoUpdate),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        AutoUpdateCheckBox.DataBindings.Add(
-            nameof(AutoUpdateCheckBox.Enabled),
+        _autoUpdateCheckBox.DataBindings.Add(
+            nameof(_autoUpdateCheckBox.Enabled),
             _settingProvider.Value.Application,
             nameof(ApplicationSetting.CheckUpdate),
             false,
@@ -106,14 +106,14 @@ public partial class AppSettingPage : UserControl
 
     private void CheckUpdateButton_Click(object sender, EventArgs e)
     {
-        LatestVersionLabel.Text = "最新版本：";
+        _latestVersionLabel.Text = "最新版本：";
         _updateChecker.CheckAsync().ContinueWith((_) => Invoke(UpdateLatestVersion));
     }
 
     private void JSGlobalAssembliesTextBox_TextChanged(object sender, EventArgs e)
     {
         _settingProvider.Value.Application.JSGlobalAssemblies =
-            JSGlobalAssembliesTextBox.Text.Split(
+            _jsGlobalAssembliesTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );
@@ -122,7 +122,7 @@ public partial class AppSettingPage : UserControl
     private void JSPatternToSkipLoadingSingleFileTextBox_TextChanged(object sender, EventArgs e)
     {
         _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile =
-            JSPatternToSkipLoadingSingleFileTextBox.Text.Split(
+            _jsPatternToSkipLoadingSingleFileTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );
@@ -131,7 +131,7 @@ public partial class AppSettingPage : UserControl
     private void PattenForEnableMatchingMuiltLinesTextBox_TextChanged(object sender, EventArgs e)
     {
         _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines =
-            PattenForEnableMatchingMuiltLinesTextBox.Text.Split(
+            _pattenForEnableMatchingMuiltLinesTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );

@@ -10,7 +10,7 @@ using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui.Functions;
 
 public partial class MatchPage : UserControl, IUpdateablePage
 {
@@ -32,21 +32,21 @@ public partial class MatchPage : UserControl, IUpdateablePage
 
         InitializeComponent();
         LoadData();
-        MatchListView.SetExploreTheme();
+        _matchListView.SetExploreTheme();
     }
 
     private void UpdateText()
     {
-        ToolStripStatusLabel.Text =
-            MatchListView.SelectedItems.Count > 0
-                ? $"共{MatchListView.Items.Count}项；已选择{MatchListView.SelectedItems.Count}项"
-                : $"共{MatchListView.Items.Count}项";
+        _toolStripStatusLabel.Text =
+            _matchListView.SelectedItems.Count > 0
+                ? $"共{_matchListView.Items.Count}项；已选择{_matchListView.SelectedItems.Count}项"
+                : $"共{_matchListView.Items.Count}项";
     }
 
     private void LoadData()
     {
-        MatchListView.BeginUpdate();
-        MatchListView.Items.Clear();
+        _matchListView.BeginUpdate();
+        _matchListView.Items.Clear();
 
         lock (_matchProvider.Value)
         {
@@ -65,10 +65,10 @@ public partial class MatchPage : UserControl, IUpdateablePage
                 );
                 item.SubItems.Add(match.Exclusions);
 
-                MatchListView.Items.Add(item);
+                _matchListView.Items.Add(item);
             }
         }
-        MatchListView.EndUpdate();
+        _matchListView.EndUpdate();
         UpdateText();
     }
 
@@ -77,7 +77,7 @@ public partial class MatchPage : UserControl, IUpdateablePage
         lock (_matchProvider.Value)
         {
             _matchProvider.Value.Clear();
-            foreach (ListViewItem item in MatchListView.Items)
+            foreach (ListViewItem item in _matchListView.Items)
             {
                 if (item.Tag is Match match)
                 {
@@ -96,36 +96,40 @@ public partial class MatchPage : UserControl, IUpdateablePage
 
     private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DeleteToolStripMenuItem.Enabled = MatchListView.SelectedItems.Count > 0;
-        EditToolStripMenuItem.Enabled = MatchListView.SelectedItems.Count == 1;
-        ClearToolStripMenuItem.Enabled = MatchListView.Items.Count > 0;
+        _deleteToolStripMenuItem.Enabled = _matchListView.SelectedItems.Count > 0;
+        _editToolStripMenuItem.Enabled = _matchListView.SelectedItems.Count == 1;
+        _clearToolStripMenuItem.Enabled = _matchListView.Items.Count > 0;
     }
 
     private void MatchListView_KeyDown(object sender, KeyEventArgs e)
     {
-        if (!e.Control || MatchListView.Items.Count <= 1 || MatchListView.SelectedItems.Count != 1)
+        if (
+            !e.Control
+            || _matchListView.Items.Count <= 1
+            || _matchListView.SelectedItems.Count != 1
+        )
         {
             return;
         }
 
         ListViewItem item;
-        var i = MatchListView.SelectedItems[0].Index;
+        var i = _matchListView.SelectedItems[0].Index;
         if (e.KeyCode == Keys.Up && i > 0)
         {
-            MatchListView.BeginUpdate();
-            item = MatchListView.Items[i - 1];
-            MatchListView.Items.Remove(item);
-            MatchListView.Items.Insert(i, item);
-            MatchListView.EndUpdate();
+            _matchListView.BeginUpdate();
+            item = _matchListView.Items[i - 1];
+            _matchListView.Items.Remove(item);
+            _matchListView.Items.Insert(i, item);
+            _matchListView.EndUpdate();
             SaveData();
         }
-        else if (e.KeyCode == Keys.Down && i >= 0 && i < MatchListView.Items.Count - 1)
+        else if (e.KeyCode == Keys.Down && i >= 0 && i < _matchListView.Items.Count - 1)
         {
-            MatchListView.BeginUpdate();
-            item = MatchListView.Items[i + 1];
-            MatchListView.Items.Remove(item);
-            MatchListView.Items.Insert(i, item);
-            MatchListView.EndUpdate();
+            _matchListView.BeginUpdate();
+            item = _matchListView.Items[i + 1];
+            _matchListView.Items.Remove(item);
+            _matchListView.Items.Insert(i, item);
+            _matchListView.EndUpdate();
             SaveData();
         }
     }
@@ -154,7 +158,7 @@ public partial class MatchPage : UserControl, IUpdateablePage
     private void EditToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (
-            MatchListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault()?.Tag is Match match
+            _matchListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault()?.Tag is Match match
             && new MatchEditor(match).ShowDialog() == DialogResult.OK
         )
         {
@@ -170,9 +174,9 @@ public partial class MatchPage : UserControl, IUpdateablePage
             return;
         }
 
-        foreach (var item in MatchListView.SelectedItems.Cast<ListViewItem>())
+        foreach (var item in _matchListView.SelectedItems.Cast<ListViewItem>())
         {
-            MatchListView.Items.Remove(item);
+            _matchListView.Items.Remove(item);
         }
         SaveData();
         UpdateText();

@@ -4,37 +4,37 @@ using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui.Functions;
 
 public partial class ConnectionPage : UserControl
 {
-    private readonly ConnectionManager _wsConnectionManager;
+    private readonly ConnectionManager _connectionManager;
     private readonly System.Timers.Timer _timer;
 
-    public ConnectionPage(ConnectionManager wsConnectionManager)
+    public ConnectionPage(ConnectionManager connectionManager)
     {
-        _wsConnectionManager = wsConnectionManager;
+        _connectionManager = connectionManager;
         InitializeComponent();
 
         _timer = new(1000);
         _timer.Elapsed += (_, _) => Invoke(UpadteInfo);
         _timer.Start();
 
-        SentCountDynamicLabel.DataBindings.Add(
-            nameof(SentCountDynamicLabel.Text),
-            _wsConnectionManager,
-            nameof(_wsConnectionManager.Sent)
+        _sentCountDynamicLabel.DataBindings.Add(
+            nameof(_sentCountDynamicLabel.Text),
+            _connectionManager,
+            nameof(_connectionManager.Sent)
         );
-        RecvCountDynamicLabel.DataBindings.Add(
-            nameof(RecvCountDynamicLabel.Text),
-            _wsConnectionManager,
-            nameof(_wsConnectionManager.Received)
+        _recvCountDynamicLabel.DataBindings.Add(
+            nameof(_recvCountDynamicLabel.Text),
+            _connectionManager,
+            nameof(_connectionManager.Received)
         );
-        _wsConnectionManager.PropertyChanged += (_, e) =>
+        _connectionManager.PropertyChanged += (_, e) =>
         {
             if (
-                e.PropertyName == nameof(_wsConnectionManager.IsActive)
-                || e.PropertyName == nameof(_wsConnectionManager.ConnectedAt)
+                e.PropertyName == nameof(_connectionManager.IsActive)
+                || e.PropertyName == nameof(_connectionManager.ConnectedAt)
             )
             {
                 Invoke(UpadteInfo);
@@ -45,9 +45,10 @@ public partial class ConnectionPage : UserControl
     private void OpenButton_Click(object sender, EventArgs e)
     {
         ConsoleWebBrowser.ClearLines();
+
         try
         {
-            _wsConnectionManager.Start();
+            _connectionManager.Start();
         }
         catch (Exception ex)
         {
@@ -59,7 +60,7 @@ public partial class ConnectionPage : UserControl
     {
         try
         {
-            _wsConnectionManager.Stop();
+            _connectionManager.Stop();
         }
         catch (Exception ex)
         {
@@ -69,9 +70,9 @@ public partial class ConnectionPage : UserControl
 
     private void UpadteInfo()
     {
-        StatusDynamicLabel.Text = _wsConnectionManager.IsActive ? "开启" : "关闭";
-        TimeDynamicLabel.Text = _wsConnectionManager.IsActive
-            ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString()
+        _statusDynamicLabel.Text = _connectionManager.IsActive ? "开启" : "关闭";
+        _timeDynamicLabel.Text = _connectionManager.IsActive
+            ? (DateTime.Now - _connectionManager.ConnectedAt).ToCommonString()
             : "-";
     }
 }

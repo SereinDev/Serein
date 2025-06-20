@@ -34,7 +34,7 @@ public partial class Panel : UserControl
 
             if (_server.Status)
             {
-                Invoke(ConsoleBrowser.ClearLines);
+                Invoke(_consoleBrowser.ClearLines);
                 _timer.Start();
             }
             else
@@ -55,7 +55,7 @@ public partial class Panel : UserControl
                 case ServerOutputType.StandardOutput:
                     lock (_lock)
                     {
-                        ConsoleBrowser.AppendHtmlLine(
+                        _consoleBrowser.AppendHtmlLine(
                             LogColorizer.ColorLine(e.Data, _server.Configuration.OutputStyle)
                         );
                     }
@@ -66,7 +66,7 @@ public partial class Panel : UserControl
                     {
                         lock (_lock)
                         {
-                            ConsoleBrowser.AppendHtmlLine($">{LogColorizer.EscapeLog(e.Data)}");
+                            _consoleBrowser.AppendHtmlLine($">{LogColorizer.EscapeLog(e.Data)}");
                         }
                     }
                     break;
@@ -74,14 +74,14 @@ public partial class Panel : UserControl
                 case ServerOutputType.InternalInfo:
                     lock (_lock)
                     {
-                        ConsoleBrowser.AppendNotice(e.Data);
+                        _consoleBrowser.AppendNotice(e.Data);
                     }
                     break;
 
                 case ServerOutputType.InternalError:
                     lock (_lock)
                     {
-                        ConsoleBrowser.AppendError(e.Data);
+                        _consoleBrowser.AppendError(e.Data);
                     }
                     break;
 
@@ -164,11 +164,11 @@ public partial class Panel : UserControl
                     && _server.CommandHistoryIndex < _server.CommandHistory.Count
                 )
                 {
-                    InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+                    _inputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
                 }
 
                 e.Handled = true;
-                InputTextBox.SelectionStart = InputTextBox.Text.Length;
+                _inputTextBox.SelectionStart = _inputTextBox.Text.Length;
                 break;
 
             case Keys.Down:
@@ -182,18 +182,18 @@ public partial class Panel : UserControl
                     && _server.CommandHistoryIndex < _server.CommandHistory.Count
                 )
                 {
-                    InputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
+                    _inputTextBox.Text = _server.CommandHistory[_server.CommandHistoryIndex];
                 }
                 else if (
                     _server.CommandHistoryIndex == _server.CommandHistory.Count
                     && _server.CommandHistory.Count != 0
                 )
                 {
-                    InputTextBox.Text = string.Empty;
+                    _inputTextBox.Text = string.Empty;
                 }
 
                 e.Handled = true;
-                InputTextBox.SelectionStart = InputTextBox.Text.Length;
+                _inputTextBox.SelectionStart = _inputTextBox.Text.Length;
                 break;
         }
     }
@@ -202,30 +202,30 @@ public partial class Panel : UserControl
     {
         if (_server.Status)
         {
-            _server.Input(InputTextBox.Text, null, true);
-            InputTextBox.Text = string.Empty;
+            _server.Input(_inputTextBox.Text, null, true);
+            _inputTextBox.Text = string.Empty;
         }
     }
 
     private void UpdateInfo()
     {
-        StatusDynamicLabel.Text = _server.Status ? "运行中" : "未启动";
-        VersionDynamicLabel.Text = _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
-        PlayerCountDynamicLabel.Text = _server.Status
+        _statusDynamicLabel.Text = _server.Status ? "运行中" : "未启动";
+        _versionDynamicLabel.Text = _server.Status ? _server.Info.Stat?.Version ?? "-" : "-";
+        _playerCountDynamicLabel.Text = _server.Status
             ? $"{_server.Info.Stat?.CurrentPlayers}/{_server.Info.Stat?.MaximumPlayers}"
             : "-";
-        RunTimeDynamicLabel.Text =
+        _runTimeDynamicLabel.Text =
             _server.Status && _server.Info.StartTime is not null
                 ? (DateTime.Now - _server.Info.StartTime).ToCommonString()
                 : "-";
 
-        CPUPercentDynamicLabel.Text = _server.Status
+        _cpuPercentDynamicLabel.Text = _server.Status
             ? _server.Info.CpuUsage.ToString("N2") + "%"
             : "-";
 
-        ToolTipProvider.SetToolTip(VersionDynamicLabel, VersionDynamicLabel.Text);
-        ToolTipProvider.SetToolTip(PlayerCountDynamicLabel, PlayerCountDynamicLabel.Text);
-        ToolTipProvider.SetToolTip(RunTimeDynamicLabel, RunTimeDynamicLabel.Text);
+        _toolTip.SetToolTip(_versionDynamicLabel, _versionDynamicLabel.Text);
+        _toolTip.SetToolTip(_playerCountDynamicLabel, _playerCountDynamicLabel.Text);
+        _toolTip.SetToolTip(_runTimeDynamicLabel, _runTimeDynamicLabel.Text);
     }
 
     protected override void OnLoad(EventArgs e)

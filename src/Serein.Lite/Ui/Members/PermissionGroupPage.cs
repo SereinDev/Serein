@@ -26,21 +26,21 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
         _groupManager = groupManager;
         _permissionGroupProvider = permissionGroupProvider;
         _permissionManager = permissionManager;
-        GroupListView.SetExploreTheme();
+        _groupListView.SetExploreTheme();
     }
 
     private void GroupContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        EditToolStripMenuItem.Enabled = GroupListView.SelectedItems.Count == 1;
-        DeleteToolStripMenuItem.Enabled =
-            GroupListView.SelectedItems.Count == 1
-            && GroupListView.SelectedItems[0].Text != "everyone";
+        _editToolStripMenuItem.Enabled = _groupListView.SelectedItems.Count == 1;
+        _deleteToolStripMenuItem.Enabled =
+            _groupListView.SelectedItems.Count == 1
+            && _groupListView.SelectedItems[0].Text != "everyone";
     }
 
     private void LoadData()
     {
-        GroupListView.BeginUpdate();
-        GroupListView.Items.Clear();
+        _groupListView.BeginUpdate();
+        _groupListView.Items.Clear();
 
         lock (_permissionGroupProvider.Value)
         {
@@ -51,10 +51,10 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
                 item.SubItems.Add(kv.Value.Description);
                 item.SubItems.Add(kv.Value.Priority.ToString());
 
-                GroupListView.Items.Add(item);
+                _groupListView.Items.Add(item);
             }
         }
-        GroupListView.EndUpdate();
+        _groupListView.EndUpdate();
     }
 
     public void UpdatePage() => LoadData();
@@ -77,8 +77,8 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
     private void EditToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (
-            GroupListView.SelectedItems.Count != 1
-            || GroupListView.SelectedItems[0].Tag is not KeyValuePair<string, Group> kv
+            _groupListView.SelectedItems.Count != 1
+            || _groupListView.SelectedItems[0].Tag is not KeyValuePair<string, Group> kv
         )
         {
             return;
@@ -97,14 +97,14 @@ public partial class PermissionGroupPage : UserControl, IUpdateablePage
     private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (
-            GroupListView.SelectedItems.Count != 1
+            _groupListView.SelectedItems.Count != 1
             || !MessageBoxHelper.ShowDeleteConfirmation("你确定要删除所选项吗？")
         )
         {
             return;
         }
 
-        _permissionGroupProvider.Value.Remove(GroupListView.SelectedItems[0].Text);
+        _permissionGroupProvider.Value.Remove(_groupListView.SelectedItems[0].Text);
         _permissionGroupProvider.SaveAsyncWithDebounce();
         LoadData();
     }

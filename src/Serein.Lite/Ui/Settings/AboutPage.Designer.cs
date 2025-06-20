@@ -31,131 +31,131 @@ namespace Serein.Lite.Ui.Settings
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label CopyrightTitleLabel;
-            System.Windows.Forms.Label CopyrightLabel;
-            System.Windows.Forms.Label LicenseLabel;
-            System.Windows.Forms.Label DeclarationTitleLabel;
-            System.Windows.Forms.Label DeclarationLabel1;
-            System.Windows.Forms.Label DeclarationLabel2;
-            System.Windows.Forms.Label DeclarationLabel3;
-            System.Windows.Forms.Label DeclarationLabel4;
-            System.Windows.Forms.Label DeclarationLabel5;
+            System.Windows.Forms.Label copyrightTitleLabel;
+            System.Windows.Forms.Label copyrightLabel;
+            System.Windows.Forms.Label licenseLabel;
+            System.Windows.Forms.Label declarationTitleLabel;
+            System.Windows.Forms.Label declarationLabel1;
+            System.Windows.Forms.Label declarationLabel2;
+            System.Windows.Forms.Label declarationLabel3;
+            System.Windows.Forms.Label declarationLabel4;
+            System.Windows.Forms.Label declarationLabel5;
             System.Windows.Forms.LinkLabel linkLabel1;
             System.Windows.Forms.LinkLabel linkLabel2;
             System.Windows.Forms.LinkLabel linkLabel3;
-            System.Windows.Forms.LinkLabel DeclarationLinkLabel1;
-            System.Windows.Forms.LinkLabel DeclarationLinkLabel2;
-            System.Windows.Forms.ToolTip ToolTip;
-            VersionLabel = new System.Windows.Forms.Label();
-            DetailedVersionLabel = new System.Windows.Forms.Label();
-            AssemblyLabel = new System.Windows.Forms.Label();
-            CopyrightTitleLabel = new System.Windows.Forms.Label();
-            CopyrightLabel = new System.Windows.Forms.Label();
-            LicenseLabel = new System.Windows.Forms.Label();
-            DeclarationTitleLabel = new System.Windows.Forms.Label();
-            DeclarationLabel1 = new System.Windows.Forms.Label();
-            DeclarationLabel2 = new System.Windows.Forms.Label();
-            DeclarationLabel3 = new System.Windows.Forms.Label();
-            DeclarationLabel4 = new System.Windows.Forms.Label();
-            DeclarationLabel5 = new System.Windows.Forms.Label();
+            System.Windows.Forms.LinkLabel declarationLinkLabel1;
+            System.Windows.Forms.LinkLabel declarationLinkLabel2;
+            System.Windows.Forms.ToolTip toolTip;
+            _versionLabel = new System.Windows.Forms.Label();
+            _detailedVersionLabel = new System.Windows.Forms.Label();
+            _assemblyLabel = new System.Windows.Forms.Label();
+            copyrightTitleLabel = new System.Windows.Forms.Label();
+            copyrightLabel = new System.Windows.Forms.Label();
+            licenseLabel = new System.Windows.Forms.Label();
+            declarationTitleLabel = new System.Windows.Forms.Label();
+            declarationLabel1 = new System.Windows.Forms.Label();
+            declarationLabel2 = new System.Windows.Forms.Label();
+            declarationLabel3 = new System.Windows.Forms.Label();
+            declarationLabel4 = new System.Windows.Forms.Label();
+            declarationLabel5 = new System.Windows.Forms.Label();
             linkLabel1 = new System.Windows.Forms.LinkLabel();
             linkLabel2 = new System.Windows.Forms.LinkLabel();
             linkLabel3 = new System.Windows.Forms.LinkLabel();
-            DeclarationLinkLabel1 = new System.Windows.Forms.LinkLabel();
-            DeclarationLinkLabel2 = new System.Windows.Forms.LinkLabel();
-            ToolTip = new System.Windows.Forms.ToolTip(components);
+            declarationLinkLabel1 = new System.Windows.Forms.LinkLabel();
+            declarationLinkLabel2 = new System.Windows.Forms.LinkLabel();
+            toolTip = new System.Windows.Forms.ToolTip(components);
             SuspendLayout();
             // 
-            // CopyrightTitleLabel
+            // copyrightTitleLabel
             // 
-            CopyrightTitleLabel.AutoSize = true;
-            CopyrightTitleLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 134);
-            CopyrightTitleLabel.Location = new System.Drawing.Point(26, 163);
-            CopyrightTitleLabel.Margin = new System.Windows.Forms.Padding(5, 20, 5, 5);
-            CopyrightTitleLabel.Name = "CopyrightTitleLabel";
-            CopyrightTitleLabel.Size = new System.Drawing.Size(110, 31);
-            CopyrightTitleLabel.TabIndex = 3;
-            CopyrightTitleLabel.Text = "版权信息";
+            copyrightTitleLabel.AutoSize = true;
+            copyrightTitleLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 134);
+            copyrightTitleLabel.Location = new System.Drawing.Point(26, 163);
+            copyrightTitleLabel.Margin = new System.Windows.Forms.Padding(5, 20, 5, 5);
+            copyrightTitleLabel.Name = "copyrightTitleLabel";
+            copyrightTitleLabel.Size = new System.Drawing.Size(110, 31);
+            copyrightTitleLabel.TabIndex = 3;
+            copyrightTitleLabel.Text = "版权信息";
             // 
-            // CopyrightLabel
+            // copyrightLabel
             // 
-            CopyrightLabel.AutoSize = true;
-            CopyrightLabel.Location = new System.Drawing.Point(26, 204);
-            CopyrightLabel.Margin = new System.Windows.Forms.Padding(5);
-            CopyrightLabel.Name = "CopyrightLabel";
-            CopyrightLabel.Size = new System.Drawing.Size(555, 31);
-            CopyrightLabel.TabIndex = 4;
-            CopyrightLabel.Text = "Copyright © 2022 Zaitonn. All Rights Reserved.";
+            copyrightLabel.AutoSize = true;
+            copyrightLabel.Location = new System.Drawing.Point(26, 204);
+            copyrightLabel.Margin = new System.Windows.Forms.Padding(5);
+            copyrightLabel.Name = "copyrightLabel";
+            copyrightLabel.Size = new System.Drawing.Size(555, 31);
+            copyrightLabel.TabIndex = 4;
+            copyrightLabel.Text = "Copyright © 2022 Zaitonn. All Rights Reserved.";
             // 
-            // LicenseLabel
+            // licenseLabel
             // 
-            LicenseLabel.AutoSize = true;
-            LicenseLabel.Location = new System.Drawing.Point(26, 245);
-            LicenseLabel.Margin = new System.Windows.Forms.Padding(5);
-            LicenseLabel.Name = "LicenseLabel";
-            LicenseLabel.Size = new System.Drawing.Size(401, 31);
-            LicenseLabel.TabIndex = 5;
-            LicenseLabel.Text = "此软件根据  GPL-3.0 license 发行。\r\n";
+            licenseLabel.AutoSize = true;
+            licenseLabel.Location = new System.Drawing.Point(26, 245);
+            licenseLabel.Margin = new System.Windows.Forms.Padding(5);
+            licenseLabel.Name = "licenseLabel";
+            licenseLabel.Size = new System.Drawing.Size(401, 31);
+            licenseLabel.TabIndex = 5;
+            licenseLabel.Text = "此软件根据  GPL-3.0 license 发行。\r\n";
             // 
-            // DeclarationTitleLabel
+            // declarationTitleLabel
             // 
-            DeclarationTitleLabel.AutoSize = true;
-            DeclarationTitleLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 134);
-            DeclarationTitleLabel.Location = new System.Drawing.Point(26, 301);
-            DeclarationTitleLabel.Margin = new System.Windows.Forms.Padding(5, 20, 5, 5);
-            DeclarationTitleLabel.Name = "DeclarationTitleLabel";
-            DeclarationTitleLabel.Size = new System.Drawing.Size(110, 31);
-            DeclarationTitleLabel.TabIndex = 6;
-            DeclarationTitleLabel.Text = "免责声明";
+            declarationTitleLabel.AutoSize = true;
+            declarationTitleLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 134);
+            declarationTitleLabel.Location = new System.Drawing.Point(26, 301);
+            declarationTitleLabel.Margin = new System.Windows.Forms.Padding(5, 20, 5, 5);
+            declarationTitleLabel.Name = "declarationTitleLabel";
+            declarationTitleLabel.Size = new System.Drawing.Size(110, 31);
+            declarationTitleLabel.TabIndex = 6;
+            declarationTitleLabel.Text = "免责声明";
             // 
-            // DeclarationLabel1
+            // declarationLabel1
             // 
-            DeclarationLabel1.Location = new System.Drawing.Point(26, 342);
-            DeclarationLabel1.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLabel1.Name = "DeclarationLabel1";
-            DeclarationLabel1.Size = new System.Drawing.Size(960, 69);
-            DeclarationLabel1.TabIndex = 7;
-            DeclarationLabel1.Text = "本程序不涉及分发、修改和传播Minecraft客户端及服务端，仅作为服务端的管理软件方便服务器管理员（软件用户）控制服务器，造成的侵权行为由用户自行承担。";
+            declarationLabel1.Location = new System.Drawing.Point(26, 342);
+            declarationLabel1.Margin = new System.Windows.Forms.Padding(5);
+            declarationLabel1.Name = "declarationLabel1";
+            declarationLabel1.Size = new System.Drawing.Size(960, 69);
+            declarationLabel1.TabIndex = 7;
+            declarationLabel1.Text = "本程序不涉及分发、修改和传播Minecraft客户端及服务端，仅作为服务端的管理软件方便服务器管理员（软件用户）控制服务器，造成的侵权行为由用户自行承担。";
             // 
-            // DeclarationLabel2
+            // declarationLabel2
             // 
-            DeclarationLabel2.AutoSize = true;
-            DeclarationLabel2.Location = new System.Drawing.Point(26, 421);
-            DeclarationLabel2.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLabel2.Name = "DeclarationLabel2";
-            DeclarationLabel2.Size = new System.Drawing.Size(518, 31);
-            DeclarationLabel2.TabIndex = 8;
-            DeclarationLabel2.Text = "● “Minecraft”是 Mojang Synergies AB 的商标";
+            declarationLabel2.AutoSize = true;
+            declarationLabel2.Location = new System.Drawing.Point(26, 421);
+            declarationLabel2.Margin = new System.Windows.Forms.Padding(5);
+            declarationLabel2.Name = "declarationLabel2";
+            declarationLabel2.Size = new System.Drawing.Size(518, 31);
+            declarationLabel2.TabIndex = 8;
+            declarationLabel2.Text = "● “Minecraft”是 Mojang Synergies AB 的商标";
             // 
-            // DeclarationLabel3
+            // declarationLabel3
             // 
-            DeclarationLabel3.AutoSize = true;
-            DeclarationLabel3.Location = new System.Drawing.Point(26, 462);
-            DeclarationLabel3.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLabel3.Name = "DeclarationLabel3";
-            DeclarationLabel3.Size = new System.Drawing.Size(649, 31);
-            DeclarationLabel3.TabIndex = 9;
-            DeclarationLabel3.Text = "● 此软件与Mojang Studio、网易、Microsoft没有从属关系";
+            declarationLabel3.AutoSize = true;
+            declarationLabel3.Location = new System.Drawing.Point(26, 462);
+            declarationLabel3.Margin = new System.Windows.Forms.Padding(5);
+            declarationLabel3.Name = "declarationLabel3";
+            declarationLabel3.Size = new System.Drawing.Size(649, 31);
+            declarationLabel3.TabIndex = 9;
+            declarationLabel3.Text = "● 此软件与Mojang Studio、网易、Microsoft没有从属关系";
             // 
-            // DeclarationLabel4
+            // declarationLabel4
             // 
-            DeclarationLabel4.AutoSize = true;
-            DeclarationLabel4.Location = new System.Drawing.Point(26, 503);
-            DeclarationLabel4.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLabel4.Name = "DeclarationLabel4";
-            DeclarationLabel4.Size = new System.Drawing.Size(698, 31);
-            DeclarationLabel4.TabIndex = 10;
-            DeclarationLabel4.Text = "● 使用本程序启动任何Minecraft服务端即代表您已阅读并同意了";
+            declarationLabel4.AutoSize = true;
+            declarationLabel4.Location = new System.Drawing.Point(26, 503);
+            declarationLabel4.Margin = new System.Windows.Forms.Padding(5);
+            declarationLabel4.Name = "declarationLabel4";
+            declarationLabel4.Size = new System.Drawing.Size(698, 31);
+            declarationLabel4.TabIndex = 10;
+            declarationLabel4.Text = "● 使用本程序启动任何Minecraft服务端即代表您已阅读并同意了";
             // 
-            // DeclarationLabel5
+            // declarationLabel5
             // 
-            DeclarationLabel5.AutoSize = true;
-            DeclarationLabel5.Location = new System.Drawing.Point(418, 544);
-            DeclarationLabel5.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLabel5.Name = "DeclarationLabel5";
-            DeclarationLabel5.Size = new System.Drawing.Size(38, 31);
-            DeclarationLabel5.TabIndex = 12;
-            DeclarationLabel5.Text = "和";
+            declarationLabel5.AutoSize = true;
+            declarationLabel5.Location = new System.Drawing.Point(418, 544);
+            declarationLabel5.Margin = new System.Windows.Forms.Padding(5);
+            declarationLabel5.Name = "declarationLabel5";
+            declarationLabel5.Size = new System.Drawing.Size(38, 31);
+            declarationLabel5.TabIndex = 12;
+            declarationLabel5.Text = "和";
             // 
             // linkLabel1
             // 
@@ -202,76 +202,76 @@ namespace Serein.Lite.Ui.Settings
             linkLabel3.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
             linkLabel3.LinkClicked += LinkLabel3_LinkClicked;
             // 
-            // DeclarationLinkLabel1
+            // declarationLinkLabel1
             // 
-            DeclarationLinkLabel1.AutoSize = true;
-            DeclarationLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            DeclarationLinkLabel1.LinkColor = System.Drawing.Color.RoyalBlue;
-            DeclarationLinkLabel1.Location = new System.Drawing.Point(56, 544);
-            DeclarationLinkLabel1.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLinkLabel1.Name = "DeclarationLinkLabel1";
-            DeclarationLinkLabel1.Size = new System.Drawing.Size(352, 31);
-            DeclarationLinkLabel1.TabIndex = 11;
-            DeclarationLinkLabel1.TabStop = true;
-            DeclarationLinkLabel1.Text = "MINECRAFT 最终用户许可协议";
-            ToolTip.SetToolTip(DeclarationLinkLabel1, UrlConstants.Eula);
-            DeclarationLinkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
-            DeclarationLinkLabel1.LinkClicked += DeclarationLinkLabel1_LinkClicked;
+            declarationLinkLabel1.AutoSize = true;
+            declarationLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            declarationLinkLabel1.LinkColor = System.Drawing.Color.RoyalBlue;
+            declarationLinkLabel1.Location = new System.Drawing.Point(56, 544);
+            declarationLinkLabel1.Margin = new System.Windows.Forms.Padding(5);
+            declarationLinkLabel1.Name = "declarationLinkLabel1";
+            declarationLinkLabel1.Size = new System.Drawing.Size(352, 31);
+            declarationLinkLabel1.TabIndex = 11;
+            declarationLinkLabel1.TabStop = true;
+            declarationLinkLabel1.Text = "MINECRAFT 最终用户许可协议";
+            toolTip.SetToolTip(declarationLinkLabel1, "https://www.minecraft.net/zh-hans/eula");
+            declarationLinkLabel1.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
+            declarationLinkLabel1.LinkClicked += DeclarationLinkLabel1_LinkClicked;
             // 
-            // DeclarationLinkLabel2
+            // declarationLinkLabel2
             // 
-            DeclarationLinkLabel2.AutoSize = true;
-            DeclarationLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            DeclarationLinkLabel2.LinkColor = System.Drawing.Color.RoyalBlue;
-            DeclarationLinkLabel2.Location = new System.Drawing.Point(466, 544);
-            DeclarationLinkLabel2.Margin = new System.Windows.Forms.Padding(5);
-            DeclarationLinkLabel2.Name = "DeclarationLinkLabel2";
-            DeclarationLinkLabel2.Size = new System.Drawing.Size(304, 31);
-            DeclarationLinkLabel2.TabIndex = 13;
-            DeclarationLinkLabel2.TabStop = true;
-            DeclarationLinkLabel2.Text = "MINECRAFT 使用准则";
-            ToolTip.SetToolTip(DeclarationLinkLabel2, UrlConstants.UsageGuidelines);
-            DeclarationLinkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
-            DeclarationLinkLabel2.LinkClicked += DeclarationLinkLabel2_LinkClicked;
+            declarationLinkLabel2.AutoSize = true;
+            declarationLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            declarationLinkLabel2.LinkColor = System.Drawing.Color.RoyalBlue;
+            declarationLinkLabel2.Location = new System.Drawing.Point(466, 544);
+            declarationLinkLabel2.Margin = new System.Windows.Forms.Padding(5);
+            declarationLinkLabel2.Name = "declarationLinkLabel2";
+            declarationLinkLabel2.Size = new System.Drawing.Size(256, 31);
+            declarationLinkLabel2.TabIndex = 13;
+            declarationLinkLabel2.TabStop = true;
+            declarationLinkLabel2.Text = "MINECRAFT 使用准则";
+            toolTip.SetToolTip(declarationLinkLabel2, "https://www.minecraft.net/zh-hans/usage-guidelines");
+            declarationLinkLabel2.VisitedLinkColor = System.Drawing.Color.RoyalBlue;
+            declarationLinkLabel2.LinkClicked += DeclarationLinkLabel2_LinkClicked;
             // 
-            // VersionLabel
+            // _versionLabel
             // 
-            VersionLabel.AutoSize = true;
-            VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            VersionLabel.Location = new System.Drawing.Point(26, 25);
-            VersionLabel.Margin = new System.Windows.Forms.Padding(5);
-            VersionLabel.Name = "VersionLabel";
-            VersionLabel.Size = new System.Drawing.Size(110, 31);
-            VersionLabel.TabIndex = 0;
-            VersionLabel.Text = "版本号：";
-            ToolTip.SetToolTip(VersionLabel, "点击可复制到剪贴板");
-            VersionLabel.Click += CopiableLabel_Click;
+            _versionLabel.AutoSize = true;
+            _versionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            _versionLabel.Location = new System.Drawing.Point(26, 25);
+            _versionLabel.Margin = new System.Windows.Forms.Padding(5);
+            _versionLabel.Name = "_versionLabel";
+            _versionLabel.Size = new System.Drawing.Size(110, 31);
+            _versionLabel.TabIndex = 0;
+            _versionLabel.Text = "版本号：";
+            toolTip.SetToolTip(_versionLabel, "点击可复制到剪贴板");
+            _versionLabel.Click += CopiableLabel_Click;
             // 
-            // DetailedVersionLabel
+            // _detailedVersionLabel
             // 
-            DetailedVersionLabel.AutoSize = true;
-            DetailedVersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            DetailedVersionLabel.Location = new System.Drawing.Point(26, 66);
-            DetailedVersionLabel.Margin = new System.Windows.Forms.Padding(5);
-            DetailedVersionLabel.Name = "DetailedVersionLabel";
-            DetailedVersionLabel.Size = new System.Drawing.Size(158, 31);
-            DetailedVersionLabel.TabIndex = 1;
-            DetailedVersionLabel.Text = "详细版本号：";
-            ToolTip.SetToolTip(DetailedVersionLabel, "点击可复制到剪贴板");
-            DetailedVersionLabel.Click += CopiableLabel_Click;
+            _detailedVersionLabel.AutoSize = true;
+            _detailedVersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            _detailedVersionLabel.Location = new System.Drawing.Point(26, 66);
+            _detailedVersionLabel.Margin = new System.Windows.Forms.Padding(5);
+            _detailedVersionLabel.Name = "_detailedVersionLabel";
+            _detailedVersionLabel.Size = new System.Drawing.Size(158, 31);
+            _detailedVersionLabel.TabIndex = 1;
+            _detailedVersionLabel.Text = "详细版本号：";
+            toolTip.SetToolTip(_detailedVersionLabel, "点击可复制到剪贴板");
+            _detailedVersionLabel.Click += CopiableLabel_Click;
             // 
-            // AssemblyLabel
+            // _assemblyLabel
             // 
-            AssemblyLabel.AutoSize = true;
-            AssemblyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            AssemblyLabel.Location = new System.Drawing.Point(26, 107);
-            AssemblyLabel.Margin = new System.Windows.Forms.Padding(5);
-            AssemblyLabel.Name = "AssemblyLabel";
-            AssemblyLabel.Size = new System.Drawing.Size(110, 31);
-            AssemblyLabel.TabIndex = 2;
-            AssemblyLabel.Text = "程序集：";
-            ToolTip.SetToolTip(AssemblyLabel, "点击可复制到剪贴板");
-            AssemblyLabel.Click += CopiableLabel_Click;
+            _assemblyLabel.AutoSize = true;
+            _assemblyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            _assemblyLabel.Location = new System.Drawing.Point(26, 107);
+            _assemblyLabel.Margin = new System.Windows.Forms.Padding(5);
+            _assemblyLabel.Name = "_assemblyLabel";
+            _assemblyLabel.Size = new System.Drawing.Size(110, 31);
+            _assemblyLabel.TabIndex = 2;
+            _assemblyLabel.Text = "程序集：";
+            toolTip.SetToolTip(_assemblyLabel, "点击可复制到剪贴板");
+            _assemblyLabel.Click += CopiableLabel_Click;
             // 
             // AboutPage
             // 
@@ -281,20 +281,20 @@ namespace Serein.Lite.Ui.Settings
             Controls.Add(linkLabel3);
             Controls.Add(linkLabel2);
             Controls.Add(linkLabel1);
-            Controls.Add(DeclarationLinkLabel2);
-            Controls.Add(DeclarationLabel5);
-            Controls.Add(DeclarationLinkLabel1);
-            Controls.Add(DeclarationLabel4);
-            Controls.Add(DeclarationLabel3);
-            Controls.Add(DeclarationLabel2);
-            Controls.Add(DeclarationLabel1);
-            Controls.Add(DeclarationTitleLabel);
-            Controls.Add(LicenseLabel);
-            Controls.Add(CopyrightLabel);
-            Controls.Add(CopyrightTitleLabel);
-            Controls.Add(AssemblyLabel);
-            Controls.Add(DetailedVersionLabel);
-            Controls.Add(VersionLabel);
+            Controls.Add(declarationLinkLabel2);
+            Controls.Add(declarationLabel5);
+            Controls.Add(declarationLinkLabel1);
+            Controls.Add(declarationLabel4);
+            Controls.Add(declarationLabel3);
+            Controls.Add(declarationLabel2);
+            Controls.Add(declarationLabel1);
+            Controls.Add(declarationTitleLabel);
+            Controls.Add(licenseLabel);
+            Controls.Add(copyrightLabel);
+            Controls.Add(copyrightTitleLabel);
+            Controls.Add(_assemblyLabel);
+            Controls.Add(_detailedVersionLabel);
+            Controls.Add(_versionLabel);
             Name = "AboutPage";
             Size = new System.Drawing.Size(1280, 663);
             ResumeLayout(false);
@@ -303,8 +303,8 @@ namespace Serein.Lite.Ui.Settings
 
         #endregion
 
-        private System.Windows.Forms.Label VersionLabel;
-        private System.Windows.Forms.Label DetailedVersionLabel;
-        private System.Windows.Forms.Label AssemblyLabel;
+        private System.Windows.Forms.Label _versionLabel;
+        private System.Windows.Forms.Label _detailedVersionLabel;
+        private System.Windows.Forms.Label _assemblyLabel;
     }
 }

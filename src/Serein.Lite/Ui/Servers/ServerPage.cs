@@ -32,7 +32,7 @@ public partial class ServerPage : UserControl
             Add(id, server);
         }
 
-        StatusStrip.Visible = _panels.Count == 0;
+        _statusStrip.Visible = _panels.Count == 0;
     }
 
     private void Add(string id, Server server)
@@ -52,7 +52,7 @@ public partial class ServerPage : UserControl
 
         tabPage.Controls.Add(new Panel(server, _mainForm));
         _panels[id] = tabPage;
-        MainTabControl.Controls.Add(tabPage);
+        _mainTabControl.Controls.Add(tabPage);
     }
 
     private void Update(object? sender, ServersUpdatedEventArgs e)
@@ -68,11 +68,11 @@ public partial class ServerPage : UserControl
             }
             else if (_panels.TryGetValue(e.Id, out var page))
             {
-                MainTabControl.Controls.Remove(page);
+                _mainTabControl.Controls.Remove(page);
                 _panels.Remove(e.Id);
             }
 
-            StatusStrip.Visible = _panels.Count == 0;
+            _statusStrip.Visible = _panels.Count == 0;
         });
     }
 }

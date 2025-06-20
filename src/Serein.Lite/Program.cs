@@ -9,7 +9,7 @@ using Serein.Core.Models.Abstractions;
 using Serein.Core.Services;
 using Serein.Lite.Services.Loggers;
 using Serein.Lite.Ui;
-using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Functions;
 using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
@@ -26,9 +26,8 @@ public static class Program
         var builder = SereinAppBuilder.CreateBuilder();
 
         builder
-            .Services.AddSingleton<ILogger, NotificationLogger>()
-            .AddSingleton<IConnectionLogger, ConnectionLogger>()
-            .AddSingleton<IPluginLogger, PluginLogger>()
+            .Services.AddSingleton<ConnectionLoggerBase, ConnectionLogger>()
+            .AddSingleton<PluginLoggerBase, PluginLogger>()
             .AddSingleton<ResourcesManager>()
             .AddSingleton<MainForm>()
             .AddSingleton<ServerPage>()

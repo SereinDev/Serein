@@ -14,7 +14,7 @@ using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui.Functions;
 
 public partial class PluginPage : UserControl
 {
@@ -30,7 +30,7 @@ public partial class PluginPage : UserControl
     {
         InitializeComponent();
 
-        PluginListView.SetExploreTheme();
+        _pluginListView.SetExploreTheme();
 
         _pluginManager = pluginManager;
         _netPluginLoader = netPluginLoader;
@@ -43,8 +43,8 @@ public partial class PluginPage : UserControl
 
     private void SyncPlugins()
     {
-        PluginListView.BeginUpdate();
-        PluginListView.Items.Clear();
+        _pluginListView.BeginUpdate();
+        _pluginListView.Items.Clear();
 
         var plugins = _jsPluginLoader
             .Plugins.Select(kv => new KeyValuePair<string, IPlugin>(kv.Key, kv.Value))
@@ -62,44 +62,44 @@ public partial class PluginPage : UserControl
             item.SubItems.Add(kv.Value.Info.Version.ToString());
             item.SubItems.Add(string.Join(',', kv.Value.Info.Authors.Select(x => x.Name)));
             item.SubItems.Add(kv.Value.Info.Description);
-            PluginListView.Items.Add(item);
+            _pluginListView.Items.Add(item);
         }
 
-        PluginListView.EndUpdate();
+        _pluginListView.EndUpdate();
 
-        CountDynamicLabel.Text = plugins.Count().ToString();
-        NetCountDynamicLabel.Text = _netPluginLoader.Plugins.Count.ToString();
-        JsCountDynamicLabel.Text = _jsPluginLoader.Plugins.Count.ToString();
+        _countDynamicLabel.Text = plugins.Count().ToString();
+        _netCountDynamicLabel.Text = _netPluginLoader.Plugins.Count.ToString();
+        _jsCountDynamicLabel.Text = _jsPluginLoader.Plugins.Count.ToString();
     }
 
     private void PluginListView_SelectedIndexChanged(object sender, EventArgs e)
     {
-        PluginInfoLabel.Text =
-            PluginListView.SelectedItems.Count == 1
-            && PluginListView.SelectedItems[0].Tag is IPlugin plugin
+        pluginInfoLabel.Text =
+            _pluginListView.SelectedItems.Count == 1
+            && _pluginListView.SelectedItems[0].Tag is IPlugin plugin
                 ? $"Id: {plugin.Info.Id} ({plugin.FileName})"
                 : string.Empty;
     }
 
     private void ListViewContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DisableToolStripMenuItem.Enabled =
-            PluginListView.SelectedItems.Count == 1
-            && PluginListView.SelectedItems[0].Tag is IPlugin plugin
+        _disableToolStripMenuItem.Enabled =
+            _pluginListView.SelectedItems.Count == 1
+            && _pluginListView.SelectedItems[0].Tag is IPlugin plugin
             && plugin.IsEnabled;
     }
 
     private void DisableToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (
-            PluginListView.SelectedItems.Count == 1
-            && PluginListView.SelectedItems[0].Tag is IPlugin plugin
+            _pluginListView.SelectedItems.Count == 1
+            && _pluginListView.SelectedItems[0].Tag is IPlugin plugin
             && plugin.IsEnabled
         )
         {
             plugin.Disable();
-            PluginListView.SelectedItems[0].ForeColor = Color.DarkGray;
-            PluginListView.SelectedItems[0].SubItems[1].Text = "禁用";
+            _pluginListView.SelectedItems[0].ForeColor = Color.DarkGray;
+            _pluginListView.SelectedItems[0].SubItems[1].Text = "禁用";
         }
     }
 

@@ -17,7 +17,7 @@ using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
-using Serein.Lite.Ui.Function;
+using Serein.Lite.Ui.Functions;
 using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
 using Serein.Lite.Ui.Settings;
@@ -110,8 +110,8 @@ public partial class MainForm : Form
         var page = Services.GetRequiredService<T>();
         page.Dock = DockStyle.Fill;
 
-        ChildrenPanel.Controls.Clear();
-        ChildrenPanel.Controls.Add(page);
+        _childrenPanel.Controls.Clear();
+        _childrenPanel.Controls.Add(page);
 
         if (page is IUpdateablePage updateablePage)
         {
@@ -162,15 +162,15 @@ public partial class MainForm : Form
     private void ServerToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
     {
         var isServerPage =
-            ChildrenPanel.Controls.Count == 1
-            && ChildrenPanel.Controls[0].GetType() == typeof(ServerPage);
-        ServerEditToolStripMenuItem.Enabled = isServerPage && _serverManager.Servers.Count > 0;
-        ServerRemoveToolStripMenuItem.Enabled = isServerPage && _serverManager.Servers.Count > 0;
+            _childrenPanel.Controls.Count == 1
+            && _childrenPanel.Controls[0].GetType() == typeof(ServerPage);
+        _serverEditToolStripMenuItem.Enabled = isServerPage && _serverManager.Servers.Count > 0;
+        _serverRemoveToolStripMenuItem.Enabled = isServerPage && _serverManager.Servers.Count > 0;
     }
 
     private void ServerAddToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+        if (_childrenPanel.Controls[0].GetType() == typeof(ServerPage))
         {
             SwitchPage<ServerPage>();
         }
@@ -186,7 +186,7 @@ public partial class MainForm : Form
 
     private void ServerImportToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (ChildrenPanel.Controls[0].GetType() == typeof(ServerPage))
+        if (_childrenPanel.Controls[0].GetType() == typeof(ServerPage))
         {
             SwitchPage<ServerPage>();
         }
@@ -229,12 +229,12 @@ public partial class MainForm : Form
     {
         var serverPage = Services.GetRequiredService<ServerPage>();
 
-        if (serverPage.MainTabControl.Controls.Count == 0)
+        if (serverPage._mainTabControl.Controls.Count == 0)
         {
             return;
         }
 
-        var panel = serverPage.MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex];
+        var panel = serverPage._mainTabControl.Controls[serverPage._mainTabControl.SelectedIndex];
         var id = panel.Tag?.ToString();
 
         if (string.IsNullOrEmpty(id) || !_serverManager.Servers.TryGetValue(id, out var server))
@@ -255,8 +255,8 @@ public partial class MainForm : Form
         var serverPage = Services.GetRequiredService<ServerPage>();
 
         if (
-            serverPage.MainTabControl.Controls.Count == 0
-            || serverPage.MainTabControl.SelectedIndex == -1
+            serverPage._mainTabControl.Controls.Count == 0
+            || serverPage._mainTabControl.SelectedIndex == -1
         )
         {
             return;
@@ -265,7 +265,7 @@ public partial class MainForm : Form
         try
         {
             var id = serverPage
-                .MainTabControl.Controls[serverPage.MainTabControl.SelectedIndex]
+                ._mainTabControl.Controls[serverPage._mainTabControl.SelectedIndex]
                 .Tag?.ToString();
 
             if (
@@ -291,17 +291,17 @@ public partial class MainForm : Form
 
     private void HideToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        HideToolStripMenuItem.Checked = !HideToolStripMenuItem.Checked;
-        TopMostToolStripMenuItem.Enabled = !HideToolStripMenuItem.Checked;
-        ShowInTaskbar = !HideToolStripMenuItem.Checked;
-        Visible = !HideToolStripMenuItem.Checked;
+        _hideToolStripMenuItem.Checked = !_hideToolStripMenuItem.Checked;
+        _topMostToolStripMenuItem.Enabled = !_hideToolStripMenuItem.Checked;
+        ShowInTaskbar = !_hideToolStripMenuItem.Checked;
+        Visible = !_hideToolStripMenuItem.Checked;
     }
 
     private void TopMostToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        TopMostToolStripMenuItem.Checked = !TopMostToolStripMenuItem.Checked;
-        HideToolStripMenuItem.Enabled = !TopMostToolStripMenuItem.Checked;
-        TopMost = TopMostToolStripMenuItem.Checked;
+        _topMostToolStripMenuItem.Checked = !_topMostToolStripMenuItem.Checked;
+        _hideToolStripMenuItem.Enabled = !_topMostToolStripMenuItem.Checked;
+        TopMost = _topMostToolStripMenuItem.Checked;
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -314,10 +314,10 @@ public partial class MainForm : Form
             Visible = false;
             ShowInTaskbar = false;
 
-            TopMostToolStripMenuItem.Checked = false;
-            TopMostToolStripMenuItem.Enabled = false;
-            HideToolStripMenuItem.Checked = true;
-            HideToolStripMenuItem.Enabled = true;
+            _topMostToolStripMenuItem.Checked = false;
+            _topMostToolStripMenuItem.Enabled = false;
+            _hideToolStripMenuItem.Checked = true;
+            _hideToolStripMenuItem.Enabled = true;
 
             ShowBalloonTip(
                 5000,
@@ -333,8 +333,8 @@ public partial class MainForm : Form
 
             Hide();
             ShowInTaskbar = false;
-            NotifyIcon.Visible = false;
-            NotifyIcon.Dispose();
+            _notifyIcon.Visible = false;
+            _notifyIcon.Dispose();
 
             _eventDispatcher.Dispatch(Event.SereinClosed);
         }
@@ -343,7 +343,7 @@ public partial class MainForm : Form
 
     public void ShowBalloonTip(int timeout, string tipTitle, string tipText, ToolTipIcon tipIcon)
     {
-        NotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+        _notifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
     }
 
     protected override void OnShown(EventArgs e)
@@ -379,8 +379,8 @@ public partial class MainForm : Form
     {
         FocusWindow();
 
-        TopMostToolStripMenuItem.Enabled = true;
-        HideToolStripMenuItem.Checked = false;
+        _topMostToolStripMenuItem.Enabled = true;
+        _hideToolStripMenuItem.Checked = false;
     }
 
     public void FocusWindow()

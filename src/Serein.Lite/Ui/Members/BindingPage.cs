@@ -15,14 +15,14 @@ public partial class BindingPage : UserControl, IUpdateablePage
         _bindingManager = bindingManager;
         InitializeComponent();
 
-        BindingListView.SetExploreTheme();
+        _bindingListView.SetExploreTheme();
         LoadData();
     }
 
     private void LoadData()
     {
-        BindingListView.BeginUpdate();
-        BindingListView.Items.Clear();
+        _bindingListView.BeginUpdate();
+        _bindingListView.Items.Clear();
 
         _bindingManager.Records.ForEach(
             (record) =>
@@ -30,18 +30,18 @@ public partial class BindingPage : UserControl, IUpdateablePage
                 var item = new ListViewItem(record.UserId.ToString()) { Tag = record };
                 item.SubItems.Add(record.ShownName);
                 item.SubItems.Add(string.Join(";", record.GameIds));
-                BindingListView.Items.Add(item);
+                _bindingListView.Items.Add(item);
             }
         );
 
-        BindingListView.EndUpdate();
+        _bindingListView.EndUpdate();
     }
 
     void BindingListView_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ToolStripStatusLabel.Text =
-            BindingListView.SelectedItems.Count != 1
-            || BindingListView.SelectedItems[0].Tag is not BindingRecord record
+        _toolStripStatusLabel.Text =
+            _bindingListView.SelectedItems.Count != 1
+            || _bindingListView.SelectedItems[0].Tag is not BindingRecord record
                 ? "-"
                 : "更新时间：" + record.Time.ToString("G");
     }

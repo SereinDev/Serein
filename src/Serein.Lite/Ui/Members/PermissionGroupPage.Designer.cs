@@ -33,19 +33,20 @@
             System.Windows.Forms.ColumnHeader columnHeader2;
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader columnHeader4;
-            System.Windows.Forms.ContextMenuStrip GroupContextMenuStrip;
-            System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
-            EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            GroupListView = new System.Windows.Forms.ListView();
+            System.Windows.Forms.ContextMenuStrip groupContextMenuStrip;
+            System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+            _editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            _groupListView = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             columnHeader3 = new System.Windows.Forms.ColumnHeader();
             columnHeader4 = new System.Windows.Forms.ColumnHeader();
-            GroupContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
-            AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            GroupContextMenuStrip.SuspendLayout();
+            groupContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            groupContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // columnHeader1
@@ -68,74 +69,73 @@
             columnHeader4.Text = "优先级";
             columnHeader4.Width = 150;
             // 
-            // GroupContextMenuStrip
+            // groupContextMenuStrip
             // 
-            GroupContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            GroupContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, EditToolStripMenuItem, DeleteToolStripMenuItem, RefreshToolStripMenuItem });
-            GroupContextMenuStrip.Name = "GroupContextMenuStrip";
-            GroupContextMenuStrip.Size = new System.Drawing.Size(301, 200);
-            GroupContextMenuStrip.Opening += GroupContextMenuStrip_Opening;
+            groupContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            groupContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addToolStripMenuItem, _editToolStripMenuItem, _deleteToolStripMenuItem, refreshToolStripMenuItem });
+            groupContextMenuStrip.Name = "GroupContextMenuStrip";
+            groupContextMenuStrip.Size = new System.Drawing.Size(137, 156);
+            groupContextMenuStrip.Opening += GroupContextMenuStrip_Opening;
             // 
-            // AddToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            AddToolStripMenuItem.Name = "AddToolStripMenuItem";
-            AddToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            AddToolStripMenuItem.Text = "添加";
-            AddToolStripMenuItem.Click += AddToolStripMenuItem_Click;
+            addToolStripMenuItem.Name = "addToolStripMenuItem";
+            addToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            addToolStripMenuItem.Text = "添加";
+            addToolStripMenuItem.Click += AddToolStripMenuItem_Click;
             // 
-            // EditToolStripMenuItem
+            // _editToolStripMenuItem
             // 
-            EditToolStripMenuItem.Name = "EditToolStripMenuItem";
-            EditToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            EditToolStripMenuItem.Text = "编辑";
-            EditToolStripMenuItem.Click += EditToolStripMenuItem_Click;
+            _editToolStripMenuItem.Name = "_editToolStripMenuItem";
+            _editToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            _editToolStripMenuItem.Text = "编辑";
+            _editToolStripMenuItem.Click += EditToolStripMenuItem_Click;
             // 
-            // DeleteToolStripMenuItem
+            // _deleteToolStripMenuItem
             // 
-            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            DeleteToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            DeleteToolStripMenuItem.Text = "删除";
-            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            _deleteToolStripMenuItem.Name = "_deleteToolStripMenuItem";
+            _deleteToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            _deleteToolStripMenuItem.Text = "删除";
+            _deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
-            // RefreshToolStripMenuItem
+            // refreshToolStripMenuItem
             // 
-            RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
-            RefreshToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            RefreshToolStripMenuItem.Text = "刷新";
-            RefreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
+            refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            refreshToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            refreshToolStripMenuItem.Text = "刷新";
+            refreshToolStripMenuItem.Click += RefreshToolStripMenuItem_Click;
             // 
-            // GroupListView
+            // _groupListView
             // 
-            GroupListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            GroupListView.ContextMenuStrip = GroupContextMenuStrip;
-            GroupListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            GroupListView.FullRowSelect = true;
-            GroupListView.GridLines = true;
-            GroupListView.Location = new System.Drawing.Point(0, 0);
-            GroupListView.MultiSelect = false;
-            GroupListView.Name = "GroupListView";
-            GroupListView.Size = new System.Drawing.Size(1280, 720);
-            GroupListView.TabIndex = 0;
-            GroupListView.UseCompatibleStateImageBehavior = false;
-            GroupListView.View = System.Windows.Forms.View.Details;
+            _groupListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            _groupListView.ContextMenuStrip = groupContextMenuStrip;
+            _groupListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            _groupListView.FullRowSelect = true;
+            _groupListView.GridLines = true;
+            _groupListView.Location = new System.Drawing.Point(0, 0);
+            _groupListView.MultiSelect = false;
+            _groupListView.Name = "_groupListView";
+            _groupListView.Size = new System.Drawing.Size(1280, 720);
+            _groupListView.TabIndex = 0;
+            _groupListView.UseCompatibleStateImageBehavior = false;
+            _groupListView.View = System.Windows.Forms.View.Details;
             // 
             // PermissionGroupPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
-            Controls.Add(GroupListView);
+            Controls.Add(_groupListView);
             Name = "PermissionGroupPage";
             Size = new System.Drawing.Size(1280, 720);
-            GroupContextMenuStrip.ResumeLayout(false);
+            groupContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.ListView GroupListView;
-        private System.Windows.Forms.ToolStripMenuItem EditToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RefreshToolStripMenuItem;
+        private System.Windows.Forms.ListView _groupListView;
+        private System.Windows.Forms.ToolStripMenuItem _editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _deleteToolStripMenuItem;
     }
 }

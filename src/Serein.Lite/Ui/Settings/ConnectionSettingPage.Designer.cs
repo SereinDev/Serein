@@ -29,250 +29,473 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label AdministratorsLabel;
-            System.Windows.Forms.Label GroupsLabel;
-            System.Windows.Forms.Label SubProtocolsLabel;
-            System.Windows.Forms.Label AccessTokenLabel;
-            System.Windows.Forms.Label UriLabel;
-            System.Windows.Forms.ToolTip ToolTip;
-            AdministratorsTextBox = new System.Windows.Forms.TextBox();
-            GroupsTextBox = new System.Windows.Forms.TextBox();
-            GrantPermissionToOwnerAndAdminsCheckBox = new System.Windows.Forms.CheckBox();
-            SaveLogCheckBox = new System.Windows.Forms.CheckBox();
-            AutoEscapeCheckBox = new System.Windows.Forms.CheckBox();
-            OutputDataCheckBox = new System.Windows.Forms.CheckBox();
-            AutoReconnectCheckBox = new System.Windows.Forms.CheckBox();
-            UseReverseWebSocketCheckBox = new System.Windows.Forms.CheckBox();
-            AccessTokenMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
-            SubProtocolsTextBox = new System.Windows.Forms.TextBox();
-            UriTextBox = new System.Windows.Forms.TextBox();
-            AdministratorsLabel = new System.Windows.Forms.Label();
-            GroupsLabel = new System.Windows.Forms.Label();
-            SubProtocolsLabel = new System.Windows.Forms.Label();
-            AccessTokenLabel = new System.Windows.Forms.Label();
-            UriLabel = new System.Windows.Forms.Label();
-            ToolTip = new System.Windows.Forms.ToolTip(components);
+            System.Windows.Forms.ToolTip toolTip;
+            System.Windows.Forms.Label selfPlatformLabel;
+            System.Windows.Forms.Label selfUserIdLabel;
+            System.Windows.Forms.Label selfLabel;
+            System.Windows.Forms.Label administratorUserIdsLabel;
+            System.Windows.Forms.Label listenedIdsLabel;
+            System.Windows.Forms.Label adapterLabel;
+            System.Windows.Forms.Label oneBotVersionLabel;
+            System.Windows.Forms.Label webSocketUriLabel;
+            System.Windows.Forms.Label webSocketSubProtocolsLabel;
+            System.Windows.Forms.Label oneBotAccessTokenLabel;
+            System.Windows.Forms.Label satoriAccessTokenLabel;
+            System.Windows.Forms.Label satoriUriLabel;
+            System.Windows.Forms.GroupBox commonGroupBox;
+            System.Windows.Forms.GroupBox satoriGroupBox;
+            System.Windows.Forms.GroupBox oneBotGroupBox;
+            _selfPlatformTextBox = new System.Windows.Forms.TextBox();
+            _selfUserIdTextBox = new System.Windows.Forms.TextBox();
+            _administratorUserIdsTextBox = new System.Windows.Forms.TextBox();
+            _listenedIdsTextBox = new System.Windows.Forms.TextBox();
+            _connectWhenSettingUpcheckBox = new System.Windows.Forms.CheckBox();
+            _saveLogCheckBox = new System.Windows.Forms.CheckBox();
+            _outputDataCheckBox = new System.Windows.Forms.CheckBox();
+            _adapterComboBox = new System.Windows.Forms.ComboBox();
+            _satoriAccessTokenMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            _satoriUriTextBox = new System.Windows.Forms.TextBox();
+            _autoEscapeCheckBox = new System.Windows.Forms.CheckBox();
+            _grantPermissionToGroupOwnerAndAdminsCheckBox = new System.Windows.Forms.CheckBox();
+            _autoReconnectCheckBox = new System.Windows.Forms.CheckBox();
+            _oneBotAccessTokenMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            _webSocketSubProtocolsTextBox = new System.Windows.Forms.TextBox();
+            _webSocketUriTextBox = new System.Windows.Forms.TextBox();
+            _oneBotVersionComboBox = new System.Windows.Forms.ComboBox();
+            toolTip = new System.Windows.Forms.ToolTip(components);
+            selfPlatformLabel = new System.Windows.Forms.Label();
+            selfUserIdLabel = new System.Windows.Forms.Label();
+            selfLabel = new System.Windows.Forms.Label();
+            administratorUserIdsLabel = new System.Windows.Forms.Label();
+            listenedIdsLabel = new System.Windows.Forms.Label();
+            adapterLabel = new System.Windows.Forms.Label();
+            oneBotVersionLabel = new System.Windows.Forms.Label();
+            webSocketUriLabel = new System.Windows.Forms.Label();
+            webSocketSubProtocolsLabel = new System.Windows.Forms.Label();
+            oneBotAccessTokenLabel = new System.Windows.Forms.Label();
+            satoriAccessTokenLabel = new System.Windows.Forms.Label();
+            satoriUriLabel = new System.Windows.Forms.Label();
+            commonGroupBox = new System.Windows.Forms.GroupBox();
+            satoriGroupBox = new System.Windows.Forms.GroupBox();
+            oneBotGroupBox = new System.Windows.Forms.GroupBox();
+            commonGroupBox.SuspendLayout();
+            satoriGroupBox.SuspendLayout();
+            oneBotGroupBox.SuspendLayout();
             SuspendLayout();
             // 
-            // AdministratorsLabel
+            // _selfPlatformTextBox
             // 
-            AdministratorsLabel.AutoSize = true;
-            AdministratorsLabel.Location = new System.Drawing.Point(21, 715);
-            AdministratorsLabel.Name = "AdministratorsLabel";
-            AdministratorsLabel.Size = new System.Drawing.Size(158, 31);
-            AdministratorsLabel.TabIndex = 30;
-            AdministratorsLabel.Text = "管理权限列表";
-            ToolTip.SetToolTip(AdministratorsLabel, "拥有管理权限的用户Id（使用;分隔）");
+            _selfPlatformTextBox.Location = new System.Drawing.Point(163, 544);
+            _selfPlatformTextBox.Name = "_selfPlatformTextBox";
+            _selfPlatformTextBox.Size = new System.Drawing.Size(402, 38);
+            _selfPlatformTextBox.TabIndex = 13;
+            toolTip.SetToolTip(_selfPlatformTextBox, "当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者\r\n· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项\r\n· 若选择Satori适配器，无论是否登录多个账号都需要设置此项");
+            _selfPlatformTextBox.TextChanged += OnPropertyChanged;
             // 
-            // GroupsLabel
+            // selfPlatformLabel
             // 
-            GroupsLabel.AutoSize = true;
-            GroupsLabel.Location = new System.Drawing.Point(21, 633);
-            GroupsLabel.Name = "GroupsLabel";
-            GroupsLabel.Size = new System.Drawing.Size(134, 31);
-            GroupsLabel.TabIndex = 28;
-            GroupsLabel.Text = "监听群列表";
-            ToolTip.SetToolTip(GroupsLabel, "要监听的群聊Id（使用;分隔）");
+            selfPlatformLabel.AutoSize = true;
+            selfPlatformLabel.Location = new System.Drawing.Point(46, 547);
+            selfPlatformLabel.Name = "selfPlatformLabel";
+            selfPlatformLabel.Size = new System.Drawing.Size(110, 31);
+            selfPlatformLabel.TabIndex = 12;
+            selfPlatformLabel.Text = "平台名称";
+            toolTip.SetToolTip(selfPlatformLabel, "当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者\r\n· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项\r\n· 若选择Satori适配器，无论是否登录多个账号都需要设置此项");
             // 
-            // SubProtocolsLabel
+            // _selfUserIdTextBox
             // 
-            SubProtocolsLabel.AutoSize = true;
-            SubProtocolsLabel.Location = new System.Drawing.Point(21, 181);
-            SubProtocolsLabel.Name = "SubProtocolsLabel";
-            SubProtocolsLabel.Size = new System.Drawing.Size(216, 31);
-            SubProtocolsLabel.TabIndex = 20;
-            SubProtocolsLabel.Text = "WebSocket子协议";
-            ToolTip.SetToolTip(SubProtocolsLabel, "连接时声明的子协议");
+            _selfUserIdTextBox.Location = new System.Drawing.Point(163, 493);
+            _selfUserIdTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _selfUserIdTextBox.Name = "_selfUserIdTextBox";
+            _selfUserIdTextBox.Size = new System.Drawing.Size(402, 38);
+            _selfUserIdTextBox.TabIndex = 11;
+            toolTip.SetToolTip(_selfUserIdTextBox, "当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者\r\n· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项\r\n· 若选择Satori适配器，无论是否登录多个账号都需要设置此项");
+            _selfUserIdTextBox.TextChanged += OnPropertyChanged;
             // 
-            // AccessTokenLabel
+            // selfUserIdLabel
             // 
-            AccessTokenLabel.AutoSize = true;
-            AccessTokenLabel.Location = new System.Drawing.Point(21, 99);
-            AccessTokenLabel.Name = "AccessTokenLabel";
-            AccessTokenLabel.Size = new System.Drawing.Size(229, 31);
-            AccessTokenLabel.TabIndex = 18;
-            AccessTokenLabel.Text = "鉴权凭证（Token）";
-            ToolTip.SetToolTip(AccessTokenLabel, "· 正向WebSocket：在Header携带Authentication字段\r\n· 反向WebSocket：校验连接的客户端Header中的Authentication字段\r\n");
+            selfUserIdLabel.AutoSize = true;
+            selfUserIdLabel.Location = new System.Drawing.Point(46, 496);
+            selfUserIdLabel.Name = "selfUserIdLabel";
+            selfUserIdLabel.Size = new System.Drawing.Size(84, 31);
+            selfUserIdLabel.TabIndex = 10;
+            selfUserIdLabel.Text = "用户Id";
+            toolTip.SetToolTip(selfUserIdLabel, "当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者\r\n· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项\r\n· 若选择Satori适配器，无论是否登录多个账号都需要设置此项");
             // 
-            // UriLabel
+            // selfLabel
             // 
-            UriLabel.AutoSize = true;
-            UriLabel.Location = new System.Drawing.Point(21, 17);
-            UriLabel.Name = "UriLabel";
-            UriLabel.Size = new System.Drawing.Size(62, 31);
-            UriLabel.TabIndex = 16;
-            UriLabel.Text = "地址";
-            ToolTip.SetToolTip(UriLabel, "· 正向WebSocket：连接的WebSocket地址\r\n· 反向WebSocket：WS服务器的开启地址\r\n");
+            selfLabel.AutoSize = true;
+            selfLabel.Location = new System.Drawing.Point(32, 449);
+            selfLabel.Name = "selfLabel";
+            selfLabel.Size = new System.Drawing.Size(134, 31);
+            selfLabel.TabIndex = 9;
+            selfLabel.Text = "默认发送者";
+            toolTip.SetToolTip(selfLabel, "当同时登录了多个账号时且在命令中未指定发送的账号时，采用此账号作为默认的发送者\r\n· 若选择OneBot适配器（V12），只登录了一个账号时可不设置此项\r\n· 若选择Satori适配器，无论是否登录多个账号都需要设置此项");
             // 
-            // AdministratorsTextBox
+            // _administratorUserIdsTextBox
             // 
-            AdministratorsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            AdministratorsTextBox.Location = new System.Drawing.Point(21, 749);
-            AdministratorsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
-            AdministratorsTextBox.Name = "AdministratorsTextBox";
-            AdministratorsTextBox.Size = new System.Drawing.Size(1211, 38);
-            AdministratorsTextBox.TabIndex = 31;
-            ToolTip.SetToolTip(AdministratorsTextBox, "拥有管理权限的用户Id（使用;分隔）");
-            AdministratorsTextBox.TextChanged += AdministratorsTextBox_TextChanged;
+            _administratorUserIdsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _administratorUserIdsTextBox.Location = new System.Drawing.Point(32, 401);
+            _administratorUserIdsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _administratorUserIdsTextBox.Name = "_administratorUserIdsTextBox";
+            _administratorUserIdsTextBox.Size = new System.Drawing.Size(1156, 38);
+            _administratorUserIdsTextBox.TabIndex = 8;
+            toolTip.SetToolTip(_administratorUserIdsTextBox, "有管理权限的用户\r\n· 使用分号\";\"分隔每一个值\r\n");
+            _administratorUserIdsTextBox.TextChanged += AdministratorUserIdsTextBox_TextChanged;
             // 
-            // GroupsTextBox
+            // administratorUserIdsLabel
             // 
-            GroupsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            GroupsTextBox.Location = new System.Drawing.Point(21, 667);
-            GroupsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            GroupsTextBox.Name = "GroupsTextBox";
-            GroupsTextBox.Size = new System.Drawing.Size(1211, 38);
-            GroupsTextBox.TabIndex = 29;
-            ToolTip.SetToolTip(GroupsTextBox, "要监听的群聊Id（使用;分隔）");
-            GroupsTextBox.TextChanged += GroupsTextBox_TextChanged;
+            administratorUserIdsLabel.AutoSize = true;
+            administratorUserIdsLabel.Location = new System.Drawing.Point(32, 367);
+            administratorUserIdsLabel.Name = "administratorUserIdsLabel";
+            administratorUserIdsLabel.Size = new System.Drawing.Size(158, 31);
+            administratorUserIdsLabel.TabIndex = 7;
+            administratorUserIdsLabel.Text = "管理权限列表";
+            toolTip.SetToolTip(administratorUserIdsLabel, "有管理权限的用户\r\n· 使用分号\";\"分隔每一个值");
             // 
-            // GrantPermissionToOwnerAndAdminsCheckBox
+            // _listenedIdsTextBox
             // 
-            GrantPermissionToOwnerAndAdminsCheckBox.AutoSize = true;
-            GrantPermissionToOwnerAndAdminsCheckBox.Location = new System.Drawing.Point(21, 595);
-            GrantPermissionToOwnerAndAdminsCheckBox.Name = "GrantPermissionToOwnerAndAdminsCheckBox";
-            GrantPermissionToOwnerAndAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
-            GrantPermissionToOwnerAndAdminsCheckBox.TabIndex = 27;
-            GrantPermissionToOwnerAndAdminsCheckBox.Text = "赋予所有群主和管理员管理权限";
-            ToolTip.SetToolTip(GrantPermissionToOwnerAndAdminsCheckBox, "开启后监听群的群主和管理员有着和下方设置一样的管理权限");
-            GrantPermissionToOwnerAndAdminsCheckBox.UseVisualStyleBackColor = true;
-            GrantPermissionToOwnerAndAdminsCheckBox.Click += OnPropertyChanged;
+            _listenedIdsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _listenedIdsTextBox.Location = new System.Drawing.Point(32, 319);
+            _listenedIdsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _listenedIdsTextBox.Name = "_listenedIdsTextBox";
+            _listenedIdsTextBox.Size = new System.Drawing.Size(1156, 38);
+            _listenedIdsTextBox.TabIndex = 6;
+            toolTip.SetToolTip(_listenedIdsTextBox, "要监听消息的群聊、频道或群组\r\n· 直接填写Id 或 [来源]:[Id] 的格式字符串\r\n    · 其中来源可为g/group（群聊）、c/channel（频道）、guild（群组）\r\n    · 例：“g:12345”或“group:12345”\r\n· 使用分号\";\"分隔每一个值");
+            _listenedIdsTextBox.TextChanged += ListenedIdsTextBox_TextChanged;
             // 
-            // SaveLogCheckBox
+            // listenedIdsLabel
             // 
-            SaveLogCheckBox.AutoSize = true;
-            SaveLogCheckBox.Location = new System.Drawing.Point(21, 525);
-            SaveLogCheckBox.Name = "SaveLogCheckBox";
-            SaveLogCheckBox.Size = new System.Drawing.Size(238, 35);
-            SaveLogCheckBox.TabIndex = 26;
-            SaveLogCheckBox.Text = "保存数据包到日志";
-            ToolTip.SetToolTip(SaveLogCheckBox, "将接收和发送的数据保存到文件“Serein/logs/connection/{datetime}.log”");
-            SaveLogCheckBox.UseVisualStyleBackColor = true;
-            SaveLogCheckBox.Click += OnPropertyChanged;
+            listenedIdsLabel.AutoSize = true;
+            listenedIdsLabel.Location = new System.Drawing.Point(32, 285);
+            listenedIdsLabel.Name = "listenedIdsLabel";
+            listenedIdsLabel.Size = new System.Drawing.Size(110, 31);
+            listenedIdsLabel.TabIndex = 5;
+            listenedIdsLabel.Text = "监听列表";
+            toolTip.SetToolTip(listenedIdsLabel, "要监听消息的群聊、频道或群组\r\n· 直接填写Id 或 [来源]:[Id] 的格式字符串\r\n    · 其中来源可为g/group（群聊）、c/channel（频道）、guild（群组）\r\n    · 例：“g:12345”或“group:12345”\r\n· 使用分号\";\"分隔每一个值\r\n");
             // 
-            // AutoEscapeCheckBox
+            // _connectWhenSettingUpcheckBox
             // 
-            AutoEscapeCheckBox.AutoSize = true;
-            AutoEscapeCheckBox.Location = new System.Drawing.Point(21, 484);
-            AutoEscapeCheckBox.Name = "AutoEscapeCheckBox";
-            AutoEscapeCheckBox.Size = new System.Drawing.Size(166, 35);
-            AutoEscapeCheckBox.TabIndex = 25;
-            AutoEscapeCheckBox.Text = "纯文本发送";
-            ToolTip.SetToolTip(AutoEscapeCheckBox, "发送信息时转义CQ码");
-            AutoEscapeCheckBox.UseVisualStyleBackColor = true;
-            AutoEscapeCheckBox.Click += OnPropertyChanged;
+            _connectWhenSettingUpcheckBox.AutoSize = true;
+            _connectWhenSettingUpcheckBox.Location = new System.Drawing.Point(32, 231);
+            _connectWhenSettingUpcheckBox.Name = "_connectWhenSettingUpcheckBox";
+            _connectWhenSettingUpcheckBox.Size = new System.Drawing.Size(142, 35);
+            _connectWhenSettingUpcheckBox.TabIndex = 4;
+            _connectWhenSettingUpcheckBox.Text = "自动连接";
+            toolTip.SetToolTip(_connectWhenSettingUpcheckBox, "Serein启动后自动开启连接");
+            _connectWhenSettingUpcheckBox.UseVisualStyleBackColor = true;
+            _connectWhenSettingUpcheckBox.Click += OnPropertyChanged;
             // 
-            // OutputDataCheckBox
+            // _saveLogCheckBox
             // 
-            OutputDataCheckBox.AutoSize = true;
-            OutputDataCheckBox.Location = new System.Drawing.Point(21, 443);
-            OutputDataCheckBox.Name = "OutputDataCheckBox";
-            OutputDataCheckBox.Size = new System.Drawing.Size(214, 35);
-            OutputDataCheckBox.TabIndex = 24;
-            OutputDataCheckBox.Text = "输出收发的数据";
-            ToolTip.SetToolTip(OutputDataCheckBox, "在控制台输出接收和发送的数据");
-            OutputDataCheckBox.UseVisualStyleBackColor = true;
-            OutputDataCheckBox.Click += OnPropertyChanged;
+            _saveLogCheckBox.AutoSize = true;
+            _saveLogCheckBox.Location = new System.Drawing.Point(32, 190);
+            _saveLogCheckBox.Name = "_saveLogCheckBox";
+            _saveLogCheckBox.Size = new System.Drawing.Size(166, 35);
+            _saveLogCheckBox.TabIndex = 3;
+            _saveLogCheckBox.Text = "保存到日志";
+            toolTip.SetToolTip(_saveLogCheckBox, "将收到的数据包以文本格式保存到日志文件（./log/connection/）");
+            _saveLogCheckBox.UseVisualStyleBackColor = true;
+            _saveLogCheckBox.Click += OnPropertyChanged;
             // 
-            // AutoReconnectCheckBox
+            // _outputDataCheckBox
             // 
-            AutoReconnectCheckBox.AutoSize = true;
-            AutoReconnectCheckBox.Location = new System.Drawing.Point(21, 373);
-            AutoReconnectCheckBox.Name = "AutoReconnectCheckBox";
-            AutoReconnectCheckBox.Size = new System.Drawing.Size(190, 35);
-            AutoReconnectCheckBox.TabIndex = 23;
-            AutoReconnectCheckBox.Text = "断线自动重连";
-            ToolTip.SetToolTip(AutoReconnectCheckBox, "非用户操作导致连接断开时自动重连（仅适用于正向连接）");
-            AutoReconnectCheckBox.UseVisualStyleBackColor = true;
-            AutoReconnectCheckBox.Click += OnPropertyChanged;
+            _outputDataCheckBox.AutoSize = true;
+            _outputDataCheckBox.Location = new System.Drawing.Point(32, 149);
+            _outputDataCheckBox.Name = "_outputDataCheckBox";
+            _outputDataCheckBox.Size = new System.Drawing.Size(214, 35);
+            _outputDataCheckBox.TabIndex = 2;
+            _outputDataCheckBox.Text = "输出收发的数据";
+            toolTip.SetToolTip(_outputDataCheckBox, "在连接控制台中输出接收和发送的数据，但可能导致控制台可读性下降");
+            _outputDataCheckBox.UseVisualStyleBackColor = true;
+            _outputDataCheckBox.Click += OnPropertyChanged;
             // 
-            // UseReverseWebSocketCheckBox
+            // _adapterComboBox
             // 
-            UseReverseWebSocketCheckBox.AutoSize = true;
-            UseReverseWebSocketCheckBox.Location = new System.Drawing.Point(21, 332);
-            UseReverseWebSocketCheckBox.Name = "UseReverseWebSocketCheckBox";
-            UseReverseWebSocketCheckBox.Size = new System.Drawing.Size(272, 35);
-            UseReverseWebSocketCheckBox.TabIndex = 22;
-            UseReverseWebSocketCheckBox.Text = "使用反向WebSocket";
-            ToolTip.SetToolTip(UseReverseWebSocketCheckBox, "开启WebSocket服务器供机器人连接");
-            UseReverseWebSocketCheckBox.UseVisualStyleBackColor = true;
-            UseReverseWebSocketCheckBox.Click += OnPropertyChanged;
+            _adapterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _adapterComboBox.FormattingEnabled = true;
+            _adapterComboBox.Items.AddRange(new object[] { "OneBot（WebSocket正向连接）", "OneBot（WebSocket反向连接）", "Satori", "插件注册（实验性）" });
+            _adapterComboBox.Location = new System.Drawing.Point(32, 83);
+            _adapterComboBox.Name = "_adapterComboBox";
+            _adapterComboBox.Size = new System.Drawing.Size(420, 39);
+            _adapterComboBox.TabIndex = 1;
+            toolTip.SetToolTip(_adapterComboBox, "决定Serein将以何种方式连接");
+            _adapterComboBox.SelectedIndexChanged += AdapterComboBox_SelectedIndexChanged;
             // 
-            // AccessTokenMaskedTextBox
+            // adapterLabel
             // 
-            AccessTokenMaskedTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            AccessTokenMaskedTextBox.Location = new System.Drawing.Point(21, 133);
-            AccessTokenMaskedTextBox.Name = "AccessTokenMaskedTextBox";
-            AccessTokenMaskedTextBox.PasswordChar = '*';
-            AccessTokenMaskedTextBox.Size = new System.Drawing.Size(1211, 38);
-            AccessTokenMaskedTextBox.TabIndex = 19;
-            ToolTip.SetToolTip(AccessTokenMaskedTextBox, "· 正向WebSocket：在Header携带Authentication字段\r\n· 反向WebSocket：校验连接的客户端Header中的Authentication字段\r\n");
-            AccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
+            adapterLabel.AutoSize = true;
+            adapterLabel.Location = new System.Drawing.Point(32, 49);
+            adapterLabel.Name = "adapterLabel";
+            adapterLabel.Size = new System.Drawing.Size(86, 31);
+            adapterLabel.TabIndex = 0;
+            adapterLabel.Text = "适配器";
+            toolTip.SetToolTip(adapterLabel, "决定Serein将以何种方式连接");
             // 
-            // SubProtocolsTextBox
+            // oneBotVersionLabel
             // 
-            SubProtocolsTextBox.AcceptsReturn = true;
-            SubProtocolsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            SubProtocolsTextBox.Location = new System.Drawing.Point(21, 215);
-            SubProtocolsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            SubProtocolsTextBox.Multiline = true;
-            SubProtocolsTextBox.Name = "SubProtocolsTextBox";
-            SubProtocolsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            SubProtocolsTextBox.Size = new System.Drawing.Size(1211, 104);
-            SubProtocolsTextBox.TabIndex = 21;
-            ToolTip.SetToolTip(SubProtocolsTextBox, "连接时声明的子协议");
-            SubProtocolsTextBox.TextChanged += SubProtocolsTextBox_TextChanged;
+            oneBotVersionLabel.AutoSize = true;
+            oneBotVersionLabel.Location = new System.Drawing.Point(32, 51);
+            oneBotVersionLabel.Name = "oneBotVersionLabel";
+            oneBotVersionLabel.Size = new System.Drawing.Size(150, 31);
+            oneBotVersionLabel.TabIndex = 2;
+            oneBotVersionLabel.Text = "OneBot版本";
+            toolTip.SetToolTip(oneBotVersionLabel, "将影响Serein中对数据包的处理方式");
             // 
-            // UriTextBox
+            // webSocketUriLabel
             // 
-            UriTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            UriTextBox.Location = new System.Drawing.Point(21, 51);
-            UriTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            UriTextBox.Name = "UriTextBox";
-            UriTextBox.Size = new System.Drawing.Size(1211, 38);
-            UriTextBox.TabIndex = 17;
-            ToolTip.SetToolTip(UriTextBox, "· 正向WebSocket：连接的WebSocket地址\r\n· 反向WebSocket：WS服务器的开启地址\r\n");
-            UriTextBox.TextChanged += OnPropertyChanged;
+            webSocketUriLabel.AutoSize = true;
+            webSocketUriLabel.Location = new System.Drawing.Point(32, 134);
+            webSocketUriLabel.Name = "webSocketUriLabel";
+            webSocketUriLabel.Size = new System.Drawing.Size(192, 31);
+            webSocketUriLabel.TabIndex = 14;
+            webSocketUriLabel.Text = "WebSocket地址";
+            toolTip.SetToolTip(webSocketUriLabel, "Websocket服务器的地址\r\n· 当选择了正向连接适配器时，这个地址应以\"ws://\"或\"wss://\"开头，Serein将会连接到这个地址\r\n· 当选择了反向连接适配器时，这个地址应以\"http://\"或\"https://\"开头，Serein将会开启一个WebSocket服务器供OneBot实现连接");
+            // 
+            // webSocketSubProtocolsLabel
+            // 
+            webSocketSubProtocolsLabel.AutoSize = true;
+            webSocketSubProtocolsLabel.Location = new System.Drawing.Point(32, 298);
+            webSocketSubProtocolsLabel.Name = "webSocketSubProtocolsLabel";
+            webSocketSubProtocolsLabel.Size = new System.Drawing.Size(216, 31);
+            webSocketSubProtocolsLabel.TabIndex = 16;
+            webSocketSubProtocolsLabel.Text = "WebSocket子协议";
+            toolTip.SetToolTip(webSocketSubProtocolsLabel, "连接WebSocket时的子协议（一行一个）\r\n· 仅适用于WebSocket正向连接");
+            // 
+            // oneBotAccessTokenLabel
+            // 
+            oneBotAccessTokenLabel.AutoSize = true;
+            oneBotAccessTokenLabel.Location = new System.Drawing.Point(32, 216);
+            oneBotAccessTokenLabel.Name = "oneBotAccessTokenLabel";
+            oneBotAccessTokenLabel.Size = new System.Drawing.Size(229, 31);
+            oneBotAccessTokenLabel.TabIndex = 18;
+            oneBotAccessTokenLabel.Text = "鉴权凭证（Token）";
+            toolTip.SetToolTip(oneBotAccessTokenLabel, "用于鉴权的Access-Token");
+            // 
+            // _satoriAccessTokenMaskedTextBox
+            // 
+            _satoriAccessTokenMaskedTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _satoriAccessTokenMaskedTextBox.Location = new System.Drawing.Point(32, 169);
+            _satoriAccessTokenMaskedTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _satoriAccessTokenMaskedTextBox.Name = "_satoriAccessTokenMaskedTextBox";
+            _satoriAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1156, 38);
+            _satoriAccessTokenMaskedTextBox.TabIndex = 23;
+            toolTip.SetToolTip(_satoriAccessTokenMaskedTextBox, "用于鉴权的Token");
+            _satoriAccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
+            // 
+            // satoriAccessTokenLabel
+            // 
+            satoriAccessTokenLabel.AutoSize = true;
+            satoriAccessTokenLabel.Location = new System.Drawing.Point(32, 135);
+            satoriAccessTokenLabel.Name = "satoriAccessTokenLabel";
+            satoriAccessTokenLabel.Size = new System.Drawing.Size(110, 31);
+            satoriAccessTokenLabel.TabIndex = 22;
+            satoriAccessTokenLabel.Text = "鉴权凭证";
+            toolTip.SetToolTip(satoriAccessTokenLabel, "用于鉴权的Token");
+            // 
+            // _satoriUriTextBox
+            // 
+            _satoriUriTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _satoriUriTextBox.Location = new System.Drawing.Point(32, 87);
+            _satoriUriTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _satoriUriTextBox.Name = "_satoriUriTextBox";
+            _satoriUriTextBox.Size = new System.Drawing.Size(1156, 38);
+            _satoriUriTextBox.TabIndex = 21;
+            toolTip.SetToolTip(_satoriUriTextBox, "用于Api请求的地址");
+            _satoriUriTextBox.TextChanged += OnPropertyChanged;
+            // 
+            // satoriUriLabel
+            // 
+            satoriUriLabel.AutoSize = true;
+            satoriUriLabel.Location = new System.Drawing.Point(32, 53);
+            satoriUriLabel.Name = "satoriUriLabel";
+            satoriUriLabel.Size = new System.Drawing.Size(62, 31);
+            satoriUriLabel.TabIndex = 20;
+            satoriUriLabel.Text = "地址";
+            toolTip.SetToolTip(satoriUriLabel, "用于Api请求的地址");
+            // 
+            // _autoEscapeCheckBox
+            // 
+            _autoEscapeCheckBox.AutoSize = true;
+            _autoEscapeCheckBox.Location = new System.Drawing.Point(32, 518);
+            _autoEscapeCheckBox.Name = "_autoEscapeCheckBox";
+            _autoEscapeCheckBox.Size = new System.Drawing.Size(166, 35);
+            _autoEscapeCheckBox.TabIndex = 22;
+            _autoEscapeCheckBox.Text = "纯文本发送";
+            toolTip.SetToolTip(_autoEscapeCheckBox, "消息内容作为纯文本发送（即不解析CQ码）\r\n· 仅当OneBot版本为V11时生效");
+            _autoEscapeCheckBox.UseVisualStyleBackColor = true;
+            _autoEscapeCheckBox.Click += OnPropertyChanged;
+            // 
+            // _grantPermissionToGroupOwnerAndAdminsCheckBox
+            // 
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.AutoSize = true;
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Location = new System.Drawing.Point(32, 559);
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Name = "_grantPermissionToGroupOwnerAndAdminsCheckBox";
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.TabIndex = 21;
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Text = "赋予所有群主和管理员管理权限";
+            toolTip.SetToolTip(_grantPermissionToGroupOwnerAndAdminsCheckBox, "使监听群的群主和管理员与上方的管理权限列表中的用户拥有相同权限\r\n· 仅当OneBot版本为V11时生效");
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.UseVisualStyleBackColor = true;
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Click += OnPropertyChanged;
+            // 
+            // _autoReconnectCheckBox
+            // 
+            _autoReconnectCheckBox.AutoSize = true;
+            _autoReconnectCheckBox.Location = new System.Drawing.Point(32, 477);
+            _autoReconnectCheckBox.Name = "_autoReconnectCheckBox";
+            _autoReconnectCheckBox.Size = new System.Drawing.Size(190, 35);
+            _autoReconnectCheckBox.TabIndex = 20;
+            _autoReconnectCheckBox.Text = "断线自动重连";
+            toolTip.SetToolTip(_autoReconnectCheckBox, "WebSocket连接异常断开时自动重连\r\n· 仅适用于WebSocket正向连接");
+            _autoReconnectCheckBox.UseVisualStyleBackColor = true;
+            _autoReconnectCheckBox.Click += OnPropertyChanged;
+            // 
+            // _oneBotAccessTokenMaskedTextBox
+            // 
+            _oneBotAccessTokenMaskedTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _oneBotAccessTokenMaskedTextBox.Location = new System.Drawing.Point(32, 250);
+            _oneBotAccessTokenMaskedTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _oneBotAccessTokenMaskedTextBox.Name = "_oneBotAccessTokenMaskedTextBox";
+            _oneBotAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1156, 38);
+            _oneBotAccessTokenMaskedTextBox.TabIndex = 19;
+            toolTip.SetToolTip(_oneBotAccessTokenMaskedTextBox, "用于鉴权的Access-Token");
+            _oneBotAccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
+            // 
+            // _webSocketSubProtocolsTextBox
+            // 
+            _webSocketSubProtocolsTextBox.AcceptsReturn = true;
+            _webSocketSubProtocolsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _webSocketSubProtocolsTextBox.Location = new System.Drawing.Point(32, 332);
+            _webSocketSubProtocolsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _webSocketSubProtocolsTextBox.Multiline = true;
+            _webSocketSubProtocolsTextBox.Name = "_webSocketSubProtocolsTextBox";
+            _webSocketSubProtocolsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            _webSocketSubProtocolsTextBox.Size = new System.Drawing.Size(1156, 132);
+            _webSocketSubProtocolsTextBox.TabIndex = 17;
+            toolTip.SetToolTip(_webSocketSubProtocolsTextBox, "连接WebSocket时的子协议（一行一个）\r\n· 仅适用于WebSocket正向连接");
+            _webSocketSubProtocolsTextBox.TextChanged += WebSocketSubProtocolsTextBox_TextChanged;
+            // 
+            // _webSocketUriTextBox
+            // 
+            _webSocketUriTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _webSocketUriTextBox.Location = new System.Drawing.Point(32, 168);
+            _webSocketUriTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _webSocketUriTextBox.Name = "_webSocketUriTextBox";
+            _webSocketUriTextBox.Size = new System.Drawing.Size(1156, 38);
+            _webSocketUriTextBox.TabIndex = 15;
+            toolTip.SetToolTip(_webSocketUriTextBox, "Websocket服务器的地址\r\n· 当选择了正向连接适配器时，这个地址应以\"ws://\"或\"wss://\"开头，Serein将会连接到这个地址\r\n· 当选择了反向连接适配器时，这个地址应以\"http://\"或\"https://\"开头，Serein将会开启一个WebSocket服务器供OneBot实现连接");
+            _webSocketUriTextBox.TextChanged += OnPropertyChanged;
+            // 
+            // _oneBotVersionComboBox
+            // 
+            _oneBotVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _oneBotVersionComboBox.FormattingEnabled = true;
+            _oneBotVersionComboBox.Items.AddRange(new object[] { "V11", "V12" });
+            _oneBotVersionComboBox.Location = new System.Drawing.Point(32, 85);
+            _oneBotVersionComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _oneBotVersionComboBox.Name = "_oneBotVersionComboBox";
+            _oneBotVersionComboBox.Size = new System.Drawing.Size(248, 39);
+            _oneBotVersionComboBox.TabIndex = 3;
+            toolTip.SetToolTip(_oneBotVersionComboBox, "将影响Serein中对数据包的处理方式");
+            _oneBotVersionComboBox.SelectedIndexChanged += OneBotVersionComboBox_SelectedIndexChanged;
+            // 
+            // commonGroupBox
+            // 
+            commonGroupBox.Controls.Add(_selfPlatformTextBox);
+            commonGroupBox.Controls.Add(selfPlatformLabel);
+            commonGroupBox.Controls.Add(_selfUserIdTextBox);
+            commonGroupBox.Controls.Add(selfUserIdLabel);
+            commonGroupBox.Controls.Add(selfLabel);
+            commonGroupBox.Controls.Add(_administratorUserIdsTextBox);
+            commonGroupBox.Controls.Add(administratorUserIdsLabel);
+            commonGroupBox.Controls.Add(_listenedIdsTextBox);
+            commonGroupBox.Controls.Add(listenedIdsLabel);
+            commonGroupBox.Controls.Add(_connectWhenSettingUpcheckBox);
+            commonGroupBox.Controls.Add(_saveLogCheckBox);
+            commonGroupBox.Controls.Add(_outputDataCheckBox);
+            commonGroupBox.Controls.Add(_adapterComboBox);
+            commonGroupBox.Controls.Add(adapterLabel);
+            commonGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            commonGroupBox.Location = new System.Drawing.Point(10, 10);
+            commonGroupBox.Name = "commonGroupBox";
+            commonGroupBox.Size = new System.Drawing.Size(1260, 612);
+            commonGroupBox.TabIndex = 0;
+            commonGroupBox.TabStop = false;
+            commonGroupBox.Text = "通用";
+            // 
+            // satoriGroupBox
+            // 
+            satoriGroupBox.Controls.Add(_satoriAccessTokenMaskedTextBox);
+            satoriGroupBox.Controls.Add(satoriAccessTokenLabel);
+            satoriGroupBox.Controls.Add(_satoriUriTextBox);
+            satoriGroupBox.Controls.Add(satoriUriLabel);
+            satoriGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            satoriGroupBox.Location = new System.Drawing.Point(10, 1237);
+            satoriGroupBox.Name = "satoriGroupBox";
+            satoriGroupBox.Size = new System.Drawing.Size(1260, 238);
+            satoriGroupBox.TabIndex = 2;
+            satoriGroupBox.TabStop = false;
+            satoriGroupBox.Text = "Satori";
+            // 
+            // oneBotGroupBox
+            // 
+            oneBotGroupBox.Controls.Add(_autoEscapeCheckBox);
+            oneBotGroupBox.Controls.Add(_grantPermissionToGroupOwnerAndAdminsCheckBox);
+            oneBotGroupBox.Controls.Add(_autoReconnectCheckBox);
+            oneBotGroupBox.Controls.Add(_oneBotAccessTokenMaskedTextBox);
+            oneBotGroupBox.Controls.Add(oneBotAccessTokenLabel);
+            oneBotGroupBox.Controls.Add(_webSocketSubProtocolsTextBox);
+            oneBotGroupBox.Controls.Add(webSocketSubProtocolsLabel);
+            oneBotGroupBox.Controls.Add(_webSocketUriTextBox);
+            oneBotGroupBox.Controls.Add(webSocketUriLabel);
+            oneBotGroupBox.Controls.Add(_oneBotVersionComboBox);
+            oneBotGroupBox.Controls.Add(oneBotVersionLabel);
+            oneBotGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            oneBotGroupBox.Location = new System.Drawing.Point(10, 622);
+            oneBotGroupBox.Name = "oneBotGroupBox";
+            oneBotGroupBox.Size = new System.Drawing.Size(1260, 615);
+            oneBotGroupBox.TabIndex = 1;
+            oneBotGroupBox.TabStop = false;
+            oneBotGroupBox.Text = "OneBot";
             // 
             // ConnectionSettingPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
-            Controls.Add(AdministratorsTextBox);
-            Controls.Add(AdministratorsLabel);
-            Controls.Add(GroupsTextBox);
-            Controls.Add(GroupsLabel);
-            Controls.Add(GrantPermissionToOwnerAndAdminsCheckBox);
-            Controls.Add(SaveLogCheckBox);
-            Controls.Add(AutoEscapeCheckBox);
-            Controls.Add(OutputDataCheckBox);
-            Controls.Add(AutoReconnectCheckBox);
-            Controls.Add(UseReverseWebSocketCheckBox);
-            Controls.Add(AccessTokenMaskedTextBox);
-            Controls.Add(SubProtocolsTextBox);
-            Controls.Add(SubProtocolsLabel);
-            Controls.Add(AccessTokenLabel);
-            Controls.Add(UriTextBox);
-            Controls.Add(UriLabel);
+            Controls.Add(satoriGroupBox);
+            Controls.Add(oneBotGroupBox);
+            Controls.Add(commonGroupBox);
             Name = "ConnectionSettingPage";
-            Size = new System.Drawing.Size(1280, 808);
+            Padding = new System.Windows.Forms.Padding(10);
+            Size = new System.Drawing.Size(1280, 1488);
+            commonGroupBox.ResumeLayout(false);
+            commonGroupBox.PerformLayout();
+            satoriGroupBox.ResumeLayout(false);
+            satoriGroupBox.PerformLayout();
+            oneBotGroupBox.ResumeLayout(false);
+            oneBotGroupBox.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox AdministratorsTextBox;
-        private System.Windows.Forms.TextBox GroupsTextBox;
-        private System.Windows.Forms.CheckBox GrantPermissionToOwnerAndAdminsCheckBox;
-        private System.Windows.Forms.CheckBox SaveLogCheckBox;
-        private System.Windows.Forms.CheckBox AutoEscapeCheckBox;
-        private System.Windows.Forms.CheckBox OutputDataCheckBox;
-        private System.Windows.Forms.CheckBox AutoReconnectCheckBox;
-        private System.Windows.Forms.CheckBox UseReverseWebSocketCheckBox;
-        private System.Windows.Forms.MaskedTextBox AccessTokenMaskedTextBox;
-        private System.Windows.Forms.TextBox SubProtocolsTextBox;
-        private System.Windows.Forms.TextBox UriTextBox;
+        private System.Windows.Forms.ComboBox _adapterComboBox;
+        private System.Windows.Forms.CheckBox _outputDataCheckBox;
+        private System.Windows.Forms.TextBox _listenedIdsTextBox;
+        private System.Windows.Forms.CheckBox _connectWhenSettingUpcheckBox;
+        private System.Windows.Forms.CheckBox _saveLogCheckBox;
+        private System.Windows.Forms.TextBox _administratorUserIdsTextBox;
+        private System.Windows.Forms.TextBox _selfPlatformTextBox;
+        private System.Windows.Forms.TextBox _selfUserIdTextBox;
+        private System.Windows.Forms.ComboBox _oneBotVersionComboBox;
+        private System.Windows.Forms.TextBox _webSocketUriTextBox;
+        private System.Windows.Forms.MaskedTextBox _oneBotAccessTokenMaskedTextBox;
+        private System.Windows.Forms.TextBox _webSocketSubProtocolsTextBox;
+        private System.Windows.Forms.CheckBox _autoEscapeCheckBox;
+        private System.Windows.Forms.CheckBox _grantPermissionToGroupOwnerAndAdminsCheckBox;
+        private System.Windows.Forms.CheckBox _autoReconnectCheckBox;
+        private System.Windows.Forms.MaskedTextBox _satoriAccessTokenMaskedTextBox;
+        private System.Windows.Forms.TextBox _satoriUriTextBox;
     }
 }

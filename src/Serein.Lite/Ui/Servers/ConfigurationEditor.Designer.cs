@@ -29,198 +29,202 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label IdLabel;
-            System.Windows.Forms.Label NameLabel;
-            System.Windows.Forms.Label FileNameLabel;
-            System.Windows.Forms.Label ArgumentLabel;
-            System.Windows.Forms.Label LineTerminatorLabel;
-            System.Windows.Forms.Label OutputStyleLabel;
-            System.Windows.Forms.Label OutputEncondingLabel;
-            System.Windows.Forms.Label InputEncondingLabel;
-            System.Windows.Forms.Label StopLabel;
-            System.Windows.Forms.Label PortLabel;
-            System.Windows.Forms.Button OpenFileButton;
+            System.Windows.Forms.Label idLabel;
+            System.Windows.Forms.Label nameLabel;
+            System.Windows.Forms.Label fileNameLabel;
+            System.Windows.Forms.Label argumentLabel;
+            System.Windows.Forms.Label lineTerminatorLabel;
+            System.Windows.Forms.Label outputStyleLabel;
+            System.Windows.Forms.Label outputEncondingLabel;
+            System.Windows.Forms.Label inputEncondingLabel;
+            System.Windows.Forms.Label stopLabel;
+            System.Windows.Forms.Label portLabel;
+            System.Windows.Forms.Button openFileButton;
+            System.Windows.Forms.TabPage commonTabPage;
+            System.Windows.Forms.TabPage inputAndOutputTabPage;
+            System.Windows.Forms.TabPage moreTabPage;
+            System.Windows.Forms.Button confirmButton;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationEditor));
-            FileNameTextBox = new System.Windows.Forms.TextBox();
-            IdTextBox = new System.Windows.Forms.TextBox();
+            _fileNameTextBox = new System.Windows.Forms.TextBox();
+            _idTextBox = new System.Windows.Forms.TextBox();
             MainTabControl = new System.Windows.Forms.TabControl();
-            CommonTabPage = new System.Windows.Forms.TabPage();
-            NameTextBox = new System.Windows.Forms.TextBox();
-            ArgumentTextBox = new System.Windows.Forms.TextBox();
-            InputAndOutputTabPage = new System.Windows.Forms.TabPage();
-            UsePtyCheckBox = new System.Windows.Forms.CheckBox();
-            LineTerminatorTextBox = new System.Windows.Forms.TextBox();
-            UseUnicodeCharsCheckBox = new System.Windows.Forms.CheckBox();
-            OutputCommandUserInputCheckBox = new System.Windows.Forms.CheckBox();
-            SaveLogCheckBox = new System.Windows.Forms.CheckBox();
-            OutputStyleComboBox = new System.Windows.Forms.ComboBox();
-            OutputEncondingComboBox = new System.Windows.Forms.ComboBox();
-            InputEncondingComboBox = new System.Windows.Forms.ComboBox();
-            MoreTabPage = new System.Windows.Forms.TabPage();
-            StopCommandsTextBox = new System.Windows.Forms.TextBox();
-            PortNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            StartWhenSettingUpCheckBox = new System.Windows.Forms.CheckBox();
-            AutoStopWhenCrashingCheckBox = new System.Windows.Forms.CheckBox();
-            AutoRestartCheckBox = new System.Windows.Forms.CheckBox();
-            ConfirmButton = new System.Windows.Forms.Button();
-            ErrorProvider = new System.Windows.Forms.ErrorProvider(components);
-            ToolTip = new System.Windows.Forms.ToolTip(components);
-            ForceWinPtyCheckBox = new System.Windows.Forms.CheckBox();
-            IdLabel = new System.Windows.Forms.Label();
-            NameLabel = new System.Windows.Forms.Label();
-            FileNameLabel = new System.Windows.Forms.Label();
-            ArgumentLabel = new System.Windows.Forms.Label();
-            LineTerminatorLabel = new System.Windows.Forms.Label();
-            OutputStyleLabel = new System.Windows.Forms.Label();
-            OutputEncondingLabel = new System.Windows.Forms.Label();
-            InputEncondingLabel = new System.Windows.Forms.Label();
-            StopLabel = new System.Windows.Forms.Label();
-            PortLabel = new System.Windows.Forms.Label();
-            OpenFileButton = new System.Windows.Forms.Button();
+            _nameTextBox = new System.Windows.Forms.TextBox();
+            _argumentTextBox = new System.Windows.Forms.TextBox();
+            _forceWinPtyCheckBox = new System.Windows.Forms.CheckBox();
+            _usePtyCheckBox = new System.Windows.Forms.CheckBox();
+            _lineTerminatorTextBox = new System.Windows.Forms.TextBox();
+            _useUnicodeCharsCheckBox = new System.Windows.Forms.CheckBox();
+            _outputCommandUserInputCheckBox = new System.Windows.Forms.CheckBox();
+            _saveLogCheckBox = new System.Windows.Forms.CheckBox();
+            _outputStyleComboBox = new System.Windows.Forms.ComboBox();
+            _outputEncondingComboBox = new System.Windows.Forms.ComboBox();
+            _inputEncondingComboBox = new System.Windows.Forms.ComboBox();
+            _stopCommandsTextBox = new System.Windows.Forms.TextBox();
+            _portNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            _startWhenSettingUpCheckBox = new System.Windows.Forms.CheckBox();
+            _autoStopWhenCrashingCheckBox = new System.Windows.Forms.CheckBox();
+            _autoRestartCheckBox = new System.Windows.Forms.CheckBox();
+            _errorProvider = new System.Windows.Forms.ErrorProvider(components);
+            toolTip = new System.Windows.Forms.ToolTip(components);
+            idLabel = new System.Windows.Forms.Label();
+            nameLabel = new System.Windows.Forms.Label();
+            fileNameLabel = new System.Windows.Forms.Label();
+            argumentLabel = new System.Windows.Forms.Label();
+            lineTerminatorLabel = new System.Windows.Forms.Label();
+            outputStyleLabel = new System.Windows.Forms.Label();
+            outputEncondingLabel = new System.Windows.Forms.Label();
+            inputEncondingLabel = new System.Windows.Forms.Label();
+            stopLabel = new System.Windows.Forms.Label();
+            portLabel = new System.Windows.Forms.Label();
+            openFileButton = new System.Windows.Forms.Button();
+            commonTabPage = new System.Windows.Forms.TabPage();
+            inputAndOutputTabPage = new System.Windows.Forms.TabPage();
+            moreTabPage = new System.Windows.Forms.TabPage();
+            confirmButton = new System.Windows.Forms.Button();
             MainTabControl.SuspendLayout();
-            CommonTabPage.SuspendLayout();
-            InputAndOutputTabPage.SuspendLayout();
-            MoreTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PortNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ErrorProvider).BeginInit();
+            commonTabPage.SuspendLayout();
+            inputAndOutputTabPage.SuspendLayout();
+            moreTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)_portNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)_errorProvider).BeginInit();
             SuspendLayout();
             // 
-            // IdLabel
+            // idLabel
             // 
-            IdLabel.AutoSize = true;
-            IdLabel.Location = new System.Drawing.Point(23, 12);
-            IdLabel.Name = "IdLabel";
-            IdLabel.Size = new System.Drawing.Size(36, 31);
-            IdLabel.TabIndex = 0;
-            IdLabel.Text = "Id";
-            ToolTip.SetToolTip(IdLabel, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
+            idLabel.AutoSize = true;
+            idLabel.Location = new System.Drawing.Point(23, 12);
+            idLabel.Name = "idLabel";
+            idLabel.Size = new System.Drawing.Size(36, 31);
+            idLabel.TabIndex = 0;
+            idLabel.Text = "Id";
+            toolTip.SetToolTip(idLabel, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
             // 
-            // NameLabel
+            // nameLabel
             // 
-            NameLabel.AutoSize = true;
-            NameLabel.Location = new System.Drawing.Point(23, 108);
-            NameLabel.Name = "NameLabel";
-            NameLabel.Size = new System.Drawing.Size(62, 31);
-            NameLabel.TabIndex = 2;
-            NameLabel.Text = "名称";
-            ToolTip.SetToolTip(NameLabel, "用于标识服务器，便于管理");
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new System.Drawing.Point(23, 108);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new System.Drawing.Size(62, 31);
+            nameLabel.TabIndex = 2;
+            nameLabel.Text = "名称";
+            toolTip.SetToolTip(nameLabel, "用于标识服务器，便于管理");
             // 
-            // FileNameLabel
+            // fileNameLabel
             // 
-            FileNameLabel.AutoSize = true;
-            FileNameLabel.Location = new System.Drawing.Point(23, 204);
-            FileNameLabel.Name = "FileNameLabel";
-            FileNameLabel.Size = new System.Drawing.Size(110, 31);
-            FileNameLabel.TabIndex = 4;
-            FileNameLabel.Text = "启动文件";
-            ToolTip.SetToolTip(FileNameLabel, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
+            fileNameLabel.AutoSize = true;
+            fileNameLabel.Location = new System.Drawing.Point(23, 204);
+            fileNameLabel.Name = "fileNameLabel";
+            fileNameLabel.Size = new System.Drawing.Size(110, 31);
+            fileNameLabel.TabIndex = 4;
+            fileNameLabel.Text = "启动文件";
+            toolTip.SetToolTip(fileNameLabel, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
             // 
-            // ArgumentLabel
+            // argumentLabel
             // 
-            ArgumentLabel.AutoSize = true;
-            ArgumentLabel.Location = new System.Drawing.Point(23, 300);
-            ArgumentLabel.Name = "ArgumentLabel";
-            ArgumentLabel.Size = new System.Drawing.Size(110, 31);
-            ArgumentLabel.TabIndex = 6;
-            ArgumentLabel.Text = "启动参数";
-            ToolTip.SetToolTip(ArgumentLabel, "附加在启动文件后的参数");
+            argumentLabel.AutoSize = true;
+            argumentLabel.Location = new System.Drawing.Point(23, 300);
+            argumentLabel.Name = "argumentLabel";
+            argumentLabel.Size = new System.Drawing.Size(110, 31);
+            argumentLabel.TabIndex = 6;
+            argumentLabel.Text = "启动参数";
+            toolTip.SetToolTip(argumentLabel, "附加在启动文件后的参数");
             // 
-            // LineTerminatorLabel
+            // lineTerminatorLabel
             // 
-            LineTerminatorLabel.AutoSize = true;
-            LineTerminatorLabel.Location = new System.Drawing.Point(23, 291);
-            LineTerminatorLabel.Name = "LineTerminatorLabel";
-            LineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
-            LineTerminatorLabel.TabIndex = 6;
-            LineTerminatorLabel.Text = "行终止符";
-            ToolTip.SetToolTip(LineTerminatorLabel, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
+            lineTerminatorLabel.AutoSize = true;
+            lineTerminatorLabel.Location = new System.Drawing.Point(23, 291);
+            lineTerminatorLabel.Name = "lineTerminatorLabel";
+            lineTerminatorLabel.Size = new System.Drawing.Size(110, 31);
+            lineTerminatorLabel.TabIndex = 6;
+            lineTerminatorLabel.Text = "行终止符";
+            toolTip.SetToolTip(lineTerminatorLabel, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
             // 
-            // OutputStyleLabel
+            // outputStyleLabel
             // 
-            OutputStyleLabel.AutoSize = true;
-            OutputStyleLabel.Location = new System.Drawing.Point(23, 198);
-            OutputStyleLabel.Name = "OutputStyleLabel";
-            OutputStyleLabel.Size = new System.Drawing.Size(110, 31);
-            OutputStyleLabel.TabIndex = 4;
-            OutputStyleLabel.Text = "输出样式";
-            ToolTip.SetToolTip(OutputStyleLabel, "控制台中渲染输出内容的样式");
+            outputStyleLabel.AutoSize = true;
+            outputStyleLabel.Location = new System.Drawing.Point(23, 198);
+            outputStyleLabel.Name = "outputStyleLabel";
+            outputStyleLabel.Size = new System.Drawing.Size(110, 31);
+            outputStyleLabel.TabIndex = 4;
+            outputStyleLabel.Text = "输出样式";
+            toolTip.SetToolTip(outputStyleLabel, "控制台中渲染输出内容的样式");
             // 
-            // OutputEncondingLabel
+            // outputEncondingLabel
             // 
-            OutputEncondingLabel.AutoSize = true;
-            OutputEncondingLabel.Location = new System.Drawing.Point(23, 105);
-            OutputEncondingLabel.Name = "OutputEncondingLabel";
-            OutputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            OutputEncondingLabel.TabIndex = 2;
-            OutputEncondingLabel.Text = "输出编码";
-            ToolTip.SetToolTip(OutputEncondingLabel, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
+            outputEncondingLabel.AutoSize = true;
+            outputEncondingLabel.Location = new System.Drawing.Point(23, 105);
+            outputEncondingLabel.Name = "outputEncondingLabel";
+            outputEncondingLabel.Size = new System.Drawing.Size(110, 31);
+            outputEncondingLabel.TabIndex = 2;
+            outputEncondingLabel.Text = "输出编码";
+            toolTip.SetToolTip(outputEncondingLabel, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
             // 
-            // InputEncondingLabel
+            // inputEncondingLabel
             // 
-            InputEncondingLabel.AutoSize = true;
-            InputEncondingLabel.Location = new System.Drawing.Point(23, 12);
-            InputEncondingLabel.Name = "InputEncondingLabel";
-            InputEncondingLabel.Size = new System.Drawing.Size(110, 31);
-            InputEncondingLabel.TabIndex = 0;
-            InputEncondingLabel.Text = "输入编码";
-            ToolTip.SetToolTip(InputEncondingLabel, "输入到服务器的编码");
+            inputEncondingLabel.AutoSize = true;
+            inputEncondingLabel.Location = new System.Drawing.Point(23, 12);
+            inputEncondingLabel.Name = "inputEncondingLabel";
+            inputEncondingLabel.Size = new System.Drawing.Size(110, 31);
+            inputEncondingLabel.TabIndex = 0;
+            inputEncondingLabel.Text = "输入编码";
+            toolTip.SetToolTip(inputEncondingLabel, "输入到服务器的编码");
             // 
-            // StopLabel
+            // stopLabel
             // 
-            StopLabel.AutoSize = true;
-            StopLabel.Location = new System.Drawing.Point(26, 217);
-            StopLabel.Name = "StopLabel";
-            StopLabel.Size = new System.Drawing.Size(110, 31);
-            StopLabel.TabIndex = 5;
-            StopLabel.Text = "关服命令";
-            ToolTip.SetToolTip(StopLabel, "关闭服务器时输入的命令（一行一个）");
+            stopLabel.AutoSize = true;
+            stopLabel.Location = new System.Drawing.Point(26, 217);
+            stopLabel.Name = "stopLabel";
+            stopLabel.Size = new System.Drawing.Size(110, 31);
+            stopLabel.TabIndex = 5;
+            stopLabel.Text = "关服命令";
+            toolTip.SetToolTip(stopLabel, "关闭服务器时输入的命令（一行一个）");
             // 
-            // PortLabel
+            // portLabel
             // 
-            PortLabel.AutoSize = true;
-            PortLabel.Location = new System.Drawing.Point(25, 136);
-            PortLabel.Name = "PortLabel";
-            PortLabel.Size = new System.Drawing.Size(111, 31);
-            PortLabel.TabIndex = 3;
-            PortLabel.Text = "IPv4端口";
-            ToolTip.SetToolTip(PortLabel, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
+            portLabel.AutoSize = true;
+            portLabel.Location = new System.Drawing.Point(25, 136);
+            portLabel.Name = "portLabel";
+            portLabel.Size = new System.Drawing.Size(111, 31);
+            portLabel.TabIndex = 3;
+            portLabel.Text = "IPv4端口";
+            toolTip.SetToolTip(portLabel, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
             // 
-            // OpenFileButton
+            // openFileButton
             // 
-            OpenFileButton.Location = new System.Drawing.Point(605, 241);
-            OpenFileButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            OpenFileButton.Name = "OpenFileButton";
-            OpenFileButton.Size = new System.Drawing.Size(118, 40);
-            OpenFileButton.TabIndex = 8;
-            OpenFileButton.Text = "打开...";
-            OpenFileButton.UseVisualStyleBackColor = true;
-            OpenFileButton.Click += OpenFileButton_Click;
+            openFileButton.Location = new System.Drawing.Point(605, 241);
+            openFileButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            openFileButton.Name = "openFileButton";
+            openFileButton.Size = new System.Drawing.Size(118, 40);
+            openFileButton.TabIndex = 8;
+            openFileButton.Text = "打开...";
+            openFileButton.UseVisualStyleBackColor = true;
+            openFileButton.Click += OpenFileButton_Click;
             // 
-            // FileNameTextBox
+            // _fileNameTextBox
             // 
-            FileNameTextBox.Location = new System.Drawing.Point(23, 242);
-            FileNameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
-            FileNameTextBox.Name = "FileNameTextBox";
-            FileNameTextBox.Size = new System.Drawing.Size(576, 38);
-            FileNameTextBox.TabIndex = 5;
-            ToolTip.SetToolTip(FileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
+            _fileNameTextBox.Location = new System.Drawing.Point(23, 242);
+            _fileNameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
+            _fileNameTextBox.Name = "_fileNameTextBox";
+            _fileNameTextBox.Size = new System.Drawing.Size(576, 38);
+            _fileNameTextBox.TabIndex = 5;
+            toolTip.SetToolTip(_fileNameTextBox, "启动进程的文件，通常为可执行文件或批处理文件\r\n【提示】你可以双击文本框打开选择文件对话框");
             // 
-            // IdTextBox
+            // _idTextBox
             // 
-            IdTextBox.Location = new System.Drawing.Point(23, 50);
-            IdTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
-            IdTextBox.Name = "IdTextBox";
-            IdTextBox.Size = new System.Drawing.Size(700, 38);
-            IdTextBox.TabIndex = 1;
-            ToolTip.SetToolTip(IdTextBox, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
-            IdTextBox.Enter += IdTextBox_Enter;
-            IdTextBox.Validating += IdTextBox_Validating;
+            _idTextBox.Location = new System.Drawing.Point(23, 50);
+            _idTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
+            _idTextBox.Name = "_idTextBox";
+            _idTextBox.Size = new System.Drawing.Size(700, 38);
+            _idTextBox.TabIndex = 1;
+            toolTip.SetToolTip(_idTextBox, "用于区分服务器（一经填写无法修改）\r\n· 长度大于或等于3\r\n· 只由数字、字母和下划线组成");
+            _idTextBox.Enter += IdTextBox_Enter;
+            _idTextBox.Validating += IdTextBox_Validating;
             // 
             // MainTabControl
             // 
-            MainTabControl.Controls.Add(CommonTabPage);
-            MainTabControl.Controls.Add(InputAndOutputTabPage);
-            MainTabControl.Controls.Add(MoreTabPage);
+            MainTabControl.Controls.Add(commonTabPage);
+            MainTabControl.Controls.Add(inputAndOutputTabPage);
+            MainTabControl.Controls.Add(moreTabPage);
             MainTabControl.Dock = System.Windows.Forms.DockStyle.Top;
             MainTabControl.Location = new System.Drawing.Point(0, 0);
             MainTabControl.Name = "MainTabControl";
@@ -228,257 +232,257 @@
             MainTabControl.Size = new System.Drawing.Size(774, 465);
             MainTabControl.TabIndex = 2;
             // 
-            // CommonTabPage
+            // commonTabPage
             // 
-            CommonTabPage.AutoScroll = true;
-            CommonTabPage.Controls.Add(OpenFileButton);
-            CommonTabPage.Controls.Add(NameLabel);
-            CommonTabPage.Controls.Add(NameTextBox);
-            CommonTabPage.Controls.Add(ArgumentTextBox);
-            CommonTabPage.Controls.Add(ArgumentLabel);
-            CommonTabPage.Controls.Add(FileNameLabel);
-            CommonTabPage.Controls.Add(FileNameTextBox);
-            CommonTabPage.Controls.Add(IdLabel);
-            CommonTabPage.Controls.Add(IdTextBox);
-            CommonTabPage.Location = new System.Drawing.Point(8, 45);
-            CommonTabPage.Name = "CommonTabPage";
-            CommonTabPage.Padding = new System.Windows.Forms.Padding(3);
-            CommonTabPage.Size = new System.Drawing.Size(758, 412);
-            CommonTabPage.TabIndex = 0;
-            CommonTabPage.Text = "常规";
-            CommonTabPage.UseVisualStyleBackColor = true;
+            commonTabPage.AutoScroll = true;
+            commonTabPage.Controls.Add(openFileButton);
+            commonTabPage.Controls.Add(nameLabel);
+            commonTabPage.Controls.Add(_nameTextBox);
+            commonTabPage.Controls.Add(_argumentTextBox);
+            commonTabPage.Controls.Add(argumentLabel);
+            commonTabPage.Controls.Add(fileNameLabel);
+            commonTabPage.Controls.Add(_fileNameTextBox);
+            commonTabPage.Controls.Add(idLabel);
+            commonTabPage.Controls.Add(_idTextBox);
+            commonTabPage.Location = new System.Drawing.Point(8, 45);
+            commonTabPage.Name = "commonTabPage";
+            commonTabPage.Padding = new System.Windows.Forms.Padding(3);
+            commonTabPage.Size = new System.Drawing.Size(758, 412);
+            commonTabPage.TabIndex = 0;
+            commonTabPage.Text = "常规";
+            commonTabPage.UseVisualStyleBackColor = true;
             // 
-            // NameTextBox
+            // _nameTextBox
             // 
-            NameTextBox.Location = new System.Drawing.Point(23, 146);
-            NameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
-            NameTextBox.Name = "NameTextBox";
-            NameTextBox.Size = new System.Drawing.Size(700, 38);
-            NameTextBox.TabIndex = 3;
-            ToolTip.SetToolTip(NameTextBox, "用于标识服务器，便于管理");
+            _nameTextBox.Location = new System.Drawing.Point(23, 146);
+            _nameTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
+            _nameTextBox.Name = "_nameTextBox";
+            _nameTextBox.Size = new System.Drawing.Size(700, 38);
+            _nameTextBox.TabIndex = 3;
+            toolTip.SetToolTip(_nameTextBox, "用于标识服务器，便于管理");
             // 
-            // ArgumentTextBox
+            // _argumentTextBox
             // 
-            ArgumentTextBox.Location = new System.Drawing.Point(23, 338);
-            ArgumentTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
-            ArgumentTextBox.Name = "ArgumentTextBox";
-            ArgumentTextBox.Size = new System.Drawing.Size(700, 38);
-            ArgumentTextBox.TabIndex = 7;
-            ToolTip.SetToolTip(ArgumentTextBox, "附加在启动文件后的参数");
+            _argumentTextBox.Location = new System.Drawing.Point(23, 338);
+            _argumentTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
+            _argumentTextBox.Name = "_argumentTextBox";
+            _argumentTextBox.Size = new System.Drawing.Size(700, 38);
+            _argumentTextBox.TabIndex = 7;
+            toolTip.SetToolTip(_argumentTextBox, "附加在启动文件后的参数");
             // 
-            // InputAndOutputTabPage
+            // inputAndOutputTabPage
             // 
-            InputAndOutputTabPage.Controls.Add(ForceWinPtyCheckBox);
-            InputAndOutputTabPage.Controls.Add(UsePtyCheckBox);
-            InputAndOutputTabPage.Controls.Add(LineTerminatorTextBox);
-            InputAndOutputTabPage.Controls.Add(LineTerminatorLabel);
-            InputAndOutputTabPage.Controls.Add(UseUnicodeCharsCheckBox);
-            InputAndOutputTabPage.Controls.Add(OutputCommandUserInputCheckBox);
-            InputAndOutputTabPage.Controls.Add(SaveLogCheckBox);
-            InputAndOutputTabPage.Controls.Add(OutputStyleLabel);
-            InputAndOutputTabPage.Controls.Add(OutputStyleComboBox);
-            InputAndOutputTabPage.Controls.Add(OutputEncondingLabel);
-            InputAndOutputTabPage.Controls.Add(InputEncondingLabel);
-            InputAndOutputTabPage.Controls.Add(OutputEncondingComboBox);
-            InputAndOutputTabPage.Controls.Add(InputEncondingComboBox);
-            InputAndOutputTabPage.Location = new System.Drawing.Point(8, 45);
-            InputAndOutputTabPage.Name = "InputAndOutputTabPage";
-            InputAndOutputTabPage.Padding = new System.Windows.Forms.Padding(3);
-            InputAndOutputTabPage.Size = new System.Drawing.Size(758, 412);
-            InputAndOutputTabPage.TabIndex = 1;
-            InputAndOutputTabPage.Text = "输出/输入";
-            InputAndOutputTabPage.UseVisualStyleBackColor = true;
+            inputAndOutputTabPage.Controls.Add(_forceWinPtyCheckBox);
+            inputAndOutputTabPage.Controls.Add(_usePtyCheckBox);
+            inputAndOutputTabPage.Controls.Add(_lineTerminatorTextBox);
+            inputAndOutputTabPage.Controls.Add(lineTerminatorLabel);
+            inputAndOutputTabPage.Controls.Add(_useUnicodeCharsCheckBox);
+            inputAndOutputTabPage.Controls.Add(_outputCommandUserInputCheckBox);
+            inputAndOutputTabPage.Controls.Add(_saveLogCheckBox);
+            inputAndOutputTabPage.Controls.Add(outputStyleLabel);
+            inputAndOutputTabPage.Controls.Add(_outputStyleComboBox);
+            inputAndOutputTabPage.Controls.Add(outputEncondingLabel);
+            inputAndOutputTabPage.Controls.Add(inputEncondingLabel);
+            inputAndOutputTabPage.Controls.Add(_outputEncondingComboBox);
+            inputAndOutputTabPage.Controls.Add(_inputEncondingComboBox);
+            inputAndOutputTabPage.Location = new System.Drawing.Point(8, 45);
+            inputAndOutputTabPage.Name = "inputAndOutputTabPage";
+            inputAndOutputTabPage.Padding = new System.Windows.Forms.Padding(3);
+            inputAndOutputTabPage.Size = new System.Drawing.Size(758, 412);
+            inputAndOutputTabPage.TabIndex = 1;
+            inputAndOutputTabPage.Text = "输出/输入";
+            inputAndOutputTabPage.UseVisualStyleBackColor = true;
             // 
-            // UsePtyCheckBox
+            // _forceWinPtyCheckBox
             // 
-            UsePtyCheckBox.AutoSize = true;
-            UsePtyCheckBox.Location = new System.Drawing.Point(365, 194);
-            UsePtyCheckBox.Name = "UsePtyCheckBox";
-            UsePtyCheckBox.Size = new System.Drawing.Size(310, 35);
-            UsePtyCheckBox.TabIndex = 11;
-            UsePtyCheckBox.Text = "使用虚拟终端（实验性）";
-            ToolTip.SetToolTip(UsePtyCheckBox, "使用虚拟终端输入和输出\r\n· 用于解决一些控制台无输入或输出的问题\r\n· 可能因系统版本不同而有不同的效果\r\n· 这是一个实验性选项，后续版本中可能会发生变化");
-            UsePtyCheckBox.UseVisualStyleBackColor = true;
-            UsePtyCheckBox.CheckedChanged += UsePtyCheckBox_CheckedChanged;
+            _forceWinPtyCheckBox.AutoSize = true;
+            _forceWinPtyCheckBox.Location = new System.Drawing.Point(365, 236);
+            _forceWinPtyCheckBox.Name = "_forceWinPtyCheckBox";
+            _forceWinPtyCheckBox.Size = new System.Drawing.Size(224, 35);
+            _forceWinPtyCheckBox.TabIndex = 12;
+            _forceWinPtyCheckBox.Text = "强制使用WinPty";
+            toolTip.SetToolTip(_forceWinPtyCheckBox, "· 仅在Windows平台下生效\r\n· 若不勾选此项，你需要手动补全相应的动态链接库\r\n· 不推荐修改此项，除非你知道你在做什么！");
+            _forceWinPtyCheckBox.UseVisualStyleBackColor = true;
             // 
-            // LineTerminatorTextBox
+            // _usePtyCheckBox
             // 
-            LineTerminatorTextBox.Location = new System.Drawing.Point(23, 329);
-            LineTerminatorTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
-            LineTerminatorTextBox.Name = "LineTerminatorTextBox";
-            LineTerminatorTextBox.Size = new System.Drawing.Size(722, 38);
-            LineTerminatorTextBox.TabIndex = 7;
-            ToolTip.SetToolTip(LineTerminatorTextBox, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
+            _usePtyCheckBox.AutoSize = true;
+            _usePtyCheckBox.Location = new System.Drawing.Point(365, 194);
+            _usePtyCheckBox.Name = "_usePtyCheckBox";
+            _usePtyCheckBox.Size = new System.Drawing.Size(190, 35);
+            _usePtyCheckBox.TabIndex = 11;
+            _usePtyCheckBox.Text = "使用虚拟终端";
+            toolTip.SetToolTip(_usePtyCheckBox, "使用虚拟终端输入和输出\r\n· 用于解决一些控制台无输入或输出的问题\r\n· 可能因系统版本不同而有不同的效果\r\n· 这是一个实验性选项，后续版本中可能会发生变化");
+            _usePtyCheckBox.UseVisualStyleBackColor = true;
+            _usePtyCheckBox.CheckedChanged += UsePtyCheckBox_CheckedChanged;
             // 
-            // UseUnicodeCharsCheckBox
+            // _lineTerminatorTextBox
             // 
-            UseUnicodeCharsCheckBox.AutoSize = true;
-            UseUnicodeCharsCheckBox.Location = new System.Drawing.Point(365, 128);
-            UseUnicodeCharsCheckBox.Name = "UseUnicodeCharsCheckBox";
-            UseUnicodeCharsCheckBox.Size = new System.Drawing.Size(237, 35);
-            UseUnicodeCharsCheckBox.TabIndex = 10;
-            UseUnicodeCharsCheckBox.Text = "使用Unicode字符";
-            ToolTip.SetToolTip(UseUnicodeCharsCheckBox, "使用Unicode字符输入（如\"§\"→\"\\u00a7\"），通常用于解决基岩版服务器输入Tellraw的编码问题");
-            UseUnicodeCharsCheckBox.UseVisualStyleBackColor = true;
+            _lineTerminatorTextBox.Location = new System.Drawing.Point(23, 329);
+            _lineTerminatorTextBox.Margin = new System.Windows.Forms.Padding(3, 7, 3, 20);
+            _lineTerminatorTextBox.Name = "_lineTerminatorTextBox";
+            _lineTerminatorTextBox.Size = new System.Drawing.Size(722, 38);
+            _lineTerminatorTextBox.TabIndex = 7;
+            toolTip.SetToolTip(_lineTerminatorTextBox, "用于标记每行的结尾\r\n· 在Windows平台下默认为CRLF（\\r\\n）\r\n· 在其他平台下默认为LF（\\n）\r\n· 随意更改可能导致服务器无法输入命令");
             // 
-            // OutputCommandUserInputCheckBox
+            // _useUnicodeCharsCheckBox
             // 
-            OutputCommandUserInputCheckBox.AutoSize = true;
-            OutputCommandUserInputCheckBox.Location = new System.Drawing.Point(365, 87);
-            OutputCommandUserInputCheckBox.Name = "OutputCommandUserInputCheckBox";
-            OutputCommandUserInputCheckBox.Size = new System.Drawing.Size(214, 35);
-            OutputCommandUserInputCheckBox.TabIndex = 9;
-            OutputCommandUserInputCheckBox.Text = "显示输出的命令";
-            ToolTip.SetToolTip(OutputCommandUserInputCheckBox, "在控制台显示由用户输入的命令");
-            OutputCommandUserInputCheckBox.UseVisualStyleBackColor = true;
+            _useUnicodeCharsCheckBox.AutoSize = true;
+            _useUnicodeCharsCheckBox.Location = new System.Drawing.Point(365, 128);
+            _useUnicodeCharsCheckBox.Name = "_useUnicodeCharsCheckBox";
+            _useUnicodeCharsCheckBox.Size = new System.Drawing.Size(237, 35);
+            _useUnicodeCharsCheckBox.TabIndex = 10;
+            _useUnicodeCharsCheckBox.Text = "使用Unicode字符";
+            toolTip.SetToolTip(_useUnicodeCharsCheckBox, "使用Unicode字符输入（如\"§\"→\"\\u00a7\"），通常用于解决基岩版服务器输入Tellraw的编码问题");
+            _useUnicodeCharsCheckBox.UseVisualStyleBackColor = true;
             // 
-            // SaveLogCheckBox
+            // _outputCommandUserInputCheckBox
             // 
-            SaveLogCheckBox.AutoSize = true;
-            SaveLogCheckBox.Location = new System.Drawing.Point(365, 46);
-            SaveLogCheckBox.Name = "SaveLogCheckBox";
-            SaveLogCheckBox.Size = new System.Drawing.Size(142, 35);
-            SaveLogCheckBox.TabIndex = 8;
-            SaveLogCheckBox.Text = "保存日志";
-            ToolTip.SetToolTip(SaveLogCheckBox, "将控制台内容保存到文件“Serein/logs/servers/{id}-{datetime}.log”");
-            SaveLogCheckBox.UseVisualStyleBackColor = true;
+            _outputCommandUserInputCheckBox.AutoSize = true;
+            _outputCommandUserInputCheckBox.Location = new System.Drawing.Point(365, 87);
+            _outputCommandUserInputCheckBox.Name = "_outputCommandUserInputCheckBox";
+            _outputCommandUserInputCheckBox.Size = new System.Drawing.Size(214, 35);
+            _outputCommandUserInputCheckBox.TabIndex = 9;
+            _outputCommandUserInputCheckBox.Text = "显示输出的命令";
+            toolTip.SetToolTip(_outputCommandUserInputCheckBox, "在控制台显示由用户输入的命令");
+            _outputCommandUserInputCheckBox.UseVisualStyleBackColor = true;
             // 
-            // OutputStyleComboBox
+            // _saveLogCheckBox
             // 
-            OutputStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            OutputStyleComboBox.FormattingEnabled = true;
-            OutputStyleComboBox.Items.AddRange(new object[] { "无颜色", "原始颜色" });
-            OutputStyleComboBox.Location = new System.Drawing.Point(23, 232);
-            OutputStyleComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
-            OutputStyleComboBox.Name = "OutputStyleComboBox";
-            OutputStyleComboBox.Size = new System.Drawing.Size(197, 39);
-            OutputStyleComboBox.TabIndex = 5;
-            ToolTip.SetToolTip(OutputStyleComboBox, "控制台中渲染输出内容的样式");
+            _saveLogCheckBox.AutoSize = true;
+            _saveLogCheckBox.Location = new System.Drawing.Point(365, 46);
+            _saveLogCheckBox.Name = "_saveLogCheckBox";
+            _saveLogCheckBox.Size = new System.Drawing.Size(142, 35);
+            _saveLogCheckBox.TabIndex = 8;
+            _saveLogCheckBox.Text = "保存日志";
+            toolTip.SetToolTip(_saveLogCheckBox, "将控制台内容保存到文件“Serein/logs/servers/{id}-{datetime}.log”");
+            _saveLogCheckBox.UseVisualStyleBackColor = true;
             // 
-            // OutputEncondingComboBox
+            // _outputStyleComboBox
             // 
-            OutputEncondingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            OutputEncondingComboBox.FormattingEnabled = true;
-            OutputEncondingComboBox.Items.AddRange(new object[] { "UTF8", "UTF16-LE", "UTF16-BE", "GBK" });
-            OutputEncondingComboBox.Location = new System.Drawing.Point(23, 139);
-            OutputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
-            OutputEncondingComboBox.Name = "OutputEncondingComboBox";
-            OutputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
-            OutputEncondingComboBox.TabIndex = 3;
-            ToolTip.SetToolTip(OutputEncondingComboBox, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
+            _outputStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _outputStyleComboBox.FormattingEnabled = true;
+            _outputStyleComboBox.Items.AddRange(new object[] { "无颜色", "原始颜色" });
+            _outputStyleComboBox.Location = new System.Drawing.Point(23, 232);
+            _outputStyleComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            _outputStyleComboBox.Name = "_outputStyleComboBox";
+            _outputStyleComboBox.Size = new System.Drawing.Size(197, 39);
+            _outputStyleComboBox.TabIndex = 5;
+            toolTip.SetToolTip(_outputStyleComboBox, "控制台中渲染输出内容的样式");
             // 
-            // InputEncondingComboBox
+            // _outputEncondingComboBox
             // 
-            InputEncondingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            InputEncondingComboBox.FormattingEnabled = true;
-            InputEncondingComboBox.Items.AddRange(new object[] { "UTF8", "UTF16-LE", "UTF16-BE", "GBK" });
-            InputEncondingComboBox.Location = new System.Drawing.Point(23, 46);
-            InputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
-            InputEncondingComboBox.Name = "InputEncondingComboBox";
-            InputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
-            InputEncondingComboBox.TabIndex = 1;
-            ToolTip.SetToolTip(InputEncondingComboBox, "输入到服务器的编码");
+            _outputEncondingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _outputEncondingComboBox.FormattingEnabled = true;
+            _outputEncondingComboBox.Items.AddRange(new object[] { "UTF8", "UTF16-LE", "UTF16-BE", "GBK" });
+            _outputEncondingComboBox.Location = new System.Drawing.Point(23, 139);
+            _outputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            _outputEncondingComboBox.Name = "_outputEncondingComboBox";
+            _outputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
+            _outputEncondingComboBox.TabIndex = 3;
+            toolTip.SetToolTip(_outputEncondingComboBox, "读取服务器输出的编码（修改后需要重新启动服务器方可生效）");
             // 
-            // MoreTabPage
+            // _inputEncondingComboBox
             // 
-            MoreTabPage.Controls.Add(StopCommandsTextBox);
-            MoreTabPage.Controls.Add(StopLabel);
-            MoreTabPage.Controls.Add(PortLabel);
-            MoreTabPage.Controls.Add(PortNumericUpDown);
-            MoreTabPage.Controls.Add(StartWhenSettingUpCheckBox);
-            MoreTabPage.Controls.Add(AutoStopWhenCrashingCheckBox);
-            MoreTabPage.Controls.Add(AutoRestartCheckBox);
-            MoreTabPage.Location = new System.Drawing.Point(8, 45);
-            MoreTabPage.Name = "MoreTabPage";
-            MoreTabPage.Padding = new System.Windows.Forms.Padding(3);
-            MoreTabPage.Size = new System.Drawing.Size(758, 412);
-            MoreTabPage.TabIndex = 2;
-            MoreTabPage.Text = "更多";
-            MoreTabPage.UseVisualStyleBackColor = true;
+            _inputEncondingComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            _inputEncondingComboBox.FormattingEnabled = true;
+            _inputEncondingComboBox.Items.AddRange(new object[] { "UTF8", "UTF16-LE", "UTF16-BE", "GBK" });
+            _inputEncondingComboBox.Location = new System.Drawing.Point(23, 46);
+            _inputEncondingComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            _inputEncondingComboBox.Name = "_inputEncondingComboBox";
+            _inputEncondingComboBox.Size = new System.Drawing.Size(197, 39);
+            _inputEncondingComboBox.TabIndex = 1;
+            toolTip.SetToolTip(_inputEncondingComboBox, "输入到服务器的编码");
             // 
-            // StopCommandsTextBox
+            // moreTabPage
             // 
-            StopCommandsTextBox.AcceptsReturn = true;
-            StopCommandsTextBox.Location = new System.Drawing.Point(26, 251);
-            StopCommandsTextBox.Multiline = true;
-            StopCommandsTextBox.Name = "StopCommandsTextBox";
-            StopCommandsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            StopCommandsTextBox.Size = new System.Drawing.Size(682, 119);
-            StopCommandsTextBox.TabIndex = 6;
-            StopCommandsTextBox.Text = "stop";
-            ToolTip.SetToolTip(StopCommandsTextBox, "关闭服务器时输入的命令（一行一个）");
+            moreTabPage.Controls.Add(_stopCommandsTextBox);
+            moreTabPage.Controls.Add(stopLabel);
+            moreTabPage.Controls.Add(portLabel);
+            moreTabPage.Controls.Add(_portNumericUpDown);
+            moreTabPage.Controls.Add(_startWhenSettingUpCheckBox);
+            moreTabPage.Controls.Add(_autoStopWhenCrashingCheckBox);
+            moreTabPage.Controls.Add(_autoRestartCheckBox);
+            moreTabPage.Location = new System.Drawing.Point(8, 45);
+            moreTabPage.Name = "moreTabPage";
+            moreTabPage.Padding = new System.Windows.Forms.Padding(3);
+            moreTabPage.Size = new System.Drawing.Size(758, 412);
+            moreTabPage.TabIndex = 2;
+            moreTabPage.Text = "更多";
+            moreTabPage.UseVisualStyleBackColor = true;
             // 
-            // PortNumericUpDown
+            // _stopCommandsTextBox
             // 
-            PortNumericUpDown.Location = new System.Drawing.Point(26, 170);
-            PortNumericUpDown.Maximum = new decimal(new int[] { 65536, 0, 0, 0 });
-            PortNumericUpDown.Name = "PortNumericUpDown";
-            PortNumericUpDown.Size = new System.Drawing.Size(240, 38);
-            PortNumericUpDown.TabIndex = 4;
-            ToolTip.SetToolTip(PortNumericUpDown, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
+            _stopCommandsTextBox.AcceptsReturn = true;
+            _stopCommandsTextBox.Location = new System.Drawing.Point(26, 251);
+            _stopCommandsTextBox.Multiline = true;
+            _stopCommandsTextBox.Name = "_stopCommandsTextBox";
+            _stopCommandsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            _stopCommandsTextBox.Size = new System.Drawing.Size(682, 119);
+            _stopCommandsTextBox.TabIndex = 6;
+            _stopCommandsTextBox.Text = "stop";
+            toolTip.SetToolTip(_stopCommandsTextBox, "关闭服务器时输入的命令（一行一个）");
             // 
-            // StartWhenSettingUpCheckBox
+            // _portNumericUpDown
             // 
-            StartWhenSettingUpCheckBox.AutoSize = true;
-            StartWhenSettingUpCheckBox.Location = new System.Drawing.Point(26, 88);
-            StartWhenSettingUpCheckBox.Name = "StartWhenSettingUpCheckBox";
-            StartWhenSettingUpCheckBox.Size = new System.Drawing.Size(310, 35);
-            StartWhenSettingUpCheckBox.TabIndex = 2;
-            StartWhenSettingUpCheckBox.Text = "应用程序启动后自动运行";
-            StartWhenSettingUpCheckBox.UseVisualStyleBackColor = true;
+            _portNumericUpDown.Location = new System.Drawing.Point(26, 170);
+            _portNumericUpDown.Maximum = new decimal(new int[] { 65536, 0, 0, 0 });
+            _portNumericUpDown.Name = "_portNumericUpDown";
+            _portNumericUpDown.Size = new System.Drawing.Size(240, 38);
+            _portNumericUpDown.TabIndex = 4;
+            toolTip.SetToolTip(_portNumericUpDown, "服务器的IPv4端口，用于获取服务器相关信息（版本、在线玩家数）");
             // 
-            // AutoStopWhenCrashingCheckBox
+            // _startWhenSettingUpCheckBox
             // 
-            AutoStopWhenCrashingCheckBox.AutoSize = true;
-            AutoStopWhenCrashingCheckBox.Location = new System.Drawing.Point(26, 47);
-            AutoStopWhenCrashingCheckBox.Name = "AutoStopWhenCrashingCheckBox";
-            AutoStopWhenCrashingCheckBox.Size = new System.Drawing.Size(382, 35);
-            AutoStopWhenCrashingCheckBox.TabIndex = 1;
-            AutoStopWhenCrashingCheckBox.Text = "应用程序崩溃时自动停止服务器";
-            AutoStopWhenCrashingCheckBox.UseVisualStyleBackColor = true;
+            _startWhenSettingUpCheckBox.AutoSize = true;
+            _startWhenSettingUpCheckBox.Location = new System.Drawing.Point(26, 88);
+            _startWhenSettingUpCheckBox.Name = "_startWhenSettingUpCheckBox";
+            _startWhenSettingUpCheckBox.Size = new System.Drawing.Size(310, 35);
+            _startWhenSettingUpCheckBox.TabIndex = 2;
+            _startWhenSettingUpCheckBox.Text = "应用程序启动后自动运行";
+            _startWhenSettingUpCheckBox.UseVisualStyleBackColor = true;
             // 
-            // AutoRestartCheckBox
+            // _autoStopWhenCrashingCheckBox
             // 
-            AutoRestartCheckBox.AutoSize = true;
-            AutoRestartCheckBox.Location = new System.Drawing.Point(26, 6);
-            AutoRestartCheckBox.Name = "AutoRestartCheckBox";
-            AutoRestartCheckBox.Size = new System.Drawing.Size(358, 35);
-            AutoRestartCheckBox.TabIndex = 0;
-            AutoRestartCheckBox.Text = "当退出代码不为零时自动重启";
-            AutoRestartCheckBox.UseVisualStyleBackColor = true;
+            _autoStopWhenCrashingCheckBox.AutoSize = true;
+            _autoStopWhenCrashingCheckBox.Location = new System.Drawing.Point(26, 47);
+            _autoStopWhenCrashingCheckBox.Name = "_autoStopWhenCrashingCheckBox";
+            _autoStopWhenCrashingCheckBox.Size = new System.Drawing.Size(382, 35);
+            _autoStopWhenCrashingCheckBox.TabIndex = 1;
+            _autoStopWhenCrashingCheckBox.Text = "应用程序崩溃时自动停止服务器";
+            _autoStopWhenCrashingCheckBox.UseVisualStyleBackColor = true;
             // 
-            // ConfirmButton
+            // _autoRestartCheckBox
             // 
-            ConfirmButton.Location = new System.Drawing.Point(310, 471);
-            ConfirmButton.Name = "ConfirmButton";
-            ConfirmButton.Size = new System.Drawing.Size(150, 46);
-            ConfirmButton.TabIndex = 3;
-            ConfirmButton.Text = "确认";
-            ConfirmButton.UseVisualStyleBackColor = true;
-            ConfirmButton.Click += ConfirmButton_Click;
+            _autoRestartCheckBox.AutoSize = true;
+            _autoRestartCheckBox.Location = new System.Drawing.Point(26, 6);
+            _autoRestartCheckBox.Name = "_autoRestartCheckBox";
+            _autoRestartCheckBox.Size = new System.Drawing.Size(358, 35);
+            _autoRestartCheckBox.TabIndex = 0;
+            _autoRestartCheckBox.Text = "当退出代码不为零时自动重启";
+            _autoRestartCheckBox.UseVisualStyleBackColor = true;
             // 
-            // ErrorProvider
+            // confirmButton
             // 
-            ErrorProvider.ContainerControl = this;
+            confirmButton.Location = new System.Drawing.Point(310, 471);
+            confirmButton.Name = "confirmButton";
+            confirmButton.Size = new System.Drawing.Size(150, 46);
+            confirmButton.TabIndex = 3;
+            confirmButton.Text = "确认";
+            confirmButton.UseVisualStyleBackColor = true;
+            confirmButton.Click += ConfirmButton_Click;
             // 
-            // ForceWinPtyCheckBox
+            // _errorProvider
             // 
-            ForceWinPtyCheckBox.AutoSize = true;
-            ForceWinPtyCheckBox.Location = new System.Drawing.Point(365, 236);
-            ForceWinPtyCheckBox.Name = "ForceWinPtyCheckBox";
-            ForceWinPtyCheckBox.Size = new System.Drawing.Size(224, 35);
-            ForceWinPtyCheckBox.TabIndex = 12;
-            ForceWinPtyCheckBox.Text = "强制使用WinPty";
-            ToolTip.SetToolTip(ForceWinPtyCheckBox, "· 仅在Windows平台下生效\r\n· 若不勾选此项，你需要手动补全相应的动态链接库\r\n· 不推荐修改此项，除非你知道你在做什么！");
-            ForceWinPtyCheckBox.UseVisualStyleBackColor = true;
+            _errorProvider.ContainerControl = this;
             // 
             // ConfigurationEditor
             // 
-            AcceptButton = ConfirmButton;
+            AcceptButton = confirmButton;
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(774, 529);
-            Controls.Add(ConfirmButton);
+            Controls.Add(confirmButton);
             Controls.Add(MainTabControl);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -491,43 +495,39 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "服务器配置编辑器";
             MainTabControl.ResumeLayout(false);
-            CommonTabPage.ResumeLayout(false);
-            CommonTabPage.PerformLayout();
-            InputAndOutputTabPage.ResumeLayout(false);
-            InputAndOutputTabPage.PerformLayout();
-            MoreTabPage.ResumeLayout(false);
-            MoreTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)PortNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ErrorProvider).EndInit();
+            commonTabPage.ResumeLayout(false);
+            commonTabPage.PerformLayout();
+            inputAndOutputTabPage.ResumeLayout(false);
+            inputAndOutputTabPage.PerformLayout();
+            moreTabPage.ResumeLayout(false);
+            moreTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)_portNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)_errorProvider).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox IdTextBox;
-        private System.Windows.Forms.TextBox FileNameTextBox;
+        private System.Windows.Forms.TextBox _idTextBox;
+        private System.Windows.Forms.TextBox _fileNameTextBox;
         private System.Windows.Forms.TabControl MainTabControl;
-        private System.Windows.Forms.TabPage CommonTabPage;
-        private System.Windows.Forms.TabPage InputAndOutputTabPage;
-        private System.Windows.Forms.TextBox ArgumentTextBox;
-        private System.Windows.Forms.TabPage MoreTabPage;
-        private System.Windows.Forms.CheckBox AutoStopWhenCrashingCheckBox;
-        private System.Windows.Forms.CheckBox AutoRestartCheckBox;
-        private System.Windows.Forms.CheckBox StartWhenSettingUpCheckBox;
-        private System.Windows.Forms.NumericUpDown PortNumericUpDown;
-        private System.Windows.Forms.Button ConfirmButton;
-        private System.Windows.Forms.TextBox StopCommandsTextBox;
-        private System.Windows.Forms.ComboBox InputEncondingComboBox;
-        private System.Windows.Forms.ComboBox OutputEncondingComboBox;
-        private System.Windows.Forms.ComboBox OutputStyleComboBox;
-        private System.Windows.Forms.CheckBox SaveLogCheckBox;
-        private System.Windows.Forms.CheckBox OutputCommandUserInputCheckBox;
-        private System.Windows.Forms.CheckBox UseUnicodeCharsCheckBox;
-        private System.Windows.Forms.TextBox LineTerminatorTextBox;
-        private System.Windows.Forms.TextBox NameTextBox;
-        private System.Windows.Forms.ErrorProvider ErrorProvider;
-        private System.Windows.Forms.ToolTip ToolTip;
-        private System.Windows.Forms.CheckBox UsePtyCheckBox;
-        private System.Windows.Forms.CheckBox ForceWinPtyCheckBox;
+        private System.Windows.Forms.TextBox _argumentTextBox;
+        private System.Windows.Forms.CheckBox _autoStopWhenCrashingCheckBox;
+        private System.Windows.Forms.CheckBox _autoRestartCheckBox;
+        private System.Windows.Forms.CheckBox _startWhenSettingUpCheckBox;
+        private System.Windows.Forms.NumericUpDown _portNumericUpDown;
+        private System.Windows.Forms.TextBox _stopCommandsTextBox;
+        private System.Windows.Forms.ComboBox _inputEncondingComboBox;
+        private System.Windows.Forms.ComboBox _outputEncondingComboBox;
+        private System.Windows.Forms.ComboBox _outputStyleComboBox;
+        private System.Windows.Forms.CheckBox _saveLogCheckBox;
+        private System.Windows.Forms.CheckBox _outputCommandUserInputCheckBox;
+        private System.Windows.Forms.CheckBox _useUnicodeCharsCheckBox;
+        private System.Windows.Forms.TextBox _lineTerminatorTextBox;
+        private System.Windows.Forms.TextBox _nameTextBox;
+        private System.Windows.Forms.ErrorProvider _errorProvider;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox _usePtyCheckBox;
+        private System.Windows.Forms.CheckBox _forceWinPtyCheckBox;
     }
 }

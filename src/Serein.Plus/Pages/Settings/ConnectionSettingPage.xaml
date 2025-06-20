@@ -32,7 +32,7 @@
                     <ComboBoxItem>OneBot（WebSocket正向连接）</ComboBoxItem>
                     <ComboBoxItem>OneBot（WebSocket反向连接）</ComboBoxItem>
                     <ComboBoxItem>Satori</ComboBoxItem>
-                    <ComboBoxItem>插件注册</ComboBoxItem>
+                    <ComboBoxItem>插件注册（实验性）</ComboBoxItem>
                 </ComboBox>
             </ui:SettingsCard>
 
@@ -137,7 +137,7 @@
                 </ComboBox>
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Description="Websocket服务器的地址" Header="WebSocket">
+            <ui:SettingsExpander Description="Websocket服务器的地址" Header="WebSocket地址">
                 <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Connection.OneBot.Uri}" />
 
                 <ui:SettingsExpander.Items>

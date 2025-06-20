@@ -6,19 +6,19 @@ public partial class SettingPage : UserControl
 {
     public SettingPage(
         ConnectionSettingPage connectionSettingPage,
-        AppSettingPage appSettingPage,
         ReactionSettingPage reactionSettingPage,
         WebApiSettingPage webApiSettingPage,
+        AppSettingPage appSettingPage,
         AboutPage aboutPage
     )
     {
         InitializeComponent();
 
-        ConnectionTabPage.Controls.Add(WrapPage(connectionSettingPage));
-        ApplicationTabPage.Controls.Add(WrapPage(appSettingPage));
-        ReactionTabPage.Controls.Add(WrapPage(reactionSettingPage, DockStyle.Fill));
-        WebApiTabPage.Controls.Add(WrapPage(webApiSettingPage));
-        AboutTabPage.Controls.Add(WrapPage(aboutPage));
+        _connectionTabPage.Controls.Add(WrapPage(connectionSettingPage));
+        _reactionTabPage.Controls.Add(WrapPage(reactionSettingPage, DockStyle.Fill));
+        _webTabPage.Controls.Add(WrapPage(webApiSettingPage));
+        _applicationTabPage.Controls.Add(WrapPage(appSettingPage));
+        _aboutTabPage.Controls.Add(WrapPage(aboutPage));
     }
 
     private static Panel WrapPage(UserControl userControl, DockStyle dockStyle = DockStyle.Top)

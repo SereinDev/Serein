@@ -15,7 +15,7 @@ public partial class PermissionGroupEditor : Form
     private readonly Core.Models.Permissions.Group _group;
     private readonly GroupManager _groupManager;
     private readonly PermissionManager _permissionManager;
-    public string Id => IdTextBox.Text;
+    public string Id => _idTextBox.Text;
 
     [GeneratedRegex(@"^\w+$")]
     private static partial Regex IdRegex();
@@ -31,8 +31,8 @@ public partial class PermissionGroupEditor : Form
 
         if (!string.IsNullOrEmpty(id))
         {
-            IdTextBox.ReadOnly = true;
-            IdTextBox.Text = id;
+            _idTextBox.ReadOnly = true;
+            _idTextBox.Text = id;
         }
 
         _group = group;
@@ -44,12 +44,12 @@ public partial class PermissionGroupEditor : Form
 
     private void SyncData()
     {
-        MemberListView.SetExploreTheme();
-        PermissionListView.SetExploreTheme();
-        NameTextBox.Text = _group.Name;
-        DescriptionTextBox.Text = _group.Description;
-        PriorityNumericUpDown.Value = _group.Priority;
-        ParentsTextBox.Text = string.Join("\r\n", _group.Parents);
+        _memberListView.SetExploreTheme();
+        _permissionListView.SetExploreTheme();
+        _nameTextBox.Text = _group.Name;
+        _descriptionTextBox.Text = _group.Description;
+        _priorityNumericUpDown.Value = _group.Priority;
+        _parentsTextBox.Text = string.Join("\r\n", _group.Parents);
 
         foreach (var kv in _group.Nodes)
         {
@@ -65,45 +65,45 @@ public partial class PermissionGroupEditor : Form
             }
 
             item.SubItems.Add(kv.Value is not null ? kv.Value.ToString() : "Null");
-            PermissionListView.Items.Add(item);
+            _permissionListView.Items.Add(item);
         }
     }
 
     private void PermissionComboBox_DropDown(object sender, EventArgs e)
     {
-        PermissionComboBox.Items.Clear();
+        _permissionComboBox.Items.Clear();
 
         lock (_permissionManager.Nodes)
         {
             foreach (var key in _permissionManager.Nodes.Keys)
             {
-                PermissionComboBox.Items.Add(key);
+                _permissionComboBox.Items.Add(key);
             }
         }
     }
 
     private void PermissionListView_SelectedIndexChanged(object sender, EventArgs e)
     {
-        PermissionComboBox.Enabled = PermissionListView.SelectedItems.Count == 1;
-        ValueComboBox.Enabled = PermissionListView.SelectedItems.Count == 1;
+        _permissionComboBox.Enabled = _permissionListView.SelectedItems.Count == 1;
+        _valueComboBox.Enabled = _permissionListView.SelectedItems.Count == 1;
 
-        PermissionComboBox.Text =
-            PermissionListView.SelectedItems.Count == 1
-                ? PermissionListView.SelectedItems[0].Text
+        _permissionComboBox.Text =
+            _permissionListView.SelectedItems.Count == 1
+                ? _permissionListView.SelectedItems[0].Text
                 : "选择一项进行修改";
-        ValueComboBox.Text =
-            PermissionListView.SelectedItems.Count == 1
-                ? PermissionListView.SelectedItems[0].SubItems[2].Text
+        _valueComboBox.Text =
+            _permissionListView.SelectedItems.Count == 1
+                ? _permissionListView.SelectedItems[0].SubItems[2].Text
                 : string.Empty;
     }
 
     private void PermissionComboBox_TextUpdate(object sender, EventArgs e)
     {
-        if (PermissionListView.SelectedItems.Count == 1)
+        if (_permissionListView.SelectedItems.Count == 1)
         {
-            PermissionListView.SelectedItems[0].Text = PermissionComboBox.Text;
-            PermissionListView.SelectedItems[0].SubItems[1].Text =
-                _permissionManager.Nodes.TryGetValue(PermissionComboBox.Text, out var description)
+            _permissionListView.SelectedItems[0].Text = _permissionComboBox.Text;
+            _permissionListView.SelectedItems[0].SubItems[1].Text =
+                _permissionManager.Nodes.TryGetValue(_permissionComboBox.Text, out var description)
                     ? description
                     : string.Empty;
         }
@@ -111,15 +111,15 @@ public partial class PermissionGroupEditor : Form
 
     private void ValueComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (PermissionListView.SelectedItems.Count == 1)
+        if (_permissionListView.SelectedItems.Count == 1)
         {
-            PermissionListView.SelectedItems[0].SubItems[2].Text = ValueComboBox.Text;
+            _permissionListView.SelectedItems[0].SubItems[2].Text = _valueComboBox.Text;
         }
     }
 
     private void PermissionContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DeletePermissionToolStripMenuItem.Enabled = PermissionListView.SelectedItems.Count == 1;
+        _deletePermissionToolStripMenuItem.Enabled = _permissionListView.SelectedItems.Count == 1;
     }
 
     private void AddPermissionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,21 +128,21 @@ public partial class PermissionGroupEditor : Form
         item.SubItems.Add(string.Empty);
         item.SubItems.Add("Null");
 
-        if (PermissionListView.SelectedItems.Count == 1)
+        if (_permissionListView.SelectedItems.Count == 1)
         {
-            PermissionListView.Items.Insert(PermissionListView.SelectedItems[0].Index, item);
+            _permissionListView.Items.Insert(_permissionListView.SelectedItems[0].Index, item);
         }
         else
         {
-            PermissionListView.Items.Add(item);
+            _permissionListView.Items.Add(item);
         }
     }
 
     private void DeletePermissionToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (PermissionListView.SelectedItems.Count == 1)
+        if (_permissionListView.SelectedItems.Count == 1)
         {
-            PermissionListView.Items.RemoveAt(PermissionListView.SelectedItems[0].Index);
+            _permissionListView.Items.RemoveAt(_permissionListView.SelectedItems[0].Index);
         }
     }
 
@@ -154,21 +154,21 @@ public partial class PermissionGroupEditor : Form
             {
                 GroupManager.ValidateGroupId(Id);
 
-                if (!IdTextBox.ReadOnly && _groupManager.Ids.Contains(Id))
+                if (!_idTextBox.ReadOnly && _groupManager.Ids.Contains(Id))
                 {
                     throw new InvalidOperationException("此Id已被占用");
                 }
 
-                _group.Name = NameTextBox.Text;
-                _group.Description = DescriptionTextBox.Text;
-                _group.Priority = (int)PriorityNumericUpDown.Value;
-                _group.Parents = ParentsTextBox.Text.Split(
+                _group.Name = _nameTextBox.Text;
+                _group.Description = _descriptionTextBox.Text;
+                _group.Priority = (int)_priorityNumericUpDown.Value;
+                _group.Parents = _parentsTextBox.Text.Split(
                     "\r\n",
                     StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
                 );
 
                 var permissions = new Dictionary<string, bool?>();
-                foreach (var item in PermissionListView.Items)
+                foreach (var item in _permissionListView.Items)
                 {
                     if (item is ListViewItem listViewItem)
                     {
@@ -183,7 +183,7 @@ public partial class PermissionGroupEditor : Form
                 _group.Nodes = permissions;
 
                 var list = new List<long>();
-                foreach (var item in MemberListView.Items)
+                foreach (var item in _memberListView.Items)
                 {
                     if (
                         item is ListViewItem listViewItem
@@ -208,58 +208,58 @@ public partial class PermissionGroupEditor : Form
 
     private void MemberContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DeleteMemberToolStripMenuItem.Enabled = MemberListView.SelectedItems.Count == 1;
+        _deleteMemberToolStripMenuItem.Enabled = _memberListView.SelectedItems.Count == 1;
     }
 
     private void AddMemberToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (MemberListView.SelectedItems.Count == 1)
+        if (_memberListView.SelectedItems.Count == 1)
         {
-            MemberListView.Items.Insert(MemberListView.SelectedItems[0].Index, "0");
+            _memberListView.Items.Insert(_memberListView.SelectedItems[0].Index, "0");
         }
         else
         {
-            MemberListView.Items.Add("0");
+            _memberListView.Items.Add("0");
         }
     }
 
     private void DeleteMemberToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (MemberListView.SelectedItems.Count == 1)
+        if (_memberListView.SelectedItems.Count == 1)
         {
-            MemberListView.Items.RemoveAt(MemberListView.SelectedItems[0].Index);
+            _memberListView.Items.RemoveAt(_memberListView.SelectedItems[0].Index);
         }
     }
 
     private void IdTextBox_Enter(object sender, EventArgs e)
     {
-        ErrorProvider.Clear();
+        _errorProvider.Clear();
     }
 
     private void IdTextBox_Validating(object sender, CancelEventArgs e)
     {
-        if (string.IsNullOrEmpty(IdTextBox.Text))
+        if (string.IsNullOrEmpty(_idTextBox.Text))
         {
-            ErrorProvider.SetError(IdTextBox, "Id不能为空");
+            _errorProvider.SetError(_idTextBox, "Id不能为空");
         }
-        else if (!IdRegex().IsMatch(IdTextBox.Text))
+        else if (!IdRegex().IsMatch(_idTextBox.Text))
         {
-            ErrorProvider.SetError(IdTextBox, "Id只能由字母、数字和下划线组成");
+            _errorProvider.SetError(_idTextBox, "Id只能由字母、数字和下划线组成");
         }
-        else if (IdTextBox.Text.Length <= 2)
+        else if (_idTextBox.Text.Length <= 2)
         {
-            ErrorProvider.SetError(IdTextBox, "Id长度太短");
+            _errorProvider.SetError(_idTextBox, "Id长度太短");
         }
     }
 
     private void ParentsTextBox_Enter(object sender, EventArgs e)
     {
-        ErrorProvider.Clear();
+        _errorProvider.Clear();
     }
 
     private void ParentsTextBox_Validating(object sender, CancelEventArgs e)
     {
-        var nonExistent = ParentsTextBox
+        var nonExistent = _parentsTextBox
             .Text.Split(
                 "\r\n",
                 StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
@@ -268,8 +268,8 @@ public partial class PermissionGroupEditor : Form
 
         if (nonExistent.Any())
         {
-            ErrorProvider.SetError(
-                ParentsTextBox,
+            _errorProvider.SetError(
+                _parentsTextBox,
                 $"以下权限组不存在：\r\n" + string.Join("\r\n", nonExistent)
             );
         }

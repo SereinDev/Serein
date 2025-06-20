@@ -9,7 +9,7 @@ using Serein.Core.Utils.Extensions;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui.Functions;
 
 public partial class SchedulePage : UserControl, IUpdateablePage
 {
@@ -20,7 +20,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
         _scheduleProvider = scheduleProvider;
 
         InitializeComponent();
-        ScheduleListView.SetExploreTheme();
+        _scheduleListView.SetExploreTheme();
         LoadData();
     }
 
@@ -29,7 +29,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
         lock (_scheduleProvider.Value)
         {
             _scheduleProvider.Value.Clear();
-            foreach (ListViewItem item in ScheduleListView.Items)
+            foreach (ListViewItem item in _scheduleListView.Items)
             {
                 if (item.Tag is Schedule schedule)
                 {
@@ -43,19 +43,19 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
     private void UpdateText()
     {
-        ToolStripStatusLabel.Text =
-            ScheduleListView.SelectedItems.Count == 0 ? $"共{ScheduleListView.Items.Count}项"
-            : ScheduleListView.SelectedItems.Count == 1
-            && ScheduleListView.SelectedItems[0].Tag is Schedule schedule
+        _toolStripStatusLabel.Text =
+            _scheduleListView.SelectedItems.Count == 0 ? $"共{_scheduleListView.Items.Count}项"
+            : _scheduleListView.SelectedItems.Count == 1
+            && _scheduleListView.SelectedItems[0].Tag is Schedule schedule
             && schedule.Cron is not null
-                ? $"共{ScheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Cron.GetNextOccurrence(DateTime.Now):f}"
-            : $"共{ScheduleListView.Items.Count}项；已选择{ScheduleListView.SelectedItems.Count}项";
+                ? $"共{_scheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Cron.GetNextOccurrence(DateTime.Now):f}"
+            : $"共{_scheduleListView.Items.Count}项；已选择{_scheduleListView.SelectedItems.Count}项";
     }
 
     private void LoadData()
     {
-        ScheduleListView.BeginUpdate();
-        ScheduleListView.Items.Clear();
+        _scheduleListView.BeginUpdate();
+        _scheduleListView.Items.Clear();
 
         lock (_scheduleProvider.Value)
         {
@@ -66,10 +66,10 @@ public partial class SchedulePage : UserControl, IUpdateablePage
                 item.SubItems.Add(schedule.Description);
                 item.Checked = schedule.IsEnabled;
 
-                ScheduleListView.Items.Add(item);
+                _scheduleListView.Items.Add(item);
             }
         }
-        ScheduleListView.EndUpdate();
+        _scheduleListView.EndUpdate();
         UpdateText();
     }
 
@@ -77,33 +77,33 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     {
         if (
             !e.Control
-            || ScheduleListView.Items.Count <= 1
-            || ScheduleListView.SelectedItems.Count != 1
+            || _scheduleListView.Items.Count <= 1
+            || _scheduleListView.SelectedItems.Count != 1
         )
         {
             return;
         }
 
         ListViewItem item;
-        var i = ScheduleListView.SelectedItems[0].Index;
+        var i = _scheduleListView.SelectedItems[0].Index;
         if (e.KeyCode == Keys.Up && i > 0)
         {
-            ScheduleListView.BeginUpdate();
+            _scheduleListView.BeginUpdate();
 
-            item = ScheduleListView.Items[i - 1];
-            ScheduleListView.Items.Remove(item);
-            ScheduleListView.Items.Insert(i, item);
-            ScheduleListView.EndUpdate();
+            item = _scheduleListView.Items[i - 1];
+            _scheduleListView.Items.Remove(item);
+            _scheduleListView.Items.Insert(i, item);
+            _scheduleListView.EndUpdate();
             SaveData();
         }
-        else if (e.KeyCode == Keys.Down && i >= 0 && i < ScheduleListView.Items.Count - 1)
+        else if (e.KeyCode == Keys.Down && i >= 0 && i < _scheduleListView.Items.Count - 1)
         {
-            ScheduleListView.BeginUpdate();
+            _scheduleListView.BeginUpdate();
 
-            item = ScheduleListView.Items[i + 1];
-            ScheduleListView.Items.Remove(item);
-            ScheduleListView.Items.Insert(i, item);
-            ScheduleListView.EndUpdate();
+            item = _scheduleListView.Items[i + 1];
+            _scheduleListView.Items.Remove(item);
+            _scheduleListView.Items.Insert(i, item);
+            _scheduleListView.EndUpdate();
             SaveData();
         }
     }
@@ -136,7 +136,7 @@ public partial class SchedulePage : UserControl, IUpdateablePage
     private void EditToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (
-            ScheduleListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault()?.Tag
+            _scheduleListView.SelectedItems.Cast<ListViewItem>().FirstOrDefault()?.Tag
                 is Schedule schedule
             && new ScheduleEditor(schedule).ShowDialog() == DialogResult.OK
         )
@@ -153,9 +153,9 @@ public partial class SchedulePage : UserControl, IUpdateablePage
             return;
         }
 
-        foreach (var item in ScheduleListView.SelectedItems.Cast<ListViewItem>())
+        foreach (var item in _scheduleListView.SelectedItems.Cast<ListViewItem>())
         {
-            ScheduleListView.Items.Remove(item);
+            _scheduleListView.Items.Remove(item);
         }
         SaveData();
         UpdateText();
@@ -191,9 +191,9 @@ public partial class SchedulePage : UserControl, IUpdateablePage
 
     private void ListViewContextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-        DeleteToolStripMenuItem.Enabled = ScheduleListView.SelectedItems.Count > 0;
-        EditToolStripMenuItem.Enabled = ScheduleListView.SelectedItems.Count == 1;
-        ClearToolStripMenuItem.Enabled = ScheduleListView.Items.Count > 0;
+        _deleteToolStripMenuItem.Enabled = _scheduleListView.SelectedItems.Count > 0;
+        _editToolStripMenuItem.Enabled = _scheduleListView.SelectedItems.Count == 1;
+        _clearToolStripMenuItem.Enabled = _scheduleListView.Items.Count > 0;
     }
 
     public void UpdatePage() => LoadData();

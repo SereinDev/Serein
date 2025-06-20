@@ -29,118 +29,118 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.SplitContainer SplitContainer;
+            System.Windows.Forms.SplitContainer splitContainer;
             System.Windows.Forms.ColumnHeader columnHeader1;
-            System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
-            System.Windows.Forms.ToolStripMenuItem AddToolStripMenuItem;
-            EventListBox = new System.Windows.Forms.ListBox();
-            CommandListView = new System.Windows.Forms.ListView();
-            DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            SplitContainer = new System.Windows.Forms.SplitContainer();
+            System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+            System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+            _eventListBox = new System.Windows.Forms.ListBox();
+            _commandListView = new System.Windows.Forms.ListView();
+            _deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            splitContainer = new System.Windows.Forms.SplitContainer();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
-            AddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)SplitContainer).BeginInit();
-            SplitContainer.Panel1.SuspendLayout();
-            SplitContainer.Panel2.SuspendLayout();
-            SplitContainer.SuspendLayout();
-            ContextMenuStrip.SuspendLayout();
+            contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
+            splitContainer.Panel1.SuspendLayout();
+            splitContainer.Panel2.SuspendLayout();
+            splitContainer.SuspendLayout();
+            contextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // SplitContainer
+            // splitContainer
             // 
-            SplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            SplitContainer.Location = new System.Drawing.Point(0, 0);
-            SplitContainer.Name = "SplitContainer";
+            splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer.Location = new System.Drawing.Point(0, 0);
+            splitContainer.Name = "splitContainer";
             // 
-            // SplitContainer.Panel1
+            // splitContainer.Panel1
             // 
-            SplitContainer.Panel1.Controls.Add(EventListBox);
-            SplitContainer.Panel1MinSize = 300;
+            splitContainer.Panel1.Controls.Add(_eventListBox);
+            splitContainer.Panel1MinSize = 300;
             // 
-            // SplitContainer.Panel2
+            // splitContainer.Panel2
             // 
-            SplitContainer.Panel2.Controls.Add(CommandListView);
-            SplitContainer.Panel2MinSize = 300;
-            SplitContainer.Size = new System.Drawing.Size(1280, 720);
-            SplitContainer.SplitterDistance = 426;
-            SplitContainer.TabIndex = 0;
+            splitContainer.Panel2.Controls.Add(_commandListView);
+            splitContainer.Panel2MinSize = 300;
+            splitContainer.Size = new System.Drawing.Size(1280, 720);
+            splitContainer.SplitterDistance = 426;
+            splitContainer.TabIndex = 0;
             // 
-            // EventListBox
+            // _eventListBox
             // 
-            EventListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            EventListBox.FormattingEnabled = true;
-            EventListBox.Location = new System.Drawing.Point(0, 0);
-            EventListBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            EventListBox.Name = "EventListBox";
-            EventListBox.Size = new System.Drawing.Size(426, 720);
-            EventListBox.TabIndex = 0;
-            EventListBox.SelectedIndexChanged += EventListBox_SelectedIndexChanged;
+            _eventListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            _eventListBox.FormattingEnabled = true;
+            _eventListBox.Location = new System.Drawing.Point(0, 0);
+            _eventListBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            _eventListBox.Name = "_eventListBox";
+            _eventListBox.Size = new System.Drawing.Size(426, 720);
+            _eventListBox.TabIndex = 0;
+            _eventListBox.SelectedIndexChanged += EventListBox_SelectedIndexChanged;
             // 
-            // CommandListView
+            // _commandListView
             // 
-            CommandListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1 });
-            CommandListView.ContextMenuStrip = ContextMenuStrip;
-            CommandListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            CommandListView.FullRowSelect = true;
-            CommandListView.GridLines = true;
-            CommandListView.LabelEdit = true;
-            CommandListView.Location = new System.Drawing.Point(0, 0);
-            CommandListView.MultiSelect = false;
-            CommandListView.Name = "CommandListView";
-            CommandListView.Size = new System.Drawing.Size(850, 720);
-            CommandListView.TabIndex = 0;
-            CommandListView.UseCompatibleStateImageBehavior = false;
-            CommandListView.View = System.Windows.Forms.View.Details;
-            CommandListView.AfterLabelEdit += CommandListView_AfterLabelEdit;
+            _commandListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1 });
+            _commandListView.ContextMenuStrip = contextMenuStrip;
+            _commandListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            _commandListView.FullRowSelect = true;
+            _commandListView.GridLines = true;
+            _commandListView.LabelEdit = true;
+            _commandListView.Location = new System.Drawing.Point(0, 0);
+            _commandListView.MultiSelect = false;
+            _commandListView.Name = "_commandListView";
+            _commandListView.Size = new System.Drawing.Size(850, 720);
+            _commandListView.TabIndex = 0;
+            _commandListView.UseCompatibleStateImageBehavior = false;
+            _commandListView.View = System.Windows.Forms.View.Details;
+            _commandListView.AfterLabelEdit += CommandListView_AfterLabelEdit;
             // 
             // columnHeader1
             // 
             columnHeader1.Text = "命令";
             columnHeader1.Width = 600;
             // 
-            // ContextMenuStrip
+            // contextMenuStrip
             // 
-            ContextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { AddToolStripMenuItem, DeleteToolStripMenuItem });
-            ContextMenuStrip.Name = "ContextMenuStrip";
-            ContextMenuStrip.Size = new System.Drawing.Size(301, 124);
-            ContextMenuStrip.Opening += ContextMenuStrip_Opening;
+            contextMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addToolStripMenuItem, _deleteToolStripMenuItem });
+            contextMenuStrip.Name = "ContextMenuStrip";
+            contextMenuStrip.Size = new System.Drawing.Size(137, 80);
+            contextMenuStrip.Opening += ContextMenuStrip_Opening;
             // 
-            // AddToolStripMenuItem
+            // addToolStripMenuItem
             // 
-            AddToolStripMenuItem.Name = "AddToolStripMenuItem";
-            AddToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            AddToolStripMenuItem.Text = "添加";
-            AddToolStripMenuItem.Click += AddToolStripMenuItem_Click;
+            addToolStripMenuItem.Name = "addToolStripMenuItem";
+            addToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            addToolStripMenuItem.Text = "添加";
+            addToolStripMenuItem.Click += AddToolStripMenuItem_Click;
             // 
-            // DeleteToolStripMenuItem
+            // _deleteToolStripMenuItem
             // 
-            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            DeleteToolStripMenuItem.Size = new System.Drawing.Size(300, 38);
-            DeleteToolStripMenuItem.Text = "删除";
-            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            _deleteToolStripMenuItem.Name = "_deleteToolStripMenuItem";
+            _deleteToolStripMenuItem.Size = new System.Drawing.Size(136, 38);
+            _deleteToolStripMenuItem.Text = "删除";
+            _deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
-            // ReactionPage
+            // ReactionSettingPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
-            Controls.Add(SplitContainer);
-            Name = "ReactionPage";
+            Controls.Add(splitContainer);
+            Name = "ReactionSettingPage";
             Size = new System.Drawing.Size(1280, 720);
-            SplitContainer.Panel1.ResumeLayout(false);
-            SplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)SplitContainer).EndInit();
-            SplitContainer.ResumeLayout(false);
-            ContextMenuStrip.ResumeLayout(false);
+            splitContainer.Panel1.ResumeLayout(false);
+            splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
+            splitContainer.ResumeLayout(false);
+            contextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox EventListBox;
-        private System.Windows.Forms.ListView CommandListView;
-        private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
+        private System.Windows.Forms.ListBox _eventListBox;
+        private System.Windows.Forms.ListView _commandListView;
+        private System.Windows.Forms.ToolStripMenuItem _deleteToolStripMenuItem;
     }
 }

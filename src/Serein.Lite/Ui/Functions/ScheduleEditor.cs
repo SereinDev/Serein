@@ -6,7 +6,7 @@ using NCrontab;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Commands;
 
-namespace Serein.Lite.Ui.Function;
+namespace Serein.Lite.Ui.Functions;
 
 public partial class ScheduleEditor : Form
 {
@@ -20,10 +20,10 @@ public partial class ScheduleEditor : Form
 
         InitializeComponent();
 
-        CronTextBox.Text = _schedule.Expression;
-        CommandTextBox.Text = _schedule.Command;
-        DescriptionTextBox.Text = _schedule.Description;
-        EnableCheckBox.Checked = _schedule.IsEnabled;
+        _cronTextBox.Text = _schedule.Expression;
+        _commandTextBox.Text = _schedule.Command;
+        __descriptionTextBox.Text = _schedule.Description;
+        _enableCheckBox.Checked = _schedule.IsEnabled;
     }
 
     private void CronTextBox_TextChanged(object sender, EventArgs e)
@@ -32,17 +32,17 @@ public partial class ScheduleEditor : Form
         try
         {
             _nextOccurrences = CrontabSchedule
-                .Parse(CronTextBox.Text)
+                .Parse(_cronTextBox.Text)
                 .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
                 .ToArray();
         }
         catch { }
 
-        ToolStripStatusLabel.Text =
+        _toolStripStatusLabel.Text =
             _nextOccurrences?.Length > 0
                 ? $"预计下一次执行时间：{_nextOccurrences.First():f}"
                 : "预计下一次执行时间：-";
-        ToolStripStatusLabel.ToolTipText =
+        _toolStripStatusLabel.ToolTipText =
             _nextOccurrences?.Length > 0
                 ? string.Join("\r\n", _nextOccurrences.Select(d => d.ToString("f")))
                 : null;
@@ -50,7 +50,7 @@ public partial class ScheduleEditor : Form
 
     private void CronTextBox_Leave(object sender, EventArgs e)
     {
-        CronErrorProvider.Clear();
+        _cronErrorProvider.Clear();
     }
 
     private void CronTextBox_Validating(object sender, CancelEventArgs e)
@@ -58,47 +58,47 @@ public partial class ScheduleEditor : Form
         try
         {
             _nextOccurrences = CrontabSchedule
-                .Parse(CronTextBox.Text)
+                .Parse(_cronTextBox.Text)
                 .GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
                 .ToArray();
         }
         catch (Exception ex)
         {
-            CronErrorProvider.SetError(CronTextBox, $"Cron语法不正确：\r\n{ex.Message}");
+            _cronErrorProvider.SetError(_cronTextBox, $"Cron语法不正确：\r\n{ex.Message}");
         }
     }
 
     private void CommandTextBox_Enter(object sender, EventArgs e)
     {
-        CommandErrorProvider.Clear();
+        _commandErrorProvider.Clear();
     }
 
     private void CommandTextBox_Validating(object sender, CancelEventArgs e)
     {
-        CommandErrorProvider.Clear();
-        if (string.IsNullOrEmpty(CommandTextBox.Text))
+        _commandErrorProvider.Clear();
+        if (string.IsNullOrEmpty(_commandTextBox.Text))
         {
-            CommandErrorProvider.SetError(CommandTextBox, "命令内容为空");
+            _commandErrorProvider.SetError(_commandTextBox, "命令内容为空");
         }
         else
         {
             try
             {
-                CommandParser.Parse(CommandOrigin.Null, CommandTextBox.Text, true);
+                CommandParser.Parse(CommandOrigin.Null, _commandTextBox.Text, true);
             }
             catch (Exception ex)
             {
-                CommandErrorProvider.SetError(CommandTextBox, ex.Message);
+                _commandErrorProvider.SetError(_commandTextBox, ex.Message);
             }
         }
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
     {
-        _schedule.Expression = CronTextBox.Text;
-        _schedule.Command = CommandTextBox.Text;
-        _schedule.Description = DescriptionTextBox.Text;
-        _schedule.IsEnabled = EnableCheckBox.Checked;
+        _schedule.Expression = _cronTextBox.Text;
+        _schedule.Command = _commandTextBox.Text;
+        _schedule.Description = __descriptionTextBox.Text;
+        _schedule.IsEnabled = _enableCheckBox.Checked;
 
         DialogResult = DialogResult.OK;
         Close();
