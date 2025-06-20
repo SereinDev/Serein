@@ -30,7 +30,7 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
     {
         _settingProvider = settingProvider;
         _actionBuilder = actionBuilder;
-        _logger = new(host.Services.GetRequiredService<IConnectionLogger>);
+        _logger = new(host.Services.GetRequiredService<ConnectionLoggerBase>);
 
         FleckLog.LogAction = (level, msg, _) =>
         {
@@ -42,7 +42,7 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
     }
 
     public AdapterType Type { get; } = AdapterType.OneBot_ReverseWebSocket;
-    private readonly Lazy<IConnectionLogger> _logger;
+    private readonly Lazy<ConnectionLoggerBase> _logger;
 
     public event EventHandler<MessageReceivedEventArgs>? DataReceived;
     public event EventHandler? StatusChanged;

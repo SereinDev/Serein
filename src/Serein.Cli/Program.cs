@@ -104,8 +104,8 @@ public static class Program
             .AddSingleton<HelpHandler>()
             .AddSingleton<CommandProvider>()
             .AddSingleton<CommandPromptCallbacks>()
-            .AddSingleton<IConnectionLogger, ConnectionLogger>()
-            .AddSingleton<IPluginLogger, PluginLogger>();
+            .AddSingleton<ConnectionLoggerBase, ConnectionLogger>()
+            .AddSingleton<PluginLoggerBase, PluginLogger>();
 
         var app = builder.Build();
         app.Services.GetRequiredService<SentryReporter>().Initialize();

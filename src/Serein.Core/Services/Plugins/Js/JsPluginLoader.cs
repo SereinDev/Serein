@@ -18,7 +18,7 @@ namespace Serein.Core.Services.Plugins.Js;
 
 public sealed class JsPluginLoader(
     IServiceProvider serviceProvider,
-    IPluginLogger pluginLogger,
+    PluginLoggerBase pluginLogger,
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider
 ) : IPluginLoader<JsPlugin>

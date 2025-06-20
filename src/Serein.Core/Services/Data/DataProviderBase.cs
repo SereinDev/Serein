@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Services.Data;
 

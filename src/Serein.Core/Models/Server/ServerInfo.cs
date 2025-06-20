@@ -1,5 +1,6 @@
 using System;
 using MineStatLib;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Server;
 

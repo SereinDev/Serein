@@ -1,5 +1,5 @@
 ﻿using PropertyChanged;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Plus.ViewModels;
 

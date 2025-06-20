@@ -17,7 +17,7 @@ namespace Serein.Core.Services.Network.Connection.Adapters.Satori;
 
 public partial class SatoriAdapter : IConnectionAdapter
 {
-    private readonly IConnectionLogger _logger;
+    private readonly ConnectionLoggerBase _logger;
     private readonly SettingProvider _settingProvider;
     private readonly System.Timers.Timer _timer;
 
@@ -34,7 +34,7 @@ public partial class SatoriAdapter : IConnectionAdapter
 
     private long? _sn;
 
-    public SatoriAdapter(IConnectionLogger logger, SettingProvider settingProvider)
+    public SatoriAdapter(ConnectionLoggerBase logger, SettingProvider settingProvider)
     {
         HttpClient = new();
 

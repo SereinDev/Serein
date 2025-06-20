@@ -1,3 +1,5 @@
+using Serein.Core.Models.Abstractions;
+
 namespace Serein.Core.Models.Settings;
 
 public class CertificateSetting : NotifyPropertyChangedModelBase

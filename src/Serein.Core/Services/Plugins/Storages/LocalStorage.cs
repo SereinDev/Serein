@@ -2,7 +2,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 

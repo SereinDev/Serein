@@ -6,10 +6,10 @@ namespace Serein.Core.Services.Plugins.Js.Properties;
 
 public sealed class Console
 {
-    private readonly IPluginLogger _logger;
+    private readonly PluginLoggerBase _logger;
     private readonly string _title;
 
-    internal Console(IPluginLogger logger, string title)
+    internal Console(PluginLoggerBase logger, string title)
     {
         _logger = logger;
         _title = title;

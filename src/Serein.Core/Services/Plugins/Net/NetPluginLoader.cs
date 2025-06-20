@@ -13,7 +13,7 @@ namespace Serein.Core.Services.Plugins.Net;
 public sealed class NetPluginLoader(
     IServiceProvider serviceProvider,
     ILogger<NetPluginLoader> logger,
-    IPluginLogger pluginLogger
+    PluginLoggerBase pluginLogger
 ) : IPluginLoader<PluginBase>
 {
     private readonly List<WeakReference<PluginAssemblyLoadContext>> _contexts = [];

@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Settings;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;

@@ -23,7 +23,7 @@ namespace Serein.Core.Services.Plugins;
 
 public sealed partial class PluginManager(
     ILogger<PluginManager> logger,
-    IPluginLogger pluginLogger,
+    PluginLoggerBase pluginLogger,
     PacketHandler packetHandler,
     SessionStorage sessionStorage,
     JsPluginLoader jsPluginLoader,

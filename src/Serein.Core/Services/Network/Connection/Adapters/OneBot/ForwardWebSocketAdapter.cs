@@ -19,8 +19,8 @@ public sealed class ForwardWebSocketAdapter(
     ActionBuilder actionBuilder
 ) : IConnectionAdapter
 {
-    private readonly Lazy<IConnectionLogger> _connectionLogger = new(
-        host.Services.GetRequiredService<IConnectionLogger>
+    private readonly Lazy<ConnectionLoggerBase> _connectionLogger = new(
+        host.Services.GetRequiredService<ConnectionLoggerBase>
     );
 
     private CancellationTokenSource? _reconnectCancellationToken;

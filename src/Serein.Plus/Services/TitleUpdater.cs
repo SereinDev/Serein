@@ -1,5 +1,5 @@
 ﻿using System.Timers;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;

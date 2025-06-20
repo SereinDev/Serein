@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Serein.ConnectionProtocols.Models.OneBot;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Settings;
 

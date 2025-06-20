@@ -22,7 +22,7 @@ public sealed class JsEngineFactory(
     SettingProvider settingProvider,
     LocalStorage localStorage,
     SessionStorage sessionStorage,
-    IPluginLogger pluginLogger,
+    PluginLoggerBase pluginLogger,
     ILogger<JsEngineFactory> logger
 )
 {

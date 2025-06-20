@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;

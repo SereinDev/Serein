@@ -58,9 +58,8 @@ public partial class App : Application
             .AddSingleton<WebApiSettingPage>()
             .AddSingleton<ReactionSettingPage>()
             .AddSingleton<CategoriesPage>()
-            .AddSingleton<ILogger, NotificationLogger>()
-            .AddSingleton<IPluginLogger, PluginLogger>()
-            .AddSingleton<IConnectionLogger, ConnectionLogger>();
+            .AddSingleton<PluginLoggerBase, PluginLogger>()
+            .AddSingleton<ConnectionLoggerBase, ConnectionLogger>();
 
         var app = builder.Build();
         app.Services.GetRequiredService<SentryReporter>().Initialize();

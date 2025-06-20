@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Serein.Core.Models;
+namespace Serein.Core.Models.Abstractions;
 
 public abstract class NotifyPropertyChangedModelBase : INotifyPropertyChanged
 {

@@ -1,4 +1,5 @@
 ﻿using Serein.ConnectionProtocols.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Network.Connection;
 
 namespace Serein.Core.Models.Settings;

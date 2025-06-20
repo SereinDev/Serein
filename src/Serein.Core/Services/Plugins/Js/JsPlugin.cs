@@ -42,7 +42,7 @@ public class JsPlugin : IPlugin
     public bool IsEnabled => !_cancellationTokenSource.IsCancellationRequested;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
-    private readonly IPluginLogger _pluginLogger;
+    private readonly PluginLoggerBase _pluginLogger;
     private readonly ConcurrentDictionary<Event, Function> _eventHandlers;
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -55,7 +55,7 @@ public class JsPlugin : IPlugin
     )
     {
         _cancellationTokenSource = new();
-        _pluginLogger = serviceProvider.GetRequiredService<IPluginLogger>();
+        _pluginLogger = serviceProvider.GetRequiredService<PluginLoggerBase>();
 
         _eventHandlers = new();
         Info = pluginInfo;

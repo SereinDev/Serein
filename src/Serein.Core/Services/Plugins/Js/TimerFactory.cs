@@ -14,13 +14,13 @@ public sealed class TimerFactory
 {
     private long _timerId;
     private readonly Dictionary<long, Timer> _timers;
-    private readonly IPluginLogger _pluginLogger;
+    private readonly PluginLoggerBase _pluginLogger;
     private readonly CancellationToken _cancellationToken;
     private readonly string _name;
 
     internal TimerFactory(
         string name,
-        IPluginLogger pluginLogger,
+        PluginLoggerBase pluginLogger,
         CancellationToken cancellationToken
     )
     {

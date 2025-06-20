@@ -34,7 +34,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     private readonly Lazy<ForwardWebSocketAdapter> _forwardWebSocketAdapter;
     private readonly Lazy<ReverseWebSocketAdapter> _reverseWebSocketAdapter;
     private readonly Lazy<SatoriAdapter> _satoriAdapter;
-    private readonly Lazy<IConnectionLogger> _connectionLogger;
+    private readonly Lazy<ConnectionLoggerBase> _connectionLogger;
 
     private IConnectionAdapter? _activeAdapter;
 
@@ -71,7 +71,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         _satoriAdapter = new(GetConfiguredAdapter<SatoriAdapter>);
         _reverseWebSocketAdapter = new(GetConfiguredAdapter<ReverseWebSocketAdapter>);
         _forwardWebSocketAdapter = new(GetConfiguredAdapter<ForwardWebSocketAdapter>);
-        _connectionLogger = new(host.Services.GetRequiredService<IConnectionLogger>);
+        _connectionLogger = new(host.Services.GetRequiredService<ConnectionLoggerBase>);
 
         cancellationTokenProvider.Token.Register(() =>
         {

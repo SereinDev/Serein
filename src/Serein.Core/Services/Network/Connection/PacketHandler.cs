@@ -22,8 +22,8 @@ public sealed partial class PacketHandler(
     ReactionTrigger reactionTrigger
 )
 {
-    private readonly Lazy<IConnectionLogger> _connectionLogger = new(
-        host.Services.GetRequiredService<IConnectionLogger>
+    private readonly Lazy<ConnectionLoggerBase> _connectionLogger = new(
+        host.Services.GetRequiredService<ConnectionLoggerBase>
     );
 
     public Action<JsonNode>? PluginPacketHandler { get; set; }

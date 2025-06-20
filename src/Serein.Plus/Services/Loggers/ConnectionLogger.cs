@@ -9,14 +9,14 @@ namespace Serein.Plus.Services.Loggers;
 public sealed class ConnectionLogger(
     ILogger<ConnectionLogger> logger,
     IServiceProvider serviceProvider
-) : IConnectionLogger
+) : ConnectionLoggerBase
 {
     private readonly Lazy<ConnectionPage> _connectionPage = new(
         serviceProvider.GetRequiredService<ConnectionPage>
     );
     private readonly ILogger _logger = logger;
 
-    public void Log(LogLevel level, string message)
+    public override void Log(LogLevel level, string message)
     {
         _logger.Log(level, "{}", message);
 
@@ -37,28 +37,28 @@ public sealed class ConnectionLogger(
         });
     }
 
-    public void LogReceivedData(string data)
+    public override void LogReceivedData(string data)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendReceivedMsgLine(data)
         );
     }
 
-    public void LogReceivedMessage(string line)
+    public override void LogReceivedMessage(string line)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendReceivedMsgLine(line)
         );
     }
 
-    public void LogSentMessage(string data)
+    public override void LogSentMessage(string data)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(data)
         );
     }
 
-    public void LogSentData(string line)
+    public override void LogSentData(string line)
     {
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(line)

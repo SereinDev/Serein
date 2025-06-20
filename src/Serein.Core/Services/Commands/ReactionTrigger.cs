@@ -58,24 +58,23 @@ public sealed class ReactionTrigger(
 
         foreach (var command in commands)
         {
-            var command1 = new Command(command);
-
-            if (string.IsNullOrEmpty(command1.Arguments?.Target) && target is not null)
+            var commandArguments = new CommandArguments();
+            if (string.IsNullOrEmpty(command.Arguments?.Target) && target is not null)
             {
-                command1.Arguments ??= new();
-
                 if (
-                    command1.Type == CommandType.InputServer
+                    command.Type == CommandType.InputServer
                     && !string.IsNullOrEmpty(target.ServerId)
                 )
                 {
-                    command1.Arguments.Target = target.ServerId;
+                    commandArguments.Target = target.ServerId;
                 }
-                else if (command1.Type == CommandType.SendPrivateMsg)
+                else if (command.Type == CommandType.SendPrivateMsg)
                 {
-                    command1.Arguments.Target = target.UserId;
+                    commandArguments.Target = target.UserId;
                 }
             }
+
+            var command1 = new Command(command) { Arguments = commandArguments };
 
             await commandRunner.RunAsync(command1, context);
         }

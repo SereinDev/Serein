@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Utils;
 
 namespace Serein.Core.Models.Server;

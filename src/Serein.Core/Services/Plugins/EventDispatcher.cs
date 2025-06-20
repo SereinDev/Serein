@@ -15,7 +15,7 @@ namespace Serein.Core.Services.Plugins;
 
 public sealed class EventDispatcher(
     ILogger<EventDispatcher> logger,
-    IPluginLogger pluginLogger,
+    PluginLoggerBase pluginLogger,
     SettingProvider settingProvider,
     NetPluginLoader netPluginLoader,
     JsPluginLoader jsPluginLoader

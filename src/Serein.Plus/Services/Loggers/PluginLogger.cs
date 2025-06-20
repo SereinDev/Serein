@@ -8,7 +8,7 @@ using Serein.Plus.Pages;
 namespace Serein.Plus.Services.Loggers;
 
 public sealed class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider serviceProvider)
-    : IPluginLogger
+    : PluginLoggerBase
 {
     private readonly Lazy<PluginConsolePage> _pluginConsolePage = new(
         serviceProvider.GetRequiredService<PluginConsolePage>,
@@ -16,7 +16,7 @@ public sealed class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider 
     );
     private readonly ILogger _logger = logger;
 
-    public void Log(LogLevel level, string name, string message)
+    public override void Log(LogLevel level, string name, string message)
     {
         var line = level != LogLevel.Trace ? $"[{name}] {message}" : message;
         _logger.Log(level, "{}", line);

@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Octokit;
-using Serein.Core.Models;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 

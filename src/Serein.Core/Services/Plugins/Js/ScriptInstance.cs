@@ -24,7 +24,7 @@ public sealed partial class ScriptInstance
     private readonly SettingProvider _settingProvider;
     private readonly PluginManager _pluginManager;
     private readonly HardwareInfoProvider _hardwareInfoProvider;
-    private readonly IPluginLogger _pluginLogger;
+    private readonly PluginLoggerBase _pluginLogger;
 
     public PermissionProperty Permissions { get; }
     public ServerProperty Servers { get; }
@@ -40,7 +40,7 @@ public sealed partial class ScriptInstance
     {
         _serviceProvider = serviceProvider;
         _jsPlugin = jsPlugin;
-        _pluginLogger = _serviceProvider.GetRequiredService<IPluginLogger>();
+        _pluginLogger = _serviceProvider.GetRequiredService<PluginLoggerBase>();
         _settingProvider = _serviceProvider.GetRequiredService<SettingProvider>();
         _pluginManager = _serviceProvider.GetRequiredService<PluginManager>();
         _hardwareInfoProvider = _serviceProvider.GetRequiredService<HardwareInfoProvider>();

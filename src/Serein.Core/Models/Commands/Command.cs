@@ -28,7 +28,7 @@ public class Command
     /// <summary>
     /// 参数
     /// </summary>
-    public CommandArguments? Arguments { get; set; }
+    public CommandArguments? Arguments { get; init; }
 
     /// <summary>
     /// 主体

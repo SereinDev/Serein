@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Serein.Core.Models;
+namespace Serein.Core.Models.Abstractions;
 
 public abstract class DataItemWrapper
 {
