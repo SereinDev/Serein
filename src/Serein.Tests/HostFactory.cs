@@ -37,8 +37,8 @@ public static class HostFactory
 
         var builder = SereinAppBuilder.CreateBuilder(enableFileLogger);
 
-        builder.Services.AddSingleton<IPluginLogger, PluginLogger>();
-        builder.Services.AddSingleton<IConnectionLogger, ConnectionLogger>();
+        builder.Services.AddSingleton<PluginLoggerBase, PluginLogger>();
+        builder.Services.AddSingleton<ConnectionLoggerBase, ConnectionLogger>();
 
         return builder.Build();
     }

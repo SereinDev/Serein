@@ -85,7 +85,7 @@
             // 
             // _selfPlatformTextBox
             // 
-            _selfPlatformTextBox.Location = new System.Drawing.Point(163, 544);
+            _selfPlatformTextBox.Location = new System.Drawing.Point(158, 544);
             _selfPlatformTextBox.Name = "_selfPlatformTextBox";
             _selfPlatformTextBox.Size = new System.Drawing.Size(402, 38);
             _selfPlatformTextBox.TabIndex = 13;
@@ -95,7 +95,7 @@
             // selfPlatformLabel
             // 
             selfPlatformLabel.AutoSize = true;
-            selfPlatformLabel.Location = new System.Drawing.Point(46, 547);
+            selfPlatformLabel.Location = new System.Drawing.Point(41, 547);
             selfPlatformLabel.Name = "selfPlatformLabel";
             selfPlatformLabel.Size = new System.Drawing.Size(110, 31);
             selfPlatformLabel.TabIndex = 12;
@@ -104,7 +104,7 @@
             // 
             // _selfUserIdTextBox
             // 
-            _selfUserIdTextBox.Location = new System.Drawing.Point(163, 493);
+            _selfUserIdTextBox.Location = new System.Drawing.Point(158, 493);
             _selfUserIdTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _selfUserIdTextBox.Name = "_selfUserIdTextBox";
             _selfUserIdTextBox.Size = new System.Drawing.Size(402, 38);
@@ -115,7 +115,7 @@
             // selfUserIdLabel
             // 
             selfUserIdLabel.AutoSize = true;
-            selfUserIdLabel.Location = new System.Drawing.Point(46, 496);
+            selfUserIdLabel.Location = new System.Drawing.Point(41, 496);
             selfUserIdLabel.Name = "selfUserIdLabel";
             selfUserIdLabel.Size = new System.Drawing.Size(84, 31);
             selfUserIdLabel.TabIndex = 10;
@@ -125,7 +125,7 @@
             // selfLabel
             // 
             selfLabel.AutoSize = true;
-            selfLabel.Location = new System.Drawing.Point(32, 449);
+            selfLabel.Location = new System.Drawing.Point(27, 449);
             selfLabel.Name = "selfLabel";
             selfLabel.Size = new System.Drawing.Size(134, 31);
             selfLabel.TabIndex = 9;
@@ -135,10 +135,10 @@
             // _administratorUserIdsTextBox
             // 
             _administratorUserIdsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _administratorUserIdsTextBox.Location = new System.Drawing.Point(32, 401);
+            _administratorUserIdsTextBox.Location = new System.Drawing.Point(27, 401);
             _administratorUserIdsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _administratorUserIdsTextBox.Name = "_administratorUserIdsTextBox";
-            _administratorUserIdsTextBox.Size = new System.Drawing.Size(1156, 38);
+            _administratorUserIdsTextBox.Size = new System.Drawing.Size(1211, 38);
             _administratorUserIdsTextBox.TabIndex = 8;
             toolTip.SetToolTip(_administratorUserIdsTextBox, "有管理权限的用户\r\n· 使用分号\";\"分隔每一个值\r\n");
             _administratorUserIdsTextBox.TextChanged += AdministratorUserIdsTextBox_TextChanged;
@@ -146,7 +146,7 @@
             // administratorUserIdsLabel
             // 
             administratorUserIdsLabel.AutoSize = true;
-            administratorUserIdsLabel.Location = new System.Drawing.Point(32, 367);
+            administratorUserIdsLabel.Location = new System.Drawing.Point(27, 367);
             administratorUserIdsLabel.Name = "administratorUserIdsLabel";
             administratorUserIdsLabel.Size = new System.Drawing.Size(158, 31);
             administratorUserIdsLabel.TabIndex = 7;
@@ -156,10 +156,10 @@
             // _listenedIdsTextBox
             // 
             _listenedIdsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _listenedIdsTextBox.Location = new System.Drawing.Point(32, 319);
+            _listenedIdsTextBox.Location = new System.Drawing.Point(27, 319);
             _listenedIdsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _listenedIdsTextBox.Name = "_listenedIdsTextBox";
-            _listenedIdsTextBox.Size = new System.Drawing.Size(1156, 38);
+            _listenedIdsTextBox.Size = new System.Drawing.Size(1211, 38);
             _listenedIdsTextBox.TabIndex = 6;
             toolTip.SetToolTip(_listenedIdsTextBox, "要监听消息的群聊、频道或群组\r\n· 直接填写Id 或 [来源]:[Id] 的格式字符串\r\n    · 其中来源可为g/group（群聊）、c/channel（频道）、guild（群组）\r\n    · 例：“g:12345”或“group:12345”\r\n· 使用分号\";\"分隔每一个值");
             _listenedIdsTextBox.TextChanged += ListenedIdsTextBox_TextChanged;
@@ -167,7 +167,7 @@
             // listenedIdsLabel
             // 
             listenedIdsLabel.AutoSize = true;
-            listenedIdsLabel.Location = new System.Drawing.Point(32, 285);
+            listenedIdsLabel.Location = new System.Drawing.Point(27, 285);
             listenedIdsLabel.Name = "listenedIdsLabel";
             listenedIdsLabel.Size = new System.Drawing.Size(110, 31);
             listenedIdsLabel.TabIndex = 5;
@@ -177,7 +177,7 @@
             // _connectWhenSettingUpcheckBox
             // 
             _connectWhenSettingUpcheckBox.AutoSize = true;
-            _connectWhenSettingUpcheckBox.Location = new System.Drawing.Point(32, 231);
+            _connectWhenSettingUpcheckBox.Location = new System.Drawing.Point(27, 231);
             _connectWhenSettingUpcheckBox.Name = "_connectWhenSettingUpcheckBox";
             _connectWhenSettingUpcheckBox.Size = new System.Drawing.Size(142, 35);
             _connectWhenSettingUpcheckBox.TabIndex = 4;
@@ -189,7 +189,7 @@
             // _saveLogCheckBox
             // 
             _saveLogCheckBox.AutoSize = true;
-            _saveLogCheckBox.Location = new System.Drawing.Point(32, 190);
+            _saveLogCheckBox.Location = new System.Drawing.Point(27, 190);
             _saveLogCheckBox.Name = "_saveLogCheckBox";
             _saveLogCheckBox.Size = new System.Drawing.Size(166, 35);
             _saveLogCheckBox.TabIndex = 3;
@@ -201,7 +201,7 @@
             // _outputDataCheckBox
             // 
             _outputDataCheckBox.AutoSize = true;
-            _outputDataCheckBox.Location = new System.Drawing.Point(32, 149);
+            _outputDataCheckBox.Location = new System.Drawing.Point(27, 149);
             _outputDataCheckBox.Name = "_outputDataCheckBox";
             _outputDataCheckBox.Size = new System.Drawing.Size(214, 35);
             _outputDataCheckBox.TabIndex = 2;
@@ -215,7 +215,7 @@
             _adapterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             _adapterComboBox.FormattingEnabled = true;
             _adapterComboBox.Items.AddRange(new object[] { "OneBot（WebSocket正向连接）", "OneBot（WebSocket反向连接）", "Satori", "插件注册（实验性）" });
-            _adapterComboBox.Location = new System.Drawing.Point(32, 83);
+            _adapterComboBox.Location = new System.Drawing.Point(27, 83);
             _adapterComboBox.Name = "_adapterComboBox";
             _adapterComboBox.Size = new System.Drawing.Size(420, 39);
             _adapterComboBox.TabIndex = 1;
@@ -225,7 +225,7 @@
             // adapterLabel
             // 
             adapterLabel.AutoSize = true;
-            adapterLabel.Location = new System.Drawing.Point(32, 49);
+            adapterLabel.Location = new System.Drawing.Point(27, 49);
             adapterLabel.Name = "adapterLabel";
             adapterLabel.Size = new System.Drawing.Size(86, 31);
             adapterLabel.TabIndex = 0;
@@ -235,7 +235,7 @@
             // oneBotVersionLabel
             // 
             oneBotVersionLabel.AutoSize = true;
-            oneBotVersionLabel.Location = new System.Drawing.Point(32, 51);
+            oneBotVersionLabel.Location = new System.Drawing.Point(27, 51);
             oneBotVersionLabel.Name = "oneBotVersionLabel";
             oneBotVersionLabel.Size = new System.Drawing.Size(150, 31);
             oneBotVersionLabel.TabIndex = 2;
@@ -245,7 +245,7 @@
             // webSocketUriLabel
             // 
             webSocketUriLabel.AutoSize = true;
-            webSocketUriLabel.Location = new System.Drawing.Point(32, 134);
+            webSocketUriLabel.Location = new System.Drawing.Point(27, 134);
             webSocketUriLabel.Name = "webSocketUriLabel";
             webSocketUriLabel.Size = new System.Drawing.Size(192, 31);
             webSocketUriLabel.TabIndex = 14;
@@ -255,7 +255,7 @@
             // webSocketSubProtocolsLabel
             // 
             webSocketSubProtocolsLabel.AutoSize = true;
-            webSocketSubProtocolsLabel.Location = new System.Drawing.Point(32, 298);
+            webSocketSubProtocolsLabel.Location = new System.Drawing.Point(27, 298);
             webSocketSubProtocolsLabel.Name = "webSocketSubProtocolsLabel";
             webSocketSubProtocolsLabel.Size = new System.Drawing.Size(216, 31);
             webSocketSubProtocolsLabel.TabIndex = 16;
@@ -265,7 +265,7 @@
             // oneBotAccessTokenLabel
             // 
             oneBotAccessTokenLabel.AutoSize = true;
-            oneBotAccessTokenLabel.Location = new System.Drawing.Point(32, 216);
+            oneBotAccessTokenLabel.Location = new System.Drawing.Point(27, 216);
             oneBotAccessTokenLabel.Name = "oneBotAccessTokenLabel";
             oneBotAccessTokenLabel.Size = new System.Drawing.Size(229, 31);
             oneBotAccessTokenLabel.TabIndex = 18;
@@ -275,10 +275,10 @@
             // _satoriAccessTokenMaskedTextBox
             // 
             _satoriAccessTokenMaskedTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _satoriAccessTokenMaskedTextBox.Location = new System.Drawing.Point(32, 169);
+            _satoriAccessTokenMaskedTextBox.Location = new System.Drawing.Point(27, 169);
             _satoriAccessTokenMaskedTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _satoriAccessTokenMaskedTextBox.Name = "_satoriAccessTokenMaskedTextBox";
-            _satoriAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1156, 38);
+            _satoriAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1211, 38);
             _satoriAccessTokenMaskedTextBox.TabIndex = 23;
             toolTip.SetToolTip(_satoriAccessTokenMaskedTextBox, "用于鉴权的Token");
             _satoriAccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
@@ -286,7 +286,7 @@
             // satoriAccessTokenLabel
             // 
             satoriAccessTokenLabel.AutoSize = true;
-            satoriAccessTokenLabel.Location = new System.Drawing.Point(32, 135);
+            satoriAccessTokenLabel.Location = new System.Drawing.Point(27, 135);
             satoriAccessTokenLabel.Name = "satoriAccessTokenLabel";
             satoriAccessTokenLabel.Size = new System.Drawing.Size(110, 31);
             satoriAccessTokenLabel.TabIndex = 22;
@@ -296,10 +296,10 @@
             // _satoriUriTextBox
             // 
             _satoriUriTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _satoriUriTextBox.Location = new System.Drawing.Point(32, 87);
+            _satoriUriTextBox.Location = new System.Drawing.Point(27, 87);
             _satoriUriTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _satoriUriTextBox.Name = "_satoriUriTextBox";
-            _satoriUriTextBox.Size = new System.Drawing.Size(1156, 38);
+            _satoriUriTextBox.Size = new System.Drawing.Size(1211, 38);
             _satoriUriTextBox.TabIndex = 21;
             toolTip.SetToolTip(_satoriUriTextBox, "用于Api请求的地址");
             _satoriUriTextBox.TextChanged += OnPropertyChanged;
@@ -307,7 +307,7 @@
             // satoriUriLabel
             // 
             satoriUriLabel.AutoSize = true;
-            satoriUriLabel.Location = new System.Drawing.Point(32, 53);
+            satoriUriLabel.Location = new System.Drawing.Point(27, 53);
             satoriUriLabel.Name = "satoriUriLabel";
             satoriUriLabel.Size = new System.Drawing.Size(62, 31);
             satoriUriLabel.TabIndex = 20;
@@ -317,7 +317,7 @@
             // _autoEscapeCheckBox
             // 
             _autoEscapeCheckBox.AutoSize = true;
-            _autoEscapeCheckBox.Location = new System.Drawing.Point(32, 518);
+            _autoEscapeCheckBox.Location = new System.Drawing.Point(27, 518);
             _autoEscapeCheckBox.Name = "_autoEscapeCheckBox";
             _autoEscapeCheckBox.Size = new System.Drawing.Size(166, 35);
             _autoEscapeCheckBox.TabIndex = 22;
@@ -329,7 +329,7 @@
             // _grantPermissionToGroupOwnerAndAdminsCheckBox
             // 
             _grantPermissionToGroupOwnerAndAdminsCheckBox.AutoSize = true;
-            _grantPermissionToGroupOwnerAndAdminsCheckBox.Location = new System.Drawing.Point(32, 559);
+            _grantPermissionToGroupOwnerAndAdminsCheckBox.Location = new System.Drawing.Point(27, 559);
             _grantPermissionToGroupOwnerAndAdminsCheckBox.Name = "_grantPermissionToGroupOwnerAndAdminsCheckBox";
             _grantPermissionToGroupOwnerAndAdminsCheckBox.Size = new System.Drawing.Size(382, 35);
             _grantPermissionToGroupOwnerAndAdminsCheckBox.TabIndex = 21;
@@ -341,7 +341,7 @@
             // _autoReconnectCheckBox
             // 
             _autoReconnectCheckBox.AutoSize = true;
-            _autoReconnectCheckBox.Location = new System.Drawing.Point(32, 477);
+            _autoReconnectCheckBox.Location = new System.Drawing.Point(27, 477);
             _autoReconnectCheckBox.Name = "_autoReconnectCheckBox";
             _autoReconnectCheckBox.Size = new System.Drawing.Size(190, 35);
             _autoReconnectCheckBox.TabIndex = 20;
@@ -353,10 +353,10 @@
             // _oneBotAccessTokenMaskedTextBox
             // 
             _oneBotAccessTokenMaskedTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _oneBotAccessTokenMaskedTextBox.Location = new System.Drawing.Point(32, 250);
+            _oneBotAccessTokenMaskedTextBox.Location = new System.Drawing.Point(27, 250);
             _oneBotAccessTokenMaskedTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _oneBotAccessTokenMaskedTextBox.Name = "_oneBotAccessTokenMaskedTextBox";
-            _oneBotAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1156, 38);
+            _oneBotAccessTokenMaskedTextBox.Size = new System.Drawing.Size(1211, 38);
             _oneBotAccessTokenMaskedTextBox.TabIndex = 19;
             toolTip.SetToolTip(_oneBotAccessTokenMaskedTextBox, "用于鉴权的Access-Token");
             _oneBotAccessTokenMaskedTextBox.TextChanged += OnPropertyChanged;
@@ -365,12 +365,12 @@
             // 
             _webSocketSubProtocolsTextBox.AcceptsReturn = true;
             _webSocketSubProtocolsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _webSocketSubProtocolsTextBox.Location = new System.Drawing.Point(32, 332);
+            _webSocketSubProtocolsTextBox.Location = new System.Drawing.Point(27, 332);
             _webSocketSubProtocolsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _webSocketSubProtocolsTextBox.Multiline = true;
             _webSocketSubProtocolsTextBox.Name = "_webSocketSubProtocolsTextBox";
             _webSocketSubProtocolsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            _webSocketSubProtocolsTextBox.Size = new System.Drawing.Size(1156, 132);
+            _webSocketSubProtocolsTextBox.Size = new System.Drawing.Size(1211, 132);
             _webSocketSubProtocolsTextBox.TabIndex = 17;
             toolTip.SetToolTip(_webSocketSubProtocolsTextBox, "连接WebSocket时的子协议（一行一个）\r\n· 仅适用于WebSocket正向连接");
             _webSocketSubProtocolsTextBox.TextChanged += WebSocketSubProtocolsTextBox_TextChanged;
@@ -378,10 +378,10 @@
             // _webSocketUriTextBox
             // 
             _webSocketUriTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _webSocketUriTextBox.Location = new System.Drawing.Point(32, 168);
+            _webSocketUriTextBox.Location = new System.Drawing.Point(27, 168);
             _webSocketUriTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _webSocketUriTextBox.Name = "_webSocketUriTextBox";
-            _webSocketUriTextBox.Size = new System.Drawing.Size(1156, 38);
+            _webSocketUriTextBox.Size = new System.Drawing.Size(1211, 38);
             _webSocketUriTextBox.TabIndex = 15;
             toolTip.SetToolTip(_webSocketUriTextBox, "Websocket服务器的地址\r\n· 当选择了正向连接适配器时，这个地址应以\"ws://\"或\"wss://\"开头，Serein将会连接到这个地址\r\n· 当选择了反向连接适配器时，这个地址应以\"http://\"或\"https://\"开头，Serein将会开启一个WebSocket服务器供OneBot实现连接");
             _webSocketUriTextBox.TextChanged += OnPropertyChanged;
@@ -391,7 +391,7 @@
             _oneBotVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             _oneBotVersionComboBox.FormattingEnabled = true;
             _oneBotVersionComboBox.Items.AddRange(new object[] { "V11", "V12" });
-            _oneBotVersionComboBox.Location = new System.Drawing.Point(32, 85);
+            _oneBotVersionComboBox.Location = new System.Drawing.Point(27, 85);
             _oneBotVersionComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             _oneBotVersionComboBox.Name = "_oneBotVersionComboBox";
             _oneBotVersionComboBox.Size = new System.Drawing.Size(248, 39);

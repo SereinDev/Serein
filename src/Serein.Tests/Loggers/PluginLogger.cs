@@ -3,7 +3,7 @@ using Serein.Core.Models.Abstractions;
 
 namespace Serein.Tests.Loggers;
 
-public class PluginLogger : IPluginLogger
+public class PluginLogger : PluginLoggerBase
 {
-    public void Log(LogLevel level, string name, string message) { }
+    public override void Log(LogLevel level, string name, string message) { }
 }
