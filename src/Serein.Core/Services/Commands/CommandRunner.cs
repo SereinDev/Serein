@@ -424,12 +424,13 @@ public sealed class CommandRunner
 
         process.Start();
 
-        _logger.LogDebug("进程Id：{}", process.Id);
+        _logger.LogDebug("命令行进程Id：{}", process.Id);
 
         await process.WaitForExitAsync().WaitAsync(TimeSpan.FromMinutes(1));
 
         if (!process.HasExited)
         {
+            _logger.LogDebug("运行超时，尝试强制结束进程（Id：{}）", process.Id);
             process.Kill(true);
         }
     }

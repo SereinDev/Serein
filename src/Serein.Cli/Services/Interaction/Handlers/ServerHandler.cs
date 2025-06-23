@@ -28,7 +28,7 @@ public sealed class ServerHandler(
         if (args.Count == 1)
         {
             throw new InvalidArgumentException(
-                "缺少参数。可用值：\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
+                "缺少参数。可用值：\"list\"、\"info\"、\"start\"、\"stop\"、\"terminate\"和\"switch\""
             );
         }
 

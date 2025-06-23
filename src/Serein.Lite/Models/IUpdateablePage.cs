@@ -1,4 +1,4 @@
-namespace Serein.Lite.Ui;
+namespace Serein.Lite.Models;
 
 public interface IUpdateablePage
 {

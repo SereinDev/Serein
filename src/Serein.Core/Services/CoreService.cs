@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -46,6 +45,7 @@ internal sealed partial class CoreService : IHostedService
         _cancellationTokenProvider = cancellationTokenProvider;
 
         _logger.LogInformation("Serein.{} {}", sereinApp.Type, sereinApp.Version);
+        _logger.LogInformation("");
         _logger.LogInformation("仓库: {}", UrlConstants.Repository);
         _logger.LogInformation("Copyright (C) 2022 Zaitonn. All rights reserved.");
         _logger.LogInformation("");
@@ -55,11 +55,6 @@ internal sealed partial class CoreService : IHostedService
         _logger.LogDebug("版本：{}", sereinApp.FullVersion);
         _logger.LogDebug("程序集：{}", sereinApp.AssemblyName);
         _logger.LogDebug("首次启动：{}", SereinAppBuilder.StartForTheFirstTime);
-
-        if (Debugger.IsAttached)
-        {
-            _logger.LogWarning("调试器已附加");
-        }
 
         AppDomain.CurrentDomain.UnhandledException += (_, _) =>
             eventDispatcher.Dispatch(Event.SereinCrashed);
@@ -73,17 +68,24 @@ internal sealed partial class CoreService : IHostedService
         {
             if (server.Configuration.StartWhenSettingUp)
             {
-                Try(server.Start, $"服务器{server.Configuration.Name}({server.Id})");
+                _logger.LogInformation(
+                    "正在启动服务器: {}({})",
+                    server.Configuration.Name,
+                    server.Id
+                );
+                Try(server.Start, $"服务器 {server.Configuration.Name}({server.Id})");
             }
         }
 
         if (_settingProvider.Value.WebApi.IsEnabled)
         {
+            _logger.LogInformation("正在启动Web服务器");
             Try(_httpServer.Start, "Web Server");
         }
 
         if (_settingProvider.Value.Connection.ConnectWhenSettingUp)
         {
+            _logger.LogInformation("正在启动连接");
             Try(_connectionManager.Start, "Connection");
         }
 

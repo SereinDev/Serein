@@ -7,9 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
-using Hardcodet.Wpf.TaskbarNotification;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
+using iNKORE.UI.WPF.TrayIcons;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core;
@@ -66,8 +66,8 @@ public partial class MainWindow : Window
         _infoBarPopOut = new(0, 200, new(TimeSpan.FromSeconds(0.5))) { EasingFunction = powerEase };
 
         InitializeComponent();
-        AppTaskbarIcon.ContextMenu!.DataContext = this;
-        AppTaskbarIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
+        AppTrayIcon.ContextMenu!.DataContext = this;
+        AppTrayIcon.DoubleClickCommand = new TaskbarIconDoubleClickCommand(this);
 
         DataContext = titleUpdater;
         titleUpdater.Update();
@@ -89,7 +89,11 @@ public partial class MainWindow : Window
             {
                 Dispatcher.Invoke(() =>
                 {
-                    ShowBalloonTip("发现新版本", _updateChecker.Latest.TagName, BalloonIcon.Info);
+                    AppTrayIcon.ShowBalloonTip(
+                        "发现新版本",
+                        _updateChecker.Latest.TagName,
+                        BalloonIcon.Info
+                    );
 
                     if (NavView.SettingsItem is NavigationViewItem navViewItem)
                     {
@@ -204,7 +208,7 @@ public partial class MainWindow : Window
 
         if (!_serverManager.AnyRunning)
         {
-            AppTaskbarIcon.Visibility = Visibility.Collapsed;
+            AppTrayIcon.Visibility = Visibility.Collapsed;
             _eventDispatcher.Dispatch(Event.SereinClosed);
             return;
         }
@@ -213,21 +217,16 @@ public partial class MainWindow : Window
         HideMenuItem.IsEnabled = HideMenuItem.IsChecked = true;
         Topmost = _isTopMost = TopMostMenuItem.IsEnabled = TopMostMenuItem.IsChecked = false;
 
-        ShowBalloonTip(
+        AppTrayIcon.ShowBalloonTip(
             "仍有服务器进程在运行中",
             "已自动最小化至托盘，点击托盘图标即可复原窗口",
             BalloonIcon.None
         );
     }
 
-    private void AppTaskbarIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
+    private void AppTrayIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
     {
         ShowWindow();
-    }
-
-    public void ShowBalloonTip(string title, string message, BalloonIcon icon)
-    {
-        AppTaskbarIcon.ShowBalloonTip(title, message, icon);
     }
 
     public void ShowInfoBar(InfoBarTask infoBarTask)

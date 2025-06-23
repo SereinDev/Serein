@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
+using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
 using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
-using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Models.Commands;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
-using V11 = Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
-using V12 = Serein.ConnectionProtocols.Models.OneBot.V12.Packets;
 
 namespace Serein.Core.Services.Commands;
 
@@ -29,7 +28,7 @@ public sealed class Matcher
     private readonly CommandRunner _commandRunner;
     private readonly SettingProvider _settingProvider;
 
-    private readonly BlockingCollection<object> _packets;
+    private readonly BlockingCollection<Packets> _packets;
     private readonly BlockingCollection<ServerLine> _serverLines;
 
     public Matcher(
@@ -44,7 +43,7 @@ public sealed class Matcher
         _matchProvider = matchProvider;
         _commandRunner = commandRunner;
         _settingProvider = settingProvider;
-        _packets = [.. new ConcurrentQueue<object>()];
+        _packets = [.. new ConcurrentQueue<Packets>()];
         _serverLines = [.. new ConcurrentQueue<ServerLine>()];
 
         Task.Run(
@@ -146,8 +145,8 @@ public sealed class Matcher
         {
             try
             {
-                var packet = _packets.Take(cancellationToken);
-                MatchMessagePacket(packet);
+                var packets = _packets.Take(cancellationToken);
+                MatchMessagePacket(packets);
             }
             catch (Exception e) when (e is OperationCanceledException or TaskCanceledException)
             {
@@ -160,18 +159,17 @@ public sealed class Matcher
         }
     }
 
-    private void MatchMessagePacket(object packet)
+    private void MatchMessagePacket(Packets packets)
     {
-        var v11Packet = packet as V11.MessagePacket;
-        var v12Packet = packet as V12.MessagePacket;
-        var satoriPacket = packet as EventBody;
-
         var msg =
-            v12Packet?.FriendlyMessage
-            ?? HttpUtility.HtmlDecode(v11Packet?.RawMessage)
-            ?? HttpUtility.HtmlDecode(satoriPacket?.Message?.Content);
+            packets.OneBotV12?.FriendlyMessage
+            ?? HttpUtility.HtmlDecode(packets.OneBotV11?.RawMessage)
+            ?? HttpUtility.HtmlDecode(packets.SatoriV1?.Message?.Content);
 
-        var userId = v11Packet?.UserId.ToString() ?? v12Packet?.UserId ?? satoriPacket?.User?.Id;
+        var userId =
+            packets.OneBotV11?.UserId.ToString()
+            ?? packets.OneBotV12?.UserId
+            ?? packets.SatoriV1?.User?.Id;
 
         var tasks = new List<Task>();
 
@@ -195,16 +193,14 @@ public sealed class Matcher
 
                 if (
                     match.RequireAdmin
-                    && (
-                        !_settingProvider.Value.Connection.AdministratorUserIds.Contains(userId)
-                        || !IsAdmin(v11Packet)
-                    )
+                    && !_settingProvider.Value.Connection.AdministratorUserIds.Contains(userId)
+                    && !IsAdmin(packets.OneBotV11)
                 )
                 {
                     continue;
                 }
 
-                if (CheckExclusions(match, v11Packet, v12Packet, satoriPacket))
+                if (CheckExclusions(match, packets))
                 {
                     continue;
                 }
@@ -236,9 +232,9 @@ public sealed class Matcher
                         new()
                         {
                             Match = matches,
-                            OneBotV11MessagePacket = v11Packet,
-                            OneBotV12MessagePacket = v12Packet,
-                            SatoriV1MessagePacket = satoriPacket,
+                            OneBotV11MessagePacket = packets.OneBotV11,
+                            OneBotV12MessagePacket = packets.OneBotV12,
+                            SatoriV1MessagePacket = packets.SatoriV1,
                         }
                     )
                 );
@@ -250,25 +246,26 @@ public sealed class Matcher
             switch (match.FieldType)
             {
                 case MatchFieldType.GroupMsg:
-                    return v11Packet?.MessageType == MessageType.Group
-                        || v12Packet?.DetailType == MessageDetailType.Group
-                        || satoriPacket is not null
-                            && satoriPacket.Channel?.Type != ChannelType.Direct;
+                    return packets.OneBotV11?.MessageType == MessageType.Group
+                        || packets.OneBotV12?.DetailType == MessageDetailType.Group
+                        || packets.SatoriV1 is not null
+                            && packets.SatoriV1.Channel?.Type != ChannelType.Direct;
 
                 case MatchFieldType.PrivateMsg:
-                    return v11Packet?.MessageType == MessageType.Private
-                        || v12Packet?.DetailType == MessageDetailType.Private
-                        || satoriPacket is { Channel.Type: ChannelType.Direct };
+                    return packets.OneBotV11?.MessageType == MessageType.Private
+                        || packets.OneBotV12?.DetailType == MessageDetailType.Private
+                        || packets.SatoriV1 is { Channel.Type: ChannelType.Direct };
 
                 case MatchFieldType.SelfMsg:
-                    return v11Packet is not null && v11Packet.UserId == v11Packet.SelfId;
+                    return packets.OneBotV11 is not null
+                        && packets.OneBotV11.UserId == packets.OneBotV11.SelfId;
 
                 case MatchFieldType.ChannelMsg:
-                    return v12Packet?.DetailType == MessageDetailType.Channel
-                        || satoriPacket is not null;
+                    return packets.OneBotV12?.DetailType == MessageDetailType.Channel
+                        || packets.SatoriV1 is not null;
 
                 case MatchFieldType.GuildMsg:
-                    return v12Packet?.DetailType == MessageDetailType.Guild;
+                    return packets.OneBotV12?.DetailType == MessageDetailType.Guild;
 
                 default:
                     return false;
@@ -276,19 +273,9 @@ public sealed class Matcher
         }
     }
 
-    public void QueueMsg(V11.MessagePacket messagePacket)
+    public void QueueMsg(Packets packets)
     {
-        _packets.Add(messagePacket);
-    }
-
-    public void QueueMsg(V12.MessagePacket messagePacket)
-    {
-        _packets.Add(messagePacket);
-    }
-
-    public void QueueMsg(EventBody eventBody)
-    {
-        _packets.Add(eventBody);
+        _packets.Add(packets);
     }
 
     private static bool CheckExclusions(Match match, string serverId)
@@ -296,47 +283,42 @@ public sealed class Matcher
         return match.MatchExclusion.Servers.Contains(serverId);
     }
 
-    private static bool CheckExclusions(
-        Match match,
-        V11.MessagePacket? v11Packet,
-        V12.MessagePacket? v12Packet,
-        EventBody? eventBody
-    )
+    private static bool CheckExclusions(Match match, Packets packets)
     {
-        if (v11Packet is not null)
+        if (packets.OneBotV11 is not null)
         {
             return match.FieldType == MatchFieldType.GroupMsg
-                    && match.MatchExclusion.Groups.Contains(v11Packet.GroupId.ToString())
-                || match.MatchExclusion.Users.Contains(v11Packet.UserId.ToString());
+                    && match.MatchExclusion.Groups.Contains(packets.OneBotV11.GroupId.ToString())
+                || match.MatchExclusion.Users.Contains(packets.OneBotV11.UserId.ToString());
         }
 
-        if (v12Packet is not null)
+        if (packets.OneBotV12 is not null)
         {
             return match.FieldType == MatchFieldType.GroupMsg
-                    && !string.IsNullOrEmpty(v12Packet.GroupId)
-                    && match.MatchExclusion.Groups.Contains(v12Packet.GroupId)
+                    && !string.IsNullOrEmpty(packets.OneBotV12.GroupId)
+                    && match.MatchExclusion.Groups.Contains(packets.OneBotV12.GroupId)
                 || match.FieldType == MatchFieldType.ChannelMsg
-                    && !string.IsNullOrEmpty(v12Packet.ChannelId)
-                    && match.MatchExclusion.Channels.Contains(v12Packet.ChannelId)
+                    && !string.IsNullOrEmpty(packets.OneBotV12.ChannelId)
+                    && match.MatchExclusion.Channels.Contains(packets.OneBotV12.ChannelId)
                 || match.FieldType is MatchFieldType.GuildMsg or MatchFieldType.ChannelMsg
-                    && !string.IsNullOrEmpty(v12Packet.GuildId)
-                    && match.MatchExclusion.Channels.Contains(v12Packet.GuildId)
-                || match.MatchExclusion.Users.Contains(v12Packet.UserId);
+                    && !string.IsNullOrEmpty(packets.OneBotV12.GuildId)
+                    && match.MatchExclusion.Channels.Contains(packets.OneBotV12.GuildId)
+                || match.MatchExclusion.Users.Contains(packets.OneBotV12.UserId);
         }
 
-        if (eventBody is not null)
+        if (packets.SatoriV1 is not null)
         {
             return match.FieldType == MatchFieldType.GroupMsg
-                    && !string.IsNullOrEmpty(eventBody.Channel?.Id)
-                    && eventBody.Channel.Type != ChannelType.Direct
-                    && match.MatchExclusion.Groups.Contains(eventBody.Channel.Id)
-                || match.MatchExclusion.Users.Contains(eventBody.User?.Id ?? string.Empty);
+                    && !string.IsNullOrEmpty(packets.SatoriV1.Channel?.Id)
+                    && packets.SatoriV1.Channel.Type != ChannelType.Direct
+                    && match.MatchExclusion.Groups.Contains(packets.SatoriV1.Channel.Id)
+                || match.MatchExclusion.Users.Contains(packets.SatoriV1.User?.Id ?? string.Empty);
         }
 
         return false;
     }
 
-    private bool IsAdmin(V11.MessagePacket? messagePacket)
+    private bool IsAdmin(MessagePacket? messagePacket)
     {
         return messagePacket?.MessageType == MessageType.Group
             && messagePacket.Sender.Role != Role.Member

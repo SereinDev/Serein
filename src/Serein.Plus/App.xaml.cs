@@ -39,7 +39,6 @@ public partial class App : Application
             .Services.AddSingleton(provider)
             .AddSingleton<TitleUpdater>()
             .AddSingleton<InfoBarProvider>()
-            .AddSingleton<BalloonTipProvider>()
             .AddSingleton<MainWindow>()
             .AddSingleton<NotImplPage>()
             .AddSingleton<ServerPage>()

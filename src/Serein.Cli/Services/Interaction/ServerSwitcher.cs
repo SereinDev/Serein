@@ -63,17 +63,17 @@ public sealed class ServerSwitcher(
     {
         if (serverManager.Servers.Count == 1)
         {
-            logger.LogWarning("当前仅有一个服务器配置，该服务器的所有输出都将输出到控制台");
-            logger.LogWarning(
-                "添加更多服务器配置后，你可以用\"server switch <id>\"选择要进行操作的服务器"
+            logger.LogInformation("当前仅有一个服务器配置，该服务器的所有输出都将输出到控制台");
+            logger.LogInformation(
+                "添加更多服务器配置后，你可以用\"server list\"查看所有的服务器信息或用\"server switch <id>\"选择要进行操作的服务器"
             );
 
             SwitchTo(serverManager.Servers.First().Key);
         }
         else if (serverManager.Servers.Count > 1)
         {
-            logger.LogWarning(
-                "当前有多个服务器配置，你可以用\"server switch <id>\"选择要进行操作的服务器"
+            logger.LogInformation(
+                "当前有多个服务器配置，你可以用\"server list\"查看所有的服务器信息或用\"server switch <id>\"选择要进行操作的服务器"
             );
         }
     }

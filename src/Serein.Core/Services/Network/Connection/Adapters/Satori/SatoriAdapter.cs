@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.Satori.V1;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
@@ -19,6 +20,7 @@ public partial class SatoriAdapter : IConnectionAdapter
 {
     private readonly ConnectionLoggerBase _logger;
     private readonly SettingProvider _settingProvider;
+    private readonly CancellationTokenProvider _cancellationTokenProvider;
     private readonly System.Timers.Timer _timer;
 
     public event EventHandler<MessageReceivedEventArgs>? DataReceived;
@@ -34,12 +36,18 @@ public partial class SatoriAdapter : IConnectionAdapter
 
     private long? _sn;
 
-    public SatoriAdapter(ConnectionLoggerBase logger, SettingProvider settingProvider)
+    public SatoriAdapter(
+        ConnectionLoggerBase logger,
+        SettingProvider settingProvider,
+        CancellationTokenProvider cancellationTokenProvider
+    )
     {
         HttpClient = new();
 
         _logger = logger;
         _settingProvider = settingProvider;
+        _cancellationTokenProvider = cancellationTokenProvider;
+
         _timer = new(10_000) { AutoReset = true };
         _timer.Elapsed += (_, _) => SendPing();
     }
@@ -54,7 +62,9 @@ public partial class SatoriAdapter : IConnectionAdapter
 
     public Task SendAsync(string payload)
     {
-        throw new NotSupportedException("Use HttpClient.SendAsync instead.");
+        throw new NotSupportedException(
+            "Use `SendRequestAsync<T>` or `HttpClient.SendAsync` instead."
+        );
     }
 
     public async Task SendMessageAsync(
@@ -69,12 +79,23 @@ public partial class SatoriAdapter : IConnectionAdapter
             return;
         }
 
-        var body = JsonSerializer.Serialize(
+        var response = await SendApiRequestAsync(
+            "v1/message.create",
             new SendMsgPacket { ChannelId = target, Content = content },
-            JsonSerializerOptionsFactory.PacketStyle
+            commandArguments?.Self
         );
+        response.EnsureSuccessStatusCode();
+    }
 
-        var request = new HttpRequestMessage(HttpMethod.Post, "v1/message.create")
+    public async Task<HttpResponseMessage> SendApiRequestAsync<T>(
+        string path,
+        T? content,
+        Self? self
+    )
+    {
+        var body = JsonSerializer.Serialize(content, JsonSerializerOptionsFactory.PacketStyle);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, path)
         {
             Content = new StringContent(body, new MediaTypeHeaderValue("application/json")),
             Headers =
@@ -86,8 +107,6 @@ public partial class SatoriAdapter : IConnectionAdapter
                     : null,
             },
         };
-
-        var self = commandArguments?.Self;
 
         if (
             self is null
@@ -109,9 +128,7 @@ public partial class SatoriAdapter : IConnectionAdapter
             request.Headers.Add("X-User-ID", self.UserId);
         }
 
-        var response = await HttpClient.SendAsync(request);
-
-        response.EnsureSuccessStatusCode();
+        return await HttpClient.SendAsync(request);
     }
 
     public void Start()
@@ -122,7 +139,9 @@ public partial class SatoriAdapter : IConnectionAdapter
         }
 
         _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = new();
+        _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
+            _cancellationTokenProvider.Token
+        );
         _sn = null;
         HttpClient = new() { BaseAddress = new(_settingProvider.Value.Connection.Satori.Uri) };
 

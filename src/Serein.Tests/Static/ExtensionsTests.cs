@@ -41,7 +41,7 @@ public static class ExtensionsTests
     public static void ShouldBeAbleToWaitForTask()
     {
         var task = Task.Run(() => 1);
-        Assert.Equal(1, task.Await());
+        Assert.Equal(1, task.WaitForResult());
         Task.Delay(50).Await();
     }
 }

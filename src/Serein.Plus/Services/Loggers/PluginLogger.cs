@@ -39,5 +39,7 @@ public sealed class PluginLogger(ILogger<PluginLogger> logger, IServiceProvider 
                     break;
             }
         });
+
+        OnLogging(level, name, message);
     }
 }

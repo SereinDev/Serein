@@ -2,13 +2,17 @@ using System;
 using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner commandRunner)
-    : IHostedService
+internal class ScheduleRunner(
+    ILogger<ScheduleRunner> logger,
+    ScheduleProvider scheduleProvider,
+    CommandRunner commandRunner
+) : IHostedService
 {
     private readonly Timer _timer = new(5000);
 
@@ -33,6 +37,13 @@ internal class ScheduleRunner(ScheduleProvider scheduleProvider, CommandRunner c
                 {
                     schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
                     schedule.IsRunning = true;
+
+                    logger.LogDebug(
+                        "正在运行定时任务（{},cron={},command={}）",
+                        schedule.GetHashCode(),
+                        schedule.Cron,
+                        schedule.Command
+                    );
                     commandRunner
                         .RunAsync(schedule.CommandObj)
                         .ContinueWith((_) => schedule.IsRunning = false);

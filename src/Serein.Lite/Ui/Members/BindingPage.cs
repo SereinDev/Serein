@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Bindings;
+using Serein.Lite.Models;
 using Serein.Lite.Utils.Native;
 
 namespace Serein.Lite.Ui.Members;

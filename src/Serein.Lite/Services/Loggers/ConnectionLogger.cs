@@ -31,6 +31,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 }
             }
         });
+        OnLogging(level.ToString().ToLowerInvariant(), message);
     }
 
     public override void LogReceivedMessage(string line)
@@ -45,6 +46,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 );
             }
         });
+
+        OnLogging("received", line);
     }
 
     public override void LogReceivedData(string data)
@@ -59,6 +62,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 );
             }
         });
+
+        OnLogging("received", data);
     }
 
     public override void LogSentData(string line)
@@ -73,6 +78,8 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 );
             }
         });
+
+        OnLogging("sent", line);
     }
 
     public override void LogSentMessage(string data)
@@ -87,5 +94,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 );
             }
         });
+
+        OnLogging("sent", data);
     }
 }

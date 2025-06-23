@@ -88,16 +88,18 @@ public partial class PacketHandler
             return;
         }
 
+        var packets = new Packets { OneBotV11 = packet };
+
         if (
             packet.MessageType == MessageType.Group
-                && !eventDispatcher.Dispatch(Event.GroupMessageReceived, packet)
+                && !eventDispatcher.Dispatch(Event.GroupMessageReceived, packets)
             || packet.MessageType == MessageType.Private
-                && !eventDispatcher.Dispatch(Event.PrivateMessageReceived, packet)
+                && !eventDispatcher.Dispatch(Event.PrivateMessageReceived, packets)
         )
         {
             return;
         }
 
-        matcher.QueueMsg(packet);
+        matcher.QueueMsg(packets);
     }
 }

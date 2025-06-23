@@ -51,5 +51,7 @@ public sealed class PluginLogger(IServiceProvider serviceProvider) : PluginLogge
                 }
             });
         }
+
+        OnLogging(level, name, message);
     }
 }

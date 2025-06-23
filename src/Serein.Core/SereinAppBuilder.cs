@@ -43,7 +43,14 @@ public static class SereinAppBuilder
 
     internal static HostApplicationBuilder CreateBuilder(bool enableFileLogger)
     {
-        var hostAppBuilder = Host.CreateEmptyApplicationBuilder(null);
+        var hostAppBuilder = Host.CreateEmptyApplicationBuilder(
+#if DEBUG
+            new() { EnvironmentName = "Development" }
+#else
+            null
+#endif
+        );
+
         hostAppBuilder.Logging.SetMinimumLevel(LogLevel.Trace);
         hostAppBuilder.Logging.ClearProviders();
         hostAppBuilder.Logging.AddDebug();
@@ -83,6 +90,7 @@ public static class SereinAppBuilder
             .AddTransient<IpBannerModule>()
             .AddTransient<ServerWebSocketModule>()
             .AddTransient<ConnectionWebSocketModule>()
+            .AddTransient<PluginWebSocketModule>()
             .AddSingleton<PageExtractor>()
             .AddSingleton<PluginManager>()
             .AddSingleton<EventDispatcher>()

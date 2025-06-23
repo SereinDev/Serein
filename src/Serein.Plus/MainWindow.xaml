@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="clr-namespace:Serein.Plus.Helpers"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:Serein.Plus.Pages"
     xmlns:services="clr-namespace:Serein.Plus.Services"
@@ -43,15 +44,14 @@
     </Window.Resources>
 
     <Grid>
-        <tb:TaskbarIcon
-            x:Name="AppTaskbarIcon"
-            x:FieldModifier="protected"
+        <ikw:TrayIcon
+            x:Name="AppTrayIcon"
             IconSource="../../logo.ico"
             MenuActivation="RightClick"
             ToolTip="Serein.Plus"
-            TrayBalloonTipClicked="AppTaskbarIcon_TrayBalloonTipClicked"
+            TrayBalloonTipClicked="AppTrayIcon_TrayBalloonTipClicked"
             Visibility="Visible">
-            <tb:TaskbarIcon.ContextMenu>
+            <ikw:TrayIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem
                         x:Name="HideMenuItem"
@@ -83,8 +83,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-            </tb:TaskbarIcon.ContextMenu>
-        </tb:TaskbarIcon>
+            </ikw:TrayIcon.ContextMenu>
+        </ikw:TrayIcon>
 
         <Grid
             x:Name="AppTitleBar"

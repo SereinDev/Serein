@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Servers;
 
@@ -27,11 +27,11 @@ public abstract partial class PluginBase
 
     protected virtual Task OnServerInput(Server server, string line) => Task.CompletedTask;
 
-    protected virtual Task<bool> OnGroupMessageReceived(MessagePacket packet) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnGroupMessageReceived(Packets packet) => Task.FromResult(true);
 
-    protected virtual Task<bool> OnPrivateMessageReceived(MessagePacket packet) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnPrivateMessageReceived(Packets packet) => Task.FromResult(true);
+
+    protected virtual Task<bool> OnChannelMessageReceived(Packets packet) => Task.FromResult(true);
 
     protected virtual Task<bool> OnConnectionDataReceived(string data) => Task.FromResult(true);
 
@@ -59,10 +59,13 @@ public abstract partial class PluginBase
                 return OnServerStopping((Server)args[0]);
 
             case Event.GroupMessageReceived:
-                return OnGroupMessageReceived((MessagePacket)args[0]);
+                return OnGroupMessageReceived((Packets)args[0]);
 
             case Event.PrivateMessageReceived:
-                return OnPrivateMessageReceived((MessagePacket)args[0]);
+                return OnPrivateMessageReceived((Packets)args[0]);
+
+            case Event.ChannelMessageReceived:
+                return OnChannelMessageReceived((Packets)args[0]);
 
             case Event.ConnectionDataReceived:
                 return OnConnectionDataReceived((string)args[0]);

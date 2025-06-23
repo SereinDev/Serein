@@ -42,6 +42,8 @@ public sealed class ConnectionLogger(
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendReceivedMsgLine(data)
         );
+
+        OnLogging("received", data);
     }
 
     public override void LogReceivedMessage(string line)
@@ -49,6 +51,8 @@ public sealed class ConnectionLogger(
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendReceivedMsgLine(line)
         );
+
+        OnLogging("received", line);
     }
 
     public override void LogSentMessage(string data)
@@ -56,6 +60,8 @@ public sealed class ConnectionLogger(
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(data)
         );
+
+        OnLogging("sent", data);
     }
 
     public override void LogSentData(string line)
@@ -63,5 +69,7 @@ public sealed class ConnectionLogger(
         _connectionPage.Value.Dispatcher.Invoke(
             () => _connectionPage.Value.Console.AppendSentMsgLine(line)
         );
+
+        OnLogging("sent", line);
     }
 }

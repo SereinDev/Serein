@@ -7,6 +7,7 @@ using Serein.Core.Models.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
+using Serein.Lite.Models;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 

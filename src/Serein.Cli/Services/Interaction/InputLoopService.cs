@@ -80,7 +80,7 @@ public sealed class InputLoopService(
 
                     try
                     {
-                        var response = prompt.ReadLineAsync().Await();
+                        var response = prompt.ReadLineAsync().WaitForResult();
 
                         if (response.IsSuccess)
                         {

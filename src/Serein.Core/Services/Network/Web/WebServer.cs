@@ -68,16 +68,10 @@ public sealed class WebServer
         }
 
         _webServer.WithModule(new AuthGate(_settingProvider));
-
-        var serverWebSocketModule = _serviceProvider.GetRequiredService<ServerWebSocketModule>();
-        _webServer.WithModule(serverWebSocketModule);
-
-        var connectionWebSocketModule =
-            _serviceProvider.GetRequiredService<ConnectionWebSocketModule>();
-        _webServer.WithModule(connectionWebSocketModule);
-
-        var ipBannerModule = _serviceProvider.GetRequiredService<IpBannerModule>();
-        _webServer.WithModule(ipBannerModule);
+        _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
+        _webServer.WithModule(_serviceProvider.GetRequiredService<ConnectionWebSocketModule>());
+        _webServer.WithModule(_serviceProvider.GetRequiredService<PluginWebSocketModule>());
+        _webServer.WithModule(_serviceProvider.GetRequiredService<IpBannerModule>());
 
         _webServer.WithWebApi(
             "/api",
@@ -124,6 +118,7 @@ public sealed class WebServer
         var options = new WebServerOptions();
 
         _settingProvider.Value.WebApi.UrlPrefixes.ToList().ForEach(options.AddUrlPrefix);
+
         if (_settingProvider.Value.WebApi.Certificate.IsEnabled)
         {
             options.AutoLoadCertificate = _settingProvider

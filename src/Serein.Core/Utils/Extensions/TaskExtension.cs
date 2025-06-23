@@ -4,7 +4,7 @@ namespace Serein.Core.Utils.Extensions;
 
 public static class TaskExtension
 {
-    public static T Await<T>(this Task<T> task)
+    public static T WaitForResult<T>(this Task<T> task)
     {
         return task.GetAwaiter().GetResult();
     }

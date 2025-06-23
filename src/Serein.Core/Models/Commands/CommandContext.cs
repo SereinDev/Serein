@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using RegexMatch = System.Text.RegularExpressions.Match;
 using V11 = Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
@@ -29,5 +30,11 @@ public readonly record struct CommandContext()
         ?? SatoriV1MessagePacket?.User?.Id;
 
     public string? GroupId =>
-        OneBotV11MessagePacket?.GroupId.ToString() ?? OneBotV12MessagePacket?.GroupId;
+        OneBotV11MessagePacket?.GroupId.ToString()
+        ?? OneBotV12MessagePacket?.GroupId
+        ?? (
+            SatoriV1MessagePacket?.Channel?.Type != ChannelType.Direct
+                ? SatoriV1MessagePacket?.Channel?.Id
+                : null
+        );
 }

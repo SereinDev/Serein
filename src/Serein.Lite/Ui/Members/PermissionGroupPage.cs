@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Serein.Core.Models.Permissions;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Permissions;
+using Serein.Lite.Models;
 using Serein.Lite.Utils;
 using Serein.Lite.Utils.Native;
 

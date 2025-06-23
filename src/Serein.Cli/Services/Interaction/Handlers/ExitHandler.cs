@@ -3,7 +3,10 @@ using System.Linq;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Cli.Models;
+using Serein.Core.Models.Plugins;
+using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Cli.Services.Interaction.Handlers;
 
@@ -12,14 +15,17 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 public sealed class ExitHandler(
     IHost host,
     ILogger<ExitHandler> logger,
-    ServerManager serverManager
+    ServerManager serverManager,
+    EventDispatcher eventDispatcher
 ) : CommandHandler
 {
     public override void Invoke(IReadOnlyList<string> args)
     {
         if (!serverManager.AnyRunning)
         {
-            host.StopAsync().Wait();
+            eventDispatcher.Dispatch(Event.SereinClosed);
+
+            host.StopAsync().Await();
             return;
         }
 

@@ -17,6 +17,8 @@ using Serein.Core.Services.Network;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
+using Serein.Lite.Models;
 using Serein.Lite.Ui.Functions;
 using Serein.Lite.Ui.Members;
 using Serein.Lite.Ui.Servers;
@@ -328,15 +330,13 @@ public partial class MainForm : Form
         }
         else
         {
-            _host.StopAsync();
             _timer.Stop();
 
             Hide();
             ShowInTaskbar = false;
             _notifyIcon.Visible = false;
-            _notifyIcon.Dispose();
-
             _eventDispatcher.Dispatch(Event.SereinClosed);
+            _host.StopAsync().Await();
         }
         base.OnClosing(e);
     }

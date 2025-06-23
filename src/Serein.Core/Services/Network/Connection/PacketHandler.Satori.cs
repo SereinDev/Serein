@@ -4,6 +4,7 @@ using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Models.Network.Connection;
+using Serein.Core.Models.Plugins;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Connection;
@@ -41,14 +42,28 @@ public partial class PacketHandler
             $"[{(eventBody.Channel.Type == ChannelType.Direct ? "私聊" : "群聊")}({eventBody.Channel.Id})] {eventBody.User?.Nick ?? eventBody.User?.Name}({eventBody.User?.Id}): {eventBody.Message.Content} (id={eventBody.Message.Id})"
         );
 
-        if (
-            eventBody.Channel.Type != ChannelType.Direct
-            && !IsListenedId(TargetType.Group, eventBody.Channel.Id)
-        )
+        var packets = new Packets { SatoriV1 = eventBody };
+
+        if (!eventDispatcher.Dispatch(Event.ChannelMessageReceived, packets))
         {
             return;
         }
 
-        matcher.QueueMsg(eventBody);
+        if (eventBody.Channel.Type != ChannelType.Direct)
+        {
+            if (
+                !IsListenedId(TargetType.Group, eventBody.Channel.Id)
+                || !eventDispatcher.Dispatch(Event.GroupMessageReceived, packets)
+            )
+            {
+                return;
+            }
+        }
+        else if (!eventDispatcher.Dispatch(Event.GroupMessageReceived, packets))
+        {
+            return;
+        }
+
+        matcher.QueueMsg(packets);
     }
 }

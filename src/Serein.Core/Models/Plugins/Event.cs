@@ -10,6 +10,7 @@ public enum Event
     ServerRawOutput,
     ServerInput,
 
+    ChannelMessageReceived,
     GroupMessageReceived,
     PrivateMessageReceived,
     ConnectionDataReceived,
