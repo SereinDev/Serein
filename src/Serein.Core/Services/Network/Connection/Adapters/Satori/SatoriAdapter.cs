@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.Satori.V1;
 using Serein.Core.Models.Abstractions;
@@ -79,12 +80,21 @@ public partial class SatoriAdapter : IConnectionAdapter
             return;
         }
 
-        var response = await SendApiRequestAsync(
-            "v1/message.create",
-            new SendMsgPacket { ChannelId = target, Content = content },
-            commandArguments?.Self
-        );
-        response.EnsureSuccessStatusCode();
+        try
+        {
+            var response = await SendApiRequestAsync(
+                "v1/message.create",
+                new SendMsgPacket { ChannelId = target, Content = content },
+                commandArguments?.Self
+            );
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, $"发送消息失败: {e.Message}");
+
+            throw;
+        }
     }
 
     public async Task<HttpResponseMessage> SendApiRequestAsync<T>(

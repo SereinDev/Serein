@@ -19,11 +19,10 @@ internal class PluginWebSocketModule : WebSocketModuleBase
         SettingProvider settingProvider,
         PluginLoggerBase pluginLoggerBase
     )
-        : base("/ws/connection", settingProvider)
+        : base("/ws/plugins", settingProvider)
     {
         _logger = logger;
         _pluginLoggerBase = pluginLoggerBase;
-
         _pluginLoggerBase.Logging += OnLogging;
     }
 
@@ -42,8 +41,8 @@ internal class PluginWebSocketModule : WebSocketModuleBase
                         new BroadcastPacket(
                             logLevel switch
                             {
-                                LogLevel.Trace => "serein",
-                                _ => logLevel.ToString().ToLowerInvariant(),
+                                LogLevel.Trace => nameof(Serein),
+                                _ => logLevel.ToString(),
                             },
                             string.IsNullOrEmpty(title) ? line : $"[{title}] {line}"
                         ),

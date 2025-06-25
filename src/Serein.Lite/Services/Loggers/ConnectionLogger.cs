@@ -31,7 +31,7 @@ public sealed class ConnectionLogger(ConnectionPage connectionPage) : Connection
                 }
             }
         });
-        OnLogging(level.ToString().ToLowerInvariant(), message);
+        OnLogging(level.ToString(), message);
     }
 
     public override void LogReceivedMessage(string line)

@@ -1,29 +1,30 @@
 using System;
 using System.Text.Json.Serialization;
+using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Plugins.Info;
 
-public class PluginInfo
+public class PluginInfo : NotifyPropertyChangedModelBase
 {
     [JsonRequired]
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     [JsonRequired]
-    public string Id { get; init; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
 
     [JsonRequired]
-    public Version Version { get; init; } = new(0, 0, 0);
+    public Version Version { get; set; } = new(0, 0, 0);
 
     [JsonRequired]
-    public PluginType Type { get; init; }
+    public PluginType Type { get; set; }
 
-    public Author[] Authors { get; init; } = [];
+    public Author[] Authors { get; set; } = [];
 
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
-    public PluginTag[] Tags { get; init; } = [];
+    public PluginTag[] Tags { get; set; } = [];
 
-    public Dependency[] Dependencies { get; init; } = [];
+    public Dependency[] Dependencies { get; set; } = [];
 
-    public string? EntryFile { get; init; }
+    public string? EntryFile { get; set; }
 }

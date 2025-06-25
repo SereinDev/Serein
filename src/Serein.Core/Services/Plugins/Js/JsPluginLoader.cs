@@ -37,7 +37,8 @@ public sealed class JsPluginLoader(
 
     public void Load(PluginInfo pluginInfo, string dir)
     {
-        var entry = Path.GetFullPath(Path.Join(dir, pluginInfo.EntryFile ?? "index.js"));
+        pluginInfo.EntryFile ??= "index.js";
+        var entry = Path.GetFullPath(Path.Join(dir, pluginInfo.EntryFile));
 
         if (!File.Exists(entry))
         {

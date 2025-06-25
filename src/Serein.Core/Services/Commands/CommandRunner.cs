@@ -57,8 +57,6 @@ public sealed class CommandRunner
     /// </summary>
     /// <param name="command">命令</param>
     /// <param name="commandContext">命令上下文</param>
-    /// <exception cref="TimeoutException"></exception>
-    /// <exception cref="NotSupportedException"></exception>
     public async Task RunAsync(Command command, CommandContext? commandContext = null)
     {
         if (command.Type == CommandType.Invalid)
@@ -67,12 +65,15 @@ public sealed class CommandRunner
         }
 
         _logger.LogDebug(
-            "运行命令：command.Body='{}'; command.Argument='{}'",
+            "运行命令：type={}, command.Body='{}'; command.Argument='{}'",
+            command.Type,
             command.Body,
             command.Arguments
         );
 
         var body = _commandParser.Value.Format(command, commandContext);
+
+        _logger.LogDebug("格式化后：body='{}'", body);
 
         switch (command.Type)
         {
@@ -210,7 +211,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Private,
                 command.Arguments.Target,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (!string.IsNullOrEmpty(commandContext?.UserId))
@@ -218,7 +220,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Private,
                 commandContext.Value.UserId,
-                body
+                body,
+                command.Arguments
             );
         }
     }
@@ -234,7 +237,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Channel,
                 command.Arguments.Target,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (!string.IsNullOrEmpty(commandContext?.OneBotV12MessagePacket?.ChannelId))
@@ -242,7 +246,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Channel,
                 commandContext.Value.OneBotV12MessagePacket.ChannelId,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (!string.IsNullOrEmpty(commandContext?.SatoriV1MessagePacket?.Channel?.Id))
@@ -250,7 +255,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Channel,
                 commandContext.Value.SatoriV1MessagePacket.Channel.Id,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (
@@ -287,7 +293,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Group,
                 command.Arguments.Target,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (!string.IsNullOrEmpty(commandContext?.GroupId))
@@ -295,7 +302,8 @@ public sealed class CommandRunner
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Group,
                 commandContext.Value.GroupId,
-                body
+                body,
+                command.Arguments
             );
         }
         else if (
@@ -317,7 +325,12 @@ public sealed class CommandRunner
                 first = first[(first.IndexOf(':') + 1)..];
             }
 
-            await _connectionManager.Value.SendMessageAsync(TargetType.Group, first, body);
+            await _connectionManager.Value.SendMessageAsync(
+                TargetType.Group,
+                first,
+                body,
+                command.Arguments
+            );
         }
     }
 

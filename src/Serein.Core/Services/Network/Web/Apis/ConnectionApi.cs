@@ -10,20 +10,20 @@ internal partial class ApiMap
     [Route(HttpVerbs.Get, "/connection")]
     public async Task GetConnectionInfo()
     {
-        await HttpContext.SendPacketAsync(wsConnectionManager);
+        await HttpContext.SendPacketAsync(connectionManager);
     }
 
     [Route(HttpVerbs.Post, "/connection")]
     public async Task StartConnection()
     {
-        wsConnectionManager.Start();
+        connectionManager.Start();
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Delete, "/connection")]
     public async Task StopConnection()
     {
-        wsConnectionManager.Stop();
+        connectionManager.Stop();
         await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
     }
 }

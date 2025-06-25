@@ -49,7 +49,7 @@ public partial class SatoriAdapter
         webSocket.Closed += (_, _) =>
         {
             _timer.Stop();
-            _logger.Log(LogLevel.Information, $"WebSocket 连接已断开");
+            _logger.Log(LogLevel.Warning, $"WebSocket 连接已断开");
             StatusChanged?.Invoke(this, EventArgs.Empty);
 
             TryReconnect();

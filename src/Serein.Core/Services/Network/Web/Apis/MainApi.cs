@@ -25,7 +25,7 @@ internal partial class ApiMap(
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider,
     ScheduleProvider scheduleProvider,
-    ConnectionManager wsConnectionManager,
+    ConnectionManager connectionManager,
     HardwareInfoProvider hardwareInfoProvider
 ) : WebApiController
 {

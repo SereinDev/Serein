@@ -26,9 +26,8 @@ public sealed class NetPluginLoader(
 
         try
         {
-            var entry = Path.GetFullPath(
-                Path.Join(dir, pluginInfo.EntryFile ?? (pluginInfo.Id + ".dll"))
-            );
+            pluginInfo.EntryFile ??= (pluginInfo.Id + ".dll");
+            var entry = Path.GetFullPath(Path.Join(dir, pluginInfo.EntryFile));
 
             if (!File.Exists(entry))
             {

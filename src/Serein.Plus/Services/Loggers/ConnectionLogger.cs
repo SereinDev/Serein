@@ -35,6 +35,8 @@ public sealed class ConnectionLogger(
                     break;
             }
         });
+
+        OnLogging(level.ToString(), message);
     }
 
     public override void LogReceivedData(string data)

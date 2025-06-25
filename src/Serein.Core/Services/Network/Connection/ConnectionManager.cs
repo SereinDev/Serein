@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
+using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Data;
@@ -233,11 +234,16 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         await _activeAdapter.SendAsync(data);
     }
 
-    public async Task SendMessageAsync(TargetType type, string target, string text)
+    public async Task SendMessageAsync(
+        TargetType type,
+        string target,
+        string text,
+        CommandArguments? commandArguments = null
+    )
     {
         if (IsActive)
         {
-            await _activeAdapter.SendMessageAsync(type, target, text);
+            await _activeAdapter.SendMessageAsync(type, target, text, commandArguments);
         }
     }
 }
