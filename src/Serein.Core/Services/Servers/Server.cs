@@ -330,11 +330,11 @@ public sealed class Server
         _logger.LogDebug("Id={}: 正在关闭", Id);
     }
 
-    internal void InputFromCommand(string command, EncodingMap.EncodingType? encodingType = null)
+    internal void InputFromCommand(string command, bool? useUnicodeChars)
     {
         if (Status)
         {
-            Input(command, encodingType, false);
+            Input(command, false);
         }
         else if (command == "start")
         {
@@ -347,25 +347,19 @@ public sealed class Server
         }
     }
 
-    public void Input(string command)
+    public void Input(string command, bool? useUnicodeChars = null)
     {
-        Input(command, null, false);
+        Input(command, true, useUnicodeChars);
     }
 
-    internal void Input(string command, EncodingMap.EncodingType? encodingType, bool fromUser)
+    internal void Input(string command, bool fromUser, bool? useUnicodeChars = null)
     {
         if (!Status)
         {
             return;
         }
 
-        _logger.LogDebug(
-            "Id={}: command='{}'; encodingType={}; fromUser={}",
-            Id,
-            command,
-            encodingType,
-            fromUser
-        );
+        _logger.LogDebug("Id={}: command='{}'; fromUser={}", Id, command, fromUser);
 
         if (!_eventDispatcher.Dispatch(Event.ServerInput, this, command))
         {
@@ -375,10 +369,13 @@ public sealed class Server
         GetProcessSpawner()!
             .Write(
                 EncodingMap
-                    .GetEncoding(encodingType ?? Configuration.InputEncoding)
+                    .GetEncoding(Configuration.InputEncoding)
                     .GetBytes(
-                        (Configuration.UseUnicodeChars ? command.ToUnicode() : command)
-                            + Configuration.LineTerminator
+                        (
+                            useUnicodeChars ?? Configuration.UseUnicodeChars
+                                ? command.ToUnicode()
+                                : command
+                        ) + Configuration.LineTerminator
                     )
             );
 

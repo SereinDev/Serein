@@ -29,26 +29,51 @@ public class WebSocketTests : IDisposable
         _app.Dispose();
     }
 
-    [Fact]
-    public async Task ShouldNotBeClosedWithTokenParam()
+    [Theory]
+    [InlineData("connection")]
+    [InlineData("plugins")]
+    public async Task ShouldNotBeClosedWithTokenParam(string path)
     {
-        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection?token=123456");
+        using var ws = new WebSocket($"ws://127.0.0.1:50000/ws/{path}?token=123456");
         ws.Open();
 
         await Task.Delay(500);
 
         Assert.Equal(WebSocketState.Open, ws.State);
-        ws.Dispose();
     }
 
-    [Fact]
-    public async Task ShouldBeClosedWithoutTokenParam()
+    [Theory]
+    [InlineData("connection")]
+    [InlineData("plugins")]
+    public async Task ShouldBeClosedWithoutTokenParam(string path)
     {
-        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/connection");
+        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/" + path);
         ws.Open();
 
         await Task.Delay(1000);
 
         Assert.NotEqual(WebSocketState.Open, ws.State);
+    }
+
+    [Fact]
+    public async Task ShouldBeClosedWithoutIdParam()
+    {
+        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/server?token=123456");
+        ws.Open();
+
+        await Task.Delay(1000);
+
+        Assert.NotEqual(WebSocketState.Open, ws.State);
+    }
+
+    [Fact]
+    public async Task ShouldNotBeClosedWithTokenAndIdParam()
+    {
+        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/server?token=123456&id=myserver");
+        ws.Open();
+
+        await Task.Delay(500);
+
+        Assert.Equal(WebSocketState.Open, ws.State);
     }
 }

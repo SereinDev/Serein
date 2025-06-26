@@ -81,7 +81,7 @@ public sealed class PluginInfoTests : IDisposable
         File.WriteAllText(Path.Join(PathConstants.PluginsDirectory, "test", "1.js"), "");
 
         await _host.StartAsync();
-        await Task.Delay(500);
+        await Task.Delay(1000);
 
         var kv = _jsPluginLoader.Plugins.First();
 

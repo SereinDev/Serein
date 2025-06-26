@@ -202,7 +202,7 @@ public partial class Panel : UserControl
     {
         if (_server.Status)
         {
-            _server.Input(_inputTextBox.Text, null, true);
+            _server.Input(_inputTextBox.Text, true);
             _inputTextBox.Text = string.Empty;
         }
     }

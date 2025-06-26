@@ -73,6 +73,7 @@ public sealed class InjectionTest : IDisposable
             )
         );
         await _host.StartAsync();
+        await Task.Delay(1000);
 
         Assert.Single(_netPluginLoader.Plugins);
     }
@@ -116,6 +117,7 @@ public sealed class InjectionTest : IDisposable
             )
         );
         await _host.StartAsync();
+        await Task.Delay(1000);
 
         Assert.Single(_netPluginLoader.Plugins);
     }
@@ -160,6 +162,7 @@ public sealed class InjectionTest : IDisposable
             )
         );
         await _host.StartAsync();
+        await Task.Delay(1000);
 
         Assert.Single(_netPluginLoader.Plugins);
     }

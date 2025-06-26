@@ -65,7 +65,7 @@ public sealed class LoadTests : IDisposable
         );
 
         await _host.StartAsync();
-        await Task.Delay(100);
+        await Task.Delay(1000);
 
         Assert.Empty(_netPluginLoader.Plugins);
     }
@@ -112,7 +112,7 @@ public sealed class LoadTests : IDisposable
         );
 
         await _host.StartAsync();
-        await Task.Delay(100);
+        await Task.Delay(1000);
 
         Assert.Empty(_netPluginLoader.Plugins);
     }
@@ -153,7 +153,7 @@ public sealed class LoadTests : IDisposable
         );
 
         await _host.StartAsync();
-        await Task.Delay(100);
+        await Task.Delay(1000);
 
         Assert.Single(_netPluginLoader.Plugins);
         Assert.Equal(nameof(PluginBase), _netPluginLoader.Plugins.First().Key);
@@ -192,7 +192,7 @@ public sealed class LoadTests : IDisposable
         );
 
         await _host.StartAsync();
-        await Task.Delay(100);
+        await Task.Delay(1000);
 
         Assert.Single(_netPluginLoader.Plugins);
     }

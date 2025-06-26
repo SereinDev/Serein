@@ -10,19 +10,18 @@ using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Utils.Extensions;
 using Serein.Core.Utils.Json;
-using WebSocket4Net;
 using Xunit;
 
-namespace Serein.Tests.Services;
+namespace Serein.Tests.Services.Connection;
 
 [Collection(nameof(Serein))]
-public class ConnectionTests : IDisposable
+public class OneBotForwardAdapterTests : IDisposable
 {
     private readonly IHost _app;
     private readonly SettingProvider _settingProvider;
     private readonly ConnectionManager _connectionManager;
 
-    public ConnectionTests()
+    public OneBotForwardAdapterTests()
     {
         _app = HostFactory.BuildNew();
         _settingProvider = _app.Services.GetRequiredService<SettingProvider>();
@@ -37,8 +36,9 @@ public class ConnectionTests : IDisposable
     }
 
     [Fact]
-    public void ShouldBeAbleToConnectToWebSocketServer()
+    public void ShouldBeAbleToConnectToOneBotWebSocketServer()
     {
+        _settingProvider.Value.Connection.Adapter = AdapterType.OneBot_ForwardWebSocket;
         using var server = new WebSocketServer(_settingProvider.Value.Connection.OneBot.Uri);
         server.Start(
             (socket) =>
@@ -55,22 +55,5 @@ public class ConnectionTests : IDisposable
 
         Task.Delay(2000).Await();
         Assert.True(_connectionManager.IsActive);
-    }
-
-    [Fact]
-    public void ShouldStartReverseWebSocketServer()
-    {
-        _settingProvider.Value.Connection.Adapter = AdapterType.OneBot_ReverseWebSocket;
-        _settingProvider.Value.Connection.OneBot.Uri = "http://127.0.0.1:8080";
-        _connectionManager.Start();
-
-        Task.Delay(2000).Await();
-        Assert.True(_connectionManager.IsActive);
-
-        using var ws = new WebSocket("ws://127.0.0.1:8080");
-        ws.Open();
-
-        Task.Delay(2000).Await();
-        Assert.Equal(WebSocketState.Open, ws.State);
     }
 }

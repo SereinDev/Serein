@@ -16,7 +16,8 @@ namespace Serein.Core.Services.Network.Connection.Adapters.OneBot;
 public sealed class ForwardWebSocketAdapter(
     IHost host,
     SettingProvider settingProvider,
-    ActionBuilder actionBuilder
+    ActionBuilder actionBuilder,
+    CancellationTokenProvider cancellationTokenProvider
 ) : IConnectionAdapter
 {
     private readonly Lazy<ConnectionLoggerBase> _connectionLogger = new(
@@ -165,7 +166,9 @@ public sealed class ForwardWebSocketAdapter(
         }
 
         _reconnectCancellationToken?.Dispose();
-        _reconnectCancellationToken = new();
+        _reconnectCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(
+            cancellationTokenProvider.Token
+        );
         _connectionLogger.Value.Log(
             LogLevel.Information,
             $"将在五秒后（{DateTime.Now.AddSeconds(5):T}）尝试重新连接"

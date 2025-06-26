@@ -19,7 +19,9 @@ public partial class SatoriAdapter
 
     private WebSocket CreateNew()
     {
-        var uri = UrlRegex.Replace(_settingProvider.Value.Connection.Satori.Uri, "ws");
+        var uri = _settingProvider.Value.Connection.Satori.Uri.StartsWith("http")
+            ? "ws" + _settingProvider.Value.Connection.Satori.Uri[4..]
+            : _settingProvider.Value.Connection.Satori.Uri;
 
         if (!uri.EndsWith('/'))
         {

@@ -198,7 +198,7 @@ public partial class PanelTabItem : TabItem
 
     private void Input()
     {
-        Server.Input(InputBox.Text, null, true);
+        Server.Input(InputBox.Text, true);
         InputBox.Text = string.Empty;
         InputBox.Focus();
     }

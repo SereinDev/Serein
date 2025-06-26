@@ -351,7 +351,7 @@ public sealed class CommandRunner
             server = _serverManager.Value.Servers.Values.First();
         }
 
-        server?.InputFromCommand(body, null);
+        server?.InputFromCommand(body, command.Arguments?.UseUnicode);
     }
 
     private async Task FastReply(CommandContext commandContext, string content)

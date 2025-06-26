@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Jint;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +7,7 @@ using Xunit;
 
 namespace Serein.Tests.Services.JsPlugin;
 
-public sealed partial class InteropTests : IDisposable
+public sealed partial class InteropTests
 {
     [Fact]
     public void ShouldBeAbleToSetVariable()

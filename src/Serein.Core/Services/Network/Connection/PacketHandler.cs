@@ -69,6 +69,11 @@ public sealed partial class PacketHandler(
             return false;
         }
 
+        if (targetType == TargetType.Private)
+        {
+            return true;
+        }
+
         var key = targetType.ToString().ToLowerInvariant();
         var shortKey = targetType != TargetType.Guild ? key[0].ToString() : key;
 

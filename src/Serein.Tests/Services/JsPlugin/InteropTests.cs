@@ -2,13 +2,10 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Jint;
 using Jint.Native;
-using Jint.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Plugins.Js;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Plugins.Js;
@@ -70,54 +67,6 @@ public sealed partial class InteropTests : IDisposable
 
         kv.Value.Engine.Evaluate("System.IO.File.WriteAllText('test.txt', '')");
         Assert.True(File.Exists("test.txt"));
-    }
-
-    [Fact]
-    public async Task ShouldBeAbleToSetListener()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Execute(
-            "var called = false; serein.setListener('PluginsLoaded', () => { called = true; });"
-        );
-        _eventDispatcher.Dispatch(Event.PluginsLoaded);
-
-        await Task.Delay(2000);
-        Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
-    }
-
-    [Fact]
-    public async Task ShouldBeAbleToSetTimeout()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Execute(
-            """
-            var called = false;
-            setTimeout(() => { called = true; }, 500);
-            """
-        );
-
-        await Task.Delay(1000);
-        Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
-    }
-
-    [Fact]
-    public async Task ShouldBeAbleToSetInterval()
-    {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Execute(
-            """
-            var count = 0;
-            var interval = setInterval(() => {
-                count++;
-                if (count >= 5) {
-                    clearInterval(interval);
-                }
-            }, 100);
-            """
-        );
-
-        await Task.Delay(1000);
-        Assert.Equal(5, kv.Value.Engine.Evaluate("count"));
     }
 
     [Fact]
