@@ -28,6 +28,10 @@ public partial class CommandPromptCallbacks
         LoadFrom<PluginHandler>
     );
 
+    private readonly Lazy<IEnumerable<CompletionItem>> _webServerubcommnads = new(
+        LoadFrom<WebServerHandler>
+    );
+
     private readonly Task<IReadOnlyList<CompletionItem>> _emptyTask = Task.FromResult<
         IReadOnlyList<CompletionItem>
     >([]);
@@ -101,7 +105,7 @@ public partial class CommandPromptCallbacks
         where THandler : CommandHandler
     {
         return typeof(THandler)
-            .GetCustomAttributes<CommandChildrenAttribute>()
+            .GetCustomAttributes<SubCommandAttribute>()
             .Select(
                 (attr) =>
                     new CompletionItem(

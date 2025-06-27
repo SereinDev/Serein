@@ -192,9 +192,7 @@ public partial class CommandParser(
 
     private static bool? GetArgumentValueAsBool(string value)
     {
-        return value.Equals("true", StringComparison.OrdinalIgnoreCase) ? true
-            : value.Equals("false", StringComparison.OrdinalIgnoreCase) ? false
-            : null;
+        return bool.TryParse(value, out bool result) ? result : null;
     }
 
     /// <summary>
@@ -378,7 +376,7 @@ public partial class CommandParser(
                         : null,
                     #endregion
 
-                    _ => GetServerVariables(name, commandContext?.ServerId),
+                    _ => GetServerVariables(match.Groups[1].Value, commandContext?.ServerId),
                 };
 
                 var r = obj?.ToString();
@@ -458,9 +456,11 @@ public partial class CommandParser(
                     "server.players.max" => server.Info.Stat?.MaximumPlayers,
                     "server.players.current" => server.Info.Stat?.CurrentPlayers,
                     "server.players.percent" => server.Info.Stat is not null
-                        ? 100
-                            * server.Info.Stat.CurrentPlayersInt
-                            / server.Info.Stat.MaximumPlayersInt
+                        ? server.Info.Stat.MaximumPlayersInt > 0
+                            ? 100
+                                * server.Info.Stat.CurrentPlayersInt
+                                / server.Info.Stat.MaximumPlayersInt
+                            : 0
                         : null,
 
                     _ => null,

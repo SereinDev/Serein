@@ -12,7 +12,7 @@ public class WebApiSetting : NotifyPropertyChangedModelBase
 
     public int MaxRequestsPerSecond { get; set; } = 50;
 
-    public string[] WhiteList { get; set; } = [];
+    public string[] WhiteList { get; set; } = ["127.0.0.1", "::1"];
 
     public string[] AccessTokens { get; set; } = [];
 

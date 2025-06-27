@@ -11,11 +11,18 @@ public partial class WebApiSettingPage : UserControl
 {
     private readonly SettingProvider _settingProvider;
     private readonly WebServer _httpServer;
+    private readonly PageExtractor _pageExtractor;
 
-    public WebApiSettingPage(SettingProvider settingProvider, WebServer httpServer)
+    public WebApiSettingPage(
+        WebServer httpServer,
+        PageExtractor pageExtractor,
+        SettingProvider settingProvider
+    )
     {
-        _settingProvider = settingProvider;
         _httpServer = httpServer;
+        _pageExtractor = pageExtractor;
+        _settingProvider = settingProvider;
+
         InitializeComponent();
         SetBindings();
 
@@ -145,6 +152,29 @@ public partial class WebApiSettingPage : UserControl
         if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
         {
             _pathTextBox.Text = dialog.FileName;
+        }
+    }
+
+    private void ExtractButton_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            _pageExtractor.Extract();
+            MessageBox.Show(
+                "解压成功\r\n\r\n需要重启网页服务器以应用更改",
+                "Serein.Lite",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                "解压失败\r\n\r\n" + ex.Message,
+                "Serein.Lite",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
     }
 }

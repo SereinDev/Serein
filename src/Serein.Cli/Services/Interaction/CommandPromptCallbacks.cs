@@ -46,12 +46,21 @@ public partial class CommandPromptCallbacks(
 
         if (args.Length > 0)
         {
-            switch (args[0])
+            switch (args[0].ToLowerInvariant())
             {
                 case "connection" when args.Length == 2:
                     return Task.FromResult<IReadOnlyList<CompletionItem>>(
                         [
                             .. _connectionSubcommnads.Value.OrderByDescending(
+                                (item) => CalculateRelevance(item.ReplacementText, typedWord)
+                            ),
+                        ]
+                    );
+
+                case "webserver" when args.Length == 2:
+                    return Task.FromResult<IReadOnlyList<CompletionItem>>(
+                        [
+                            .. _webServerubcommnads.Value.OrderByDescending(
                                 (item) => CalculateRelevance(item.ReplacementText, typedWord)
                             ),
                         ]

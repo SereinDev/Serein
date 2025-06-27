@@ -47,7 +47,12 @@ public partial class AboutPage : UserControl
         if (sender is Label label)
         {
             Clipboard.SetText(label.Text);
-            MessageBox.Show("复制成功", "Serein", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "复制成功",
+                "Serein.Lite",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
     }
 }

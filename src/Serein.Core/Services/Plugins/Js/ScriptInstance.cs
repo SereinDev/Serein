@@ -11,6 +11,7 @@ using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Settings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Properties;
 using Console = Serein.Core.Services.Plugins.Js.Properties.Console;
@@ -30,6 +31,7 @@ public sealed partial class ScriptInstance
     public ServerProperty Servers { get; }
     public ConnectionProperty Connection { get; }
     public CommandProperty Command { get; }
+    public WebServer WebServer { get; }
     public Console Console => _jsPlugin.Console;
     public Setting Setting => _settingProvider.Value;
     public SereinApp App { get; }
@@ -46,6 +48,7 @@ public sealed partial class ScriptInstance
         _hardwareInfoProvider = _serviceProvider.GetRequiredService<HardwareInfoProvider>();
 
         App = _serviceProvider.GetRequiredService<SereinApp>();
+        WebServer = _serviceProvider.GetRequiredService<WebServer>();
 
         var propertyBuilder = _serviceProvider.GetRequiredService<PropertyFactory>();
         Command = propertyBuilder.CommandProperty;

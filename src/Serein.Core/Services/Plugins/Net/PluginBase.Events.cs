@@ -1,7 +1,7 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using EmbedIO;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Services.Servers;
@@ -36,6 +36,9 @@ public abstract partial class PluginBase
     protected virtual Task<bool> OnConnectionDataReceived(string data) => Task.FromResult(true);
 
     protected virtual Task<bool> OnPacketReceived(JsonNode packet) => Task.FromResult(true);
+
+    protected virtual Task<bool> OnHttpRequestReceived(IHttpContext httpContext) =>
+        Task.FromResult(true);
 
     protected virtual Task OnSereinClosed() => Task.CompletedTask;
 
@@ -74,41 +77,16 @@ public abstract partial class PluginBase
                 return OnPacketReceived((JsonNode)args[0]);
 
             case Event.ServerOutput:
-                if (args.Length != 2)
-                {
-                    ThrowArgumentException();
-                }
-
                 return OnServerOutput((Server)args[0], (string)args[1]);
 
             case Event.ServerRawOutput:
-                if (args.Length != 2)
-                {
-                    ThrowArgumentException();
-                }
-
                 return OnServerRawOutput((Server)args[0], (string)args[1]);
 
             case Event.ServerInput:
-                if (args.Length != 2)
-                {
-                    ThrowArgumentException();
-                }
-
                 return OnServerInput((Server)args[0], (string)args[1]);
 
             case Event.ServerExited:
-                if (
-                    args.Length != 3
-                    || args[0] is not Server server
-                    || args[1] is not int code
-                    || args[2] is not DateTime time
-                )
-                {
-                    ThrowArgumentException();
-                }
-
-                return OnServerExited(server, code, time);
+                return OnServerExited((Server)args[0], (int)args[1], (DateTime)args[2]);
 
             case Event.SereinClosed:
                 return OnSereinClosed();
@@ -122,14 +100,11 @@ public abstract partial class PluginBase
             case Event.PluginsUnloading:
                 return OnPluginsUnloading();
 
+            case Event.HttpRequestReceived:
+                return OnHttpRequestReceived((IHttpContext)args[0]);
+
             default:
                 throw new NotSupportedException();
-        }
-
-        [DoesNotReturn]
-        static void ThrowArgumentException()
-        {
-            throw new ArgumentException("缺少参数或类型不正确", nameof(args));
         }
     }
 }

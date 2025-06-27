@@ -21,6 +21,7 @@ internal partial class ApiMap
     {
         var connectionSetting = await HttpContext.ConvertRequestAs<ConnectionSetting>();
         connectionSetting.DeepCloneTo(settingProvider.Value.Connection);
+        settingProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync();
     }
@@ -30,6 +31,7 @@ internal partial class ApiMap
     {
         var webApiSetting = await HttpContext.ConvertRequestAs<WebApiSetting>();
         webApiSetting.DeepCloneTo(settingProvider.Value.WebApi);
+        settingProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync();
     }
@@ -39,6 +41,7 @@ internal partial class ApiMap
     {
         var applicationSetting = await HttpContext.ConvertRequestAs<ApplicationSetting>();
         applicationSetting.DeepCloneTo(settingProvider.Value.Application);
+        settingProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync();
     }
@@ -56,6 +59,7 @@ internal partial class ApiMap
                 settingProvider.Value.Reactions[key] = dict.TryGetValue(key, out var v) ? v : value;
             }
         }
+        settingProvider.SaveAsyncWithDebounce();
 
         await HttpContext.SendPacketAsync();
     }

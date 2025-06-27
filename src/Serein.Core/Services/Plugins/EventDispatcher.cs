@@ -31,8 +31,14 @@ public sealed class EventDispatcher(
     {
         _logger.LogDebug("分发事件：{}", @event);
 
+        if (jsPluginLoader.Plugins.Count == 0 && netPluginLoader.Plugins.Count == 0)
+        {
+            _logger.LogDebug("没有可用的插件，事件（{}）被忽略", @event);
+            return true;
+        }
+
         var tasks = new List<Task<bool>>();
-        var cancellationTokenSource = new CancellationTokenSource();
+        using var cancellationTokenSource = new CancellationTokenSource();
 
         DispatchToJsPlugins(tasks, @event, cancellationTokenSource.Token, args);
 
@@ -49,7 +55,6 @@ public sealed class EventDispatcher(
         if (tasks.Count == 0)
         {
             cancellationTokenSource.Cancel();
-            cancellationTokenSource.Dispose();
             return true;
         }
 
@@ -62,7 +67,19 @@ public sealed class EventDispatcher(
                     settingProvider.Value.Application.PluginEventMaxWaitingTime
                 );
             }
-            catch (Exception e) when (e is not AggregateException)
+            catch (OperationCanceledException)
+            {
+                _logger.LogDebug("事件（{}）任务被取消", @event);
+            }
+            catch (AggregateException e)
+            {
+                pluginLogger.Log(
+                    LogLevel.Trace,
+                    string.Empty,
+                    $"事件（{@event}）任务执行时出现异常：\n{(e.InnerException ?? e).GetDetailString()}"
+                );
+            }
+            catch (Exception)
             {
                 throw;
             }

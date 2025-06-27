@@ -39,6 +39,7 @@
             System.Windows.Forms.Label passwordLabel;
             System.Windows.Forms.Label pathLabel;
             System.Windows.Forms.ToolTip toolTip;
+            System.Windows.Forms.Button extractButton;
             _passwordMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             _pathTextBox = new System.Windows.Forms.TextBox();
             _autoLoadCertificateCheckBox = new System.Windows.Forms.CheckBox();
@@ -59,6 +60,7 @@
             passwordLabel = new System.Windows.Forms.Label();
             pathLabel = new System.Windows.Forms.Label();
             toolTip = new System.Windows.Forms.ToolTip(components);
+            extractButton = new System.Windows.Forms.Button();
             certificateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)_maxRequestsPerSecondNumericUpDown).BeginInit();
             SuspendLayout();
@@ -271,10 +273,21 @@
             toolTip.SetToolTip(_accessTokensTextBox, "若值不为空，请求时“/api”下的任意资源均需要在请求头中添加Authentication项，即“Authentication: Bearer [Token]”");
             _accessTokensTextBox.TextChanged += AccessTokensTextBox_TextChanged;
             // 
+            // extractButton
+            // 
+            extractButton.Location = new System.Drawing.Point(210, 22);
+            extractButton.Name = "extractButton";
+            extractButton.Size = new System.Drawing.Size(234, 46);
+            extractButton.TabIndex = 11;
+            extractButton.Text = "解压释放网页文件";
+            toolTip.SetToolTip(extractButton, "· 此操作将覆盖“Serein/web/”下的所有文件且不可撤销\r\n· 用于更新网页文件或修复文件丢失问题");
+            extractButton.UseVisualStyleBackColor = true;
+            extractButton.Click += ExtractButton_Click;
+            // 
             // _isEnableCheckBox
             // 
             _isEnableCheckBox.AutoSize = true;
-            _isEnableCheckBox.Location = new System.Drawing.Point(27, 25);
+            _isEnableCheckBox.Location = new System.Drawing.Point(27, 29);
             _isEnableCheckBox.Name = "_isEnableCheckBox";
             _isEnableCheckBox.Size = new System.Drawing.Size(94, 35);
             _isEnableCheckBox.TabIndex = 0;
@@ -288,6 +301,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.Color.White;
+            Controls.Add(extractButton);
             Controls.Add(certificateGroupBox);
             Controls.Add(_accessTokensTextBox);
             Controls.Add(accessTokensLabel);

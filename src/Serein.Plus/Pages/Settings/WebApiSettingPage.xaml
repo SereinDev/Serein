@@ -29,6 +29,20 @@
                 <ui:ToggleSwitch IsOn="{Binding Value.WebApi.IsEnabled}" Toggled="ToggleSwitch_Toggled" />
             </ui:SettingsCard>
 
+            <ui:SettingsCard
+                Click="ExtractPages_Click"
+                Header="解压释放网页文件"
+                IsClickEnabled="True">
+                <ui:SettingsCard.Description>
+                    <sys:String xml:space="preserve">· 此操作将覆盖“Serein/web/”下的所有文件且不可撤销
+· 用于更新网页文件或修复文件丢失问题</sys:String>
+                </ui:SettingsCard.Description>
+
+                <ui:SettingsCard.ActionIcon>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.OpenLocal}" />
+                </ui:SettingsCard.ActionIcon>
+            </ui:SettingsCard>
+
             <TextBlock
                 Margin="0,15,0,5"
                 Style="{DynamicResource SubtitleTextBlockStyle}"

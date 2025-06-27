@@ -10,12 +10,12 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("server", "服务器")]
 [CommandDescription(["管理服务器配置", "控制服务器", "查看服务器信息"])]
-[CommandChildren("info", "显示信息")]
-[CommandChildren("start", "启动")]
-[CommandChildren("stop", "关闭")]
-[CommandChildren("terminate", "强制结束")]
-[CommandChildren("switch", "选择并控制")]
-[CommandChildren("list", "列出所有服务器")]
+[SubCommand("info", "显示信息")]
+[SubCommand("start", "启动")]
+[SubCommand("stop", "关闭")]
+[SubCommand("terminate", "强制结束")]
+[SubCommand("switch", "选择并控制")]
+[SubCommand("list", "列出所有服务器")]
 public sealed class ServerHandler(
     ILogger<ServerHandler> logger,
     SettingProvider settingProvider,

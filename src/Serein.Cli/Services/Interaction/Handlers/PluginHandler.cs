@@ -14,9 +14,9 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("plugin", "插件")]
 [CommandDescription(["重新加载插件", "管理插件", "禁用插件"])]
-[CommandChildren("reload", "重新加载插件")]
-[CommandChildren("list", "显示插件列表")]
-[CommandChildren("disable", "禁用插件")]
+[SubCommand("reload", "重新加载插件")]
+[SubCommand("list", "显示插件列表")]
+[SubCommand("disable", "禁用插件")]
 public sealed class PluginHandler(
     ILogger<PluginHandler> logger,
     PluginManager pluginManager,

@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.WebApi;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,12 @@ public sealed class WebServer
     static WebServer()
     {
         Logger.NoLogging();
+
+        if (Loggers.FileLoggerProvider.IsEnabled)
+        {
+            Directory.CreateDirectory("Serein/logs/swan");
+            Logger.RegisterLogger(new FileLogger("Serein/logs/swan/web.log", true));
+        }
     }
 
     private readonly IServiceProvider _serviceProvider;
@@ -68,10 +76,10 @@ public sealed class WebServer
         }
 
         _webServer.WithModule(new AuthGate(_settingProvider));
+        _webServer.WithModule(_serviceProvider.GetRequiredService<RequestInterceptorModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ServerWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<ConnectionWebSocketModule>());
         _webServer.WithModule(_serviceProvider.GetRequiredService<PluginWebSocketModule>());
-        _webServer.WithModule(_serviceProvider.GetRequiredService<IpBannerModule>());
 
         _webServer.WithWebApi(
             "/api",
@@ -82,6 +90,8 @@ public sealed class WebServer
                     .WithController(() => _serviceProvider.GetRequiredService<ApiMap>())
         );
         _webServer.WithStaticFolder("/", PathConstants.WebRoot, true);
+
+        _webServer.HandleUnhandledException(OnUnhandledException);
 
         _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(
             _cancellationTokenProvider.Token
@@ -111,6 +121,19 @@ public sealed class WebServer
         _cancellationTokenSource?.Dispose();
         _webServer.Dispose();
         _logger.LogInformation("网页服务器已停止");
+    }
+
+    private Task OnUnhandledException(IHttpContext context, Exception exception)
+    {
+        _logger.LogError(
+            exception,
+            "网页服务器发生未处理异常。path={}, id={}, from={}",
+            context.Request.Url,
+            context.Id,
+            context.RemoteEndPoint
+        );
+
+        return Task.CompletedTask;
     }
 
     private WebServerOptions CreateOptions()

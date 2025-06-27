@@ -16,6 +16,8 @@ public enum Event
     ConnectionDataReceived,
     PacketReceived,
 
+    HttpRequestReceived,
+
     SereinClosed,
     SereinCrashed,
 

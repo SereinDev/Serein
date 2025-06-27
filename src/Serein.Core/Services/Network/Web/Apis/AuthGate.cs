@@ -16,20 +16,20 @@ internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
             return;
         }
 
-        var auth = context.Request.Headers.Get("Authorization");
+        var token = context.Request.Headers.Get("Authorization");
 
-        if (string.IsNullOrEmpty(auth))
+        if (string.IsNullOrEmpty(token))
         {
             await ApiHelper.HandleHttpException(context, HttpException.Unauthorized());
             return;
         }
 
-        if (auth.StartsWith("Bearer "))
+        if (token.StartsWith("Bearer "))
         {
-            auth = auth[7..];
+            token = token[7..];
         }
 
-        if (!settingProvider.Value.WebApi.AccessTokens.Contains(auth))
+        if (!settingProvider.Value.WebApi.AccessTokens.Contains(token))
         {
             await ApiHelper.HandleHttpException(context, HttpException.Unauthorized());
         }

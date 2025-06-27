@@ -153,6 +153,7 @@ public static class Program
             .AddSingleton<ServerHandler>()
             .AddSingleton<ConnectionHandler>()
             .AddSingleton<ClearScreenHandler>()
+            .AddSingleton<WebServerHandler>()
             .AddSingleton<VersionHandler>()
             .AddSingleton<ExitHandler>()
             .AddSingleton<HelpHandler>()

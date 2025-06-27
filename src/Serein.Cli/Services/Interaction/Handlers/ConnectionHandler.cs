@@ -8,12 +8,12 @@ namespace Serein.Cli.Services.Interaction.Handlers;
 
 [CommandName("connection", "连接")]
 [CommandDescription(["连接或断开WebSocket", "查看连接信息"])]
-[CommandChildren("info", "查看WebSocket连接状态")]
-[CommandChildren("open", "打开WebSocket连接")]
-[CommandChildren("close", "关闭WebSocket连接")]
+[SubCommand("info", "查看WebSocket连接状态")]
+[SubCommand("open", "打开WebSocket连接")]
+[SubCommand("close", "关闭WebSocket连接")]
 public sealed class ConnectionHandler(
     ILogger<ConnectionHandler> logger,
-    ConnectionManager wsConnectionManager
+    ConnectionManager connectionManager
 ) : CommandHandler
 {
     public override void Invoke(IReadOnlyList<string> args)
@@ -28,14 +28,14 @@ public sealed class ConnectionHandler(
             case "info":
                 logger.LogInformation(
                     "连接状态：{}",
-                    wsConnectionManager.IsActive ? "已连接" : "未连接"
+                    connectionManager.IsActive ? "已连接" : "未连接"
                 );
 
                 break;
             case "open":
                 try
                 {
-                    wsConnectionManager.Start();
+                    connectionManager.Start();
                 }
                 catch (Exception e)
                 {
@@ -46,7 +46,7 @@ public sealed class ConnectionHandler(
             case "close":
                 try
                 {
-                    wsConnectionManager.Stop();
+                    connectionManager.Stop();
                 }
                 catch (Exception e)
                 {

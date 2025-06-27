@@ -28,6 +28,7 @@ public sealed class CommandProvider
             serviceProvider.GetRequiredService<ServerHandler>(),
             serviceProvider.GetRequiredService<ConnectionHandler>(),
             serviceProvider.GetRequiredService<PluginHandler>(),
+            serviceProvider.GetRequiredService<WebServerHandler>(),
             serviceProvider.GetRequiredService<ClearScreenHandler>(),
             serviceProvider.GetRequiredService<VersionHandler>(),
             serviceProvider.GetRequiredService<ExitHandler>(),
@@ -44,15 +45,18 @@ public sealed class CommandProvider
         {
             var type = command.GetType();
             var attribute = type.GetCustomAttribute<CommandNameAttribute>();
+
             if (attribute is null)
             {
                 continue;
             }
+
             dict[attribute.RootCommand] = command;
             if (attribute.RootCommand == "help")
             {
                 dict["?"] = command;
             }
+
             GenerateHelpPage(list, stringBuilder, type);
         }
 
@@ -82,7 +86,7 @@ public sealed class CommandProvider
             stringBuilder.AppendLine($"  ▫ {line}");
         }
 
-        var childrenAttributes = type.GetCustomAttributes<CommandChildrenAttribute>();
+        var childrenAttributes = type.GetCustomAttributes<SubCommandAttribute>();
         if (childrenAttributes.Any())
         {
             stringBuilder.AppendLine(" ▢ 用法");

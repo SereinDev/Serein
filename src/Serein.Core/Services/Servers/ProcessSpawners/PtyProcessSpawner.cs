@@ -30,7 +30,6 @@ internal sealed class PtyProcessSpawner(
     private IPtyConnection? _ptyConnection;
     private StreamReader? _streamReader;
     private bool _isPreparing;
-    private readonly ILogger _logger = logger;
 
     public void Start(Configuration configuration)
     {
@@ -92,7 +91,18 @@ internal sealed class PtyProcessSpawner(
                     CurrentProcess = Process.GetProcessById(_ptyConnection.Pid);
                     _ptyConnection.ProcessExited += (_, e) =>
                     {
-                        _ptyConnection?.Dispose();
+                        try
+                        {
+                            _ptyConnection?.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            serverLogger.WriteInternalError(
+                                "在处理进程退出时发生异常：" + ex.Message
+                            );
+                            logger.LogError(ex, "在处理进程退出时发生异常");
+                        }
+
                         _ptyConnection = null;
                         _streamReader?.Close();
                         _cancellationTokenSource.Cancel();
@@ -148,7 +158,7 @@ internal sealed class PtyProcessSpawner(
             catch (Exception e)
             {
                 serverLogger.WriteInternalError(e.Message);
-                _logger.LogDebug(e, "读取服务器输出时发生错误");
+                logger.LogDebug(e, "读取服务器输出时发生错误");
             }
         }
 

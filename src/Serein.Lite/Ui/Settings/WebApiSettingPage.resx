@@ -163,4 +163,7 @@
   · 允许外网访问：“http://*:8080”（可能需要以管理员身份运行）
   · 使用域名：“http://example.com”</value>
   </data>
+  <metadata name="extractButton.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

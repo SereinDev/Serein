@@ -13,18 +13,21 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
 {
     private readonly ILogger<WebApiSettingPage> _logger;
     private readonly WebServer _httpServer;
+    private readonly PageExtractor _pageExtractor;
     private readonly InfoBarProvider _infoBarProvider;
     private readonly SettingProvider _settingProvider;
 
     public WebApiSettingPage(
         ILogger<WebApiSettingPage> logger,
         WebServer httpServer,
+        PageExtractor pageExtractor,
         InfoBarProvider infoBarProvider,
         SettingProvider settingProvider
     )
     {
         _logger = logger;
         _httpServer = httpServer;
+        _pageExtractor = pageExtractor;
         _infoBarProvider = infoBarProvider;
         _settingProvider = settingProvider;
         DataContext = _settingProvider;
@@ -42,10 +45,12 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
     private void OpenFileButton_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog();
+
         if (dialog.ShowDialog() == true)
         {
             _settingProvider.Value.WebApi.Certificate.Path = dialog.FileName;
         }
+
         OnPropertyChanged(sender, e);
     }
 
@@ -84,5 +89,22 @@ public partial class WebApiSettingPage : System.Windows.Controls.Page
         }
 
         OnPropertyChanged(sender, e);
+    }
+
+    private void ExtractPages_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            _pageExtractor.Extract();
+            _infoBarProvider.Enqueue(
+                "解压成功",
+                "需要重启网页服务器以应用更改",
+                InfoBarSeverity.Success
+            );
+        }
+        catch (Exception ex)
+        {
+            _infoBarProvider.Enqueue("解压失败", ex.Message, InfoBarSeverity.Error);
+        }
     }
 }
