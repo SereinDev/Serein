@@ -43,11 +43,15 @@ public class WebSocketTests : IDisposable
     }
 
     [Theory]
-    [InlineData("connection")]
-    [InlineData("plugins")]
-    public async Task ShouldBeClosedWithoutTokenParam(string path)
+    [InlineData("ws://127.0.0.1:50000/ws/plugins")]
+    [InlineData("ws://127.0.0.1:50000/ws/connection")]
+    [InlineData("ws://127.0.0.1:50000/ws/plugins?token=")]
+    [InlineData("ws://127.0.0.1:50000/ws/connection?token=")]
+    [InlineData("ws://127.0.0.1:50000/ws/plugins?token=1")]
+    [InlineData("ws://127.0.0.1:50000/ws/connection?token=1")]
+    public async Task ShouldBeClosedWithInvalidTokenParam(string url)
     {
-        using var ws = new WebSocket("ws://127.0.0.1:50000/ws/" + path);
+        using var ws = new WebSocket(url);
         ws.Open();
 
         await Task.Delay(1000);

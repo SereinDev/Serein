@@ -96,5 +96,9 @@ public sealed class ProcessTests : IDisposable
 
         server.Input("echo");
         server.Input("exit");
+
+        await Task.Delay(1000);
+        Assert.Null(server.Pid);
+        Assert.False(server.Status);
     }
 }

@@ -334,7 +334,7 @@ public sealed class Server
     {
         if (Status)
         {
-            Input(command, false);
+            Input(command, useUnicodeChars);
         }
         else if (command == "start")
         {

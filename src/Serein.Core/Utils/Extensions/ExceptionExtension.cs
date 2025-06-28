@@ -10,8 +10,9 @@ public static class ExceptionExtension
     /// </summary>
     public static string GetDetailString(this Exception e)
     {
-        return e is JavaScriptException ex
-            ? $"{ex.Message}\n{ex.JavaScriptStackTrace}"
+        return e is JavaScriptException ex ? $"{ex.Message}\n{ex.JavaScriptStackTrace}"
+            : e.InnerException is not null && e.InnerException != e
+                ? $"{e.GetType().FullName}: {e.Message} > {e.InnerException.GetDetailString()}"
             : $"{e.GetType().FullName}: {e.Message}";
     }
 }

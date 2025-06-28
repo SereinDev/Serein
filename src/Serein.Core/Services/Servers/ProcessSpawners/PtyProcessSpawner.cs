@@ -8,6 +8,7 @@ using Pty.Net;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers.ProcessSpawners;
 
@@ -41,12 +42,6 @@ internal sealed class PtyProcessSpawner(
 
         _isPreparing = true;
 
-        var cwd = Path.GetDirectoryName(configuration.FileName);
-        if (string.IsNullOrEmpty(cwd))
-        {
-            cwd = Directory.GetCurrentDirectory();
-        }
-
         PtyProvider
             .SpawnAsync(
                 new()
@@ -54,7 +49,10 @@ internal sealed class PtyProcessSpawner(
                     Name = id,
                     App = configuration.FileName,
                     CommandLine = [configuration.Argument],
-                    Cwd = cwd,
+                    Cwd = StringExtension.SelectValueNotNullOrEmpty(
+                        Path.GetDirectoryName(configuration.FileName),
+                        Directory.GetCurrentDirectory()
+                    )!,
                     ForceWinPty = Environment.OSVersion.Platform == PlatformID.Win32NT,
                     Environment = configuration.Environment,
 

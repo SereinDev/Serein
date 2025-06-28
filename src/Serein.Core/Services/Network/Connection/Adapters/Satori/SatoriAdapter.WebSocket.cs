@@ -153,9 +153,4 @@ public partial class SatoriAdapter
             _logger.LogSentData(data);
         }
     }
-
-    private static readonly Regex UrlRegex = GetUrlRegex();
-
-    [GeneratedRegex(@"^http")]
-    private static partial Regex GetUrlRegex();
 }

@@ -161,6 +161,7 @@ public sealed partial class PluginManager(
                 catch (Exception e)
                 {
                     pluginLogger.Log(LogLevel.Error, pluginInfo.Name, e.GetDetailString());
+                    logger.LogError(e, "加载插件\"{PluginName}\"时发生错误", pluginInfo.Name);
                 }
             }
 

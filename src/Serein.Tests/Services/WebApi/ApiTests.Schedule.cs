@@ -48,7 +48,9 @@ public partial class ApiTests
         _app.Services.GetRequiredService<ScheduleProvider>().Value.Add(match);
 
         var response = await _client.DeleteAsync("/api/schedules/" + match.GetHashCode());
+
         Assert.True(response.IsSuccessStatusCode);
         Assert.Empty(_app.Services.GetRequiredService<ScheduleProvider>().Value);
+        Assert.Empty(await response.Content.ReadAsStringAsync());
     }
 }

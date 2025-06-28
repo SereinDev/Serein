@@ -79,10 +79,6 @@ public sealed class EventDispatcher(
                     $"事件（{@event}）任务执行时出现异常：\n{(e.InnerException ?? e).GetDetailString()}"
                 );
             }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
         cancellationTokenSource.Cancel();

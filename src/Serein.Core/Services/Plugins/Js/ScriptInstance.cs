@@ -8,9 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Models.Settings;
+using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Network.Web;
 using Serein.Core.Services.Permissions;
 using Serein.Core.Services.Plugins.Js.Properties;
@@ -22,18 +23,20 @@ public sealed partial class ScriptInstance
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly JsPlugin _jsPlugin;
-    private readonly SettingProvider _settingProvider;
     private readonly PluginManager _pluginManager;
     private readonly HardwareInfoProvider _hardwareInfoProvider;
     private readonly PluginLoggerBase _pluginLogger;
 
     public PermissionProperty Permissions { get; }
     public ServerProperty Servers { get; }
-    public ConnectionProperty Connection { get; }
+    public ConnectionManager Connection { get; }
     public CommandProperty Command { get; }
     public WebServer WebServer { get; }
     public Console Console => _jsPlugin.Console;
-    public Setting Setting => _settingProvider.Value;
+    public SettingProvider Settings { get; }
+    public ScheduleProvider Schedules { get; }
+    public MatchProvider Matches { get; }
+    public BindingManager Bindings { get; }
     public SereinApp App { get; }
     public HardwareInfo? HardwareInfo => _hardwareInfoProvider.Info;
     public string Id => _jsPlugin.Info.Id;
@@ -43,17 +46,20 @@ public sealed partial class ScriptInstance
         _serviceProvider = serviceProvider;
         _jsPlugin = jsPlugin;
         _pluginLogger = _serviceProvider.GetRequiredService<PluginLoggerBase>();
-        _settingProvider = _serviceProvider.GetRequiredService<SettingProvider>();
         _pluginManager = _serviceProvider.GetRequiredService<PluginManager>();
         _hardwareInfoProvider = _serviceProvider.GetRequiredService<HardwareInfoProvider>();
 
         App = _serviceProvider.GetRequiredService<SereinApp>();
         WebServer = _serviceProvider.GetRequiredService<WebServer>();
+        Settings = _serviceProvider.GetRequiredService<SettingProvider>();
+        Schedules = _serviceProvider.GetRequiredService<ScheduleProvider>();
+        Matches = _serviceProvider.GetRequiredService<MatchProvider>();
+        Bindings = _serviceProvider.GetRequiredService<BindingManager>();
+        Connection = _serviceProvider.GetRequiredService<ConnectionManager>();
 
         var propertyBuilder = _serviceProvider.GetRequiredService<PropertyFactory>();
         Command = propertyBuilder.CommandProperty;
         Servers = propertyBuilder.ServerProperty;
-        Connection = propertyBuilder.ConnectionProperty;
 
         Permissions = new(
             Id,

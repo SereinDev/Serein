@@ -10,43 +10,90 @@ namespace Serein.Core.Services.Plugins.Net;
 
 public abstract partial class PluginBase
 {
-    protected virtual Task<bool> OnServerStarting(Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStarting(Server server)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task OnServerStarted(Server server) => Task.CompletedTask;
+    protected virtual Task OnServerStarted(Server server)
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task<bool> OnServerStopping(Server server) => Task.FromResult(true);
+    protected virtual Task<bool> OnServerStopping(Server server)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task OnServerExited(Server server, int exitcode, DateTime exitTime) =>
-        Task.CompletedTask;
+    protected virtual Task OnServerExited(Server server, int exitcode, DateTime exitTime)
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task<bool> OnServerOutput(Server server, string line) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerOutput(Server server, string line)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnServerRawOutput(Server server, string line) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnServerRawOutput(Server server, string line)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task OnServerInput(Server server, string line) => Task.CompletedTask;
+    protected virtual Task OnServerInput(Server server, string line)
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task<bool> OnGroupMessageReceived(Packets packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnGroupMessageReceived(Packets packets)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnPrivateMessageReceived(Packets packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnPrivateMessageReceived(Packets packets)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnChannelMessageReceived(Packets packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnChannelMessageReceived(Packets packets)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnConnectionDataReceived(string data) => Task.FromResult(true);
+    protected virtual Task<bool> OnConnectionDataReceived(string data)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnPacketReceived(JsonNode packet) => Task.FromResult(true);
+    protected virtual Task<bool> OnPacketReceived(JsonNode packet)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task<bool> OnHttpRequestReceived(IHttpContext httpContext) =>
-        Task.FromResult(true);
+    protected virtual Task<bool> OnHttpRequestReceived(IHttpContext httpContext)
+    {
+        return Task.FromResult(true);
+    }
 
-    protected virtual Task OnSereinClosed() => Task.CompletedTask;
+    protected virtual Task OnSereinClosed()
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task OnSereinCrashed() => Task.CompletedTask;
+    protected virtual Task OnSereinCrashed()
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task OnPluginsLoaded() => Task.CompletedTask;
+    protected virtual Task OnPluginsLoaded()
+    {
+        return Task.CompletedTask;
+    }
 
-    protected virtual Task OnPluginsUnloading() => Task.CompletedTask;
+    protected virtual Task OnPluginsUnloading()
+    {
+        return Task.CompletedTask;
+    }
 
     internal Task Invoke(Event @event, params object[] args)
     {

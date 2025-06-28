@@ -349,29 +349,29 @@ public partial class CommandParser(
                     #region 消息
                     "msg.id" => commandContext.HasValue
                         ? StringExtension.SelectValueNotNullOrEmpty(
-                            commandContext.Value.OneBotV11MessagePacket?.MessageId.ToString(),
-                            commandContext.Value.OneBotV12MessagePacket?.MessageId.ToString(),
-                            commandContext.Value.SatoriV1MessagePacket?.Message?.Id
+                            commandContext.Value.Packets.OneBotV11?.MessageId.ToString(),
+                            commandContext.Value.Packets.OneBotV12?.MessageId.ToString(),
+                            commandContext.Value.Packets.SatoriV1?.Message?.Id
                         )
                         : null,
-                    "sender.id" => commandContext?.UserId,
+                    "sender.id" => commandContext?.Packets.UserId,
                     "sender.nickname" => commandContext.HasValue
                         ? StringExtension.SelectValueNotNullOrEmpty(
-                            commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
-                            commandContext.Value.SatoriV1MessagePacket?.User?.Nick
+                            commandContext.Value.Packets.OneBotV11?.Sender.Nickname,
+                            commandContext.Value.Packets.SatoriV1?.User?.Nick
                         )
                         : null,
-                    "sender.title" => commandContext?.OneBotV11MessagePacket?.Sender?.Title,
-                    "sender.avatar" => commandContext?.SatoriV1MessagePacket?.User?.Avatar,
-                    "sender.card" => commandContext?.OneBotV11MessagePacket?.Sender?.Card,
-                    "sender.role" => commandContext?.OneBotV11MessagePacket?.Sender?.RoleName,
-                    "sender.gameid" => GetGameId(commandContext?.UserId),
+                    "sender.title" => commandContext?.Packets.OneBotV11?.Sender?.Title,
+                    "sender.avatar" => commandContext?.Packets.SatoriV1?.User?.Avatar,
+                    "sender.card" => commandContext?.Packets.OneBotV11?.Sender?.Card,
+                    "sender.role" => commandContext?.Packets.OneBotV11?.Sender?.RoleName,
+                    "sender.gameid" => GetGameId(commandContext?.Packets.UserId),
                     "sender.shownname" => commandContext.HasValue
                         ? StringExtension.SelectValueNotNullOrEmpty(
-                            commandContext.Value.OneBotV11MessagePacket?.Sender.Card,
-                            commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
-                            commandContext.Value.SatoriV1MessagePacket?.User?.Nick,
-                            commandContext.Value.SatoriV1MessagePacket?.User?.Name
+                            commandContext.Value.Packets.OneBotV11?.Sender.Card,
+                            commandContext.Value.Packets.OneBotV11?.Sender.Nickname,
+                            commandContext.Value.Packets.SatoriV1?.User?.Nick,
+                            commandContext.Value.Packets.SatoriV1?.User?.Name
                         )
                         : null,
                     #endregion

@@ -38,7 +38,7 @@ public sealed class BindingTests : IDisposable
     [InlineData("_")]
     [InlineData("a..bc")]
     [InlineData("00000000000000000000000000000000000000000000000000000000000000")]
-    public void ShouldValidateInvalidGameId(string gameId)
+    public void ShouldThrowWhenGivenInvalidGameId(string gameId)
     {
         Assert.Throws<BindingFailureException>(() => _bindingManager.ValidateGameId(gameId));
     }
@@ -61,18 +61,28 @@ public sealed class BindingTests : IDisposable
     public void ShouldBeAbleToAccessUsingCommandVariable()
     {
         _bindingManager.Add("123456", "test_name");
+
         Assert.Equal(
             "test_name",
             _parser.ApplyVariables(
                 "{sender.gameid}",
-                new()
-                {
-                    OneBotV11MessagePacket = new()
-                    {
-                        UserId = 123456,
-                        Sender = { UserId = 123456 },
-                    },
-                }
+                new() { Packets = new() { OneBotV11 = new() { UserId = 123456 } } }
+            )
+        );
+
+        Assert.Equal(
+            "test_name",
+            _parser.ApplyVariables(
+                "{sender.gameid}",
+                new() { Packets = new() { OneBotV12 = new() { UserId = "123456" } } }
+            )
+        );
+
+        Assert.Equal(
+            "test_name",
+            _parser.ApplyVariables(
+                "{sender.gameid}",
+                new() { Packets = new() { SatoriV1 = new() { User = new() { Id = "123456" } } } }
             )
         );
     }

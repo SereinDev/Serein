@@ -21,14 +21,21 @@ public partial class ApiTests
                 mediaType: new("application/json")
             )
         );
+
         Assert.True(response.IsSuccessStatusCode);
+        Assert.NotEmpty(await response.Content.ReadAsStringAsync());
+        Assert.NotEmpty(_app.Services.GetRequiredService<ServerManager>().Servers);
     }
 
     [Fact]
     public async Task ShouldBeAbleToRemoveServer()
     {
-        _app.Services.GetRequiredService<ServerManager>().Add("1234", new());
+        var serverManager = _app.Services.GetRequiredService<ServerManager>();
+        serverManager.Add("1234", new());
         var response = await _client.DeleteAsync("/api/servers/1234");
+
         Assert.True(response.IsSuccessStatusCode);
+        Assert.Empty(await response.Content.ReadAsStringAsync());
+        Assert.Empty(serverManager.Servers);
     }
 }

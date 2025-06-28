@@ -112,7 +112,10 @@ public sealed class CommandRunner
 
             case CommandType.Bind:
             case CommandType.Unbind:
-                if (!commandContext.HasValue || string.IsNullOrEmpty(commandContext.Value.UserId))
+                if (
+                    !commandContext.HasValue
+                    || string.IsNullOrEmpty(commandContext.Value.Packets.UserId)
+                )
                 {
                     break;
                 }
@@ -122,32 +125,32 @@ public sealed class CommandRunner
                     if (command.Type == CommandType.Bind)
                     {
                         _bindingManager.Add(
-                            commandContext.Value.UserId,
+                            commandContext.Value.Packets.UserId,
                             body,
                             StringExtension.SelectValueNotNullOrEmpty(
-                                commandContext.Value.OneBotV11MessagePacket?.Sender.Card,
-                                commandContext.Value.OneBotV11MessagePacket?.Sender.Nickname,
-                                commandContext.Value.SatoriV1MessagePacket?.User?.Nick,
-                                commandContext.Value.SatoriV1MessagePacket?.User?.Name
+                                commandContext.Value.Packets.OneBotV11?.Sender.Card,
+                                commandContext.Value.Packets.OneBotV11?.Sender.Nickname,
+                                commandContext.Value.Packets.SatoriV1?.User?.Nick,
+                                commandContext.Value.Packets.SatoriV1?.User?.Name
                             )
                         );
 
                         await _reactionTrigger.Value.TriggerAsync(
                             ReactionType.BindingSucceeded,
                             new(
-                                UserId: commandContext.Value.UserId,
-                                GroupId: commandContext.Value.GroupId
+                                UserId: commandContext.Value.Packets.UserId,
+                                GroupId: commandContext.Value.Packets.GroupId
                             )
                         );
                     }
                     else
                     {
-                        _bindingManager.Remove(commandContext.Value.UserId, body);
+                        _bindingManager.Remove(commandContext.Value.Packets.UserId, body);
                         await _reactionTrigger.Value.TriggerAsync(
                             ReactionType.UnbindingSucceeded,
                             new(
-                                UserId: commandContext.Value.UserId,
-                                GroupId: commandContext.Value.GroupId
+                                UserId: commandContext.Value.Packets.UserId,
+                                GroupId: commandContext.Value.Packets.GroupId
                             )
                         );
                     }
@@ -215,11 +218,11 @@ public sealed class CommandRunner
                 command.Arguments
             );
         }
-        else if (!string.IsNullOrEmpty(commandContext?.UserId))
+        else if (!string.IsNullOrEmpty(commandContext?.Packets.UserId))
         {
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Private,
-                commandContext.Value.UserId,
+                commandContext.Value.Packets.UserId,
                 body,
                 command.Arguments
             );
@@ -241,20 +244,20 @@ public sealed class CommandRunner
                 command.Arguments
             );
         }
-        else if (!string.IsNullOrEmpty(commandContext?.OneBotV12MessagePacket?.ChannelId))
+        else if (!string.IsNullOrEmpty(commandContext?.Packets.OneBotV12?.ChannelId))
         {
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Channel,
-                commandContext.Value.OneBotV12MessagePacket.ChannelId,
+                commandContext.Value.Packets.OneBotV12.ChannelId,
                 body,
                 command.Arguments
             );
         }
-        else if (!string.IsNullOrEmpty(commandContext?.SatoriV1MessagePacket?.Channel?.Id))
+        else if (!string.IsNullOrEmpty(commandContext?.Packets.SatoriV1?.Channel?.Id))
         {
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Channel,
-                commandContext.Value.SatoriV1MessagePacket.Channel.Id,
+                commandContext.Value.Packets.SatoriV1.Channel.Id,
                 body,
                 command.Arguments
             );
@@ -297,11 +300,11 @@ public sealed class CommandRunner
                 command.Arguments
             );
         }
-        else if (!string.IsNullOrEmpty(commandContext?.GroupId))
+        else if (!string.IsNullOrEmpty(commandContext?.Packets.GroupId))
         {
             await _connectionManager.Value.SendMessageAsync(
                 TargetType.Group,
-                commandContext.Value.GroupId,
+                commandContext.Value.Packets.GroupId,
                 body,
                 command.Arguments
             );
@@ -357,50 +360,50 @@ public sealed class CommandRunner
     private async Task FastReply(CommandContext commandContext, string content)
     {
         if (
-            commandContext.OneBotV11MessagePacket is not null
-            || commandContext.OneBotV12MessagePacket is not null
+            commandContext.Packets.OneBotV11 is not null
+            || commandContext.Packets.OneBotV12 is not null
         )
         {
-            if (!string.IsNullOrEmpty(commandContext.GroupId))
+            if (!string.IsNullOrEmpty(commandContext.Packets.GroupId))
             {
                 await _connectionManager.Value.SendMessageAsync(
                     TargetType.Group,
-                    commandContext.GroupId,
+                    commandContext.Packets.GroupId,
                     content
                 );
             }
-            else if (!string.IsNullOrEmpty(commandContext.OneBotV12MessagePacket?.ChannelId))
+            else if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.ChannelId))
             {
                 await _connectionManager.Value.SendMessageAsync(
                     TargetType.Channel,
-                    commandContext.OneBotV12MessagePacket.ChannelId,
+                    commandContext.Packets.OneBotV12.ChannelId,
                     content
                 );
             }
-            else if (!string.IsNullOrEmpty(commandContext.OneBotV12MessagePacket?.GuildId))
+            else if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.GuildId))
             {
                 await _connectionManager.Value.SendMessageAsync(
                     TargetType.Guild,
-                    commandContext.OneBotV12MessagePacket.GuildId,
+                    commandContext.Packets.OneBotV12.GuildId,
                     content
                 );
             }
-            else if (!string.IsNullOrEmpty(commandContext.UserId))
+            else if (!string.IsNullOrEmpty(commandContext.Packets.UserId))
             {
                 await _connectionManager.Value.SendMessageAsync(
                     TargetType.Private,
-                    commandContext.UserId,
+                    commandContext.Packets.UserId,
                     content
                 );
             }
         }
-        else if (commandContext.SatoriV1MessagePacket is not null)
+        else if (commandContext.Packets.SatoriV1 is not null)
         {
-            if (commandContext.SatoriV1MessagePacket.Channel is not null)
+            if (commandContext.Packets.SatoriV1.Channel is not null)
             {
                 await _connectionManager.Value.SendMessageAsync(
                     TargetType.Channel,
-                    commandContext.SatoriV1MessagePacket.Channel.Id,
+                    commandContext.Packets.SatoriV1.Channel.Id,
                     content
                 );
             }

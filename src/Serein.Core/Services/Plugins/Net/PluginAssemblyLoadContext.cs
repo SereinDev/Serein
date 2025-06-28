@@ -19,8 +19,15 @@ internal class PluginAssemblyLoadContext : AssemblyLoadContext
 
     protected override Assembly? Load(AssemblyName assemblyName)
     {
-        var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
-        return assemblyPath is not null ? LoadFromAssemblyPath(assemblyPath) : null;
+        try
+        {
+            return Assembly.Load(assemblyName);
+        }
+        catch
+        {
+            var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            return assemblyPath is not null ? LoadFromAssemblyPath(assemblyPath) : null;
+        }
     }
 
     protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)

@@ -59,7 +59,7 @@ public partial class ServerManager
 
         if (Blacklist.Contains(id.ToUpperInvariant()))
         {
-            throw new ArgumentException("不能使用Windows的保留关键字作为Id", nameof(id));
+            throw new ArgumentException("不能使用Windows系统的保留关键字作为Id", nameof(id));
         }
     }
 

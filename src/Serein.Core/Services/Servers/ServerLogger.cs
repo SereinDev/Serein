@@ -51,7 +51,7 @@ public sealed class ServerLogger
     {
         lock (_history)
         {
-            if (_history.Count >= 100)
+            while (_history.Count >= 100)
             {
                 _history.Dequeue();
             }

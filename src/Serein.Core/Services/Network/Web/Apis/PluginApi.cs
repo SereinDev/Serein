@@ -57,7 +57,14 @@ internal partial class ApiMap
     [Route(HttpVerbs.Post, "/plugins/{id}/disable")]
     public async Task DisablePlugin(string id)
     {
-        Task.Run(FastGetPlugin(id).Disable);
+        var plugin = FastGetPlugin(id);
+
+        if (!plugin.IsEnabled)
+        {
+            throw HttpException.BadRequest($"插件（Id={id}）已被禁用");
+        }
+
+        Task.Run(plugin.Disable);
         await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
     }
 

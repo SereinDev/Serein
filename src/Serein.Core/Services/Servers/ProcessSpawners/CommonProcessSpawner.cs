@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Serein.Core.Models.Server;
 using Serein.Core.Utils;
+using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers.ProcessSpawners;
 
@@ -29,7 +30,10 @@ internal sealed class CommonProcessSpawner(ServerLogger serverLogger) : IProcess
             RedirectStandardInput = true,
             StandardOutputEncoding = EncodingMap.GetEncoding(configuration.OutputEncoding),
             StandardErrorEncoding = EncodingMap.GetEncoding(configuration.OutputEncoding),
-            WorkingDirectory = Path.GetDirectoryName(configuration.FileName),
+            WorkingDirectory = StringExtension.SelectValueNotNullOrEmpty(
+                Path.GetDirectoryName(configuration.FileName),
+                Directory.GetCurrentDirectory()
+            ),
             Arguments = configuration.Argument,
         };
         foreach (var (key, value) in configuration.Environment)

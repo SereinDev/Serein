@@ -159,7 +159,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     {
         if (IsActive)
         {
-            throw new InvalidOperationException("已连接");
+            throw new InvalidOperationException("连接未关闭");
         }
 
         _sent = _received = 0;
@@ -219,6 +219,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
 
         Interlocked.Increment(ref _sent);
         PropertyChanged?.Invoke(this, _sentArg);
+
         DataTransferred?.Invoke(this, new() { Data = data, Type = DataTranferredType.Sent });
 
         if (_settingProvider.Value.Connection.SaveLog)

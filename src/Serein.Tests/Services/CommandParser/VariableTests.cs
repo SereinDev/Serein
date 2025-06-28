@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Servers;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;
+using V11 = Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using V12 = Serein.ConnectionProtocols.Models.OneBot.V12.Packets;
 
 #pragma warning disable SYSLIB1045
 
@@ -75,11 +77,16 @@ public sealed class VariableTests : IDisposable
     [Fact]
     public void ShouldWorkWithServerVariable()
     {
-        _app.Services.GetRequiredService<ServerManager>().Add("foo", new() { Name = "5678" });
-        _app.Services.GetRequiredService<ServerManager>().Add("bar", new() { Name = "1234" });
+        var serverManager = _app.Services.GetRequiredService<ServerManager>();
+
+        serverManager.Add("foo", new() { Name = "5678" });
+        serverManager.Add("bar", new() { Name = "1234" });
+        serverManager.Add("UPPERCASE", new() { Name = "upper" });
+
         Assert.Equal("myserver", _commandParser.ApplyVariables("{server.id}", null));
         Assert.Equal("foo", _commandParser.ApplyVariables("{server.id@foo}", null));
         Assert.Equal("bar", _commandParser.ApplyVariables("{server.id@bar}", null));
+        Assert.Equal("UPPERCASE", _commandParser.ApplyVariables("{server.id@UPPERCASE}", null));
 
         Assert.Equal("未命名", _commandParser.ApplyVariables("{server.name}", null));
         Assert.Equal("5678", _commandParser.ApplyVariables("{server.name@foo}", null));
@@ -94,41 +101,119 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithMsgPacketVariable()
+    public void ShouldWorkWithOneBotV11MsgPacketVariable()
     {
-        var packet = new MessagePacket
+        var packet = new V11.MessagePacket
         {
             UserId = 114514,
             MessageId = 1,
             Sender = { Card = "", Nickname = "nickname" },
         };
+
         Assert.Equal(
             "1",
-            _commandParser.ApplyVariables("{msg.id}", new() { OneBotV11MessagePacket = packet })
+            _commandParser.ApplyVariables(
+                "{MSG.ID}",
+                new() { Packets = new() { OneBotV11 = packet } }
+            )
+        );
+        Assert.Equal(
+            "1",
+            _commandParser.ApplyVariables(
+                "{msg.id}",
+                new() { Packets = new() { OneBotV11 = packet } }
+            )
         );
         Assert.Equal(
             "成员",
             _commandParser.ApplyVariables(
                 "{sender.role}",
-                new() { OneBotV11MessagePacket = packet }
+                new() { Packets = new() { OneBotV11 = packet } }
             )
         );
         Assert.Equal(
             "114514",
-            _commandParser.ApplyVariables("{sender.id}", new() { OneBotV11MessagePacket = packet })
+            _commandParser.ApplyVariables(
+                "{sender.id}",
+                new() { Packets = new() { OneBotV11 = packet } }
+            )
         );
         Assert.Equal(
             "nickname",
             _commandParser.ApplyVariables(
                 "{sender.nickname}",
-                new() { OneBotV11MessagePacket = packet }
+                new() { Packets = new() { OneBotV11 = packet } }
             )
         );
         Assert.Equal(
             "nickname",
             _commandParser.ApplyVariables(
                 "{sender.shownname}",
-                new() { OneBotV11MessagePacket = packet }
+                new() { Packets = new() { OneBotV11 = packet } }
+            )
+        );
+    }
+
+    [Fact]
+    public void ShouldWorkWithOneBotV12MsgPacketVariable()
+    {
+        var packet = new V12.MessagePacket { UserId = "114514", MessageId = "1" };
+        Assert.Equal(
+            "1",
+            _commandParser.ApplyVariables(
+                "{msg.id}",
+                new() { Packets = new() { OneBotV12 = packet } }
+            )
+        );
+        Assert.Equal(
+            "114514",
+            _commandParser.ApplyVariables(
+                "{sender.id}",
+                new() { Packets = new() { OneBotV12 = packet } }
+            )
+        );
+    }
+
+    [Fact]
+    public void ShouldWorkWithSatoriMsgPacketVariable()
+    {
+        var eventBody = new EventBody
+        {
+            Message = new() { Id = "1" },
+            User = new()
+            {
+                Id = "114514",
+                Nick = "nickname",
+                Avatar = "http://example.com",
+            },
+        };
+
+        Assert.Equal(
+            "1",
+            _commandParser.ApplyVariables(
+                "{msg.id}",
+                new() { Packets = new() { SatoriV1 = eventBody } }
+            )
+        );
+        Assert.Equal(
+            "114514",
+            _commandParser.ApplyVariables(
+                "{sender.id}",
+                new() { Packets = new() { SatoriV1 = eventBody } }
+            )
+        );
+        Assert.Equal(
+            "http://example.com",
+            _commandParser.ApplyVariables(
+                "{sender.avatar}",
+                new() { Packets = new() { SatoriV1 = eventBody } }
+            )
+        );
+        Assert.Equal(
+            "nickname",
+            _commandParser.ApplyVariables(
+                "{sender.nickname}",
+                new() { Packets = new() { SatoriV1 = eventBody } }
             )
         );
     }

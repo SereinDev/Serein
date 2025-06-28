@@ -161,16 +161,6 @@ public sealed class Matcher
 
     private void MatchMessagePacket(Packets packets)
     {
-        var msg =
-            packets.OneBotV12?.FriendlyMessage
-            ?? HttpUtility.HtmlDecode(packets.OneBotV11?.RawMessage)
-            ?? HttpUtility.HtmlDecode(packets.SatoriV1?.Message?.Content);
-
-        var userId =
-            packets.OneBotV11?.UserId.ToString()
-            ?? packets.OneBotV12?.UserId
-            ?? packets.SatoriV1?.User?.Id;
-
         var tasks = new List<Task>();
 
         lock (_matchProvider.Value)
@@ -180,7 +170,7 @@ public sealed class Matcher
                 if (
                     string.IsNullOrEmpty(match.RegExp)
                     || string.IsNullOrEmpty(match.Command)
-                    || string.IsNullOrEmpty(msg)
+                    || string.IsNullOrEmpty(packets.Message)
                 )
                 {
                     continue;
@@ -193,7 +183,9 @@ public sealed class Matcher
 
                 if (
                     match.RequireAdmin
-                    && !_settingProvider.Value.Connection.AdministratorUserIds.Contains(userId)
+                    && !_settingProvider.Value.Connection.AdministratorUserIds.Contains(
+                        packets.UserId
+                    )
                     && !IsAdmin(packets.OneBotV11)
                 )
                 {
@@ -222,20 +214,14 @@ public sealed class Matcher
                 return;
             }
 
-            var matches = match.RegexObj.Match(msg);
+            var matches = match.RegexObj.Match(packets.Message);
 
             if (matches.Success)
             {
                 tasks.Add(
                     _commandRunner.RunAsync(
                         match.CommandObj,
-                        new()
-                        {
-                            Match = matches,
-                            OneBotV11MessagePacket = packets.OneBotV11,
-                            OneBotV12MessagePacket = packets.OneBotV12,
-                            SatoriV1MessagePacket = packets.SatoriV1,
-                        }
+                        new() { Match = matches, Packets = packets }
                     )
                 );
             }

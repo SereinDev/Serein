@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Services.Plugins.Net;
 
 namespace Serein.Plugins.Demo;
 
 public class Demo : PluginBase
 {
+    private readonly PluginLoggerBase _pluginLoggerBase;
+    private readonly IServiceProvider _serviceProvider;
+
     public Demo(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
+        _pluginLoggerBase = _serviceProvider.GetRequiredService<PluginLoggerBase>();
+
         Call();
     }
 
@@ -29,8 +38,8 @@ public class Demo : PluginBase
         return Task.CompletedTask;
     }
 
-    private static void Call([CallerMemberName] string member = "")
+    private void Call([CallerMemberName] string member = "")
     {
-        Console.WriteLine(member + "!");
+        _pluginLoggerBase.Log(LogLevel.Information, nameof(Demo), member + "!");
     }
 }

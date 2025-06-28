@@ -8,7 +8,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Serein.Core\Serein.Core.csproj">
             <Private>false</Private>
-            <ExcludeAssets>all</ExcludeAssets>
+            <ExcludeAssets>runtime;contentFiles</ExcludeAssets>
         </ProjectReference>
 
         <None Include="plugin-info.json" CopyToOutputDirectory="Always" />

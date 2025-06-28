@@ -39,6 +39,7 @@ public partial class ApiTests
             )
         );
         Assert.True(response.IsSuccessStatusCode);
+        Assert.NotEmpty(_app.Services.GetRequiredService<MatchProvider>().Value);
     }
 
     [Fact]
@@ -48,7 +49,9 @@ public partial class ApiTests
         _app.Services.GetRequiredService<MatchProvider>().Value.Add(match);
 
         var response = await _client.DeleteAsync("/api/matches/" + match.GetHashCode());
+
         Assert.True(response.IsSuccessStatusCode);
         Assert.Empty(_app.Services.GetRequiredService<MatchProvider>().Value);
+        Assert.Empty(await response.Content.ReadAsStringAsync());
     }
 }
