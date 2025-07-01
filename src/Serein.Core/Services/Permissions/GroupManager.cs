@@ -52,7 +52,7 @@ public partial class GroupManager(
         }
     }
 
-    public Dictionary<string, bool?> GetAllNodes(long userId, bool ignoreWildcard = false)
+    public Dictionary<string, bool?> GetAllNodes(string userId, bool ignoreWildcard = false)
     {
         var result = new Dictionary<string, (int Priority, bool? Value)>();
         var visitedGroups = new HashSet<string>();
@@ -67,7 +67,7 @@ public partial class GroupManager(
                     continue;
                 }
 
-                if (kv.Key == "everyone" || kv.Value.Members.Contains(userId))
+                if (kv.Key == "everyone" || kv.Value.Users.Contains(userId))
                 {
                     ProcessGroup(kv.Key, kv.Value);
                 }

@@ -27,7 +27,7 @@ public partial class ConnectionPage : Page
         _timer.Elapsed += (_, _) => Dispatcher.Invoke(UpdateTimeText);
         _wsConnectionManager.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(_wsConnectionManager.ConnectedAt))
+            if (e.PropertyName == nameof(_wsConnectionManager.StartedAt))
             {
                 Dispatcher.Invoke(UpdateTimeText);
             }
@@ -37,7 +37,7 @@ public partial class ConnectionPage : Page
     private void UpdateTimeText()
     {
         TimeTextBlock.Text = _wsConnectionManager.IsActive
-            ? (DateTime.Now - _wsConnectionManager.ConnectedAt).ToCommonString() ?? "-"
+            ? (DateTime.Now - _wsConnectionManager.StartedAt).ToCommonString() ?? "-"
             : "-";
     }
 

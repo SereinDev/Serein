@@ -49,12 +49,12 @@ public sealed class LogicTests : IDisposable
             nameof(ShouldWorkWithWildcard),
             new()
             {
-                Members = [114514],
+                Users = ["114514"],
                 Nodes = new() { [permissionKey] = true },
             }
         );
 
-        var result = _groupManager.GetAllNodes(114514);
+        var result = _groupManager.GetAllNodes("114514");
         Assert.Equal(result1, TryGet(result, nameof(NodeTests) + ".foo.foo"));
         Assert.Equal(result2, TryGet(result, nameof(NodeTests) + ".bar"));
     }
@@ -62,12 +62,12 @@ public sealed class LogicTests : IDisposable
     [Fact]
     public void ShouldInheritFromDefaultGroup()
     {
-        _groupManager.Add("example", new() { Members = [114514] });
+        _groupManager.Add("example", new() { Users = ["114514"] });
         _groupManager["everyone"].Nodes[nameof(NodeTests) + ".foo.bar"] = true;
 
         Assert.Equal(
             true,
-            TryGet(_groupManager.GetAllNodes(114514), nameof(NodeTests) + ".foo.bar")
+            TryGet(_groupManager.GetAllNodes("114514"), nameof(NodeTests) + ".foo.bar")
         );
     }
 
@@ -75,9 +75,9 @@ public sealed class LogicTests : IDisposable
     public void ShouldWorkWithInheritance()
     {
         _groupManager.Add("1", new() { Nodes = { ["foo.bar"] = true } });
-        _groupManager.Add("2", new() { Members = [114514], Parents = ["1"] });
+        _groupManager.Add("2", new() { Users = ["114514"], Parents = ["1"] });
 
-        Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "foo.bar"));
+        Assert.Equal(true, TryGet(_groupManager.GetAllNodes("114514"), "foo.bar"));
     }
 
     [Theory]
@@ -91,22 +91,22 @@ public sealed class LogicTests : IDisposable
             "bar",
             new()
             {
-                Members = [114514],
+                Users = ["114514"],
                 Nodes = { ["foo.bar"] = false },
                 Parents = ["foo"],
                 Priority = priority2,
             }
         );
 
-        Assert.Equal(expected, TryGet(_groupManager.GetAllNodes(114514), "foo.bar"));
+        Assert.Equal(expected, TryGet(_groupManager.GetAllNodes("114514"), "foo.bar"));
     }
 
     [Fact]
     public void ShouldAvoidCyclingInheritance()
     {
         _groupManager.Add("5", new() { Nodes = { ["a.b"] = true }, Parents = ["6"] });
-        _groupManager.Add("6", new() { Members = [114514], Parents = ["5"] });
+        _groupManager.Add("6", new() { Users = ["114514"], Parents = ["5"] });
 
-        Assert.Equal(true, TryGet(_groupManager.GetAllNodes(114514), "a.b"));
+        Assert.Equal(true, TryGet(_groupManager.GetAllNodes("114514"), "a.b"));
     }
 }

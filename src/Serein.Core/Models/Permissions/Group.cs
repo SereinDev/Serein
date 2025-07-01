@@ -14,5 +14,5 @@ public class Group
 
     public string[] Parents { get; set; } = [];
 
-    public long[] Members { get; set; } = [];
+    public string[] Users { get; set; } = [];
 }

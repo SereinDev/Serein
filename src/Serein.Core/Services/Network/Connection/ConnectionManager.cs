@@ -18,7 +18,6 @@ using Serein.Core.Services.Network.Connection.Adapters.OneBot;
 using Serein.Core.Services.Network.Connection.Adapters.Satori;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Utils;
-using Serein.Core.Utils.Json;
 using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection;
@@ -46,7 +45,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     public bool IsActive => _activeAdapter is not null && _activeAdapter.IsActive;
     public ulong Sent => _sent;
     public ulong Received => _received;
-    public DateTime? ConnectedAt { get; private set; }
+    public DateTime? StartedAt { get; private set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public event EventHandler<DataTranferredEventArgs>? DataTransferred;
@@ -54,9 +53,9 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     public ConnectionManager(
         IHost host,
         ILogger<LogWriter> logger,
+        PacketHandler packetHandler,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        PacketHandler packetHandler,
         CancellationTokenProvider cancellationTokenProvider
     )
     {
@@ -100,7 +99,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         void OnStatusChanged(object? sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, _isActiveArg);
-            ConnectedAt = IsActive ? DateTime.Now : null;
+            StartedAt = IsActive ? DateTime.Now : null;
         }
     }
 
@@ -193,21 +192,13 @@ public sealed class ConnectionManager : INotifyPropertyChanged
             throw new InvalidOperationException("未连接");
         }
 
-        ConnectedAt = null;
+        StartedAt = null;
         _sent = _received = 0;
 
         PropertyChanged?.Invoke(this, _sentArg);
         PropertyChanged?.Invoke(this, _receivedArg);
 
         _activeAdapter.Stop();
-    }
-
-    public async Task SendAsync<T>(T body)
-        where T : notnull
-    {
-        var text = JsonSerializer.Serialize(body, JsonSerializerOptionsFactory.PacketStyle);
-
-        await SendDataAsync(text);
     }
 
     public async Task SendDataAsync(string data)

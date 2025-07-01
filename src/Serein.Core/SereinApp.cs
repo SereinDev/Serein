@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace Serein.Core;
@@ -69,6 +70,7 @@ public sealed class SereinApp
         }
     }
 
+    [JsonIgnore]
     public IServiceProvider Services { get; }
 
     public string AssemblyName { get; }

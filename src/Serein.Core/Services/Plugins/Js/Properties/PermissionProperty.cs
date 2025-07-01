@@ -1,3 +1,4 @@
+using Jint.Native;
 using Serein.Core.Services.Permissions;
 
 namespace Serein.Core.Services.Plugins.Js.Properties;

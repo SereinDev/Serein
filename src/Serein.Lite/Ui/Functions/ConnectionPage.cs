@@ -34,7 +34,7 @@ public partial class ConnectionPage : UserControl
         {
             if (
                 e.PropertyName == nameof(_connectionManager.IsActive)
-                || e.PropertyName == nameof(_connectionManager.ConnectedAt)
+                || e.PropertyName == nameof(_connectionManager.StartedAt)
             )
             {
                 Invoke(UpadteInfo);
@@ -72,7 +72,7 @@ public partial class ConnectionPage : UserControl
     {
         _statusDynamicLabel.Text = _connectionManager.IsActive ? "开启" : "关闭";
         _timeDynamicLabel.Text = _connectionManager.IsActive
-            ? (DateTime.Now - _connectionManager.ConnectedAt).ToCommonString()
+            ? (DateTime.Now - _connectionManager.StartedAt).ToCommonString()
             : "-";
     }
 }

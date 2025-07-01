@@ -38,7 +38,7 @@ public partial class PermissionGroupEditor : Window
 
         IdTextBox.IsEnabled = string.IsNullOrEmpty(id);
 
-        foreach (var userId in Group.Members)
+        foreach (var userId in Group.Users)
         {
             MemberListView.Items.Add(userId);
         }
@@ -218,7 +218,7 @@ public partial class PermissionGroupEditor : Window
                 throw new InvalidOperationException("此Id已被占用");
             }
 
-            Group.Members = [.. MemberListView.Items.OfType<long>().Distinct()];
+            Group.Users = [.. MemberListView.Items.OfType<string>().Distinct()];
 
             var dict = new Dictionary<string, bool?>();
             foreach (var item in PermissionListView.Items.OfType<PermissionItemViewModel>())

@@ -182,19 +182,15 @@ public partial class PermissionGroupEditor : Form
                 }
                 _group.Nodes = permissions;
 
-                var list = new List<long>();
+                var list = new List<string>();
                 foreach (var item in _memberListView.Items)
                 {
-                    if (
-                        item is ListViewItem listViewItem
-                        && long.TryParse(listViewItem.Text, out var id)
-                        && !list.Contains(id)
-                    )
+                    if (item is ListViewItem listViewItem)
                     {
-                        list.Add(id);
+                        list.Add(listViewItem.Text);
                     }
                 }
-                _group.Members = [.. list];
+                _group.Users = [.. list];
 
                 DialogResult = DialogResult.OK;
                 Close();

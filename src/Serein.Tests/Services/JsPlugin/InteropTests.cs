@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Jint;
@@ -21,6 +22,8 @@ public sealed partial class InteropTests : IDisposable
     private readonly JsPluginLoader _jsPluginLoader;
     private readonly EventDispatcher _eventDispatcher;
 
+    private readonly KeyValuePair<string, Core.Services.Plugins.Js.JsPlugin> _kv;
+
     public InteropTests()
     {
         _host = HostFactory.BuildNew();
@@ -39,6 +42,8 @@ public sealed partial class InteropTests : IDisposable
             )
         );
         _host.Start();
+
+        _kv = _jsPluginLoader.Plugins.First();
     }
 
     public void Dispose()
@@ -50,36 +55,31 @@ public sealed partial class InteropTests : IDisposable
     [Fact]
     public void ShouldAccessToClrType()
     {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        Assert.NotEqual(JsValue.Undefined, kv.Value.Engine.Evaluate("System.Console"));
+        Assert.NotEqual(JsValue.Undefined, _kv.Value.Engine.Evaluate("System.Console"));
     }
 
     [Fact]
     public void ShouldAccessToClrMethod()
     {
-        var kv = _jsPluginLoader.Plugins.First();
-
         Assert.Equal(
             Environment.ProcessId,
-            kv.Value.Engine.Evaluate("System.Diagnostics.Process.GetCurrentProcess().Id")
+            _kv.Value.Engine.Evaluate("System.Diagnostics.Process.GetCurrentProcess().Id")
         );
 
-        kv.Value.Engine.Evaluate("System.IO.File.WriteAllText('test.txt', '')");
+        _kv.Value.Engine.Evaluate("System.IO.File.WriteAllText('test.txt', '')");
         Assert.True(File.Exists("test.txt"));
     }
 
     [Fact]
     public void ShouldBeAbleToResolveFile()
     {
-        var kv = _jsPluginLoader.Plugins.First();
         Assert.Equal(
             Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "111.txt")),
-            kv.Value.Engine.Evaluate("serein.resolve('111.txt')")
+            _kv.Value.Engine.Evaluate("serein.resolve('111.txt')")
         );
         Assert.Equal(
             Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "a", "b", "111.txt")),
-            kv.Value.Engine.Evaluate("serein.resolve('a', 'b', '111.txt')")
+            _kv.Value.Engine.Evaluate("serein.resolve('a', 'b', '111.txt')")
         );
     }
 
@@ -88,23 +88,21 @@ public sealed partial class InteropTests : IDisposable
     [InlineData("sessionStorage")]
     public void ShouldBeAbleToUseStorage(string storageName)
     {
-        var kv = _jsPluginLoader.Plugins.First();
-
-        kv.Value.Engine.Execute($"{storageName}.setItem('test', 'value')");
+        _kv.Value.Engine.Execute($"{storageName}.setItem('test', 'value')");
         Assert.Equal(
             "value",
-            kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
+            _kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
         );
-        Assert.Equal("value", kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
+        Assert.Equal("value", _kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
 
-        kv.Value.Engine.Execute($"{storageName}.setItem('test', 'newValue')");
+        _kv.Value.Engine.Execute($"{storageName}.setItem('test', 'newValue')");
         Assert.Equal(
             "newValue",
-            kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
+            _kv.Value.Engine.Evaluate($"{storageName}.getItem('test')").AsString()
         );
-        Assert.Equal("newValue", kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
+        Assert.Equal("newValue", _kv.Value.Engine.Evaluate($"{storageName}['test']").AsString());
 
-        kv.Value.Engine.Execute($"{storageName}.removeItem('test')");
-        Assert.Equal(JsValue.Null, kv.Value.Engine.Evaluate($"{storageName}.getItem('test')"));
+        _kv.Value.Engine.Execute($"{storageName}.removeItem('test')");
+        Assert.Equal(JsValue.Null, _kv.Value.Engine.Evaluate($"{storageName}.getItem('test')"));
     }
 }

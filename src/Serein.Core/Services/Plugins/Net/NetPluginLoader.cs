@@ -41,7 +41,6 @@ public sealed class NetPluginLoader(
 
             var assembly = context.LoadFromAssemblyPath(entry);
             plugin = CreatePluginInstance(assembly.GetExportedTypes());
-            plugin.FileName = entry;
             plugin.Info = pluginInfo;
         }
         catch

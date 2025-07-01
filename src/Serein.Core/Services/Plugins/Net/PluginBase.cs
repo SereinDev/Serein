@@ -7,7 +7,7 @@ namespace Serein.Core.Services.Plugins.Net;
 
 public abstract partial class PluginBase : IPlugin
 {
-    public string FileName { get; internal set; } = null!;
+    public string FileName { get; }
     public PluginInfo Info { get; internal set; } = null!;
 
     public bool IsEnabled => !CancellationTokenSource.IsCancellationRequested;
@@ -19,6 +19,10 @@ public abstract partial class PluginBase : IPlugin
         CancellationTokenSource.Token.Register(
             () => PropertyChanged?.Invoke(this, new(nameof(IsEnabled)))
         );
+
+#pragma warning disable IL3000 // Avoid accessing Assembly file path when publishing as a single file
+        FileName = GetType().Assembly.Location;
+#pragma warning restore IL3000
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

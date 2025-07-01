@@ -31,8 +31,7 @@ public partial class ApiTests
     public async Task ShouldBeAbleToRemoveServer()
     {
         var serverManager = _app.Services.GetRequiredService<ServerManager>();
-        serverManager.Add("1234", new());
-        var response = await _client.DeleteAsync("/api/servers/1234");
+        var response = await _client.DeleteAsync("/api/servers/myserver");
 
         Assert.True(response.IsSuccessStatusCode);
         Assert.Empty(await response.Content.ReadAsStringAsync());

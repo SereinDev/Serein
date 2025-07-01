@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Jint;
 using Xunit;
@@ -10,8 +9,7 @@ public sealed partial class InteropTests
     [Fact]
     public async Task ShouldBeAbleToSetTimeout()
     {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Execute(
+        _kv.Value.Engine.Execute(
             """
             var called = false;
             setTimeout(() => { called = true; }, 500);
@@ -19,14 +17,13 @@ public sealed partial class InteropTests
         );
 
         await Task.Delay(1000);
-        Assert.True(kv.Value.Engine.Evaluate("called").AsBoolean());
+        Assert.True(_kv.Value.Engine.Evaluate("called").AsBoolean());
     }
 
     [Fact]
     public async Task ShouldBeAbleToSetInterval()
     {
-        var kv = _jsPluginLoader.Plugins.First();
-        kv.Value.Engine.Execute(
+        _kv.Value.Engine.Execute(
             """
             var count = 0;
             var interval = setInterval(() => {
@@ -39,6 +36,6 @@ public sealed partial class InteropTests
         );
 
         await Task.Delay(1000);
-        Assert.Equal(5, kv.Value.Engine.Evaluate("count"));
+        Assert.Equal(5, _kv.Value.Engine.Evaluate("count"));
     }
 }
