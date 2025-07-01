@@ -16,6 +16,7 @@
         <SelfContained>false</SelfContained>
         <IncludeContentInSingleFile>true</IncludeContentInSingleFile>
         <NoWarn>$(NoWarn);CS1416</NoWarn>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">

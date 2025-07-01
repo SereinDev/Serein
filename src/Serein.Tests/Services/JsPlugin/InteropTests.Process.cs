@@ -14,8 +14,11 @@ public sealed partial class InteropTests
         Assert.Equal(Environment.Version.ToString(), _kv.Value.Engine.Evaluate("process.version"));
         Assert.Equal(Environment.CurrentDirectory, _kv.Value.Engine.Evaluate("process.cwd()"));
         Assert.Equal(Environment.ProcessPath, _kv.Value.Engine.Evaluate("process.execPath"));
-        Assert.Equal("win32nt", _kv.Value.Engine.Evaluate("process.platform"));
         Assert.Equal(Types.Object, _kv.Value.Engine.Evaluate("process.env").Type);
+        Assert.Equal(
+            Environment.OSVersion.Platform.ToString().ToLowerInvariant(),
+            _kv.Value.Engine.Evaluate("process.platform")
+        );
     }
 
     [Fact]
