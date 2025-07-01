@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,7 +14,14 @@ public partial class ApiTests
     [Fact]
     public async Task ShouldBeAbleToAddServer()
     {
-        var body = new { Id = "test", Configuration = new { FileName = "cmd" } };
+        var body = new
+        {
+            Id = "test",
+            Configuration = new
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+            },
+        };
         var response = await _client.PostAsync(
             "/api/servers",
             new StringContent(

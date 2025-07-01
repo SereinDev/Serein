@@ -38,7 +38,14 @@ public sealed class ProcessTests : IDisposable
     {
         _app.Start();
 
-        var server = _serverManager.Add("test", new() { FileName = "cmd", AutoRestart = true });
+        var server = _serverManager.Add(
+            "test",
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                AutoRestart = true,
+            }
+        );
         server.Start();
         server.Input("exit 1");
 
@@ -68,7 +75,14 @@ public sealed class ProcessTests : IDisposable
     {
         _app.Start();
 
-        var server = _serverManager.Add("test", new() { FileName = "cmd", AutoRestart = true });
+        var server = _serverManager.Add(
+            "test",
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                AutoRestart = true,
+            }
+        );
 
         Assert.Null(server.Pid);
         server.Start();
@@ -85,7 +99,11 @@ public sealed class ProcessTests : IDisposable
 
         var server = _serverManager.Add(
             "test",
-            new() { FileName = "cmd", Pty = { IsEnabled = usePty } }
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                Pty = { IsEnabled = usePty },
+            }
         );
 
         Assert.Null(server.Pid);
@@ -94,7 +112,7 @@ public sealed class ProcessTests : IDisposable
         await Task.Delay(1000);
         Assert.NotNull(server.Pid);
 
-        server.Input("echo");
+        server.Input("echo \"1\"");
         server.Input("exit");
 
         await Task.Delay(1000);

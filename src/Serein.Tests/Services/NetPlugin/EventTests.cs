@@ -165,7 +165,11 @@ public sealed class EventTests : IDisposable
         var serverManager = _host.Services.GetRequiredService<ServerManager>();
         var server = serverManager.Add(
             "abcdefg",
-            new() { FileName = "cmd", OutputEncoding = EncodingMap.EncodingType.GBK }
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                OutputEncoding = EncodingMap.EncodingType.GBK,
+            }
         );
         server.Start();
         server.Input("HELP");

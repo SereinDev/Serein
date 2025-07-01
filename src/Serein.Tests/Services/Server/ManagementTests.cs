@@ -65,7 +65,10 @@ public sealed class ManagementTests : IDisposable
     public void ShouldNotRemoveRunningServer()
     {
         _app.Start();
-        var server = _serverManager.Add("test", new() { FileName = "cmd" });
+        var server = _serverManager.Add(
+            "test",
+            new() { FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh" }
+        );
         server.Start();
 
         Assert.Throws<InvalidOperationException>(() => _serverManager.Remove("test"));

@@ -24,7 +24,9 @@ public sealed class CommandTests
     [Fact]
     public async Task ShouldExecuteShellCommand()
     {
-        await _commandRunner.RunAsync(Parser.Parse(CommandOrigin.Null, "[cmd]echo.1>Serein/1.txt"));
+        await _commandRunner.RunAsync(
+            Parser.Parse(CommandOrigin.Null, "[cmd]echo \"1\">Serein/1.txt")
+        );
         Assert.True(File.Exists("Serein/1.txt"));
     }
 }

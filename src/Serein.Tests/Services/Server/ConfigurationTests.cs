@@ -39,7 +39,11 @@ public sealed class ConfigurationTests : IDisposable
     {
         var server = _serverManager.Add(
             "test",
-            new() { FileName = "cmd", StartWhenSettingUp = true }
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                StartWhenSettingUp = true,
+            }
         );
 
         await _app.StartAsync();
@@ -51,7 +55,14 @@ public sealed class ConfigurationTests : IDisposable
     [Fact]
     public async Task ShouldOutputToFile()
     {
-        var server = _serverManager.Add("test", new() { FileName = "cmd", SaveLog = true });
+        var server = _serverManager.Add(
+            "test",
+            new()
+            {
+                FileName = Environment.OSVersion.Platform == PlatformID.Win32NT ? "cmd" : "sh",
+                SaveLog = true,
+            }
+        );
 
         await _app.StartAsync();
         _app.Start();
