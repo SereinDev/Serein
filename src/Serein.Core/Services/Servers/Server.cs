@@ -18,13 +18,13 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers;
 
-public sealed class Server
+public class Server
 {
     [JsonIgnore]
     public string Id { get; }
     public RestartStatus RestartStatus { get; private set; }
 
-    public bool Status =>
+    public virtual bool Status =>
         _commonProcessSpawner is { IsValueCreated: true, Value.Status: true }
         || _ptyProcessSpawner is { IsValueCreated: true, Value.Status: true };
 
@@ -50,12 +50,12 @@ public sealed class Server
     private readonly List<string> _cache;
     private readonly System.Timers.Timer _updateTimer;
     private readonly ServerInfo _info;
-    private readonly Lazy<PtyProcessSpawner> _ptyProcessSpawner;
-    private readonly Lazy<CommonProcessSpawner> _commonProcessSpawner;
+    protected readonly Lazy<PtyProcessSpawner> _ptyProcessSpawner;
+    protected readonly Lazy<CommonProcessSpawner> _commonProcessSpawner;
 
     public event EventHandler? StatusChanged;
 
-    internal Server(
+    protected internal Server(
         string id,
         ILogger<Server> logger,
         ILogger<LogWriter> writerLogger,
@@ -110,7 +110,7 @@ public sealed class Server
         };
     }
 
-    private IProcessSpawner? GetProcessSpawner()
+    public virtual IProcessSpawner? GetCurrentProcessSpawner()
     {
         if (_commonProcessSpawner is { IsValueCreated: true, Value.Status: true })
         {
@@ -131,7 +131,7 @@ public sealed class Server
         if (Status)
         {
             Logger.WriteInternalInfo($"“{Configuration.FileName}”启动中");
-            Pid = GetProcessSpawner()!.CurrentProcess?.Id;
+            Pid = GetCurrentProcessSpawner()!.CurrentProcess?.Id;
         }
     }
 
@@ -239,14 +239,7 @@ public sealed class Server
             return;
         }
 
-        if (Configuration.Pty.IsEnabled)
-        {
-            _ptyProcessSpawner.Value.Start(Configuration);
-        }
-        else
-        {
-            _commonProcessSpawner.Value.Start(Configuration);
-        }
+        StartProcess();
 
         RestartStatus = RestartStatus.None;
 
@@ -273,6 +266,18 @@ public sealed class Server
         if (Configuration.SaveLog)
         {
             _logWriter.WriteAsync(DateTime.Now.ToString("T") + " 服务器已启动");
+        }
+    }
+
+    protected virtual void StartProcess()
+    {
+        if (Configuration.Pty.IsEnabled)
+        {
+            _ptyProcessSpawner.Value.Start(Configuration);
+        }
+        else
+        {
+            _commonProcessSpawner.Value.Start(Configuration);
         }
     }
 
@@ -352,7 +357,7 @@ public sealed class Server
         Input(command, true, useUnicodeChars);
     }
 
-    internal void Input(string command, bool fromUser, bool? useUnicodeChars = null)
+    protected internal void Input(string command, bool fromUser, bool? useUnicodeChars = null)
     {
         if (!Status)
         {
@@ -366,7 +371,7 @@ public sealed class Server
             return;
         }
 
-        GetProcessSpawner()!
+        GetCurrentProcessSpawner()!
             .Write(
                 EncodingMap
                     .GetEncoding(Configuration.InputEncoding)
@@ -416,7 +421,7 @@ public sealed class Server
             throw new InvalidOperationException("服务器未运行");
         }
 
-        GetProcessSpawner()!.Terminate();
+        GetCurrentProcessSpawner()!.Terminate();
         _isTerminated = true;
     }
 
@@ -480,7 +485,7 @@ public sealed class Server
 
     private void UpdateInfo()
     {
-        var process = GetProcessSpawner()?.CurrentProcess;
+        var process = GetCurrentProcessSpawner()?.CurrentProcess;
         if (!Status && process is null)
         {
             _info.Argument = null;

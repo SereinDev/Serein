@@ -17,7 +17,7 @@ using WebSocket4Net;
 
 namespace Serein.Core.Services.Network.Connection.Adapters.Satori;
 
-public partial class SatoriAdapter : IConnectionAdapter
+public sealed partial class SatoriAdapter : IConnectionAdapter
 {
     private readonly ConnectionLoggerBase _logger;
     private readonly SettingProvider _settingProvider;

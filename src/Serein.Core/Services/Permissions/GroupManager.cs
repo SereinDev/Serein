@@ -6,7 +6,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Permissions;
 
-public partial class GroupManager(
+public sealed partial class GroupManager(
     PermissionManager permissionManager,
     PermissionGroupProvider permissionGroupProvider
 )

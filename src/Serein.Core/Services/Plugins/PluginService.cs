@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Serein.Core.Services.Plugins;
 
-internal class PluginService(PluginManager pluginManager) : IHostedService
+internal sealed class PluginService(PluginManager pluginManager) : IHostedService
 {
     private bool _unloaded;
 

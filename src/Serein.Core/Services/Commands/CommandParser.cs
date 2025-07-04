@@ -10,7 +10,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Commands;
 
-public partial class CommandParser(
+public sealed partial class CommandParser(
     SereinApp sereinApp,
     PluginManager pluginManager,
     ServerManager servers,

@@ -8,7 +8,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Commands;
 
-internal class ScheduleRunner(
+internal sealed class ScheduleRunner(
     ILogger<ScheduleRunner> logger,
     ScheduleProvider scheduleProvider,
     CommandRunner commandRunner

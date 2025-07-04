@@ -2,15 +2,13 @@ using System;
 
 namespace Serein.Core.Models.Network.Web;
 
-public class ApiPacket<T>
+public class ApiPacket
 {
-    public int Code { get; init; } = 200;
+    public object? Data { get; init; }
 
     public string? ErrorMsg { get; init; }
 
-    public T? Data { get; init; }
+    public string[] Details { get; init; } = [];
 
     public DateTime Time { get; } = DateTime.Now;
 }
-
-public class ApiPacket : ApiPacket<object> { }

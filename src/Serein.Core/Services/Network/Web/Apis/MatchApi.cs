@@ -29,7 +29,7 @@ internal partial class ApiMap
         matchProvider.Value.Add(match);
         matchProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync(match.GetHashCode(), HttpStatusCode.Created);
+        await HttpContext.SendPacketAsync(match, HttpStatusCode.Created);
     }
 
     [Route(HttpVerbs.Delete, "/matches/{id}")]
@@ -38,7 +38,7 @@ internal partial class ApiMap
         var march = FastGetMatch(id);
         matchProvider.Value.Remove(march);
         matchProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Put, "/matches/{id}")]
@@ -48,7 +48,7 @@ internal partial class ApiMap
         var oldMatch = FastGetMatch(id);
         match.DeepCloneTo(oldMatch);
         matchProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync(oldMatch.GetHashCode());
+        await HttpContext.SendPacketAsync(oldMatch);
     }
 
     private Match FastGetMatch(int id)

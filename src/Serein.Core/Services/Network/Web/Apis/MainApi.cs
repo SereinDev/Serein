@@ -16,7 +16,7 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Network.Web.Apis;
 
-internal partial class ApiMap(
+internal sealed partial class ApiMap(
     SereinApp sereinApp,
     MatchProvider matchProvider,
     PluginManager pluginManager,

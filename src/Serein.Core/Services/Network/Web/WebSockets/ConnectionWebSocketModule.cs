@@ -11,7 +11,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Web.WebSockets;
 
-internal class ConnectionWebSocketModule : WebSocketModuleBase
+internal sealed class ConnectionWebSocketModule : WebSocketModuleBase
 {
     private readonly ILogger<ConnectionWebSocketModule> _logger;
     private readonly ConnectionManager _connectionManager;

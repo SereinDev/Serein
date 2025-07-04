@@ -8,7 +8,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Loggers;
 
-internal class FileLoggerProvider : ILoggerProvider
+internal sealed class FileLoggerProvider : ILoggerProvider
 {
     public static bool IsEnabled { get; } =
         Environment.GetCommandLineArgs().Contains("--log")

@@ -7,7 +7,7 @@ namespace Serein.Core.Models.Bindings;
 /// <summary>
 /// 绑定记录
 /// </summary>
-public class BindingRecord
+public sealed class BindingRecord
 {
     private DateTime _time;
 

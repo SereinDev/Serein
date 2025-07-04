@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -12,7 +13,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers.ProcessSpawners;
 
-internal sealed class PtyProcessSpawner(
+public sealed class PtyProcessSpawner(
     string id,
     SereinApp sereinApp,
     LogWriter logWriter,
@@ -21,14 +22,14 @@ internal sealed class PtyProcessSpawner(
 ) : IProcessSpawner
 {
     public Process? CurrentProcess { get; private set; }
-
-    public bool Status => _ptyConnection is not null && !_isPreparing;
+    public IPtyConnection? PtyConnection { get; private set; }
+    public bool Status => PtyConnection is not null && !_isPreparing;
 
     public event EventHandler? StatusChanged;
     public event EventHandler<int>? ProcessExited;
+    public event EventHandler<char>? CharOutput;
 
     private CancellationTokenSource _cancellationTokenSource = new();
-    private IPtyConnection? _ptyConnection;
     private StreamReader? _streamReader;
     private bool _isPreparing;
 
@@ -85,13 +86,13 @@ internal sealed class PtyProcessSpawner(
                     }
 
                     _isPreparing = false;
-                    _ptyConnection = task.Result;
-                    CurrentProcess = Process.GetProcessById(_ptyConnection.Pid);
-                    _ptyConnection.ProcessExited += (_, e) =>
+                    PtyConnection = task.Result;
+                    CurrentProcess = Process.GetProcessById(PtyConnection.Pid);
+                    PtyConnection.ProcessExited += (_, e) =>
                     {
                         try
                         {
-                            _ptyConnection?.Dispose();
+                            PtyConnection?.Dispose();
                         }
                         catch (Exception ex)
                         {
@@ -101,14 +102,14 @@ internal sealed class PtyProcessSpawner(
                             logger.LogError(ex, "在处理进程退出时发生异常");
                         }
 
-                        _ptyConnection = null;
+                        PtyConnection = null;
                         _streamReader?.Close();
                         _cancellationTokenSource.Cancel();
 
                         ProcessExited?.Invoke(this, e.ExitCode);
                     };
                     _streamReader = new(
-                        _ptyConnection.ReaderStream,
+                        PtyConnection.ReaderStream,
                         EncodingMap.GetEncoding(configuration.OutputEncoding)
                     );
 
@@ -116,7 +117,7 @@ internal sealed class PtyProcessSpawner(
                     serverLogger.WriteInternalInfo(
                         "正在使用虚拟终端启动服务器进程。若出现问题请尝试关闭虚拟终端功能。"
                     );
-                    ReadLineLoop();
+                    Task.Run(StartReadLineLoop);
                 }
             );
     }
@@ -128,30 +129,43 @@ internal sealed class PtyProcessSpawner(
 
     public void Write(byte[] bytes)
     {
-        _ptyConnection?.WriterStream.Write(bytes);
+        PtyConnection?.WriterStream.Write(bytes);
     }
 
-    private async Task ReadLineLoop()
+    private void StartReadLineLoop()
     {
+        var list = new List<char>();
+
         while (
             Status && !_cancellationTokenSource.IsCancellationRequested && _streamReader is not null
         )
         {
             try
             {
-                var line = await _streamReader.ReadLineAsync(_cancellationTokenSource.Token);
-                if (line is not null)
+                var code = _streamReader.Read();
+
+                if (code < 0)
                 {
-                    serverLogger.WriteStandardOutput(line);
+                    break;
                 }
-            }
-            catch (ObjectDisposedException)
-            {
-                break;
-            }
-            catch (OperationCanceledException)
-            {
-                break;
+
+                var c = (char)code;
+
+                CharOutput?.Invoke(this, c);
+
+                if (c == '\n' || c == '\r')
+                {
+                    if (list.Count > 0)
+                    {
+                        var line = new string([.. list]).TrimEnd('\r', '\n');
+                        list.Clear();
+                        serverLogger.WriteStandardOutput(line);
+                    }
+                }
+                else
+                {
+                    list.Add(c);
+                }
             }
             catch (Exception e)
             {

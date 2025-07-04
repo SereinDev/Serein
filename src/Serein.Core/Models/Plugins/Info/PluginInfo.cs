@@ -4,7 +4,7 @@ using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Plugins.Info;
 
-public class PluginInfo : NotifyPropertyChangedModelBase
+public sealed class PluginInfo : NotifyPropertyChangedModelBase
 {
     [JsonRequired]
     public string Name { get; set; } = string.Empty;
@@ -27,4 +27,6 @@ public class PluginInfo : NotifyPropertyChangedModelBase
     public Dependency[] Dependencies { get; set; } = [];
 
     public string? EntryFile { get; set; }
+
+    public PluginTargets? Targets { get; set; }
 }

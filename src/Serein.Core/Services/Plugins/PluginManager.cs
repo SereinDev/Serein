@@ -23,6 +23,8 @@ namespace Serein.Core.Services.Plugins;
 
 public sealed partial class PluginManager(
     ILogger<PluginManager> logger,
+    SereinApp sereinApp,
+    FileSystem fileSystem,
     PluginLoggerBase pluginLogger,
     PacketHandler packetHandler,
     SessionStorage sessionStorage,
@@ -51,11 +53,6 @@ public sealed partial class PluginManager(
 
     public bool IsLoading { get; private set; }
     public bool IsReloading { get; private set; }
-
-    public void ExportVariables(string key, object? value)
-    {
-        ExportedVariables.AddOrUpdate(key, value, (_, _) => value);
-    }
 
     public void SetCommandVariable(string key, string? value)
     {
@@ -122,6 +119,38 @@ public sealed partial class PluginManager(
                 {
                     pluginLogger.Log(LogLevel.Error, Path.GetFileName(dir), e.Message);
                     continue;
+                }
+
+                if (pluginInfo.Targets is not null)
+                {
+                    if (
+                        pluginInfo.Targets.Max is not null
+                        && pluginInfo.Targets.Max
+                            < new Version(
+                                sereinApp.Version.Major,
+                                sereinApp.Version.Minor,
+                                sereinApp.Version.Build
+                            ) // fix (2.1.0 < 2.1.0.0) == true
+                    )
+                    {
+                        pluginLogger.Log(
+                            LogLevel.Warning,
+                            pluginInfo.Name,
+                            $"插件版本可能不兼容，当前版本：{sereinApp.Version}，插件要求最高版本：{pluginInfo.Targets.Max}"
+                        );
+                    }
+
+                    if (
+                        pluginInfo.Targets.Min is not null
+                        && pluginInfo.Targets.Min > sereinApp.Version
+                    )
+                    {
+                        pluginLogger.Log(
+                            LogLevel.Warning,
+                            pluginInfo.Name,
+                            $"插件版本可能不兼容，当前版本：{sereinApp.Version}，插件要求最低版本：{pluginInfo.Targets.Min}"
+                        );
+                    }
                 }
 
                 try
@@ -194,7 +223,7 @@ public sealed partial class PluginManager(
         packetHandler.PluginPacketHandler = null;
         eventDispatcher.Dispatch(Event.PluginsUnloading);
 
-        FileSystem.DisposeAll();
+        fileSystem.DisposeAll();
         netPluginLoader.Unload();
         jsPluginLoader.Unload();
         sessionStorage.Clear();

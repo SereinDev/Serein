@@ -158,7 +158,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     {
         if (IsActive)
         {
-            throw new InvalidOperationException("连接未关闭");
+            throw new InvalidOperationException("连接功能未关闭");
         }
 
         _sent = _received = 0;
@@ -189,7 +189,7 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     {
         if (!IsActive)
         {
-            throw new InvalidOperationException("未连接");
+            throw new InvalidOperationException("连接功能未启动");
         }
 
         StartedAt = null;

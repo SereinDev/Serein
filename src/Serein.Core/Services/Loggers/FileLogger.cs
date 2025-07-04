@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Loggers;
 
-internal class FileLogger(string categoryName, IList<string> buffer) : ILogger
+internal sealed class FileLogger(string categoryName, IList<string> buffer) : ILogger
 {
     public IDisposable? BeginScope<TState>(TState state)
         where TState : notnull

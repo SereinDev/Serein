@@ -120,10 +120,9 @@ public class JsPlugin : IPlugin
                 return true;
             }
 
-            var result = Engine.Invoke(func, args);
-            {
-                return !result.IsBoolean() || result.AsBoolean();
-            }
+            var result = Engine.Invoke(func, args).UnwrapIfPromise();
+
+            return !result.IsBoolean() || result.AsBoolean();
         }
         catch (Exception e)
         {
@@ -132,7 +131,7 @@ public class JsPlugin : IPlugin
                 Info.Name,
                 $"触发事件{@event}时出现异常：\n{e.GetDetailString()}"
             );
-            return false;
+            return true;
         }
         finally
         {

@@ -16,13 +16,13 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Servers;
 
-public partial class ServerManager
+public sealed partial class ServerManager
 {
     [GeneratedRegex(@"^\w{3,}$")]
     private static partial Regex GetServerIdRegex();
 
     private static readonly Regex ServerId = GetServerIdRegex();
-    private static readonly string[] Blacklist =
+    private static readonly string[] BlacklistOfFileName =
     [
         "CON",
         "PRN",
@@ -50,6 +50,8 @@ public partial class ServerManager
         "LPT9",
     ];
 
+    private static readonly char[] BlacklistOfChars = { '/', '\\', '<', '>', '&', '|', '?' };
+
     public static void ValidateId(string? id)
     {
         if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
@@ -57,9 +59,14 @@ public partial class ServerManager
             throw new ArgumentException("服务器Id格式不正确", nameof(id));
         }
 
-        if (Blacklist.Contains(id.ToUpperInvariant()))
+        if (BlacklistOfFileName.Contains(id.ToUpperInvariant()))
         {
             throw new ArgumentException("不能使用Windows系统的保留关键字作为Id", nameof(id));
+        }
+
+        if (id.IndexOfAny(BlacklistOfChars) >= 0)
+        {
+            throw new ArgumentException("Id不能包含特殊字符", nameof(id));
         }
     }
 
@@ -131,8 +138,6 @@ public partial class ServerManager
 
     public bool Remove(string id)
     {
-        ValidateId(id);
-
         if (_servers.TryGetValue(id, out var server) && server.Status)
         {
             throw new InvalidOperationException("服务器仍在运行中");

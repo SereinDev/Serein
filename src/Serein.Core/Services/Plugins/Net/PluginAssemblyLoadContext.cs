@@ -5,7 +5,7 @@ using System.Runtime.Loader;
 
 namespace Serein.Core.Services.Plugins.Net;
 
-internal class PluginAssemblyLoadContext : AssemblyLoadContext
+internal sealed class PluginAssemblyLoadContext : AssemblyLoadContext
 {
     private readonly AssemblyDependencyResolver _resolver;
 

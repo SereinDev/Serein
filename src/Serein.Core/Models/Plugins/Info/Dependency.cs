@@ -2,4 +2,9 @@ using System;
 
 namespace Serein.Core.Models.Plugins.Info;
 
-public record Dependency(string Id, Version[] Version);
+public sealed class Dependency
+{
+    public string Id { get; set; } = string.Empty;
+
+    public Version[] Version { get; set; } = [];
+}

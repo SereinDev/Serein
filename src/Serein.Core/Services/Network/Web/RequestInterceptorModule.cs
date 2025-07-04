@@ -8,7 +8,7 @@ using Serein.Core.Services.Plugins;
 
 namespace Serein.Core.Services.Network.Web;
 
-internal class RequestInterceptorModule : IPBanningModule
+internal sealed class RequestInterceptorModule : IPBanningModule
 {
     private readonly EventDispatcher _eventDispatcher;
 

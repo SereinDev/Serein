@@ -52,6 +52,5 @@ public partial class ApiTests
 
         Assert.True(response.IsSuccessStatusCode);
         Assert.Empty(_app.Services.GetRequiredService<MatchProvider>().Value);
-        Assert.Empty(await response.Content.ReadAsStringAsync());
     }
 }

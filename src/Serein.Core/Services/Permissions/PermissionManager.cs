@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Serein.Core.Services.Permissions;
 
-public partial class PermissionManager
+public sealed partial class PermissionManager
 {
     [GeneratedRegex(@"^([a-zA-Z][a-zA-Z0-9\-]*\.)*[a-zA-Z][a-zA-Z0-9\-]*$")]
     private static partial Regex GetKeyRegex();

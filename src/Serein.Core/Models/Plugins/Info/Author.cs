@@ -1,6 +1,6 @@
 namespace Serein.Core.Models.Plugins.Info;
 
-public record Author(string Name, string? Description = null)
+public sealed record Author(string Name, string? Description = null)
 {
     public override string ToString()
     {

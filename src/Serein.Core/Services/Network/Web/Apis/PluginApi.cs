@@ -29,7 +29,7 @@ internal partial class ApiMap
     public async Task ReloadPlugins()
     {
         Task.Run(pluginManager.Reload);
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Get, "/plugins")]
@@ -65,7 +65,7 @@ internal partial class ApiMap
         }
 
         Task.Run(plugin.Disable);
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 
     private IPlugin FastGetPlugin(string id)

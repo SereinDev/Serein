@@ -40,9 +40,10 @@ internal partial class ApiMap
                 JsonSerializerOptionsFactory.Common
             ) ?? throw HttpException.BadRequest("请求中未包含有效的服务器配置");
 
-        serverManager.Add(id, configuration);
-
-        await HttpContext.SendPacketAsync(HttpStatusCode.Created);
+        await HttpContext.SendPacketAsync(
+            serverManager.Add(id, configuration),
+            HttpStatusCode.Created
+        );
     }
 
     [Route(HttpVerbs.Put, "/servers/{id}")]
@@ -59,14 +60,20 @@ internal partial class ApiMap
 
         configuration.DeepCloneTo(server.Configuration);
 
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketAsync(server);
     }
 
     [Route(HttpVerbs.Delete, "/servers/{id}")]
     public async Task RemoveServer(string id)
     {
-        serverManager.Remove(id);
-        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
+        if (serverManager.Remove(id))
+        {
+            await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
+        }
+        else
+        {
+            throw HttpException.NotFound("未找到指定的服务器");
+        }
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}")]
@@ -106,7 +113,15 @@ internal partial class ApiMap
         var server = FastGetServer(id);
 
         server.Start();
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+
+        if (!server.Configuration.Pty.IsEnabled)
+        {
+            await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.OK);
+        }
+        else
+        {
+            await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
+        }
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/stop")]
@@ -115,7 +130,7 @@ internal partial class ApiMap
         var server = FastGetServer(id);
 
         server.Stop();
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/terminate")]
@@ -124,11 +139,11 @@ internal partial class ApiMap
         var server = FastGetServer(id);
 
         server.Terminate();
-        await HttpContext.SendPacketAsync(HttpStatusCode.Accepted);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 
     [Route(HttpVerbs.Post, "/servers/{id}/input")]
-    public async Task InputServer(string id, [QueryField("line")] string[] lines)
+    public async Task InputServer(string id)
     {
         var server = FastGetServer(id);
 
@@ -137,25 +152,15 @@ internal partial class ApiMap
             throw HttpException.Forbidden("服务器未运行");
         }
 
-        if (lines.Length == 0)
+        foreach (
+            var l in await HttpContext.ConvertRequestAs<string[]>()
+                ?? throw HttpException.BadRequest()
+        )
         {
-            foreach (
-                var l in await HttpContext.ConvertRequestAs<string[]>()
-                    ?? throw HttpException.BadRequest()
-            )
-            {
-                server.Input(l);
-            }
-        }
-        else
-        {
-            foreach (var l in lines)
-            {
-                server.Input(l);
-            }
+            server.Input(l);
         }
 
-        await HttpContext.SendPacketAsync(HttpStatusCode.OK);
+        HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 
     private Server FastGetServer(string id)

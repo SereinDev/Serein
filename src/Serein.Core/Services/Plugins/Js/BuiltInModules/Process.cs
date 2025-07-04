@@ -4,31 +4,33 @@ using System.IO;
 
 namespace Serein.Core.Services.Plugins.Js.BuiltInModules;
 
-public static class Process
+#pragma warning disable CA1822
+
+public sealed class Process
 {
-    public static string Arch => Environment.Is64BitProcess ? "x64" : "arm64";
+    public string Arch => Environment.Is64BitProcess ? "x64" : "arm64";
 
-    public static string[] Argv => Environment.GetCommandLineArgs();
+    public string[] Argv => Environment.GetCommandLineArgs();
 
-    public static string Argv0 => Argv[0];
+    public string Argv0 => Argv[0];
 
-    public static string Chdir(string directory)
+    public string Chdir(string directory)
     {
         Directory.SetCurrentDirectory(directory);
         return directory;
     }
 
-    public static string Cwd()
+    public string Cwd()
     {
         return Directory.GetCurrentDirectory();
     }
 
-    public static void Exit(int code = 0)
+    public void Exit(int code = 0)
     {
         Environment.Exit(code);
     }
 
-    public static Dictionary<string, string?> Env
+    public Dictionary<string, string?> Env
     {
         get
         {
@@ -48,22 +50,22 @@ public static class Process
         }
     }
 
-    public static string ExecPath => Environment.ProcessPath ?? string.Empty;
+    public string ExecPath => Environment.ProcessPath ?? string.Empty;
 
-    public static int ExitCode
+    public int ExitCode
     {
         get => Environment.ExitCode;
         set => Environment.ExitCode = value;
     }
 
-    public static void Kill(int pid)
+    public void Kill(int pid)
     {
         System.Diagnostics.Process.GetProcessById(pid).Kill(true);
     }
 
-    public static int Pid => Environment.ProcessId;
+    public int Pid => Environment.ProcessId;
 
-    public static string Platform => Environment.OSVersion.Platform.ToString().ToLowerInvariant();
+    public string Platform => Environment.OSVersion.Platform.ToString().ToLowerInvariant();
 
-    public static string Version => Environment.Version.ToString();
+    public string Version => Environment.Version.ToString();
 }

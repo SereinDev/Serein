@@ -5,7 +5,7 @@ using Serein.Core.Services.Data;
 
 namespace Serein.Core.Services.Network.Web.Apis;
 
-internal class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
+internal sealed class AuthGate(SettingProvider settingProvider) : WebModuleBase("/api")
 {
     public override bool IsFinalHandler => false;
 

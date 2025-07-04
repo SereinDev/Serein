@@ -13,7 +13,7 @@ using V12 = Serein.ConnectionProtocols.Models.OneBot.V12.Actions;
 
 namespace Serein.Core.Services.Network.Connection.Adapters.OneBot;
 
-public class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settingProvider)
+public sealed class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider settingProvider)
 {
     public string Build(
         TargetType targetType,

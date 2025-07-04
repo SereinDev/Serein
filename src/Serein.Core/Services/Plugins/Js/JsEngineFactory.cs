@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using Jint;
 using Jint.Native;
 using Jint.Runtime.Interop;
@@ -14,7 +15,6 @@ using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
-using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -26,6 +26,9 @@ public sealed class JsEngineFactory(
     ILogger<JsEngineFactory> logger
 )
 {
+    public FileSystem FileSystem { get; } = new();
+    public Process Process { get; } = new();
+
     private readonly ILogger _logger = logger;
 
     private Options PrepareOptions(JsPlugin jsPlugin)
@@ -82,6 +85,7 @@ public sealed class JsEngineFactory(
                 AllowWrite = jsPlugin.Config.AllowWrite,
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
+                SerializeToJson = (obj) => JsonSerializer.Serialize(obj),
             },
             Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
             Strict = jsPlugin.Config.Strict,
@@ -100,6 +104,9 @@ public sealed class JsEngineFactory(
 
         engine.SetValue("serein", jsPlugin.ScriptInstance);
         engine.SetValue("console", jsPlugin.Console);
+
+        engine.SetValue("fs", FileSystem);
+        engine.SetValue("process", Process);
         engine.SetValue("localStorage", localStorage);
         engine.SetValue("sessionStorage", sessionStorage);
 
@@ -114,10 +121,6 @@ public sealed class JsEngineFactory(
         engine.SetValue("clearTimeout", jsPlugin.TimerFactory.ClearTimeout);
         engine.SetValue("clearInterval", jsPlugin.TimerFactory.ClearInterval);
 
-        engine.SetValue("fs", TypeReference.CreateTypeReference(engine, typeof(FileSystem)));
-        engine.SetValue("process", TypeReference.CreateTypeReference(engine, typeof(Process)));
-
-        AddTypeReference<EncodingMap.EncodingType>();
         AddTypeReference<Command>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<AppType>();

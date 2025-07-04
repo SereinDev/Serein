@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Serein.Core.Services.Data;
 
-public class LogWriter(ILogger<LogWriter> logger, string directory)
+public sealed class LogWriter(ILogger<LogWriter> logger, string directory)
 {
     private readonly object _lock = new();
     private readonly List<string> _buffer = [];

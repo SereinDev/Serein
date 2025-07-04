@@ -4,7 +4,7 @@ using Serein.Core.Models.Abstractions;
 
 namespace Serein.Core.Models.Server;
 
-internal class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
+internal sealed class ServerInfo : NotifyPropertyChangedModelBase, IServerInfo
 {
     public string? FileName { get; internal set; }
 

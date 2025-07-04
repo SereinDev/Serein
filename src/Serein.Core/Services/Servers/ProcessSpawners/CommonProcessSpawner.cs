@@ -7,7 +7,7 @@ using Serein.Core.Utils.Extensions;
 
 namespace Serein.Core.Services.Servers.ProcessSpawners;
 
-internal sealed class CommonProcessSpawner(ServerLogger serverLogger) : IProcessSpawner
+public sealed class CommonProcessSpawner(ServerLogger serverLogger) : IProcessSpawner
 {
     public Process? CurrentProcess { get; private set; }
 

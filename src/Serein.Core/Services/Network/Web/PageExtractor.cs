@@ -6,7 +6,7 @@ using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Network.Web;
 
-public class PageExtractor(ILogger<PageExtractor> logger)
+public sealed class PageExtractor(ILogger<PageExtractor> logger)
 {
     private const string ResourceName = "Serein.Core.frontend.zip";
 

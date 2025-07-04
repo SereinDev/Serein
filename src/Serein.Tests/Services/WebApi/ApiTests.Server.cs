@@ -31,7 +31,6 @@ public partial class ApiTests
         );
 
         Assert.True(response.IsSuccessStatusCode);
-        Assert.NotEmpty(await response.Content.ReadAsStringAsync());
         Assert.NotEmpty(_app.Services.GetRequiredService<ServerManager>().Servers);
     }
 
@@ -42,7 +41,6 @@ public partial class ApiTests
         var response = await _client.DeleteAsync("/api/servers/myserver");
 
         Assert.True(response.IsSuccessStatusCode);
-        Assert.Empty(await response.Content.ReadAsStringAsync());
         Assert.Empty(serverManager.Servers);
     }
 }

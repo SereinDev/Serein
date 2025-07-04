@@ -23,7 +23,7 @@ internal partial class ApiMap
         connectionSetting.DeepCloneTo(settingProvider.Value.Connection);
         settingProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync();
+        HttpContext.SendPacketWithEmptyDataAsync();
     }
 
     [Route(HttpVerbs.Put, "/settings/web-api")]
@@ -33,7 +33,7 @@ internal partial class ApiMap
         webApiSetting.DeepCloneTo(settingProvider.Value.WebApi);
         settingProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketWithEmptyDataAsync();
     }
 
     [Route(HttpVerbs.Put, "/settings/application")]
@@ -43,7 +43,7 @@ internal partial class ApiMap
         applicationSetting.DeepCloneTo(settingProvider.Value.Application);
         settingProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketWithEmptyDataAsync();
     }
 
     [Route(HttpVerbs.Put, "/settings/reactions")]
@@ -61,6 +61,6 @@ internal partial class ApiMap
         }
         settingProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync();
+        await HttpContext.SendPacketWithEmptyDataAsync();
     }
 }

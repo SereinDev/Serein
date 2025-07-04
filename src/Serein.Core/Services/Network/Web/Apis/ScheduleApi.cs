@@ -29,7 +29,7 @@ internal partial class ApiMap
         scheduleProvider.Value.Add(schedule);
         scheduleProvider.SaveAsyncWithDebounce();
 
-        await HttpContext.SendPacketAsync(schedule.GetHashCode(), HttpStatusCode.Created);
+        await HttpContext.SendPacketAsync(schedule, HttpStatusCode.Created);
     }
 
     [Route(HttpVerbs.Delete, "/schedules/{id}")]
@@ -38,7 +38,7 @@ internal partial class ApiMap
         var schedule = FastGetSchedule(id);
         scheduleProvider.Value.Remove(schedule);
         scheduleProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync(HttpStatusCode.NoContent);
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Put, "/schedules/{id}")]
@@ -47,8 +47,9 @@ internal partial class ApiMap
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
         var old = FastGetSchedule(id);
         schedule.DeepCloneTo(old);
+
         scheduleProvider.SaveAsyncWithDebounce();
-        await HttpContext.SendPacketAsync(old.GetHashCode());
+        await HttpContext.SendPacketAsync(old);
     }
 
     private Schedule FastGetSchedule(int id)

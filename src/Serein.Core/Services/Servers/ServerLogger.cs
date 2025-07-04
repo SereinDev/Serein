@@ -8,7 +8,7 @@ public sealed class ServerLogger
 {
     public string Id { get; }
 
-    internal ServerLogger(string id)
+    public ServerLogger(string id)
     {
         Id = id;
     }
@@ -19,28 +19,28 @@ public sealed class ServerLogger
 
     private readonly Queue<ServerOutputEventArgs> _history = new(100);
 
-    internal void WriteStandardOutput(string output)
+    public void WriteStandardOutput(string output)
     {
         var e = new ServerOutputEventArgs(ServerOutputType.StandardOutput, output);
         AddToHistory(e);
         Output?.Invoke(this, e);
     }
 
-    internal void WriteStandardInput(string input)
+    public void WriteStandardInput(string input)
     {
         var e = new ServerOutputEventArgs(ServerOutputType.StandardInput, input);
         AddToHistory(e);
         Output?.Invoke(this, e);
     }
 
-    internal void WriteInternalError(string error)
+    public void WriteInternalError(string error)
     {
         var e = new ServerOutputEventArgs(ServerOutputType.InternalError, error);
         AddToHistory(e);
         Output?.Invoke(this, new(ServerOutputType.InternalError, error));
     }
 
-    internal void WriteInternalInfo(string message)
+    public void WriteInternalInfo(string message)
     {
         var e = new ServerOutputEventArgs(ServerOutputType.InternalInfo, message);
         AddToHistory(e);
@@ -60,7 +60,7 @@ public sealed class ServerLogger
         }
     }
 
-    internal void ClearHistory()
+    public void ClearHistory()
     {
         lock (_history)
         {

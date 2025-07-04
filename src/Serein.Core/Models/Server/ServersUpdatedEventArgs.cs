@@ -1,5 +1,4 @@
 ﻿using System;
-using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Models.Server;
 

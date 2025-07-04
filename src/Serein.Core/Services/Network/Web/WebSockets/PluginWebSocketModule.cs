@@ -9,7 +9,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Network.Web.WebSockets;
 
-internal class PluginWebSocketModule : WebSocketModuleBase
+internal sealed class PluginWebSocketModule : WebSocketModuleBase
 {
     private readonly ILogger<PluginWebSocketModule> _logger;
     private readonly PluginLoggerBase _pluginLoggerBase;
