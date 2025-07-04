@@ -136,7 +136,7 @@ public sealed partial class ServerManager
         return server;
     }
 
-    public bool Remove(string id)
+    public void Remove(string id)
     {
         if (_servers.TryGetValue(id, out var server) && server.Status)
         {
@@ -145,7 +145,7 @@ public sealed partial class ServerManager
 
         if (!_servers.Remove(id) || server is null)
         {
-            return false;
+            throw new KeyNotFoundException($"未找到服务器：{id}");
         }
 
         var path = string.Format(PathConstants.ServerConfigFile, id);
@@ -156,8 +156,6 @@ public sealed partial class ServerManager
 
         _logger.LogDebug("删除服务器：{}", id);
         ServersUpdated?.Invoke(this, new(ServersUpdatedType.Removed, id, server));
-
-        return true;
     }
 
     public void SaveAll()

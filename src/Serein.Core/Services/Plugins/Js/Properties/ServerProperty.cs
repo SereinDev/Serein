@@ -21,9 +21,9 @@ public sealed class ServerProperty
         return _serverManager.Add(id, configuration);
     }
 
-    public bool Remove(string id)
+    public void Remove(string id)
     {
-        return _serverManager.Remove(id);
+        _serverManager.Remove(id);
     }
 
     public bool AnyRunning => _serverManager.AnyRunning;

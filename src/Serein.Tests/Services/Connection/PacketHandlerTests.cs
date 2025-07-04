@@ -1,17 +1,10 @@
 using System;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
-using Serein.Core.Utils.Extensions;
-using Serein.Core.Utils.Json;
-using WebSocket4Net;
 using Xunit;
 
 namespace Serein.Tests.Services.Connection;

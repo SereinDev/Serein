@@ -8,7 +8,7 @@ using Jint.Native;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Plugins.Js;
-using Serein.Core.Services.Plugins;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js;
 using Serein.Core.Utils;
 using Xunit;
@@ -20,15 +20,17 @@ public sealed partial class InteropTests : IDisposable
 {
     private readonly IHost _host;
     private readonly JsPluginLoader _jsPluginLoader;
-    private readonly EventDispatcher _eventDispatcher;
 
     private readonly KeyValuePair<string, Core.Services.Plugins.Js.JsPlugin> _kv;
 
     public InteropTests()
     {
         _host = HostFactory.BuildNew();
-        _eventDispatcher = _host.Services.GetRequiredService<EventDispatcher>();
         _jsPluginLoader = _host.Services.GetRequiredService<JsPluginLoader>();
+
+        _host
+            .Services.GetRequiredService<SettingProvider>()
+            .Value.Application.PluginEventMaxWaitingTime = 2000;
 
         (
             (ConcurrentDictionary<string, Core.Services.Plugins.Js.JsPlugin>)_jsPluginLoader.Plugins

@@ -274,6 +274,7 @@ public sealed partial class CommandParser(
                     "serein.type" => sereinApp.Type,
                     "serein.version" => sereinApp.Version,
                     "serein.fullversion" => sereinApp.FullVersion,
+                    "serein.assembly" => sereinApp.AssemblyName,
                     #endregion
 
                     #region 时间
@@ -376,7 +377,8 @@ public sealed partial class CommandParser(
                         : null,
                     #endregion
 
-                    _ => GetServerVariables(match.Groups[1].Value, commandContext?.ServerId),
+                    _ => GetServerVariables(match.Groups[1].Value, commandContext?.ServerId)
+                        ?? GetUserIdByGameId(match.Groups[1].Value),
                 };
 
                 var r = obj?.ToString();
@@ -406,6 +408,34 @@ public sealed partial class CommandParser(
     }
 
 #pragma warning restore IDE0046
+
+    private string? GetUserIdByGameId(string input)
+    {
+        if (
+            !input.StartsWith("user.id", StringComparison.InvariantCultureIgnoreCase)
+            || !input.Contains('@')
+        )
+        {
+            return null;
+        }
+
+        var i = input.IndexOf('@');
+
+        var gameId = input[(i + 1)..];
+
+        if (!string.IsNullOrEmpty(gameId))
+        {
+            foreach (var record in bindingManager.Records)
+            {
+                if (record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    return record.UserId;
+                }
+            }
+        }
+
+        return null;
+    }
 
     private object? GetServerVariables(string input, string? id = null)
     {

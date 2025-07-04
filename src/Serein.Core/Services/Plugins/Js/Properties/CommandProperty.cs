@@ -29,6 +29,13 @@ public sealed class CommandProperty
 
     public void SetVariable(string key, string? value)
     {
-        _pluginManager.SetCommandVariable(key, value);
+        if (value == null)
+        {
+            _pluginManager.CommandVariables.TryRemove(key, out _);
+        }
+        else
+        {
+            _pluginManager.CommandVariables.AddOrUpdate(key, value, (_, _) => value);
+        }
     }
 }

@@ -54,18 +54,6 @@ public sealed partial class PluginManager(
     public bool IsLoading { get; private set; }
     public bool IsReloading { get; private set; }
 
-    public void SetCommandVariable(string key, string? value)
-    {
-        if (value == null)
-        {
-            CommandVariables.TryRemove(key, out _);
-        }
-        else
-        {
-            CommandVariables.AddOrUpdate(key, value, (_, _) => value);
-        }
-    }
-
     public void Load()
     {
         try

@@ -1,12 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
-using Serein.Core.Utils.Extensions;
 using Xunit;
 
 namespace Serein.Tests.Services.Connection;

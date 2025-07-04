@@ -66,14 +66,7 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/servers/{id}")]
     public async Task RemoveServer(string id)
     {
-        if (serverManager.Remove(id))
-        {
-            await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
-        }
-        else
-        {
-            throw HttpException.NotFound("未找到指定的服务器");
-        }
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
     }
 
     [Route(HttpVerbs.Get, "/servers/{id}")]
@@ -139,6 +132,15 @@ internal partial class ApiMap
         var server = FastGetServer(id);
 
         server.Terminate();
+        await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
+    }
+
+    [Route(HttpVerbs.Post, "/servers/{id}/restart")]
+    public async Task RestartServer(string id)
+    {
+        var server = FastGetServer(id);
+
+        server.RequestRestart();
         await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.Accepted);
     }
 

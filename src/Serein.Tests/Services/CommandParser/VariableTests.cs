@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Models.Commands;
+using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Servers;
 using Xunit;
 using Parser = Serein.Core.Services.Commands.CommandParser;
@@ -75,7 +76,7 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithServerVariable()
+    public void ShouldApplyServerVariable()
     {
         var serverManager = _app.Services.GetRequiredService<ServerManager>();
 
@@ -101,7 +102,7 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithOneBotV11MsgPacketVariable()
+    public void ShouldApplyOneBotV11MsgPacketVariable()
     {
         var packet = new V11.MessagePacket
         {
@@ -155,7 +156,7 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithOneBotV12MsgPacketVariable()
+    public void ShouldApplyOneBotV12MsgPacketVariable()
     {
         var packet = new V12.MessagePacket { UserId = "114514", MessageId = "1" };
         Assert.Equal(
@@ -175,7 +176,7 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithSatoriMsgPacketVariable()
+    public void ShouldApplySatoriMsgPacketVariable()
     {
         var eventBody = new EventBody
         {
@@ -219,7 +220,7 @@ public sealed class VariableTests : IDisposable
     }
 
     [Fact]
-    public void ShouldWorkWithRegexVariable()
+    public void ShouldApplyRegexVariable()
     {
         Assert.Equal(
             "a",
@@ -234,6 +235,27 @@ public sealed class VariableTests : IDisposable
                 Parser.Parse(CommandOrigin.Null, "[cmd]$a"),
                 new() { Match = Regex.Match("a1", @"(?<a>\d)") }
             )
+        );
+    }
+
+    [Fact]
+    public void ShouldApplyBindingVariable()
+    {
+        Assert.Equal(
+            "{user.id}",
+            _commandParser.Format(Parser.Parse(CommandOrigin.Null, "[cmd]{user.id}"), new())
+        );
+
+        Assert.Equal(
+            "{user.id@steve}",
+            _commandParser.Format(Parser.Parse(CommandOrigin.Null, "[cmd]{user.id@steve}"), new())
+        );
+
+        _app.Services.GetRequiredService<BindingManager>().Add("123456", "steve");
+
+        Assert.Equal(
+            "123456",
+            _commandParser.Format(Parser.Parse(CommandOrigin.Null, "[cmd]{user.id@steve}"), new())
         );
     }
 }

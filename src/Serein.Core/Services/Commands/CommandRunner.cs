@@ -102,20 +102,15 @@ public sealed class CommandRunner
                 break;
 
             case CommandType.SendReply:
-                if (!commandContext.HasValue)
+                if (commandContext.HasValue)
                 {
-                    break;
+                    await FastReply(commandContext.Value, body);
                 }
-
-                await FastReply(commandContext.Value, body);
                 break;
 
             case CommandType.Bind:
             case CommandType.Unbind:
-                if (
-                    !commandContext.HasValue
-                    || string.IsNullOrEmpty(commandContext.Value.Packets.UserId)
-                )
+                if (string.IsNullOrEmpty(commandContext?.Packets.UserId))
                 {
                     break;
                 }
@@ -157,7 +152,7 @@ public sealed class CommandRunner
                 }
                 catch (BindingFailureException e)
                 {
-                    _logger.LogWarning(e, "通过命令绑定失败");
+                    _logger.LogError(e, "通过命令绑定失败");
 
                     await FastReply(commandContext.Value, e.Message);
                 }

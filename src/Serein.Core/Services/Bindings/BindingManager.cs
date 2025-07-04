@@ -89,7 +89,10 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         {
             foreach (var record in context.Datas)
             {
-                if (record.UserId != id && record.GameIds.Contains(gameId))
+                if (
+                    record.UserId != id
+                    && record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase)
+                )
                 {
                     throw new BindingFailureException("此Id已被占用");
                 }

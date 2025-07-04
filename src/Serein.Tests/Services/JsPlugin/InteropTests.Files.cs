@@ -30,7 +30,8 @@ public sealed partial class InteropTests
 
     [Theory]
     [InlineData(["123.js"])]
-    [InlineData(["abc/456.dll"])]
+    [InlineData(["abc/edf.dll"])]
+    [InlineData(["abc", "edf.dll"])]
     [InlineData(["../sky.png"])]
     public void ShouldBeAbleToResolvePaths(params string[] paths)
     {

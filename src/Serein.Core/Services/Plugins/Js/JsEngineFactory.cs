@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Jint;
 using Jint.Native;
@@ -28,6 +29,11 @@ public sealed class JsEngineFactory(
 {
     public FileSystem FileSystem { get; } = new();
     public Process Process { get; } = new();
+
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    };
 
     private readonly ILogger _logger = logger;
 
@@ -85,7 +91,7 @@ public sealed class JsEngineFactory(
                 AllowWrite = jsPlugin.Config.AllowWrite,
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
-                SerializeToJson = (obj) => JsonSerializer.Serialize(obj),
+                SerializeToJson = (obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
             },
             Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
             Strict = jsPlugin.Config.Strict,
