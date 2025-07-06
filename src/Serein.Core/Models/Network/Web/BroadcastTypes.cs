@@ -12,9 +12,7 @@ public static class BroadcastTypes
 
     public static readonly string Output = "output";
 
-    public static readonly string Info = "info";
-
-    public static readonly string Warning = "warning";
+    public static readonly string Information = "information";
 
     public static readonly string Error = "error";
 }

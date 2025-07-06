@@ -18,20 +18,24 @@ public class Schedule : NotifyPropertyChangedModelBase
         set
         {
             _expression = value;
+            UpdateExpression();
+        }
+    }
 
-            try
+    private void UpdateExpression()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(_expression))
             {
-                if (string.IsNullOrEmpty(_expression))
-                {
-                    throw new ArgumentException("Cron表达式不得为空", nameof(Expression));
-                }
-                Cron = CrontabSchedule.Parse(_expression);
-                NextTime = Cron?.GetNextOccurrence(DateTime.Now);
+                throw new ArgumentException("Cron表达式不得为空", nameof(Expression));
             }
-            catch
-            {
-                NextTime = null;
-            }
+            Crontab = CrontabSchedule.Parse(_expression);
+            NextTime = Crontab?.GetNextOccurrence(DateTime.Now);
+        }
+        catch
+        {
+            NextTime = null;
         }
     }
 
@@ -41,7 +45,7 @@ public class Schedule : NotifyPropertyChangedModelBase
         set
         {
             _command = value;
-            CommandObj = CommandParser.Parse(CommandOrigin.Schedule, value);
+            CommandInstance = CommandParser.Parse(CommandOrigin.Schedule, value);
         }
     }
 
@@ -49,18 +53,22 @@ public class Schedule : NotifyPropertyChangedModelBase
 
     public bool IsEnabled { get; set; } = true;
 
-    [DoNotNotify]
     [JsonIgnore]
-    public Command? CommandObj { get; private set; }
+    public Command? CommandInstance { get; private set; }
 
     [JsonIgnore]
     public DateTime? NextTime { get; internal set; }
 
     [JsonIgnore]
-    [DoNotNotify]
     public bool IsRunning { get; internal set; }
 
     [AlsoNotifyFor(nameof(NextTime))]
     [JsonIgnore]
-    public CrontabSchedule? Cron { get; internal set; }
+    public CrontabSchedule? Crontab { get; internal set; }
+
+    public void ForceUpdate()
+    {
+        CommandInstance = CommandParser.Parse(CommandOrigin.Schedule, _command);
+        UpdateExpression();
+    }
 }

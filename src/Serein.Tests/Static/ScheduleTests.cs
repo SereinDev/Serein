@@ -10,23 +10,23 @@ public static class ScheduleTests
     public static void ShouldModifyCommandObjWhenSettingCommand()
     {
         var schedule = new Schedule { Command = "[g]1" };
-        Assert.NotNull(schedule.CommandObj);
+        Assert.NotNull(schedule.CommandInstance);
 
         schedule.Command = "111?";
-        Assert.NotNull(schedule.CommandObj);
+        Assert.NotNull(schedule.CommandInstance);
     }
 
     [Fact]
     public static void CronShouldBeNullIfExpressionIsEmptyOrInvalid()
     {
         var schedule = new Schedule { Expression = string.Empty };
-        Assert.Null(schedule.Cron);
+        Assert.Null(schedule.Crontab);
 
         schedule.Expression = "* * * * * *";
-        Assert.Null(schedule.Cron);
+        Assert.Null(schedule.Crontab);
 
         schedule.Expression = "1 2 3";
-        Assert.Null(schedule.Cron);
+        Assert.Null(schedule.Crontab);
     }
 
     [Fact]

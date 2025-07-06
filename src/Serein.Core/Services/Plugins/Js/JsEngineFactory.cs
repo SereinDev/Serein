@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Jint;
 using Jint.Native;
 using Jint.Runtime.Interop;
@@ -16,6 +17,7 @@ using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
+using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -33,6 +35,7 @@ public sealed class JsEngineFactory(
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
     };
 
     private readonly ILogger _logger = logger;
@@ -91,7 +94,9 @@ public sealed class JsEngineFactory(
                 AllowWrite = jsPlugin.Config.AllowWrite,
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
-                SerializeToJson = (obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
+                SerializeToJson = jsPlugin.Config.UseJintJsonConverter
+                    ? null
+                    : (obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
             },
             Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
             Strict = jsPlugin.Config.Strict,
@@ -128,6 +133,7 @@ public sealed class JsEngineFactory(
         engine.SetValue("clearInterval", jsPlugin.TimerFactory.ClearInterval);
 
         AddTypeReference<Command>();
+        AddTypeReference<EncodingMap.EncodingType>();
         AddTypeReference<CommandOrigin>();
         AddTypeReference<AppType>();
         AddTypeReference<ReactionType>();

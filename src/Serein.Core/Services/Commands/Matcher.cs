@@ -93,22 +93,22 @@ public sealed class Matcher
                                 ? MatchFieldType.ServerInput
                                 : MatchFieldType.ServerOutput
                         )
-                    || match.RegexObj is null
-                    || match.CommandObj is null
-                    || match.CommandObj.Type == CommandType.Invalid
+                    || match.RegexInstance is null
+                    || match.CommandInstance is null
+                    || match.CommandInstance.Type == CommandType.Invalid
                     || CheckExclusions(match, serverLine.Id)
                 )
                 {
                     continue;
                 }
 
-                var matches = match.RegexObj.Match(serverLine.Line);
+                var matches = match.RegexInstance.Match(serverLine.Line);
 
                 if (matches.Success)
                 {
                     tasks.Add(
                         _commandRunner.RunAsync(
-                            match.CommandObj,
+                            match.CommandInstance,
                             new() { Match = matches, ServerId = serverLine.Id }
                         )
                     );
@@ -206,21 +206,21 @@ public sealed class Matcher
         void RunMatch(Match match)
         {
             if (
-                match.RegexObj is null
-                || match.CommandObj is null
-                || match.CommandObj.Type == CommandType.Invalid
+                match.RegexInstance is null
+                || match.CommandInstance is null
+                || match.CommandInstance.Type == CommandType.Invalid
             )
             {
                 return;
             }
 
-            var matches = match.RegexObj.Match(packets.Message);
+            var matches = match.RegexInstance.Match(packets.Message);
 
             if (matches.Success)
             {
                 tasks.Add(
                     _commandRunner.RunAsync(
-                        match.CommandObj,
+                        match.CommandInstance,
                         new() { Match = matches, Packets = packets }
                     )
                 );
@@ -266,7 +266,7 @@ public sealed class Matcher
 
     private static bool CheckExclusions(Match match, string serverId)
     {
-        return match.MatchExclusion.Servers.Contains(serverId);
+        return match.ExclusionInstance.Servers.Contains(serverId);
     }
 
     private static bool CheckExclusions(Match match, Packets packets)
@@ -274,22 +274,22 @@ public sealed class Matcher
         if (packets.OneBotV11 is not null)
         {
             return match.FieldType == MatchFieldType.GroupMsg
-                    && match.MatchExclusion.Groups.Contains(packets.OneBotV11.GroupId.ToString())
-                || match.MatchExclusion.Users.Contains(packets.OneBotV11.UserId.ToString());
+                    && match.ExclusionInstance.Groups.Contains(packets.OneBotV11.GroupId.ToString())
+                || match.ExclusionInstance.Users.Contains(packets.OneBotV11.UserId.ToString());
         }
 
         if (packets.OneBotV12 is not null)
         {
             return match.FieldType == MatchFieldType.GroupMsg
                     && !string.IsNullOrEmpty(packets.OneBotV12.GroupId)
-                    && match.MatchExclusion.Groups.Contains(packets.OneBotV12.GroupId)
+                    && match.ExclusionInstance.Groups.Contains(packets.OneBotV12.GroupId)
                 || match.FieldType == MatchFieldType.ChannelMsg
                     && !string.IsNullOrEmpty(packets.OneBotV12.ChannelId)
-                    && match.MatchExclusion.Channels.Contains(packets.OneBotV12.ChannelId)
+                    && match.ExclusionInstance.Channels.Contains(packets.OneBotV12.ChannelId)
                 || match.FieldType is MatchFieldType.GuildMsg or MatchFieldType.ChannelMsg
                     && !string.IsNullOrEmpty(packets.OneBotV12.GuildId)
-                    && match.MatchExclusion.Channels.Contains(packets.OneBotV12.GuildId)
-                || match.MatchExclusion.Users.Contains(packets.OneBotV12.UserId);
+                    && match.ExclusionInstance.Channels.Contains(packets.OneBotV12.GuildId)
+                || match.ExclusionInstance.Users.Contains(packets.OneBotV12.UserId);
         }
 
         if (packets.SatoriV1 is not null)
@@ -297,8 +297,8 @@ public sealed class Matcher
             return match.FieldType == MatchFieldType.GroupMsg
                     && !string.IsNullOrEmpty(packets.SatoriV1.Channel?.Id)
                     && packets.SatoriV1.Channel.Type != ChannelType.Direct
-                    && match.MatchExclusion.Groups.Contains(packets.SatoriV1.Channel.Id)
-                || match.MatchExclusion.Users.Contains(packets.SatoriV1.User?.Id ?? string.Empty);
+                    && match.ExclusionInstance.Groups.Contains(packets.SatoriV1.Channel.Id)
+                || match.ExclusionInstance.Users.Contains(packets.SatoriV1.User?.Id ?? string.Empty);
         }
 
         return false;

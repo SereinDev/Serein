@@ -47,7 +47,7 @@ internal sealed class ConnectionWebSocketModule : WebSocketModuleBase
         {
             BroadcastAsync(
                     JsonSerializer.Serialize(
-                        new BroadcastPacket(e.Type, e.Data),
+                        new BroadcastPacket(e.Type, nameof(Serein), e.Data),
                         JsonSerializerOptionsFactory.Common
                     )
                 )
@@ -65,7 +65,11 @@ internal sealed class ConnectionWebSocketModule : WebSocketModuleBase
         {
             BroadcastAsync(
                     JsonSerializer.Serialize(
-                        new BroadcastPacket(e.Type.ToString() + "-raw", e.Data),
+                        new BroadcastPacket(
+                            e.Type.ToString(),
+                            _connectionManager.ActiveAdapterType?.ToString(),
+                            e.Data
+                        ),
                         JsonSerializerOptionsFactory.Common
                     )
                 )

@@ -48,8 +48,8 @@ public partial class SchedulePage : UserControl, IUpdateablePage
             _scheduleListView.SelectedItems.Count == 0 ? $"共{_scheduleListView.Items.Count}项"
             : _scheduleListView.SelectedItems.Count == 1
             && _scheduleListView.SelectedItems[0].Tag is Schedule schedule
-            && schedule.Cron is not null
-                ? $"共{_scheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Cron.GetNextOccurrence(DateTime.Now):f}"
+            && schedule.Crontab is not null
+                ? $"共{_scheduleListView.Items.Count}项；已选择1项；预计下一次执行时间：{schedule.Crontab.GetNextOccurrence(DateTime.Now):f}"
             : $"共{_scheduleListView.Items.Count}项；已选择{_scheduleListView.SelectedItems.Count}项";
     }
 

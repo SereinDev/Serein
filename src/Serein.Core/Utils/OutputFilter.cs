@@ -44,7 +44,7 @@ public static partial class OutputFilter
     /// </summary>
     /// <param name="input">输入</param>
     /// <returns>移除后的文本</returns>
-    public static string Clear(string input)
+    public static string Clean(string input)
     {
         return RemoveANSIEscapeChars(RemoveControlChars(input));
     }

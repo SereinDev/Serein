@@ -23,7 +23,7 @@ internal partial class ApiMap
         connectionSetting.DeepCloneTo(settingProvider.Value.Connection);
         settingProvider.SaveAsyncWithDebounce();
 
-        HttpContext.SendPacketWithEmptyDataAsync();
+        await HttpContext.SendPacketWithEmptyDataAsync();
     }
 
     [Route(HttpVerbs.Put, "/settings/web-api")]

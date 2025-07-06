@@ -65,7 +65,7 @@ public partial class PanelTabItem : TabItem
                     () =>
                         Console.AppendLine(
                             Server.Configuration.OutputStyle == OutputStyle.Plain
-                                ? OutputFilter.RemoveANSIEscapeChars(e.Data)
+                                ? OutputFilter.Clean(e.Data)
                                 : e.Data
                         )
                 );

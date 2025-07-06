@@ -42,10 +42,12 @@ public sealed class ConnectionManager : INotifyPropertyChanged
     private ulong _received;
 
     [MemberNotNullWhen(true, nameof(_activeAdapter))]
+    [MemberNotNullWhen(true, nameof(ActiveAdapterType))]
     public bool IsActive => _activeAdapter is not null && _activeAdapter.IsActive;
     public ulong Sent => _sent;
     public ulong Received => _received;
     public DateTime? StartedAt { get; private set; }
+    public AdapterType? ActiveAdapterType => _activeAdapter?.Type;
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public event EventHandler<DataTranferredEventArgs>? DataTransferred;

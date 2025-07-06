@@ -17,4 +17,6 @@ public sealed class JsPluginConfig
     public bool AllowStringCompilation { get; init; } = true;
 
     public bool Strict { get; init; }
+
+    public bool UseJintJsonConverter { get; init; } = false;
 }

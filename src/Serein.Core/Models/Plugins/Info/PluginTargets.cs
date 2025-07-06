@@ -2,4 +2,8 @@ using System;
 
 namespace Serein.Core.Models.Plugins.Info;
 
-public sealed record PluginTargets(Version? Min, Version? Max);
+public sealed class PluginTargets
+{
+    public Version? Min { get; set; }
+    public Version? Max { get; set; }
+}

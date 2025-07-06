@@ -25,9 +25,9 @@ internal sealed class ScheduleRunner(
                 if (
                     !schedule.IsEnabled
                     || schedule.IsRunning
-                    || schedule.CommandObj is null
-                    || schedule.CommandObj.Type == CommandType.Invalid
-                    || schedule.Cron is null
+                    || schedule.CommandInstance is null
+                    || schedule.CommandInstance.Type == CommandType.Invalid
+                    || schedule.Crontab is null
                 )
                 {
                     continue;
@@ -35,17 +35,17 @@ internal sealed class ScheduleRunner(
 
                 if (schedule.NextTime < DateTime.Now)
                 {
-                    schedule.NextTime = schedule.Cron.GetNextOccurrence(DateTime.Now);
+                    schedule.NextTime = schedule.Crontab.GetNextOccurrence(DateTime.Now);
                     schedule.IsRunning = true;
 
                     logger.LogDebug(
                         "正在运行定时任务（{},cron={},command={}）",
                         schedule.GetHashCode(),
-                        schedule.Cron,
+                        schedule.Crontab,
                         schedule.Command
                     );
                     commandRunner
-                        .RunAsync(schedule.CommandObj)
+                        .RunAsync(schedule.CommandInstance)
                         .ContinueWith((_) => schedule.IsRunning = false);
                 }
             }

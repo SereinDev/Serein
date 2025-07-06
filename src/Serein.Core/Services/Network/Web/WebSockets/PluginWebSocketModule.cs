@@ -41,10 +41,11 @@ internal sealed class PluginWebSocketModule : WebSocketModuleBase
                         new BroadcastPacket(
                             logLevel switch
                             {
-                                LogLevel.Trace => nameof(Serein),
+                                LogLevel.Trace => BroadcastTypes.Information,
                                 _ => logLevel.ToString(),
                             },
-                            string.IsNullOrEmpty(title) ? line : $"[{title}] {line}"
+                            logLevel == LogLevel.Trace ? nameof(Serein) : title,
+                            line
                         ),
                         JsonSerializerOptionsFactory.Common
                     )

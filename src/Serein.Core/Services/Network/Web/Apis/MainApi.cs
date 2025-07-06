@@ -31,25 +31,25 @@ internal sealed partial class ApiMap(
 {
     private List<ApiEndpointRecord>? _records;
 
-    [Route(HttpVerbs.Get, "/metadata")]
+    [Route(HttpVerbs.Get, "/")]
     public async Task GetMetaData()
     {
         await HttpContext.SendPacketAsync(sereinApp);
     }
 
-    [Route(HttpVerbs.Get, "/")]
-    public async Task GetUrlInfo()
+    [Route(HttpVerbs.Get, "/routes")]
+    public async Task GetRoutes()
     {
         if (_records is null)
         {
-            GenerateUrlInfos();
+            GenerateRouteInfos();
         }
 
         await HttpContext.SendPacketAsync(_records);
     }
 
     [MemberNotNull(nameof(_records))]
-    private void GenerateUrlInfos()
+    private void GenerateRouteInfos()
     {
         _records = [];
         foreach (var methodInfo in typeof(ApiMap).GetMethods())

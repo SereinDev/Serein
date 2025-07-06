@@ -190,7 +190,7 @@ public class Server
             return;
         }
 
-        var filtered = OutputFilter.Clear(line);
+        var filtered = OutputFilter.Clean(line);
 
         if (!_eventDispatcher.Dispatch(Event.ServerOutput, this, filtered))
         {

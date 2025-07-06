@@ -60,12 +60,15 @@ internal partial class ApiMap
 
         configuration.DeepCloneTo(server.Configuration);
 
+        serverManager.SaveAll();
+
         await HttpContext.SendPacketAsync(server);
     }
 
     [Route(HttpVerbs.Delete, "/servers/{id}")]
     public async Task RemoveServer(string id)
     {
+        serverManager.Remove(id);
         await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
     }
 
@@ -91,9 +94,12 @@ internal partial class ApiMap
                             ServerOutputType.StandardOutput => BroadcastTypes.Output,
                             ServerOutputType.StandardInput => BroadcastTypes.Input,
                             ServerOutputType.InternalError => BroadcastTypes.Error,
-                            ServerOutputType.InternalInfo => BroadcastTypes.Info,
+                            ServerOutputType.InternalInfo => BroadcastTypes.Information,
                             _ => throw new NotSupportedException(),
                         },
+                        line.Type is ServerOutputType.InternalError or ServerOutputType.InternalInfo
+                            ? nameof(Serein)
+                            : "server",
                         line.Data
                     )
             )

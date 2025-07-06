@@ -50,7 +50,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public List<BindingRecord> Records => [.. BindingRecordDbContext.Datas];
+    public IReadOnlyList<BindingRecord> Records => [.. BindingRecordDbContext.Datas];
 
     public bool TryGetValue(string id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
     {
@@ -74,12 +74,12 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         return bindingRecord is not null;
     }
 
-    public void CheckConflict(string id, string gameId)
+    public void CheckConflict(string userId, string gameId)
     {
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
-            CheckConflict(context, id, gameId);
+            CheckConflict(context, userId, gameId);
         }
     }
 
@@ -100,41 +100,44 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public void Add(string id, string gameId, string? shownName = null)
+    public void Add(BindingRecord bindingRecord)
     {
-        ValidateGameId(gameId);
+        ArgumentNullException.ThrowIfNull(bindingRecord, nameof(bindingRecord));
+        ArgumentException.ThrowIfNullOrEmpty(bindingRecord.UserId, nameof(bindingRecord.UserId));
 
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
 
-            CheckConflict(context, id, gameId);
-            if (!TryGetValue(context, id, out var record))
+            foreach (var gameId in bindingRecord.GameIds)
             {
-                record = new()
-                {
-                    UserId = id,
-                    GameIds = [gameId],
-                    ShownName = shownName ?? string.Empty,
-                    Time = DateTime.Now,
-                };
-                context.Datas.Add(record);
+                ValidateGameId(gameId);
+                CheckConflict(context, bindingRecord.UserId, gameId);
+            }
+
+            if (!TryGetValue(context, bindingRecord.UserId, out var record))
+            {
+                context.Datas.Add(bindingRecord);
             }
             else
             {
-                if (!string.IsNullOrEmpty(shownName))
+                if (!string.IsNullOrEmpty(bindingRecord.ShownName))
                 {
-                    record.ShownName = shownName;
+                    record.ShownName = bindingRecord.ShownName;
                 }
 
-                if (record.GameIds.Contains(gameId))
+                foreach (var gameId in bindingRecord.GameIds)
                 {
-                    throw new BindingFailureException("已经绑定过此Id了");
+                    if (record.GameIds.Contains(gameId, StringComparer.InvariantCultureIgnoreCase))
+                    {
+                        throw new BindingFailureException($"已经绑定过此Id了（Id={gameId}）");
+                    }
+                    else
+                    {
+                        record.GameIds.Add(gameId);
+                    }
                 }
-                else
-                {
-                    record.GameIds.Add(gameId);
-                }
+
                 record.Update();
             }
 
@@ -142,12 +145,24 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         }
     }
 
-    public void Remove(string id, string gameId)
+    public void Add(string userId, string gameId, string? shownName = null)
+    {
+        Add(
+            new()
+            {
+                UserId = userId,
+                GameIds = [gameId],
+                ShownName = shownName ?? string.Empty,
+            }
+        );
+    }
+
+    public void Remove(string userId, string gameId)
     {
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
-            if (!TryGetValue(context, id, out var record) || !record.GameIds.Remove(gameId))
+            if (!TryGetValue(context, userId, out var record) || !record.GameIds.Remove(gameId))
             {
                 throw new BindingFailureException("未绑定此Id");
             }

@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using EmbedIO;
+using Serein.Core.Models.Bindings;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Utils;
@@ -76,7 +77,7 @@ public static class ApiHelper
         httpContext.Response.StatusCode = statusCode;
         httpContext.Response.Headers.Add("X-Serein-Request-Id", httpContext.Id);
 
-        if (statusCode != (int)HttpStatusCode.NoContent && data is not null)
+        if (statusCode != (int)HttpStatusCode.NoContent)
         {
             if (data is ApiPacket packet)
             {
@@ -115,7 +116,13 @@ public static class ApiHelper
 
     public static async Task HandleException(IHttpContext context, Exception e)
     {
-        if (e is InvalidOperationException or NotSupportedException or ArgumentException)
+        if (
+            e
+            is InvalidOperationException
+                or NotSupportedException
+                or ArgumentException
+                or BindingFailureException
+        )
         {
             await context.SendPacketAsync(
                 new ApiPacket { ErrorMsg = e.Message },

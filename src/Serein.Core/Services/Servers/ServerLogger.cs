@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Serein.Core.Models.Server;
 
 namespace Serein.Core.Services.Servers;
@@ -15,6 +16,7 @@ public sealed class ServerLogger
 
     public event EventHandler<ServerOutputEventArgs>? Output;
 
+    [JsonIgnore]
     public IReadOnlyCollection<ServerOutputEventArgs> History => _history;
 
     private readonly Queue<ServerOutputEventArgs> _history = new(100);

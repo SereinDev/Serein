@@ -492,6 +492,9 @@ public sealed partial class CommandParser(
                                 / server.Info.Stat.MaximumPlayersInt
                             : 0
                         : null,
+                    "server.players.list" => server.Info.Stat is not null
+                        ? string.Join(", ", server.Info.Stat.PlayerList)
+                        : null,
 
                     _ => null,
                 };

@@ -9,47 +9,47 @@ public static class MatchTests
     public static void RegexObjShouldBeNullIfRegExpIsEmptyOrInvalid()
     {
         var match = new Match { RegExp = "{1,0}" };
-        Assert.Null(match.RegexObj);
+        Assert.Null(match.RegexInstance);
 
         match.RegExp = string.Empty;
-        Assert.Null(match.RegexObj);
+        Assert.Null(match.RegexInstance);
 
         match.RegExp = "1";
-        Assert.NotNull(match.RegexObj);
+        Assert.NotNull(match.RegexInstance);
     }
 
     [Fact]
     public static void ShouldWorkOutCorrectMatchExclusion()
     {
         var match = new Match { Exclusions = "a=1; b=2" };
-        Assert.Empty(match.MatchExclusion.Servers);
-        Assert.Empty(match.MatchExclusion.Groups);
-        Assert.Empty(match.MatchExclusion.Users);
+        Assert.Empty(match.ExclusionInstance.Servers);
+        Assert.Empty(match.ExclusionInstance.Groups);
+        Assert.Empty(match.ExclusionInstance.Users);
 
         match.Exclusions = "server=1; group=2 ; user = 3;;;;;";
-        Assert.Single(match.MatchExclusion.Servers);
-        Assert.Single(match.MatchExclusion.Groups);
-        Assert.Single(match.MatchExclusion.Users);
+        Assert.Single(match.ExclusionInstance.Servers);
+        Assert.Single(match.ExclusionInstance.Groups);
+        Assert.Single(match.ExclusionInstance.Users);
 
         match.Exclusions = "server =  1; group=  2; user=3; server=4; group=5; user=6";
-        Assert.Contains("1", match.MatchExclusion.Servers);
-        Assert.Contains("4", match.MatchExclusion.Servers);
+        Assert.Contains("1", match.ExclusionInstance.Servers);
+        Assert.Contains("4", match.ExclusionInstance.Servers);
 
-        Assert.Contains("2", match.MatchExclusion.Groups);
-        Assert.Contains("5", match.MatchExclusion.Groups);
+        Assert.Contains("2", match.ExclusionInstance.Groups);
+        Assert.Contains("5", match.ExclusionInstance.Groups);
 
-        Assert.Contains("3", match.MatchExclusion.Users);
-        Assert.Contains("6", match.MatchExclusion.Users);
+        Assert.Contains("3", match.ExclusionInstance.Users);
+        Assert.Contains("6", match.ExclusionInstance.Users);
     }
 
     [Fact]
     public static void ShouldModifyCommandObjWhenSettingCommand()
     {
         var match = new Match { Command = "[g]1" };
-        Assert.NotNull(match.CommandObj);
+        Assert.NotNull(match.CommandInstance);
 
         match.Command = "111?";
-        Assert.NotNull(match.CommandObj);
+        Assert.NotNull(match.CommandInstance);
     }
 
     [Theory]
@@ -65,6 +65,6 @@ public static class MatchTests
     )
     {
         var match = new Match { FieldType = matchFieldType, Command = "[debug]1" };
-        Assert.Equal(commandOrigin, match.CommandObj?.Origin);
+        Assert.Equal(commandOrigin, match.CommandInstance?.Origin);
     }
 }

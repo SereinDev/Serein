@@ -114,7 +114,7 @@ internal class ServerWebSocketModule : WebSocketModule
             {
                 var payload = EncodingMap.UTF8.GetBytes(
                     JsonSerializer.Serialize(
-                        new BroadcastPacket(BroadcastTypes.Removed),
+                        new BroadcastPacket(BroadcastTypes.Removed, "server", null),
                         JsonSerializerOptionsFactory.Common
                     )
                 );
@@ -142,11 +142,14 @@ internal class ServerWebSocketModule : WebSocketModule
                         e.Type switch
                         {
                             ServerOutputType.InternalError => BroadcastTypes.Error,
-                            ServerOutputType.InternalInfo => BroadcastTypes.Info,
+                            ServerOutputType.InternalInfo => BroadcastTypes.Information,
                             ServerOutputType.StandardOutput => BroadcastTypes.Output,
                             ServerOutputType.StandardInput => BroadcastTypes.Input,
                             _ => throw new NotSupportedException(),
                         },
+                        e.Type is ServerOutputType.InternalError or ServerOutputType.InternalInfo
+                            ? nameof(Serein)
+                            : "server",
                         e.Data
                     ),
                     JsonSerializerOptionsFactory.Common
@@ -172,7 +175,9 @@ internal class ServerWebSocketModule : WebSocketModule
             var payload = EncodingMap.UTF8.GetBytes(
                 JsonSerializer.Serialize(
                     new BroadcastPacket(
-                        server.Status ? BroadcastTypes.Started : BroadcastTypes.Stopped
+                        server.Status ? BroadcastTypes.Started : BroadcastTypes.Stopped,
+                        "server",
+                        null
                     ),
                     JsonSerializerOptionsFactory.Common
                 )

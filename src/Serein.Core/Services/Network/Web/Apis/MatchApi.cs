@@ -35,8 +35,8 @@ internal partial class ApiMap
     [Route(HttpVerbs.Delete, "/matches/{id}")]
     public async Task DeleteMatch(int id)
     {
-        var march = FastGetMatch(id);
-        matchProvider.Value.Remove(march);
+        var match = FastGetMatch(id);
+        matchProvider.Value.Remove(match);
         matchProvider.SaveAsyncWithDebounce();
         await HttpContext.SendPacketWithEmptyDataAsync(HttpStatusCode.NoContent);
     }
@@ -47,6 +47,7 @@ internal partial class ApiMap
         var match = await HttpContext.ConvertRequestAs<Match>();
         var oldMatch = FastGetMatch(id);
         match.DeepCloneTo(oldMatch);
+        oldMatch.ForceUpdate();
         matchProvider.SaveAsyncWithDebounce();
         await HttpContext.SendPacketAsync(oldMatch);
     }

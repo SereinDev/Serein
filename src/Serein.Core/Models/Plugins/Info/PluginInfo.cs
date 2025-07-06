@@ -28,5 +28,5 @@ public sealed class PluginInfo : NotifyPropertyChangedModelBase
 
     public string? EntryFile { get; set; }
 
-    public PluginTargets? Targets { get; set; }
+    public PluginTargets? Targets { get; set; } = new();
 }

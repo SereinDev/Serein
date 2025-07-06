@@ -25,11 +25,11 @@ public partial class ScheduleEditor : Window
 
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        PreviewTextBlock.ToolTip = _schedule.Cron is not null
+        PreviewTextBlock.ToolTip = _schedule.Crontab is not null
             ? string.Join(
                 "\r\n",
                 _schedule
-                    .Cron.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
+                    .Crontab.GetNextOccurrences(DateTime.Now, DateTime.Now.AddYears(1))
                     .Take(10)
                     .Select((datetime) => datetime.ToString("f"))
             )

@@ -47,6 +47,7 @@ internal partial class ApiMap
         var schedule = await HttpContext.ConvertRequestAs<Schedule>();
         var old = FastGetSchedule(id);
         schedule.DeepCloneTo(old);
+        old.ForceUpdate();
 
         scheduleProvider.SaveAsyncWithDebounce();
         await HttpContext.SendPacketAsync(old);
