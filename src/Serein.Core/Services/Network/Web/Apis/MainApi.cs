@@ -32,7 +32,7 @@ internal sealed partial class ApiMap(
     private List<ApiEndpointRecord>? _records;
 
     [Route(HttpVerbs.Get, "/")]
-    public async Task GetMetaData()
+    public async Task GetAppInfo()
     {
         await HttpContext.SendPacketAsync(sereinApp);
     }

@@ -33,7 +33,7 @@ public sealed partial class InteropTests
     [InlineData(["abc/edf.dll"])]
     [InlineData(["abc", "edf.dll"])]
     [InlineData(["../sky.png"])]
-    public void ShouldBeAbleToResolvePaths(params string[] paths)
+    public void CanResolvePaths(params string[] paths)
     {
         Assert.Equal(
             Path.GetFullPath(Path.Combine([PathConstants.PluginsDirectory, .. paths])),

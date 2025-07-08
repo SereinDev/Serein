@@ -15,7 +15,7 @@ namespace Serein.Tests.Services.JsPlugin;
 public sealed partial class InteropTests
 {
     [Fact]
-    public void ShouldBeAbleToSetVariable()
+    public void CanSetVariable()
     {
         var commandVariables = _host.Services.GetRequiredService<PluginManager>().CommandVariables;
 
@@ -29,7 +29,7 @@ public sealed partial class InteropTests
     }
 
     [Fact]
-    public void ShouldBeAbleToParseCommand()
+    public void CanParseCommand()
     {
         var command = (Command?)
             _kv.Value.Engine.Evaluate("serein.command.parse('[g]command')").ToObject();
@@ -44,7 +44,7 @@ public sealed partial class InteropTests
     [InlineData("info")]
     [InlineData("warn")]
     [InlineData("error")]
-    public void ShouldBeAbleToOutput(string functionName)
+    public void CanOutput(string functionName)
     {
         _kv.Value.Engine.Evaluate($"serein.console.{functionName}('test')");
         _kv.Value.Engine.Evaluate($"console.{functionName}('test')");
@@ -54,12 +54,13 @@ public sealed partial class InteropTests
     }
 
     [Fact]
-    public void ShouldBeAbleToManageServers()
+    public void CanManageServers()
     {
         _kv.Value.Execute("serein.servers.add('test', {  })");
-
         Assert.NotNull(_kv.Value.Engine.Evaluate("serein.servers['test']"));
-        Assert.True(_kv.Value.Engine.Evaluate("serein.servers.remove('test')").AsBoolean());
+
+        _kv.Value.Engine.Evaluate("serein.servers.remove('test')");
+        Assert.Equal(JsValue.Undefined, _kv.Value.Engine.Evaluate("serein.servers['test']"));
     }
 
     [Fact]

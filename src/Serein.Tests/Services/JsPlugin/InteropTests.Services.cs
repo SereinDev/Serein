@@ -7,7 +7,7 @@ namespace Serein.Tests.Services.JsPlugin;
 public sealed partial class InteropTests
 {
     [Fact]
-    public void ShouldBeAbleToGetService()
+    public void CanGetService()
     {
         var service = _kv
             .Value.Engine.Evaluate("serein.getService('Serein.Core.SereinApp')")

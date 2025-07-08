@@ -5,14 +5,9 @@ using Serein.Core.Models.Server;
 
 namespace Serein.Core.Services.Servers;
 
-public sealed class ServerLogger
+public sealed class ServerLogger(string id)
 {
-    public string Id { get; }
-
-    public ServerLogger(string id)
-    {
-        Id = id;
-    }
+    public string Id { get; } = id;
 
     public event EventHandler<ServerOutputEventArgs>? Output;
 
@@ -53,7 +48,7 @@ public sealed class ServerLogger
     {
         lock (_history)
         {
-            while (_history.Count >= 100)
+            while (_history.Count > 100)
             {
                 _history.Dequeue();
             }

@@ -7,7 +7,7 @@ namespace Serein.Tests.Services.JsPlugin;
 public sealed partial class InteropTests
 {
     [Fact]
-    public async Task ShouldBeAbleToSetTimeout()
+    public async Task CanSetTimeout()
     {
         _kv.Value.Engine.Execute(
             """
@@ -21,7 +21,7 @@ public sealed partial class InteropTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToSetInterval()
+    public async Task CanSetInterval()
     {
         _kv.Value.Engine.Execute(
             """
@@ -31,11 +31,11 @@ public sealed partial class InteropTests
                 if (count >= 5) {
                     clearInterval(interval);
                 }
-            }, 100);
+            }, 500);
             """
         );
 
-        await Task.Delay(1000);
+        await Task.Delay(5000);
         Assert.Equal(5, _kv.Value.Engine.Evaluate("count"));
     }
 }

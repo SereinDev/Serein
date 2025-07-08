@@ -30,7 +30,7 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string[] JSPatternToSkipLoadingSingleFile { get; set; } = [".module.js"];
 
-    public bool DisableBinderWhenServerClosed { get; set; }
+    public bool DisableBindingManagerWhenServerClosed { get; set; }
 
     public string RegexForCheckingGameId { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";
 

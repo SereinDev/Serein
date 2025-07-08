@@ -22,7 +22,7 @@ public sealed partial class InteropTests
     }
 
     [Fact]
-    public void ShouldBeAbleToSetExitCode()
+    public void CanSetExitCode()
     {
         var code = Environment.ExitCode;
 

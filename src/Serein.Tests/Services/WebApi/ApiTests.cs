@@ -37,11 +37,11 @@ public partial class ApiTests : IDisposable
 
     [Theory]
     [InlineData("/api/")]
-    [InlineData("/api/metadata")]
+    [InlineData("/api/plugins")]
     [InlineData("/api/servers")]
     [InlineData("/api/settings")]
     [InlineData("/api/plugin-manager")]
-    public async Task ShouldBeAbleToVisitSpecifiedPath(string path)
+    public async Task CanVisitSpecifiedPath(string path)
     {
         var response = await _client.GetAsync(path);
 
@@ -49,7 +49,7 @@ public partial class ApiTests : IDisposable
     }
 
     [Fact]
-    public async Task ShouldBeAbleToGetHardwareInfo()
+    public async Task CanGetHardwareInfo()
     {
         foreach (var methodInfo in typeof(ApiMap).GetMethods())
         {
@@ -73,7 +73,7 @@ public partial class ApiTests : IDisposable
     }
 
     [Fact]
-    public async Task ShouldBeAbleToGetSettings()
+    public async Task CanGetSettings()
     {
         var response = await _client.GetAsync("/api/settings");
         Assert.True(response.IsSuccessStatusCode);

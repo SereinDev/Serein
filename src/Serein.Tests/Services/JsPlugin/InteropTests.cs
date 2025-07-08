@@ -73,7 +73,7 @@ public sealed partial class InteropTests : IDisposable
     }
 
     [Fact]
-    public void ShouldBeAbleToResolveFile()
+    public void CanResolveFile()
     {
         Assert.Equal(
             Path.GetFullPath(Path.Join(PathConstants.PluginsDirectory, "111.txt")),
@@ -88,7 +88,7 @@ public sealed partial class InteropTests : IDisposable
     [Theory]
     [InlineData("localStorage")]
     [InlineData("sessionStorage")]
-    public void ShouldBeAbleToUseStorage(string storageName)
+    public void CanUseStorage(string storageName)
     {
         _kv.Value.Engine.Execute($"{storageName}.setItem('test', 'value')");
         Assert.Equal(

@@ -6,17 +6,11 @@ public sealed class JsPluginConfig
 
     public string[] NetAssemblies { get; init; } = [];
 
-    public bool AllowGetType { get; init; }
-
     public bool AllowOperatorOverloading { get; init; } = true;
-
-    public bool AllowSystemReflection { get; init; }
 
     public bool AllowWrite { get; init; } = true;
 
-    public bool AllowStringCompilation { get; init; } = true;
-
     public bool Strict { get; init; }
 
-    public bool UseJintJsonConverter { get; init; } = false;
+    public bool UseJintJsonSerializer { get; init; } = false;
 }

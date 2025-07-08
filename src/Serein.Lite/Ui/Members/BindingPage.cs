@@ -25,15 +25,13 @@ public partial class BindingPage : UserControl, IUpdateablePage
         _bindingListView.BeginUpdate();
         _bindingListView.Items.Clear();
 
-        _bindingManager.Records.ForEach(
-            (record) =>
-            {
-                var item = new ListViewItem(record.UserId.ToString()) { Tag = record };
-                item.SubItems.Add(record.ShownName);
-                item.SubItems.Add(string.Join(";", record.GameIds));
-                _bindingListView.Items.Add(item);
-            }
-        );
+        foreach (var record in _bindingManager.Records)
+        {
+            var item = new ListViewItem(record.UserId.ToString()) { Tag = record };
+            item.SubItems.Add(record.ShownName);
+            item.SubItems.Add(string.Join(";", record.GameIds));
+            _bindingListView.Items.Add(item);
+        }
 
         _bindingListView.EndUpdate();
     }

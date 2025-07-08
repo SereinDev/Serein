@@ -12,14 +12,14 @@ namespace Serein.Tests.Services.WebApi;
 public partial class ApiTests
 {
     [Fact]
-    public async Task ShouldBeAbleToGetMatches()
+    public async Task CanGetMatches()
     {
         var response = await _client.GetAsync("/api/matches");
         Assert.True(response.IsSuccessStatusCode);
     }
 
     [Fact]
-    public async Task ShouldBeAbleToGetMatch()
+    public async Task CanGetMatch()
     {
         var match = new Match();
         _app.Services.GetRequiredService<MatchProvider>().Value.Add(match);
@@ -29,7 +29,7 @@ public partial class ApiTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToAddMatch()
+    public async Task CanAddMatch()
     {
         var response = await _client.PostAsync(
             "/api/matches",
@@ -43,7 +43,7 @@ public partial class ApiTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToRemoveMatch()
+    public async Task CanRemoveMatch()
     {
         var match = new Match();
         _app.Services.GetRequiredService<MatchProvider>().Value.Add(match);

@@ -7,7 +7,7 @@ namespace Serein.Tests.Services.WebApi;
 public partial class ApiTests
 {
     [Fact]
-    public async Task ShouldBeAbleToSwitchConnectionStatus()
+    public async Task CanSwitchConnectionStatus()
     {
         var response = await _client.PostAsync("/api/connection", new StringContent(string.Empty));
         Assert.True(response.IsSuccessStatusCode);
@@ -17,7 +17,7 @@ public partial class ApiTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToGetConnectionStatus()
+    public async Task CanGetConnectionStatus()
     {
         var response = await _client.GetAsync("/api/connection");
         Assert.True(response.IsSuccessStatusCode);

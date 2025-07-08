@@ -124,7 +124,7 @@
             </ui:SettingsExpander>
 
             <ui:SettingsCard Description="只影响通过Serein命令执行的绑定" Header="当服务器关闭时禁用绑定功能">
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBinderWhenServerClosed}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBindingManagerWhenServerClosed}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <TextBlock

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -20,7 +19,6 @@ namespace Serein.Core.Services.Servers;
 
 public class Server
 {
-    [JsonIgnore]
     public string Id { get; }
     public RestartStatus RestartStatus { get; private set; }
 

@@ -43,7 +43,7 @@
             _jsPatternToSkipLoadingSingleFileTextBox = new System.Windows.Forms.TextBox();
             _jsGlobalAssembliesTextBox = new System.Windows.Forms.TextBox();
             _pluginEventMaxWaitingTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            _disableBinderWhenServerClosedCheckBox = new System.Windows.Forms.CheckBox();
+            _disableBindingManagerWhenServerClosedCheckBox = new System.Windows.Forms.CheckBox();
             _regexForCheckingGameIDTextBox = new System.Windows.Forms.TextBox();
             _enableSentryCheckBox = new System.Windows.Forms.CheckBox();
             _customTitleTextBox = new System.Windows.Forms.TextBox();
@@ -157,7 +157,7 @@
             // 
             // bindingGroupBox
             // 
-            bindingGroupBox.Controls.Add(_disableBinderWhenServerClosedCheckBox);
+            bindingGroupBox.Controls.Add(_disableBindingManagerWhenServerClosedCheckBox);
             bindingGroupBox.Controls.Add(_regexForCheckingGameIDTextBox);
             bindingGroupBox.Controls.Add(regexForCheckingGameIDLabel);
             bindingGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -168,17 +168,17 @@
             bindingGroupBox.TabStop = false;
             bindingGroupBox.Text = "绑定";
             // 
-            // _disableBinderWhenServerClosedCheckBox
+            // _disableBindingManagerWhenServerClosedCheckBox
             // 
-            _disableBinderWhenServerClosedCheckBox.AutoSize = true;
-            _disableBinderWhenServerClosedCheckBox.Location = new System.Drawing.Point(27, 130);
-            _disableBinderWhenServerClosedCheckBox.Name = "_disableBinderWhenServerClosedCheckBox";
-            _disableBinderWhenServerClosedCheckBox.Size = new System.Drawing.Size(358, 35);
-            _disableBinderWhenServerClosedCheckBox.TabIndex = 7;
-            _disableBinderWhenServerClosedCheckBox.Text = "当服务器关闭时禁用绑定功能";
-            toolTip.SetToolTip(_disableBinderWhenServerClosedCheckBox, "只影响通过Serein命令执行的绑定");
-            _disableBinderWhenServerClosedCheckBox.UseVisualStyleBackColor = true;
-            _disableBinderWhenServerClosedCheckBox.Click += OnPropertyChanged;
+            _disableBindingManagerWhenServerClosedCheckBox.AutoSize = true;
+            _disableBindingManagerWhenServerClosedCheckBox.Location = new System.Drawing.Point(27, 130);
+            _disableBindingManagerWhenServerClosedCheckBox.Name = "_disableBindingManagerWhenServerClosedCheckBox";
+            _disableBindingManagerWhenServerClosedCheckBox.Size = new System.Drawing.Size(358, 35);
+            _disableBindingManagerWhenServerClosedCheckBox.TabIndex = 7;
+            _disableBindingManagerWhenServerClosedCheckBox.Text = "当服务器关闭时禁用绑定功能";
+            toolTip.SetToolTip(_disableBindingManagerWhenServerClosedCheckBox, "只影响通过Serein命令执行的绑定");
+            _disableBindingManagerWhenServerClosedCheckBox.UseVisualStyleBackColor = true;
+            _disableBindingManagerWhenServerClosedCheckBox.Click += OnPropertyChanged;
             // 
             // _regexForCheckingGameIDTextBox
             // 
@@ -368,7 +368,7 @@
         private System.Windows.Forms.TextBox _jsGlobalAssembliesTextBox;
         private System.Windows.Forms.NumericUpDown _pluginEventMaxWaitingTimeNumericUpDown;
         private System.Windows.Forms.TextBox _jsPatternToSkipLoadingSingleFileTextBox;
-        private System.Windows.Forms.CheckBox _disableBinderWhenServerClosedCheckBox;
+        private System.Windows.Forms.CheckBox _disableBindingManagerWhenServerClosedCheckBox;
         private System.Windows.Forms.TextBox _regexForCheckingGameIDTextBox;
         private System.Windows.Forms.TextBox _pattenForEnableMatchingMuiltLinesTextBox;
         private System.Windows.Forms.TextBox _customTitleTextBox;

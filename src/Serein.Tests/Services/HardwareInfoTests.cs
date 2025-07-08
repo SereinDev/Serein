@@ -35,7 +35,7 @@ public class HardwareInfoTests : IDisposable
     }
 
     [Fact]
-    public async Task ShouldBeAbleToUpdate()
+    public async Task CanUpdate()
     {
         _hardwareInfoProvider.Update();
         await Task.Delay(2000);

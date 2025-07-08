@@ -52,13 +52,7 @@ public sealed class PluginConfigTests : IDisposable
             )
         );
 
-        var config = new JsPluginConfig
-        {
-            NetAssemblies = ["System.Text.Json"],
-            AllowGetType = true,
-            AllowStringCompilation = false,
-            Strict = true,
-        };
+        var config = new JsPluginConfig { NetAssemblies = ["System.Text.Json"], Strict = true };
 
         File.WriteAllText(
             Path.Join(PathConstants.PluginsDirectory, "test", PathConstants.JsPluginConfigFileName),
@@ -71,7 +65,6 @@ public sealed class PluginConfigTests : IDisposable
 
         var kv = _jsPluginLoader.Plugins.First();
 
-        Assert.Equal(kv.Value.Config.AllowGetType, config.AllowGetType);
         kv.Value.Engine.Evaluate("const a = new System.Guid(); a.GetType();");
 
         Assert.Equal(kv.Value.Config.NetAssemblies, config.NetAssemblies);

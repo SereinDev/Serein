@@ -58,7 +58,7 @@ public sealed class BindingTests : IDisposable
     }
 
     [Fact]
-    public void ShouldBeAbleToAccessUsingCommandVariable()
+    public void CanAccessUsingCommandVariable()
     {
         _bindingManager.Add("123456", "test_name");
 

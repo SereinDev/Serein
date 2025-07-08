@@ -42,7 +42,7 @@ public class PacketHandlerTests : IDisposable
     }
 
     [Fact]
-    public void ShouldBeAbleToCaculateCorrectTargets()
+    public void CanCaculateCorrectTargets()
     {
         Assert.False(_packetHandler.IsListenedId(TargetType.Auto, ""));
         Assert.False(_packetHandler.IsListenedId(TargetType.Group, null));

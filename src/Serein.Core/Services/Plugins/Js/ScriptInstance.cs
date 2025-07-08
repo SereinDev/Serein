@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Hardware.Info;
 using Jint;
 using Jint.Native;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Plugins;
+using Serein.Core.Models.Plugins.Info;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
@@ -39,6 +41,8 @@ public sealed partial class ScriptInstance
     public BindingManager Bindings { get; }
     public SereinApp App { get; }
     public HardwareInfo? HardwareInfo => _hardwareInfoProvider.Info;
+    public PluginInfo Info => _jsPlugin.Info;
+    public string Path { get; } = Directory.GetCurrentDirectory();
     public string Id => _jsPlugin.Info.Id;
 
     internal ScriptInstance(IServiceProvider serviceProvider, JsPlugin jsPlugin)

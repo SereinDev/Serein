@@ -36,7 +36,7 @@ public class OneBotForwardAdapterTests : IDisposable
     }
 
     [Fact]
-    public void ShouldBeAbleToConnectToOneBotWebSocketServer()
+    public void CanConnectToOneBotWebSocketServer()
     {
         _settingProvider.Value.Connection.Adapter = AdapterType.OneBot_ForwardWebSocket;
         using var server = new WebSocketServer(_settingProvider.Value.Connection.OneBot.Uri);

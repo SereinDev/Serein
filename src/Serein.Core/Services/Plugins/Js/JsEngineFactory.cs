@@ -46,7 +46,7 @@ public sealed class JsEngineFactory(
         {
             typeof(Console).Assembly, // System
             typeof(SereinApp).Assembly, // Serein.Core
-            typeof(Protocol).Assembly, // Serein.ConnectionProtocols
+            typeof(Self).Assembly, // Serein.ConnectionProtocols
         };
 
         var entry = Assembly.GetEntryAssembly();
@@ -88,17 +88,17 @@ public sealed class JsEngineFactory(
             Interop =
             {
                 Enabled = true,
-                AllowGetType = jsPlugin.Config.AllowGetType,
+                AllowGetType = true,
                 AllowOperatorOverloading = jsPlugin.Config.AllowOperatorOverloading,
-                AllowSystemReflection = jsPlugin.Config.AllowSystemReflection,
+                AllowSystemReflection = true,
                 AllowWrite = jsPlugin.Config.AllowWrite,
                 AllowedAssemblies = assemblies,
                 ExceptionHandler = (_) => true,
-                SerializeToJson = jsPlugin.Config.UseJintJsonConverter
+                SerializeToJson = jsPlugin.Config.UseJintJsonSerializer
                     ? null
                     : (obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
             },
-            Host = { StringCompilationAllowed = jsPlugin.Config.AllowStringCompilation },
+            Host = { StringCompilationAllowed = true },
             Strict = jsPlugin.Config.Strict,
             ExperimentalFeatures = ExperimentalFeature.All,
         };

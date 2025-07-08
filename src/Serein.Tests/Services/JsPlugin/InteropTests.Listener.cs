@@ -17,7 +17,7 @@ public sealed partial class InteropTests
     [InlineData(
         "serein.setListener('ServerStarting', async () => { await System.Threading.Tasks.Task.Delay(100); return false; });"
     )]
-    public async Task ShouldBeAbleToSetListener(string code)
+    public async Task CanSetListener(string code)
     {
         _kv.Value.Engine.Execute(code);
 

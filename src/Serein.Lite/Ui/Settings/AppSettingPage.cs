@@ -74,10 +74,10 @@ public partial class AppSettingPage : UserControl
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        _disableBinderWhenServerClosedCheckBox.DataBindings.Add(
-            nameof(_disableBinderWhenServerClosedCheckBox.Checked),
+        _disableBindingManagerWhenServerClosedCheckBox.DataBindings.Add(
+            nameof(_disableBindingManagerWhenServerClosedCheckBox.Checked),
             _settingProvider.Value.Application,
-            nameof(ApplicationSetting.DisableBinderWhenServerClosed),
+            nameof(ApplicationSetting.DisableBindingManagerWhenServerClosed),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );

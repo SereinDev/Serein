@@ -12,14 +12,14 @@ namespace Serein.Tests.Services.WebApi;
 public partial class ApiTests
 {
     [Fact]
-    public async Task ShouldBeAbleToGetSchedules()
+    public async Task CanGetSchedules()
     {
         var response = await _client.GetAsync("/api/schedules");
         Assert.True(response.IsSuccessStatusCode);
     }
 
     [Fact]
-    public async Task ShouldBeAbleToGetSchedule()
+    public async Task CanGetSchedule()
     {
         var match = new Schedule();
         _app.Services.GetRequiredService<ScheduleProvider>().Value.Add(match);
@@ -29,7 +29,7 @@ public partial class ApiTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToAddSchedule()
+    public async Task CanAddSchedule()
     {
         var response = await _client.PostAsync(
             "/api/schedules",
@@ -39,10 +39,11 @@ public partial class ApiTests
             )
         );
         Assert.True(response.IsSuccessStatusCode);
+        Assert.NotEmpty(_app.Services.GetRequiredService<ScheduleProvider>().Value);
     }
 
     [Fact]
-    public async Task ShouldBeAbleToRemoveSchedule()
+    public async Task CanRemoveSchedule()
     {
         var match = new Schedule();
         _app.Services.GetRequiredService<ScheduleProvider>().Value.Add(match);

@@ -28,7 +28,7 @@ public static class CommandTests
     [InlineData("[p:114514]3", CommandType.SendPrivateMsg, "3", "114514")]
     [InlineData("[priVate:114514]4", CommandType.SendPrivateMsg, "4", "114514")]
     [InlineData("[priVAte:114514]4", CommandType.SendPrivateMsg, "4", "114514")]
-    public static void ShouldBeAbleToParseCommand(
+    public static void CanParseCommand(
         string input,
         CommandType exceptedType,
         string exceptedBody,

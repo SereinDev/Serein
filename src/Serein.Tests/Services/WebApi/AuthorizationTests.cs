@@ -35,7 +35,7 @@ public class AuthorizationTests : IDisposable
 
     [Theory]
     [InlineData("/api/")]
-    [InlineData("/api/metadata")]
+    [InlineData("/api/plugins")]
     [InlineData("/api/connection")]
     [InlineData("/api/servers")]
     [InlineData("/api/settings")]
@@ -58,7 +58,7 @@ public class AuthorizationTests : IDisposable
 
     [Theory]
     [InlineData("/api/")]
-    [InlineData("/api/metadata")]
+    [InlineData("/api/plugins")]
     [InlineData("/api/connection")]
     [InlineData("/api/servers")]
     [InlineData("/api/settings")]

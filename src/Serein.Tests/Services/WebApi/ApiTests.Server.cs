@@ -12,7 +12,7 @@ namespace Serein.Tests.Services.WebApi;
 public partial class ApiTests
 {
     [Fact]
-    public async Task ShouldBeAbleToAddServer()
+    public async Task CanAddServer()
     {
         var body = new
         {
@@ -35,7 +35,7 @@ public partial class ApiTests
     }
 
     [Fact]
-    public async Task ShouldBeAbleToRemoveServer()
+    public async Task CanRemoveServer()
     {
         var serverManager = _app.Services.GetRequiredService<ServerManager>();
         var response = await _client.DeleteAsync("/api/servers/myserver");

@@ -23,7 +23,7 @@ public sealed class NodeTests
     [InlineData("a-b")]
     [InlineData("a-c.a-c")]
     [InlineData("a11.b22")]
-    public void ShouldBeAbleToRegisterPermissions(string node)
+    public void CanRegisterPermissions(string node)
     {
         _permissionManager.Register(nameof(NodeTests), node);
     }
