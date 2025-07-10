@@ -8,11 +8,17 @@ public sealed class CommandProperty
 {
     private readonly PluginManager _pluginManager;
     private readonly CommandRunner _commandRunner;
+    private readonly CommandParser _commandParser;
 
-    internal CommandProperty(PluginManager pluginManager, CommandRunner commandRunner)
+    internal CommandProperty(
+        PluginManager pluginManager,
+        CommandRunner commandRunner,
+        CommandParser commandParser
+    )
     {
         _pluginManager = pluginManager;
         _commandRunner = commandRunner;
+        _commandParser = commandParser;
     }
 
     public async Task RunAsync(string? command)
@@ -26,6 +32,15 @@ public sealed class CommandProperty
         return CommandParser.Parse(CommandOrigin.Plugin, command);
     }
 #pragma warning restore CA1822
+
+    public string ApplyVariables(
+        string input,
+        CommandContext? commandContext = null,
+        bool removeInvalidVariablePatten = false
+    )
+    {
+        return _commandParser.ApplyVariables(input, commandContext, removeInvalidVariablePatten);
+    }
 
     public void SetVariable(string key, string? value)
     {

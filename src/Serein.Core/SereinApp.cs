@@ -36,6 +36,9 @@ public sealed class SereinApp
             _ => AppType.Unknown,
         };
 
+        ProcessId = Environment.ProcessId;
+        ClrVersion = Environment.Version;
+
 #if RELEASE
         IsReleaseConfiguration = true;
 #endif
@@ -84,4 +87,8 @@ public sealed class SereinApp
     public bool IsReleaseConfiguration { get; }
 
     public bool IsSingleFile { get; }
+
+    public int ProcessId { get; }
+
+    public Version ClrVersion { get; }
 }

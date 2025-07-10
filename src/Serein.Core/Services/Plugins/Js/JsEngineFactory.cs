@@ -13,11 +13,9 @@ using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
-using Serein.Core.Models.Network.Connection;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins.Js.BuiltInModules;
 using Serein.Core.Services.Plugins.Storages;
-using Serein.Core.Utils;
 
 namespace Serein.Core.Services.Plugins.Js;
 
@@ -121,8 +119,8 @@ public sealed class JsEngineFactory(
         engine.SetValue("localStorage", localStorage);
         engine.SetValue("sessionStorage", sessionStorage);
 
-        engine.SetValue("window", JsValue.Undefined);
-        engine.SetValue("exports", JsValue.Undefined);
+        engine.SetValue("window", new JsObject(engine));
+        engine.SetValue("exports", new JsObject(engine));
 
         engine.SetValue("__filename", Path.GetFullPath(jsPlugin.FileName));
         engine.SetValue("__dirname", Path.GetDirectoryName(Path.GetFullPath(jsPlugin.FileName)));
@@ -132,18 +130,22 @@ public sealed class JsEngineFactory(
         engine.SetValue("clearTimeout", jsPlugin.TimerFactory.ClearTimeout);
         engine.SetValue("clearInterval", jsPlugin.TimerFactory.ClearInterval);
 
-        AddTypeReference<Command>();
-        AddTypeReference<EncodingMap.EncodingType>();
-        AddTypeReference<CommandOrigin>();
-        AddTypeReference<AppType>();
-        AddTypeReference<ReactionType>();
-        AddTypeReference<TargetType>();
+        engine.SetValue(nameof(Command), TypeReference.CreateTypeReference<Command>(engine));
+        AddTypeReferences(
+            typeof(Self)
+                .Assembly.GetTypes()
+                .Concat(typeof(SereinApp).Assembly.GetTypes())
+                .Where((t) => t.IsEnum)
+        );
 
         return engine;
 
-        void AddTypeReference<T>()
+        void AddTypeReferences(IEnumerable<Type> types)
         {
-            engine.SetValue(typeof(T).Name, TypeReference.CreateTypeReference<T>(engine));
+            foreach (var type in types)
+            {
+                engine.SetValue(type.Name, TypeReference.CreateTypeReference(engine, type));
+            }
         }
     }
 }
