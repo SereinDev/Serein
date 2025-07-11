@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.Extensions.Logging;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
@@ -298,7 +297,9 @@ public sealed class Matcher
                     && !string.IsNullOrEmpty(packets.SatoriV1.Channel?.Id)
                     && packets.SatoriV1.Channel.Type != ChannelType.Direct
                     && match.ExclusionInstance.Groups.Contains(packets.SatoriV1.Channel.Id)
-                || match.ExclusionInstance.Users.Contains(packets.SatoriV1.User?.Id ?? string.Empty);
+                || match.ExclusionInstance.Users.Contains(
+                    packets.SatoriV1.User?.Id ?? string.Empty
+                );
         }
 
         return false;

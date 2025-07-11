@@ -55,9 +55,9 @@ public static class MatchTests
     [Theory]
     [InlineData(MatchFieldType.ServerOutput, CommandOrigin.ServerOutput)]
     [InlineData(MatchFieldType.ServerInput, CommandOrigin.ServerInput)]
-    [InlineData(MatchFieldType.PrivateMsg, CommandOrigin.Msg)]
-    [InlineData(MatchFieldType.GroupMsg, CommandOrigin.Msg)]
-    [InlineData(MatchFieldType.SelfMsg, CommandOrigin.Msg)]
+    [InlineData(MatchFieldType.PrivateMsg, CommandOrigin.Message)]
+    [InlineData(MatchFieldType.GroupMsg, CommandOrigin.Message)]
+    [InlineData(MatchFieldType.SelfMsg, CommandOrigin.Message)]
     [InlineData(MatchFieldType.Disabled, CommandOrigin.Null)]
     public static void ShouldChooseCorrectCommandOrigin(
         MatchFieldType matchFieldType,

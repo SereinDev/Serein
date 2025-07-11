@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Serein.Core.Models.Commands;
@@ -64,23 +65,19 @@ public sealed partial class CommandParser(
             {
                 "cmd" => CommandType.ExecuteShellCommand,
 
-                "s" => CommandType.InputServer,
-                "server" => CommandType.InputServer,
+                "s" or "server" => CommandType.InputServer,
 
-                "g" => CommandType.SendGroupMsg,
-                "group" => CommandType.SendGroupMsg,
-                "p" => CommandType.SendPrivateMsg,
-                "private" => CommandType.SendPrivateMsg,
-                "d" => CommandType.SendData,
-                "data" => CommandType.SendData,
+                "g" or "group" => CommandType.SendGroupMsg,
+                "p" or "private" => CommandType.SendPrivateMsg,
+                "c" or "channel" => CommandType.SendChannelMsg,
+                "d" or "data" => CommandType.SendData,
+                "r" or "reply" => CommandType.SendReply,
+                "guild" => CommandType.SendGuildMsg,
 
-                "b" => CommandType.Bind,
-                "bind" => CommandType.Bind,
-                "ub" => CommandType.Unbind,
-                "unbind" => CommandType.Unbind,
+                "b" or "bind" => CommandType.Bind,
+                "ub" or "unbind" => CommandType.Unbind,
 
-                "js" => CommandType.ExecuteJavascriptCodes,
-                "javascript" => CommandType.ExecuteJavascriptCodes,
+                "js" or "javascript" => CommandType.ExecuteJavascriptCodes,
 
                 "debug" => CommandType.Debug,
                 _ => throw new NotSupportedException("命令类型无效"),
@@ -174,12 +171,14 @@ public sealed partial class CommandParser(
                     break;
 
                 case "self_id":
+                case "self.id":
                 case "selfid":
                     commandArguments.Self ??= new();
                     commandArguments.Self.UserId = value;
                     break;
 
                 case "self_platform":
+                case "self.platform":
                 case "selfplatform":
                     commandArguments.Self ??= new();
                     commandArguments.Self.Platform = value;
@@ -268,6 +267,7 @@ public sealed partial class CommandParser(
                     return value;
                 }
 
+                var matched = true;
                 object? obj = name switch
                 {
                     #region Serein
@@ -275,6 +275,8 @@ public sealed partial class CommandParser(
                     "serein.version" => sereinApp.Version,
                     "serein.fullversion" => sereinApp.FullVersion,
                     "serein.assembly" => sereinApp.AssemblyName,
+                    "serein.pid" => sereinApp.ProcessId,
+                    "serein.clrversion" => sereinApp.ClrVersion,
                     #endregion
 
                     #region 时间
@@ -377,15 +379,14 @@ public sealed partial class CommandParser(
                         : null,
                     #endregion
 
-                    _ => GetServerVariables(match.Groups[1].Value, commandContext?.ServerId)
-                        ?? GetUserIdByGameId(match.Groups[1].Value),
+                    _ => HandleUnmatchedVariablePattern(ref matched, match, commandContext),
                 };
 
                 var r = obj?.ToString();
 
-                if (r is not null)
+                if (matched)
                 {
-                    return r;
+                    return r ?? string.Empty;
                 }
 
                 return removeInvalidVariablePatten ? string.Empty : match.Value;
@@ -393,18 +394,33 @@ public sealed partial class CommandParser(
         );
 
         return text;
+
+        object? HandleUnmatchedVariablePattern(
+            ref bool matched,
+            System.Text.RegularExpressions.Match match,
+            CommandContext? commandContext
+        )
+        {
+            object? o = GetServerVariables(match.Groups[1].Value, commandContext?.ServerId);
+            o ??= GetUserIdByGameId(match.Groups[1].Value);
+
+            Debug.Assert(matched);
+
+            matched = o is not null;
+            return o;
+        }
     }
 
-    private string? GetGameId(string? userId)
+    private string GetGameId(string? userId)
     {
         if (userId is null)
         {
-            return null;
+            return string.Empty;
         }
 
         return bindingManager.TryGetValue(userId, out var binding)
-            ? binding.GameIds.FirstOrDefault()
-            : null;
+            ? binding.GameIds.FirstOrDefault() ?? string.Empty
+            : string.Empty;
     }
 
 #pragma warning restore IDE0046
@@ -434,7 +450,7 @@ public sealed partial class CommandParser(
             }
         }
 
-        return null;
+        return string.Empty;
     }
 
     private object? GetServerVariables(string input, string? id = null)
@@ -466,7 +482,7 @@ public sealed partial class CommandParser(
         var key = input[..i];
         id = input[(i + 1)..];
 
-        return !servers.Servers.TryGetValue(id, out server) ? null : Switch(key, server);
+        return !servers.Servers.TryGetValue(id, out server) ? string.Empty : Switch(key, server);
 
         static object? Switch(string key, Server? server)
         {
@@ -480,21 +496,22 @@ public sealed partial class CommandParser(
                     "server.usage" => server.Info.CpuUsage,
                     "server.output" => server.Info.OutputLines,
                     "server.input" => server.Info.InputLines,
-                    "server.time" => (DateTime.Now - server.Info.StartTime).ToCommonString(),
-                    "server.version" => server.Info.Stat?.Version,
-                    "server.motd" => server.Info.Stat?.Stripped_Motd,
-                    "server.players.max" => server.Info.Stat?.MaximumPlayers,
-                    "server.players.current" => server.Info.Stat?.CurrentPlayers,
+                    "server.time" => (DateTime.Now - server.Info.StartTime).ToCommonString()
+                        ?? string.Empty,
+                    "server.version" => server.Info.Stat?.Version ?? string.Empty,
+                    "server.motd" => server.Info.Stat?.Stripped_Motd ?? string.Empty,
+                    "server.players.max" => server.Info.Stat?.MaximumPlayers ?? string.Empty,
+                    "server.players.current" => server.Info.Stat?.CurrentPlayers ?? string.Empty,
                     "server.players.percent" => server.Info.Stat is not null
                         ? server.Info.Stat.MaximumPlayersInt > 0
                             ? 100
                                 * server.Info.Stat.CurrentPlayersInt
                                 / server.Info.Stat.MaximumPlayersInt
                             : 0
-                        : null,
+                        : string.Empty,
                     "server.players.list" => server.Info.Stat is not null
                         ? string.Join(", ", server.Info.Stat.PlayerList)
-                        : null,
+                        : string.Empty,
 
                     _ => null,
                 };

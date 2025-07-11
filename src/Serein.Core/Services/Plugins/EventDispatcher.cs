@@ -84,7 +84,20 @@ public sealed class EventDispatcher(
         cancellationTokenSource.Cancel();
 
         var completedTasks = tasks.Where(task => task.Status == TaskStatus.RanToCompletion);
-        return !completedTasks.Any() || completedTasks.All(task => task.Result);
+        _logger.LogDebug(
+            "事件（{}）各任务结果：{}",
+            @event,
+            completedTasks.Select(task => task.Result)
+        );
+
+        var result = !completedTasks.Any() || completedTasks.All(task => task.Result);
+        _logger.LogDebug(
+            "事件（{}）分发完成，已完成的任务数：{}，结果：{}",
+            @event,
+            completedTasks.Count(),
+            result
+        );
+        return result;
     }
 
     private void DispatchToJsPlugins(

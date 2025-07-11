@@ -39,7 +39,7 @@ internal sealed class ScheduleRunner(
                     schedule.IsRunning = true;
 
                     logger.LogDebug(
-                        "正在运行定时任务（{},cron={},command={}）",
+                        "正在运行定时任务（Id={}, Crontab='{}', Command='{}'）",
                         schedule.GetHashCode(),
                         schedule.Crontab,
                         schedule.Command

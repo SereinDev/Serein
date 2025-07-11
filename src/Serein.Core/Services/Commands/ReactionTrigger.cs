@@ -31,7 +31,7 @@ public sealed class ReactionTrigger(
         IReadOnlyDictionary<string, string?>? variables = null
     )
     {
-        _logger.LogDebug("触发：type={}", type);
+        _logger.LogDebug("触发：Type={}, Target={}", type, target);
 
         if (!settingProvider.Value.Reactions.TryGetValue(type, out var values))
         {

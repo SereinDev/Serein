@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Serein.Core.Services.Servers;
 
 public sealed partial class ServerManager
 {
+    private static readonly SearchValues<char> BlacklistOfChars = SearchValues.Create("/\\<>&|?");
+
     [GeneratedRegex(@"^\w{3,}$")]
     private static partial Regex GetServerIdRegex();
 
@@ -50,23 +53,23 @@ public sealed partial class ServerManager
         "LPT9",
     ];
 
-    private static readonly char[] BlacklistOfChars = { '/', '\\', '<', '>', '&', '|', '?' };
-
     public static void ValidateId(string? id)
     {
-        if (string.IsNullOrEmpty(id) || !ServerId.IsMatch(id))
+        ArgumentException.ThrowIfNullOrEmpty(id, nameof(id));
+
+        if (BlacklistOfFileName.Contains(id, StringComparer.InvariantCultureIgnoreCase))
         {
-            throw new ArgumentException("服务器Id格式不正确", nameof(id));
+            throw new ArgumentException("不能使用或含有Windows系统的保留关键字", nameof(id));
         }
 
-        if (BlacklistOfFileName.Contains(id.ToUpperInvariant()))
+        if (id.AsSpan().IndexOfAny(BlacklistOfChars) >= 0)
         {
-            throw new ArgumentException("不能使用Windows系统的保留关键字作为Id", nameof(id));
+            throw new ArgumentException("不能包含特殊字符", nameof(id));
         }
 
-        if (id.IndexOfAny(BlacklistOfChars) >= 0)
+        if (!ServerId.IsMatch(id))
         {
-            throw new ArgumentException("Id不能包含特殊字符", nameof(id));
+            throw new ArgumentException("格式不正确", nameof(id));
         }
     }
 

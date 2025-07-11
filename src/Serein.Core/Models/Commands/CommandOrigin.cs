@@ -10,7 +10,7 @@ public enum CommandOrigin
     /// <summary>
     /// 消息
     /// </summary>
-    Msg,
+    Message,
 
     /// <summary>
     /// 服务器输出

@@ -120,7 +120,7 @@ public class Match : NotifyPropertyChangedModelBase
                 or MatchFieldType.SelfMsg
                 or MatchFieldType.GroupMsg
                 or MatchFieldType.ChannelMsg
-                or MatchFieldType.GuildMsg => CommandOrigin.Msg,
+                or MatchFieldType.GuildMsg => CommandOrigin.Message,
                 _ => CommandOrigin.Null,
             },
             _command

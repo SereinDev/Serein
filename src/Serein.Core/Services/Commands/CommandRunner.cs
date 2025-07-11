@@ -65,15 +65,16 @@ public sealed class CommandRunner
         }
 
         _logger.LogDebug(
-            "运行命令：type={}, command.Body='{}'; command.Argument='{}'",
+            "运行命令：Type={}, Body='{}', Arguments='{}', Id={}",
             command.Type,
             command.Body,
-            command.Arguments
+            command.Arguments,
+            command.GetHashCode()
         );
 
         var body = _commandParser.Value.Format(command, commandContext);
 
-        _logger.LogDebug("格式化后：body='{}'", body);
+        _logger.LogDebug("格式化后：Body='{}'", body);
 
         switch (command.Type)
         {
@@ -196,6 +197,8 @@ public sealed class CommandRunner
             default:
                 throw new NotSupportedException();
         }
+
+        _logger.LogDebug("命令（Id={}）运行结束", command.GetHashCode());
     }
 
     private async Task SendPrivateMsgAsync(
@@ -258,7 +261,7 @@ public sealed class CommandRunner
             );
         }
         else if (
-            command.Origin != CommandOrigin.Msg
+            command.Origin != CommandOrigin.Message
             && _settingProvider.Value.Connection.ListenedIds.Length > 0
         )
         {
@@ -305,7 +308,7 @@ public sealed class CommandRunner
             );
         }
         else if (
-            command.Origin != CommandOrigin.Msg
+            command.Origin != CommandOrigin.Message
             && _settingProvider.Value.Connection.ListenedIds.Length > 0
         )
         {
