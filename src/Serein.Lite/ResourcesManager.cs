@@ -47,8 +47,6 @@ public class ResourcesManager(ILogger<ResourcesManager> logger)
             Directory.CreateDirectory("Serein/console");
             using var stream = new FileStream(IndexPath, FileMode.Create);
             _consoleHtml.CopyTo(stream);
-            stream.Flush();
-            stream.Close();
         }
     }
 

@@ -21,7 +21,7 @@ public static partial class OutputFilter
             var c = input[i];
             if (c > 31 && c != 127 || c == 0x1b)
             {
-                stringBuilder.Append(input[i]);
+                stringBuilder.Append(c);
             }
         }
         return stringBuilder.ToString();

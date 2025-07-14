@@ -374,7 +374,7 @@ public partial class MainWindow : Window
                     {
                         type = actionType;
 
-                        return result != null;
+                        return result.Value.HasValue;
                     }
                 },
                 (actionType) => result.Value.HasValue && result.Value.Value

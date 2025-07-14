@@ -28,7 +28,12 @@ public partial class MatchEditor : Form
 
     private void FieldType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        _requireAdminCheckBox.Enabled = _fieldTypeComboBox.SelectedIndex is 3 or 4;
+        _requireAdminCheckBox.Enabled =
+            (MatchFieldType)_fieldTypeComboBox.SelectedIndex
+                is MatchFieldType.GroupMsg
+                    or MatchFieldType.PrivateMsg
+                    or MatchFieldType.ChannelMsg
+                    or MatchFieldType.GuildMsg;
         if (!_requireAdminCheckBox.Enabled)
         {
             _requireAdminCheckBox.Checked = false;

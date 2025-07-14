@@ -40,10 +40,7 @@ public sealed partial class CommandParser(
         var cmd = command?.TrimStart();
         try
         {
-            if (string.IsNullOrEmpty(cmd) || string.IsNullOrWhiteSpace(cmd))
-            {
-                throw new ArgumentException("命令为空", nameof(command));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(cmd, nameof(command));
 
             if (cmd.Length < 2 || !cmd.StartsWith('[') || !cmd.Contains(']'))
             {
