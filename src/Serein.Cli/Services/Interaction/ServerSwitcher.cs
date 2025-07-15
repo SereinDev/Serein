@@ -81,10 +81,14 @@ public sealed class ServerSwitcher(
 
     private void LogToConsole(object? sender, ServerOutputEventArgs e)
     {
-        if (sender is not Server server)
+        if (
+            sender is not ServerLogger serverLogger1
+            || !serverManager.Servers.TryGetValue(serverLogger1.Id, out var server)
+        )
         {
             return;
         }
+
         switch (e.Type)
         {
             case ServerOutputType.StandardOutput:
