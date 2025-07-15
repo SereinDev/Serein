@@ -24,15 +24,15 @@ public class ApplicationSetting : NotifyPropertyChangedModelBase
 
     public string CliCommandHeader { get; set; } = "//";
 
-    public int PluginEventMaxWaitingTime { get; set; } = 500;
+    public int MaximumWaitTimeForPluginEvents { get; set; } = 500;
 
-    public string[] JSGlobalAssemblies { get; set; } = ["System"];
+    public string[] JsDefaultAssemblies { get; set; } = ["System"];
 
-    public string[] JSPatternToSkipLoadingSingleFile { get; set; } = [".module.js"];
+    public string[] JsFilesToExcludeFromLoading { get; set; } = [".module.js"];
 
-    public bool DisableBindingManagerWhenServerClosed { get; set; }
+    public bool DisableBindingManagerWhenAllServersStopped { get; set; }
 
-    public string RegexForCheckingGameId { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";
+    public string GameIdValidationPattern { get; set; } = @"^[a-zA-Z0-9_\s\-]{3,16}$";
 
-    public string[] PattenForEnableMatchingMuiltLines { get; set; } = [];
+    public string[] MultiLineMatchingPatterns { get; set; } = [];
 }

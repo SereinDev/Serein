@@ -30,7 +30,7 @@ public sealed partial class InteropTests : IDisposable
 
         _host
             .Services.GetRequiredService<SettingProvider>()
-            .Value.Application.PluginEventMaxWaitingTime = 2000;
+            .Value.Application.MaximumWaitTimeForPluginEvents = 2000;
 
         (
             (ConcurrentDictionary<string, Core.Services.Plugins.Js.JsPlugin>)_jsPluginLoader.Plugins

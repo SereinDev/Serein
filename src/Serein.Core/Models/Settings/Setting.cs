@@ -8,11 +8,11 @@ public class Setting
     public static readonly IReadOnlyDictionary<ReactionType, string[]> DefaultReactions =
         new Dictionary<ReactionType, string[]>()
         {
-            [ReactionType.ServerStart] = ["[g]服务器正在启动"],
-            [ReactionType.ServerExitedNormally] = ["[g]服务器已关闭"],
-            [ReactionType.ServerExitedUnexpectedly] = ["[g]服务器异常关闭"],
-            [ReactionType.GroupIncreased] = ["[g]欢迎[CQ:at,qq={ID}]入群~"],
-            [ReactionType.GroupDecreased] = ["[g]用户{ID}退出了群聊"],
+            [ReactionType.ServerStart] = ["[g]服务器{server.name}正在启动"],
+            [ReactionType.ServerExitedNormally] = ["[g]服务器{server.name}已关闭"],
+            [ReactionType.ServerExitedUnexpectedly] = ["[g]服务器{server.name}异常关闭"],
+            [ReactionType.GroupIncreased] = ["[g]欢迎[CQ:at,qq={sender.id}]入群~"],
+            [ReactionType.GroupDecreased] = ["[g]用户{sender.id}退出了群聊"],
             [ReactionType.GroupPoke] = ["[g]别戳我……(*/ω＼*)"],
             [ReactionType.BindingSucceeded] = ["[g]绑定成功"],
             [ReactionType.UnbindingSucceeded] = ["[g]解绑成功"],
@@ -22,7 +22,7 @@ public class Setting
             ],
             [ReactionType.PermissionDeniedFromGroupMsg] =
             [
-                "[g][CQ:at,qq={ID}] 你没有执行这个命令的权限",
+                "[g][CQ:at,qq={sender.id}] 你没有执行这个命令的权限",
             ],
             [ReactionType.PermissionDeniedFromPrivateMsg] = ["[p]你没有执行这个命令的权限"],
         };

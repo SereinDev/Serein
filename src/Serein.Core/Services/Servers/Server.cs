@@ -203,7 +203,7 @@ public class Server
         }
 
         if (
-            !_settingProvider.Value.Application.PattenForEnableMatchingMuiltLines.Any(
+            !_settingProvider.Value.Application.MultiLineMatchingPatterns.Any(
                 filtered.Contains
             )
         )

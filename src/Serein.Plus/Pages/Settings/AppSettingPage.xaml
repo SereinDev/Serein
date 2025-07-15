@@ -38,10 +38,10 @@
                     LostFocus="OnPropertyChanged"
                     Minimum="0"
                     SpinButtonPlacementMode="Compact"
-                    Value="{Binding Value.Application.PluginEventMaxWaitingTime}" />
+                    Value="{Binding Value.Application.MaximumWaitTimeForPluginEvents}" />
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Description="此处的程序集将会被所有JS插件加载" Header="JS插件全局加载的程序集">
+            <ui:SettingsExpander Description="此处的程序集将会被所有Js插件加载" Header="Js插件默认加载的程序集">
                 <ui:SettingsExpander.ItemsHeader>
                     <ui:InfoBar
                         Title="提示"
@@ -60,13 +60,13 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.JSGlobalAssemblies, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding Value.Application.JsDefaultAssemblies, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Description="凡是以所选内容结尾的文件都不会被加载" Header="JS插件加载时忽略的文件后缀">
+            <ui:SettingsExpander Description="凡是以所选内容结尾的文件都不会被加载" Header="Js插件加载时忽略的文件后缀">
                 <ui:SettingsExpander.ItemsHeader>
                     <ui:InfoBar
                         Title="提示"
@@ -85,7 +85,7 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.JSPatternToSkipLoadingSingleFile, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding Value.Application.JsFilesToExcludeFromLoading, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -110,21 +110,21 @@
                     </ui:InfoBar>
                 </ui:SettingsExpander.ItemsHeader>
 
-                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.RegexForCheckingGameId}" />
+                <TextBlock Style="{DynamicResource SettingsExpanderValue}" Text="{Binding Value.Application.GameIdValidationPattern}" />
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox
                             AcceptsReturn="False"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.RegexForCheckingGameId}"
+                            Text="{Binding Value.Application.GameIdValidationPattern}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
             <ui:SettingsCard Description="只影响通过Serein命令执行的绑定" Header="当服务器关闭时禁用绑定功能">
-                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBindingManagerWhenServerClosed}" Toggled="OnPropertyChanged" />
+                <ui:ToggleSwitch IsOn="{Binding Value.Application.DisableBindingManagerWhenAllServersStopped}" Toggled="OnPropertyChanged" />
             </ui:SettingsCard>
 
             <TextBlock
@@ -152,7 +152,7 @@
                         <TextBox
                             AcceptsReturn="True"
                             LostFocus="OnPropertyChanged"
-                            Text="{Binding Value.Application.PattenForEnableMatchingMuiltLines, Converter={StaticResource multiLinesConverter}}"
+                            Text="{Binding Value.Application.MultiLineMatchingPatterns, Converter={StaticResource multiLinesConverter}}"
                             TextWrapping="Wrap" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>

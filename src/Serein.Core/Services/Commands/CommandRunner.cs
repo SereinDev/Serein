@@ -151,7 +151,7 @@ public sealed class CommandRunner
                         );
                     }
                 }
-                catch (BindingFailureException e)
+                catch (Exception e) when (e is BindingFailureException or ArgumentException)
                 {
                     _logger.LogError(e, "通过命令绑定失败");
 

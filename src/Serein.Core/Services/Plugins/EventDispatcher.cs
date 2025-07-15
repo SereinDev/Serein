@@ -58,13 +58,13 @@ public sealed class EventDispatcher(
             return true;
         }
 
-        if (settingProvider.Value.Application.PluginEventMaxWaitingTime > 0)
+        if (settingProvider.Value.Application.MaximumWaitTimeForPluginEvents > 0)
         {
             try
             {
                 Task.WaitAll(
                     [.. tasks],
-                    settingProvider.Value.Application.PluginEventMaxWaitingTime
+                    settingProvider.Value.Application.MaximumWaitTimeForPluginEvents
                 );
             }
             catch (OperationCanceledException)

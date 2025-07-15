@@ -160,7 +160,11 @@ public sealed class ForwardWebSocketAdapter(
 
     private async Task TryReconnect()
     {
-        if (_closedManually || !_connectedSuccessfully)
+        if (
+            _closedManually
+            || !_connectedSuccessfully
+            || !settingProvider.Value.Connection.OneBot.AutoReconnect
+        )
         {
             return;
         }

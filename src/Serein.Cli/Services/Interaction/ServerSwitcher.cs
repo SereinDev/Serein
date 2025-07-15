@@ -47,10 +47,11 @@ public sealed class ServerSwitcher(
 
             if (server.Status)
             {
-                if (string.IsNullOrEmpty(settingProvider.Value.Application.CliCommandHeader))
+                if (string.IsNullOrWhiteSpace(settingProvider.Value.Application.CliCommandHeader))
                 {
                     settingProvider.Value.Application.CliCommandHeader = "//";
                 }
+
                 logger.LogWarning(
                     "此服务器正在运行中，输入的命令将转发至服务器。若要执行Serein的命令，你需要在命令前加上\"{}\"",
                     settingProvider.Value.Application.CliCommandHeader

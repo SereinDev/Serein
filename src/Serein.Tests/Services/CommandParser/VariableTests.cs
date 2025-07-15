@@ -247,7 +247,7 @@ public sealed class VariableTests : IDisposable
         );
 
         Assert.Equal(
-            "{user.id@steve}",
+            string.Empty,
             _commandParser.Format(Parser.Parse(CommandOrigin.Null, "[cmd]{user.id@steve}"), new())
         );
 

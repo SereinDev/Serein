@@ -26,17 +26,17 @@ public partial class AppSettingPage : UserControl
 
         _versionLabel.Text = $"当前版本：{sereinApp.Version}";
 
-        _jsGlobalAssembliesTextBox.Text = string.Join(
+        _jsDefaultAssembliesTextBox.Text = string.Join(
             "\r\n",
-            _settingProvider.Value.Application.JSGlobalAssemblies
+            _settingProvider.Value.Application.JsDefaultAssemblies
         );
-        _jsPatternToSkipLoadingSingleFileTextBox.Text = string.Join(
+        _jsFilesToExcludeFromLoadingTextBox.Text = string.Join(
             "\r\n",
-            _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile
+            _settingProvider.Value.Application.JsFilesToExcludeFromLoading
         );
-        _pattenForEnableMatchingMuiltLinesTextBox.Text = string.Join(
+        _multiLineMatchingPatternsTextBox.Text = string.Join(
             "\r\n",
-            _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines
+            _settingProvider.Value.Application.MultiLineMatchingPatterns
         );
         _updateChecker.Updated += (_, _) => Invoke(() => UpdateLatestVersion());
     }
@@ -53,17 +53,24 @@ public partial class AppSettingPage : UserControl
 
     private void SetBindings()
     {
-        _pluginEventMaxWaitingTimeNumericUpDown.DataBindings.Add(
-            nameof(_pluginEventMaxWaitingTimeNumericUpDown.Value),
+        _enableSentryCheckBox.DataBindings.Add(
+            nameof(_enableSentryCheckBox.Checked),
             _settingProvider.Value.Application,
-            nameof(ApplicationSetting.PluginEventMaxWaitingTime),
+            nameof(ApplicationSetting.EnableSentry),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        _regexForCheckingGameIDTextBox.DataBindings.Add(
-            nameof(_regexForCheckingGameIDTextBox.Text),
+        _maximumWaitTimeForPluginEventsNumericUpDown.DataBindings.Add(
+            nameof(_maximumWaitTimeForPluginEventsNumericUpDown.Value),
             _settingProvider.Value.Application,
-            nameof(ApplicationSetting.RegexForCheckingGameId),
+            nameof(ApplicationSetting.MaximumWaitTimeForPluginEvents),
+            false,
+            DataSourceUpdateMode.OnPropertyChanged
+        );
+        _gameIdValidationPatternTextBox.DataBindings.Add(
+            nameof(_gameIdValidationPatternTextBox.Text),
+            _settingProvider.Value.Application,
+            nameof(ApplicationSetting.GameIdValidationPattern),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
@@ -74,10 +81,10 @@ public partial class AppSettingPage : UserControl
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
-        _disableBindingManagerWhenServerClosedCheckBox.DataBindings.Add(
-            nameof(_disableBindingManagerWhenServerClosedCheckBox.Checked),
+        _disableBindingManagerWhenAllServersStoppedCheckBox.DataBindings.Add(
+            nameof(_disableBindingManagerWhenAllServersStoppedCheckBox.Checked),
             _settingProvider.Value.Application,
-            nameof(ApplicationSetting.DisableBindingManagerWhenServerClosed),
+            nameof(ApplicationSetting.DisableBindingManagerWhenAllServersStopped),
             false,
             DataSourceUpdateMode.OnPropertyChanged
         );
@@ -110,28 +117,28 @@ public partial class AppSettingPage : UserControl
         _updateChecker.CheckAsync().ContinueWith((_) => Invoke(UpdateLatestVersion));
     }
 
-    private void JSGlobalAssembliesTextBox_TextChanged(object sender, EventArgs e)
+    private void JsDefaultAssembliesTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Application.JSGlobalAssemblies =
-            _jsGlobalAssembliesTextBox.Text.Split(
+        _settingProvider.Value.Application.JsDefaultAssemblies =
+            _jsDefaultAssembliesTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );
     }
 
-    private void JSPatternToSkipLoadingSingleFileTextBox_TextChanged(object sender, EventArgs e)
+    private void JsFilesToExcludeFromLoadingTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile =
-            _jsPatternToSkipLoadingSingleFileTextBox.Text.Split(
+        _settingProvider.Value.Application.JsFilesToExcludeFromLoading =
+            _jsFilesToExcludeFromLoadingTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );
     }
 
-    private void PattenForEnableMatchingMuiltLinesTextBox_TextChanged(object sender, EventArgs e)
+    private void multiLineMatchingPatternsTextBox_TextChanged(object sender, EventArgs e)
     {
-        _settingProvider.Value.Application.PattenForEnableMatchingMuiltLines =
-            _pattenForEnableMatchingMuiltLinesTextBox.Text.Split(
+        _settingProvider.Value.Application.MultiLineMatchingPatterns =
+            _multiLineMatchingPatternsTextBox.Text.Split(
                 "\r\n",
                 StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
             );

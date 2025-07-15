@@ -81,7 +81,7 @@ public sealed class JsPluginLoader(
         foreach (var file in Directory.GetFiles(PathConstants.PluginsDirectory, "*.js"))
         {
             if (
-                settingProvider.Value.Application.JSPatternToSkipLoadingSingleFile.Any(
+                settingProvider.Value.Application.JsFilesToExcludeFromLoading.Any(
                     file.EndsWith
                 )
             )

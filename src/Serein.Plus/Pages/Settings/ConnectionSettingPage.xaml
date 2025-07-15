@@ -131,7 +131,7 @@
                 Text="OneBot" />
 
             <ui:SettingsCard Description="将影响Serein中对数据包的处理方式" Header="OneBot版本">
-                <ComboBox SelectedIndex="{Binding Value.Connection.OneBot.Version, Converter={StaticResource enumConverter}}">
+                <ComboBox SelectedIndex="{Binding Value.Connection.OneBot.Version, Converter={StaticResource enumConverter}}" SelectionChanged="OnPropertyChanged">
                     <ComboBoxItem Content="V11" />
                     <ComboBoxItem Content="V12" />
                 </ComboBox>

@@ -9,12 +9,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Serein.Core.Models.Bindings;
 using Serein.Core.Services.Data;
+using Serein.Core.Services.Servers;
 
 namespace Serein.Core.Services.Bindings;
 
-public sealed class BindingManager(SettingProvider settingProvider, IServiceProvider services)
+public sealed class BindingManager(IServiceProvider services, SettingProvider settingProvider)
 {
     private readonly object _lock = new();
+
+    private readonly Lazy<ServerManager> _serverManager = new(
+        services.GetRequiredService<ServerManager>
+    );
 
     private BindingRecordDbContext BindingRecordDbContext
     {
@@ -42,7 +47,7 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
     {
         ArgumentException.ThrowIfNullOrEmpty(gameId, nameof(gameId));
 
-        var regex = new Regex(settingProvider.Value.Application.RegexForCheckingGameId);
+        var regex = new Regex(settingProvider.Value.Application.GameIdValidationPattern);
 
         if (!regex.IsMatch(gameId))
         {
@@ -105,6 +110,14 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
         ArgumentNullException.ThrowIfNull(bindingRecord, nameof(bindingRecord));
         ArgumentException.ThrowIfNullOrEmpty(bindingRecord.UserId, nameof(bindingRecord.UserId));
 
+        if (
+            settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
+            && !_serverManager.Value.AnyRunning
+        )
+        {
+            throw new BindingFailureException("服务器未运行");
+        }
+
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
@@ -159,6 +172,14 @@ public sealed class BindingManager(SettingProvider settingProvider, IServiceProv
 
     public void Remove(string userId, string gameId)
     {
+        if (
+            settingProvider.Value.Application.DisableBindingManagerWhenAllServersStopped
+            && !_serverManager.Value.AnyRunning
+        )
+        {
+            throw new BindingFailureException("服务器未运行");
+        }
+
         lock (_lock)
         {
             using var context = BindingRecordDbContext;

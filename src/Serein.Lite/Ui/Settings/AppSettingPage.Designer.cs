@@ -30,42 +30,42 @@
         {
             components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox pluginGroupBox;
-            System.Windows.Forms.Label jsPatternToSkipLoadingSingleFileLabel;
-            System.Windows.Forms.Label jsGlobalAssembliesLabel;
-            System.Windows.Forms.Label pluginEventMaxWaitingTimeLabel;
+            System.Windows.Forms.Label jsFilesToExcludeFromLoadingLabel;
+            System.Windows.Forms.Label jsDefaultAssembliesLabel;
+            System.Windows.Forms.Label maximumWaitTimeForPluginEventsLabel;
             System.Windows.Forms.GroupBox bindingGroupBox;
-            System.Windows.Forms.Label regexForCheckingGameIDLabel;
+            System.Windows.Forms.Label gameIdValidationPatternLabel;
             System.Windows.Forms.GroupBox moreGroupBox;
             System.Windows.Forms.Label customTitleLabel;
-            System.Windows.Forms.Label pattenForEnableMatchingMuiltLinesLabel;
+            System.Windows.Forms.Label multiLineMatchingPatternsLabel;
             System.Windows.Forms.GroupBox updateGroupBox;
             System.Windows.Forms.ToolTip toolTip;
-            _jsPatternToSkipLoadingSingleFileTextBox = new System.Windows.Forms.TextBox();
-            _jsGlobalAssembliesTextBox = new System.Windows.Forms.TextBox();
-            _pluginEventMaxWaitingTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            _disableBindingManagerWhenServerClosedCheckBox = new System.Windows.Forms.CheckBox();
-            _regexForCheckingGameIDTextBox = new System.Windows.Forms.TextBox();
+            _jsFilesToExcludeFromLoadingTextBox = new System.Windows.Forms.TextBox();
+            _jsDefaultAssembliesTextBox = new System.Windows.Forms.TextBox();
+            _maximumWaitTimeForPluginEventsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            _disableBindingManagerWhenAllServersStoppedCheckBox = new System.Windows.Forms.CheckBox();
+            _gameIdValidationPatternTextBox = new System.Windows.Forms.TextBox();
             _enableSentryCheckBox = new System.Windows.Forms.CheckBox();
             _customTitleTextBox = new System.Windows.Forms.TextBox();
-            _pattenForEnableMatchingMuiltLinesTextBox = new System.Windows.Forms.TextBox();
+            _multiLineMatchingPatternsTextBox = new System.Windows.Forms.TextBox();
             _checkUpdateButton = new System.Windows.Forms.Button();
             _latestVersionLabel = new System.Windows.Forms.Label();
             _versionLabel = new System.Windows.Forms.Label();
             _autoUpdateCheckBox = new System.Windows.Forms.CheckBox();
             _checkUpdateCheckBox = new System.Windows.Forms.CheckBox();
             pluginGroupBox = new System.Windows.Forms.GroupBox();
-            jsPatternToSkipLoadingSingleFileLabel = new System.Windows.Forms.Label();
-            jsGlobalAssembliesLabel = new System.Windows.Forms.Label();
-            pluginEventMaxWaitingTimeLabel = new System.Windows.Forms.Label();
+            jsFilesToExcludeFromLoadingLabel = new System.Windows.Forms.Label();
+            jsDefaultAssembliesLabel = new System.Windows.Forms.Label();
+            maximumWaitTimeForPluginEventsLabel = new System.Windows.Forms.Label();
             bindingGroupBox = new System.Windows.Forms.GroupBox();
-            regexForCheckingGameIDLabel = new System.Windows.Forms.Label();
+            gameIdValidationPatternLabel = new System.Windows.Forms.Label();
             moreGroupBox = new System.Windows.Forms.GroupBox();
             customTitleLabel = new System.Windows.Forms.Label();
-            pattenForEnableMatchingMuiltLinesLabel = new System.Windows.Forms.Label();
+            multiLineMatchingPatternsLabel = new System.Windows.Forms.Label();
             updateGroupBox = new System.Windows.Forms.GroupBox();
             toolTip = new System.Windows.Forms.ToolTip(components);
             pluginGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)_pluginEventMaxWaitingTimeNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)_maximumWaitTimeForPluginEventsNumericUpDown).BeginInit();
             bindingGroupBox.SuspendLayout();
             moreGroupBox.SuspendLayout();
             updateGroupBox.SuspendLayout();
@@ -73,12 +73,12 @@
             // 
             // pluginGroupBox
             // 
-            pluginGroupBox.Controls.Add(_jsPatternToSkipLoadingSingleFileTextBox);
-            pluginGroupBox.Controls.Add(jsPatternToSkipLoadingSingleFileLabel);
-            pluginGroupBox.Controls.Add(_jsGlobalAssembliesTextBox);
-            pluginGroupBox.Controls.Add(jsGlobalAssembliesLabel);
-            pluginGroupBox.Controls.Add(_pluginEventMaxWaitingTimeNumericUpDown);
-            pluginGroupBox.Controls.Add(pluginEventMaxWaitingTimeLabel);
+            pluginGroupBox.Controls.Add(_jsFilesToExcludeFromLoadingTextBox);
+            pluginGroupBox.Controls.Add(jsFilesToExcludeFromLoadingLabel);
+            pluginGroupBox.Controls.Add(_jsDefaultAssembliesTextBox);
+            pluginGroupBox.Controls.Add(jsDefaultAssembliesLabel);
+            pluginGroupBox.Controls.Add(_maximumWaitTimeForPluginEventsNumericUpDown);
+            pluginGroupBox.Controls.Add(maximumWaitTimeForPluginEventsLabel);
             pluginGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             pluginGroupBox.Location = new System.Drawing.Point(10, 10);
             pluginGroupBox.Name = "pluginGroupBox";
@@ -87,79 +87,79 @@
             pluginGroupBox.TabStop = false;
             pluginGroupBox.Text = "插件";
             // 
-            // _jsPatternToSkipLoadingSingleFileTextBox
+            // _jsFilesToExcludeFromLoadingTextBox
             // 
-            _jsPatternToSkipLoadingSingleFileTextBox.AcceptsReturn = true;
-            _jsPatternToSkipLoadingSingleFileTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _jsPatternToSkipLoadingSingleFileTextBox.Location = new System.Drawing.Point(27, 339);
-            _jsPatternToSkipLoadingSingleFileTextBox.Multiline = true;
-            _jsPatternToSkipLoadingSingleFileTextBox.Name = "_jsPatternToSkipLoadingSingleFileTextBox";
-            _jsPatternToSkipLoadingSingleFileTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            _jsPatternToSkipLoadingSingleFileTextBox.Size = new System.Drawing.Size(1206, 132);
-            _jsPatternToSkipLoadingSingleFileTextBox.TabIndex = 3;
-            toolTip.SetToolTip(_jsPatternToSkipLoadingSingleFileTextBox, "凡是以所选内容结尾的文件都不会被加载（一行一个）");
-            _jsPatternToSkipLoadingSingleFileTextBox.TextChanged += JSPatternToSkipLoadingSingleFileTextBox_TextChanged;
+            _jsFilesToExcludeFromLoadingTextBox.AcceptsReturn = true;
+            _jsFilesToExcludeFromLoadingTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _jsFilesToExcludeFromLoadingTextBox.Location = new System.Drawing.Point(27, 339);
+            _jsFilesToExcludeFromLoadingTextBox.Multiline = true;
+            _jsFilesToExcludeFromLoadingTextBox.Name = "_jsFilesToExcludeFromLoadingTextBox";
+            _jsFilesToExcludeFromLoadingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            _jsFilesToExcludeFromLoadingTextBox.Size = new System.Drawing.Size(1206, 132);
+            _jsFilesToExcludeFromLoadingTextBox.TabIndex = 3;
+            toolTip.SetToolTip(_jsFilesToExcludeFromLoadingTextBox, "凡是以所选内容结尾的文件都不会被加载（一行一个）");
+            _jsFilesToExcludeFromLoadingTextBox.TextChanged += JsFilesToExcludeFromLoadingTextBox_TextChanged;
             // 
-            // jsPatternToSkipLoadingSingleFileLabel
+            // jsFilesToExcludeFromLoadingLabel
             // 
-            jsPatternToSkipLoadingSingleFileLabel.AutoSize = true;
-            jsPatternToSkipLoadingSingleFileLabel.Location = new System.Drawing.Point(27, 305);
-            jsPatternToSkipLoadingSingleFileLabel.Name = "jsPatternToSkipLoadingSingleFileLabel";
-            jsPatternToSkipLoadingSingleFileLabel.Size = new System.Drawing.Size(326, 31);
-            jsPatternToSkipLoadingSingleFileLabel.TabIndex = 4;
-            jsPatternToSkipLoadingSingleFileLabel.Text = "JS插件加载时忽略的文件后缀";
-            toolTip.SetToolTip(jsPatternToSkipLoadingSingleFileLabel, "凡是以所选内容结尾的文件都不会被加载（一行一个）");
+            jsFilesToExcludeFromLoadingLabel.AutoSize = true;
+            jsFilesToExcludeFromLoadingLabel.Location = new System.Drawing.Point(27, 305);
+            jsFilesToExcludeFromLoadingLabel.Name = "jsFilesToExcludeFromLoadingLabel";
+            jsFilesToExcludeFromLoadingLabel.Size = new System.Drawing.Size(326, 31);
+            jsFilesToExcludeFromLoadingLabel.TabIndex = 4;
+            jsFilesToExcludeFromLoadingLabel.Text = "Js插件加载时忽略的文件后缀";
+            toolTip.SetToolTip(jsFilesToExcludeFromLoadingLabel, "凡是以所选内容结尾的文件都不会被加载（一行一个）");
             // 
-            // _jsGlobalAssembliesTextBox
+            // _jsDefaultAssembliesTextBox
             // 
-            _jsGlobalAssembliesTextBox.AcceptsReturn = true;
-            _jsGlobalAssembliesTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _jsGlobalAssembliesTextBox.Location = new System.Drawing.Point(27, 163);
-            _jsGlobalAssembliesTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            _jsGlobalAssembliesTextBox.Multiline = true;
-            _jsGlobalAssembliesTextBox.Name = "_jsGlobalAssembliesTextBox";
-            _jsGlobalAssembliesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            _jsGlobalAssembliesTextBox.Size = new System.Drawing.Size(1206, 132);
-            _jsGlobalAssembliesTextBox.TabIndex = 1;
-            toolTip.SetToolTip(_jsGlobalAssembliesTextBox, "此处的程序集将会被所有JS插件加载（一行一个）\r\n");
-            _jsGlobalAssembliesTextBox.TextChanged += JSGlobalAssembliesTextBox_TextChanged;
+            _jsDefaultAssembliesTextBox.AcceptsReturn = true;
+            _jsDefaultAssembliesTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _jsDefaultAssembliesTextBox.Location = new System.Drawing.Point(27, 163);
+            _jsDefaultAssembliesTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _jsDefaultAssembliesTextBox.Multiline = true;
+            _jsDefaultAssembliesTextBox.Name = "_jsDefaultAssembliesTextBox";
+            _jsDefaultAssembliesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            _jsDefaultAssembliesTextBox.Size = new System.Drawing.Size(1206, 132);
+            _jsDefaultAssembliesTextBox.TabIndex = 1;
+            toolTip.SetToolTip(_jsDefaultAssembliesTextBox, "此处的程序集将会被所有Js插件加载（一行一个）\r\n");
+            _jsDefaultAssembliesTextBox.TextChanged += JsDefaultAssembliesTextBox_TextChanged;
             // 
-            // jsGlobalAssembliesLabel
+            // jsDefaultAssembliesLabel
             // 
-            jsGlobalAssembliesLabel.AutoSize = true;
-            jsGlobalAssembliesLabel.Location = new System.Drawing.Point(27, 129);
-            jsGlobalAssembliesLabel.Name = "jsGlobalAssembliesLabel";
-            jsGlobalAssembliesLabel.Size = new System.Drawing.Size(278, 31);
-            jsGlobalAssembliesLabel.TabIndex = 2;
-            jsGlobalAssembliesLabel.Text = "JS插件全局加载的程序集";
-            toolTip.SetToolTip(jsGlobalAssembliesLabel, "此处的程序集将会被所有JS插件加载（一行一个）\r\n");
+            jsDefaultAssembliesLabel.AutoSize = true;
+            jsDefaultAssembliesLabel.Location = new System.Drawing.Point(27, 129);
+            jsDefaultAssembliesLabel.Name = "jsDefaultAssembliesLabel";
+            jsDefaultAssembliesLabel.Size = new System.Drawing.Size(278, 31);
+            jsDefaultAssembliesLabel.TabIndex = 2;
+            jsDefaultAssembliesLabel.Text = "Js插件默认加载的程序集";
+            toolTip.SetToolTip(jsDefaultAssembliesLabel, "此处的程序集将会被所有Js插件加载（一行一个）\r\n");
             // 
-            // _pluginEventMaxWaitingTimeNumericUpDown
+            // _maximumWaitTimeForPluginEventsNumericUpDown
             // 
-            _pluginEventMaxWaitingTimeNumericUpDown.Location = new System.Drawing.Point(27, 81);
-            _pluginEventMaxWaitingTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            _pluginEventMaxWaitingTimeNumericUpDown.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            _pluginEventMaxWaitingTimeNumericUpDown.Name = "_pluginEventMaxWaitingTimeNumericUpDown";
-            _pluginEventMaxWaitingTimeNumericUpDown.Size = new System.Drawing.Size(223, 38);
-            _pluginEventMaxWaitingTimeNumericUpDown.TabIndex = 1;
-            toolTip.SetToolTip(_pluginEventMaxWaitingTimeNumericUpDown, "超出此时间返回的结果将被忽略；设置成0可禁用等待");
-            _pluginEventMaxWaitingTimeNumericUpDown.ValueChanged += OnPropertyChanged;
+            _maximumWaitTimeForPluginEventsNumericUpDown.Location = new System.Drawing.Point(27, 81);
+            _maximumWaitTimeForPluginEventsNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _maximumWaitTimeForPluginEventsNumericUpDown.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            _maximumWaitTimeForPluginEventsNumericUpDown.Name = "_maximumWaitTimeForPluginEventsNumericUpDown";
+            _maximumWaitTimeForPluginEventsNumericUpDown.Size = new System.Drawing.Size(223, 38);
+            _maximumWaitTimeForPluginEventsNumericUpDown.TabIndex = 1;
+            toolTip.SetToolTip(_maximumWaitTimeForPluginEventsNumericUpDown, "超出此时间返回的结果将被忽略；设置成0可禁用等待");
+            _maximumWaitTimeForPluginEventsNumericUpDown.ValueChanged += OnPropertyChanged;
             // 
-            // pluginEventMaxWaitingTimeLabel
+            // maximumWaitTimeForPluginEventsLabel
             // 
-            pluginEventMaxWaitingTimeLabel.AutoSize = true;
-            pluginEventMaxWaitingTimeLabel.Location = new System.Drawing.Point(27, 47);
-            pluginEventMaxWaitingTimeLabel.Name = "pluginEventMaxWaitingTimeLabel";
-            pluginEventMaxWaitingTimeLabel.Size = new System.Drawing.Size(262, 31);
-            pluginEventMaxWaitingTimeLabel.TabIndex = 0;
-            pluginEventMaxWaitingTimeLabel.Text = "事件最大等待时间 (ms)";
-            toolTip.SetToolTip(pluginEventMaxWaitingTimeLabel, "超出此时间返回的结果将被忽略；设置成0可禁用等待");
+            maximumWaitTimeForPluginEventsLabel.AutoSize = true;
+            maximumWaitTimeForPluginEventsLabel.Location = new System.Drawing.Point(27, 47);
+            maximumWaitTimeForPluginEventsLabel.Name = "maximumWaitTimeForPluginEventsLabel";
+            maximumWaitTimeForPluginEventsLabel.Size = new System.Drawing.Size(262, 31);
+            maximumWaitTimeForPluginEventsLabel.TabIndex = 0;
+            maximumWaitTimeForPluginEventsLabel.Text = "事件最大等待时间 (ms)";
+            toolTip.SetToolTip(maximumWaitTimeForPluginEventsLabel, "超出此时间返回的结果将被忽略；设置成0可禁用等待");
             // 
             // bindingGroupBox
             // 
-            bindingGroupBox.Controls.Add(_disableBindingManagerWhenServerClosedCheckBox);
-            bindingGroupBox.Controls.Add(_regexForCheckingGameIDTextBox);
-            bindingGroupBox.Controls.Add(regexForCheckingGameIDLabel);
+            bindingGroupBox.Controls.Add(_disableBindingManagerWhenAllServersStoppedCheckBox);
+            bindingGroupBox.Controls.Add(_gameIdValidationPatternTextBox);
+            bindingGroupBox.Controls.Add(gameIdValidationPatternLabel);
             bindingGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             bindingGroupBox.Location = new System.Drawing.Point(10, 508);
             bindingGroupBox.Name = "bindingGroupBox";
@@ -168,46 +168,46 @@
             bindingGroupBox.TabStop = false;
             bindingGroupBox.Text = "绑定";
             // 
-            // _disableBindingManagerWhenServerClosedCheckBox
+            // _disableBindingManagerWhenAllServersStoppedCheckBox
             // 
-            _disableBindingManagerWhenServerClosedCheckBox.AutoSize = true;
-            _disableBindingManagerWhenServerClosedCheckBox.Location = new System.Drawing.Point(27, 130);
-            _disableBindingManagerWhenServerClosedCheckBox.Name = "_disableBindingManagerWhenServerClosedCheckBox";
-            _disableBindingManagerWhenServerClosedCheckBox.Size = new System.Drawing.Size(358, 35);
-            _disableBindingManagerWhenServerClosedCheckBox.TabIndex = 7;
-            _disableBindingManagerWhenServerClosedCheckBox.Text = "当服务器关闭时禁用绑定功能";
-            toolTip.SetToolTip(_disableBindingManagerWhenServerClosedCheckBox, "只影响通过Serein命令执行的绑定");
-            _disableBindingManagerWhenServerClosedCheckBox.UseVisualStyleBackColor = true;
-            _disableBindingManagerWhenServerClosedCheckBox.Click += OnPropertyChanged;
+            _disableBindingManagerWhenAllServersStoppedCheckBox.AutoSize = true;
+            _disableBindingManagerWhenAllServersStoppedCheckBox.Location = new System.Drawing.Point(27, 130);
+            _disableBindingManagerWhenAllServersStoppedCheckBox.Name = "_disableBindingManagerWhenAllServersStoppedCheckBox";
+            _disableBindingManagerWhenAllServersStoppedCheckBox.Size = new System.Drawing.Size(358, 35);
+            _disableBindingManagerWhenAllServersStoppedCheckBox.TabIndex = 7;
+            _disableBindingManagerWhenAllServersStoppedCheckBox.Text = "当服务器关闭时禁用绑定功能";
+            toolTip.SetToolTip(_disableBindingManagerWhenAllServersStoppedCheckBox, "只影响通过Serein命令执行的绑定");
+            _disableBindingManagerWhenAllServersStoppedCheckBox.UseVisualStyleBackColor = true;
+            _disableBindingManagerWhenAllServersStoppedCheckBox.Click += OnPropertyChanged;
             // 
-            // _regexForCheckingGameIDTextBox
+            // _gameIdValidationPatternTextBox
             // 
-            _regexForCheckingGameIDTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _regexForCheckingGameIDTextBox.Location = new System.Drawing.Point(27, 79);
-            _regexForCheckingGameIDTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            _regexForCheckingGameIDTextBox.Name = "_regexForCheckingGameIDTextBox";
-            _regexForCheckingGameIDTextBox.Size = new System.Drawing.Size(1206, 38);
-            _regexForCheckingGameIDTextBox.TabIndex = 6;
-            toolTip.SetToolTip(_regexForCheckingGameIDTextBox, "绑定时游戏名称需要符合此正则");
-            _regexForCheckingGameIDTextBox.TextChanged += OnPropertyChanged;
+            _gameIdValidationPatternTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _gameIdValidationPatternTextBox.Location = new System.Drawing.Point(27, 79);
+            _gameIdValidationPatternTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _gameIdValidationPatternTextBox.Name = "_gameIdValidationPatternTextBox";
+            _gameIdValidationPatternTextBox.Size = new System.Drawing.Size(1206, 38);
+            _gameIdValidationPatternTextBox.TabIndex = 6;
+            toolTip.SetToolTip(_gameIdValidationPatternTextBox, "绑定时游戏名称需要符合此正则");
+            _gameIdValidationPatternTextBox.TextChanged += OnPropertyChanged;
             // 
-            // regexForCheckingGameIDLabel
+            // gameIdValidationPatternLabel
             // 
-            regexForCheckingGameIDLabel.AutoSize = true;
-            regexForCheckingGameIDLabel.Location = new System.Drawing.Point(27, 45);
-            regexForCheckingGameIDLabel.Name = "regexForCheckingGameIDLabel";
-            regexForCheckingGameIDLabel.Size = new System.Drawing.Size(206, 31);
-            regexForCheckingGameIDLabel.TabIndex = 5;
-            regexForCheckingGameIDLabel.Text = "游戏名称检验正则";
-            toolTip.SetToolTip(regexForCheckingGameIDLabel, "绑定时游戏名称需要符合此正则");
+            gameIdValidationPatternLabel.AutoSize = true;
+            gameIdValidationPatternLabel.Location = new System.Drawing.Point(27, 45);
+            gameIdValidationPatternLabel.Name = "gameIdValidationPatternLabel";
+            gameIdValidationPatternLabel.Size = new System.Drawing.Size(206, 31);
+            gameIdValidationPatternLabel.TabIndex = 5;
+            gameIdValidationPatternLabel.Text = "游戏名称检验正则";
+            toolTip.SetToolTip(gameIdValidationPatternLabel, "绑定时游戏名称需要符合此正则");
             // 
             // moreGroupBox
             // 
             moreGroupBox.Controls.Add(_enableSentryCheckBox);
             moreGroupBox.Controls.Add(_customTitleTextBox);
             moreGroupBox.Controls.Add(customTitleLabel);
-            moreGroupBox.Controls.Add(_pattenForEnableMatchingMuiltLinesTextBox);
-            moreGroupBox.Controls.Add(pattenForEnableMatchingMuiltLinesLabel);
+            moreGroupBox.Controls.Add(_multiLineMatchingPatternsTextBox);
+            moreGroupBox.Controls.Add(multiLineMatchingPatternsLabel);
             moreGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             moreGroupBox.Location = new System.Drawing.Point(10, 695);
             moreGroupBox.Name = "moreGroupBox";
@@ -248,29 +248,29 @@
             customTitleLabel.Text = "标题后缀";
             toolTip.SetToolTip(customTitleLabel, "显示在标题栏的内容\r\n· 可使用命令的变量");
             // 
-            // _pattenForEnableMatchingMuiltLinesTextBox
+            // _multiLineMatchingPatternsTextBox
             // 
-            _pattenForEnableMatchingMuiltLinesTextBox.AcceptsReturn = true;
-            _pattenForEnableMatchingMuiltLinesTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            _pattenForEnableMatchingMuiltLinesTextBox.Location = new System.Drawing.Point(27, 78);
-            _pattenForEnableMatchingMuiltLinesTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
-            _pattenForEnableMatchingMuiltLinesTextBox.Multiline = true;
-            _pattenForEnableMatchingMuiltLinesTextBox.Name = "_pattenForEnableMatchingMuiltLinesTextBox";
-            _pattenForEnableMatchingMuiltLinesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            _pattenForEnableMatchingMuiltLinesTextBox.Size = new System.Drawing.Size(1206, 132);
-            _pattenForEnableMatchingMuiltLinesTextBox.TabIndex = 9;
-            toolTip.SetToolTip(_pattenForEnableMatchingMuiltLinesTextBox, "当输入的内容若含有以下内容将触发多行匹配（一行一个）");
-            _pattenForEnableMatchingMuiltLinesTextBox.TextChanged += PattenForEnableMatchingMuiltLinesTextBox_TextChanged;
+            _multiLineMatchingPatternsTextBox.AcceptsReturn = true;
+            _multiLineMatchingPatternsTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            _multiLineMatchingPatternsTextBox.Location = new System.Drawing.Point(27, 78);
+            _multiLineMatchingPatternsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            _multiLineMatchingPatternsTextBox.Multiline = true;
+            _multiLineMatchingPatternsTextBox.Name = "_multiLineMatchingPatternsTextBox";
+            _multiLineMatchingPatternsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            _multiLineMatchingPatternsTextBox.Size = new System.Drawing.Size(1206, 132);
+            _multiLineMatchingPatternsTextBox.TabIndex = 9;
+            toolTip.SetToolTip(_multiLineMatchingPatternsTextBox, "当输入的内容若含有以下内容将触发多行匹配（一行一个）");
+            _multiLineMatchingPatternsTextBox.TextChanged += multiLineMatchingPatternsTextBox_TextChanged;
             // 
-            // pattenForEnableMatchingMuiltLinesLabel
+            // multiLineMatchingPatternsLabel
             // 
-            pattenForEnableMatchingMuiltLinesLabel.AutoSize = true;
-            pattenForEnableMatchingMuiltLinesLabel.Location = new System.Drawing.Point(27, 44);
-            pattenForEnableMatchingMuiltLinesLabel.Name = "pattenForEnableMatchingMuiltLinesLabel";
-            pattenForEnableMatchingMuiltLinesLabel.Size = new System.Drawing.Size(278, 31);
-            pattenForEnableMatchingMuiltLinesLabel.TabIndex = 8;
-            pattenForEnableMatchingMuiltLinesLabel.Text = "用于触发多行匹配的文本";
-            toolTip.SetToolTip(pattenForEnableMatchingMuiltLinesLabel, "当输入的内容若含有以下内容将触发多行匹配（一行一个）");
+            multiLineMatchingPatternsLabel.AutoSize = true;
+            multiLineMatchingPatternsLabel.Location = new System.Drawing.Point(27, 44);
+            multiLineMatchingPatternsLabel.Name = "multiLineMatchingPatternsLabel";
+            multiLineMatchingPatternsLabel.Size = new System.Drawing.Size(278, 31);
+            multiLineMatchingPatternsLabel.TabIndex = 8;
+            multiLineMatchingPatternsLabel.Text = "用于触发多行匹配的文本";
+            toolTip.SetToolTip(multiLineMatchingPatternsLabel, "当输入的内容若含有以下内容将触发多行匹配（一行一个）");
             // 
             // updateGroupBox
             // 
@@ -353,7 +353,7 @@
             Size = new System.Drawing.Size(1280, 1265);
             pluginGroupBox.ResumeLayout(false);
             pluginGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)_pluginEventMaxWaitingTimeNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)_maximumWaitTimeForPluginEventsNumericUpDown).EndInit();
             bindingGroupBox.ResumeLayout(false);
             bindingGroupBox.PerformLayout();
             moreGroupBox.ResumeLayout(false);
@@ -365,12 +365,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox _jsGlobalAssembliesTextBox;
-        private System.Windows.Forms.NumericUpDown _pluginEventMaxWaitingTimeNumericUpDown;
-        private System.Windows.Forms.TextBox _jsPatternToSkipLoadingSingleFileTextBox;
-        private System.Windows.Forms.CheckBox _disableBindingManagerWhenServerClosedCheckBox;
-        private System.Windows.Forms.TextBox _regexForCheckingGameIDTextBox;
-        private System.Windows.Forms.TextBox _pattenForEnableMatchingMuiltLinesTextBox;
+        private System.Windows.Forms.TextBox _jsDefaultAssembliesTextBox;
+        private System.Windows.Forms.NumericUpDown _maximumWaitTimeForPluginEventsNumericUpDown;
+        private System.Windows.Forms.TextBox _jsFilesToExcludeFromLoadingTextBox;
+        private System.Windows.Forms.CheckBox _disableBindingManagerWhenAllServersStoppedCheckBox;
+        private System.Windows.Forms.TextBox _gameIdValidationPatternTextBox;
+        private System.Windows.Forms.TextBox _multiLineMatchingPatternsTextBox;
         private System.Windows.Forms.TextBox _customTitleTextBox;
         private System.Windows.Forms.Button _checkUpdateButton;
         private System.Windows.Forms.Label _latestVersionLabel;

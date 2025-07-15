@@ -47,12 +47,12 @@ public sealed class PluginHandler(
                 );
                 foreach (var plugin in jsPluginLoader.Plugins)
                 {
-                    stringBuilder.AppendLine($"[JS] {plugin.Key}");
+                    stringBuilder.AppendLine($"[Js] {plugin.Key}");
                     AppendPluginInfo(stringBuilder, plugin.Value);
                 }
                 foreach (var plugin in netPluginLoader.Plugins)
                 {
-                    stringBuilder.AppendLine($"[NET] {plugin.Key}");
+                    stringBuilder.AppendLine($"[.NET] {plugin.Key}");
                     AppendPluginInfo(stringBuilder, plugin.Value);
                 }
 

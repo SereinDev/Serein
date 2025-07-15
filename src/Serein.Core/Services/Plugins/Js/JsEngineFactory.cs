@@ -56,7 +56,7 @@ public sealed class JsEngineFactory(
 
         foreach (
             var assemblyName in jsPlugin.Config.NetAssemblies.Concat(
-                settingProvider.Value.Application.JSGlobalAssemblies
+                settingProvider.Value.Application.JsDefaultAssemblies
             )
         )
         {
