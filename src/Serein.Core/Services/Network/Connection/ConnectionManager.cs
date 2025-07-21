@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
@@ -232,12 +233,13 @@ public sealed class ConnectionManager : INotifyPropertyChanged
         TargetType type,
         string target,
         string text,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     )
     {
         if (IsActive)
         {
-            await _activeAdapter.SendMessageAsync(type, target, text, commandArguments);
+            await _activeAdapter.SendMessageAsync(type, target, text, commandArguments, self);
         }
     }
 }

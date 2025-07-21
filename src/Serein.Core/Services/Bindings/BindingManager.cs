@@ -57,16 +57,25 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
 
     public IReadOnlyList<BindingRecord> Records => [.. BindingRecordDbContext.Datas];
 
-    public bool TryGetValue(string id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
+    public BindingRecord? Get(string id)
+    {
+        lock (_lock)
+        {
+            TryGet(id, out BindingRecord? bindingRecord);
+            return bindingRecord;
+        }
+    }
+
+    public bool TryGet(string id, [NotNullWhen(true)] out BindingRecord? bindingRecord)
     {
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
-            return TryGetValue(context, id, out bindingRecord);
+            return TryGet(context, id, out bindingRecord);
         }
     }
 
-    private bool TryGetValue(
+    private bool TryGet(
         BindingRecordDbContext context,
         string id,
         [NotNullWhen(true)] out BindingRecord? bindingRecord
@@ -128,7 +137,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
                 CheckConflict(context, bindingRecord.UserId, gameId);
             }
 
-            if (!TryGetValue(context, bindingRecord.UserId, out var record))
+            if (!TryGet(context, bindingRecord.UserId, out var record))
             {
                 context.Datas.Add(bindingRecord);
             }
@@ -183,7 +192,7 @@ public sealed class BindingManager(IServiceProvider services, SettingProvider se
         lock (_lock)
         {
             using var context = BindingRecordDbContext;
-            if (!TryGetValue(context, userId, out var record) || !record.GameIds.Remove(gameId))
+            if (!TryGet(context, userId, out var record) || !record.GameIds.Remove(gameId))
             {
                 throw new BindingFailureException("未绑定此Id");
             }

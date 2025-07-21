@@ -201,30 +201,100 @@ public sealed class CommandRunner
         _logger.LogDebug("命令（Id={}）运行结束", command.GetHashCode());
     }
 
+    #region 发送消息
+
+    private async Task SendMessageAsync(
+        TargetType targetType,
+        Command command,
+        CommandContext? commandContext,
+        string content,
+        Func<CommandContext, string?> targetIdExtractor,
+        string[] fallbackPrefixes
+    )
+    {
+        // 优先使用命令参数中指定的目标
+        if (!string.IsNullOrEmpty(command.Arguments?.Target))
+        {
+            await _connectionManager.Value.SendMessageAsync(
+                targetType,
+                command.Arguments.Target,
+                content,
+                command.Arguments,
+                commandContext?.Packets.Self
+            );
+            return;
+        }
+
+        // 从上下文中提取目标ID
+        if (commandContext.HasValue)
+        {
+            var targetId = targetIdExtractor(commandContext.Value);
+            if (!string.IsNullOrEmpty(targetId))
+            {
+                await _connectionManager.Value.SendMessageAsync(
+                    targetType,
+                    targetId,
+                    content,
+                    command.Arguments,
+                    commandContext?.Packets.Self
+                );
+                return;
+            }
+        }
+
+        // 回退到配置的默认ID（仅限非消息来源的命令）
+        if (
+            command.Origin != CommandOrigin.Message
+            && _settingProvider.Value.Connection.ListenedIds.Length > 0
+        )
+        {
+            var targetId = GetFallbackTargetId(fallbackPrefixes);
+            if (!string.IsNullOrEmpty(targetId))
+            {
+                await _connectionManager.Value.SendMessageAsync(
+                    targetType,
+                    targetId,
+                    content,
+                    command.Arguments,
+                    commandContext?.Packets.Self
+                );
+            }
+        }
+    }
+
+    private string? GetFallbackTargetId(string[] prefixes)
+    {
+        var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(id =>
+            prefixes.Any(prefix => id.StartsWith(prefix)) || !id.Contains(':')
+        );
+
+        if (string.IsNullOrEmpty(first))
+        {
+            return null;
+        }
+
+        if (first.Contains(':'))
+        {
+            first = first[(first.IndexOf(':') + 1)..];
+        }
+
+        return first;
+    }
+
     private async Task SendPrivateMsgAsync(
         Command command,
         CommandContext? commandContext,
         string body
     )
     {
-        if (!string.IsNullOrEmpty(command.Arguments?.Target))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Private,
-                command.Arguments.Target,
-                body,
-                command.Arguments
-            );
-        }
-        else if (!string.IsNullOrEmpty(commandContext?.Packets.UserId))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Private,
-                commandContext.Value.Packets.UserId,
-                body,
-                command.Arguments
-            );
-        }
+        await SendMessageAsync(
+            TargetType.Private,
+            command,
+            commandContext,
+            body,
+            ctx => ctx.Packets.UserId,
+            []
+        );
     }
 
     private async Task SendChannelMsgAsync(
@@ -233,54 +303,14 @@ public sealed class CommandRunner
         string body
     )
     {
-        if (!string.IsNullOrEmpty(command.Arguments?.Target))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Channel,
-                command.Arguments.Target,
-                body,
-                command.Arguments
-            );
-        }
-        else if (!string.IsNullOrEmpty(commandContext?.Packets.OneBotV12?.ChannelId))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Channel,
-                commandContext.Value.Packets.OneBotV12.ChannelId,
-                body,
-                command.Arguments
-            );
-        }
-        else if (!string.IsNullOrEmpty(commandContext?.Packets.SatoriV1?.Channel?.Id))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Channel,
-                commandContext.Value.Packets.SatoriV1.Channel.Id,
-                body,
-                command.Arguments
-            );
-        }
-        else if (
-            command.Origin != CommandOrigin.Message
-            && _settingProvider.Value.Connection.ListenedIds.Length > 0
-        )
-        {
-            var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
-                (id) => id.StartsWith("channel:") || id.StartsWith("c:") || !id.Contains(':')
-            );
-
-            if (string.IsNullOrEmpty(first))
-            {
-                return;
-            }
-
-            if (first.Contains(':'))
-            {
-                first = first[(first.IndexOf(':') + 1)..];
-            }
-
-            await _connectionManager.Value.SendMessageAsync(TargetType.Channel, first, body);
-        }
+        await SendMessageAsync(
+            TargetType.Channel,
+            command,
+            commandContext,
+            body,
+            ctx => ctx.Packets.OneBotV12?.ChannelId ?? ctx.Packets.SatoriV1?.Channel?.Id,
+            ["channel:", "c:"]
+        );
     }
 
     private async Task SendGroupMsgAsync(
@@ -289,51 +319,66 @@ public sealed class CommandRunner
         string body
     )
     {
-        if (!string.IsNullOrEmpty(command.Arguments?.Target))
+        await SendMessageAsync(
+            TargetType.Group,
+            command,
+            commandContext,
+            body,
+            ctx => ctx.Packets.GroupId,
+            ["group:", "g:"]
+        );
+    }
+
+    private async Task FastReply(CommandContext commandContext, string content)
+    {
+        var targetInfo = GetReplyTargetInfo(commandContext);
+        if (targetInfo.HasValue)
         {
             await _connectionManager.Value.SendMessageAsync(
-                TargetType.Group,
-                command.Arguments.Target,
-                body,
-                command.Arguments
-            );
-        }
-        else if (!string.IsNullOrEmpty(commandContext?.Packets.GroupId))
-        {
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Group,
-                commandContext.Value.Packets.GroupId,
-                body,
-                command.Arguments
-            );
-        }
-        else if (
-            command.Origin != CommandOrigin.Message
-            && _settingProvider.Value.Connection.ListenedIds.Length > 0
-        )
-        {
-            var first = _settingProvider.Value.Connection.ListenedIds.FirstOrDefault(
-                (id) => id.StartsWith("group:") || id.StartsWith("g:") || !id.Contains(':')
-            );
-
-            if (string.IsNullOrEmpty(first))
-            {
-                return;
-            }
-
-            if (first.Contains(':'))
-            {
-                first = first[(first.IndexOf(':') + 1)..];
-            }
-
-            await _connectionManager.Value.SendMessageAsync(
-                TargetType.Group,
-                first,
-                body,
-                command.Arguments
+                targetInfo.Value.TargetType,
+                targetInfo.Value.TargetId,
+                content,
+                null,
+                commandContext.Packets.Self
             );
         }
     }
+
+    private static (TargetType TargetType, string TargetId)? GetReplyTargetInfo(
+        CommandContext commandContext
+    )
+    {
+        if (
+            commandContext.Packets.OneBotV11 is not null
+            || commandContext.Packets.OneBotV12 is not null
+        )
+        {
+            if (!string.IsNullOrEmpty(commandContext.Packets.GroupId))
+            {
+                return (TargetType.Group, commandContext.Packets.GroupId);
+            }
+            if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.ChannelId))
+            {
+                return (TargetType.Channel, commandContext.Packets.OneBotV12.ChannelId);
+            }
+            if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.GuildId))
+            {
+                return (TargetType.Guild, commandContext.Packets.OneBotV12.GuildId);
+            }
+            if (!string.IsNullOrEmpty(commandContext.Packets.UserId))
+            {
+                return (TargetType.Private, commandContext.Packets.UserId);
+            }
+        }
+        else if (commandContext.Packets.SatoriV1?.Channel is not null)
+        {
+            return (TargetType.Channel, commandContext.Packets.SatoriV1.Channel.Id);
+        }
+
+        return null;
+    }
+
+    #endregion
 
     private void InputServer(Command command, CommandContext? commandContext, string body)
     {
@@ -353,59 +398,6 @@ public sealed class CommandRunner
         }
 
         server?.InputFromCommand(body, command.Arguments?.UseUnicode);
-    }
-
-    private async Task FastReply(CommandContext commandContext, string content)
-    {
-        if (
-            commandContext.Packets.OneBotV11 is not null
-            || commandContext.Packets.OneBotV12 is not null
-        )
-        {
-            if (!string.IsNullOrEmpty(commandContext.Packets.GroupId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Group,
-                    commandContext.Packets.GroupId,
-                    content
-                );
-            }
-            else if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.ChannelId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Channel,
-                    commandContext.Packets.OneBotV12.ChannelId,
-                    content
-                );
-            }
-            else if (!string.IsNullOrEmpty(commandContext.Packets.OneBotV12?.GuildId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Guild,
-                    commandContext.Packets.OneBotV12.GuildId,
-                    content
-                );
-            }
-            else if (!string.IsNullOrEmpty(commandContext.Packets.UserId))
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Private,
-                    commandContext.Packets.UserId,
-                    content
-                );
-            }
-        }
-        else if (commandContext.Packets.SatoriV1 is not null)
-        {
-            if (commandContext.Packets.SatoriV1.Channel is not null)
-            {
-                await _connectionManager.Value.SendMessageAsync(
-                    TargetType.Channel,
-                    commandContext.Packets.SatoriV1.Channel.Id,
-                    content
-                );
-            }
-        }
     }
 
     private async Task ExecuteShellCommand(string line)

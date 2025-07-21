@@ -72,7 +72,8 @@ public sealed partial class SatoriAdapter : IConnectionAdapter
         TargetType type,
         string target,
         string content,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     )
     {
         if (!IsActive)
@@ -85,7 +86,7 @@ public sealed partial class SatoriAdapter : IConnectionAdapter
             var response = await SendApiRequestAsync(
                 "v1/message.create",
                 new SendMsgPacket { ChannelId = target, Content = content },
-                commandArguments?.Self
+                self ?? commandArguments?.Self
             );
             response.EnsureSuccessStatusCode();
         }

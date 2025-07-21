@@ -146,7 +146,6 @@
                     </ui:InfoBar>
                 </ui:SettingsExpander.ItemsHeader>
 
-
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard ContentAlignment="Left">
                         <TextBox

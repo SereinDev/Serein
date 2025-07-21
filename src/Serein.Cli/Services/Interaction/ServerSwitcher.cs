@@ -7,16 +7,46 @@ using Serein.Core.Services.Servers;
 
 namespace Serein.Cli.Services.Interaction;
 
-public sealed class ServerSwitcher(
-    ILogger<ServerSwitcher> logger,
-    ILogger<Server> serverLogger,
-    ServerManager serverManager,
-    SettingProvider settingProvider
-)
+public sealed class ServerSwitcher
 {
-    public string? CurrentId { get; private set; }
+    public string? CurrentId => _server?.Id;
+    private Server? _server;
 
     private readonly object _lock = new();
+    private readonly ILogger<ServerSwitcher> _logger;
+    private readonly ILogger<Server> _serverLogger;
+    private readonly ServerManager _serverManager;
+    private readonly SettingProvider _settingProvider;
+
+    public ServerSwitcher(
+        ILogger<ServerSwitcher> logger,
+        ILogger<Server> serverLogger,
+        ServerManager serverManager,
+        SettingProvider settingProvider
+    )
+    {
+        _logger = logger;
+        _serverLogger = serverLogger;
+        _serverManager = serverManager;
+        _settingProvider = settingProvider;
+
+        _serverManager.ServersUpdated += (_, e) =>
+        {
+            if (e.Type == ServersUpdatedType.Removed && e.Id == CurrentId)
+            {
+                _logger.LogWarning(
+                    "当前选择的服务器\"{}\"(Id={})已被删除",
+                    _server?.Configuration.Name,
+                    _server?.Id
+                );
+
+                if (_serverManager.Servers.Count > 0)
+                {
+                    SwitchTo(_serverManager.Servers.First().Key);
+                }
+            }
+        };
+    }
 
     public void SwitchTo(string id)
     {
@@ -24,37 +54,35 @@ public sealed class ServerSwitcher(
         {
             if (id == CurrentId)
             {
-                logger.LogWarning("选择的服务器Id没有变化");
+                _logger.LogWarning("选择的服务器Id没有变化");
                 return;
             }
 
-            if (!serverManager.Servers.TryGetValue(id, out var server))
+            if (!_serverManager.Servers.TryGetValue(id, out var server))
             {
                 throw new InvalidOperationException("选择的服务器不存在");
             }
 
-            if (
-                !string.IsNullOrEmpty(CurrentId)
-                && serverManager.Servers.TryGetValue(CurrentId, out var oldServer)
-            )
+            if (_server is not null)
             {
-                oldServer.Logger.Output -= LogToConsole;
+                _server.Logger.Output -= LogToConsole;
             }
 
-            server.Logger.Output += LogToConsole;
-            CurrentId = id;
-            logger.LogInformation("成功选择到\"{}\"(Id={})", server.Configuration.Name, id);
+            _server = server;
 
-            if (server.Status)
+            _server.Logger.Output += LogToConsole;
+            _logger.LogInformation("成功选择到\"{}\"(Id={})", _server.Configuration.Name, id);
+
+            if (_server.Status)
             {
-                if (string.IsNullOrWhiteSpace(settingProvider.Value.Application.CliCommandHeader))
+                if (string.IsNullOrWhiteSpace(_settingProvider.Value.Application.CliCommandHeader))
                 {
-                    settingProvider.Value.Application.CliCommandHeader = "//";
+                    _settingProvider.Value.Application.CliCommandHeader = "//";
                 }
 
-                logger.LogWarning(
+                _logger.LogWarning(
                     "此服务器正在运行中，输入的命令将转发至服务器。若要执行Serein的命令，你需要在命令前加上\"{}\"",
-                    settingProvider.Value.Application.CliCommandHeader
+                    _settingProvider.Value.Application.CliCommandHeader
                 );
             }
         }
@@ -62,18 +90,18 @@ public sealed class ServerSwitcher(
 
     public void Initialize()
     {
-        if (serverManager.Servers.Count == 1)
+        if (_serverManager.Servers.Count == 1)
         {
-            logger.LogInformation("当前仅有一个服务器配置，该服务器的所有输出都将输出到控制台");
-            logger.LogInformation(
+            _logger.LogInformation("当前仅有一个服务器配置，该服务器的所有输出都将输出到控制台");
+            _logger.LogInformation(
                 "添加更多服务器配置后，你可以用\"server list\"查看所有的服务器信息或用\"server switch <id>\"选择要进行操作的服务器"
             );
 
-            SwitchTo(serverManager.Servers.First().Key);
+            SwitchTo(_serverManager.Servers.First().Key);
         }
-        else if (serverManager.Servers.Count > 1)
+        else if (_serverManager.Servers.Count > 1)
         {
-            logger.LogInformation(
+            _logger.LogInformation(
                 "当前有多个服务器配置，你可以用\"server list\"查看所有的服务器信息或用\"server switch <id>\"选择要进行操作的服务器"
             );
         }
@@ -81,10 +109,7 @@ public sealed class ServerSwitcher(
 
     private void LogToConsole(object? sender, ServerOutputEventArgs e)
     {
-        if (
-            sender is not ServerLogger serverLogger1
-            || !serverManager.Servers.TryGetValue(serverLogger1.Id, out var server)
-        )
+        if (_server is null)
         {
             return;
         }
@@ -96,19 +121,19 @@ public sealed class ServerSwitcher(
                 break;
 
             case ServerOutputType.InternalInfo:
-                serverLogger.LogInformation(
+                _serverLogger.LogInformation(
                     "[{}(Id={})] {}",
-                    server.Configuration.Name,
-                    server.Id,
+                    _server.Configuration.Name,
+                    _server.Id,
                     e.Data
                 );
                 break;
 
             case ServerOutputType.InternalError:
-                serverLogger.LogError(
+                _serverLogger.LogError(
                     "[{}(Id={})] {}",
-                    server.Configuration.Name,
-                    server.Id,
+                    _server.Configuration.Name,
+                    _server.Id,
                     e.Data
                 );
                 break;

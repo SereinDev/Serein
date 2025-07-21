@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Fleck;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
@@ -155,9 +156,10 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
         TargetType type,
         string target,
         string content,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     )
     {
-        return SendAsync(_actionBuilder.Build(type, target, content, commandArguments));
+        return SendAsync(_actionBuilder.Build(type, target, content, commandArguments, self));
     }
 }

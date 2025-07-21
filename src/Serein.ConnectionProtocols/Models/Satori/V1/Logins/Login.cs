@@ -4,9 +4,9 @@ public class Login
 {
     public long Sn { get; init; }
 
-    public string? Platform { get; init; }
+    public string Platform { get; init; } = string.Empty;
 
-    public User? User { get; init; }
+    public User User { get; init; } = new();
 
     public LoginStatus Status { get; init; }
 

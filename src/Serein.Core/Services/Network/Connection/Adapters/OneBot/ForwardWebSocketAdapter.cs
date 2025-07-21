@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
@@ -110,10 +111,11 @@ public sealed class ForwardWebSocketAdapter(
         TargetType type,
         string target,
         string content,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     )
     {
-        return SendAsync(actionBuilder.Build(type, target, content, commandArguments));
+        return SendAsync(actionBuilder.Build(type, target, content, commandArguments, self));
     }
 
     public void Start()

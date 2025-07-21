@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Serein.ConnectionProtocols.Models;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using WebSocket4Net;
@@ -20,7 +21,8 @@ public interface IConnectionAdapter : IDisposable
         TargetType type,
         string target,
         string content,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     );
 
     Task SendAsync(string payload);

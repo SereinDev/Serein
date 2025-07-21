@@ -1,4 +1,5 @@
 using System.Web;
+using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.Satori.V1.Channels;
 using Serein.ConnectionProtocols.Models.Satori.V1.Signals.Bodies;
 using Serein.Core.Utils.Extensions;
@@ -14,6 +15,14 @@ public readonly record struct Packets
     public V12.MessagePacket? OneBotV12 { get; init; }
 
     public EventBody? SatoriV1 { get; init; }
+
+    public Self? Self =>
+        OneBotV12?.Self
+        ?? (
+            SatoriV1?.Login is not null
+                ? new() { Platform = SatoriV1.Login.Platform, UserId = SatoriV1.Login.User.Id }
+                : null
+        );
 
     public string? UserId =>
         OneBotV11?.UserId.ToString() ?? OneBotV12?.UserId ?? SatoriV1?.User?.Id;

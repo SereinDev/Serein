@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Serein.ConnectionProtocols.Models;
 using Serein.ConnectionProtocols.Models.OneBot;
 using Serein.ConnectionProtocols.Models.OneBot.Shared;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
@@ -19,7 +20,8 @@ public sealed class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider
         TargetType targetType,
         string target,
         string text,
-        CommandArguments? commandArguments = null
+        CommandArguments? commandArguments = null,
+        Self? self = null
     )
     {
         if (settingProvider.Value.Connection.OneBot.Version == OneBotVersion.V11)
@@ -52,15 +54,15 @@ public sealed class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider
         }
         else
         {
-            var self = commandArguments?.Self;
+            var self1 = self ?? commandArguments?.Self;
 
             if (
-                self is null
+                self1 is null
                 && !string.IsNullOrEmpty(settingProvider.Value.Connection.Self.Platform)
                 && !string.IsNullOrEmpty(settingProvider.Value.Connection.Self.UserId)
             )
             {
-                self = settingProvider.Value.Connection.Self;
+                self1 = settingProvider.Value.Connection.Self;
             }
 
             var segments = ParseMessageSegments(text, commandArguments?.AsSegments ?? false);
@@ -95,7 +97,7 @@ public sealed class ActionBuilder(ILogger<ActionBuilder> logger, SettingProvider
                     },
                     _ => throw new NotSupportedException(),
                 },
-                Self = self,
+                Self = self1,
             };
 
             return JsonSerializer.Serialize(action, JsonSerializerOptionsFactory.PacketStyle);
