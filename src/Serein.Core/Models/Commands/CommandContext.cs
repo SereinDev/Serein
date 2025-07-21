@@ -7,7 +7,7 @@ namespace Serein.Core.Models.Commands;
 /// <summary>
 /// 命令上下文
 /// </summary>
-public readonly record struct CommandContext()
+public readonly record struct CommandContext
 {
     public RegexMatch? Match { get; init; }
 

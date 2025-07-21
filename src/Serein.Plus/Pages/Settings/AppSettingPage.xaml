@@ -183,7 +183,7 @@
 · 跟随系统选项可能无法生效</sys:String>
                 </ui:SettingsCard.Description>
 
-                <ComboBox SelectedIndex="{Binding Value.Application.Theme, Converter={StaticResource enumConverter}}" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox SelectedIndex="{Binding Value.Application.Theme, Converter={StaticResource enumValueConverter}}" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem>跟随系统</ComboBoxItem>
                     <ComboBoxItem>浅色</ComboBoxItem>
                     <ComboBoxItem>深色</ComboBoxItem>

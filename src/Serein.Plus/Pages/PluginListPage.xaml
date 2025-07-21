@@ -14,7 +14,7 @@
 
     <Page.Resources>
         <converter:StatusConverter x:Key="statusConverter" />
-        <converter:AuthorsConverter x:Key="authorsConverter" />
+        <converter:AuthorListToStringConverter x:Key="authorListToStringConverter" />
     </Page.Resources>
 
     <Grid>
@@ -81,7 +81,7 @@
                         Header="版本" />
                     <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding Value.Info.Authors, Mode=OneWay, Converter={StaticResource authorsConverter}}"
+                        DisplayMemberBinding="{Binding Value.Info.Authors, Mode=OneWay, Converter={StaticResource authorListToStringConverter}}"
                         Header="作者" />
                     <GridViewColumn
                         Width="230"

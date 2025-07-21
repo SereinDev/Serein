@@ -9,7 +9,6 @@ namespace Serein.Core;
 public sealed class SereinApp
 {
     private static SereinApp? s_sereinApp;
-    private readonly ILogger<SereinApp> _logger;
 
     public static SereinApp GetCurrentApp()
     {
@@ -19,7 +18,6 @@ public sealed class SereinApp
     public SereinApp(ILogger<SereinApp> logger, IServiceProvider serviceProvider)
     {
         s_sereinApp = this;
-        _logger = logger;
         Services = serviceProvider;
 
         AssemblyName = typeof(SereinApp).Assembly.FullName!;
@@ -51,7 +49,7 @@ public sealed class SereinApp
         }
         catch { }
 
-        _logger.LogDebug(
+        logger.LogDebug(
             "编译版本: {Version}, 全版本: {FullVersion}, 类型: {Type}, 单文件: {IsSingleFile}, 发布配置: {IsReleaseConfiguration}",
             Version,
             FullVersion,
@@ -62,14 +60,14 @@ public sealed class SereinApp
 
         if (!IsReleaseConfiguration)
         {
-            _logger.LogWarning(
+            logger.LogWarning(
                 "当前为开发版本，可能包含暂未发布的功能或测试代码。不建议在生产环境中使用"
             );
         }
 
         if (Debugger.IsAttached)
         {
-            _logger.LogWarning("当前正在调试模式下运行，可能会影响性能和稳定性");
+            logger.LogWarning("当前正在调试模式下运行，可能会影响性能和稳定性");
         }
     }
 

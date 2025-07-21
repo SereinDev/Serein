@@ -33,7 +33,7 @@
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 
-    <converter:EnumConverter x:Key="enumConverter" />
+    <converter:EnumValueConverter x:Key="enumValueConverter" />
     <converter:MultiLinesConverter x:Key="multiLinesConverter" />
     <converter:SplitterConverter x:Key="splitterConverter" />
 </ResourceDictionary>

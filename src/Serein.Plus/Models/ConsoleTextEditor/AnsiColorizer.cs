@@ -10,7 +10,7 @@ namespace Serein.Plus.Models.ConsoleTextEditor;
 
 public partial class AnsiColorizer : DocumentColorizingTransformer
 {
-    public static bool AllowHighContrastColor { get; set; } = false;
+    public static bool AllowHighContrastColor { get; set; }
 
     [GeneratedRegex(@"^[0-9;]*$")]
     private static partial Regex GetColorArgsEscapePattern();
@@ -153,7 +153,7 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         break;
 
                     case "38":
-                        var type1 = ColorMap.TryGetColor(args, j + 1, out Color color1);
+                        var (type1, color1) = ColorMap.TryGetColor(args, j + 1);
 
                         if (type1 == ColorMap.ColorType.EightBit)
                         {
@@ -236,7 +236,7 @@ public partial class AnsiColorizer : DocumentColorizingTransformer
                         break;
 
                     case "48":
-                        var type2 = ColorMap.TryGetColor(args, j + 1, out Color color2);
+                        var (type2, color2) = ColorMap.TryGetColor(args, j + 1);
 
                         if (type2 == ColorMap.ColorType.EightBit)
                         {

@@ -93,8 +93,6 @@ public sealed class ForwardWebSocketAdapter(
     {
         _client?.Dispose();
         _reconnectCancellationToken?.Dispose();
-
-        GC.SuppressFinalize(this);
     }
 
     public Task SendAsync(string text)

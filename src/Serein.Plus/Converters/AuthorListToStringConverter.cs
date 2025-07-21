@@ -6,7 +6,7 @@ using Serein.Core.Models.Plugins.Info;
 
 namespace Serein.Plus.Converters;
 
-public class AuthorsConverter : IValueConverter
+public class AuthorListToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

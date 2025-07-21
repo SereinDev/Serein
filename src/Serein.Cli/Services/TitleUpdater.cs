@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Services;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 
@@ -14,23 +13,13 @@ public sealed class TitleUpdater : IHostedService
     private readonly CommandParser _commandParser;
     private readonly System.Timers.Timer _timer;
 
-    public TitleUpdater(
-        SettingProvider settingProvider,
-        CommandParser commandParser,
-        CancellationTokenProvider cancellationTokenProvider
-    )
+    public TitleUpdater(SettingProvider settingProvider, CommandParser commandParser)
     {
         _settingProvider = settingProvider;
         _commandParser = commandParser;
 
         _timer = new(2000) { AutoReset = true };
         _timer.Elapsed += (_, _) => Update();
-
-        cancellationTokenProvider.Token.Register(() =>
-        {
-            _timer.Stop();
-            _timer.Dispose();
-        });
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -47,6 +36,8 @@ public sealed class TitleUpdater : IHostedService
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
+        _timer.Stop();
+        _timer.Dispose();
         return Task.CompletedTask;
     }
 

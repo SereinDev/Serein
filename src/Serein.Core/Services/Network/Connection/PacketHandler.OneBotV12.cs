@@ -18,25 +18,30 @@ public partial class PacketHandler
     /// </summary>
     private void HandleOneBotV12Packet(JsonNode jsonNode)
     {
-        switch (jsonNode["type"]?.ToString())
-        {
-            case "message":
-                HandleMessagePacket(
-                    JsonSerializer.Deserialize<MessagePacket>(
-                        jsonNode,
-                        JsonSerializerOptionsFactory.PacketStyle
-                    )
-                );
-                break;
+        var type = jsonNode["type"]?.ToString();
 
-            case "notice":
-                HandleNoticePacket(
-                    JsonSerializer.Deserialize<NoticePacket>(
-                        jsonNode,
-                        JsonSerializerOptionsFactory.PacketStyle
-                    )
-                );
-                break;
+        if (string.IsNullOrEmpty(type))
+        {
+            return;
+        }
+
+        if (type == "message")
+        {
+            HandleMessagePacket(
+                JsonSerializer.Deserialize<MessagePacket>(
+                    jsonNode,
+                    JsonSerializerOptionsFactory.PacketStyle
+                )
+            );
+        }
+        else if (type == "notice")
+        {
+            HandleNoticePacket(
+                JsonSerializer.Deserialize<NoticePacket>(
+                    jsonNode,
+                    JsonSerializerOptionsFactory.PacketStyle
+                )
+            );
         }
     }
 

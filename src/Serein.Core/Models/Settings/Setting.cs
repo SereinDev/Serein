@@ -6,7 +6,7 @@ namespace Serein.Core.Models.Settings;
 public class Setting
 {
     public static readonly IReadOnlyDictionary<ReactionType, string[]> DefaultReactions =
-        new Dictionary<ReactionType, string[]>()
+        new Dictionary<ReactionType, string[]>
         {
             [ReactionType.ServerStart] = ["[g]服务器{server.name}正在启动"],
             [ReactionType.ServerExitedNormally] = ["[g]服务器{server.name}已关闭"],

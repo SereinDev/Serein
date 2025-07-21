@@ -23,7 +23,7 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Window.Resources>
-        <converter:EnumConverter x:Key="enumConverter" />
+        <converter:EnumValueConverter x:Key="enumValueConverter" />
 
         <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
             <Setter Property="Margin" Value="0,6" />
@@ -83,7 +83,7 @@
             <ComboBox
                 Width="150"
                 ui:ControlHelper.Header="匹配域"
-                SelectedIndex="{Binding FieldType, Converter={StaticResource enumConverter}}"
+                SelectedIndex="{Binding FieldType, Converter={StaticResource enumValueConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="禁用" />
                 <ComboBoxItem Content="服务器输出" />

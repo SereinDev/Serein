@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Serein.Plus.Converters;
 
-public class EnumConverter : IValueConverter
+public class EnumValueConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

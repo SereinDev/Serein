@@ -56,7 +56,7 @@ public static class ApiHelper
         HttpStatusCode statusCode = HttpStatusCode.OK
     )
     {
-        await httpContext.SendPacketAsync<object?>(null, statusCode);
+        await httpContext.SendPacketAsync<object?>(statusCode: statusCode);
     }
 
     public static async Task SendPacketAsync<T>(

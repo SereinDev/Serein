@@ -28,7 +28,7 @@
                 Text="通用" />
 
             <ui:SettingsCard Description="决定Serein将以何种方式连接" Header="适配器">
-                <ComboBox SelectedIndex="{Binding Value.Connection.Adapter, Converter={StaticResource enumConverter}}" SelectionChanged="OnPropertyChanged">
+                <ComboBox SelectedIndex="{Binding Value.Connection.Adapter, Converter={StaticResource enumValueConverter}}" SelectionChanged="OnPropertyChanged">
                     <ComboBoxItem>OneBot（WebSocket正向连接）</ComboBoxItem>
                     <ComboBoxItem>OneBot（WebSocket反向连接）</ComboBoxItem>
                     <ComboBoxItem>Satori</ComboBoxItem>
@@ -131,7 +131,7 @@
                 Text="OneBot" />
 
             <ui:SettingsCard Description="将影响Serein中对数据包的处理方式" Header="OneBot版本">
-                <ComboBox SelectedIndex="{Binding Value.Connection.OneBot.Version, Converter={StaticResource enumConverter}}" SelectionChanged="OnPropertyChanged">
+                <ComboBox SelectedIndex="{Binding Value.Connection.OneBot.Version, Converter={StaticResource enumValueConverter}}" SelectionChanged="OnPropertyChanged">
                     <ComboBoxItem Content="V11" />
                     <ComboBoxItem Content="V12" />
                 </ComboBox>

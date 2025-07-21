@@ -125,7 +125,7 @@ public partial class AppSettingPage : Page
         _consoleWindow.Show();
         _consoleWindow.Focus();
 
-        void Write(object? sender, (LogLevel Level, string Line) args)
+        void Write(object? _, (LogLevel Level, string Line) args)
         {
             _consoleWindow?.Dispatcher.Invoke(
                 () => _consoleWindow.WriteLine(args.Level, args.Line)

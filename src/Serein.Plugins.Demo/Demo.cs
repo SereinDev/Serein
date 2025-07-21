@@ -11,12 +11,19 @@ namespace Serein.Plugins.Demo;
 public class Demo : PluginBase
 {
     private readonly PluginLoggerBase _pluginLoggerBase;
-    private readonly IServiceProvider _serviceProvider;
 
+    // 手动获取服务
     public Demo(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        _pluginLoggerBase = _serviceProvider.GetRequiredService<PluginLoggerBase>();
+        _pluginLoggerBase = serviceProvider.GetRequiredService<PluginLoggerBase>();
+
+        Call();
+    }
+
+    // 使用自动注入获取服务
+    public Demo(PluginLoggerBase pluginLoggerBase)
+    {
+        _pluginLoggerBase = pluginLoggerBase;
 
         Call();
     }

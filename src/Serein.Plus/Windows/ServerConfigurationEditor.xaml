@@ -24,7 +24,7 @@
     mc:Ignorable="d">
     <Window.Resources>
         <converter:LineTerminatorConverter x:Key="lineTerminatorConverter" />
-        <converter:EnumConverter x:Key="enumConverter" />
+        <converter:EnumValueConverter x:Key="enumValueConverter" />
         <converter:MultiLinesConverter x:Key="multiLinesConverter" />
     </Window.Resources>
 
@@ -118,7 +118,7 @@
                         <StackPanel>
                             <ComboBox
                                 ui:ControlHelper.Header="输入编码"
-                                SelectedIndex="{Binding Configuration.InputEncoding, Converter={StaticResource enumConverter}}"
+                                SelectedIndex="{Binding Configuration.InputEncoding, Converter={StaticResource enumValueConverter}}"
                                 ToolTip="输入到服务器的编码">
                                 <ComboBoxItem Content="UTF-8" />
                                 <ComboBoxItem Content="UTF-16 (LittleEndian)" />
@@ -127,7 +127,7 @@
                             </ComboBox>
                             <ComboBox
                                 ui:ControlHelper.Header="输出编码"
-                                SelectedIndex="{Binding Configuration.OutputEncoding, Converter={StaticResource enumConverter}}"
+                                SelectedIndex="{Binding Configuration.OutputEncoding, Converter={StaticResource enumValueConverter}}"
                                 ToolTip="读取服务器输出的编码（修改后需要重新启动服务器方可生效）">
                                 <ComboBoxItem Content="UTF-8" />
                                 <ComboBoxItem Content="UTF-16 (LittleEndian)" />
@@ -136,7 +136,7 @@
                             </ComboBox>
                             <ComboBox
                                 ui:ControlHelper.Header="输出样式"
-                                SelectedIndex="{Binding Configuration.OutputStyle, Converter={StaticResource enumConverter}}"
+                                SelectedIndex="{Binding Configuration.OutputStyle, Converter={StaticResource enumValueConverter}}"
                                 ToolTip="控制台中渲染输出内容的样式">
                                 <ComboBoxItem Content="无颜色" />
                                 <ComboBoxItem Content="原始彩色" />

@@ -92,7 +92,7 @@ public sealed class ReverseWebSocketAdapter : IConnectionAdapter
     public void Dispose()
     {
         _server?.Dispose();
-        GC.SuppressFinalize(this);
+        _webSockets.Clear();
     }
 
     public async Task SendAsync(string text)

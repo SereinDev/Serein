@@ -6,16 +6,18 @@ namespace Serein.Plus.Utils;
 
 public static class ColorMap
 {
-    public static ColorType TryGetColor(string[] args, int offset, out Color color)
+    public static (ColorType Type, Color? Color) TryGetColor(string[] args, int offset)
     {
-        if (args.Length <= offset + 2 && args[offset] == "5")
+        if (args.Length > offset + 1 && args[offset] == "5")
         {
-            return EightBitColors.TryGetValue(args[offset + 1], out color)
-                ? ColorType.EightBit
-                : ColorType.Invalid;
+            if (EightBitColors.TryGetValue(args[offset + 1], out var eightBitColor))
+            {
+                return (ColorType.EightBit, eightBitColor);
+            }
+            return (ColorType.Invalid, null);
         }
 
-        if (args.Length <= offset + 4 && args[offset] == "2")
+        if (args.Length > offset + 3 && args[offset] == "2")
         {
             if (
                 byte.TryParse(args[offset + 1], out var r)
@@ -23,12 +25,12 @@ public static class ColorMap
                 && byte.TryParse(args[offset + 3], out var b)
             )
             {
-                color = Color.FromRgb(r, g, b);
-                return ColorType.TwentyFourBit;
+                return (ColorType.TwentyFourBit, Color.FromRgb(r, g, b));
             }
+            return (ColorType.Invalid, null);
         }
 
-        return ColorType.Invalid;
+        return (ColorType.Invalid, null);
     }
 
     public enum ColorType

@@ -123,7 +123,7 @@ public partial class ServerPage : Page
             case "Import":
                 try
                 {
-                    var dialog = new OpenFileDialog() { Filter = "服务器配置文件|*.json" };
+                    var dialog = new OpenFileDialog { Filter = "服务器配置文件|*.json" };
                     if (dialog.ShowDialog() != true)
                     {
                         return;

@@ -30,8 +30,10 @@ public abstract partial class PluginBase : IPlugin
     public void Disable()
     {
         CancellationTokenSource.Cancel();
+        CancellationTokenSource.Dispose();
     }
 
+    // TODO: 修改Dispose方法，确保插件在Dispose时能正确释放CancellationTokenSource
     public abstract void Dispose();
 
     public string Resolve(params string[] paths) => PluginManager.Resolve(this, paths);

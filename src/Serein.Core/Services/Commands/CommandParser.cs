@@ -415,7 +415,7 @@ public sealed partial class CommandParser(
             return string.Empty;
         }
 
-        return bindingManager.TryGetValue(userId, out var binding)
+        return bindingManager.TryGet(userId, out var binding)
             ? binding.GameIds.FirstOrDefault() ?? string.Empty
             : string.Empty;
     }

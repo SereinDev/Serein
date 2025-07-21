@@ -57,8 +57,6 @@ public sealed partial class SatoriAdapter : IConnectionAdapter
     {
         HttpClient?.Dispose();
         _cancellationTokenSource?.Dispose();
-
-        GC.SuppressFinalize(this);
     }
 
     public Task SendAsync(string payload)

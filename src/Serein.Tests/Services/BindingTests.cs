@@ -47,7 +47,7 @@ public sealed class BindingTests : IDisposable
     public void ShouldCheckConflict()
     {
         _bindingManager.Add("123456", "gameId");
-        Assert.True(_bindingManager.TryGetValue("123456", out var record));
+        Assert.True(_bindingManager.TryGet("123456", out var record));
         Assert.Throws<BindingFailureException>(() => _bindingManager.Add("123456", "gameId"));
     }
 

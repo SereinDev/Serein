@@ -16,7 +16,7 @@
     PrimaryButtonText="确定"
     mc:Ignorable="d">
     <ui:ContentDialog.Resources>
-        <converter:EnumConverter x:Key="enumConverter" />
+        <converter:EnumValueConverter x:Key="enumValueConverter" />
 
         <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
             <Setter Property="Margin" Value="0,6" />
@@ -37,7 +37,7 @@
                 Message="{Binding Tip, Mode=OneWay}"
                 Severity="Warning" />
             <TextBox ui:ControlHelper.Header="正则表达式" Text="{Binding RegExp, UpdateSourceTrigger=PropertyChanged}" />
-            <ComboBox ui:ControlHelper.Header="匹配域" SelectedIndex="{Binding FieldType, Converter={StaticResource enumConverter}}">
+            <ComboBox ui:ControlHelper.Header="匹配域" SelectedIndex="{Binding FieldType, Converter={StaticResource enumValueConverter}}">
                 <ComboBoxItem Content="禁用" />
                 <ComboBoxItem Content="服务器输出" />
                 <ComboBoxItem Content="服务器输入" />

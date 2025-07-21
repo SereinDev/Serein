@@ -13,6 +13,7 @@ public sealed class CancellationTokenProvider
         if (!Token.IsCancellationRequested)
         {
             _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
     }
 }
