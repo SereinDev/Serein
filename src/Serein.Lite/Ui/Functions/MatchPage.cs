@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,15 +16,18 @@ namespace Serein.Lite.Ui.Functions;
 
 public partial class MatchPage : UserControl, IUpdateablePage
 {
-    private static readonly Dictionary<MatchFieldType, string> MatchFieldTypeTexts = new()
-    {
-        [MatchFieldType.Disabled] = "禁用",
-        [MatchFieldType.ServerOutput] = "服务器输出",
-        [MatchFieldType.ServerInput] = "服务器输入",
-        [MatchFieldType.GroupMsg] = "群聊消息",
-        [MatchFieldType.PrivateMsg] = "私聊消息",
-        [MatchFieldType.SelfMsg] = "自身消息",
-    };
+    private static readonly FrozenDictionary<MatchFieldType, string> MatchFieldTypeTexts =
+        new Dictionary<MatchFieldType, string>
+        {
+            [MatchFieldType.Disabled] = "禁用",
+            [MatchFieldType.ServerOutput] = "服务器输出",
+            [MatchFieldType.ServerInput] = "服务器输入",
+            [MatchFieldType.GroupMsg] = "群聊消息",
+            [MatchFieldType.PrivateMsg] = "私聊消息",
+            [MatchFieldType.SelfMsg] = "自身消息",
+            [MatchFieldType.ChannelMsg] = "频道消息",
+            [MatchFieldType.GuildMsg] = "群组消息",
+        }.ToFrozenDictionary();
 
     private readonly MatchProvider _matchProvider;
 
