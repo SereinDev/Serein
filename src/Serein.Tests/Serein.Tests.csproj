@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../Serein.Core/Serein.Core.csproj" />
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <PropertyGroup>
