@@ -38,8 +38,8 @@ jobs:
         id: coverage
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
-          dotnet tool install --global JetBrains.dotCover.CommandLineTools
-          dotCover cover-dotnet --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --logger GitHubActions
+          dotnet tool install --global JetBrains.dotCover.CommandLineTools --version 2025.1.0
+          dotCover cover --Output=AppCoverageReport.xml --ReportType=DetailedXML -- test --logger GitHubActions
 
       - name: Run codacy-coverage-reporter
         if: steps.coverage.conclusion != 'skipped' && (failure() || success()) && matrix.os == 'windows-latest'
