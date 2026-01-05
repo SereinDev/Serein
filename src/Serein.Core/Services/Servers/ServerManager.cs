@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Automations.TriggerHandlers;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
@@ -82,8 +83,8 @@ public sealed partial class ServerManager
     private readonly SereinApp _sereinApp;
     private readonly SettingProvider _settingProvider;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly ReactionTrigger _reactionManager;
-    private readonly Matcher _matcher;
+    private readonly MatchTriggerHandler _matchTriggerHandler;
+    private readonly EventTriggerHandler _eventTriggerHandler;
     private readonly Dictionary<string, Server> _servers = [];
 
     public ServerManager(
@@ -91,21 +92,21 @@ public sealed partial class ServerManager
         ILogger<ServerManager> logger,
         ILogger<LogWriter> logWriterLogger,
         SereinApp sereinApp,
-        Matcher matcher,
         SettingProvider settingProvider,
         EventDispatcher eventDispatcher,
-        ReactionTrigger reactionManager,
+        EventTriggerHandler eventTriggerHandler,
+        MatchTriggerHandler matchTriggerHandler,
         CancellationTokenProvider cancellationTokenProvider
     )
     {
-        _matcher = matcher;
+        _matchTriggerHandler = matchTriggerHandler;
         _serverlogger = serverlogger;
         _logger = logger;
         _logWriterLogger = logWriterLogger;
         _sereinApp = sereinApp;
         _settingProvider = settingProvider;
         _eventDispatcher = eventDispatcher;
-        _reactionManager = reactionManager;
+        _eventTriggerHandler = eventTriggerHandler;
 
         LoadAll();
 
@@ -124,11 +125,11 @@ public sealed partial class ServerManager
             _serverlogger,
             _logWriterLogger,
             _sereinApp,
-            _matcher,
             configuration,
             _settingProvider,
             _eventDispatcher,
-            _reactionManager
+            _eventTriggerHandler,
+            _matchTriggerHandler
         );
         _servers.Add(id, server);
         ServersUpdated?.Invoke(this, new(ServersUpdatedType.Added, id, server));

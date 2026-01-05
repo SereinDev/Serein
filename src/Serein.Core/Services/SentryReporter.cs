@@ -23,6 +23,12 @@ internal class SentryReporter(
             return;
         }
 
+        if (SentrySdk.IsEnabled)
+        {
+            _logger.LogDebug("Sentry已启用，无需重复初始化");
+            return;
+        }
+
         SentrySdk.Init(options =>
         {
             options.Dsn =

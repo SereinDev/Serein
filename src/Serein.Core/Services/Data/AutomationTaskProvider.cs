@@ -4,34 +4,29 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using Serein.Core.Models.Abstractions;
-using Serein.Core.Models.Commands;
+using Serein.Core.Models.Automations;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Schedule>>
+public sealed class AutomationTaskProvider
+    : FileDataProviderBase<ObservableCollection<AutomationTask>>
 {
-    public override ObservableCollection<Schedule> Value { get; }
+    public override ObservableCollection<AutomationTask> Value { get; } = [];
 
-    public ScheduleProvider()
-    {
-        Value = [];
-        Read();
-    }
-
-    public override ObservableCollection<Schedule> Read()
+    public override ObservableCollection<AutomationTask> Read()
     {
         try
         {
-            if (File.Exists(PathConstants.SchedulesFile))
+            if (File.Exists(PathConstants.AutomationTasksFile))
             {
-                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<Schedule>>>(
-                    File.ReadAllText(PathConstants.SchedulesFile),
+                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<AutomationTask>>>(
+                    File.ReadAllText(PathConstants.AutomationTasksFile),
                     JsonSerializerOptionsFactory.Common
                 );
 
-                if (wrapper?.Type == typeof(ObservableCollection<Schedule>).ToString())
+                if (wrapper?.Type == typeof(List<AutomationTask>).ToString())
                 {
                     lock (Value)
                     {
@@ -39,9 +34,9 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
 
                         if (wrapper.Data is not null)
                         {
-                            foreach (var match in wrapper.Data)
+                            foreach (var task in wrapper.Data)
                             {
-                                Value.Add(match);
+                                Value.Add(task);
                             }
                         }
                     }
@@ -56,7 +51,7 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
         catch (Exception e)
         {
             throw new InvalidOperationException(
-                $"加载定时任务文件（{PathConstants.SchedulesFile}）时出现异常",
+                $"加载自动化任务文件（{PathConstants.AutomationTasksFile}）时出现异常",
                 e
             );
         }
@@ -68,17 +63,14 @@ public sealed class ScheduleProvider : DataProviderBase<ObservableCollection<Sch
         {
             Directory.CreateDirectory(PathConstants.Root);
             File.WriteAllText(
-                PathConstants.SchedulesFile,
-                JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
-                )
+                PathConstants.AutomationTasksFile,
+                JsonSerializer.Serialize(DataItemWrapper.Wrap(Value), Options)
             );
         }
         catch (Exception e)
         {
             throw new InvalidOperationException(
-                $"保存定时任务文件（{PathConstants.SchedulesFile}）时出现异常",
+                $"保存自动化任务文件（{PathConstants.AutomationTasksFile}）时出现异常",
                 e
             );
         }

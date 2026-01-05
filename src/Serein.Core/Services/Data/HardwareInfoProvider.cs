@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Hardware.Info;
 using Microsoft.Extensions.Logging;
 
-namespace Serein.Core.Services.Commands;
+namespace Serein.Core.Services.Data;
 
 /// <summary>
 /// 硬件信息提供者

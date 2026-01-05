@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Services;
+using Serein.Core.Services.Automations;
+using Serein.Core.Services.Automations.TriggerHandlers;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
@@ -42,7 +44,7 @@ public static class SereinAppBuilder
         return CreateBuilder(false);
     }
 
-    internal static HostApplicationBuilder CreateBuilder(bool enableFileLogger)
+    internal static HostApplicationBuilder CreateBuilder(bool forceEnableFileLogger)
     {
         var hostAppBuilder = Host.CreateEmptyApplicationBuilder(
 #if DEBUG
@@ -58,7 +60,7 @@ public static class SereinAppBuilder
 
         var cancellationTokenProvider = new CancellationTokenProvider();
 
-        if (FileLoggerProvider.IsEnabled || enableFileLogger)
+        if (FileLoggerProvider.IsEnabled || forceEnableFileLogger)
         {
             hostAppBuilder.Logging.AddProvider(new FileLoggerProvider(cancellationTokenProvider));
         }
@@ -67,15 +69,12 @@ public static class SereinAppBuilder
             .Services.AddSingleton(cancellationTokenProvider)
             .AddSingleton<SentryReporter>()
             .AddSingleton<SettingProvider>()
-            .AddSingleton<MatchProvider>()
-            .AddSingleton<ScheduleProvider>()
             .AddSingleton<PermissionGroupProvider>()
+            .AddSingleton<AutomationTaskProvider>()
             .AddSingleton<ImportHandler>()
             .AddSingleton<GroupManager>()
             .AddSingleton<PermissionManager>()
             .AddSingleton<HardwareInfoProvider>()
-            .AddSingleton<ReactionTrigger>()
-            .AddSingleton<Matcher>()
             .AddSingleton<ServerManager>()
             .AddSingleton<CommandParser>()
             .AddSingleton<CommandRunner>()
@@ -105,8 +104,12 @@ public static class SereinAppBuilder
             .AddSingleton<SessionStorage>()
             .AddDbContext<BindingRecordDbContext>(ServiceLifetime.Transient)
             .AddSingleton<BindingManager>()
+            .AddSingleton<TaskHost>()
+            .AddHostedService<ScheduleTriggerHandler>()
+            .AddSingleton<MatchTriggerHandler>()
+            .AddSingleton<PluginTriggerHandler>()
+            .AddSingleton<EventTriggerHandler>()
             .AddHostedService<PluginService>()
-            .AddHostedService<ScheduleRunner>()
             .AddHostedService<CoreService>()
             .AddSingleton<SereinApp>();
 

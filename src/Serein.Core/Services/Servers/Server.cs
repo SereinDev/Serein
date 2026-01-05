@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Plugins;
 using Serein.Core.Models.Server;
+using Serein.Core.Services.Automations.TriggerHandlers;
 using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
@@ -38,9 +40,9 @@ public class Server
     private bool _isTerminated;
     private TimeSpan _prevProcessCpuTime = TimeSpan.Zero;
     private readonly LogWriter _logWriter;
-    private readonly Matcher _matcher;
+    private readonly MatchTriggerHandler _matchTriggerHandler;
     private readonly EventDispatcher _eventDispatcher;
-    private readonly ReactionTrigger _reactionManager;
+    private readonly EventTriggerHandler _eventTriggerHandler;
     private readonly ILogger _logger;
     private readonly SereinApp _sereinApp;
     private readonly SettingProvider _settingProvider;
@@ -58,11 +60,11 @@ public class Server
         ILogger<Server> logger,
         ILogger<LogWriter> writerLogger,
         SereinApp sereinApp,
-        Matcher matcher,
         Configuration configuration,
         SettingProvider settingManager,
         EventDispatcher eventDispatcher,
-        ReactionTrigger reactionManager
+        EventTriggerHandler eventTriggerHandler,
+        MatchTriggerHandler matchTriggerHandler
     )
     {
         Id = id;
@@ -71,9 +73,9 @@ public class Server
         _sereinApp = sereinApp;
         Configuration = configuration;
         _settingProvider = settingManager;
-        _matcher = matcher;
+        _matchTriggerHandler = matchTriggerHandler;
         _eventDispatcher = eventDispatcher;
-        _reactionManager = reactionManager;
+        _eventTriggerHandler = eventTriggerHandler;
         _commandHistory = [];
         _cache = [];
         _updateTimer = new(2000) { AutoReset = true };
@@ -163,10 +165,8 @@ public class Server
             return;
         }
 
-        _reactionManager.TriggerAsync(
-            exitCode == 0
-                ? ReactionType.ServerExitedNormally
-                : ReactionType.ServerExitedUnexpectedly,
+        _eventTriggerHandler.CallAsync(
+            exitCode == 0 ? Events.ServerExitedNormally : Events.ServerExitedUnexpectedly,
             new(Id)
         );
 
@@ -199,14 +199,10 @@ public class Server
 
         if (_cache.Count > 1)
         {
-            _matcher.QueueServerOutputLine(Id, string.Join('\n', _cache));
+            _matchTriggerHandler.QueueServerOutputLine(Id, string.Join('\n', _cache));
         }
 
-        if (
-            !_settingProvider.Value.Application.MultiLineMatchingPatterns.Any(
-                filtered.Contains
-            )
-        )
+        if (!_settingProvider.Value.Application.MultiLineMatchingPatterns.Any(filtered.Contains))
         {
             _cache.Clear();
         }
@@ -215,7 +211,7 @@ public class Server
             _cache.RemoveRange(0, _cache.Count - 100);
         }
 
-        _matcher.QueueServerOutputLine(Id, filtered);
+        _matchTriggerHandler.QueueServerOutputLine(Id, filtered);
     }
 
     public void Start()
@@ -255,7 +251,7 @@ public class Server
         _commandHistory.Clear();
         _restartCancellationTokenSource?.Cancel();
 
-        _reactionManager.TriggerAsync(ReactionType.ServerStart, new(Id));
+        _eventTriggerHandler.CallAsync(Events.ServerStart, new(Id));
         _eventDispatcher.Dispatch(Event.ServerStarted, this);
         _updateTimer.Start();
 
@@ -402,7 +398,7 @@ public class Server
 
         CommandHistoryIndex = CommandHistory.Count;
 
-        _matcher.QueueServerInputLine(Id, command);
+        _matchTriggerHandler.QueueServerInputLine(Id, command);
     }
 
     public void Terminate()

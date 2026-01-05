@@ -8,7 +8,7 @@ using Serein.ConnectionProtocols.Models.OneBot;
 using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
-using Serein.Core.Services.Commands;
+using Serein.Core.Services.Automations.TriggerHandlers;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 
@@ -16,10 +16,10 @@ namespace Serein.Core.Services.Network.Connection;
 
 public sealed partial class PacketHandler(
     IHost host,
-    Matcher matcher,
     SettingProvider settingProvider,
     EventDispatcher eventDispatcher,
-    ReactionTrigger reactionTrigger
+    MatchTriggerHandler matchTriggerHandler,
+    EventTriggerHandler eventTriggerHandler
 )
 {
     private readonly Lazy<ConnectionLoggerBase> _connectionLogger = new(

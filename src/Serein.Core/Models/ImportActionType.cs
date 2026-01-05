@@ -4,11 +4,7 @@ public enum ImportActionType
 {
     Invalid,
 
-    Error,
-
-    Match,
-
-    Schedule,
+    AutomationTask,
 
     Server,
 }

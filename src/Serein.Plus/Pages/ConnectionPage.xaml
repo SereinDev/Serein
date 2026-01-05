@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="连接"
-    d:DataContext="{d:DesignInstance Type=connection:WsConnectionManager}"
+    d:DataContext="{d:DesignInstance Type=connection:ConnectionManager}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="Page_Loaded"

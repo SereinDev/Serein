@@ -138,19 +138,11 @@
 
                 <ui:NavigationViewItemHeader Content="功能" />
                 <ui:NavigationViewItem
-                    Content="匹配"
-                    Tag="{x:Type pages:MatchPage}"
+                    Content="自动化任务"
+                    Tag="{x:Type pages:AutomationPage}"
                     ToolTip="管理匹配列表">
                     <ui:NavigationViewItem.Icon>
                         <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.List}" />
-                    </ui:NavigationViewItem.Icon>
-                </ui:NavigationViewItem>
-                <ui:NavigationViewItem
-                    Content="定时任务"
-                    Tag="{x:Type pages:SchedulePage}"
-                    ToolTip="管理定时执行的命令">
-                    <ui:NavigationViewItem.Icon>
-                        <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.EmojiTabFavorites}" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem

@@ -9,7 +9,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public sealed class PermissionGroupProvider : DataProviderBase<Dictionary<string, Group>>
+public sealed class PermissionGroupProvider : FileDataProviderBase<Dictionary<string, Group>>
 {
     public PermissionGroupProvider()
     {
@@ -86,10 +86,7 @@ public sealed class PermissionGroupProvider : DataProviderBase<Dictionary<string
             Directory.CreateDirectory(PathConstants.Root);
             File.WriteAllText(
                 PathConstants.PermissionGroupsFile,
-                JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
-                )
+                JsonSerializer.Serialize(DataItemWrapper.Wrap(Value), Options)
             );
         }
         catch (Exception e)

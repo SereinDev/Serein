@@ -1,6 +1,6 @@
-namespace Serein.Core.Models.Commands;
+namespace Serein.Core.Models.Automations;
 
-public enum ReactionType
+public enum Events
 {
     ServerStart,
 

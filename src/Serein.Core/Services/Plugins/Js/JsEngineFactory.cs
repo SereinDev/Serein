@@ -94,7 +94,7 @@ public sealed class JsEngineFactory(
                 ExceptionHandler = (_) => true,
                 SerializeToJson = jsPlugin.Config.UseJintJsonSerializer
                     ? null
-                    : (obj) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
+                    : (obj, _, _) => JsonSerializer.Serialize(obj, _jsonSerializerOptions),
             },
             Host = { StringCompilationAllowed = true },
             Strict = jsPlugin.Config.Strict,

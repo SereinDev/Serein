@@ -64,6 +64,6 @@ public partial class PacketHandler
             return;
         }
 
-        matcher.QueueMsg(packets);
+        matchTriggerHandler.QueueMsg(packets);
     }
 }

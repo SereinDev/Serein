@@ -6,7 +6,6 @@ using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
 using Serein.Core.Models.Network.Web;
-using Serein.Core.Services.Commands;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
 using Serein.Core.Services.Plugins;
@@ -18,15 +17,14 @@ namespace Serein.Core.Services.Network.Web.Apis;
 
 internal sealed partial class ApiMap(
     SereinApp sereinApp,
-    MatchProvider matchProvider,
     PluginManager pluginManager,
     ServerManager serverManager,
     JsPluginLoader jsPluginLoader,
     NetPluginLoader netPluginLoader,
     SettingProvider settingProvider,
-    ScheduleProvider scheduleProvider,
     ConnectionManager connectionManager,
-    HardwareInfoProvider hardwareInfoProvider
+    HardwareInfoProvider hardwareInfoProvider,
+    AutomationTaskProvider automationTaskProvider
 ) : WebApiController
 {
     private List<ApiEndpointRecord>? _records;

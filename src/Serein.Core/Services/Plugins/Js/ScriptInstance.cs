@@ -35,9 +35,8 @@ public sealed partial class ScriptInstance
     public CommandProperty Command { get; }
     public WebServer WebServer { get; }
     public Console Console => _jsPlugin.Console;
+    public AutomationTaskProvider AutomationTasks { get; }
     public SettingProvider Settings { get; }
-    public ScheduleProvider Schedules { get; }
-    public MatchProvider Matches { get; }
     public BindingManager Bindings { get; }
     public SereinApp App { get; }
     public HardwareInfo? HardwareInfo => _hardwareInfoProvider.Info;
@@ -56,14 +55,13 @@ public sealed partial class ScriptInstance
         App = _serviceProvider.GetRequiredService<SereinApp>();
         WebServer = _serviceProvider.GetRequiredService<WebServer>();
         Settings = _serviceProvider.GetRequiredService<SettingProvider>();
-        Schedules = _serviceProvider.GetRequiredService<ScheduleProvider>();
-        Matches = _serviceProvider.GetRequiredService<MatchProvider>();
+        AutomationTasks = _serviceProvider.GetRequiredService<AutomationTaskProvider>();
         Bindings = _serviceProvider.GetRequiredService<BindingManager>();
         Connection = _serviceProvider.GetRequiredService<ConnectionManager>();
 
-        var propertyBuilder = _serviceProvider.GetRequiredService<PropertyFactory>();
-        Command = propertyBuilder.CommandProperty;
-        Servers = propertyBuilder.ServerProperty;
+        var propertyFactory = _serviceProvider.GetRequiredService<PropertyFactory>();
+        Command = propertyFactory.CommandProperty;
+        Servers = propertyFactory.ServerProperty;
 
         Permissions = new(
             Id,

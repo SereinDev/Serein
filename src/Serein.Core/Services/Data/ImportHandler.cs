@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Text.Json.Nodes;
 using Microsoft.Extensions.Logging;
 using Serein.Core.Models;
 using Serein.Core.Models.Abstractions;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Server;
 using Serein.Core.Services.Servers;
@@ -16,9 +18,8 @@ namespace Serein.Core.Services.Data;
 
 public class ImportHandler(
     ILogger<ImportHandler> logger,
-    MatchProvider matchProvider,
-    ScheduleProvider scheduleProvider,
-    ServerManager serverManager
+    ServerManager serverManager,
+    AutomationTaskProvider automationTaskProvider
 )
 {
     public void Import(
@@ -69,58 +70,29 @@ public class ImportHandler(
         if (
             TryUnwrap(
                 dataItemWrapper,
-                typeof(ObservableCollection<Match>).ToString(),
-                out Match[]? matches,
+                typeof(List<AutomationTask>).ToString(),
+                out AutomationTask[]? tasks,
                 JsonSerializerOptionsFactory.Common
             )
         )
         {
-            if (!comfirm.Invoke(ImportActionType.Match))
+            if (!comfirm.Invoke(ImportActionType.AutomationTask))
             {
                 return;
             }
 
-            var merge = shouldMerge.Invoke(ImportActionType.Match);
+            var merge = shouldMerge.Invoke(ImportActionType.AutomationTask);
 
-            lock (matchProvider.Value)
+            lock (automationTaskProvider.Value)
             {
                 if (!merge)
                 {
-                    matchProvider.Value.Clear();
+                    automationTaskProvider.Value.Clear();
                 }
 
-                foreach (var match in matches)
+                foreach (var task in tasks)
                 {
-                    matchProvider.Value.Add(match);
-                }
-            }
-        }
-        else if (
-            TryUnwrap(
-                dataItemWrapper,
-                typeof(ObservableCollection<Schedule>).ToString(),
-                out Schedule[]? schedules,
-                JsonSerializerOptionsFactory.Common
-            )
-        )
-        {
-            if (!comfirm.Invoke(ImportActionType.Schedule))
-            {
-                return;
-            }
-
-            var merge = shouldMerge.Invoke(ImportActionType.Schedule);
-
-            lock (scheduleProvider.Value)
-            {
-                if (!merge)
-                {
-                    scheduleProvider.Value.Clear();
-                }
-
-                foreach (var schedule in schedules)
-                {
-                    scheduleProvider.Value.Add(schedule);
+                    automationTaskProvider.Value.Add(task);
                 }
             }
         }

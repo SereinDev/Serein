@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V12.Packets;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
@@ -81,7 +82,7 @@ public partial class PacketHandler
                 return;
         }
 
-        matcher.QueueMsg(packets);
+        matchTriggerHandler.QueueMsg(packets);
     }
 
     private void HandleNoticePacket(NoticePacket? packet)
@@ -91,11 +92,11 @@ public partial class PacketHandler
             return;
         }
 
-        reactionTrigger.Trigger(
+        eventTriggerHandler.CallAsync(
             packet.DetailType switch
             {
-                "group_increase" => ReactionType.GroupIncreased,
-                "group_decrease" => ReactionType.GroupDecreased,
+                "group_increase" => Events.GroupIncreased,
+                "group_decrease" => Events.GroupDecreased,
                 _ => throw new NotSupportedException(),
             },
             new(GroupId: packet.GroupId, UserId: packet.UserId),

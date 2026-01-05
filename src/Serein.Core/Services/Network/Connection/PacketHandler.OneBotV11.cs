@@ -4,6 +4,7 @@ using System.Text.Json.Nodes;
 using System.Web;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Messages;
 using Serein.ConnectionProtocols.Models.OneBot.V11.Packets;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
 using Serein.Core.Models.Plugins;
@@ -59,10 +60,10 @@ public partial class PacketHandler
                 return;
             }
 
-            reactionTrigger.Trigger(
-                packet.NoticeType == "group_increase" ? ReactionType.GroupIncreased
-                    : packet.NoticeType == "group_decrease" ? ReactionType.GroupDecreased
-                    : ReactionType.GroupPoke,
+            eventTriggerHandler.CallAsync(
+                packet.NoticeType == "group_increase" ? Events.GroupIncreased
+                    : packet.NoticeType == "group_decrease" ? Events.GroupDecreased
+                    : Events.GroupPoke,
                 new(GroupId: packet.GroupId.ToString(), UserId: packet.UserId.ToString()),
                 new Dictionary<string, string?> { ["sender.id"] = packet.UserId.ToString() }
             );
@@ -100,6 +101,6 @@ public partial class PacketHandler
             return;
         }
 
-        matcher.QueueMsg(packets);
+        matchTriggerHandler.QueueMsg(packets);
     }
 }

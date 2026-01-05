@@ -24,7 +24,6 @@ public partial class CategoriesPage : Page
         NavigationView.MenuItems = new List<NavigationViewItem>
         {
             new() { Content = "连接", Tag = typeof(ConnectionSettingPage) },
-            new() { Content = "反应", Tag = typeof(ReactionSettingPage) },
             new() { Content = "网页", Tag = typeof(WebApiSettingPage) },
             new() { Content = "应用", Tag = typeof(AppSettingPage) },
             new() { Content = "关于", Tag = typeof(AboutPage) },

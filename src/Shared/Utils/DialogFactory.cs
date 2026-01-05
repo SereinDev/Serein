@@ -157,7 +157,7 @@ internal static class DialogFactory
 
     public static bool? ShowImportConfirmWithMergeOption(ImportActionType importActionType)
     {
-        if (importActionType is not ImportActionType.Match and not ImportActionType.Schedule)
+        if (importActionType is not ImportActionType.AutomationTask)
         {
             return null;
         }
@@ -168,10 +168,7 @@ internal static class DialogFactory
         {
             Buttons = { btn1, btn2, new(ButtonType.Cancel) },
             CenterParent = true,
-            Content =
-                importActionType == ImportActionType.Match
-                    ? "确认要导入此匹配文件吗？"
-                    : "确认要导入此定时任务文件吗？",
+            Content = "确认要导入此自动化任务文件吗？",
             MainIcon = TaskDialogIcon.Information,
             MainInstruction = "导入确认",
             WindowTitle = Title.Value,

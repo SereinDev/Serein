@@ -42,8 +42,7 @@ public partial class App : Application
             .AddSingleton<MainWindow>()
             .AddSingleton<NotImplPage>()
             .AddSingleton<ServerPage>()
-            .AddSingleton<MatchPage>()
-            .AddSingleton<SchedulePage>()
+            .AddSingleton<AutomationPage>()
             .AddSingleton<ConnectionPage>()
             .AddSingleton<BindingPage>()
             .AddSingleton<PermissionGroupPage>()
@@ -55,7 +54,6 @@ public partial class App : Application
             .AddSingleton<AppSettingPage>()
             .AddSingleton<ConnectionSettingPage>()
             .AddSingleton<WebApiSettingPage>()
-            .AddSingleton<ReactionSettingPage>()
             .AddSingleton<CategoriesPage>()
             .AddSingleton<PluginLoggerBase, PluginLogger>()
             .AddSingleton<ConnectionLoggerBase, ConnectionLogger>();

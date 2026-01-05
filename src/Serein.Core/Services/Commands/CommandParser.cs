@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Serein.Core.Models.Commands;
 using Serein.Core.Services.Bindings;
+using Serein.Core.Services.Data;
 using Serein.Core.Services.Plugins;
 using Serein.Core.Services.Servers;
 using Serein.Core.Utils.Extensions;
@@ -227,7 +228,7 @@ public sealed partial class CommandParser(
     /// </summary>
     /// <param name="input">输入</param>
     /// <param name="commandContext">命令上下文</param>
-    /// <param name="removeInvalidVariablePatten">删除无效的命令片段</param>
+    /// <param name="removeInvalidVariablePatten">删除无效的变量片段</param>
     /// <returns>应用变量后的文本</returns>
     public string ApplyVariables(
         string input,

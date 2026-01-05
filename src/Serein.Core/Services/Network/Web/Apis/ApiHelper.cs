@@ -4,8 +4,8 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using EmbedIO;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Bindings;
-using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Json;
@@ -16,11 +16,7 @@ public static class ApiHelper
 {
     private static readonly JsonSerializerOptions Options = new(JsonSerializerOptionsFactory.Common)
     {
-        Converters =
-        {
-            new JsonObjectWithIdConverter<Match>(),
-            new JsonObjectWithIdConverter<Schedule>(),
-        },
+        Converters = { new JsonObjectWithIdConverter<AutomationTask>() },
     };
 
     public static async Task<T> ConvertRequestAs<T>(this IHttpContext httpContext)

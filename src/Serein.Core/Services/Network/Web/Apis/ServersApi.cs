@@ -6,7 +6,6 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using EmbedIO;
 using EmbedIO.Routing;
-using EmbedIO.WebApi;
 using Force.DeepCloner;
 using Serein.Core.Models.Network.Web;
 using Serein.Core.Models.Server;

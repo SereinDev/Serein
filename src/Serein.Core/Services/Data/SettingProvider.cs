@@ -8,7 +8,7 @@ using Serein.Core.Utils.Json;
 
 namespace Serein.Core.Services.Data;
 
-public sealed class SettingProvider : DataProviderBase<Setting>
+public sealed class SettingProvider : FileDataProviderBase<Setting>
 {
     public SettingProvider()
     {
@@ -31,7 +31,7 @@ public sealed class SettingProvider : DataProviderBase<Setting>
 
                 if (wrapper?.Type == typeof(Setting).ToString() && wrapper.Data is not null)
                 {
-                    return CompleteReactions(wrapper.Data);
+                    return wrapper.Data;
                 }
             }
 
@@ -46,31 +46,13 @@ public sealed class SettingProvider : DataProviderBase<Setting>
         }
     }
 
-    private static Setting CompleteReactions(Setting setting)
-    {
-        if (setting.Reactions.Count != Setting.DefaultReactions.Count)
-        {
-            foreach (var kv in Setting.DefaultReactions)
-            {
-                if (!setting.Reactions.ContainsKey(kv.Key))
-                {
-                    setting.Reactions.Add(kv.Key, kv.Value);
-                }
-            }
-        }
-        return setting;
-    }
-
     public override void Save()
     {
         try
         {
             File.WriteAllText(
                 PathConstants.SettingFile,
-                JsonSerializer.Serialize(
-                    DataItemWrapper.Wrap(Value),
-                    options: new(JsonSerializerOptionsFactory.Common) { WriteIndented = true }
-                )
+                JsonSerializer.Serialize(DataItemWrapper.Wrap(Value), Options)
             );
         }
         catch (Exception e)

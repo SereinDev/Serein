@@ -1,9 +1,7 @@
-namespace Serein.Core.Models.Commands;
+namespace Serein.Core.Models.Automations;
 
 public enum MatchFieldType
 {
-    Disabled,
-
     ServerOutput,
 
     ServerInput,

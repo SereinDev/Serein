@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serein.Core.Models.Automations;
 using Serein.Core.Models.Bindings;
 using Serein.Core.Models.Commands;
 using Serein.Core.Models.Network.Connection;
+using Serein.Core.Services.Automations.TriggerHandlers;
 using Serein.Core.Services.Bindings;
 using Serein.Core.Services.Data;
 using Serein.Core.Services.Network.Connection;
@@ -27,7 +29,7 @@ public sealed class CommandRunner
     private readonly Lazy<CommandParser> _commandParser;
     private readonly Lazy<ConnectionManager> _connectionManager;
     private readonly Lazy<ServerManager> _serverManager;
-    private readonly Lazy<ReactionTrigger> _reactionTrigger;
+    private readonly Lazy<EventTriggerHandler> _eventTriggerHandler;
     private readonly ILogger _logger;
     private readonly SettingProvider _settingProvider;
     private readonly JsPluginLoader _jsPluginLoader;
@@ -43,7 +45,7 @@ public sealed class CommandRunner
     {
         var services = host.Services;
         _connectionManager = new(services.GetRequiredService<ConnectionManager>);
-        _reactionTrigger = new(services.GetRequiredService<ReactionTrigger>);
+        _eventTriggerHandler = new(services.GetRequiredService<EventTriggerHandler>);
         _serverManager = new(services.GetRequiredService<ServerManager>);
         _commandParser = new(services.GetRequiredService<CommandParser>);
         _logger = logger;
@@ -131,8 +133,8 @@ public sealed class CommandRunner
                             )
                         );
 
-                        await _reactionTrigger.Value.TriggerAsync(
-                            ReactionType.BindingSucceeded,
+                        await _eventTriggerHandler.Value.CallAsync(
+                            Events.BindingSucceeded,
                             new(
                                 UserId: commandContext.Value.Packets.UserId,
                                 GroupId: commandContext.Value.Packets.GroupId
@@ -142,8 +144,8 @@ public sealed class CommandRunner
                     else
                     {
                         _bindingManager.Remove(commandContext.Value.Packets.UserId, body);
-                        await _reactionTrigger.Value.TriggerAsync(
-                            ReactionType.UnbindingSucceeded,
+                        await _eventTriggerHandler.Value.CallAsync(
+                            Events.UnbindingSucceeded,
                             new(
                                 UserId: commandContext.Value.Packets.UserId,
                                 GroupId: commandContext.Value.Packets.GroupId
