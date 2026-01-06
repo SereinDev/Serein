@@ -8,8 +8,6 @@ public sealed class ScheduleTrigger : TriggerBase
 {
     private string _cronExpression = string.Empty;
 
-    public override TriggerType Type => TriggerType.Schedule;
-
     public string CronExpression
     {
         get => _cronExpression;

@@ -1,16 +1,15 @@
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Serein.Core.Models.Abstractions;
 using Serein.Core.Models.Automations.Triggers;
 using Serein.Core.Models.Commands;
 
 namespace Serein.Core.Models.Automations;
 
-public sealed class AutomationTask
+public sealed class AutomationTask : NotifyPropertyChangedModelBase
 {
-    public string Name { get; init; } = string.Empty;
+    public ObservableCollection<TriggerBase> Triggers { get; set; } = [];
 
-    public string Description { get; init; } = string.Empty;
+    public ObservableCollection<Command> Commands { get; set; } = [];
 
-    public List<TriggerBase> Triggers { get; init; } = [];
-
-    public List<Command> Commands { get; init; } = [];
+    public string Description { get; set; } = string.Empty;
 }

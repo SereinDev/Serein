@@ -13,6 +13,11 @@ namespace Serein.Core.Services.Data;
 public sealed class AutomationTaskProvider
     : FileDataProviderBase<ObservableCollection<AutomationTask>>
 {
+    public AutomationTaskProvider()
+    {
+         Read();
+    }
+
     public override ObservableCollection<AutomationTask> Value { get; } = [];
 
     public override ObservableCollection<AutomationTask> Read()
@@ -21,12 +26,12 @@ public sealed class AutomationTaskProvider
         {
             if (File.Exists(PathConstants.AutomationTasksFile))
             {
-                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<List<AutomationTask>>>(
+                var wrapper = JsonSerializer.Deserialize<DataItemWrapper<ObservableCollection<AutomationTask>>>(
                     File.ReadAllText(PathConstants.AutomationTasksFile),
                     JsonSerializerOptionsFactory.Common
                 );
 
-                if (wrapper?.Type == typeof(List<AutomationTask>).ToString())
+                if (wrapper?.Type == typeof(ObservableCollection<AutomationTask>).ToString())
                 {
                     lock (Value)
                     {

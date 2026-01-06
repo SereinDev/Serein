@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Serein.Core.Models.Automations;
 using Serein.Core.Services.Data;
 using Serein.Core.Utils;
 using Serein.Core.Utils.Extensions;
@@ -21,25 +19,29 @@ public partial class AutomationPage : Page
         _mainWindow = mainWindow;
         _automationTaskProvider = automationTaskProvider;
         InitializeComponent();
-        AutomationesDataGrid.ItemsSource = _automationTaskProvider.Value;
+
+        automationTasksListView.ItemsSource = _automationTaskProvider.Value;
         _automationTaskProvider.Value.CollectionChanged += UpdateDetails;
+
+        UpdateDetails(this, EventArgs.Empty);
     }
 
     private void UpdateDetails(object? sender, EventArgs e)
     {
         Details.Text =
-            AutomationesDataGrid.SelectedItems.Count > 1
-                ? $"共{_automationTaskProvider.Value.Count}项，已选择{AutomationesDataGrid.SelectedItems.Count}项"
-            : AutomationesDataGrid.SelectedIndex >= 0
-                ? $"共{_automationTaskProvider.Value.Count}项，已选择第{AutomationesDataGrid.SelectedIndex + 1}项"
+            automationTasksListView.SelectedItems.Count > 1
+                ? $"共{_automationTaskProvider.Value.Count}项，已选择{automationTasksListView.SelectedItems.Count}项"
+            : automationTasksListView.SelectedIndex >= 0
+                ? $"共{_automationTaskProvider.Value.Count}项，已选择第{automationTasksListView.SelectedIndex + 1}项"
             : $"共{_automationTaskProvider.Value.Count}项";
     }
 
     private void AutomationesDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
     {
-        RemoveMenuItem.IsEnabled = AutomationesDataGrid.SelectedItems.Count > 0;
-        EditMenuItem.IsEnabled =
-            AutomationesDataGrid.SelectedItems.Count == 1 && AutomationesDataGrid.SelectedItem is AutomationTask;
+        //RemoveMenuItem.IsEnabled = AutomationesDataGrid.SelectedItems.Count > 0;
+        //EditMenuItem.IsEnabled =
+        //    AutomationesDataGrid.SelectedItems.Count == 1
+        //    && AutomationesDataGrid.SelectedItem is AutomationTask;
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -71,14 +73,14 @@ public partial class AutomationPage : Page
                             }
                             Dispatcher.Invoke(() =>
                             {
-                                foreach (
-                                    var item in AutomationesDataGrid
-                                        .SelectedItems.OfType<AutomationTask>()
-                                        .ToArray()
-                                )
-                                {
-                                    _automationTaskProvider.Value.Remove(item);
-                                }
+                                //foreach (
+                                //    var item in AutomationesDataGrid
+                                //        .SelectedItems.OfType<AutomationTask>()
+                                //        .ToArray()
+                                //)
+                                //{
+                                //    _automationTaskProvider.Value.Remove(item);
+                                //}
 
                                 _automationTaskProvider.SaveAsyncWithDebounce();
                             });
@@ -87,10 +89,10 @@ public partial class AutomationPage : Page
                 break;
 
             case "Edit":
-                if (AutomationesDataGrid.SelectedItem is not AutomationTask task3)
-                {
-                    return;
-                }
+                //if (AutomationesDataGrid.SelectedItem is not AutomationTask task3)
+                //{
+                //    return;
+                //}
 
                 // var m4 = task3.ShallowClone();
 

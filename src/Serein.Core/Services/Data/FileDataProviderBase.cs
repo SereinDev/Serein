@@ -9,12 +9,8 @@ namespace Serein.Core.Services.Data;
 public abstract class FileDataProviderBase<T> : NotifyPropertyChangedModelBase
     where T : notnull
 {
-    protected static readonly JsonSerializerOptions Options = new(
-        JsonSerializerOptionsFactory.Common
-    )
-    {
-        WriteIndented = true,
-    };
+    protected virtual JsonSerializerOptions Options { get; } =
+        new(JsonSerializerOptionsFactory.Common) { WriteIndented = true };
 
     private DateTime _last;
 

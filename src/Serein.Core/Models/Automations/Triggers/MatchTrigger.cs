@@ -8,8 +8,6 @@ public sealed class MatchTrigger : TriggerBase
     private string _pattern = string.Empty;
     private bool _isRegex;
 
-    public override TriggerType Type { get; } = TriggerType.Match;
-
     public MatchFieldType FieldType { get; set; } = MatchFieldType.ServerOutput;
 
     public string Pattern

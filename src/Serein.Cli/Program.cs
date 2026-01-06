@@ -35,12 +35,7 @@ public static class Program
                 new Option<bool>("--no-color", "禁用控制台彩色输出（服务器输出不受影响）")
             );
 
-            var configuration = new CommandLineConfiguration(rootCommnad)
-            {
-                EnableDefaultExceptionHandler = false,
-            };
-
-            return configuration.Invoke(args);
+            return rootCommnad.Parse(args).Invoke(new() { EnableDefaultExceptionHandler = false });
         }
         catch (Exception e)
         {

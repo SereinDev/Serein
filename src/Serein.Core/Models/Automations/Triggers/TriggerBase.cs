@@ -9,8 +9,5 @@ namespace Serein.Core.Models.Automations.Triggers;
 [JsonDerivedType(typeof(ScheduleTrigger), typeDiscriminator: "schedule")]
 public abstract class TriggerBase
 {
-    [JsonConverter(typeof(JsonStringEnumConverter<TriggerType>))]
-    public abstract TriggerType Type { get; }
-
     public bool IsEnabled { get; set; }
 }
