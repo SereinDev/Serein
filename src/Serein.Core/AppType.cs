@@ -1,3 +1,5 @@
+using System;
+
 namespace Serein.Core;
 
 /// <summary>
@@ -6,8 +8,10 @@ namespace Serein.Core;
 public enum AppType
 {
     Unknown,
-    Cli,
-    Lite,
-    Plus,
+
+    Console,
+
+    Gui,
+
     Tests,
 }

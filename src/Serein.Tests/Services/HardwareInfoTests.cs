@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serein.Core.Services.Commands;
+using Serein.Core.Services.Data;
 using Xunit;
 
 namespace Serein.Tests.Services;

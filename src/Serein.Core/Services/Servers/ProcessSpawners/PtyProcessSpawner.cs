@@ -58,13 +58,13 @@ public sealed class PtyProcessSpawner(
                     Environment = configuration.Environment,
 
                     Rows =
-                        sereinApp.Type == AppType.Cli
+                        sereinApp.Type == AppType.Console
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
                         && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight
                             : configuration.Pty.TerminalHeight ?? 80,
                     Cols =
-                        sereinApp.Type == AppType.Cli
+                        sereinApp.Type == AppType.Console
                         && Environment.OSVersion.Platform == PlatformID.Win32NT
                         && configuration.Pty.TerminalHeight is null
                             ? Console.WindowHeight

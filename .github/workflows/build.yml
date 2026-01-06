@@ -34,53 +34,46 @@ jobs:
       - name: Publish the solution
         run: ./src/Scripts/publish.bat
 
-      # Serein.Lite
-      - name: Upload binary files(Serein.Lite_win-x64)
+      # Serein.Gui
+      - name: Upload binary files(Serein.Gui_win-x64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Lite_win-x64
-          path: ./src/Serein.Lite/bin/Release/net8.0-windows/win-x64/publish
+          name: Serein.Gui_win-x64
+          path: ./src/Serein.Gui/bin/Release/net8.0-windows/win-x64/publish
 
-      # Serein.Plus
-      - name: Upload binary files(Serein.Plus_win-x64)
+      # Serein.Console
+      - name: Upload binary files(Serein.Console_win-x64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Plus_win-x64
-          path: ./src/Serein.Plus/bin/Release/net8.0-windows/win-x64/publish
+          name: Serein.Console_win-x64
+          path: ./src/Serein.Console/bin/Release/net8.0/win-x64/publish
 
-      # Serein.Cli
-      - name: Upload binary files(Serein.Cli_win-x64)
+      - name: Upload binary files(Serein.Console_linux-x64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Cli_win-x64
-          path: ./src/Serein.Cli/bin/Release/net8.0/win-x64/publish
+          name: Serein.Console_linux-x64
+          path: ./src/Serein.Console/bin/Release/net8.0/linux-x64/publish
 
-      - name: Upload binary files(Serein.Cli_linux-x64)
+      - name: Upload binary files(Serein.Console_linux-arm)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Cli_linux-x64
-          path: ./src/Serein.Cli/bin/Release/net8.0/linux-x64/publish
+          name: Serein.Console_linux-arm
+          path: ./src/Serein.Console/bin/Release/net8.0/linux-arm/publish
 
-      - name: Upload binary files(Serein.Cli_linux-arm)
+      - name: Upload binary files(Serein.Console_linux-arm64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Cli_linux-arm
-          path: ./src/Serein.Cli/bin/Release/net8.0/linux-arm/publish
+          name: Serein.Console_linux-arm64
+          path: ./src/Serein.Console/bin/Release/net8.0/linux-arm64/publish
 
-      - name: Upload binary files(Serein.Cli_linux-arm64)
+      - name: Upload binary files(Serein.Console_osx-x64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Cli_linux-arm64
-          path: ./src/Serein.Cli/bin/Release/net8.0/linux-arm64/publish
+          name: Serein.Console_osx-x64
+          path: ./src/Serein.Console/bin/Release/net8.0/osx-x64/publish
 
-      - name: Upload binary files(Serein.Cli_osx-x64)
+      - name: Upload binary files(Serein.Console_osx-arm64)
         uses: actions/upload-artifact@v4
         with:
-          name: Serein.Cli_osx-x64
-          path: ./src/Serein.Cli/bin/Release/net8.0/osx-x64/publish
-
-      - name: Upload binary files(Serein.Cli_osx-arm64)
-        uses: actions/upload-artifact@v4
-        with:
-          name: Serein.Cli_osx-arm64
-          path: ./src/Serein.Cli/bin/Release/net8.0/osx-arm64/publish
+          name: Serein.Console_osx-arm64
+          path: ./src/Serein.Console/bin/Release/net8.0/osx-arm64/publish

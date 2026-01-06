@@ -297,7 +297,7 @@ public class Server
         if (Configuration.StopCommands.Length == 0)
         {
             if (
-                _sereinApp.Type is AppType.Lite or AppType.Plus
+                _sereinApp.Type is AppType.Gui
                 && Environment.OSVersion.Platform == PlatformID.Win32NT
                 && Pid is not null
             )
@@ -390,7 +390,7 @@ public class Server
                 _commandHistory.Add(command);
             }
 
-            if (_sereinApp.Type != AppType.Cli)
+            if (_sereinApp.Type != AppType.Console)
             {
                 Logger.WriteStandardInput(command);
             }

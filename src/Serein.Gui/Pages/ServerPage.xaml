@@ -1,0 +1,69 @@
+<ui:Page
+    x:Class="Serein.Gui.Pages.ServerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:control="clr-namespace:Serein.Gui.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Serein.Gui.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="服务器"
+    d:DataContext="{d:DesignInstance Type=local:ServerPage}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="Page_Loaded"
+    Unloaded="Page_Unloaded"
+    mc:Ignorable="d">
+
+    <ui:Page.Resources>
+        <Grid x:Key="Empty" Height="39" />
+        <Button
+            x:Key="AddButton"
+            Margin="3,3,7,3"
+            Padding="7">
+            <ui:FontIcon FontSize="12" Icon="{x:Static ui:SegoeFluentIcons.Add}" />
+
+            <ui:FlyoutService.Flyout>
+                <ui:MenuFlyout Placement="BottomEdgeAlignedRight">
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="新建"
+                        Tag="Add">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.AddTo}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="导入..."
+                        Tag="Import">
+                        <MenuItem.Icon>
+                            <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Import}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ui:MenuFlyout>
+            </ui:FlyoutService.Flyout>
+        </Button>
+    </ui:Page.Resources>
+
+    <Grid>
+        <TabControl
+            x:Name="TabControl"
+            Padding="5,5,5,0"
+            ui:TabControlHelper.IsAddTabButtonVisible="False"
+            ui:TabControlHelper.TabStripFooter="{StaticResource AddButton}"
+            ui:TabControlHelper.TabStripHeader="{StaticResource Empty}"
+            ui:TabControlHelper.TabWidthMode="SizeToContent">
+            <TabControl.Resources>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="TabViewBackground" Color="{DynamicResource SolidBackgroundFillColorBase}" />
+                    <SolidColorBrush x:Key="TabViewItemHeaderForeground" Color="{DynamicResource TextFillColorPrimary}" />
+                </ResourceDictionary>
+
+            </TabControl.Resources>
+
+        </TabControl>
+    </Grid>
+</ui:Page>

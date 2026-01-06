@@ -8,10 +8,10 @@
         <EmbeddedResource Condition="Exists('../Sources/frontend.zip')" Include="../Sources/frontend.zip" />
         <ProjectReference Include="../Serein.ConnectionProtocols/Serein.ConnectionProtocols.csproj" />
 
-        <InternalsVisibleTo Include="Serein.Cli" />
+        <InternalsVisibleTo Include="Serein.Console" />
         <InternalsVisibleTo Include="Serein.Lite" />
         <InternalsVisibleTo Include="Serein.Tests" />
-        <InternalsVisibleTo Include="Serein.Plus" />
+        <InternalsVisibleTo Include="Serein.Gui" />
 
         <PackageReference Include="DeepCloner" Version="0.10.4" />
         <PackageReference Include="EmbedIO" Version="3.5.2" />
